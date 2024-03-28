@@ -10,8 +10,7 @@ abstract class LoginPresenter implements Listenable {
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 
-  void validateEmail(String email);
+  void validateUser(String email);
   void validatePassword(String password);
   Future<void> auth();
-  void goToSignUp();
 }

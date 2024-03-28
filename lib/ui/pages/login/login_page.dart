@@ -7,10 +7,11 @@ import './login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+class LoginPage extends StatelessWidget
+    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
   final LoginPresenter presenter;
 
-  LoginPage(this.presenter);
+  LoginPage(this.presenter, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +28,13 @@ class LoginPage extends StatelessWidget with KeyboardManager, LoadingManager, UI
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  LoginHeader(),
+                  const LoginHeader(),
                   Headline1(text: R.string.login),
                   Padding(
-                    padding: EdgeInsets.all(32),
+                    padding: const EdgeInsets.all(32),
                     child: ListenableProvider(
                       create: (_) => presenter,
-                      child: Form(
+                      child: const Form(
                         child: Column(
                           children: <Widget>[
                             UserInput(),
@@ -42,11 +43,6 @@ class LoginPage extends StatelessWidget with KeyboardManager, LoadingManager, UI
                               child: PasswordInput(),
                             ),
                             LoginButton(),
-                            TextButton.icon(
-                              onPressed: presenter.goToSignUp,
-                              icon: Icon(Icons.person),
-                              label: Text(R.string.addAccount)
-                            )
                           ],
                         ),
                       ),

@@ -12,7 +12,7 @@ class GetxLoginPresenter extends GetxController
     implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
-  final SaveCurrentCrossId saveCrossId;
+  final SaveCrossId saveCrossId;
 
   final _userError = Rx<UIError?>(null);
   final _passwordError = Rx<UIError?>(null);
@@ -32,7 +32,7 @@ class GetxLoginPresenter extends GetxController
   });
 
   @override
-  void validateEmail(String email) {
+  void validateUser(String email) {
     _user = email;
     _userError.value = _validateField('email');
     _validateForm();
@@ -75,17 +75,13 @@ class GetxLoginPresenter extends GetxController
       isLoading = true;
       final account = await authentication
           .auth(AuthenticationParams(user: _user!, password: _password!));
+
       await saveCrossId.save(account);
-      navigateTo = '/surveys';
+      navigateTo = '/home';
     } on DomainError {
       mainError = UIError.unexpected;
 
       isLoading = false;
     }
-  }
-
-  @override
-  void goToSignUp() {
-    navigateTo = '/signup';
   }
 }

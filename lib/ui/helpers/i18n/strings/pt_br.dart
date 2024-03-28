@@ -7,11 +7,12 @@ class PtBr implements Translation {
   String get msgInvalidCredentials => 'Credenciais inválidas.';
   String get msgInvalidField => 'Campo inválido';
   String get msgRequiredField => 'Campo obrigatório';
-  String get msgUnexpectedError => 'Algo errado aconteceu. Tente novamente em breve.';
+  String get msgUnexpectedError =>
+      'Algo errado aconteceu. Tente novamente em breve.';
 
   String get addAccount => 'Criar conta';
   String get confirmPassword => 'Confirmar senha';
-  String get email => 'Email';
+  String get email => "Usuário";
   String get enter => 'Entrar';
   String get login => 'Login';
   String get name => 'Nome';
@@ -19,5 +20,7 @@ class PtBr implements Translation {
   String get reload => 'Recarregar';
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
+  String get user => 'Usuário';
+  String get urlCcs => 'Nome da empresa ou UrlCcs';
   String get wait => 'Aguarde...';
 }

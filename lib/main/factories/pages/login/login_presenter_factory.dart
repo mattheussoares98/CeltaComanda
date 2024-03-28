@@ -5,5 +5,5 @@ import '../../factories.dart';
 LoginPresenter makeGetxLoginPresenter() => GetxLoginPresenter(
   authentication: makeRemoteAuthentication(),
   validation: makeLoginValidation(),
-  saveCrossId: makeLocalSaveCurrentAccount()
+  saveCrossId: makeLocalSaveCrossId()
 );

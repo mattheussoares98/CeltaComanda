@@ -16,14 +16,18 @@ class GetxLoginPresenter extends GetxController
 
   final _userError = Rx<UIError?>(null);
   final _passwordError = Rx<UIError?>(null);
+  final _urlCcsError = Rx<UIError?>(null);
 
   String? _user;
   String? _password;
+  String? _urlCcs;
 
   @override
-  Stream<UIError?> get emailErrorStream => _userError.stream;
+  Stream<UIError?> get userErrorStream => _userError.stream;
   @override
   Stream<UIError?> get passwordErrorStream => _passwordError.stream;
+  @override
+  Stream<UIError?> get urlCcsErrorStream => _urlCcsError.stream;
 
   GetxLoginPresenter({
     required this.validation,
@@ -32,9 +36,9 @@ class GetxLoginPresenter extends GetxController
   });
 
   @override
-  void validateUser(String email) {
-    _user = email;
-    _userError.value = _validateField('email');
+  void validateUser(String user) {
+    _user = user;
+    _userError.value = _validateField('user');
     _validateForm();
   }
 
@@ -45,10 +49,18 @@ class GetxLoginPresenter extends GetxController
     _validateForm();
   }
 
+  @override
+  void validateUrlCcs(String urlCcs) {
+    _urlCcs = urlCcs;
+    _passwordError.value = _validateField('urlCcs');
+    _validateForm();
+  }
+
   UIError? _validateField(String field) {
     final formData = {
-      'email': _user,
+      R.string.user: _user,
       'password': _password,
+      'ccsUrl': _urlCcs,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {
@@ -73,8 +85,13 @@ class GetxLoginPresenter extends GetxController
     try {
       mainError = null;
       isLoading = true;
-      final account = await authentication
-          .auth(AuthenticationParams(user: _user!, password: _password!));
+      final account = await authentication.auth(
+        AuthenticationParams(
+          user: _user!,
+          password: _password!,
+          urlCcs: _urlCcs!,
+        ),
+      );
 
       await saveCrossId.save(account);
       navigateTo = '/home';

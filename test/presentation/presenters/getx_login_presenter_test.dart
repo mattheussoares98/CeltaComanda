@@ -7,11 +7,11 @@ import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
-import '../mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../mocks/mocks.dart';
 
 void main() {
   late GetxLoginPresenter sut;
@@ -20,7 +20,7 @@ void main() {
   late SaveCrossIdSpy saveCrossId;
   late String user;
   late String password;
-  late String urlCcs;
+  late String urlCcs; //implementar testes
   late CrossIdEntity account;
 
   setUp(() {
@@ -44,12 +44,11 @@ void main() {
   });
 
   test('Should call Validation with correct user', () {
-    final formData = {R.string.user: user, 'password': null};
+    final formData = {"user": user, 'password': null, 'ccsUrl': null};
 
     sut.validateUser(user);
 
-    verify(() => validation.validate(field: R.string.user, input: formData))
-        .called(1);
+    verify(() => validation.validate(field: "user", input: formData)).called(1);
   });
 
   test('Should emit invalidFieldError if user is invalid', () {
@@ -86,7 +85,7 @@ void main() {
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {R.string.user: null, 'password': password};
+    final formData = {"user": null, 'password': password, 'ccsUrl': null};
 
     sut.validatePassword(password);
 
@@ -118,7 +117,7 @@ void main() {
 
   test('Should disable form button if any field is invalid', () {
     validation.mockValidationError(
-        field: R.string.user, value: ValidationError.invalidField);
+        field: "user", value: ValidationError.invalidField);
 
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
@@ -133,6 +132,9 @@ void main() {
     sut.validateUser(user);
     await Future.delayed(Duration.zero);
     sut.validatePassword(password);
+    await Future.delayed(Duration.zero);
+    sut.validateUrlCcs(urlCcs);
+    await Future.delayed(Duration.zero);
   });
 
   test('Should call Authentication with correct values', () async {
@@ -144,7 +146,6 @@ void main() {
     verify(() => authentication.auth(AuthenticationParams(
           user: user,
           password: password,
-          urlCcs: urlCcs,
         ))).called(1);
   });
 
@@ -183,7 +184,7 @@ void main() {
     sut.validatePassword(password);
 
     sut.navigateToStream
-        .listen(expectAsync1((page) => expect(page, '/surveys')));
+        .listen(expectAsync1((page) => expect(page, '/home')));
 
     await sut.auth();
   });

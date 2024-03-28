@@ -1,7 +1,6 @@
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../ui/helpers/helpers.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 
@@ -22,36 +21,31 @@ class RemoteAuthentication implements Authentication {
       /* throw error == HttpError.unauthorized
         ? DomainError.invalidCredentials
         : */
-      DomainError.unexpected;
+      throw DomainError.unexpected;
     }
-    return null;
   }
 }
 
 class RemoteAuthenticationParams {
-  final String email;
+  final String user;
   final String password;
-  final String urlCcs;
 
   RemoteAuthenticationParams({
-    required this.email,
+    required this.user,
     required this.password,
-    required this.urlCcs,
   });
 
   factory RemoteAuthenticationParams.fromDomain(
     AuthenticationParams params,
   ) {
     return RemoteAuthenticationParams(
-      email: params.user,
+      user: params.user,
       password: params.password,
-      urlCcs: params.urlCcs,
     );
   }
 
   Map toJson() => {
-        R.string.user: email,
-        R.string.password: password,
-        R.string.urlCcs: urlCcs,
+        "user": user,
+        "password": password,
       };
 }

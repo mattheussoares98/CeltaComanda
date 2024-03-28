@@ -29,10 +29,10 @@ void main() {
   test('Should call HttpClient with correct values', () async {
     await sut.auth(params);
 
-    verify(() => httpClient.request(
-        url: url,
-        method: 'post',
-        body: {'user': params.user, 'password': params.password}));
+    verify(() => httpClient.request(url: url, method: 'post', body: {
+          'user': params.user,
+          'password': params.password,
+        }));
   });
 
   test('Should throw UnexpectedError if HttpClient returns 400', () async {

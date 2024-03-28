@@ -12,6 +12,5 @@ class ParamsFactory {
   static AuthenticationParams makeAuthentication() => AuthenticationParams(
         user: faker.person.name(),
         password: faker.internet.password(),
-        urlCcs: faker.internet.httpUrl(),
       );
 }

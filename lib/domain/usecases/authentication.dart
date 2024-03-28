@@ -9,14 +9,12 @@ abstract class Authentication {
 class AuthenticationParams extends Equatable {
   final String user;
   final String password;
-  final String urlCcs;
 
   @override
-  List get props => [user, password, urlCcs];
+  List get props => [user, password];
 
   const AuthenticationParams({
     required this.user,
     required this.password,
-    required this.urlCcs,
   });
 }

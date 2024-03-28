@@ -52,13 +52,13 @@ class GetxLoginPresenter extends GetxController
   @override
   void validateUrlCcs(String urlCcs) {
     _urlCcs = urlCcs;
-    _passwordError.value = _validateField('urlCcs');
+    _urlCcsError.value = _validateField('urlCcs');
     _validateForm();
   }
 
   UIError? _validateField(String field) {
     final formData = {
-      R.string.user: _user,
+      'user': _user,
       'password': _password,
       'ccsUrl': _urlCcs,
     };
@@ -76,8 +76,10 @@ class GetxLoginPresenter extends GetxController
   void _validateForm() {
     isFormValid = _userError.value == null &&
         _passwordError.value == null &&
+        _urlCcsError.value == null &&
         _user != null &&
-        _password != null;
+        _password != null &&
+        _urlCcs != null;
   }
 
   @override
@@ -89,7 +91,6 @@ class GetxLoginPresenter extends GetxController
         AuthenticationParams(
           user: _user!,
           password: _password!,
-          urlCcs: _urlCcs!,
         ),
       );
 

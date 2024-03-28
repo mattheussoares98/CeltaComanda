@@ -12,29 +12,29 @@ class GetxLoginPresenter extends GetxController
     implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
-  final SaveCurrentCrossId saveCurrentCrossId;
+  final SaveCurrentCrossId saveCrossId;
 
-  final _emailError = Rx<UIError?>(null);
+  final _userError = Rx<UIError?>(null);
   final _passwordError = Rx<UIError?>(null);
 
-  String? _email;
+  String? _user;
   String? _password;
 
   @override
-  Stream<UIError?> get emailErrorStream => _emailError.stream;
+  Stream<UIError?> get emailErrorStream => _userError.stream;
   @override
   Stream<UIError?> get passwordErrorStream => _passwordError.stream;
 
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
-    required this.saveCurrentCrossId,
+    required this.saveCrossId,
   });
 
   @override
   void validateEmail(String email) {
-    _email = email;
-    _emailError.value = _validateField('email');
+    _user = email;
+    _userError.value = _validateField('email');
     _validateForm();
   }
 
@@ -47,7 +47,7 @@ class GetxLoginPresenter extends GetxController
 
   UIError? _validateField(String field) {
     final formData = {
-      'email': _email,
+      'email': _user,
       'password': _password,
     };
     final error = validation.validate(field: field, input: formData);
@@ -62,9 +62,9 @@ class GetxLoginPresenter extends GetxController
   }
 
   void _validateForm() {
-    isFormValid = _emailError.value == null &&
+    isFormValid = _userError.value == null &&
         _passwordError.value == null &&
-        _email != null &&
+        _user != null &&
         _password != null;
   }
 
@@ -74,8 +74,8 @@ class GetxLoginPresenter extends GetxController
       mainError = null;
       isLoading = true;
       final account = await authentication
-          .auth(AuthenticationParams(user: _email!, password: _password!));
-      await saveCurrentCrossId.save(account);
+          .auth(AuthenticationParams(user: _user!, password: _password!));
+      await saveCrossId.save(account);
       navigateTo = '/surveys';
     } on DomainError {
       mainError = UIError.unexpected;

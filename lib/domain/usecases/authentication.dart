@@ -3,7 +3,7 @@ import '../entities/entities.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class Authentication {
-  Future<CrossIdEntity> auth(AuthenticationParams params);
+  Future<CrossIdEntity?> auth(AuthenticationParams params);
 }
 
 class AuthenticationParams extends Equatable {

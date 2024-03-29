@@ -71,7 +71,7 @@ void main() {
   test('Should return an Account if HttpClient returns 200', () async {
     final account = await sut.auth(params);
 
-    expect(account!.crossId, apiResult['accessToken']);
+    expect(account?.crossId, apiResult['crossId']);
   });
 
   test(

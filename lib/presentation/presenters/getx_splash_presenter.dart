@@ -17,7 +17,7 @@ class GetxSplashPresenter extends GetxController
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       await loadCrossId.load();
-      navigateTo = '/surveys';
+      navigateTo = '/home';
     } catch (error) {
       navigateTo = '/login';
     }

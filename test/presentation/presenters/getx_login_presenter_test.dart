@@ -20,7 +20,7 @@ void main() {
   late SaveCrossIdSpy saveCrossId;
   late String user;
   late String password;
-  late String urlCcs; //implementar testes
+  late String urlCcs;
   late CrossIdEntity account;
 
   setUp(() {
@@ -75,13 +75,53 @@ void main() {
     sut.validateUser(user);
   });
 
-  test('Should emit null if validation succeeds', () {
+  test('Should emit null if user validation succeeds', () {
     sut.userErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
     sut.validateUser(user);
     sut.validateUser(user);
+  });
+  test('Should call Validation with correct urlCcs', () {
+    final formData = {"user": null, 'password': null, 'ccsUrl': urlCcs};
+
+    sut.validateUrlCcs(urlCcs);
+
+    verify(() => validation.validate(field: "urlCcs", input: formData)).called(1);
+  });
+
+  test('Should emit invalidFieldError if urlCcs is invalid', () {
+    validation.mockValidationError(value: ValidationError.invalidField);
+
+    sut.urlCcsErrorStream
+        .listen(expectAsync1((error) => expect(error, UIError.invalidField)));
+    sut.isFormValidStream
+        .listen(expectAsync1((isValid) => expect(isValid, false)));
+
+    sut.validateUrlCcs(urlCcs);
+    sut.validateUrlCcs(urlCcs);
+  });
+
+  test('Should emit requiredFieldError if urlCcs is empty', () {
+    validation.mockValidationError(value: ValidationError.requiredField);
+
+    sut.urlCcsErrorStream
+        .listen(expectAsync1((error) => expect(error, UIError.requiredField)));
+    sut.isFormValidStream
+        .listen(expectAsync1((isValid) => expect(isValid, false)));
+
+    sut.validateUrlCcs(urlCcs);
+    sut.validateUrlCcs(urlCcs);
+  });
+
+  test('Should emit null if urlCcs validation succeeds', () {
+    sut.urlCcsErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    sut.isFormValidStream
+        .listen(expectAsync1((isValid) => expect(isValid, false)));
+
+    sut.validateUrlCcs(urlCcs);
+    sut.validateUrlCcs(urlCcs);
   });
 
   test('Should call Validation with correct password', () {

@@ -35,8 +35,7 @@ void main() {
     verify(() => presenter.validatePassword(password));
 
     final urlCcs = faker.internet.httpUrl();
-    await tester.enterText(
-        find.bySemanticsLabel('Empresa ou UrlCcs'), urlCcs);
+    await tester.enterText(find.bySemanticsLabel('Empresa ou UrlCcs'), urlCcs);
     verify(() => presenter.validateUrlCcs(urlCcs));
   });
 
@@ -220,5 +219,19 @@ void main() {
     presenter.emitNavigateTo('');
     await tester.pump();
     expect(currentRoute, '/login');
+  });
+
+  testWidgets('Should change focusNode correctly', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.onSubmitUser("any value");
+    await tester.pump();
+    expect(presenter.passwordFocusNode.hasFocus, true);
+    expect(presenter.urlCcsFocus.hasFocus, false);
+
+    presenter.onSubmitPassword("any value");
+    await tester.pump();
+    expect(presenter.urlCcsFocus.hasFocus, true);
+    expect(presenter.passwordFocusNode.hasFocus, false);
   });
 }

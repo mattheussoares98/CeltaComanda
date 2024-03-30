@@ -20,6 +20,8 @@ class PasswordInput extends StatelessWidget {
             errorText: snapshot.data?.description,
           ),
           obscureText: true,
+          focusNode: presenter.passwordFocusNode,
+          onFieldSubmitted: presenter.onSubmitPassword,
           onChanged: presenter.validatePassword,
         );
       }

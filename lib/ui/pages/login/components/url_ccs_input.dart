@@ -16,10 +16,10 @@ class UrlCcsInput extends StatelessWidget {
           return TextFormField(
             decoration: InputDecoration(
               labelText: R.string.urlCcs,
-              icon:
-                  Icon(Icons.http, color: Theme.of(context).primaryColor),
+              icon: Icon(Icons.http, color: Theme.of(context).primaryColor),
               errorText: snapshot.data?.description,
             ),
+            focusNode: presenter.urlCcsFocusNode,
             onChanged: presenter.validateUrlCcs,
           );
         });

@@ -20,6 +20,7 @@ class UserInput extends StatelessWidget {
                 Icon(Icons.person, color: Theme.of(context).primaryColor),
             errorText: snapshot.data?.description,
           ),
+          onFieldSubmitted: presenter.onSubmitUser,
           onChanged: presenter.validateUser,
         );
       },

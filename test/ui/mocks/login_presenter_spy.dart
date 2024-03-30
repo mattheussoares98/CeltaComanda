@@ -2,6 +2,8 @@
 
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
@@ -14,8 +16,18 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   final navigateToController = StreamController<String?>();
   final isFormValidController = StreamController<bool>();
   final isLoadingController = StreamController<bool>();
+  final passwordFocus = FocusNode();
+  final urlCcsFocus = FocusNode();
 
   LoginPresenterSpy() {
+    when(() => this.passwordFocusNode).thenReturn(passwordFocus);
+    when(() => this.urlCcsFocusNode).thenReturn(urlCcsFocus);
+    when(() => this.onSubmitUser("any value")).thenAnswer(
+      (_) async => FocusScope.of(Get.context!).requestFocus(this.passwordFocus),
+    );
+    when(() => this.onSubmitPassword("any value")).thenAnswer(
+      (_) async => FocusScope.of(Get.context!).requestFocus(this.urlCcsFocus),
+    );
     when(() => this.auth()).thenAnswer((_) async => _);
     when(() => this.userErrorStream)
         .thenAnswer((_) => userErrorController.stream);

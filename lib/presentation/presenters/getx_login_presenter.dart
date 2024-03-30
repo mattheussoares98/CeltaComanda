@@ -8,7 +8,12 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxLoginPresenter extends GetxController
-    with LoadingManager, NavigationManager, FormManager, UIErrorManager
+    with
+        LoadingManager,
+        NavigationManager,
+        FormManager,
+        UIErrorManager,
+        FocusNodeManager
     implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
@@ -56,11 +61,21 @@ class GetxLoginPresenter extends GetxController
     _validateForm();
   }
 
+  @override
+  void onSubmitUser(String value) {
+    changeFocus(passwordFocusNode);
+  }
+
+  @override
+  void onSubmitPassword(String value) {
+    changeFocus(urlCcsFocusNode);
+  }
+
   UIError? _validateField(String field) {
     final formData = {
       'user': _user,
       'password': _password,
-      'ccsUrl': _urlCcs,
+      'urlCcs': _urlCcs,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {

@@ -11,7 +11,12 @@ abstract class LoginPresenter implements Listenable {
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 
+  FocusNode get passwordFocusNode;
+  FocusNode get urlCcsFocusNode;
+
   void validateUser(String user);
+  void onSubmitUser(String value);
+  void onSubmitPassword(String value);
   void validatePassword(String password);
   void validateUrlCcs(String urlCcs);
   Future<void> auth();

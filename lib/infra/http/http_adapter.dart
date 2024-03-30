@@ -9,11 +9,12 @@ class HttpAdapter implements HttpClient {
   HttpAdapter(this.client);
 
   @override
-  Future<dynamic> request(
-      {required String url,
-      required String method,
-      Map? body,
-      Map? headers}) async {
+  Future<dynamic> request({
+    required String url,
+    required String method,
+    Map? body,
+    Map? headers,
+  }) async {
     final defaultHeaders = headers?.cast<String, String>() ?? {}
       ..addAll(
           {'content-type': 'application/json', 'accept': 'application/json'});

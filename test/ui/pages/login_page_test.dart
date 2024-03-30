@@ -33,6 +33,11 @@ void main() {
     final password = faker.internet.password();
     await tester.enterText(find.bySemanticsLabel('Senha'), password);
     verify(() => presenter.validatePassword(password));
+
+    final urlCcs = faker.internet.httpUrl();
+    await tester.enterText(
+        find.bySemanticsLabel('Empresa ou UrlCcs'), urlCcs);
+    verify(() => presenter.validateUrlCcs(urlCcs));
   });
 
   testWidgets('Should present error if user is invalid',
@@ -65,6 +70,40 @@ void main() {
     expect(
         find.descendant(
             of: find.bySemanticsLabel(R.string.user),
+            matching: find.byType(Text)),
+        findsOneWidget);
+  });
+
+  testWidgets('Should present error if urlCcs is invalid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitUrlCcsError(UIError.invalidField);
+    await tester.pump();
+
+    expect(find.text('Campo inválido'), findsOneWidget);
+  });
+
+  testWidgets('Should present error if urlCcs is empty',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitUrlCcsError(UIError.requiredField);
+    await tester.pump();
+
+    expect(find.text('Campo obrigatório'), findsOneWidget);
+  });
+
+  testWidgets('Should present no error if urlCcs is valid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitUrlCcsValid();
+    await tester.pump();
+
+    expect(
+        find.descendant(
+            of: find.bySemanticsLabel(R.string.urlCcs),
             matching: find.byType(Text)),
         findsOneWidget);
   });

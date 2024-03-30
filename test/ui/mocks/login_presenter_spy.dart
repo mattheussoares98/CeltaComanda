@@ -9,6 +9,7 @@ import 'package:mocktail/mocktail.dart';
 class LoginPresenterSpy extends Mock implements LoginPresenter {
   final userErrorController = StreamController<UIError?>();
   final passwordErrorController = StreamController<UIError?>();
+  final urlCcsErrorController = StreamController<UIError?>();
   final mainErrorController = StreamController<UIError?>();
   final navigateToController = StreamController<String?>();
   final isFormValidController = StreamController<bool>();
@@ -20,6 +21,8 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
         .thenAnswer((_) => userErrorController.stream);
     when(() => this.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
+    when(() => this.urlCcsErrorStream)
+        .thenAnswer((_) => urlCcsErrorController.stream);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.navigateToStream)
@@ -34,6 +37,8 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void emitUserValid() => userErrorController.add(null);
   void emitPasswordError(UIError error) => passwordErrorController.add(error);
   void emitPasswordValid() => passwordErrorController.add(null);
+  void emitUrlCcsError(UIError error) => urlCcsErrorController.add(error);
+  void emitUrlCcsValid() => urlCcsErrorController.add(null);
   void emitFormError() => isFormValidController.add(false);
   void emitFormValid() => isFormValidController.add(true);
   void emitLoading([bool show = true]) => isLoadingController.add(show);
@@ -43,6 +48,7 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void dispose() {
     userErrorController.close();
     passwordErrorController.close();
+    urlCcsErrorController.close();
     mainErrorController.close();
     navigateToController.close();
     isFormValidController.close();

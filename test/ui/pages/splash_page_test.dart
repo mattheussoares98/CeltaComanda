@@ -22,7 +22,7 @@ void main() {
   testWidgets('Should present spinner on page load', (WidgetTester tester) async {
     await loadPage(tester);
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byKey(const Key("loading")), findsOneWidget);
   });
 
   testWidgets('Should call LoadCrossId on page load', (WidgetTester tester) async {

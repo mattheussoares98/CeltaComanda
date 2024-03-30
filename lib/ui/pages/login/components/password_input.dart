@@ -16,7 +16,7 @@ class PasswordInput extends StatelessWidget {
         return TextFormField(
           decoration: InputDecoration(
             labelText: R.string.password,
-            icon: Icon(Icons.lock, color: Theme.of(context).primaryColorLight),
+            icon: Icon(Icons.lock, color: Theme.of(context).primaryColor),
             errorText: snapshot.data?.description,
           ),
           obscureText: true,

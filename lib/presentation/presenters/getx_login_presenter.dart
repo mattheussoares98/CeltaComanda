@@ -77,9 +77,9 @@ class GetxLoginPresenter extends GetxController
     isFormValid = _userError.value == null &&
         _passwordError.value == null &&
         _urlCcsError.value == null &&
-        _user != null &&
-        _password != null &&
-        _urlCcs != null;
+        _user?.isNotEmpty == true &&
+        _password?.isNotEmpty == true &&
+        _urlCcs?.isNotEmpty == true;
   }
 
   @override

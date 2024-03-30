@@ -31,17 +31,18 @@ class LoginPage extends StatelessWidget
                   const LoginHeader(),
                   Headline1(text: R.string.login),
                   Padding(
-                    padding: const EdgeInsets.all(32),
+                    padding: const EdgeInsets.all(25),
                     child: ListenableProvider(
                       create: (_) => presenter,
                       child: const Form(
                         child: Column(
                           children: <Widget>[
                             UserInput(),
-                            Padding(
-                              padding: EdgeInsets.only(top: 8, bottom: 32),
-                              child: PasswordInput(),
-                            ),
+                            SizedBox(height: 10),
+                            PasswordInput(),
+                            SizedBox(height: 10),
+                            UrlCcsInput(),
+                            SizedBox(height: 20),
                             LoginButton(),
                           ],
                         ),

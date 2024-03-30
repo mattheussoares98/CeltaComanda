@@ -17,7 +17,7 @@ class UserInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: R.string.user,
             icon:
-                Icon(Icons.person, color: Theme.of(context).primaryColorLight),
+                Icon(Icons.person, color: Theme.of(context).primaryColor),
             errorText: snapshot.data?.description,
           ),
           onChanged: presenter.validateUser,

@@ -20,6 +20,6 @@ class PtBr implements Translation {
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get user => 'Usuário';
-  String get urlCcs => 'Nome da empresa ou UrlCcs';
+  String get urlCcs => 'Empresa ou UrlCcs';
   String get wait => 'Aguarde...';
 }

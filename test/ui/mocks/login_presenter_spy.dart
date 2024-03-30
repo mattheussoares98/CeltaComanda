@@ -36,7 +36,7 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void emitPasswordValid() => passwordErrorController.add(null);
   void emitFormError() => isFormValidController.add(false);
   void emitFormValid() => isFormValidController.add(true);
-  void emitLoading([bool show = true]) => {isLoadingController.add(show)};
+  void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
   void emitNavigateTo(String route) => navigateToController.add(route);
 

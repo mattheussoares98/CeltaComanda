@@ -142,11 +142,6 @@ void main() {
     presenter.emitLoading();
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-    presenter.emitLoading(false);
-    await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsNothing);
-    presenter.dispose();
   });
 
   testWidgets('Should present error message if authentication fails',

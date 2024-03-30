@@ -3,7 +3,7 @@ import '../helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 void showLoading(BuildContext context) {
-  Future.delayed(Duration.zero);
+  // Future.delayed(Duration.zero);
   showDialog(
     context: context,
     barrierDismissible: false,

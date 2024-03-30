@@ -27,7 +27,7 @@ void main() {
     await loadPage(tester);
 
     final user = faker.person.name();
-    await tester.enterText(find.bySemanticsLabel(R.string.user), user);
+    await tester.enterText(find.bySemanticsLabel("Usuário"), user);
     verify(() => presenter.validateUser(user));
 
     final password = faker.internet.password();
@@ -142,6 +142,11 @@ void main() {
     presenter.emitLoading();
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    presenter.emitLoading(false);
+    await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+    presenter.dispose();
   });
 
   testWidgets('Should present error message if authentication fails',

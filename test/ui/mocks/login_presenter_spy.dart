@@ -1,5 +1,7 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+// ignore_for_file: unnecessary_this
+
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
@@ -13,15 +15,19 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   final isLoadingController = StreamController<bool>();
 
   LoginPresenterSpy() {
-    when(() => auth()).thenAnswer((_) async => _);
-    when(() => userErrorStream).thenAnswer((_) => userErrorController.stream);
-    when(() => passwordErrorStream)
+    when(() => this.auth()).thenAnswer((_) async => _);
+    when(() => this.userErrorStream)
+        .thenAnswer((_) => userErrorController.stream);
+    when(() => this.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
-    when(() => mainErrorStream).thenAnswer((_) => mainErrorController.stream);
-    when(() => navigateToStream).thenAnswer((_) => navigateToController.stream);
-    when(() => isFormValidStream)
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
+    when(() => this.navigateToStream)
+        .thenAnswer((_) => navigateToController.stream);
+    when(() => this.isFormValidStream)
         .thenAnswer((_) => isFormValidController.stream);
-    when(() => isLoadingStream).thenAnswer((_) => isLoadingController.stream);
+    when(() => this.isLoadingStream)
+        .thenAnswer((_) => isLoadingController.stream);
   }
 
   void emitUserError(UIError error) => userErrorController.add(error);
@@ -30,7 +36,7 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void emitPasswordValid() => passwordErrorController.add(null);
   void emitFormError() => isFormValidController.add(false);
   void emitFormValid() => isFormValidController.add(true);
-  void emitLoading([bool show = true]) => isLoadingController.add(show);
+  void emitLoading([bool show = true]) => {isLoadingController.add(show)};
   void emitMainError(UIError error) => mainErrorController.add(error);
   void emitNavigateTo(String route) => navigateToController.add(route);
 

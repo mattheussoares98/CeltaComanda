@@ -15,7 +15,7 @@ class UserInput extends StatelessWidget {
       builder: (context, snapshot) {
         return TextFormField(
           decoration: InputDecoration(
-            labelText: R.string.name,
+            labelText: R.string.user,
             icon:
                 Icon(Icons.person, color: Theme.of(context).primaryColorLight),
             errorText: snapshot.data?.description,

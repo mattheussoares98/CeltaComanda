@@ -44,7 +44,7 @@ void main() {
   });
 
   test('Should call Validation with correct user', () {
-    final formData = {"user": user, 'password': null, 'ccsUrl': null};
+    final formData = {"user": user, 'password': null, 'urlCcs': null};
 
     sut.validateUser(user);
 
@@ -84,7 +84,7 @@ void main() {
     sut.validateUser(user);
   });
   test('Should call Validation with correct urlCcs', () {
-    final formData = {"user": null, 'password': null, 'ccsUrl': urlCcs};
+    final formData = {"user": null, 'password': null, 'urlCcs': urlCcs};
 
     sut.validateUrlCcs(urlCcs);
 
@@ -125,7 +125,7 @@ void main() {
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {"user": null, 'password': password, 'ccsUrl': null};
+    final formData = {"user": null, 'password': password, 'urlCcs': null};
 
     sut.validatePassword(password);
 

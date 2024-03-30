@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/validation/validators/validators.dart';
 import 'package:clean_celta_mobile/main/factories/factories.dart';
 
@@ -9,9 +8,9 @@ void main() {
     final validations = makeLoginValidations();
 
     expect(validations, [
-      RequiredFieldValidation(R.string.user),
-      RequiredFieldValidation(R.string.password),
-      RequiredFieldValidation(R.string.urlCcs),
+      const RequiredFieldValidation("user"),
+      const RequiredFieldValidation("password"),
+      const RequiredFieldValidation("urlCcs"),
     ]);
   });
 }

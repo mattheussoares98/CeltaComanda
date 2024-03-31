@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 
-import '../../data/mocks/mocks.dart';
+import '../../data/mocks/params_factory.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
@@ -88,7 +88,8 @@ void main() {
 
     sut.validateUrlCcs(urlCcs);
 
-    verify(() => validation.validate(field: "urlCcs", input: formData)).called(1);
+    verify(() => validation.validate(field: "urlCcs", input: formData))
+        .called(1);
   });
 
   test('Should emit invalidFieldError if urlCcs is invalid', () {
@@ -223,8 +224,7 @@ void main() {
     sut.validateUser(user);
     sut.validatePassword(password);
 
-    sut.navigateToStream
-        .listen(expectAsync1((page) => expect(page, '/home')));
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/home')));
 
     await sut.auth();
   });

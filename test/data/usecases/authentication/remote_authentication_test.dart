@@ -1,3 +1,6 @@
+import 'package:faker/faker.dart';
+import 'package:mocktail/mocktail.dart';
+
 import 'package:clean_celta_mobile/data/http/http.dart';
 import 'package:clean_celta_mobile/data/usecases/usecases.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
@@ -6,9 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../infra/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
+import '../../mocks/params_factory.dart';
 
-import 'package:faker/faker.dart';
-import 'package:mocktail/mocktail.dart';
 
 void main() {
   late RemoteAuthentication sut;

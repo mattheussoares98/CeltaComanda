@@ -22,10 +22,11 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
       navigatorObservers: [routeObserver],
-      initialRoute: '/',
+      initialRoute: '/expansible_groups',
       getPages: [
         GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
         GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(name: '/expansible_groups', page: makeExpansibleGroupsPage, transition: Transition.fadeIn),
       ],
     );
   }

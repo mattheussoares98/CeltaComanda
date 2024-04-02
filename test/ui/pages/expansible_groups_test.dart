@@ -19,13 +19,16 @@ void main() {
     presenter.dispose();
   });
 
-  testWidgets('Should present spinner on page load',
+  testWidgets('Should handle spinner on page load',
       (WidgetTester tester) async {
     await loadPage(tester);
+    
     presenter.emitLoading();
-
     await tester.pump();
-
     expect(find.byKey(const Key("loading")), findsOneWidget);
+
+    presenter.emitLoading(false);
+    await tester.pump();
+    expect(find.byKey(const Key("loading")), findsNothing);
   });
 }

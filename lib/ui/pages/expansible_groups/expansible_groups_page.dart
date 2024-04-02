@@ -7,31 +7,20 @@ import 'package:provider/provider.dart';
 
 class ExpansibleGroupsPage extends StatelessWidget
     with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
-  final ExpansibleGroupPresenter presenter;
+  final ExpansibleGroupsPresenter presenter;
 
   ExpansibleGroupsPage(this.presenter, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    presenter.getProducts();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Grupos expansíveis"),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.shopping_cart_rounded,
-              color: Colors.red,
-              shadows: [
-                Shadow(
-                  offset: Offset(1, 1),
-                  blurRadius: 2.0,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-          ),
+        actions: const [
+          CartIcon(),
         ],
       ),
       body: Builder(

@@ -12,6 +12,7 @@ void showLoading(BuildContext context) {
       surfaceTintColor: Colors.white,
       children: <Widget>[
         Column(
+          key: const Key("loading"),
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(

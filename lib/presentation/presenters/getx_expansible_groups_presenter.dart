@@ -5,7 +5,7 @@ import '../mixins/mixins.dart';
 
 class GetxExpansibleGroupsPresenter extends GetxController
     with LoadingManager, NavigationManager, UIErrorManager
-    implements ExpansibleGroupPresenter {
+    implements ExpansibleGroupsPresenter {
   @override
   Future<void> getProducts() async {
     isLoading = true;

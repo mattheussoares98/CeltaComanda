@@ -17,6 +17,16 @@ class ExpansibleGroupsPage extends StatefulWidget {
 
 class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+  bool _isLoaded = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isLoaded) {
+      _isLoaded = true;
+      widget.presenter.loadExpansibleGroups();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +42,16 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
         child: Builder(
           builder: (context) {
             handleLoading(context, widget.presenter.isLoadingStream);
-            // handleMainError(context, widget.presenter.mainErrorStream);
             handleNavigation(widget.presenter.navigateToStream);
 
-            widget.presenter.loadExpansibleGroups();
             return StreamBuilder<List<ExpansibleGroupsViewModel>>(
                 stream: widget.presenter.expansibleGroupsStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: widget.presenter.loadExpansibleGroups,
+                      reload: () async =>
+                          await widget.presenter.loadExpansibleGroups(),
                     );
                   }
                   if (snapshot.hasData) {

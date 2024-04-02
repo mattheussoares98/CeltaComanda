@@ -1,4 +1,5 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../helpers/helpers.dart';
@@ -33,13 +34,13 @@ void main() {
     expect(find.byKey(const Key("loading")), findsNothing);
   });
 
-  testWidgets('Should present error message if get products fails',
+  testWidgets('Should present ReloadScreen if get expansible groups fails',
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitMainError(UIError.unexpected);
-    await tester.pump();
+    presenter.mockExpansibleGroupStreamError(DomainError.unexpected);
+    await tester.pumpAndSettle();
 
-    expect(find.text(R.string.msgUnexpectedError), findsOneWidget);
+    expect(find.byType(ReloadScreen), findsOneWidget);
   });
 }

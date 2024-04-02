@@ -6,7 +6,7 @@ import '../../ui/pages/expansible_groups/expansible_groups.dart';
 import '../mixins/mixins.dart';
 
 class GetxExpansibleGroupsPresenter extends GetxController
-    with LoadingManager, NavigationManager, UIErrorManager
+    with LoadingManager, NavigationManager
     implements ExpansibleGroupsPresenter {
   GetxExpansibleGroupsPresenter({required this.loadProducts});
 
@@ -20,26 +20,19 @@ class GetxExpansibleGroupsPresenter extends GetxController
   @override
   Future<void> loadExpansibleGroups() async {
     try {
-      await Future.delayed(const Duration(seconds: 1), () {
-        isLoading = true;
-      });
-      await Future.delayed(const Duration(seconds: 3), () async {
-        // /* final expansibles = */ await loadProducts.getExpansibleGroups();
-        // _expansibleGroups.subject.add([
-        //   const ExpansibleGroupsViewModel(id: "1", name: "Name 1"),
-        //   const ExpansibleGroupsViewModel(id: "2", name: "Name 2"),
-        //   const ExpansibleGroupsViewModel(id: "3", name: "Name 3"),
-        //   const ExpansibleGroupsViewModel(id: "4", name: "Name 4"),
-        // ]);
-        isLoading = false;
-        _expansibleGroups.update((val) {
-          throw Exception('Um erro ocorreu');
-        });
-        // _expansibleGroups.subject
-        //     .addError(UIError.unexpected.description.toString(), null);
-      });
+      await Future.delayed(const Duration(seconds: 1));
+      isLoading = true;
+      await Future.delayed(const Duration(seconds: 3));
+      _expansibleGroups.subject.add([
+        const ExpansibleGroupsViewModel(id: "1", name: "Name 1"),
+        const ExpansibleGroupsViewModel(id: "2", name: "Name 2"),
+        const ExpansibleGroupsViewModel(id: "3", name: "Name 3"),
+        const ExpansibleGroupsViewModel(id: "4", name: "Name 4"),
+      ]);
+      isLoading = false;
     } catch (e) {
-      mainError = UIError.unexpected;
+      _expansibleGroups.subject
+          .addError(UIError.unexpected.description, StackTrace.current);
     }
   }
 }

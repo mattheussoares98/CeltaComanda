@@ -13,7 +13,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
   final isLoadingController = StreamController<bool>();
 
   ExpansibleGroupsPresenterSpy() {
-    when(() => this.getProducts()).thenAnswer((_) async => _);
+    when(() => this.loadExpansibleGroups()).thenAnswer((_) async => _);
     when(() => this.navigateToStream)
         .thenAnswer((_) => navigateToController.stream);
     when(() => this.mainErrorStream)

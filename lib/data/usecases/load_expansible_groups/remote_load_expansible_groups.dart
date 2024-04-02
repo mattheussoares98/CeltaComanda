@@ -4,13 +4,13 @@ import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
-class RemoteGetProducts implements GetProducts {
+class RemoteLoadExpansibleGroups implements LoadExpansibleGroups {
   final HttpClient httpAdapter;
 
-  RemoteGetProducts({required this.httpAdapter});
+  RemoteLoadExpansibleGroups({required this.httpAdapter});
 
   @override
-  Future<List<ProductEntity>?> getProducts() async {
+  Future<List<ProductEntity>?> getExpansibleGroups() async {
     try {
       final products = await httpAdapter.request(url: "url", method: "get");
       if (products == null) throw Error();

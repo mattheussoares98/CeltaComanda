@@ -1,4 +1,4 @@
-import 'package:clean_celta_mobile/ui/pages/expansible_groups/expansible_groups.dart';
+import '../expansible_groups/expansible_groups.dart';
 
 import '../../mixins/mixins.dart';
 
@@ -13,7 +13,7 @@ class ExpansibleGroupsPage extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    presenter.getProducts();
+    presenter.loadExpansibleGroups();
 
     return Scaffold(
       appBar: AppBar(
@@ -29,30 +29,34 @@ class ExpansibleGroupsPage extends StatelessWidget
           handleMainError(context, presenter.mainErrorStream);
           handleNavigation(presenter.navigateToStream, clear: true);
 
-          return GestureDetector(
-            onTap: () => hideKeyboard(context),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  ListenableProvider(
-                    create: (_) => presenter,
+          return StreamBuilder<List<ExpansibleGroupsViewModel>>(
+              stream: presenter.expansibleGroupsStream,
+              builder: (context, snapshot) {
+                return GestureDetector(
+                  onTap: () => hideKeyboard(context),
+                  child: SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        const Groups(),
-                        TextButton(
-                          onPressed: () {
-                            presenter.getProducts();
-                          },
-                          child: const Text("Obter produtos"),
+                        ListenableProvider(
+                          create: (_) => presenter,
+                          child: Column(
+                            children: <Widget>[
+                              const Groups(),
+                              TextButton(
+                                onPressed: () {
+                                  presenter.loadExpansibleGroups();
+                                },
+                                child: const Text("Obter produtos"),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          );
+                  ),
+                );
+              });
         },
       ),
     );

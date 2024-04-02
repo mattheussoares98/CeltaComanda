@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/ui/pages/expansible_groups/expansible_groups.dart';
 import 'package:get/get.dart';
 
@@ -6,8 +7,17 @@ import '../mixins/mixins.dart';
 class GetxExpansibleGroupsPresenter extends GetxController
     with LoadingManager, NavigationManager, UIErrorManager
     implements ExpansibleGroupsPresenter {
+  GetxExpansibleGroupsPresenter({required this.loadProducts});
+
+  late final LoadExpansibleGroups? loadProducts;
+  final _expansibleGroups = Rx<List<ExpansibleGroupsViewModel>>([]);
+
   @override
-  Future<void> getProducts() async {
+  Stream<List<ExpansibleGroupsViewModel>> get expansibleGroupsStream =>
+      _expansibleGroups.stream;
+
+  @override
+  Future<void> loadExpansibleGroups() async {
     isLoading = true;
     Future.delayed(const Duration(seconds: 5), () {
       isLoading = false;

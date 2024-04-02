@@ -14,12 +14,16 @@ class ExpansibleGroupsPresenterSpy extends Mock
 
   ExpansibleGroupsPresenterSpy() {
     when(() => this.getProducts()).thenAnswer((_) async => _);
-    when(() => this.navigateToStream).thenAnswer((_) => navigateToController.stream);
-    when(() => this.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
-    when(() => this.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
+    when(() => this.navigateToStream)
+        .thenAnswer((_) => navigateToController.stream);
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
+    when(() => this.isLoadingStream)
+        .thenAnswer((_) => isLoadingController.stream);
   }
   void emitNavigateTo(String route) => navigateToController.add(route);
   void emitLoading([bool show = true]) => isLoadingController.add(show);
+  void emitMainError(UIError error) => mainErrorController.add(error);
 
   void dispose() {
     navigateToController.close();

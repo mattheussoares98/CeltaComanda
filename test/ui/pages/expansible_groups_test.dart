@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../helpers/helpers.dart';
@@ -22,7 +23,7 @@ void main() {
   testWidgets('Should handle spinner on page load',
       (WidgetTester tester) async {
     await loadPage(tester);
-    
+
     presenter.emitLoading();
     await tester.pump();
     expect(find.byKey(const Key("loading")), findsOneWidget);
@@ -30,5 +31,15 @@ void main() {
     presenter.emitLoading(false);
     await tester.pump();
     expect(find.byKey(const Key("loading")), findsNothing);
+  });
+
+  testWidgets('Should present error message if get products fails',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitMainError(UIError.unexpected);
+    await tester.pump();
+
+    expect(find.text(R.string.msgUnexpectedError), findsOneWidget);
   });
 }

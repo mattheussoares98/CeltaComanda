@@ -1,3 +1,4 @@
+import '../../components/components.dart';
 import '../expansible_groups/expansible_groups.dart';
 
 import '../../mixins/mixins.dart';
@@ -5,16 +6,19 @@ import '../../mixins/mixins.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ExpansibleGroupsPage extends StatelessWidget
-    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+class ExpansibleGroupsPage extends StatefulWidget {
   final ExpansibleGroupsPresenter presenter;
 
-  ExpansibleGroupsPage(this.presenter, {super.key});
+  const ExpansibleGroupsPage(this.presenter, {super.key});
 
   @override
-  Widget build(BuildContext context) {
-    presenter.loadExpansibleGroups();
+  State<ExpansibleGroupsPage> createState() => _ExpansibleGroupsPageState();
+}
 
+class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
+    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Grupos expansíveis"),
@@ -23,41 +27,35 @@ class ExpansibleGroupsPage extends StatelessWidget
           CartIcon(),
         ],
       ),
-      body: Builder(
-        builder: (context) {
-          handleLoading(context, presenter.isLoadingStream);
-          handleMainError(context, presenter.mainErrorStream);
-          handleNavigation(presenter.navigateToStream, clear: true);
+      body: SingleChildScrollView(
+        primary: false,
+        child: Builder(
+          builder: (context) {
+            handleLoading(context, widget.presenter.isLoadingStream);
+            // handleMainError(context, widget.presenter.mainErrorStream);
+            handleNavigation(widget.presenter.navigateToStream);
 
-          return StreamBuilder<List<ExpansibleGroupsViewModel>>(
-              stream: presenter.expansibleGroupsStream,
-              builder: (context, snapshot) {
-                return GestureDetector(
-                  onTap: () => hideKeyboard(context),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        ListenableProvider(
-                          create: (_) => presenter,
-                          child: Column(
-                            children: <Widget>[
-                              const Groups(),
-                              TextButton(
-                                onPressed: () {
-                                  presenter.loadExpansibleGroups();
-                                },
-                                child: const Text("Obter produtos"),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              });
-        },
+            widget.presenter.loadExpansibleGroups();
+            return StreamBuilder<List<ExpansibleGroupsViewModel>>(
+                stream: widget.presenter.expansibleGroupsStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return ReloadScreen(
+                      error: '${snapshot.error}',
+                      reload: widget.presenter.loadExpansibleGroups,
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    return ListenableProvider(
+                      create: (_) => widget.presenter,
+                      child: GroupsItems(
+                          expansibleGroupsViewModel: snapshot.data!),
+                    );
+                  }
+                  return const SizedBox(height: 0);
+                });
+          },
+        ),
       ),
     );
   }

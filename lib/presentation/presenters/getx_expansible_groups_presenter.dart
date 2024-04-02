@@ -1,7 +1,8 @@
-import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
-import 'package:clean_celta_mobile/ui/pages/expansible_groups/expansible_groups.dart';
 import 'package:get/get.dart';
 
+import '../../domain/usecases/usecases.dart';
+import '../../ui/helpers/helpers.dart';
+import '../../ui/pages/expansible_groups/expansible_groups.dart';
 import '../mixins/mixins.dart';
 
 class GetxExpansibleGroupsPresenter extends GetxController
@@ -9,7 +10,7 @@ class GetxExpansibleGroupsPresenter extends GetxController
     implements ExpansibleGroupsPresenter {
   GetxExpansibleGroupsPresenter({required this.loadProducts});
 
-  late final LoadExpansibleGroups? loadProducts;
+  late final LoadExpansibleGroups loadProducts;
   final _expansibleGroups = Rx<List<ExpansibleGroupsViewModel>>([]);
 
   @override
@@ -18,9 +19,27 @@ class GetxExpansibleGroupsPresenter extends GetxController
 
   @override
   Future<void> loadExpansibleGroups() async {
-    isLoading = true;
-    Future.delayed(const Duration(seconds: 5), () {
-      isLoading = false;
-    });
+    try {
+      await Future.delayed(const Duration(seconds: 1), () {
+        isLoading = true;
+      });
+      await Future.delayed(const Duration(seconds: 3), () async {
+        // /* final expansibles = */ await loadProducts.getExpansibleGroups();
+        // _expansibleGroups.subject.add([
+        //   const ExpansibleGroupsViewModel(id: "1", name: "Name 1"),
+        //   const ExpansibleGroupsViewModel(id: "2", name: "Name 2"),
+        //   const ExpansibleGroupsViewModel(id: "3", name: "Name 3"),
+        //   const ExpansibleGroupsViewModel(id: "4", name: "Name 4"),
+        // ]);
+        isLoading = false;
+        _expansibleGroups.update((val) {
+          throw Exception('Um erro ocorreu');
+        });
+        // _expansibleGroups.subject
+        //     .addError(UIError.unexpected.description.toString(), null);
+      });
+    } catch (e) {
+      mainError = UIError.unexpected;
+    }
   }
 }

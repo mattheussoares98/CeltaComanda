@@ -11,11 +11,15 @@ class ExpansibleGroupsPresenterSpy extends Mock
   final navigateToController = StreamController<String?>();
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
+  final expansibleGroupsController =
+      StreamController<List<ExpansibleGroupsViewModel>>();
 
   ExpansibleGroupsPresenterSpy() {
     when(() => this.loadExpansibleGroups()).thenAnswer((_) async => _);
     when(() => this.navigateToStream)
         .thenAnswer((_) => navigateToController.stream);
+    when(() => this.expansibleGroupsStream)
+        .thenAnswer((_) => expansibleGroupsController.stream);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

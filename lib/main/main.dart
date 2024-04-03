@@ -25,8 +25,16 @@ class App extends StatelessWidget {
       initialRoute: '/expansible_groups',
       getPages: [
         GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
-        GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
-        GetPage(name: '/expansible_groups', page: makeExpansibleGroupsPage, transition: Transition.fadeIn),
+        GetPage(
+            name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(
+            name: '/expansible_groups',
+            page: makeExpansibleGroupsPage,
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/products',
+            page: makeProductsPage,
+            transition: Transition.fadeIn),
       ],
     );
   }

@@ -35,4 +35,9 @@ class GetxExpansibleGroupsPresenter extends GetxController
           .addError(UIError.unexpected.description, StackTrace.current);
     }
   }
+
+  @override
+  void goToProductsPage() {
+    navigateTo = "/products";
+  }
 }

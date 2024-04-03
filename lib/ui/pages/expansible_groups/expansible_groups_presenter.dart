@@ -8,4 +8,5 @@ abstract class ExpansibleGroupsPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
 
   Future<void> loadExpansibleGroups();
+  void goToProductsPage();
 }

@@ -18,6 +18,14 @@ class GetxLoginPresenter extends GetxController
   final Validation validation;
   final Authentication authentication;
   final SaveCrossId saveCrossId;
+  final SaveUrl saveUrl;
+
+  GetxLoginPresenter({
+    required this.validation,
+    required this.authentication,
+    required this.saveCrossId,
+    required this.saveUrl,
+  });
 
   final _userError = Rx<UIError?>(null);
   final _passwordError = Rx<UIError?>(null);
@@ -33,12 +41,6 @@ class GetxLoginPresenter extends GetxController
   Stream<UIError?> get passwordErrorStream => _passwordError.stream;
   @override
   Stream<UIError?> get urlErrorStream => _urlError.stream;
-
-  GetxLoginPresenter({
-    required this.validation,
-    required this.authentication,
-    required this.saveCrossId,
-  });
 
   @override
   void validateUser(String user) {
@@ -102,6 +104,8 @@ class GetxLoginPresenter extends GetxController
     try {
       mainError = null;
       isLoading = true;
+      await saveUrl.save(_url!);
+      
       final account = await authentication.auth(
         AuthenticationParams(
           user: _user!,

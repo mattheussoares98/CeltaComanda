@@ -18,24 +18,28 @@ void main() {
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
   late SaveCrossIdSpy saveCrossId;
+  late SaveUrlSpy saveUrl;
+  late CrossIdEntity account;
   late String user;
   late String password;
   late String url;
-  late CrossIdEntity account;
 
   setUp(() {
     account = EntityFactory.makeAccount();
     user = faker.person.name();
     password = faker.internet.password();
     url = faker.internet.httpUrl();
+    saveUrl = SaveUrlSpy();
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);
     saveCrossId = SaveCrossIdSpy();
     sut = GetxLoginPresenter(
-        validation: validation,
-        authentication: authentication,
-        saveCrossId: saveCrossId);
+      validation: validation,
+      authentication: authentication,
+      saveCrossId: saveCrossId,
+      saveUrl: saveUrl,
+    );
   });
 
   setUpAll(() {
@@ -199,6 +203,16 @@ void main() {
     await sut.auth();
 
     verify(() => saveCrossId.save(account)).called(1);
+  });
+
+  test('Should call SaveUrl with correct value', () async {
+    sut.validateUser(user);
+    sut.validatePassword(password);
+    sut.validateUrl(url);
+
+    await sut.auth();
+
+    verify(() => saveUrl.save(url)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {

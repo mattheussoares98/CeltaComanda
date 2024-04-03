@@ -1,3 +1,3 @@
 abstract class SaveUrl {
-  Future<void> save(String saveUrl);
+  Future<void> save(String url);
 }

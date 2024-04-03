@@ -19,6 +19,7 @@ void main() {
   late ValidationSpy validation;
   late SaveCrossIdSpy saveCrossId;
   late SaveUrlSpy saveUrl;
+  late SaveUserSpy saveUser;
   late CrossIdEntity account;
   late String user;
   late String password;
@@ -30,6 +31,7 @@ void main() {
     password = faker.internet.password();
     url = faker.internet.httpUrl();
     saveUrl = SaveUrlSpy();
+    saveUser = SaveUserSpy();
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);
@@ -39,6 +41,7 @@ void main() {
       authentication: authentication,
       saveCrossId: saveCrossId,
       saveUrl: saveUrl,
+      saveUser: saveUser,
     );
   });
 
@@ -213,6 +216,16 @@ void main() {
     await sut.auth();
 
     verify(() => saveUrl.save(url)).called(1);
+  });
+
+  test('Should call SaveUser with correct value', () async {
+    sut.validateUser(user);
+    sut.validatePassword(password);
+    sut.validateUrl(url);
+
+    await sut.auth();
+
+    verify(() => saveUser.save(user)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {

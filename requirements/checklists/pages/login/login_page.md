@@ -9,3 +9,4 @@
 6. Esconder loading no fim da ação de login
 7. Salvar a url do CCS ao tentar fazer o login
 8. Se der certo o login, salvar o crossId
+9. Se der certo o login, salvar o usuário

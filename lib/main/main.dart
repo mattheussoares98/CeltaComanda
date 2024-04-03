@@ -35,6 +35,10 @@ class App extends StatelessWidget {
             name: '/products',
             page: makeProductsPage,
             transition: Transition.fadeIn),
+        GetPage(
+            name: '/cart',
+            page: makeCartPage,
+            transition: Transition.fadeIn),
       ],
     );
   }

@@ -33,8 +33,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
       appBar: AppBar(
         title: const Text("Grupos expansíveis"),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: const [
-          CartIcon(),
+        actions: [
+          CartIcon(presenter: widget.presenter),
         ],
       ),
       body: SingleChildScrollView(

@@ -9,4 +9,5 @@ abstract class ExpansibleGroupsPresenter implements Listenable {
 
   Future<void> loadExpansibleGroups();
   void goToProductsPage();
+  void goToCartPage();
 }

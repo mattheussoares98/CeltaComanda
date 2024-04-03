@@ -19,9 +19,6 @@ void main() {
     await tester.pumpWidget(
       makePage(path: '/', page: () => ExpansibleGroupsPage(presenter)),
     );
-
-    await tester
-        .pumpWidget(makePage(path: "/cart", page: () => const CartPage()));
   }
 
   tearDown(() {
@@ -54,6 +51,8 @@ void main() {
   testWidgets('Should navigate to products page on expansibleGroup click',
       (WidgetTester tester) async {
     await loadPage(tester);
+    await tester
+        .pumpWidget(makePage(path: "/products", page: () => const CartPage()));
 
     presenter.emitNavigateTo('/products');
     await tester.pump();
@@ -63,6 +62,8 @@ void main() {
   testWidgets('Should navigate to cart page on cartIcon click',
       (WidgetTester tester) async {
     await loadPage(tester);
+    await tester
+        .pumpWidget(makePage(path: "/cart", page: () => const CartPage()));
 
     presenter.emitNavigateTo('/cart');
     await tester.pump();

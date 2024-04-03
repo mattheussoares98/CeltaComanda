@@ -20,14 +20,14 @@ void main() {
   late SaveCrossIdSpy saveCrossId;
   late String user;
   late String password;
-  late String urlCcs;
+  late String url;
   late CrossIdEntity account;
 
   setUp(() {
     account = EntityFactory.makeAccount();
     user = faker.person.name();
     password = faker.internet.password();
-    urlCcs = faker.internet.httpUrl();
+    url = faker.internet.httpUrl();
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);
@@ -44,7 +44,7 @@ void main() {
   });
 
   test('Should call Validation with correct user', () {
-    final formData = {"user": user, 'password': null, 'urlCcs': null};
+    final formData = {"user": user, 'password': null, 'url': null};
 
     sut.validateUser(user);
 
@@ -83,50 +83,49 @@ void main() {
     sut.validateUser(user);
     sut.validateUser(user);
   });
-  test('Should call Validation with correct urlCcs', () {
-    final formData = {"user": null, 'password': null, 'urlCcs': urlCcs};
+  test('Should call Validation with correct url', () {
+    final formData = {"user": null, 'password': null, 'url': url};
 
-    sut.validateUrlCcs(urlCcs);
+    sut.validateUrl(url);
 
-    verify(() => validation.validate(field: "urlCcs", input: formData))
-        .called(1);
+    verify(() => validation.validate(field: "url", input: formData)).called(1);
   });
 
-  test('Should emit invalidFieldError if urlCcs is invalid', () {
+  test('Should emit invalidFieldError if url is invalid', () {
     validation.mockValidationError(value: ValidationError.invalidField);
 
-    sut.urlCcsErrorStream
+    sut.urlErrorStream
         .listen(expectAsync1((error) => expect(error, UIError.invalidField)));
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUrlCcs(urlCcs);
-    sut.validateUrlCcs(urlCcs);
+    sut.validateUrl(url);
+    sut.validateUrl(url);
   });
 
-  test('Should emit requiredFieldError if urlCcs is empty', () {
+  test('Should emit requiredFieldError if url is empty', () {
     validation.mockValidationError(value: ValidationError.requiredField);
 
-    sut.urlCcsErrorStream
+    sut.urlErrorStream
         .listen(expectAsync1((error) => expect(error, UIError.requiredField)));
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUrlCcs(urlCcs);
-    sut.validateUrlCcs(urlCcs);
+    sut.validateUrl(url);
+    sut.validateUrl(url);
   });
 
-  test('Should emit null if urlCcs validation succeeds', () {
-    sut.urlCcsErrorStream.listen(expectAsync1((error) => expect(error, null)));
+  test('Should emit null if url validation succeeds', () {
+    sut.urlErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUrlCcs(urlCcs);
-    sut.validateUrlCcs(urlCcs);
+    sut.validateUrl(url);
+    sut.validateUrl(url);
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {"user": null, 'password': password, 'urlCcs': null};
+    final formData = {"user": null, 'password': password, 'url': null};
 
     sut.validatePassword(password);
 
@@ -174,25 +173,28 @@ void main() {
     await Future.delayed(Duration.zero);
     sut.validatePassword(password);
     await Future.delayed(Duration.zero);
-    sut.validateUrlCcs(urlCcs);
+    sut.validateUrl(url);
     await Future.delayed(Duration.zero);
   });
 
   test('Should call Authentication with correct values', () async {
     sut.validateUser(user);
     sut.validatePassword(password);
+    sut.validateUrl(url);
 
     await sut.auth();
 
     verify(() => authentication.auth(AuthenticationParams(
           user: user,
           password: password,
+          url: url,
         ))).called(1);
   });
 
   test('Should call SaveCrossId with correct value', () async {
     sut.validateUser(user);
     sut.validatePassword(password);
+    sut.validateUrl(url);
 
     await sut.auth();
 
@@ -203,6 +205,7 @@ void main() {
     saveCrossId.mockSaveError();
     sut.validateUser(user);
     sut.validatePassword(password);
+    sut.validateUrl(url);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -213,6 +216,7 @@ void main() {
   test('Should emit correct events on Authentication success', () async {
     sut.validateUser(user);
     sut.validatePassword(password);
+    sut.validateUrl(url);
 
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
@@ -223,6 +227,7 @@ void main() {
   test('Should change page on success', () async {
     sut.validateUser(user);
     sut.validatePassword(password);
+    sut.validateUrl(url);
 
     sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/home')));
 
@@ -245,6 +250,7 @@ void main() {
     authentication.mockAuthenticationError(DomainError.unexpected);
     sut.validateUser(user);
     sut.validatePassword(password);
+    sut.validateUrl(url);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));

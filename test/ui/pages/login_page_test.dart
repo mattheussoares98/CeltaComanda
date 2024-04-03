@@ -34,9 +34,9 @@ void main() {
     await tester.enterText(find.bySemanticsLabel('Senha'), password);
     verify(() => presenter.validatePassword(password));
 
-    final urlCcs = faker.internet.httpUrl();
-    await tester.enterText(find.bySemanticsLabel('Empresa ou UrlCcs'), urlCcs);
-    verify(() => presenter.validateUrlCcs(urlCcs));
+    final url = faker.internet.httpUrl();
+    await tester.enterText(find.bySemanticsLabel('Empresa ou url'), url);
+    verify(() => presenter.validateUrl(url));
   });
 
   testWidgets('Should present error if user is invalid',
@@ -73,36 +73,36 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('Should present error if urlCcs is invalid',
+  testWidgets('Should present error if url is invalid',
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitUrlCcsError(UIError.invalidField);
+    presenter.emitUrlError(UIError.invalidField);
     await tester.pump();
 
     expect(find.text('Campo inválido'), findsOneWidget);
   });
 
-  testWidgets('Should present error if urlCcs is empty',
+  testWidgets('Should present error if url is empty',
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitUrlCcsError(UIError.requiredField);
+    presenter.emitUrlError(UIError.requiredField);
     await tester.pump();
 
     expect(find.text('Campo obrigatório'), findsOneWidget);
   });
 
-  testWidgets('Should present no error if urlCcs is valid',
+  testWidgets('Should present no error if url is valid',
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitUrlCcsValid();
+    presenter.emitUrlValid();
     await tester.pump();
 
     expect(
         find.descendant(
-            of: find.bySemanticsLabel(R.string.urlCcs),
+            of: find.bySemanticsLabel(R.string.url),
             matching: find.byType(Text)),
         findsOneWidget);
   });
@@ -227,11 +227,11 @@ void main() {
     presenter.onSubmitUser("any value");
     await tester.pump();
     expect(presenter.passwordFocusNode.hasFocus, true);
-    expect(presenter.urlCcsFocus.hasFocus, false);
+    expect(presenter.urlFocus.hasFocus, false);
 
     presenter.onSubmitPassword("any value");
     await tester.pump();
-    expect(presenter.urlCcsFocus.hasFocus, true);
+    expect(presenter.urlFocus.hasFocus, true);
     expect(presenter.passwordFocusNode.hasFocus, false);
   });
 }

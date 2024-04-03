@@ -21,18 +21,18 @@ class GetxLoginPresenter extends GetxController
 
   final _userError = Rx<UIError?>(null);
   final _passwordError = Rx<UIError?>(null);
-  final _urlCcsError = Rx<UIError?>(null);
+  final _urlError = Rx<UIError?>(null);
 
   String? _user;
   String? _password;
-  String? _urlCcs;
+  String? _url;
 
   @override
   Stream<UIError?> get userErrorStream => _userError.stream;
   @override
   Stream<UIError?> get passwordErrorStream => _passwordError.stream;
   @override
-  Stream<UIError?> get urlCcsErrorStream => _urlCcsError.stream;
+  Stream<UIError?> get urlErrorStream => _urlError.stream;
 
   GetxLoginPresenter({
     required this.validation,
@@ -55,9 +55,9 @@ class GetxLoginPresenter extends GetxController
   }
 
   @override
-  void validateUrlCcs(String urlCcs) {
-    _urlCcs = urlCcs;
-    _urlCcsError.value = _validateField('urlCcs');
+  void validateUrl(String url) {
+    _url = url;
+    _urlError.value = _validateField('url');
     _validateForm();
   }
 
@@ -68,14 +68,14 @@ class GetxLoginPresenter extends GetxController
 
   @override
   void onSubmitPassword(String value) {
-    changeFocus(urlCcsFocusNode);
+    changeFocus(urlFocusNode);
   }
 
   UIError? _validateField(String field) {
     final formData = {
       'user': _user,
       'password': _password,
-      'urlCcs': _urlCcs,
+      'url': _url,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {
@@ -91,10 +91,10 @@ class GetxLoginPresenter extends GetxController
   void _validateForm() {
     isFormValid = _userError.value == null &&
         _passwordError.value == null &&
-        _urlCcsError.value == null &&
+        _urlError.value == null &&
         _user?.isNotEmpty == true &&
         _password?.isNotEmpty == true &&
-        _urlCcs?.isNotEmpty == true;
+        _url?.isNotEmpty == true;
   }
 
   @override
@@ -106,6 +106,7 @@ class GetxLoginPresenter extends GetxController
         AuthenticationParams(
           user: _user!,
           password: _password!,
+          url: _url!,
         ),
       );
 

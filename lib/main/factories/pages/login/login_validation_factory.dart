@@ -8,5 +8,5 @@ Validation makeLoginValidation() => ValidationComposite(makeLoginValidations());
 List<FieldValidation> makeLoginValidations() => [
       ...ValidationBuilder.field("user").required().build(),
       ...ValidationBuilder.field("password").required().build(),
-      ...ValidationBuilder.field("urlCcs").required().build(),
+      ...ValidationBuilder.field("url").required().build(),
     ];

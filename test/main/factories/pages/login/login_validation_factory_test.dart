@@ -10,7 +10,7 @@ void main() {
     expect(validations, [
       const RequiredFieldValidation("user"),
       const RequiredFieldValidation("password"),
-      const RequiredFieldValidation("urlCcs"),
+      const RequiredFieldValidation("url"),
     ]);
   });
 }

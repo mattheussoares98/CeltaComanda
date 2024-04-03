@@ -6,5 +6,6 @@ class ParamsFactory {
   static AuthenticationParams makeAuthentication() => AuthenticationParams(
         user: faker.person.name(),
         password: faker.internet.password(),
+        url: faker.internet.httpUrl(),
       );
 }

@@ -11,30 +11,30 @@ import 'package:mocktail/mocktail.dart';
 class LoginPresenterSpy extends Mock implements LoginPresenter {
   final userErrorController = StreamController<UIError?>();
   final passwordErrorController = StreamController<UIError?>();
-  final urlCcsErrorController = StreamController<UIError?>();
+  final urlErrorController = StreamController<UIError?>();
   final mainErrorController = StreamController<UIError?>();
   final navigateToController = StreamController<String?>();
   final isFormValidController = StreamController<bool>();
   final isLoadingController = StreamController<bool>();
   final passwordFocus = FocusNode();
-  final urlCcsFocus = FocusNode();
+  final urlFocus = FocusNode();
 
   LoginPresenterSpy() {
     when(() => this.passwordFocusNode).thenReturn(passwordFocus);
-    when(() => this.urlCcsFocusNode).thenReturn(urlCcsFocus);
+    when(() => this.urlFocusNode).thenReturn(urlFocus);
     when(() => this.onSubmitUser("any value")).thenAnswer(
       (_) async => FocusScope.of(Get.context!).requestFocus(this.passwordFocus),
     );
     when(() => this.onSubmitPassword("any value")).thenAnswer(
-      (_) async => FocusScope.of(Get.context!).requestFocus(this.urlCcsFocus),
+      (_) async => FocusScope.of(Get.context!).requestFocus(this.urlFocus),
     );
     when(() => this.auth()).thenAnswer((_) async => _);
     when(() => this.userErrorStream)
         .thenAnswer((_) => userErrorController.stream);
     when(() => this.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
-    when(() => this.urlCcsErrorStream)
-        .thenAnswer((_) => urlCcsErrorController.stream);
+    when(() => this.urlErrorStream)
+        .thenAnswer((_) => urlErrorController.stream);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.navigateToStream)
@@ -49,8 +49,8 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void emitUserValid() => userErrorController.add(null);
   void emitPasswordError(UIError error) => passwordErrorController.add(error);
   void emitPasswordValid() => passwordErrorController.add(null);
-  void emitUrlCcsError(UIError error) => urlCcsErrorController.add(error);
-  void emitUrlCcsValid() => urlCcsErrorController.add(null);
+  void emitUrlError(UIError error) => urlErrorController.add(error);
+  void emitUrlValid() => urlErrorController.add(null);
   void emitFormError() => isFormValidController.add(false);
   void emitFormValid() => isFormValidController.add(true);
   void emitLoading([bool show = true]) => isLoadingController.add(show);
@@ -60,7 +60,7 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void dispose() {
     userErrorController.close();
     passwordErrorController.close();
-    urlCcsErrorController.close();
+    urlErrorController.close();
     mainErrorController.close();
     navigateToController.close();
     isFormValidController.close();

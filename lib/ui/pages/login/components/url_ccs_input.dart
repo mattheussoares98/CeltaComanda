@@ -11,16 +11,16 @@ class UrlCcsInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final presenter = Provider.of<LoginPresenter>(context);
     return StreamBuilder<UIError?>(
-        stream: presenter.urlCcsErrorStream,
+        stream: presenter.urlErrorStream,
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: R.string.urlCcs,
+              labelText: R.string.url,
               icon: Icon(Icons.http, color: Theme.of(context).primaryColor),
               errorText: snapshot.data?.description,
             ),
-            focusNode: presenter.urlCcsFocusNode,
-            onChanged: presenter.validateUrlCcs,
+            focusNode: presenter.urlFocusNode,
+            onChanged: presenter.validateUrl,
           );
         });
   }

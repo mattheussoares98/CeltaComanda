@@ -57,8 +57,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   if (snapshot.hasData) {
                     return ListenableProvider(
                       create: (_) => widget.presenter,
-                      child: GroupsItems(
-                          expansibleGroupsViewModel: snapshot.data!),
+                      child:
+                          GroupItems(expansibleGroupsViewModel: snapshot.data!),
                     );
                   }
                   return const SizedBox(height: 0);

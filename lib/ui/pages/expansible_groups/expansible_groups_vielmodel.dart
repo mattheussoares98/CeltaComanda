@@ -4,17 +4,12 @@ import 'package:equatable/equatable.dart';
 class ExpansibleGroupsViewModel extends Equatable {
   final String id;
   final String name;
-  // final Color color;
 
   @override
-  List get props => [
-        id,
-        name /* color */
-      ];
+  List get props => [id, name];
 
   const ExpansibleGroupsViewModel({
     required this.id,
     required this.name,
-    // required this.color,
   });
 }

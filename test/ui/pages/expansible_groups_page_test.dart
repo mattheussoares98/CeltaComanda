@@ -11,10 +11,17 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late ExpansibleGroupsPresenterSpy presenter;
 
-  Future<void> loadPage(WidgetTester tester) async {
+  setUp(() {
     presenter = ExpansibleGroupsPresenterSpy();
+  });
+
+  Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
-        makePage(path: '/', page: () => ExpansibleGroupsPage(presenter)));
+      makePage(path: '/', page: () => ExpansibleGroupsPage(presenter)),
+    );
+
+    await tester
+        .pumpWidget(makePage(path: "/cart", page: () => const CartPage()));
   }
 
   tearDown(() {
@@ -42,5 +49,23 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ReloadScreen), findsOneWidget);
+  });
+
+  testWidgets('Should navigate to products page on expansibleGroup click',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitNavigateTo('/products');
+    await tester.pump();
+    expect(currentRoute, '/products');
+  });
+
+  testWidgets('Should navigate to cart page on cartIcon click',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitNavigateTo('/cart');
+    await tester.pump();
+    expect(currentRoute, '/cart');
   });
 }

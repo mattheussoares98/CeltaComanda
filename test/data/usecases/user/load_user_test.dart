@@ -3,35 +3,35 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
-import '../../../mocks/cache_storage_spy.dart';
-import '../../../mocks/mocks.dart';
+import '../../mocks/cache_storage_spy.dart';
+import '../../mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late LoadUrl sut;
+  late LoadUserName sut;
   late CacheStorageSpy cacheStorage;
-  late String fakeUrl;
+  late String userName;
 
   setUp(() {
-    fakeUrl = faker.internet.httpUrl();
+    userName = faker.person.name();
     cacheStorage = CacheStorageSpy();
-    cacheStorage.mockGet(fakeUrl);
-    sut = LocalLoadUrl(cacheStorage: cacheStorage);
+    cacheStorage.mockGet(userName);
+    sut = LocalLoadUserName(cacheStorage: cacheStorage);
   });
 
   test('Should call CacheStorage with correct value', () async {
     await sut.load();
 
-    verify(() => cacheStorage.get(CacheKeys.url.name));
+    verify(() => cacheStorage.get(CacheKeys.userName.name));
   });
 
-  test('Should return an Url', () async {
-    final url = await sut.load();
+  test('Should return an UserName', () async {
+    final user = await sut.load();
 
-    expect(url, fakeUrl);
+    expect(user, userName);
   });
 
   test('Should throw UnexpectedError if FetchcacheStorage throws', () async {

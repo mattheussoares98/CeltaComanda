@@ -2,7 +2,7 @@ import 'package:clean_celta_mobile/data/usecases/usecases.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
-import '../../../mocks/mocks.dart';
+import '../../mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';

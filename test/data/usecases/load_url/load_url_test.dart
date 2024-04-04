@@ -1,6 +1,7 @@
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/data/usecases/usecases.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
 import '../../mocks/cache_storage_spy.dart';
 import '../../mocks/mocks.dart';
@@ -24,7 +25,7 @@ void main() {
   test('Should call CacheStorage with correct value', () async {
     await sut.load();
 
-    verify(() => cacheStorage.get('url'));
+    verify(() => cacheStorage.get(CacheKeys.url.name));
   });
 
   test('Should return an Url', () async {

@@ -1,6 +1,7 @@
+import 'package:clean_celta_mobile/data/usecases/usecases.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/data/usecases/usecases.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
 import '../../mocks/mocks.dart';
 
@@ -23,7 +24,7 @@ void main() {
     await sut.save(account);
 
     verify(
-        () => secureCacheStorage.save(key: 'crossId', value: account.crossId));
+        () => secureCacheStorage.save(key: CacheKeys.crossId.name, value: account.crossId));
   });
 
   test('Should throw UnexpectedError if SaveSecureCacheStorage throws',

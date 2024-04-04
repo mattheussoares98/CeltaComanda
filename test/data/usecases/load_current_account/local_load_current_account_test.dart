@@ -1,8 +1,8 @@
-import 'package:clean_celta_mobile/domain/entities/cross_id_entity.dart';
+import 'package:clean_celta_mobile/data/usecases/usecases.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/data/usecases/usecases.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
 import '../../mocks/mocks.dart';
 
@@ -25,7 +25,7 @@ void main() {
   test('Should call FetchSecureCacheStorage with correct value', () async {
     await sut.load();
 
-    verify(() => secureCacheStorage.fetch('crossId'));
+    verify(() => secureCacheStorage.fetch(CacheKeys.crossId.name));
   });
 
   test('Should return an CrossIdEntity', () async {

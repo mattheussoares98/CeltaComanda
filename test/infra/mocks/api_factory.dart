@@ -1,8 +1,9 @@
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:faker/faker.dart';
 
 class ApiFactory {
   static Map makeAccountJson() => {
-    'crossId': faker.guid.guid(),
+    CacheKeys.crossId.name: faker.guid.guid(),
     'user': faker.person.name(),
   };
 

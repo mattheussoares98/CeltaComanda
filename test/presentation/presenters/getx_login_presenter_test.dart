@@ -1,9 +1,10 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../data/mocks/params_factory.dart';
 import '../../domain/mocks/mocks.dart';
@@ -51,7 +52,7 @@ void main() {
   });
 
   test('Should call Validation with correct user', () {
-    final formData = {"user": user, 'password': null, 'url': null};
+    final formData = {"user": user, 'password': null, CacheKeys.url.name: null};
 
     sut.validateUser(user);
 
@@ -91,7 +92,7 @@ void main() {
     sut.validateUser(user);
   });
   test('Should call Validation with correct url', () {
-    final formData = {"user": null, 'password': null, 'url': url};
+    final formData = {"user": null, 'password': null, CacheKeys.url.name: url};
 
     sut.validateUrl(url);
 
@@ -132,7 +133,7 @@ void main() {
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {"user": null, 'password': password, 'url': null};
+    final formData = {"user": null, 'password': password, CacheKeys.url.name: null};
 
     sut.validatePassword(password);
 

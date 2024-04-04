@@ -1,5 +1,6 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
 class LocalSaveUrl implements SaveUrl {
@@ -10,7 +11,7 @@ class LocalSaveUrl implements SaveUrl {
   @override
   Future<void> save(String url) async {
     try {
-      await cacheStorage.save(key: 'url', value: url);
+      await cacheStorage.save(key: CacheKeys.url.name, value: url);
     } catch (error) {
       throw DomainError.unexpected;
     }

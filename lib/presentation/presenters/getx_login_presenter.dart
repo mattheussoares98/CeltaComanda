@@ -1,7 +1,8 @@
-import '../../ui/helpers/helpers.dart';
-import '../../ui/pages/pages.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../infra/helpers/helperts.dart';
+import '../../ui/helpers/helpers.dart';
+import '../../ui/pages/pages.dart';
 import '../protocols/protocols.dart';
 import '../mixins/mixins.dart';
 
@@ -61,7 +62,7 @@ class GetxLoginPresenter extends GetxController
   @override
   void validateUrl(String url) {
     _url = url;
-    _urlError.value = _validateField('url');
+    _urlError.value = _validateField(CacheKeys.url.name);
     _validateForm();
   }
 
@@ -79,7 +80,7 @@ class GetxLoginPresenter extends GetxController
     final formData = {
       'user': _user,
       'password': _password,
-      'url': _url,
+      CacheKeys.url.name: _url,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {

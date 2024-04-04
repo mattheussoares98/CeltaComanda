@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/data/usecases/usecases.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
 import '../../mocks/cache_storage_spy.dart';
 
@@ -21,7 +22,7 @@ void main() {
   test('Should call SaveCacheStorage with correct values', () async {
     await sut.save(userName);
 
-    verify(() => cacheStorage.save(key: 'userName', value: userName));
+    verify(() => cacheStorage.save(key: CacheKeys.userName.name, value: userName));
   });
 
   test('Should throw UnexpectedError if SaveCacheStorage throws', () async {

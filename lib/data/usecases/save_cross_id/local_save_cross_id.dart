@@ -1,6 +1,7 @@
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
 class LocalSaveCrossId implements SaveCrossId {
@@ -13,7 +14,7 @@ class LocalSaveCrossId implements SaveCrossId {
     try {
       if (account != null) {
         await saveSecureCacheStorage.save(
-          key: 'crossId',
+          key: CacheKeys.crossId.name,
           value: account.crossId,
         );
       } else {

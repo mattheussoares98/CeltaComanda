@@ -1,5 +1,6 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
 class LocalSaveUser implements SaveUser {
@@ -10,7 +11,7 @@ class LocalSaveUser implements SaveUser {
   @override
   Future<void> save(String userName) async {
     try {
-      await cacheStorage.save(key: 'userName', value: userName);
+      await cacheStorage.save(key: CacheKeys.userName.name, value: userName);
     } catch (error) {
       throw DomainError.unexpected;
     }

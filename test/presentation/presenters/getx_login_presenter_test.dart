@@ -301,6 +301,12 @@ void main() {
     await sut.auth();
   });
 
+  test('Should emit correct events on loadData', () async {
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    
+    await sut.loadData();
+  });
+
   test("Should call LoadUser on loadData", () async {
     loadUserName.mockLoad(userName);
     loadUrl.mockLoad(url);

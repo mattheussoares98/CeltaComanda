@@ -133,10 +133,12 @@ class GetxLoginPresenter extends GetxController
 
   @override
   Future<void> loadData() async {
+    isLoading = true;
     String? userName = await loadUserName.load();
     String? url = await loadUrl.load();
 
     _user = userName;
     _url = url;
+    isLoading = false;
   }
 }

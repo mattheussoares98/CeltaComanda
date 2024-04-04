@@ -3,17 +3,15 @@ import '../../../../domain/usecases/usecases.dart';
 import '../../../../infra/helpers/helperts.dart';
 import '../../../cache/cache.dart';
 
-class LocalLoadUser implements LoadUser {
+class LocalSaveUser implements SaveUserName {
   final CacheStorage cacheStorage;
 
-  LocalLoadUser({required this.cacheStorage});
+  LocalSaveUser({required this.cacheStorage});
 
   @override
-  Future<String> load() async {
+  Future<void> save(String userName) async {
     try {
-      final url = await cacheStorage.get(CacheKeys.userName.name);
-      if (url == null) throw Error();
-      return url;
+      await cacheStorage.save(key: CacheKeys.userName.name, value: userName);
     } catch (error) {
       throw DomainError.unexpected;
     }

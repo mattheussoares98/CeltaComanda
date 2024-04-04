@@ -17,6 +17,7 @@ void main() {
   late RemoteAuthentication sut;
   late HttpClientSpy httpClient;
   late SaveUrlSpy saveUrl;
+  late SaveUserNameSpy saveUser;
   late String url;
   late AuthenticationParams params;
   late Map apiResult;
@@ -27,11 +28,13 @@ void main() {
     apiResult = ApiFactory.makeAccountJson();
     httpClient = HttpClientSpy();
     saveUrl = SaveUrlSpy();
+    saveUser = SaveUserNameSpy();
     httpClient.mockRequest(apiResult);
     sut = RemoteAuthentication(
       httpClient: httpClient,
       url: url,
       saveUrl: saveUrl,
+      saveUserName: saveUser,
     );
   });
 
@@ -97,5 +100,11 @@ void main() {
     await sut.auth(params);
 
     verify(() => saveUrl.save(url));
+  });
+
+  test('Should call SaveUser with correct values', () async {
+    await sut.auth(params);
+
+    verify(() => saveUser.save(params.user));
   });
 }

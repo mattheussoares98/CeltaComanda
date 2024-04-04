@@ -11,7 +11,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late LoadUser sut;
+  late LoadUserName sut;
   late CacheStorageSpy cacheStorage;
   late String userName;
 
@@ -19,7 +19,7 @@ void main() {
     userName = faker.person.name();
     cacheStorage = CacheStorageSpy();
     cacheStorage.mockGet(userName);
-    sut = LocalLoadUser(cacheStorage: cacheStorage);
+    sut = LocalLoadUserName(cacheStorage: cacheStorage);
   });
 
   test('Should call CacheStorage with correct value', () async {

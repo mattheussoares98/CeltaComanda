@@ -20,7 +20,7 @@ class GetxLoginPresenter extends GetxController
   final Authentication authentication;
   final SaveCrossId saveCrossId;
   final SaveUrl saveUrl;
-  final SaveUser saveUser;
+  final SaveUserName saveUser;
 
   GetxLoginPresenter({
     required this.validation,

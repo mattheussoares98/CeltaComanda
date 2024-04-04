@@ -6,4 +6,5 @@ Authentication makeRemoteAuthentication() => RemoteAuthentication(
   httpClient: makeHttpAdapter(),
   url: makeApiUrl('login'),
   saveUrl: makeLocalSaveUrl(),
+  saveUserName: makeLocalSaveUserName(),
 );

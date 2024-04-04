@@ -20,7 +20,7 @@ void main() {
   late ValidationSpy validation;
   late SaveCrossIdSpy saveCrossId;
   late SaveUrlSpy saveUrl;
-  late SaveUserSpy saveUser;
+  late SaveUserNameSpy saveUser;
   late CrossIdEntity account;
   late String user;
   late String password;
@@ -32,7 +32,7 @@ void main() {
     password = faker.internet.password();
     url = faker.internet.httpUrl();
     saveUrl = SaveUrlSpy();
-    saveUser = SaveUserSpy();
+    saveUser = SaveUserNameSpy();
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);

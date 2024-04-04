@@ -3,8 +3,8 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class SaveUserSpy extends Mock implements SaveUser {
-  SaveUserSpy() {
+class SaveUserNameSpy extends Mock implements SaveUserName {
+  SaveUserNameSpy() {
     mockSave();
   }
 

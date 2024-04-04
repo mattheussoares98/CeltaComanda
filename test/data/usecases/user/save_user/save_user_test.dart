@@ -9,14 +9,14 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late LocalSaveUser sut;
+  late LocalSaveUserName sut;
   late CacheStorageSpy cacheStorage;
   late String userName;
 
   setUp(() {
     cacheStorage = CacheStorageSpy();
     userName = faker.person.name();
-    sut = LocalSaveUser(cacheStorage: cacheStorage);
+    sut = LocalSaveUserName(cacheStorage: cacheStorage);
   });
 
   test('Should call SaveCacheStorage with correct values', () async {

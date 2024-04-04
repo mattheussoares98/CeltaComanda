@@ -8,17 +8,20 @@ class RemoteAuthentication implements Authentication {
   final HttpClient httpClient;
   final String url;
   final SaveUrl saveUrl;
+  final SaveUserName saveUserName;
 
   RemoteAuthentication({
     required this.httpClient,
     required this.url,
     required this.saveUrl,
+    required this.saveUserName,
   });
 
   @override
   Future<CrossIdEntity?> auth(AuthenticationParams params) async {
     await saveUrl.save(url);
-    
+    await saveUserName.save(params.user);
+
     final body = RemoteAuthenticationParams.fromDomain(params).toJson();
     try {
       final httpResponse =

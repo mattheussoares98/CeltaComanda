@@ -10,10 +10,10 @@ class CacheStorageSpy extends Mock implements CacheStorage {
     this.mockSave();
   }
 
-  When mockFetchCall() => when(() => this.get(any()));
-  void mockFetch(dynamic json) =>
-      this.mockFetchCall().thenAnswer((_) async => json);
-  void mockFetchError() => this.mockFetchCall().thenThrow(Exception());
+  When mockGetCall() => when(() => this.get(any()));
+  void mockGet(dynamic json) =>
+      this.mockGetCall().thenAnswer((_) async => json);
+  void mockGetError() => this.mockGetCall().thenThrow(Exception());
 
   When mockDeleteCall() => when(() => this.delete(any()));
   void mockDelete() => this.mockDeleteCall().thenAnswer((_) async => _);

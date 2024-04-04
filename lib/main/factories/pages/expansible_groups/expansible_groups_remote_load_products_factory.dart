@@ -1,4 +1,4 @@
-import '../../../../data/usecases/load_expansible_groups/remote_load_expansible_groups.dart';
+import '../../../../data/usecases/expansible_groups/expansible_groups.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../../factories/factories.dart';
 

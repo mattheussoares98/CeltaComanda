@@ -1,4 +1,4 @@
-import '../../../data/usecases/save_url/save_url.dart';
+import '../../../data/usecases/url/url.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../factories.dart';
 

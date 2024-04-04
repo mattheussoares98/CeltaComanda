@@ -7,11 +7,18 @@ import '../../models/models.dart';
 class RemoteAuthentication implements Authentication {
   final HttpClient httpClient;
   final String url;
+  final SaveUrl saveUrl;
 
-  RemoteAuthentication({required this.httpClient, required this.url});
+  RemoteAuthentication({
+    required this.httpClient,
+    required this.url,
+    required this.saveUrl,
+  });
 
   @override
   Future<CrossIdEntity?> auth(AuthenticationParams params) async {
+    await saveUrl.save(url);
+    
     final body = RemoteAuthenticationParams.fromDomain(params).toJson();
     try {
       final httpResponse =

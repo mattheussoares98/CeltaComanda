@@ -8,9 +8,9 @@ class LocalSaveUser implements SaveUser {
   LocalSaveUser({required this.cacheStorage});
 
   @override
-  Future<void> save(String user) async {
+  Future<void> save(String userName) async {
     try {
-      await cacheStorage.save(key: 'user', value: user);
+      await cacheStorage.save(key: 'userName', value: userName);
     } catch (error) {
       throw DomainError.unexpected;
     }

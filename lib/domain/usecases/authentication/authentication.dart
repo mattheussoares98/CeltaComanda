@@ -1,4 +1,4 @@
-import '../entities/entities.dart';
+import '../../entities/entities.dart';
 
 import 'package:equatable/equatable.dart';
 

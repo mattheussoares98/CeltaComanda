@@ -1,6 +1,4 @@
-export './authentication.dart';
-export './load_expansible_groups.dart';
-export "./load_cross_id.dart";
-export './load_login_data.dart';
-export './save_cross_id.dart';
-export './save_login_data.dart';
+export 'authentication/authentication.dart';
+export 'cross_id/cross_id.dart';
+export 'expansible_groups/expansible_groups.dart';
+export 'login_data/login_data.dart';

@@ -1,5 +1,5 @@
 import '../../../domain/entities/entities.dart';
-import '../../../domain/usecases/save_login_data.dart';
+import '../../../domain/usecases/login_data/save_login_data.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../infra/helpers/helperts.dart';
 

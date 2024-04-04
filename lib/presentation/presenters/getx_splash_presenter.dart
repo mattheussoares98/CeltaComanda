@@ -3,7 +3,7 @@ import '../../domain/usecases/usecases.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 import 'package:get/get.dart';
-import '../../domain/usecases/load_cross_id.dart';
+import '../../domain/usecases/cross_id/load_cross_id.dart';
 
 class GetxSplashPresenter extends GetxController
     with NavigationManager

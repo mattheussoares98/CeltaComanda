@@ -9,15 +9,12 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
-import '../../../domain/mocks/mocks.dart';
 import '../../../infra/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
 
 void main() {
   late RemoteAuthentication sut;
   late HttpClientSpy httpClient;
-  late SaveUrlSpy saveUrl;
-  late SaveUserNameSpy saveUser;
   late String url;
   late AuthenticationParams params;
   late Map apiResult;
@@ -27,14 +24,10 @@ void main() {
     url = faker.internet.httpUrl();
     apiResult = ApiFactory.makeAccountJson();
     httpClient = HttpClientSpy();
-    saveUrl = SaveUrlSpy();
-    saveUser = SaveUserNameSpy();
     httpClient.mockRequest(apiResult);
     sut = RemoteAuthentication(
       httpClient: httpClient,
       url: url,
-      saveUrl: saveUrl,
-      saveUserName: saveUser,
     );
   });
 
@@ -94,17 +87,5 @@ void main() {
     final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
-  });
-
-  test('Should call SaveUrl with correct values', () async {
-    await sut.auth(params);
-
-    verify(() => saveUrl.save(url));
-  });
-
-  test('Should call SaveUser with correct values', () async {
-    await sut.auth(params);
-
-    verify(() => saveUser.save(params.user));
   });
 }

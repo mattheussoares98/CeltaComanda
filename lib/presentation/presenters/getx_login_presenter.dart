@@ -1,6 +1,5 @@
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-import '../../infra/helpers/helperts.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../protocols/protocols.dart';
@@ -19,19 +18,11 @@ class GetxLoginPresenter extends GetxController
   final Validation validation;
   final Authentication authentication;
   final SaveCrossId saveCrossId;
-  final SaveUrl saveUrl;
-  final SaveUserName saveUserName;
-  final LoadUserName loadUserName;
-  final LoadUrl loadUrl;
 
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
     required this.saveCrossId,
-    required this.saveUrl,
-    required this.saveUserName,
-    required this.loadUserName,
-    required this.loadUrl,
   });
 
   final _userError = Rx<UIError?>(null);
@@ -52,7 +43,7 @@ class GetxLoginPresenter extends GetxController
   @override
   void validateUser(String user) {
     _user = user;
-    _userError.value = _validateField('user');
+    _userError.value = _validateField('userName');
     _validateForm();
   }
 
@@ -66,7 +57,7 @@ class GetxLoginPresenter extends GetxController
   @override
   void validateUrl(String url) {
     _url = url;
-    _urlError.value = _validateField(CacheKeys.url.name);
+    _urlError.value = _validateField('url');
     _validateForm();
   }
 
@@ -82,9 +73,9 @@ class GetxLoginPresenter extends GetxController
 
   UIError? _validateField(String field) {
     final formData = {
-      'user': _user,
+      'userName': _user,
       'password': _password,
-      CacheKeys.url.name: _url,
+      'url': _url,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {
@@ -111,8 +102,8 @@ class GetxLoginPresenter extends GetxController
     try {
       mainError = null;
       isLoading = true;
-      await saveUrl.save(_url!);
-      await saveUserName.save(_user!);
+      // await saveUrl.save(_url!);
+      // await saveUserName.save(_user!);
 
       final account = await authentication.auth(
         AuthenticationParams(
@@ -134,11 +125,11 @@ class GetxLoginPresenter extends GetxController
   @override
   Future<void> loadData() async {
     isLoading = true;
-    String? userName = await loadUserName.load();
-    String? url = await loadUrl.load();
+    // String? userName = await loadUserName.load();
+    // String? url = await loadUrl.load();
 
-    _user = userName;
-    _url = url;
+    // _user = userName;
+    // _url = url;
     isLoading = false;
   }
 }

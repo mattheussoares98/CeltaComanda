@@ -13,7 +13,7 @@ class LocalSaveUrl implements SaveLoginData {
   @override
   Future<void> save(LoginDataEntity loginData) async {
     try {
-      await cacheStorage.save(key: CacheKeys.url.name, value: loginData);
+      await cacheStorage.save(key: CacheKeys.loginData.name, value: loginData);
     } catch (error) {
       throw DomainError.unexpected;
     }

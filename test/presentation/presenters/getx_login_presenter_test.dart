@@ -1,13 +1,11 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
-import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../data/mocks/params_factory.dart';
-import '../../domain/mocks/load_user_spy.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
@@ -20,10 +18,6 @@ void main() {
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
   late SaveCrossIdSpy saveCrossId;
-  late SaveUrlSpy saveUrl;
-  late LoadUrlSpy loadUrl;
-  late SaveUserNameSpy saveUser;
-  late LoadUserNameSpy loadUserName;
   late CrossIdEntity account;
   late String userName;
   late String password;
@@ -34,10 +28,6 @@ void main() {
     userName = faker.person.name();
     password = faker.internet.password();
     url = faker.internet.httpUrl();
-    saveUrl = SaveUrlSpy();
-    saveUser = SaveUserNameSpy();
-    loadUrl = LoadUrlSpy();
-    loadUserName = LoadUserNameSpy();
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);
@@ -46,10 +36,6 @@ void main() {
       validation: validation,
       authentication: authentication,
       saveCrossId: saveCrossId,
-      saveUrl: saveUrl,
-      saveUserName: saveUser,
-      loadUrl: loadUrl,
-      loadUserName: loadUserName,
     );
   });
 
@@ -60,14 +46,15 @@ void main() {
 
   test('Should call Validation with correct user', () {
     final formData = {
-      "user": userName,
+      "userName": userName,
       'password': null,
-      CacheKeys.url.name: null
+      'url': null,
     };
 
     sut.validateUser(userName);
 
-    verify(() => validation.validate(field: "user", input: formData)).called(1);
+    verify(() => validation.validate(field: "userName", input: formData))
+        .called(1);
   });
 
   test('Should emit invalidFieldError if user is invalid', () {
@@ -103,7 +90,7 @@ void main() {
     sut.validateUser(userName);
   });
   test('Should call Validation with correct url', () {
-    final formData = {"user": null, 'password': null, CacheKeys.url.name: url};
+    final formData = {"userName": null, 'password': null, 'url': url};
 
     sut.validateUrl(url);
 
@@ -144,11 +131,7 @@ void main() {
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {
-      "user": null,
-      'password': password,
-      CacheKeys.url.name: null
-    };
+    final formData = {"userName": null, 'password': password, 'url': null};
 
     sut.validatePassword(password);
 
@@ -180,7 +163,7 @@ void main() {
 
   test('Should disable form button if any field is invalid', () {
     validation.mockValidationError(
-        field: "user", value: ValidationError.invalidField);
+        field: "userName", value: ValidationError.invalidField);
 
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
@@ -222,26 +205,6 @@ void main() {
     await sut.auth();
 
     verify(() => saveCrossId.save(account)).called(1);
-  });
-
-  test('Should call SaveUrl with correct value', () async {
-    sut.validateUser(userName);
-    sut.validatePassword(password);
-    sut.validateUrl(url);
-
-    await sut.auth();
-
-    verify(() => saveUrl.save(url)).called(1);
-  });
-
-  test('Should call SaveUser with correct value', () async {
-    sut.validateUser(userName);
-    sut.validatePassword(password);
-    sut.validateUrl(url);
-
-    await sut.auth();
-
-    verify(() => saveUser.save(userName)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {
@@ -303,16 +266,16 @@ void main() {
 
   test('Should emit correct events on loadData', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    
+
     await sut.loadData();
   });
 
-  test("Should call LoadUser on loadData", () async {
-    loadUserName.mockLoad(userName);
-    loadUrl.mockLoad(url);
-    await sut.loadData();
+  // test("Should call LoadUser on loadData", () async {
+  //   loadUserName.mockLoad(userName);
+  //   loadUrl.mockLoad(url);
+  //   await sut.loadData();
 
-    verify(() => loadUserName.load()).called(1);
-    verify(() => loadUrl.load()).called(1);
-  });
+  //   verify(() => loadUserName.load()).called(1);
+  //   verify(() => loadUrl.load()).called(1);
+  // });
 }

@@ -6,8 +6,4 @@ LoginPresenter makeGetxLoginPresenter() => GetxLoginPresenter(
   authentication: makeRemoteAuthentication(),
   validation: makeLoginValidation(),
   saveCrossId: makeLocalSaveCrossId(),
-  saveUrl: makeLocalSaveUrl(),
-  saveUserName: makeLocalSaveUserName(),
-  loadUrl: makeLocalLoadUrl(),
-  loadUserName: makeLocalLoadUserName(),
 );

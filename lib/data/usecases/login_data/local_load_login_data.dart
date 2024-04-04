@@ -13,7 +13,7 @@ class LocalLoadUrl implements LoadLoginData {
   @override
   Future<LoginDataEntity?> load() async {
     try {
-      LoginDataEntity? loginData = await cacheStorage.get(CacheKeys.url.name);
+      LoginDataEntity? loginData = await cacheStorage.get(CacheKeys.loginData.name);
       if (loginData == null) throw Error();
       return loginData;
     } catch (error) {

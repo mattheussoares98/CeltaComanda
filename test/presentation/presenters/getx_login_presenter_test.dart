@@ -7,6 +7,7 @@ import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../data/mocks/params_factory.dart';
+import '../../domain/mocks/load_user_spy.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
@@ -20,19 +21,23 @@ void main() {
   late ValidationSpy validation;
   late SaveCrossIdSpy saveCrossId;
   late SaveUrlSpy saveUrl;
+  late LoadUrlSpy loadUrl;
   late SaveUserNameSpy saveUser;
+  late LoadUserNameSpy loadUserName;
   late CrossIdEntity account;
-  late String user;
+  late String userName;
   late String password;
   late String url;
 
   setUp(() {
     account = EntityFactory.makeAccount();
-    user = faker.person.name();
+    userName = faker.person.name();
     password = faker.internet.password();
     url = faker.internet.httpUrl();
     saveUrl = SaveUrlSpy();
     saveUser = SaveUserNameSpy();
+    loadUrl = LoadUrlSpy();
+    loadUserName = LoadUserNameSpy();
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);
@@ -42,7 +47,9 @@ void main() {
       authentication: authentication,
       saveCrossId: saveCrossId,
       saveUrl: saveUrl,
-      saveUser: saveUser,
+      saveUserName: saveUser,
+      loadUrl: loadUrl,
+      loadUserName: loadUserName,
     );
   });
 
@@ -52,9 +59,13 @@ void main() {
   });
 
   test('Should call Validation with correct user', () {
-    final formData = {"user": user, 'password': null, CacheKeys.url.name: null};
+    final formData = {
+      "user": userName,
+      'password': null,
+      CacheKeys.url.name: null
+    };
 
-    sut.validateUser(user);
+    sut.validateUser(userName);
 
     verify(() => validation.validate(field: "user", input: formData)).called(1);
   });
@@ -67,8 +78,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(user);
-    sut.validateUser(user);
+    sut.validateUser(userName);
+    sut.validateUser(userName);
   });
 
   test('Should emit requiredFieldError if user is empty', () {
@@ -79,8 +90,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(user);
-    sut.validateUser(user);
+    sut.validateUser(userName);
+    sut.validateUser(userName);
   });
 
   test('Should emit null if user validation succeeds', () {
@@ -88,8 +99,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(user);
-    sut.validateUser(user);
+    sut.validateUser(userName);
+    sut.validateUser(userName);
   });
   test('Should call Validation with correct url', () {
     final formData = {"user": null, 'password': null, CacheKeys.url.name: url};
@@ -133,7 +144,11 @@ void main() {
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {"user": null, 'password': password, CacheKeys.url.name: null};
+    final formData = {
+      "user": null,
+      'password': password,
+      CacheKeys.url.name: null
+    };
 
     sut.validatePassword(password);
 
@@ -170,14 +185,14 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
   });
 
   test('Should enable form button if all fields are valid', () async {
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
 
-    sut.validateUser(user);
+    sut.validateUser(userName);
     await Future.delayed(Duration.zero);
     sut.validatePassword(password);
     await Future.delayed(Duration.zero);
@@ -186,21 +201,21 @@ void main() {
   });
 
   test('Should call Authentication with correct values', () async {
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
     await sut.auth();
 
     verify(() => authentication.auth(AuthenticationParams(
-          user: user,
+          user: userName,
           password: password,
           url: url,
         ))).called(1);
   });
 
   test('Should call SaveCrossId with correct value', () async {
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
@@ -210,7 +225,7 @@ void main() {
   });
 
   test('Should call SaveUrl with correct value', () async {
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
@@ -220,18 +235,18 @@ void main() {
   });
 
   test('Should call SaveUser with correct value', () async {
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
     await sut.auth();
 
-    verify(() => saveUser.save(user)).called(1);
+    verify(() => saveUser.save(userName)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {
     saveCrossId.mockSaveError();
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
@@ -242,7 +257,7 @@ void main() {
   });
 
   test('Should emit correct events on Authentication success', () async {
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
@@ -253,7 +268,7 @@ void main() {
   });
 
   test('Should change page on success', () async {
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
@@ -276,7 +291,7 @@ void main() {
 
   test('Should emit correct events on UnexpectedError', () async {
     authentication.mockAuthenticationError(DomainError.unexpected);
-    sut.validateUser(user);
+    sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);
 
@@ -284,5 +299,14 @@ void main() {
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.auth();
+  });
+
+  test("Should call LoadUser on loadData", () async {
+    loadUserName.mockLoad(userName);
+    loadUrl.mockLoad(url);
+    await sut.loadData();
+
+    verify(() => loadUserName.load()).called(1);
+    verify(() => loadUrl.load()).called(1);
   });
 }

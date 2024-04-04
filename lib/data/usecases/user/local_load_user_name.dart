@@ -9,9 +9,9 @@ class LocalLoadUserName implements LoadUserName {
   LocalLoadUserName({required this.cacheStorage});
 
   @override
-  Future<String> load() async {
+  Future<String?> load() async {
     try {
-      final url = await cacheStorage.get(CacheKeys.userName.name);
+      String? url = await cacheStorage.get(CacheKeys.userName.name);
       if (url == null) throw Error();
       return url;
     } catch (error) {

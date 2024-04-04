@@ -1,7 +1,0 @@
-import '../../../data/usecases/usecases.dart';
-import '../../../domain/usecases/usecases.dart';
-import '../factories.dart';
-
-SaveUserName makeLocalSaveUserName() => LocalSaveUserName(
-      cacheStorage: makeLocalStorageAdapter(),
-    );

@@ -1,3 +1,3 @@
 abstract class LoadUrl {
-  Future<String> load();
+  Future<String?> load();
 }

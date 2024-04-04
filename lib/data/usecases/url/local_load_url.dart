@@ -9,9 +9,9 @@ class LocalLoadUrl implements LoadUrl {
   LocalLoadUrl({required this.cacheStorage});
 
   @override
-  Future<String> load() async {
+  Future<String?> load() async {
     try {
-      final url = await cacheStorage.get(CacheKeys.url.name);
+      String? url = await cacheStorage.get(CacheKeys.url.name);
       if (url == null) throw Error();
       return url;
     } catch (error) {

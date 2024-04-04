@@ -1,3 +1,3 @@
 abstract class LoadUserName {
-  Future<String> load();
+  Future<String?> load();
 }

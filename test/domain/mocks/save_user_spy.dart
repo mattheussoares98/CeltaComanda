@@ -9,6 +9,6 @@ class SaveUserNameSpy extends Mock implements SaveUserName {
   }
 
   When mockSaveCall() => when(() => save(any()));
-  void mockSave() => mockSaveCall().thenAnswer((_) async => _);
+  void mockSave() => mockSaveCall().thenAnswer((_) async => Future<String?>);
   void mockSaveError() => mockSaveCall().thenThrow(DomainError.unexpected);
 }

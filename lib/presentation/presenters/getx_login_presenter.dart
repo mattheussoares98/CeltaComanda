@@ -20,14 +20,18 @@ class GetxLoginPresenter extends GetxController
   final Authentication authentication;
   final SaveCrossId saveCrossId;
   final SaveUrl saveUrl;
-  final SaveUserName saveUser;
+  final SaveUserName saveUserName;
+  final LoadUserName loadUserName;
+  final LoadUrl loadUrl;
 
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
     required this.saveCrossId,
     required this.saveUrl,
-    required this.saveUser,
+    required this.saveUserName,
+    required this.loadUserName,
+    required this.loadUrl,
   });
 
   final _userError = Rx<UIError?>(null);
@@ -108,7 +112,7 @@ class GetxLoginPresenter extends GetxController
       mainError = null;
       isLoading = true;
       await saveUrl.save(_url!);
-      await saveUser.save(_user!);
+      await saveUserName.save(_user!);
 
       final account = await authentication.auth(
         AuthenticationParams(
@@ -125,5 +129,14 @@ class GetxLoginPresenter extends GetxController
 
       isLoading = false;
     }
+  }
+
+  @override
+  Future<void> loadData() async {
+    String? userName = await loadUserName.load();
+    String? url = await loadUrl.load();
+
+    _user = userName;
+    _url = url;
   }
 }

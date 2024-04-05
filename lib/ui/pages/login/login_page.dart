@@ -7,22 +7,35 @@ import './login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget
-    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+class LoginPage extends StatefulWidget {
   final LoginPresenter presenter;
 
-  LoginPage(this.presenter, {super.key});
+  const LoginPage(this.presenter, {super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage>
+    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+  bool _isLoaded = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isLoaded) {
+      _isLoaded = true;
+      widget.presenter.loadData();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          handleLoading(context, presenter.isLoadingStream);
-          handleMainError(context, presenter.mainErrorStream);
-          handleNavigation(presenter.navigateToStream, clear: true);
-
-          presenter.loadData();
+          handleLoading(context, widget.presenter.isLoadingStream);
+          handleMainError(context, widget.presenter.mainErrorStream);
+          handleNavigation(widget.presenter.navigateToStream, clear: true);
 
           return GestureDetector(
             onTap: () => hideKeyboard(context),
@@ -35,7 +48,7 @@ class LoginPage extends StatelessWidget
                   Padding(
                     padding: const EdgeInsets.all(25),
                     child: ListenableProvider(
-                      create: (_) => presenter,
+                      create: (_) => widget.presenter,
                       child: const Form(
                         child: Column(
                           children: <Widget>[

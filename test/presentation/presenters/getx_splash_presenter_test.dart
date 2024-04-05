@@ -27,7 +27,7 @@ void main() {
 
   test('Should go to surveys page on success', () async {
     sut.navigateToStream
-        .listen(expectAsync1((page) => expect(page, '/home')));
+        .listen(expectAsync1((page) => expect(page, '/expansible_groups')));
 
     await sut.checkAccount(durationInSeconds: 0);
   });

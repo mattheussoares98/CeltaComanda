@@ -12,7 +12,7 @@ class ParamsFactory {
         url: faker.internet.httpUrl(),
       );
 
-  static SaveLoginData makeLoginData() => LocalSaveLoginData(
+  static SaveLoginData makeLoginData() => LocalLoginData(
         cacheStorage: CacheStorageSpy(),
       );
 }

@@ -11,7 +11,7 @@ import '../../mocks/mocks.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late LocalLoadLoginData sut;
+  late LocalLoginData sut;
   late CacheStorageSpy cacheStorage;
   late Map data;
   late LoginDataEntity loginData;
@@ -21,7 +21,7 @@ void main() {
     data = CacheFactory.makeLoginData();
     cacheStorage = CacheStorageSpy();
     cacheStorage.mockGet(data);
-    sut = LocalLoadLoginData(cacheStorage: cacheStorage);
+    sut = LocalLoginData(cacheStorage: cacheStorage);
   });
 
   group('load', () {

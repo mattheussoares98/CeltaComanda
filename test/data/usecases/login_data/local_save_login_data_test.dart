@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/data/usecases/login_data/login_data.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
@@ -10,7 +11,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late LocalSaveLoginData sut;
+  late LocalLoginData sut;
   late CacheStorageSpy cacheStorage;
   late LoginDataEntity loginData;
 
@@ -20,18 +21,19 @@ void main() {
       url: faker.internet.httpUrl(),
       userName: faker.person.name(),
     );
-    sut = LocalSaveLoginData(cacheStorage: cacheStorage);
+    sut = LocalLoginData(cacheStorage: cacheStorage);
   });
 
   test('Should call LocalSaveLoginData with correct values', () async {
     await sut.save(loginData);
 
     verify(() => cacheStorage.save(
-        key: CacheKeys.loginData.name, value: loginData));
+          key: CacheKeys.loginData.name,
+          value: LoginDataModel.fromEntity(loginData).toJson(),
+        ));
   });
 
-  test('Should throw UnexpectedError if LocalSaveLoginData throws',
-      () async {
+  test('Should throw UnexpectedError if LocalSaveLoginData throws', () async {
     cacheStorage.mockSaveError();
 
     final future = sut.save(loginData);

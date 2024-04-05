@@ -19,7 +19,7 @@ void main() {
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
   late CrossIdSpy crossIdSpy;
-  late LoginDataSpy loginData;
+  late LocalLoginDataSpy loginData;
   late CrossIdEntity crossIdEntity;
   late LoginDataEntity loginDataEntity;
   late String password;
@@ -30,7 +30,7 @@ void main() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     crossIdSpy = CrossIdSpy();
-    loginData = LoginDataSpy();
+    loginData = LocalLoginDataSpy();
 
     loginDataEntity = EntityFactory.makeLoginData();
     crossIdEntity = EntityFactory.makeAccount();
@@ -43,8 +43,7 @@ void main() {
       validation: validation,
       authentication: authentication,
       saveCrossId: crossIdSpy,
-      saveLoginData: loginData,
-      loadLoginData: loginData,
+      localLoginData: loginData,
     );
 
     sut.userNameController.text = faker.person.name();

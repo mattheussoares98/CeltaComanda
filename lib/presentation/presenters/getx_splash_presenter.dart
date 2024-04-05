@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
+
 import '../../domain/usecases/usecases.dart';
 
 import '../../ui/pages/pages.dart';
@@ -16,8 +18,12 @@ class GetxSplashPresenter extends GetxController
   Future<void> checkAccount({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      await loadCrossId.load();
-      navigateTo = '/home';
+      CrossIdEntity? crossIdEntity = await loadCrossId.load();
+      if (crossIdEntity != null) {
+        navigateTo = '/expansible_groups';
+      } else {
+        navigateTo = '/login';
+      }
     } catch (error) {
       navigateTo = '/login';
     }

@@ -10,11 +10,13 @@ class LocalLoadCrossId implements LoadCrossId {
   LocalLoadCrossId({required this.fetchSecureCacheStorage});
 
   @override
-  Future<CrossIdEntity> load() async {
+  Future<CrossIdEntity?> load() async {
     try {
-      final crossId =
+      String? crossId =
           await fetchSecureCacheStorage.fetch(CacheKeys.crossId.name);
-      if (crossId == null) throw Error();
+
+      if (crossId == null) throw DomainError.unexpected;
+      
       return CrossIdEntity(crossId: crossId);
     } catch (error) {
       throw DomainError.unexpected;

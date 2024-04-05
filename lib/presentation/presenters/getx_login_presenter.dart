@@ -1,3 +1,4 @@
+import '../../../data/usecases/login_data/login_data.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -20,15 +21,13 @@ class GetxLoginPresenter extends GetxController
   final Validation validation;
   final Authentication authentication;
   final SaveCrossId saveCrossId;
-  final SaveLoginData saveLoginData;
-  final LoadLoginData loadLoginData;
+  final LocalLoginData localLoginData;
 
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
     required this.saveCrossId,
-    required this.saveLoginData,
-    required this.loadLoginData,
+    required this.localLoginData,
   });
 
   final _userError = Rx<UIError?>(null);
@@ -107,6 +106,11 @@ class GetxLoginPresenter extends GetxController
       mainError = null;
       isLoading = true;
 
+      await localLoginData.save(LoginDataEntity(
+        url: urlController.text,
+        userName: userNameController.text,
+      ));
+
       final account = await authentication.auth(
         AuthenticationParams(
           user: userNameController.text,
@@ -116,10 +120,7 @@ class GetxLoginPresenter extends GetxController
       );
 
       await saveCrossId.save(account);
-      await saveLoginData.save(LoginDataEntity(
-        url: urlController.text,
-        userName: userNameController.text,
-      ));
+
       navigateTo = '/home';
     } on DomainError {
       mainError = UIError.unexpected;
@@ -132,7 +133,7 @@ class GetxLoginPresenter extends GetxController
   Future<void> loadData() async {
     isLoading = true;
 
-    final loginData = await loadLoginData.load();
+    final loginData = await localLoginData.load();
 
     if (loginData != null) {
       userNameController.text = loginData.userName;

@@ -1,4 +1,4 @@
-import 'package:clean_celta_mobile/data/models/local_login_data_model.dart';
+import 'package:clean_celta_mobile/data/models/login_data_model.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 
 import '../../../domain/helpers/helpers.dart';
@@ -6,18 +6,21 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalLoadLoginData
+class LocalLoginData
     implements LoadLoginData, SaveLoginData, ValidateLoginData {
   final CacheStorage cacheStorage;
 
-  LocalLoadLoginData({required this.cacheStorage});
+  LocalLoginData({required this.cacheStorage});
 
   @override
   Future<LoginDataEntity?> load() async {
     try {
       final json = await cacheStorage.get(CacheKeys.loginData.name);
-      if (json == null) throw Error();
-      return _mapToEntity(json);
+      if (json != null) {
+        return _mapToEntity(json);
+      } else {
+        return null;
+      }
     } catch (error) {
       throw DomainError.unexpected;
     }
@@ -43,9 +46,9 @@ class LocalLoadLoginData
     }
   }
 
-  LoginDataEntity _mapToEntity(dynamic json) =>
-      LocalLoginDataModel.fromJson(json).toEntity();
+  LoginDataEntity? _mapToEntity(dynamic json) =>
+      LoginDataModel.fromJson(json).toEntity();
 
   Map _mapToJson(LoginDataEntity entity) =>
-      LocalLoginDataModel.fromEntity(entity).toJson();
+      LoginDataModel.fromEntity(entity).toJson();
 }

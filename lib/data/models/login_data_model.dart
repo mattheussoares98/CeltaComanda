@@ -1,26 +1,25 @@
 import '../../domain/entities/entities.dart';
 
-class LocalLoginDataModel {
+class LoginDataModel {
   final String url;
   final String userName;
 
-  LocalLoginDataModel({
+  LoginDataModel({
     required this.url,
     required this.userName,
   });
 
-  factory LocalLoginDataModel.fromJson(Map json) {
+  factory LoginDataModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll(['url', 'userName'])) {
       throw Exception();
     }
-    return LocalLoginDataModel(
+    return LoginDataModel(
       url: json['url'],
       userName: json['userName'],
     );
   }
 
-  factory LocalLoginDataModel.fromEntity(LoginDataEntity entity) =>
-      LocalLoginDataModel(
+  factory LoginDataModel.fromEntity(LoginDataEntity entity) => LoginDataModel(
         url: entity.url,
         userName: entity.userName,
       );

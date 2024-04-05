@@ -234,4 +234,11 @@ void main() {
     expect(presenter.urlFocus.hasFocus, true);
     expect(presenter.passwordFocusNode.hasFocus, false);
   });
+
+  testWidgets('Should call LoadCrossId on page load',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    verify(() => presenter.loadData()).called(1);
+  });
 }

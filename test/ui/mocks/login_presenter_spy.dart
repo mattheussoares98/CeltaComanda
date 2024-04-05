@@ -29,6 +29,7 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
       (_) async => FocusScope.of(Get.context!).requestFocus(this.urlFocus),
     );
     when(() => this.auth()).thenAnswer((_) async => _);
+    when(() => this.loadData()).thenAnswer((_) async => _);
     when(() => this.userErrorStream)
         .thenAnswer((_) => userErrorController.stream);
     when(() => this.passwordErrorStream)

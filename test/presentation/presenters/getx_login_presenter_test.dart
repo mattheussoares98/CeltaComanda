@@ -277,18 +277,6 @@ void main() {
     await sut.auth();
   });
 
-  // test('Should emit correct events on InvalidCredentialsError', () async {
-  //   authentication.mockAuthenticationError(DomainError.invalidCredentials);
-  //   sut.validateUser(user);
-  //   sut.validatePassword(password);
-
-  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //   expectLater(
-  //       sut.mainErrorStream, emitsInOrder([null, UIError.invalidCredentials]));
-
-  //   await sut.auth();
-  // });
-
   test('Should emit correct events on UnexpectedError', () async {
     authentication.mockAuthenticationError(DomainError.unexpected);
     sut.validateUser(loginDataEntity.userName);

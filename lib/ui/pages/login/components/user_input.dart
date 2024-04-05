@@ -22,7 +22,7 @@ class UserInput extends StatelessWidget {
           ),
           onFieldSubmitted: presenter.onSubmitUser,
           onChanged: presenter.validateUser,
-          controller: presenter.userController,
+          controller: presenter.userNameController,
         );
       },
     );

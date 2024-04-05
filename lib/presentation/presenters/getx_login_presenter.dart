@@ -46,7 +46,7 @@ class GetxLoginPresenter extends GetxController
 
   @override
   void validateUser(String user) {
-    userController.text = user;
+    userNameController.text = user;
     _userError.value = _validateField('userName');
     _validateForm();
   }
@@ -77,7 +77,7 @@ class GetxLoginPresenter extends GetxController
 
   UIError? _validateField(String field) {
     final formData = {
-      'userName': userController.text,
+      'userName': userNameController.text,
       'password': _password,
       'url': urlController.text,
     };
@@ -96,7 +96,7 @@ class GetxLoginPresenter extends GetxController
     isFormValid = _userError.value == null &&
         _passwordError.value == null &&
         _urlError.value == null &&
-        userController.text.isNotEmpty == true &&
+        userNameController.text.isNotEmpty == true &&
         _password?.isNotEmpty == true &&
         urlController.text.isNotEmpty == true;
   }
@@ -109,7 +109,7 @@ class GetxLoginPresenter extends GetxController
 
       final account = await authentication.auth(
         AuthenticationParams(
-          user: userController.text,
+          user: userNameController.text,
           password: _password!,
           url: urlController.text,
         ),
@@ -118,7 +118,7 @@ class GetxLoginPresenter extends GetxController
       await saveCrossId.save(account);
       await saveLoginData.save(LoginDataEntity(
         url: urlController.text,
-        userName: userController.text,
+        userName: userNameController.text,
       ));
       navigateTo = '/home';
     } on DomainError {
@@ -135,7 +135,7 @@ class GetxLoginPresenter extends GetxController
     final loginData = await loadLoginData.load();
 
     if (loginData != null) {
-      userController.text = loginData.userName;
+      userNameController.text = loginData.userName;
       urlController.text = loginData.url;
     }
     isLoading = false;

@@ -47,7 +47,7 @@ void main() {
       loadLoginData: loginData,
     );
 
-    sut.userController.text = faker.person.name();
+    sut.userNameController.text = faker.person.name();
     sut.urlController.text = faker.internet.httpUrl();
   });
 
@@ -59,12 +59,12 @@ void main() {
 
   test('Should call Validation with correct user', () {
     final formData = {
-      "userName": sut.userController.text,
+      "userName": sut.userNameController.text,
       'password': null,
       'url': sut.urlController.text,
     };
 
-    sut.validateUser(sut.userController.text);
+    sut.validateUser(sut.userNameController.text);
 
     verify(() => validation.validate(field: "userName", input: formData))
         .called(1);
@@ -104,7 +104,7 @@ void main() {
   });
   test('Should call Validation with correct url', () {
     final formData = {
-      "userName": sut.userController.text,
+      "userName": sut.userNameController.text,
       'password': null,
       'url': sut.urlController.text
     };
@@ -149,7 +149,7 @@ void main() {
 
   test('Should call Validation with correct password', () {
     final formData = {
-      "userName": sut.userController.text,
+      "userName": sut.userNameController.text,
       'password': password,
       'url': sut.urlController.text,
     };
@@ -307,5 +307,11 @@ void main() {
     await sut.loadData();
 
     verify(() => loginData.load()).called(1);
+  });
+  test("Should change controllers with cacheLoginData", () async {
+    await sut.loadData();
+
+    expect(loginDataEntity.url, sut.urlController.text);
+    expect(loginDataEntity.userName, sut.userNameController.text);
   });
 }

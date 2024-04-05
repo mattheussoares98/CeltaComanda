@@ -13,7 +13,7 @@ abstract class LoginPresenter implements Listenable {
 
   FocusNode get passwordFocusNode;
   FocusNode get urlFocusNode;
-  TextEditingController get userController;
+  TextEditingController get userNameController;
   TextEditingController get urlController;
 
   void validateUser(String user);

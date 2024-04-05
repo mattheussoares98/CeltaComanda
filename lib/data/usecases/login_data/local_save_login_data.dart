@@ -5,10 +5,10 @@ import '../../../infra/helpers/helperts.dart';
 
 import '../../cache/cache.dart';
 
-class LocalSaveUrl implements SaveLoginData {
+class LocalSaveLoginData implements SaveLoginData {
   final CacheStorage cacheStorage;
 
-  LocalSaveUrl({required this.cacheStorage});
+  LocalSaveLoginData({required this.cacheStorage});
 
   @override
   Future<void> save(LoginDataEntity loginData) async {

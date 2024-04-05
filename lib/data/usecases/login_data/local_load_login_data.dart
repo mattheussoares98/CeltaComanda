@@ -5,10 +5,10 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalLoadUrl implements LoadLoginData {
+class LocalLoadLoginData implements LoadLoginData {
   final CacheStorage cacheStorage;
 
-  LocalLoadUrl({required this.cacheStorage});
+  LocalLoadLoginData({required this.cacheStorage});
 
   @override
   Future<LoginDataEntity?> load() async {

@@ -17,7 +17,7 @@ void main() {
   late GetxLoginPresenter sut;
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
-  late SaveCrossIdSpy saveCrossId;
+  late CrossIdSpy crossIdSpy;
   late CrossIdEntity account;
   late String userName;
   late String password;
@@ -31,11 +31,11 @@ void main() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     authentication.mockAuthentication(account);
-    saveCrossId = SaveCrossIdSpy();
+    crossIdSpy = CrossIdSpy();
     sut = GetxLoginPresenter(
       validation: validation,
       authentication: authentication,
-      saveCrossId: saveCrossId,
+      saveCrossId: crossIdSpy,
     );
   });
 
@@ -204,11 +204,11 @@ void main() {
 
     await sut.auth();
 
-    verify(() => saveCrossId.save(account)).called(1);
+    verify(() => crossIdSpy.save(account)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {
-    saveCrossId.mockSaveError();
+    crossIdSpy.mockSaveError();
     sut.validateUser(userName);
     sut.validatePassword(password);
     sut.validateUrl(url);

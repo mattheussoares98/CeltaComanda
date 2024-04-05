@@ -7,12 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late GetxSplashPresenter sut;
-  late LoadCrossIdSpy loadCrossId;
+  late CrossIdSpy crossIdSpy;
 
   setUp(() {
-    loadCrossId = LoadCrossIdSpy();
-    loadCrossId.mockLoad(account: EntityFactory.makeAccount());
-    sut = GetxSplashPresenter(loadCrossId: loadCrossId);
+    crossIdSpy = CrossIdSpy();
+    crossIdSpy.mockLoad(account: EntityFactory.makeAccount());
+    sut = GetxSplashPresenter(loadCrossId: crossIdSpy);
   });
 
   setUpAll(() {
@@ -22,7 +22,7 @@ void main() {
   test('Should call LoadCrossId', () async {
     await sut.checkAccount(durationInSeconds: 0);
 
-    verify(() => loadCrossId.load()).called(1);
+    verify(() => crossIdSpy.load()).called(1);
   });
 
   test('Should go to surveys page on success', () async {
@@ -33,7 +33,7 @@ void main() {
   });
 
   test('Should go to login page on error', () async {
-    loadCrossId.mockLoadError();
+    crossIdSpy.mockLoadError();
 
     sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/login')));
 

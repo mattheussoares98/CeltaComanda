@@ -37,6 +37,7 @@ void main() {
     authentication.mockAuthentication(crossIdEntity);
 
     loginData.mockSave(loginDataEntity);
+    loginData.mockLoad(loginDataEntity);
 
     sut = GetxLoginPresenter(
       validation: validation,
@@ -45,6 +46,9 @@ void main() {
       saveLoginData: loginData,
       loadLoginData: loginData,
     );
+
+    sut.userController.text = faker.person.name();
+    sut.urlController.text = faker.internet.httpUrl();
   });
 
   setUpAll(() {
@@ -55,12 +59,12 @@ void main() {
 
   test('Should call Validation with correct user', () {
     final formData = {
-      "userName": loginDataEntity.userName,
+      "userName": sut.userController.text,
       'password': null,
-      'url': null,
+      'url': sut.urlController.text,
     };
 
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userController.text);
 
     verify(() => validation.validate(field: "userName", input: formData))
         .called(1);
@@ -100,12 +104,12 @@ void main() {
   });
   test('Should call Validation with correct url', () {
     final formData = {
-      "userName": null,
+      "userName": sut.userController.text,
       'password': null,
-      'url': loginDataEntity.url
+      'url': sut.urlController.text
     };
 
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     verify(() => validation.validate(field: "url", input: formData)).called(1);
   });
@@ -118,8 +122,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUrl(loginDataEntity.url);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
+    sut.validateUrl(sut.urlController.text);
   });
 
   test('Should emit requiredFieldError if url is empty', () {
@@ -130,8 +134,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUrl(loginDataEntity.url);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
+    sut.validateUrl(sut.urlController.text);
   });
 
   test('Should emit null if url validation succeeds', () {
@@ -139,12 +143,16 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUrl(loginDataEntity.url);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
+    sut.validateUrl(sut.urlController.text);
   });
 
   test('Should call Validation with correct password', () {
-    final formData = {"userName": null, 'password': password, 'url': null};
+    final formData = {
+      "userName": sut.userController.text,
+      'password': password,
+      'url': sut.urlController.text,
+    };
 
     sut.validatePassword(password);
 
@@ -168,7 +176,7 @@ void main() {
     sut.passwordErrorStream
         .listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream
-        .listen(expectAsync1((isValid) => expect(isValid, false)));
+        .listen(expectAsync1((isValid) => expect(isValid, true)));
 
     sut.validatePassword(password);
     sut.validatePassword(password);
@@ -192,28 +200,28 @@ void main() {
     await Future.delayed(Duration.zero);
     sut.validatePassword(password);
     await Future.delayed(Duration.zero);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
     await Future.delayed(Duration.zero);
   });
 
   test('Should call Authentication with correct values', () async {
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     await sut.auth();
 
     verify(() => authentication.auth(AuthenticationParams(
           user: loginDataEntity.userName,
           password: password,
-          url: loginDataEntity.url,
+          url: sut.urlController.text,
         ))).called(1);
   });
 
   test('Should call SaveCrossId with correct value', () async {
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     await sut.auth();
 
@@ -224,7 +232,7 @@ void main() {
     crossIdSpy.mockSaveError();
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -235,12 +243,12 @@ void main() {
   test('Should call SaveLoginData with correct value', () async {
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     await sut.auth();
 
     verify(() => loginData.save(LoginDataEntity(
-        url: loginDataEntity.url,
+        url: sut.urlController.text,
         userName: loginDataEntity.userName))).called(1);
   });
 
@@ -248,7 +256,7 @@ void main() {
     loginData.mockSaveError();
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -259,7 +267,7 @@ void main() {
   test('Should emit correct events on Authentication success', () async {
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
@@ -270,7 +278,7 @@ void main() {
   test('Should change page on success', () async {
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/home')));
 
@@ -281,7 +289,7 @@ void main() {
     authentication.mockAuthenticationError(DomainError.unexpected);
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
-    sut.validateUrl(loginDataEntity.url);
+    sut.validateUrl(sut.urlController.text);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -296,7 +304,6 @@ void main() {
   });
 
   test("Should call LoadUser on loadData", () async {
-    loginData.mockLoad(loginDataEntity: loginDataEntity);
     await sut.loadData();
 
     verify(() => loginData.load()).called(1);

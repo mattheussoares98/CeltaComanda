@@ -14,7 +14,8 @@ class GetxLoginPresenter extends GetxController
         NavigationManager,
         FormManager,
         UIErrorManager,
-        FocusNodeManager
+        FocusNodeManager,
+        TextControllerManager
     implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
@@ -34,9 +35,7 @@ class GetxLoginPresenter extends GetxController
   final _passwordError = Rx<UIError?>(null);
   final _urlError = Rx<UIError?>(null);
 
-  String? _user;
   String? _password;
-  String? _url;
 
   @override
   Stream<UIError?> get userErrorStream => _userError.stream;
@@ -47,7 +46,7 @@ class GetxLoginPresenter extends GetxController
 
   @override
   void validateUser(String user) {
-    _user = user;
+    userController.text = user;
     _userError.value = _validateField('userName');
     _validateForm();
   }
@@ -61,7 +60,7 @@ class GetxLoginPresenter extends GetxController
 
   @override
   void validateUrl(String url) {
-    _url = url;
+    urlController.text = url;
     _urlError.value = _validateField('url');
     _validateForm();
   }
@@ -78,9 +77,9 @@ class GetxLoginPresenter extends GetxController
 
   UIError? _validateField(String field) {
     final formData = {
-      'userName': _user,
+      'userName': userController.text,
       'password': _password,
-      'url': _url,
+      'url': urlController.text,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {
@@ -97,9 +96,9 @@ class GetxLoginPresenter extends GetxController
     isFormValid = _userError.value == null &&
         _passwordError.value == null &&
         _urlError.value == null &&
-        _user?.isNotEmpty == true &&
+        userController.text.isNotEmpty == true &&
         _password?.isNotEmpty == true &&
-        _url?.isNotEmpty == true;
+        urlController.text.isNotEmpty == true;
   }
 
   @override
@@ -110,14 +109,17 @@ class GetxLoginPresenter extends GetxController
 
       final account = await authentication.auth(
         AuthenticationParams(
-          user: _user!,
+          user: userController.text,
           password: _password!,
-          url: _url!,
+          url: urlController.text,
         ),
       );
 
       await saveCrossId.save(account);
-      await saveLoginData.save(LoginDataEntity(url: _url!, userName: _user!));
+      await saveLoginData.save(LoginDataEntity(
+        url: urlController.text,
+        userName: userController.text,
+      ));
       navigateTo = '/home';
     } on DomainError {
       mainError = UIError.unexpected;
@@ -131,12 +133,10 @@ class GetxLoginPresenter extends GetxController
     isLoading = true;
 
     final loginData = await loadLoginData.load();
-    // String? userName = await loadUserName.load();
-    // String? url = await loadUrl.load();
 
     if (loginData != null) {
-      _user = loginData.userName;
-      _url = loginData.url;
+      userController.text = loginData.userName;
+      urlController.text = loginData.url;
     }
     isLoading = false;
   }

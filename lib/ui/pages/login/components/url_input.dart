@@ -4,8 +4,8 @@ import '../login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UrlCcsInput extends StatelessWidget {
-  const UrlCcsInput({super.key});
+class UrlInput extends StatelessWidget {
+  const UrlInput({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class UrlCcsInput extends StatelessWidget {
             ),
             focusNode: presenter.urlFocusNode,
             onChanged: presenter.validateUrl,
+            controller: presenter.urlController,
           );
         });
   }

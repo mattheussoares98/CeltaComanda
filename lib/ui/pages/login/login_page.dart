@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget
                             SizedBox(height: 10),
                             PasswordInput(),
                             SizedBox(height: 10),
-                            UrlCcsInput(),
+                            UrlInput(),
                             SizedBox(height: 20),
                             LoginButton(),
                           ],

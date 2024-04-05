@@ -1,20 +1,22 @@
+// ignore_for_file: unnecessary_this
+
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 
 import 'package:mocktail/mocktail.dart';
 
 class ValidationSpy extends Mock implements Validation {
   ValidationSpy() {
-    mockValidation();
+    this.mockValidation();
   }
 
   When mockValidationCall(String? field) => when(
-        () => validate(
+        () => this.validate(
           field: field ?? any(named: 'field'),
           input: any(named: 'input'),
         ),
       );
   void mockValidation({String? field}) =>
-      mockValidationCall(field).thenReturn(null);
+      this.mockValidationCall(field).thenReturn(null);
   void mockValidationError({String? field, required ValidationError value}) =>
-      mockValidationCall(field).thenReturn(value);
+      this.mockValidationCall(field).thenReturn(value);
 }

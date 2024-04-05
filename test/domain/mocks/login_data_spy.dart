@@ -12,7 +12,7 @@ class LoginDataSpy extends Mock implements SaveLoginData, LoadLoginData {
   void mockSaveError() => this.mockSaveCall().thenThrow(DomainError.unexpected);
 
   When mockLoadCall() => when(() => load());
-  void mockLoad({required LoginDataEntity loginDataEntity}) =>
+  void mockLoad(LoginDataEntity loginDataEntity) =>
       mockLoadCall().thenAnswer((_) async => loginDataEntity);
   void mockLoadError() => mockLoadCall().thenThrow(Exception());
 }

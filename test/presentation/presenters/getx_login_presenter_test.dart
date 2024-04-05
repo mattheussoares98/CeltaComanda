@@ -19,7 +19,7 @@ void main() {
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
   late CrossIdSpy crossIdSpy;
-  late SaveLoginDataSpy saveLoginData;
+  late LoginDataSpy loginData;
   late CrossIdEntity crossIdEntity;
   late LoginDataEntity loginDataEntity;
   late String password;
@@ -30,19 +30,20 @@ void main() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     crossIdSpy = CrossIdSpy();
-    saveLoginData = SaveLoginDataSpy();
+    loginData = LoginDataSpy();
 
     loginDataEntity = EntityFactory.makeLoginData();
     crossIdEntity = EntityFactory.makeAccount();
     authentication.mockAuthentication(crossIdEntity);
 
-    saveLoginData.mockSave(loginDataEntity);
+    loginData.mockSave(loginDataEntity);
 
     sut = GetxLoginPresenter(
       validation: validation,
       authentication: authentication,
       saveCrossId: crossIdSpy,
-      saveLoginData: saveLoginData,
+      saveLoginData: loginData,
+      loadLoginData: loginData,
     );
   });
 
@@ -238,13 +239,13 @@ void main() {
 
     await sut.auth();
 
-    verify(() => saveLoginData.save(LoginDataEntity(
+    verify(() => loginData.save(LoginDataEntity(
         url: loginDataEntity.url,
         userName: loginDataEntity.userName))).called(1);
   });
 
   test('Should emit UnexpectedError if SaveLoginData fails', () async {
-    saveLoginData.mockSaveError();
+    loginData.mockSaveError();
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
     sut.validateUrl(loginDataEntity.url);
@@ -306,12 +307,10 @@ void main() {
     await sut.loadData();
   });
 
-  // test("Should call LoadUser on loadData", () async {
-  //   loadUserName.mockLoad(userName);
-  //   loadUrl.mockLoad(url);
-  //   await sut.loadData();
+  test("Should call LoadUser on loadData", () async {
+    loginData.mockLoad(loginDataEntity: loginDataEntity);
+    await sut.loadData();
 
-  //   verify(() => loadUserName.load()).called(1);
-  //   verify(() => loadUrl.load()).called(1);
-  // });
+    verify(() => loginData.load()).called(1);
+  });
 }

@@ -10,5 +10,5 @@ class LoginDataEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [url, userName];
+  List get props => [url, userName];
 }

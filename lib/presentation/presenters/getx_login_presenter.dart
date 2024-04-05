@@ -1,3 +1,4 @@
+import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
@@ -18,11 +19,13 @@ class GetxLoginPresenter extends GetxController
   final Validation validation;
   final Authentication authentication;
   final SaveCrossId saveCrossId;
+  final SaveLoginData saveLoginData;
 
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
     required this.saveCrossId,
+    required this.saveLoginData,
   });
 
   final _userError = Rx<UIError?>(null);
@@ -102,8 +105,6 @@ class GetxLoginPresenter extends GetxController
     try {
       mainError = null;
       isLoading = true;
-      // await saveUrl.save(_url!);
-      // await saveUserName.save(_user!);
 
       final account = await authentication.auth(
         AuthenticationParams(
@@ -114,6 +115,7 @@ class GetxLoginPresenter extends GetxController
       );
 
       await saveCrossId.save(account);
+      await saveLoginData.save(LoginDataEntity(url: _url!, userName: _user!));
       navigateTo = '/home';
     } on DomainError {
       mainError = UIError.unexpected;

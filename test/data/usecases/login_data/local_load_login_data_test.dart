@@ -12,14 +12,14 @@ import 'package:mocktail/mocktail.dart';
 
 void main() {
   late LocalLoginData sut;
-  late CacheStorageSpy cacheStorage;
+  late HiveStorageSpy cacheStorage;
   late Map data;
   late LoginDataEntity loginData;
 
   setUp(() {
     loginData = EntityFactory.makeLoginData();
     data = CacheFactory.makeLoginData();
-    cacheStorage = CacheStorageSpy();
+    cacheStorage = HiveStorageSpy();
     cacheStorage.mockGet(data);
     sut = LocalLoginData(cacheStorage: cacheStorage);
   });
@@ -114,8 +114,7 @@ void main() {
 
       await sut.save(loginData);
 
-      verify(() => cacheStorage.save(key: CacheKeys.loginData.name, value: map))
-          .called(1);
+      verify(() => cacheStorage.put(CacheKeys.loginData.name, map)).called(1);
     });
 
     test('Should throw UnexpectedError if save throws', () async {

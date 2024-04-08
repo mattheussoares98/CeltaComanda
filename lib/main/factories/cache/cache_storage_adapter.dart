@@ -1,6 +1,7 @@
-import 'package:localstorage/localstorage.dart';
+import 'package:hive/hive.dart';
 
+import '../../../infra/helpers/helperts.dart';
 import '../../../infra/cache/cache.dart';
 
-LocalStorageAdapter makeLocalStorageAdapter() =>
-    LocalStorageAdapter(localStorage: LocalStorage("celta"));
+HiveAdapter makeLocalStorageAdapter() =>
+    HiveAdapter(box: Hive.box(CacheKeys.hiveBoxName.name));

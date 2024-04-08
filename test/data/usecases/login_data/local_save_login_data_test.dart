@@ -12,11 +12,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late LocalLoginData sut;
-  late CacheStorageSpy cacheStorage;
+  late HiveStorageSpy cacheStorage;
   late LoginDataEntity loginData;
 
   setUp(() {
-    cacheStorage = CacheStorageSpy();
+    cacheStorage = HiveStorageSpy();
     loginData = LoginDataEntity(
       url: faker.internet.httpUrl(),
       userName: faker.person.name(),
@@ -27,9 +27,9 @@ void main() {
   test('Should call LocalSaveLoginData with correct values', () async {
     await sut.save(loginData);
 
-    verify(() => cacheStorage.save(
-          key: CacheKeys.loginData.name,
-          value: LoginDataModel.fromEntity(loginData).toJson(),
+    verify(() => cacheStorage.put(
+          CacheKeys.loginData.name,
+          LoginDataModel.fromEntity(loginData).toJson(),
         ));
   });
 

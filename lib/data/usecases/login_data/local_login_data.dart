@@ -8,14 +8,16 @@ import '../../cache/cache.dart';
 
 class LocalLoginData
     implements LoadLoginData, SaveLoginData, ValidateLoginData {
-  final CacheStorage cacheStorage;
+  final HiveStorage cacheStorage;
 
   LocalLoginData({required this.cacheStorage});
 
   @override
   Future<LoginDataEntity?> load() async {
     try {
-      final json = await cacheStorage.get(CacheKeys.loginData.name);
+      final json = await cacheStorage.get(
+        CacheKeys.loginData.name,
+      );
       if (json != null) {
         return _mapToEntity(json);
       } else {
@@ -30,7 +32,10 @@ class LocalLoginData
   Future<void> save(LoginDataEntity entity) async {
     try {
       final json = _mapToJson(entity);
-      await cacheStorage.save(key: CacheKeys.loginData.name, value: json);
+      await cacheStorage.put(
+        CacheKeys.loginData.name,
+        json,
+      );
     } catch (error) {
       throw DomainError.unexpected;
     }
@@ -39,10 +44,14 @@ class LocalLoginData
   @override
   Future<void> validate() async {
     try {
-      final data = await cacheStorage.get(CacheKeys.loginData.name);
+      final data = await cacheStorage.get(
+        CacheKeys.loginData.name,
+      );
       _mapToEntity(data);
     } catch (error) {
-      await cacheStorage.delete(CacheKeys.loginData.name);
+      await cacheStorage.delete(
+        CacheKeys.loginData.name,
+      );
     }
   }
 

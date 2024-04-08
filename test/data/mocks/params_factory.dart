@@ -3,7 +3,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:faker/faker.dart';
 
-import 'cache_storage_spy.dart';
+import 'hive_storage_spy.dart';
 
 class ParamsFactory {
   static AuthenticationParams makeAuthentication() => AuthenticationParams(
@@ -13,6 +13,6 @@ class ParamsFactory {
       );
 
   static SaveLoginData makeLoginData() => LocalLoginData(
-        cacheStorage: CacheStorageSpy(),
+        cacheStorage: HiveStorageSpy(),
       );
 }

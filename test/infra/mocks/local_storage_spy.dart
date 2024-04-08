@@ -1,21 +1,25 @@
-import 'package:localstorage/localstorage.dart';
+// ignore_for_file: unnecessary_this
+
+import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
 
-class LocalStorageSpy extends Mock implements LocalStorage {
-  LocalStorageSpy() {
-    mockDelete();
-    mockSave();
-  }
+class HiveSpy extends Mock implements Box<dynamic>, HiveInterface {
+  When mockDeleteCall() => when(() => this.delete(any()));
+  void mockDelete(String key) => this.mockDeleteCall().thenAnswer((_) async => _);
+  void mockDeleteError() => when(() => this.mockDeleteCall().thenThrow(Exception()));
 
-  When mockDeleteCall() => when(() => deleteItem(any()));
-  void mockDelete() => mockDeleteCall().thenAnswer((_) async => _);
-  void mockDeleteError() => when(() => mockDeleteCall().thenThrow(Exception()));
+  When mockInitCall() => when(() => this.init(any()));
+  void mockInit(String name) => this.mockInitCall().thenAnswer((_) async => _);
 
-  When mockSaveCall() => when(() => setItem(any(), any()));
-  void mockSave() => mockSaveCall().thenAnswer((_) async => _);
-  void mockSaveError() => when(() => mockSaveCall().thenThrow(Exception()));
+  When mockOpenBoxCall() => when(() => this.openBox(any()));
+  void mockOpenBox() => this.mockOpenBoxCall().thenAnswer((_) async => _);
 
-  When mockGetCall() => when(() => getItem(any()));
-  void mockGet(dynamic data) => mockGetCall().thenAnswer((_) async => data);
-  void mockGetError() => when(() => mockGetCall().thenThrow(Exception()));
+  When mockPutCall() => when(() => this.put(any(), any()));
+  void mockPut(String key, String value) =>
+      this.mockPutCall().thenAnswer((_) async => _);
+  void mockPutError() => when(() => this.mockPutCall().thenThrow(Exception()));
+
+  When mockGetCall() => when(() => this.get(any()));
+  void mockGet(dynamic data) => this.mockGetCall().thenAnswer((_) async => data);
+  void mockGetError() => when(() => this.mockGetCall().thenThrow(Exception()));
 }

@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:clean_celta_mobile/data/cache/cache.dart';
 import 'package:clean_celta_mobile/infra/cache/cache.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../mocks/mocks.dart';
@@ -14,51 +12,43 @@ import 'package:flutter_test/flutter_test.dart';
 
 class MockHiveInterface extends Mock implements HiveInterface {}
 
-class MockHiveBox extends Mock implements Box {}
+// class MockHiveBox extends Mock implements Box {}
 
 void main() {
   late HiveAdapter sut;
   late HiveSpy hive;
-  late Box<dynamic> box;
-  late String boxKey;
-  late dynamic value;
-  late String result;
 
-  late MockHiveInterface mockHiveInterface;
-  late MockHiveBox mockHiveBox;
-  late HiveStorage hiveMovieSearchRepo;
-  setUp(() {
-    mockHiveInterface = MockHiveInterface();
-    mockHiveBox = MockHiveBox();
-    hiveMovieSearchRepo = HiveAdapter(box: mockHiveBox);
-  });
+  late Box<dynamic> box;
+  late dynamic value;
+  // late String result;
+
+  late BoxSpy mockHiveBox;
 
   setUp(() async {
-    boxKey = faker.randomGenerator.string(5);
-    result = faker.randomGenerator.string(50);
+    hive = HiveSpy();
+    mockHiveBox = BoxSpy();
+    // result = faker.randomGenerator.string(50);
     value = faker.randomGenerator.string(50);
 
-    when(() => mockHiveInterface.openBox(any()))
-        .thenAnswer((_) async => mockHiveBox);
-
+    hive.mockOpenBox(mockHiveBox);
     var path = Directory.current.path;
-    mockHiveInterface.init(path);
-
-    // hive.mockOpenBox();
-    box = await mockHiveInterface.openBox(path);
-
+    hive.init(path);
+    box = await hive.openBox(path);
     sut = HiveAdapter(box: box);
   });
 
   group('save', () {
     test('Should call localStorage with correct values', () async {
-      when(() => mockHiveBox.delete(any())).thenAnswer((_) async => Future.value());
-      when(() => mockHiveBox.put(any(), any())).thenAnswer((_) async => Future.value());
+      when(() => mockHiveBox.delete(any()))
+          .thenAnswer((_) async => Future.value());
+      when(() => mockHiveBox.put(any(), any()))
+          .thenAnswer((_) async => Future.value());
 
       await sut.put(CacheKeys.hiveBoxName.name, value);
 
       verify(() => mockHiveBox.delete(CacheKeys.hiveBoxName.name)).called(1);
-      verify(() => mockHiveBox.put(CacheKeys.hiveBoxName.name, value)).called(1);
+      verify(() => mockHiveBox.put(CacheKeys.hiveBoxName.name, value))
+          .called(1);
     });
 
     // test('Should throw if deleteItem throws', () async {

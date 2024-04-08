@@ -1,11 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:hive/hive.dart';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+
+import '../infra/helpers/helperts.dart';
 import '../ui/components/components.dart';
 import './factories/factories.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDir.path);
+  await Hive.openBox(CacheKeys.hiveBoxName.name);
   runApp(const App());
 }
 
@@ -36,9 +44,7 @@ class App extends StatelessWidget {
             page: makeProductsPage,
             transition: Transition.fadeIn),
         GetPage(
-            name: '/cart',
-            page: makeCartPage,
-            transition: Transition.fadeIn),
+            name: '/cart', page: makeCartPage, transition: Transition.fadeIn),
       ],
     );
   }

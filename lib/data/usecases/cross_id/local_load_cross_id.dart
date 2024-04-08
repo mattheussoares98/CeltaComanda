@@ -15,8 +15,8 @@ class LocalLoadCrossId implements LoadCrossId {
       String? crossId =
           await fetchSecureCacheStorage.fetch(CacheKeys.crossId.name);
 
-      if (crossId == null) throw DomainError.unexpected;
-      
+      if (crossId == null) return null;
+
       return CrossIdEntity(crossId: crossId);
     } catch (error) {
       throw DomainError.unexpected;

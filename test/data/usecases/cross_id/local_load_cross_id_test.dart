@@ -47,8 +47,8 @@ void main() {
       () async {
     secureCacheStorage.mockFetch(null);
 
-    final future = sut.load();
+    final future = await sut.load();
 
-    expect(future, throwsA(DomainError.unexpected));
+    expect(future, null);
   });
 }

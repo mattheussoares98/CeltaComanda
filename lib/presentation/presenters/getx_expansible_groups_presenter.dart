@@ -45,4 +45,9 @@ class GetxExpansibleGroupsPresenter extends GetxController
   void goToCartPage() {
     navigateTo = "/cart";
   }
+
+  @override
+  void goToHomePage() {
+    navigateTo = "/";
+  }
 }

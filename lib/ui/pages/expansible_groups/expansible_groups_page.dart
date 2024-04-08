@@ -30,6 +30,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: drawer(context: context, presenter: widget.presenter),
       appBar: AppBar(
         title: const Text("Grupos expansíveis"),
         backgroundColor: Theme.of(context).colorScheme.primary,

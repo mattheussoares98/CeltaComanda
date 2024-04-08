@@ -10,9 +10,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late ExpansibleGroupsPresenterSpy presenter;
+  late SplashPresenterSpy splashPresenter;
 
   setUp(() {
     presenter = ExpansibleGroupsPresenterSpy();
+    splashPresenter = SplashPresenterSpy();
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -68,5 +70,19 @@ void main() {
     presenter.emitNavigateTo('/cart');
     await tester.pump();
     expect(currentRoute, '/cart');
+  });
+
+  testWidgets('Should navigate to homePage on logout click',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+    await tester.pumpWidget(makePage(
+        path: "/",
+        page: () => SplashPage(
+              presenter: splashPresenter,
+            )));
+
+    presenter.emitNavigateTo('/');
+    await tester.pump();
+    expect(currentRoute, '/');
   });
 }

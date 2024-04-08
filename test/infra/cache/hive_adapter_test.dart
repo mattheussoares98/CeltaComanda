@@ -10,108 +10,103 @@ import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class MockHiveInterface extends Mock implements HiveInterface {}
-
-// class MockHiveBox extends Mock implements Box {}
-
 void main() {
   late HiveAdapter sut;
   late HiveSpy hive;
-
   late Box<dynamic> box;
   late dynamic value;
-  // late String result;
-
+  late String result;
   late BoxSpy mockHiveBox;
+  late String key;
 
   setUp(() async {
     hive = HiveSpy();
     mockHiveBox = BoxSpy();
-    // result = faker.randomGenerator.string(50);
+
+    result = faker.randomGenerator.string(50);
     value = faker.randomGenerator.string(50);
+    key = CacheKeys.hiveBoxName.name;
 
     hive.mockOpenBox(mockHiveBox);
+    mockHiveBox.mockGet(result);
+    mockHiveBox.mockDelete(key);
+    mockHiveBox.mockPut(key, value);
+
     var path = Directory.current.path;
     hive.init(path);
+
     box = await hive.openBox(path);
     sut = HiveAdapter(box: box);
   });
 
   group('save', () {
     test('Should call localStorage with correct values', () async {
-      when(() => mockHiveBox.delete(any()))
-          .thenAnswer((_) async => Future.value());
-      when(() => mockHiveBox.put(any(), any()))
-          .thenAnswer((_) async => Future.value());
+      await sut.put(key, value);
 
-      await sut.put(CacheKeys.hiveBoxName.name, value);
-
-      verify(() => mockHiveBox.delete(CacheKeys.hiveBoxName.name)).called(1);
-      verify(() => mockHiveBox.put(CacheKeys.hiveBoxName.name, value))
-          .called(1);
+      verify(() => mockHiveBox.delete(key)).called(1);
+      verify(() => mockHiveBox.put(key, value)).called(1);
     });
 
-    // test('Should throw if deleteItem throws', () async {
-    //   hive.mockDeleteError();
+    test('Should throw if deleteItem throws', () async {
+      mockHiveBox.mockDeleteError();
 
-    //   final future = sut.put(boxKey, value);
+      final future = sut.put(key, value);
 
-    //   expect(future, throwsA(const TypeMatcher<Exception>()));
-    // });
+      expect(future, throwsA(const TypeMatcher<Exception>()));
+    });
 
-    // test('Should throw if deleteItem throws', () async {
-    //   hive.mockDeleteError();
+    test('Should throw if deleteItem throws', () async {
+      mockHiveBox.mockDeleteError();
 
-    //   final future = sut.delete(CacheKeys.hiveBoxName.name);
+      final future = sut.delete(CacheKeys.hiveBoxName.name);
 
-    //   expect(future, throwsA(const TypeMatcher<Exception>()));
-    // });
+      expect(future, throwsA(const TypeMatcher<Exception>()));
+    });
 
-    //   test('Should throw if deleteItem throws', () async {
-    //     localStorage.mockSaveError();
+    test('Should throw if deleteItem throws', () async {
+      mockHiveBox.mockPutError();
 
-    //     final future = sut.save(key: key, value: value);
+      final future = sut.put(key, value);
 
-    //     expect(future, throwsA(const TypeMatcher<Exception>()));
-    //   });
-    // });
+      expect(future, throwsA(const TypeMatcher<Exception>()));
+    });
   });
 
-  // group('delete', () {
-  //   test('Should call localStorage with correct values', () async {
-  //     await sut.delete(key);
+  group('delete', () {
+    test('Should call localStorage with correct values', () async {
+      await sut.delete(key);
 
-  //     verify(() => localStorage.deleteItem(key)).called(1);
-  //   });
+      verify(() => mockHiveBox.delete(key)).called(1);
+    });
 
-  //   test('Should throw if deleteItem throws', () async {
-  //     localStorage.mockDeleteError();
+    test('Should throw if deleteItem throws', () async {
+      mockHiveBox.mockDeleteError();
 
-  //     final future = sut.delete(key);
+      final future = sut.delete(key);
 
-  //     expect(future, throwsA(const TypeMatcher<Exception>()));
-  //   });
-  // });
+      expect(future, throwsA(const TypeMatcher<Exception>()));
+    });
+  });
 
-  // group('get', () {
-  //   test('Should call localStorage with correct value', () async {
-  //     await sut.get(key);
+  group('get', () {
+    test('Should call localStorage with correct value', () async {
+      await sut.get(key);
 
-  //     verify(() => localStorage.getItem(key)).called(1);
-  //   });
+      verify(() => mockHiveBox.get(key)).called(1);
+    });
 
-  //   test('Should return same value as localStorage', () async {
-  //     final data = await sut.get(key);
+    test('Should return same value as localStorage', () async {
+      final data = await sut.get(key);
 
-  //     expect(data, result);
-  //   });
+      expect(data, result);
+    });
 
-  //   test('Should throw if getItem throws', () async {
-  //     localStorage.mockGetError();
+    test('Should throw if getItem throws', () async {
+      mockHiveBox.mockGetError();
 
-  //     final future = sut.get(key);
+      final future = sut.get(key);
 
-  //     expect(future, throwsA(const TypeMatcher<Exception>()));
-  //   });
-  // });
+      expect(future, throwsA(const TypeMatcher<Exception>()));
+    });
+  });
 }

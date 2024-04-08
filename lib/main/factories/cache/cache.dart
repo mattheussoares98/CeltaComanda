@@ -1,2 +1,2 @@
-export './cache_storage_adapter.dart';
+export 'hive_adapter_factory.dart';
 export './secure_storage_adapter_factory.dart';

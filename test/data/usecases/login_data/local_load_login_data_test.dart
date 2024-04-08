@@ -21,7 +21,7 @@ void main() {
     data = CacheFactory.makeLoginData();
     cacheStorage = HiveStorageSpy();
     cacheStorage.mockGet(data);
-    sut = LocalLoginData(cacheStorage: cacheStorage);
+    sut = LocalLoginData(hiveStorage: cacheStorage);
   });
 
   group('load', () {

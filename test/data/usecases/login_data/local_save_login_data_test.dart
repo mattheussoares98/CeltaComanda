@@ -21,7 +21,7 @@ void main() {
       url: faker.internet.httpUrl(),
       userName: faker.person.name(),
     );
-    sut = LocalLoginData(cacheStorage: cacheStorage);
+    sut = LocalLoginData(hiveStorage: cacheStorage);
   });
 
   test('Should call LocalSaveLoginData with correct values', () async {

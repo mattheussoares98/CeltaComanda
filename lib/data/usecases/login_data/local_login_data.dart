@@ -8,14 +8,14 @@ import '../../cache/cache.dart';
 
 class LocalLoginData
     implements LoadLoginData, SaveLoginData, ValidateLoginData {
-  final HiveStorage cacheStorage;
+  final HiveStorage hiveStorage;
 
-  LocalLoginData({required this.cacheStorage});
+  LocalLoginData({required this.hiveStorage});
 
   @override
   Future<LoginDataEntity?> load() async {
     try {
-      final json = await cacheStorage.get(
+      final json = await hiveStorage.get(
         CacheKeys.loginData.name,
       );
       if (json != null) {
@@ -32,7 +32,7 @@ class LocalLoginData
   Future<void> save(LoginDataEntity entity) async {
     try {
       final json = _mapToJson(entity);
-      await cacheStorage.put(
+      await hiveStorage.put(
         CacheKeys.loginData.name,
         json,
       );
@@ -44,12 +44,12 @@ class LocalLoginData
   @override
   Future<void> validate() async {
     try {
-      final data = await cacheStorage.get(
+      final data = await hiveStorage.get(
         CacheKeys.loginData.name,
       );
       _mapToEntity(data);
     } catch (error) {
-      await cacheStorage.delete(
+      await hiveStorage.delete(
         CacheKeys.loginData.name,
       );
     }

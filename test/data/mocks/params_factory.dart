@@ -13,6 +13,6 @@ class ParamsFactory {
       );
 
   static SaveLoginData makeLoginData() => LocalLoginData(
-        cacheStorage: HiveStorageSpy(),
+        hiveStorage: HiveStorageSpy(),
       );
 }

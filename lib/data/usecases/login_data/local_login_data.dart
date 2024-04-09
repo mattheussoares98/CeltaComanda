@@ -7,7 +7,7 @@ import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
 class LocalLoginData
-    implements LoadLoginData, SaveLoginData, ValidateLoginData {
+    implements LoadLoginData, SaveLoginData /* , ValidateLoginData */ {
   final HiveStorage hiveStorage;
 
   LocalLoginData({required this.hiveStorage});
@@ -41,19 +41,19 @@ class LocalLoginData
     }
   }
 
-  @override
-  Future<void> validate() async {
-    try {
-      final data = await hiveStorage.get(
-        CacheKeys.loginData.name,
-      );
-      _mapToEntity(data);
-    } catch (error) {
-      await hiveStorage.delete(
-        CacheKeys.loginData.name,
-      );
-    }
-  }
+  // @override
+  // Future<void> validate() async {
+  //   try {
+  //     final data = await hiveStorage.get(
+  //       CacheKeys.loginData.name,
+  //     );
+  //     _mapToEntity(data);
+  //   } catch (error) {
+  //     await hiveStorage.delete(
+  //       CacheKeys.loginData.name,
+  //     );
+  //   }
+  // }
 
   LoginDataEntity? _mapToEntity(dynamic json) =>
       LoginDataModel.fromJson(json).toEntity();

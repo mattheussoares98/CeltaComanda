@@ -73,37 +73,37 @@ void main() {
     });
   });
 
-  group('validate', () {
-    test('Should call cacheStorage with correct key', () async {
-      await sut.validate();
+  // group('validate', () {
+  //   test('Should call cacheStorage with correct key', () async {
+  //     await sut.validate();
 
-      verify(() => cacheStorage.get(CacheKeys.loginData.name)).called(1);
-    });
+  //     verify(() => cacheStorage.get(CacheKeys.loginData.name)).called(1);
+  //   });
 
-    test('Should delete cache if it is invalid', () async {
-      cacheStorage.mockGet(CacheFactory.makeInvalidLoginData());
+  //   test('Should delete cache if it is invalid', () async {
+  //     cacheStorage.mockGet(CacheFactory.makeInvalidLoginData());
 
-      await sut.validate();
+  //     await sut.validate();
 
-      verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
-    });
+  //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
+  //   });
 
-    test('Should delete cache if it is incomplete', () async {
-      cacheStorage.mockGet(CacheFactory.makeIncompleteLoginData());
+  //   test('Should delete cache if it is incomplete', () async {
+  //     cacheStorage.mockGet(CacheFactory.makeIncompleteLoginData());
 
-      await sut.validate();
+  //     await sut.validate();
 
-      verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
-    });
+  //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
+  //   });
 
-    test('Should delete cache if get fails', () async {
-      cacheStorage.mockGetError();
+  //   test('Should delete cache if get fails', () async {
+  //     cacheStorage.mockGetError();
 
-      await sut.validate();
+  //     await sut.validate();
 
-      verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
-    });
-  });
+  //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
+  //   });
+  // });
 
   group('save', () {
     test('Should call cacheStorage with correct values', () async {

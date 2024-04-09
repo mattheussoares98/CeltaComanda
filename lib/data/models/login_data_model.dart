@@ -3,10 +3,12 @@ import '../../domain/entities/entities.dart';
 class LoginDataModel {
   final String url;
   final String userName;
+  final String? enterpriseName;
 
   LoginDataModel({
     required this.url,
     required this.userName,
+    this.enterpriseName,
   });
 
   factory LoginDataModel.fromJson(Map json) {
@@ -16,21 +18,25 @@ class LoginDataModel {
     return LoginDataModel(
       url: json['url'],
       userName: json['userName'],
+      enterpriseName: json["enterpriseName"],
     );
   }
 
   factory LoginDataModel.fromEntity(LoginDataEntity entity) => LoginDataModel(
         url: entity.url,
         userName: entity.userName,
+        enterpriseName: entity.enterpriseName,
       );
 
   LoginDataEntity toEntity() => LoginDataEntity(
         url: url,
         userName: userName,
+        enterpriseName: enterpriseName,
       );
 
   Map<String, String> toJson() => {
         'url': url,
         'userName': userName,
+        'enterpriseName': enterpriseName ?? "",
       };
 }

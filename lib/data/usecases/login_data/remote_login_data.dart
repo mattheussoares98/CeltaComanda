@@ -51,6 +51,7 @@ class RemoteLoginData
         return LoginDataEntity(
           url: data[FirebaseKeys.urlCCS.name] ?? "",
           userName: loginDataEntity.userName,
+          enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
         );
       }
     } catch (error) {

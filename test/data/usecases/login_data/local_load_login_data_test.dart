@@ -29,11 +29,15 @@ void main() {
     });
 
     test('Should return a LoginData on success', () async {
-      final surveys = await sut.load();
+      final loginDataEntity = await sut.load();
 
       expect(
-        surveys,
-        LoginDataEntity(url: data['url'], userName: data['userName']),
+        loginDataEntity,
+        LoginDataEntity(
+          url: data['url'],
+          userName: data['userName'],
+          enterpriseName: null,
+        ),
       );
     });
 

@@ -4,11 +4,12 @@ class CacheFactory {
   static Map makeLoginData() => {
         'url': faker.internet.httpUrl(),
         'userName': faker.person.name(),
+        'enterpriseName': null,
       };
 
   static Map makeInvalidLoginData() => {
         'url': false,
-          'userName': {},
+        'userName': {},
       };
 
   static Map makeIncompleteLoginData() => {

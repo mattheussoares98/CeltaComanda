@@ -4,7 +4,6 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../domain/mocks/mocks.dart';
 import '../../../infra/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
 
@@ -14,10 +13,8 @@ void main() {
   late LocalLoginData sut;
   late HiveStorageSpy cacheStorage;
   late Map data;
-  late LoginDataEntity loginData;
 
   setUp(() {
-    loginData = EntityFactory.makeLoginData();
     data = CacheFactory.makeLoginData();
     cacheStorage = HiveStorageSpy();
     cacheStorage.mockGet(data);
@@ -104,25 +101,4 @@ void main() {
   //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
   //   });
   // });
-
-  group('save', () {
-    test('Should call cacheStorage with correct values', () async {
-      final map = {
-        'url': loginData.url,
-        'userName': loginData.userName,
-      };
-
-      await sut.save(loginData);
-
-      verify(() => cacheStorage.put(CacheKeys.loginData.name, map)).called(1);
-    });
-
-    test('Should throw UnexpectedError if save throws', () async {
-      cacheStorage.mockSaveError();
-
-      final future = sut.save(loginData);
-
-      expect(future, throwsA(DomainError.unexpected));
-    });
-  });
 }

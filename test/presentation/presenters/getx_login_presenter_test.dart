@@ -5,13 +5,13 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
-import '../../data/mocks/params_factory.dart';
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../domain/mocks/login_data_spy.dart';
+import '../../domain/mocks/local_login_data_spy.dart';
 import '../mocks/mocks.dart';
 
 void main() {
@@ -19,10 +19,11 @@ void main() {
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
   late CrossIdSpy crossIdSpy;
-  late LocalLoginDataSpy loginData;
+  late LocalLoginDataSpy localLoginData;
   late CrossIdEntity crossIdEntity;
   late LoginDataEntity loginDataEntity;
   late String password;
+  late RemoteLoginDataSpy remoteLoginData;
 
   setUp(() {
     password = faker.internet.password();
@@ -30,24 +31,27 @@ void main() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     crossIdSpy = CrossIdSpy();
-    loginData = LocalLoginDataSpy();
+    localLoginData = LocalLoginDataSpy();
+    remoteLoginData = RemoteLoginDataSpy();
 
     loginDataEntity = EntityFactory.makeLoginData();
     crossIdEntity = EntityFactory.makeAccount();
     authentication.mockAuthentication(crossIdEntity);
 
-    loginData.mockSave(loginDataEntity);
-    loginData.mockLoad(loginDataEntity);
+    localLoginData.mockSave(loginDataEntity);
+    localLoginData.mockLoad(loginDataEntity);
+    remoteLoginData.mockLoad(loginDataEntity);
 
     sut = GetxLoginPresenter(
       validation: validation,
       authentication: authentication,
       saveCrossId: crossIdSpy,
-      localLoginData: loginData,
+      localLoginData: localLoginData,
+      remoteLoginData: remoteLoginData,
     );
 
-    sut.userNameController.text = faker.person.name();
-    sut.urlController.text = faker.internet.httpUrl();
+    sut.userNameController.text = loginDataEntity.userName;
+    sut.urlController.text = loginDataEntity.url;
   });
 
   setUpAll(() {
@@ -246,13 +250,13 @@ void main() {
 
     await sut.auth();
 
-    verify(() => loginData.save(LoginDataEntity(
+    verify(() => localLoginData.save(LoginDataEntity(
         url: sut.urlController.text,
         userName: loginDataEntity.userName))).called(1);
   });
 
   test('Should emit UnexpectedError if SaveLoginData fails', () async {
-    loginData.mockSaveError();
+    localLoginData.mockSaveError();
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
@@ -305,12 +309,22 @@ void main() {
   test("Should call LoadUser on loadData", () async {
     await sut.loadData();
 
-    verify(() => loginData.load()).called(1);
+    verify(() => localLoginData.load()).called(1);
   });
   test("Should change controllers with cacheLoginData", () async {
     await sut.loadData();
 
     expect(loginDataEntity.url, sut.urlController.text);
     expect(loginDataEntity.userName, sut.userNameController.text);
+  });
+  test("Should call remoteLoadLoginData on login click", () async {
+    sut.validateUser(sut.userNameController.text);
+    sut.validatePassword(password);
+    sut.validateUrl(sut.urlController.text);
+
+    await sut.auth();
+
+    verify(() => remoteLoginData.load(
+            loginData: loginDataEntity)).called(1);
   });
 }

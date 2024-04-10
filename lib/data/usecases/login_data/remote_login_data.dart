@@ -6,14 +6,11 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../cache/cache.dart';
 
-class RemoteLoginData
-    implements LoadLoginData, SaveLoginData, ValidateLoginData {
+class RemoteLoginData implements LoadLoginData, SaveLoginData {
   final FirebaseStorage firebaseStorage;
-  final LoginDataEntity loginDataEntity;
 
   RemoteLoginData({
     required this.firebaseStorage,
-    required this.loginDataEntity,
   });
 
   static final FirebaseFirestore _firebaseFirestore =
@@ -22,40 +19,13 @@ class RemoteLoginData
     FirebaseCollections.clients.name,
   );
 
-  String _getFieldToSearch() {
-    if (kIsWeb && loginDataEntity.url.contains("http")) {
+  String _getFieldToSearch({required LoginDataEntity loginData}) {
+    if (kIsWeb && loginData.url.contains("http")) {
       return "urlCCSWeb";
-    } else if (loginDataEntity.url.contains("http")) {
+    } else if (loginData.url.contains("http")) {
       return "urlCCs";
     } else {
       return "enterpriseName";
-    }
-  }
-
-  @override
-  Future<LoginDataEntity?> load() async {
-    try {
-      final querySnapshot = await firebaseStorage.get(
-        collection:
-            _firebaseFirestore.collection(FirebaseCollections.clients.name),
-        fieldToSearch: _getFieldToSearch(),
-        valueToSearch: loginDataEntity.url,
-      );
-
-      if (querySnapshot == null) {
-        throw DomainError.enterpriseOrUrlNotFound;
-      } else {
-        Map<String, dynamic> data =
-            querySnapshot.docs[0].data() as Map<String, dynamic>;
-
-        return LoginDataEntity(
-          url: data[FirebaseKeys.urlCCS.name] ?? "",
-          userName: loginDataEntity.userName,
-          enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
-        );
-      }
-    } catch (error) {
-      throw DomainError.unexpected;
     }
   }
 
@@ -73,17 +43,30 @@ class RemoteLoginData
   }
 
   @override
-  Future<void> validate() async {
-    // try {
-    //   final data = await hiveStorage.get(
-    //     CacheKeys.loginData.name,
-    //   );
-    //   _mapToEntity(data);
-    // } catch (error) {
-    //   await hiveStorage.delete(
-    //     CacheKeys.loginData.name,
-    //   );
-    // }
+  Future<LoginDataEntity?> load({LoginDataEntity? loginData}) async {
+    if (loginData == null) return null;
+    
+    try {
+      final querySnapshot = await firebaseStorage.get(
+        collection: FirebaseCollections.clients.name,
+        fieldToSearch: _getFieldToSearch(loginData: loginData),
+        valueToSearch: loginData.url,
+      );
+
+      if (querySnapshot.docs.isEmpty) {
+        throw DomainError.enterpriseOrUrlNotFound;
+      } else {
+        Map<String, dynamic> data = querySnapshot.docs[0].data();
+
+        return LoginDataEntity(
+          url: data[FirebaseKeys.urlCCS.name] ?? "",
+          userName: "userName",
+          enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
+        );
+      }
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
   }
 
   // LoginDataEntity? _mapToEntity(dynamic json) =>

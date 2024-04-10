@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "619247462622",
+    "project_id": "celta-restaurant",
+    "storage_bucket": "celta-restaurant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619247462622:android:64c86f98e68cc6e4813a4f",
+        "android_client_info": {
+          "package_name": "com.example.clean_celta_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByrP2KRW_EdOrfyQeVS5UO_GJiHNNdsfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

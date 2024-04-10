@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirebaseStorage {
-  Future<QuerySnapshot?> get({
-    required CollectionReference<Object?> collection,
+  Future<QuerySnapshot<Map<String, dynamic>>> get({
+    required String collection,
     required String fieldToSearch,
     required String valueToSearch,
   });

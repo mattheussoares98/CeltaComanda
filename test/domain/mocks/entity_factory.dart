@@ -5,9 +5,11 @@ import 'package:faker/faker.dart';
 class EntityFactory {
   static CrossIdEntity makeAccount() =>
       CrossIdEntity(crossId: faker.guid.guid());
+  static final String url = faker.internet.httpUrl();
 
   static LoginDataEntity makeLoginData() => LoginDataEntity(
-        url: faker.internet.httpUrl(),
+        url: url,
         userName: faker.person.name(),
+        enterpriseName: !url.contains("http") ? url : "",
       );
 }

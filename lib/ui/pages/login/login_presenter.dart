@@ -1,3 +1,4 @@
+import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ abstract class LoginPresenter implements Listenable {
   FocusNode get urlFocusNode;
   TextEditingController get userNameController;
   TextEditingController get urlController;
+
+  LoginDataEntity? get loginData;
 
   void validateUser(String user);
   void onSubmitUser(String value);

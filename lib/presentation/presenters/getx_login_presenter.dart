@@ -22,12 +22,14 @@ class GetxLoginPresenter extends GetxController
   final Authentication authentication;
   final SaveCrossId saveCrossId;
   final LocalLoginData localLoginData;
+  final RemoteLoginData remoteLoginData;
 
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
     required this.saveCrossId,
     required this.localLoginData,
+    required this.remoteLoginData,
   });
 
   final _userError = Rx<UIError?>(null);
@@ -42,6 +44,10 @@ class GetxLoginPresenter extends GetxController
   Stream<UIError?> get passwordErrorStream => _passwordError.stream;
   @override
   Stream<UIError?> get urlErrorStream => _urlError.stream;
+
+  LoginDataEntity? _loginData;
+  @override
+  LoginDataEntity? get loginData => _loginData;
 
   @override
   void validateUser(String user) {
@@ -106,10 +112,16 @@ class GetxLoginPresenter extends GetxController
       mainError = null;
       isLoading = true;
 
-      await localLoginData.save(LoginDataEntity(
-        url: urlController.text,
+      _loginData = LoginDataEntity(
+        url: urlController.text.contains("http") ? urlController.text : "",
         userName: userNameController.text,
-      ));
+        enterpriseName:
+            !urlController.text.contains("http") ? urlController.text : "",
+      );
+
+      await localLoginData.save(_loginData!);
+
+      _loginData = await remoteLoginData.load(loginData: loginData);
 
       final account = await authentication.auth(
         AuthenticationParams(
@@ -133,11 +145,11 @@ class GetxLoginPresenter extends GetxController
   Future<void> loadData() async {
     isLoading = true;
 
-    final loginData = await localLoginData.load();
+    _loginData = await localLoginData.load();
 
     if (loginData != null) {
-      userNameController.text = loginData.userName;
-      urlController.text = loginData.url;
+      userNameController.text = loginData!.userName;
+      urlController.text = loginData!.url;
     }
     isLoading = false;
   }

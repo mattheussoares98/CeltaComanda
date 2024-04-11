@@ -13,7 +13,8 @@ class CrossIdSpy extends Mock implements SaveCrossId, LoadCrossId {
 
   When mockSaveCall() => when(() => this.save(any()));
   void mockSave() => this.mockSaveCall().thenAnswer((_) async => _);
-  void mockSaveError() => this.mockSaveCall().thenThrow(DomainError.unexpected);
+  void mockSaveError(DomainError error) =>
+      this.mockSaveCall().thenThrow(error);
 
   When mockLoadCall() => when(() => load());
   void mockLoad({required CrossIdEntity account}) =>

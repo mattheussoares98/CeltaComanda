@@ -239,6 +239,6 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(() => presenter.loadData()).called(1);
+    verify(() => presenter.loadRemoteData()).called(1);
   });
 }

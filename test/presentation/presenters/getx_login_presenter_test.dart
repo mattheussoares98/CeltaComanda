@@ -232,7 +232,7 @@ void main() {
   });
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {
-    crossIdSpy.mockSaveError();
+    crossIdSpy.mockSaveError(DomainError.unexpected);
     sut.validateUser(loginDataEntity.userName);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
@@ -303,16 +303,16 @@ void main() {
   test('Should emit correct events on loadData', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.loadData();
+    await sut.loadRemoteData();
   });
 
   test("Should call LoadUser on loadData", () async {
-    await sut.loadData();
+    await sut.loadRemoteData();
 
     verify(() => localLoginData.load()).called(1);
   });
   test("Should change controllers with cacheLoginData", () async {
-    await sut.loadData();
+    await sut.loadRemoteData();
 
     expect(loginDataEntity.url, sut.urlController.text);
     expect(loginDataEntity.userName, sut.userNameController.text);
@@ -324,7 +324,7 @@ void main() {
 
     await sut.auth();
 
-    verify(() => remoteLoginData.load(
-            loginData: loginDataEntity)).called(1);
+    verify(() => remoteLoginData.load(loginData: loginDataEntity)).called(1);
   });
+
 }

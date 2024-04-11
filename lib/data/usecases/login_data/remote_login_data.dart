@@ -21,11 +21,11 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
 
   String _getFieldToSearch({required LoginDataEntity loginData}) {
     if (kIsWeb && loginData.url.contains("http")) {
-      return "urlCCSWeb";
+      return FirebaseKeys.urlCCSWeb.name;
     } else if (loginData.url.contains("http")) {
-      return "urlCCs";
+      return FirebaseKeys.urlCCS.name;
     } else {
-      return "enterpriseName";
+      return FirebaseKeys.enterpriseName.name;
     }
   }
 
@@ -45,7 +45,7 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
   @override
   Future<LoginDataEntity?> load({LoginDataEntity? loginData}) async {
     if (loginData == null) return null;
-    
+
     try {
       final querySnapshot = await firebaseStorage.get(
         collection: FirebaseCollections.clients.name,
@@ -60,12 +60,12 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
 
         return LoginDataEntity(
           url: data[FirebaseKeys.urlCCS.name] ?? "",
-          userName: "userName",
+          userName: loginData.userName,
           enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
         );
       }
     } catch (error) {
-      throw DomainError.unexpected;
+      throw DomainError.enterpriseOrUrlNotFound;
     }
   }
 

@@ -1,5 +1,5 @@
-import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
+import '../../../domain/entities/entities.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,8 @@ abstract class LoginPresenter implements Listenable {
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 
+  bool get isUpdatedUrlController;
+  
   FocusNode get passwordFocusNode;
   FocusNode get urlFocusNode;
   TextEditingController get userNameController;
@@ -25,5 +27,7 @@ abstract class LoginPresenter implements Listenable {
   void validatePassword(String password);
   void validateUrl(String url);
   Future<void> auth();
-  Future<void> loadData();
+  Future<void> loadRemoteData();
+  Future<void> loadLocalData();
+  void updateUserAndUrlTexts();
 }

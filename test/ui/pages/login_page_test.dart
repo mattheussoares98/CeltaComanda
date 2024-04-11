@@ -36,7 +36,7 @@ void main() {
 
     final url = faker.internet.httpUrl();
     await tester.enterText(find.bySemanticsLabel('Empresa ou url'), url);
-    verify(() => presenter.validateUrl(url));
+    verify(() => presenter.validateUrl(url, updateUrlController: true));
   });
 
   testWidgets('Should present error if user is invalid',
@@ -239,6 +239,6 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(() => presenter.loadRemoteData()).called(1);
+    verify(() => presenter.loadLocalData()).called(1);
   });
 }

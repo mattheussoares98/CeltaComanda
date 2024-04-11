@@ -45,20 +45,19 @@ class GetxLoginPresenter extends GetxController
   @override
   Stream<UIError?> get urlErrorStream => _urlError.stream;
 
-  bool _isUpdatedUrlController = false;
-
-  @override
-  bool get isUpdatedUrlController => _isUpdatedUrlController;
-
   LoginDataEntity? _loginData;
 
   @override
   LoginDataEntity? get loginData => _loginData;
 
   @override
+  bool isUpdatedUrlController = false;
+
+  @override
   void validateUser(String user) {
     userNameController.text = user;
     _userError.value = _validateField('userName');
+    _updateLoginData();
     _validateForm();
   }
 
@@ -66,16 +65,18 @@ class GetxLoginPresenter extends GetxController
   void validatePassword(String password) {
     _password = password;
     _passwordError.value = _validateField('password');
+    _updateLoginData();
     _validateForm();
   }
 
   @override
-  void validateUrl(String url) {
+  void validateUrl(String url, {bool? updateUrlController = false}) {
     urlController.text = url;
     _urlError.value = _validateField('url');
-    if (_isUpdatedUrlController == false) {
-      _isUpdatedUrlController = true;
+    if (updateUrlController == true) {
+      isUpdatedUrlController = true;
     }
+    _updateLoginData();
     _validateForm();
   }
 
@@ -115,28 +116,30 @@ class GetxLoginPresenter extends GetxController
         urlController.text.isNotEmpty == true;
   }
 
+  void _updateLoginData() {
+    _loginData = LoginDataEntity(
+      url: urlController.text.contains("http") ? urlController.text : "",
+      userName: userNameController.text,
+      enterpriseName:
+          !urlController.text.contains("http") ? urlController.text : "",
+    );
+  }
+
   @override
   Future<void> auth() async {
     try {
       mainError = null;
       isLoading = true;
 
-      await localLoginData.save(
-        LoginDataEntity(
-          url: urlController.text.contains("http") ? urlController.text : "",
-          userName: userNameController.text,
-          enterpriseName:
-              !urlController.text.contains("http") ? urlController.text : "",
-        ),
-      );
+      await localLoginData.save(_loginData!);
 
-      if (_isUpdatedUrlController) {
+      if (isUpdatedUrlController) {
         await loadRemoteData();
       }
 
       final account = await authentication.auth(
         AuthenticationParams(
-          user: userNameController.text,
+          user: _loginData!.userName,
           password: _password!,
           url: _loginData!.url,
         ),
@@ -149,13 +152,14 @@ class GetxLoginPresenter extends GetxController
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;
-          throw DomainError.enterpriseOrUrlNotFound;
+          isLoading = false;
+          break;
+        // throw DomainError.enterpriseOrUrlNotFound;
         default:
           mainError = UIError.unexpected;
-          throw DomainError.unexpected;
+          isLoading = false;
+        // throw DomainError.unexpected;
       }
-    } finally {
-      isLoading = false;
     }
   }
 
@@ -171,22 +175,15 @@ class GetxLoginPresenter extends GetxController
 
   @override
   Future<void> loadLocalData() async {
-    isLoading = true;
-
     _loginData = await localLoginData.load();
     updateUserAndUrlTexts();
-
-    isLoading = false;
   }
 
   @override
   Future<void> loadRemoteData() async {
-    isLoading = true;
-
     _loginData = await remoteLoginData.load(loginData: _loginData);
     // _loginData = remoteData;
     updateUserAndUrlTexts();
-    _isUpdatedUrlController = false;
-    isLoading = false;
+    isUpdatedUrlController = false;
   }
 }

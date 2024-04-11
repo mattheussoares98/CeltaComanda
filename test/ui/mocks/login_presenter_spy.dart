@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,12 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   final urlFocus = FocusNode();
   final userTextEditingController = TextEditingController();
   final urlTextEditingController = TextEditingController();
+  final bool updatedUrlController = false;
+  LoginDataEntity? loginDataMock;
 
   LoginPresenterSpy() {
     when(() => this.passwordFocusNode).thenReturn(passwordFocus);
+    when(() => this.isUpdatedUrlController).thenReturn(updatedUrlController);
     when(() => this.urlFocusNode).thenReturn(urlFocus);
     when(() => this.userNameController).thenReturn(userTextEditingController);
     when(() => this.urlController).thenReturn(urlTextEditingController);
@@ -33,7 +37,9 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
       (_) async => FocusScope.of(Get.context!).requestFocus(this.urlFocus),
     );
     when(() => this.auth()).thenAnswer((_) async => _);
+    when(() => this.updateUserAndUrlTexts()).thenAnswer((_) async => _);
     when(() => this.loadRemoteData()).thenAnswer((_) async => _);
+    when(() => this.loadLocalData()).thenAnswer((_) async => _);
     when(() => this.userErrorStream)
         .thenAnswer((_) => userErrorController.stream);
     when(() => this.passwordErrorStream)
@@ -48,6 +54,18 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
         .thenAnswer((_) => isFormValidController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+
+    when(
+      () => this.validateUrl(
+        any(),
+        updateUrlController: any(named: "updateUrlController"),
+      ),
+    ).thenAnswer((_) async => _);
+
+    when(() => this.loginData).thenReturn(LoginDataEntity(
+      url: urlController.text,
+      userName: userNameController.text,
+    ));
   }
 
   void emitUserError(UIError error) => userErrorController.add(error);

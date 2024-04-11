@@ -20,7 +20,8 @@ class UrlInput extends StatelessWidget {
               errorText: snapshot.data?.description,
             ),
             focusNode: presenter.urlFocusNode,
-            onChanged: presenter.validateUrl,
+            onChanged: (value) =>
+                presenter.validateUrl(value, updateUrlController: true),
             controller: presenter.urlController,
           );
         });

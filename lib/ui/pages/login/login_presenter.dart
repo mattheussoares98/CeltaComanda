@@ -12,8 +12,8 @@ abstract class LoginPresenter implements Listenable {
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 
-  bool get isUpdatedUrlController;
-  
+  bool isUpdatedUrlController = false;
+
   FocusNode get passwordFocusNode;
   FocusNode get urlFocusNode;
   TextEditingController get userNameController;
@@ -25,7 +25,7 @@ abstract class LoginPresenter implements Listenable {
   void onSubmitUser(String value);
   void onSubmitPassword(String value);
   void validatePassword(String password);
-  void validateUrl(String url);
+  void validateUrl(String url, {bool? updateUrlController = false});
   Future<void> auth();
   Future<void> loadRemoteData();
   Future<void> loadLocalData();

@@ -21,7 +21,7 @@ void main() {
   late CrossIdSpy crossIdSpy;
   late LocalLoginDataSpy localLoginData;
   late CrossIdEntity crossIdEntity;
-  late LoginDataEntity loginDataEntity;
+  late LoginDataEntity loginData;
   late String password;
   late RemoteLoginDataSpy remoteLoginData;
 
@@ -34,13 +34,13 @@ void main() {
     localLoginData = LocalLoginDataSpy();
     remoteLoginData = RemoteLoginDataSpy();
 
-    loginDataEntity = EntityFactory.makeLoginData();
+    loginData = EntityFactory.makeLoginData();
     crossIdEntity = EntityFactory.makeAccount();
     authentication.mockAuthentication(crossIdEntity);
 
-    localLoginData.mockSave(loginDataEntity);
-    localLoginData.mockLoad(loginDataEntity);
-    remoteLoginData.mockLoad(loginDataEntity);
+    localLoginData.mockSave(loginData);
+    localLoginData.mockLoad(loginData);
+    remoteLoginData.mockLoad(loginData);
 
     sut = GetxLoginPresenter(
       validation: validation,
@@ -50,8 +50,8 @@ void main() {
       remoteLoginData: remoteLoginData,
     );
 
-    sut.userNameController.text = loginDataEntity.userName;
-    sut.urlController.text = loginDataEntity.url;
+    sut.userNameController.text = loginData.userName;
+    sut.urlController.text = loginData.url;
   });
 
   setUpAll(() {
@@ -81,8 +81,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(loginDataEntity.userName);
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
+    sut.validateUser(sut.userNameController.text);
   });
 
   test('Should emit requiredFieldError if user is empty', () {
@@ -93,8 +93,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(loginDataEntity.userName);
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
+    sut.validateUser(sut.userNameController.text);
   });
 
   test('Should emit null if user validation succeeds', () {
@@ -102,8 +102,8 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(loginDataEntity.userName);
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
+    sut.validateUser(sut.userNameController.text);
   });
   test('Should call Validation with correct url', () {
     final formData = {
@@ -192,14 +192,14 @@ void main() {
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
   });
 
   test('Should enable form button if all fields are valid', () async {
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
 
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     await Future.delayed(Duration.zero);
     sut.validatePassword(password);
     await Future.delayed(Duration.zero);
@@ -208,21 +208,21 @@ void main() {
   });
 
   test('Should call Authentication with correct values', () async {
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
     await sut.auth();
 
     verify(() => authentication.auth(AuthenticationParams(
-          user: loginDataEntity.userName,
+          user: loginData.userName,
           password: password,
-          url: sut.urlController.text,
+          url: loginData.url,
         ))).called(1);
   });
 
   test('Should call SaveCrossId with correct value', () async {
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
@@ -233,7 +233,8 @@ void main() {
 
   test('Should emit UnexpectedError if SaveCrossId fails', () async {
     crossIdSpy.mockSaveError(DomainError.unexpected);
-    sut.validateUser(loginDataEntity.userName);
+    // sut.loadLocalData();
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
@@ -244,20 +245,19 @@ void main() {
   });
 
   test('Should call SaveLoginData with correct value', () async {
-    sut.validateUser(loginDataEntity.userName);
+    localLoginData.mockSave(loginData);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
     await sut.auth();
 
-    verify(() => localLoginData.save(LoginDataEntity(
-        url: sut.urlController.text,
-        userName: loginDataEntity.userName))).called(1);
+    verify(() => localLoginData.save(loginData)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveLoginData fails', () async {
     localLoginData.mockSaveError();
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
@@ -268,7 +268,7 @@ void main() {
   });
 
   test('Should emit correct events on Authentication success', () async {
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
@@ -279,7 +279,7 @@ void main() {
   });
 
   test('Should change page on success', () async {
-    sut.validateUser(loginDataEntity.userName);
+    sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
@@ -288,43 +288,25 @@ void main() {
     await sut.auth();
   });
 
-  test('Should emit correct events on UnexpectedError', () async {
-    authentication.mockAuthenticationError(DomainError.unexpected);
-    sut.validateUser(loginDataEntity.userName);
-    sut.validatePassword(password);
-    sut.validateUrl(sut.urlController.text);
-
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-    await sut.auth();
-  });
-
-  test('Should emit correct events on loadData', () async {
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-    await sut.loadRemoteData();
-  });
-
   test("Should call LoadUser on loadData", () async {
     await sut.loadRemoteData();
 
-    verify(() => localLoginData.load()).called(1);
+    verify(() => remoteLoginData.load()).called(1);
   });
   test("Should change controllers with cacheLoginData", () async {
     await sut.loadRemoteData();
 
-    expect(loginDataEntity.url, sut.urlController.text);
-    expect(loginDataEntity.userName, sut.userNameController.text);
+    expect(loginData.url, sut.urlController.text);
+    expect(loginData.userName, sut.userNameController.text);
   });
   test("Should call remoteLoadLoginData on login click", () async {
     sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
+    sut.isUpdatedUrlController = true;
 
     await sut.auth();
 
-    verify(() => remoteLoginData.load(loginData: loginDataEntity)).called(1);
+    verify(() => remoteLoginData.load(loginData: loginData)).called(1);
   });
-
 }

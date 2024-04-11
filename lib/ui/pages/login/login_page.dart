@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      widget.presenter.loadRemoteData();
+      widget.presenter.loadLocalData();
     }
   }
 

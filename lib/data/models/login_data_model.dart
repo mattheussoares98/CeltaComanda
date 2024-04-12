@@ -31,12 +31,20 @@ class LoginDataModel {
   LoginDataEntity toEntity() => LoginDataEntity(
         url: url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         userName: userName,
-        enterpriseName: enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+        enterpriseName:
+            enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
       );
 
   Map<String, String> toJson() => {
         'url': url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         'userName': userName,
-        'enterpriseName': enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
+        'enterpriseName':
+            enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
+      };
+
+  Map<String, String> toFirebaseJson() => {
+        'url': url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+        'enterpriseName':
+            enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
       };
 }

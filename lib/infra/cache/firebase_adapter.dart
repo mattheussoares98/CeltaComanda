@@ -16,7 +16,7 @@ class FirebaseAdapter implements FirebaseStorage {
   }) async {
     await firestore
         .collection(collection)
-        .add(LoginDataModel.fromEntity(loginEntity).toJson())
+        .add(LoginDataModel.fromEntity(loginEntity).toFirebaseJson())
         .then((value) => value)
         .catchError((error) => error);
   }

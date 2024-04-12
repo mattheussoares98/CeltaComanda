@@ -36,7 +36,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
       navigatorObservers: [routeObserver],
-      initialRoute: '/',
+      initialRoute: '/products',
       getPages: [
         GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
         GetPage(

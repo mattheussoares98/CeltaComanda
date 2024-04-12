@@ -1,3 +1,6 @@
 import '../../../../ui/pages/products/products.dart';
+import './products.dart';
 
-ProductsPage makeProductsPage() => const ProductsPage();
+ProductsPage makeProductsPage() => ProductsPage(
+      presenter: makeGetxProductsPresenter(),
+    );

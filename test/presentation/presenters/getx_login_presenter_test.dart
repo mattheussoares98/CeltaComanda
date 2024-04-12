@@ -40,7 +40,9 @@ void main() {
 
     localLoginData.mockSave(loginData);
     localLoginData.mockLoad(loginData);
-    remoteLoginData.mockLoad(loginData);
+    remoteLoginData.mockRemoteLoad(loginData);
+    remoteLoginData.mockRemoteLoad(loginData);
+    remoteLoginData.mockAdd(loginData);
 
     sut = GetxLoginPresenter(
       validation: validation,
@@ -67,7 +69,7 @@ void main() {
       'url': sut.urlController.text,
     };
 
-    sut.validateUser(sut.userNameController.text);
+    sut.validateUser(loginData.userName);
 
     verify(() => validation.validate(field: "userName", input: formData))
         .called(1);
@@ -252,7 +254,7 @@ void main() {
 
     await sut.auth();
 
-    verify(() => localLoginData.save(loginData)).called(1);
+    verify(() => localLoginData.add(loginData)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveLoginData fails', () async {
@@ -307,6 +309,20 @@ void main() {
 
     await sut.auth();
 
-    verify(() => remoteLoginData.load(loginData: loginData)).called(1);
+    verify(() => remoteLoginData.load(loginEntity: loginData)).called(1);
+  });
+
+  testWidgets(
+      'Should save loginData in remote database when remoteLoginData is empty',
+      (WidgetTester tester) async {
+    sut.validateUser(sut.userNameController.text);
+    sut.validatePassword(password);
+    sut.validateUrl(sut.urlController.text);
+
+    remoteLoginData.mockRemoteLoad(null);
+
+    await sut.auth();
+
+    verify(() => remoteLoginData.add(loginData)).called(1);
   });
 }

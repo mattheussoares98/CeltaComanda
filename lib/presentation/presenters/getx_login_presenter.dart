@@ -46,9 +46,12 @@ class GetxLoginPresenter extends GetxController
   Stream<UIError?> get urlErrorStream => _urlError.stream;
 
   LoginDataEntity? _loginData;
-
   @override
   LoginDataEntity? get loginData => _loginData;
+
+  LoginDataEntity? _remoteEntity;
+  @override
+  LoginDataEntity? get remoteEntity => _remoteEntity;
 
   @override
   bool isUpdatedUrlController = false;
@@ -131,7 +134,7 @@ class GetxLoginPresenter extends GetxController
       mainError = null;
       isLoading = true;
 
-      await localLoginData.save(_loginData!);
+      await localLoginData.add(_loginData!);
 
       if (isUpdatedUrlController) {
         await loadRemoteData();
@@ -146,6 +149,8 @@ class GetxLoginPresenter extends GetxController
       );
 
       await saveCrossId.save(account);
+
+      await addLoginDataInDatabase(_loginData!);
 
       navigateTo = '/home';
     } on DomainError catch (error) {
@@ -164,26 +169,39 @@ class GetxLoginPresenter extends GetxController
   }
 
   @override
-  void updateUserAndUrlTexts() {
-    if (_loginData != null) {
-      userNameController.text = _loginData!.userName;
-      urlController.text = _loginData!.enterpriseName?.isNotEmpty == true
-          ? _loginData!.enterpriseName!
-          : _loginData!.url;
+  void updateUserAndUrlTexts(LoginDataEntity? loginEntity) {
+    if (loginEntity != null) {
+      userNameController.text = loginEntity.userName;
+      urlController.text = loginEntity.enterpriseName?.isNotEmpty == true
+          ? loginEntity.enterpriseName!
+          : loginEntity.url;
     }
   }
 
   @override
   Future<void> loadLocalData() async {
     _loginData = await localLoginData.load();
-    updateUserAndUrlTexts();
+    updateUserAndUrlTexts(_loginData);
   }
 
   @override
-  Future<void> loadRemoteData() async {
-    _loginData = await remoteLoginData.load(loginData: _loginData);
-    // _loginData = remoteData;
-    updateUserAndUrlTexts();
-    isUpdatedUrlController = false;
+  Future<LoginDataEntity?> loadRemoteData() async {
+    LoginDataEntity? value;
+    if (_remoteEntity == null) {
+      value = await remoteLoginData.load(loginEntity: _loginData);
+      updateUserAndUrlTexts(value);
+      isUpdatedUrlController = false;
+    }
+    _remoteEntity = value;
+    return value;
+  }
+
+  @override
+  Future<void> addLoginDataInDatabase(LoginDataEntity loginEntity) async {
+    await loadRemoteData();
+
+    if (_remoteEntity == null) {
+      await remoteLoginData.add(_loginData!);
+    }
   }
 }

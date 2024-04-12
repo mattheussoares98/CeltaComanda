@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
+class LoginDataEntitySpy extends Mock implements LoginDataEntity {}
+
 class LoginPresenterSpy extends Mock implements LoginPresenter {
   final userErrorController = StreamController<UIError?>();
   final passwordErrorController = StreamController<UIError?>();
@@ -22,7 +24,6 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   final userTextEditingController = TextEditingController();
   final urlTextEditingController = TextEditingController();
   final bool updatedUrlController = false;
-  LoginDataEntity? loginDataMock;
 
   LoginPresenterSpy() {
     when(() => this.passwordFocusNode).thenReturn(passwordFocus);
@@ -37,9 +38,13 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
       (_) async => FocusScope.of(Get.context!).requestFocus(this.urlFocus),
     );
     when(() => this.auth()).thenAnswer((_) async => _);
-    when(() => this.updateUserAndUrlTexts()).thenAnswer((_) async => _);
-    when(() => this.loadRemoteData()).thenAnswer((_) async => _);
+    when(() => this.updateUserAndUrlTexts(any())).thenAnswer((_) async => _);
+    when(() => this.addLoginDataInDatabase(any())).thenAnswer((_) async => _);
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
+    when(() => this.validateUser(any())).thenAnswer((_) async => _);
+    when(() => this.validatePassword(any())).thenAnswer((_) async => _);
+    when(() => this.validateUrl(any(), updateUrlController: any(named: "updateUrlController"))).thenAnswer((_) async => _);
+
     when(() => this.userErrorStream)
         .thenAnswer((_) => userErrorController.stream);
     when(() => this.passwordErrorStream)
@@ -62,10 +67,8 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
       ),
     ).thenAnswer((_) async => _);
 
-    when(() => this.loginData).thenReturn(LoginDataEntity(
-      url: urlController.text,
-      userName: userNameController.text,
-    ));
+    when(() => this.loginData).thenReturn(LoginDataEntitySpy());
+    when(() => this.remoteEntity).thenReturn(null);
   }
 
   void emitUserError(UIError error) => userErrorController.add(error);
@@ -79,6 +82,9 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
   void emitNavigateTo(String route) => navigateToController.add(route);
+  void mockLoadRemoteData(LoginDataEntity? loginEntity) {
+    when(() => this.loadRemoteData()).thenAnswer((_) async => loginEntity);
+  }
 
   void dispose() {
     userErrorController.close();

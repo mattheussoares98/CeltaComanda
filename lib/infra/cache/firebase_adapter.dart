@@ -1,6 +1,8 @@
+import 'package:clean_celta_mobile/data/models/login_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/cache/cache.dart';
+import '../../domain/entities/entities.dart';
 
 class FirebaseAdapter implements FirebaseStorage {
   final FirebaseFirestore firestore;
@@ -8,7 +10,16 @@ class FirebaseAdapter implements FirebaseStorage {
   FirebaseAdapter({required this.firestore});
 
   @override
-  Future<void> add() async {}
+  Future<void> add({
+    required LoginDataEntity loginEntity,
+    required String collection,
+  }) async {
+    await firestore
+        .collection(collection)
+        .add(LoginDataModel.fromEntity(loginEntity).toJson())
+        .then((value) => value)
+        .catchError((error) => error);
+  }
 
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> get({

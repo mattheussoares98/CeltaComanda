@@ -18,6 +18,10 @@ void main() {
         .pumpWidget(makePage(path: '/login', page: () => LoginPage(presenter)));
   }
 
+  setUpAll(() {
+    registerFallbackValue(LoginDataEntitySpy());
+  });
+
   tearDown(() {
     presenter.dispose();
   });

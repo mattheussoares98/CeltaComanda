@@ -25,7 +25,7 @@ void main() {
   });
 
   test('Should call LocalSaveLoginData with correct values', () async {
-    await sut.save(loginData);
+    await sut.add(loginData);
 
     verify(() => cacheStorage.put(
           CacheKeys.loginData.name,
@@ -36,7 +36,7 @@ void main() {
   test('Should throw UnexpectedError if LocalSaveLoginData throws', () async {
     cacheStorage.mockSaveError();
 
-    final future = sut.save(loginData);
+    final future = sut.add(loginData);
 
     expect(future, throwsA(DomainError.unexpected));
   });

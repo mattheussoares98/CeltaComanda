@@ -20,6 +20,7 @@ abstract class LoginPresenter implements Listenable {
   TextEditingController get urlController;
 
   LoginDataEntity? get loginData;
+  LoginDataEntity? get remoteEntity;
 
   void validateUser(String user);
   void onSubmitUser(String value);
@@ -27,7 +28,8 @@ abstract class LoginPresenter implements Listenable {
   void validatePassword(String password);
   void validateUrl(String url, {bool? updateUrlController = false});
   Future<void> auth();
-  Future<void> loadRemoteData();
+  Future<LoginDataEntity?> loadRemoteData();
   Future<void> loadLocalData();
-  void updateUserAndUrlTexts();
+  void updateUserAndUrlTexts(LoginDataEntity? loginEntity);
+  Future<void> addLoginDataInDatabase(LoginDataEntity loginEntity);
 }

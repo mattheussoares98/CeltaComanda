@@ -149,7 +149,7 @@ class GetxLoginPresenter extends GetxController
       );
 
       await saveCrossId.save(account);
-
+      
       await addLoginDataInDatabase(_loginData!);
 
       navigateTo = '/home';
@@ -185,15 +185,15 @@ class GetxLoginPresenter extends GetxController
   }
 
   @override
-  Future<LoginDataEntity?> loadRemoteData() async {
-    LoginDataEntity? value;
+  Future<void> loadRemoteData() async {
     if (_remoteEntity == null) {
-      value = await remoteLoginData.load(loginEntity: _loginData);
-      updateUserAndUrlTexts(value);
+      _remoteEntity = await remoteLoginData.load(loginEntity: _loginData);
+      updateUserAndUrlTexts(_remoteEntity);
       isUpdatedUrlController = false;
     }
-    _remoteEntity = value;
-    return value;
+    if (_remoteEntity != null) {
+      await localLoginData.add(_remoteEntity!);
+    }
   }
 
   @override

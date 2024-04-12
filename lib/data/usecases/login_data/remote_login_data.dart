@@ -19,13 +19,23 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
     FirebaseCollections.clients.name,
   );
 
-  String _getFieldToSearch({required LoginDataEntity loginEntity}) {
+  String _getFieldToSearch(LoginDataEntity loginEntity) {
     if (kIsWeb && loginEntity.url.contains("http")) {
-      return FirebaseKeys.urlCCSWeb.name;
+      return FirebaseKeys.urlWeb.name;
     } else if (loginEntity.url.contains("http")) {
-      return FirebaseKeys.urlCCS.name;
+      return FirebaseKeys.url.name;
     } else {
       return FirebaseKeys.enterpriseName.name;
+    }
+  }
+
+  String _getValueToSearch(LoginDataEntity loginEntity) {
+    if (loginEntity.url.contains("http")) {
+      return loginEntity.url.toLowerCase().replaceAll(RegExp(r'\s+'), '');
+    } else {
+      return loginEntity.enterpriseName!
+          .toLowerCase()
+          .replaceAll(RegExp(r'\s+'), '');
     }
   }
 
@@ -34,7 +44,7 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
     try {
       await firebaseStorage.add(
         loginEntity: entity,
-        collection: FirebaseKeys.enterpriseName.name,
+        collection: FirebaseCollections.clients.name,
       );
     } catch (error) {
       throw DomainError.unexpected;
@@ -48,17 +58,17 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
     try {
       final querySnapshot = await firebaseStorage.get(
         collection: FirebaseCollections.clients.name,
-        fieldToSearch: _getFieldToSearch(loginEntity: loginEntity),
-        valueToSearch: loginEntity.url,
+        fieldToSearch: _getFieldToSearch(loginEntity),
+        valueToSearch: _getValueToSearch(loginEntity),
       );
 
       if (querySnapshot.docs.isEmpty) {
-        throw DomainError.enterpriseOrUrlNotFound;
+        return null;
       } else {
         Map<String, dynamic> data = querySnapshot.docs[0].data();
 
         return LoginDataEntity(
-          url: data[FirebaseKeys.urlCCS.name] ?? "",
+          url: data[FirebaseKeys.url.name] ?? "",
           userName: loginEntity.userName,
           enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
         );

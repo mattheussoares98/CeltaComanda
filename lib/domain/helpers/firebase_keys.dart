@@ -5,7 +5,7 @@ enum FirebaseCollections {
 }
 
 enum FirebaseKeys {
-  urlCCS,
-  urlCCSWeb,
+  url,
+  urlWeb,
   enterpriseName,
 }

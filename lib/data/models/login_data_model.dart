@@ -29,14 +29,14 @@ class LoginDataModel {
       );
 
   LoginDataEntity toEntity() => LoginDataEntity(
-        url: url,
+        url: url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         userName: userName,
-        enterpriseName: enterpriseName,
+        enterpriseName: enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
       );
 
   Map<String, String> toJson() => {
-        'url': url,
+        'url': url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         'userName': userName,
-        'enterpriseName': enterpriseName ?? "",
+        'enterpriseName': enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
       };
 }

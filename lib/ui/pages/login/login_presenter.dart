@@ -28,7 +28,7 @@ abstract class LoginPresenter implements Listenable {
   void validatePassword(String password);
   void validateUrl(String url, {bool? updateUrlController = false});
   Future<void> auth();
-  Future<LoginDataEntity?> loadRemoteData();
+  Future<void> loadRemoteData();
   Future<void> loadLocalData();
   void updateUserAndUrlTexts(LoginDataEntity? loginEntity);
   Future<void> addLoginDataInDatabase(LoginDataEntity loginEntity);

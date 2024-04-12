@@ -248,13 +248,14 @@ void main() {
 
   test('Should call SaveLoginData with correct value', () async {
     localLoginData.mockSave(loginData);
+    remoteLoginData.mockRemoteLoad(loginData);
     sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
     await sut.auth();
 
-    verify(() => localLoginData.add(loginData)).called(1);
+    verify(() => localLoginData.add(loginData)).called(2);
   });
 
   test('Should emit UnexpectedError if SaveLoginData fails', () async {

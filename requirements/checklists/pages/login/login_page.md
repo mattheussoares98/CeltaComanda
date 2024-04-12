@@ -10,10 +10,10 @@
 7. ✅ Salvar localmente a url do CCS, nome da empresa e usuário ao tentar fazer o login
 8. ✅ Se der certo o login, salvar o crossId
 9. ✅ Salvar o usuário ao tentar autenticar
-10. Se der certo o login e não houver a URL no firebase, salvar a URL no firebase
+10. ✅ Se der certo o login e não houver a URL ou nome da empresa no firebase, salvar a URL no firebase
 11. ✅ Restaurar os dados de usuário, url e nome da empresa ao acessar a página
-12. Se no campo de URL não for uma URL válida, pesquisar no firebase o cliente pelo nome da empresa
-13. Se pesquisar o cliente no firebase e não encontrar, aparecer erro de que a empresa não foi encontrada
+12. ✅ Se no campo de URL não for uma URL válida, pesquisar no firebase o cliente pelo nome da empresa
+13. ✅ Se pesquisar o cliente no firebase e não encontrar, aparecer erro de que a empresa não foi encontrada
 14. ✅ Ao usar o submit do usuário, mudar o foco pra senha
 15. ✅ Ao usar o submit da senha, mudar o foco pra URL
-16. Ao chamar o validate do user, url e password atualizar o loginData do presenter
+16. ✅ Ao chamar o validate do user, url e password atualizar o loginData do presenter

@@ -18,7 +18,7 @@ class ProductsItems extends StatelessWidget {
       itemCount: productsViewModel.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
         final groupViewModel = productsViewModel[index];

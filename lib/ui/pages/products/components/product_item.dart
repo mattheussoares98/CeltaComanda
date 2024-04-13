@@ -1,8 +1,8 @@
+import 'package:clean_celta_mobile/ui/pages/products/components/image_widget.dart';
 import 'package:clean_celta_mobile/ui/pages/products/products.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 class ProductItem extends StatelessWidget {
   final ProductsViewModel product;
@@ -13,67 +13,48 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
-    final color = Color.fromRGBO(
-      random.nextInt(256),
-      random.nextInt(256),
-      random.nextInt(256),
-      1,
-    );
-
     final presenter = Provider.of<ProductsPresenter>(context);
 
     return GestureDetector(
       onTap: presenter.goToProductDetailsPage,
-      child: Container(
+      child: Card(
         margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-            bottomRight: Radius.circular(10.0),
-            bottomLeft: Radius.circular(10.0),
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(
+            color: Colors.grey,
+            width: 0.5,
+          ),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
           ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Image.network(
-                product.image,
-                fit: BoxFit.cover,
-                height: double.infinity,
-                width: double.infinity,
-              ),
-            ),
-            Text(
-              product.price.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Colors.black,
-                    blurRadius: 3,
-                    offset: Offset(2, 2),
+            ImageWidget(product: product),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name.toString(),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    product.price.toString(),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              product.name.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Colors.black,
-                    blurRadius: 3,
-                    offset: Offset(2, 2),
-                  ),
-                ],
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ],

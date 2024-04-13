@@ -43,7 +43,10 @@ class _ProductsPageState extends State<ProductsPage>
         child: Builder(
           builder: (context) {
             handleLoading(context, widget.presenter.isLoadingStream);
-            handleNavigation(widget.presenter.navigateToStream);
+            handleNavigation(
+              widget.presenter.navigateToStream,
+              arguments: widget.presenter.selectedProduct,
+            );
 
             return StreamBuilder<List<ProductsViewModel>>(
                 stream: widget.presenter.productsStream,

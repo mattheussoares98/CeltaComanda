@@ -19,6 +19,10 @@ class GetxProductsPresenter extends GetxController
     navigateTo = PageRoutes.productDetails;
   }
 
+  ProductsViewModel? _selectedProduct;
+  @override
+  ProductsViewModel? get selectedProduct => _selectedProduct;
+
   @override
   Future<void> loadProducts() async {
     try {
@@ -47,5 +51,10 @@ class GetxProductsPresenter extends GetxController
       _products.subject
           .addError(UIError.unexpected.description, StackTrace.current);
     }
+  }
+
+  @override
+  void updateSelectedProduct(ProductsViewModel product) {
+    _selectedProduct = product;
   }
 }

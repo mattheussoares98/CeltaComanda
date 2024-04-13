@@ -16,7 +16,10 @@ class ProductItem extends StatelessWidget {
     final presenter = Provider.of<ProductsPresenter>(context);
 
     return GestureDetector(
-      onTap: presenter.goToProductDetailsPage,
+      onTap: () {
+        presenter.updateSelectedProduct(product);
+        presenter.goToProductDetailsPage();
+      },
       child: Card(
         margin: const EdgeInsets.all(8),
         shape: const RoundedRectangleBorder(

@@ -16,8 +16,7 @@ class ProductsPage extends StatefulWidget {
   State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage>
-    with LoadingManager, NavigationManager {
+class _ProductsPageState extends State<ProductsPage> with LoadingManager {
   bool _isLoaded = false;
   @override
   void didChangeDependencies() {
@@ -43,10 +42,6 @@ class _ProductsPageState extends State<ProductsPage>
         child: Builder(
           builder: (context) {
             handleLoading(context, widget.presenter.isLoadingStream);
-            handleNavigation(
-              widget.presenter.navigateToStream,
-              arguments: widget.presenter.selectedProduct,
-            );
 
             return StreamBuilder<List<ProductsViewModel>>(
                 stream: widget.presenter.productsStream,

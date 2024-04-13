@@ -1,7 +1,5 @@
 import '../../../ui/pages/pages.dart';
 import '../../mixins/mixins.dart';
-import './components/components.dart';
-import './products_details.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,7 +13,7 @@ class ProductDetailsPage extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final productDetailsViewModel = Get.arguments;
+    final productDetailsViewModel = Get.arguments as ProductsViewModel;
 
     return Scaffold(
       appBar: AppBar(

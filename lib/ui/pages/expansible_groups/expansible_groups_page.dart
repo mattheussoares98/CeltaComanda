@@ -1,7 +1,6 @@
 import '../../components/components.dart';
-import '../expansible_groups/expansible_groups.dart';
-
 import '../../mixins/mixins.dart';
+import '../expansible_groups/expansible_groups.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

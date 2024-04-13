@@ -16,7 +16,7 @@ class GetxProductsPresenter extends GetxController
 
   @override
   void goToProductDetailsPage() {
-    navigateTo = "/product_details";
+    navigateTo = PageRoutes.productDetails;
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/pages/produc_details/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,7 +37,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
       navigatorObservers: [routeObserver],
-      initialRoute: PageRoutes.splash,
+      initialRoute: PageRoutes.expansibleGroups,
       getPages: [
         GetPage(
           name: PageRoutes.splash,
@@ -61,6 +62,11 @@ class App extends StatelessWidget {
         GetPage(
           name: PageRoutes.cart,
           page: makeCartPage,
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: PageRoutes.productDetails,
+          page: makeProductDetailsPage,
           transition: Transition.fadeIn,
         ),
       ],

@@ -2,6 +2,8 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -21,6 +23,16 @@ void main() {
       makePage(path: PageRoutes.products, page: () => ProductsPage(presenter)),
     );
   }
+
+  setUpAll(() {
+    registerFallbackValue(
+      ProductsViewModel(
+        price: faker.randomGenerator.string(7),
+        name: faker.food.random.string(10),
+        image: faker.internet.httpUrl(),
+      ),
+    );
+  });
 
   tearDown(() {
     presenter.dispose();
@@ -43,7 +55,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockExpansibleGroupStreamError(DomainError.unexpected);
+    presenter.mockProductStreamError(DomainError.unexpected);
     await tester.pumpAndSettle();
 
     expect(find.byType(ReloadScreen), findsOneWidget);
@@ -52,18 +64,9 @@ void main() {
   testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitNavigateTo('/any_route');
+    presenter.goToProductDetailsPage();
     await tester.pumpAndSettle();
 
-    expect(currentRoute, '/any_route');
-    expect(find.text('fake page'), findsOneWidget);
-  });
-
-  testWidgets('Should not change page', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.emitNavigateTo('');
-    await tester.pump();
-    expect(currentRoute, PageRoutes.products);
+    expect(currentRoute, PageRoutes.productDetails);
   });
 }

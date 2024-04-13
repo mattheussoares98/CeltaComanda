@@ -1,8 +1,7 @@
-import 'package:clean_celta_mobile/ui/pages/products/components/products_items.dart';
-
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import './products.dart';
+import './components/components.dart';
 
 import 'package:flutter/material.dart';
 

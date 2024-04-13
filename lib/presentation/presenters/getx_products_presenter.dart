@@ -5,7 +5,7 @@ import '../../ui/pages/products/products.dart';
 import '../mixins/mixins.dart';
 
 class GetxProductsPresenter extends GetxController
-    with NavigationManager, LoadingManager
+    with LoadingManager
     implements ProductsPresenter {
   GetxProductsPresenter();
 
@@ -16,7 +16,6 @@ class GetxProductsPresenter extends GetxController
 
   @override
   void goToProductDetailsPage() {
-    navigateTo = PageRoutes.productDetails;
     Get.toNamed(PageRoutes.productDetails, arguments: _selectedProduct);
   }
 
@@ -44,7 +43,8 @@ class GetxProductsPresenter extends GetxController
         ProductsViewModel(
           price: 30.toString(),
           name: "Mattheus",
-          image: "https://play-lh.googleusercontent.com/CyuxNrlJ5RZ9NhoEL0v5Ipp-lWYCW-0U2xESBiw0vxycYsqVJ71tZAuzIR5PxldcP9wF=w526-h296-rw",
+          image:
+              "https://play-lh.googleusercontent.com/CyuxNrlJ5RZ9NhoEL0v5Ipp-lWYCW-0U2xESBiw0vxycYsqVJ71tZAuzIR5PxldcP9wF=w526-h296-rw",
         ),
       ]);
       isLoading = false;

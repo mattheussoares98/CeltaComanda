@@ -28,7 +28,6 @@ class ProductDetailsPage extends StatelessWidget
         child: Builder(
           builder: (context) {
             handleLoading(context, presenter.isLoadingStream);
-            handleNavigation(presenter.navigateToStream);
 
             return ListenableProvider(
               create: (_) => presenter,

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../helpers/helpers.dart';
@@ -12,7 +13,7 @@ void main() {
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = SplashPresenterSpy();
-    await tester.pumpWidget(makePage(path: '/', page: () => SplashPage(presenter: presenter)));
+    await tester.pumpWidget(makePage(path: PageRoutes.splash, page: () => SplashPage(presenter: presenter)));
   }
 
   tearDown(() {
@@ -46,6 +47,6 @@ void main() {
 
     presenter.emitNavigateTo('');
     await tester.pump();
-    expect(currentRoute, '/');
+    expect(currentRoute, PageRoutes.splash);
   });
 }

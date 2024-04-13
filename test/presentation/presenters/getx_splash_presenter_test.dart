@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../domain/mocks/mocks.dart';
 
@@ -26,8 +27,8 @@ void main() {
   });
 
   test('Should go to surveys page on success', () async {
-    sut.navigateToStream
-        .listen(expectAsync1((page) => expect(page, '/expansible_groups')));
+    sut.navigateToStream.listen(
+        expectAsync1((page) => expect(page, PageRoutes.expansibleGroups)));
 
     await sut.checkAccount(durationInSeconds: 0);
   });
@@ -35,7 +36,8 @@ void main() {
   test('Should go to login page on error', () async {
     crossIdSpy.mockLoadError();
 
-    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/login')));
+    sut.navigateToStream
+        .listen(expectAsync1((page) => expect(page, PageRoutes.login)));
 
     await sut.checkAccount(durationInSeconds: 0);
   });

@@ -9,8 +9,8 @@ import '../firebase_options.dart';
 
 import '../infra/helpers/helperts.dart';
 import '../ui/components/components.dart';
+import '../ui/helpers/helpers.dart';
 import './factories/factories.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,21 +36,33 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
       navigatorObservers: [routeObserver],
-      initialRoute: '/products',
+      initialRoute: PageRoutes.splash,
       getPages: [
-        GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
         GetPage(
-            name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+          name: PageRoutes.splash,
+          page: makeSplashPage,
+          transition: Transition.fade,
+        ),
         GetPage(
-            name: '/expansible_groups',
-            page: makeExpansibleGroupsPage,
-            transition: Transition.fadeIn),
+          name: PageRoutes.login,
+          page: makeLoginPage,
+          transition: Transition.fadeIn,
+        ),
         GetPage(
-            name: '/products',
-            page: makeProductsPage,
-            transition: Transition.fadeIn),
+          name: PageRoutes.expansibleGroups,
+          page: makeExpansibleGroupsPage,
+          transition: Transition.fadeIn,
+        ),
         GetPage(
-            name: '/cart', page: makeCartPage, transition: Transition.fadeIn),
+          name: PageRoutes.products,
+          page: makeProductsPage,
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: PageRoutes.cart,
+          page: makeCartPage,
+          transition: Transition.fadeIn,
+        ),
       ],
     );
   }

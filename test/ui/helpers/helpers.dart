@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,8 +7,8 @@ Widget makePage({required String path, required Widget Function() page}) {
     GetPage(name: path, page: page),
     GetPage(name: '/any_route', page: () => Scaffold(appBar: AppBar(title: const Text('any title')), body: const Text('fake page')))
   ];
-  if (path != '/login') {
-    getPages.add(GetPage(name: '/login', page: () => const Scaffold(body: Text('fake login'))));
+  if (path != PageRoutes.login) {
+    getPages.add(GetPage(name: PageRoutes.login, page: () => const Scaffold(body: Text('fake login'))));
   }
   return GetMaterialApp(
     initialRoute: path,

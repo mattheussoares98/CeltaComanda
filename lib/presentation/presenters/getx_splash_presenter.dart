@@ -1,11 +1,11 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:get/get.dart';
 
+
+import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
-
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
-import 'package:get/get.dart';
-import '../../domain/usecases/cross_id/load_cross_id.dart';
 
 class GetxSplashPresenter extends GetxController
     with NavigationManager
@@ -20,12 +20,12 @@ class GetxSplashPresenter extends GetxController
     try {
       CrossIdEntity? crossIdEntity = await loadCrossId.load();
       if (crossIdEntity != null) {
-        navigateTo = '/expansible_groups';
+        navigateTo = PageRoutes.expansibleGroups;
       } else {
-        navigateTo = '/login';
+        navigateTo = PageRoutes.login;
       }
     } catch (error) {
-      navigateTo = '/login';
+      navigateTo = PageRoutes.login;
     }
   }
 }

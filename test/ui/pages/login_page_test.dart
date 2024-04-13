@@ -15,7 +15,7 @@ void main() {
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
     await tester
-        .pumpWidget(makePage(path: '/login', page: () => LoginPage(presenter)));
+        .pumpWidget(makePage(path: PageRoutes.login, page: () => LoginPage(presenter)));
   }
 
   setUpAll(() {
@@ -222,7 +222,7 @@ void main() {
 
     presenter.emitNavigateTo('');
     await tester.pump();
-    expect(currentRoute, '/login');
+    expect(currentRoute, PageRoutes.login);
   });
 
   testWidgets('Should change focusNode correctly', (WidgetTester tester) async {

@@ -38,16 +38,16 @@ class GetxExpansibleGroupsPresenter extends GetxController
 
   @override
   void goToProductsPage() {
-    navigateTo = "/products";
+    navigateTo = PageRoutes.products;
   }
 
   @override
   void goToCartPage() {
-    navigateTo = "/cart";
+    navigateTo = PageRoutes.cart;
   }
 
   @override
   void goToHomePage() {
-    navigateTo = "/";
+    navigateTo = PageRoutes.splash;
   }
 }

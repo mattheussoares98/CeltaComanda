@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/components/components.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../helpers/helpers.dart';
@@ -10,16 +11,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late ExpansibleGroupsPresenterSpy presenter;
-  late SplashPresenterSpy splashPresenter;
 
   setUp(() {
     presenter = ExpansibleGroupsPresenterSpy();
-    splashPresenter = SplashPresenterSpy();
   });
 
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
-      makePage(path: '/', page: () => ExpansibleGroupsPage(presenter)),
+      makePage(
+          path: PageRoutes.expansibleGroups,
+          page: () => ExpansibleGroupsPage(presenter)),
     );
   }
 
@@ -50,39 +51,21 @@ void main() {
     expect(find.byType(ReloadScreen), findsOneWidget);
   });
 
-  testWidgets('Should navigate to products page on expansibleGroup click',
-      (WidgetTester tester) async {
+  testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
-    await tester
-        .pumpWidget(makePage(path: "/products", page: () => const CartPage()));
 
-    presenter.emitNavigateTo('/products');
-    await tester.pump();
-    expect(currentRoute, '/products');
+    presenter.emitNavigateTo('/any_route');
+    await tester.pumpAndSettle();
+
+    expect(currentRoute, '/any_route');
+    expect(find.text('fake page'), findsOneWidget);
   });
 
-  testWidgets('Should navigate to cart page on cartIcon click',
-      (WidgetTester tester) async {
+  testWidgets('Should not change page', (WidgetTester tester) async {
     await loadPage(tester);
-    await tester
-        .pumpWidget(makePage(path: "/cart", page: () => const CartPage()));
 
-    presenter.emitNavigateTo('/cart');
+    presenter.emitNavigateTo('');
     await tester.pump();
-    expect(currentRoute, '/cart');
-  });
-
-  testWidgets('Should navigate to homePage on logout click',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-    await tester.pumpWidget(makePage(
-        path: "/",
-        page: () => SplashPage(
-              presenter: splashPresenter,
-            )));
-
-    presenter.emitNavigateTo('/');
-    await tester.pump();
-    expect(currentRoute, '/');
+    expect(currentRoute, PageRoutes.expansibleGroups);
   });
 }

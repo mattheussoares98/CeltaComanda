@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatelessWidget
-    with LoadingManager, NavigationManager {
+    with LoadingManager {
   final ProductDetailsPresenter presenter;
   const ProductDetailsPage(this.presenter, {super.key});
 

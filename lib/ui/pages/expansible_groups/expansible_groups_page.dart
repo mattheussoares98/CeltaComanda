@@ -15,7 +15,7 @@ class ExpansibleGroupsPage extends StatefulWidget {
 }
 
 class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
-    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+    with KeyboardManager, LoadingManager, UIErrorManager {
   bool _isLoaded = false;
   @override
   void didChangeDependencies() {

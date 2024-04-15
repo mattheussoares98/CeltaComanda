@@ -51,21 +51,30 @@ void main() {
     expect(find.byType(ReloadScreen), findsOneWidget);
   });
 
-  testWidgets('Should change page', (WidgetTester tester) async {
+  testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitNavigateTo('/any_route');
+    presenter.goToProductsPage();
     await tester.pumpAndSettle();
 
-    expect(currentRoute, '/any_route');
-    expect(find.text('fake page'), findsOneWidget);
+    expect(currentRoute, PageRoutes.products);
   });
 
-  testWidgets('Should not change page', (WidgetTester tester) async {
+  testWidgets('Should go to CartPage', (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.emitNavigateTo('');
-    await tester.pump();
-    expect(currentRoute, PageRoutes.expansibleGroups);
+    presenter.goToCartPage();
+    await tester.pumpAndSettle();
+
+    expect(currentRoute, PageRoutes.cart);
+  });
+
+  testWidgets('Should go to SplashPage', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.goToSplashPage();
+    await tester.pumpAndSettle();
+
+    expect(currentRoute, PageRoutes.splash);
   });
 }

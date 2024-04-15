@@ -6,9 +6,13 @@ import '../../ui/pages/expansible_groups/expansible_groups.dart';
 import '../mixins/mixins.dart';
 
 class GetxExpansibleGroupsPresenter extends GetxController
-    with LoadingManager, NavigationManager
+    with LoadingManager
     implements ExpansibleGroupsPresenter {
-  GetxExpansibleGroupsPresenter({required this.loadProducts});
+  final NavigateTo navigateTo;
+  GetxExpansibleGroupsPresenter({
+    required this.loadProducts,
+    required this.navigateTo,
+  });
 
   late final LoadExpansibleGroups loadProducts;
   final _expansibleGroups = Rx<List<ExpansibleGroupsViewModel>>([]);
@@ -38,16 +42,16 @@ class GetxExpansibleGroupsPresenter extends GetxController
 
   @override
   void goToProductsPage() {
-    navigateTo = PageRoutes.products;
+    navigateTo.navigate(pageRoute: PageRoutes.products);
   }
 
   @override
   void goToCartPage() {
-    navigateTo = PageRoutes.cart;
+    navigateTo.navigate(pageRoute: PageRoutes.cart);
   }
 
   @override
-  void goToHomePage() {
-    navigateTo = PageRoutes.splash;
+  void goToSplashPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }
 }

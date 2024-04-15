@@ -34,6 +34,14 @@ Widget makePage({required String path, required Widget Function() page}) {
       name: PageRoutes.expansibleGroups,
       page: () => ExpansibleGroupsPage(ExpansibleGroupsPresenterSpy()),
     ),
+    GetPage(
+      name: PageRoutes.cart,
+      page: () => const CartPage(),
+    ),
+    GetPage(
+      name: PageRoutes.splash,
+      page: () => SplashPage(presenter: SplashPresenterSpy()),
+    ),
   ];
 
   final index = allPages.indexWhere((element) => element.name == path);

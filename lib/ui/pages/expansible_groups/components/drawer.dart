@@ -31,7 +31,7 @@ Widget drawer({
             key: const Key("logout"),
             context: context,
             onTap: () async {
-              presenter.goToHomePage();
+              presenter.goToSplashPage();
             },
             text: "Sair",
             leading: Icon(

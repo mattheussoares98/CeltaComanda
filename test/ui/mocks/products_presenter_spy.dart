@@ -17,10 +17,11 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
     price: faker.randomGenerator.string(7),
     name: faker.food.random.string(10),
     image: faker.internet.httpUrl(),
+    plu: faker.randomGenerator.integer(5).toString(),
   );
 
   ProductsPresenterSpy() {
-    when(() => this.loadProducts()).thenAnswer((_) async => _);
+    when(() => this.load()).thenAnswer((_) async => [selectedProductMock]);
     when(() => this.productsStream)
         .thenAnswer((_) => productsController.stream);
     when(() => this.selectedProduct).thenAnswer((_) => selectedProductMock);
@@ -39,7 +40,8 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
   }
 
   mockUpdateSelectedProduct(ProductsViewModel product) {
-    when(() => this.updateSelectedProduct(any())).thenAnswer((_) async => product);
+    when(() => this.updateSelectedProduct(any()))
+        .thenAnswer((_) async => product);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

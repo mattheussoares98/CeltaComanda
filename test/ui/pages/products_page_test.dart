@@ -2,8 +2,6 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -23,16 +21,6 @@ void main() {
       makePage(path: PageRoutes.products, page: () => ProductsPage(presenter)),
     );
   }
-
-  setUpAll(() {
-    registerFallbackValue(
-      ProductsViewModel(
-        price: faker.randomGenerator.string(7),
-        name: faker.food.random.string(10),
-        image: faker.internet.httpUrl(),
-      ),
-    );
-  });
 
   tearDown(() {
     presenter.dispose();

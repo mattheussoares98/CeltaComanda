@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/factories/pages/produc_details/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

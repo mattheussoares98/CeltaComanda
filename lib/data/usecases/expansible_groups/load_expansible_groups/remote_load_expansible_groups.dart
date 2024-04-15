@@ -14,7 +14,7 @@ class RemoteLoadExpansibleGroups implements LoadExpansibleGroups {
       final products = await httpAdapter.request(url: "url", method: "get");
       if (products == null) throw Error();
       return const [
-        ProductEntity(name: "name", plu: "plu", price: 10),
+        ProductEntity(name: "name", plu: "plu", price: 10, image: "image"),
       ];
     } catch (error) {
       throw DomainError.unexpected;

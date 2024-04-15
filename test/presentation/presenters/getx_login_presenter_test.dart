@@ -11,7 +11,6 @@ import '../../domain/mocks/mocks.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../domain/mocks/local_login_data_spy.dart';
 import '../mocks/mocks.dart';
 
 void main() {

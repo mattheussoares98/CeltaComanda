@@ -22,7 +22,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      widget.presenter.loadProducts();
+      widget.presenter.load();
     }
   }
 
@@ -48,7 +48,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: () async => await widget.presenter.loadProducts(),
+                      reload: () async => await widget.presenter.load(),
                     );
                   }
                   if (snapshot.hasData) {

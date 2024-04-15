@@ -41,7 +41,10 @@ void main() {
     await sut.checkAccount(durationInSeconds: 0);
 
     verify(
-      () => navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups),
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.expansibleGroups,
+        clear: true,
+      ),
     ).called(1);
   });
 
@@ -50,7 +53,10 @@ void main() {
     await sut.checkAccount(durationInSeconds: 0);
 
     verify(
-      () => navigateTo.navigate(pageRoute: PageRoutes.login),
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.login,
+        clear: true,
+      ),
     ).called(1);
   });
 }

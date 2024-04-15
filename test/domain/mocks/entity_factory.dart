@@ -14,4 +14,21 @@ class EntityFactory {
       enterpriseName: !url.contains("http") ? url : "",
     );
   }
+
+  static List<ProductEntity> makeProducts() {
+    return [
+      ProductEntity(
+        image: faker.internet.httpUrl(),
+        price: faker.randomGenerator.decimal(),
+        name: faker.food.random.string(10),
+        plu: faker.randomGenerator.integer(5).toString(),
+      ),
+      ProductEntity(
+        image: faker.internet.httpUrl(),
+        price: faker.randomGenerator.decimal(),
+        name: faker.food.random.string(10),
+        plu: faker.randomGenerator.integer(5).toString(),
+      ),
+    ];
+  }
 }

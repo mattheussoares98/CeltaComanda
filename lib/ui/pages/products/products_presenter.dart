@@ -8,6 +8,6 @@ abstract class ProductsPresenter implements Listenable {
   ProductsViewModel? get selectedProduct;
 
   void goToProductDetailsPage();
-  Future<void> loadProducts();
+  Future<void> load();
   void updateSelectedProduct(ProductsViewModel product);
 }

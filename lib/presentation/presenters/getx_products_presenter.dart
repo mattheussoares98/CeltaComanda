@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../domain/helpers/helpers.dart';
+import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/products/products.dart';
 import '../mixins/mixins.dart';
@@ -7,7 +9,13 @@ import '../mixins/mixins.dart';
 class GetxProductsPresenter extends GetxController
     with LoadingManager
     implements ProductsPresenter {
-  GetxProductsPresenter();
+  final LoadProducts loadProducts;
+  final NavigateTo navigateTo;
+
+  GetxProductsPresenter({
+    required this.navigateTo,
+    required this.loadProducts,
+  });
 
   final _products = Rx<List<ProductsViewModel>>([]);
 
@@ -16,7 +24,10 @@ class GetxProductsPresenter extends GetxController
 
   @override
   void goToProductDetailsPage() {
-    Get.toNamed(PageRoutes.productDetails, arguments: _selectedProduct);
+    navigateTo.navigate(
+      pageRoute: PageRoutes.productDetails,
+      arguments: _selectedProduct,
+    );
   }
 
   ProductsViewModel? _selectedProduct;
@@ -24,33 +35,31 @@ class GetxProductsPresenter extends GetxController
   ProductsViewModel? get selectedProduct => _selectedProduct;
 
   @override
-  Future<void> loadProducts() async {
+  Future<void> load() async {
     try {
       await Future.delayed(const Duration(seconds: 1));
       isLoading = true;
       await Future.delayed(const Duration(seconds: 3));
-      _products.subject.add([
-        ProductsViewModel(
-            price: 10.toString(),
-            name: "name 1",
-            image:
-                "https://www.keyfactor.com/wp-content/uploads/iStock-1252346549-1.jpg"),
-        ProductsViewModel(
-            price: 20.toString(),
-            name: "name 2",
-            image:
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZrRMOfxT7f-f7DMJMneZplp2E6wwfCn6LbA&s"),
-        ProductsViewModel(
-          price: 30.toString(),
-          name: "Mattheus",
-          image:
-              "https://play-lh.googleusercontent.com/CyuxNrlJ5RZ9NhoEL0v5Ipp-lWYCW-0U2xESBiw0vxycYsqVJ71tZAuzIR5PxldcP9wF=w526-h296-rw",
-        ),
-      ]);
+
+      final products = await loadProducts.load();
+
+      if (products != null) {
+        _products.value = products
+            .map((e) => ProductsViewModel(
+                  name: e.name,
+                  plu: e.plu,
+                  price: e.price.toString(),
+                  image: e.image,
+                ))
+            .toList();
+      }
+
       isLoading = false;
     } catch (e) {
       _products.subject
           .addError(UIError.unexpected.description, StackTrace.current);
+
+      throw DomainError.unexpected;
     }
   }
 

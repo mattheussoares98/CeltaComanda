@@ -1,4 +1,3 @@
-export './firebase_firestore_spy.dart';
 export './firebase_storage_spy.dart';
 export 'hive_storage_spy.dart';
 export './http_client_spy.dart';

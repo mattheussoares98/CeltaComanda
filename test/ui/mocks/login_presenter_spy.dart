@@ -16,7 +16,6 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   final passwordErrorController = StreamController<UIError?>();
   final urlErrorController = StreamController<UIError?>();
   final mainErrorController = StreamController<UIError?>();
-  final navigateToController = StreamController<String?>();
   final isFormValidController = StreamController<bool>();
   final isLoadingController = StreamController<bool>();
   final passwordFocus = FocusNode();
@@ -53,8 +52,6 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
         .thenAnswer((_) => urlErrorController.stream);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.navigateToStream)
-        .thenAnswer((_) => navigateToController.stream);
     when(() => this.isFormValidStream)
         .thenAnswer((_) => isFormValidController.stream);
     when(() => this.isLoadingStream)
@@ -81,7 +78,6 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
   void emitFormValid() => isFormValidController.add(true);
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
-  void emitNavigateTo(String route) => navigateToController.add(route);
   void mockLoadRemoteData(LoginDataEntity? loginEntity) {
     when(() => this.loadRemoteData()).thenAnswer((_) async => loginEntity);
   }
@@ -91,7 +87,6 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {
     passwordErrorController.close();
     urlErrorController.close();
     mainErrorController.close();
-    navigateToController.close();
     isFormValidController.close();
     isLoadingController.close();
   }

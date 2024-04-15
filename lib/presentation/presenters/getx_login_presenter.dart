@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 class GetxLoginPresenter extends GetxController
     with
         LoadingManager,
-        NavigationManager,
         FormManager,
         UIErrorManager,
         FocusNodeManager,
@@ -23,6 +22,7 @@ class GetxLoginPresenter extends GetxController
   final SaveCrossId saveCrossId;
   final LocalLoginData localLoginData;
   final RemoteLoginData remoteLoginData;
+  final NavigateTo navigateTo;
 
   GetxLoginPresenter({
     required this.validation,
@@ -30,6 +30,7 @@ class GetxLoginPresenter extends GetxController
     required this.saveCrossId,
     required this.localLoginData,
     required this.remoteLoginData,
+    required this.navigateTo,
   });
 
   final _userError = Rx<UIError?>(null);
@@ -149,10 +150,10 @@ class GetxLoginPresenter extends GetxController
       );
 
       await saveCrossId.save(account);
-      
+
       await addLoginDataInDatabase(_loginData!);
 
-      navigateTo = '/home';
+      navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:

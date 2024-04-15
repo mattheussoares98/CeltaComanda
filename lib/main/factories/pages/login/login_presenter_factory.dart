@@ -8,4 +8,5 @@ LoginPresenter makeGetxLoginPresenter() => GetxLoginPresenter(
   saveCrossId: makeLocalSaveCrossId(),
   localLoginData: makeLocalLoadLoginData(),
   remoteLoginData: makeRemoteLoginData(),
+  navigateTo: makeNavigateTo(),
 );

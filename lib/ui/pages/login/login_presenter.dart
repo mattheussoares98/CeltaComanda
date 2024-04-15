@@ -8,7 +8,6 @@ abstract class LoginPresenter implements Listenable {
   Stream<UIError?> get passwordErrorStream;
   Stream<UIError?> get urlErrorStream;
   Stream<UIError?> get mainErrorStream;
-  Stream<String?> get navigateToStream;
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 

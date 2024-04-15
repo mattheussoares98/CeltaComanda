@@ -14,8 +14,8 @@ void main() {
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
-    await tester
-        .pumpWidget(makePage(path: PageRoutes.login, page: () => LoginPage(presenter)));
+    await tester.pumpWidget(
+        makePage(path: PageRoutes.login, page: () => LoginPage(presenter)));
   }
 
   setUpAll(() {
@@ -205,24 +205,6 @@ void main() {
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'),
         findsOneWidget);
-  });
-
-  testWidgets('Should change page', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.emitNavigateTo('/any_route');
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, '/any_route');
-    expect(find.text('fake page'), findsOneWidget);
-  });
-
-  testWidgets('Should not change page', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.emitNavigateTo('');
-    await tester.pump();
-    expect(currentRoute, PageRoutes.login);
   });
 
   testWidgets('Should change focusNode correctly', (WidgetTester tester) async {

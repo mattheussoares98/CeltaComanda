@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage>
-    with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
+    with KeyboardManager, LoadingManager, UIErrorManager {
   bool _isLoaded = false;
   @override
   void didChangeDependencies() {
@@ -35,7 +35,6 @@ class _LoginPageState extends State<LoginPage>
         builder: (context) {
           handleLoading(context, widget.presenter.isLoadingStream);
           handleMainError(context, widget.presenter.mainErrorStream);
-          handleNavigation(widget.presenter.navigateToStream, clear: true);
 
           return GestureDetector(
             onTap: () => hideKeyboard(context),

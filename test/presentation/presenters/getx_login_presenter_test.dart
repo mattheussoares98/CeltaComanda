@@ -23,6 +23,7 @@ void main() {
   late LoginDataEntity loginData;
   late String password;
   late RemoteLoginDataSpy remoteLoginData;
+  late NavigateToSpy navigateTo;
 
   setUp(() {
     password = faker.internet.password();
@@ -32,6 +33,7 @@ void main() {
     crossIdSpy = CrossIdSpy();
     localLoginData = LocalLoginDataSpy();
     remoteLoginData = RemoteLoginDataSpy();
+    navigateTo = NavigateToSpy();
 
     loginData = EntityFactory.makeLoginData();
     crossIdEntity = EntityFactory.makeAccount();
@@ -49,6 +51,7 @@ void main() {
       saveCrossId: crossIdSpy,
       localLoginData: localLoginData,
       remoteLoginData: remoteLoginData,
+      navigateTo: navigateTo,
     );
 
     sut.userNameController.text = loginData.userName;
@@ -280,14 +283,15 @@ void main() {
     await sut.auth();
   });
 
-  test('Should change page on success', () async {
+  test('Should go to ExpansibleGroupsPage on success', () async {
     sut.validateUser(sut.userNameController.text);
     sut.validatePassword(password);
     sut.validateUrl(sut.urlController.text);
 
-    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/home')));
-
     await sut.auth();
+
+    verify(() => navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups))
+        .called(1);
   });
 
   test("Should call LoadUser on loadData", () async {

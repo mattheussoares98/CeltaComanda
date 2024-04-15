@@ -1,18 +1,19 @@
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
+// ignore_for_file: unnecessary_this
 
-import 'dart:async';
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class SplashPresenterSpy extends Mock implements SplashPresenter {
-  final navigateToController = StreamController<String?>();
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
+class SplashPresenterSpy extends Mock implements SplashPresenter, LoadCrossId {
   SplashPresenterSpy() {
-    when(() => checkAccount(durationInSeconds: any(named: 'durationInSeconds'))).thenAnswer((_) async => _);
-    when(() => navigateToStream).thenAnswer((_) => navigateToController.stream);
+    when(() => this
+            .checkAccount(durationInSeconds: any(named: 'durationInSeconds')))
+        .thenAnswer((_) async => _);
   }
-  void emitNavigateTo(String route) => navigateToController.add(route);
 
-  void dispose() {
-    navigateToController.close();
+  void mockLoadAccount(CrossIdEntity? crossIdEntity) {
+    when(() => this.load()).thenAnswer((_) async => crossIdEntity);
   }
 }

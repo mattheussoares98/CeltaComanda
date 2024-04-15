@@ -1,18 +1,18 @@
 import 'package:get/get.dart';
 
-
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
-import '../mixins/mixins.dart';
 
-class GetxSplashPresenter extends GetxController
-    with NavigationManager
-    implements SplashPresenter {
+class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final LoadCrossId loadCrossId;
+  final NavigateTo navigateTo;
 
-  GetxSplashPresenter({required this.loadCrossId});
+  GetxSplashPresenter({
+    required this.loadCrossId,
+    required this.navigateTo,
+  });
 
   @override
   Future<void> checkAccount({int durationInSeconds = 2}) async {
@@ -20,12 +20,18 @@ class GetxSplashPresenter extends GetxController
     try {
       CrossIdEntity? crossIdEntity = await loadCrossId.load();
       if (crossIdEntity != null) {
-        navigateTo = PageRoutes.expansibleGroups;
+        navigateTo.navigate(
+          pageRoute: PageRoutes.expansibleGroups,
+          clear: true,
+        );
       } else {
-        navigateTo = PageRoutes.login;
+        navigateTo.navigate(
+          pageRoute: PageRoutes.login,
+          clear: true,
+        );
       }
     } catch (error) {
-      navigateTo = PageRoutes.login;
+      navigateTo.navigate(pageRoute: PageRoutes.login, clear: true);
     }
   }
 }

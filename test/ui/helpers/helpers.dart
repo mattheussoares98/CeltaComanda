@@ -28,7 +28,11 @@ Widget makePage({required String path, required Widget Function() page}) {
     ),
     GetPage(
       name: PageRoutes.login,
-      page: () => const Scaffold(body: Text('fake login')),
+      page: () => LoginPage(LoginPresenterSpy()),
+    ),
+    GetPage(
+      name: PageRoutes.expansibleGroups,
+      page: () => ExpansibleGroupsPage(ExpansibleGroupsPresenterSpy()),
     ),
   ];
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './splash.dart';
-import '../../mixins/mixins.dart';
 
-class SplashPage extends StatelessWidget with NavigationManager {
+class SplashPage extends StatelessWidget {
   final SplashPresenter presenter;
 
   const SplashPage({super.key, required this.presenter});
@@ -16,7 +15,7 @@ class SplashPage extends StatelessWidget with NavigationManager {
       appBar: AppBar(title: const Text('Celta restaurante')),
       body: Builder(
         builder: (context) {
-          handleNavigation(presenter.navigateToStream, clear: true);
+          // handleNavigation(presenter.navigateToStream, clear: true);
 
           return Image.asset(
             key: const Key("loading"),

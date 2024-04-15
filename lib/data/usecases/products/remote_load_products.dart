@@ -16,20 +16,20 @@ class RemoteLoadProducts implements LoadProducts {
   @override
   Future<List<ProductEntity>> load() async {
     try {
-      final products = await httpAdapter.request(url: "url", method: "get");
-      if (products == null) throw Error();
+      // final products = await httpAdapter.request(url: "url", method: "get");
+      // if (products == null) throw Error();
       return [
         const ProductEntity(
           name: "name",
           plu: "plu",
           price: 10,
-          image: "http://",
+          image: "https://lh4.googleusercontent.com/ECbQV5RNf6RMdJQ_qE-s-9JF9lYOSTyxCYq5nCrHgcBct8ixi__prSequxRFInCxyVojmotC91hoNvrNDwOihQ1YHM5tMW_MRmDtCjOVpMbikgdiv0vqIE1PmQu9xNEA0Ke-aYjHOJAL5ec00E-2g28",
         ),
         const ProductEntity(
           name: "name",
           plu: "plu",
           price: 10,
-          image: "http://",
+          image: "http://teste.com.jpeg",
         ),
       ];
     } catch (error) {

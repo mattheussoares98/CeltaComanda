@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/products/products.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -66,5 +67,37 @@ void main() {
         ])));
 
     await sut.load();
+  });
+
+  test('Should update SelectedProduct', () async {
+    sut.updateSelectedProduct(
+      ProductsViewModel(
+        image: products[0].image,
+        price: products[0].price.toString(),
+        name: products[0].name,
+        plu: products[0].plu,
+      ),
+    );
+
+    expect(
+      ProductsViewModel(
+        image: products[0].image,
+        price: products[0].price.toString(),
+        name: products[0].name,
+        plu: products[0].plu,
+      ),
+      sut.selectedProduct,
+    );
+  });
+
+  test('Should go to surveys page on success', () async {
+    sut.goToProductDetailsPage();
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.productDetails,
+        arguments: sut.selectedProduct,
+      ),
+    ).called(1);
   });
 }

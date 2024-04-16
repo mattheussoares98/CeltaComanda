@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'package:flutter/widgets.dart';
@@ -65,14 +66,34 @@ void main() {
     await sut.load();
   });
 
-  // test('Should go to surveys page on success', () async {
-  //   sut.goTo();
+  test('Should go to cart page on CartIcon click', () async {
+    sut.goToCartPage();
 
-  //   verify(
-  //     () => navigateTo.navigate(
-  //       pageRoute: PageRoutes.productDetails,
-  //       arguments: sut.selectedProduct,
-  //     ),
-  //   ).called(1);
-  // });
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.cart,
+      ),
+    ).called(1);
+  });
+
+  test('Should go to products page ExpansibleGroupItem click', () async {
+    sut.goToProductsPage();
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.products,
+      ),
+    ).called(1);
+  });
+
+  test('Should go to SplashPage on logout click', () async {
+    sut.goToSplashPage();
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.splash,
+        clear: true,
+      ),
+    ).called(1);
+  });
 }

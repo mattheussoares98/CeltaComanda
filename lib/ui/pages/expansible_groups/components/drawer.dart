@@ -30,9 +30,7 @@ Widget drawer({
           _drawerItem(
             key: const Key("logout"),
             context: context,
-            onTap: () async {
-              presenter.goToSplashPage();
-            },
+            onTap: presenter.goToSplashPage,
             text: "Sair",
             leading: Icon(
               Icons.logout,

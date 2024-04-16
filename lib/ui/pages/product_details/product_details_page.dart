@@ -1,3 +1,4 @@
+import '../../../ui/components/components.dart';
 import '../../../ui/pages/pages.dart';
 import '../../mixins/mixins.dart';
 
@@ -6,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-class ProductDetailsPage extends StatelessWidget
-    with LoadingManager {
+class ProductDetailsPage extends StatelessWidget with LoadingManager {
   final ProductDetailsPresenter presenter;
   const ProductDetailsPage(this.presenter, {super.key});
 
@@ -19,9 +19,7 @@ class ProductDetailsPage extends StatelessWidget
       appBar: AppBar(
         title: const Text("Produtos"),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        // actions: [
-        //   CartIcon(presenter: ),
-        // ],
+        actions: [CartIcon(goToCartPage: presenter.goToCartPage)],
       ),
       body: SingleChildScrollView(
         primary: false,

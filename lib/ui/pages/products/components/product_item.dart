@@ -15,52 +15,87 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final presenter = Provider.of<ProductsPresenter>(context);
 
-    return GestureDetector(
-      onTap: () {
-        presenter.updateSelectedProduct(product);
-        presenter.goToProductDetailsPage();
-      },
-      child: Card(
-        margin: const EdgeInsets.all(8),
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
+      child: GestureDetector(
+        onTap: () {
+          presenter.updateSelectedProduct(product);
+          presenter.goToProductDetailsPage();
+        },
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 3,
+                color: Color(0x411D2429),
+                offset: Offset(
+                  0.0,
+                  1,
+                ),
+              )
+            ],
+            borderRadius: BorderRadius.circular(8),
           ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ImageWidget(product: product),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.name.toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                ImageWidget(product: product),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 4, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 4, 8, 0),
+                          child: Text(
+                            'Subtítulo',
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    product.price.toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                      child: Icon(
+                        Icons.chevron_right_rounded,
+                        color: Color(0xFF57636C),
+                        size: 24,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 8),
+                      child: Text(
+                        'R\$${product.price}',
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

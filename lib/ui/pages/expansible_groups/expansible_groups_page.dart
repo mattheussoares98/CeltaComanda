@@ -31,8 +31,9 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     return Scaffold(
       drawer: drawer(context: context, presenter: widget.presenter),
       appBar: AppBar(
-        title: const Text("Grupos expansíveis"),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: const Color(0xFFF1F5F8),
+        automaticallyImplyLeading: false,
+        title: const Text("Grupos de comida"),
         actions: [
           CartIcon(goToCartPage: widget.presenter.goToCartPage),
         ],
@@ -49,8 +50,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: () async =>
-                          await widget.presenter.load(),
+                      reload: () async => await widget.presenter.load(),
                     );
                   }
                   if (snapshot.hasData) {

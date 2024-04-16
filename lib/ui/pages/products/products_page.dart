@@ -30,8 +30,9 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFF1F5F8),
+        automaticallyImplyLeading: false,
         title: const Text("Produtos"),
-        backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           CartIcon(goToCartPage: widget.presenter.goToProductDetailsPage),
         ],
@@ -54,7 +55,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
                   if (snapshot.hasData) {
                     return ListenableProvider(
                       create: (_) => widget.presenter,
-                      child: ProductsItems(productsViewModel: snapshot.data!),
+                      child: ProductsItems(products: snapshot.data!),
                     );
                   }
                   return const SizedBox(height: 0);

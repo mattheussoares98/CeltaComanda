@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class CartIcon extends StatelessWidget {
   final void Function()? goToCartPage;
+  final Color? color;
   const CartIcon({
+    this.color = Colors.grey,
     required this.goToCartPage,
     super.key,
   });
@@ -12,16 +14,10 @@ class CartIcon extends StatelessWidget {
     return IconButton(
       key: const Key("CartIcon"),
       onPressed: goToCartPage,
-      icon: const Icon(
-        Icons.shopping_cart_rounded,
-        color: Colors.red,
-        shadows: [
-          Shadow(
-            offset: Offset(1, 1),
-            blurRadius: 2.0,
-            color: Colors.white,
-          ),
-        ],
+      icon: Icon(
+        Icons.shopping_cart_outlined,
+        color: color,
+        size: 24,
       ),
     );
   }

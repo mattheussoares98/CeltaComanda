@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/expansible_groups/expansible_groups.dart';
@@ -10,11 +11,11 @@ class GetxExpansibleGroupsPresenter extends GetxController
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   GetxExpansibleGroupsPresenter({
-    required this.loadProducts,
+    required this.loadExpansibleGroups,
     required this.navigateTo,
   });
 
-  late final LoadExpansibleGroups loadProducts;
+  late final LoadExpansibleGroups loadExpansibleGroups;
   final _expansibleGroups = Rx<List<ExpansibleGroupsViewModel>>([]);
 
   @override
@@ -22,21 +23,21 @@ class GetxExpansibleGroupsPresenter extends GetxController
       _expansibleGroups.stream;
 
   @override
-  Future<void> loadExpansibleGroups() async {
+  Future<void> load() async {
     try {
+      await loadExpansibleGroups.load();
       await Future.delayed(const Duration(seconds: 1));
       isLoading = true;
       await Future.delayed(const Duration(seconds: 3));
       _expansibleGroups.subject.add([
-        const ExpansibleGroupsViewModel(id: "1", name: "Name 1"),
-        const ExpansibleGroupsViewModel(id: "2", name: "Name 2"),
-        const ExpansibleGroupsViewModel(id: "3", name: "Name 3"),
-        const ExpansibleGroupsViewModel(id: "4", name: "Name 4"),
+        const ExpansibleGroupsViewModel(name: "Name 1"),
+        const ExpansibleGroupsViewModel(name: "Name 2"),
       ]);
       isLoading = false;
     } catch (e) {
       _expansibleGroups.subject
           .addError(UIError.unexpected.description, StackTrace.current);
+      throw DomainError.unexpected;
     }
   }
 

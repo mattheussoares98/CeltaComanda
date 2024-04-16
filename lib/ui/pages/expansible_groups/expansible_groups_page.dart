@@ -22,7 +22,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      widget.presenter.loadExpansibleGroups();
+      widget.presenter.load();
     }
   }
 
@@ -50,7 +50,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                     return ReloadScreen(
                       error: '${snapshot.error}',
                       reload: () async =>
-                          await widget.presenter.loadExpansibleGroups(),
+                          await widget.presenter.load(),
                     );
                   }
                   if (snapshot.hasData) {

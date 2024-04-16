@@ -31,4 +31,11 @@ class EntityFactory {
       ),
     ];
   }
+
+  static List<ExpansibleGroupEntity> makeExpansibleGroups() {
+    return [
+      ExpansibleGroupEntity(name: faker.randomGenerator.string(30)),
+      ExpansibleGroupEntity(name: faker.randomGenerator.string(30)),
+    ];
+  }
 }

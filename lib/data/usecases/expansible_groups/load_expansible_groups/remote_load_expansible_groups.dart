@@ -9,12 +9,12 @@ class RemoteLoadExpansibleGroups implements LoadExpansibleGroups {
   RemoteLoadExpansibleGroups({required this.httpAdapter});
 
   @override
-  Future<List<ProductEntity>?> getExpansibleGroups() async {
+  Future<List<ExpansibleGroupEntity>?> load() async {
     try {
-      final products = await httpAdapter.request(url: "url", method: "get");
-      if (products == null) throw Error();
+      // final products = await httpAdapter.request(url: "url", method: "get");
+      // if (products == null) throw Error();
       return const [
-        ProductEntity(name: "name", plu: "plu", price: 10, image: "image"),
+        ExpansibleGroupEntity(name: "Expansible Group Name"),
       ];
     } catch (error) {
       throw DomainError.unexpected;

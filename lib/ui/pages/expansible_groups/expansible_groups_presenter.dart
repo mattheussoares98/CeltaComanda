@@ -6,7 +6,7 @@ abstract class ExpansibleGroupsPresenter implements Listenable {
   Stream<List<ExpansibleGroupsViewModel>> get expansibleGroupsStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> loadExpansibleGroups();
+  Future<void> load();
   void goToProductsPage();
   void goToCartPage();
   void goToSplashPage();

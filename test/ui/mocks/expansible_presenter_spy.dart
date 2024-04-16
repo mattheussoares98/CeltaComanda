@@ -17,7 +17,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
       StreamController<List<ExpansibleGroupsViewModel>>();
 
   ExpansibleGroupsPresenterSpy() {
-    when(() => this.loadExpansibleGroups()).thenAnswer((_) async => _);
+    when(() => this.load()).thenAnswer((_) async => _);
     when(() => this.expansibleGroupsStream)
         .thenAnswer((_) => expansibleGroupsController.stream);
     when(() => this.isLoadingStream)

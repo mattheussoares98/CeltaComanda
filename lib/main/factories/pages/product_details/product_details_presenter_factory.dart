@@ -1,6 +1,6 @@
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
-
 import '../../../../presentation/presenters/presenters.dart';
+import '../../../../ui/pages/pages.dart';
+import '../../../factories/usecases/usecases.dart';
 
 ProductDetailsPresenter makeGetxProductDetailsPresenter() =>
-    GetxProductDetailsPresenter();
+    GetxProductDetailsPresenter(navigateTo: makeNavigateTo());

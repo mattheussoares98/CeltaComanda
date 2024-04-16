@@ -1,19 +1,22 @@
 import 'package:get/get.dart';
 
+import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
 class GetxProductDetailsPresenter extends GetxController
-    with NavigationManager, LoadingManager
+    with LoadingManager
     implements ProductDetailsPresenter {
-  GetxProductDetailsPresenter();
+  final NavigateTo navigateTo;
+
+  GetxProductDetailsPresenter({required this.navigateTo});
 
   @override
   void addProductInCart() {}
 
   @override
   void goToCartPage() {
-    navigateTo = PageRoutes.cart;
+    navigateTo.navigate(pageRoute: PageRoutes.cart);
   }
 }

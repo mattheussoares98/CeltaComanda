@@ -10,6 +10,7 @@ class CartIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      key: const Key("CartIcon"),
       onPressed: goToCartPage,
       icon: const Icon(
         Icons.shopping_cart_rounded,

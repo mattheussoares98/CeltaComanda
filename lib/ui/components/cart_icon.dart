@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../expansible_groups/expansible_groups.dart';
-
 class CartIcon extends StatelessWidget {
-  final ExpansibleGroupsPresenter presenter;
+  final void Function()? goToCartPage;
   const CartIcon({
-    required this.presenter,
+    required this.goToCartPage,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: presenter.goToCartPage,
+      onPressed: goToCartPage,
       icon: const Icon(
         Icons.shopping_cart_rounded,
         color: Colors.red,

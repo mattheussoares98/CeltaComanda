@@ -34,7 +34,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
         title: const Text("Grupos expansíveis"),
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
-          CartIcon(presenter: widget.presenter),
+          CartIcon(goToCartPage: widget.presenter.goToCartPage),
         ],
       ),
       body: SingleChildScrollView(

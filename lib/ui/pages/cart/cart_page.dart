@@ -47,16 +47,16 @@ class CartPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         // ImageWidget(product: product),
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          child: Image.network(
-                                            "https://www.dotcominfoway.com/wp-content/uploads/2020/01/app-development-platforms.png",
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                        // ClipRRect(
+                                        //   borderRadius:
+                                        //       BorderRadius.circular(12),
+                                        //   child: Image.network(
+                                        //     "https://www.dotcominfoway.com/wp-content/uploads/2020/01/app-development-platforms.png",
+                                        //     width: 70,
+                                        //     height: 70,
+                                        //     fit: BoxFit.cover,
+                                        //   ),
+                                        // ),
                                         const Expanded(
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(

@@ -22,14 +22,6 @@ class GetxProductsPresenter extends GetxController
   @override
   Stream<List<ProductsViewModel>> get productsStream => _products.stream;
 
-  @override
-  void goToProductDetailsPage() {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.productDetails,
-      arguments: _selectedProduct,
-    );
-  }
-
   ProductsViewModel? _selectedProduct;
   @override
   ProductsViewModel? get selectedProduct => _selectedProduct;
@@ -66,5 +58,20 @@ class GetxProductsPresenter extends GetxController
   @override
   void updateSelectedProduct(ProductsViewModel product) {
     _selectedProduct = product;
+  }
+
+  @override
+  void goToCartPage() {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.cart,
+    );
+  }
+
+  @override
+  void goToProductDetailsPage() {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.productDetails,
+      arguments: _selectedProduct,
+    );
   }
 }

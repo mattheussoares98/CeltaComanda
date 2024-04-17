@@ -18,7 +18,10 @@ void main() {
 
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
-      makePage(path: PageRoutes.products, page: () => ProductsPage(presenter)),
+      makePage(
+        path: PageRoutes.products,
+        page: () => ProductsPage(presenter),
+      ),
     );
   }
 
@@ -49,13 +52,21 @@ void main() {
     expect(find.byType(ReloadScreen), findsOneWidget);
   });
 
-  testWidgets('Should change page', (WidgetTester tester) async {
+  testWidgets('Should go to ProductDetailsPage', (WidgetTester tester) async {
     await loadPage(tester);
 
     presenter.goToProductDetailsPage();
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.productDetails);
+  });
+  testWidgets('Should go to CartPage', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.goToCartPage();
+    await tester.pumpAndSettle();
+
+    expect(currentRoute, PageRoutes.cart);
   });
 
   testWidgets('Should show CartIcon on AppBar', (WidgetTester tester) async {

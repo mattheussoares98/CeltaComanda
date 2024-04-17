@@ -31,6 +31,9 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
           PageRoutes.productDetails,
           arguments: selectedProductMock,
         ));
+    when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
+          PageRoutes.cart,
+        ));
   }
   void mockProductStreamError(DomainError error) {
     productsController.addError(

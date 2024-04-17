@@ -1,3 +1,6 @@
 import '../../../../ui/pages/pages.dart';
+import 'cart.dart';
 
-CartPage makeCartPage() => const CartPage();
+CartPage makeCartPage() => CartPage(
+      makeCartPresenter(),
+    );

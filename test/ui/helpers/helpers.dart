@@ -36,7 +36,7 @@ Widget makePage({required String path, required Widget Function() page}) {
     ),
     GetPage(
       name: PageRoutes.cart,
-      page: () => const CartPage(),
+      page: () => CartPage(CartPresenterSpy()),
     ),
     GetPage(
       name: PageRoutes.splash,

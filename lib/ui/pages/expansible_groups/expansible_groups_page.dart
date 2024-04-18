@@ -32,7 +32,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
       drawer: drawer(context: context, presenter: widget.presenter),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
-        automaticallyImplyLeading: false,
         title: const Text("Grupos de comida"),
         actions: [
           CartIcon(goToCartPage: widget.presenter.goToCartPage),

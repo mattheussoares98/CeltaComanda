@@ -11,17 +11,11 @@ class ProductDetailsCartIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: const AlignmentDirectional(0.85, -0.4),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-        child: CircleAvatar(
-          backgroundColor: Colors.grey,
-          child: CartIcon(
-            goToCartPage: goToCartPage,
-            color: Colors.white,
-          ),
-        ),
+    return CircleAvatar(
+      backgroundColor: Colors.grey,
+      child: CartIcon(
+        goToCartPage: goToCartPage,
+        color: Colors.white,
       ),
     );
   }

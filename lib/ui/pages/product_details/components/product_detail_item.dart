@@ -33,8 +33,11 @@ class ProductDetailItem extends StatelessWidget {
                       width: double.infinity,
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                      padding: const EdgeInsetsDirectional.only(
+                        start: 15,
+                        end: 15,
+                        top: 50,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

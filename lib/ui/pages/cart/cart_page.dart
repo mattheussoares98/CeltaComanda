@@ -39,7 +39,22 @@ class _CartPageState extends State<CartPage> with LoadingManager {
                   if (snapshot.hasData) {
                     return CartItems(productViewModel: snapshot.data!);
                   }
-                  return const SizedBox(height: 0);
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          widget.presenter.addProductInCart(const ProductsViewModel(
+                            image: "image",
+                            price: "price",
+                            name: "name",
+                            plu: "plu",
+                          ));
+                        },
+                        child: const Text("Adicionar produto"),
+                      ),
+                    ],
+                  );
                 });
           },
         ),

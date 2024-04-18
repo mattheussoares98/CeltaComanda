@@ -5,13 +5,11 @@ import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import '../firebase_options.dart';
 
 import '../infra/helpers/helperts.dart';
 import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
-import '../ui/pages/pages.dart';
 import './factories/factories.dart';
 
 void main() async {
@@ -33,51 +31,44 @@ class App extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     final routeObserver = Get.put<RouteObserver>(RouteObserver<PageRoute>());
 
-    return MultiProvider(
-      providers: [
-        ListenableProvider<CartPresenter>(
-          create: (_) => makeGetxCartPresenter(),
+    return GetMaterialApp(
+      title: 'Celta restaurante',
+      debugShowCheckedModeBanner: false,
+      theme: makeAppTheme(),
+      navigatorObservers: [routeObserver],
+      initialRoute: PageRoutes.expansibleGroups,
+      getPages: [
+        GetPage(
+          name: PageRoutes.splash,
+          page: makeSplashPage,
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: PageRoutes.login,
+          page: makeLoginPage,
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: PageRoutes.expansibleGroups,
+          page: makeExpansibleGroupsPage,
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: PageRoutes.products,
+          page: makeProductsPage,
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: PageRoutes.cart,
+          page: makeCartPage,
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: PageRoutes.productDetails,
+          page: makeProductDetailsPage,
+          transition: Transition.fadeIn,
         ),
       ],
-      child: GetMaterialApp(
-        title: 'Celta restaurante',
-        debugShowCheckedModeBanner: false,
-        theme: makeAppTheme(),
-        navigatorObservers: [routeObserver],
-        initialRoute: PageRoutes.expansibleGroups,
-        getPages: [
-          GetPage(
-            name: PageRoutes.splash,
-            page: makeSplashPage,
-            transition: Transition.fade,
-          ),
-          GetPage(
-            name: PageRoutes.login,
-            page: makeLoginPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.expansibleGroups,
-            page: makeExpansibleGroupsPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.products,
-            page: makeProductsPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.cart,
-            page: makeCartPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.productDetails,
-            page: makeProductDetailsPage,
-            transition: Transition.fadeIn,
-          ),
-        ],
-      ),
     );
   }
 }

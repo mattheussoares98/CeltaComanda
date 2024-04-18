@@ -5,5 +5,4 @@ import '../../../factories/usecases/usecases.dart';
 ProductDetailsPresenter makeGetxProductDetailsPresenter() =>
     GetxProductDetailsPresenter(
       navigateTo: makeNavigateTo(),
-      addProduct: makeCartAddProduct(),
     );

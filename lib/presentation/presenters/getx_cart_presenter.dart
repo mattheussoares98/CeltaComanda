@@ -1,16 +1,12 @@
 import 'package:get/get.dart';
 
-import '../../domain/usecases/usecases.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
 class GetxCartPresenter extends GetxController
     with LoadingManager
     implements CartPresenter {
-  final NavigateTo navigateTo;
-  GetxCartPresenter({
-    required this.navigateTo,
-  });
+  GetxCartPresenter();
 
   final _cartItems = Rx<List<ProductsViewModel>>([]);
 
@@ -18,7 +14,11 @@ class GetxCartPresenter extends GetxController
   Stream<List<ProductsViewModel>> get cartProducts => _cartItems.stream;
 
   @override
-  void addProductInCart(ProductsViewModel product) {
+  void addProductInCart(ProductsViewModel product) async {
+    await Future.delayed(const Duration(seconds: 1));
+    isLoading = true;
+    await Future.delayed(const Duration(seconds: 3));
     _cartItems.subject.add([product]);
+    isLoading = false;
   }
 }

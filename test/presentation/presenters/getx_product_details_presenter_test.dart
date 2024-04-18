@@ -11,14 +11,17 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late GetxProductDetailsPresenter sut;
   late NavigateToSpy navigateTo;
+  late AddProductSpy addProduct;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
     navigateTo = NavigateToSpy();
+    addProduct = AddProductSpy();
     navigateTo.mockNavigate();
     sut = GetxProductDetailsPresenter(
       navigateTo: navigateTo,
+      addProduct: addProduct,
     );
   });
 

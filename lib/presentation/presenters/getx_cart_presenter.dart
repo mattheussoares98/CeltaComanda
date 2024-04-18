@@ -12,8 +12,13 @@ class GetxCartPresenter extends GetxController
     required this.navigateTo,
   });
 
-  final _cartItems = Rx<List<CartViewModel>>([]);
+  final _cartItems = Rx<List<ProductsViewModel>>([]);
 
   @override
-  Stream<List<CartViewModel>> get cartProducts => _cartItems.stream;
+  Stream<List<ProductsViewModel>> get cartProducts => _cartItems.stream;
+
+  @override
+  void addProductInCart(ProductsViewModel product) {
+    _cartItems.subject.add([product]);
+  }
 }

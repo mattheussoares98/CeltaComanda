@@ -9,7 +9,7 @@ import 'package:mocktail/mocktail.dart';
 
 class CartPresenterSpy extends Mock implements CartPresenter {
   final isLoadingController = StreamController<bool>();
-  final cartController = StreamController<List<CartViewModel>>();
+  final cartController = StreamController<List<ProductsViewModel>>();
 
   CartPresenterSpy() {
     when(() => this.cartProducts).thenAnswer((_) => cartController.stream);

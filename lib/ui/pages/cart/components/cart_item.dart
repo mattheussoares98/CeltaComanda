@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../cart.dart';
+import '../../pages.dart';
 
 class CartItem extends StatelessWidget {
-  final CartViewModel cartViewModel;
+  final ProductsViewModel productViewModel;
   const CartItem({
-    required this.cartViewModel,
+    required this.productViewModel,
     super.key,
   });
 

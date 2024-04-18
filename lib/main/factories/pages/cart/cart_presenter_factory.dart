@@ -3,6 +3,6 @@ import 'package:clean_celta_mobile/presentation/presenters/getx_cart_presenter.d
 
 import '../../../../ui/pages/pages.dart';
 
-CartPresenter makeCartPresenter() => GetxCartPresenter(
+CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       navigateTo: makeNavigateTo(),
     );

@@ -3,4 +3,7 @@ import '../../../../ui/pages/pages.dart';
 import '../../../factories/usecases/usecases.dart';
 
 ProductDetailsPresenter makeGetxProductDetailsPresenter() =>
-    GetxProductDetailsPresenter(navigateTo: makeNavigateTo());
+    GetxProductDetailsPresenter(
+      navigateTo: makeNavigateTo(),
+      addProduct: makeCartAddProduct(),
+    );

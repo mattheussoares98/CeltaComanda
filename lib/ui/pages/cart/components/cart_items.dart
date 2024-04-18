@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class CartItems extends StatelessWidget {
-  final List<CartViewModel> cartViewModel;
+  final List<ProductsViewModel> productViewModel;
   const CartItems({
-    required this.cartViewModel,
+    required this.productViewModel,
     super.key,
   });
 
@@ -14,15 +14,15 @@ class CartItems extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: cartViewModel.length,
+      itemCount: productViewModel.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1.5,
       ),
       itemBuilder: (context, index) {
-        final cartItem = cartViewModel[index];
+        final cartItem = productViewModel[index];
 
-        return CartItem(cartViewModel: cartItem);
+        return CartItem(productViewModel: cartItem);
       },
     );
   }

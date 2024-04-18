@@ -1,10 +1,7 @@
-
 import '../../pages/pages.dart';
 import '../../mixins/mixins.dart';
 
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
   final CartPresenter presenter;
@@ -15,8 +12,7 @@ class CartPage extends StatefulWidget {
   State<CartPage> createState() => _CartPageState();
 }
 
-class _CartPageState extends State<CartPage>
-    with KeyboardManager, LoadingManager, UIErrorManager {
+class _CartPageState extends State<CartPage> with LoadingManager {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +27,7 @@ class _CartPageState extends State<CartPage>
           builder: (context) {
             handleLoading(context, widget.presenter.isLoadingStream);
 
-            return StreamBuilder<List<CartViewModel>>(
+            return StreamBuilder<List<ProductsViewModel>>(
                 stream: widget.presenter.cartProducts,
                 builder: (context, snapshot) {
                   // if (snapshot.hasError) {
@@ -41,10 +37,7 @@ class _CartPageState extends State<CartPage>
                   //   );
                   // }
                   if (snapshot.hasData) {
-                    return ListenableProvider(
-                      create: (_) => widget.presenter,
-                      child: CartItems(cartViewModel: snapshot.data!),
-                    );
+                    return CartItems(productViewModel: snapshot.data!);
                   }
                   return const SizedBox(height: 0);
                 });

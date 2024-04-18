@@ -53,7 +53,7 @@ class ProductDetailItem extends StatelessWidget {
           ),
         ),
         AddProductInCart(
-          onPressed: presenter.addProductInCart,
+          onPressed: () => presenter.addProductInCart(product),
           price: product.price,
         ),
       ],

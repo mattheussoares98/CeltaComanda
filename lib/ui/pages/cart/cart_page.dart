@@ -1,12 +1,13 @@
+import 'package:provider/provider.dart';
+
+import '../../../presentation/presenters/presenters.dart';
 import '../../pages/pages.dart';
 import '../../mixins/mixins.dart';
 
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
-  final CartPresenter presenter;
-
-  const CartPage(this.presenter, {super.key});
+  const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -15,6 +16,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> with LoadingManager {
   @override
   Widget build(BuildContext context) {
+    GetxCartPresenter cartPresenter = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
@@ -24,37 +26,24 @@ class _CartPageState extends State<CartPage> with LoadingManager {
         primary: false,
         child: Builder(
           builder: (context) {
-            handleLoading(context, widget.presenter.isLoadingStream);
+            handleLoading(context, cartPresenter.isLoadingStream);
 
-            return StreamBuilder<List<ProductsViewModel>>(
-                stream: widget.presenter.cartProducts,
-                builder: (context, snapshot) {
-                  // if (snapshot.hasError) {
-                  //   return ReloadScreen(
-                  //     error: '${snapshot.error}',
-                  //     reload: () async => await widget.presenter.load(),
-                  //   );
-                  // }
-                  if (snapshot.hasData) {
-                    return CartItems(productViewModel: snapshot.data!);
-                  }
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          widget.presenter.addProductInCart(const ProductsViewModel(
-                            image: "image",
-                            price: "price",
-                            name: "name",
-                            plu: "plu",
-                          ));
-                        },
-                        child: const Text("Adicionar produto"),
-                      ),
-                    ],
-                  );
-                });
+            return Column(
+              children: [
+                CartItems(productViewModel: cartPresenter.cartProducts),
+                ElevatedButton(
+                  onPressed: ()async {
+                    await cartPresenter.addProductInCart(const ProductsViewModel(
+                      image: "image",
+                      price: "price",
+                      name: "name",
+                      plu: "plu",
+                    ));
+                  },
+                  child: const Text("Adicionar produto"),
+                ),
+              ],
+            );
           },
         ),
       ),

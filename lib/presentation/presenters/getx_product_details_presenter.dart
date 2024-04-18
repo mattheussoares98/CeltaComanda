@@ -14,11 +14,16 @@ class GetxProductDetailsPresenter extends GetxController
     required this.navigateTo,
   });
 
-  // @override
-  // void addProductInCart(ProductsViewModel product) {}
-
   @override
   void goToCartPage() {
     navigateTo.navigate(pageRoute: PageRoutes.cart);
+  }
+
+  @override
+  Future<void> addProductInCart({
+    required ProductsViewModel product,
+    required CartPresenter cartPresenter,
+  }) async {
+    await cartPresenter.addProductInCart(product);
   }
 }

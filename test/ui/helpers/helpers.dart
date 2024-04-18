@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
+
+import 'package:flutter/material.dart';
+
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../mocks/mocks.dart';
 
@@ -36,7 +38,7 @@ Widget makePage({required String path, required Widget Function() page}) {
     ),
     GetPage(
       name: PageRoutes.cart,
-      page: () => CartPage(CartPresenterSpy()),
+      page: () => const CartPage(),
     ),
     GetPage(
       name: PageRoutes.splash,

@@ -1,24 +1,23 @@
 import 'package:get/get.dart';
 
+import 'package:flutter/foundation.dart';
+
 import '../../ui/pages/pages.dart';
-import '../mixins/mixins.dart';
 
-class GetxCartPresenter extends GetxController
-    with LoadingManager
-    implements CartPresenter {
-  GetxCartPresenter();
-
-  final _cartItems = Rx<List<ProductsViewModel>>([]);
+class GetxCartPresenter with ChangeNotifier implements CartPresenter {
+  final List<ProductsViewModel> _cartItems = [];
 
   @override
-  Stream<List<ProductsViewModel>> get cartProducts => _cartItems.stream;
+  List<ProductsViewModel> get cartProducts => _cartItems;
 
   @override
-  void addProductInCart(ProductsViewModel product) async {
-    await Future.delayed(const Duration(seconds: 1));
-    isLoading = true;
-    await Future.delayed(const Duration(seconds: 3));
-    _cartItems.subject.add([product]);
-    isLoading = false;
+  Future<void> addProductInCart(ProductsViewModel product) async {
+    _cartItems.add(product);
+    notifyListeners();
   }
+
+  final _isLoading = Rx<bool>(false);
+
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
 }

@@ -5,6 +5,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'dart:async';
+
 import 'package:mocktail/mocktail.dart';
 
 class CartPresenterSpy extends Mock implements CartPresenter {
@@ -12,7 +13,7 @@ class CartPresenterSpy extends Mock implements CartPresenter {
   final cartController = StreamController<List<ProductsViewModel>>();
 
   CartPresenterSpy() {
-    when(() => this.cartProducts).thenAnswer((_) => cartController.stream);
+    // when(() => this.cartProducts).thenAnswer((_) => cartController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
   }
@@ -24,8 +25,4 @@ class CartPresenterSpy extends Mock implements CartPresenter {
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);
-
-  void dispose() {
-    isLoadingController.close();
-  }
 }

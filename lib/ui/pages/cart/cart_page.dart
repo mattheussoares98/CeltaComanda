@@ -18,7 +18,6 @@ class _CartPageState extends State<CartPage> with LoadingManager {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
-        automaticallyImplyLeading: false,
         title: const Text("Carrinho"),
       ),
       body: SingleChildScrollView(

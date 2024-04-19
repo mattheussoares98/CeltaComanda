@@ -22,30 +22,41 @@ class _CartPageState extends State<CartPage> with LoadingManager {
         backgroundColor: const Color(0xFFF1F5F8),
         title: const Text("Carrinho"),
       ),
-      body: SingleChildScrollView(
-        primary: false,
-        child: Builder(
-          builder: (context) {
-            handleLoading(context, cartPresenter.isLoadingStream);
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Builder(
+                builder: (context) {
+                  handleLoading(context, cartPresenter.isLoadingStream);
 
-            return Column(
-              children: [
-                CartItems(productViewModel: cartPresenter.cartProducts),
-                ElevatedButton(
-                  onPressed: ()async {
-                    await cartPresenter.addProductInCart(const ProductsViewModel(
-                      image: "image",
-                      price: "price",
-                      name: "name",
-                      plu: "plu",
-                    ));
-                  },
-                  child: const Text("Adicionar produto"),
+                  return CartItems(
+                      productViewModel: cartPresenter.cartProducts);
+                },
+              ),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              // fixedSize: const Size(double.infinity, 60),
+              minimumSize: const Size(double.infinity, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(
+                  color: Color(0xFFE0E3E7),
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ),
+            onPressed: () {},
+            child: const Text(
+              'Salvar pedido',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

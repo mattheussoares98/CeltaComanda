@@ -18,6 +18,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   Future<void> checkApiSaleRequest({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
+      //precisa testar o local. Se não der certo, testa o remote
       ApiSaleRequestEntity? apiSaleRequestEntity = await loadApiSaleRequest.load();
       if (apiSaleRequestEntity != null) {
         navigateTo.navigate(

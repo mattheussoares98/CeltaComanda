@@ -16,6 +16,10 @@ class CartPresenterSpy extends Mock implements CartPresenter {
     // when(() => this.cartProducts).thenAnswer((_) => cartController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+
+    when(() => this.addProductInCart(any())).thenAnswer(
+      (_) async => _,
+    );
   }
   void mockExpansibleGroupStreamError(DomainError error) {
     cartController.addError(

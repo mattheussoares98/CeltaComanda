@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'package:faker/faker.dart';
 
@@ -37,5 +38,14 @@ class EntityFactory {
       ExpansibleGroupEntity(name: faker.randomGenerator.string(30)),
       ExpansibleGroupEntity(name: faker.randomGenerator.string(30)),
     ];
+  }
+
+  static ProductsViewModel makeProductViewModel() {
+    return ProductsViewModel(
+      image: faker.internet.httpUrl(),
+      price: faker.randomGenerator.decimal().toString(),
+      name: faker.food.random.string(10),
+      plu: faker.randomGenerator.integer(5).toString(),
+    );
   }
 }

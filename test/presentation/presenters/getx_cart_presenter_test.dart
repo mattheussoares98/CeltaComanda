@@ -23,18 +23,9 @@ void main() {
     sut = GetxCartPresenter();
   });
 
-  test('Should call addProduct with correct product', () async {
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-    // sut.cartProducts.listen(expectAsync1((products) => expect(products, [
-    //       ProductsViewModel(
-    //         image: products[0].image,
-    //         price: products[0].price,
-    //         name: products[0].name,
-    //         plu: products[0].plu,
-    //       ),
-    //     ])));
-
+  test('Should add product in cart', () async {
     sut.addProductInCart(product);
+
+    expect(product, sut.cartProducts[0]);
   });
 }

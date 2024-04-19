@@ -21,6 +21,7 @@ class _CartIconState extends State<CartIcon> {
     GetxCartPresenter cartProvider = Provider.of(context);
 
     return GestureDetector(
+      key: const Key("CartIcon"),
       onTap: widget.goToCartPage,
       child: FittedBox(
         child: Stack(

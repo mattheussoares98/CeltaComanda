@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
@@ -61,10 +63,17 @@ Widget makePage({required String path, required Widget Function() page}) {
     ));
   }
 
-  return GetMaterialApp(
-    initialRoute: path,
-    navigatorObservers: [Get.put<RouteObserver>(RouteObserver<PageRoute>())],
-    getPages: allPages,
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => GetxCartPresenter(),
+      ),
+    ],
+    child: GetMaterialApp(
+      initialRoute: path,
+      navigatorObservers: [Get.put<RouteObserver>(RouteObserver<PageRoute>())],
+      getPages: allPages,
+    ),
   );
 }
 

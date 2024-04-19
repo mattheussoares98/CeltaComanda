@@ -1,10 +1,8 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
-import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
@@ -14,7 +12,6 @@ import '../mocks/mocks.dart';
 
 void main() {
   late GetxLoginPresenter sut;
-  late AuthenticationSpy authentication;
   late ValidationSpy validation;
   late LocalLoginDataSpy localLoginData;
   late LoginDataEntity loginData;
@@ -26,13 +23,11 @@ void main() {
     password = faker.internet.password();
 
     validation = ValidationSpy();
-    authentication = AuthenticationSpy();
     localLoginData = LocalLoginDataSpy();
     remoteLoginData = RemoteLoginDataSpy();
     navigateTo = NavigateToSpy();
 
     loginData = EntityFactory.makeLoginData();
-    authentication.mockAuthentication("");
 
     localLoginData.mockSave(loginData);
     localLoginData.mockLoad(loginData);
@@ -42,7 +37,6 @@ void main() {
 
     sut = GetxLoginPresenter(
       validation: validation,
-      authentication: authentication,
       localLoginData: localLoginData,
       remoteLoginData: remoteLoginData,
       navigateTo: navigateTo,
@@ -54,7 +48,6 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeLoginData());
-    registerFallbackValue(ParamsFactory.makeAuthentication());
   });
 
   test('Should call Validation with correct user', () {
@@ -204,19 +197,19 @@ void main() {
     await Future.delayed(Duration.zero);
   });
 
-  test('Should call Authentication with correct values', () async {
-    sut.validateUser(sut.userNameController.text);
-    sut.validatePassword(password);
-    sut.validateUrl(sut.urlController.text);
+  // test('Should call Authentication with correct values', () async {
+  //   sut.validateUser(sut.userNameController.text);
+  //   sut.validatePassword(password);
+  //   sut.validateUrl(sut.urlController.text);
 
-    await sut.auth();
+  //   await sut.auth();
 
-    verify(() => authentication.auth(AuthenticationParams(
-          user: loginData.userName,
-          password: password,
-          url: loginData.url,
-        ))).called(1);
-  });
+  //   verify(() => authentication.auth(AuthenticationParams(
+  //         user: loginData.userName,
+  //         password: password,
+  //         url: loginData.url,
+  //       ))).called(1);
+  // });
 
   // test('Should call SaveCrossId with correct value', () async {
   //   sut.validateUser(sut.userNameController.text);

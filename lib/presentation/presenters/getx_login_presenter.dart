@@ -18,14 +18,12 @@ class GetxLoginPresenter extends GetxController
         TextControllerManager
     implements LoginPresenter {
   final Validation validation;
-  final Authentication authentication;
   final LocalLoginData localLoginData;
   final RemoteLoginData remoteLoginData;
   final NavigateTo navigateTo;
 
   GetxLoginPresenter({
     required this.validation,
-    required this.authentication,
     required this.localLoginData,
     required this.remoteLoginData,
     required this.navigateTo,
@@ -139,13 +137,13 @@ class GetxLoginPresenter extends GetxController
         await loadRemoteData();
       }
 
-      await authentication.auth(
-        AuthenticationParams(
-          user: _loginData!.userName,
-          password: _password!,
-          url: _loginData!.url,
-        ),
-      );
+      // await authentication.auth(
+      //   AuthenticationParams(
+      //     user: _loginData!.userName,
+      //     password: _password!,
+      //     url: _loginData!.url,
+      //   ),
+      // );
 
       await addLoginDataInDatabase(_loginData!);
 

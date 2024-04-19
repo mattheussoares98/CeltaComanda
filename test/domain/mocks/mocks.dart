@@ -1,4 +1,3 @@
-export './authentication_spy.dart';
 export './entity_factory.dart';
 export '../../data/mocks/load_products_spy.dart';
 export './local_login_data_spy.dart';

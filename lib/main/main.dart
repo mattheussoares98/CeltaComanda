@@ -44,7 +44,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: makeAppTheme(),
         navigatorObservers: [routeObserver],
-        initialRoute: PageRoutes.expansibleGroups,
+        initialRoute: PageRoutes.splash,
         getPages: [
           GetPage(
             name: PageRoutes.splash,

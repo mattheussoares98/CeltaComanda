@@ -8,7 +8,7 @@ class SplashPresenterSpy extends Mock
     implements SplashPresenter /* LoadCrossId */ {
   SplashPresenterSpy() {
     when(() => this
-            .checkAccount(durationInSeconds: any(named: 'durationInSeconds')))
+            .checkApiSaleRequest(durationInSeconds: any(named: 'durationInSeconds')))
         .thenAnswer((_) async => _);
   }
 

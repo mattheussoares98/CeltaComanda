@@ -45,4 +45,16 @@ class EntityFactory {
       plu: faker.randomGenerator.integer(5).toString(),
     );
   }
+
+  static ApiSaleRequestEntity makeApiSaleRequestEntity() {
+    return ApiSaleRequestEntity(
+      products: [],
+      saleRequestTempId: faker.randomGenerator.integer(10),
+      personalizedCode: faker.randomGenerator.string(10),
+      enterpriseId: faker.randomGenerator.integer(3),
+      totalLiquid: faker.randomGenerator.decimal(),
+      deliveryControl: faker.randomGenerator.integer(5),
+      comments: faker.randomGenerator.string(50),
+    );
+  }
 }

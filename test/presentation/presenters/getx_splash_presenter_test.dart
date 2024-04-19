@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/widgets.dart';
@@ -11,26 +12,31 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late GetxSplashPresenter sut;
   late NavigateToSpy navigateTo;
+  late LoadApiSaleRequestSpy loadApiSaleRequest;
+  late ApiSaleRequestEntity apiSaleRequestEntity;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
-    // crossIdSpy.mockLoad(account: EntityFactory.makeAccount());
     navigateTo = NavigateToSpy();
+    loadApiSaleRequest = LoadApiSaleRequestSpy();
     navigateTo.mockNavigate();
+    apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
+    loadApiSaleRequest.mockLoadApiSaleRequest(apiSaleRequestEntity);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
+      loadApiSaleRequest: loadApiSaleRequest,
     );
   });
 
-  // test('Should call LoadCrossId', () async {
-  //   await sut.checkAccount(durationInSeconds: 0);
+  test('Should call LoadApiSaleRequestEntity', () async {
+    await sut.checkApiSaleRequest(durationInSeconds: 0);
 
-  //   verify(() => crossIdSpy.load()).called(1);
-  // });
+    verify(() => loadApiSaleRequest.load()).called(1);
+  });
 
   test('Should go to surveys page on success', () async {
-    await sut.checkAccount(durationInSeconds: 0);
+    await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(
       () => navigateTo.navigate(
@@ -40,8 +46,9 @@ void main() {
     ).called(1);
   });
 
-  test('Should go to login page on error', () async {
-    await sut.checkAccount(durationInSeconds: 0);
+  test('Should go to login page if loadApiSaleRequest returns null', () async {
+    loadApiSaleRequest.mockLoadApiSaleRequest(null);
+    await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(
       () => navigateTo.navigate(

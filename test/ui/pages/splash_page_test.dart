@@ -36,7 +36,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(() => presenter.checkAccount()).called(1);
+    verify(() => presenter.checkApiSaleRequest()).called(1);
   });
 
   testWidgets('Should change to LoginPage', (WidgetTester tester) async {

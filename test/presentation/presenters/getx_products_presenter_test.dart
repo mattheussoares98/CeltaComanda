@@ -6,6 +6,7 @@ import 'package:clean_celta_mobile/ui/pages/products/products.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:mocktail/mocktail.dart';

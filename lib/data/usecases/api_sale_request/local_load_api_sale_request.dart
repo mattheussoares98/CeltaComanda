@@ -12,9 +12,7 @@ class LocalLoadApiSaleRequest
   LocalLoadApiSaleRequest({required this.hiveStorage});
 
   @override
-  Future<ApiSaleRequestEntity?> load(
-    ApiSaleRequestEntity? apiSaleRequestEntity,
-  ) async {
+  Future<ApiSaleRequestEntity?> load() async {
     try {
       final json = await hiveStorage.get(
         CacheKeys.apiSaleRequest.name,

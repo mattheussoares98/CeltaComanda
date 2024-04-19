@@ -36,26 +36,7 @@ class _CartPageState extends State<CartPage> with LoadingManager {
               ),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              // fixedSize: const Size(double.infinity, 60),
-              minimumSize: const Size(double.infinity, 40),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: const BorderSide(
-                  color: Color(0xFFE0E3E7),
-                ),
-              ),
-            ),
-            onPressed: () {},
-            child: const Text(
-              'Salvar pedido',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
+          const SaveSaleRequestButton(),
         ],
       ),
     );

@@ -31,10 +31,6 @@ void main() {
     );
   });
 
-  setUpAll(() {
-    registerFallbackValue(EntityFactory.makeAccount());
-  });
-
   test('Should call load products', () async {
     await sut.load();
 

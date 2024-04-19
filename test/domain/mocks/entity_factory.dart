@@ -4,9 +4,6 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 class EntityFactory {
-  static CrossIdEntity makeAccount() =>
-      CrossIdEntity(crossId: faker.guid.guid());
-
   static LoginDataEntity makeLoginData() {
     final String url = faker.internet.httpUrl();
     return LoginDataEntity(

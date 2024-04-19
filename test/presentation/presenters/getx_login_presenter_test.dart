@@ -1,5 +1,4 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
@@ -17,9 +16,7 @@ void main() {
   late GetxLoginPresenter sut;
   late AuthenticationSpy authentication;
   late ValidationSpy validation;
-  late CrossIdSpy crossIdSpy;
   late LocalLoginDataSpy localLoginData;
-  late CrossIdEntity crossIdEntity;
   late LoginDataEntity loginData;
   late String password;
   late RemoteLoginDataSpy remoteLoginData;
@@ -30,14 +27,12 @@ void main() {
 
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
-    crossIdSpy = CrossIdSpy();
     localLoginData = LocalLoginDataSpy();
     remoteLoginData = RemoteLoginDataSpy();
     navigateTo = NavigateToSpy();
 
     loginData = EntityFactory.makeLoginData();
-    crossIdEntity = EntityFactory.makeAccount();
-    authentication.mockAuthentication(crossIdEntity);
+    authentication.mockAuthentication("");
 
     localLoginData.mockSave(loginData);
     localLoginData.mockLoad(loginData);
@@ -48,7 +43,6 @@ void main() {
     sut = GetxLoginPresenter(
       validation: validation,
       authentication: authentication,
-      saveCrossId: crossIdSpy,
       localLoginData: localLoginData,
       remoteLoginData: remoteLoginData,
       navigateTo: navigateTo,
@@ -59,7 +53,6 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(EntityFactory.makeAccount());
     registerFallbackValue(EntityFactory.makeLoginData());
     registerFallbackValue(ParamsFactory.makeAuthentication());
   });
@@ -225,28 +218,28 @@ void main() {
         ))).called(1);
   });
 
-  test('Should call SaveCrossId with correct value', () async {
-    sut.validateUser(sut.userNameController.text);
-    sut.validatePassword(password);
-    sut.validateUrl(sut.urlController.text);
+  // test('Should call SaveCrossId with correct value', () async {
+  //   sut.validateUser(sut.userNameController.text);
+  //   sut.validatePassword(password);
+  //   sut.validateUrl(sut.urlController.text);
 
-    await sut.auth();
+  //   await sut.auth();
 
-    verify(() => crossIdSpy.save(crossIdEntity)).called(1);
-  });
+  //   verify(() => crossIdSpy.save(crossIdEntity)).called(1);
+  // });
 
-  test('Should emit UnexpectedError if SaveCrossId fails', () async {
-    crossIdSpy.mockSaveError(DomainError.unexpected);
-    // sut.loadLocalData();
-    sut.validateUser(sut.userNameController.text);
-    sut.validatePassword(password);
-    sut.validateUrl(sut.urlController.text);
+  // test('Should emit UnexpectedError if SaveCrossId fails', () async {
+  //   crossIdSpy.mockSaveError(DomainError.unexpected);
+  //   // sut.loadLocalData();
+  //   sut.validateUser(sut.userNameController.text);
+  //   sut.validatePassword(password);
+  //   sut.validateUrl(sut.urlController.text);
 
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+  //   expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    await sut.auth();
-  });
+  //   await sut.auth();
+  // });
 
   test('Should call SaveLoginData with correct value', () async {
     localLoginData.mockSave(loginData);

@@ -19,7 +19,6 @@ class GetxLoginPresenter extends GetxController
     implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
-  final SaveCrossId saveCrossId;
   final LocalLoginData localLoginData;
   final RemoteLoginData remoteLoginData;
   final NavigateTo navigateTo;
@@ -27,7 +26,6 @@ class GetxLoginPresenter extends GetxController
   GetxLoginPresenter({
     required this.validation,
     required this.authentication,
-    required this.saveCrossId,
     required this.localLoginData,
     required this.remoteLoginData,
     required this.navigateTo,
@@ -141,15 +139,13 @@ class GetxLoginPresenter extends GetxController
         await loadRemoteData();
       }
 
-      final account = await authentication.auth(
+      await authentication.auth(
         AuthenticationParams(
           user: _loginData!.userName,
           password: _password!,
           url: _loginData!.url,
         ),
       );
-
-      await saveCrossId.save(account);
 
       await addLoginDataInDatabase(_loginData!);
 

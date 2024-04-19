@@ -1,19 +1,18 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
-class SplashPresenterSpy extends Mock implements SplashPresenter, LoadCrossId {
+class SplashPresenterSpy extends Mock
+    implements SplashPresenter /* LoadCrossId */ {
   SplashPresenterSpy() {
     when(() => this
             .checkAccount(durationInSeconds: any(named: 'durationInSeconds')))
         .thenAnswer((_) async => _);
   }
 
-  void mockLoadAccount(CrossIdEntity? crossIdEntity) {
-    when(() => this.load()).thenAnswer((_) async => crossIdEntity);
-  }
+  // void mockLoadAccount(CrossIdEntity? crossIdEntity) {
+  //   when(() => this.load()).thenAnswer((_) async => crossIdEntity);
+  // }
 }

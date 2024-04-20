@@ -8,4 +8,5 @@ enum FirebaseKeys {
   url,
   urlWeb,
   enterpriseName,
+  enterpriseId,
 }

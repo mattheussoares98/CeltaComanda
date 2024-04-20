@@ -1,7 +1,9 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
+
 import '../../../data/usecases/login_data/login_data.dart';
-import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../protocols/protocols.dart';
@@ -35,28 +37,23 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   Future<void> loadLocalData() async {
-    _loginData = await localLoginData.load();
+    LoginDataBuilder.loginDataEntity = await localLoginData.load();
 
-    if (_loginData?.enterpriseName?.isNotEmpty == true) {
-      updateEnterpriseController(_loginData!.enterpriseName!);
+    if (LoginDataBuilder.loginDataEntity?.enterpriseName?.isNotEmpty == true) {
+      updateEnterpriseController(
+          LoginDataBuilder.loginDataEntity!.enterpriseName!);
     }
   }
 
-  LoginDataEntity? _loginData;
-  @override
-  LoginDataEntity? get loginData => _loginData;
-
-  LoginDataEntity? _remoteEntity;
-  @override
-  LoginDataEntity? get remoteEntity => _remoteEntity;
-
   @override
   Future<void> loadRemoteData() async {
-    _remoteEntity ??= await remoteLoginData.load(loginEntity: _loginData);
+    LoginDataBuilder.loginDataEntity = await remoteLoginData.load(
+        loginEntity: LoginDataBuilder.loginDataEntity);
 
-    if (_remoteEntity?.enterpriseName?.isNotEmpty == true) {
-      enterpriseNameController.text = _remoteEntity!.enterpriseName!;
-      await localLoginData.add(_remoteEntity!);
+    if (LoginDataBuilder.loginDataEntity?.enterpriseName?.isNotEmpty == true) {
+      enterpriseNameController.text =
+          LoginDataBuilder.loginDataEntity!.enterpriseName!;
+      await localLoginData.add(LoginDataBuilder.loginDataEntity!);
     }
 
     isUpdatedEnterpriseName = false;
@@ -68,15 +65,22 @@ class GetxEnterpriseValidationPresenter extends GetxController
       mainError = null;
       isLoading = true;
 
-      await localLoginData.add(_loginData!);
+      await localLoginData.add(LoginDataBuilder.loginDataEntity!);
 
       if (isUpdatedEnterpriseName) {
         await loadRemoteData();
       }
 
-      await loadApiSaleRequest.load();
+      if (LoginDataBuilder.loginDataEntity == null) {
+        throw DomainError.enterpriseOrUrlNotFound;
+      }
 
-      await localLoginData.add(_loginData!);
+      await loadApiSaleRequest.load(
+        url: LoginDataBuilder.loginDataEntity!.url,
+        enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
+      );
+
+      await localLoginData.add(LoginDataBuilder.loginDataEntity!);
 
       navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
     } on DomainError catch (error) {
@@ -102,9 +106,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
       isUpdatedEnterpriseName = true;
     }
 
-    _loginData = LoginDataEntity(
-      url: urlController.text,
-      userName: userNameController.text,
+    LoginDataBuilder.loginDataEntity = LoginDataEntity(
+      url: "url",
+      userName: "userName",
       enterpriseName: enterpriseNameController.text,
     );
   }

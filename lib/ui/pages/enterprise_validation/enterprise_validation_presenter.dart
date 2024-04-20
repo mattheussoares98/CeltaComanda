@@ -1,4 +1,3 @@
-import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 
 import 'package:flutter/material.dart';
@@ -12,9 +11,6 @@ abstract class EnterpriseValidationPresenter implements Listenable {
   bool isUpdatedEnterpriseName = false;
 
   TextEditingController get enterpriseNameController;
-
-  LoginDataEntity? get loginData;
-  LoginDataEntity? get remoteEntity;
 
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false});

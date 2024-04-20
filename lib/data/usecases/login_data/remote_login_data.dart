@@ -6,7 +6,7 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../cache/cache.dart';
 
-class RemoteLoginData implements LoadLoginData, SaveLoginData {
+class RemoteLoginData implements LoadLoginData /* SaveLoginData */ {
   final FirebaseStorage firebaseStorage;
 
   RemoteLoginData({
@@ -39,17 +39,17 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
     }
   }
 
-  @override
-  Future<void> add(LoginDataEntity entity) async {
-    try {
-      await firebaseStorage.add(
-        loginEntity: entity,
-        collection: FirebaseCollections.clients.name,
-      );
-    } catch (error) {
-      throw DomainError.unexpected;
-    }
-  }
+  // @override
+  // Future<void> add(LoginDataEntity entity) async {
+  //   try {
+  //     await firebaseStorage.add(
+  //       loginEntity: entity,
+  //       collection: FirebaseCollections.clients.name,
+  //     );
+  //   } catch (error) {
+  //     throw DomainError.unexpected;
+  //   }
+  // }
 
   @override
   Future<LoginDataEntity?> load({LoginDataEntity? loginEntity}) async {
@@ -70,6 +70,7 @@ class RemoteLoginData implements LoadLoginData, SaveLoginData {
         return LoginDataEntity(
           url: data[FirebaseKeys.url.name] ?? "",
           userName: loginEntity.userName,
+          enterpriseId: data[FirebaseKeys.enterpriseId.name],
           enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
         );
       }

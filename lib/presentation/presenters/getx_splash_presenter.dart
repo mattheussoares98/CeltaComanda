@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/entities.dart';
@@ -7,19 +8,35 @@ import '../../ui/pages/pages.dart';
 
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final LoadApiSaleRequest loadApiSaleRequest;
+  final LoadLoginData loadLoginData;
   final NavigateTo navigateTo;
 
   GetxSplashPresenter({
     required this.loadApiSaleRequest,
     required this.navigateTo,
+    required this.loadLoginData,
   });
 
   @override
-  Future<void> checkApiSaleRequest({int durationInSeconds = 2}) async {
+  Future<void> checkApiSaleRequest({
+    int durationInSeconds = 2,
+  }) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      //precisa testar o local. Se não der certo, testa o remote
-      ApiSaleRequestEntity? apiSaleRequestEntity = await loadApiSaleRequest.load();
+      LoginDataBuilder.loginDataEntity = await loadLoginData.load();
+
+      if (LoginDataBuilder.loginDataEntity == null) {
+        navigateTo.navigate(
+          pageRoute: PageRoutes.expansibleGroups,
+          clear: true,
+        );
+      }
+
+      ApiSaleRequestEntity? apiSaleRequestEntity =
+          await loadApiSaleRequest.load(
+        enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
+        url: LoginDataBuilder.loginDataEntity!.url,
+      );
       if (apiSaleRequestEntity != null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.expansibleGroups,
@@ -32,7 +49,8 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
         );
       }
     } catch (error) {
-      navigateTo.navigate(pageRoute: PageRoutes.enterpriseValidation, clear: true);
+      navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation, clear: true);
     }
   }
 }

@@ -6,18 +6,20 @@ import '../../http/http.dart';
 
 class RemoteLoadApiSaleRequest implements LoadApiSaleRequest {
   final HttpClient httpAdapter;
-  final String url;
 
   RemoteLoadApiSaleRequest({
     required this.httpAdapter,
-    required this.url,
   });
 
   @override
-  Future<ApiSaleRequestEntity?> load() async {
+  Future<ApiSaleRequestEntity?> load({
+    required String url,
+    required int enterpriseId,
+  }) async {
     try {
       final apiSaleRequest = await httpAdapter.request(
-        url: "http://192.168.1.10:10965/api/apiSaleRequest/GetTemp?_enterpriseId=1&_personalizedCode=001",
+        url:
+            "$url/api/apiSaleRequest/GetTemp?_enterpriseId=$enterpriseId&_personalizedCode=001",
         method: "get",
       );
       if (apiSaleRequest == null) throw Error();

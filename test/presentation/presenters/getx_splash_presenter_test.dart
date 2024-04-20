@@ -14,6 +14,8 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadApiSaleRequestSpy loadApiSaleRequest;
   late ApiSaleRequestEntity apiSaleRequestEntity;
+  late LocalLoadLoginDataSpy loadLoginData;
+  late LoginDataEntity loginDataEntity;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -23,16 +25,22 @@ void main() {
     navigateTo.mockNavigate();
     apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
     loadApiSaleRequest.mockLoadApiSaleRequest(apiSaleRequestEntity);
+    loadLoginData = LocalLoadLoginDataSpy();
+    loginDataEntity = EntityFactory.makeLoginData();
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadApiSaleRequest: loadApiSaleRequest,
+      loadLoginData: loadLoginData,
     );
   });
 
   test('Should call LoadApiSaleRequestEntity', () async {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
-    verify(() => loadApiSaleRequest.load()).called(1);
+    verify(() => loadApiSaleRequest.load(
+          enterpriseId: loginDataEntity.enterpriseId!,
+          url: loginDataEntity.url,
+        )).called(1);
   });
 
   test('Should go to surveys page on success', () async {

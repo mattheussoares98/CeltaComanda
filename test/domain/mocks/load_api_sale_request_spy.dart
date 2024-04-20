@@ -8,7 +8,10 @@ class LoadApiSaleRequestSpy extends Mock implements LoadApiSaleRequest {
   LoadApiSaleRequestSpy() {
     mockLoadApiSaleRequest(null);
   }
-  When mockLoadApiSaleRequestCall() => when(() => this.load());
+  When mockLoadApiSaleRequestCall() => when(() => this.load(
+        enterpriseId: any(named: "enterpriseId"),
+        url: any(named: "url"),
+      ));
 
   void mockLoadApiSaleRequest(ApiSaleRequestEntity? entity) {
     mockLoadApiSaleRequestCall().thenAnswer((_) async => entity);

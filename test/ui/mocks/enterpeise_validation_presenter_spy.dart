@@ -36,9 +36,6 @@ class EnterpriseValidationPresenterSpy extends Mock
         .thenAnswer((_) => isFormValidController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-
-    when(() => this.loginData).thenReturn(LoginDataEntitySpy());
-    when(() => this.remoteEntity).thenReturn(null);
   }
 
   void emitFormError() => isFormValidController.add(false);

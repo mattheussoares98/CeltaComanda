@@ -12,7 +12,7 @@ import '../mocks/mocks.dart';
 void main() {
   late GetxEnterpriseValidationPresenter sut;
   late ValidationSpy validation;
-  late LocalLoginDataSpy localLoginData;
+  late LocalLoadLoginDataSpy localLoginData;
   late LoginDataEntity loginData;
   late RemoteLoginDataSpy remoteLoginData;
   late NavigateToSpy navigateTo;
@@ -20,7 +20,7 @@ void main() {
 
   setUp(() {
     validation = ValidationSpy();
-    localLoginData = LocalLoginDataSpy();
+    localLoginData = LocalLoadLoginDataSpy();
     remoteLoginData = RemoteLoginDataSpy();
     navigateTo = NavigateToSpy();
     loginData = EntityFactory.makeLoginData();

@@ -7,7 +7,7 @@ import 'package:mocktail/mocktail.dart';
 class FirebaseStorageSpy extends Mock implements FirebaseStorage {
   FirebaseStorageSpy() {
     this.mockUpdate();
-    this.mockAdd();
+    // this.mockAdd();
   }
 
   When mockGetCall() => when(() => this.get(
@@ -23,10 +23,10 @@ class FirebaseStorageSpy extends Mock implements FirebaseStorage {
   void mockUpdate() => this.mockUpdateCall().thenAnswer((_) async => _);
   void mockUpdateError() => this.mockUpdateCall().thenThrow(Exception());
 
-  When mockAddCall() => when(() => this.add(
-        loginEntity: any(named: "loginEntity"),
-        collection: any(named: "collection"),
-      ));
-  void mockAdd() => this.mockAddCall().thenAnswer((_) async => _);
-  void mockAddError() => this.mockAddCall().thenThrow(Exception());
+  // When mockAddCall() => when(() => this.add(
+  //       loginEntity: any(named: "loginEntity"),
+  //       collection: any(named: "collection"),
+  //     ));
+  // void mockAdd() => this.mockAddCall().thenAnswer((_) async => _);
+  // void mockAddError() => this.mockAddCall().thenThrow(Exception());
 }

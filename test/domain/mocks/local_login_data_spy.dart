@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:mocktail/mocktail.dart';
 
-class LocalLoginDataSpy extends Mock implements LocalLoginData {
+class LocalLoadLoginDataSpy extends Mock implements LocalLoginData {
   When mockSaveCall() => when(() => this.add(any()));
   void mockSave(LoginDataEntity entity) =>
       this.mockSaveCall().thenAnswer((_) async => entity);

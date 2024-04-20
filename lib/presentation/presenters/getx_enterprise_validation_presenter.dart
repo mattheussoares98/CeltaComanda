@@ -69,6 +69,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       if (isUpdatedEnterpriseName) {
         await loadRemoteData();
+        await localLoginData.add(LoginDataBuilder.loginDataEntity!);
       }
 
       if (LoginDataBuilder.loginDataEntity == null) {
@@ -79,8 +80,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
         url: LoginDataBuilder.loginDataEntity!.url,
         enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
       );
-
-      await localLoginData.add(LoginDataBuilder.loginDataEntity!);
 
       navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
     } on DomainError catch (error) {

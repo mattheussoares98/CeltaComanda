@@ -40,11 +40,11 @@ class LoginDataModel {
         enterpriseId: enterpriseId,
       );
 
-  Map<String, String> toJson() => {
+  Map<String, dynamic> toJson() => {
         'url': url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         'userName': userName,
         'enterpriseName':
             enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
-        'enterpriseId': enterpriseId.toString(),
+        'enterpriseId': enterpriseId,
       };
 }

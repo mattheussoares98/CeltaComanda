@@ -5,6 +5,6 @@ import '../../factories.dart';
 
 import 'package:flutter/material.dart';
 
-Widget makeEnterpriseValidationPage() => LoginPage(
+Widget makeEnterpriseValidationPage() => EnterpriseValidationPage(
       makeGetxEnterpriseValidationPresenter(),
     );

@@ -21,7 +21,6 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(SplashPresenterSpy());
-    registerFallbackValue(LoginDataEntitySpy());
     registerFallbackValue(ExpansibleGroupsPresenterSpy());
   });
 
@@ -39,14 +38,14 @@ void main() {
     verify(() => presenter.checkApiSaleRequest()).called(1);
   });
 
-  testWidgets('Should change to LoginPage', (WidgetTester tester) async {
+  testWidgets('Should change to EnterpriseValidationPage', (WidgetTester tester) async {
     await loadPage(tester);
-    mockNavigation(routeName: PageRoutes.login);
+    mockNavigation(routeName: PageRoutes.enterpriseValidation);
 
     // presenter.navigateToLoginPage();
     await tester.pumpAndSettle();
 
-    expect(currentRoute, PageRoutes.login);
+    expect(currentRoute, PageRoutes.enterpriseValidation);
   });
 
   testWidgets('Should change to ExpansibleGroupsPage',

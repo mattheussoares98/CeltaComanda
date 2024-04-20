@@ -5,12 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Should return the correct validations', () {
-    final validations = makeLoginValidations();
+    final validations = makeEnterpriseValidations();
 
     expect(validations, [
-      const RequiredFieldValidation("user"),
-      const RequiredFieldValidation("password"),
-      const RequiredFieldValidation("url"),
+      const RequiredFieldValidation("enterpriseName"),
+      const MinLengthValidation(field: "enterpriseName", size: 2),
     ]);
   });
 }

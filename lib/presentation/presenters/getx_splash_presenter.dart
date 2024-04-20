@@ -27,12 +27,12 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
         );
       } else {
         navigateTo.navigate(
-          pageRoute: PageRoutes.login,
+          pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
       }
     } catch (error) {
-      navigateTo.navigate(pageRoute: PageRoutes.login, clear: true);
+      navigateTo.navigate(pageRoute: PageRoutes.enterpriseValidation, clear: true);
     }
   }
 }

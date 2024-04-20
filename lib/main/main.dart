@@ -52,18 +52,13 @@ class App extends StatelessWidget {
             transition: Transition.fade,
           ),
           GetPage(
-            name: PageRoutes.login,
-            page: makeLoginPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
             name: PageRoutes.enterpriseValidation,
             page: makeEnterpriseValidationPage,
             transition: Transition.fadeIn,
           ),
           GetPage(
             name: PageRoutes.enterpriseValidation,
-            page: makeLoginPage,
+            page: makeEnterpriseValidationPage,
             transition: Transition.fadeIn,
           ),
           GetPage(

@@ -52,7 +52,7 @@ void main() {
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.login,
+        pageRoute: PageRoutes.enterpriseValidation,
         clear: true,
       ),
     ).called(1);

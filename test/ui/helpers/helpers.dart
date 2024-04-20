@@ -31,10 +31,6 @@ Widget makePage({required String path, required Widget Function() page}) {
       ),
     ),
     GetPage(
-      name: PageRoutes.login,
-      page: () => LoginPage(LoginPresenterSpy()),
-    ),
-    GetPage(
       name: PageRoutes.expansibleGroups,
       page: () => ExpansibleGroupsPage(ExpansibleGroupsPresenterSpy()),
     ),
@@ -45,6 +41,10 @@ Widget makePage({required String path, required Widget Function() page}) {
     GetPage(
       name: PageRoutes.splash,
       page: () => SplashPage(presenter: SplashPresenterSpy()),
+    ),
+    GetPage(
+      name: PageRoutes.enterpriseValidation,
+      page: () => EnterpriseValidationPage(EnterpriseValidationPresenterSpy()),
     ),
   ];
 

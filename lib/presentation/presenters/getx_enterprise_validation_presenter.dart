@@ -80,7 +80,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       //   ),
       // );
 
-      await addLoginDataInDatabase(_loginData!);
+      await localLoginData.add(_loginData!);
 
       navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
     } on DomainError catch (error) {
@@ -97,15 +97,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  Future<void> addLoginDataInDatabase(LoginDataEntity loginEntity) async {
-    await loadRemoteData();
-
-    if (_remoteEntity == null) {
-      await remoteLoginData.add(_loginData!);
-    }
-  }
-
-  @override
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false}) {
     enterpriseNameController.text = value;
@@ -114,6 +105,12 @@ class GetxEnterpriseValidationPresenter extends GetxController
     if (updateEnterpriseNameController == true) {
       isUpdatedEnterpriseName = true;
     }
+
+    _loginData = LoginDataEntity(
+      url: urlController.text,
+      userName: userNameController.text,
+      enterpriseName: enterpriseNameController.text,
+    );
   }
 
   UIError? _validateField(String field) {

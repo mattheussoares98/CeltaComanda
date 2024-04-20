@@ -23,5 +23,4 @@ abstract class EnterpriseValidationPresenter implements Listenable {
   Future<void> validateApiSaleRequest();
   Future<void> loadRemoteData();
   Future<void> loadLocalData();
-  Future<void> addLoginDataInDatabase(LoginDataEntity loginEntity);
 }

@@ -7,13 +7,13 @@ import 'package:mocktail/mocktail.dart';
 
 class RemoteLoginDataSpy extends Mock implements RemoteLoginData {
   When mockAddCall() => when(() => this.add(any()));
-  void mockAdd(LoginDataEntity loginData) =>
-      this.mockAddCall().thenAnswer((_) async => loginData);
+  void mockAdd(LoginDataEntity entity) =>
+      this.mockAddCall().thenAnswer((_) async => entity);
   void mockSaveError() => this.mockAddCall().thenThrow(DomainError.unexpected);
 
   When mockRemoteLoadDataCall() =>
-      when(() => load(loginEntity: any(named: "loginEntity")));
-  void mockRemoteLoad(LoginDataEntity? loginDataEntity) =>
-      mockRemoteLoadDataCall().thenAnswer((_) async => loginDataEntity);
-  void mockRemoteLoadError() => mockRemoteLoadDataCall().thenThrow(Exception());
+      when(() => this.load(loginEntity: any(named: "loginEntity")));
+  void mockRemoteLoad(LoginDataEntity? entity) =>
+      this.mockRemoteLoadDataCall().thenAnswer((_) async => entity);
+  void mockRemoteLoadError() => this.mockRemoteLoadDataCall().thenThrow(Exception());
 }

@@ -9,7 +9,7 @@ class EntityFactory {
     return LoginDataEntity(
       url: url,
       userName: faker.person.name(),
-      enterpriseName: !url.contains("http") ? url : "",
+      enterpriseName: !url.contains("http") ? url : "enterpriseName",
     );
   }
 

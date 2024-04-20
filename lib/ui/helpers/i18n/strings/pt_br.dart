@@ -9,6 +9,8 @@ class PtBr implements Translation {
   String get msgRequiredField => 'Campo obrigatório';
   String get msgUnexpectedError =>
       'Algo errado aconteceu. Tente novamente em breve.';
+  String get msgVeryShortField =>
+      'Campo muito curto';
 
   String get addAccount => 'Criar conta';
   String get confirmPassword => 'Confirmar senha';

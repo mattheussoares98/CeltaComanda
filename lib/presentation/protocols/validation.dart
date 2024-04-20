@@ -6,6 +6,7 @@ abstract class Validation {
 }
 
 enum ValidationError {
+  invalidField,
   requiredField,
-  invalidField
+  shortField,
 }

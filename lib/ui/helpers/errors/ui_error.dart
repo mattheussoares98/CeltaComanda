@@ -1,17 +1,20 @@
 import '../helpers.dart';
 
 enum UIError {
-  requiredField,
-  invalidField,
-  unexpected,
-  invalidCredentials,
   emailInUse,
   enterpriseOrUrlNotFound,
+  invalidField,
+  invalidCredentials,
+  requiredField,
+  unexpected,
+  shortField,
 }
 
 extension UIErrorExtension on UIError {
   String get description {
     switch (this) {
+      case UIError.shortField:
+        return R.string.msgVeryShortField;
       case UIError.requiredField:
         return R.string.msgRequiredField;
       case UIError.invalidField:

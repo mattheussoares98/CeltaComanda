@@ -57,11 +57,6 @@ class App extends StatelessWidget {
             transition: Transition.fadeIn,
           ),
           GetPage(
-            name: PageRoutes.enterpriseValidation,
-            page: makeEnterpriseValidationPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
             name: PageRoutes.expansibleGroups,
             page: makeExpansibleGroupsPage,
             transition: Transition.fadeIn,

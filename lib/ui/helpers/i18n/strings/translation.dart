@@ -3,6 +3,7 @@ abstract class Translation {
   String get msgInvalidCredentials;
   String get msgInvalidField;
   String get msgRequiredField;
+  String get msgVeryShortField;
   String get msgUnexpectedError;
 
   String get addAccount;

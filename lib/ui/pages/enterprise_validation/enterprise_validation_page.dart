@@ -14,7 +14,8 @@ class EnterpriseValidationPage extends StatefulWidget {
   const EnterpriseValidationPage(this.presenter, {super.key});
 
   @override
-  State<EnterpriseValidationPage> createState() => _EnterpriseValidationPageState();
+  State<EnterpriseValidationPage> createState() =>
+      _EnterpriseValidationPageState();
 }
 
 class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
@@ -50,7 +51,13 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                     child: ListenableProvider(
                       create: (_) => widget.presenter,
                       child: const Form(
-                        child: EnterpriseValidateButton(),
+                        child: Column(
+                          children: [
+                            EnterpriseInput(),
+                            SizedBox(height: 10),
+                            EnterpriseValidateButton(),
+                          ],
+                        ),
                       ),
                     ),
                   )

@@ -16,11 +16,10 @@ class EnterpriseInput extends StatelessWidget {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: R.string.validateEnterprise,
-              icon: Icon(Icons.lock, color: Theme.of(context).primaryColor),
+              labelText: R.string.enterprise,
+              icon: Icon(Icons.business, color: Theme.of(context).primaryColor),
               errorText: snapshot.data?.description,
             ),
-            obscureText: true,
             onChanged: (value) => presenter.validateEnterpriseInput(value,
                 updateEnterpriseNameController: true),
           );

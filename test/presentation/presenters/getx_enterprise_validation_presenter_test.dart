@@ -116,8 +116,14 @@ void main() {
 
     verify(() => remoteLoginData.load()).called(1);
   });
-  test("Should change controllers with cacheLoginData", () async {
+  test("Should change controllers with remoteLoginData", () async {
     await sut.loadRemoteData();
+
+    expect(loginData.enterpriseName, sut.enterpriseNameController.text);
+  });
+
+  test("Should change controllers with cacheLoginData", () async {
+    await sut.loadLocalData();
 
     expect(loginData.enterpriseName, sut.enterpriseNameController.text);
   });

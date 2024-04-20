@@ -15,7 +15,7 @@ class LoginButton extends StatelessWidget {
       builder: (context, snapshot) {
         return ElevatedButton(
           onPressed: snapshot.data == true ? presenter.auth : null,
-          child: Text(R.string.enter.toUpperCase()),
+          child: Text(R.string.validateEnterprise.toUpperCase()),
         );
       }
     );

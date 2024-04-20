@@ -7,7 +7,8 @@ abstract class Translation {
 
   String get addAccount;
   String get confirmPassword;
-  String get enter;
+  String get enterpriseOrUrlNotFound;
+  String get enterprise;
   String get login;
   String get name;
   String get password;
@@ -15,7 +16,7 @@ abstract class Translation {
   String get surveys;
   String get surveyResult;
   String get url;
-  String get enterpriseOrUrlNotFound;
   String get user;
+  String get validateEnterprise;
   String get wait;
 }

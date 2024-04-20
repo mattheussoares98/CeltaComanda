@@ -12,7 +12,8 @@ class PtBr implements Translation {
 
   String get addAccount => 'Criar conta';
   String get confirmPassword => 'Confirmar senha';
-  String get enter => 'Entrar';
+  String get enterprise => 'Empresa';
+  String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get login => 'Login';
   String get name => 'Nome';
   String get password => 'Senha';
@@ -21,6 +22,6 @@ class PtBr implements Translation {
   String get surveyResult => 'Resultado da enquete';
   String get user => 'Usuário';
   String get url => 'Empresa ou url';
-  String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
+  String get validateEnterprise => 'Validar empresa';
   String get wait => 'Aguarde...';
 }

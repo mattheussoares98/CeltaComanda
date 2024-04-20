@@ -15,7 +15,7 @@ class EnterpriseValidateButton extends StatelessWidget {
         builder: (context, snapshot) {
           return ElevatedButton(
             onPressed:
-                snapshot.data == true ? presenter.validateEnterprise : null,
+                snapshot.data == true ? presenter.validateApiSaleRequest : null,
             child: Text(R.string.validateEnterprise.toUpperCase()),
           );
         });

@@ -14,10 +14,14 @@ abstract class EnterpriseValidationPresenter implements Listenable {
   TextEditingController get enterpriseNameController;
 
   LoginDataEntity? get loginData;
+  LoginDataEntity? get remoteEntity;
 
-  void validateEnterpriseInput(String enterprise);
-  void validateEnterprise();
+  void validateEnterpriseInput(String value,
+      {bool? updateEnterpriseNameController = false});
+  void updateEnterpriseController(String value);
+
+  Future<void> validateApiSaleRequest();
   Future<void> loadRemoteData();
   Future<void> loadLocalData();
-  void updateEnterpriseText(ApiSaleRequestEntity? entity);
+  Future<void> addLoginDataInDatabase(LoginDataEntity loginEntity);
 }

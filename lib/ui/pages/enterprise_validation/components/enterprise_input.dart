@@ -21,7 +21,8 @@ class EnterpriseInput extends StatelessWidget {
               errorText: snapshot.data?.description,
             ),
             obscureText: true,
-            onChanged: presenter.validateEnterpriseInput,
+            onChanged: (value) => presenter.validateEnterpriseInput(value,
+                updateEnterpriseNameController: true),
           );
         });
   }

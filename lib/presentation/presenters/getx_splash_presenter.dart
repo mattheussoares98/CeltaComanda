@@ -1,5 +1,6 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
+
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';

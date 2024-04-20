@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/widgets.dart';
@@ -41,6 +42,20 @@ void main() {
           enterpriseId: loginDataEntity.enterpriseId!,
           url: loginDataEntity.url,
         )).called(1);
+  });
+
+  test('Should go to EnterpriseValidationPage if loadApiSaleRequest throws',
+      () async {
+    loadApiSaleRequest.mockError(DomainError.enterpriseOrUrlNotFound);
+
+    await sut.checkApiSaleRequest(durationInSeconds: 0);
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.enterpriseValidation,
+        clear: true,
+      ),
+    ).called(1);
   });
 
   test('Should go to surveys page on success', () async {

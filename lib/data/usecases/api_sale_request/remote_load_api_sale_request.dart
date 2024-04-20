@@ -17,7 +17,7 @@ class RemoteLoadApiSaleRequest implements LoadApiSaleRequest {
   Future<ApiSaleRequestEntity?> load() async {
     try {
       final apiSaleRequest = await httpAdapter.request(
-        url: "url",
+        url: "http://192.168.1.10:10965/api/apiSaleRequest/GetTemp?_enterpriseId=1&_personalizedCode=001",
         method: "get",
       );
       if (apiSaleRequest == null) throw Error();

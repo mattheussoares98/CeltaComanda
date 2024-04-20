@@ -16,12 +16,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LocalLoginData localLoginData;
   final RemoteLoginData remoteLoginData;
   final NavigateTo navigateTo;
+  final LoadApiSaleRequest loadApiSaleRequest;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
     required this.localLoginData,
     required this.remoteLoginData,
     required this.navigateTo,
+    required this.loadApiSaleRequest,
   });
 
   @override
@@ -72,13 +74,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         await loadRemoteData();
       }
 
-      // await authentication.auth(
-      //   AuthenticationParams(
-      //     user: _loginData!.userName,
-      //     password: _password!,
-      //     url: _loginData!.url,
-      //   ),
-      // );
+      await loadApiSaleRequest.load();
 
       await localLoginData.add(_loginData!);
 

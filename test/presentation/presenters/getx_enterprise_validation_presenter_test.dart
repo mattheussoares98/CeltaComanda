@@ -16,6 +16,7 @@ void main() {
   late LoginDataEntity loginData;
   late RemoteLoginDataSpy remoteLoginData;
   late NavigateToSpy navigateTo;
+  late LoadApiSaleRequestSpy loadApiSaleRequest;
 
   setUp(() {
     validation = ValidationSpy();
@@ -23,6 +24,7 @@ void main() {
     remoteLoginData = RemoteLoginDataSpy();
     navigateTo = NavigateToSpy();
     loginData = EntityFactory.makeLoginData();
+    loadApiSaleRequest = LoadApiSaleRequestSpy();
 
     localLoginData.mockSave(loginData);
     localLoginData.mockLoad(loginData);
@@ -34,6 +36,7 @@ void main() {
       localLoginData: localLoginData,
       remoteLoginData: remoteLoginData,
       navigateTo: navigateTo,
+      loadApiSaleRequest: loadApiSaleRequest,
     );
 
     sut.enterpriseNameController.text = loginData.enterpriseName!;

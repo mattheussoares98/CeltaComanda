@@ -9,4 +9,5 @@ EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
       localLoginData: makeLocalLoadLoginData(),
       remoteLoginData: makeRemoteLoginData(),
       navigateTo: makeNavigateTo(),
+      loadApiSaleRequest: makeRemoteLoadApiSaleRequest(),
     );

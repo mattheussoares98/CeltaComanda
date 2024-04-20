@@ -5,10 +5,10 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalLoadApiSaleRequest implements SaveApiSaleRequest {
+class LocalSaveApiSaleRequest implements SaveApiSaleRequest {
   final HiveStorage hiveStorage;
 
-  LocalLoadApiSaleRequest({required this.hiveStorage});
+  LocalSaveApiSaleRequest({required this.hiveStorage});
 
   @override
   Future<void> save(ApiSaleRequestEntity entity) async {

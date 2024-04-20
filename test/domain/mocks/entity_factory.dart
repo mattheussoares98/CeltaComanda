@@ -48,13 +48,13 @@ class EntityFactory {
 
   static ApiSaleRequestEntity makeApiSaleRequestEntity() {
     return ApiSaleRequestEntity(
-      products: [],
-      saleRequestTempId: faker.randomGenerator.integer(10),
-      personalizedCode: faker.randomGenerator.string(10),
-      enterpriseId: faker.randomGenerator.integer(3),
-      totalLiquid: faker.randomGenerator.decimal(),
-      deliveryControl: faker.randomGenerator.integer(5),
-      comments: faker.randomGenerator.string(50),
+      Products: [],
+      SaleRequestTempId: faker.randomGenerator.integer(10),
+      PersonalizedCode: faker.randomGenerator.string(10),
+      EnterpriseId: faker.randomGenerator.integer(3),
+      TotalLiquid: faker.randomGenerator.decimal(),
+      DeliveryControl: faker.randomGenerator.integer(5),
+      Comments: faker.randomGenerator.string(50),
     );
   }
 }

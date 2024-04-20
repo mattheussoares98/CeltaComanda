@@ -1,74 +1,76 @@
+// ignore_for_file: non_constant_identifier_names
+
 import '../../domain/entities/entities.dart';
 
 class ApiSaleRequestModel {
-  final dynamic products;
-  final int saleRequestTempId;
-  final String personalizedCode;
-  final int enterpriseId;
-  final double totalLiquid;
-  final int deliveryControl;
-  final String? comments;
+  final dynamic Products;
+  final int SaleRequestTempId;
+  final String PersonalizedCode;
+  final int EnterpriseId;
+  final double TotalLiquid;
+  final int DeliveryControl;
+  final String? Comments;
 
   ApiSaleRequestModel({
-    required this.products,
-    required this.saleRequestTempId,
-    required this.personalizedCode,
-    required this.enterpriseId,
-    required this.totalLiquid,
-    required this.deliveryControl,
-    this.comments,
+    required this.Products,
+    required this.SaleRequestTempId,
+    required this.PersonalizedCode,
+    required this.EnterpriseId,
+    required this.TotalLiquid,
+    required this.DeliveryControl,
+    this.Comments,
   });
 
   factory ApiSaleRequestModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
-      "products",
-      "saleRequestTempId",
-      "personalizedCode",
-      "enterpriseId",
-      "totalLiquid",
-      "deliveryControl",
+      "Products",
+      "SaleRequestTempId",
+      "PersonalizedCode",
+      "EnterpriseId",
+      "TotalLiquid",
+      "DeliveryControl",
     ])) {
       throw Exception();
     }
     return ApiSaleRequestModel(
-      products: json["products"],
-      saleRequestTempId: json["saleRequestTempId"],
-      personalizedCode: json["personalizedCode"],
-      enterpriseId: json["enterpriseId"],
-      totalLiquid: json["totalLiquid"],
-      deliveryControl: json["deliveryControl"],
-      comments: json["comments"],
+      Products: json["Products"],
+      SaleRequestTempId: json["SaleRequestTempId"],
+      PersonalizedCode: json["PersonalizedCode"],
+      EnterpriseId: json["EnterpriseId"],
+      TotalLiquid: json["TotalLiquid"],
+      DeliveryControl: json["DeliveryControl"],
+      Comments: json["Comments"],
     );
   }
 
   factory ApiSaleRequestModel.fromEntity(ApiSaleRequestEntity entity) =>
       ApiSaleRequestModel(
-        products: entity.products,
-        saleRequestTempId: entity.saleRequestTempId,
-        personalizedCode: entity.personalizedCode,
-        enterpriseId: entity.enterpriseId,
-        totalLiquid: entity.totalLiquid,
-        deliveryControl: entity.deliveryControl,
-        comments: entity.comments,
+        Products: entity.Products,
+        SaleRequestTempId: entity.SaleRequestTempId,
+        PersonalizedCode: entity.PersonalizedCode,
+        EnterpriseId: entity.EnterpriseId,
+        TotalLiquid: entity.TotalLiquid,
+        DeliveryControl: entity.DeliveryControl,
+        Comments: entity.Comments,
       );
 
   ApiSaleRequestEntity toEntity() => ApiSaleRequestEntity(
-        products: products,
-        saleRequestTempId: saleRequestTempId,
-        personalizedCode: personalizedCode,
-        enterpriseId: enterpriseId,
-        totalLiquid: totalLiquid,
-        deliveryControl: deliveryControl,
-        comments: comments,
+        Products: Products,
+        SaleRequestTempId: SaleRequestTempId,
+        PersonalizedCode: PersonalizedCode,
+        EnterpriseId: EnterpriseId,
+        TotalLiquid: TotalLiquid,
+        DeliveryControl: DeliveryControl,
+        Comments: Comments,
       );
 
   Map<String, dynamic> toJson() => {
-        "products": products,
-        "saleRequestTempId": saleRequestTempId,
-        "personalizedCode": personalizedCode,
-        "enterpriseId": enterpriseId,
-        "totalLiquid": totalLiquid,
-        "deliveryControl": deliveryControl,
-        "comments": comments,
+        "Products": Products,
+        "SaleRequestTempId": SaleRequestTempId,
+        "PersonalizedCode": PersonalizedCode,
+        "EnterpriseId": EnterpriseId,
+        "TotalLiquid": TotalLiquid,
+        "DeliveryControl": DeliveryControl,
+        "Comments": Comments,
       };
 }

@@ -5,6 +5,7 @@ class CacheFactory {
         'url': faker.internet.httpUrl(),
         'userName': faker.person.name(),
         'enterpriseName': null,
+        'enterpriseId': faker.randomGenerator.integer(2),
       };
 
   static Map makeInvalidLoginData() => {

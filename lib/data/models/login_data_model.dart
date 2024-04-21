@@ -14,7 +14,7 @@ class LoginDataModel {
   });
 
   factory LoginDataModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll(['url', 'userName', 'enterpriseId'])) {
+    if (!json.keys.toSet().containsAll(['url', 'userName', 'enterpriseId', 'enterpriseName'])) {
       throw Exception();
     }
     return LoginDataModel(

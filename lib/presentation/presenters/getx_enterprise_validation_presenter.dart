@@ -1,6 +1,5 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
-
 import '../../../data/usecases/login_data/login_data.dart';
+import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
@@ -47,8 +46,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   Future<void> loadRemoteData() async {
-    LoginDataBuilder.loginDataEntity = await remoteLoginData.load(
-        loginEntity: LoginDataBuilder.loginDataEntity);
+    LoginDataBuilder.loginDataEntity = await remoteLoginData.load();
 
     if (LoginDataBuilder.loginDataEntity?.enterpriseName?.isNotEmpty == true) {
       enterpriseNameController.text =
@@ -69,7 +67,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       if (isUpdatedEnterpriseName) {
         await loadRemoteData();
-        await localLoginData.add(LoginDataBuilder.loginDataEntity!);
       }
 
       if (LoginDataBuilder.loginDataEntity == null) {

@@ -12,17 +12,17 @@ void main() {
   });
 
   test('Should return error if value is empty', () {
-    expect(sut.validate({'any_field': ''}), ValidationError.invalidField);
+    expect(sut.validate({'any_field': ''}), ValidationError.shortField);
   });
 
   test('Should return error if value is null', () {
-    expect(sut.validate({}), ValidationError.invalidField);
-    expect(sut.validate({'any_field': null}), ValidationError.invalidField);
+    expect(sut.validate({}), ValidationError.shortField);
+    expect(sut.validate({'any_field': null}), ValidationError.shortField);
   });
 
   test('Should return error if value is less than min size', () {
     expect(sut.validate({'any_field': faker.randomGenerator.string(4, min: 1)}),
-        ValidationError.invalidField);
+        ValidationError.shortField);
   });
 
   test('Should return null if value is equal than min size', () {

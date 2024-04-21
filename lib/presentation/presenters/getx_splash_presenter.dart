@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
 
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
@@ -19,9 +18,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   });
 
   @override
-  Future<void> checkApiSaleRequest({
-    int durationInSeconds = 2,
-  }) async {
+  Future<void> checkApiSaleRequest({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       LoginDataBuilder.loginDataEntity = await loadLoginData.load();

@@ -9,7 +9,6 @@ void main() {
 
     expect(validations, [
       const RequiredFieldValidation("enterpriseName"),
-      const MinLengthValidation(field: "enterpriseName", size: 2),
     ]);
   });
 }

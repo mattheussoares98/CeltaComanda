@@ -1,33 +1,35 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 
 import '../../domain/mocks/mocks.dart';
 
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   late GetxSplashPresenter sut;
   late NavigateToSpy navigateTo;
   late LoadApiSaleRequestSpy loadApiSaleRequest;
   late ApiSaleRequestEntity apiSaleRequestEntity;
-  late LocalLoadLoginDataSpy loadLoginData;
-  late LoginDataEntity loginDataEntity;
+  late LocalLoginDataSpy loadLoginData;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
+    LoginDataBuilder.loginDataEntity = EntityFactory.makeLoginData();
     navigateTo = NavigateToSpy();
     loadApiSaleRequest = LoadApiSaleRequestSpy();
     navigateTo.mockNavigate();
     apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
     loadApiSaleRequest.mockLoadApiSaleRequest(apiSaleRequestEntity);
-    loadLoginData = LocalLoadLoginDataSpy();
-    loginDataEntity = EntityFactory.makeLoginData();
+    loadLoginData = LocalLoginDataSpy();
+    loadLoginData.mockLoad(LoginDataBuilder.loginDataEntity!);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadApiSaleRequest: loadApiSaleRequest,
@@ -39,8 +41,8 @@ void main() {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(() => loadApiSaleRequest.load(
-          enterpriseId: loginDataEntity.enterpriseId!,
-          url: loginDataEntity.url,
+          enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
+          url: LoginDataBuilder.loginDataEntity!.url,
         )).called(1);
   });
 

@@ -1,18 +1,21 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/presentation/presenters/getx_enterprise_validation_presenter.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../domain/mocks/mocks.dart';
 
-import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:mocktail/mocktail.dart';
 import '../mocks/mocks.dart';
 
 void main() {
   late GetxEnterpriseValidationPresenter sut;
   late ValidationSpy validation;
-  late LocalLoadLoginDataSpy localLoginData;
+  late LocalLoginDataSpy localLoginData;
   late LoginDataEntity loginData;
   late RemoteLoginDataSpy remoteLoginData;
   late NavigateToSpy navigateTo;
@@ -20,7 +23,7 @@ void main() {
 
   setUp(() {
     validation = ValidationSpy();
-    localLoginData = LocalLoadLoginDataSpy();
+    localLoginData = LocalLoginDataSpy();
     remoteLoginData = RemoteLoginDataSpy();
     navigateTo = NavigateToSpy();
     loginData = EntityFactory.makeLoginData();
@@ -42,6 +45,8 @@ void main() {
     sut.enterpriseNameController.text = loginData.enterpriseName!;
     sut.urlController.text = loginData.url;
     sut.userNameController.text = loginData.userName;
+
+    LoginDataBuilder.loginDataEntity = loginData;
   });
 
   setUpAll(() {
@@ -75,16 +80,20 @@ void main() {
   });
 
   test('Should call SaveLoginData with correct value', () async {
-    sut.validateEnterpriseInput(sut.enterpriseNameController.text);
+    sut.validateEnterpriseInput(
+      sut.enterpriseNameController.text,
+      updateEnterpriseNameController: true,
+    );
 
     await sut.validateApiSaleRequest();
 
-    verify(() => localLoginData.add(loginData)).called(2);
+    verify(() => localLoginData.add(loginData)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveLoginData fails', () async {
-    localLoginData.mockSaveError();
-    sut.validateEnterpriseInput(sut.enterpriseNameController.text);
+    loadApiSaleRequest.mockError(DomainError.unexpected);
+    sut.validateEnterpriseInput(sut.enterpriseNameController.text,
+        updateEnterpriseNameController: true);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -94,7 +103,8 @@ void main() {
 
   test('Should emit correct events on validateApiSaleRequest success',
       () async {
-    sut.validateEnterpriseInput(sut.enterpriseNameController.text);
+    sut.validateEnterpriseInput(sut.enterpriseNameController.text,
+        updateEnterpriseNameController: true);
 
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
@@ -103,7 +113,8 @@ void main() {
   });
 
   test('Should go to ExpansibleGroupsPage on success', () async {
-    sut.validateEnterpriseInput(sut.enterpriseNameController.text);
+    sut.validateEnterpriseInput(sut.enterpriseNameController.text,
+        updateEnterpriseNameController: true);
 
     await sut.validateApiSaleRequest();
 
@@ -134,6 +145,6 @@ void main() {
 
     await sut.validateApiSaleRequest();
 
-    verify(() => remoteLoginData.load(loginEntity: loginData)).called(1);
+    verify(() => remoteLoginData.load()).called(1);
   });
 }

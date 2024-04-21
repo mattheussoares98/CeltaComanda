@@ -2,12 +2,13 @@ import 'package:clean_celta_mobile/data/usecases/login_data/login_data.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 import '../../../infra/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
 
 import 'package:mocktail/mocktail.dart';
+
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late LocalLoginData sut;
@@ -37,6 +38,7 @@ void main() {
           url: data['url'],
           userName: data['userName'],
           enterpriseName: null,
+          enterpriseId: data["enterpriseId"],
         ),
       );
     });
@@ -73,36 +75,4 @@ void main() {
       expect(future, throwsA(DomainError.unexpected));
     });
   });
-
-  // group('validate', () {
-  //   test('Should call cacheStorage with correct key', () async {
-  //     await sut.validate();
-
-  //     verify(() => cacheStorage.get(CacheKeys.loginData.name)).called(1);
-  //   });
-
-  //   test('Should delete cache if it is invalid', () async {
-  //     cacheStorage.mockGet(CacheFactory.makeInvalidLoginData());
-
-  //     await sut.validate();
-
-  //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
-  //   });
-
-  //   test('Should delete cache if it is incomplete', () async {
-  //     cacheStorage.mockGet(CacheFactory.makeIncompleteLoginData());
-
-  //     await sut.validate();
-
-  //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
-  //   });
-
-  //   test('Should delete cache if get fails', () async {
-  //     cacheStorage.mockGetError();
-
-  //     await sut.validate();
-
-  //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
-  //   });
-  // });
 }

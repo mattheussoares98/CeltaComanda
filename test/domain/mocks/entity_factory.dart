@@ -10,7 +10,7 @@ class EntityFactory {
       url: url,
       userName: faker.person.name(),
       enterpriseId: faker.randomGenerator.integer(3),
-      enterpriseName: !url.contains("http") ? url : "enterpriseName",
+      enterpriseName: faker.company.name(),
     );
   }
 

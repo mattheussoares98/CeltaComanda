@@ -11,7 +11,7 @@ class LocalLoginData implements LoadLoginData, SaveLoginData {
   LocalLoginData({required this.hiveStorage});
 
   @override
-  Future<LoginDataEntity?> load({LoginDataEntity? loginEntity}) async {
+  Future<LoginDataEntity?> load() async {
     try {
       final json = await hiveStorage.get(
         CacheKeys.loginData.name,

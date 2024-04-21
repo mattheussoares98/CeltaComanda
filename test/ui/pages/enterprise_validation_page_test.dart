@@ -41,8 +41,6 @@ void main() {
       loadApiSaleRequest: loadApiSaleRequest,
     );
 
-    sut.userNameController.text = LoginDataBuilder.loginDataEntity!.userName;
-    sut.urlController.text = LoginDataBuilder.loginDataEntity!.url;
     sut.enterpriseNameController.text =
         LoginDataBuilder.loginDataEntity!.enterpriseName!;
   });
@@ -148,5 +146,12 @@ void main() {
     await sut.validateApiSaleRequest();
 
     verify(() => remoteLoginData.load()).called(1);
+  });
+
+  test("Should update enterpriseNameController with local data", () async {
+    await sut.loadLocalData();
+
+    expect(LoginDataBuilder.loginDataEntity!.enterpriseName!,
+        sut.enterpriseNameController.text);
   });
 }

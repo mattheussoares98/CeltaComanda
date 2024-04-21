@@ -43,8 +43,6 @@ void main() {
     );
 
     sut.enterpriseNameController.text = loginData.enterpriseName!;
-    sut.urlController.text = loginData.url;
-    sut.userNameController.text = loginData.userName;
 
     LoginDataBuilder.loginDataEntity = loginData;
   });

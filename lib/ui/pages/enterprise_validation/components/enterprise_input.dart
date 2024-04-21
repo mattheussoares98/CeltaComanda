@@ -20,6 +20,7 @@ class EnterpriseInput extends StatelessWidget {
               icon: Icon(Icons.business, color: Theme.of(context).primaryColor),
               errorText: snapshot.data?.description,
             ),
+            controller: presenter.enterpriseNameController,
             onChanged: (value) => presenter.validateEnterpriseInput(value,
                 updateEnterpriseNameController: true),
           );

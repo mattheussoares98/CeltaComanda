@@ -1,4 +1,4 @@
-import '../../../data/usecases/login_data/login_data.dart';
+import '../../data/usecases/enterprise/enterprise.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -14,15 +14,15 @@ class GetxEnterpriseValidationPresenter extends GetxController
     with TextControllerManager, LoadingManager, FormManager, UIErrorManager
     implements EnterpriseValidationPresenter {
   final Validation validation;
-  final LocalLoginData localLoginData;
-  final RemoteLoginData remoteLoginData;
+  final LocalEnterpriseData localEntepriseData;
+  final RemoteEnterpriseData remoteEnterpriseData;
   final NavigateTo navigateTo;
   final LoadApiSaleRequest loadApiSaleRequest;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
-    required this.localLoginData,
-    required this.remoteLoginData,
+    required this.localEntepriseData,
+    required this.remoteEnterpriseData,
     required this.navigateTo,
     required this.loadApiSaleRequest,
   });
@@ -36,22 +36,22 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   Future<void> loadLocalData() async {
-    LoginDataBuilder.loginDataEntity = await localLoginData.load();
+    EnterpriseDataBuilder.enterpriseDataEntity = await localEntepriseData.load();
 
-    if (LoginDataBuilder.loginDataEntity?.enterpriseName?.isNotEmpty == true) {
+    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName.isNotEmpty == true) {
       updateEnterpriseController(
-          LoginDataBuilder.loginDataEntity!.enterpriseName!);
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
     }
   }
 
   @override
   Future<void> loadRemoteData() async {
-    LoginDataBuilder.loginDataEntity = await remoteLoginData.load();
+    EnterpriseDataBuilder.enterpriseDataEntity = await remoteEnterpriseData.load();
 
-    if (LoginDataBuilder.loginDataEntity?.enterpriseName?.isNotEmpty == true) {
+    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName.isNotEmpty == true) {
       enterpriseNameController.text =
-          LoginDataBuilder.loginDataEntity!.enterpriseName!;
-      await localLoginData.add(LoginDataBuilder.loginDataEntity!);
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
+      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
     }
 
     isUpdatedEnterpriseName = false;
@@ -63,19 +63,19 @@ class GetxEnterpriseValidationPresenter extends GetxController
       mainError = null;
       isLoading = true;
 
-      await localLoginData.add(LoginDataBuilder.loginDataEntity!);
+      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
 
       if (isUpdatedEnterpriseName) {
         await loadRemoteData();
       }
 
-      if (LoginDataBuilder.loginDataEntity == null) {
+      if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
         throw DomainError.enterpriseOrUrlNotFound;
       }
 
       await loadApiSaleRequest.load(
-        url: LoginDataBuilder.loginDataEntity!.url,
-        enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       );
 
       navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
@@ -102,9 +102,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       isUpdatedEnterpriseName = true;
     }
 
-    LoginDataBuilder.loginDataEntity = LoginDataEntity(
-      url: "url",
-      userName: "userName",
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
       enterpriseName: enterpriseNameController.text,
     );
   }

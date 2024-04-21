@@ -1,20 +1,20 @@
-import '../../../data/models/models.dart';
+import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalLoginData implements LoadLoginData, SaveLoginData {
+class LocalEnterpriseData implements LoadEnterpriseData, SaveEnterpriseData {
   final HiveStorage hiveStorage;
 
-  LocalLoginData({required this.hiveStorage});
+  LocalEnterpriseData({required this.hiveStorage});
 
   @override
-  Future<LoginDataEntity?> load() async {
+  Future<EnterpriseEntity?> load() async {
     try {
       final json = await hiveStorage.get(
-        CacheKeys.loginData.name,
+        CacheKeys.enterprise.name,
       );
       if (json != null) {
         return _mapToEntity(json);
@@ -27,11 +27,11 @@ class LocalLoginData implements LoadLoginData, SaveLoginData {
   }
 
   @override
-  Future<void> add(LoginDataEntity entity) async {
+  Future<void> add(EnterpriseEntity entity) async {
     try {
       final json = _mapToJson(entity);
       await hiveStorage.put(
-        CacheKeys.loginData.name,
+        CacheKeys.enterprise.name,
         json,
       );
     } catch (error) {
@@ -39,9 +39,9 @@ class LocalLoginData implements LoadLoginData, SaveLoginData {
     }
   }
 
-  LoginDataEntity? _mapToEntity(dynamic json) =>
-      LoginDataModel.fromJson(json).toEntity();
+  EnterpriseEntity? _mapToEntity(dynamic json) =>
+      EnterpriseValidationModel.fromJson(json).toEntity();
 
-  Map _mapToJson(LoginDataEntity entity) =>
-      LoginDataModel.fromEntity(entity).toJson();
+  Map _mapToJson(EnterpriseEntity entity) =>
+      EnterpriseValidationModel.fromEntity(entity).toJson();
 }

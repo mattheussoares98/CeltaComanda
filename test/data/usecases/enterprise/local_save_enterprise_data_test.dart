@@ -1,5 +1,5 @@
 import 'package:clean_celta_mobile/data/models/models.dart';
-import 'package:clean_celta_mobile/data/usecases/login_data/login_data.dart';
+import 'package:clean_celta_mobile/data/usecases/enterprise/enterprise.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
@@ -11,32 +11,33 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late LocalLoginData sut;
+  late LocalEnterpriseData sut;
   late HiveStorageSpy cacheStorage;
-  late LoginDataEntity loginData;
+  late EnterpriseEntity enterpriseData;
 
   setUp(() {
     cacheStorage = HiveStorageSpy();
-    loginData = LoginDataEntity(
+    enterpriseData = EnterpriseEntity(
       url: faker.internet.httpUrl(),
-      userName: faker.person.name(),
+     enterpriseName: faker.company.name(),
+     enterpriseId: faker.randomGenerator.integer(3),
     );
-    sut = LocalLoginData(hiveStorage: cacheStorage);
+    sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });
 
-  test('Should call LocalSaveLoginData with correct values', () async {
-    await sut.add(loginData);
+  test('Should call LocalSaveEnterpriseData with correct values', () async {
+    await sut.add(enterpriseData);
 
     verify(() => cacheStorage.put(
-          CacheKeys.loginData.name,
-          LoginDataModel.fromEntity(loginData).toJson(),
+          CacheKeys.enterprise.name,
+          EnterpriseValidationModel.fromEntity(enterpriseData).toJson(),
         ));
   });
 
-  test('Should throw UnexpectedError if LocalSaveLoginData throws', () async {
+  test('Should throw UnexpectedError if LocalSaveEnterpriseData throws', () async {
     cacheStorage.mockSaveError();
 
-    final future = sut.add(loginData);
+    final future = sut.add(enterpriseData);
 
     expect(future, throwsA(DomainError.unexpected));
   });

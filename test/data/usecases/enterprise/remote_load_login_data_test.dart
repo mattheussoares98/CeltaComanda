@@ -1,4 +1,4 @@
-// import 'package:clean_celta_mobile/data/usecases/login_data/login_data.dart';
+// import 'package:clean_celta_mobile/data/usecases/enterprise_data/enterprise_data.dart';
 // import 'package:clean_celta_mobile/domain/entities/entities.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:faker/faker.dart';
@@ -8,28 +8,28 @@
 // import '../../mocks/mocks.dart';
 
 // void main() {
-//   late RemoteLoginData sut;
+//   late RemoteEnterpriseData sut;
 //   late FirebaseStorageSpy firebaseStorage;
 //   late FirebaseFirestoreSpy firebaseFirestore;
-//   late LoginDataEntity loginData;
+//   late EnterpriseDataEntity enterpriseData;
 //   late CollectionReference<Object?> collection;
 //   late Map data;
 
 //   setUpAll(() async {});
 
 //   setUp(() {
-//     data = CacheFactory.makeLoginData();
+//     data = CacheFactory.makeEnterpriseData();
 //     firebaseStorage = FirebaseStorageSpy();
 //     firebaseFirestore = FirebaseFirestoreSpy();
 //     firebaseStorage.mockGet(data);
-//     loginData = LoginDataEntity(
+//     enterpriseData = EnterpriseDataEntity(
 //       url: faker.internet.httpUrl(),
 //       userName: faker.person.name(),
 //       enterpriseName: faker.job.title(),
 //     );
-//     sut = RemoteLoginData(
+//     sut = RemoteEnterpriseData(
 //       firebaseStorage: firebaseStorage,
-//       loginDataEntity: loginData,
+//       enterpriseDataEntity: enterpriseData,
 //     );
 //   });
 
@@ -45,12 +45,12 @@
 //   //     verify(() => firebaseStorage.get(collection: )).called(1);
 //   //   });
 
-//   //   test('Should return a LoginData on success', () async {
-//   //     final loginDataEntity = await sut.load();
+//   //   test('Should return a EnterpriseData on success', () async {
+//   //     final enterpriseDataEntity = await sut.load();
 
 //   //     expect(
-//   //       loginDataEntity,
-//   //       LoginDataEntity(
+//   //       enterpriseDataEntity,
+//   //       EnterpriseDataEntity(
 //   //         url: data['url'],
 //   //         userName: data['userName'],
 //   //         enterpriseName: null,
@@ -67,7 +67,7 @@
 //   //   });
 
 //   //   test('Should throw UnexpectedError if cache is isvalid', () async {
-//   //     firebaseStorage.mockGet(CacheFactory.makeInvalidLoginData());
+//   //     firebaseStorage.mockGet(CacheFactory.makeInvalidEnterpriseData());
 
 //   //     final future = sut.load();
 
@@ -75,7 +75,7 @@
 //   //   });
 
 //   //   test('Should throw UnexpectedError if cache is incomplete', () async {
-//   //     firebaseStorage.mockGet(CacheFactory.makeIncompleteLoginData());
+//   //     firebaseStorage.mockGet(CacheFactory.makeIncompleteEnterpriseData());
 
 //   //     final future = sut.load();
 
@@ -95,23 +95,23 @@
 //   //   test('Should call cacheStorage with correct key', () async {
 //   //     await sut.validate();
 
-//   //     verify(() => cacheStorage.get(CacheKeys.loginData.name)).called(1);
+//   //     verify(() => cacheStorage.get(CacheKeys.enterpriseData.name)).called(1);
 //   //   });
 
 //   //   test('Should delete cache if it is invalid', () async {
-//   //     cacheStorage.mockGet(CacheFactory.makeInvalidLoginData());
+//   //     cacheStorage.mockGet(CacheFactory.makeInvalidEnterpriseData());
 
 //   //     await sut.validate();
 
-//   //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
+//   //     verify(() => cacheStorage.delete(CacheKeys.enterpriseData.name)).called(1);
 //   //   });
 
 //   //   test('Should delete cache if it is incomplete', () async {
-//   //     cacheStorage.mockGet(CacheFactory.makeIncompleteLoginData());
+//   //     cacheStorage.mockGet(CacheFactory.makeIncompleteEnterpriseData());
 
 //   //     await sut.validate();
 
-//   //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
+//   //     verify(() => cacheStorage.delete(CacheKeys.enterpriseData.name)).called(1);
 //   //   });
 
 //   //   test('Should delete cache if get fails', () async {
@@ -119,7 +119,7 @@
 
 //   //     await sut.validate();
 
-//   //     verify(() => cacheStorage.delete(CacheKeys.loginData.name)).called(1);
+//   //     verify(() => cacheStorage.delete(CacheKeys.enterpriseData.name)).called(1);
 //   //   });
 //   // });
 // }

@@ -7,18 +7,6 @@ class FirebaseAdapter implements FirebaseStorage {
 
   FirebaseAdapter({required this.firestore});
 
-  // @override
-  // Future<void> add({
-  //   required LoginDataEntity loginEntity,
-  //   required String collection,
-  // }) async {
-  //   await firestore
-  //       .collection(collection)
-  //       .add(LoginDataModel.fromEntity(loginEntity).toFirebaseJson())
-  //       .then((value) => value)
-  //       .catchError((error) => error);
-  // }
-
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> get({
     required String collection,

@@ -4,11 +4,10 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 class EntityFactory {
-  static LoginDataEntity makeLoginData() {
+  static EnterpriseEntity makeEnterpriseData() {
     final String url = faker.internet.httpUrl();
-    return LoginDataEntity(
+    return EnterpriseEntity(
       url: url,
-      userName: faker.person.name(),
       enterpriseId: faker.randomGenerator.integer(3),
       enterpriseName: faker.company.name(),
     );

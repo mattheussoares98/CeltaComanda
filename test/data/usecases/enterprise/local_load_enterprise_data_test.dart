@@ -1,4 +1,4 @@
-import 'package:clean_celta_mobile/data/usecases/login_data/login_data.dart';
+import 'package:clean_celta_mobile/data/usecases/enterprise/enterprise.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
@@ -11,33 +11,34 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late LocalLoginData sut;
+  late LocalEnterpriseData sut;
   late HiveStorageSpy cacheStorage;
   late Map data;
 
   setUp(() {
-    data = CacheFactory.makeLoginData();
+    data = CacheFactory.makeEnterpriseData();
     cacheStorage = HiveStorageSpy();
     cacheStorage.mockGet(data);
-    sut = LocalLoginData(hiveStorage: cacheStorage);
+    sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });
 
   group('load', () {
     test('Should call cacheStorage with correct key', () async {
       await sut.load();
 
-      verify(() => cacheStorage.get(CacheKeys.loginData.name)).called(1);
+      verify(() => cacheStorage.get(CacheKeys.enterprise.name)).called(1);
     });
 
-    test('Should return a LoginData on success', () async {
-      final loginDataEntity = await sut.load();
+    test('Should return a EnterpriseData on success', () async {
+      final enterpriseDataEntity = await sut.load();
 
       expect(
-        loginDataEntity,
-        LoginDataEntity(
-          url: data['url'],
-          userName: data['userName'],
-          enterpriseName: null,
+        enterpriseDataEntity,
+        EnterpriseEntity(
+          url: data['url'].toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+          enterpriseName: data['enterpriseName']
+              .toLowerCase()
+              .replaceAll(RegExp(r'\s+'), ''),
           enterpriseId: data["enterpriseId"],
         ),
       );
@@ -52,7 +53,7 @@ void main() {
     });
 
     test('Should throw UnexpectedError if cache is isvalid', () async {
-      cacheStorage.mockGet(CacheFactory.makeInvalidLoginData());
+      cacheStorage.mockGet(CacheFactory.makeInvalidEnterpriseData());
 
       final future = sut.load();
 
@@ -60,7 +61,7 @@ void main() {
     });
 
     test('Should throw UnexpectedError if cache is incomplete', () async {
-      cacheStorage.mockGet(CacheFactory.makeIncompleteLoginData());
+      cacheStorage.mockGet(CacheFactory.makeIncompleteEnterpriseData());
 
       final future = sut.load();
 

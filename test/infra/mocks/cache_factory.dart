@@ -1,19 +1,18 @@
 import 'package:faker/faker.dart';
 
 class CacheFactory {
-  static Map makeLoginData() => {
+  static Map makeEnterpriseData() => {
         'url': faker.internet.httpUrl(),
-        'userName': faker.person.name(),
-        'enterpriseName': null,
+        'enterpriseName': faker.company.name(),
         'enterpriseId': faker.randomGenerator.integer(2),
       };
 
-  static Map makeInvalidLoginData() => {
+  static Map makeInvalidEnterpriseData() => {
         'url': false,
         'userName': {},
       };
 
-  static Map makeIncompleteLoginData() => {
+  static Map makeIncompleteEnterpriseData() => {
         'url': 'http://localhost:9090',
       };
 }

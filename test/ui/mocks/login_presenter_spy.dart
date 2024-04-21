@@ -9,7 +9,7 @@
 // import 'dart:async';
 // import 'package:mocktail/mocktail.dart';
 
-// class LoginDataEntitySpy extends Mock implements LoginDataEntity {}
+// class EnterpriseDataEntitySpy extends Mock implements EnterpriseDataEntity {}
 
 // class LoginPresenterSpy extends Mock implements LoginPresenter {
 //   final userErrorController = StreamController<UIError?>();
@@ -38,7 +38,7 @@
 //     );
 //     when(() => this.auth()).thenAnswer((_) async => _);
 //     when(() => this.updateUserAndUrlTexts(any())).thenAnswer((_) async => _);
-//     when(() => this.addLoginDataInDatabase(any())).thenAnswer((_) async => _);
+//     when(() => this.addEnterpriseDataInDatabase(any())).thenAnswer((_) async => _);
 //     when(() => this.loadLocalData()).thenAnswer((_) async => _);
 //     when(() => this.validateUser(any())).thenAnswer((_) async => _);
 //     when(() => this.validatePassword(any())).thenAnswer((_) async => _);
@@ -64,7 +64,7 @@
 //       ),
 //     ).thenAnswer((_) async => _);
 
-//     when(() => this.loginData).thenReturn(LoginDataEntitySpy());
+//     when(() => this.enterpriseData).thenReturn(EnterpriseDataEntitySpy());
 //     when(() => this.remoteEntity).thenReturn(null);
 //   }
 
@@ -78,8 +78,8 @@
 //   void emitFormValid() => isFormValidController.add(true);
 //   void emitLoading([bool show = true]) => isLoadingController.add(show);
 //   void emitMainError(UIError error) => mainErrorController.add(error);
-//   void mockLoadRemoteData(LoginDataEntity? loginEntity) {
-//     when(() => this.loadRemoteData()).thenAnswer((_) async => loginEntity);
+//   void mockLoadRemoteData(EnterpriseDataEntity? enterpriseEntity) {
+//     when(() => this.loadRemoteData()).thenAnswer((_) async => enterpriseEntity);
 //   }
 
 //   void dispose() {

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class LoginDataEntitySpy extends Mock implements LoginDataEntity {}
+class EnterpriseDataEntitySpy extends Mock implements EnterpriseEntity {}
 
 class EnterpriseValidationPresenterSpy extends Mock
     implements EnterpriseValidationPresenter {
@@ -42,8 +42,8 @@ class EnterpriseValidationPresenterSpy extends Mock
   void emitFormValid() => isFormValidController.add(true);
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
-  void mockLoadRemoteData(LoginDataEntity? loginEntity) {
-    when(() => this.loadRemoteData()).thenAnswer((_) async => loginEntity);
+  void mockLoadRemoteData(EnterpriseEntity? enterpriseEntity) {
+    when(() => this.loadRemoteData()).thenAnswer((_) async => enterpriseEntity);
   }
 
   void dispose() {

@@ -7,9 +7,6 @@ abstract class FirebaseStorage {
     required String fieldToSearch,
     required String valueToSearch,
   });
-  // Future<void> add({
-  //   required LoginDataEntity loginEntity,
-  //   required String collection,
-  // });
+
   Future<void> update(QuerySnapshot querySnapshot);
 }

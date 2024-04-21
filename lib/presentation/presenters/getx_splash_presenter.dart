@@ -8,22 +8,22 @@ import '../../ui/pages/pages.dart';
 
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final LoadApiSaleRequest loadApiSaleRequest;
-  final LoadLoginData loadLoginData;
+  final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
 
   GetxSplashPresenter({
     required this.loadApiSaleRequest,
     required this.navigateTo,
-    required this.loadLoginData,
+    required this.loadEnterpriseData,
   });
 
   @override
   Future<void> checkApiSaleRequest({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      LoginDataBuilder.loginDataEntity = await loadLoginData.load();
+      EnterpriseDataBuilder.enterpriseDataEntity = await loadEnterpriseData.load();
 
-      if (LoginDataBuilder.loginDataEntity == null) {
+      if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.expansibleGroups,
           clear: true,
@@ -32,8 +32,8 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       ApiSaleRequestEntity? apiSaleRequestEntity =
           await loadApiSaleRequest.load(
-        enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
-        url: LoginDataBuilder.loginDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
       if (apiSaleRequestEntity != null) {
         navigateTo.navigate(

@@ -17,23 +17,23 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadApiSaleRequestSpy loadApiSaleRequest;
   late ApiSaleRequestEntity apiSaleRequestEntity;
-  late LocalLoginDataSpy loadLoginData;
+  late LocalEnterpriseDataSpy loadEnterpriseData;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
-    LoginDataBuilder.loginDataEntity = EntityFactory.makeLoginData();
+    EnterpriseDataBuilder.enterpriseDataEntity = EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
     loadApiSaleRequest = LoadApiSaleRequestSpy();
     navigateTo.mockNavigate();
     apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
     loadApiSaleRequest.mockLoadApiSaleRequest(apiSaleRequestEntity);
-    loadLoginData = LocalLoginDataSpy();
-    loadLoginData.mockLoad(LoginDataBuilder.loginDataEntity!);
+    loadEnterpriseData = LocalEnterpriseDataSpy();
+    loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadApiSaleRequest: loadApiSaleRequest,
-      loadLoginData: loadLoginData,
+      loadEnterpriseData: loadEnterpriseData,
     );
   });
 
@@ -41,8 +41,8 @@ void main() {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(() => loadApiSaleRequest.load(
-          enterpriseId: LoginDataBuilder.loginDataEntity!.enterpriseId!,
-          url: LoginDataBuilder.loginDataEntity!.url,
+          enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         )).called(1);
   });
 
@@ -71,7 +71,7 @@ void main() {
     ).called(1);
   });
 
-  test('Should go to login page if loadApiSaleRequest returns null', () async {
+  test('Should go to enterprise page if loadApiSaleRequest returns null', () async {
     loadApiSaleRequest.mockLoadApiSaleRequest(null);
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 

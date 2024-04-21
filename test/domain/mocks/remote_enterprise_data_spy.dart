@@ -5,15 +5,15 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class RemoteLoginDataSpy extends Mock implements RemoteLoginData {
+class RemoteEnterpriseDataSpy extends Mock implements RemoteEnterpriseData {
   // When mockAddCall() => when(() => this.add(any()));
-  // void mockAdd(LoginDataEntity entity) =>
+  // void mockAdd(EnterpriseDataEntity entity) =>
   //     this.mockAddCall().thenAnswer((_) async => entity);
   // void mockSaveError() => this.mockAddCall().thenThrow(DomainError.unexpected);
 
   When mockRemoteLoadDataCall() =>
       when(() => this.load());
-  void mockRemoteLoad(LoginDataEntity? entity) =>
+  void mockRemoteLoad(EnterpriseEntity? entity) =>
       this.mockRemoteLoadDataCall().thenAnswer((_) async => entity);
   void mockRemoteLoadError() => this.mockRemoteLoadDataCall().thenThrow(Exception());
 }

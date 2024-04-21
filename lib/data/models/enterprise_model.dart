@@ -1,48 +1,46 @@
 import '../../domain/entities/entities.dart';
 
-class LoginDataModel {
+class EnterpriseValidationModel {
   final String url;
-  final String userName;
   final String? enterpriseName;
   final int? enterpriseId;
 
-  LoginDataModel({
+  EnterpriseValidationModel({
     required this.url,
-    required this.userName,
     this.enterpriseName,
     this.enterpriseId,
   });
 
-  factory LoginDataModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll(['url', 'userName', 'enterpriseId', 'enterpriseName'])) {
+  factory EnterpriseValidationModel.fromJson(Map json) {
+    if (!json.keys
+        .toSet()
+        .containsAll(['url', 'enterpriseId', 'enterpriseName'])) {
       throw Exception();
     }
-    return LoginDataModel(
+    return EnterpriseValidationModel(
       url: json['url'],
-      userName: json['userName'],
       enterpriseName: json["enterpriseName"],
       enterpriseId: json["enterpriseId"],
     );
   }
 
-  factory LoginDataModel.fromEntity(LoginDataEntity entity) => LoginDataModel(
-        url: entity.url,
-        userName: entity.userName,
+  factory EnterpriseValidationModel.fromEntity(
+          EnterpriseEntity entity) =>
+      EnterpriseValidationModel(
+        url: entity.url!,
         enterpriseName: entity.enterpriseName,
-        enterpriseId: entity.enterpriseId,
+        enterpriseId: entity.enterpriseId!,
       );
 
-  LoginDataEntity toEntity() => LoginDataEntity(
+  EnterpriseEntity toEntity() => EnterpriseEntity(
         url: url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
-        userName: userName,
         enterpriseName:
-            enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+            enterpriseName!.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         enterpriseId: enterpriseId,
       );
 
   Map<String, dynamic> toJson() => {
         'url': url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
-        'userName': userName,
         'enterpriseName':
             enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
         'enterpriseId': enterpriseId,

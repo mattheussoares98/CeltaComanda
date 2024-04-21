@@ -15,40 +15,39 @@ import '../mocks/mocks.dart';
 void main() {
   late GetxEnterpriseValidationPresenter sut;
   late ValidationSpy validation;
-  late LocalLoginDataSpy localLoginData;
-  late LoginDataEntity loginData;
-  late RemoteLoginDataSpy remoteLoginData;
+  late LocalEnterpriseDataSpy localEnterpriseData;
+  late EnterpriseEntity enterpriseData;
+  late RemoteEnterpriseDataSpy remoteEnterpriseData;
   late NavigateToSpy navigateTo;
   late LoadApiSaleRequestSpy loadApiSaleRequest;
 
   setUp(() {
     validation = ValidationSpy();
-    localLoginData = LocalLoginDataSpy();
-    remoteLoginData = RemoteLoginDataSpy();
+    localEnterpriseData = LocalEnterpriseDataSpy();
+    remoteEnterpriseData = RemoteEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
-    loginData = EntityFactory.makeLoginData();
+    enterpriseData = EntityFactory.makeEnterpriseData();
     loadApiSaleRequest = LoadApiSaleRequestSpy();
 
-    localLoginData.mockSave(loginData);
-    localLoginData.mockLoad(loginData);
-    remoteLoginData.mockRemoteLoad(loginData);
-    // remoteLoginData.mockAdd(loginData);
+    localEnterpriseData.mockSave(enterpriseData);
+    localEnterpriseData.mockLoad(enterpriseData);
+    remoteEnterpriseData.mockRemoteLoad(enterpriseData);
 
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
-      localLoginData: localLoginData,
-      remoteLoginData: remoteLoginData,
+      localEntepriseData: localEnterpriseData,
+      remoteEnterpriseData: remoteEnterpriseData,
       navigateTo: navigateTo,
       loadApiSaleRequest: loadApiSaleRequest,
     );
 
-    sut.enterpriseNameController.text = loginData.enterpriseName!;
+    sut.enterpriseNameController.text = enterpriseData.enterpriseName;
 
-    LoginDataBuilder.loginDataEntity = loginData;
+    EnterpriseDataBuilder.enterpriseDataEntity = enterpriseData;
   });
 
   setUpAll(() {
-    registerFallbackValue(EntityFactory.makeLoginData());
+    registerFallbackValue(EntityFactory.makeEnterpriseData());
   });
 
   test('Should emit null if enterpriseName validation succeeds', () {
@@ -77,7 +76,7 @@ void main() {
     await Future.delayed(Duration.zero);
   });
 
-  test('Should call SaveLoginData with correct value', () async {
+  test('Should call SaveEnterpriseData with correct value', () async {
     sut.validateEnterpriseInput(
       sut.enterpriseNameController.text,
       updateEnterpriseNameController: true,
@@ -85,10 +84,10 @@ void main() {
 
     await sut.validateApiSaleRequest();
 
-    verify(() => localLoginData.add(loginData)).called(1);
+    verify(() => localEnterpriseData.add(enterpriseData)).called(1);
   });
 
-  test('Should emit UnexpectedError if SaveLoginData fails', () async {
+  test('Should emit UnexpectedError if SaveEnterpriseData fails', () async {
     loadApiSaleRequest.mockError(DomainError.unexpected);
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
@@ -123,26 +122,26 @@ void main() {
   test("Should call LoadRemoteData on loadData", () async {
     await sut.loadRemoteData();
 
-    verify(() => remoteLoginData.load()).called(1);
+    verify(() => remoteEnterpriseData.load()).called(1);
   });
-  test("Should change controllers with remoteLoginData", () async {
+  test("Should change controllers with remoteEnterpriseData", () async {
     await sut.loadRemoteData();
 
-    expect(loginData.enterpriseName, sut.enterpriseNameController.text);
+    expect(enterpriseData.enterpriseName, sut.enterpriseNameController.text);
   });
 
-  test("Should change controllers with cacheLoginData", () async {
+  test("Should change controllers with cacheEnterpriseData", () async {
     await sut.loadLocalData();
 
-    expect(loginData.enterpriseName, sut.enterpriseNameController.text);
+    expect(enterpriseData.enterpriseName, sut.enterpriseNameController.text);
   });
-  test("Should call remoteLoadLoginData on ValidateApiSaleRequest click",
+  test("Should call remoteLoadEnterpriseData on ValidateApiSaleRequest click",
       () async {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
     sut.isUpdatedEnterpriseName = true;
 
     await sut.validateApiSaleRequest();
 
-    verify(() => remoteLoginData.load()).called(1);
+    verify(() => remoteEnterpriseData.load()).called(1);
   });
 }

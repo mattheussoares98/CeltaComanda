@@ -1,9 +1,11 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
@@ -26,6 +28,17 @@ class EnterpriseValidationPresenterSpy extends Mock
         .thenReturn(enterpriseNameTextEditingController);
 
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
+    when(() => this.loadRemoteData()).thenAnswer((_) async => _);
+    when(() => this.validateApiSaleRequest()).thenAnswer((_) async => _);
+    when(() => this.goToExpansibleGroupsPage()).thenAnswer((_) => Get.offNamed(
+          PageRoutes.expansibleGroups,
+        ));
+    when(() => this.updateEnterpriseController(any()))
+        .thenAnswer((_) async => _);
+    when(() => this.validateEnterpriseInput(any(),
+            updateEnterpriseNameController:
+                any(named: "updateEnterpriseNameController")))
+        .thenAnswer((_) async => _);
 
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
@@ -44,6 +57,11 @@ class EnterpriseValidationPresenterSpy extends Mock
   void emitMainError(UIError error) => mainErrorController.add(error);
   void mockLoadRemoteData(EnterpriseEntity? enterpriseEntity) {
     when(() => this.loadRemoteData()).thenAnswer((_) async => enterpriseEntity);
+  }
+
+  void mockLoadRemoteDataError() {
+    when(() => this.loadRemoteData())
+        .thenThrow((_) async => DomainError.enterpriseOrUrlNotFound);
   }
 
   void dispose() {

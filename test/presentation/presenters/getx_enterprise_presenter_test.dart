@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
@@ -16,7 +15,6 @@ void main() {
   late GetxEnterpriseValidationPresenter sut;
   late ValidationSpy validation;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late EnterpriseEntity enterpriseData;
   late RemoteEnterpriseDataSpy remoteEnterpriseData;
   late NavigateToSpy navigateTo;
   late LoadApiSaleRequestSpy loadApiSaleRequest;
@@ -26,12 +24,14 @@ void main() {
     localEnterpriseData = LocalEnterpriseDataSpy();
     remoteEnterpriseData = RemoteEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
-    enterpriseData = EntityFactory.makeEnterpriseData();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
     loadApiSaleRequest = LoadApiSaleRequestSpy();
 
-    localEnterpriseData.mockSave(enterpriseData);
-    localEnterpriseData.mockLoad(enterpriseData);
-    remoteEnterpriseData.mockRemoteLoad(enterpriseData);
+    localEnterpriseData.mockSave(EnterpriseDataBuilder.enterpriseDataEntity!);
+    localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
+    remoteEnterpriseData
+        .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
 
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
@@ -41,9 +41,8 @@ void main() {
       loadApiSaleRequest: loadApiSaleRequest,
     );
 
-    sut.enterpriseNameController.text = enterpriseData.enterpriseName;
-
-    EnterpriseDataBuilder.enterpriseDataEntity = enterpriseData;
+    sut.enterpriseNameController.text =
+        EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
   });
 
   setUpAll(() {
@@ -84,7 +83,8 @@ void main() {
 
     await sut.validateApiSaleRequest();
 
-    verify(() => localEnterpriseData.add(enterpriseData)).called(1);
+    verify(() => localEnterpriseData
+        .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveEnterpriseData fails', () async {
@@ -109,6 +109,16 @@ void main() {
     await sut.validateApiSaleRequest();
   });
 
+  test('Should error if enterprise not exists in firebase', () {
+    remoteEnterpriseData.mockRemoteLoadError();
+    // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
+    //     updateEnterpriseNameController: true);
+
+    final error = sut.loadRemoteData();
+
+    expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
+  });
+
   test('Should go to ExpansibleGroupsPage on success', () async {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
@@ -127,13 +137,15 @@ void main() {
   test("Should change controllers with remoteEnterpriseData", () async {
     await sut.loadRemoteData();
 
-    expect(enterpriseData.enterpriseName, sut.enterpriseNameController.text);
+    expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        sut.enterpriseNameController.text);
   });
 
   test("Should change controllers with cacheEnterpriseData", () async {
     await sut.loadLocalData();
 
-    expect(enterpriseData.enterpriseName, sut.enterpriseNameController.text);
+    expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        sut.enterpriseNameController.text);
   });
   test("Should call remoteLoadEnterpriseData on ValidateApiSaleRequest click",
       () async {

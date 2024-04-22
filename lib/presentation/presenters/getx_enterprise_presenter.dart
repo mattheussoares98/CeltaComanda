@@ -36,9 +36,11 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   Future<void> loadLocalData() async {
-    EnterpriseDataBuilder.enterpriseDataEntity = await localEntepriseData.load();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        await localEntepriseData.load();
 
-    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName.isNotEmpty == true) {
+    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName.isNotEmpty ==
+        true) {
       updateEnterpriseController(
           EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
     }
@@ -46,15 +48,27 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   Future<void> loadRemoteData() async {
-    EnterpriseDataBuilder.enterpriseDataEntity = await remoteEnterpriseData.load();
+    try {
+      EnterpriseDataBuilder.enterpriseDataEntity =
+          await remoteEnterpriseData.load();
 
-    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName.isNotEmpty == true) {
-      enterpriseNameController.text =
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
-      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
+      if (EnterpriseDataBuilder
+              .enterpriseDataEntity?.enterpriseName.isNotEmpty ==
+          true) {
+        enterpriseNameController.text =
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
+        await localEntepriseData
+            .add(EnterpriseDataBuilder.enterpriseDataEntity!);
+      }
+
+      if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
+        throw DomainError.enterpriseOrUrlNotFound;
+      }
+    } catch (e) {
+      throw DomainError.enterpriseOrUrlNotFound;
+    } finally {
+      isUpdatedEnterpriseName = false;
     }
-
-    isUpdatedEnterpriseName = false;
   }
 
   @override
@@ -69,16 +83,12 @@ class GetxEnterpriseValidationPresenter extends GetxController
         await loadRemoteData();
       }
 
-      if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
-        throw DomainError.enterpriseOrUrlNotFound;
-      }
-
       await loadApiSaleRequest.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       );
 
-      navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
+      goToExpansibleGroupsPage();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:
@@ -125,5 +135,10 @@ class GetxEnterpriseValidationPresenter extends GetxController
   void _validateForm() {
     isFormValid = _enterpriseError.value == null &&
         enterpriseNameController.text.isNotEmpty == true;
+  }
+
+  @override
+  void goToExpansibleGroupsPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
   }
 }

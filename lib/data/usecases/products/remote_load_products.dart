@@ -18,8 +18,10 @@ class RemoteLoadProducts implements LoadProducts {
   @override
   Future<List<ProductEntity>> load(int? expansibleGroupId) async {
     try {
+      if (expansibleGroupId == null) throw DomainError.unexpected;
+
       String url =
-          "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.url}&_groupCode=$expansibleGroupId";
+          "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_groupCode=$expansibleGroupId";
       final products = await httpAdapter.request(url: url, method: "get");
       if (products == null) throw Error();
       return [

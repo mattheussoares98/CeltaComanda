@@ -79,7 +79,8 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
 
-      if (isUpdatedEnterpriseName) {
+      if (isUpdatedEnterpriseName ||
+          EnterpriseDataBuilder.enterpriseDataEntity!.url == null) {
         await loadRemoteData();
       }
 

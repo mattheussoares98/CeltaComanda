@@ -21,7 +21,7 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
   );
 
   ProductsPresenterSpy() {
-    when(() => this.load()).thenAnswer((_) async => [selectedProductMock]);
+    when(() => this.load(any())).thenAnswer((_) async => [selectedProductMock]);
     when(() => this.productsStream)
         .thenAnswer((_) => productsController.stream);
     when(() => this.selectedProduct).thenAnswer((_) => selectedProductMock);

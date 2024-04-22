@@ -9,7 +9,7 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../mocks/mocks.dart';
 
-Widget makePage({required String path, required Widget Function() page}) {
+Widget makePage({required String path, required Widget Function() page, dynamic arguments}) {
   final allPages = [
     GetPage(
       name: PageRoutes.products,
@@ -55,6 +55,7 @@ Widget makePage({required String path, required Widget Function() page}) {
     allPages[index] = GetPage(
       name: path,
       page: page,
+      arguments: arguments,
     );
   } else {
     allPages.add(GetPage(

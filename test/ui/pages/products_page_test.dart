@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -21,6 +22,7 @@ void main() {
       makePage(
         path: PageRoutes.products,
         page: () => ProductsPage(presenter),
+        arguments: faker.randomGenerator.integer(3),
       ),
     );
   }

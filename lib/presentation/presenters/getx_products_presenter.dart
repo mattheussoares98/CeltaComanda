@@ -27,11 +27,9 @@ class GetxProductsPresenter extends GetxController
   ProductsViewModel? get selectedProduct => _selectedProduct;
 
   @override
-  Future<void> load() async {
+  Future<void> load(int? expansibleGroupId) async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
       isLoading = true;
-      await Future.delayed(const Duration(seconds: 3));
 
       final products = await loadProducts.load();
 

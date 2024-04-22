@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/products/products.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +34,7 @@ void main() {
   });
 
   test('Should call load products', () async {
-    await sut.load();
+    await sut.load(faker.randomGenerator.integer(3));
 
     verify(() => loadProducts.load()).called(1);
   });
@@ -41,7 +42,7 @@ void main() {
   test('Should throw DomainErrorUnexpected', () async {
     loadProducts.mockLoadProductsError();
 
-    final future = sut.load();
+    final future = sut.load(faker.randomGenerator.integer(3));
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -63,7 +64,7 @@ void main() {
           ),
         ])));
 
-    await sut.load();
+    await sut.load(faker.randomGenerator.integer(3));
   });
 
   test('Should update SelectedProduct', () async {

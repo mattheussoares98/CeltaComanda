@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import './products.dart';
@@ -16,18 +18,28 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> with LoadingManager {
+  int? expansibleGroupId;
+
   bool _isLoaded = false;
   @override
   void didChangeDependencies() {
+    if (Get.arguments != null) {
+      expansibleGroupId = Get.arguments as int;
+    }
+
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      widget.presenter.load();
+      widget.presenter.load(expansibleGroupId);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (Get.arguments != null) {
+      expansibleGroupId = Get.arguments as int;
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
@@ -48,7 +60,8 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: () async => await widget.presenter.load(),
+                      reload: () async =>
+                          await widget.presenter.load(expansibleGroupId),
                     );
                   }
                   if (snapshot.hasData) {

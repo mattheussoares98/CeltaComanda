@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -54,7 +55,7 @@ void main() {
   testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.goToProductsPage(1);
+    presenter.goToProductsPage(faker.randomGenerator.integer(3));
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);

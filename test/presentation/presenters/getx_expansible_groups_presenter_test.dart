@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/main/builders/enterprise_data_builder.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -105,7 +106,10 @@ void main() {
   });
 
   test('Should clear local data on logout', () async {
-    const enterpriseEntity = EnterpriseEntity(enterpriseName: "");
+    final enterpriseEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+    );
     localEnterpriseData.mockAdd(enterpriseEntity);
 
     await sut.clearEnterpriseData();

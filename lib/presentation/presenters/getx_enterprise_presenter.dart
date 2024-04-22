@@ -88,6 +88,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       );
 
+      isLoading = false;
       goToExpansibleGroupsPage();
     } on DomainError catch (error) {
       switch (error) {

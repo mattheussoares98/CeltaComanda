@@ -21,20 +21,31 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   Future<void> checkApiSaleRequest({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      EnterpriseDataBuilder.enterpriseDataEntity = await loadEnterpriseData.load();
+      EnterpriseDataBuilder.enterpriseDataEntity =
+          await loadEnterpriseData.load();
 
-      if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
+      // if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
+      //   navigateTo.navigate(
+      //     pageRoute: PageRoutes.expansibleGroups,
+      //     clear: true,
+      //   );
+      // }
+      if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId == null) {
         navigateTo.navigate(
-          pageRoute: PageRoutes.expansibleGroups,
+          pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
       }
 
-      ApiSaleRequestEntity? apiSaleRequestEntity =
-          await loadApiSaleRequest.load(
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      );
+      ApiSaleRequestEntity? apiSaleRequestEntity;
+      if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId != null) {
+        apiSaleRequestEntity = await loadApiSaleRequest.load(
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        );
+      }
+
       if (apiSaleRequestEntity != null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.expansibleGroups,

@@ -68,9 +68,12 @@ class GetxExpansibleGroupsPresenter extends GetxController
 
   @override
   Future<void> clearEnterpriseData() async {
-    EnterpriseDataBuilder.enterpriseDataEntity = null;
     await localEnterpriseData.add(
-      const EnterpriseEntity(enterpriseName: ""),
+      EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      ),
     );
+    EnterpriseDataBuilder.enterpriseDataEntity = null;
   }
 }

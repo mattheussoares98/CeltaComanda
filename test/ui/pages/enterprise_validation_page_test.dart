@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/mocks.dart';
 import '../helpers/helpers.dart';
@@ -61,5 +62,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.enterpriseValidation);
+  });
+
+  testWidgets('Should call validateEnterpriseInput on didChangeDependencies',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    // Verificando se a função foi chamada quando didChangeDependencies é chamado
+    verify(() => presenter.validateEnterpriseInput(
+        presenter.enterpriseNameController.text));
   });
 }

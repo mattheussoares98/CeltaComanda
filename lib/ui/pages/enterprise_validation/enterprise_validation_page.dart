@@ -22,11 +22,13 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   bool _isLoaded = false;
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      widget.presenter.loadLocalData();
+      await widget.presenter.loadLocalData();
+      widget.presenter.validateEnterpriseInput(
+          widget.presenter.enterpriseNameController.text);
     }
   }
 

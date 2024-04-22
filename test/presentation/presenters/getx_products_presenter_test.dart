@@ -53,16 +53,20 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.productsStream.listen(expectAsync1((products) => expect(products, [
           ProductsViewModel(
-            image: products[0].image,
-            price: products[0].price,
-            name: products[0].name,
-            plu: products[0].plu,
+            SaleRetailPraticed: products[0].SaleRetailPraticed,
+            PackingAbbreviation: products[0].PackingAbbreviation,
+            Name: products[0].Name,
+            EanCode: products[0].EanCode,
+            PriceLookupCode: products[0].PriceLookupCode,
+            ProductsId: products[0].ProductsId,
           ),
           ProductsViewModel(
-            image: products[1].image,
-            price: products[1].price,
-            name: products[1].name,
-            plu: products[1].plu,
+            SaleRetailPraticed: products[1].SaleRetailPraticed,
+            PackingAbbreviation: products[1].PackingAbbreviation,
+            Name: products[1].Name,
+            EanCode: products[1].EanCode,
+            PriceLookupCode: products[1].PriceLookupCode,
+            ProductsId: products[1].ProductsId,
           ),
         ])));
 
@@ -72,19 +76,23 @@ void main() {
   test('Should update SelectedProduct', () async {
     sut.updateSelectedProduct(
       ProductsViewModel(
-        image: products[0].image,
-        price: products[0].price.toString(),
-        name: products[0].name,
-        plu: products[0].plu,
+        SaleRetailPraticed: products[0].saleRetailPraticed.toString(),
+        PackingAbbreviation: products[0].packingAbbreviation,
+        Name: products[0].name,
+        EanCode: products[0].eanCode.toString(),
+        PriceLookupCode: products[0].priceLookupCode,
+        ProductsId: products[0].productsId,
       ),
     );
 
     expect(
       ProductsViewModel(
-        image: products[0].image,
-        price: products[0].price.toString(),
-        name: products[0].name,
-        plu: products[0].plu,
+        SaleRetailPraticed: products[0].saleRetailPraticed.toString(),
+        PackingAbbreviation: products[0].packingAbbreviation,
+        Name: products[0].name,
+        EanCode: products[0].eanCode.toString(),
+        PriceLookupCode: products[0].priceLookupCode,
+        ProductsId: products[0].productsId,
       ),
       sut.selectedProduct,
     );

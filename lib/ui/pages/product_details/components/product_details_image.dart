@@ -9,7 +9,7 @@ class ProductDetailsImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      product.image,
+      product.SaleRetailPraticed,
       fit: BoxFit.cover,
       width: double.infinity,
       height: 300,

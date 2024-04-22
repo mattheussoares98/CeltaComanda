@@ -3,22 +3,18 @@
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
+import '../../domain/mocks/mocks.dart';
+
 class ProductsPresenterSpy extends Mock implements ProductsPresenter {
   final mainErrorController = StreamController<List<ProductsViewModel>>();
   final isLoadingController = StreamController<bool>();
   final productsController = StreamController<List<ProductsViewModel>>();
-  final selectedProductMock = ProductsViewModel(
-    price: faker.randomGenerator.string(7),
-    name: faker.food.random.string(10),
-    image: faker.internet.httpUrl(),
-    plu: faker.randomGenerator.integer(5).toString(),
-  );
+  final selectedProductMock = EntityFactory.makeProductViewModel();
 
   ProductsPresenterSpy() {
     when(() => this.load(any())).thenAnswer((_) async => [selectedProductMock]);

@@ -31,7 +31,7 @@ class CartItem extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              product.name,
+                              product.Name,
                             ),
                           ),
                         ),

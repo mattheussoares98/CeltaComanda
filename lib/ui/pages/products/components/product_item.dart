@@ -53,7 +53,7 @@ class ProductItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          product.name,
+                          product.Name,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -87,7 +87,7 @@ class ProductItem extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 8),
                       child: Text(
-                        'R\$${product.price}',
+                        'R\$${product.PackingAbbreviation}',
                         textAlign: TextAlign.end,
                       ),
                     ),

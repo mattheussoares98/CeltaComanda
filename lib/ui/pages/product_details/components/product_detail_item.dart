@@ -50,7 +50,7 @@ class ProductDetailItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                ProductName(name: product.name),
+                ProductName(name: product.Name),
                 const ProductSubtitle(
                     title:
                         'Effortlessly flow from one space to the next in this sleeveless take on the classic trench coat. '),
@@ -64,7 +64,7 @@ class ProductDetailItem extends StatelessWidget {
             product: product,
             cartPresenter: cartPresenter,
           ),
-          price: product.price,
+          price: product.PackingAbbreviation,
         ),
       ],
     );

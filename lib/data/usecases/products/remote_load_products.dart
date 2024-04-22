@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -22,23 +23,12 @@ class RemoteLoadProducts implements LoadProducts {
 
       String url =
           "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_groupCode=$expansibleGroupId";
-      final products = await httpAdapter.request(url: url, method: "get");
-      if (products == null) throw Error();
-      return [
-        const ProductEntity(
-          name: "name",
-          plu: "plu",
-          price: 10,
-          image:
-              "https://lh4.googleusercontent.com/ECbQV5RNf6RMdJQ_qE-s-9JF9lYOSTyxCYq5nCrHgcBct8ixi__prSequxRFInCxyVojmotC91hoNvrNDwOihQ1YHM5tMW_MRmDtCjOVpMbikgdiv0vqIE1PmQu9xNEA0Ke-aYjHOJAL5ec00E-2g28",
-        ),
-        const ProductEntity(
-          name: "name",
-          plu: "plu",
-          price: 10,
-          image: "http://teste.com.jpeg",
-        ),
-      ];
+      final response = await httpAdapter.request(url: url, method: "get");
+      if (response == null) throw Error();
+
+      return response.map<ProductEntity>((element) {
+        return ProductModel.fromJson(element).toEntity();
+      }).toList();
     } catch (error) {
       throw DomainError.unexpected;
     }

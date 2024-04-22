@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
@@ -155,5 +156,20 @@ void main() {
     await sut.validateApiSaleRequest();
 
     verify(() => remoteEnterpriseData.load()).called(1);
+  });
+
+  test(
+      "Should change EnterpriseDataBuilder.enterpriseName when change enterprise value",
+      () async {
+    sut.validateEnterpriseInput(
+      sut.enterpriseNameController.text,
+      updateEnterpriseNameController: true,
+    );
+
+    expect(
+        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseEntity(
+          enterpriseName: sut.enterpriseNameController.text,
+        ));
   });
 }

@@ -93,12 +93,12 @@ class GetxEnterpriseValidationPresenter extends GetxController
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;
-          isLoading = false;
           break;
         default:
           mainError = UIError.unexpected;
-          isLoading = false;
       }
+    } finally {
+      isLoading = false;
     }
   }
 
@@ -106,6 +106,11 @@ class GetxEnterpriseValidationPresenter extends GetxController
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false}) {
     enterpriseNameController.text = value;
+
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      enterpriseName: enterpriseNameController.text,
+    );
+
     _enterpriseError.value = _validateField('enterpriseName');
     _validateForm();
     if (updateEnterpriseNameController == true) {

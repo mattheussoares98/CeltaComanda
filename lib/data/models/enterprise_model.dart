@@ -1,13 +1,13 @@
 import '../../domain/entities/entities.dart';
 
 class EnterpriseValidationModel {
-  final String url;
-  final String? enterpriseName;
+  final String? url;
+  final String enterpriseName;
   final int? enterpriseId;
 
   EnterpriseValidationModel({
-    required this.url,
-    this.enterpriseName,
+    required this.enterpriseName,
+    this.url,
     this.enterpriseId,
   });
 
@@ -24,25 +24,24 @@ class EnterpriseValidationModel {
     );
   }
 
-  factory EnterpriseValidationModel.fromEntity(
-          EnterpriseEntity entity) =>
+  factory EnterpriseValidationModel.fromEntity(EnterpriseEntity entity) =>
       EnterpriseValidationModel(
-        url: entity.url!,
+        url: entity.url,
         enterpriseName: entity.enterpriseName,
-        enterpriseId: entity.enterpriseId!,
+        enterpriseId: entity.enterpriseId,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
-        url: url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+        url: url?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         enterpriseName:
-            enterpriseName!.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+            enterpriseName.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         enterpriseId: enterpriseId,
       );
 
   Map<String, dynamic> toJson() => {
-        'url': url.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+        'url': url?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         'enterpriseName':
-            enterpriseName?.toLowerCase().replaceAll(RegExp(r'\s+'), '') ?? "",
+            enterpriseName.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         'enterpriseId': enterpriseId,
       };
 }

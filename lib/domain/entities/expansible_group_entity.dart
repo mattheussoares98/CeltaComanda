@@ -1,7 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 class ExpansibleGroupEntity {
-  final String name;
+  final String Name;
+  final int ExpansibleGroupId;
+  final int ExpansibleGroupType;
+  final int OrderClassification;
 
   const ExpansibleGroupEntity({
-    required this.name,
+    required this.Name,
+    required this.ExpansibleGroupId,
+    required this.ExpansibleGroupType,
+    required this.OrderClassification,
   });
 }

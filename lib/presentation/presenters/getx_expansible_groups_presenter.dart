@@ -25,14 +25,19 @@ class GetxExpansibleGroupsPresenter extends GetxController
   @override
   Future<void> load() async {
     try {
-      await loadExpansibleGroups.load();
-      await Future.delayed(const Duration(seconds: 1));
+      final expansibleGroups = await loadExpansibleGroups.load();
       isLoading = true;
-      await Future.delayed(const Duration(seconds: 3));
-      _expansibleGroups.subject.add([
-        const ExpansibleGroupsViewModel(name: "Name 1"),
-        const ExpansibleGroupsViewModel(name: "Name 2"),
-      ]);
+
+      if (expansibleGroups != null) {
+        _expansibleGroups.subject.add(
+          expansibleGroups
+              .map((e) => ExpansibleGroupsViewModel(
+                    name: e.Name,
+                  ))
+              .toList(),
+        );
+      }
+
       isLoading = false;
     } catch (e) {
       _expansibleGroups.subject

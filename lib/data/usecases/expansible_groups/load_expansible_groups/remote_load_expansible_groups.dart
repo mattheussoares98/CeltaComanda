@@ -1,3 +1,6 @@
+import 'package:clean_celta_mobile/data/models/expansible_groups_model.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+
 import '../../../../data/http/http.dart';
 import '../../../../domain/entities/entities.dart';
 import '../../../../domain/helpers/helpers.dart';
@@ -11,11 +14,19 @@ class RemoteLoadExpansibleGroups implements LoadExpansibleGroups {
   @override
   Future<List<ExpansibleGroupEntity>?> load() async {
     try {
-      // final products = await httpAdapter.request(url: "url", method: "get");
-      // if (products == null) throw Error();
-      return const [
-        ExpansibleGroupEntity(name: "Expansible Group Name"),
-      ];
+      final response = await httpAdapter.request(
+        url:
+            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIGroups/GetAll?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}",
+        method: "get",
+      );
+      if (response == null) {
+        throw Error();
+      }
+
+      return response.map<ExpansibleGroupEntity>((element) {
+        return ExpansibleGroupsModel.fromJson(element).toEntity();
+      }).toList();
+      
     } catch (error) {
       throw DomainError.unexpected;
     }

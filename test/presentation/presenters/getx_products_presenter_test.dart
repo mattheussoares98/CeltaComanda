@@ -19,9 +19,11 @@ void main() {
   late LoadProductsSpy loadProducts;
   late List<ProductEntity> products;
   WidgetsFlutterBinding.ensureInitialized();
+  late int expansibleGroupId;
   Get.testMode = true;
 
   setUp(() {
+    expansibleGroupId = faker.randomGenerator.integer(3);
     loadProducts = LoadProductsSpy();
     products = EntityFactory.makeProducts();
     loadProducts.mockLoadProducts(products);
@@ -34,9 +36,9 @@ void main() {
   });
 
   test('Should call load products', () async {
-    await sut.load(faker.randomGenerator.integer(3));
+    await sut.load(expansibleGroupId);
 
-    verify(() => loadProducts.load()).called(1);
+    verify(() => loadProducts.load(expansibleGroupId)).called(1);
   });
 
   test('Should throw DomainErrorUnexpected', () async {

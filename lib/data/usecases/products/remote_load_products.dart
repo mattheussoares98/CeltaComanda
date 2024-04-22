@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/products/products.dart';
@@ -14,16 +16,19 @@ class RemoteLoadProducts implements LoadProducts {
   });
 
   @override
-  Future<List<ProductEntity>> load() async {
+  Future<List<ProductEntity>> load(int? expansibleGroupId) async {
     try {
-      // final products = await httpAdapter.request(url: "url", method: "get");
-      // if (products == null) throw Error();
+      String url =
+          "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.url}&_groupCode=$expansibleGroupId";
+      final products = await httpAdapter.request(url: url, method: "get");
+      if (products == null) throw Error();
       return [
         const ProductEntity(
           name: "name",
           plu: "plu",
           price: 10,
-          image: "https://lh4.googleusercontent.com/ECbQV5RNf6RMdJQ_qE-s-9JF9lYOSTyxCYq5nCrHgcBct8ixi__prSequxRFInCxyVojmotC91hoNvrNDwOihQ1YHM5tMW_MRmDtCjOVpMbikgdiv0vqIE1PmQu9xNEA0Ke-aYjHOJAL5ec00E-2g28",
+          image:
+              "https://lh4.googleusercontent.com/ECbQV5RNf6RMdJQ_qE-s-9JF9lYOSTyxCYq5nCrHgcBct8ixi__prSequxRFInCxyVojmotC91hoNvrNDwOihQ1YHM5tMW_MRmDtCjOVpMbikgdiv0vqIE1PmQu9xNEA0Ke-aYjHOJAL5ec00E-2g28",
         ),
         const ProductEntity(
           name: "name",

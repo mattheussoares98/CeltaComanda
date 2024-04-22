@@ -31,7 +31,7 @@ class GetxProductsPresenter extends GetxController
     try {
       isLoading = true;
 
-      final products = await loadProducts.load();
+      final products = await loadProducts.load(expansibleGroupId);
 
       if (products != null) {
         _products.value = products

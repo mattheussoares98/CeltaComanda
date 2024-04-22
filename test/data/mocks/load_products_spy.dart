@@ -6,7 +6,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadProductsSpy extends Mock implements LoadProducts {
-  When mockLoadProductsCall() => when(() => this.load());
+  When mockLoadProductsCall() => when(() => this.load(any()));
 
   void mockLoadProducts(List<ProductEntity>? products) =>
       this.mockLoadProductsCall().thenAnswer((_) async => products);

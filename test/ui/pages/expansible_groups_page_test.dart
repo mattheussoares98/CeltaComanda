@@ -54,7 +54,7 @@ void main() {
   testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.goToProductsPage();
+    presenter.goToProductsPage(1);
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);

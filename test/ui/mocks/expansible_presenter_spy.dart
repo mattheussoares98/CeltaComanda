@@ -22,7 +22,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
         .thenAnswer((_) => expansibleGroupsController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.goToProductsPage()).thenAnswer((_) => Get.offNamed(
+    when(() => this.goToProductsPage(any())).thenAnswer((_) => Get.offNamed(
           PageRoutes.products,
         ));
     when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(

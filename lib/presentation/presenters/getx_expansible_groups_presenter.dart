@@ -37,7 +37,10 @@ class GetxExpansibleGroupsPresenter extends GetxController
         _expansibleGroups.subject.add(
           expansibleGroups
               .map((e) => ExpansibleGroupsViewModel(
-                    name: e.Name,
+                    Name: e.Name,
+                    ExpansibleGroupId: e.ExpansibleGroupId,
+                    ExpansibleGroupType: e.ExpansibleGroupType,
+                    OrderClassification: e.OrderClassification,
                   ))
               .toList(),
         );
@@ -52,8 +55,11 @@ class GetxExpansibleGroupsPresenter extends GetxController
   }
 
   @override
-  void goToProductsPage() {
-    navigateTo.navigate(pageRoute: PageRoutes.products);
+  void goToProductsPage(int expansibleGroupId) {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.products,
+      arguments: expansibleGroupId,
+    );
   }
 
   @override

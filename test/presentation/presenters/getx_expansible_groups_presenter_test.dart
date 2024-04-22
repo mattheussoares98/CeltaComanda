@@ -64,10 +64,16 @@ void main() {
     sut.expansibleGroupsStream
         .listen(expectAsync1((expansibleGroups) => expect(expansibleGroups, [
               ExpansibleGroupsViewModel(
-                name: expansibleGroups[0].name,
+                Name: expansibleGroups[0].Name,
+                ExpansibleGroupId: expansibleGroups[0].ExpansibleGroupId,
+                ExpansibleGroupType: expansibleGroups[0].ExpansibleGroupType,
+                OrderClassification: expansibleGroups[0].OrderClassification,
               ),
               ExpansibleGroupsViewModel(
-                name: expansibleGroups[1].name,
+                Name: expansibleGroups[1].Name,
+                ExpansibleGroupId: expansibleGroups[1].ExpansibleGroupId,
+                ExpansibleGroupType: expansibleGroups[1].ExpansibleGroupType,
+                OrderClassification: expansibleGroups[1].OrderClassification,
               ),
             ])));
 
@@ -85,11 +91,12 @@ void main() {
   });
 
   test('Should go to products page ExpansibleGroupItem click', () async {
-    sut.goToProductsPage();
+    sut.goToProductsPage(expansibleGroups[0].ExpansibleGroupId);
 
     verify(
       () => navigateTo.navigate(
         pageRoute: PageRoutes.products,
+        arguments: expansibleGroups[0].ExpansibleGroupId,
       ),
     ).called(1);
   });

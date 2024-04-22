@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -18,19 +19,29 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late List<ExpansibleGroupEntity> expansibleGroups;
+  late LocalEnterpriseDataSpy localEnterpriseData;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroups();
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
+    localEnterpriseData = LocalEnterpriseDataSpy();
     sut = GetxExpansibleGroupsPresenter(
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
+      localEnterpriseData: localEnterpriseData,
     );
+  });
+
+  setUpAll(() {
+    registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
+    registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
   });
 
   test('Should call load products', () async {
@@ -91,5 +102,14 @@ void main() {
         clear: true,
       ),
     ).called(1);
+  });
+
+  test('Should clear local data on logout', () async {
+    const enterpriseEntity = EnterpriseEntity(enterpriseName: "");
+    localEnterpriseData.mockAdd(enterpriseEntity);
+
+    await sut.clearEnterpriseData();
+
+    verify(() => localEnterpriseData.add(enterpriseEntity)).called(1);
   });
 }

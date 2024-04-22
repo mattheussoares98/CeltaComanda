@@ -10,4 +10,6 @@ abstract class ExpansibleGroupsPresenter implements Listenable {
   void goToProductsPage();
   void goToCartPage();
   void goToSplashPage();
+
+  Future<void> clearEnterpriseData();
 }

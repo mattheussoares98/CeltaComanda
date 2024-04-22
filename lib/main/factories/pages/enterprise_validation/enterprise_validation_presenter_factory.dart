@@ -5,7 +5,7 @@ import '../../factories.dart';
 EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
     GetxEnterpriseValidationPresenter(
       validation: makeEnterpriseValidation(),
-      localEntepriseData: makeLocalLoadEnterpriseData(),
+      localEntepriseData: makeLocalEnterpriseData(),
       remoteEnterpriseData: makeRemoteEnterpriseData(),
       navigateTo: makeNavigateTo(),
       loadApiSaleRequest: makeRemoteLoadApiSaleRequest(),

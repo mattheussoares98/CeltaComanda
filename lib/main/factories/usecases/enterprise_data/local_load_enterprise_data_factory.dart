@@ -2,5 +2,5 @@
 import '../../../../data/usecases/enterprise/enterprise.dart';
 import '../../factories.dart';
 
-LocalEnterpriseData makeLocalLoadEnterpriseData() =>
+LocalEnterpriseData makeLocalEnterpriseData() =>
     LocalEnterpriseData(hiveStorage: makeHiveAdapter());

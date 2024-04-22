@@ -6,10 +6,10 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LocalEnterpriseDataSpy extends Mock implements LocalEnterpriseData {
-  When mockSaveCall() => when(() => this.add(any()));
-  void mockSave(EnterpriseEntity entity) =>
-      this.mockSaveCall().thenAnswer((_) async => entity);
-  void mockSaveError() => this.mockSaveCall().thenThrow(Exception());
+  When mockAddCall() => when(() => this.add(any()));
+  void mockAdd(EnterpriseEntity entity) =>
+      this.mockAddCall().thenAnswer((_) async => entity);
+  void mockAddError() => this.mockAddCall().thenThrow(Exception());
 
   When mockLoadCall() => when(() => this.load());
   void mockLoad(EnterpriseEntity entity) =>

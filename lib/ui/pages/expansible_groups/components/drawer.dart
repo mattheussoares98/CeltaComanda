@@ -30,7 +30,10 @@ Widget drawer({
           _drawerItem(
             key: const Key("logout"),
             context: context,
-            onTap: presenter.goToSplashPage,
+            onTap: ()async {
+              presenter.goToSplashPage();
+              await presenter.clearEnterpriseData();
+            } ,
             text: "Sair",
             leading: Icon(
               Icons.logout,

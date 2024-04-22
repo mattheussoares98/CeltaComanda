@@ -29,7 +29,7 @@ void main() {
         EntityFactory.makeEnterpriseData();
     loadApiSaleRequest = LoadApiSaleRequestSpy();
 
-    localEnterpriseData.mockSave(EnterpriseDataBuilder.enterpriseDataEntity!);
+    localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     remoteEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);

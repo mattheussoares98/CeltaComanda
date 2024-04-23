@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/helpers.dart';
 import './expansible_groups.dart';
 
-abstract class ExpansibleGroupsPresenter implements Listenable {
+abstract class ExpansibleGroupsPresenter with ChangeNotifier implements Listenable {
   List<ExpansibleGroupsViewModel> get expansibleGroups;
   SaleRequestTempViewModel? get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;

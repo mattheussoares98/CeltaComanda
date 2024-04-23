@@ -9,7 +9,10 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../mocks/mocks.dart';
 
-Widget makePage({required String path, required Widget Function() page, dynamic arguments}) {
+Widget makePage(
+    {required String path,
+    required Widget Function() page,
+    dynamic arguments}) {
   final allPages = [
     GetPage(
       name: PageRoutes.products,
@@ -61,12 +64,16 @@ Widget makePage({required String path, required Widget Function() page, dynamic 
     allPages.add(GetPage(
       name: path,
       page: page,
+      arguments: arguments,
     ));
   }
 
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider(
+      ChangeNotifierProvider<ExpansibleGroupsPresenter>(
+        create: (_) => ExpansibleGroupsPresenterSpy(),
+      ),
+      ChangeNotifierProvider<GetxCartPresenter>(
         create: (_) => GetxCartPresenter(),
       ),
     ],
@@ -76,6 +83,19 @@ Widget makePage({required String path, required Widget Function() page, dynamic 
       getPages: allPages,
     ),
   );
+
+  // return MultiProvider(
+  //   providers: [
+  //     ChangeNotifierProvider(
+  //       create: (_) => GetxCartPresenter(),
+  //     ),
+  //   ],
+  //   child: GetMaterialApp(
+  //     initialRoute: path,
+  //     navigatorObservers: [Get.put<RouteObserver>(RouteObserver<PageRoute>())],
+  //     getPages: allPages,
+  //   ),
+  // );
 }
 
 String get currentRoute => Get.currentRoute;

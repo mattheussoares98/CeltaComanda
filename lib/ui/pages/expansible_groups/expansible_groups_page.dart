@@ -1,6 +1,3 @@
-import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:provider/provider.dart';
-
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import '../expansible_groups/expansible_groups.dart';
@@ -20,16 +17,13 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    final expansibleGroupsPresenter =
-        Provider.of<GetxExpansibleGroupsPresenter>(context);
-
     return Scaffold(
-      drawer: drawer(context: context, presenter: expansibleGroupsPresenter),
+      drawer: drawer(context: context, presenter: widget.presenter),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
         title: const Text("Grupos de comida"),
         actions: [
-          CartIcon(goToCartPage: expansibleGroupsPresenter.goToCartPage),
+          CartIcon(goToCartPage: widget.presenter.goToCartPage),
         ],
       ),
       body: Column(
@@ -38,20 +32,18 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
-                  handleMainError(
-                      context, expansibleGroupsPresenter.mainErrorStream);
+                  handleLoading(context, widget.presenter.isLoadingStream);
+                  handleMainError(context, widget.presenter.mainErrorStream);
 
-                  if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
+                  if (widget.presenter.expansibleGroups.isEmpty) {
                     return InsertCommandNumber(
-                      presenter: expansibleGroupsPresenter,
+                      presenter: widget.presenter,
                     );
                   }
 
                   return GroupItems(
                     expansibleGroupsViewModel:
-                        expansibleGroupsPresenter.expansibleGroups,
+                        widget.presenter.expansibleGroups,
                   );
                 },
               ),

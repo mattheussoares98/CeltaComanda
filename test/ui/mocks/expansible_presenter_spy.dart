@@ -38,10 +38,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
     when(() => this.getSaleRequestTemp(any())).thenThrow(error);
   }
 
-  void emitLoading([bool show = true]) => isLoadingController.add(show);
-
-  void dispose() {
-    mainErrorController.close();
-    isLoadingController.close();
+  void emitLoading([bool show = true]) {
+    isLoadingController.add(show);
   }
 }

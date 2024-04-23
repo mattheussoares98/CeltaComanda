@@ -83,7 +83,8 @@ void main() {
     expect(find.byKey(const Key("CartIcon")), findsOneWidget);
   });
 
-  testWidgets('Should present InsertCommandNumber if verify command is avaible fails',
+  testWidgets(
+      'Should present InsertCommandNumber if verify command is avaible fails',
       (WidgetTester tester) async {
     await loadPage(tester);
 
@@ -97,7 +98,8 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockVerifyCommandIsAvailableError(DomainError.commandNotAvailable);
+    presenter
+        .mockVerifyCommandIsAvailableError(DomainError.commandNotAvailable);
     await tester.pumpAndSettle();
 
     expect(find.byType(InsertCommandNumber), findsOneWidget);

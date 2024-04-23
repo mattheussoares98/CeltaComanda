@@ -3,7 +3,7 @@
 > ## FLUXO
 ## CONSULTA DA COMANDA
 # PADRÃO
-1. Exibir o loading ao iniciar a consulta da comanda
+1. ✅ Exibir o loading ao iniciar a consulta da comanda
 
 # SUCESSO
 1. Exibe os grupos expansíveis para selecionar

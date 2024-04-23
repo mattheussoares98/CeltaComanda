@@ -22,16 +22,20 @@ void main() {
   late List<ExpansibleGroupEntity> expansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late LoadCommandsAvailableSpy loadCommandsAvailable;
+  late ApiSaleRequestEntity apiSeleRequest;
+  late String commandNumber;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
+    commandNumber = "001";
     loadCommandsAvailable = LoadCommandsAvailableSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroups();
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
+    apiSeleRequest = EntityFactory.makeApiSaleRequestEntity();
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
     localEnterpriseData = LocalEnterpriseDataSpy();
@@ -125,5 +129,11 @@ void main() {
     await sut.clearEnterpriseData();
 
     verify(() => localEnterpriseData.add(enterpriseEntity)).called(1);
+  });
+
+  test('Should emit correct events on verify command success', () async {
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+    await sut.verifyCommandAvailable(commandNumber);
   });
 }

@@ -12,7 +12,7 @@ class RemoteLoadCommandsAvailable implements LoadCommandsAvailable {
   });
 
   @override
-  Future<ApiSaleRequestEntity?> load({
+  Future<SaleRequestEntity?> load({
     required String url,
     required int enterpriseId,
     required String commandNumber,

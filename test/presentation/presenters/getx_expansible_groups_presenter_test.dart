@@ -22,7 +22,7 @@ void main() {
   late List<ExpansibleGroupEntity> expansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late LoadCommandsAvailableSpy loadCommandsAvailable;
-  late ApiSaleRequestEntity apiSaleRequest;
+  late SaleRequestEntity apiSaleRequest;
   late String commandNumber;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;

@@ -16,7 +16,7 @@ void main() {
   late GetxSplashPresenter sut;
   late NavigateToSpy navigateTo;
   late LoadCommandsAvailableSpy loadCommandsAvailable;
-  late ApiSaleRequestEntity apiSaleRequestEntity;
+  late SaleRequestEntity apiSaleRequestEntity;
   late LocalEnterpriseDataSpy loadEnterpriseData;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;

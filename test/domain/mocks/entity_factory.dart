@@ -176,8 +176,8 @@ class EntityFactory {
     );
   }
 
-  static ApiSaleRequestEntity makeApiSaleRequestEntity() {
-    return ApiSaleRequestEntity(
+  static SaleRequestEntity makeApiSaleRequestEntity() {
+    return SaleRequestEntity(
       Products: [],
       SaleRequestTempId: faker.randomGenerator.integer(10),
       PersonalizedCode: faker.randomGenerator.string(10),

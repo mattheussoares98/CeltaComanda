@@ -13,7 +13,7 @@ class LoadCommandsAvailableSpy extends Mock implements LoadCommandsAvailable {
       ));
 
   void mockLoadCommandsAvailable(
-          List<ApiSaleRequestEntity>? expansibleGroups) =>
+          List<SaleRequestEntity>? expansibleGroups) =>
       this
           .mockLoadCommandsAvailableCall()
           .thenAnswer((_) async => expansibleGroups);

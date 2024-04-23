@@ -43,7 +43,7 @@ class ApiSaleRequestModel {
     );
   }
 
-  factory ApiSaleRequestModel.fromEntity(ApiSaleRequestEntity entity) =>
+  factory ApiSaleRequestModel.fromEntity(SaleRequestEntity entity) =>
       ApiSaleRequestModel(
         Products: entity.Products,
         SaleRequestTempId: entity.SaleRequestTempId,
@@ -54,7 +54,7 @@ class ApiSaleRequestModel {
         Comments: entity.Comments,
       );
 
-  ApiSaleRequestEntity toEntity() => ApiSaleRequestEntity(
+  SaleRequestEntity toEntity() => SaleRequestEntity(
         Products: Products,
         SaleRequestTempId: SaleRequestTempId,
         PersonalizedCode: PersonalizedCode,

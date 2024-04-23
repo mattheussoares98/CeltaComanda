@@ -15,7 +15,7 @@ class LoadCommandsAvailableSpy extends Mock implements LoadCommandsAvailable {
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockLoadCommandsAvailable(ApiSaleRequestEntity? entity) {
+  void mockLoadCommandsAvailable(SaleRequestEntity? entity) {
     this.mockLoadCommandsAvailableCall().thenAnswer((_) async => entity);
   }
 

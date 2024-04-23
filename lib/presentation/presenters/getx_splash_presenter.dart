@@ -37,7 +37,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
         );
       }
 
-      ApiSaleRequestEntity? apiSaleRequestEntity;
+      SaleRequestEntity? apiSaleRequestEntity;
       if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId != null) {
         apiSaleRequestEntity = await loadCommandsAvailable.load(
           enterpriseId:

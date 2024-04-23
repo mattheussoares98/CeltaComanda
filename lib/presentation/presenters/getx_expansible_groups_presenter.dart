@@ -91,7 +91,7 @@ class GetxExpansibleGroupsPresenter extends GetxController
     isLoading = true;
 
     try {
-      ApiSaleRequestEntity? value = await loadCommandsAvailable.load(
+      SaleRequestEntity? value = await loadCommandsAvailable.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: commandNumber,

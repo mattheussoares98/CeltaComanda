@@ -16,16 +16,6 @@ class ExpansibleGroupsPage extends StatefulWidget {
 
 class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
-  bool _isLoaded = false;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isLoaded) {
-      _isLoaded = true;
-      widget.presenter.load();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

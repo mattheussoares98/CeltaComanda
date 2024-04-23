@@ -1,6 +1,6 @@
 enum DomainError {
   unexpected,
   enterpriseOrUrlNotFound,
-  // emailInUse,
+  commandNotAvailable,
   // accessDenied
 }

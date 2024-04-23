@@ -21,12 +21,14 @@ void main() {
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late List<ExpansibleGroupEntity> expansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
+  late LoadCommandsAvailableSpy loadCommandsAvailable;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
+    loadCommandsAvailable = LoadCommandsAvailableSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroups();
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
@@ -37,6 +39,7 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
+      loadCommandsAvailable: loadCommandsAvailable,
     );
   });
 

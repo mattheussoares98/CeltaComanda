@@ -7,6 +7,7 @@ abstract class Translation {
   String get msgUnexpectedError;
 
   String get addAccount;
+  String get commandNotAvailable;
   String get confirmPassword;
   String get enterpriseOrUrlNotFound;
   String get enterprise;

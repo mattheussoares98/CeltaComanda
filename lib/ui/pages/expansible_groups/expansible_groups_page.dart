@@ -32,6 +32,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
         child: Builder(
           builder: (context) {
             handleLoading(context, widget.presenter.isLoadingStream);
+            handleMainError(context, widget.presenter.mainErrorStream);
 
             return StreamBuilder<List<ExpansibleGroupsViewModel>>(
                 stream: widget.presenter.expansibleGroupsStream,

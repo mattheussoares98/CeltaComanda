@@ -27,7 +27,7 @@ class RemoteLoadCommandsAvailable implements LoadCommandsAvailable {
 
       return ApiSaleRequestModel.fromJson(apiSaleRequest).toEntity();
     } catch (error) {
-      throw DomainError.unexpected;
+      throw DomainError.commandNotAvailable;
     }
   }
 }

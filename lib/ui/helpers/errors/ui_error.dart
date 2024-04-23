@@ -8,6 +8,7 @@ enum UIError {
   requiredField,
   unexpected,
   shortField,
+  commandNotAvailable,
 }
 
 extension UIErrorExtension on UIError {
@@ -25,6 +26,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgEmailInUse;
       case UIError.enterpriseOrUrlNotFound:
         return R.string.enterpriseOrUrlNotFound;
+      case UIError.commandNotAvailable:
+        return R.string.commandNotAvailable;
       default:
         return R.string.msgUnexpectedError;
     }

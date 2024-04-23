@@ -10,14 +10,16 @@ import 'package:mocktail/mocktail.dart';
 
 class ExpansibleGroupsPresenterSpy extends Mock
     implements ExpansibleGroupsPresenter {
-  final mainErrorController =
-      StreamController<List<ExpansibleGroupsViewModel>>();
+  final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   final expansibleGroupsController =
       StreamController<List<ExpansibleGroupsViewModel>>();
 
   ExpansibleGroupsPresenterSpy() {
     when(() => this.load()).thenAnswer((_) async => _);
+    when(() => this.verifyCommandAvailable(any())).thenAnswer((_) async => _);
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
     when(() => this.expansibleGroupsStream)
         .thenAnswer((_) => expansibleGroupsController.stream);
     when(() => this.isLoadingStream)

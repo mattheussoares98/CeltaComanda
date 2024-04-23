@@ -10,14 +10,17 @@ import '../../ui/pages/expansible_groups/expansible_groups.dart';
 import '../mixins/mixins.dart';
 
 class GetxExpansibleGroupsPresenter extends GetxController
-    with LoadingManager
+    with LoadingManager, UIErrorManager
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
+  final LoadCommandsAvailable loadCommandsAvailable;
+
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
+    required this.loadCommandsAvailable,
   });
 
   late final LoadExpansibleGroups loadExpansibleGroups;
@@ -81,5 +84,35 @@ class GetxExpansibleGroupsPresenter extends GetxController
       ),
     );
     EnterpriseDataBuilder.enterpriseDataEntity = null;
+  }
+
+  @override
+  Future<void> verifyCommandAvailable(int commandNumber) async {
+    isLoading = true;
+
+    try {
+      ApiSaleRequestEntity? value = await loadCommandsAvailable.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
+
+      if (value != null) {
+        await load();
+      }
+
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.enterpriseOrUrlNotFound:
+          mainError = UIError.enterpriseOrUrlNotFound;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+
+    isLoading = false;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
@@ -8,10 +9,9 @@ import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/expansible_groups/expansible_groups.dart';
-import '../mixins/mixins.dart';
 
-class GetxExpansibleGroupsPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+class GetxExpansibleGroupsPresenter
+    with ChangeNotifier
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
@@ -23,6 +23,21 @@ class GetxExpansibleGroupsPresenter extends GetxController
     required this.localEnterpriseData,
     required this.loadCommandsAvailable,
   });
+
+  final _isLoading = false.obs;
+
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+    notifyListeners();
+  }
+
+  final _mainError = Rx<UIError?>(null);
+
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 
   late final LoadExpansibleGroups loadExpansibleGroups;
   final _expansibleGroups = Rx<List<ExpansibleGroupsViewModel>>([]);
@@ -58,6 +73,8 @@ class GetxExpansibleGroupsPresenter extends GetxController
     } catch (e) {
       _expansibleGroups.subject
           .addError(UIError.unexpected.description, StackTrace.current);
+      isLoading = false;
+      notifyListeners();
       throw DomainError.unexpected;
     }
   }
@@ -94,6 +111,7 @@ class GetxExpansibleGroupsPresenter extends GetxController
   @override
   Future<void> verifyCommandAvailable(String commandNumber) async {
     isLoading = true;
+    notifyListeners();
 
     try {
       SaleRequestEntity? saleRequestTemp = await loadCommandsAvailable.load(
@@ -121,6 +139,7 @@ class GetxExpansibleGroupsPresenter extends GetxController
       mainError = UIError.commandNotAvailable;
     } finally {
       isLoading = false;
+      notifyListeners();
     }
   }
 }

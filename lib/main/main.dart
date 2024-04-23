@@ -38,6 +38,14 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => GetxCartPresenter(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => GetxExpansibleGroupsPresenter(
+            loadCommandsAvailable: makeRemoteLoadCommandsAvailable(),
+            loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
+            localEnterpriseData: makeLocalEnterpriseData(),
+            navigateTo: makeNavigateTo(),
+          ),
+        ),
       ],
       child: GetMaterialApp(
         title: 'Celta restaurante',

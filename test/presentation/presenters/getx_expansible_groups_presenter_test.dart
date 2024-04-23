@@ -22,7 +22,7 @@ void main() {
   late List<ExpansibleGroupEntity> expansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late LoadCommandsAvailableSpy loadCommandsAvailable;
-  late SaleRequestEntity apiSaleRequest;
+  late SaleRequestEntity saleRequestTemp;
   late String commandNumber;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -35,7 +35,7 @@ void main() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroups();
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
-    apiSaleRequest = EntityFactory.makeApiSaleRequestEntity();
+    saleRequestTemp = EntityFactory.makeApiSaleRequestEntity();
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
     localEnterpriseData = LocalEnterpriseDataSpy();
@@ -137,14 +137,14 @@ void main() {
     await sut.verifyCommandAvailable(commandNumber);
   });
   test('Should return correct value on loadCommandsAvailable', () async {
-    loadCommandsAvailable.mockLoadCommandsAvailable(apiSaleRequest);
+    loadCommandsAvailable.mockLoadCommandsAvailable(saleRequestTemp);
     final value = await loadCommandsAvailable.load(
       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       commandNumber: commandNumber,
     );
 
-    expect(value, apiSaleRequest);
+    expect(value, saleRequestTemp);
   });
 
   test('Should correct events on load command throws commandNotAvailable',
@@ -153,6 +153,25 @@ void main() {
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
+
+    await sut.verifyCommandAvailable(commandNumber);
+  });
+
+  test('Should emit correct events on get saleRequestTemp', () async {
+    loadCommandsAvailable.mockLoadCommandsAvailable(saleRequestTemp);
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+    sut.saleRequestTemp.listen(expectAsync1((saleRequest) => expect(
+          saleRequest,
+          SaleRequestViewModel(
+            Products: saleRequest!.Products,
+            PersonalizedCode: saleRequest.PersonalizedCode,
+            EnterpriseId: saleRequest.EnterpriseId,
+            TotalLiquid: saleRequest.TotalLiquid,
+            DeliveryControl: saleRequest.DeliveryControl,
+            Comments: saleRequest.Comments,
+          ),
+        )));
 
     await sut.verifyCommandAvailable(commandNumber);
   });

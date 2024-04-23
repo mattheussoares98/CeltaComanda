@@ -12,16 +12,15 @@ class ExpansibleGroupsPresenterSpy extends Mock
     implements ExpansibleGroupsPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
-  final expansibleGroupsController =
-      StreamController<List<ExpansibleGroupsViewModel>>();
+  final List<ExpansibleGroupsViewModel> expansibleGroupsController = [];
 
   ExpansibleGroupsPresenterSpy() {
     when(() => this.load()).thenAnswer((_) async => _);
     when(() => this.getSaleRequestTemp(any())).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.expansibleGroupsStream)
-        .thenAnswer((_) => expansibleGroupsController.stream);
+    when(() => this.expansibleGroups)
+        .thenAnswer((_) => expansibleGroupsController);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.goToProductsPage(any())).thenAnswer((_) => Get.offNamed(
@@ -33,12 +32,6 @@ class ExpansibleGroupsPresenterSpy extends Mock
     when(() => this.goToSplashPage()).thenAnswer((_) => Get.offAllNamed(
           PageRoutes.splash,
         ));
-  }
-  void mockExpansibleGroupStreamError(DomainError error) {
-    expansibleGroupsController.addError(
-      UIError.unexpected.description,
-      StackTrace.current,
-    );
   }
 
   void mockVerifyCommandIsAvailableError(DomainError error) {

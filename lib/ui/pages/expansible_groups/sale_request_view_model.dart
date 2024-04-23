@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../data/models/models.dart';
 
-class SaleRequestViewModel extends Equatable {
+class SaleRequestTempViewModel extends Equatable {
   final List<ProductModel> Products;
   final String PersonalizedCode;
   final int EnterpriseId;
@@ -22,7 +22,7 @@ class SaleRequestViewModel extends Equatable {
         Comments,
       ];
 
-  const SaleRequestViewModel({
+  const SaleRequestTempViewModel({
     required this.Products,
     required this.PersonalizedCode,
     required this.EnterpriseId,

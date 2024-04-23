@@ -3,7 +3,6 @@ import '../../mixins/mixins.dart';
 import '../expansible_groups/expansible_groups.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ExpansibleGroupsPage extends StatefulWidget {
   final ExpansibleGroupsPresenter presenter;
@@ -27,34 +26,30 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
           CartIcon(goToCartPage: widget.presenter.goToCartPage),
         ],
       ),
-      body: SingleChildScrollView(
-        primary: false,
-        child: Builder(
-          builder: (context) {
-            handleLoading(context, widget.presenter.isLoadingStream);
-            handleMainError(context, widget.presenter.mainErrorStream);
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Builder(
+                builder: (context) {
+                  handleLoading(context, widget.presenter.isLoadingStream);
+                  handleMainError(context, widget.presenter.mainErrorStream);
 
-            return StreamBuilder<List<ExpansibleGroupsViewModel>>(
-                stream: widget.presenter.expansibleGroupsStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return ReloadScreen(
-                      error: '${snapshot.error}',
-                      reload: () async => await widget.presenter.load(),
-                    );
-                  }
-                  if (snapshot.hasData) {
-                    return ListenableProvider(
-                      create: (_) => widget.presenter,
-                      child:
-                          GroupItems(expansibleGroupsViewModel: snapshot.data!),
+                  if (widget.presenter.expansibleGroups.isEmpty) {
+                    return InsertCommandNumber(
+                      presenter: widget.presenter,
                     );
                   }
 
-                  return InsertCommandNumber(presenter: widget.presenter);
-                });
-          },
-        ),
+                  return GroupItems(
+                    expansibleGroupsViewModel:
+                        widget.presenter.expansibleGroups,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

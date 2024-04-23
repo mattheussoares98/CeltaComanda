@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class ExpansibleGroupEntity {
+import 'package:equatable/equatable.dart';
+
+class ExpansibleGroupEntity extends Equatable {
   final String Name;
   final int ExpansibleGroupId;
   final int ExpansibleGroupType;
@@ -12,4 +14,8 @@ class ExpansibleGroupEntity {
     required this.ExpansibleGroupType,
     required this.OrderClassification,
   });
+
+  @override
+  List<Object?> get props =>
+      [Name, ExpansibleGroupId, ExpansibleGroupType, OrderClassification];
 }

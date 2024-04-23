@@ -40,15 +40,18 @@ class GetxExpansibleGroupsPresenter
   set mainError(UIError? value) => _mainError.value = value;
 
   late final LoadExpansibleGroups loadExpansibleGroups;
-  final _expansibleGroups = Rx<List<ExpansibleGroupsViewModel>>([]);
 
+  final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
-  Stream<List<ExpansibleGroupsViewModel>> get expansibleGroupsStream =>
-      _expansibleGroups.stream;
+  List<ExpansibleGroupsViewModel> get expansibleGroups =>
+      [..._expansibleGroups];
 
-  final _saleRequestTemp = Rx<SaleRequestViewModel?>(null);
+  SaleRequestTempViewModel? _saleRequestTemp;
   @override
-  Stream<SaleRequestViewModel?> get saleRequestTemp => _saleRequestTemp.stream;
+  SaleRequestTempViewModel? get saleRequestTemp => _saleRequestTemp;
+  set saleRequestTemp(SaleRequestTempViewModel? newValue) {
+    _saleRequestTemp = newValue;
+  }
 
   @override
   Future<void> load() async {
@@ -57,25 +60,23 @@ class GetxExpansibleGroupsPresenter
       isLoading = true;
 
       if (expansibleGroups != null) {
-        _expansibleGroups.subject.add(
-          expansibleGroups
-              .map((e) => ExpansibleGroupsViewModel(
-                    Name: e.Name,
-                    ExpansibleGroupId: e.ExpansibleGroupId,
-                    ExpansibleGroupType: e.ExpansibleGroupType,
-                    OrderClassification: e.OrderClassification,
-                  ))
-              .toList(),
-        );
+        _expansibleGroups.addAll(expansibleGroups
+            .map((e) => ExpansibleGroupsViewModel(
+                  Name: e.Name,
+                  ExpansibleGroupId: e.ExpansibleGroupId,
+                  ExpansibleGroupType: e.ExpansibleGroupType,
+                  OrderClassification: e.OrderClassification,
+                ))
+            .toList());
       }
 
       isLoading = false;
     } catch (e) {
-      _expansibleGroups.subject
-          .addError(UIError.unexpected.description, StackTrace.current);
+      mainError = UIError.unexpected;
       isLoading = false;
-      notifyListeners();
       throw DomainError.unexpected;
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -121,16 +122,14 @@ class GetxExpansibleGroupsPresenter
       );
 
       if (saleRequestTemp != null) {
-        _saleRequestTemp.subject.add(
-          SaleRequestViewModel(
-            Products:
-                saleRequestTemp.Products.map((e) => ProductModel.fromEntity(e))
-                    .toList(),
-            PersonalizedCode: saleRequestTemp.PersonalizedCode,
-            EnterpriseId: saleRequestTemp.EnterpriseId,
-            TotalLiquid: saleRequestTemp.TotalLiquid,
-            DeliveryControl: saleRequestTemp.DeliveryControl,
-          ),
+        _saleRequestTemp = SaleRequestTempViewModel(
+          Products:
+              saleRequestTemp.Products.map((e) => ProductModel.fromEntity(e))
+                  .toList(),
+          PersonalizedCode: saleRequestTemp.PersonalizedCode,
+          EnterpriseId: saleRequestTemp.EnterpriseId,
+          TotalLiquid: saleRequestTemp.TotalLiquid,
+          DeliveryControl: saleRequestTemp.DeliveryControl,
         );
 
         await load();

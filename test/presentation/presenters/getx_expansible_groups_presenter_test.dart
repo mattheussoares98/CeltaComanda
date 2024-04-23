@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -22,8 +23,11 @@ void main() {
   late List<ExpansibleGroupEntity> expansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late SaleRequestTempEntity saleRequestTemp;
+  late SaleRequestTempEntity saleRequestTempEntity;
+  late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   late String commandNumber;
+  late SaleRequestTempViewModel saleRequestTempViewModel;
+  late List<ProductModel> products;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -31,11 +35,24 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     commandNumber = "001";
+    products = EntityFactory.makeProductModel();
+    saleRequestTempViewModel =
+        EntityFactory.makeSaleRequestTempViewModel(products);
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
-    expansibleGroups = EntityFactory.makeExpansibleGroups();
+    expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
+
+    expansibleGroupsViewModel = expansibleGroups
+        .map((e) => ExpansibleGroupsViewModel(
+              Name: e.Name,
+              ExpansibleGroupId: e.ExpansibleGroupId,
+              ExpansibleGroupType: e.ExpansibleGroupType,
+              OrderClassification: e.OrderClassification,
+            ))
+        .toList();
+
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
-    saleRequestTemp = EntityFactory.makeApiSaleRequestEntity();
+    saleRequestTempEntity = EntityFactory.makeApiSaleRequestEntity();
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
     localEnterpriseData = LocalEnterpriseDataSpy();
@@ -66,25 +83,14 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Should emit correct events on success', () async {
+  test('Should emit correct events on success load expansible groups',
+      () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.expansibleGroupsStream
-        .listen(expectAsync1((expansibleGroups) => expect(expansibleGroups, [
-              ExpansibleGroupsViewModel(
-                Name: expansibleGroups[0].Name,
-                ExpansibleGroupId: expansibleGroups[0].ExpansibleGroupId,
-                ExpansibleGroupType: expansibleGroups[0].ExpansibleGroupType,
-                OrderClassification: expansibleGroups[0].OrderClassification,
-              ),
-              ExpansibleGroupsViewModel(
-                Name: expansibleGroups[1].Name,
-                ExpansibleGroupId: expansibleGroups[1].ExpansibleGroupId,
-                ExpansibleGroupType: expansibleGroups[1].ExpansibleGroupType,
-                OrderClassification: expansibleGroups[1].OrderClassification,
-              ),
-            ])));
+    loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
 
     await sut.load();
+
+    expect(sut.expansibleGroups, expansibleGroupsViewModel);
   });
 
   test('Should go to cart page on CartIcon click', () async {
@@ -137,14 +143,14 @@ void main() {
     await sut.getSaleRequestTemp(commandNumber);
   });
   test('Should return correct value on loadSaleRequestTemp', () async {
-    loadSaleRequestTemp.mockLoadCommandsAvailable(saleRequestTemp);
+    loadSaleRequestTemp.mockLoadCommandsAvailable(saleRequestTempEntity);
     final value = await loadSaleRequestTemp.load(
       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       commandNumber: commandNumber,
     );
 
-    expect(value, saleRequestTemp);
+    expect(value, saleRequestTempEntity);
   });
 
   test('Should correct events on load command throws commandNotAvailable',
@@ -158,21 +164,11 @@ void main() {
   });
 
   test('Should emit correct events on get saleRequestTemp', () async {
-    loadSaleRequestTemp.mockLoadCommandsAvailable(saleRequestTemp);
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-    sut.saleRequestTemp.listen(expectAsync1((saleRequest) => expect(
-          saleRequest,
-          SaleRequestViewModel(
-            Products: saleRequest!.Products,
-            PersonalizedCode: saleRequest.PersonalizedCode,
-            EnterpriseId: saleRequest.EnterpriseId,
-            TotalLiquid: saleRequest.TotalLiquid,
-            DeliveryControl: saleRequest.DeliveryControl,
-            Comments: saleRequest.Comments,
-          ),
-        )));
+    sut.saleRequestTemp = saleRequestTempViewModel;
 
     await sut.getSaleRequestTemp(commandNumber);
+
+    expect(sut.saleRequestTemp, saleRequestTempViewModel);
   });
 }

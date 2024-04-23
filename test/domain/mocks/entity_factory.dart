@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
@@ -148,7 +149,7 @@ class EntityFactory {
     ];
   }
 
-  static List<ExpansibleGroupEntity> makeExpansibleGroups() {
+  static List<ExpansibleGroupEntity> makeExpansibleGroupsEntity() {
     return [
       ExpansibleGroupEntity(
         Name: faker.randomGenerator.string(30),
@@ -165,15 +166,47 @@ class EntityFactory {
     ];
   }
 
+  static SaleRequestTempViewModel makeSaleRequestTempViewModel(
+      List<ProductModel> products) {
+    return SaleRequestTempViewModel(
+      Products: products,
+      PersonalizedCode: faker.randomGenerator.string(10),
+      EnterpriseId: faker.randomGenerator.integer(3),
+      DeliveryControl: faker.randomGenerator.integer(3),
+      TotalLiquid: faker.randomGenerator.decimal(min: 0.01),
+    );
+  }
+
   static ProductsViewModel makeProductViewModel() {
     return ProductsViewModel(
-      SaleRetailPraticed: faker.internet.httpUrl(),
+      SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01).toString(),
       PackingAbbreviation: faker.randomGenerator.string(10),
       Name: faker.food.random.string(10),
       EanCode: faker.randomGenerator.integer(20).toString(),
       PriceLookupCode: faker.randomGenerator.string(10),
       ProductsId: faker.randomGenerator.integer(10),
     );
+  }
+
+  static List<ProductModel> makeProductModel() {
+    return [
+      ProductModel(
+        SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01),
+        PackingAbbreviation: faker.randomGenerator.string(10),
+        Name: faker.food.random.string(10),
+        EanCode: faker.randomGenerator.integer(20).toString(),
+        PriceLookupCode: faker.randomGenerator.string(10),
+        ProductsId: faker.randomGenerator.integer(10),
+      ),
+      ProductModel(
+        SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01),
+        PackingAbbreviation: faker.randomGenerator.string(10),
+        Name: faker.food.random.string(10),
+        EanCode: faker.randomGenerator.integer(20).toString(),
+        PriceLookupCode: faker.randomGenerator.string(10),
+        ProductsId: faker.randomGenerator.integer(10),
+      ),
+    ];
   }
 
   static SaleRequestTempEntity makeApiSaleRequestEntity() {

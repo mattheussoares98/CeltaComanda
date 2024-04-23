@@ -5,5 +5,4 @@ import '../../../../domain/usecases/usecases.dart';
 
 LoadProducts makeRemoteLoadProducts() => RemoteLoadProducts(
       httpAdapter: makeHttpAdapter(),
-      url: makeApiUrl("products"),
     );

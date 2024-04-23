@@ -76,23 +76,23 @@ void main() {
   test('Should update SelectedProduct', () async {
     sut.updateSelectedProduct(
       ProductsViewModel(
-        SaleRetailPraticed: products[0].saleRetailPraticed.toString(),
-        PackingAbbreviation: products[0].packingAbbreviation,
-        Name: products[0].name,
-        EanCode: products[0].eanCode.toString(),
-        PriceLookupCode: products[0].priceLookupCode,
-        ProductsId: products[0].productsId,
+        SaleRetailPraticed: products[0].SaleRetailPraticed.toString(),
+        PackingAbbreviation: products[0].PackingAbbreviation,
+        Name: products[0].Name,
+        EanCode: products[0].EanCode.toString(),
+        PriceLookupCode: products[0].PriceLookupCode,
+        ProductsId: products[0].ProductsId,
       ),
     );
 
     expect(
       ProductsViewModel(
-        SaleRetailPraticed: products[0].saleRetailPraticed.toString(),
-        PackingAbbreviation: products[0].packingAbbreviation,
-        Name: products[0].name,
-        EanCode: products[0].eanCode.toString(),
-        PriceLookupCode: products[0].priceLookupCode,
-        ProductsId: products[0].productsId,
+        SaleRetailPraticed: products[0].SaleRetailPraticed.toString(),
+        PackingAbbreviation: products[0].PackingAbbreviation,
+        Name: products[0].Name,
+        EanCode: products[0].EanCode.toString(),
+        PriceLookupCode: products[0].PriceLookupCode,
+        ProductsId: products[0].ProductsId,
       ),
       sut.selectedProduct,
     );

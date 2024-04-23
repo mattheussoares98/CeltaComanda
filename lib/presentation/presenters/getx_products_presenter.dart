@@ -36,12 +36,12 @@ class GetxProductsPresenter extends GetxController
       if (products != null) {
         _products.value = products
             .map((e) => ProductsViewModel(
-                  SaleRetailPraticed: e.saleRetailPraticed.toString(),
-                  PackingAbbreviation: e.packingAbbreviation,
-                  Name: e.name,
-                  EanCode: e.eanCode ?? "",
-                  PriceLookupCode: e.priceLookupCode,
-                  ProductsId: e.productsId,
+                  SaleRetailPraticed: e.SaleRetailPraticed.toString(),
+                  PackingAbbreviation: e.PackingAbbreviation,
+                  Name: e.Name,
+                  EanCode: e.EanCode ?? "",
+                  PriceLookupCode: e.PriceLookupCode,
+                  ProductsId: e.ProductsId,
                 ))
             .toList();
       }

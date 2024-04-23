@@ -9,11 +9,9 @@ import '../../http/http.dart';
 
 class RemoteLoadProducts implements LoadProducts {
   final HttpClient httpAdapter;
-  final String url;
 
   RemoteLoadProducts({
     required this.httpAdapter,
-    required this.url,
   });
 
   @override
@@ -25,6 +23,7 @@ class RemoteLoadProducts implements LoadProducts {
           "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_groupCode=$expansibleGroupId";
       final response = await httpAdapter.request(url: url, method: "get");
       if (response == null) throw Error();
+
 
       return response.map<ProductEntity>((element) {
         return ProductModel.fromJson(element).toEntity();

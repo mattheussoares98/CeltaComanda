@@ -1,134 +1,136 @@
+// ignore_for_file: non_constant_identifier_names
+
 class ProductEntity {
-  final int productsId;
-  final int? internalCodeOnERP;
-  final int? internalCodeOfProductOnERP;
-  final int? enterpriseId;
-  final int? packingQuantity;
-  final int? offerRetailPrice;
-  final int? wholeSalePrice;
-  final int? wholeOfferPrice;
-  final int? offerECommercePrice;
-  final int? saleECommercePrice;
-  final int? liquidCost;
-  final int? liquidCostMiddle;
-  final int? liquidCostReal;
-  final int? repositionCost;
-  final int? repositionCostMiddle;
-  final int? repositionCostReal;
-  final int? icmsAliquot;
-  final int? icmsIVAMargin;
-  final int? icmsReductionMargin;
-  final int? icmsStave;
-  final int? percImpNBPTState;
-  final int? percImpNBPTMunicipal;
-  final int? cofinsType;
-  final int? pisType;
-  final int? productIsFatherComposition;
-  final int? quantityMinimumWholeSale;
-  final int? quantityMinimumWholeSaleByClass;
-  final int? balanceTare;
-  final int? familyCode;
-  final int? departmentCode;
-  final int? sectionCode;
-  final int? groupCode;
-  final int? subGroupCode;
-  final int? stockQuantity;
+  final int ProductsId;
+  final int? InternalCodeOnERP;
+  final int? InternalCodeOfProductOnERP;
+  final int? EenterpriseId;
+  final double? PackingQuantity;
+  final double? OfferRetailPrice;
+  final double? WholeSalePrice;
+  final double? WholeOfferPrice;
+  final double? OfferECommercePrice;
+  final double? SaleECommercePrice;
+  final double? LiquidCost;
+  final double? LiquidCostMiddle;
+  final double? LiquidCostReal;
+  final double? RepositionCost;
+  final double? RepositionCostMiddle;
+  final double? RepositionCostReal;
+  final double? IcmsAliquot;
+  final double? IcmsIVAMargin;
+  final double? IcmsReductionMargin;
+  final double? IcmsStave;
+  final double? PercImpNBPTState;
+  final double? PercImpNBPTMunicipal;
+  final int? CofinsType;
+  final int? PisType;
+  final int? ProductIsFatherComposition;
+  final double? QuantityMinimumWholeSale;
+  final double? QuantityMinimumWholeSaleByClass;
+  final double? BalanceTare;
+  final int? FamilyCode;
+  final int? DepartmentCode;
+  final int? SectionCode;
+  final int? GroupCode;
+  final int? SubGroupCode;
+  final double? StockQuantity;
 
-  final bool? allowFractionate;
-  final bool? isBalance;
-  final bool? canBeWeightyInPdv;
-  final bool? quantityInBalance;
-  final bool? allowQuantityInPdv;
-  final bool? goesForFastTable;
-  final bool? isAlcoholicProduct;
+  final bool? AllowFractionate;
+  final bool? IsBalance;
+  final bool? CanBeWeightyInPdv;
+  final bool? QuantityInBalance;
+  final bool? AllowQuantityInPdv;
+  final bool? GoesForFastTable;
+  final bool? IsAlcoholicProduct;
 
-  final double? saleRetailPrice;
-  final double? percImpNBPTNational;
-  final double saleRetailPraticed;
-  final double? cofinsPercentage;
-  final double? pisPercentage;
+  final double? SaleRetailPrice;
+  final double? PercImpNBPTNational;
+  final double SaleRetailPraticed;
+  final double? CofinsPercentage;
+  final double? PisPercentage;
 
-  final String? cFOP;
-  final String? fiscalClassificationNCM;
-  final String? tributarySituationCode;
-  final String? cSTPisCofins;
-  final String? codeClass;
-  final String? departmentName;
-  final String? sectionName;
-  final String? dateOfLastChanged;
-  final String? groupName;
-  final String? saleRetailPraticedString;
-  final String priceLookupCode;
-  final String? personalizedCode;
-  final String? eanCode;
-  final String name;
-  final String? nameComplete;
-  final String? nameReduced;
-  final String packingAbbreviation;
+  final String? CFOP;
+  final String? FiscalClassificationNCM;
+  final String? TributarySituationCode;
+  final String? CSTPisCofins;
+  final String? CodeClass;
+  final String? DepartmentName;
+  final String? SectionName;
+  final String? DateOfLastChanged;
+  final String? GroupName;
+  final String? SaleRetailPraticedString;
+  final String PriceLookupCode;
+  final String? PersonalizedCode;
+  final String? EanCode;
+  final String Name;
+  final String? NameComplete;
+  final String? PameReduced;
+  final String PackingAbbreviation;
 
   ProductEntity({
-    required this.packingAbbreviation,
-    required this.saleRetailPraticed,
-    required this.name,
-    required this.priceLookupCode,
-    required this.productsId,
-    this.internalCodeOnERP,
-    this.internalCodeOfProductOnERP,
-    this.enterpriseId,
-    this.personalizedCode,
-    this.eanCode,
-    this.nameComplete,
-    this.nameReduced,
-    this.packingQuantity,
-    this.saleRetailPrice,
-    this.offerRetailPrice,
-    this.wholeSalePrice,
-    this.wholeOfferPrice,
-    this.offerECommercePrice,
-    this.saleECommercePrice,
-    this.liquidCost,
-    this.liquidCostMiddle,
-    this.liquidCostReal,
-    this.repositionCost,
-    this.repositionCostMiddle,
-    this.repositionCostReal,
-    this.cFOP,
-    this.fiscalClassificationNCM,
-    this.tributarySituationCode,
-    this.icmsAliquot,
-    this.icmsIVAMargin,
-    this.icmsReductionMargin,
-    this.icmsStave,
-    this.percImpNBPTNational,
-    this.percImpNBPTState,
-    this.percImpNBPTMunicipal,
-    this.cofinsPercentage,
-    this.pisPercentage,
-    this.cofinsType,
-    this.pisType,
-    this.cSTPisCofins,
-    this.productIsFatherComposition,
-    this.quantityMinimumWholeSale,
-    this.quantityMinimumWholeSaleByClass,
-    this.allowFractionate,
-    this.isBalance,
-    this.canBeWeightyInPdv,
-    this.quantityInBalance,
-    this.allowQuantityInPdv,
-    this.goesForFastTable,
-    this.isAlcoholicProduct,
-    this.balanceTare,
-    this.codeClass,
-    this.familyCode,
-    this.departmentCode,
-    this.departmentName,
-    this.sectionCode,
-    this.sectionName,
-    this.groupCode,
-    this.groupName,
-    this.subGroupCode,
-    this.dateOfLastChanged,
-    this.stockQuantity,
-    this.saleRetailPraticedString,
+    required this.PackingAbbreviation,
+    required this.SaleRetailPraticed,
+    required this.Name,
+    required this.PriceLookupCode,
+    required this.ProductsId,
+    this.InternalCodeOnERP,
+    this.InternalCodeOfProductOnERP,
+    this.EenterpriseId,
+    this.PersonalizedCode,
+    this.EanCode,
+    this.NameComplete,
+    this.PameReduced,
+    this.PackingQuantity,
+    this.SaleRetailPrice,
+    this.OfferRetailPrice,
+    this.WholeSalePrice,
+    this.WholeOfferPrice,
+    this.OfferECommercePrice,
+    this.SaleECommercePrice,
+    this.LiquidCost,
+    this.LiquidCostMiddle,
+    this.LiquidCostReal,
+    this.RepositionCost,
+    this.RepositionCostMiddle,
+    this.RepositionCostReal,
+    this.CFOP,
+    this.FiscalClassificationNCM,
+    this.TributarySituationCode,
+    this.IcmsAliquot,
+    this.IcmsIVAMargin,
+    this.IcmsReductionMargin,
+    this.IcmsStave,
+    this.PercImpNBPTNational,
+    this.PercImpNBPTState,
+    this.PercImpNBPTMunicipal,
+    this.CofinsPercentage,
+    this.PisPercentage,
+    this.CofinsType,
+    this.PisType,
+    this.CSTPisCofins,
+    this.ProductIsFatherComposition,
+    this.QuantityMinimumWholeSale,
+    this.QuantityMinimumWholeSaleByClass,
+    this.AllowFractionate,
+    this.IsBalance,
+    this.CanBeWeightyInPdv,
+    this.QuantityInBalance,
+    this.AllowQuantityInPdv,
+    this.GoesForFastTable,
+    this.IsAlcoholicProduct,
+    this.BalanceTare,
+    this.CodeClass,
+    this.FamilyCode,
+    this.DepartmentCode,
+    this.DepartmentName,
+    this.SectionCode,
+    this.SectionName,
+    this.GroupCode,
+    this.GroupName,
+    this.SubGroupCode,
+    this.DateOfLastChanged,
+    this.StockQuantity,
+    this.SaleRetailPraticedString,
   });
 }

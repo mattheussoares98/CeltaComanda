@@ -1,331 +1,349 @@
+// ignore_for_file: non_constant_identifier_names
+
+import '../../domain/entities/entities.dart';
+
 class ProductModel {
-  int? productsId;
-  int? internalCodeOnERP;
-  int? internalCodeOfProductOnERP;
-  int? enterpriseId;
-  String? priceLookupCode;
-  String? personalizedCode;
-  String? eanCode;
-  String? name;
-  String? nameComplete;
-  String? nameReduced;
-  String? packingAbbreviation;
-  int? packingQuantity;
-  double? saleRetailPrice;
-  int? offerRetailPrice;
-  int? wholeSalePrice;
-  int? wholeOfferPrice;
-  int? offerECommercePrice;
-  int? saleECommercePrice;
-  int? liquidCost;
-  int? liquidCostMiddle;
-  int? liquidCostReal;
-  int? repositionCost;
-  int? repositionCostMiddle;
-  int? repositionCostReal;
-  String? cFOP;
-  String? fiscalClassificationNCM;
-  String? tributarySituationCode;
-  int? icmsAliquot;
-  int? icmsIVAMargin;
-  int? icmsReductionMargin;
-  int? icmsStave;
-  double? percImpNBPTNational;
-  int? percImpNBPTState;
-  int? percImpNBPTMunicipal;
-  double? cofinsPercentage;
-  double? pisPercentage;
-  int? cofinsType;
-  int? pisType;
-  String? cSTPisCofins;
-  int? productIsFatherComposition;
-  int? quantityMinimumWholeSale;
-  int? quantityMinimumWholeSaleByClass;
-  bool? allowFractionate;
-  bool? isBalance;
-  bool? canBeWeightyInPdv;
-  bool? quantityInBalance;
-  bool? allowQuantityInPdv;
-  bool? goesForFastTable;
-  bool? isAlcoholicProduct;
-  int? balanceTare;
-  String? codeClass;
-  int? familyCode;
-  int? departmentCode;
-  String? departmentName;
-  int? sectionCode;
-  String? sectionName;
-  int? groupCode;
-  String? groupName;
-  int? subGroupCode;
-  String? dateOfLastChanged;
-  int? stockQuantity;
-  double? saleRetailPraticed;
-  String? saleRetailPraticedString;
+  final int ProductsId;
+  final int? InternalCodeOnERP;
+  final int? InternalCodeOfProductOnERP;
+  final int? EnterpriseId;
+  final double? PackingQuantity;
+  final double? OfferRetailPrice;
+  final double? WholeSalePrice;
+  final double? WholeOfferPrice;
+  final double? OfferECommercePrice;
+  final double? SaleECommercePrice;
+  final double? LiquidCost;
+  final double? LiquidCostMiddle;
+  final double? LiquidCostReal;
+  final double? RepositionCost;
+  final double? RepositionCostMiddle;
+  final double? RepositionCostReal;
+  final double? IcmsAliquot;
+  final double? IcmsIVAMargin;
+  final double? IcmsReductionMargin;
+  final double? IcmsStave;
+  final double? PercImpNBPTState;
+  final double? PercImpNBPTMunicipal;
+  final int? CofinsType;
+  final int? PisType;
+  final int? ProductIsFatherComposition;
+  final double? QuantityMinimumWholeSale;
+  final double? QuantityMinimumWholeSaleByClass;
+  final double? BalanceTare;
+  final int? FamilyCode;
+  final int? DepartmentCode;
+  final int? SectionCode;
+  final int? GroupCode;
+  final int? SubGroupCode;
+  final double? StockQuantity;
+  final bool? AllowFractionate;
+  final bool? IsBalance;
+  final bool? CanBeWeightyInPdv;
+  final bool? QuantityInBalance;
+  final bool? AllowQuantityInPdv;
+  final bool? GoesForFastTable;
+  final bool? IsAlcoholicProduct;
+  final double? SaleRetailPrice;
+  final double? PercImpNBPTNational;
+  final double SaleRetailPraticed;
+  final double? CofinsPercentage;
+  final double? PisPercentage;
+  final String? CFOP;
+  final String? FiscalClassificationNCM;
+  final String? TributarySituationCode;
+  final String? CSTPisCofins;
+  final String? CodeClass;
+  final String? DepartmentName;
+  final String? SectionName;
+  final String? DateOfLastChanged;
+  final String? GroupName;
+  final String? SaleRetailPraticedString;
+  final String PriceLookupCode;
+  final String? PersonalizedCode;
+  final String? EanCode;
+  final String Name;
+  final String? NameComplete;
+  final String? NameReduced;
+  final String PackingAbbreviation;
 
   ProductModel({
-    this.productsId,
-    this.internalCodeOnERP,
-    this.internalCodeOfProductOnERP,
-    this.enterpriseId,
-    this.priceLookupCode,
-    this.personalizedCode,
-    this.eanCode,
-    this.name,
-    this.nameComplete,
-    this.nameReduced,
-    this.packingAbbreviation,
-    this.packingQuantity,
-    this.saleRetailPrice,
-    this.offerRetailPrice,
-    this.wholeSalePrice,
-    this.wholeOfferPrice,
-    this.offerECommercePrice,
-    this.saleECommercePrice,
-    this.liquidCost,
-    this.liquidCostMiddle,
-    this.liquidCostReal,
-    this.repositionCost,
-    this.repositionCostMiddle,
-    this.repositionCostReal,
-    this.cFOP,
-    this.fiscalClassificationNCM,
-    this.tributarySituationCode,
-    this.icmsAliquot,
-    this.icmsIVAMargin,
-    this.icmsReductionMargin,
-    this.icmsStave,
-    this.percImpNBPTNational,
-    this.percImpNBPTState,
-    this.percImpNBPTMunicipal,
-    this.cofinsPercentage,
-    this.pisPercentage,
-    this.cofinsType,
-    this.pisType,
-    this.cSTPisCofins,
-    this.productIsFatherComposition,
-    this.quantityMinimumWholeSale,
-    this.quantityMinimumWholeSaleByClass,
-    this.allowFractionate,
-    this.isBalance,
-    this.canBeWeightyInPdv,
-    this.quantityInBalance,
-    this.allowQuantityInPdv,
-    this.goesForFastTable,
-    this.isAlcoholicProduct,
-    this.balanceTare,
-    this.codeClass,
-    this.familyCode,
-    this.departmentCode,
-    this.departmentName,
-    this.sectionCode,
-    this.sectionName,
-    this.groupCode,
-    this.groupName,
-    this.subGroupCode,
-    this.dateOfLastChanged,
-    this.stockQuantity,
-    this.saleRetailPraticed,
-    this.saleRetailPraticedString,
+    required this.SaleRetailPraticed,
+    required this.Name,
+    required this.ProductsId,
+    required this.PackingAbbreviation,
+    required this.PriceLookupCode,
+    this.InternalCodeOnERP,
+    this.InternalCodeOfProductOnERP,
+    this.EnterpriseId,
+    this.PackingQuantity,
+    this.OfferRetailPrice,
+    this.WholeSalePrice,
+    this.WholeOfferPrice,
+    this.OfferECommercePrice,
+    this.SaleECommercePrice,
+    this.LiquidCost,
+    this.LiquidCostMiddle,
+    this.LiquidCostReal,
+    this.RepositionCost,
+    this.RepositionCostMiddle,
+    this.RepositionCostReal,
+    this.IcmsAliquot,
+    this.IcmsIVAMargin,
+    this.IcmsReductionMargin,
+    this.IcmsStave,
+    this.PercImpNBPTState,
+    this.PercImpNBPTMunicipal,
+    this.CofinsType,
+    this.PisType,
+    this.ProductIsFatherComposition,
+    this.QuantityMinimumWholeSale,
+    this.QuantityMinimumWholeSaleByClass,
+    this.BalanceTare,
+    this.FamilyCode,
+    this.DepartmentCode,
+    this.SectionCode,
+    this.GroupCode,
+    this.SubGroupCode,
+    this.StockQuantity,
+    this.AllowFractionate,
+    this.IsBalance,
+    this.CanBeWeightyInPdv,
+    this.QuantityInBalance,
+    this.AllowQuantityInPdv,
+    this.GoesForFastTable,
+    this.IsAlcoholicProduct,
+    this.SaleRetailPrice,
+    this.PercImpNBPTNational,
+    this.CofinsPercentage,
+    this.PisPercentage,
+    this.CFOP,
+    this.FiscalClassificationNCM,
+    this.TributarySituationCode,
+    this.CSTPisCofins,
+    this.CodeClass,
+    this.DepartmentName,
+    this.SectionName,
+    this.DateOfLastChanged,
+    this.GroupName,
+    this.SaleRetailPraticedString,
+    this.PersonalizedCode,
+    this.EanCode,
+    this.NameComplete,
+    this.NameReduced,
   });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    productsId = json['ProductsId'];
-    internalCodeOnERP = json['InternalCodeOnERP'];
-    internalCodeOfProductOnERP = json['InternalCodeOfProductOnERP'];
-    enterpriseId = json['EnterpriseId'];
-    priceLookupCode = json['PriceLookupCode'];
-    personalizedCode = json['PersonalizedCode'];
-    eanCode = json['EanCode'];
-    name = json['Name'];
-    nameComplete = json['NameComplete'];
-    nameReduced = json['NameReduced'];
-    packingAbbreviation = json['PackingAbbreviation'];
-    packingQuantity = json['PackingQuantity'];
-    saleRetailPrice = json['SaleRetailPrice'];
-    offerRetailPrice = json['OfferRetailPrice'];
-    wholeSalePrice = json['WholeSalePrice'];
-    wholeOfferPrice = json['WholeOfferPrice'];
-    offerECommercePrice = json['OfferECommercePrice'];
-    saleECommercePrice = json['SaleECommercePrice'];
-    liquidCost = json['LiquidCost'];
-    liquidCostMiddle = json['LiquidCostMiddle'];
-    liquidCostReal = json['LiquidCostReal'];
-    repositionCost = json['RepositionCost'];
-    repositionCostMiddle = json['RepositionCostMiddle'];
-    repositionCostReal = json['RepositionCostReal'];
-    cFOP = json['CFOP'];
-    fiscalClassificationNCM = json['FiscalClassificationNCM'];
-    tributarySituationCode = json['TributarySituationCode'];
-    icmsAliquot = json['IcmsAliquot'];
-    icmsIVAMargin = json['IcmsIVAMargin'];
-    icmsReductionMargin = json['IcmsReductionMargin'];
-    icmsStave = json['IcmsStave'];
-    percImpNBPTNational = json['PercImpNBPTNational'];
-    percImpNBPTState = json['PercImpNBPTState'];
-    percImpNBPTMunicipal = json['PercImpNBPTMunicipal'];
-    cofinsPercentage = json['CofinsPercentage'];
-    pisPercentage = json['PisPercentage'];
-    cofinsType = json['CofinsType'];
-    pisType = json['PisType'];
-    cSTPisCofins = json['CSTPisCofins'];
-    productIsFatherComposition = json['ProductIsFatherComposition'];
-    quantityMinimumWholeSale = json['QuantityMinimumWholeSale'];
-    quantityMinimumWholeSaleByClass = json['QuantityMinimumWholeSaleByClass'];
-    allowFractionate = json['AllowFractionate'];
-    isBalance = json['IsBalance'];
-    canBeWeightyInPdv = json['CanBeWeightyInPdv'];
-    quantityInBalance = json['QuantityInBalance'];
-    allowQuantityInPdv = json['AllowQuantityInPdv'];
-    goesForFastTable = json['GoesForFastTable'];
-    isAlcoholicProduct = json['IsAlcoholicProduct'];
-    balanceTare = json['BalanceTare'];
-    codeClass = json['CodeClass'];
-    familyCode = json['FamilyCode'];
-    departmentCode = json['DepartmentCode'];
-    departmentName = json['DepartmentName'];
-    sectionCode = json['SectionCode'];
-    sectionName = json['SectionName'];
-    groupCode = json['GroupCode'];
-    groupName = json['GroupName'];
-    subGroupCode = json['SubGroupCode'];
-    dateOfLastChanged = json['DateOfLastChanged'];
-    stockQuantity = json['StockQuantity'];
-    saleRetailPraticed = json['SaleRetailPraticed'];
-    saleRetailPraticedString = json['SaleRetailPraticedString'];
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    if (!json.keys.toSet().containsAll(
+      [
+        "PackingAbbreviation",
+        "SaleRetailPraticed",
+        "Name",
+        "PriceLookupCode",
+        "ProductsId",
+      ],
+    )) {
+      throw Exception();
+    }
+
+    return ProductModel(
+      SaleRetailPraticed: json["SaleRetailPraticed"],
+      Name: json["Name"],
+      ProductsId: json["ProductsId"],
+      PackingAbbreviation: json["PackingAbbreviation"],
+      PriceLookupCode: json["PriceLookupCode"],
+      InternalCodeOnERP: json["InternalCodeOnERP"],
+      InternalCodeOfProductOnERP: json["InternalCodeOfProductOnERP"],
+      EnterpriseId: json["EenterpriseId"],
+      PackingQuantity: json["PackingQuantity"],
+      OfferRetailPrice: json["OfferRetailPrice"],
+      WholeSalePrice: json["WholeSalePrice"],
+      WholeOfferPrice: json["WholeOfferPrice"],
+      OfferECommercePrice: json["OfferECommercePrice"],
+      SaleECommercePrice: json["SaleECommercePrice"],
+      LiquidCost: json["LiquidCost"],
+      LiquidCostMiddle: json["LiquidCostMiddle"],
+      LiquidCostReal: json["LiquidCostReal"],
+      RepositionCost: json["RepositionCost"],
+      RepositionCostMiddle: json["RepositionCostMiddle"],
+      RepositionCostReal: json["RepositionCostReal"],
+      IcmsAliquot: json["IcmsAliquot"],
+      IcmsIVAMargin: json["IcmsIVAMargin"],
+      IcmsReductionMargin: json["IcmsReductionMargin"],
+      IcmsStave: json["IcmsStave"],
+      PercImpNBPTState: json["PercImpNBPTState"],
+      PercImpNBPTMunicipal: json["PercImpNBPTMunicipal"],
+      CofinsType: json["CofinsType"],
+      PisType: json["PisType"],
+      ProductIsFatherComposition: json["ProductIsFatherComposition"],
+      QuantityMinimumWholeSale: json["QuantityMinimumWholeSale"],
+      QuantityMinimumWholeSaleByClass: json["QuantityMinimumWholeSaleByClass"],
+      BalanceTare: json["BalanceTare"],
+      FamilyCode: json["FamilyCode"],
+      DepartmentCode: json["DepartmentCode"],
+      SectionCode: json["SectionCode"],
+      GroupCode: json["GroupCode"],
+      SubGroupCode: json["SubGroupCode"],
+      StockQuantity: json["StockQuantity"],
+      AllowFractionate: json["AllowFractionate"],
+      IsBalance: json["IsBalance"],
+      CanBeWeightyInPdv: json["CanBeWeightyInPdv"],
+      QuantityInBalance: json["QuantityInBalance"],
+      AllowQuantityInPdv: json["AllowQuantityInPdv"],
+      GoesForFastTable: json["GoesForFastTable"],
+      IsAlcoholicProduct: json["IsAlcoholicProduct"],
+      SaleRetailPrice: json["SaleRetailPrice"],
+      PercImpNBPTNational: json["PercImpNBPTNational"],
+      CofinsPercentage: json["CofinsPercentage"],
+      PisPercentage: json["PisPercentage"],
+      CFOP: json["CFOP"],
+      FiscalClassificationNCM: json["FiscalClassificationNCM"],
+      TributarySituationCode: json["TributarySituationCode"],
+      CSTPisCofins: json["CSTPisCofins"],
+      CodeClass: json["CodeClass"],
+      DepartmentName: json["DepartmentName"],
+      SectionName: json["SectionName"],
+      DateOfLastChanged: json["DateOfLastChanged"],
+      GroupName: json["GroupName"],
+      SaleRetailPraticedString: json["SaleRetailPraticedString"],
+      PersonalizedCode: json["PersonalizedCode"],
+      EanCode: json["EanCode"],
+      NameComplete: json["NameComplete"],
+      NameReduced: json["PameReduced"],
+    );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['ProductsId'] = productsId;
-    data['InternalCodeOnERP'] = internalCodeOnERP;
-    data['InternalCodeOfProductOnERP'] = internalCodeOfProductOnERP;
-    data['EnterpriseId'] = enterpriseId;
-    data['PriceLookupCode'] = priceLookupCode;
-    data['PersonalizedCode'] = personalizedCode;
-    data['EanCode'] = eanCode;
-    data['Name'] = name;
-    data['NameComplete'] = nameComplete;
-    data['NameReduced'] = nameReduced;
-    data['PackingAbbreviation'] = packingAbbreviation;
-    data['PackingQuantity'] = packingQuantity;
-    data['SaleRetailPrice'] = saleRetailPrice;
-    data['OfferRetailPrice'] = offerRetailPrice;
-    data['WholeSalePrice'] = wholeSalePrice;
-    data['WholeOfferPrice'] = wholeOfferPrice;
-    data['OfferECommercePrice'] = offerECommercePrice;
-    data['SaleECommercePrice'] = saleECommercePrice;
-    data['LiquidCost'] = liquidCost;
-    data['LiquidCostMiddle'] = liquidCostMiddle;
-    data['LiquidCostReal'] = liquidCostReal;
-    data['RepositionCost'] = repositionCost;
-    data['RepositionCostMiddle'] = repositionCostMiddle;
-    data['RepositionCostReal'] = repositionCostReal;
-    data['CFOP'] = cFOP;
-    data['FiscalClassificationNCM'] = fiscalClassificationNCM;
-    data['TributarySituationCode'] = tributarySituationCode;
-    data['IcmsAliquot'] = icmsAliquot;
-    data['IcmsIVAMargin'] = icmsIVAMargin;
-    data['IcmsReductionMargin'] = icmsReductionMargin;
-    data['IcmsStave'] = icmsStave;
-    data['PercImpNBPTNational'] = percImpNBPTNational;
-    data['PercImpNBPTState'] = percImpNBPTState;
-    data['PercImpNBPTMunicipal'] = percImpNBPTMunicipal;
-    data['CofinsPercentage'] = cofinsPercentage;
-    data['PisPercentage'] = pisPercentage;
-    data['CofinsType'] = cofinsType;
-    data['PisType'] = pisType;
-    data['CSTPisCofins'] = cSTPisCofins;
-    data['ProductIsFatherComposition'] = productIsFatherComposition;
-    data['QuantityMinimumWholeSale'] = quantityMinimumWholeSale;
-    data['QuantityMinimumWholeSaleByClass'] = quantityMinimumWholeSaleByClass;
-    data['AllowFractionate'] = allowFractionate;
-    data['IsBalance'] = isBalance;
-    data['CanBeWeightyInPdv'] = canBeWeightyInPdv;
-    data['QuantityInBalance'] = quantityInBalance;
-    data['AllowQuantityInPdv'] = allowQuantityInPdv;
-    data['GoesForFastTable'] = goesForFastTable;
-    data['IsAlcoholicProduct'] = isAlcoholicProduct;
-    data['BalanceTare'] = balanceTare;
-    data['CodeClass'] = codeClass;
-    data['FamilyCode'] = familyCode;
-    data['DepartmentCode'] = departmentCode;
-    data['DepartmentName'] = departmentName;
-    data['SectionCode'] = sectionCode;
-    data['SectionName'] = sectionName;
-    data['GroupCode'] = groupCode;
-    data['GroupName'] = groupName;
-    data['SubGroupCode'] = subGroupCode;
-    data['DateOfLastChanged'] = dateOfLastChanged;
-    data['StockQuantity'] = stockQuantity;
-    data['SaleRetailPraticed'] = saleRetailPraticed;
-    data['SaleRetailPraticedString'] = saleRetailPraticedString;
+    data['ProductsId'] = ProductsId;
+    data['InternalCodeOnERP'] = InternalCodeOnERP;
+    data['InternalCodeOfProductOnERP'] = InternalCodeOfProductOnERP;
+    data['EnterpriseId'] = EnterpriseId;
+    data['PriceLookupCode'] = PriceLookupCode;
+    data['PersonalizedCode'] = PersonalizedCode;
+    data['EanCode'] = EanCode;
+    data['Name'] = Name;
+    data['NameComplete'] = NameComplete;
+    data['NameReduced'] = NameReduced;
+    data['PackingAbbreviation'] = PackingAbbreviation;
+    data['PackingQuantity'] = PackingQuantity;
+    data['SaleRetailPrice'] = SaleRetailPrice;
+    data['OfferRetailPrice'] = OfferRetailPrice;
+    data['WholeSalePrice'] = WholeSalePrice;
+    data['WholeOfferPrice'] = WholeOfferPrice;
+    data['OfferECommercePrice'] = OfferECommercePrice;
+    data['SaleECommercePrice'] = SaleECommercePrice;
+    data['LiquidCost'] = LiquidCost;
+    data['LiquidCostMiddle'] = LiquidCostMiddle;
+    data['LiquidCostReal'] = LiquidCostReal;
+    data['RepositionCost'] = RepositionCost;
+    data['RepositionCostMiddle'] = RepositionCostMiddle;
+    data['RepositionCostReal'] = RepositionCostReal;
+    data['CFOP'] = CFOP;
+    data['FiscalClassificationNCM'] = FiscalClassificationNCM;
+    data['TributarySituationCode'] = TributarySituationCode;
+    data['IcmsAliquot'] = IcmsAliquot;
+    data['IcmsIVAMargin'] = IcmsIVAMargin;
+    data['IcmsReductionMargin'] = IcmsReductionMargin;
+    data['IcmsStave'] = IcmsStave;
+    data['PercImpNBPTNational'] = PercImpNBPTNational;
+    data['PercImpNBPTState'] = PercImpNBPTState;
+    data['PercImpNBPTMunicipal'] = PercImpNBPTMunicipal;
+    data['CofinsPercentage'] = CofinsPercentage;
+    data['PisPercentage'] = PisPercentage;
+    data['CofinsType'] = CofinsType;
+    data['PisType'] = PisType;
+    data['CSTPisCofins'] = CSTPisCofins;
+    data['ProductIsFatherComposition'] = ProductIsFatherComposition;
+    data['QuantityMinimumWholeSale'] = QuantityMinimumWholeSale;
+    data['QuantityMinimumWholeSaleByClass'] = QuantityMinimumWholeSaleByClass;
+    data['AllowFractionate'] = AllowFractionate;
+    data['IsBalance'] = IsBalance;
+    data['CanBeWeightyInPdv'] = CanBeWeightyInPdv;
+    data['QuantityInBalance'] = QuantityInBalance;
+    data['AllowQuantityInPdv'] = AllowQuantityInPdv;
+    data['GoesForFastTable'] = GoesForFastTable;
+    data['IsAlcoholicProduct'] = IsAlcoholicProduct;
+    data['BalanceTare'] = BalanceTare;
+    data['CodeClass'] = CodeClass;
+    data['FamilyCode'] = FamilyCode;
+    data['DepartmentCode'] = DepartmentCode;
+    data['DepartmentName'] = DepartmentName;
+    data['SectionCode'] = SectionCode;
+    data['SectionName'] = SectionName;
+    data['GroupCode'] = GroupCode;
+    data['GroupName'] = GroupName;
+    data['SubGroupCode'] = SubGroupCode;
+    data['DateOfLastChanged'] = DateOfLastChanged;
+    data['StockQuantity'] = StockQuantity;
+    data['SaleRetailPraticed'] = SaleRetailPraticed;
+    data['SaleRetailPraticedString'] = SaleRetailPraticedString;
     return data;
   }
 
-  ProductModel toEntity() => ProductModel(
-        productsId: productsId,
-        internalCodeOnERP: internalCodeOnERP,
-        internalCodeOfProductOnERP: internalCodeOfProductOnERP,
-        enterpriseId: enterpriseId,
-        priceLookupCode: priceLookupCode,
-        personalizedCode: personalizedCode,
-        eanCode: eanCode,
-        name: name,
-        nameComplete: nameComplete,
-        nameReduced: nameReduced,
-        packingAbbreviation: packingAbbreviation,
-        packingQuantity: packingQuantity,
-        saleRetailPrice: saleRetailPrice,
-        offerRetailPrice: offerRetailPrice,
-        wholeSalePrice: wholeSalePrice,
-        wholeOfferPrice: wholeOfferPrice,
-        offerECommercePrice: offerECommercePrice,
-        saleECommercePrice: saleECommercePrice,
-        liquidCost: liquidCost,
-        liquidCostMiddle: liquidCostMiddle,
-        liquidCostReal: liquidCostReal,
-        repositionCost: repositionCost,
-        repositionCostMiddle: repositionCostMiddle,
-        repositionCostReal: repositionCostReal,
-        cFOP: cFOP,
-        fiscalClassificationNCM: fiscalClassificationNCM,
-        tributarySituationCode: tributarySituationCode,
-        icmsAliquot: icmsAliquot,
-        icmsIVAMargin: icmsIVAMargin,
-        icmsReductionMargin: icmsReductionMargin,
-        icmsStave: icmsStave,
-        percImpNBPTNational: percImpNBPTNational,
-        percImpNBPTState: percImpNBPTState,
-        percImpNBPTMunicipal: percImpNBPTMunicipal,
-        cofinsPercentage: cofinsPercentage,
-        pisPercentage: pisPercentage,
-        cofinsType: cofinsType,
-        pisType: pisType,
-        cSTPisCofins: cSTPisCofins,
-        productIsFatherComposition: productIsFatherComposition,
-        quantityMinimumWholeSale: quantityMinimumWholeSale,
-        quantityMinimumWholeSaleByClass: quantityMinimumWholeSaleByClass,
-        allowFractionate: allowFractionate,
-        isBalance: isBalance,
-        canBeWeightyInPdv: canBeWeightyInPdv,
-        quantityInBalance: quantityInBalance,
-        allowQuantityInPdv: allowQuantityInPdv,
-        goesForFastTable: goesForFastTable,
-        isAlcoholicProduct: isAlcoholicProduct,
-        balanceTare: balanceTare,
-        codeClass: codeClass,
-        familyCode: familyCode,
-        departmentCode: departmentCode,
-        departmentName: departmentName,
-        sectionCode: sectionCode,
-        sectionName: sectionName,
-        groupCode: groupCode,
-        groupName: groupName,
-        subGroupCode: subGroupCode,
-        dateOfLastChanged: dateOfLastChanged,
-        stockQuantity: stockQuantity,
-        saleRetailPraticed: saleRetailPraticed,
-        saleRetailPraticedString: saleRetailPraticedString,
+  ProductEntity toEntity() => ProductEntity(
+        ProductsId: ProductsId,
+        InternalCodeOnERP: InternalCodeOnERP,
+        InternalCodeOfProductOnERP: InternalCodeOfProductOnERP,
+        EenterpriseId: EnterpriseId,
+        PriceLookupCode: PriceLookupCode,
+        PersonalizedCode: PersonalizedCode,
+        EanCode: EanCode,
+        Name: Name,
+        NameComplete: NameComplete,
+        PameReduced: NameReduced,
+        PackingAbbreviation: PackingAbbreviation,
+        PackingQuantity: PackingQuantity,
+        SaleRetailPrice: SaleRetailPrice,
+        OfferRetailPrice: OfferRetailPrice,
+        WholeSalePrice: WholeSalePrice,
+        WholeOfferPrice: WholeOfferPrice,
+        OfferECommercePrice: OfferECommercePrice,
+        SaleECommercePrice: SaleECommercePrice,
+        LiquidCost: LiquidCost,
+        LiquidCostMiddle: LiquidCostMiddle,
+        LiquidCostReal: LiquidCostReal,
+        RepositionCost: RepositionCost,
+        RepositionCostMiddle: RepositionCostMiddle,
+        RepositionCostReal: RepositionCostReal,
+        CFOP: CFOP,
+        FiscalClassificationNCM: FiscalClassificationNCM,
+        TributarySituationCode: TributarySituationCode,
+        IcmsAliquot: IcmsAliquot,
+        IcmsIVAMargin: IcmsIVAMargin,
+        IcmsReductionMargin: IcmsReductionMargin,
+        IcmsStave: IcmsStave,
+        PercImpNBPTNational: PercImpNBPTNational,
+        PercImpNBPTState: PercImpNBPTState,
+        PercImpNBPTMunicipal: PercImpNBPTMunicipal,
+        CofinsPercentage: CofinsPercentage,
+        PisPercentage: PisPercentage,
+        CofinsType: CofinsType,
+        PisType: PisType,
+        CSTPisCofins: CSTPisCofins,
+        ProductIsFatherComposition: ProductIsFatherComposition,
+        QuantityMinimumWholeSale: QuantityMinimumWholeSale,
+        QuantityMinimumWholeSaleByClass: QuantityMinimumWholeSaleByClass,
+        AllowFractionate: AllowFractionate,
+        IsBalance: IsBalance,
+        CanBeWeightyInPdv: CanBeWeightyInPdv,
+        QuantityInBalance: QuantityInBalance,
+        AllowQuantityInPdv: AllowQuantityInPdv,
+        GoesForFastTable: GoesForFastTable,
+        IsAlcoholicProduct: IsAlcoholicProduct,
+        BalanceTare: BalanceTare,
+        CodeClass: CodeClass,
+        FamilyCode: FamilyCode,
+        DepartmentCode: DepartmentCode,
+        DepartmentName: DepartmentName,
+        SectionCode: SectionCode,
+        SectionName: SectionName,
+        GroupCode: GroupCode,
+        GroupName: GroupName,
+        SubGroupCode: SubGroupCode,
+        DateOfLastChanged: DateOfLastChanged,
+        StockQuantity: StockQuantity,
+        SaleRetailPraticed: SaleRetailPraticed,
+        SaleRetailPraticedString: SaleRetailPraticedString,
       );
 }

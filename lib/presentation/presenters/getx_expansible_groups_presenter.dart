@@ -71,6 +71,7 @@ class GetxExpansibleGroupsPresenter
       }
 
       isLoading = false;
+      notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
       isLoading = false;

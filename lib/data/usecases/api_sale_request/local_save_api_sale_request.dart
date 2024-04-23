@@ -24,5 +24,5 @@ class LocalSaveApiSaleRequest implements SaveApiSaleRequest {
   }
 
   Map _mapToJson(SaleRequestEntity entity) =>
-      ApiSaleRequestModel.fromEntity(entity).toJson();
+      SaleRequestModel.fromEntity(entity).toJson();
 }

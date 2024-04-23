@@ -5,6 +5,7 @@ import './expansible_groups.dart';
 
 abstract class ExpansibleGroupsPresenter implements Listenable {
   Stream<List<ExpansibleGroupsViewModel>> get expansibleGroupsStream;
+  Stream<SaleRequestViewModel?> get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 

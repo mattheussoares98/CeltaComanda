@@ -25,7 +25,7 @@ class RemoteLoadCommandsAvailable implements LoadCommandsAvailable {
       );
       if (apiSaleRequest == null) throw Error();
 
-      return ApiSaleRequestModel.fromJson(apiSaleRequest).toEntity();
+      return SaleRequestModel.fromJson(apiSaleRequest).toEntity();
     } catch (error) {
       throw DomainError.commandNotAvailable;
     }

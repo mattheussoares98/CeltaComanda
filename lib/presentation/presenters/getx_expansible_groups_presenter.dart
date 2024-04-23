@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,10 @@ class GetxExpansibleGroupsPresenter extends GetxController
   @override
   Stream<List<ExpansibleGroupsViewModel>> get expansibleGroupsStream =>
       _expansibleGroups.stream;
+
+  final _saleRequestTemp = Rx<SaleRequestViewModel?>(null);
+  @override
+  Stream<SaleRequestViewModel?> get saleRequestTemp => _saleRequestTemp.stream;
 
   @override
   Future<void> load() async {
@@ -91,13 +96,25 @@ class GetxExpansibleGroupsPresenter extends GetxController
     isLoading = true;
 
     try {
-      SaleRequestEntity? value = await loadCommandsAvailable.load(
+      SaleRequestEntity? saleRequestTemp = await loadCommandsAvailable.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 
-      if (value != null) {
+      if (saleRequestTemp != null) {
+        _saleRequestTemp.subject.add(
+          SaleRequestViewModel(
+            Products:
+                saleRequestTemp.Products.map((e) => ProductModel.fromEntity(e))
+                    .toList(),
+            PersonalizedCode: saleRequestTemp.PersonalizedCode,
+            EnterpriseId: saleRequestTemp.EnterpriseId,
+            TotalLiquid: saleRequestTemp.TotalLiquid,
+            DeliveryControl: saleRequestTemp.DeliveryControl,
+          ),
+        );
+
         await load();
       }
     } catch (error) {

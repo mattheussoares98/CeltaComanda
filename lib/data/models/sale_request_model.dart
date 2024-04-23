@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
-class ApiSaleRequestModel {
-  final dynamic Products;
+class SaleRequestModel {
+  final List<ProductEntity> Products;
   final int SaleRequestTempId;
   final String PersonalizedCode;
   final int EnterpriseId;
@@ -11,7 +12,7 @@ class ApiSaleRequestModel {
   final int DeliveryControl;
   final String? Comments;
 
-  ApiSaleRequestModel({
+  SaleRequestModel({
     required this.Products,
     required this.SaleRequestTempId,
     required this.PersonalizedCode,
@@ -21,7 +22,7 @@ class ApiSaleRequestModel {
     this.Comments,
   });
 
-  factory ApiSaleRequestModel.fromJson(Map json) {
+  factory SaleRequestModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       "Products",
       "SaleRequestTempId",
@@ -32,8 +33,10 @@ class ApiSaleRequestModel {
     ])) {
       throw Exception();
     }
-    return ApiSaleRequestModel(
-      Products: json["Products"],
+    return SaleRequestModel(
+      Products: json["Products"]
+          .map<ProductEntity>((e) => ProductModel.fromJson(e["Product"]).toEntity())
+          .toList(),
       SaleRequestTempId: json["SaleRequestTempId"],
       PersonalizedCode: json["PersonalizedCode"],
       EnterpriseId: json["EnterpriseId"],
@@ -43,8 +46,8 @@ class ApiSaleRequestModel {
     );
   }
 
-  factory ApiSaleRequestModel.fromEntity(SaleRequestEntity entity) =>
-      ApiSaleRequestModel(
+  factory SaleRequestModel.fromEntity(SaleRequestEntity entity) =>
+      SaleRequestModel(
         Products: entity.Products,
         SaleRequestTempId: entity.SaleRequestTempId,
         PersonalizedCode: entity.PersonalizedCode,

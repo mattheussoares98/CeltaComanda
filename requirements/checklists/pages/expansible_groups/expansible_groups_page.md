@@ -10,9 +10,9 @@
 2. ✅ Esconder o loading no término da consulta
 
 # FALHA
-1. Mostra mensagem de comanda não disponível
+1. ✅ Mostra mensagem de comanda não disponível
 2. ✅ Esconder o loading no término da consulta
-3. Permite a consulta de outra comanda
+3. ✅ Permite a consulta de outra comanda
 
 ## CONSULTA DOS GRUPOS EXPANSÍVEIS
 # PADRÃO

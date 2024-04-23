@@ -100,11 +100,13 @@ class GetxExpansibleGroupsPresenter extends GetxController
       if (value != null) {
         await load();
       }
-
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;
+          break;
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
           break;
         default:
           mainError = UIError.unexpected;
@@ -112,7 +114,5 @@ class GetxExpansibleGroupsPresenter extends GetxController
     } finally {
       isLoading = false;
     }
-
-    isLoading = false;
   }
 }

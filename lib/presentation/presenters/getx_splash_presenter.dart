@@ -43,7 +43,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: 001, //aqui é só pra testar se a API está disponível, por isso um valor fixo
+          commandNumber: "001", //aqui é só pra testar se a API está disponível, por isso um valor fixo
         );
       }
 

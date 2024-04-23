@@ -43,7 +43,7 @@ void main() {
     verify(() => loadCommandsAvailable.load(
           enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: 001,
+          commandNumber: "001",
         )).called(1);
   });
 

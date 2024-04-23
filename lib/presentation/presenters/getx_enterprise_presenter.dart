@@ -88,7 +88,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber:
-            001, //aqui é só pra testar se a API está disponível, por isso um valor fixo
+            "001", //aqui é só pra testar se a API está disponível, por isso um valor fixo
       );
 
       isLoading = false;
@@ -97,6 +97,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;
+          break;
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
           break;
         default:
           mainError = UIError.unexpected;

@@ -15,7 +15,7 @@ class RemoteLoadCommandsAvailable implements LoadCommandsAvailable {
   Future<ApiSaleRequestEntity?> load({
     required String url,
     required int enterpriseId,
-    required int commandNumber,
+    required String commandNumber,
   }) async {
     try {
       final apiSaleRequest = await httpAdapter.request(

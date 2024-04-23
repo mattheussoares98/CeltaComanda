@@ -87,7 +87,7 @@ class GetxExpansibleGroupsPresenter extends GetxController
   }
 
   @override
-  Future<void> verifyCommandAvailable(int commandNumber) async {
+  Future<void> verifyCommandAvailable(String commandNumber) async {
     isLoading = true;
 
     try {

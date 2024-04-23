@@ -10,7 +10,7 @@ abstract class ExpansibleGroupsPresenter implements Listenable {
 
   Future<void> load();
   Future<void> clearEnterpriseData();
-  Future<void> verifyCommandAvailable(int commandNumber);
+  Future<void> verifyCommandAvailable(String commandNumber);
 
   void goToProductsPage(int expansibleGroupId);
   void goToCartPage();

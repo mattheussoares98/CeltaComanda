@@ -70,7 +70,7 @@ void main() {
   });
 
   test('Should call load products', () async {
-    await sut.load();
+    await sut.getExpansibleGroups();
 
     verify(() => loadExpansibleGroups.load()).called(1);
   });
@@ -78,7 +78,7 @@ void main() {
   test('Should throw DomainErrorUnexpected', () async {
     loadExpansibleGroups.mockLoadExpansibleGroupsError();
 
-    final future = sut.load();
+    final future = sut.getExpansibleGroups();
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -88,7 +88,7 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
 
-    await sut.load();
+    await sut.getExpansibleGroups();
 
     expect(sut.expansibleGroups, expansibleGroupsViewModel);
   });

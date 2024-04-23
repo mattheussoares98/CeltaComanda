@@ -9,7 +9,7 @@ abstract class ExpansibleGroupsPresenter with ChangeNotifier implements Listenab
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> load();
+  Future<void> getExpansibleGroups();
   Future<void> clearEnterpriseData();
   Future<void> getSaleRequestTemp(String commandNumber);
 

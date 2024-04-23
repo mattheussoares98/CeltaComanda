@@ -15,7 +15,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
   final List<ExpansibleGroupsViewModel> expansibleGroupsController = [];
 
   ExpansibleGroupsPresenterSpy() {
-    when(() => this.load()).thenAnswer((_) async => _);
+    when(() => this.getExpansibleGroups()).thenAnswer((_) async => _);
     when(() => this.getSaleRequestTemp(any())).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
@@ -36,6 +36,10 @@ class ExpansibleGroupsPresenterSpy extends Mock
 
   void mockVerifyCommandIsAvailableError(DomainError error) {
     when(() => this.getSaleRequestTemp(any())).thenThrow(error);
+  }
+
+  void mockExpansibleGroupStreamError(DomainError error) {
+    mainErrorController.add(UIError.unexpected);
   }
 
   void emitLoading([bool show = true]) {

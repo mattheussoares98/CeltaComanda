@@ -54,7 +54,7 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> load() async {
+  Future<void> getExpansibleGroups() async {
     try {
       final expansibleGroups = await loadExpansibleGroups.load();
       isLoading = true;
@@ -132,7 +132,7 @@ class GetxExpansibleGroupsPresenter
           DeliveryControl: saleRequestTemp.DeliveryControl,
         );
 
-        await load();
+        await getExpansibleGroups();
       }
     } catch (error) {
       mainError = UIError.commandNotAvailable;

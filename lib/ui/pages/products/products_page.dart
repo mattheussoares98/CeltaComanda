@@ -22,7 +22,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
 
   bool _isLoaded = false;
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (Get.arguments != null) {
       expansibleGroupId = Get.arguments as int;
     }
@@ -30,7 +30,9 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      widget.presenter.load(expansibleGroupId);
+      Future.delayed(Duration.zero, () async {
+        await widget.presenter.load(expansibleGroupId);
+      });
     }
   }
 

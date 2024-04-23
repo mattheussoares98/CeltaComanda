@@ -51,6 +51,7 @@ class GetxProductsPresenter extends GetxController
       _products.subject
           .addError(UIError.unexpected.description, StackTrace.current);
 
+      isLoading = false;
       throw DomainError.unexpected;
     }
   }

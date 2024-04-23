@@ -87,7 +87,7 @@ class ProductItem extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 8),
                       child: Text(
-                        'R\$${product.PackingAbbreviation}',
+                        'R\$${product.SaleRetailPraticed}',
                         textAlign: TextAlign.end,
                       ),
                     ),

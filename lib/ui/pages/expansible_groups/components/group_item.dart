@@ -24,8 +24,9 @@ class GroupItem extends StatelessWidget {
     final presenter = Provider.of<ExpansibleGroupsPresenter>(context);
 
     return GestureDetector(
-      onTap: () => presenter
-          .goToProductsPage(expansibleGroupsViewModel.ExpansibleGroupId),
+      onTap: () {
+        presenter.goToProductsPage(expansibleGroupsViewModel.ExpansibleGroupId);
+      },
       child: Container(
         margin: const EdgeInsets.all(8),
         height: 100,

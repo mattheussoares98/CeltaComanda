@@ -51,24 +51,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                     );
                   }
 
-                  return Center(
-                    child: TextButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: TextField(
-                                  controller: TextEditingController(),
-                                ),
-                                title: const Text("Validar comanda"),
-                              );
-                            });
-                      },
-                      child: const Text("Inserir número da comanda"),
-                    ),
-                  );
+                  return InsertCommandNumber(presenter: widget.presenter);
                 });
           },
         ),

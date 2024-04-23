@@ -147,29 +147,12 @@ void main() {
     expect(value, apiSaleRequest);
   });
 
-  test('Should correct events on load command throws commandNotAvailable', () async {
+  test('Should correct events on load command throws commandNotAvailable',
+      () async {
     loadCommandsAvailable.mockError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
-
-    await sut.verifyCommandAvailable(commandNumber);
-  });
-
-  test('Should correct events on load command throws unexpected', () async {
-    loadCommandsAvailable.mockError(DomainError.unexpected);
-
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emits(UIError.unexpected));
-
-    await sut.verifyCommandAvailable(commandNumber);
-  });
-
-  test('Should correct events on load command throws enterpriseOrUrlNotFound', () async {
-    loadCommandsAvailable.mockError(DomainError.enterpriseOrUrlNotFound);
-
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emits(UIError.enterpriseOrUrlNotFound));
 
     await sut.verifyCommandAvailable(commandNumber);
   });

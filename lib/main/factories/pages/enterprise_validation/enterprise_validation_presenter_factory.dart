@@ -8,5 +8,5 @@ EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
       localEntepriseData: makeLocalEnterpriseData(),
       remoteEnterpriseData: makeRemoteEnterpriseData(),
       navigateTo: makeNavigateTo(),
-      loadCommandsAvailable: makeRemoteLoadCommandsAvailable(),
+      loadSaleRequestTemp: makeRemoteLoadCommandsAvailable(),
     );

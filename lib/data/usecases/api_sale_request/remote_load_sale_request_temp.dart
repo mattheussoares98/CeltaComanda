@@ -4,28 +4,28 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteLoadCommandsAvailable implements LoadCommandsAvailable {
+class RemoteLoadSaleRequestTemp implements LoadSaleRequestTemp {
   final HttpClient httpAdapter;
 
-  RemoteLoadCommandsAvailable({
+  RemoteLoadSaleRequestTemp({
     required this.httpAdapter,
   });
 
   @override
-  Future<SaleRequestEntity?> load({
+  Future<SaleRequestTempEntity?> load({
     required String url,
     required int enterpriseId,
     required String commandNumber,
   }) async {
     try {
-      final apiSaleRequest = await httpAdapter.request(
+      final saleRequestTemp = await httpAdapter.request(
         url:
             "$url/api/apiSaleRequest/GetTemp?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber",
         method: "get",
       );
-      if (apiSaleRequest == null) throw Error();
+      if (saleRequestTemp == null) throw Error();
 
-      return SaleRequestModel.fromJson(apiSaleRequest).toEntity();
+      return SaleRequestModel.fromJson(saleRequestTemp).toEntity();
     } catch (error) {
       throw DomainError.commandNotAvailable;
     }

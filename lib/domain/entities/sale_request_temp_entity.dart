@@ -2,7 +2,7 @@
 
 import '../../domain/entities/entities.dart';
 
-class SaleRequestEntity {
+class SaleRequestTempEntity {
   final List<ProductEntity> Products;
   final int SaleRequestTempId;
   final String PersonalizedCode;
@@ -11,7 +11,7 @@ class SaleRequestEntity {
   final int DeliveryControl;
   final String? Comments;
 
-  const SaleRequestEntity({
+  const SaleRequestTempEntity({
     required this.Products,
     required this.SaleRequestTempId,
     required this.PersonalizedCode,

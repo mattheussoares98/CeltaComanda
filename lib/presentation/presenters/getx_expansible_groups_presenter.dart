@@ -15,13 +15,13 @@ class GetxExpansibleGroupsPresenter
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
-  final LoadCommandsAvailable loadCommandsAvailable;
+  final LoadSaleRequestTemp loadSaleRequestTemp;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
-    required this.loadCommandsAvailable,
+    required this.loadSaleRequestTemp,
   });
 
   final _isLoading = false.obs;
@@ -109,12 +109,12 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> verifyCommandAvailable(String commandNumber) async {
+  Future<void> getSaleRequestTemp(String commandNumber) async {
     isLoading = true;
     notifyListeners();
 
     try {
-      SaleRequestEntity? saleRequestTemp = await loadCommandsAvailable.load(
+      SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: commandNumber,

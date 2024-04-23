@@ -17,7 +17,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
 
   ExpansibleGroupsPresenterSpy() {
     when(() => this.load()).thenAnswer((_) async => _);
-    when(() => this.verifyCommandAvailable(any())).thenAnswer((_) async => _);
+    when(() => this.getSaleRequestTemp(any())).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.expansibleGroupsStream)
@@ -42,7 +42,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
   }
 
   void mockVerifyCommandIsAvailableError(DomainError error) {
-    when(() => this.verifyCommandAvailable(any())).thenThrow(error);
+    when(() => this.getSaleRequestTemp(any())).thenThrow(error);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

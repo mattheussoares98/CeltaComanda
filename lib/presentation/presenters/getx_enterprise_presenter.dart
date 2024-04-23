@@ -17,14 +17,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LocalEnterpriseData localEntepriseData;
   final RemoteEnterpriseData remoteEnterpriseData;
   final NavigateTo navigateTo;
-  final LoadCommandsAvailable loadCommandsAvailable;
+  final LoadSaleRequestTemp loadSaleRequestTemp;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
     required this.localEntepriseData,
     required this.remoteEnterpriseData,
     required this.navigateTo,
-    required this.loadCommandsAvailable,
+    required this.loadSaleRequestTemp,
   });
 
   @override
@@ -84,7 +84,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         await loadRemoteData();
       }
 
-      await loadCommandsAvailable.load(
+      await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber:

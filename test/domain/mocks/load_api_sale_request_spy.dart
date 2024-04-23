@@ -5,8 +5,8 @@ import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class LoadCommandsAvailableSpy extends Mock implements LoadCommandsAvailable {
-  LoadCommandsAvailableSpy() {
+class LoadSaleRequestTempSpy extends Mock implements LoadSaleRequestTemp {
+  LoadSaleRequestTempSpy() {
     mockLoadCommandsAvailable(null);
   }
   When mockLoadCommandsAvailableCall() => when(() => this.load(
@@ -15,7 +15,7 @@ class LoadCommandsAvailableSpy extends Mock implements LoadCommandsAvailable {
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockLoadCommandsAvailable(SaleRequestEntity? entity) {
+  void mockLoadCommandsAvailable(SaleRequestTempEntity? entity) {
     this.mockLoadCommandsAvailableCall().thenAnswer((_) async => entity);
   }
 

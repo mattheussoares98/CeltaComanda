@@ -7,12 +7,12 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
-  final LoadCommandsAvailable loadCommandsAvailable;
+  final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
 
   GetxSplashPresenter({
-    required this.loadCommandsAvailable,
+    required this.loadSaleRequestTemp,
     required this.navigateTo,
     required this.loadEnterpriseData,
   });
@@ -37,9 +37,9 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
         );
       }
 
-      SaleRequestEntity? apiSaleRequestEntity;
+      SaleRequestTempEntity? apiSaleRequestEntity;
       if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId != null) {
-        apiSaleRequestEntity = await loadCommandsAvailable.load(
+        apiSaleRequestEntity = await loadSaleRequestTemp.load(
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,

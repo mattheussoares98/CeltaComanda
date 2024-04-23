@@ -11,7 +11,7 @@ class LocalSaveApiSaleRequest implements SaveApiSaleRequest {
   LocalSaveApiSaleRequest({required this.hiveStorage});
 
   @override
-  Future<void> save(SaleRequestEntity entity) async {
+  Future<void> save(SaleRequestTempEntity entity) async {
     try {
       final json = _mapToJson(entity);
       await hiveStorage.put(
@@ -23,6 +23,6 @@ class LocalSaveApiSaleRequest implements SaveApiSaleRequest {
     }
   }
 
-  Map _mapToJson(SaleRequestEntity entity) =>
+  Map _mapToJson(SaleRequestTempEntity entity) =>
       SaleRequestModel.fromEntity(entity).toJson();
 }

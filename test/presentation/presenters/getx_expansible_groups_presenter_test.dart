@@ -21,8 +21,8 @@ void main() {
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late List<ExpansibleGroupEntity> expansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late LoadCommandsAvailableSpy loadCommandsAvailable;
-  late SaleRequestEntity saleRequestTemp;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late SaleRequestTempEntity saleRequestTemp;
   late String commandNumber;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -31,7 +31,7 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     commandNumber = "001";
-    loadCommandsAvailable = LoadCommandsAvailableSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroups();
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
@@ -43,7 +43,7 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
-      loadCommandsAvailable: loadCommandsAvailable,
+      loadSaleRequestTemp: loadSaleRequestTemp,
     );
   });
 
@@ -134,11 +134,11 @@ void main() {
   test('Should emit correct events on verify command success', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.verifyCommandAvailable(commandNumber);
+    await sut.getSaleRequestTemp(commandNumber);
   });
-  test('Should return correct value on loadCommandsAvailable', () async {
-    loadCommandsAvailable.mockLoadCommandsAvailable(saleRequestTemp);
-    final value = await loadCommandsAvailable.load(
+  test('Should return correct value on loadSaleRequestTemp', () async {
+    loadSaleRequestTemp.mockLoadCommandsAvailable(saleRequestTemp);
+    final value = await loadSaleRequestTemp.load(
       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       commandNumber: commandNumber,
@@ -149,16 +149,16 @@ void main() {
 
   test('Should correct events on load command throws commandNotAvailable',
       () async {
-    loadCommandsAvailable.mockError(DomainError.commandNotAvailable);
+    loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
 
-    await sut.verifyCommandAvailable(commandNumber);
+    await sut.getSaleRequestTemp(commandNumber);
   });
 
   test('Should emit correct events on get saleRequestTemp', () async {
-    loadCommandsAvailable.mockLoadCommandsAvailable(saleRequestTemp);
+    loadSaleRequestTemp.mockLoadCommandsAvailable(saleRequestTemp);
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
     sut.saleRequestTemp.listen(expectAsync1((saleRequest) => expect(
@@ -173,6 +173,6 @@ void main() {
           ),
         )));
 
-    await sut.verifyCommandAvailable(commandNumber);
+    await sut.getSaleRequestTemp(commandNumber);
   });
 }

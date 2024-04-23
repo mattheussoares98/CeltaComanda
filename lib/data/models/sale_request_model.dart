@@ -46,7 +46,7 @@ class SaleRequestModel {
     );
   }
 
-  factory SaleRequestModel.fromEntity(SaleRequestEntity entity) =>
+  factory SaleRequestModel.fromEntity(SaleRequestTempEntity entity) =>
       SaleRequestModel(
         Products: entity.Products,
         SaleRequestTempId: entity.SaleRequestTempId,
@@ -57,7 +57,7 @@ class SaleRequestModel {
         Comments: entity.Comments,
       );
 
-  SaleRequestEntity toEntity() => SaleRequestEntity(
+  SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
         Products: Products,
         SaleRequestTempId: SaleRequestTempId,
         PersonalizedCode: PersonalizedCode,

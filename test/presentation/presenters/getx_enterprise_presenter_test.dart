@@ -18,7 +18,7 @@ void main() {
   late LocalEnterpriseDataSpy localEnterpriseData;
   late RemoteEnterpriseDataSpy remoteEnterpriseData;
   late NavigateToSpy navigateTo;
-  late LoadCommandsAvailableSpy loadCommandsAvailable;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
 
   setUp(() {
     validation = ValidationSpy();
@@ -27,7 +27,7 @@ void main() {
     navigateTo = NavigateToSpy();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    loadCommandsAvailable = LoadCommandsAvailableSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
 
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
@@ -39,7 +39,7 @@ void main() {
       localEntepriseData: localEnterpriseData,
       remoteEnterpriseData: remoteEnterpriseData,
       navigateTo: navigateTo,
-      loadCommandsAvailable: loadCommandsAvailable,
+      loadSaleRequestTemp: loadSaleRequestTemp,
     );
 
     sut.enterpriseNameController.text =
@@ -89,7 +89,7 @@ void main() {
   });
 
   test('Should emit UnexpectedError if SaveEnterpriseData fails', () async {
-    loadCommandsAvailable.mockError(DomainError.unexpected);
+    loadSaleRequestTemp.mockError(DomainError.unexpected);
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
 

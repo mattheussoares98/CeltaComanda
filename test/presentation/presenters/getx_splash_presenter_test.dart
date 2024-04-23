@@ -15,8 +15,8 @@ import 'package:flutter/widgets.dart';
 void main() {
   late GetxSplashPresenter sut;
   late NavigateToSpy navigateTo;
-  late LoadCommandsAvailableSpy loadCommandsAvailable;
-  late SaleRequestEntity apiSaleRequestEntity;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late SaleRequestTempEntity apiSaleRequestEntity;
   late LocalEnterpriseDataSpy loadEnterpriseData;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -24,15 +24,15 @@ void main() {
   setUp(() {
     EnterpriseDataBuilder.enterpriseDataEntity = EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
-    loadCommandsAvailable = LoadCommandsAvailableSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
     navigateTo.mockNavigate();
     apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
-    loadCommandsAvailable.mockLoadCommandsAvailable(apiSaleRequestEntity);
+    loadSaleRequestTemp.mockLoadCommandsAvailable(apiSaleRequestEntity);
     loadEnterpriseData = LocalEnterpriseDataSpy();
     loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
-      loadCommandsAvailable: loadCommandsAvailable,
+      loadSaleRequestTemp: loadSaleRequestTemp,
       loadEnterpriseData: loadEnterpriseData,
     );
   });
@@ -40,16 +40,16 @@ void main() {
   test('Should call LoadCommandsAvailableEntity', () async {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
-    verify(() => loadCommandsAvailable.load(
+    verify(() => loadSaleRequestTemp.load(
           enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           commandNumber: "001",
         )).called(1);
   });
 
-  test('Should go to EnterpriseValidationPage if loadCommandsAvailable throws',
+  test('Should go to EnterpriseValidationPage if loadSaleRequestTemp throws',
       () async {
-    loadCommandsAvailable.mockError(DomainError.enterpriseOrUrlNotFound);
+    loadSaleRequestTemp.mockError(DomainError.enterpriseOrUrlNotFound);
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
@@ -72,8 +72,8 @@ void main() {
     ).called(1);
   });
 
-  test('Should go to enterprise page if loadCommandsAvailable returns null', () async {
-    loadCommandsAvailable.mockLoadCommandsAvailable(null);
+  test('Should go to enterprise page if loadSaleRequestTemp returns null', () async {
+    loadSaleRequestTemp.mockLoadCommandsAvailable(null);
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(

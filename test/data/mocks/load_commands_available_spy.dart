@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class LoadCommandsAvailableSpy extends Mock implements LoadCommandsAvailable {
+class LoadCommandsAvailableSpy extends Mock implements LoadSaleRequestTemp {
   When mockLoadCommandsAvailableCall() => when(() => this.load(
         url: any(named: "url"),
         enterpriseId: any(named: "enterpriseId"),
@@ -13,7 +13,7 @@ class LoadCommandsAvailableSpy extends Mock implements LoadCommandsAvailable {
       ));
 
   void mockLoadCommandsAvailable(
-          List<SaleRequestEntity>? expansibleGroups) =>
+          List<SaleRequestTempEntity>? expansibleGroups) =>
       this
           .mockLoadCommandsAvailableCall()
           .thenAnswer((_) async => expansibleGroups);

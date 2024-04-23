@@ -9,5 +9,5 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       navigateTo: makeNavigateTo(),
       localEnterpriseData: makeLocalEnterpriseData(),
-      loadCommandsAvailable: makeRemoteLoadCommandsAvailable(),
+      loadSaleRequestTemp: makeRemoteLoadCommandsAvailable(),
     );

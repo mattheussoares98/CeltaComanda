@@ -7,12 +7,12 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
-  final LoadApiSaleRequest loadApiSaleRequest;
+  final LoadCommandsAvailable loadCommandsAvailable;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
 
   GetxSplashPresenter({
-    required this.loadApiSaleRequest,
+    required this.loadCommandsAvailable,
     required this.navigateTo,
     required this.loadEnterpriseData,
   });
@@ -39,10 +39,11 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       ApiSaleRequestEntity? apiSaleRequestEntity;
       if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId != null) {
-        apiSaleRequestEntity = await loadApiSaleRequest.load(
+        apiSaleRequestEntity = await loadCommandsAvailable.load(
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: 001, //aqui é só pra testar se a API está disponível, por isso um valor fixo
         );
       }
 

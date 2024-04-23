@@ -1,8 +1,9 @@
 import '../../entities/entities.dart';
 
-abstract class LoadApiSaleRequest {
+abstract class LoadCommandsAvailable {
   Future<ApiSaleRequestEntity?> load({
     required String url,
     required int enterpriseId,
+    required int commandNumber,
   });
 }

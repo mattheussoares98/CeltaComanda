@@ -19,12 +19,12 @@ void main() {
 
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
-      makePage(
-        path: PageRoutes.products,
-        page: () => ProductsPage(presenter),
-        arguments: faker.randomGenerator.integer(3),
-      ),
-    );
+        makePage(
+          path: PageRoutes.products,
+          page: () => ProductsPage(presenter),
+          arguments: faker.randomGenerator.integer(3),
+        ),
+        const Duration(seconds: 1));
   }
 
   tearDown(() {
@@ -36,11 +36,11 @@ void main() {
     await loadPage(tester);
 
     presenter.emitLoading();
-    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const Key("loading")), findsOneWidget);
 
     presenter.emitLoading(false);
-    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const Key("loading")), findsNothing);
   });
 
@@ -73,6 +73,8 @@ void main() {
 
   testWidgets('Should show CartIcon on AppBar', (WidgetTester tester) async {
     await loadPage(tester);
+    await tester.pump(const Duration(seconds: 1));
+    
     expect(find.byKey(const Key("CartIcon")), findsOneWidget);
   });
 }

@@ -4,10 +4,10 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteLoadApiSaleRequest implements LoadApiSaleRequest {
+class RemoteLoadCommandsAvailable implements LoadCommandsAvailable {
   final HttpClient httpAdapter;
 
-  RemoteLoadApiSaleRequest({
+  RemoteLoadCommandsAvailable({
     required this.httpAdapter,
   });
 
@@ -15,11 +15,12 @@ class RemoteLoadApiSaleRequest implements LoadApiSaleRequest {
   Future<ApiSaleRequestEntity?> load({
     required String url,
     required int enterpriseId,
+    required int commandNumber,
   }) async {
     try {
       final apiSaleRequest = await httpAdapter.request(
         url:
-            "$url/api/apiSaleRequest/GetTemp?_enterpriseId=$enterpriseId&_personalizedCode=001",
+            "$url/api/apiSaleRequest/GetTemp?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber",
         method: "get",
       );
       if (apiSaleRequest == null) throw Error();

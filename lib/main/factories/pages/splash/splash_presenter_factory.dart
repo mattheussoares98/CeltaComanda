@@ -4,6 +4,6 @@ import '../../usecases/usecases.dart';
 
 SplashPresenter makeGetxSplashPresenter() => GetxSplashPresenter(
       navigateTo: makeNavigateTo(),
-      loadApiSaleRequest: makeRemoteLoadApiSaleRequest(),
+      loadCommandsAvailable: makeRemoteLoadCommandsAvailable(),
       loadEnterpriseData: makeLocalEnterpriseData(),
     );

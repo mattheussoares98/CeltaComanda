@@ -41,6 +41,10 @@ class ExpansibleGroupsPresenterSpy extends Mock
     );
   }
 
+  void mockVerifyCommandIsAvailableError(DomainError error) {
+    when(() => this.verifyCommandAvailable(any())).thenThrow(error);
+  }
+
   void emitLoading([bool show = true]) => isLoadingController.add(show);
 
   void dispose() {

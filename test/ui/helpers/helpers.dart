@@ -78,7 +78,7 @@ Widget makePage(
           loadSaleRequestTemp: LoadSaleRequestTempSpy(),
           localEnterpriseData: LocalEnterpriseDataSpy(),
           navigateTo: NavigateToSpy(),
-          loadPrintedProducts: LoadSaleRequestPrintedProductsSpy(),
+          loadPrintedProducts: LoadPrintedProductsSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(

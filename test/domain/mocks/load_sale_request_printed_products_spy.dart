@@ -5,22 +5,22 @@ import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class LoadSaleRequestPrintedProductsSpy extends Mock
+class LoadPrintedProductsSpy extends Mock
     implements LoadPrintedProducts {
-  LoadSaleRequestPrintedProductsSpy() {
-    mockLoadSaleRequestTemp(null);
+  LoadPrintedProductsSpy() {
+    mockLoadPrintedProducts(null);
   }
-  When mockLoadSaleRequestTempCall() => when(() => this.load(
+  When mockLoadPrintedProductsCall() => when(() => this.load(
         enterpriseId: any(named: "enterpriseId"),
         url: any(named: "url"),
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockLoadSaleRequestTemp(SaleRequestTempEntity? entity) {
-    this.mockLoadSaleRequestTempCall().thenAnswer((_) async => entity);
+  void mockLoadPrintedProducts(PrintedProductsEntity? entity) {
+    this.mockLoadPrintedProductsCall().thenAnswer((_) async => entity);
   }
 
   void mockError(DomainError error) {
-    this.mockLoadSaleRequestTempCall().thenThrow(error);
+    this.mockLoadPrintedProductsCall().thenThrow(error);
   }
 }

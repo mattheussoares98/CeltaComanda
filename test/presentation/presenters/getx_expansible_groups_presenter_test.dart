@@ -1,6 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -17,16 +16,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late GetxExpansibleGroupsPresenter sut;
-  late NavigateToSpy navigateTo;
-  late LoadExpansibleGroupsSpy loadExpansibleGroups;
+  late EnterpriseEntity enterpriseEntity;
   late List<ExpansibleGroupEntity> expansibleGroups;
-  late LocalEnterpriseDataSpy localEnterpriseData;
-  late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late SaleRequestTempEntity saleRequestTempEntity;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
+  late PrintedProductsEntity printedProducts;
   late String commandNumber;
-  late EnterpriseEntity enterpriseEntity;
-  late LoadPrintedProducts loadSaleRequestPrintedProducts;
+  late LoadExpansibleGroupsSpy loadExpansibleGroups;
+  late LocalEnterpriseDataSpy localEnterpriseData;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late NavigateToSpy navigateTo;
+  late LoadPrintedProductsSpy loadPrintedProducts;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -36,8 +36,9 @@ void main() {
     commandNumber = "001";
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
-    loadSaleRequestPrintedProducts = LoadSaleRequestPrintedProductsSpy();
+    loadPrintedProducts = LoadPrintedProductsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
+    printedProducts = EntityFactory.makePrintedProductsEntity();
 
     expansibleGroupsViewModel = expansibleGroups
         .map((e) => ExpansibleGroupsViewModel(
@@ -51,6 +52,7 @@ void main() {
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
     saleRequestTempEntity = EntityFactory.makeApiSaleRequestEntity();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    loadPrintedProducts.mockLoadPrintedProducts(printedProducts);
 
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
@@ -68,7 +70,7 @@ void main() {
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
       loadSaleRequestTemp: loadSaleRequestTemp,
-      loadPrintedProducts: loadSaleRequestPrintedProducts,
+      loadPrintedProducts: loadPrintedProducts,
     );
   });
 
@@ -196,5 +198,15 @@ void main() {
     await sut.goToSplashPage();
 
     expect(sut.expansibleGroups, []);
+  });
+
+  test('Should return correct values on LoadPrintedProducts', () async {
+    final result = await loadPrintedProducts.load(
+      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+      commandNumber: 1,
+    );
+
+    expect(result, printedProducts);
   });
 }

@@ -26,7 +26,16 @@ class CartItems extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            CartItem(product: productViewModel),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: productViewModel.Products.length,
+              itemBuilder: (context, index) {
+                final cartItem = productViewModel.Products[index];
+
+                return CartItem(product: cartItem);
+              },
+            ),
             const RequestSummary(),
           ],
         ),

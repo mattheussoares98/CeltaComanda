@@ -1,4 +1,4 @@
-import 'package:clean_celta_mobile/presentation/presenters/getx_cart_presenter.dart';
+import 'package:clean_celta_mobile/presentation/presenters/getx_expansible_groups_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,7 @@ class CartIcon extends StatefulWidget {
 class _CartIconState extends State<CartIcon> {
   @override
   Widget build(BuildContext context) {
-    GetxCartPresenter cartProvider = Provider.of(context);
+    GetxExpansibleGroupsPresenter presenter = Provider.of(context);
 
     return GestureDetector(
       key: const Key("CartIcon"),
@@ -42,7 +42,8 @@ class _CartIconState extends State<CartIcon> {
                 maxRadius: 9,
                 child: FittedBox(
                   child: Text(
-                    cartProvider.cartProducts.length.toString(),
+                    presenter.saleRequestTemp?.Products.length.toString() ??
+                        "0",
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),

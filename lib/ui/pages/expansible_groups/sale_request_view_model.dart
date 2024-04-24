@@ -2,10 +2,10 @@
 
 import 'package:equatable/equatable.dart';
 
-import '../../../data/models/models.dart';
+import '../pages.dart';
 
 class SaleRequestTempViewModel extends Equatable {
-  final List<ProductModel> Products;
+  final List<ProductsViewModel> Products;
   final String PersonalizedCode;
   final int EnterpriseId;
   final double TotalLiquid;

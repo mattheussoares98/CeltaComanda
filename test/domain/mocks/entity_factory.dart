@@ -169,7 +169,16 @@ class EntityFactory {
   static SaleRequestTempViewModel makeSaleRequestTempViewModel(
       List<ProductModel> products) {
     return SaleRequestTempViewModel(
-      Products: products,
+      Products: products
+          .map((e) => ProductsViewModel(
+                SaleRetailPraticed: e.SaleRetailPraticed.toString(),
+                EanCode: e.EanCode.toString(),
+                PackingAbbreviation: e.PackingAbbreviation,
+                Name: e.Name,
+                PriceLookupCode: e.PriceLookupCode,
+                ProductsId: e.ProductsId,
+              ))
+          .toList(),
       PersonalizedCode: faker.randomGenerator.string(10),
       EnterpriseId: faker.randomGenerator.integer(3),
       DeliveryControl: faker.randomGenerator.integer(3),

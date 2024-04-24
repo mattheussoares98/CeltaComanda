@@ -1,13 +1,12 @@
-import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
-import '../../ui/pages/expansible_groups/expansible_groups.dart';
 
 class GetxExpansibleGroupsPresenter
     with ChangeNotifier
@@ -126,9 +125,14 @@ class GetxExpansibleGroupsPresenter
 
       if (saleRequestTemp != null) {
         _saleRequestTemp = SaleRequestTempViewModel(
-          Products:
-              saleRequestTemp.Products.map((e) => ProductModel.fromEntity(e))
-                  .toList(),
+          Products: saleRequestTemp.Products.map((e) => ProductsViewModel(
+                SaleRetailPraticed: e.SaleRetailPraticed.toString(),
+                PackingAbbreviation: e.PackingAbbreviation,
+                Name: e.Name,
+                EanCode: e.EanCode.toString(),
+                PriceLookupCode: e.PriceLookupCode,
+                ProductsId: e.ProductsId,
+              )).toList(),
           PersonalizedCode: saleRequestTemp.PersonalizedCode,
           EnterpriseId: saleRequestTemp.EnterpriseId,
           TotalLiquid: saleRequestTemp.TotalLiquid,

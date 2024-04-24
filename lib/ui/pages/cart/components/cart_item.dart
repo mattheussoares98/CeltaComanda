@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class CartItem extends StatelessWidget {
-  final SaleRequestTempViewModel product;
+  final ProductsViewModel product;
   const CartItem({
     required this.product,
     super.key,
@@ -30,7 +30,7 @@ class CartItem extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              product.Products[0].Name,
+                              product.Name,
                             ),
                           ),
                         ),

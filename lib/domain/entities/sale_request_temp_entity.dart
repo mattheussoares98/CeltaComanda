@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/entities.dart';
 
-class SaleRequestTempEntity {
+class SaleRequestTempEntity extends Equatable {
   final List<ProductEntity> Products;
   final int SaleRequestTempId;
   final String PersonalizedCode;
@@ -20,4 +22,15 @@ class SaleRequestTempEntity {
     required this.DeliveryControl,
     this.Comments,
   });
+
+  @override
+  List<Object?> get props => [
+        Products,
+        SaleRequestTempId,
+        PersonalizedCode,
+        EnterpriseId,
+        TotalLiquid,
+        DeliveryControl,
+        Comments,
+      ];
 }

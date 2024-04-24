@@ -220,7 +220,7 @@ class EntityFactory {
 
   static SaleRequestTempEntity makeApiSaleRequestEntity() {
     return SaleRequestTempEntity(
-      Products: [],
+      Products: const [],
       SaleRequestTempId: faker.randomGenerator.integer(10),
       PersonalizedCode: faker.randomGenerator.string(10),
       EnterpriseId: faker.randomGenerator.integer(3),

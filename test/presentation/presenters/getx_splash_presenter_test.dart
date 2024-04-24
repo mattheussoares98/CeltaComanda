@@ -27,7 +27,7 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     navigateTo.mockNavigate();
     apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
-    loadSaleRequestTemp.mockLoadCommandsAvailable(apiSaleRequestEntity);
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(apiSaleRequestEntity);
     loadEnterpriseData = LocalEnterpriseDataSpy();
     loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     sut = GetxSplashPresenter(
@@ -73,7 +73,7 @@ void main() {
   });
 
   test('Should go to enterprise page if loadSaleRequestTemp returns null', () async {
-    loadSaleRequestTemp.mockLoadCommandsAvailable(null);
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(null);
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(

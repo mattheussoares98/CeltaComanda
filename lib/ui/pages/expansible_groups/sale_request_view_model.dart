@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../pages.dart';
 
 class SaleRequestTempViewModel extends Equatable {
@@ -30,4 +31,21 @@ class SaleRequestTempViewModel extends Equatable {
     required this.DeliveryControl,
     this.Comments,
   });
+
+  factory SaleRequestTempViewModel.fromEntity(SaleRequestTempEntity entity) =>
+      SaleRequestTempViewModel(
+        Products: entity.Products.map((e) => ProductsViewModel(
+              SaleRetailPraticed: e.SaleRetailPraticed.toString(),
+              PackingAbbreviation: e.PackingAbbreviation,
+              Name: e.Name,
+              EanCode: e.EanCode.toString(),
+              PriceLookupCode: e.PriceLookupCode,
+              ProductsId: e.ProductsId,
+            )).toList(),
+        PersonalizedCode: entity.PersonalizedCode,
+        EnterpriseId: entity.EnterpriseId,
+        TotalLiquid: entity.TotalLiquid,
+        DeliveryControl: entity.DeliveryControl,
+        Comments: entity.Comments,
+      );
 }

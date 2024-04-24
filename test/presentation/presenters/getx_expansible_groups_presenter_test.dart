@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -26,8 +25,7 @@ void main() {
   late SaleRequestTempEntity saleRequestTempEntity;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   late String commandNumber;
-  late SaleRequestTempViewModel saleRequestTempViewModel;
-  late List<ProductModel> products;
+  late EnterpriseEntity enterpriseEntity;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -35,9 +33,6 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     commandNumber = "001";
-    products = EntityFactory.makeProductModel();
-    saleRequestTempViewModel =
-        EntityFactory.makeSaleRequestTempViewModel(products);
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
@@ -53,9 +48,19 @@ void main() {
 
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
     saleRequestTempEntity = EntityFactory.makeApiSaleRequestEntity();
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
     localEnterpriseData = LocalEnterpriseDataSpy();
+
+    enterpriseEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+    );
+
+    localEnterpriseData.mockAdd(enterpriseEntity);
+
     sut = GetxExpansibleGroupsPresenter(
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
@@ -86,7 +91,6 @@ void main() {
   test('Should emit correct events on success load expansible groups',
       () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
 
     await sut.getExpansibleGroups();
 
@@ -126,12 +130,6 @@ void main() {
   });
 
   test('Should clear local data on logout', () async {
-    final enterpriseEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-    );
-    localEnterpriseData.mockAdd(enterpriseEntity);
-
     await sut.clearEnterpriseData();
 
     verify(() => localEnterpriseData.add(enterpriseEntity)).called(1);
@@ -143,7 +141,6 @@ void main() {
     await sut.getSaleRequestTemp(commandNumber);
   });
   test('Should return correct value on loadSaleRequestTemp', () async {
-    loadSaleRequestTemp.mockLoadCommandsAvailable(saleRequestTempEntity);
     final value = await loadSaleRequestTemp.load(
       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
@@ -158,24 +155,43 @@ void main() {
     loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
     await sut.getSaleRequestTemp(commandNumber);
   });
 
   test('Should emit correct events on get saleRequestTemp', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.saleRequestTemp = saleRequestTempViewModel;
 
     await sut.getSaleRequestTemp(commandNumber);
+
+    final saleRequestTempViewModel =
+        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
 
     expect(sut.saleRequestTemp, saleRequestTempViewModel);
   });
 
-  
   test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
-    sut.goToSplashPage();
+    await sut.goToSplashPage();
 
-    expect(EnterpriseDataBuilder.enterpriseDataEntity, null);
+    expect(
+        EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName, isNotEmpty);
+    expect(EnterpriseDataBuilder.enterpriseDataEntity?.url, null);
+    expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId, null);
+  });
+
+  test('Should clear SaleRequestTemp when go to SplashPage', () async {
+    await sut.getSaleRequestTemp(commandNumber);
+    await sut.goToSplashPage();
+
+    expect(sut.saleRequestTemp, null);
+  });
+
+  test('Should clear expansibleGroups when go to SplashPage', () async {
+    await sut.getExpansibleGroups();
+    await sut.goToSplashPage();
+
+    expect(sut.expansibleGroups, []);
   });
 }

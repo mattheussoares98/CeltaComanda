@@ -7,19 +7,19 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadSaleRequestTempSpy extends Mock implements LoadSaleRequestTemp {
   LoadSaleRequestTempSpy() {
-    mockLoadCommandsAvailable(null);
+    mockLoadSaleRequestTemp(null);
   }
-  When mockLoadCommandsAvailableCall() => when(() => this.load(
+  When mockLoadSaleRequestTempCall() => when(() => this.load(
         enterpriseId: any(named: "enterpriseId"),
         url: any(named: "url"),
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockLoadCommandsAvailable(SaleRequestTempEntity? entity) {
-    this.mockLoadCommandsAvailableCall().thenAnswer((_) async => entity);
+  void mockLoadSaleRequestTemp(SaleRequestTempEntity? entity) {
+    this.mockLoadSaleRequestTempCall().thenAnswer((_) async => entity);
   }
 
   void mockError(DomainError error) {
-    this.mockLoadCommandsAvailableCall().thenThrow(error);
+    this.mockLoadSaleRequestTempCall().thenThrow(error);
   }
 }

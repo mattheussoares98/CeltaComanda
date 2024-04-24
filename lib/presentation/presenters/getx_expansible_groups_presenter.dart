@@ -40,7 +40,7 @@ class GetxExpansibleGroupsPresenter
 
   late final LoadExpansibleGroups loadExpansibleGroups;
 
-  final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
+  List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
   List<ExpansibleGroupsViewModel> get expansibleGroups =>
       [..._expansibleGroups];
@@ -97,20 +97,24 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  void goToSplashPage() {
+  Future<void> goToSplashPage() async {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
-    EnterpriseDataBuilder.enterpriseDataEntity = null;
+    _saleRequestTemp = null;
+    _expansibleGroups = [];
+    await clearEnterpriseData();
   }
 
   @override
   Future<void> clearEnterpriseData() async {
-    await localEnterpriseData.add(
-      EnterpriseEntity(
-        enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-      ),
+    final emptyEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName ?? "",
+      enterpriseId: null,
+      url: null,
     );
-    EnterpriseDataBuilder.enterpriseDataEntity = null;
+    EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
+
+    await localEnterpriseData.add(emptyEntity);
   }
 
   @override
@@ -140,6 +144,7 @@ class GetxExpansibleGroupsPresenter
           EnterpriseId: saleRequestTemp.EnterpriseId,
           TotalLiquid: saleRequestTemp.TotalLiquid,
           DeliveryControl: saleRequestTemp.DeliveryControl,
+          Comments: saleRequestTemp.Comments,
         );
 
         await getExpansibleGroups();

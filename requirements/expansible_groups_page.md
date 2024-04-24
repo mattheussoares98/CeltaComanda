@@ -31,3 +31,8 @@
 
 ## IR PARA TELA DO CARRINHO
 1. ✅ Ao clicar no ícone do carrinho, levar pra tela de totalização 
+
+## FAZER LOGOUT (TELA DE SPLASH)
+1. ✅ Limpar o SaleRequestTemp
+2. ✅ Limpar a lista de grupos expansíveis
+3. ✅ Limpar enterpriseId e url do EnterpriseDataBuilder

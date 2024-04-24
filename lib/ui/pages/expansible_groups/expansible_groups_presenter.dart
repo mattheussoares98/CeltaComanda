@@ -15,5 +15,5 @@ abstract class ExpansibleGroupsPresenter with ChangeNotifier implements Listenab
 
   void goToProductsPage(int expansibleGroupId);
   void goToCartPage();
-  void goToSplashPage();
+  Future<void> goToSplashPage();
 }

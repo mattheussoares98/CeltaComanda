@@ -31,7 +31,7 @@ class RemoteLoadPrintedProducts
               printedProducts)
           .toEntity();
     } catch (error) {
-      throw DomainError.commandNotAvailable;
+      throw DomainError.unexpected;
     }
   }
 }

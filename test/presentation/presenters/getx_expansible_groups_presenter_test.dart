@@ -161,7 +161,7 @@ void main() {
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(
-        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+        sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.load(commandNumber);
   });
@@ -208,5 +208,15 @@ void main() {
     );
 
     expect(result, printedProducts);
+  });
+
+  test('Should throws unexpected error when LoadPrintedProducts', () async {
+    loadPrintedProducts.mockError(DomainError.unexpected);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+    await sut.load(commandNumber);
   });
 }

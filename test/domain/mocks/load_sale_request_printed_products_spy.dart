@@ -5,8 +5,7 @@ import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class LoadPrintedProductsSpy extends Mock
-    implements LoadPrintedProducts {
+class LoadPrintedProductsSpy extends Mock implements LoadPrintedProducts {
   LoadPrintedProductsSpy() {
     mockLoadPrintedProducts(null);
   }

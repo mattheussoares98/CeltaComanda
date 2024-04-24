@@ -158,7 +158,7 @@ class GetxExpansibleGroupsPresenter
         await getPrintedProducts(commandNumber);
       }
     } catch (error) {
-      mainError = UIError.commandNotAvailable;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
       notifyListeners();
@@ -186,10 +186,10 @@ class GetxExpansibleGroupsPresenter
           DeliveryControl: printedProducts.DeliveryControl,
           Comments: printedProducts.Comments,
         );
-        debugPrint(printedProducts.toString());
+        // debugPrint(printedProducts.toString());
       }
     } catch (error) {
-      mainError = UIError.commandNotAvailable;
+      throw UIError.unexpected;
     } finally {
       isLoading = false;
       notifyListeners();

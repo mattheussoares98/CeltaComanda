@@ -158,7 +158,7 @@ void main() {
     loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
     await sut.getSaleRequestTemp(commandNumber);
   });

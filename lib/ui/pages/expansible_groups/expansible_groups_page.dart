@@ -18,7 +18,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context);
+    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context, listen: true);
     return Scaffold(
       drawer: drawer(context: context, presenter: presenter),
       appBar: AppBar(

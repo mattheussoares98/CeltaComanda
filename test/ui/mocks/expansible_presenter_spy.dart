@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
 class ExpansibleGroupsPresenterSpy extends Mock
-    implements ExpansibleGroupsPresenter {
+    implements GetxExpansibleGroupsPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   final List<ExpansibleGroupsViewModel> expansibleGroupsController = [];

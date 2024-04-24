@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/foundation.dart';
@@ -76,6 +77,7 @@ class GetxExpansibleGroupsPresenter
     } catch (e) {
       mainError = UIError.unexpected;
       isLoading = false;
+      throw DomainError.unexpected;
     } finally {
       notifyListeners();
     }
@@ -95,7 +97,7 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> goToSplashPage() async {
+  void goToSplashPage() {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }
 

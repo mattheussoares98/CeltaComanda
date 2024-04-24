@@ -7,6 +7,8 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
+import '../../data/mocks/load_expansible_groups_spy.dart';
+import '../../domain/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
 Widget makePage(
@@ -70,8 +72,13 @@ Widget makePage(
 
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider<ExpansibleGroupsPresenter>(
-        create: (_) => ExpansibleGroupsPresenterSpy(),
+      ChangeNotifierProvider<GetxExpansibleGroupsPresenter>(
+        create: (_) => GetxExpansibleGroupsPresenter(
+          loadExpansibleGroups: LoadExpansibleGroupsSpy(),
+          loadSaleRequestTemp: LoadSaleRequestTempSpy(),
+          localEnterpriseData: LocalEnterpriseDataSpy(),
+          navigateTo: NavigateToSpy(),
+        ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(
         create: (_) => GetxCartPresenter(),
@@ -83,19 +90,6 @@ Widget makePage(
       getPages: allPages,
     ),
   );
-
-  // return MultiProvider(
-  //   providers: [
-  //     ChangeNotifierProvider(
-  //       create: (_) => GetxCartPresenter(),
-  //     ),
-  //   ],
-  //   child: GetMaterialApp(
-  //     initialRoute: path,
-  //     navigatorObservers: [Get.put<RouteObserver>(RouteObserver<PageRoute>())],
-  //     getPages: allPages,
-  //   ),
-  // );
 }
 
 String get currentRoute => Get.currentRoute;

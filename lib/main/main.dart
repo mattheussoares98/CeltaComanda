@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,6 +49,7 @@ class App extends StatelessWidget {
         ),
       ],
       child: GetMaterialApp(
+        navigatorKey: NavigatorKey.navigatorKey,
         title: 'Celta restaurante',
         debugShowCheckedModeBanner: false,
         theme: makeAppTheme(),

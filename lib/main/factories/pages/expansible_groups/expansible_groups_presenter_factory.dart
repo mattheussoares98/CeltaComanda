@@ -11,5 +11,5 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       navigateTo: makeNavigateTo(),
       localEnterpriseData: makeLocalEnterpriseData(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
-      loadSaleRequestPrintedProducts: makeRemoteLoadSaleRequestPrintedProducts(),
+      loadPrintedProducts: makeRemoteLoadPrintedProducts(),
     );

@@ -14,7 +14,9 @@ abstract class ExpansibleGroupsPresenter with ChangeNotifier implements Listenab
   Future<void> load(String commandNumber);
   Future<void> getPrintedProducts(String commandNumber);
 
+  Future<void> goToSplashPage();
+
   void goToProductsPage(int expansibleGroupId);
   void goToCartPage();
-  Future<void> goToSplashPage();
+  void goToPrintedProductsPage();
 }

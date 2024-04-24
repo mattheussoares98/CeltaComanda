@@ -11,12 +11,9 @@ class ProductDetailsCartIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
+    return const CircleAvatar(
       backgroundColor: Colors.grey,
-      child: CartIcon(
-        goToCartPage: goToCartPage,
-        color: Colors.white,
-      ),
+      child: CartIcon(),
     );
   }
 }

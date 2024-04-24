@@ -1,13 +1,10 @@
-import 'package:clean_celta_mobile/presentation/presenters/getx_expansible_groups_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../presentation/presenters/presenters.dart';
+
 class CartIcon extends StatefulWidget {
-  final void Function()? goToCartPage;
-  final Color? color;
   const CartIcon({
-    this.color = Colors.grey,
-    required this.goToCartPage,
     super.key,
   });
 
@@ -22,17 +19,17 @@ class _CartIconState extends State<CartIcon> {
 
     return GestureDetector(
       key: const Key("CartIcon"),
-      onTap: widget.goToCartPage,
+      onTap: presenter.goToCartPage,
       child: FittedBox(
         child: Stack(
           children: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart_outlined,
-                color: widget.color,
+                color: Colors.grey,
                 size: 28,
               ),
-              onPressed: widget.goToCartPage,
+              onPressed: presenter.goToCartPage,
             ),
             Positioned(
               top: 2,

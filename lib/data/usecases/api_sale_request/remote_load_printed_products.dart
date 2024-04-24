@@ -5,30 +5,30 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteLoadSaleRequestPrintedProducts
-    implements LoadSaleRequestPrintedProducts {
+class RemoteLoadPrintedProducts
+    implements LoadPrintedProducts {
   final HttpClient httpAdapter;
 
-  RemoteLoadSaleRequestPrintedProducts({
+  RemoteLoadPrintedProducts({
     required this.httpAdapter,
   });
 
   @override
-  Future<SaleRequestPrintedProductsEntity?> load({
+  Future<PrintedProductsEntity?> load({
     required String url,
     required int enterpriseId,
     required int commandNumber,
   }) async {
     try {
-      final saleRequestPrintedProducts = await httpAdapter.request(
+      final printedProducts = await httpAdapter.request(
         url:
             "$url/api/apiSaleRequest/Get?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber&_considerUsing=false",
         method: "get",
       );
-      if (saleRequestPrintedProducts == null) throw Error();
+      if (printedProducts == null) throw Error();
 
-      return SaleRequestPrintedProductsModel.fromJson(
-              saleRequestPrintedProducts)
+      return PrintedProductsModel.fromJson(
+              printedProducts)
           .toEntity();
     } catch (error) {
       throw DomainError.commandNotAvailable;

@@ -15,14 +15,14 @@ class GetxExpansibleGroupsPresenter
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
   final LoadSaleRequestTemp loadSaleRequestTemp;
-  final LoadSaleRequestPrintedProducts loadSaleRequestPrintedProducts;
+  final LoadPrintedProducts loadPrintedProducts;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
     required this.loadSaleRequestTemp,
-    required this.loadSaleRequestPrintedProducts,
+    required this.loadPrintedProducts,
   });
 
   final _isLoading = false.obs;
@@ -167,8 +167,8 @@ class GetxExpansibleGroupsPresenter
     notifyListeners();
 
     try {
-      SaleRequestPrintedProductsEntity? saleRequestTemp =
-          await loadSaleRequestPrintedProducts.load(
+      PrintedProductsEntity? saleRequestTemp =
+          await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: int.tryParse(commandNumber) ?? 0,
@@ -183,5 +183,12 @@ class GetxExpansibleGroupsPresenter
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  @override
+  void goToPrintedProductsPage() {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.printedProducts,
+    );
   }
 }

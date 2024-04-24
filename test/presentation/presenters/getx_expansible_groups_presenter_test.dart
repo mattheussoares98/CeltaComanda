@@ -26,7 +26,7 @@ void main() {
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   late String commandNumber;
   late EnterpriseEntity enterpriseEntity;
-  late LoadSaleRequestPrintedProducts loadSaleRequestPrintedProducts;
+  late LoadPrintedProducts loadSaleRequestPrintedProducts;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -68,7 +68,7 @@ void main() {
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
       loadSaleRequestTemp: loadSaleRequestTemp,
-      loadSaleRequestPrintedProducts: loadSaleRequestPrintedProducts,
+      loadPrintedProducts: loadSaleRequestPrintedProducts,
     );
   });
 

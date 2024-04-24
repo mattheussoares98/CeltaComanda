@@ -46,9 +46,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
         title: const Text("Produtos"),
-        actions: [
-          CartIcon(goToCartPage: widget.presenter.goToCartPage),
-        ],
+        actions: const [CartIcon()],
       ),
       body: SingleChildScrollView(
         primary: false,

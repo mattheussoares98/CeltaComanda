@@ -18,15 +18,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context, listen: true);
+    final presenter =
+        Provider.of<GetxExpansibleGroupsPresenter>(context, listen: true);
     return Scaffold(
       drawer: drawer(context: context, presenter: presenter),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
         title: const Text("Grupos de comida"),
-        actions: [
-          CartIcon(goToCartPage: presenter.goToCartPage),
-        ],
+        actions: const [CartIcon()],
       ),
       body: Column(
         children: [

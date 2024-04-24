@@ -2,7 +2,7 @@
 
 import '../../domain/entities/entities.dart';
 
-class SaleRequestPrintedProductsModel {
+class PrintedProductsModel {
   final List<dynamic> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
@@ -19,7 +19,7 @@ class SaleRequestPrintedProductsModel {
   final int DeliveryControl;
   String? Comments;
 
-  SaleRequestPrintedProductsModel({
+  PrintedProductsModel({
     required this.Products,
     required this.PersonalizedCode,
     required this.DateOfCreation,
@@ -37,7 +37,7 @@ class SaleRequestPrintedProductsModel {
     this.Comments,
   });
 
-  factory SaleRequestPrintedProductsModel.fromJson(Map json) {
+  factory PrintedProductsModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       "Products",
       "PersonalizedCode",
@@ -47,7 +47,7 @@ class SaleRequestPrintedProductsModel {
     ])) {
       throw Exception();
     }
-    return SaleRequestPrintedProductsModel(
+    return PrintedProductsModel(
       Products: json["Products"],
       PersonalizedCode: json["PersonalizedCode"],
       DateOfCreation: json["DateOfCreation"],
@@ -66,9 +66,9 @@ class SaleRequestPrintedProductsModel {
     );
   }
 
-  factory SaleRequestPrintedProductsModel.fromEntity(
-          SaleRequestPrintedProductsEntity entity) =>
-      SaleRequestPrintedProductsModel(
+  factory PrintedProductsModel.fromEntity(
+          PrintedProductsEntity entity) =>
+      PrintedProductsModel(
         Products: entity.Products,
         PersonalizedCode: entity.PersonalizedCode,
         DateOfCreation: entity.DateOfCreation,
@@ -86,8 +86,8 @@ class SaleRequestPrintedProductsModel {
         Comments: entity.Comments,
       );
 
-  SaleRequestPrintedProductsEntity toEntity() =>
-      SaleRequestPrintedProductsEntity(
+  PrintedProductsEntity toEntity() =>
+      PrintedProductsEntity(
         Products: Products,
         PersonalizedCode: PersonalizedCode,
         DateOfCreation: DateOfCreation,

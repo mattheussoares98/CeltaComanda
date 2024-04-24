@@ -6,7 +6,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadSaleRequestPrintedProductsSpy extends Mock
-    implements LoadSaleRequestPrintedProducts {
+    implements LoadPrintedProducts {
   LoadSaleRequestPrintedProductsSpy() {
     mockLoadSaleRequestTemp(null);
   }

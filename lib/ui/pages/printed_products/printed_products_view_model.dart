@@ -29,7 +29,7 @@ class SaleRequestPrintedProductsViewModel extends Equatable {
   });
 
   factory SaleRequestPrintedProductsViewModel.fromEntity(
-          SaleRequestPrintedProductsEntity entity) =>
+          PrintedProductsEntity entity) =>
       SaleRequestPrintedProductsViewModel(
         Products: entity.Products,
         PersonalizedCode: entity.PersonalizedCode,

@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-class SaleRequestPrintedProductsEntity {
+class PrintedProductsEntity {
   final List<dynamic> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
@@ -17,7 +17,7 @@ class SaleRequestPrintedProductsEntity {
   final int DeliveryControl;
   String? Comments;
 
-  SaleRequestPrintedProductsEntity({
+  PrintedProductsEntity({
     required this.Products,
     required this.PersonalizedCode,
     required this.DateOfCreation,

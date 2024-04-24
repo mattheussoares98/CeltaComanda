@@ -22,4 +22,4 @@
 1. ✅ Retornar erro de empresa não encontrada
 2. ✅ Esconder o loading
 # CASO DE SUCESSO
-1. ✅ Ir para a tela de grupos expansíveis
+1. ✅ Ir para a tela de grupos expansíveis limpando a rota atual

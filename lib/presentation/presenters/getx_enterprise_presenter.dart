@@ -151,6 +151,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   void goToExpansibleGroupsPage() {
-    navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups);
+    navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups, clear: true);
   }
 }

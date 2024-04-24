@@ -172,4 +172,15 @@ void main() {
           enterpriseName: sut.enterpriseNameController.text,
         ));
   });
+
+  test("Should go to ExpansibleGroupsPage cleaning atual route", () async {
+    sut.goToExpansibleGroupsPage();
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.expansibleGroups,
+        clear: true,
+      ),
+    );
+  });
 }

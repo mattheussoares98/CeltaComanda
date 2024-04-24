@@ -58,7 +58,7 @@ class InsertCommandNumber extends StatelessWidget {
 
                           Navigator.of(context).pop();
                           await presenter
-                              .getSaleRequestTemp(textController.text);
+                              .load(textController.text);
                         },
                         child: const Text("Consultar"),
                       )

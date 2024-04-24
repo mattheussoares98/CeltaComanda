@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/main/factories/usecases/load_api_sale_request/remote_load_printed_products_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -41,10 +42,11 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => GetxExpansibleGroupsPresenter(
-            loadSaleRequestTemp: makeRemoteLoadCommandsAvailable(),
+            loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
             loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
             localEnterpriseData: makeLocalEnterpriseData(),
             navigateTo: makeNavigateTo(),
+            loadSaleRequestPrintedProducts: makeRemoteLoadSaleRequestPrintedProducts(),
           ),
         ),
       ],

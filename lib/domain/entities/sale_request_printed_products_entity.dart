@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 class SaleRequestPrintedProductsEntity {
-  final List<Map<String, dynamic>> Products;
+  final List<dynamic> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
   final String DateHourOfCreation;

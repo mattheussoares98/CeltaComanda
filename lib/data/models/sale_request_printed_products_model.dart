@@ -3,7 +3,7 @@
 import '../../domain/entities/entities.dart';
 
 class SaleRequestPrintedProductsModel {
-  final List<Map<String, dynamic>> Products;
+  final List<dynamic> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
   final String DateHourOfCreation;
@@ -40,7 +40,6 @@ class SaleRequestPrintedProductsModel {
   factory SaleRequestPrintedProductsModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       "Products",
-      "PersonalizedCode",
       "PersonalizedCode",
       "EnterpriseId",
       "TotalLiquid",

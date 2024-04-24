@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/usecases/load_api_sale_request/remote_load_printed_products_factory.dart';
 import 'package:clean_celta_mobile/main/factories/usecases/usecases.dart';
 
 import '../../../../presentation/presenters/getx_expansible_groups_presenter.dart';
@@ -9,5 +10,6 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       navigateTo: makeNavigateTo(),
       localEnterpriseData: makeLocalEnterpriseData(),
-      loadSaleRequestTemp: makeRemoteLoadCommandsAvailable(),
+      loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+      loadSaleRequestPrintedProducts: makeRemoteLoadSaleRequestPrintedProducts(),
     );

@@ -4,6 +4,6 @@ abstract class LoadSaleRequestPrintedProducts {
   Future<SaleRequestPrintedProductsEntity?> load({
     required String url,
     required int enterpriseId,
-    required String commandNumber,
+    required int commandNumber,
   });
 }

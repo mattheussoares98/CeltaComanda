@@ -7,7 +7,7 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
-import '../../data/mocks/load_expansible_groups_spy.dart';
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
@@ -78,6 +78,7 @@ Widget makePage(
           loadSaleRequestTemp: LoadSaleRequestTempSpy(),
           localEnterpriseData: LocalEnterpriseDataSpy(),
           navigateTo: NavigateToSpy(),
+          loadSaleRequestPrintedProducts: LoadSaleRequestPrintedProductsSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(

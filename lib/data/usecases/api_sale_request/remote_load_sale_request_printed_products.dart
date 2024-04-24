@@ -17,12 +17,12 @@ class RemoteLoadSaleRequestPrintedProducts
   Future<SaleRequestPrintedProductsEntity?> load({
     required String url,
     required int enterpriseId,
-    required String commandNumber,
+    required int commandNumber,
   }) async {
     try {
       final saleRequestPrintedProducts = await httpAdapter.request(
         url:
-            "$url/api/apiSaleRequest/GetTemp?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber&_considerUsing=false",
+            "$url/api/apiSaleRequest/Get?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber&_considerUsing=false",
         method: "get",
       );
       if (saleRequestPrintedProducts == null) throw Error();

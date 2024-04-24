@@ -1,7 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
-import 'package:clean_celta_mobile/main/builders/enterprise_data_builder.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -26,6 +26,7 @@ void main() {
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   late String commandNumber;
   late EnterpriseEntity enterpriseEntity;
+  late LoadSaleRequestPrintedProducts loadSaleRequestPrintedProducts;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -35,6 +36,7 @@ void main() {
     commandNumber = "001";
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
+    loadSaleRequestPrintedProducts = LoadSaleRequestPrintedProductsSpy();
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
 
     expansibleGroupsViewModel = expansibleGroups
@@ -66,6 +68,7 @@ void main() {
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
       loadSaleRequestTemp: loadSaleRequestTemp,
+      loadSaleRequestPrintedProducts: loadSaleRequestPrintedProducts,
     );
   });
 
@@ -138,7 +141,7 @@ void main() {
   test('Should emit correct events on verify command success', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.getSaleRequestTemp(commandNumber);
+    await sut.load(commandNumber);
   });
   test('Should return correct value on loadSaleRequestTemp', () async {
     final value = await loadSaleRequestTemp.load(
@@ -158,13 +161,13 @@ void main() {
     expectLater(
         sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
-    await sut.getSaleRequestTemp(commandNumber);
+    await sut.load(commandNumber);
   });
 
   test('Should emit correct events on get saleRequestTemp', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.getSaleRequestTemp(commandNumber);
+    await sut.load(commandNumber);
 
     final saleRequestTempViewModel =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
@@ -182,7 +185,7 @@ void main() {
   });
 
   test('Should clear SaleRequestTemp when go to SplashPage', () async {
-    await sut.getSaleRequestTemp(commandNumber);
+    await sut.load(commandNumber);
     await sut.goToSplashPage();
 
     expect(sut.saleRequestTemp, null);

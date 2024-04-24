@@ -15,12 +15,14 @@ class GetxExpansibleGroupsPresenter
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
   final LoadSaleRequestTemp loadSaleRequestTemp;
+  final LoadSaleRequestPrintedProducts loadSaleRequestPrintedProducts;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
     required this.loadSaleRequestTemp,
+    required this.loadSaleRequestPrintedProducts,
   });
 
   final _isLoading = false.obs;
@@ -118,7 +120,7 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> getSaleRequestTemp(String commandNumber) async {
+  Future<void> load(String commandNumber) async {
     isLoading = true;
     mainError = null;
     notifyListeners();
@@ -148,6 +150,32 @@ class GetxExpansibleGroupsPresenter
         );
 
         await getExpansibleGroups();
+        await getPrintedProducts(commandNumber);
+      }
+    } catch (error) {
+      mainError = UIError.commandNotAvailable;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  @override
+  Future<void> getPrintedProducts(String commandNumber) async {
+    isLoading = true;
+    mainError = null;
+    notifyListeners();
+
+    try {
+      SaleRequestPrintedProductsEntity? saleRequestTemp =
+          await loadSaleRequestPrintedProducts.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: int.tryParse(commandNumber) ?? 0,
+      );
+
+      if (saleRequestTemp != null) {
+        print(saleRequestTemp);
       }
     } catch (error) {
       mainError = UIError.commandNotAvailable;

@@ -1,11 +1,11 @@
-import 'package:clean_celta_mobile/ui/pages/cart/components/request_summary.dart';
+import 'package:clean_celta_mobile/ui/pages/sale_request_temp/components/request_summary.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class CartItems extends StatelessWidget {
+class ProductsItems extends StatelessWidget {
   final SaleRequestTempViewModel productViewModel;
-  const CartItems({
+  const ProductsItems({
     required this.productViewModel,
     super.key,
   });
@@ -33,7 +33,7 @@ class CartItems extends StatelessWidget {
               itemBuilder: (context, index) {
                 final cartItem = productViewModel.Products[index];
 
-                return CartItem(product: cartItem);
+                return ProductItem(product: cartItem);
               },
             ),
             const RequestSummary(),

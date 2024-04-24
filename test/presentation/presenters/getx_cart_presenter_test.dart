@@ -22,6 +22,6 @@ void main() {
   test('Should add product in cart', () async {
     sut.addProductInCart(product);
 
-    expect(product, sut.cartProducts[0]);
+    expect(product, sut.saleRequestProducts[0]);
   });
 }

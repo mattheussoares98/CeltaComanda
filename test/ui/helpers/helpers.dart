@@ -41,7 +41,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.cart,
-      page: () => const CartPage(),
+      page: () => const SaleRequestTempPage(),
     ),
     GetPage(
       name: PageRoutes.splash,

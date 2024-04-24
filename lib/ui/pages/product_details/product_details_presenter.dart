@@ -8,6 +8,6 @@ abstract class ProductDetailsPresenter implements Listenable {
   void goToCartPage();
   Future<void> addProductInCart({
     required ProductsViewModel product,
-    required CartPresenter cartPresenter,
+    required SaleRequestTempPresenter cartPresenter,
   });
 }

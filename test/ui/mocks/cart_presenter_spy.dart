@@ -8,7 +8,7 @@ import 'dart:async';
 
 import 'package:mocktail/mocktail.dart';
 
-class CartPresenterSpy extends Mock implements CartPresenter {
+class CartPresenterSpy extends Mock implements SaleRequestTempPresenter {
   final isLoadingController = StreamController<bool>();
   final cartController = StreamController<List<ProductsViewModel>>();
 

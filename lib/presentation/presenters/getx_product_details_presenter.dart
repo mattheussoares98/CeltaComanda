@@ -22,7 +22,7 @@ class GetxProductDetailsPresenter extends GetxController
   @override
   Future<void> addProductInCart({
     required ProductsViewModel product,
-    required CartPresenter cartPresenter,
+    required SaleRequestTempPresenter cartPresenter,
   }) async {
     await cartPresenter.addProductInCart(product);
   }

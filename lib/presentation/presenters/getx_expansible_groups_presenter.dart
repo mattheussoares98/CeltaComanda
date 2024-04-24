@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:clean_celta_mobile/ui/pages/printed_products/printed_products_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +42,10 @@ class GetxExpansibleGroupsPresenter
   set mainError(UIError? value) => _mainError.value = value;
 
   late final LoadExpansibleGroups loadExpansibleGroups;
+
+  PrintedProductsViewModel? _printedProducts;
+  @override
+  PrintedProductsViewModel? get printedProducts => _printedProducts;
 
   List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
@@ -167,15 +172,21 @@ class GetxExpansibleGroupsPresenter
     notifyListeners();
 
     try {
-      PrintedProductsEntity? saleRequestTemp =
-          await loadPrintedProducts.load(
+      PrintedProductsEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: int.tryParse(commandNumber) ?? 0,
       );
 
-      if (saleRequestTemp != null) {
-        print(saleRequestTemp);
+      if (printedProducts != null) {
+        _printedProducts = PrintedProductsViewModel(
+          Products: printedProducts.Products,
+          PersonalizedCode: printedProducts.PersonalizedCode,
+          TotalLiquid: printedProducts.TotalLiquid,
+          DeliveryControl: printedProducts.DeliveryControl,
+          Comments: printedProducts.Comments,
+        );
+        debugPrint(printedProducts.toString());
       }
     } catch (error) {
       mainError = UIError.commandNotAvailable;

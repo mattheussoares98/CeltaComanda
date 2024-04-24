@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
 
-class SaleRequestPrintedProductsViewModel extends Equatable {
+class PrintedProductsViewModel extends Equatable {
   final List<dynamic> Products;
   final String PersonalizedCode;
   final double TotalLiquid;
@@ -20,7 +20,7 @@ class SaleRequestPrintedProductsViewModel extends Equatable {
         Comments,
       ];
 
-  const SaleRequestPrintedProductsViewModel({
+  const PrintedProductsViewModel({
     required this.Products,
     required this.PersonalizedCode,
     required this.TotalLiquid,
@@ -28,9 +28,9 @@ class SaleRequestPrintedProductsViewModel extends Equatable {
     this.Comments,
   });
 
-  factory SaleRequestPrintedProductsViewModel.fromEntity(
+  factory PrintedProductsViewModel.fromEntity(
           PrintedProductsEntity entity) =>
-      SaleRequestPrintedProductsViewModel(
+      PrintedProductsViewModel(
         Products: entity.Products,
         PersonalizedCode: entity.PersonalizedCode,
         TotalLiquid: entity.TotalLiquid,

@@ -126,7 +126,7 @@ void main() {
 
     await sut.validateApiSaleRequest();
 
-    verify(() => navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups))
+    verify(() => navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups, clear: true))
         .called(1);
   });
 

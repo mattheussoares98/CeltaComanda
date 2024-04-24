@@ -99,6 +99,7 @@ class GetxExpansibleGroupsPresenter
   @override
   void goToSplashPage() {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
+    EnterpriseDataBuilder.enterpriseDataEntity = null;
   }
 
   @override

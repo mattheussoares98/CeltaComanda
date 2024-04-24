@@ -171,4 +171,11 @@ void main() {
 
     expect(sut.saleRequestTemp, saleRequestTempViewModel);
   });
+
+  
+  test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
+    sut.goToSplashPage();
+
+    expect(EnterpriseDataBuilder.enterpriseDataEntity, null);
+  });
 }

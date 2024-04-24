@@ -9,7 +9,7 @@
 1. ✅ Exibe os grupos expansíveis para selecionar
 2. ✅ Esconder o loading no término da consulta
 3. Exibir itens que já foram impressos
-4. Exibir itens que ainda não foram impressos
+4. ✅ Exibir itens que ainda não foram impressos
 
 # FALHA
 1. ✅ Mostra mensagem de comanda não disponível

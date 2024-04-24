@@ -5,7 +5,8 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteLoadSaleRequestPrintedProducts implements LoadSaleRequestPrintedProducts {
+class RemoteLoadSaleRequestPrintedProducts
+    implements LoadSaleRequestPrintedProducts {
   final HttpClient httpAdapter;
 
   RemoteLoadSaleRequestPrintedProducts({
@@ -26,7 +27,9 @@ class RemoteLoadSaleRequestPrintedProducts implements LoadSaleRequestPrintedProd
       );
       if (saleRequestPrintedProducts == null) throw Error();
 
-      // return SaleRequestModel.fromJson(saleRequestPrintedProducts).toEntity();
+      return SaleRequestPrintedProductsModel.fromJson(
+              saleRequestPrintedProducts)
+          .toEntity();
     } catch (error) {
       throw DomainError.commandNotAvailable;
     }

@@ -6,7 +6,6 @@ class SaleRequestPrintedProductsEntity {
   final String DateOfCreation;
   final String DateHourOfCreation;
   final String FlagStatus;
-  final String Comments;
   final int EnterpriseId;
   final dynamic RequestType;
   final bool IsCancelled;
@@ -16,6 +15,7 @@ class SaleRequestPrintedProductsEntity {
   final int SaleRequestId;
   final int FlagOrigin;
   final int DeliveryControl;
+  String? Comments;
 
   SaleRequestPrintedProductsEntity({
     required this.Products,
@@ -23,7 +23,7 @@ class SaleRequestPrintedProductsEntity {
     required this.DateOfCreation,
     required this.DateHourOfCreation,
     required this.FlagStatus,
-    required this.Comments,
+    this.Comments,
     required this.EnterpriseId,
     required this.RequestType,
     required this.IsCancelled,

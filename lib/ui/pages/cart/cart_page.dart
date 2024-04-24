@@ -16,7 +16,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> with LoadingManager {
   @override
   Widget build(BuildContext context) {
-    GetxCartPresenter cartPresenter = Provider.of(context);
+    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
@@ -28,10 +28,13 @@ class _CartPageState extends State<CartPage> with LoadingManager {
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(context, cartPresenter.isLoadingStream);
+                  handleLoading(context, presenter.isLoadingStream);
 
-                  return CartItems(
-                      productViewModel: cartPresenter.cartProducts);
+                  if (presenter.saleRequestTemp != null) {
+                    return CartItems(
+                        productViewModel: presenter.saleRequestTemp!);
+                  }
+                  return const Text("Não há dados");
                 },
               ),
             ),

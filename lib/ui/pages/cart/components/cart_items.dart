@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class CartItems extends StatelessWidget {
-  final List<ProductsViewModel> productViewModel;
+  final SaleRequestTempViewModel productViewModel;
   const CartItems({
     required this.productViewModel,
     super.key,
@@ -26,16 +26,7 @@ class CartItems extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: productViewModel.length,
-              itemBuilder: (context, index) {
-                final cartItem = productViewModel[index];
-
-                return CartItem(product: cartItem);
-              },
-            ),
+            CartItem(product: productViewModel),
             const RequestSummary(),
           ],
         ),

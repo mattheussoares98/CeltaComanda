@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
-import '../../products/components/components.dart';
 
 class CartItem extends StatelessWidget {
-  final ProductsViewModel product;
+  final SaleRequestTempViewModel product;
   const CartItem({
     required this.product,
     super.key,
@@ -25,13 +24,13 @@ class CartItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        ImageWidget(product: product),
+                        // ImageWidget(product: product),
                         Expanded(
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              product.Name,
+                              product.Products[0].Name,
                             ),
                           ),
                         ),

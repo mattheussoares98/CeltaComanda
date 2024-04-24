@@ -20,7 +20,7 @@ void main() {
     await tester.pumpWidget(
       makePage(
           path: PageRoutes.expansibleGroups,
-          page: () => ExpansibleGroupsPage(presenter)),
+          page: () => const ExpansibleGroupsPage()),
     );
   }
 

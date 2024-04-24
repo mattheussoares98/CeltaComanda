@@ -35,7 +35,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.expansibleGroups,
-      page: () => ExpansibleGroupsPage(ExpansibleGroupsPresenterSpy()),
+      page: () => const ExpansibleGroupsPage(),
     ),
     GetPage(
       name: PageRoutes.cart,

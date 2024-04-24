@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
-import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/expansible_groups/expansible_groups.dart';
@@ -56,8 +55,11 @@ class GetxExpansibleGroupsPresenter
   @override
   Future<void> getExpansibleGroups() async {
     try {
-      final expansibleGroups = await loadExpansibleGroups.load();
       isLoading = true;
+      mainError = null;
+      notifyListeners();
+
+      final expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
         _expansibleGroups.addAll(expansibleGroups
@@ -75,7 +77,6 @@ class GetxExpansibleGroupsPresenter
     } catch (e) {
       mainError = UIError.unexpected;
       isLoading = false;
-      throw DomainError.unexpected;
     } finally {
       notifyListeners();
     }
@@ -113,6 +114,7 @@ class GetxExpansibleGroupsPresenter
   @override
   Future<void> getSaleRequestTemp(String commandNumber) async {
     isLoading = true;
+    mainError = null;
     notifyListeners();
 
     try {

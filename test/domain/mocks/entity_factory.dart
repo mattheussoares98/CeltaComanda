@@ -230,10 +230,10 @@ class EntityFactory {
     );
   }
 
-  static PrintedProductsEntity makePrintedProductsEntity() {
-    return PrintedProductsEntity(
+  static PrintedEntity makePrintedProductsEntity() {
+    return PrintedEntity(
       Products: [
-        PrintedProductsProductEntity(
+        PrintedProductsEntity(
           Product: makeProducts()[0],
           ProductPriceLookUpCode: faker.randomGenerator.string(7),
           DateHourOfCreation: faker.date.dateTime().toIso8601String(),

@@ -15,7 +15,7 @@ class LoadPrintedProductsSpy extends Mock implements LoadPrintedProducts {
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockLoadPrintedProducts(PrintedProductsEntity? entity) {
+  void mockLoadPrintedProducts(PrintedEntity? entity) {
     this.mockLoadPrintedProductsCall().thenAnswer((_) async => entity);
   }
 

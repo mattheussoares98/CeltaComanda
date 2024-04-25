@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../presentation/presenters/presenters.dart';
@@ -39,7 +40,7 @@ class _PrintedProductsIconState extends State<PrintedProductsIcon> {
                 maxRadius: 9,
                 child: FittedBox(
                   child: Text(
-                    presenter.saleRequestTemp?.Products.length.toString() ??
+                    presenter.printedProducts?.Products.length.toString() ??
                         "0",
                     style: const TextStyle(color: Colors.white),
                   ),

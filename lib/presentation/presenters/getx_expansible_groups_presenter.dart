@@ -1,14 +1,13 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:clean_celta_mobile/ui/pages/printed_products/printed_products_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
+import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
+import '../../ui/pages/pages.dart';
 
 class GetxExpansibleGroupsPresenter
     with ChangeNotifier
@@ -43,9 +42,9 @@ class GetxExpansibleGroupsPresenter
 
   late final LoadExpansibleGroups loadExpansibleGroups;
 
-  PrintedProductsViewModel? _printedProducts;
+  PrintedViewModel? _printedProducts;
   @override
-  PrintedProductsViewModel? get printedProducts => _printedProducts;
+  PrintedViewModel? get printedProducts => _printedProducts;
 
   List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
@@ -172,21 +171,32 @@ class GetxExpansibleGroupsPresenter
     notifyListeners();
 
     try {
-      PrintedProductsEntity? printedProducts = await loadPrintedProducts.load(
+      PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: int.tryParse(commandNumber) ?? 0,
       );
 
       if (printedProducts != null) {
-        _printedProducts = PrintedProductsViewModel(
-          Products: printedProducts.Products,
+        _printedProducts = PrintedViewModel(
+          Products: printedProducts.Products.map(
+            (e) => PrintedProductsViewModel.fromEntity(e),
+          ).toList(),
           PersonalizedCode: printedProducts.PersonalizedCode,
-          TotalLiquid: printedProducts.TotalLiquid,
-          DeliveryControl: printedProducts.DeliveryControl,
+          DateOfCreation: printedProducts.DateOfCreation,
+          DateHourOfCreation: printedProducts.DateHourOfCreation,
+          FlagStatus: printedProducts.FlagStatus,
+          RequestType: printedProducts.RequestType,
+          EnterpriseId: printedProducts.EnterpriseId.toString(),
+          IsCancelled: printedProducts.IsCancelled.toString(),
+          IsUsing: printedProducts.IsUsing.toString(),
+          Peoples: printedProducts.Peoples.toString(),
+          SaleRequestId: printedProducts.SaleRequestId.toString(),
+          FlagOrigin: printedProducts.FlagOrigin.toString(),
+          TotalLiquid: printedProducts.TotalLiquid.toString(),
+          DeliveryControl: printedProducts.DeliveryControl.toString(),
           Comments: printedProducts.Comments,
         );
-        // debugPrint(printedProducts.toString());
       }
     } catch (error) {
       throw UIError.unexpected;

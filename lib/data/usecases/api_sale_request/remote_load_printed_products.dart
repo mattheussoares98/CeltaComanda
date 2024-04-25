@@ -1,6 +1,6 @@
 import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/entities/printed_products_entity.dart';
+import '../../../domain/entities/printed_entity.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
@@ -14,7 +14,7 @@ class RemoteLoadPrintedProducts
   });
 
   @override
-  Future<PrintedProductsEntity?> load({
+  Future<PrintedEntity?> load({
     required String url,
     required int enterpriseId,
     required int commandNumber,

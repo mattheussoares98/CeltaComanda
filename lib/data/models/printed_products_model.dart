@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
 class PrintedProductsModel {
-  final List<PrintedProductsProductEntity> Products;
+  final List<PrintedProductsEntity> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
   final String DateHourOfCreation;
@@ -51,7 +51,7 @@ class PrintedProductsModel {
     }
     return PrintedProductsModel(
       Products: (json["Products"] as List)
-          .map((e) => PrintedProductsProductEntity(
+          .map((e) => PrintedProductsEntity(
                 Product: ProductModel.fromJson(e["Product"]).toEntity(),
                 SaleRequestProductId: e["SaleRequestProductId"],
                 ProductPriceLookUpCode: e["ProductPriceLookUpCode"],
@@ -87,7 +87,7 @@ class PrintedProductsModel {
     );
   }
 
-  factory PrintedProductsModel.fromEntity(PrintedProductsEntity entity) =>
+  factory PrintedProductsModel.fromEntity(PrintedEntity entity) =>
       PrintedProductsModel(
         Products: entity.Products,
         PersonalizedCode: entity.PersonalizedCode,
@@ -106,7 +106,7 @@ class PrintedProductsModel {
         Comments: entity.Comments,
       );
 
-  PrintedProductsEntity toEntity() => PrintedProductsEntity(
+  PrintedEntity toEntity() => PrintedEntity(
         Products: Products,
         PersonalizedCode: PersonalizedCode,
         DateOfCreation: DateOfCreation,

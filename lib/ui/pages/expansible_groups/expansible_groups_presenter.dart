@@ -1,12 +1,11 @@
-import 'package:clean_celta_mobile/ui/pages/printed_products/printed_products_view_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
-import './expansible_groups.dart';
 
 abstract class ExpansibleGroupsPresenter with ChangeNotifier implements Listenable {
   List<ExpansibleGroupsViewModel> get expansibleGroups;
-  PrintedProductsViewModel? get printedProducts;
+  PrintedViewModel? get printedProducts;
   SaleRequestTempViewModel? get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;

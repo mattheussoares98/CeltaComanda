@@ -20,7 +20,7 @@ void main() {
   late List<ExpansibleGroupEntity> expansibleGroups;
   late SaleRequestTempEntity saleRequestTempEntity;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
-  late PrintedProductsEntity printedProducts;
+  late PrintedEntity printedProducts;
   late String commandNumber;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;

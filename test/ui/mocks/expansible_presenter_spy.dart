@@ -33,6 +33,9 @@ class ExpansibleGroupsPresenterSpy extends Mock
     when(() => this.goToSplashPage()).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));
+    when(() => this.goToPrintedProductsPage()).thenAnswer((_) async => Get.offNamed(
+          PageRoutes.printedProducts,
+        ));
   }
 
   void mockVerifyCommandIsAvailableError(DomainError error) {

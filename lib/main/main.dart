@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/main/factories/pages/printed_products/printed_products.dart';
 import 'package:clean_celta_mobile/main/factories/usecases/load_api_sale_request/remote_load_printed_products_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -86,6 +87,11 @@ class App extends StatelessWidget {
           GetPage(
             name: PageRoutes.productDetails,
             page: makeProductDetailsPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.printedProducts,
+            page: makePrintedProductsPage,
             transition: Transition.fadeIn,
           ),
         ],

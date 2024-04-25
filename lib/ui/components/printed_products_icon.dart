@@ -19,7 +19,7 @@ class _PrintedProductsIconState extends State<PrintedProductsIcon> {
 
     return GestureDetector(
       key: const Key("PrintedProductsIcon"),
-      onTap: presenter.goToCartPage,
+      onTap: presenter.goToPrintedProductsPage,
       child: FittedBox(
         child: Stack(
           children: [
@@ -29,7 +29,7 @@ class _PrintedProductsIconState extends State<PrintedProductsIcon> {
                 color: Colors.grey,
                 size: 28,
               ),
-              onPressed: presenter.goToCartPage,
+              onPressed: presenter.goToPrintedProductsPage,
             ),
             Positioned(
               top: 2,

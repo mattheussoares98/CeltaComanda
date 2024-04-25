@@ -51,6 +51,10 @@ Widget makePage(
       name: PageRoutes.enterpriseValidation,
       page: () => EnterpriseValidationPage(EnterpriseValidationPresenterSpy()),
     ),
+    GetPage(
+      name: PageRoutes.printedProducts,
+      page: () => PrintedProductsPage(PrintedProductsPresenterSpy()),
+    ),
   ];
 
   final index = allPages.indexWhere((element) => element.name == path);

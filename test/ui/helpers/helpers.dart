@@ -83,6 +83,7 @@ Widget makePage(
           localEnterpriseData: LocalEnterpriseDataSpy(),
           navigateTo: NavigateToSpy(),
           loadPrintedProducts: LoadPrintedProductsSpy(),
+          clearExpansibleGroups: ClearExpansibleGroupsSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(

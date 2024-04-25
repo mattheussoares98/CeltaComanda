@@ -1,8 +1,9 @@
 import '../../../domain/usecases/usecases.dart';
+import '../../../ui/pages/pages.dart';
 
 class LocalClearExpansibleGroups implements ClearExpansibleGroups {
   @override
-  List? clear() {
-    return null;
+  List<ExpansibleGroupsViewModel> clear() {
+    return [];
   }
 }

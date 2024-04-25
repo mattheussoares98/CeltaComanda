@@ -1,3 +1,5 @@
+import '../../../ui/pages/pages.dart';
+
 abstract class ClearExpansibleGroups {
-  List? clear();
+  List<ExpansibleGroupsViewModel> clear();
 }

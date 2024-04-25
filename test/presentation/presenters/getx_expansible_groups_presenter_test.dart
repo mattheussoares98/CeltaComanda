@@ -27,6 +27,7 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late NavigateToSpy navigateTo;
   late LoadPrintedProductsSpy loadPrintedProducts;
+  late ClearExpansibleGroupsSpy clearExpansibleGroups;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -37,6 +38,8 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
+    clearExpansibleGroups = ClearExpansibleGroupsSpy();
+
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     printedProducts = EntityFactory.makePrintedProductsEntity();
 
@@ -71,6 +74,7 @@ void main() {
       localEnterpriseData: localEnterpriseData,
       loadSaleRequestTemp: loadSaleRequestTemp,
       loadPrintedProducts: loadPrintedProducts,
+      clearExpansibleGroups: clearExpansibleGroups,
     );
   });
 
@@ -160,8 +164,7 @@ void main() {
     loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(
-        sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.load(commandNumber);
   });
@@ -214,9 +217,14 @@ void main() {
     loadPrintedProducts.mockError(DomainError.unexpected);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(
-        sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.load(commandNumber);
+  });
+
+  test('Should call ClearExpansibleGroups on load data', () async {
+    await sut.load(commandNumber);
+
+    verify(() => clearExpansibleGroups.clear()).called(1);
   });
 }

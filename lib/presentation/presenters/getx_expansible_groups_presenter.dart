@@ -16,6 +16,7 @@ class GetxExpansibleGroupsPresenter
   final LocalEnterpriseData localEnterpriseData;
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadPrintedProducts loadPrintedProducts;
+  final ClearExpansibleGroups clearExpansibleGroups;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
@@ -23,6 +24,7 @@ class GetxExpansibleGroupsPresenter
     required this.localEnterpriseData,
     required this.loadSaleRequestTemp,
     required this.loadPrintedProducts,
+    required this.clearExpansibleGroups,
   });
 
   final _isLoading = false.obs;
@@ -127,6 +129,7 @@ class GetxExpansibleGroupsPresenter
   Future<void> load(String commandNumber) async {
     isLoading = true;
     mainError = null;
+    _expansibleGroups = clearExpansibleGroups.clear();
     notifyListeners();
 
     try {

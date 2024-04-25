@@ -1,6 +1,6 @@
 import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/entities/sale_request_printed_products_entity.dart';
+import '../../../domain/entities/printed_products_entity.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';

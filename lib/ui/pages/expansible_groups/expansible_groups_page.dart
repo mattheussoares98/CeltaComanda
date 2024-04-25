@@ -25,7 +25,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
         title: const Text("Grupos de comida"),
-        actions: const [CartIcon()],
+        actions: const [PrintedProductsIcon(), CartIcon()],
       ),
       body: Column(
         children: [

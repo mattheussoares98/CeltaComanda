@@ -28,7 +28,6 @@ void main() {
     presenter.dispose();
   });
 
-
   //gastei muito tempo tentando arrumar esse teste. Fiz diversos testes mas
   // nenhum deu certo. No ambiente de produção está funcionando
   // testWidgets('Should handle spinner on page load', (WidgetTester tester)
@@ -83,6 +82,11 @@ void main() {
   testWidgets('Should show CartIcon on AppBar', (WidgetTester tester) async {
     await loadPage(tester);
     expect(find.byKey(const Key("CartIcon")), findsOneWidget);
+  });
+
+  testWidgets('Should show PrintedProductsIcon on AppBar', (WidgetTester tester) async {
+    await loadPage(tester);
+    expect(find.byKey(const Key("PrintedProductsIcon")), findsOneWidget);
   });
 
   testWidgets(

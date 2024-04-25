@@ -1,4 +1,4 @@
-import '../../../data/models/models.dart';
+import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/entities/printed_entity.dart';
 import '../../../domain/helpers/helpers.dart';

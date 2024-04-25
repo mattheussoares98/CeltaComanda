@@ -97,6 +97,11 @@ void main() {
     expect(find.byKey(const Key("PrintedProductsIcon")), findsOneWidget);
   });
 
+  testWidgets('Should show SearchCommandIcon on AppBar', (WidgetTester tester) async {
+    await loadPage(tester);
+    expect(find.byKey(const Key("SearchCommandIcon")), findsOneWidget);
+  });
+
   testWidgets(
       'Should present InsertCommandNumber if verify command is avaible fails',
       (WidgetTester tester) async {

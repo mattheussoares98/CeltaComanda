@@ -7,3 +7,4 @@ export './loading_image.dart';
 export './loading_dialog.dart';
 export './printed_products_icon.dart';
 export './reload_screen.dart';
+export './search_command_icon.dart';

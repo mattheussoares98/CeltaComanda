@@ -65,7 +65,7 @@ class ProductEntity {
   final String? EanCode;
   final String Name;
   final String? NameComplete;
-  final String? PameReduced;
+  final String? NameReduced;
   final String PackingAbbreviation;
 
   ProductEntity({
@@ -80,7 +80,7 @@ class ProductEntity {
     this.PersonalizedCode,
     this.EanCode,
     this.NameComplete,
-    this.PameReduced,
+    this.NameReduced,
     this.PackingQuantity,
     this.SaleRetailPrice,
     this.OfferRetailPrice,

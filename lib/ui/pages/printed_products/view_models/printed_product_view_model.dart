@@ -272,6 +272,6 @@ class PrintedProductViewModel extends Equatable {
         PersonalizedCode: entity.Product.PersonalizedCode,
         EanCode: entity.Product.EanCode,
         NameComplete: entity.Product.NameComplete,
-        PameReduced: entity.Product.PameReduced,
+        PameReduced: entity.Product.NameReduced,
       );
 }

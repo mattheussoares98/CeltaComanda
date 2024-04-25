@@ -138,14 +138,8 @@ class GetxExpansibleGroupsPresenter
 
       if (saleRequestTemp != null) {
         _saleRequestTemp = SaleRequestTempViewModel(
-          Products: saleRequestTemp.Products.map((e) => ProductsViewModel(
-                SaleRetailPraticed: e.SaleRetailPraticed.toString(),
-                PackingAbbreviation: e.PackingAbbreviation,
-                Name: e.Name,
-                EanCode: e.EanCode.toString(),
-                PriceLookupCode: e.PriceLookupCode,
-                ProductsId: e.ProductsId,
-              )).toList(),
+          Products: saleRequestTemp.Products.map(
+              (e) => ProductsViewModel.fromEntity(e)).toList(),
           PersonalizedCode: saleRequestTemp.PersonalizedCode,
           EnterpriseId: saleRequestTemp.EnterpriseId,
           TotalLiquid: saleRequestTemp.TotalLiquid,
@@ -178,25 +172,7 @@ class GetxExpansibleGroupsPresenter
       );
 
       if (printedProducts != null) {
-        _printedProducts = PrintedViewModel(
-          Products: printedProducts.Products.map(
-            (e) => PrintedProductsViewModel.fromEntity(e),
-          ).toList(),
-          PersonalizedCode: printedProducts.PersonalizedCode,
-          DateOfCreation: printedProducts.DateOfCreation,
-          DateHourOfCreation: printedProducts.DateHourOfCreation,
-          FlagStatus: printedProducts.FlagStatus,
-          RequestType: printedProducts.RequestType,
-          EnterpriseId: printedProducts.EnterpriseId.toString(),
-          IsCancelled: printedProducts.IsCancelled.toString(),
-          IsUsing: printedProducts.IsUsing.toString(),
-          Peoples: printedProducts.Peoples.toString(),
-          SaleRequestId: printedProducts.SaleRequestId.toString(),
-          FlagOrigin: printedProducts.FlagOrigin.toString(),
-          TotalLiquid: printedProducts.TotalLiquid.toString(),
-          DeliveryControl: printedProducts.DeliveryControl.toString(),
-          Comments: printedProducts.Comments,
-        );
+        _printedProducts = PrintedViewModel.fromEntity(printedProducts);
       }
     } catch (error) {
       throw UIError.unexpected;

@@ -277,7 +277,7 @@ class ProductModel {
       PersonalizedCode: entity.PersonalizedCode,
       EanCode: entity.EanCode,
       NameComplete: entity.NameComplete,
-      NameReduced: entity.PameReduced,
+      NameReduced: entity.NameReduced,
     );
   }
 
@@ -359,7 +359,7 @@ class ProductModel {
         EanCode: EanCode,
         Name: Name,
         NameComplete: NameComplete,
-        PameReduced: NameReduced,
+        NameReduced: NameReduced,
         PackingAbbreviation: PackingAbbreviation,
         PackingQuantity: PackingQuantity,
         SaleRetailPrice: SaleRetailPrice,

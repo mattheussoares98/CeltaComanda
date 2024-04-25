@@ -41,7 +41,7 @@ class GetxProductsPresenter extends GetxController
                   Name: e.Name,
                   EanCode: e.EanCode ?? "",
                   PriceLookupCode: e.PriceLookupCode,
-                  ProductsId: e.ProductsId,
+                  ProductsId: e.ProductsId.toString(),
                 ))
             .toList();
       }

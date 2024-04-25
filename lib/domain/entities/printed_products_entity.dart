@@ -1,7 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
+import '../../domain/entities/entities.dart';
+
 class PrintedProductsEntity {
-  final List<dynamic> Products;
+  final List<PrintedProductsProductEntity> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
   final String DateHourOfCreation;

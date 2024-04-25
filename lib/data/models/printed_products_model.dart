@@ -1,9 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:clean_celta_mobile/data/models/models.dart';
+
 import '../../domain/entities/entities.dart';
 
 class PrintedProductsModel {
-  final List<dynamic> Products;
+  final List<PrintedProductsProductEntity> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
   final String DateHourOfCreation;
@@ -48,7 +50,26 @@ class PrintedProductsModel {
       throw Exception();
     }
     return PrintedProductsModel(
-      Products: json["Products"],
+      Products: (json["Products"] as List)
+          .map((e) => PrintedProductsProductEntity(
+                Product: ProductModel.fromJson(e["Product"]).toEntity(),
+                SaleRequestProductId: e["SaleRequestProductId"],
+                ProductPriceLookUpCode: e["ProductPriceLookUpCode"],
+                Value: e["Value"],
+                Quantity: e["Quantity"],
+                QuantityString: e["QuantityString"],
+                Comments: e["Comments"],
+                UserId: e["UserId"],
+                DateHourOfCreation: e["DateHourOfCreation"],
+                IsCancelled: e["IsCancelled"],
+                IsDelivered: e["IsDelivered"],
+                IsPrinted: e["IsPrinted"],
+                ProductionStatus: e["ProductionStatus"],
+                TotalLiquid: e["TotalLiquid"],
+                ProductInternalCodeOnErp: e["ProductInternalCodeOnErp"],
+                SaleRequestId: e["SaleRequestId"],
+              ))
+          .toList(),
       PersonalizedCode: json["PersonalizedCode"],
       DateOfCreation: json["DateOfCreation"],
       DateHourOfCreation: json["DateHourOfCreation"],
@@ -66,8 +87,7 @@ class PrintedProductsModel {
     );
   }
 
-  factory PrintedProductsModel.fromEntity(
-          PrintedProductsEntity entity) =>
+  factory PrintedProductsModel.fromEntity(PrintedProductsEntity entity) =>
       PrintedProductsModel(
         Products: entity.Products,
         PersonalizedCode: entity.PersonalizedCode,
@@ -86,8 +106,7 @@ class PrintedProductsModel {
         Comments: entity.Comments,
       );
 
-  PrintedProductsEntity toEntity() =>
-      PrintedProductsEntity(
+  PrintedProductsEntity toEntity() => PrintedProductsEntity(
         Products: Products,
         PersonalizedCode: PersonalizedCode,
         DateOfCreation: DateOfCreation,

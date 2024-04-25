@@ -14,6 +14,7 @@ void showDialogSearchCommandNumber({
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog(
+          key: const Key("AlertDialogSearchCommand"),
           content: Form(
             key: formKey,
             // autovalidateMode: AutovalidateMode.onUserInteraction,

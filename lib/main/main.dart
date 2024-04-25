@@ -1,5 +1,3 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-import 'package:clean_celta_mobile/main/factories/pages/printed_products/printed_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,12 +6,13 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import '../firebase_options.dart';
 
+import '../../main/builders/builders.dart';
 import '../infra/helpers/helperts.dart';
 import '../presentation/presenters/presenters.dart';
 import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
+import '../firebase_options.dart';
 import './factories/factories.dart';
 
 void main() async {

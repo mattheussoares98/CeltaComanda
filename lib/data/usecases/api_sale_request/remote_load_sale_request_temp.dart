@@ -27,7 +27,7 @@ class RemoteLoadSaleRequestTemp implements LoadSaleRequestTemp {
 
       return SaleRequestModel.fromJson(saleRequestTemp).toEntity();
     } catch (error) {
-      throw DomainError.commandNotAvailable;
+      throw DomainError.unexpected;
     }
   }
 }

@@ -85,6 +85,7 @@ Widget makePage(
           loadPrintedProducts: LoadPrintedProductsSpy(),
           clearExpansibleGroups: ClearExpansibleGroupsSpy(),
           clearPrintedProducts: ClearPrintedProductsSpy(),
+          clearSaleRequestTemp: ClearSaleRequestTempSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(

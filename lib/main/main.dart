@@ -48,6 +48,7 @@ class App extends StatelessWidget {
             loadPrintedProducts: makeRemoteLoadPrintedProducts(),
             clearExpansibleGroups: makeLocalClearExpansibleGroups(),
             clearPrintedProducts: makeLocalClearPrintedProducts(),
+            clearSaleRequestTemp: makeLocalClearSaleRequestTemp(),
           ),
         ),
       ],

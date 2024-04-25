@@ -1,10 +1,10 @@
 import 'package:clean_celta_mobile/data/models/expansible_groups_model.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 
-import '../../../../data/http/http.dart';
-import '../../../../domain/entities/entities.dart';
-import '../../../../domain/helpers/helpers.dart';
-import '../../../../domain/usecases/usecases.dart';
+import '../../http/http.dart';
+import '../../../domain/entities/entities.dart';
+import '../../../domain/helpers/helpers.dart';
+import '../../../domain/usecases/usecases.dart';
 
 class RemoteLoadExpansibleGroups implements LoadExpansibleGroups {
   final HttpClient httpAdapter;

@@ -4,10 +4,10 @@ import '../../../../ui/pages/pages.dart';
 
 ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
     GetxExpansibleGroupsPresenter(
-      loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
-      navigateTo: makeNavigateTo(),
-      localEnterpriseData: makeLocalEnterpriseData(),
-      loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
-      loadPrintedProducts: makeRemoteLoadPrintedProducts(),
-      clearExpansibleGroups: makeLocalClearExpansibleGroups(),
-    );
+        loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
+        navigateTo: makeNavigateTo(),
+        localEnterpriseData: makeLocalEnterpriseData(),
+        loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+        loadPrintedProducts: makeRemoteLoadPrintedProducts(),
+        clearExpansibleGroups: makeLocalClearExpansibleGroups(),
+        clearPrintedProducts: makeLocalClearPrintedProducts());

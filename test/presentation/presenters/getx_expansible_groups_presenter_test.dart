@@ -28,6 +28,7 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late ClearExpansibleGroupsSpy clearExpansibleGroups;
+  late ClearPrintedProductsSpy clearPrintedProducts;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -39,6 +40,7 @@ void main() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     clearExpansibleGroups = ClearExpansibleGroupsSpy();
+    clearPrintedProducts = ClearPrintedProductsSpy();
 
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     printedProducts = EntityFactory.makePrintedProductsEntity();
@@ -75,6 +77,7 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       loadPrintedProducts: loadPrintedProducts,
       clearExpansibleGroups: clearExpansibleGroups,
+      clearPrintedProducts: clearPrintedProducts,
     );
   });
 
@@ -226,5 +229,11 @@ void main() {
     await sut.load(commandNumber);
 
     verify(() => clearExpansibleGroups.clear()).called(1);
+  });
+
+  test('Should call ClearPrintedProducts on load data', () async {
+    await sut.load(commandNumber);
+
+    verify(() => clearPrintedProducts.clear()).called(1);
   });
 }

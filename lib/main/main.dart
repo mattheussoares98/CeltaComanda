@@ -47,6 +47,7 @@ class App extends StatelessWidget {
             navigateTo: makeNavigateTo(),
             loadPrintedProducts: makeRemoteLoadPrintedProducts(),
             clearExpansibleGroups: makeLocalClearExpansibleGroups(),
+            clearPrintedProducts: makeLocalClearPrintedProducts(),
           ),
         ),
       ],

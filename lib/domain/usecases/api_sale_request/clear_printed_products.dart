@@ -1,5 +1,5 @@
-import '../../entities/entities.dart';
+import '../../../ui/pages/pages.dart';
 
 abstract class ClearPrintedProducts {
-  PrintedEntity? clear();
+  PrintedViewModel? clear();
 }

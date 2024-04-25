@@ -17,6 +17,7 @@ class GetxExpansibleGroupsPresenter
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadPrintedProducts loadPrintedProducts;
   final ClearExpansibleGroups clearExpansibleGroups;
+  final ClearPrintedProducts clearPrintedProducts;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
@@ -25,6 +26,7 @@ class GetxExpansibleGroupsPresenter
     required this.loadSaleRequestTemp,
     required this.loadPrintedProducts,
     required this.clearExpansibleGroups,
+    required this.clearPrintedProducts,
   });
 
   final _isLoading = false.obs;
@@ -130,6 +132,7 @@ class GetxExpansibleGroupsPresenter
     isLoading = true;
     mainError = null;
     _expansibleGroups = clearExpansibleGroups.clear();
+    _printedProducts = clearPrintedProducts.clear();
     notifyListeners();
 
     try {

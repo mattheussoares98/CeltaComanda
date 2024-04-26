@@ -62,7 +62,7 @@ class PrintedViewModel extends Equatable {
         FlagStatus: entity.FlagStatus,
         RequestType: entity.RequestType,
         EnterpriseId: entity.EnterpriseId.toString(),
-        TotalLiquid: entity.TotalLiquid.toString(),
+        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2),
         DeliveryControl: entity.DeliveryControl.toString(),
         IsCancelled: entity.IsCancelled.toString(),
         IsUsing: entity.IsUsing.toString(),

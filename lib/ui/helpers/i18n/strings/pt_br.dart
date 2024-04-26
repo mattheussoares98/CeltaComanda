@@ -17,6 +17,7 @@ class PtBr implements Translation {
   String get confirmPassword => 'Confirmar senha';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
+  String get invalidCredentials => 'Credenciais inválidas';
   String get login => 'Login';
   String get name => 'Nome';
   String get password => 'Senha';

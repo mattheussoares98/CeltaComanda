@@ -1,6 +1,7 @@
 enum DomainError {
-  unexpected,
-  enterpriseOrUrlNotFound,
-  commandNotAvailable,
   accessDenied,
+  commandNotAvailable,
+  enterpriseOrUrlNotFound,
+  invalidCredentials,
+  unexpected,
 }

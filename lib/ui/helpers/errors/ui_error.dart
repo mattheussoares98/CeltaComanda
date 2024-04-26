@@ -1,15 +1,15 @@
 import '../helpers.dart';
 
 enum UIError {
+  accessDenied,
+  commandNotAvailable,
   emailInUse,
   enterpriseOrUrlNotFound,
-  invalidField,
   invalidCredentials,
+  invalidField,
   requiredField,
-  unexpected,
   shortField,
-  commandNotAvailable,
-  accessDenied,
+  unexpected,
 }
 
 extension UIErrorExtension on UIError {

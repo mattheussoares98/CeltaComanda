@@ -6,6 +6,7 @@ abstract class Translation {
   String get msgVeryShortField;
   String get msgUnexpectedError;
 
+  String get accessDenied;
   String get addAccount;
   String get commandNotAvailable;
   String get confirmPassword;

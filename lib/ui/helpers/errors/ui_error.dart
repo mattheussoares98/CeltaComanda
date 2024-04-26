@@ -9,6 +9,7 @@ enum UIError {
   unexpected,
   shortField,
   commandNotAvailable,
+  accessDenied,
 }
 
 extension UIErrorExtension on UIError {
@@ -28,6 +29,8 @@ extension UIErrorExtension on UIError {
         return R.string.enterpriseOrUrlNotFound;
       case UIError.commandNotAvailable:
         return R.string.commandNotAvailable;
+      case UIError.accessDenied:
+        return R.string.accessDenied;
       default:
         return R.string.msgUnexpectedError;
     }

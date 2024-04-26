@@ -11,6 +11,7 @@ class PtBr implements Translation {
       'Algo errado aconteceu. Tente novamente em breve.';
   String get msgVeryShortField => 'Campo muito curto';
 
+  String get accessDenied => 'O usuário não possui permissão';
   String get addAccount => 'Criar conta';
   String get commandNotAvailable => "Comanda não disponível";
   String get confirmPassword => 'Confirmar senha';

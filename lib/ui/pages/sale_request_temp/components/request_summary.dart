@@ -11,13 +11,13 @@ class RequestSummary extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Order Summary',
-          ),
           const Divider(
             height: 32,
             thickness: 2,
             color: Color(0xFFE0E3E7),
+          ),
+          const Text(
+            'Order Summary',
           ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),

@@ -17,7 +17,7 @@ class GetxPrintedProductsPresenter extends GetxController
   });
 
   @override
-  Future<bool> userCanCancel({
+  Future<bool> isValidPasswordAndCanCancel({
     required int personalizedCode,
     required String password,
   }) async {

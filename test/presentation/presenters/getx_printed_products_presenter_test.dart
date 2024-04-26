@@ -27,9 +27,85 @@ void main() {
     );
   });
 
-  group("User can cancel", () {
+  group("Validate password", () {
+    test('Should call isValidPassword with correct values', () async {
+      await sut.isValidPasswordAndCanCancel(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      verify(
+        () => userValidations.isValidPassword(
+          password: password,
+          personalizedCode: personalizedCode,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        ),
+      ).called(1);
+    });
+
+    test('Should return true on password is valid', () async {
+      final validPassword = await sut.isValidPasswordAndCanCancel(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(validPassword, true);
+    });
+
+    test('Should show invalidCredentials UIError on invalid credential', () async {
+      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+
+      await sut.isValidPasswordAndCanCancel(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+    });
+
+    test('Should show accessDenied UIError on user dont have permission',
+        () async {
+      userValidations.mockIsValidPasswordError(DomainError.accessDenied);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+
+      await sut.isValidPasswordAndCanCancel(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+    });
+
+    test('Should show unexpected UIError on unexpected error', () async {
+      userValidations.mockIsValidPasswordError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.isValidPasswordAndCanCancel(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+    });
+
+    test('Should return false invalid password', () async {
+      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
+
+      final validPassword = await sut.isValidPasswordAndCanCancel(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(validPassword, false);
+    });
+  });
+  group("Verify user can cancel", () {
     test('Should call userCanCancel with correct values', () async {
-      await sut.userCanCancel(
+      await sut.isValidPasswordAndCanCancel(
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -43,7 +119,7 @@ void main() {
     });
 
     test('Should return true on user can cancel', () async {
-      final canCancel = await sut.userCanCancel(
+      final canCancel = await sut.isValidPasswordAndCanCancel(
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -58,7 +134,7 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
 
-      await sut.userCanCancel(
+      await sut.isValidPasswordAndCanCancel(
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -72,7 +148,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
 
-      await sut.userCanCancel(
+      await sut.isValidPasswordAndCanCancel(
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -85,7 +161,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.userCanCancel(
+      await sut.isValidPasswordAndCanCancel(
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -94,7 +170,7 @@ void main() {
     test('Should return false on user cant cancel', () async {
       userValidations.mockCanCancelError(DomainError.invalidCredentials);
 
-      final canCancel = await sut.userCanCancel(
+      final canCancel = await sut.isValidPasswordAndCanCancel(
         personalizedCode: personalizedCode,
         password: password,
       );

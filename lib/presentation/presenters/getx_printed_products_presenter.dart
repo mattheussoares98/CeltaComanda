@@ -11,10 +11,8 @@ class GetxPrintedProductsPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements PrintedProductsPresenter {
   final UserValidations userValidations;
-  final NavigateTo navigateTo;
 
   GetxPrintedProductsPresenter({
-    required this.navigateTo,
     required this.userValidations,
   });
 
@@ -51,10 +49,10 @@ class GetxPrintedProductsPresenter extends GetxController
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.invalidCredentials:
-          mainError = UIError.enterpriseOrUrlNotFound;
+          mainError = UIError.invalidCredentials;
           break;
         case DomainError.accessDenied:
-          mainError = UIError.commandNotAvailable;
+          mainError = UIError.accessDenied;
           break;
         default:
           mainError = UIError.unexpected;

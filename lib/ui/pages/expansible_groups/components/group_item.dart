@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 
 import '../../../../presentation/presenters/presenters.dart';
 import '../../expansible_groups/expansible_groups.dart';
@@ -14,15 +13,16 @@ class GroupItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
-    final color = Color.fromRGBO(
-      random.nextInt(256),
-      random.nextInt(256),
-      random.nextInt(256),
-      1,
-    );
+    // final random = Random();
+    // final color = Color.fromRGBO(
+    //   random.nextInt(256),
+    //   random.nextInt(256),
+    //   random.nextInt(256),
+    //   1,
+    // );
 
-    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context, listen: false);
+    final presenter =
+        Provider.of<GetxExpansibleGroupsPresenter>(context, listen: false);
 
     return GestureDetector(
       onTap: () {
@@ -31,7 +31,10 @@ class GroupItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(8),
         height: 100,
-        color: color,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).colorScheme.primary,
+        ),
         child: Center(
           child: Text(
             expansibleGroupsViewModel.Name,

@@ -6,21 +6,16 @@ class RequestSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Divider(
-            height: 32,
-            thickness: 2,
-            color: Color(0xFFE0E3E7),
-          ),
           const Text(
             'Order Summary',
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,

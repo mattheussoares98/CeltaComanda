@@ -203,23 +203,55 @@ class ProductsViewModel extends Equatable {
 
   factory ProductsViewModel.fromEntity(ProductEntity entity) =>
       ProductsViewModel(
+        PriceLookupCode: entity.PriceLookupCode,
+        Name: entity.Name,
+        PackingAbbreviation: entity.PackingAbbreviation,
+        CFOP: entity.CFOP,
+        FiscalClassificationNCM: entity.FiscalClassificationNCM,
+        TributarySituationCode: entity.TributarySituationCode,
+        CSTPisCofins: entity.CSTPisCofins,
+        CodeClass: entity.CodeClass,
+        DepartmentName: entity.DepartmentName,
+        SectionName: entity.SectionName,
+        DateOfLastChanged: entity.DateOfLastChanged,
+        GroupName: entity.GroupName,
+        SaleRetailPraticedString: entity.SaleRetailPraticedString,
+        PersonalizedCode: entity.PersonalizedCode,
+        EanCode: entity.EanCode,
+        NameComplete: entity.NameComplete,
+        NameReduced: entity.NameReduced,
         ProductsId: entity.ProductsId.toString(),
+        SaleRetailPrice: entity.SaleRetailPrice?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        SaleRetailPraticed: entity.SaleRetailPraticed.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
         InternalCodeOnERP: entity.InternalCodeOnERP.toString(),
         InternalCodeOfProductOnERP:
             entity.InternalCodeOfProductOnERP.toString(),
         EenterpriseId: entity.EenterpriseId.toString(),
         PackingQuantity: entity.PackingQuantity.toString(),
-        OfferRetailPrice: entity.OfferRetailPrice.toString(),
-        WholeSalePrice: entity.WholeSalePrice.toString(),
-        WholeOfferPrice: entity.WholeOfferPrice.toString(),
-        OfferECommercePrice: entity.OfferECommercePrice.toString(),
-        SaleECommercePrice: entity.SaleECommercePrice.toString(),
-        LiquidCost: entity.LiquidCost.toString(),
-        LiquidCostMiddle: entity.LiquidCostMiddle.toString(),
-        LiquidCostReal: entity.LiquidCostReal.toString(),
-        RepositionCost: entity.RepositionCost.toString(),
-        RepositionCostMiddle: entity.RepositionCostMiddle.toString(),
-        RepositionCostReal: entity.RepositionCostReal.toString(),
+        OfferRetailPrice: entity.OfferRetailPrice?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        WholeSalePrice: entity.WholeSalePrice?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        WholeOfferPrice: entity.WholeOfferPrice?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        OfferECommercePrice: entity.OfferECommercePrice?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        SaleECommercePrice: entity.SaleECommercePrice?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        LiquidCost: entity.LiquidCost?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        LiquidCostMiddle: entity.LiquidCostMiddle?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        LiquidCostReal: entity.LiquidCostReal?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        RepositionCost: entity.RepositionCost?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        RepositionCostMiddle: entity.RepositionCostMiddle?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        RepositionCostReal: entity.RepositionCostReal?.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
         IcmsAliquot: entity.IcmsAliquot.toString(),
         IcmsIVAMargin: entity.IcmsIVAMargin.toString(),
         IcmsReductionMargin: entity.IcmsReductionMargin.toString(),
@@ -247,27 +279,8 @@ class ProductsViewModel extends Equatable {
         AllowQuantityInPdv: entity.AllowQuantityInPdv.toString(),
         GoesForFastTable: entity.GoesForFastTable.toString(),
         IsAlcoholicProduct: entity.IsAlcoholicProduct.toString(),
-        SaleRetailPrice: entity.SaleRetailPrice.toString(),
         PercImpNBPTNational: entity.PercImpNBPTNational.toString(),
-        SaleRetailPraticed: entity.SaleRetailPraticed.toString(),
         CofinsPercentage: entity.CofinsPercentage.toString(),
         PisPercentage: entity.PisPercentage.toString(),
-        CFOP: entity.CFOP,
-        FiscalClassificationNCM: entity.FiscalClassificationNCM,
-        TributarySituationCode: entity.TributarySituationCode,
-        CSTPisCofins: entity.CSTPisCofins,
-        CodeClass: entity.CodeClass,
-        DepartmentName: entity.DepartmentName,
-        SectionName: entity.SectionName,
-        DateOfLastChanged: entity.DateOfLastChanged,
-        GroupName: entity.GroupName,
-        SaleRetailPraticedString: entity.SaleRetailPraticedString,
-        PriceLookupCode: entity.PriceLookupCode,
-        PersonalizedCode: entity.PersonalizedCode,
-        EanCode: entity.EanCode,
-        Name: entity.Name,
-        NameComplete: entity.NameComplete,
-        NameReduced: entity.NameReduced,
-        PackingAbbreviation: entity.PackingAbbreviation,
       );
 }

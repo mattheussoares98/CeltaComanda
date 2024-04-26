@@ -240,9 +240,9 @@ class EntityFactory {
               ))
           .toList(),
       PersonalizedCode: faker.randomGenerator.string(10),
-      EnterpriseId: faker.randomGenerator.integer(3),
-      DeliveryControl: faker.randomGenerator.integer(3),
-      TotalLiquid: faker.randomGenerator.decimal(min: 0.01),
+      EnterpriseId: faker.randomGenerator.integer(3).toString(),
+      DeliveryControl: faker.randomGenerator.integer(3).toString(),
+      TotalLiquid: faker.randomGenerator.decimal(min: 0.01).toString(),
     );
   }
 

@@ -33,7 +33,17 @@ class ProductsItems extends StatelessWidget {
               itemBuilder: (context, index) {
                 final cartItem = productViewModel.Products[index];
 
-                return ProductItem(product: cartItem);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ProductItem(
+                      product: cartItem,
+                      comments: productViewModel.Comments,
+                      quantity: "xx",
+                      totalLiquid: productViewModel.TotalLiquid,
+                    ),
+                  ],
+                );
               },
             ),
             const RequestSummary(),

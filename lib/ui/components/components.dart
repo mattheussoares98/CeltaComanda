@@ -9,4 +9,3 @@ export './printed_products_icon.dart';
 export './product_details.dart';
 export './reload_screen.dart';
 export './search_command_icon.dart';
-export './update_product_quantity.dart';

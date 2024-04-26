@@ -75,12 +75,7 @@ class GetxExpansibleGroupsPresenter
 
       if (expansibleGroups != null) {
         _expansibleGroups.addAll(expansibleGroups
-            .map((e) => ExpansibleGroupsViewModel(
-                  Name: e.Name,
-                  ExpansibleGroupId: e.ExpansibleGroupId,
-                  ExpansibleGroupType: e.ExpansibleGroupType,
-                  OrderClassification: e.OrderClassification,
-                ))
+            .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
             .toList());
       }
 
@@ -146,15 +141,7 @@ class GetxExpansibleGroupsPresenter
       );
 
       if (saleRequestTemp != null) {
-        _saleRequestTemp = SaleRequestTempViewModel(
-          Products: saleRequestTemp.Products.map(
-              (e) => ProductsViewModel.fromEntity(e)).toList(),
-          PersonalizedCode: saleRequestTemp.PersonalizedCode,
-          EnterpriseId: saleRequestTemp.EnterpriseId,
-          TotalLiquid: saleRequestTemp.TotalLiquid,
-          DeliveryControl: saleRequestTemp.DeliveryControl,
-          Comments: saleRequestTemp.Comments,
-        );
+        _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
 
         await getExpansibleGroups();
         await getPrintedProducts(commandNumber);

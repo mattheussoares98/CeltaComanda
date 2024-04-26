@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../domain/entities/entities.dart';
 
 class PrintedProductsViewModel extends Equatable {
-  final PrintedProductViewModel Products;
+  final ProductsViewModel Products;
   final String SaleRequestProductId;
   final String ProductPriceLookUpCode;
   final String Value;
@@ -47,15 +47,17 @@ class PrintedProductsViewModel extends Equatable {
 
   factory PrintedProductsViewModel.fromEntity(PrintedProductsEntity entity) =>
       PrintedProductsViewModel(
-        Products: PrintedProductViewModel.fromEntity(entity),
+        Products: ProductsViewModel.fromEntity(entity.Product),
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
         QuantityString: entity.QuantityString,
         Comments: entity.Comments,
         DateHourOfCreation: entity.DateHourOfCreation,
         SaleRequestProductId: entity.SaleRequestProductId.toString(),
         Value: entity.Value.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
-        Quantity: entity.Quantity.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
-        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
+        Quantity:
+            entity.Quantity.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
+        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
         UserId: entity.UserId.toString(),
         IsCancelled: entity.IsCancelled.toString(),
         IsDelivered: entity.IsDelivered.toString(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
+import '../../sale_request_temp/components/request_summary.dart';
 
 class PrintedProduct extends StatelessWidget {
   final PrintedViewModel printed;
@@ -39,15 +40,8 @@ class PrintedProduct extends StatelessWidget {
                     PrintedProductItem(
                       product: product.Products,
                       quantity: product.Quantity,
-                    ),
-                    if (product.Comments != null)
-                      Text("Comments ${product.Comments}"),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text("Preço ${product.Value} R\$"),
-                        Text("Total ${product.TotalLiquid} R\$"),
-                      ],
+                      comments: product.Comments,
+                      totalLiquid: product.TotalLiquid,
                     ),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -72,14 +66,15 @@ class PrintedProduct extends StatelessWidget {
                 );
               },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text("Total: ${printed.TotalLiquid} R\$"),
-              ],
-            ),
-            Text("Comments: ${printed.Comments}"),
-            Text("Comanda: ${printed.PersonalizedCode}"),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     Text("Total: ${printed.TotalLiquid} R\$"),
+            //   ],
+            // ),
+            // Text("Comments: ${printed.Comments}"),
+            // Text("Comanda: ${printed.PersonalizedCode}"),
+            const RequestSummary(),
             // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
             // Text("DateOfCreation: ${printed.DateOfCreation}"),
             // Text("DeliveryControl: ${printed.DeliveryControl}"),

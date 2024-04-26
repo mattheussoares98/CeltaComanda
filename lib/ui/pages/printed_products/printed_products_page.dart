@@ -6,7 +6,6 @@ import '../../../presentation/presenters/presenters.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
-
 class PrintedProductsPage extends StatefulWidget {
   const PrintedProductsPage({super.key});
 
@@ -42,7 +41,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               ),
             ),
           ),
-          const SaveSaleRequestButton(),
         ],
       ),
     );

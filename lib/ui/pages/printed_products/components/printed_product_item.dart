@@ -4,11 +4,15 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class PrintedProductItem extends StatelessWidget {
-  final PrintedProductViewModel product;
+  final ProductsViewModel product;
   final String quantity;
+  final String totalLiquid;
+  final String? comments;
   const PrintedProductItem({
     required this.product,
     required this.quantity,
+    required this.totalLiquid,
+    required this.comments,
     super.key,
   });
 
@@ -22,12 +26,13 @@ class PrintedProductItem extends StatelessWidget {
           name: product.Name,
           eanCode: product.EanCode,
           plu: product.PriceLookupCode,
-        ),
-
-        UpdateProductQuantity(
+          comments: comments,
+          saleRetailPraticed: product.SaleRetailPraticed,
+          totalLiquid: totalLiquid,
           quantity: quantity,
           onPressedAddQuantity: () {},
           onPressedReduceQuantity: () {},
+          isPrintedProducts: true,
         ),
       ],
     );

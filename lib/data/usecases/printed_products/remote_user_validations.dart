@@ -2,11 +2,10 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class UserValidations
-    implements ValidateUserPassword, VerifyCancelPermission {
+class RemoteUserValidations implements UserValidations {
   final HttpClient httpAdapter;
 
-  UserValidations({required this.httpAdapter});
+  RemoteUserValidations({required this.httpAdapter});
 
   @override
   Future<bool> isValidPassword({
@@ -22,8 +21,6 @@ class UserValidations
       );
       if (isValidPassword == null) {
         throw Error();
-      } else if (!isValidPassword) {
-        throw DomainError.invalidCredentials;
       }
 
       return isValidPassword;
@@ -43,8 +40,6 @@ class UserValidations
       );
       if (canCancel == null) {
         throw Error();
-      } else if (!canCancel) {
-        throw DomainError.accessDenied;
       }
 
       return canCancel;

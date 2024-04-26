@@ -7,4 +7,6 @@ abstract class PrintedProductsPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
 
   Future<bool> isValidPasswordAndCanCancel({required int personalizedCode, required String password});
+
+  Future<void> removeProduct();
 }

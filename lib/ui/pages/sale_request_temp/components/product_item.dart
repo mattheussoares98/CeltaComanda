@@ -33,6 +33,7 @@ class ProductItem extends StatelessWidget {
           onPressedAddQuantity: () {},
           onPressedReduceQuantity: () {},
           isPrintedProducts: false,
+          onPressedRemoveProduct: null,
         ),
       ],
     );

@@ -12,6 +12,7 @@ class ProductDetails extends StatelessWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
   final bool isPrintedProducts;
+  final void Function()? onPressedRemoveProduct;
 
   const ProductDetails({
     required this.nameComplete,
@@ -25,6 +26,7 @@ class ProductDetails extends StatelessWidget {
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
     required this.isPrintedProducts,
+    required this.onPressedRemoveProduct,
     super.key,
   });
 
@@ -76,7 +78,7 @@ class ProductDetails extends StatelessWidget {
                           color: Colors.red,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: onPressedRemoveProduct,
                       icon: const Icon(
                         Icons.delete,
                         color: Colors.red,

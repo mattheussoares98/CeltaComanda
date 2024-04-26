@@ -53,7 +53,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.printedProducts,
-      page: () => const PrintedProductsPage(),
+      page: () => PrintedProductsPage(presenter: PrintedProductsPresenterSpy()),
     ),
   ];
 

@@ -7,7 +7,11 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class PrintedProductsPage extends StatefulWidget {
-  const PrintedProductsPage({super.key});
+  final PrintedProductsPresenter presenter;
+  const PrintedProductsPage({
+    required this.presenter,
+    super.key,
+  });
 
   @override
   State<PrintedProductsPage> createState() => _PrintedProductsPageState();
@@ -17,7 +21,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     with LoadingManager {
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context);
+    final expansibleGroupsPresenter = Provider.of<GetxExpansibleGroupsPresenter>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
@@ -29,11 +33,14 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(context, presenter.isLoadingStream);
+                  handleLoading(context, expansibleGroupsPresenter.isLoadingStream);
 
-                  if (presenter.printedProducts != null) {
-                    return PrintedProduct(
-                      printed: presenter.printedProducts!,
+                  if (expansibleGroupsPresenter.printedProducts != null) {
+                    return ListenableProvider(
+                      create: (_) => widget.presenter,
+                      child: PrintedProduct(
+                        printed: expansibleGroupsPresenter.printedProducts!,
+                      ),
                     );
                   }
                   return const Text("Não há dados");

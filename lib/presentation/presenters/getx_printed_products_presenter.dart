@@ -63,4 +63,7 @@ class GetxPrintedProductsPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> removeProduct() async {}
 }

@@ -43,9 +43,14 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       printed: printedProductsPresenter.printedProducts!,
                     );
                   }
-                  return InsertCommandNumber(
-                    presenter: expansibleGroupsPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
+                  return Column(
+                    children: [
+                      const Text("Não foram encontrados produtos impressos"),
+                      SearchDataByCommandNumber(
+                        expansibleGroupsPresenter: expansibleGroupsPresenter,
+                        printedProductsPresenter: printedProductsPresenter,
+                      ),
+                    ],
                   );
                 },
               ),

@@ -37,8 +37,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   handleMainError(context, presenter.mainErrorStream);
 
                   if (presenter.expansibleGroups.isEmpty) {
-                    return InsertCommandNumber(
-                      presenter: presenter,
+                    return SearchDataByCommandNumber(
+                      expansibleGroupsPresenter: presenter,
                       printedProductsPresenter: printedProductsPresenter,
                     );
                   }

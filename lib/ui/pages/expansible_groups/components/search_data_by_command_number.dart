@@ -1,11 +1,11 @@
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
-class InsertCommandNumber extends StatelessWidget {
-  final ExpansibleGroupsPresenter presenter;
+class SearchDataByCommandNumber extends StatelessWidget {
+  final ExpansibleGroupsPresenter expansibleGroupsPresenter;
   final PrintedProductsPresenter printedProductsPresenter;
-  const InsertCommandNumber({
-    required this.presenter,
+  const SearchDataByCommandNumber({
+    required this.expansibleGroupsPresenter,
     required this.printedProductsPresenter,
     super.key,
   });
@@ -24,12 +24,12 @@ class InsertCommandNumber extends StatelessWidget {
           onPressed: () {
             showDialogSearchCommandNumber(
               context: context,
-              presenter: presenter,
+              presenter: expansibleGroupsPresenter,
               printedProductsPresenter: printedProductsPresenter,
             );
           },
           child: const Text(
-            "Informe o número da comanda",
+            "Consultar dados",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 25,

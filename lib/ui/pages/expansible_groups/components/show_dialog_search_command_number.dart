@@ -37,7 +37,14 @@ void showDialogSearchCommandNumber({
               keyboardType: TextInputType.number,
             ),
           ),
-          title: const Text("Consultar dados da comanda"),
+          title: const Text(
+            "Número da comanda",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () async {

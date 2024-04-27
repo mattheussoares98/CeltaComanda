@@ -23,7 +23,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
-    GetxPrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
@@ -35,22 +36,19 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(context, printedProductsPresenter.isLoadingStream);
-                  handleMainError(context, printedProductsPresenter.mainErrorStream);
+                  handleLoading(
+                      context, printedProductsPresenter.isLoadingStream);
+                  handleMainError(
+                      context, printedProductsPresenter.mainErrorStream);
 
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedProduct(
                       printed: printedProductsPresenter.printedProducts!,
                     );
                   }
-                  return Column(
-                    children: [
-                      const Text("Não foram encontrados produtos impressos"),
-                      SearchDataByCommandNumber(
-                        expansibleGroupsPresenter: expansibleGroupsPresenter,
-                        printedProductsPresenter: printedProductsPresenter,
-                      ),
-                    ],
+                  return SearchDataByCommandNumber(
+                    expansibleGroupsPresenter: expansibleGroupsPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
                   );
                 },
               ),

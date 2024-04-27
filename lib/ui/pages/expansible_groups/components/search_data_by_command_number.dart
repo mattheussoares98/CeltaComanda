@@ -20,7 +20,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
     return SizedBox(
       height: usableScreenHeight,
       child: Center(
-        child: TextButton(
+        child: TextButton.icon(
           onPressed: () {
             showDialogSearchCommandNumber(
               context: context,
@@ -28,12 +28,13 @@ class SearchDataByCommandNumber extends StatelessWidget {
               printedProductsPresenter: printedProductsPresenter,
             );
           },
-          child: const Text(
+          icon: const Icon(Icons.search),
+          label: const Text(
             "Consultar dados",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 25,
-            ),
+                // fontSize: 25,
+                ),
           ),
         ),
       ),

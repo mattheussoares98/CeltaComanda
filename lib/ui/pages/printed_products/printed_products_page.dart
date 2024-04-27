@@ -18,13 +18,12 @@ class PrintedProductsPage extends StatefulWidget {
 }
 
 class _PrintedProductsPageState extends State<PrintedProductsPage>
-    with LoadingManager {
+    with LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    final expansibleGroupsPresenter =
-        Provider.of<GetxExpansibleGroupsPresenter>(context);
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
@@ -36,15 +35,18 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
+                  handleLoading(context, printedProductsPresenter.isLoadingStream);
+                  handleMainError(context, printedProductsPresenter.mainErrorStream);
 
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedProduct(
                       printed: printedProductsPresenter.printedProducts!,
                     );
                   }
-                  return const Text("Não há dados");
+                  return InsertCommandNumber(
+                    presenter: expansibleGroupsPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                  );
                 },
               ),
             ),

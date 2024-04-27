@@ -68,7 +68,12 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> removeProduct() async {}
+  Future<void> removeProduct() async {
+    if (_printedProducts?.Products != null) {
+      _printedProducts!.Products.remove(_printedProducts!.Products.first);
+      notifyListeners();
+    }
+  }
 
   @override
   Future<void> getPrintedProducts(String commandNumber) async {

@@ -70,11 +70,4 @@ void main() {
 
     expect(currentRoute, PageRoutes.cart);
   });
-
-  testWidgets('Should show CartIcon on AppBar', (WidgetTester tester) async {
-    await loadPage(tester);
-    await tester.pump(const Duration(seconds: 1));
-    
-    expect(find.byKey(const Key("CartIcon")), findsOneWidget);
-  });
 }

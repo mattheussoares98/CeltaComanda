@@ -61,12 +61,12 @@ void main() {
     ).called(1);
   });
 
-  test('Should go to surveys page on success', () async {
+  test('Should go to home page on success to load data of API', () async {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.expansibleGroups,
+        pageRoute: PageRoutes.home,
         clear: true,
       ),
     ).called(1);

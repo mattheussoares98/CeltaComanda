@@ -32,8 +32,8 @@ class ProductDetailItem extends StatelessWidget {
                       height: 250,
                       width: double.infinity,
                     ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(
+                    const Padding(
+                      padding: EdgeInsetsDirectional.only(
                         start: 15,
                         end: 15,
                         top: 50,
@@ -41,10 +41,7 @@ class ProductDetailItem extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const ReturnIcon(),
-                          ProductDetailsCartIcon(
-                            goToCartPage: presenter.goToCartPage,
-                          ),
+                          ReturnIcon(),
                         ],
                       ),
                     ),

@@ -30,7 +30,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
           },
           icon: const Icon(Icons.search),
           label: const Text(
-            "Consultar dados",
+            "Consultar dados da comanda",
             textAlign: TextAlign.center,
             style: TextStyle(
                 // fontSize: 25,

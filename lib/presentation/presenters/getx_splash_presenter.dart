@@ -49,7 +49,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       if (apiSaleRequestEntity != null) {
         navigateTo.navigate(
-          pageRoute: PageRoutes.expansibleGroups,
+          pageRoute: PageRoutes.home,
           clear: true,
         );
       } else {

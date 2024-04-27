@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/pages/home/home_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -98,6 +99,16 @@ class App extends StatelessWidget {
           GetPage(
             name: PageRoutes.printedProducts,
             page: makePrintedProductsPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.printedProducts,
+            page: makePrintedProductsPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.home,
+            page: makeHomePage,
             transition: Transition.fadeIn,
           ),
         ],

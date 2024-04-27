@@ -1,12 +1,10 @@
 export "./app_theme.dart";
-export './cart_icon.dart';
 export './error_message.dart';
 export './headline1.dart';
+export './icon_with_number_quantity.dart';
 export './login_header.dart';
 export './loading_image.dart';
 export './loading_dialog.dart';
 export './notification_dialog.dart';
-export './printed_products_icon.dart';
 export './product_details.dart';
 export './reload_screen.dart';
-export './search_command_icon.dart';

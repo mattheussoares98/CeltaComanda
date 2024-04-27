@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import '../../../presentation/presenters/presenters.dart';
 import '../../../ui/pages/pages.dart';
-import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 
 import 'package:flutter/material.dart';
@@ -19,14 +18,9 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter presenter = Provider.of(context);
-    GetxPrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context);
     return Scaffold(
-      drawer: drawer(context: context, presenter: presenter),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        title: const Text(""),
-        actions: const [SearchCommandIcon(), PrintedProductsIcon(), CartIcon()],
-      ),
       body: Column(
         children: [
           Expanded(

@@ -43,11 +43,6 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        title: const Text("Produtos"),
-        actions: const [CartIcon()],
-      ),
       body: SingleChildScrollView(
         primary: false,
         child: Builder(

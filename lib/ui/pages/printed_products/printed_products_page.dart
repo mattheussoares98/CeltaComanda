@@ -7,9 +7,7 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class PrintedProductsPage extends StatefulWidget {
-  final PrintedProductsPresenter presenter;
   const PrintedProductsPage({
-    required this.presenter,
     super.key,
   });
 
@@ -26,10 +24,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        title: const Text("Produtos impressos"),
-      ),
       body: Column(
         children: [
           Expanded(

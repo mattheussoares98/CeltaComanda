@@ -13,15 +13,12 @@ class SaleRequestTempPage extends StatefulWidget {
   State<SaleRequestTempPage> createState() => _SaleRequestTempPageState();
 }
 
-class _SaleRequestTempPageState extends State<SaleRequestTempPage> with LoadingManager {
+class _SaleRequestTempPageState extends State<SaleRequestTempPage>
+    with LoadingManager {
   @override
   Widget build(BuildContext context) {
     final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        title: const Text("Carrinho"),
-      ),
       body: Column(
         children: [
           Expanded(

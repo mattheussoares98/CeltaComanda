@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -19,7 +18,7 @@ class LoadPrintedProductsSpy extends Mock implements LoadPrintedProducts {
     this.mockLoadPrintedProductsCall().thenAnswer((_) async => entity);
   }
 
-  void mockError(DomainError error) {
-    this.mockLoadPrintedProductsCall().thenThrow(error);
+  void mockError() {
+    this.mockLoadPrintedProductsCall().thenThrow(Exception());
   }
 }

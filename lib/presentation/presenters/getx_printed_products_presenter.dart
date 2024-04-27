@@ -95,7 +95,7 @@ class GetxPrintedProductsPresenter
         _printedProducts = PrintedViewModel.fromEntity(printedProducts);
       }
     } catch (error) {
-      throw UIError.unexpected;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
       notifyListeners();

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
@@ -13,14 +14,18 @@ void main() {
   late GetxPrintedProductsPresenter sut;
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
+  late PrintedEntity printedEntity;
   late int personalizedCode;
   late String password;
+  late String commandNumber;
 
   setUp(() {
     personalizedCode = faker.randomGenerator.integer(5);
     password = faker.randomGenerator.string(5);
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
+    commandNumber = faker.randomGenerator.integer(3).toString();
+    printedEntity = EntityFactory.makePrintedProductsEntity();
 
     userValidations = UserValidationsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
@@ -28,6 +33,8 @@ void main() {
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
     );
+
+    loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
   });
 
   group("Validate password", () {
@@ -55,7 +62,8 @@ void main() {
       expect(validPassword, true);
     });
 
-    test('Should show invalidCredentials UIError on invalid credential', () async {
+    test('Should show invalidCredentials UIError on invalid credential',
+        () async {
       userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -130,7 +138,8 @@ void main() {
       expect(canCancel, true);
     });
 
-    test('Should show invalidCredentials UIError on invalid credential', () async {
+    test('Should show invalidCredentials UIError on invalid credential',
+        () async {
       userValidations.mockCanCancelError(DomainError.invalidCredentials);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -179,6 +188,57 @@ void main() {
       );
 
       expect(canCancel, false);
+    });
+  });
+
+  group("Manipulate data", () {
+    test("Should call loadPrintedProducts with correct values", () async {
+      await sut.getPrintedProducts(commandNumber);
+
+      verify(() => loadPrintedProducts.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            commandNumber: int.parse(commandNumber),
+          )).called(1);
+    });
+
+    test("Should return correct printedProducts on LoadPrintedProducts",
+        () async {
+      final result = await loadPrintedProducts.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: int.parse(commandNumber),
+      );
+
+      expect(result, printedEntity);
+    });
+
+    test("Should return null on loadPrintedProducts", () async {
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+      final result = await loadPrintedProducts.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: int.parse(commandNumber),
+      );
+
+      expect(result, null);
+    });
+
+    test("Should emit correct events", () async {
+      loadPrintedProducts.mockError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.getPrintedProducts(commandNumber);
+    });
+
+    test("Should clear printed on call clearPrinted", () async {
+      sut.clearPrintedProducts();
+
+      expect(sut.printedProducts, null);
     });
   });
 }

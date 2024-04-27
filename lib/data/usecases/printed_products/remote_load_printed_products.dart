@@ -5,8 +5,7 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteLoadPrintedProducts
-    implements LoadPrintedProducts {
+class RemoteLoadPrintedProducts implements LoadPrintedProducts {
   final HttpClient httpAdapter;
 
   RemoteLoadPrintedProducts({
@@ -25,11 +24,9 @@ class RemoteLoadPrintedProducts
             "$url/api/apiSaleRequest/Get?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber&_considerUsing=false",
         method: "get",
       );
-      if (printedProducts == null) throw Error();
+      if (printedProducts == null) return null;
 
-      return PrintedProductsModel.fromJson(
-              printedProducts)
-          .toEntity();
+      return PrintedProductsModel.fromJson(printedProducts).toEntity();
     } catch (error) {
       throw DomainError.unexpected;
     }

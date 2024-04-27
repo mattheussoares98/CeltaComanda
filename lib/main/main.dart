@@ -40,6 +40,12 @@ class App extends StatelessWidget {
           create: (_) => GetxCartPresenter(),
         ),
         ChangeNotifierProvider(
+          create: (_) => GetxPrintedProductsPresenter(
+            userValidations: makeRemoteUserValidations(),
+            loadPrintedProducts: makeRemoteLoadPrintedProducts(),
+          ),
+        ),
+        ChangeNotifierProvider(
           create: (_) => GetxExpansibleGroupsPresenter(
             loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
             loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
@@ -47,7 +53,6 @@ class App extends StatelessWidget {
             navigateTo: makeNavigateTo(),
             loadPrintedProducts: makeRemoteLoadPrintedProducts(),
             clearExpansibleGroups: makeLocalClearExpansibleGroups(),
-            clearPrintedProducts: makeLocalClearPrintedProducts(),
             clearSaleRequestTemp: makeLocalClearSaleRequestTemp(),
           ),
         ),

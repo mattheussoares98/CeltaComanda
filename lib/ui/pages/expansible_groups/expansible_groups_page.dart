@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
 
 import '../../../presentation/presenters/presenters.dart';
+import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
-import '../expansible_groups/expansible_groups.dart';
 
 import 'package:flutter/material.dart';
 
@@ -18,8 +18,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    final presenter =
-        Provider.of<GetxExpansibleGroupsPresenter>(context, listen: true);
+    GetxExpansibleGroupsPresenter presenter = Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     return Scaffold(
       drawer: drawer(context: context, presenter: presenter),
       appBar: AppBar(
@@ -39,6 +39,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   if (presenter.expansibleGroups.isEmpty) {
                     return InsertCommandNumber(
                       presenter: presenter,
+                      printedProductsPresenter: printedProductsPresenter,
                     );
                   }
 

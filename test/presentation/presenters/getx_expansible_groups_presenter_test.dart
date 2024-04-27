@@ -14,8 +14,11 @@ import '../../domain/mocks/mocks.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../ui/mocks/mocks.dart';
+
 void main() {
   late GetxExpansibleGroupsPresenter sut;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
   late EnterpriseEntity enterpriseEntity;
   late List<ExpansibleGroupEntity> expansibleGroups;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -28,7 +31,6 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late ClearExpansibleGroupsSpy clearExpansibleGroups;
-  late ClearPrintedProductsSpy clearPrintedProducts;
   late ClearSaleRequestTempSpy clearSaleRequestTemp;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -41,8 +43,8 @@ void main() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     clearExpansibleGroups = ClearExpansibleGroupsSpy();
-    clearPrintedProducts = ClearPrintedProductsSpy();
     clearSaleRequestTemp = ClearSaleRequestTempSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
 
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     printedProducts = EntityFactory.makePrintedProductsEntity();
@@ -79,8 +81,7 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       loadPrintedProducts: loadPrintedProducts,
       clearExpansibleGroups: clearExpansibleGroups,
-      clearPrintedProducts: clearPrintedProducts,
-      clearSaleRequestTemp: clearSaleRequestTemp
+      clearSaleRequestTemp: clearSaleRequestTemp,
     );
   });
 
@@ -153,7 +154,10 @@ void main() {
   test('Should emit correct events on verify command success', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.load(commandNumber);
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
   });
   test('Should return correct value on loadSaleRequestTemp', () async {
     final value = await loadSaleRequestTemp.load(
@@ -172,13 +176,19 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    await sut.load(commandNumber);
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
   });
 
   test('Should emit correct events on get saleRequestTemp', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.load(commandNumber);
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
 
     final saleRequestTempViewModel =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
@@ -196,7 +206,10 @@ void main() {
   });
 
   test('Should clear SaleRequestTemp when go to SplashPage', () async {
-    await sut.load(commandNumber);
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
     await sut.goToSplashPage();
 
     expect(sut.saleRequestTemp, null);
@@ -219,29 +232,20 @@ void main() {
     expect(result, printedProducts);
   });
 
-  test('Should throws unexpected error when LoadPrintedProducts', () async {
-    loadPrintedProducts.mockError(DomainError.unexpected);
-
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-    await sut.load(commandNumber);
-  });
-
   test('Should call ClearExpansibleGroups on load data', () async {
-    await sut.load(commandNumber);
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
 
     verify(() => clearExpansibleGroups.clear()).called(1);
   });
 
-  test('Should call ClearPrintedProducts on load data', () async {
-    await sut.load(commandNumber);
-
-    verify(() => clearPrintedProducts.clear()).called(1);
-  });
-
   test('Should call ClearSaleRequestTemp on load data', () async {
-    await sut.load(commandNumber);
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
 
     verify(() => clearSaleRequestTemp.clear()).called(1);
   });

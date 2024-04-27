@@ -6,4 +6,5 @@ import '../../../../ui/pages/pages.dart';
 PrintedProductsPresenter makeGetxPrintedProductsPresenter() =>
     GetxPrintedProductsPresenter(
       userValidations: makeRemoteUserValidations(),
+      loadPrintedProducts: makeRemoteLoadPrintedProducts(),
     );

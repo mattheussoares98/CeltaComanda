@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
-abstract class ExpansibleGroupsPresenter with ChangeNotifier implements Listenable {
+abstract class ExpansibleGroupsPresenter
+    with ChangeNotifier
+    implements Listenable {
   List<ExpansibleGroupsViewModel> get expansibleGroups;
-  PrintedViewModel? get printedProducts;
   SaleRequestTempViewModel? get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
   Future<void> getExpansibleGroups();
   Future<void> clearEnterpriseData();
-  Future<void> load(String commandNumber);
-  Future<void> getPrintedProducts(String commandNumber);
+  Future<void> load({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+  });
 
   Future<void> goToSplashPage();
 

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class InsertCommandNumber extends StatelessWidget {
   final ExpansibleGroupsPresenter presenter;
+  final PrintedProductsPresenter printedProductsPresenter;
   const InsertCommandNumber({
     required this.presenter,
+    required this.printedProductsPresenter,
     super.key,
   });
 
@@ -23,6 +25,7 @@ class InsertCommandNumber extends StatelessWidget {
             showDialogSearchCommandNumber(
               context: context,
               presenter: presenter,
+              printedProductsPresenter: printedProductsPresenter,
             );
           },
           child: const Text(

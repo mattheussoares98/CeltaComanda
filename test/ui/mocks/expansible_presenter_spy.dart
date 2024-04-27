@@ -17,7 +17,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
 
   ExpansibleGroupsPresenterSpy() {
     when(() => this.getExpansibleGroups()).thenAnswer((_) async => _);
-    when(() => this.load(any())).thenAnswer((_) async => _);
+    mockLoadCall().thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.expansibleGroups)
@@ -33,14 +33,20 @@ class ExpansibleGroupsPresenterSpy extends Mock
     when(() => this.goToSplashPage()).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));
-    when(() => this.goToPrintedProductsPage()).thenAnswer((_) async => Get.offNamed(
-          PageRoutes.printedProducts,
-        ));
+    when(() => this.goToPrintedProductsPage())
+        .thenAnswer((_) async => Get.offNamed(
+              PageRoutes.printedProducts,
+            ));
   }
 
-  void mockVerifyCommandIsAvailableError(DomainError error) {
-    when(() => this.load(any())).thenThrow(error);
+  void mockLoadDataError(DomainError error) {
+    mockLoadCall().thenThrow(error);
   }
+
+  When mockLoadCall() => when(() => this.load(
+        commandNumber: any(named: "commandNumber"),
+        printedProductsPresenter: any(named: "printedProductsPresenter"),
+      ));
 
   void mockExpansibleGroupStreamError(DomainError error) {
     mainErrorController.add(UIError.unexpected);

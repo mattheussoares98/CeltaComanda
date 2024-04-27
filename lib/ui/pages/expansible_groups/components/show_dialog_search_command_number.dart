@@ -5,6 +5,7 @@ import '../../pages.dart';
 void showDialogSearchCommandNumber({
   required BuildContext context,
   required ExpansibleGroupsPresenter presenter,
+  required PrintedProductsPresenter printedProductsPresenter,
 }) {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController textController = TextEditingController();
@@ -44,7 +45,10 @@ void showDialogSearchCommandNumber({
                 if (!isValid) return;
 
                 Navigator.of(context).pop();
-                await presenter.load(textController.text);
+                await presenter.load(
+                  commandNumber: textController.text,
+                  printedProductsPresenter: printedProductsPresenter,
+                );
               },
               child: const Text("Consultar"),
             )

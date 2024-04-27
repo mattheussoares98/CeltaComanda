@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../presentation/presenters/presenters.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
@@ -19,8 +20,8 @@ class PrintedProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter =
-        Provider.of<PrintedProductsPresenter>(context, listen: false);
+    GetxPrintedProductsPresenter presenter =
+        Provider.of(context);
     return Row(
       children: [
         // ImageWidget(product: product),
@@ -36,7 +37,8 @@ class PrintedProductItem extends StatelessWidget {
           onPressedAddQuantity: null,
           onPressedReduceQuantity: null,
           isPrintedProducts: true,
-          onPressedRemoveProduct: () async => await presenter.removeProduct(),
+          onPressedRemoveProduct: () async =>
+              await presenter.removeProduct(),
         ),
       ],
     );

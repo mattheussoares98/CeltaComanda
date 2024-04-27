@@ -10,6 +10,5 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
       clearExpansibleGroups: makeLocalClearExpansibleGroups(),
-      clearPrintedProducts: makeLocalClearPrintedProducts(),
       clearSaleRequestTemp: makeLocalClearSaleRequestTemp(),
     );

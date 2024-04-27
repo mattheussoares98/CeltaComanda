@@ -335,6 +335,64 @@ class EntityFactory {
     ];
   }
 
+  static PrintedViewModel makePrintedViewModel() {
+    return PrintedViewModel(
+      Products: makePrintedProductsViewModel(),
+      PersonalizedCode: faker.randomGenerator.string(10),
+      TotalLiquid: faker.randomGenerator.string(10),
+      DeliveryControl: faker.randomGenerator.string(10),
+      DateOfCreation: faker.randomGenerator.string(10),
+      DateHourOfCreation: faker.randomGenerator.string(10),
+      FlagStatus: faker.randomGenerator.string(10),
+      EnterpriseId: faker.randomGenerator.string(10),
+      RequestType: faker.randomGenerator.string(10),
+      IsCancelled: faker.randomGenerator.string(10),
+      IsUsing: faker.randomGenerator.string(10),
+      Peoples: faker.randomGenerator.string(10),
+      SaleRequestId: faker.randomGenerator.string(10),
+      FlagOrigin: faker.randomGenerator.string(10),
+    );
+  }
+
+  static List<PrintedProductsViewModel> makePrintedProductsViewModel() {
+    return [
+      PrintedProductsViewModel(
+        Products: makeProductViewModel(),
+        SaleRequestProductId: faker.randomGenerator.string(10),
+        ProductPriceLookUpCode: faker.randomGenerator.string(10),
+        Value: faker.randomGenerator.string(10),
+        Quantity: faker.randomGenerator.string(10),
+        QuantityString: faker.randomGenerator.string(10),
+        UserId: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.string(10),
+        IsDelivered: faker.randomGenerator.string(10),
+        IsPrinted: faker.randomGenerator.string(10),
+        ProductionStatus: faker.randomGenerator.string(10),
+        TotalLiquid: faker.randomGenerator.string(10),
+        ProductInternalCodeOnErp: faker.randomGenerator.string(10),
+        SaleRequestId: faker.randomGenerator.string(10),
+      ),
+      PrintedProductsViewModel(
+        Products: makeProductViewModel(),
+        SaleRequestProductId: faker.randomGenerator.string(10),
+        ProductPriceLookUpCode: faker.randomGenerator.string(10),
+        Value: faker.randomGenerator.string(10),
+        Quantity: faker.randomGenerator.string(10),
+        QuantityString: faker.randomGenerator.string(10),
+        UserId: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.string(10),
+        IsDelivered: faker.randomGenerator.string(10),
+        IsPrinted: faker.randomGenerator.string(10),
+        ProductionStatus: faker.randomGenerator.string(10),
+        TotalLiquid: faker.randomGenerator.string(10),
+        ProductInternalCodeOnErp: faker.randomGenerator.string(10),
+        SaleRequestId: faker.randomGenerator.string(10),
+      ),
+    ];
+  }
+
   static SaleRequestTempEntity makeApiSaleRequestEntity() {
     return SaleRequestTempEntity(
       Products: const [],

@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -13,6 +14,12 @@ void main() {
 
   setUp(() {
     presenter = ExpansibleGroupsPresenterSpy();
+  });
+
+  setUpAll(() {
+    registerFallbackValue(
+      PrintedProductsPresenterSpy(),
+    );
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -109,7 +116,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockVerifyCommandIsAvailableError(DomainError.unexpected);
+    presenter.mockLoadDataError(DomainError.unexpected);
     await tester.pumpAndSettle();
 
     expect(find.byType(InsertCommandNumber), findsOneWidget);
@@ -119,14 +126,14 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter
-        .mockVerifyCommandIsAvailableError(DomainError.commandNotAvailable);
+    presenter.mockLoadDataError(DomainError.commandNotAvailable);
     await tester.pumpAndSettle();
 
     expect(find.byType(InsertCommandNumber), findsOneWidget);
   });
 
-  testWidgets('Should open AlertDialog to insert command number on SearchCommandIcon click',
+  testWidgets(
+      'Should open AlertDialog to insert command number on SearchCommandIcon click',
       (WidgetTester tester) async {
     await loadPage(tester);
 

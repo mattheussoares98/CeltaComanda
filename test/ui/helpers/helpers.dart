@@ -84,12 +84,17 @@ Widget makePage(
           navigateTo: NavigateToSpy(),
           loadPrintedProducts: LoadPrintedProductsSpy(),
           clearExpansibleGroups: ClearExpansibleGroupsSpy(),
-          clearPrintedProducts: ClearPrintedProductsSpy(),
           clearSaleRequestTemp: ClearSaleRequestTempSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(
         create: (_) => GetxCartPresenter(),
+      ),
+      ChangeNotifierProvider<GetxPrintedProductsPresenter>(
+        create: (_) => GetxPrintedProductsPresenter(
+          userValidations: UserValidationsSpy(),
+          loadPrintedProducts: LoadPrintedProductsSpy(),
+        ),
       ),
     ],
     child: GetMaterialApp(

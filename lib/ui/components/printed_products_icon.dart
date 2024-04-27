@@ -17,6 +17,8 @@ class _PrintedProductsIconState extends State<PrintedProductsIcon> {
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter presenter = Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context);
 
     return GestureDetector(
       key: const Key("PrintedProductsIcon"),
@@ -40,7 +42,7 @@ class _PrintedProductsIconState extends State<PrintedProductsIcon> {
                 maxRadius: 9,
                 child: FittedBox(
                   child: Text(
-                    presenter.printedProducts?.Products.length.toString() ??
+                    printedProductsPresenter.printedProducts?.Products.length.toString() ??
                         "0",
                     style: const TextStyle(color: Colors.white),
                   ),

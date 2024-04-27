@@ -12,6 +12,7 @@ import '../../domain/mocks/mocks.dart';
 void main() {
   late GetxPrintedProductsPresenter sut;
   late UserValidationsSpy userValidations;
+  late LoadPrintedProductsSpy loadPrintedProducts;
   late int personalizedCode;
   late String password;
 
@@ -22,8 +23,10 @@ void main() {
         EntityFactory.makeEnterpriseData();
 
     userValidations = UserValidationsSpy();
+    loadPrintedProducts = LoadPrintedProductsSpy();
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
+      loadPrintedProducts: loadPrintedProducts,
     );
   });
 

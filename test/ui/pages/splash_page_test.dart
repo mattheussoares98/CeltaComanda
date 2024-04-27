@@ -19,11 +19,6 @@ void main() {
         path: PageRoutes.splash, page: () => SplashPage(presenter: presenter)));
   }
 
-  setUpAll(() {
-    registerFallbackValue(SplashPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
-  });
-
   testWidgets('Should present spinner on page load',
       (WidgetTester tester) async {
     await loadPage(tester);
@@ -38,7 +33,8 @@ void main() {
     verify(() => presenter.checkApiSaleRequest()).called(1);
   });
 
-  testWidgets('Should change to EnterpriseValidationPage', (WidgetTester tester) async {
+  testWidgets('Should change to EnterpriseValidationPage',
+      (WidgetTester tester) async {
     await loadPage(tester);
     mockNavigation(routeName: PageRoutes.enterpriseValidation);
 

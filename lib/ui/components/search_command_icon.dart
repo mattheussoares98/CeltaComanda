@@ -17,11 +17,17 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter presenter = Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context);
 
     return GestureDetector(
       key: const Key("SearchCommandIcon"),
       onTap: () {
-        showDialogSearchCommandNumber(context: context, presenter: presenter);
+        showDialogSearchCommandNumber(
+          context: context,
+          presenter: presenter,
+          printedProductsPresenter: printedProductsPresenter,
+        );
       },
       child: FittedBox(
         child: Stack(
@@ -36,6 +42,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
                 showDialogSearchCommandNumber(
                   context: context,
                   presenter: presenter,
+                  printedProductsPresenter: printedProductsPresenter,
                 );
               },
             ),

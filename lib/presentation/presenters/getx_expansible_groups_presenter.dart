@@ -17,7 +17,6 @@ class GetxExpansibleGroupsPresenter
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadPrintedProducts loadPrintedProducts;
   final ClearExpansibleGroups clearExpansibleGroups;
-  final ClearPrintedProducts clearPrintedProducts;
   final ClearSaleRequestTemp clearSaleRequestTemp;
 
   GetxExpansibleGroupsPresenter({
@@ -27,7 +26,6 @@ class GetxExpansibleGroupsPresenter
     required this.loadSaleRequestTemp,
     required this.loadPrintedProducts,
     required this.clearExpansibleGroups,
-    required this.clearPrintedProducts,
     required this.clearSaleRequestTemp,
   });
 
@@ -47,10 +45,6 @@ class GetxExpansibleGroupsPresenter
   set mainError(UIError? value) => _mainError.value = value;
 
   late final LoadExpansibleGroups loadExpansibleGroups;
-
-  PrintedViewModel? _printedProducts;
-  @override
-  PrintedViewModel? get printedProducts => _printedProducts;
 
   List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
@@ -125,11 +119,14 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> load(String commandNumber) async {
+  Future<void> load({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+  }) async {
     isLoading = true;
     mainError = null;
     _expansibleGroups = clearExpansibleGroups.clear();
-    _printedProducts = clearPrintedProducts.clear();
+    printedProductsPresenter.clearPrintedProducts();
     _saleRequestTemp = clearSaleRequestTemp.clear();
     notifyListeners();
 
@@ -144,34 +141,10 @@ class GetxExpansibleGroupsPresenter
         _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
 
         await getExpansibleGroups();
-        await getPrintedProducts(commandNumber);
+        await printedProductsPresenter.getPrintedProducts(commandNumber);
       }
     } catch (error) {
       mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  @override
-  Future<void> getPrintedProducts(String commandNumber) async {
-    isLoading = true;
-    mainError = null;
-    notifyListeners();
-
-    try {
-      PrintedEntity? printedProducts = await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: int.tryParse(commandNumber) ?? 0,
-      );
-
-      if (printedProducts != null) {
-        _printedProducts = PrintedViewModel.fromEntity(printedProducts);
-      }
-    } catch (error) {
-      throw UIError.unexpected;
     } finally {
       isLoading = false;
       notifyListeners();

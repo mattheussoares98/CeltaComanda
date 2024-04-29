@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
-import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
@@ -14,15 +13,11 @@ class GetxExpansibleGroupsPresenter
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
-  final ClearExpansibleGroups clearExpansibleGroups;
-  // final ClearSaleRequestTemp clearSaleRequestTemp;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
-    required this.clearExpansibleGroups,
-    // required this.clearSaleRequestTemp,
   });
 
   final _isLoading = false.obs;
@@ -48,42 +43,11 @@ class GetxExpansibleGroupsPresenter
       [..._expansibleGroups];
 
   @override
-  Future<void> getExpansibleGroups() async {
-    try {
-      isLoading = true;
-      mainError = null;
-      notifyListeners();
-
-      final expansibleGroups = await loadExpansibleGroups.load();
-
-      if (expansibleGroups != null) {
-        _expansibleGroups.addAll(expansibleGroups
-            .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
-            .toList());
-      }
-
-      isLoading = false;
-      notifyListeners();
-    } catch (e) {
-      mainError = UIError.unexpected;
-      isLoading = false;
-      throw DomainError.unexpected;
-    } finally {
-      notifyListeners();
-    }
-  }
-
-  @override
   void goToProductsPage(int expansibleGroupId) {
     navigateTo.navigate(
       pageRoute: PageRoutes.products,
       arguments: expansibleGroupId,
     );
-  }
-
-  @override
-  void goToCartPage() {
-    navigateTo.navigate(pageRoute: PageRoutes.saleRequestTemp);
   }
 
   @override
@@ -120,16 +84,21 @@ class GetxExpansibleGroupsPresenter
   }) async {
     isLoading = true;
     mainError = null;
-    _expansibleGroups = clearExpansibleGroups.clear();
+    clear();
     printedProductsPresenter.clear();
     saleRequestTempPresenter.clear();
     notifyListeners();
 
     try {
-      await getExpansibleGroups();
+      final expansibleGroups = await loadExpansibleGroups.load();
+
+      if (expansibleGroups != null) {
+        _expansibleGroups.addAll(expansibleGroups
+            .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
+            .toList());
+      }
 
       await saleRequestTempPresenter.load(commandNumber);
-
       await printedProductsPresenter.load(commandNumber);
     } catch (error) {
       mainError = UIError.unexpected;
@@ -140,9 +109,7 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  void goToPrintedProductsPage() {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.printedProducts,
-    );
+  void clear() {
+    _expansibleGroups.clear();
   }
 }

@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../domain/mocks/entity_factory.dart';
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
 
@@ -20,9 +21,9 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(
-      PrintedProductsPresenterSpy(),
-    );
+    registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(SaleRequestTempPresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -55,7 +56,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockExpansibleGroupStreamError(DomainError.unexpected);
+    presenter.clear();
     await tester.pumpAndSettle();
 
     expect(find.byType(SearchDataByCommandNumber), findsOneWidget);
@@ -68,24 +69,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);
-  });
-
-  testWidgets('Should go to PrintedProductsPage', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.goToPrintedProductsPage();
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.printedProducts);
-  });
-
-  testWidgets('Should go to CartPage', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.goToCartPage();
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.saleRequestTemp);
   });
 
   testWidgets('Should go to SplashPage', (WidgetTester tester) async {

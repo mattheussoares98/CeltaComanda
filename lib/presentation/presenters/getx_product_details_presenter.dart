@@ -24,6 +24,6 @@ class GetxProductDetailsPresenter extends GetxController
     required SaleRequestTempProductsViewModel product,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
-    await saleRequestTempPresenter.addProductInCart(product);
+    // await saleRequestTempPresenter.addProductInCart(product);
   }
 }

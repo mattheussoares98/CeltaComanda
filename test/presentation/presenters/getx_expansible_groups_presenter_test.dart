@@ -1,5 +1,4 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -10,11 +9,10 @@ import 'package:get/get.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
+import '../../ui/mocks/mocks.dart';
 
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../../ui/mocks/mocks.dart';
 
 void main() {
   late GetxExpansibleGroupsPresenter sut;
@@ -31,8 +29,6 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late NavigateToSpy navigateTo;
   late LoadPrintedProductsSpy loadPrintedProducts;
-  late ClearExpansibleGroupsSpy clearExpansibleGroups;
-  late ClearSaleRequestTempSpy clearSaleRequestTemp;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -43,8 +39,6 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
-    clearExpansibleGroups = ClearExpansibleGroupsSpy();
-    clearSaleRequestTemp = ClearSaleRequestTempSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
 
@@ -80,17 +74,21 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
-      clearExpansibleGroups: clearExpansibleGroups,
     );
   });
 
   setUpAll(() {
     registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
     registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
+    registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
   });
 
   test('Should call load products', () async {
-    await sut.getExpansibleGroups();
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
 
     verify(() => loadExpansibleGroups.load()).called(1);
   });
@@ -98,28 +96,29 @@ void main() {
   test('Should throw DomainErrorUnexpected', () async {
     loadExpansibleGroups.mockLoadExpansibleGroupsError();
 
-    final future = sut.getExpansibleGroups();
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    expect(future, throwsA(DomainError.unexpected));
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
+
+    expect(sut.expansibleGroups, []);
   });
 
   test('Should emit correct events on success load expansible groups',
       () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.getExpansibleGroups();
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
 
     expect(sut.expansibleGroups, expansibleGroupsViewModel);
-  });
-
-  test('Should go to cart page on CartIcon click', () async {
-    sut.goToCartPage();
-
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.saleRequestTemp,
-      ),
-    ).called(1);
   });
 
   test('Should go to products page ExpansibleGroupItem click', () async {
@@ -174,7 +173,7 @@ void main() {
 
   test('Should correct events on load command throws commandNotAvailable',
       () async {
-    loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
+    loadExpansibleGroups.mockLoadExpansibleGroupsError();
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -186,19 +185,14 @@ void main() {
     );
   });
 
-  test('Should emit correct events on get saleRequestTemp', () async {
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
+  test('Should call LoadSaleRequestTemp when load expansibleGroups', () async {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
-    final saleRequestTempViewModel =
-        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
-
-    expect(saleRequestTempPresenter.saleRequestTemp, saleRequestTempViewModel);
+    verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
   });
 
   test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
@@ -228,7 +222,12 @@ void main() {
   });
 
   test('Should clear expansibleGroups when go to SplashPage', () async {
-    await sut.getExpansibleGroups();
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
+
     await sut.goToSplashPage(
       printedProductsPresenter: printedProductsPresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
@@ -247,25 +246,6 @@ void main() {
     expect(result, printedProducts);
   });
 
-  test('Should call ClearExpansibleGroups on load data', () async {
-    await sut.load(
-      commandNumber: commandNumber,
-      printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
-    );
-
-    verify(() => clearExpansibleGroups.clear()).called(1);
-  });
-
-  test('Should call ClearSaleRequestTemp on load data', () async {
-    await sut.load(
-      commandNumber: commandNumber,
-      printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
-    );
-
-    verify(() => clearSaleRequestTemp.clear()).called(1);
-  });
   test('Should call clearPrintedProducts on load data', () async {
     await sut.load(
       commandNumber: commandNumber,

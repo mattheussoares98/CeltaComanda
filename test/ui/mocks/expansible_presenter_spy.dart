@@ -16,7 +16,6 @@ class ExpansibleGroupsPresenterSpy extends Mock
   final List<ExpansibleGroupsViewModel> expansibleGroupsController = [];
 
   ExpansibleGroupsPresenterSpy() {
-    when(() => this.getExpansibleGroups()).thenAnswer((_) async => _);
     mockLoadCall().thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
@@ -24,11 +23,9 @@ class ExpansibleGroupsPresenterSpy extends Mock
         .thenAnswer((_) => expansibleGroupsController);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+    when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.goToProductsPage(any())).thenAnswer((_) => Get.offNamed(
           PageRoutes.products,
-        ));
-    when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
-          PageRoutes.saleRequestTemp,
         ));
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
@@ -36,10 +33,6 @@ class ExpansibleGroupsPresenterSpy extends Mock
         )).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));
-    when(() => this.goToPrintedProductsPage())
-        .thenAnswer((_) async => Get.offNamed(
-              PageRoutes.printedProducts,
-            ));
   }
 
   void mockLoadDataError(DomainError error) {

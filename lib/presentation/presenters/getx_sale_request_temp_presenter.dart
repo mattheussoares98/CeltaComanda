@@ -23,13 +23,6 @@ class GetxSaleRequestTempPresenter
     _saleRequestTemp = newValue;
   }
 
-  @override
-  Future<void> addProductInCart(
-      SaleRequestTempProductsViewModel product) async {
-    _saleRequestTemp?.Products.add(product);
-    notifyListeners();
-  }
-
   final _isLoading = Rx<bool>(false);
 
   @override

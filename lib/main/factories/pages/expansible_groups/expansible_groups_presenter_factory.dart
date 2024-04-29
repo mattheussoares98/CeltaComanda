@@ -7,5 +7,4 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       navigateTo: makeNavigateTo(),
       localEnterpriseData: makeLocalEnterpriseData(),
-      clearExpansibleGroups: makeLocalClearExpansibleGroups(),
     );

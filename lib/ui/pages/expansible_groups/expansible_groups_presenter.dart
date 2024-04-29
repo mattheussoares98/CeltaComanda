@@ -10,7 +10,6 @@ abstract class ExpansibleGroupsPresenter
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> getExpansibleGroups();
   Future<void> clearEnterpriseData();
   Future<void> load({
     required String commandNumber,
@@ -24,6 +23,5 @@ abstract class ExpansibleGroupsPresenter
   });
 
   void goToProductsPage(int expansibleGroupId);
-  void goToCartPage();
-  void goToPrintedProductsPage();
+  void clear();
 }

@@ -8,18 +8,20 @@ import 'dart:async';
 
 import 'package:mocktail/mocktail.dart';
 
-class SaleRequestTempPresenterSpy extends Mock implements SaleRequestTempPresenter {
+class SaleRequestTempPresenterSpy extends Mock
+    implements SaleRequestTempPresenter {
   final isLoadingController = StreamController<bool>();
   final cartController = StreamController<List<ProductsViewModel>>();
+  SaleRequestTempViewModel? saleRequestTempMock;
 
   SaleRequestTempPresenterSpy() {
     // when(() => this.cartProducts).thenAnswer((_) => cartController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+    when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
 
-    when(() => this.addProductInCart(any())).thenAnswer(
-      (_) async => _,
-    );
+    when(() => this.load(any())).thenAnswer((_) async => _);
+    when(() => this.clear()).thenAnswer((_) async => _);
   }
   void mockExpansibleGroupStreamError(DomainError error) {
     cartController.addError(

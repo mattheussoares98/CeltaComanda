@@ -13,10 +13,12 @@ class GetxPrintedProductsPresenter
     implements PrintedProductsPresenter {
   final UserValidations userValidations;
   final LoadPrintedProducts loadPrintedProducts;
+  final RemovePrintedProduct removePrintedProduct;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
+    required this.removePrintedProduct,
   });
 
   @override
@@ -63,6 +65,7 @@ class GetxPrintedProductsPresenter
   Future<void> removeProduct({
     required int personalizedCode,
     required String password,
+    required String saleRequestProductId,
   }) async {
     isLoading = true;
     mainError = null;
@@ -74,7 +77,16 @@ class GetxPrintedProductsPresenter
       );
 
       if (canCancel) {
-        _printedProducts!.Products.remove(_printedProducts!.Products.first);
+        await removePrintedProduct.remove(
+          productId: saleRequestProductId,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        );
+
+        //depois precisa remover esse trecho de código abaixo. Pois o ideal é
+        //consultar os dados da comanda de novo. Vai que em algum outro local
+        //estão realizando alterações da comanda também...
+        _printedProducts?.Products.removeWhere(
+            (element) => element.SaleRequestProductId == saleRequestProductId);
         notifyListeners();
       }
     } on DomainError catch (error) {

@@ -11,11 +11,13 @@ class PrintedProductItem extends StatelessWidget {
   final String quantity;
   final String totalLiquid;
   final String? comments;
+  final String saleRequestProductId;
   const PrintedProductItem({
     required this.product,
     required this.quantity,
     required this.totalLiquid,
     required this.comments,
+    required this.saleRequestProductId,
     super.key,
   });
 
@@ -116,6 +118,7 @@ class PrintedProductItem extends StatelessWidget {
                               password: passwordController.text,
                               personalizedCode:
                                   int.parse(personalizedCodeController.text),
+                              saleRequestProductId: saleRequestProductId,
                             );
                           },
                           child: const Text("Validar usuário"),

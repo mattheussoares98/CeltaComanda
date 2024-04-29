@@ -19,5 +19,6 @@ abstract class PrintedProductsPresenter implements Listenable {
   Future<void> removeProduct({
     required int personalizedCode,
     required String password,
+    required String saleRequestProductId,
   });
 }

@@ -44,6 +44,7 @@ class App extends StatelessWidget {
           create: (_) => GetxPrintedProductsPresenter(
             userValidations: makeRemoteUserValidations(),
             loadPrintedProducts: makeRemoteLoadPrintedProducts(),
+            removePrintedProduct: makeRemoteRemovePrintedProduct(),
           ),
         ),
         ChangeNotifierProvider(

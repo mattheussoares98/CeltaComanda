@@ -12,9 +12,13 @@ import '../../domain/mocks/mocks.dart';
 
 void main() {
   late GetxPrintedProductsPresenter sut;
+
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
+  late RemovePrintedProductSpy removePrintedProduct;
+
   late PrintedEntity printedEntity;
+
   late int personalizedCode;
   late String password;
   late String commandNumber;
@@ -29,9 +33,12 @@ void main() {
 
     userValidations = UserValidationsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
+    removePrintedProduct = RemovePrintedProductSpy();
+
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
+      removePrintedProduct: removePrintedProduct,
     );
 
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);

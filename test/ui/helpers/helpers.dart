@@ -94,6 +94,7 @@ Widget makePage(
         create: (_) => GetxPrintedProductsPresenter(
           userValidations: UserValidationsSpy(),
           loadPrintedProducts: LoadPrintedProductsSpy(),
+          removePrintedProduct: RemovePrintedProductSpy(),
         ),
       ),
     ],

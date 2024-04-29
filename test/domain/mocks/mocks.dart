@@ -6,4 +6,5 @@ export 'load_sale_request_temp_spy.dart';
 export 'local_enterprise_data_spy.dart';
 export './navigate_to_spy.dart';
 export 'remote_enterprise_data_spy.dart';
+export './remove_printed_product_spy.dart';
 export './user_validations_spy.dart';

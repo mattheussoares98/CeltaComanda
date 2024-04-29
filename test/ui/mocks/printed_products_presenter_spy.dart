@@ -27,6 +27,8 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.removeProduct(
           password: any(named: "password"),
           personalizedCode: any(named: "personalizedCode"),
+          saleRequestProductId: any(named: "productId"),
+
         )).thenAnswer((_) async => _);
   }
 

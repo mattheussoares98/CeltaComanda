@@ -41,6 +41,7 @@ class PrintedProduct extends StatelessWidget {
                       product: product.Products,
                       quantity: product.Quantity,
                       comments: product.Comments,
+                      saleRequestProductId: product.SaleRequestProductId,
                       totalLiquid: product.TotalLiquid,
                     ),
                     const Padding(
@@ -61,7 +62,7 @@ class PrintedProduct extends StatelessWidget {
                     // Text("ProductionStatus ${product.ProductionStatus}"),
                     // Text(
                     //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
-                    // Text("SaleRequestId ${product.SaleRequestId}"),
+                    Text("SaleRequestId ${product.SaleRequestId}"),
                   ],
                 );
               },
@@ -85,7 +86,7 @@ class PrintedProduct extends StatelessWidget {
             // Text("IsUsing: ${printed.IsUsing}"),
             // Text("Peoples: ${printed.Peoples}"),
             // Text("RequestType: ${printed.RequestType}"),
-            // Text("SaleRequestId: ${printed.SaleRequestId}"),
+            Text("SaleRequestId: ${printed.SaleRequestId}"),
           ],
         ),
       ),

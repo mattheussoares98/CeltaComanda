@@ -8,3 +8,4 @@ export './loading_dialog.dart';
 export './notification_dialog.dart';
 export './product_details.dart';
 export './reload_screen.dart';
+export './search_command_icon.dart';

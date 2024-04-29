@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       drawer: drawer(context: context, presenter: expansibleGroupsPresenter),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
+        actions: const [SearchCommandIcon()],
         title: FittedBox(
           child: Text(
             _titles[_currentIndex],

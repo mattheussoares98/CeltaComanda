@@ -2,7 +2,7 @@ import '../helpers/helpers.dart';
 
 import 'package:flutter/material.dart';
 
-import 'loading_image.dart';
+// import 'loading_image.dart';
 
 void showLoading(BuildContext context) {
   showDialog(
@@ -15,11 +15,11 @@ void showLoading(BuildContext context) {
           key: const Key("loading"),
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: loadingImage(),
-            ),
-            const SizedBox(height: 10),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: loadingImage(),
+            // ),
+            // const SizedBox(height: 10),
             const LinearProgressIndicator(),
             const SizedBox(height: 10),
             Text(R.string.wait, textAlign: TextAlign.center),

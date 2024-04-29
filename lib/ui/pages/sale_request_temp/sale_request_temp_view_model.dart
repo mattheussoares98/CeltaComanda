@@ -6,7 +6,7 @@ import '../../../domain/entities/entities.dart';
 import '../pages.dart';
 
 class SaleRequestTempViewModel extends Equatable {
-  final List<ProductsViewModel> Products;
+  final List<SaleRequestTempProductsViewModel> Products;
   final String PersonalizedCode;
   final String EnterpriseId;
   final String TotalLiquid;
@@ -35,7 +35,7 @@ class SaleRequestTempViewModel extends Equatable {
   factory SaleRequestTempViewModel.fromEntity(SaleRequestTempEntity entity) =>
       SaleRequestTempViewModel(
         Products: entity.Products.map(
-          (e) => ProductsViewModel.fromEntity(e),
+          (e) => SaleRequestTempProductsViewModel.fromEntity(e),
         ).toList(),
         PersonalizedCode: entity.PersonalizedCode,
         EnterpriseId: entity.EnterpriseId.toString(),

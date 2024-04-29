@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
-import '../../sale_request_temp/components/request_summary.dart';
 
 class PrintedProduct extends StatelessWidget {
   final PrintedViewModel printed;

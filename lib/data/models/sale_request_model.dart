@@ -4,7 +4,7 @@ import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
 class SaleRequestModel {
-  final List<ProductEntity> Products;
+  final List<SaleRequestTempProductEntity> Products;
   final int SaleRequestTempId;
   final String PersonalizedCode;
   final int EnterpriseId;
@@ -35,7 +35,8 @@ class SaleRequestModel {
     }
     return SaleRequestModel(
       Products: json["Products"]
-          .map<ProductEntity>((e) => ProductModel.fromJson(e["Product"]).toEntity())
+          .map<SaleRequestTempProductEntity>(
+              (e) => SaleRequestTempProductsModel.fromJson(e).toEntity())
           .toList(),
       SaleRequestTempId: json["SaleRequestTempId"],
       PersonalizedCode: json["PersonalizedCode"],

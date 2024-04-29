@@ -1,12 +1,11 @@
-import 'package:clean_celta_mobile/ui/pages/sale_request_temp/components/request_summary.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
 class ProductsItems extends StatelessWidget {
-  final SaleRequestTempViewModel productViewModel;
+  final SaleRequestTempViewModel saleRequestTempProductViewModel;
   const ProductsItems({
-    required this.productViewModel,
+    required this.saleRequestTempProductViewModel,
     super.key,
   });
 
@@ -29,18 +28,16 @@ class ProductsItems extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: productViewModel.Products.length,
+              itemCount: saleRequestTempProductViewModel.Products.length,
               itemBuilder: (context, index) {
-                final cartItem = productViewModel.Products[index];
+                final cartItem = saleRequestTempProductViewModel.Products[index];
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ProductItem(
                       product: cartItem,
-                      comments: productViewModel.Comments,
-                      quantity: "xx",
-                      totalLiquid: productViewModel.TotalLiquid,
+                      saleRequestTempViewModel: saleRequestTempProductViewModel,
                     ),
                   ],
                 );

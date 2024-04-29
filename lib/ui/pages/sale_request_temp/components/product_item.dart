@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
 import '../../pages.dart';
 
 class ProductItem extends StatelessWidget {
-  final ProductsViewModel product;
-  final String? comments;
-  final String totalLiquid;
-  final String quantity;
+  final SaleRequestTempProductsViewModel product;
+  final SaleRequestTempViewModel saleRequestTempViewModel;
+
   const ProductItem({
     required this.product,
-    required this.comments,
-    required this.totalLiquid,
-    required this.quantity,
+    required this.saleRequestTempViewModel,
     super.key,
   });
 
@@ -21,19 +17,20 @@ class ProductItem extends StatelessWidget {
     return Row(
       children: [
         // ImageWidget(product: product),
-        ProductDetails(
-          nameComplete: product.NameComplete,
-          name: product.Name,
-          eanCode: product.EanCode,
-          plu: product.PriceLookupCode,
-          comments: comments,
-          saleRetailPraticed: product.SaleRetailPraticed,
-          totalLiquid: totalLiquid,
-          quantity: quantity,
-          onPressedAddQuantity: () {},
-          onPressedReduceQuantity: () {},
-          isPrintedProducts: false,
-          onPressedRemoveProduct: null,
+        Column(
+          children: [
+            ProductTempDetails(
+              Product: product.Product,
+              onPressedAddQuantity: () {},
+              onPressedReduceQuantity: () {},
+              onPressedRemoveProduct: null,
+            ),
+            Text("DeliveryControl: ${saleRequestTempViewModel.DeliveryControl}"),
+            Text("Comments: ${saleRequestTempViewModel.Comments}"),
+            Text("EnterpriseId: ${saleRequestTempViewModel.EnterpriseId}"),
+            Text("PersonalizedCode: ${saleRequestTempViewModel.PersonalizedCode}"),
+            Text("TotalLiquid: ${saleRequestTempViewModel.TotalLiquid}"),
+          ],
         ),
       ],
     );

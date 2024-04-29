@@ -4,3 +4,4 @@ export 'enterprise_entity.dart';
 export 'printed_products_entity.dart';
 export 'printed_entity.dart';
 export "./product_entity.dart";
+export './sale_request_temp_product_entity.dart';

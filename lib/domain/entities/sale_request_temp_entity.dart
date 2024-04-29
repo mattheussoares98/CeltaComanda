@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../../domain/entities/entities.dart';
 
 class SaleRequestTempEntity extends Equatable {
-  final List<ProductEntity> Products;
+  final List<SaleRequestTempProductEntity> Products;
   final int SaleRequestTempId;
   final String PersonalizedCode;
   final int EnterpriseId;

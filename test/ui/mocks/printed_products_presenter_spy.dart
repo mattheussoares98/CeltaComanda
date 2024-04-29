@@ -24,7 +24,10 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
-    when(() => this.removeProduct()).thenAnswer((_) async => _);
+    when(() => this.removeProduct(
+          password: any(named: "password"),
+          personalizedCode: any(named: "personalizedCode"),
+        )).thenAnswer((_) async => _);
   }
 
   When mockIsValidPassordCall() => when(() => this.isValidPasswordAndCanCancel(

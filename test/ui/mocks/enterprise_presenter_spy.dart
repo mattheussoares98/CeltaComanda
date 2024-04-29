@@ -30,7 +30,7 @@ class EnterpriseValidationPresenterSpy extends Mock
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
     when(() => this.loadRemoteData()).thenAnswer((_) async => _);
     when(() => this.validateApiSaleRequest()).thenAnswer((_) async => _);
-    when(() => this.goToExpansibleGroupsPage()).thenAnswer((_) => Get.offNamed(
+    when(() => this.goToHomePage()).thenAnswer((_) => Get.offNamed(
           PageRoutes.expansibleGroups,
         ));
     when(() => this.updateEnterpriseController(any()))

@@ -92,7 +92,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       );
 
       isLoading = false;
-      goToExpansibleGroupsPage();
+      goToHomePage();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.enterpriseOrUrlNotFound:
@@ -150,7 +150,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  void goToExpansibleGroupsPage() {
-    navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups, clear: true);
+  void goToHomePage() {
+    navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
   }
 }

@@ -48,7 +48,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.goToExpansibleGroupsPage();
+    presenter.goToHomePage();
 
     expect(currentRoute, PageRoutes.expansibleGroups);
   });

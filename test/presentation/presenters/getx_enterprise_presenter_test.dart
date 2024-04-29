@@ -174,7 +174,7 @@ void main() {
   });
 
   test("Should go to ExpansibleGroupsPage cleaning atual route", () async {
-    sut.goToExpansibleGroupsPage();
+    sut.goToHomePage();
 
     verify(
       () => navigateTo.navigate(

@@ -1,5 +1,5 @@
 class PageRoutes {
-  static const String cart = "/cart";
+  static const String saleRequestTemp = "/sale_request_temp";
   static const String enterpriseValidation = "/enterprise_validation";
   static const String expansibleGroups = "/expansible_groups";
   static const String home = "/home";

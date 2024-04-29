@@ -118,7 +118,7 @@ void main() {
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.cart,
+        pageRoute: PageRoutes.saleRequestTemp,
       ),
     ).called(1);
   });

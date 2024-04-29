@@ -38,7 +38,9 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => GetxCartPresenter(),
+          create: (_) => GetxCartPresenter(
+            loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => GetxPrintedProductsPresenter(
@@ -88,8 +90,8 @@ class App extends StatelessWidget {
             transition: Transition.fadeIn,
           ),
           GetPage(
-            name: PageRoutes.cart,
-            page: makeCartPage,
+            name: PageRoutes.saleRequestTemp,
+            page: makeSaleRequestTempPage,
             transition: Transition.fadeIn,
           ),
           GetPage(

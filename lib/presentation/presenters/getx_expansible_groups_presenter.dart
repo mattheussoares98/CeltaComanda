@@ -94,7 +94,7 @@ class GetxExpansibleGroupsPresenter
 
   @override
   void goToCartPage() {
-    navigateTo.navigate(pageRoute: PageRoutes.cart);
+    navigateTo.navigate(pageRoute: PageRoutes.saleRequestTemp);
   }
 
   @override

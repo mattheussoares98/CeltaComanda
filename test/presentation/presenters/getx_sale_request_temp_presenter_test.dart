@@ -11,12 +11,18 @@ import '../../domain/mocks/mocks.dart';
 void main() {
   late GetxCartPresenter sut;
   late ProductsViewModel product;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
     product = EntityFactory.makeProductViewModel();
-    sut = GetxCartPresenter();
+    
+    sut = GetxCartPresenter(
+      loadSaleRequestTemp: loadSaleRequestTemp,
+    );
   });
 
   test('Should add product in cart', () async {

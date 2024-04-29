@@ -68,6 +68,6 @@ void main() {
     presenter.goToCartPage();
     await tester.pumpAndSettle();
 
-    expect(currentRoute, PageRoutes.cart);
+    expect(currentRoute, PageRoutes.saleRequestTemp);
   });
 }

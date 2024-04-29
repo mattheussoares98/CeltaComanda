@@ -7,4 +7,5 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Stream<bool> get isLoadingStream;
 
   Future<void> addProductInCart(ProductsViewModel product);
+  Future<void> load();
 }

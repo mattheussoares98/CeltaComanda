@@ -18,7 +18,7 @@ class ProductDetailsPresenterSpy extends Mock
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
-          PageRoutes.cart,
+          PageRoutes.saleRequestTemp,
         ));
   }
   // void mockExpansibleGroupStreamError(DomainError error) {

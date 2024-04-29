@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import 'package:clean_celta_mobile/main/factories/factories.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -40,7 +41,7 @@ Widget makePage(
       page: () => const ExpansibleGroupsPage(),
     ),
     GetPage(
-      name: PageRoutes.cart,
+      name: PageRoutes.saleRequestTemp,
       page: () => const SaleRequestTempPage(),
     ),
     GetPage(
@@ -88,7 +89,9 @@ Widget makePage(
         ),
       ),
       ChangeNotifierProvider<GetxCartPresenter>(
-        create: (_) => GetxCartPresenter(),
+        create: (_) => GetxCartPresenter(
+          loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+        ),
       ),
       ChangeNotifierProvider<GetxPrintedProductsPresenter>(
         create: (_) => GetxPrintedProductsPresenter(

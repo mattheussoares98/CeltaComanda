@@ -64,7 +64,7 @@ class GetxProductsPresenter extends GetxController
   @override
   void goToCartPage() {
     navigateTo.navigate(
-      pageRoute: PageRoutes.cart,
+      pageRoute: PageRoutes.saleRequestTemp,
     );
   }
 

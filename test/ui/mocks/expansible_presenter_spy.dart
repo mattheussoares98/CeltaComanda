@@ -28,7 +28,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
           PageRoutes.products,
         ));
     when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
-          PageRoutes.cart,
+          PageRoutes.saleRequestTemp,
         ));
     when(() => this.goToSplashPage()).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,

@@ -173,14 +173,17 @@ class EntityFactory {
           .map((e) => SaleRequestTempProductsViewModel(
                 Product: makeProductViewModel(),
                 IsPrinted: faker.randomGenerator.boolean().toString(),
-                SaleRequestProductTempId: faker.randomGenerator.integer(10).toString(),
+                SaleRequestProductTempId:
+                    faker.randomGenerator.integer(10).toString(),
                 SaleRequestTempId: faker.randomGenerator.integer(10).toString(),
-                ProductInternalCodeOnErp: faker.randomGenerator.integer(10).toString(),
+                ProductInternalCodeOnErp:
+                    faker.randomGenerator.integer(10).toString(),
                 Comments: faker.randomGenerator.string(50),
                 TotalLiquid: faker.randomGenerator.decimal().toString(),
                 Quantity: faker.randomGenerator.decimal().toString(),
                 Value: faker.randomGenerator.decimal().toString(),
-                ProductPriceLookUpCode: faker.randomGenerator.integer(10).toString(),
+                ProductPriceLookUpCode:
+                    faker.randomGenerator.integer(10).toString(),
               ))
           .toList(),
       PersonalizedCode: faker.randomGenerator.string(10),
@@ -386,4 +389,18 @@ class EntityFactory {
       DeliveryControl: faker.randomGenerator.integer(10),
     );
   }
+
+  static SaleRequestTempProductsViewModel
+      makeSaleRequestTempProductsViewModel() =>
+          SaleRequestTempProductsViewModel(
+            Product: makeProductViewModel(),
+            SaleRequestProductTempId: faker.randomGenerator.integer(10).toString(),
+            ProductPriceLookUpCode: faker.randomGenerator.integer(10).toString(),
+            SaleRequestTempId: faker.randomGenerator.integer(10).toString(),
+            ProductInternalCodeOnErp: faker.randomGenerator.integer(10).toString(),
+            IsPrinted: faker.randomGenerator.boolean().toString(),
+            TotalLiquid: faker.randomGenerator.decimal().toString(),
+            Quantity: faker.randomGenerator.decimal().toString(),
+            Value: faker.randomGenerator.decimal().toString(),
+          );
 }

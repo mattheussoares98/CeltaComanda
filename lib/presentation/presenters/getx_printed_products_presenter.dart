@@ -82,10 +82,10 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> getPrintedProducts(String commandNumber) async {
+  Future<void> load(String commandNumber) async {
     isLoading = true;
     mainError = null;
-    clearPrintedProducts();
+    clear();
     notifyListeners();
 
     try {
@@ -128,7 +128,7 @@ class GetxPrintedProductsPresenter
   set mainError(UIError? value) => _mainError.value = value;
 
   @override
-  void clearPrintedProducts() {
+  void clear() {
     _printedProducts = null;
   }
 }

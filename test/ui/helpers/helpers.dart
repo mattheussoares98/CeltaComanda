@@ -80,16 +80,13 @@ Widget makePage(
       ChangeNotifierProvider<GetxExpansibleGroupsPresenter>(
         create: (_) => GetxExpansibleGroupsPresenter(
           loadExpansibleGroups: LoadExpansibleGroupsSpy(),
-          loadSaleRequestTemp: LoadSaleRequestTempSpy(),
           localEnterpriseData: LocalEnterpriseDataSpy(),
           navigateTo: NavigateToSpy(),
-          loadPrintedProducts: LoadPrintedProductsSpy(),
           clearExpansibleGroups: ClearExpansibleGroupsSpy(),
-          clearSaleRequestTemp: ClearSaleRequestTempSpy(),
         ),
       ),
-      ChangeNotifierProvider<GetxCartPresenter>(
-        create: (_) => GetxCartPresenter(
+      ChangeNotifierProvider<GetxSaleRequestTempPresenter>(
+        create: (_) => GetxSaleRequestTempPresenter(
           loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
         ),
       ),

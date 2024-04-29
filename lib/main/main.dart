@@ -38,7 +38,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => GetxCartPresenter(
+          create: (_) => GetxSaleRequestTempPresenter(
             loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
           ),
         ),
@@ -51,13 +51,10 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => GetxExpansibleGroupsPresenter(
-            loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
             loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
             localEnterpriseData: makeLocalEnterpriseData(),
             navigateTo: makeNavigateTo(),
-            loadPrintedProducts: makeRemoteLoadPrintedProducts(),
             clearExpansibleGroups: makeLocalClearExpansibleGroups(),
-            clearSaleRequestTemp: makeLocalClearSaleRequestTemp(),
           ),
         ),
       ],

@@ -16,7 +16,9 @@ class SearchCommandIcon extends StatefulWidget {
 class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
-    GetxExpansibleGroupsPresenter presenter = Provider.of(context);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenterr =
+        Provider.of(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
 
@@ -25,8 +27,9 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
       onTap: () {
         showDialogSearchCommandNumber(
           context: context,
-          presenter: presenter,
+          presenter: expansibleGroupsPresenterr,
           printedProductsPresenter: printedProductsPresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter,
         );
       },
       child: FittedBox(
@@ -41,8 +44,9 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
               onPressed: () {
                 showDialogSearchCommandNumber(
                   context: context,
-                  presenter: presenter,
+                  presenter: expansibleGroupsPresenterr,
                   printedProductsPresenter: printedProductsPresenter,
+                  saleRequestTempPresenter: saleRequestTempPresenter,
                 );
               },
             ),

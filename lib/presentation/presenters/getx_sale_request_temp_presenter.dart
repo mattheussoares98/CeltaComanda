@@ -3,25 +3,30 @@ import 'package:get/get.dart';
 
 import 'package:flutter/foundation.dart';
 
+import '../../domain/entities/entities.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxCartPresenter
+class GetxSaleRequestTempPresenter
     with ChangeNotifier
     implements SaleRequestTempPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
 
-  GetxCartPresenter({
+  GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
   });
-  
-  final List<ProductsViewModel> _cartItems = [];
+
+  SaleRequestTempViewModel? _saleRequestTemp;
+  @override
+  SaleRequestTempViewModel? get saleRequestTemp => _saleRequestTemp;
+  set saleRequestTemp(SaleRequestTempViewModel? newValue) {
+    _saleRequestTemp = newValue;
+  }
 
   @override
-  List<ProductsViewModel> get saleRequestProducts => _cartItems;
-
-  @override
-  Future<void> addProductInCart(ProductsViewModel product) async {
-    _cartItems.add(product);
+  Future<void> addProductInCart(
+      SaleRequestTempProductsViewModel product) async {
+    _saleRequestTemp?.Products.add(product);
     notifyListeners();
   }
 
@@ -31,5 +36,24 @@ class GetxCartPresenter
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
   @override
-  Future<void> load() async {}
+  Future<void> load(String commandNumber) async {
+    try {
+      SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
+
+      if (saleRequestTemp != null) {
+        _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
+      }
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  @override
+  void clear() {
+    _saleRequestTemp = null;
+  }
 }

@@ -45,11 +45,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
 
     return Scaffold(
-      drawer: drawer(context: context, presenter: expansibleGroupsPresenter),
+      drawer: drawer(
+        context: context,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      ),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
         actions: const [SearchCommandIcon()],
@@ -89,13 +95,13 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: IconWithNumberQuantity(
               iconData: Icons.shopping_cart_outlined,
-              productsQuantity: expansibleGroupsPresenter.saleRequestTemp ==
+              productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
                           null ||
-                      expansibleGroupsPresenter
+                      saleRequestTempPresenter
                               .saleRequestTemp?.Products.isEmpty ==
                           true
                   ? 0
-                  : expansibleGroupsPresenter.saleRequestTemp!.Products.length,
+                  : saleRequestTempPresenter.saleRequestTemp!.Products.length,
             ),
             label: 'Pendentes',
           ),

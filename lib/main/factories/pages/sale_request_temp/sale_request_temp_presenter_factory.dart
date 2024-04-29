@@ -3,6 +3,6 @@ import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 
 SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
-    GetxCartPresenter(
+    GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
     );

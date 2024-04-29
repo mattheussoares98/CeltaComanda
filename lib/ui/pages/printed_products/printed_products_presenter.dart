@@ -8,8 +8,8 @@ abstract class PrintedProductsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> getPrintedProducts(String commandNumber);
-  void clearPrintedProducts();
+  Future<void> load(String commandNumber);
+  void clear();
   PrintedViewModel? get printedProducts;
 
   Future<void> removeProduct({

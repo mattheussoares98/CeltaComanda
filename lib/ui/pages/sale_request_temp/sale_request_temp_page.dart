@@ -17,7 +17,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
     with LoadingManager {
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<GetxExpansibleGroupsPresenter>(context);
+    final expansibleGroupsPresenter =
+        Provider.of<GetxExpansibleGroupsPresenter>(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     return Scaffold(
       body: Column(
         children: [
@@ -25,11 +27,13 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(context, presenter.isLoadingStream);
+                  handleLoading(
+                      context, expansibleGroupsPresenter.isLoadingStream);
 
-                  if (presenter.saleRequestTemp != null) {
+                  if (saleRequestTempPresenter.saleRequestTemp != null) {
                     return ProductsItems(
-                        saleRequestTempViewModel: presenter.saleRequestTemp!);
+                        saleRequestTempViewModel:
+                            saleRequestTempPresenter.saleRequestTemp!);
                   }
                   return const Text("Não há dados");
                 },

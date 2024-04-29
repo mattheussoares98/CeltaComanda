@@ -10,27 +10,28 @@ import '../../domain/mocks/mocks.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../ui/mocks/cart_presenter_spy.dart';
+import '../../ui/mocks/sale_request_temp_presenter_spy.dart';
 
 void main() {
   late GetxProductDetailsPresenter sut;
-  late CartPresenterSpy cartPresenter;
+  late SaleRequestTempPresenterSpy cartPresenter;
   late NavigateToSpy navigateTo;
   // late AddProductSpy addProduct;
-  late ProductsViewModel product;
+  late SaleRequestTempProductsViewModel saleRequestTempProductsViewModel;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(SaleRequestTempPresenterSpy());
   });
 
   setUp(() {
     navigateTo = NavigateToSpy();
-    cartPresenter = CartPresenterSpy();
+    cartPresenter = SaleRequestTempPresenterSpy();
     // addProduct = AddProductSpy();
-    product = EntityFactory.makeProductViewModel();
+    saleRequestTempProductsViewModel =
+        EntityFactory.makeSaleRequestTempProductsViewModel();
     navigateTo.mockNavigate();
     sut = GetxProductDetailsPresenter(
       navigateTo: navigateTo,
@@ -48,8 +49,12 @@ void main() {
   });
 
   test('Should call addProduct with correct product', () async {
-    sut.addProductInCart(cartPresenter: cartPresenter, product: product);
+    sut.addProductInCart(
+        saleRequestTempPresenter: cartPresenter,
+        product: saleRequestTempProductsViewModel);
 
-    verify(() => cartPresenter.addProductInCart(product)).called(1);
+    verify(() =>
+            cartPresenter.addProductInCart(saleRequestTempProductsViewModel))
+        .called(1);
   });
 }

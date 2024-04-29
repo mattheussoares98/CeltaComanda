@@ -31,14 +31,14 @@ class PrintedProductsPresenterSpy extends Mock
   }
 
   When mockGetPrintedProductsCall() =>
-      when(() => this.getPrintedProducts(any()));
+      when(() => this.load(any()));
 
   mockGetPrintedProducts() {
     this.mockGetPrintedProductsCall().thenAnswer((_) async => _);
   }
 
   When mockClearPrintedProductsCall() =>
-      when(() => this.clearPrintedProducts());
+      when(() => this.clear());
 
   mockClearPrintedProducts() {
     this.mockClearPrintedProductsCall().thenAnswer((_) async => _);

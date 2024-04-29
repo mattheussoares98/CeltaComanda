@@ -191,7 +191,7 @@ void main() {
 
   group("Manipulate data", () {
     test("Should call loadPrintedProducts with correct values", () async {
-      await sut.getPrintedProducts(commandNumber);
+      await sut.load(commandNumber);
 
       verify(() => loadPrintedProducts.load(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -230,11 +230,11 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.getPrintedProducts(commandNumber);
+      await sut.load(commandNumber);
     });
 
     test("Should clear printed on call clearPrinted", () async {
-      sut.clearPrintedProducts();
+      sut.clear();
 
       expect(sut.printedProducts, null);
     });

@@ -10,9 +10,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late ExpansibleGroupsPresenterSpy presenter;
+  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
 
   setUp(() {
     presenter = ExpansibleGroupsPresenterSpy();
+    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
   });
 
   setUpAll(() {
@@ -87,7 +91,10 @@ void main() {
   testWidgets('Should go to SplashPage', (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.goToSplashPage();
+    presenter.goToSplashPage(
+      saleRequestTempPresenter: saleRequestTempPresenter,
+      printedProductsPresenter: printedProductsPresenter,
+    );
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.splash);

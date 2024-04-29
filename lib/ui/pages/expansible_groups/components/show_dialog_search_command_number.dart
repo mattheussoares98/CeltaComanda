@@ -6,6 +6,7 @@ void showDialogSearchCommandNumber({
   required BuildContext context,
   required ExpansibleGroupsPresenter presenter,
   required PrintedProductsPresenter printedProductsPresenter,
+  required SaleRequestTempPresenter saleRequestTempPresenter,
 }) {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController textController = TextEditingController();
@@ -55,6 +56,7 @@ void showDialogSearchCommandNumber({
                 await presenter.load(
                   commandNumber: textController.text,
                   printedProductsPresenter: printedProductsPresenter,
+                  saleRequestTempPresenter: saleRequestTempPresenter,
                 );
               },
               child: const Text("Consultar"),

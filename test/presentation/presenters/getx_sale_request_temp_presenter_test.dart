@@ -9,25 +9,28 @@ import 'package:flutter/widgets.dart';
 import '../../domain/mocks/mocks.dart';
 
 void main() {
-  late GetxCartPresenter sut;
+  late GetxSaleRequestTempPresenter sut;
   late ProductsViewModel product;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late SaleRequestTempProductsViewModel saleRequestTempProductsViewModel;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   setUp(() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
+    saleRequestTempProductsViewModel =
+        EntityFactory.makeSaleRequestTempProductsViewModel();
     product = EntityFactory.makeProductViewModel();
-    
-    sut = GetxCartPresenter(
+
+    sut = GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
     );
   });
 
   test('Should add product in cart', () async {
-    sut.addProductInCart(product);
+    sut.addProductInCart(saleRequestTempProductsViewModel);
 
-    expect(product, sut.saleRequestProducts[0]);
+    expect(product, sut.saleRequestTemp?.Products[0]);
   });
 }

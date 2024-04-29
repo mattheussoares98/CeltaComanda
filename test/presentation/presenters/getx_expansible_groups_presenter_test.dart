@@ -19,6 +19,7 @@ import '../../ui/mocks/mocks.dart';
 void main() {
   late GetxExpansibleGroupsPresenter sut;
   late PrintedProductsPresenterSpy printedProductsPresenter;
+  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
   late EnterpriseEntity enterpriseEntity;
   late List<ExpansibleGroupEntity> expansibleGroups;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -45,6 +46,7 @@ void main() {
     clearExpansibleGroups = ClearExpansibleGroupsSpy();
     clearSaleRequestTemp = ClearSaleRequestTempSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
+    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
 
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     printedProducts = EntityFactory.makePrintedProductsEntity();
@@ -78,10 +80,7 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
-      loadSaleRequestTemp: loadSaleRequestTemp,
-      loadPrintedProducts: loadPrintedProducts,
       clearExpansibleGroups: clearExpansibleGroups,
-      clearSaleRequestTemp: clearSaleRequestTemp,
     );
   });
 
@@ -135,7 +134,10 @@ void main() {
   });
 
   test('Should go to SplashPage on logout click', () async {
-    sut.goToSplashPage();
+    sut.goToSplashPage(
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
 
     verify(
       () => navigateTo.navigate(
@@ -157,6 +159,7 @@ void main() {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
   });
   test('Should return correct value on loadSaleRequestTemp', () async {
@@ -179,6 +182,7 @@ void main() {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
   });
 
@@ -188,16 +192,20 @@ void main() {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
     final saleRequestTempViewModel =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
 
-    expect(sut.saleRequestTemp, saleRequestTempViewModel);
+    expect(saleRequestTempPresenter.saleRequestTemp, saleRequestTempViewModel);
   });
 
   test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
-    await sut.goToSplashPage();
+    await sut.goToSplashPage(
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
 
     expect(
         EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName, isNotEmpty);
@@ -209,15 +217,22 @@ void main() {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
-    await sut.goToSplashPage();
+    await sut.goToSplashPage(
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
 
-    expect(sut.saleRequestTemp, null);
+    expect(saleRequestTempPresenter.saleRequestTemp, null);
   });
 
   test('Should clear expansibleGroups when go to SplashPage', () async {
     await sut.getExpansibleGroups();
-    await sut.goToSplashPage();
+    await sut.goToSplashPage(
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
 
     expect(sut.expansibleGroups, []);
   });
@@ -236,6 +251,7 @@ void main() {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
     verify(() => clearExpansibleGroups.clear()).called(1);
@@ -245,17 +261,18 @@ void main() {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
     verify(() => clearSaleRequestTemp.clear()).called(1);
   });
   test('Should call clearPrintedProducts on load data', () async {
-
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
-    verify(() => printedProductsPresenter.clearPrintedProducts()).called(1);
+    verify(() => printedProductsPresenter.clear()).called(1);
   });
 }

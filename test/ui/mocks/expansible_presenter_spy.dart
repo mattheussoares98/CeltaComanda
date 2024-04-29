@@ -30,7 +30,10 @@ class ExpansibleGroupsPresenterSpy extends Mock
     when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
           PageRoutes.saleRequestTemp,
         ));
-    when(() => this.goToSplashPage()).thenAnswer((_) async => Get.offAllNamed(
+    when(() => this.goToSplashPage(
+          printedProductsPresenter: any(named: "printedProductsPresenter"),
+          saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
+        )).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));
     when(() => this.goToPrintedProductsPage())
@@ -46,6 +49,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
   When mockLoadCall() => when(() => this.load(
         commandNumber: any(named: "commandNumber"),
         printedProductsPresenter: any(named: "printedProductsPresenter"),
+        saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
       ));
 
   void mockExpansibleGroupStreamError(DomainError error) {

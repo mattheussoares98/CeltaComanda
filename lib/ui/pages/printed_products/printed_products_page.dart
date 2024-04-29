@@ -19,6 +19,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     with LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context);
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
@@ -43,6 +45,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   return SearchDataByCommandNumber(
                     expansibleGroupsPresenter: expansibleGroupsPresenter,
                     printedProductsPresenter: printedProductsPresenter,
+                    saleRequestTempPresenter: saleRequestTempPresenter,
                   );
                 },
               ),

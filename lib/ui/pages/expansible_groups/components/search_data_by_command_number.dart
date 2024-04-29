@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 class SearchDataByCommandNumber extends StatelessWidget {
   final ExpansibleGroupsPresenter expansibleGroupsPresenter;
   final PrintedProductsPresenter printedProductsPresenter;
+  final SaleRequestTempPresenter saleRequestTempPresenter;
   const SearchDataByCommandNumber({
     required this.expansibleGroupsPresenter,
     required this.printedProductsPresenter,
+    required this.saleRequestTempPresenter,
     super.key,
   });
 
@@ -26,6 +28,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
               context: context,
               presenter: expansibleGroupsPresenter,
               printedProductsPresenter: printedProductsPresenter,
+              saleRequestTempPresenter: saleRequestTempPresenter,
             );
           },
           icon: const Icon(Icons.search),

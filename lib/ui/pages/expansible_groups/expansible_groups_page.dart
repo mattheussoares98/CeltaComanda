@@ -17,7 +17,9 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    GetxExpansibleGroupsPresenter presenter = Provider.of(context);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
     return Scaffold(
@@ -27,18 +29,22 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(context, presenter.isLoadingStream);
-                  handleMainError(context, presenter.mainErrorStream);
+                  handleLoading(
+                      context, expansibleGroupsPresenter.isLoadingStream);
+                  handleMainError(
+                      context, expansibleGroupsPresenter.mainErrorStream);
 
-                  if (presenter.expansibleGroups.isEmpty) {
+                  if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
                     return SearchDataByCommandNumber(
-                      expansibleGroupsPresenter: presenter,
+                      expansibleGroupsPresenter: expansibleGroupsPresenter,
                       printedProductsPresenter: printedProductsPresenter,
+                      saleRequestTempPresenter: saleRequestTempPresenter,
                     );
                   }
 
                   return GroupItems(
-                    expansibleGroupsViewModel: presenter.expansibleGroups,
+                    expansibleGroupsViewModel:
+                        expansibleGroupsPresenter.expansibleGroups,
                   );
                 },
               ),

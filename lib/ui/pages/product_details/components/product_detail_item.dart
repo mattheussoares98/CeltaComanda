@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
-import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../products/components/components.dart';
 
@@ -17,7 +14,7 @@ class ProductDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetxCartPresenter cartPresenter = Provider.of(context);
+    // GetxSaleRequestTempPresenter cartPresenter = Provider.of(context);
     return Column(
       children: [
         Expanded(
@@ -56,13 +53,13 @@ class ProductDetailItem extends StatelessWidget {
             ),
           ),
         ),
-        AddProductInCart(
-          onPressed: () async => await presenter.addProductInCart(
-            product: product,
-            cartPresenter: cartPresenter,
-          ),
-          price: product.PackingAbbreviation,
-        ),
+        // AddProductInCart(
+        //   onPressed: () async => await presenter.addProductInCart(
+        //     product: product,
+        //     saleRequestTempPresenter: cartPresenter,
+        //   ),
+        //   price: product.PackingAbbreviation,
+        // ),
       ],
     );
   }

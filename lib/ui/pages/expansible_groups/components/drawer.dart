@@ -4,7 +4,9 @@ import '../../pages.dart';
 
 Widget drawer({
   required BuildContext context,
-  required ExpansibleGroupsPresenter presenter,
+  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required PrintedProductsPresenter printedProductsPresenter,
 }) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * 0.7,
@@ -30,10 +32,13 @@ Widget drawer({
           _drawerItem(
             key: const Key("logout"),
             context: context,
-            onTap: ()async {
-              presenter.goToSplashPage();
-              await presenter.clearEnterpriseData();
-            } ,
+            onTap: () async {
+              expansibleGroupsPresenter.goToSplashPage(
+                printedProductsPresenter: printedProductsPresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+              );
+              await expansibleGroupsPresenter.clearEnterpriseData();
+            },
             text: "Sair",
             leading: Icon(
               Icons.logout,

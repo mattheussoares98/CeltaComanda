@@ -14,19 +14,15 @@ class GetxExpansibleGroupsPresenter
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
-  final LoadSaleRequestTemp loadSaleRequestTemp;
-  final LoadPrintedProducts loadPrintedProducts;
   final ClearExpansibleGroups clearExpansibleGroups;
-  final ClearSaleRequestTemp clearSaleRequestTemp;
+  // final ClearSaleRequestTemp clearSaleRequestTemp;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
-    required this.loadSaleRequestTemp,
-    required this.loadPrintedProducts,
     required this.clearExpansibleGroups,
-    required this.clearSaleRequestTemp,
+    // required this.clearSaleRequestTemp,
   });
 
   final _isLoading = false.obs;
@@ -50,13 +46,6 @@ class GetxExpansibleGroupsPresenter
   @override
   List<ExpansibleGroupsViewModel> get expansibleGroups =>
       [..._expansibleGroups];
-
-  SaleRequestTempViewModel? _saleRequestTemp;
-  @override
-  SaleRequestTempViewModel? get saleRequestTemp => _saleRequestTemp;
-  set saleRequestTemp(SaleRequestTempViewModel? newValue) {
-    _saleRequestTemp = newValue;
-  }
 
   @override
   Future<void> getExpansibleGroups() async {
@@ -98,10 +87,15 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> goToSplashPage() async {
+  Future<void> goToSplashPage({
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+  }) async {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
-    _saleRequestTemp = null;
+
     _expansibleGroups = [];
+    printedProductsPresenter.clear();
+    saleRequestTempPresenter.clear();
     await clearEnterpriseData();
   }
 
@@ -122,27 +116,21 @@ class GetxExpansibleGroupsPresenter
   Future<void> load({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     isLoading = true;
     mainError = null;
     _expansibleGroups = clearExpansibleGroups.clear();
-    printedProductsPresenter.clearPrintedProducts();
-    _saleRequestTemp = clearSaleRequestTemp.clear();
+    printedProductsPresenter.clear();
+    saleRequestTempPresenter.clear();
     notifyListeners();
 
     try {
-      SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber,
-      );
+      await getExpansibleGroups();
 
-      if (saleRequestTemp != null) {
-        _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
+      await saleRequestTempPresenter.load(commandNumber);
 
-        await getExpansibleGroups();
-        await printedProductsPresenter.getPrintedProducts(commandNumber);
-      }
+      await printedProductsPresenter.load(commandNumber);
     } catch (error) {
       mainError = UIError.unexpected;
     } finally {

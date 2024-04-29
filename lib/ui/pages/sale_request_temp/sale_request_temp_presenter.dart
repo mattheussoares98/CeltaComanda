@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../pages.dart';
 
 abstract class SaleRequestTempPresenter implements ChangeNotifier {
-  List<ProductsViewModel> get saleRequestProducts;
+  SaleRequestTempViewModel? get saleRequestTemp;
   Stream<bool> get isLoadingStream;
 
-  Future<void> addProductInCart(ProductsViewModel product);
-  Future<void> load();
+  Future<void> addProductInCart(SaleRequestTempProductsViewModel product);
+  Future<void> load(String commandNumber);
+  void clear();
 }

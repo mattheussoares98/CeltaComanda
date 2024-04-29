@@ -249,4 +249,13 @@ void main() {
 
     verify(() => clearSaleRequestTemp.clear()).called(1);
   });
+  test('Should call clearPrintedProducts on load data', () async {
+
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
+
+    verify(() => printedProductsPresenter.clearPrintedProducts()).called(1);
+  });
 }

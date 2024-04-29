@@ -126,7 +126,7 @@ void main() {
 
     await sut.validateApiSaleRequest();
 
-    verify(() => navigateTo.navigate(pageRoute: PageRoutes.expansibleGroups, clear: true))
+    verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
         .called(1);
   });
 
@@ -173,12 +173,12 @@ void main() {
         ));
   });
 
-  test("Should go to ExpansibleGroupsPage cleaning atual route", () async {
+  test("Should go to HomePage cleaning atual route", () async {
     sut.goToHomePage();
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.expansibleGroups,
+        pageRoute: PageRoutes.home,
         clear: true,
       ),
     );

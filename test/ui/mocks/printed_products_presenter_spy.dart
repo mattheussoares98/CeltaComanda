@@ -15,7 +15,6 @@ class PrintedProductsPresenterSpy extends Mock
   PrintedViewModel printedProductsMock = EntityFactory.makePrintedViewModel();
 
   PrintedProductsPresenterSpy() {
-    mockIsValidPasswordAndCanCancel(true);
     mockGetPrintedProducts();
     mockClearPrintedProducts();
 
@@ -27,17 +26,8 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.removeProduct(
           password: any(named: "password"),
           personalizedCode: any(named: "personalizedCode"),
-          saleRequestProductId: any(named: "productId"),
-
+          saleRequestProductId: any(named: "saleRequestProductId"),
         )).thenAnswer((_) async => _);
-  }
-
-  When mockIsValidPassordCall() => when(() => this.isValidPasswordAndCanCancel(
-        personalizedCode: any(named: "personalizedCode"),
-        password: any(named: "password"),
-      ));
-  mockIsValidPasswordAndCanCancel(bool value) {
-    this.mockIsValidPassordCall().thenAnswer((_) async => value);
   }
 
   When mockGetPrintedProductsCall() =>

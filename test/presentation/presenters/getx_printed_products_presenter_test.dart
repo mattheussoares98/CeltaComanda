@@ -22,6 +22,7 @@ void main() {
   late int personalizedCode;
   late String password;
   late String commandNumber;
+  late String saleRequestProductId;
 
   setUp(() {
     personalizedCode = faker.randomGenerator.integer(5);
@@ -30,6 +31,7 @@ void main() {
         EntityFactory.makeEnterpriseData();
     commandNumber = faker.randomGenerator.integer(3).toString();
     printedEntity = EntityFactory.makePrintedProductsEntity();
+    saleRequestProductId = faker.randomGenerator.integer(5).toString();
 
     userValidations = UserValidationsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
@@ -46,7 +48,8 @@ void main() {
 
   group("Validate password", () {
     test('Should call isValidPassword with correct values', () async {
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -61,7 +64,10 @@ void main() {
     });
 
     test('Should return true on password is valid', () async {
-      final validPassword = await sut.isValidPasswordAndCanCancel(
+      userValidations.mockIsValidPassword(true);
+
+      final validPassword = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -77,7 +83,8 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
 
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -91,7 +98,8 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
 
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -104,26 +112,17 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
-    });
-
-    test('Should return false invalid password', () async {
-      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
-
-      final validPassword = await sut.isValidPasswordAndCanCancel(
-        personalizedCode: personalizedCode,
-        password: password,
-      );
-
-      expect(validPassword, false);
     });
   });
   group("Verify user can cancel", () {
     test('Should call userCanCancel with correct values', () async {
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -137,9 +136,9 @@ void main() {
     });
 
     test('Should return true on user can cancel', () async {
-      final canCancel = await sut.isValidPasswordAndCanCancel(
+      final canCancel = await userValidations.canCancel(
         personalizedCode: personalizedCode,
-        password: password,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
       expect(canCancel, true);
@@ -153,7 +152,8 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
 
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -167,7 +167,8 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
 
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -180,21 +181,11 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.isValidPasswordAndCanCancel(
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
       );
-    });
-
-    test('Should return false on user cant cancel', () async {
-      userValidations.mockCanCancelError(DomainError.invalidCredentials);
-
-      final canCancel = await sut.isValidPasswordAndCanCancel(
-        personalizedCode: personalizedCode,
-        password: password,
-      );
-
-      expect(canCancel, false);
     });
   });
 

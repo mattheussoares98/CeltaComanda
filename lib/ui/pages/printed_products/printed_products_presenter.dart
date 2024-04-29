@@ -8,10 +8,6 @@ abstract class PrintedProductsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<bool> isValidPasswordAndCanCancel({
-    required int personalizedCode,
-    required String password,
-  });
   Future<void> getPrintedProducts(String commandNumber);
   void clearPrintedProducts();
   PrintedViewModel? get printedProducts;

@@ -22,10 +22,14 @@ class GetxPrintedProductsPresenter
   });
 
   @override
-  Future<bool> isValidPasswordAndCanCancel({
+  Future<void> removeProduct({
     required int personalizedCode,
     required String password,
+    required String saleRequestProductId,
   }) async {
+    isLoading = true;
+    mainError = null;
+
     try {
       final isValidPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -47,34 +51,6 @@ class GetxPrintedProductsPresenter
       if (!canCancel) {
         throw DomainError.accessDenied;
       }
-
-      return canCancel;
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.invalidCredentials:
-          throw DomainError.invalidCredentials;
-        case DomainError.accessDenied:
-          throw DomainError.accessDenied;
-        default:
-          throw DomainError.unexpected;
-      }
-    }
-  }
-
-  @override
-  Future<void> removeProduct({
-    required int personalizedCode,
-    required String password,
-    required String saleRequestProductId,
-  }) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      final bool canCancel = await isValidPasswordAndCanCancel(
-        personalizedCode: personalizedCode,
-        password: password,
-      );
 
       if (canCancel) {
         await removePrintedProduct.remove(

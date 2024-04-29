@@ -9,7 +9,7 @@ class SaleRequestTempProductsViewModel extends Equatable {
   final ProductsViewModel Product;
   final String SaleRequestProductTempId;
   final String IsPrinted;
-  final String Comments;
+  final String? Comments;
   final String SaleRequestTempId;
   final String ProductInternalCodeOnErp;
   final String TotalLiquid;
@@ -35,7 +35,7 @@ class SaleRequestTempProductsViewModel extends Equatable {
     required this.Product,
     required this.SaleRequestProductTempId,
     required this.IsPrinted,
-    required this.Comments,
+    this.Comments,
     required this.SaleRequestTempId,
     required this.ProductInternalCodeOnErp,
     required this.TotalLiquid,
@@ -52,10 +52,12 @@ class SaleRequestTempProductsViewModel extends Equatable {
         IsPrinted: entity.IsPrinted.toString(),
         SaleRequestTempId: entity.SaleRequestTempId.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
-        TotalLiquid: entity.TotalLiquid.toString(),
-        Quantity: entity.Quantity.toString(),
-        Value: entity.Value.toString(),
-        Comments: entity.Comments.toString(),
+        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2)
+            .replaceAll(RegExp(r'\.'), ','),
+        Quantity:
+            entity.Quantity.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
+        Value: entity.Value.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
+        Comments: entity.Comments,
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
       );
 }

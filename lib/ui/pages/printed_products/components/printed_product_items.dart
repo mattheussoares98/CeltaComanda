@@ -74,7 +74,7 @@ class PrintedProduct extends StatelessWidget {
             // ),
             // Text("Comments: ${printed.Comments}"),
             // Text("Comanda: ${printed.PersonalizedCode}"),
-            const RequestSummary(),
+            RequestSummary(totalLiquid: printed.TotalLiquid),
             // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
             // Text("DateOfCreation: ${printed.DateOfCreation}"),
             // Text("DeliveryControl: ${printed.DeliveryControl}"),

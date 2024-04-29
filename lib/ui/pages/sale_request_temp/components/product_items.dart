@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class ProductsItems extends StatelessWidget {
-  final SaleRequestTempViewModel saleRequestTempProductViewModel;
+  final SaleRequestTempViewModel saleRequestTempViewModel;
   const ProductsItems({
-    required this.saleRequestTempProductViewModel,
+    required this.saleRequestTempViewModel,
     super.key,
   });
 
@@ -28,22 +28,18 @@ class ProductsItems extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: saleRequestTempProductViewModel.Products.length,
+              itemCount: saleRequestTempViewModel.Products.length,
               itemBuilder: (context, index) {
-                final cartItem = saleRequestTempProductViewModel.Products[index];
+                final productViewModel =
+                    saleRequestTempViewModel.Products[index];
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ProductItem(
-                      product: cartItem,
-                      saleRequestTempViewModel: saleRequestTempProductViewModel,
-                    ),
-                  ],
-                );
+                return ProductItem(product: productViewModel);
               },
             ),
-            const RequestSummary(),
+            RequestSummary(
+              totalLiquid: saleRequestTempViewModel.TotalLiquid,
+              comments: saleRequestTempViewModel.Comments,
+            ),
           ],
         ),
       ),

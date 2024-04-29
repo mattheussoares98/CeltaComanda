@@ -8,7 +8,6 @@ class SaveSaleRequestButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red,
-        // fixedSize: const Size(double.infinity, 60),
         minimumSize: const Size(double.infinity, 40),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -19,7 +18,7 @@ class SaveSaleRequestButton extends StatelessWidget {
       ),
       onPressed: () {},
       child: const Text(
-        'Salvar pedido',
+        'Imprimir produtos',
         style: TextStyle(
           color: Colors.white,
         ),

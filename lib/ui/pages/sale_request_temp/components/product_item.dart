@@ -4,34 +4,37 @@ import '../../pages.dart';
 
 class ProductItem extends StatelessWidget {
   final SaleRequestTempProductsViewModel product;
-  final SaleRequestTempViewModel saleRequestTempViewModel;
 
   const ProductItem({
     required this.product,
-    required this.saleRequestTempViewModel,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ImageWidget(product: product),
-        Column(
-          children: [
-            ProductTempDetails(
-              Product: product.Product,
-              onPressedAddQuantity: () {},
-              onPressedReduceQuantity: () {},
-              onPressedRemoveProduct: null,
-            ),
-            Text("DeliveryControl: ${saleRequestTempViewModel.DeliveryControl}"),
-            Text("Comments: ${saleRequestTempViewModel.Comments}"),
-            Text("EnterpriseId: ${saleRequestTempViewModel.EnterpriseId}"),
-            Text("PersonalizedCode: ${saleRequestTempViewModel.PersonalizedCode}"),
-            Text("TotalLiquid: ${saleRequestTempViewModel.TotalLiquid}"),
-          ],
+        ProductTempDetails(
+          Product: product.Product,
+          onPressedAddQuantity: () {},
+          onPressedReduceQuantity: () {},
+          onPressedRemoveProduct: null,
+          quantity: product.Quantity,
+          value: product.Value,
+          totalLiquid: product.TotalLiquid,
+          comments: product.Comments,
         ),
+        // if (product.Comments != null) Text("Comments: ${product.Comments}"),
+        // Text("SaleRequestProductTempId ${product.SaleRequestProductTempId}"),
+        // Text("IsPrinted ${product.IsPrinted}"),
+
+        // Text("SaleRequestTempId ${product.SaleRequestTempId}"),
+        // Text("ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
+        // Text("TotalLiquid ${product.TotalLiquid}"),
+        // Text("Quantity ${product.Quantity}"),
+        // Text("Value ${product.Value}"),
+        // Text("PLU ${product.ProductPriceLookUpCode}"),
       ],
     );
   }

@@ -29,7 +29,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
 
                   if (presenter.saleRequestTemp != null) {
                     return ProductsItems(
-                        saleRequestTempProductViewModel: presenter.saleRequestTemp!);
+                        saleRequestTempViewModel: presenter.saleRequestTemp!);
                   }
                   return const Text("Não há dados");
                 },

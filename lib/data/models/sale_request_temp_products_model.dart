@@ -7,7 +7,7 @@ class SaleRequestTempProductsModel {
   final ProductModel Product;
   final int SaleRequestProductTempId;
   final bool IsPrinted;
-  final String Comments;
+  final String? Comments;
   final int SaleRequestTempId;
   final int ProductInternalCodeOnErp;
   final double TotalLiquid;

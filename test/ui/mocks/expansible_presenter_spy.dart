@@ -14,11 +14,13 @@ class ExpansibleGroupsPresenterSpy extends Mock
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   final List<ExpansibleGroupsViewModel> expansibleGroupsController = [];
+  final String? commandNumberMock = null;
 
   ExpansibleGroupsPresenterSpy() {
     mockLoadCall().thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
+    when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
     when(() => this.expansibleGroups)
         .thenAnswer((_) => expansibleGroupsController);
     when(() => this.isLoadingStream)

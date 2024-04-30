@@ -17,6 +17,8 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,16 +28,23 @@ class ProductItem extends StatelessWidget {
           onPressedAddQuantity: () async {
             await saleRequestTempPresenter.addProductQuantity(
               url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-              saleRequestProductTempId:
-                  int.parse(product.SaleRequestProductTempId),
+              saleRequestProductTempId: int.parse(
+                product.SaleRequestProductTempId,
+              ),
+              commandNumber: expansibleGroupsPresenter.commandNumber!,
             );
           },
           onPressedReduceQuantity: () async {
+            double? quantityDouble =
+                double.tryParse(product.Quantity.replaceAll(RegExp(r','), '.'));
+            int quantityInt = quantityDouble!.toInt();
+
             await saleRequestTempPresenter.subtractProductQuantity(
               url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
               saleRequestProductTempId:
                   int.parse(product.SaleRequestProductTempId),
-              productQuantity: int.parse(product.Quantity),
+              productQuantity: quantityInt,
+              commandNumber: expansibleGroupsPresenter.commandNumber!,
             );
           },
           onPressedRemoveProduct: null,

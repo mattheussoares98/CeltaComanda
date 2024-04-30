@@ -40,6 +40,7 @@ class SaleRequestTempPresenterSpy extends Mock
           saleRequestProductTempId: any(named: "saleRequestProductTempId"),
           url: any(named: "url"),
           productQuantity: any(named: "productQuantity"),
+          commandNumber: any(named: "commandNumber"),
         ));
   }
 
@@ -51,6 +52,7 @@ class SaleRequestTempPresenterSpy extends Mock
     return when(() => this.addProductQuantity(
           saleRequestProductTempId: any(named: "saleRequestProductTempId"),
           url: any(named: "url"),
+          commandNumber: any(named: "commandNumber"),
         ));
   }
 

@@ -12,11 +12,13 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Future<void> addProductQuantity({
     required String url,
     required int saleRequestProductTempId,
+    required String commandNumber,
   });
   Future<void> subtractProductQuantity({
     required String url,
     required int saleRequestProductTempId,
     required int productQuantity,
+    required String commandNumber,
   });
 
   void clear();

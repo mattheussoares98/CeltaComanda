@@ -38,9 +38,12 @@ class GetxSaleRequestTempPresenter
 
   @override
   Future<void> load(String commandNumber) async {
+    _saleRequestTemp = null;
+    notifyListeners();
+
     isLoading = true;
     mainError = null;
-    notifyListeners();
+
     try {
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -50,9 +53,12 @@ class GetxSaleRequestTempPresenter
 
       if (saleRequestTemp != null) {
         _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
+        notifyListeners();
       }
     } catch (e) {
       throw Exception();
+    } finally {
+      isLoading = false;
     }
   }
 
@@ -65,20 +71,21 @@ class GetxSaleRequestTempPresenter
   Future<void> addProductQuantity({
     required String url,
     required int saleRequestProductTempId,
+    required String commandNumber,
   }) async {
     isLoading = true;
     mainError = null;
-    notifyListeners();
     try {
       await updateProductQuantity.add(
         url: url,
         saleRequestProductTempId: saleRequestProductTempId,
       );
+
+      await load(commandNumber);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
 
@@ -87,10 +94,10 @@ class GetxSaleRequestTempPresenter
     required String url,
     required int saleRequestProductTempId,
     required int productQuantity,
+    required String commandNumber,
   }) async {
     isLoading = true;
     mainError = null;
-    notifyListeners();
     try {
       if (productQuantity <= 1) {
         await updateProductQuantity.delete(
@@ -101,11 +108,12 @@ class GetxSaleRequestTempPresenter
           saleRequestProductTempId: saleRequestProductTempId,
         );
       }
+
+      await load(commandNumber);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
 }

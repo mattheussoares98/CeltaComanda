@@ -13,6 +13,7 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
 
+  late String commandNumber;
   late int saleRequestProductTempId;
 
   setUp(() {
@@ -27,6 +28,7 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     saleRequestProductTempId = faker.randomGenerator.integer(3);
+    commandNumber = faker.randomGenerator.integer(3).toString();
   });
 
   group("AddProductQuantity group", () {
@@ -34,6 +36,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        commandNumber: commandNumber,
       );
 
       verify(
@@ -55,6 +58,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        commandNumber: commandNumber,
       );
     });
 
@@ -69,6 +73,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        commandNumber: commandNumber,
       );
     });
 
@@ -79,6 +84,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        commandNumber: commandNumber,
       );
     });
   });
@@ -88,6 +94,7 @@ void main() {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
         productQuantity: 10,
+        commandNumber: commandNumber,
       );
 
       verify(
@@ -111,6 +118,7 @@ void main() {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
         productQuantity: 10,
+        commandNumber: commandNumber,
       );
     });
 
@@ -126,6 +134,7 @@ void main() {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
         productQuantity: 10,
+        commandNumber: commandNumber,
       );
     });
 
@@ -137,6 +146,7 @@ void main() {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
         productQuantity: 10,
+        commandNumber: commandNumber,
       );
     });
 
@@ -146,6 +156,7 @@ void main() {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
         productQuantity: 1,
+        commandNumber: commandNumber,
       );
 
       verify(
@@ -156,12 +167,14 @@ void main() {
       ).called(1);
     });
 
-    test("Should call subtract product quantity if productQuantity is more than 1",
+    test(
+        "Should call subtract product quantity if productQuantity is more than 1",
         () async {
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
         productQuantity: 2,
+        commandNumber: commandNumber,
       );
 
       verify(

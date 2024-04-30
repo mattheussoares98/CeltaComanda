@@ -71,6 +71,7 @@ class ProductDetails extends StatelessWidget {
                   quantity: quantity,
                   onPressedAddQuantity: onPressedAddQuantity,
                   isPrintedProducts: isPrintedProducts,
+                  onPressedRemoveProduct: onPressedRemoveProduct,
                 ),
                 Text("Total $totalLiquid R\$"),
               ],
@@ -87,15 +88,18 @@ class ProductDetails extends StatelessWidget {
 }
 
 class _UpdateQuantity extends StatelessWidget {
-  final void Function()? onPressedReduceQuantity;
   final String quantity;
-  final void Function()? onPressedAddQuantity;
   final bool isPrintedProducts;
+  final void Function()? onPressedReduceQuantity;
+  final void Function()? onPressedAddQuantity;
+  final void Function()? onPressedRemoveProduct;
+
   const _UpdateQuantity({
     required this.onPressedReduceQuantity,
     required this.quantity,
     required this.onPressedAddQuantity,
     required this.isPrintedProducts,
+    required this.onPressedRemoveProduct,
   });
 
   @override
@@ -111,7 +115,7 @@ class _UpdateQuantity extends StatelessWidget {
                 width: 35,
                 child: FittedBox(
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: onPressedRemoveProduct,
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.red,

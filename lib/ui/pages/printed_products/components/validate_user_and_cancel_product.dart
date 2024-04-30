@@ -3,6 +3,25 @@ import 'package:flutter/services.dart';
 
 import '../../../../ui/pages/pages.dart';
 
+Future<void> _removeProduct({
+  required BuildContext context,
+  required GlobalKey<FormState> formKey,
+  required TextEditingController personalizedCodeController,
+  required TextEditingController passwordController,
+  required PrintedProductsPresenter printedProductsPresenter,
+  required String saleRequestProductId,
+}) async {
+  bool isValid = formKey.currentState!.validate();
+  if (!isValid) return;
+
+  Navigator.of(context).pop();
+  await printedProductsPresenter.removeProduct(
+    password: passwordController.text,
+    personalizedCode: int.parse(personalizedCodeController.text),
+    saleRequestProductId: saleRequestProductId,
+  );
+}
+
 void validateUserAndCancelProduct({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
@@ -10,6 +29,8 @@ void validateUserAndCancelProduct({
   required TextEditingController passwordController,
   required PrintedProductsPresenter printedProductsPresenter,
   required String saleRequestProductId,
+  required FocusNode passwordFocus,
+  required FocusNode userFocus,
 }) {
   showDialog(
       context: context,
@@ -29,11 +50,20 @@ void validateUserAndCancelProduct({
               ),
               content: Form(
                 key: formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     TextFormField(
+                      focusNode: userFocus,
                       autofocus: true,
+                      onFieldSubmitted: (value) {
+                        if (personalizedCodeController.text.isEmpty) {
+                          formKey.currentState!.validate();
+                          FocusScope.of(context).requestFocus(userFocus);
+                          return;
+                        }
+
+                        FocusScope.of(context).requestFocus(passwordFocus);
+                      },
                       // onChanged: (value) {},
                       validator: (value) {
                         if (value == null) {
@@ -53,8 +83,24 @@ void validateUserAndCancelProduct({
                     ),
                     const SizedBox(height: 15),
                     TextFormField(
-                      // autofocus: true,
-                      // onChanged: (value) {},
+                      focusNode: passwordFocus,
+                      onFieldSubmitted: (_) async {
+                        if (passwordController.text.isEmpty) {
+                          formKey.currentState!.validate();
+                          FocusScope.of(context).requestFocus(passwordFocus);
+                          return;
+                        }
+
+                        await _removeProduct(
+                          context: context,
+                          formKey: formKey,
+                          personalizedCodeController:
+                              personalizedCodeController,
+                          passwordController: passwordController,
+                          printedProductsPresenter: printedProductsPresenter,
+                          saleRequestProductId: saleRequestProductId,
+                        );
+                      },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Digite a senha do usuário";
@@ -75,14 +121,12 @@ void validateUserAndCancelProduct({
               actions: [
                 TextButton(
                   onPressed: () async {
-                    bool isValid = formKey.currentState!.validate();
-                    if (!isValid) return;
-
-                    Navigator.of(context).pop();
-                    await printedProductsPresenter.removeProduct(
-                      password: passwordController.text,
-                      personalizedCode:
-                          int.parse(personalizedCodeController.text),
+                    await _removeProduct(
+                      context: context,
+                      formKey: formKey,
+                      personalizedCodeController: personalizedCodeController,
+                      passwordController: passwordController,
+                      printedProductsPresenter: printedProductsPresenter,
                       saleRequestProductId: saleRequestProductId,
                     );
                   },

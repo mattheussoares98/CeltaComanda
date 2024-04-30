@@ -52,8 +52,8 @@ class PrintedItem extends StatelessWidget {
                           child: ProductDetails(
                             Product: product.Products,
                             isPrintedProducts: true,
-                            onPressedAddQuantity: () {},
-                            onPressedReduceQuantity: () {},
+                            onPressedAddQuantity: null,
+                            onPressedReduceQuantity: null,
                             onPressedRemoveProduct: () {
                               validateUserAndCancelProduct(
                                 context: context,
@@ -65,6 +65,8 @@ class PrintedItem extends StatelessWidget {
                                     printedProductsPresenter,
                                 saleRequestProductId:
                                     product.SaleRequestProductId,
+                                passwordFocus: FocusNode(),
+                                userFocus: FocusNode(),
                               );
                             },
                             quantity: product.Quantity,

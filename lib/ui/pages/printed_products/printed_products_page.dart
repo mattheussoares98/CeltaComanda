@@ -38,7 +38,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       context, printedProductsPresenter.mainErrorStream);
 
                   if (printedProductsPresenter.printedProducts != null) {
-                    return PrintedProduct(
+                    return PrintedItem(
                       printed: printedProductsPresenter.printedProducts!,
                     );
                   }

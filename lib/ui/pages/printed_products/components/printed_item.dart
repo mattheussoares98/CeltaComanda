@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class PrintedProduct extends StatelessWidget {
+class PrintedItem extends StatelessWidget {
   final PrintedViewModel printed;
-  const PrintedProduct({
+  const PrintedItem({
     required this.printed,
     super.key,
   });
@@ -36,19 +36,26 @@ class PrintedProduct extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    PrintedProductItem(
-                      product: product.Products,
-                      quantity: product.Quantity,
-                      comments: product.Comments,
-                      saleRequestProductId: product.SaleRequestProductId,
-                      totalLiquid: product.TotalLiquid,
+                    Row(
+                      children: [
+                        // ImageWidget(product: product),
+                        ProductDetails(
+                          nameComplete: product.Products.NameComplete,
+                          name: product.Products.Name,
+                          eanCode: product.Products.EanCode,
+                          plu: product.Products.PriceLookupCode,
+                          saleRetailPraticed:
+                              product.Products.SaleRetailPraticed,
+                          comments: product.Comments,
+                          totalLiquid: product.TotalLiquid,
+                          quantity: product.Quantity,
+                          saleRequestProductId: product.SaleRequestProductId,
+                        ),
+                      ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Divider(
-                        color: Colors.grey,
-                        thickness: 0.4,
-                      ),
+                    const Divider(
+                      color: Colors.grey,
+                      thickness: 0.4,
                     ),
                     // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
                     // Text(
@@ -61,20 +68,14 @@ class PrintedProduct extends StatelessWidget {
                     // Text("ProductionStatus ${product.ProductionStatus}"),
                     // Text(
                     //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
-                    Text("SaleRequestId ${product.SaleRequestId}"),
+                    // Text("SaleRequestId ${product.SaleRequestId}"),
                   ],
                 );
               },
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     Text("Total: ${printed.TotalLiquid} R\$"),
-            //   ],
-            // ),
-            // Text("Comments: ${printed.Comments}"),
-            // Text("Comanda: ${printed.PersonalizedCode}"),
             RequestSummary(totalLiquid: printed.TotalLiquid),
+            Text("Comentário: ${printed.Comments}"),
+            // Text("Comanda: ${printed.PersonalizedCode}"),
             // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
             // Text("DateOfCreation: ${printed.DateOfCreation}"),
             // Text("DeliveryControl: ${printed.DeliveryControl}"),
@@ -85,7 +86,7 @@ class PrintedProduct extends StatelessWidget {
             // Text("IsUsing: ${printed.IsUsing}"),
             // Text("Peoples: ${printed.Peoples}"),
             // Text("RequestType: ${printed.RequestType}"),
-            Text("SaleRequestId: ${printed.SaleRequestId}"),
+            // Text("SaleRequestId: ${printed.SaleRequestId}"),
           ],
         ),
       ),

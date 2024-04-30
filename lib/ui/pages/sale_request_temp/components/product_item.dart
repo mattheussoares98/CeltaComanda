@@ -1,4 +1,7 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
@@ -12,14 +15,29 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ProductDetails(
           isPrintedProducts: false,
           Product: product.Product,
-          onPressedAddQuantity: () {},
-          onPressedReduceQuantity: () {},
+          onPressedAddQuantity: () async {
+            await saleRequestTempPresenter.addProductQuantity(
+              url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+              saleRequestProductTempId:
+                  int.parse(product.SaleRequestProductTempId),
+            );
+          },
+          onPressedReduceQuantity: () async {
+            await saleRequestTempPresenter.subtractProductQuantity(
+              url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+              saleRequestProductTempId:
+                  int.parse(product.SaleRequestProductTempId),
+              productQuantity: int.parse(product.Quantity),
+            );
+          },
           onPressedRemoveProduct: null,
           quantity: product.Quantity,
           value: product.Value,

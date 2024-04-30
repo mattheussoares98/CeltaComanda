@@ -15,7 +15,8 @@ class ProductItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ProductTempDetails(
+        ProductDetails(
+          isPrintedProducts: false,
           Product: product.Product,
           onPressedAddQuantity: () {},
           onPressedReduceQuantity: () {},

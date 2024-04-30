@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../presentation/presenters/presenters.dart';
 import '../../pages.dart';
 
 class PrintedItem extends StatelessWidget {
@@ -11,6 +13,13 @@ class PrintedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final TextEditingController personalizedCodeController =
+        TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -39,23 +48,32 @@ class PrintedItem extends StatelessWidget {
                     Row(
                       children: [
                         // ImageWidget(product: product),
-                        ProductDetails(
-                          nameComplete: product.Products.NameComplete,
-                          name: product.Products.Name,
-                          eanCode: product.Products.EanCode,
-                          plu: product.Products.PriceLookupCode,
-                          saleRetailPraticed:
-                              product.Products.SaleRetailPraticed,
-                          comments: product.Comments,
-                          totalLiquid: product.TotalLiquid,
-                          quantity: product.Quantity,
-                          saleRequestProductId: product.SaleRequestProductId,
+                        Expanded(
+                          child: ProductDetails(
+                            Product: product.Products,
+                            isPrintedProducts: true,
+                            onPressedAddQuantity: () {},
+                            onPressedReduceQuantity: () {},
+                            onPressedRemoveProduct: () {
+                              validateUserAndCancelProduct(
+                                context: context,
+                                formKey: formKey,
+                                personalizedCodeController:
+                                    personalizedCodeController,
+                                passwordController: passwordController,
+                                printedProductsPresenter:
+                                    printedProductsPresenter,
+                                saleRequestProductId:
+                                    product.SaleRequestProductId,
+                              );
+                            },
+                            quantity: product.Quantity,
+                            value: product.Value,
+                            totalLiquid: product.TotalLiquid,
+                            comments: product.Comments,
+                          ),
                         ),
                       ],
-                    ),
-                    const Divider(
-                      color: Colors.grey,
-                      thickness: 0.4,
                     ),
                     // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
                     // Text(
@@ -73,8 +91,10 @@ class PrintedItem extends StatelessWidget {
                 );
               },
             ),
-            RequestSummary(totalLiquid: printed.TotalLiquid),
-            Text("Comentário: ${printed.Comments}"),
+            RequestSummary(
+              totalLiquid: printed.TotalLiquid,
+              comments: printed.Comments,
+            ),
             // Text("Comanda: ${printed.PersonalizedCode}"),
             // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
             // Text("DateOfCreation: ${printed.DateOfCreation}"),

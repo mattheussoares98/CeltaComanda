@@ -5,7 +5,7 @@ class RequestSummary extends StatelessWidget {
   final String? comments;
   const RequestSummary({
     required this.totalLiquid,
-    this.comments,
+    required this.comments,
     super.key,
   });
 

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../../ui/pages/pages.dart';
 
-void validateUserDialog({
+void validateUserAndCancelProduct({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
   required TextEditingController personalizedCodeController,

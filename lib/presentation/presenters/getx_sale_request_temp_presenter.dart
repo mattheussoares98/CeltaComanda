@@ -92,10 +92,15 @@ class GetxSaleRequestTempPresenter
     mainError = null;
     notifyListeners();
     try {
-      await updateProductQuantity.subtract(
-        url: url,
-        saleRequestProductTempId: saleRequestProductTempId,
-      );
+      if (productQuantity <= 1) {
+        await updateProductQuantity.delete(
+            url: url, saleRequestProductTempId: saleRequestProductTempId);
+      } else {
+        await updateProductQuantity.subtract(
+          url: url,
+          saleRequestProductTempId: saleRequestProductTempId,
+        );
+      }
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

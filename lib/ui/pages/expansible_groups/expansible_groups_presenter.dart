@@ -9,6 +9,7 @@ abstract class ExpansibleGroupsPresenter
   List<ExpansibleGroupsViewModel> get expansibleGroups;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  String? get commandNumber;
 
   Future<void> clearEnterpriseData();
   Future<void> load({

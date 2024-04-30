@@ -85,6 +85,7 @@ class GetxExpansibleGroupsPresenter
     isLoading = true;
     mainError = null;
     clear();
+    _commandNumber = commandNumber;
     printedProductsPresenter.clear();
     saleRequestTempPresenter.clear();
     notifyListeners();
@@ -111,5 +112,10 @@ class GetxExpansibleGroupsPresenter
   @override
   void clear() {
     _expansibleGroups.clear();
+    _commandNumber = null;
   }
+
+  String? _commandNumber;
+  @override
+  String? get commandNumber => _commandNumber;
 }

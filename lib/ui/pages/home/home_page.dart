@@ -14,11 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<String> _titles = [
-    "Produtos",
-    "Produtos impressos",
-    "Pendentes para impressão",
-  ];
   final List<Widget> _screens = [
     const ExpansibleGroupsPage(),
     const PrintedProductsPage(),
@@ -45,7 +40,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
-    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
 
@@ -59,11 +55,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
         actions: const [SearchCommandIcon()],
-        title: FittedBox(
-          child: Text(
-            _titles[_currentIndex],
-            style: const TextStyle(fontSize: 20),
-          ),
+        title: AppBarTitle(
+          currentIndex: _currentIndex,
+          commandNumber: expansibleGroupsPresenter.commandNumber,
         ),
       ),
       body: PageView(

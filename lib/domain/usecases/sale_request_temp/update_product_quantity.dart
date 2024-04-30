@@ -8,4 +8,9 @@ abstract class UpdateProductQuantity {
     required String url,
     required int saleRequestProductTempId,
   });
+
+  Future<void> delete({
+    required String url,
+    required int saleRequestProductTempId,
+  });
 }

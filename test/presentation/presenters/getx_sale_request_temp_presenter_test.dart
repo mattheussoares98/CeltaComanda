@@ -87,6 +87,7 @@ void main() {
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        productQuantity: 10,
       );
 
       verify(
@@ -97,7 +98,8 @@ void main() {
       );
     });
 
-    test("Should throw DomainError.unexpected on error to SubtractProductQuantity",
+    test(
+        "Should throw DomainError.unexpected on error to SubtractProductQuantity",
         () async {
       updateProductQuantity.mockSubtractProductQuantityError();
 
@@ -108,6 +110,7 @@ void main() {
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        productQuantity: 10,
       );
     });
 
@@ -122,6 +125,7 @@ void main() {
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        productQuantity: 10,
       );
     });
 
@@ -132,6 +136,7 @@ void main() {
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
+        productQuantity: 10,
       );
     });
   });

@@ -16,12 +16,11 @@ class RemoteUpdateProductQuantity implements UpdateProductQuantity {
     required int saleRequestProductTempId,
   }) async {
     try {
-      final saleRequestTemp = await httpAdapter.request(
+      await httpAdapter.request(
         url:
             "$url/api/APISaleRequestProduct/UpdateQuantityPlus?_saleRequestProductTempId=$saleRequestProductTempId",
         method: "get",
       );
-      if (saleRequestTemp == null) throw Error();
     } catch (error) {
       throw DomainError.unexpected;
     }
@@ -33,12 +32,27 @@ class RemoteUpdateProductQuantity implements UpdateProductQuantity {
     required int saleRequestProductTempId,
   }) async {
     try {
-      final saleRequestTemp = await httpAdapter.request(
+      await httpAdapter.request(
         url:
             "$url/api/APISaleRequestProduct/UpdateQuantityMinus?_saleRequestProductTempId=$saleRequestProductTempId",
         method: "get",
       );
-      if (saleRequestTemp == null) throw Error();
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  @override
+  Future<void> delete({
+    required String url,
+    required int saleRequestProductTempId,
+  }) async {
+    try {
+      await httpAdapter.request(
+        url:
+            "$url/api/APISaleRequestProduct/DeleteSaleRequestProductTemp?id=$saleRequestProductTempId",
+        method: "get",
+      );
     } catch (error) {
       throw DomainError.unexpected;
     }

@@ -86,6 +86,7 @@ class GetxSaleRequestTempPresenter
   Future<void> subtractProductQuantity({
     required String url,
     required int saleRequestProductTempId,
+    required int productQuantity,
   }) async {
     isLoading = true;
     mainError = null;

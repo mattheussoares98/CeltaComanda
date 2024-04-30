@@ -8,7 +8,6 @@ import 'dart:async';
 
 import 'package:mocktail/mocktail.dart';
 
-
 class SaleRequestTempPresenterSpy extends Mock
     implements SaleRequestTempPresenter {
   final isLoadingController = StreamController<bool>();
@@ -40,6 +39,7 @@ class SaleRequestTempPresenterSpy extends Mock
     return when(() => this.subtractProductQuantity(
           saleRequestProductTempId: any(named: "saleRequestProductTempId"),
           url: any(named: "url"),
+          productQuantity: any(named: "productQuantity"),
         ));
   }
 

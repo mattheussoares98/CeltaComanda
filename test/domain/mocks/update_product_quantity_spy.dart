@@ -6,6 +6,8 @@ import 'package:mocktail/mocktail.dart';
 class UpdateProductQuantitySpy extends Mock implements UpdateProductQuantity {
   UpdateProductQuantitySpy() {
     mockAddProductQuantity();
+    mockSubtractProductQuantity();
+    mockDeleteProduct();
   }
   When mockAddProductQuantityCall() => when(() => this.add(
         url: any(named: "url"),
@@ -31,5 +33,18 @@ class UpdateProductQuantitySpy extends Mock implements UpdateProductQuantity {
 
   void mockSubtractProductQuantityError() {
     this.mockSubtractProductQuantityCall().thenThrow(Exception());
+  }
+
+  When mockDeleteProductCall() => when(() => this.delete(
+        url: any(named: "url"),
+        saleRequestProductTempId: any(named: "saleRequestProductTempId"),
+      ));
+
+  void mockDeleteProduct() {
+    this.mockDeleteProductCall().thenAnswer((_) async => _);
+  }
+
+  void mockDeleteProductError() {
+    this.mockDeleteProductCall().thenThrow(Exception());
   }
 }

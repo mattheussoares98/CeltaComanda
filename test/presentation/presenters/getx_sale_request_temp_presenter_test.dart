@@ -139,5 +139,37 @@ void main() {
         productQuantity: 10,
       );
     });
+
+    test("Should call delete product if productQuantity is less than 1",
+        () async {
+      await sut.subtractProductQuantity(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        saleRequestProductTempId: saleRequestProductTempId,
+        productQuantity: 1,
+      );
+
+      verify(
+        () => updateProductQuantity.delete(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+        ),
+      ).called(1);
+    });
+
+    test("Should call subtract product quantity if productQuantity is more than 1",
+        () async {
+      await sut.subtractProductQuantity(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        saleRequestProductTempId: saleRequestProductTempId,
+        productQuantity: 2,
+      );
+
+      verify(
+        () => updateProductQuantity.subtract(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+        ),
+      ).called(1);
+    });
   });
 }

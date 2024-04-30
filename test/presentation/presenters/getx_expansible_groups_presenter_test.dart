@@ -276,4 +276,14 @@ void main() {
 
     verify(() => saleRequestTempPresenter.clear()).called(1);
   });
+
+  test('Should update commandNumber on load data', () async {
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
+
+   expect(sut.commandNumber, commandNumber);
+  });
 }

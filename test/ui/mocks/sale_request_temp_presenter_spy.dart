@@ -8,27 +8,57 @@ import 'dart:async';
 
 import 'package:mocktail/mocktail.dart';
 
+
 class SaleRequestTempPresenterSpy extends Mock
     implements SaleRequestTempPresenter {
   final isLoadingController = StreamController<bool>();
-  final cartController = StreamController<List<ProductsViewModel>>();
+  final mainErrorController = StreamController<UIError?>();
   SaleRequestTempViewModel? saleRequestTempMock;
 
   SaleRequestTempPresenterSpy() {
-    // when(() => this.cartProducts).thenAnswer((_) => cartController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
+
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
 
     when(() => this.load(any())).thenAnswer((_) async => _);
+    mockAddProductQuantityCall().thenAnswer((_) async => _);
+
+    mockSubtractProductQuantityCall().thenAnswer((_) async => _);
     when(() => this.clear()).thenAnswer((_) async => _);
   }
-  void mockExpansibleGroupStreamError(DomainError error) {
-    cartController.addError(
-      UIError.unexpected.description,
-      StackTrace.current,
+
+  void mockLoadSaleRequestTempError() {
+    when(() => this.load(any())).thenThrow(
+      DomainError.unexpected,
     );
   }
 
+  When mockSubtractProductQuantityCall() {
+    return when(() => this.subtractProductQuantity(
+          saleRequestProductTempId: any(named: "saleRequestProductTempId"),
+          url: any(named: "url"),
+        ));
+  }
+
+  void mockSubtractProductQuantityError() {
+    mockSubtractProductQuantityCall().thenThrow(DomainError.unexpected);
+  }
+
+  When mockAddProductQuantityCall() {
+    return when(() => this.addProductQuantity(
+          saleRequestProductTempId: any(named: "saleRequestProductTempId"),
+          url: any(named: "url"),
+        ));
+  }
+
+  void mockAddProductQuantityError() {
+    mockAddProductQuantityCall().thenThrow(DomainError.unexpected);
+  }
+
   void emitLoading([bool show = true]) => isLoadingController.add(show);
+  void addSaleRequestTempViewModel(SaleRequestTempViewModel? data) =>
+      saleRequestTempMock = data;
 }

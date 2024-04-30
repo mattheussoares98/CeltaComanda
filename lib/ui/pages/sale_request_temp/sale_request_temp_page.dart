@@ -14,12 +14,15 @@ class SaleRequestTempPage extends StatefulWidget {
 }
 
 class _SaleRequestTempPageState extends State<SaleRequestTempPage>
-    with LoadingManager {
+    with LoadingManager, UIErrorManager {
   @override
   Widget build(BuildContext context) {
-    final expansibleGroupsPresenter =
-        Provider.of<GetxExpansibleGroupsPresenter>(context);
-    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context);
     return Scaffold(
       body: Column(
         children: [
@@ -28,14 +31,20 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
               child: Builder(
                 builder: (context) {
                   handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
+                      context, saleRequestTempPresenter.isLoadingStream);
+                  handleMainError(
+                      context, saleRequestTempPresenter.mainErrorStream);
 
                   if (saleRequestTempPresenter.saleRequestTemp != null) {
                     return ProductsItems(
                         saleRequestTempViewModel:
                             saleRequestTempPresenter.saleRequestTemp!);
                   }
-                  return const Text("Não há dados");
+                  return SearchDataByCommandNumber(
+                    expansibleGroupsPresenter: expansibleGroupsPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    saleRequestTempPresenter: saleRequestTempPresenter,
+                  );
                 },
               ),
             ),

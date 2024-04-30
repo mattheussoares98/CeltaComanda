@@ -136,6 +136,7 @@ class _UpdateQuantity extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
+                  key: const Key("IconButtonSubtractQuantity"),
                   icon: Icon(
                     double.parse(quantity.replaceAll(RegExp(r','), '.')) <= 1
                         ? Icons.delete

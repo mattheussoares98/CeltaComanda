@@ -3,8 +3,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../http/http.dart';
 
-class RemoteUpdateProductQuantity
-    implements AddProductQuantity, SubtractProductQuantity {
+class RemoteUpdateProductQuantity implements UpdateProductQuantity {
   final HttpClient httpAdapter;
 
   RemoteUpdateProductQuantity({

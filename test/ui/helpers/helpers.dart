@@ -56,6 +56,10 @@ Widget makePage(
       name: PageRoutes.printedProducts,
       page: () => const PrintedProductsPage(),
     ),
+    GetPage(
+      name: PageRoutes.home,
+      page: () => const HomePage(),
+    ),
   ];
 
   final index = allPages.indexWhere((element) => element.name == path);
@@ -87,6 +91,7 @@ Widget makePage(
       ChangeNotifierProvider<GetxSaleRequestTempPresenter>(
         create: (_) => GetxSaleRequestTempPresenter(
           loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+          updateProductQuantity: makeRemoteUpdateProductQuantity(),
         ),
       ),
       ChangeNotifierProvider<GetxPrintedProductsPresenter>(

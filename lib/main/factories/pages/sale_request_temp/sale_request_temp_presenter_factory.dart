@@ -5,4 +5,5 @@ import '../../../../ui/pages/pages.dart';
 SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
     GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+      updateProductQuantity: makeRemoteUpdateProductQuantity(),
     );

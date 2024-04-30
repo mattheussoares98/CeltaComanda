@@ -40,6 +40,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => GetxSaleRequestTempPresenter(
             loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+            updateProductQuantity: makeRemoteUpdateProductQuantity(),
           ),
         ),
         ChangeNotifierProvider(

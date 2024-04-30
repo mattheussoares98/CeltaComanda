@@ -154,6 +154,7 @@ void main() {
 
   test('Should emit correct events on verify command success', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(sut.mainErrorStream, emits(null));
 
     await sut.load(
       commandNumber: commandNumber,
@@ -193,6 +194,16 @@ void main() {
     );
 
     verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
+  });
+
+  test('Should call LoadPrinted when load expansibleGroups', () async {
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
+
+    verify(() => printedProductsPresenter.load(commandNumber)).called(1);
   });
 
   test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
@@ -254,5 +265,15 @@ void main() {
     );
 
     verify(() => printedProductsPresenter.clear()).called(1);
+  });
+
+  test('Should call clearSaleRequestTemp on load data', () async {
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
+
+    verify(() => saleRequestTempPresenter.clear()).called(1);
   });
 }

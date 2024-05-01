@@ -54,7 +54,7 @@ class ProductItem extends StatelessWidget {
             padding: const EdgeInsets.all(3),
             child: Row(
               children: [
-                ImageWidget(product: product),
+                // ImageWidget(product: product),
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.all(5),
@@ -69,6 +69,13 @@ class ProductItem extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
+                        Text(
+                          product.PriceLookupCode,
+                        ),
+                        if (product.EanCode != null)
+                          Text(
+                            product.EanCode!,
+                          ),
                         if (_productQuantityInSaleRequestTemp(
                                 saleRequestTempPresenter:
                                     saleRequestTempPresenter,

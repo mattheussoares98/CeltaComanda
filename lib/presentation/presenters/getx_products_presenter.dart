@@ -30,16 +30,8 @@ class GetxProductsPresenter extends GetxController
       final products = await loadProducts.load(expansibleGroupId);
 
       if (products != null) {
-        _products.value = products
-            .map((e) => ProductsViewModel(
-                  SaleRetailPraticed: e.SaleRetailPraticed.toString(),
-                  PackingAbbreviation: e.PackingAbbreviation,
-                  Name: e.Name,
-                  EanCode: e.EanCode ?? "",
-                  PriceLookupCode: e.PriceLookupCode,
-                  ProductsId: e.ProductsId.toString(),
-                ))
-            .toList();
+        _products.value =
+            products.map((e) => ProductsViewModel.fromEntity(e)).toList();
       }
 
       isLoading = false;

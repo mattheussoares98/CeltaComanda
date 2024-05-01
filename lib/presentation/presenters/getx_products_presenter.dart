@@ -22,10 +22,6 @@ class GetxProductsPresenter extends GetxController
   @override
   Stream<List<ProductsViewModel>> get productsStream => _products.stream;
 
-  ProductsViewModel? _selectedProduct;
-  @override
-  ProductsViewModel? get selectedProduct => _selectedProduct;
-
   @override
   Future<void> load(int? expansibleGroupId) async {
     try {
@@ -57,11 +53,6 @@ class GetxProductsPresenter extends GetxController
   }
 
   @override
-  void updateSelectedProduct(ProductsViewModel product) {
-    _selectedProduct = product;
-  }
-
-  @override
   void goToCartPage() {
     navigateTo.navigate(
       pageRoute: PageRoutes.saleRequestTemp,
@@ -69,10 +60,10 @@ class GetxProductsPresenter extends GetxController
   }
 
   @override
-  void goToProductDetailsPage() {
+  void goToProductDetailsPage(ProductsViewModel product) {
     navigateTo.navigate(
       pageRoute: PageRoutes.productDetails,
-      arguments: _selectedProduct,
+      arguments: product,
     );
   }
 }

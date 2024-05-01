@@ -73,24 +73,14 @@ void main() {
     await sut.load(faker.randomGenerator.integer(3));
   });
 
-  test('Should update SelectedProduct', () async {
-    sut.updateSelectedProduct(
-      ProductsViewModel.fromEntity(products[0]),
-    );
-
-    expect(
-      ProductsViewModel.fromEntity(products[0]),
-      sut.selectedProduct,
-    );
-  });
-
   test('Should go to surveys page on success', () async {
-    sut.goToProductDetailsPage();
+    final product = EntityFactory.makeProductViewModel();
+    sut.goToProductDetailsPage(product);
 
     verify(
       () => navigateTo.navigate(
         pageRoute: PageRoutes.productDetails,
-        arguments: sut.selectedProduct,
+        arguments: product,
       ),
     ).called(1);
   });

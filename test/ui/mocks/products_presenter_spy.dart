@@ -8,39 +8,35 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-import '../../domain/mocks/mocks.dart';
-
 class ProductsPresenterSpy extends Mock implements ProductsPresenter {
   final mainErrorController = StreamController<List<ProductsViewModel>>();
   final isLoadingController = StreamController<bool>();
   final productsController = StreamController<List<ProductsViewModel>>();
-  final selectedProductMock = EntityFactory.makeProductViewModel();
 
   ProductsPresenterSpy() {
-    when(() => this.load(any())).thenAnswer((_) async => [selectedProductMock]);
+    when(() => this.load(any())).thenAnswer((_) async => _);
     when(() => this.productsStream)
         .thenAnswer((_) => productsController.stream);
-    when(() => this.selectedProduct).thenAnswer((_) => selectedProductMock);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.goToProductDetailsPage()).thenAnswer((_) => Get.offNamed(
-          PageRoutes.productDetails,
-          arguments: selectedProductMock,
-        ));
     when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
           PageRoutes.saleRequestTemp,
         ));
   }
+
+  void mockNavigateToProductDetails(ProductsViewModel product) {
+    when(() => this.goToProductDetailsPage(any()))
+        .thenAnswer((_) => Get.offNamed(
+              PageRoutes.productDetails,
+              arguments: product,
+            ));
+  }
+
   void mockProductStreamError(DomainError error) {
     productsController.addError(
       UIError.unexpected.description,
       StackTrace.current,
     );
-  }
-
-  mockUpdateSelectedProduct(ProductsViewModel product) {
-    when(() => this.updateSelectedProduct(any()))
-        .thenAnswer((_) async => product);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

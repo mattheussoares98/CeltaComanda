@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import '../../../ui/pages/pages.dart';
 import '../../mixins/mixins.dart';
 
@@ -9,13 +11,17 @@ class ProductDetailsPage extends StatelessWidget with LoadingManager {
 
   @override
   Widget build(BuildContext context) {
-    // final product = Get.arguments as ProductsViewModel;
+    ProductsViewModel? product;
 
-    return const Scaffold(
-        // body: ProductDetailItem(
-        //   product: product,
-        //   presenter: presenter,
-        // ),
-        );
+    if (Get.arguments != null) {
+      product = Get.arguments as ProductsViewModel;
+    }
+
+    return Scaffold(
+      body: ProductDetailItem(
+        product: product!,
+        presenter: presenter,
+      ),
+    );
   }
 }

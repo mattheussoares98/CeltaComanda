@@ -32,8 +32,7 @@ class ProductItem extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
       child: GestureDetector(
         onTap: () {
-          presenter.updateSelectedProduct(product);
-          presenter.goToProductDetailsPage();
+          presenter.goToProductDetailsPage(product);
         },
         child: Container(
           width: double.infinity,

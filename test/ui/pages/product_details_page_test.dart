@@ -1,7 +1,9 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:get/get.dart';
+import 'package:mocktail/mocktail.dart';
 
+import '../../domain/mocks/mocks.dart';
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
 
@@ -15,6 +17,10 @@ void main() {
   setUp(() {
     presenter = ProductDetailsPresenterSpy();
     productsPresenter = ProductsPresenterSpy();
+  });
+
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeProductViewModel());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -43,7 +49,10 @@ void main() {
     //Por isso fiz a rota inicial ser a de produtos, pra navegar pra de detalhes
     //do produto e a partir daí fazer os testes corretamente
     await loadPage(tester);
-    productsPresenter.goToProductDetailsPage();
+    final product = EntityFactory.makeProductViewModel();
+    productsPresenter.mockNavigateToProductDetails(product);
+    productsPresenter
+        .goToProductDetailsPage(product);
     await tester.pumpAndSettle();
     expect(currentRoute, PageRoutes.productDetails);
 

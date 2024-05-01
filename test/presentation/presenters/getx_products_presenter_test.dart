@@ -1,7 +1,6 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/products/products.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
@@ -71,17 +70,5 @@ void main() {
         ])));
 
     await sut.load(faker.randomGenerator.integer(3));
-  });
-
-  test('Should go to surveys page on success', () async {
-    final product = EntityFactory.makeProductViewModel();
-    sut.goToProductDetailsPage(product);
-
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.productDetails,
-        arguments: product,
-      ),
-    ).called(1);
   });
 }

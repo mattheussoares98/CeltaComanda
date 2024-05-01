@@ -60,16 +60,6 @@ void main() {
     expect(find.byType(ReloadScreen), findsOneWidget);
   });
 
-  testWidgets('Should go to ProductDetailsPage', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    final product = EntityFactory.makeProductViewModel();
-    presenter.mockNavigateToProductDetails(product);
-    presenter.goToProductDetailsPage(product);
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.productDetails);
-  });
   testWidgets('Should go to CartPage', (WidgetTester tester) async {
     await loadPage(tester);
 

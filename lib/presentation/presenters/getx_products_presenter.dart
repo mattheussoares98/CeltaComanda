@@ -50,12 +50,4 @@ class GetxProductsPresenter extends GetxController
       pageRoute: PageRoutes.saleRequestTemp,
     );
   }
-
-  @override
-  void goToProductDetailsPage(ProductsViewModel product) {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.productDetails,
-      arguments: product,
-    );
-  }
 }

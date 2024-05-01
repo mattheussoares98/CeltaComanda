@@ -6,7 +6,6 @@ abstract class ProductsPresenter implements Listenable {
   Stream<List<ProductsViewModel>> get productsStream;
   Stream<bool> get isLoadingStream;
 
-  void goToProductDetailsPage(ProductsViewModel product);
   void goToCartPage();
   Future<void> load(int? expansibleGroupId);
 }

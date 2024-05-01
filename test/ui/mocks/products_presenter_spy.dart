@@ -24,14 +24,6 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
         ));
   }
 
-  void mockNavigateToProductDetails(ProductsViewModel product) {
-    when(() => this.goToProductDetailsPage(any()))
-        .thenAnswer((_) => Get.offNamed(
-              PageRoutes.productDetails,
-              arguments: product,
-            ));
-  }
-
   void mockProductStreamError(DomainError error) {
     productsController.addError(
       UIError.unexpected.description,

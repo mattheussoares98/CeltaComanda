@@ -24,7 +24,6 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<ProductsPresenter>(context);
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
 
@@ -32,9 +31,10 @@ class ProductItem extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
       child: GestureDetector(
         onTap: () {
-          presenter.goToProductDetailsPage(product);
+          // presenter.goToProductDetailsPage(product);
         },
         child: Container(
+          padding: const EdgeInsets.all(8),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -50,91 +50,72 @@ class ProductItem extends StatelessWidget {
             ],
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(3),
-            child: Row(
-              children: [
-                // ImageWidget(product: product),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.Name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Text(
-                          product.PriceLookupCode,
-                        ),
-                        if (product.EanCode != null)
-                          Text(
-                            product.EanCode!,
-                          ),
-                        if (_productQuantityInSaleRequestTemp(
-                                saleRequestTempPresenter:
-                                    saleRequestTempPresenter,
-                                product: product) >
-                            0)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 4, 8, 0),
-                            child: RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: _productQuantityInSaleRequestTemp(
-                                              saleRequestTempPresenter:
-                                                  saleRequestTempPresenter,
-                                              product: product)
-                                          .toString(),
-                                      style: const TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      )),
-                                  const TextSpan(
-                                    text: ' qtd no carrinho',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+          child: Row(
+            children: [
+              // ImageWidget(product: product),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                      child: Icon(
-                        Icons.chevron_right_rounded,
-                        color: Color(0xFF57636C),
-                        size: 24,
+                    Text(
+                      product.Name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 8),
-                      child: Text(
-                        'R\$${product.SaleRetailPraticed}',
-                        textAlign: TextAlign.end,
-                      ),
+                    Text(
+                      product.PriceLookupCode,
                     ),
+                    if (product.EanCode != null)
+                      Text(
+                        product.EanCode!,
+                      ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'R\$${product.SaleRetailPraticed}',
+                    textAlign: TextAlign.end,
+                  ),
+                  if (_productQuantityInSaleRequestTemp(
+                          saleRequestTempPresenter: saleRequestTempPresenter,
+                          product: product) >
+                      0)
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: _productQuantityInSaleRequestTemp(
+                                      saleRequestTempPresenter:
+                                          saleRequestTempPresenter,
+                                      product: product)
+                                  .toString(),
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              )),
+                          const TextSpan(
+                            text: ' no carrinho',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ],
+                      ),
+                    ),
+                  const Icon(
+                    Icons.arrow_drop_down,
+                    color: Color(0xFF57636C),
+                    size: 24,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

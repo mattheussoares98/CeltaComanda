@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -18,17 +19,21 @@ void main() {
   late GetxExpansibleGroupsPresenter sut;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+
   late EnterpriseEntity enterpriseEntity;
   late List<ExpansibleGroupEntity> expansibleGroups;
   late SaleRequestTempEntity saleRequestTempEntity;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   late PrintedEntity printedProducts;
   late String commandNumber;
+
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late NavigateToSpy navigateTo;
   late LoadPrintedProductsSpy loadPrintedProducts;
+  late VerifyCommandIsPermittedSpy verifyCommandIsPermitted;
+
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -41,6 +46,7 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    verifyCommandIsPermitted = VerifyCommandIsPermittedSpy();
 
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     printedProducts = EntityFactory.makePrintedProductsEntity();
@@ -74,6 +80,7 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
+      verifyCommandIsPermitted: verifyCommandIsPermitted,
     );
   });
 
@@ -94,7 +101,7 @@ void main() {
   });
 
   test('Should throw DomainErrorUnexpected', () async {
-    loadExpansibleGroups.mockLoadExpansibleGroupsError();
+    loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -174,10 +181,10 @@ void main() {
 
   test('Should correct events on load command throws commandNotAvailable',
       () async {
-    loadExpansibleGroups.mockLoadExpansibleGroupsError();
+    loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
     await sut.load(
       commandNumber: commandNumber,
@@ -284,6 +291,6 @@ void main() {
       saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
-   expect(sut.commandNumber, commandNumber);
+    expect(sut.commandNumber, commandNumber);
   });
 }

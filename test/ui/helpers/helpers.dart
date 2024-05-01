@@ -86,6 +86,7 @@ Widget makePage(
           loadExpansibleGroups: LoadExpansibleGroupsSpy(),
           localEnterpriseData: LocalEnterpriseDataSpy(),
           navigateTo: NavigateToSpy(),
+          verifyCommandIsPermitted: VerifyCommandIsPermittedSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxSaleRequestTempPresenter>(

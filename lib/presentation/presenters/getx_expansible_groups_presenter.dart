@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
@@ -13,11 +14,13 @@ class GetxExpansibleGroupsPresenter
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
+  final VerifyCommandIsPermitted verifyCommandIsPermitted;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
+    required this.verifyCommandIsPermitted,
   });
 
   final _isLoading = false.obs;
@@ -90,6 +93,11 @@ class GetxExpansibleGroupsPresenter
     saleRequestTempPresenter.clear();
     notifyListeners();
 
+    await verifyCommandIsPermitted.verify(
+      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      commandNumber: commandNumber,
+    );
+
     try {
       final expansibleGroups = await loadExpansibleGroups.load();
 
@@ -101,7 +109,14 @@ class GetxExpansibleGroupsPresenter
 
       await saleRequestTempPresenter.load(commandNumber);
       await printedProductsPresenter.load(commandNumber);
-    } catch (error) {
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;

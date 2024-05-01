@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/factories/pages/home/home_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,6 +54,7 @@ class App extends StatelessWidget {
             loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
             localEnterpriseData: makeLocalEnterpriseData(),
             navigateTo: makeNavigateTo(),
+            verifyCommandIsPermitted: makeRemoteVerifyCommandIsPermitted(),
           ),
         ),
       ],

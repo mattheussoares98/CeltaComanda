@@ -10,7 +10,6 @@ import '../../domain/mocks/mocks.dart';
 
 class PrintedProductsPresenterSpy extends Mock
     implements PrintedProductsPresenter {
-  final isLoadingController = StreamController<bool>();
   final mainErrorController = StreamController<UIError?>();
   PrintedViewModel printedProductsMock = EntityFactory.makePrintedViewModel();
 
@@ -20,8 +19,6 @@ class PrintedProductsPresenterSpy extends Mock
 
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.isLoadingStream)
-        .thenAnswer((_) => isLoadingController.stream);
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
     when(() => this.removeProduct(
           password: any(named: "password"),
@@ -45,7 +42,6 @@ class PrintedProductsPresenterSpy extends Mock
   }
 
   void dispose() {
-    isLoadingController.close();
     mainErrorController.close();
   }
 }

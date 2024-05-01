@@ -16,7 +16,7 @@ class PrintedProductsPage extends StatefulWidget {
 }
 
 class _PrintedProductsPageState extends State<PrintedProductsPage>
-    with LoadingManager, UIErrorManager {
+    with UIErrorManager {
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -32,8 +32,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
-                      context, printedProductsPresenter.isLoadingStream);
                   handleMainError(
                       context, printedProductsPresenter.mainErrorStream);
 

@@ -5,7 +5,6 @@ import '../pages.dart';
 
 abstract class SaleRequestTempPresenter implements ChangeNotifier {
   SaleRequestTempViewModel? get saleRequestTemp;
-  Stream<bool> get isLoadingStream;
   Stream<UIError?> get mainErrorStream;
 
   Future<void> load(String commandNumber);

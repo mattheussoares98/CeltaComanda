@@ -10,13 +10,10 @@ import 'package:mocktail/mocktail.dart';
 
 class SaleRequestTempPresenterSpy extends Mock
     implements SaleRequestTempPresenter {
-  final isLoadingController = StreamController<bool>();
   final mainErrorController = StreamController<UIError?>();
   SaleRequestTempViewModel? saleRequestTempMock;
 
   SaleRequestTempPresenterSpy() {
-    when(() => this.isLoadingStream)
-        .thenAnswer((_) => isLoadingController.stream);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
 
@@ -60,7 +57,6 @@ class SaleRequestTempPresenterSpy extends Mock
     mockAddProductQuantityCall().thenThrow(DomainError.unexpected);
   }
 
-  void emitLoading([bool show = true]) => isLoadingController.add(show);
   void addSaleRequestTempViewModel(SaleRequestTempViewModel? data) =>
       saleRequestTempMock = data;
 }

@@ -14,7 +14,7 @@ class SaleRequestTempPage extends StatefulWidget {
 }
 
 class _SaleRequestTempPageState extends State<SaleRequestTempPage>
-    with LoadingManager, UIErrorManager {
+    with UIErrorManager {
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -30,8 +30,6 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
-                      context, saleRequestTempPresenter.isLoadingStream);
                   handleMainError(
                       context, saleRequestTempPresenter.mainErrorStream);
 

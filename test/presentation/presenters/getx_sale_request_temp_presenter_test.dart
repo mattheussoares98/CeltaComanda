@@ -51,7 +51,6 @@ void main() {
         () async {
       updateProductQuantity.mockAddProductQuantityError();
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
@@ -66,7 +65,6 @@ void main() {
         () async {
       updateProductQuantity.mockAddProductQuantityError();
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
@@ -78,7 +76,6 @@ void main() {
     });
 
     test("Should emits correct events on AddProductQuantity", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.addProductQuantity(
@@ -110,7 +107,6 @@ void main() {
         () async {
       updateProductQuantity.mockSubtractProductQuantityError();
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
@@ -126,7 +122,6 @@ void main() {
         () async {
       updateProductQuantity.mockSubtractProductQuantityError();
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
@@ -139,7 +134,6 @@ void main() {
     });
 
     test("Should emits correct events on SubtractProductQuantity", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.subtractProductQuantity(

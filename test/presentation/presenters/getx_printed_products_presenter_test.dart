@@ -79,7 +79,6 @@ void main() {
         () async {
       userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
 
@@ -94,7 +93,6 @@ void main() {
         () async {
       userValidations.mockIsValidPasswordError(DomainError.accessDenied);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
 
@@ -108,7 +106,6 @@ void main() {
     test('Should show unexpected UIError on unexpected error', () async {
       userValidations.mockIsValidPasswordError(DomainError.unexpected);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
@@ -148,7 +145,6 @@ void main() {
         () async {
       userValidations.mockCanCancelError(DomainError.invalidCredentials);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
 
@@ -163,7 +159,6 @@ void main() {
         () async {
       userValidations.mockCanCancelError(DomainError.accessDenied);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
 
@@ -177,7 +172,6 @@ void main() {
     test('Should show unexpected UIError on unexpected error', () async {
       userValidations.mockCanCancelError(DomainError.unexpected);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
@@ -226,7 +220,6 @@ void main() {
     test("Should emit correct events", () async {
       loadPrintedProducts.mockError();
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 

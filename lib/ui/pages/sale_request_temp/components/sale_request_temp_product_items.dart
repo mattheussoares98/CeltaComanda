@@ -33,7 +33,7 @@ class SaleRequestProductsItems extends StatelessWidget {
                 final productViewModel =
                     saleRequestTempViewModel.Products[index];
 
-                return ProductItem(product: productViewModel.Product);
+                return SaleRequestTempProductItem(product: productViewModel);
               },
             ),
             RequestSummary(

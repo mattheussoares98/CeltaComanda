@@ -50,4 +50,17 @@ class GetxProductsPresenter extends GetxController
       pageRoute: PageRoutes.saleRequestTemp,
     );
   }
+
+  int? _indexOfSelectedProduct;
+  @override
+  int? get indexOfSelectedProduct => _indexOfSelectedProduct;
+
+  @override
+  void updateIndexOfSelectedProduct(int? index) {
+    if (_indexOfSelectedProduct == index) {
+      _indexOfSelectedProduct = null;
+    } else {
+      _indexOfSelectedProduct = index;
+    }
+  }
 }

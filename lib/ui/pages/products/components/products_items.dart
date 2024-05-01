@@ -22,7 +22,10 @@ class ProductsItems extends StatelessWidget {
         itemBuilder: (context, index) {
           final productViewModel = products[index];
 
-          return ProductItem(product: productViewModel);
+          return ProductItem(
+            product: productViewModel,
+            indexOfProduct: index,
+          );
         },
       ),
     );

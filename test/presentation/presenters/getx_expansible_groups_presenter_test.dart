@@ -181,10 +181,12 @@ void main() {
 
   test('Should correct events on load command throws commandNotAvailable',
       () async {
-    loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
+    loadExpansibleGroups
+        .mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
     await sut.load(
       commandNumber: commandNumber,
@@ -292,5 +294,34 @@ void main() {
     );
 
     expect(sut.commandNumber, commandNumber);
+  });
+
+  test('Should call verifyCommandIsPermitted on load data', () async {
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
+
+    verify(() => verifyCommandIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: commandNumber,
+        )).called(1);
+  });
+
+  test(
+      'Should correct events on VerifyCommandIsPermitted throws commandNotAvailable',
+      () async {
+    verifyCommandIsPermitted.mockError();
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+
+    await sut.load(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+    );
   });
 }

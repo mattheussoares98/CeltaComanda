@@ -93,12 +93,12 @@ class GetxExpansibleGroupsPresenter
     saleRequestTempPresenter.clear();
     notifyListeners();
 
-    await verifyCommandIsPermitted.verify(
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      commandNumber: commandNumber,
-    );
-
     try {
+      await verifyCommandIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: commandNumber,
+      );
+
       final expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
@@ -117,7 +117,6 @@ class GetxExpansibleGroupsPresenter
         default:
           mainError = UIError.unexpected;
       }
-      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
       notifyListeners();

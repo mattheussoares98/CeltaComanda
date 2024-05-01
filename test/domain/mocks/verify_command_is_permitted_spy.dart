@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -18,6 +19,6 @@ class VerifyCommandIsPermittedSpy extends Mock
   }
 
   void mockError() {
-    this.mockVerifyCommandIsPermittedsCall().thenThrow(Exception());
+    this.mockVerifyCommandIsPermittedsCall().thenThrow(DomainError.commandNotAvailable);
   }
 }

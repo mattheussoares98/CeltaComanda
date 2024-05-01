@@ -2,6 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
+Future<void> _validateFormAndSearchCommand({
+  required GlobalKey<FormState> formKey,
+  required BuildContext context,
+  required ExpansibleGroupsPresenter presenter,
+  required PrintedProductsPresenter printedProductsPresenter,
+  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required TextEditingController textController,
+}) async {
+  bool isValid = formKey.currentState!.validate();
+  if (!isValid) return;
+
+  Navigator.of(context).pop();
+  await presenter.load(
+    commandNumber: textController.text,
+    printedProductsPresenter: printedProductsPresenter,
+    saleRequestTempPresenter: saleRequestTempPresenter,
+  );
+}
+
 void showDialogSearchCommandNumber({
   required BuildContext context,
   required ExpansibleGroupsPresenter presenter,
@@ -19,8 +38,17 @@ void showDialogSearchCommandNumber({
           key: const Key("AlertDialogSearchCommand"),
           content: Form(
             key: formKey,
-            // autovalidateMode: AutovalidateMode.onUserInteraction,
             child: TextFormField(
+              onFieldSubmitted: (_) async {
+                await _validateFormAndSearchCommand(
+                  formKey: formKey,
+                  context: context,
+                  presenter: presenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  textController: textController,
+                );
+              },
               autofocus: true,
               onChanged: (value) {},
               validator: (value) {
@@ -49,14 +77,13 @@ void showDialogSearchCommandNumber({
           actions: [
             TextButton(
               onPressed: () async {
-                bool isValid = formKey.currentState!.validate();
-                if (!isValid) return;
-
-                Navigator.of(context).pop();
-                await presenter.load(
-                  commandNumber: textController.text,
+                await _validateFormAndSearchCommand(
+                  formKey: formKey,
+                  context: context,
+                  presenter: presenter,
                   printedProductsPresenter: printedProductsPresenter,
                   saleRequestTempPresenter: saleRequestTempPresenter,
+                  textController: textController,
                 );
               },
               child: const Text("Consultar"),

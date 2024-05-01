@@ -14,13 +14,13 @@ class GetxExpansibleGroupsPresenter
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
-  final VerifyCommandIsPermitted verifyCommandIsPermitted;
+  final TicketIsPermitted ticketIsPermitted;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
-    required this.verifyCommandIsPermitted,
+    required this.ticketIsPermitted,
   });
 
   final _isLoading = false.obs;
@@ -94,7 +94,7 @@ class GetxExpansibleGroupsPresenter
     notifyListeners();
 
     try {
-      await verifyCommandIsPermitted.verify(
+      await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber,
       );

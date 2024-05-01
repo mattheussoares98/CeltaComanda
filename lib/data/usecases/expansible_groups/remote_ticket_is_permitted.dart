@@ -2,10 +2,10 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteVerifyCommandIsPermitted implements VerifyCommandIsPermitted {
+class RemoteTicketIsPermitted implements TicketIsPermitted {
   final HttpClient httpAdapter;
 
-  RemoteVerifyCommandIsPermitted({required this.httpAdapter});
+  RemoteTicketIsPermitted({required this.httpAdapter});
   @override
   Future<dynamic> verify({
     required String url,

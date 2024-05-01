@@ -32,7 +32,7 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late NavigateToSpy navigateTo;
   late LoadPrintedProductsSpy loadPrintedProducts;
-  late VerifyCommandIsPermittedSpy verifyCommandIsPermitted;
+  late TicketIsPermittedSpy ticketIsPermitted;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -46,7 +46,7 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
-    verifyCommandIsPermitted = VerifyCommandIsPermittedSpy();
+    ticketIsPermitted = TicketIsPermittedSpy();
 
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     printedProducts = EntityFactory.makePrintedProductsEntity();
@@ -80,7 +80,7 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       localEnterpriseData: localEnterpriseData,
-      verifyCommandIsPermitted: verifyCommandIsPermitted,
+      ticketIsPermitted: ticketIsPermitted,
     );
   });
 
@@ -296,23 +296,23 @@ void main() {
     expect(sut.commandNumber, commandNumber);
   });
 
-  test('Should call verifyCommandIsPermitted on load data', () async {
+  test('Should call ticketIsPermitted on load data', () async {
     await sut.load(
       commandNumber: commandNumber,
       printedProductsPresenter: printedProductsPresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
-    verify(() => verifyCommandIsPermitted.verify(
+    verify(() => ticketIsPermitted.verify(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           commandNumber: commandNumber,
         )).called(1);
   });
 
   test(
-      'Should correct events on VerifyCommandIsPermitted throws commandNotAvailable',
+      'Should correct events on ticketIsPermitted throws commandNotAvailable',
       () async {
-    verifyCommandIsPermitted.mockError();
+    ticketIsPermitted.mockError();
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(

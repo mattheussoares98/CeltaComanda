@@ -7,5 +7,5 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       navigateTo: makeNavigateTo(),
       localEnterpriseData: makeLocalEnterpriseData(),
-      verifyCommandIsPermitted: makeRemoteVerifyCommandIsPermitted(),
+      ticketIsPermitted: makeRemoteticketIsPermitted(),
     );

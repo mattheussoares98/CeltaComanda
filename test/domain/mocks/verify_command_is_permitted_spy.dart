@@ -4,21 +4,21 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class VerifyCommandIsPermittedSpy extends Mock
-    implements VerifyCommandIsPermitted {
-  VerifyCommandIsPermittedSpy() {
-    mockVerifyCommandIsPermitted();
+class TicketIsPermittedSpy extends Mock
+    implements TicketIsPermitted {
+  ticketIsPermittedSpy() {
+    mockticketIsPermitted();
   }
-  When mockVerifyCommandIsPermittedsCall() => when(() => this.verify(
+  When mockticketIsPermittedsCall() => when(() => this.verify(
         url: any(named: "url"),
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockVerifyCommandIsPermitted() {
-    this.mockVerifyCommandIsPermittedsCall().thenAnswer((_) async => _);
+  void mockticketIsPermitted() {
+    this.mockticketIsPermittedsCall().thenAnswer((_) async => _);
   }
 
   void mockError() {
-    this.mockVerifyCommandIsPermittedsCall().thenThrow(DomainError.commandNotAvailable);
+    this.mockticketIsPermittedsCall().thenThrow(DomainError.commandNotAvailable);
   }
 }

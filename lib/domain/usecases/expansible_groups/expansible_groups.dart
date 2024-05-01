@@ -1,2 +1,2 @@
 export './load_expansible_groups.dart';
-export './verify_command_is_permited.dart';
+export 'ticket_is_permitted.dart';

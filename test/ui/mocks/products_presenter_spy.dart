@@ -12,9 +12,14 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
   final mainErrorController = StreamController<List<ProductsViewModel>>();
   final isLoadingController = StreamController<bool>();
   final productsController = StreamController<List<ProductsViewModel>>();
+  int? selectedProductIndex;
 
   ProductsPresenterSpy() {
     when(() => this.load(any())).thenAnswer((_) async => _);
+    when(() => this.indexOfSelectedProduct)
+        .thenAnswer((_) => this.selectedProductIndex);
+    when(() => this.updateIndexOfSelectedProduct(any()))
+        .thenAnswer((_) async => _);
     when(() => this.productsStream)
         .thenAnswer((_) => productsController.stream);
     when(() => this.isLoadingStream)

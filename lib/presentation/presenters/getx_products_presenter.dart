@@ -33,14 +33,14 @@ class GetxProductsPresenter extends GetxController
         _products.value =
             products.map((e) => ProductsViewModel.fromEntity(e)).toList();
       }
-
-      isLoading = false;
     } catch (e) {
       _products.subject
           .addError(UIError.unexpected.description, StackTrace.current);
 
       isLoading = false;
       throw DomainError.unexpected;
+    } finally {
+      isLoading = false;
     }
   }
 

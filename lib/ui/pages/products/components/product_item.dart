@@ -127,6 +127,7 @@ class _ProductItemState extends State<ProductItem> {
               if (widget.indexOfProduct ==
                   productsPresenter.indexOfSelectedProduct)
                 Padding(
+                  key: const Key("AddCommentAndProductInCart"),
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     children: [
@@ -162,8 +163,9 @@ int _productQuantityInSaleRequestTemp({
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required ProductsViewModel product,
 }) {
-  return saleRequestTempPresenter.saleRequestTemp!.Products
-      .where((element) =>
-          element.Product.PriceLookupCode == product.PriceLookupCode)
-      .length;
+  return saleRequestTempPresenter.saleRequestTemp?.Products
+          .where((element) =>
+              element.Product.PriceLookupCode == product.PriceLookupCode)
+          .length ??
+      0;
 }

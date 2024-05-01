@@ -21,6 +21,11 @@ class EnterpriseInput extends StatelessWidget {
               errorText: snapshot.data?.description,
             ),
             controller: presenter.enterpriseNameController,
+            onFieldSubmitted: (_) async {
+              if (presenter.enterpriseNameController.text.isNotEmpty) {
+                presenter.validateApiSaleRequest();
+              }
+            },
             onChanged: (value) => presenter.validateEnterpriseInput(value,
                 updateEnterpriseNameController: true),
           );

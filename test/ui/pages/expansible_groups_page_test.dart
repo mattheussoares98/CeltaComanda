@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -14,13 +15,17 @@ void main() {
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
 
+  late ExpansibleGroupEntity expansibleGroupEntity;
+
   setUp(() {
+    expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = ExpansibleGroupsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
   });
 
   setUpAll(() {
+    registerFallbackValue(EntityFactory.makeExpansibleGroupsEntity()[0]);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
@@ -64,8 +69,9 @@ void main() {
 
   testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
     await loadPage(tester);
+    presenter.mockGoToProductsPage(expansibleGroupEntity);
 
-    presenter.goToProductsPage(1);
+    presenter.goToProductsPage(expansibleGroupEntity);
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);

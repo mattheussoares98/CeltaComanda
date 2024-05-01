@@ -46,10 +46,10 @@ class GetxExpansibleGroupsPresenter
       [..._expansibleGroups];
 
   @override
-  void goToProductsPage(int expansibleGroupId) {
+  void goToProductsPage(ExpansibleGroupEntity entity) {
     navigateTo.navigate(
       pageRoute: PageRoutes.products,
-      arguments: expansibleGroupId,
+      arguments: entity,
     );
   }
 

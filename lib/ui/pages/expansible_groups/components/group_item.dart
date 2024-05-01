@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class GroupItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        presenter.goToProductsPage(expansibleGroupsViewModel.ExpansibleGroupId);
+        presenter.goToProductsPage(expansibleGroupsViewModel.toEntity());
       },
       child: Container(
         margin: const EdgeInsets.all(8),

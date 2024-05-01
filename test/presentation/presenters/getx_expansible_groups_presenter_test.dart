@@ -54,9 +54,9 @@ void main() {
     expansibleGroupsViewModel = expansibleGroups
         .map((e) => ExpansibleGroupsViewModel(
               Name: e.Name,
-              ExpansibleGroupId: e.ExpansibleGroupId,
-              ExpansibleGroupType: e.ExpansibleGroupType,
-              OrderClassification: e.OrderClassification,
+              ExpansibleGroupId: e.ExpansibleGroupId.toString(),
+              ExpansibleGroupType: e.ExpansibleGroupType.toString(),
+              OrderClassification: e.OrderClassification.toString(),
             ))
         .toList();
 
@@ -129,7 +129,7 @@ void main() {
   });
 
   test('Should go to products page ExpansibleGroupItem click', () async {
-    sut.goToProductsPage(expansibleGroups[0].ExpansibleGroupId);
+    sut.goToProductsPage(expansibleGroups[0]);
 
     verify(
       () => navigateTo.navigate(
@@ -309,8 +309,7 @@ void main() {
         )).called(1);
   });
 
-  test(
-      'Should correct events on ticketIsPermitted throws commandNotAvailable',
+  test('Should correct events on ticketIsPermitted throws commandNotAvailable',
       () async {
     ticketIsPermitted.mockError();
 

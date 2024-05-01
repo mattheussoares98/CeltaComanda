@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import './products.dart';
@@ -18,20 +19,20 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> with LoadingManager {
-  int? expansibleGroupId;
+  ExpansibleGroupEntity? expansibleGroupEntity;
 
   bool _isLoaded = false;
   @override
   void didChangeDependencies() async {
     if (Get.arguments != null) {
-      expansibleGroupId = Get.arguments as int;
+      expansibleGroupEntity = Get.arguments as ExpansibleGroupEntity;
     }
 
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
       Future.delayed(Duration.zero, () async {
-        await widget.presenter.load(expansibleGroupId);
+        await widget.presenter.load(expansibleGroupEntity!.ExpansibleGroupId);
       });
     }
   }
@@ -39,10 +40,13 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
   @override
   Widget build(BuildContext context) {
     if (Get.arguments != null) {
-      expansibleGroupId = Get.arguments as int;
+      expansibleGroupEntity = Get.arguments as ExpansibleGroupEntity;
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(expansibleGroupEntity?.Name ?? ""),
+      ),
       body: SingleChildScrollView(
         primary: false,
         child: Builder(
@@ -55,8 +59,8 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: () async =>
-                          await widget.presenter.load(expansibleGroupId),
+                      reload: () async => await widget.presenter
+                          .load(expansibleGroupEntity!.ExpansibleGroupId),
                     );
                   }
                   if (snapshot.hasData) {

@@ -6,9 +6,9 @@ import 'package:equatable/equatable.dart';
 
 class ExpansibleGroupsViewModel extends Equatable {
   final String Name;
-  final int ExpansibleGroupId;
-  final int ExpansibleGroupType;
-  final int OrderClassification;
+  final String ExpansibleGroupId;
+  final String ExpansibleGroupType;
+  final String OrderClassification;
 
   @override
   List get props =>
@@ -24,8 +24,15 @@ class ExpansibleGroupsViewModel extends Equatable {
   factory ExpansibleGroupsViewModel.fromEntity(ExpansibleGroupEntity entity) =>
       ExpansibleGroupsViewModel(
         Name: entity.Name,
-        ExpansibleGroupId: entity.ExpansibleGroupId,
-        ExpansibleGroupType: entity.ExpansibleGroupType,
-        OrderClassification: entity.OrderClassification,
+        ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
+        ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
+        OrderClassification: entity.OrderClassification.toString(),
+      );
+
+  ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(
+        Name: Name,
+        ExpansibleGroupId: int.tryParse(ExpansibleGroupId) ?? 0,
+        ExpansibleGroupType: int.tryParse(ExpansibleGroupType) ?? 0,
+        OrderClassification: int.tryParse(OrderClassification) ?? 0,
       );
 }

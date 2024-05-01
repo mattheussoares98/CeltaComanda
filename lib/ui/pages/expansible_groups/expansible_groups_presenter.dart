@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
@@ -23,6 +24,6 @@ abstract class ExpansibleGroupsPresenter
     required SaleRequestTempPresenter saleRequestTempPresenter,
   });
 
-  void goToProductsPage(int expansibleGroupId);
+  void goToProductsPage(ExpansibleGroupEntity entity);
   void clear();
 }

@@ -3,5 +3,6 @@ export './expansible_groups_model.dart';
 export 'product_model.dart';
 export 'sale_request_model.dart';
 export 'printed_products_model.dart';
+export './sale_request_temp_model.dart';
 export './sale_request_temp_products_model.dart';
 export './ticket_is_permitted_model.dart';

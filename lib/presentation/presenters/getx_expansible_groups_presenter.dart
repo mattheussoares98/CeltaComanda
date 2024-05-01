@@ -110,6 +110,7 @@ class GetxExpansibleGroupsPresenter
       await saleRequestTempPresenter.load(commandNumber);
       await printedProductsPresenter.load(commandNumber);
     } on DomainError catch (error) {
+      _commandNumber = null;
       switch (error) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;

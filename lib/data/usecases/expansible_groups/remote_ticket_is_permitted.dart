@@ -10,7 +10,7 @@ class RemoteTicketIsPermitted implements TicketIsPermitted {
 
   RemoteTicketIsPermitted({required this.httpAdapter});
   @override
-  Future<TicketIsPermittedEntity> verify({
+  Future<TicketIsPermittedEntity?> verify({
     required String url,
     required String commandNumber,
   }) async {

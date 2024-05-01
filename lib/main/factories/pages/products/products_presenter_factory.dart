@@ -5,4 +5,5 @@ import '../../../factories/usecases/usecases.dart';
 ProductsPresenter makeGetxProductsPresenter() => GetxProductsPresenter(
       navigateTo: makeNavigateTo(),
       loadProducts: makeRemoteLoadProducts(),
+      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
     );

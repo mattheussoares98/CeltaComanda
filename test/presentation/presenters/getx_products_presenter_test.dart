@@ -13,14 +13,17 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  Get.testMode = true;
   WidgetsFlutterBinding.ensureInitialized();
+
   late GetxProductsPresenter sut;
-  late NavigateToSpy navigateTo;
-  late LoadProductsSpy loadProducts;
+
   late List<ProductEntity> products;
   late int expansibleGroupId;
-  Get.testMode = true;
 
+  late NavigateToSpy navigateTo;
+  late LoadProductsSpy loadProducts;
+  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   setUp(() {
     expansibleGroupId = faker.randomGenerator.integer(3);
     loadProducts = LoadProductsSpy();
@@ -28,9 +31,13 @@ void main() {
     loadProducts.mockLoadProducts(products);
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
+
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,
       loadProducts: loadProducts,
+      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   });
 

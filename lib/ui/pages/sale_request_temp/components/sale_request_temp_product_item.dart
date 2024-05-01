@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
-class ProductItem extends StatelessWidget {
+class SaleRequestTempProductItem extends StatelessWidget {
   final SaleRequestTempProductsViewModel product;
 
-  const ProductItem({
+  const SaleRequestTempProductItem({
     required this.product,
     super.key,
   });

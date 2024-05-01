@@ -134,7 +134,7 @@ void main() {
     verify(
       () => navigateTo.navigate(
         pageRoute: PageRoutes.products,
-        arguments: expansibleGroups[0].ExpansibleGroupId,
+        arguments: expansibleGroups[0],
       ),
     ).called(1);
   });

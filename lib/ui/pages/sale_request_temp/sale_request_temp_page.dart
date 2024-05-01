@@ -36,7 +36,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                   if (saleRequestTempPresenter
                           .saleRequestTemp?.Products.isNotEmpty ==
                       true) {
-                    return ProductsItems(
+                    return SaleRequestProductsItems(
                         saleRequestTempViewModel:
                             saleRequestTempPresenter.saleRequestTemp!);
                   }

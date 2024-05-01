@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/products/components/product_item.dart';
 import '../../../../ui/pages/products/products.dart';
 
 class ProductsItems extends StatelessWidget {

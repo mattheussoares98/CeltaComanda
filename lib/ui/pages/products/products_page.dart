@@ -4,7 +4,6 @@ import '../../../domain/entities/entities.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import './products.dart';
-import './components/components.dart';
 
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
     if (!_isLoaded) {
       _isLoaded = true;
       Future.delayed(Duration.zero, () async {
-        await widget.presenter.load(expansibleGroupEntity!.ExpansibleGroupId);
+        await widget.presenter.load(expansibleGroupEntity?.ExpansibleGroupId);
       });
     }
   }

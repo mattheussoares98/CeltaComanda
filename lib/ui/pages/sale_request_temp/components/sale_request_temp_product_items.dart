@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class ProductsItems extends StatelessWidget {
+class SaleRequestProductsItems extends StatelessWidget {
   final SaleRequestTempViewModel saleRequestTempViewModel;
-  const ProductsItems({
+  const SaleRequestProductsItems({
     required this.saleRequestTempViewModel,
     super.key,
   });
@@ -33,7 +33,7 @@ class ProductsItems extends StatelessWidget {
                 final productViewModel =
                     saleRequestTempViewModel.Products[index];
 
-                return ProductItem(product: productViewModel);
+                return ProductItem(product: productViewModel.Product);
               },
             ),
             RequestSummary(

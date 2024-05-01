@@ -21,25 +21,33 @@ class SearchDataByCommandNumber extends StatelessWidget {
 
     return SizedBox(
       height: usableScreenHeight,
-      child: Center(
-        child: TextButton.icon(
-          onPressed: () {
-            showDialogSearchCommandNumber(
-              context: context,
-              presenter: expansibleGroupsPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              saleRequestTempPresenter: saleRequestTempPresenter,
-            );
-          },
-          icon: const Icon(Icons.search),
-          label: const Text(
-            "Consultar dados da comanda",
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "Não há dados",
             textAlign: TextAlign.center,
-            style: TextStyle(
-                // fontSize: 25,
-                ),
           ),
-        ),
+          TextButton.icon(
+            onPressed: () {
+              showDialogSearchCommandNumber(
+                context: context,
+                presenter: expansibleGroupsPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+              );
+            },
+            icon: const Icon(Icons.search),
+            label: const Text(
+              "Consultar dados da comanda",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  // fontSize: 25,
+                  ),
+            ),
+          ),
+        ],
       ),
     );
   }

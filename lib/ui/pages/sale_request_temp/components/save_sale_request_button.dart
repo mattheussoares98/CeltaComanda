@@ -18,7 +18,7 @@ class SaveSaleRequestButton extends StatelessWidget {
       ),
       onPressed: () {},
       child: const Text(
-        'Imprimir produtos',
+        'Salvar/imprimir produtos',
         style: TextStyle(
           color: Colors.white,
         ),

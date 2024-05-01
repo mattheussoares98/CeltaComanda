@@ -35,7 +35,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                   handleMainError(
                       context, saleRequestTempPresenter.mainErrorStream);
 
-                  if (saleRequestTempPresenter.saleRequestTemp != null) {
+                  if (saleRequestTempPresenter
+                          .saleRequestTemp?.Products.isNotEmpty ==
+                      true) {
                     return ProductsItems(
                         saleRequestTempViewModel:
                             saleRequestTempPresenter.saleRequestTemp!);
@@ -49,7 +51,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
               ),
             ),
           ),
-          const SaveSaleRequestButton(),
+          if (saleRequestTempPresenter.saleRequestTemp?.Products.isNotEmpty ==
+              true)
+            const SaveSaleRequestButton(),
         ],
       ),
     );

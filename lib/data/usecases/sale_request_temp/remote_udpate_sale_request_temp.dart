@@ -1,6 +1,5 @@
-import 'package:clean_celta_mobile/data/models/models.dart';
-import 'package:clean_celta_mobile/domain/entities/sale_request_temp_entity.dart';
-
+import '../../../data/models/models.dart';
+import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
@@ -15,14 +14,17 @@ class RemoteUpdateSaleRequestTemp implements UpdateSaleRequestTemp {
   @override
   Future<void> update({
     required String url,
-    required SaleRequestTempEntity saleRequestTempEntity,
+    required UpdateSaleRequestTempEntity entity,
   }) async {
     try {
-      await httpAdapter.request(
+      final body = UpdateSaleRequestTempModel.fromEntity(entity).toJson();
+     final response = await httpAdapter.request(
         url: "$url/api/apiSaleRequest/UpdateSaleRequestTemp",
-        method: "get",
-        body: SaleRequestTempModel.fromEntity(saleRequestTempEntity).toJson(),
+        method: "post",
+        body: body,
       );
+
+      response != null;
     } catch (error) {
       throw DomainError.unexpected;
     }

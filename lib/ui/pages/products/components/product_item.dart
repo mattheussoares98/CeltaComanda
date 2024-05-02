@@ -1,3 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -145,7 +148,45 @@ class _ProductItemState extends State<ProductItem> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          String numberAmerican = widget
+                              .product.SaleRetailPraticed
+                              .replaceAll(RegExp(r','), '.');
+
+                          double saleRetailPraticed =
+                              double.parse(numberAmerican);
+
+                          final entity = UpdateSaleRequestTempEntity(
+                            DeliveryControl: int.parse(saleRequestTempPresenter
+                                .saleRequestTemp!.DeliveryControl),
+                            EnterpriseId: int.parse(saleRequestTempPresenter
+                                .saleRequestTemp!.EnterpriseId),
+                            PersonalizedCode: saleRequestTempPresenter
+                                .saleRequestTemp!.PersonalizedCode,
+                            SaleRequestTempId: int.parse(
+                                saleRequestTempPresenter
+                                    .saleRequestTemp!.SaleRequestTempId),
+                            TotalLiquid: saleRetailPraticed,
+                            Products: [
+                              UpdateSaleRequestTempProductEntity(
+                                ProductInternalCodeOnErp: int.parse(widget
+                                    .product.InternalCodeOfProductOnERP
+                                    .toString()),
+                                ProductPriceLookUpCode:
+                                    widget.product.PriceLookupCode,
+                                Quantity: 1,
+                                SaleRequestTempId: int.parse(
+                                    saleRequestTempPresenter
+                                        .saleRequestTemp!.SaleRequestTempId),
+                                TotalLiquid: saleRetailPraticed,
+                                Value: saleRetailPraticed,
+                              )
+                            ],
+                            Comments: "comentário via aplicativo",
+                          );
+
+                          await productsPresenter.updateSaleRequest(entity);
+                        },
                         child: const Text("Adicionar"),
                       ),
                     ],

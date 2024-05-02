@@ -12,6 +12,7 @@ class SaleRequestTempViewModel extends Equatable {
   final String TotalLiquid;
   final String DeliveryControl;
   final String? Comments;
+  final String SaleRequestTempId;
 
   @override
   List get props => [
@@ -21,6 +22,7 @@ class SaleRequestTempViewModel extends Equatable {
         TotalLiquid,
         DeliveryControl,
         Comments,
+        SaleRequestTempId,
       ];
 
   const SaleRequestTempViewModel({
@@ -29,6 +31,7 @@ class SaleRequestTempViewModel extends Equatable {
     required this.EnterpriseId,
     required this.TotalLiquid,
     required this.DeliveryControl,
+    required this.SaleRequestTempId,
     this.Comments,
   });
 
@@ -43,5 +46,6 @@ class SaleRequestTempViewModel extends Equatable {
             .replaceAll(RegExp(r'\.'), ','),
         DeliveryControl: entity.DeliveryControl.toString(),
         Comments: entity.Comments,
+        SaleRequestTempId: entity.SaleRequestTempId.toString(),
       );
 }

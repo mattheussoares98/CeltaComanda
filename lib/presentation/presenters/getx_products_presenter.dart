@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/domain/entities/update_sale_request_temp_entity.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -63,6 +65,23 @@ class GetxProductsPresenter extends GetxController
       _indexOfSelectedProduct = null;
     } else {
       _indexOfSelectedProduct = index;
+    }
+  }
+
+  @override
+  updateSaleRequest(UpdateSaleRequestTempEntity entity) async {
+    try {
+      isLoading = true;
+
+      await updateSaleRequestTemp.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        entity: entity,
+      );
+    } catch (e) {
+      isLoading = false;
+      throw DomainError.unexpected;
+    } finally {
+      isLoading = false;
     }
   }
 }

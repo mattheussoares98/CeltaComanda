@@ -10,8 +10,8 @@ class UpdateSaleRequestTempSpy extends Mock implements UpdateSaleRequestTemp {
   }
 
   When mocUpdateSaleRequestTempCall() => when(() => this.update(
-        saleRequestTempEntity: any(named: "saleRequestTempEntity"),
         url: any(named: "url"),
+        entity: any(named: "entity"),
       ));
 
   void mocUpdateSaleRequestTemp(SaleRequestTempViewModel? value) {

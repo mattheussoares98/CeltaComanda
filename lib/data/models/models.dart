@@ -6,3 +6,5 @@ export 'printed_products_model.dart';
 export './sale_request_temp_model.dart';
 export './sale_request_temp_products_model.dart';
 export './ticket_is_permitted_model.dart';
+export './update_sale_request_temp_model.dart';
+export './update_sale_request_temp_products_model.dart';

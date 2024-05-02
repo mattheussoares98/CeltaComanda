@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import './products_view_model.dart';
 
 abstract class ProductsPresenter implements Listenable {
@@ -10,4 +11,6 @@ abstract class ProductsPresenter implements Listenable {
   void updateIndexOfSelectedProduct(int? index);
   void goToCartPage();
   Future<void> load(int? expansibleGroupId);
+
+  updateSaleRequest(UpdateSaleRequestTempEntity entity);
 }

@@ -170,7 +170,7 @@ class _ProductItemState extends State<ProductItem> {
                             Products: [
                               UpdateSaleRequestTempProductEntity(
                                 ProductInternalCodeOnErp: int.parse(widget
-                                    .product.InternalCodeOfProductOnERP
+                                    .product.InternalCodeOnERP
                                     .toString()),
                                 ProductPriceLookUpCode:
                                     widget.product.PriceLookupCode,

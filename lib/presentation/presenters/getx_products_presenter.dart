@@ -72,6 +72,7 @@ class GetxProductsPresenter extends GetxController
   Future<void> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   }) async {
     try {
       isLoading = true;
@@ -81,7 +82,8 @@ class GetxProductsPresenter extends GetxController
         entity: entity,
       );
 
-      await saleRequestTempPresenter.load("001");
+      await saleRequestTempPresenter
+          .load(expansibleGroupsPresenter.commandNumber!);
     } catch (e) {
       isLoading = false;
       throw DomainError.unexpected;

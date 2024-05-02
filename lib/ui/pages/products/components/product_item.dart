@@ -26,6 +26,8 @@ class _ProductItemState extends State<ProductItem> {
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: true);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context, listen: true);
     ProductsPresenter productsPresenter = Provider.of(context, listen: true);
 
     TextEditingController commentController = TextEditingController();
@@ -191,6 +193,8 @@ class _ProductItemState extends State<ProductItem> {
                           await productsPresenter.updateSaleRequest(
                             entity: entity,
                             saleRequestTempPresenter: saleRequestTempPresenter,
+                            expansibleGroupsPresenter:
+                                expansibleGroupsPresenter,
                           );
 
                           // setState(() {});

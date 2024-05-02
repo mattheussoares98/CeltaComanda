@@ -5,7 +5,7 @@ import '../../domain/entities/entities.dart';
 class UpdateSaleRequestTempProductsModel {
   final int ProductInternalCodeOnErp;
   final String ProductPriceLookUpCode;
-  final int Quantity;
+  final double Quantity;
   final int SaleRequestTempId;
   final double TotalLiquid;
   final double Value;

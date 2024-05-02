@@ -18,7 +18,7 @@ class RemoteUpdateSaleRequestTemp implements UpdateSaleRequestTemp {
   }) async {
     try {
       final body = UpdateSaleRequestTempModel.fromEntity(entity).toJson();
-     final response = await httpAdapter.request(
+      final response = await httpAdapter.request(
         url: "$url/api/apiSaleRequest/UpdateSaleRequestTemp",
         method: "post",
         body: body,

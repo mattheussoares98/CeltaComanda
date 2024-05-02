@@ -27,7 +27,7 @@ void main() {
   setUp(() {
     expansibleGroupId = faker.randomGenerator.integer(3);
     loadProducts = LoadProductsSpy();
-    products = EntityFactory.makeProducts();
+    products = EntityFactory.makeProductsEntitys();
     loadProducts.mockLoadProducts(products);
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();

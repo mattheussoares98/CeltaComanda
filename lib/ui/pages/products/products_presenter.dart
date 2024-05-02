@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
-import './products_view_model.dart';
+import '../../../ui/pages/pages.dart';
 
 abstract class ProductsPresenter implements Listenable {
   Stream<List<ProductsViewModel>> get productsStream;
@@ -12,5 +12,8 @@ abstract class ProductsPresenter implements Listenable {
   void goToCartPage();
   Future<void> load(int? expansibleGroupId);
 
-  updateSaleRequest(UpdateSaleRequestTempEntity entity);
+  Future<void> updateSaleRequest({
+    required UpdateSaleRequestTempEntity entity,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+  });
 }

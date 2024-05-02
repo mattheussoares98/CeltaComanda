@@ -1,11 +1,11 @@
-import 'package:clean_celta_mobile/domain/entities/update_sale_request_temp_entity.dart';
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/entities/entities.dart';
+import '../../../main/builders/builders.dart';
+import '../../../ui/pages/pages.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
-import '../../ui/pages/products/products.dart';
 import '../mixins/mixins.dart';
 
 class GetxProductsPresenter extends GetxController
@@ -69,7 +69,10 @@ class GetxProductsPresenter extends GetxController
   }
 
   @override
-  updateSaleRequest(UpdateSaleRequestTempEntity entity) async {
+  Future<void> updateSaleRequest({
+    required UpdateSaleRequestTempEntity entity,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+  }) async {
     try {
       isLoading = true;
 
@@ -77,6 +80,8 @@ class GetxProductsPresenter extends GetxController
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         entity: entity,
       );
+
+      await saleRequestTempPresenter.load("001");
     } catch (e) {
       isLoading = false;
       throw DomainError.unexpected;

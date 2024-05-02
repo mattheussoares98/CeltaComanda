@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/entities.dart';
 import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 
@@ -25,8 +25,10 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: false);
-    ProductsPresenter productsPresenter = Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
+    ProductsPresenter productsPresenter = Provider.of(context, listen: true);
+
+    TextEditingController commentController = TextEditingController();
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
@@ -137,6 +139,7 @@ class _ProductItemState extends State<ProductItem> {
                       Expanded(
                         child: TextFormField(
                           maxLines: null,
+                          controller: commentController,
                           decoration: const InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                               vertical: 5.0,
@@ -182,10 +185,15 @@ class _ProductItemState extends State<ProductItem> {
                                 Value: saleRetailPraticed,
                               )
                             ],
-                            Comments: "comentário via aplicativo",
+                            Comments: commentController.text,
                           );
 
-                          await productsPresenter.updateSaleRequest(entity);
+                          await productsPresenter.updateSaleRequest(
+                            entity: entity,
+                            saleRequestTempPresenter: saleRequestTempPresenter,
+                          );
+
+                          // setState(() {});
                         },
                         child: const Text("Adicionar"),
                       ),

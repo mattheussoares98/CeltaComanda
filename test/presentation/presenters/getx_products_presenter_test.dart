@@ -332,7 +332,7 @@ void main() {
       saleRequestProductTempId: saleRequestProductTempId,
     );
 
-   expect(error, throwsA(DomainError.unexpected));
+    expect(error, throwsA(DomainError.unexpected));
   });
 
   test('Should throw AddComment on addCommentError to AddProductComment',
@@ -346,6 +346,19 @@ void main() {
       saleRequestProductTempId: saleRequestProductTempId,
     );
 
-   expect(error, throwsA(DomainError.addComment));
+    expect(error, throwsA(DomainError.addComment));
+  });
+
+  test('Should correct events on updateProductComment success', () async {
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    // expectLater(
+    //     sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+
+    await sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
+    );
   });
 }

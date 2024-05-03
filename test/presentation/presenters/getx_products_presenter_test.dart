@@ -22,6 +22,7 @@ void main() {
 
   late GetxProductsPresenter sut;
   late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
+  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
 
   late List<ProductEntity> products;
   late int expansibleGroupId;
@@ -52,20 +53,20 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
     updateProductComment = UpdateProductCommentSpy();
+    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
 
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
 
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    expansibleGroupsPresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
+    expansibleGroupsPresenter.commandNumberMock = commandNumber;
 
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,
       loadProducts: loadProducts,
       updateSaleRequestTemp: updateSaleRequestTemp,
-      loadSaleRequestTemp: loadSaleRequestTemp,
+      // loadSaleRequestTemp: loadSaleRequestTemp,
       updateProductComment: updateProductComment,
     );
   });
@@ -95,19 +96,15 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
-      verify(() => loadSaleRequestTemp.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: expansibleGroupsPresenter.commandNumberMock!,
-          )).called(1);
+      verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
     });
 
     test('Should emit UnexpectedError on error to loadSaleRequestTemp',
         () async {
-      loadSaleRequestTemp.mockError();
+      saleRequestTempPresenter.mockLoadSaleRequestTempError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -118,6 +115,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -130,6 +128,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
   });
@@ -304,6 +303,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
       expect(isUpdated, true);
@@ -316,6 +316,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
       expect(isUpdated, false);
@@ -330,6 +331,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -345,6 +347,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
   });
@@ -368,6 +371,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
       verify(() => updateProductComment.update(
@@ -383,6 +387,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: "",
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
       verifyNever(() => updateProductComment.update(
@@ -402,6 +407,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -420,6 +426,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
     test('Should emit correct events on UpdateProductComment throws addComment',
@@ -436,6 +443,7 @@ void main() {
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
   });

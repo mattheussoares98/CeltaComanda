@@ -14,14 +14,14 @@ class GetxProductsPresenter extends GetxController
   final LoadProducts loadProducts;
   final NavigateTo navigateTo;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
-  final LoadSaleRequestTemp loadSaleRequestTemp;
+  // final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateProductComment updateProductComment;
 
   GetxProductsPresenter({
     required this.navigateTo,
     required this.loadProducts,
     required this.updateSaleRequestTemp,
-    required this.loadSaleRequestTemp,
+    // required this.loadSaleRequestTemp,
     required this.updateProductComment,
   });
 
@@ -72,6 +72,7 @@ class GetxProductsPresenter extends GetxController
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required String comments,
     required int saleRequestProductTempId,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -81,12 +82,6 @@ class GetxProductsPresenter extends GetxController
         entity: entity,
       );
 
-      await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: expansibleGroupsPresenter.commandNumber!,
-      );
-
       if (comments.isNotEmpty) {
         await updateProductComment.update(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -94,6 +89,10 @@ class GetxProductsPresenter extends GetxController
           comments: comments,
         );
       }
+
+      await saleRequestTempPresenter
+          .load(expansibleGroupsPresenter.commandNumber!);
+
       return true;
     } on DomainError catch (e) {
       switch (e) {

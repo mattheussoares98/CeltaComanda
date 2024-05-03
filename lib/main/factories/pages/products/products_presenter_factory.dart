@@ -6,6 +6,6 @@ ProductsPresenter makeGetxProductsPresenter() => GetxProductsPresenter(
       navigateTo: makeNavigateTo(),
       loadProducts: makeRemoteLoadProducts(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
-      loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+      // loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateProductComment: makeRemoteUpdateProductComment(),
     );

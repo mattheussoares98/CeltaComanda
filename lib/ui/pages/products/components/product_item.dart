@@ -194,11 +194,14 @@ class _ProductItemState extends State<ProductItem> {
                             expansibleGroupsPresenter:
                                 expansibleGroupsPresenter,
                             comments: commentController.text,
-                            saleRequestProductTempId: int.parse(selectedProduct(
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
-                              product: widget.product,
-                            ).SaleRequestProductTempId),
+                            saleRequestProductTempId: int.parse(
+                              selectedProduct(
+                                saleRequestTempPresenter:
+                                    saleRequestTempPresenter,
+                                product: widget.product,
+                              ).SaleRequestProductTempId,
+                            ),
+                            saleRequestTempPresenter: saleRequestTempPresenter,
                           );
                         },
                         child: const Text("Adicionar"),

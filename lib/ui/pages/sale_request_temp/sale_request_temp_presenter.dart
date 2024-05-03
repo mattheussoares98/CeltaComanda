@@ -22,4 +22,13 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   });
 
   void clear();
+
+  Future<void> updateComment({
+    required String comments,
+    required int saleRequestProductTempId,
+  });
+
+  int? get indexOfSelectedProduct;
+
+  void updateIndexOfSelectedProduct(int? index);
 }

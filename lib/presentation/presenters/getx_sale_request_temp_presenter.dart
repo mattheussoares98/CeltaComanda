@@ -121,4 +121,41 @@ class GetxSaleRequestTempPresenter
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> updateComment({
+    required String comments,
+    required int saleRequestProductTempId,
+  }) async {
+    mainError = null;
+    isLoading = true;
+    try {
+      if (comments.isNotEmpty) {
+        await updateProductComment.update(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          comments: comments,
+        );
+      }
+      
+      updateIndexOfSelectedProduct(null);
+    } catch (e) {
+      mainError = UIError.addComment;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  int? _indexOfSelectedProduct;
+  @override
+  int? get indexOfSelectedProduct => _indexOfSelectedProduct;
+
+  @override
+  void updateIndexOfSelectedProduct(int? index) {
+    if (_indexOfSelectedProduct == index) {
+      _indexOfSelectedProduct = null;
+    } else {
+      _indexOfSelectedProduct = index;
+    }
+  }
 }

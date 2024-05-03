@@ -17,6 +17,7 @@ void main() {
 
   late String commandNumber;
   late int saleRequestProductTempId;
+  late String comments;
 
   setUp(() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -33,6 +34,7 @@ void main() {
         EntityFactory.makeEnterpriseData();
     saleRequestProductTempId = faker.randomGenerator.integer(3);
     commandNumber = faker.randomGenerator.integer(3).toString();
+    comments = faker.randomGenerator.string(10);
   });
 
   group("AddProductQuantity group", () {
@@ -186,6 +188,56 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: commandNumber,
           )).called(1);
+    });
+  });
+
+  group("UpdateProductComment", () {
+    test("Should call UpdateComment with correct values", () async {
+      await sut.updateComment(
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+
+      verify(() => updateProductComment.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            saleRequestProductTempId: saleRequestProductTempId,
+            comments: comments,
+          ));
+    });
+
+    test("Should emit correct events on UpdateComment success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateComment(
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
+
+    test("Should emit correct events on UpdateComment throws", () async {
+      updateProductComment.mockUpdateProductCommentError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.addComment]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateComment(
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
+
+    test("Should clear selectedProductIndex on success to UpdateComment",
+        () async {
+      sut.updateIndexOfSelectedProduct(1);
+
+      expect(sut.indexOfSelectedProduct, 1);
+      await sut.updateComment(
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+      expect(sut.indexOfSelectedProduct, null);
     });
   });
 }

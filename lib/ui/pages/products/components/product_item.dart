@@ -149,13 +149,6 @@ class _ProductItemState extends State<ProductItem> {
                         await productsPresenter.updateSaleRequest(
                           entity: entity,
                           expansibleGroupsPresenter: expansibleGroupsPresenter,
-                          saleRequestProductTempId: int.parse(
-                            selectedProduct(
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
-                              product: widget.product,
-                            ).SaleRequestProductTempId,
-                          ),
                           saleRequestTempPresenter: saleRequestTempPresenter,
                         );
                       },
@@ -169,14 +162,6 @@ class _ProductItemState extends State<ProductItem> {
       ),
     );
   }
-}
-
-SaleRequestTempProductsViewModel selectedProduct({
-  required SaleRequestTempPresenter saleRequestTempPresenter,
-  required ProductsViewModel product,
-}) {
-  return saleRequestTempPresenter.saleRequestTemp!.Products.firstWhere(
-      (element) => product.PriceLookupCode == element.ProductPriceLookUpCode);
 }
 
 int _productQuantityInSaleRequestTemp({

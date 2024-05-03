@@ -25,7 +25,6 @@ void main() {
 
   late List<ProductEntity> products;
   late int expansibleGroupId;
-  late int saleRequestProductTempId;
   late SaleRequestTempEntity saleRequestTempEntity;
   late String commandNumber;
 
@@ -41,7 +40,6 @@ void main() {
     loadProducts.mockLoadProducts(products);
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
-    saleRequestProductTempId = faker.randomGenerator.integer(5);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
     commandNumber = faker.randomGenerator.integer(3).toString();
 
@@ -87,7 +85,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
@@ -105,7 +102,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
@@ -117,7 +113,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
@@ -291,7 +286,6 @@ void main() {
       final isUpdated = await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
@@ -303,7 +297,6 @@ void main() {
       final isUpdated = await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
@@ -317,7 +310,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
@@ -332,7 +324,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });

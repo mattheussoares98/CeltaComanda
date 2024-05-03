@@ -14,7 +14,6 @@ abstract class ProductsPresenter implements Listenable {
   Future<bool> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-    required int saleRequestProductTempId,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   });
 }

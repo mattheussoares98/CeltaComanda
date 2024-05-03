@@ -5,3 +5,4 @@ export './load_commands_available_spy.dart';
 export './load_expansible_groups_spy.dart';
 export './load_products_spy.dart';
 export './secure_cache_storage_spy.dart';
+export './update_product_comment_spy.dart';

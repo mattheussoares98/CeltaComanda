@@ -30,6 +30,7 @@ void main() {
   late LoadProductsSpy loadProducts;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late UpdateProductCommentSpy updateProductComment;
 
   setUp(() {
     expansibleGroupId = faker.randomGenerator.integer(3);
@@ -43,6 +44,7 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    updateProductComment = UpdateProductCommentSpy();
 
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -58,6 +60,7 @@ void main() {
       loadProducts: loadProducts,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSaleRequestTemp: loadSaleRequestTemp,
+      updateProductComment: updateProductComment,
     );
   });
 

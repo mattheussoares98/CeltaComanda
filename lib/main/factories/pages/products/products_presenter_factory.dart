@@ -7,4 +7,5 @@ ProductsPresenter makeGetxProductsPresenter() => GetxProductsPresenter(
       loadProducts: makeRemoteLoadProducts(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+      updateProductComment: makeRemoteUpdateProductComment(),
     );

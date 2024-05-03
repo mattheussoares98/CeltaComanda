@@ -15,12 +15,14 @@ class GetxProductsPresenter extends GetxController
   final NavigateTo navigateTo;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadSaleRequestTemp loadSaleRequestTemp;
+  final UpdateProductComment updateProductComment;
 
   GetxProductsPresenter({
     required this.navigateTo,
     required this.loadProducts,
     required this.updateSaleRequestTemp,
     required this.loadSaleRequestTemp,
+    required this.updateProductComment,
   });
 
   final _products = Rx<List<ProductsViewModel>>([]);

@@ -193,6 +193,7 @@ class _ProductItemState extends State<ProductItem> {
                             entity: entity,
                             expansibleGroupsPresenter:
                                 expansibleGroupsPresenter,
+                            comments: commentController.text,
                           );
                         },
                         child: const Text("Adicionar"),

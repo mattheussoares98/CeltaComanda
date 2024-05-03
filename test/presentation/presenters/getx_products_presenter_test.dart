@@ -2,7 +2,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:clean_celta_mobile/ui/pages/products/products.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -24,6 +24,7 @@ void main() {
 
   late List<ProductEntity> products;
   late int expansibleGroupId;
+  late String comments;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -37,6 +38,7 @@ void main() {
     loadProducts.mockLoadProducts(products);
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
+    comments = faker.randomGenerator.string(10);
 
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -235,6 +237,7 @@ void main() {
     await sut.updateSaleRequest(
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
     );
 
     verify(() => loadSaleRequestTemp.load(
@@ -249,6 +252,7 @@ void main() {
     final isUpdated = await sut.updateSaleRequest(
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
     );
 
     expect(isUpdated, true);
@@ -260,6 +264,7 @@ void main() {
     final error = sut.updateSaleRequest(
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
     );
 
     expect(error, throwsA(DomainError.unexpected));
@@ -272,6 +277,7 @@ void main() {
     final error = sut.updateSaleRequest(
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
     );
 
     expect(error, throwsA(DomainError.unexpected));

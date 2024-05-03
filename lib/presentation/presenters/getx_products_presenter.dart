@@ -74,6 +74,7 @@ class GetxProductsPresenter extends GetxController
   Future<bool> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required String comments,
   }) async {
     isLoading = true;
     try {

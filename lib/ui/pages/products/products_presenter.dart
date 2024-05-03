@@ -16,5 +16,6 @@ abstract class ProductsPresenter implements Listenable {
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required String comments,
+    required int saleRequestProductTempId,
   });
 }

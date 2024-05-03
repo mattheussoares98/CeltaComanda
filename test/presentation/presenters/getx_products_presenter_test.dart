@@ -25,6 +25,7 @@ void main() {
   late List<ProductEntity> products;
   late int expansibleGroupId;
   late String comments;
+  late int saleRequestProductTempId;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -40,6 +41,7 @@ void main() {
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
     comments = faker.randomGenerator.string(10);
+    saleRequestProductTempId = faker.randomGenerator.integer(5);
 
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -241,6 +243,7 @@ void main() {
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
       comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
     );
 
     verify(() => loadSaleRequestTemp.load(
@@ -256,6 +259,7 @@ void main() {
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
       comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
     );
 
     expect(isUpdated, true);
@@ -268,6 +272,7 @@ void main() {
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
       comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
     );
 
     expect(error, throwsA(DomainError.unexpected));
@@ -281,8 +286,23 @@ void main() {
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
       comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
     );
 
     expect(error, throwsA(DomainError.unexpected));
+  });
+
+  test('Should call UpdateProductComment when comment is not empty', () async {
+    await sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
+    );
+
+    verify(() => updateProductComment.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        saleRequestProductTempId: saleRequestProductTempId,
+        comments: comments)).called(1);
   });
 }

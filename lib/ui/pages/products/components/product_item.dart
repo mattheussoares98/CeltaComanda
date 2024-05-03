@@ -194,6 +194,11 @@ class _ProductItemState extends State<ProductItem> {
                             expansibleGroupsPresenter:
                                 expansibleGroupsPresenter,
                             comments: commentController.text,
+                            saleRequestProductTempId: int.parse(selectedProduct(
+                              saleRequestTempPresenter:
+                                  saleRequestTempPresenter,
+                              product: widget.product,
+                            ).SaleRequestProductTempId),
                           );
                         },
                         child: const Text("Adicionar"),
@@ -207,6 +212,14 @@ class _ProductItemState extends State<ProductItem> {
       ),
     );
   }
+}
+
+SaleRequestTempProductsViewModel selectedProduct({
+  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required ProductsViewModel product,
+}) {
+  return saleRequestTempPresenter.saleRequestTemp!.Products.firstWhere(
+      (element) => product.PriceLookupCode == element.ProductPriceLookUpCode);
 }
 
 int _productQuantityInSaleRequestTemp({

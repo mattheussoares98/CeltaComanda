@@ -77,6 +77,7 @@ class GetxProductsPresenter extends GetxController
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required String comments,
+    required int saleRequestProductTempId,
   }) async {
     isLoading = true;
     try {
@@ -90,10 +91,23 @@ class GetxProductsPresenter extends GetxController
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: expansibleGroupsPresenter.commandNumber!,
       );
+
+      if (comments.isNotEmpty) {
+        await updateProductComment.update(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          comments: comments,
+        );
+      }
       return true;
-    } catch (e) {
+    } on DomainError catch (e) {
       isLoading = false;
-      throw DomainError.unexpected;
+      switch (e) {
+        case DomainError.addComment:
+          throw DomainError.addComment;
+        default:
+          throw DomainError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

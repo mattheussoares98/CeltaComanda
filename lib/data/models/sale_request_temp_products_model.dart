@@ -154,5 +154,6 @@ class SaleRequestTempProductsModel {
         Quantity: Quantity,
         Value: Value,
         ProductPriceLookUpCode: ProductPriceLookUpCode,
+        Comments: Comments,
       );
 }

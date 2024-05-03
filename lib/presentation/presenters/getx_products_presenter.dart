@@ -93,6 +93,8 @@ class GetxProductsPresenter extends GetxController
       await saleRequestTempPresenter
           .load(expansibleGroupsPresenter.commandNumber!);
 
+      updateIndexOfSelectedProduct(null);
+
       return true;
     } on DomainError catch (e) {
       switch (e) {

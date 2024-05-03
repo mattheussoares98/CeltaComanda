@@ -350,6 +350,20 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
+  
+    test("Should clear indexOfSelectedProduct on success", () async {
+      sut.updateIndexOfSelectedProduct(1);
+
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+
+      expect(sut.indexOfSelectedProduct, null);
+    });
   });
 
   test('Should update indexOfSelectedProduct correctly', () async {

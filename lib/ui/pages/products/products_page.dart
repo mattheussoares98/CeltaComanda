@@ -17,7 +17,8 @@ class ProductsPage extends StatefulWidget {
   State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> with LoadingManager {
+class _ProductsPageState extends State<ProductsPage>
+    with LoadingManager, UIErrorManager {
   ExpansibleGroupEntity? expansibleGroupEntity;
 
   bool _isLoaded = false;
@@ -51,6 +52,7 @@ class _ProductsPageState extends State<ProductsPage> with LoadingManager {
         child: Builder(
           builder: (context) {
             handleLoading(context, widget.presenter.isLoadingStream);
+            handleMainError(context, widget.presenter.mainErrorStream);
 
             return StreamBuilder<List<ProductsViewModel>>(
                 stream: widget.presenter.productsStream,

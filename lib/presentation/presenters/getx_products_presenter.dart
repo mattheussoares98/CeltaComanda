@@ -14,15 +14,11 @@ class GetxProductsPresenter extends GetxController
   final LoadProducts loadProducts;
   final NavigateTo navigateTo;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
-  // final LoadSaleRequestTemp loadSaleRequestTemp;
-  final UpdateProductComment updateProductComment;
 
   GetxProductsPresenter({
     required this.navigateTo,
     required this.loadProducts,
     required this.updateSaleRequestTemp,
-    // required this.loadSaleRequestTemp,
-    required this.updateProductComment,
   });
 
   final _mainError = Rx<UIError?>(null);
@@ -53,24 +49,10 @@ class GetxProductsPresenter extends GetxController
     }
   }
 
-  int? _indexOfSelectedProduct;
-  @override
-  int? get indexOfSelectedProduct => _indexOfSelectedProduct;
-
-  @override
-  void updateIndexOfSelectedProduct(int? index) {
-    if (_indexOfSelectedProduct == index) {
-      _indexOfSelectedProduct = null;
-    } else {
-      _indexOfSelectedProduct = index;
-    }
-  }
-
   @override
   Future<bool> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-    required String comments,
     required int saleRequestProductTempId,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
@@ -82,18 +64,8 @@ class GetxProductsPresenter extends GetxController
         entity: entity,
       );
 
-      if (comments.isNotEmpty) {
-        await updateProductComment.update(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          comments: comments,
-        );
-      }
-
       await saleRequestTempPresenter
           .load(expansibleGroupsPresenter.commandNumber!);
-
-      updateIndexOfSelectedProduct(null);
 
       return true;
     } on DomainError catch (e) {

@@ -1,5 +1,4 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/errors/errors.dart';
@@ -26,7 +25,6 @@ void main() {
 
   late List<ProductEntity> products;
   late int expansibleGroupId;
-  late String comments;
   late int saleRequestProductTempId;
   late SaleRequestTempEntity saleRequestTempEntity;
   late String commandNumber;
@@ -35,7 +33,6 @@ void main() {
   late LoadProductsSpy loadProducts;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late UpdateProductCommentSpy updateProductComment;
 
   setUp(() {
     expansibleGroupId = faker.randomGenerator.integer(3);
@@ -44,7 +41,6 @@ void main() {
     loadProducts.mockLoadProducts(products);
     navigateTo = NavigateToSpy();
     navigateTo.mockNavigate();
-    comments = faker.randomGenerator.string(10);
     saleRequestProductTempId = faker.randomGenerator.integer(5);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
     commandNumber = faker.randomGenerator.integer(3).toString();
@@ -52,7 +48,6 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
-    updateProductComment = UpdateProductCommentSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
 
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
@@ -66,8 +61,6 @@ void main() {
       navigateTo: navigateTo,
       loadProducts: loadProducts,
       updateSaleRequestTemp: updateSaleRequestTemp,
-      // loadSaleRequestTemp: loadSaleRequestTemp,
-      updateProductComment: updateProductComment,
     );
   });
 
@@ -94,7 +87,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -113,7 +105,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -126,7 +117,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -301,7 +291,6 @@ void main() {
       final isUpdated = await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -314,7 +303,6 @@ void main() {
       final isUpdated = await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -329,7 +317,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -345,117 +332,6 @@ void main() {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
         expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-      );
-    });
-  
-    test("Should clear indexOfSelectedProduct on success", () async {
-      sut.updateIndexOfSelectedProduct(1);
-
-      await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-      );
-
-      expect(sut.indexOfSelectedProduct, null);
-    });
-  });
-
-  test('Should update indexOfSelectedProduct correctly', () async {
-    sut.updateIndexOfSelectedProduct(1);
-    expect(sut.indexOfSelectedProduct, 1);
-
-    sut.updateIndexOfSelectedProduct(1);
-    expect(sut.indexOfSelectedProduct, null);
-
-    sut.updateIndexOfSelectedProduct(null);
-    expect(sut.indexOfSelectedProduct, null);
-  });
-
-  group("UpdateProductComment", () {
-    test('Should call UpdateProductComment when comment is not empty',
-        () async {
-      await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-      );
-
-      verify(() => updateProductComment.update(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          comments: comments)).called(1);
-    });
-
-    test('Should not call UpdateProductComment when comment is empty',
-        () async {
-      await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: "",
-        saleRequestProductTempId: saleRequestProductTempId,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-      );
-
-      verifyNever(() => updateProductComment.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            saleRequestProductTempId: saleRequestProductTempId,
-            comments: "",
-          ));
-    });
-
-    test('Should emit correct events on UpdateProductComment success',
-        () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-      );
-    });
-
-    test(
-        'Should emit correct events on UpdateProductComment throws UnexpectedError',
-        () async {
-      updateProductComment
-          .mockUpdateProductCommentError(DomainError.unexpected);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-      );
-    });
-    test('Should emit correct events on UpdateProductComment throws addComment',
-        () async {
-      updateProductComment
-          .mockUpdateProductCommentError(DomainError.addComment);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.addComment]));
-
-      await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );

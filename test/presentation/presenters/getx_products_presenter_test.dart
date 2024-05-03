@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/pages/products/products.dart';
 import 'package:faker/faker.dart';
@@ -12,11 +13,14 @@ import '../../domain/mocks/mocks.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../ui/mocks/mocks.dart';
+
 void main() {
   Get.testMode = true;
   WidgetsFlutterBinding.ensureInitialized();
 
   late GetxProductsPresenter sut;
+  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
 
   late List<ProductEntity> products;
   late int expansibleGroupId;
@@ -24,6 +28,8 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+
   setUp(() {
     expansibleGroupId = faker.randomGenerator.integer(3);
     loadProducts = LoadProductsSpy();
@@ -33,12 +39,28 @@ void main() {
     navigateTo.mockNavigate();
 
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
+    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+
+    updateSaleRequestTemp.mocUpdateSaleRequestTemp();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
+
+    loadSaleRequestTemp
+        .mockLoadSaleRequestTemp(EntityFactory.makeSaleRequestTempEntity());
 
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,
       loadProducts: loadProducts,
       updateSaleRequestTemp: updateSaleRequestTemp,
+      loadSaleRequestTemp: loadSaleRequestTemp,
     );
+  });
+
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(SaleRequestTempPresenterSpy());
   });
 
   test('Should call load products', () async {
@@ -205,5 +227,21 @@ void main() {
 
     sut.updateIndexOfSelectedProduct(null);
     expect(sut.indexOfSelectedProduct, null);
+  });
+
+  test('Should call loadSaleRequestTemp when updateSaleRequestTemp', () async {
+    expansibleGroupsPresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
+    await sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+    );
+
+    verify(() => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+        )).called(1);
   });
 }

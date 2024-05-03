@@ -192,7 +192,6 @@ class _ProductItemState extends State<ProductItem> {
 
                           await productsPresenter.updateSaleRequest(
                             entity: entity,
-                            saleRequestTempPresenter: saleRequestTempPresenter,
                             expansibleGroupsPresenter:
                                 expansibleGroupsPresenter,
                           );

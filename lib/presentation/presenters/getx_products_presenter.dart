@@ -14,11 +14,13 @@ class GetxProductsPresenter extends GetxController
   final LoadProducts loadProducts;
   final NavigateTo navigateTo;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
+  final LoadSaleRequestTemp loadSaleRequestTemp;
 
   GetxProductsPresenter({
     required this.navigateTo,
     required this.loadProducts,
     required this.updateSaleRequestTemp,
+    required this.loadSaleRequestTemp,
   });
 
   final _products = Rx<List<ProductsViewModel>>([]);
@@ -71,19 +73,20 @@ class GetxProductsPresenter extends GetxController
   @override
   Future<void> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   }) async {
+    isLoading = true;
     try {
-      isLoading = true;
-
       await updateSaleRequestTemp.update(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         entity: entity,
       );
 
-      await saleRequestTempPresenter
-          .load(expansibleGroupsPresenter.commandNumber!);
+      await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: expansibleGroupsPresenter.commandNumber!,
+      );
     } catch (e) {
       isLoading = false;
       throw DomainError.unexpected;

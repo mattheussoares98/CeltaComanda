@@ -24,7 +24,7 @@ class RemoteUpdateProductComment implements UpdateProductComment {
 
       response != null;
     } catch (error) {
-      throw DomainError.unexpected;
+      throw DomainError.addComment;
     }
   }
 }

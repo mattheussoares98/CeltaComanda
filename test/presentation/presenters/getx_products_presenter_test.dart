@@ -305,4 +305,47 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         comments: comments)).called(1);
   });
+
+  test('Should not call UpdateProductComment when comment is empty', () async {
+    await sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: "",
+      saleRequestProductTempId: saleRequestProductTempId,
+    );
+
+    verifyNever(() => updateProductComment.update(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          comments: "",
+        ));
+  });
+
+  test('Should throw UnexpectedError on unexpectedError to AddProductComment',
+      () async {
+    updateProductComment.mockUpdateProductCommentError(DomainError.unexpected);
+
+    final error = sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
+    );
+
+   expect(error, throwsA(DomainError.unexpected));
+  });
+
+  test('Should throw AddComment on addCommentError to AddProductComment',
+      () async {
+    updateProductComment.mockUpdateProductCommentError(DomainError.addComment);
+
+    final error = sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      comments: comments,
+      saleRequestProductTempId: saleRequestProductTempId,
+    );
+
+   expect(error, throwsA(DomainError.addComment));
+  });
 }

@@ -243,6 +243,5 @@ void main() {
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: expansibleGroupsPresenter.commandNumberMock!,
         )).called(1);
-        print("x");
   });
 }

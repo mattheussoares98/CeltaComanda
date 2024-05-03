@@ -6,12 +6,14 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 
 void main() {
   late GetxSaleRequestTempPresenter sut;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
+  late UpdateProductCommentSpy updateProductComment;
 
   late String commandNumber;
   late int saleRequestProductTempId;
@@ -19,10 +21,12 @@ void main() {
   setUp(() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     updateProductQuantity = UpdateProductQuantitySpy();
+    updateProductComment = UpdateProductCommentSpy();
 
     sut = GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateProductQuantity: updateProductQuantity,
+      updateProductComment: updateProductComment,
     );
 
     EnterpriseDataBuilder.enterpriseDataEntity =

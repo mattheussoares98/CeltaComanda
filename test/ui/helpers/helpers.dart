@@ -93,6 +93,7 @@ Widget makePage(
         create: (_) => GetxSaleRequestTempPresenter(
           loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
           updateProductQuantity: makeRemoteUpdateProductQuantity(),
+          updateProductComment: makeRemoteUpdateProductComment(),
         ),
       ),
       ChangeNotifierProvider<GetxPrintedProductsPresenter>(

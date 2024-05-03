@@ -13,10 +13,12 @@ class GetxSaleRequestTempPresenter
     implements SaleRequestTempPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateProductQuantity updateProductQuantity;
+  final UpdateProductComment updateProductComment;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
     required this.updateProductQuantity,
+    required this.updateProductComment,
   });
 
   SaleRequestTempViewModel? _saleRequestTemp;

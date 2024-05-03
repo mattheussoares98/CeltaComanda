@@ -6,4 +6,5 @@ SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
     GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateProductQuantity: makeRemoteUpdateProductQuantity(),
+      updateProductComment: makeRemoteUpdateProductComment(),
     );

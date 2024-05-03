@@ -1,5 +1,4 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -22,7 +21,8 @@ void main() {
   Get.testMode = true;
 
   setUp(() {
-    EnterpriseDataBuilder.enterpriseDataEntity = EntityFactory.makeEnterpriseData();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     navigateTo.mockNavigate();
@@ -41,7 +41,8 @@ void main() {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(() => loadSaleRequestTemp.load(
-          enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           commandNumber: "001",
         )).called(1);
@@ -49,7 +50,7 @@ void main() {
 
   test('Should go to EnterpriseValidationPage if loadSaleRequestTemp throws',
       () async {
-    loadSaleRequestTemp.mockError(DomainError.enterpriseOrUrlNotFound);
+    loadSaleRequestTemp.mockError();
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
@@ -72,7 +73,8 @@ void main() {
     ).called(1);
   });
 
-  test('Should go to enterprise page if loadSaleRequestTemp returns null', () async {
+  test('Should go to enterprise page if loadSaleRequestTemp returns null',
+      () async {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(null);
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 

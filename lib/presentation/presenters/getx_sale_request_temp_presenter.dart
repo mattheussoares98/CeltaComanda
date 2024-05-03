@@ -26,6 +26,15 @@ class GetxSaleRequestTempPresenter
     _saleRequestTemp = newValue;
   }
 
+  final _isLoading = false.obs;
+
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+    notifyListeners();
+  }
+
   final _mainError = Rx<UIError?>(null);
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
@@ -35,7 +44,7 @@ class GetxSaleRequestTempPresenter
   Future<void> load(String commandNumber) async {
     _saleRequestTemp = null;
     notifyListeners();
-
+    isLoading = true;
     mainError = null;
 
     try {
@@ -50,7 +59,9 @@ class GetxSaleRequestTempPresenter
         notifyListeners();
       }
     } catch (e) {
-      throw Exception();
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
   }
 
@@ -66,6 +77,7 @@ class GetxSaleRequestTempPresenter
     required String commandNumber,
   }) async {
     mainError = null;
+    isLoading = true;
     try {
       await updateProductQuantity.add(
         url: url,
@@ -75,7 +87,9 @@ class GetxSaleRequestTempPresenter
       await load(commandNumber);
     } catch (e) {
       mainError = UIError.unexpected;
-    } finally {}
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override
@@ -86,6 +100,7 @@ class GetxSaleRequestTempPresenter
     required String commandNumber,
   }) async {
     mainError = null;
+    isLoading = true;
     try {
       if (productQuantity <= 1) {
         await updateProductQuantity.delete(
@@ -100,6 +115,8 @@ class GetxSaleRequestTempPresenter
       await load(commandNumber);
     } catch (e) {
       mainError = UIError.unexpected;
-    } finally {}
+    } finally {
+      isLoading = false;
+    }
   }
 }

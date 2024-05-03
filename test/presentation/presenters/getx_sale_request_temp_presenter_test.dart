@@ -47,26 +47,13 @@ void main() {
       );
     });
 
-    test("Should throw DomainError.unexpected on error to add quantity",
-        () async {
-      updateProductQuantity.mockAddProductQuantityError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.addProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: commandNumber,
-      );
-    });
-
     test("Should emits correct events on error to AddProductQuantity",
         () async {
       updateProductQuantity.mockAddProductQuantityError();
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -75,8 +62,9 @@ void main() {
       );
     });
 
-    test("Should emits correct events on AddProductQuantity", () async {
+    test("Should emits correct events on AddtractProductQuantity", () async {
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -102,28 +90,13 @@ void main() {
       );
     });
 
-    test(
-        "Should throw DomainError.unexpected on error to SubtractProductQuantity",
-        () async {
-      updateProductQuantity.mockSubtractProductQuantityError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        productQuantity: 10,
-        commandNumber: commandNumber,
-      );
-    });
-
     test("Should emits correct events on error to SubtractProductQuantity",
         () async {
       updateProductQuantity.mockSubtractProductQuantityError();
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -135,6 +108,7 @@ void main() {
 
     test("Should emits correct events on SubtractProductQuantity", () async {
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -177,6 +151,37 @@ void main() {
           saleRequestProductTempId: saleRequestProductTempId,
         ),
       ).called(1);
+    });
+  });
+
+  group("LoadSaleRequestTemp", () {
+    test("Should emits correct events on LoadSaleRequestTemp", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.load(commandNumber);
+    });
+
+    test("Should emits correct events on error to LoadSaleRequestTemp",
+        () async {
+      loadSaleRequestTemp.mockError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.load(commandNumber);
+    });
+
+    test("Should call LoadSaleRequestTemp with correct values", () async {
+      await sut.load(commandNumber);
+
+      verify(() => loadSaleRequestTemp.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            commandNumber: commandNumber,
+          )).called(1);
     });
   });
 }

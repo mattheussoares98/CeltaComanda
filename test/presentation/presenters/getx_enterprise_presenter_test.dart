@@ -89,7 +89,7 @@ void main() {
   });
 
   test('Should emit UnexpectedError if SaveEnterpriseData fails', () async {
-    loadSaleRequestTemp.mockError(DomainError.unexpected);
+    localEnterpriseData.mockAddError();
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
 

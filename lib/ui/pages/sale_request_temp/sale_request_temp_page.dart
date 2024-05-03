@@ -14,7 +14,7 @@ class SaleRequestTempPage extends StatefulWidget {
 }
 
 class _SaleRequestTempPageState extends State<SaleRequestTempPage>
-    with UIErrorManager {
+    with UIErrorManager, LoadingManager {
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -32,6 +32,8 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                 builder: (context) {
                   handleMainError(
                       context, saleRequestTempPresenter.mainErrorStream);
+                  handleLoading(
+                      context, saleRequestTempPresenter.isLoadingStream);
 
                   if (saleRequestTempPresenter
                           .saleRequestTemp?.Products.isNotEmpty ==

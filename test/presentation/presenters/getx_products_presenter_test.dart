@@ -42,12 +42,14 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
 
-    updateSaleRequestTemp.mocUpdateSaleRequestTemp();
+    updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
 
     loadSaleRequestTemp
         .mockLoadSaleRequestTemp(EntityFactory.makeSaleRequestTempEntity());
+    expansibleGroupsPresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
 
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,
@@ -230,8 +232,6 @@ void main() {
   });
 
   test('Should call loadSaleRequestTemp when updateSaleRequestTemp', () async {
-    expansibleGroupsPresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
     await sut.updateSaleRequest(
       entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
       expansibleGroupsPresenter: expansibleGroupsPresenter,
@@ -243,5 +243,37 @@ void main() {
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: expansibleGroupsPresenter.commandNumberMock!,
         )).called(1);
+  });
+
+  test('Should return true on success to updateSaleRequestTemp', () async {
+    final isUpdated = await sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+    );
+
+    expect(isUpdated, true);
+  });
+
+  test('Should throw Unexpected error when updateSaleRequest throws', () async {
+    updateSaleRequestTemp.mockUpdateSaleRequestTempError();
+
+    final error = sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+    );
+
+    expect(error, throwsA(DomainError.unexpected));
+  });
+
+  test('Should throw Unexpected error when loadSaleRequestTemp throws',
+      () async {
+    loadSaleRequestTemp.mockError();
+
+    final error = sut.updateSaleRequest(
+      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+    );
+
+    expect(error, throwsA(DomainError.unexpected));
   });
 }

@@ -71,7 +71,7 @@ class GetxProductsPresenter extends GetxController
   }
 
   @override
-  Future<void> updateSaleRequest({
+  Future<bool> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   }) async {
@@ -87,6 +87,7 @@ class GetxProductsPresenter extends GetxController
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: expansibleGroupsPresenter.commandNumber!,
       );
+      return true;
     } catch (e) {
       isLoading = false;
       throw DomainError.unexpected;

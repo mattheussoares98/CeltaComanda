@@ -12,7 +12,7 @@ abstract class ProductsPresenter implements Listenable {
   void goToCartPage();
   Future<void> load(int? expansibleGroupId);
 
-  Future<void> updateSaleRequest({
+  Future<bool> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   });

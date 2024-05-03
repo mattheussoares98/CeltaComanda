@@ -187,7 +187,6 @@ class _ProductItemState extends State<ProductItem> {
                                 Value: saleRetailPraticed,
                               )
                             ],
-                            Comments: commentController.text,
                           );
 
                           await productsPresenter.updateSaleRequest(
@@ -195,8 +194,6 @@ class _ProductItemState extends State<ProductItem> {
                             expansibleGroupsPresenter:
                                 expansibleGroupsPresenter,
                           );
-
-                          // setState(() {});
                         },
                         child: const Text("Adicionar"),
                       ),

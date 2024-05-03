@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/ui/helpers/errors/errors.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +27,8 @@ void main() {
   late int expansibleGroupId;
   late String comments;
   late int saleRequestProductTempId;
+  late SaleRequestTempEntity saleRequestTempEntity;
+  late String commandNumber;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -42,6 +45,8 @@ void main() {
     navigateTo.mockNavigate();
     comments = faker.randomGenerator.string(10);
     saleRequestProductTempId = faker.randomGenerator.integer(5);
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    commandNumber = faker.randomGenerator.integer(3).toString();
 
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -52,8 +57,7 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
 
-    loadSaleRequestTemp
-        .mockLoadSaleRequestTemp(EntityFactory.makeSaleRequestTempEntity());
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     expansibleGroupsPresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
 
@@ -72,159 +76,277 @@ void main() {
     registerFallbackValue(SaleRequestTempPresenterSpy());
   });
 
-  test('Should call load products', () async {
-    await sut.load(expansibleGroupId);
+  group("LoadSaleRequestTemp", () {
+    test('Should return correct entity on success to loadSaleRequestTemp',
+        () async {
+      final value = await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
 
-    verify(() => loadProducts.load(expansibleGroupId)).called(1);
+      expect(value, saleRequestTempEntity);
+    });
+
+    test('Should call loadSaleRequestTemp when updateSaleRequestTemp',
+        () async {
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+
+      verify(() => loadSaleRequestTemp.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+          )).called(1);
+    });
+
+    test('Should emit UnexpectedError on error to loadSaleRequestTemp',
+        () async {
+      loadSaleRequestTemp.mockError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
+
+    test('Should emit correct events on loadSaleRequestTemp success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
   });
 
-  test('Should throw DomainErrorUnexpected', () async {
-    loadProducts.mockLoadProductsError();
+  group("LoadProducts", () {
+    test('Should call load products', () async {
+      await sut.load(expansibleGroupId);
 
-    final future = sut.load(faker.randomGenerator.integer(3));
+      verify(() => loadProducts.load(expansibleGroupId)).called(1);
+    });
 
-    expect(future, throwsA(DomainError.unexpected));
+    test('Should emit correct events on success to load', () async {
+      loadProducts.mockLoadProducts(products);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+      sut.productsStream.listen(expectAsync1((products) => expect(products, [
+            ProductsViewModel(
+              ProductsId: products[0].ProductsId,
+              SaleRetailPraticed: products[0].SaleRetailPraticed,
+              PriceLookupCode: products[0].PriceLookupCode,
+              Name: products[0].Name,
+              PackingAbbreviation: products[0].PackingAbbreviation,
+              InternalCodeOnERP: products[0].InternalCodeOnERP,
+              InternalCodeOfProductOnERP:
+                  products[0].InternalCodeOfProductOnERP,
+              EenterpriseId: products[0].EenterpriseId,
+              PackingQuantity: products[0].PackingQuantity,
+              OfferRetailPrice: products[0].OfferRetailPrice,
+              WholeSalePrice: products[0].WholeSalePrice,
+              WholeOfferPrice: products[0].WholeOfferPrice,
+              OfferECommercePrice: products[0].OfferECommercePrice,
+              SaleECommercePrice: products[0].SaleECommercePrice,
+              LiquidCost: products[0].LiquidCost,
+              LiquidCostMiddle: products[0].LiquidCostMiddle,
+              LiquidCostReal: products[0].LiquidCostReal,
+              RepositionCost: products[0].RepositionCost,
+              RepositionCostMiddle: products[0].RepositionCostMiddle,
+              RepositionCostReal: products[0].RepositionCostReal,
+              IcmsAliquot: products[0].IcmsAliquot,
+              IcmsIVAMargin: products[0].IcmsIVAMargin,
+              IcmsReductionMargin: products[0].IcmsReductionMargin,
+              IcmsStave: products[0].IcmsStave,
+              PercImpNBPTState: products[0].PercImpNBPTState,
+              PercImpNBPTMunicipal: products[0].PercImpNBPTMunicipal,
+              CofinsType: products[0].CofinsType,
+              PisType: products[0].PisType,
+              ProductIsFatherComposition:
+                  products[0].ProductIsFatherComposition,
+              QuantityMinimumWholeSale: products[0].QuantityMinimumWholeSale,
+              QuantityMinimumWholeSaleByClass:
+                  products[0].QuantityMinimumWholeSaleByClass,
+              BalanceTare: products[0].BalanceTare,
+              FamilyCode: products[0].FamilyCode,
+              DepartmentCode: products[0].DepartmentCode,
+              SectionCode: products[0].SectionCode,
+              GroupCode: products[0].GroupCode,
+              SubGroupCode: products[0].SubGroupCode,
+              StockQuantity: products[0].StockQuantity,
+              AllowFractionate: products[0].AllowFractionate,
+              IsBalance: products[0].IsBalance,
+              CanBeWeightyInPdv: products[0].CanBeWeightyInPdv,
+              QuantityInBalance: products[0].QuantityInBalance,
+              AllowQuantityInPdv: products[0].AllowQuantityInPdv,
+              GoesForFastTable: products[0].GoesForFastTable,
+              IsAlcoholicProduct: products[0].IsAlcoholicProduct,
+              SaleRetailPrice: products[0].SaleRetailPrice,
+              PercImpNBPTNational: products[0].PercImpNBPTNational,
+              CofinsPercentage: products[0].CofinsPercentage,
+              PisPercentage: products[0].PisPercentage,
+              CFOP: products[0].CFOP,
+              FiscalClassificationNCM: products[0].FiscalClassificationNCM,
+              TributarySituationCode: products[0].TributarySituationCode,
+              CSTPisCofins: products[0].CSTPisCofins,
+              CodeClass: products[0].CodeClass,
+              DepartmentName: products[0].DepartmentName,
+              SectionName: products[0].SectionName,
+              DateOfLastChanged: products[0].DateOfLastChanged,
+              GroupName: products[0].GroupName,
+              SaleRetailPraticedString: products[0].SaleRetailPraticedString,
+              PersonalizedCode: products[0].PersonalizedCode,
+              EanCode: products[0].EanCode,
+              NameComplete: products[0].NameComplete,
+              NameReduced: products[0].NameReduced,
+            ),
+            ProductsViewModel(
+              ProductsId: products[1].ProductsId,
+              SaleRetailPraticed: products[1].SaleRetailPraticed,
+              PriceLookupCode: products[1].PriceLookupCode,
+              Name: products[1].Name,
+              PackingAbbreviation: products[1].PackingAbbreviation,
+              InternalCodeOnERP: products[1].InternalCodeOnERP,
+              InternalCodeOfProductOnERP:
+                  products[1].InternalCodeOfProductOnERP,
+              EenterpriseId: products[1].EenterpriseId,
+              PackingQuantity: products[1].PackingQuantity,
+              OfferRetailPrice: products[1].OfferRetailPrice,
+              WholeSalePrice: products[1].WholeSalePrice,
+              WholeOfferPrice: products[1].WholeOfferPrice,
+              OfferECommercePrice: products[1].OfferECommercePrice,
+              SaleECommercePrice: products[1].SaleECommercePrice,
+              LiquidCost: products[1].LiquidCost,
+              LiquidCostMiddle: products[1].LiquidCostMiddle,
+              LiquidCostReal: products[1].LiquidCostReal,
+              RepositionCost: products[1].RepositionCost,
+              RepositionCostMiddle: products[1].RepositionCostMiddle,
+              RepositionCostReal: products[1].RepositionCostReal,
+              IcmsAliquot: products[1].IcmsAliquot,
+              IcmsIVAMargin: products[1].IcmsIVAMargin,
+              IcmsReductionMargin: products[1].IcmsReductionMargin,
+              IcmsStave: products[1].IcmsStave,
+              PercImpNBPTState: products[1].PercImpNBPTState,
+              PercImpNBPTMunicipal: products[1].PercImpNBPTMunicipal,
+              CofinsType: products[1].CofinsType,
+              PisType: products[1].PisType,
+              ProductIsFatherComposition:
+                  products[1].ProductIsFatherComposition,
+              QuantityMinimumWholeSale: products[1].QuantityMinimumWholeSale,
+              QuantityMinimumWholeSaleByClass:
+                  products[1].QuantityMinimumWholeSaleByClass,
+              BalanceTare: products[1].BalanceTare,
+              FamilyCode: products[1].FamilyCode,
+              DepartmentCode: products[1].DepartmentCode,
+              SectionCode: products[1].SectionCode,
+              GroupCode: products[1].GroupCode,
+              SubGroupCode: products[1].SubGroupCode,
+              StockQuantity: products[1].StockQuantity,
+              AllowFractionate: products[1].AllowFractionate,
+              IsBalance: products[1].IsBalance,
+              CanBeWeightyInPdv: products[1].CanBeWeightyInPdv,
+              QuantityInBalance: products[1].QuantityInBalance,
+              AllowQuantityInPdv: products[1].AllowQuantityInPdv,
+              GoesForFastTable: products[1].GoesForFastTable,
+              IsAlcoholicProduct: products[1].IsAlcoholicProduct,
+              SaleRetailPrice: products[1].SaleRetailPrice,
+              PercImpNBPTNational: products[1].PercImpNBPTNational,
+              CofinsPercentage: products[1].CofinsPercentage,
+              PisPercentage: products[1].PisPercentage,
+              CFOP: products[1].CFOP,
+              FiscalClassificationNCM: products[1].FiscalClassificationNCM,
+              TributarySituationCode: products[1].TributarySituationCode,
+              CSTPisCofins: products[1].CSTPisCofins,
+              CodeClass: products[1].CodeClass,
+              DepartmentName: products[1].DepartmentName,
+              SectionName: products[1].SectionName,
+              DateOfLastChanged: products[1].DateOfLastChanged,
+              GroupName: products[1].GroupName,
+              SaleRetailPraticedString: products[1].SaleRetailPraticedString,
+              PersonalizedCode: products[1].PersonalizedCode,
+              EanCode: products[1].EanCode,
+              NameComplete: products[1].NameComplete,
+              NameReduced: products[1].NameReduced,
+            ),
+          ])));
+
+      await sut.load(faker.randomGenerator.integer(3));
+    });
+
+    test('Should emit correct events on error to load', () async {
+      loadProducts.mockLoadProductsError();
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.load(faker.randomGenerator.integer(3));
+    });
   });
 
-  test('Should emit correct events on success', () async {
-    loadProducts.mockLoadProducts(products);
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.productsStream.listen(expectAsync1((products) => expect(products, [
-          ProductsViewModel(
-            ProductsId: products[0].ProductsId,
-            SaleRetailPraticed: products[0].SaleRetailPraticed,
-            PriceLookupCode: products[0].PriceLookupCode,
-            Name: products[0].Name,
-            PackingAbbreviation: products[0].PackingAbbreviation,
-            InternalCodeOnERP: products[0].InternalCodeOnERP,
-            InternalCodeOfProductOnERP: products[0].InternalCodeOfProductOnERP,
-            EenterpriseId: products[0].EenterpriseId,
-            PackingQuantity: products[0].PackingQuantity,
-            OfferRetailPrice: products[0].OfferRetailPrice,
-            WholeSalePrice: products[0].WholeSalePrice,
-            WholeOfferPrice: products[0].WholeOfferPrice,
-            OfferECommercePrice: products[0].OfferECommercePrice,
-            SaleECommercePrice: products[0].SaleECommercePrice,
-            LiquidCost: products[0].LiquidCost,
-            LiquidCostMiddle: products[0].LiquidCostMiddle,
-            LiquidCostReal: products[0].LiquidCostReal,
-            RepositionCost: products[0].RepositionCost,
-            RepositionCostMiddle: products[0].RepositionCostMiddle,
-            RepositionCostReal: products[0].RepositionCostReal,
-            IcmsAliquot: products[0].IcmsAliquot,
-            IcmsIVAMargin: products[0].IcmsIVAMargin,
-            IcmsReductionMargin: products[0].IcmsReductionMargin,
-            IcmsStave: products[0].IcmsStave,
-            PercImpNBPTState: products[0].PercImpNBPTState,
-            PercImpNBPTMunicipal: products[0].PercImpNBPTMunicipal,
-            CofinsType: products[0].CofinsType,
-            PisType: products[0].PisType,
-            ProductIsFatherComposition: products[0].ProductIsFatherComposition,
-            QuantityMinimumWholeSale: products[0].QuantityMinimumWholeSale,
-            QuantityMinimumWholeSaleByClass:
-                products[0].QuantityMinimumWholeSaleByClass,
-            BalanceTare: products[0].BalanceTare,
-            FamilyCode: products[0].FamilyCode,
-            DepartmentCode: products[0].DepartmentCode,
-            SectionCode: products[0].SectionCode,
-            GroupCode: products[0].GroupCode,
-            SubGroupCode: products[0].SubGroupCode,
-            StockQuantity: products[0].StockQuantity,
-            AllowFractionate: products[0].AllowFractionate,
-            IsBalance: products[0].IsBalance,
-            CanBeWeightyInPdv: products[0].CanBeWeightyInPdv,
-            QuantityInBalance: products[0].QuantityInBalance,
-            AllowQuantityInPdv: products[0].AllowQuantityInPdv,
-            GoesForFastTable: products[0].GoesForFastTable,
-            IsAlcoholicProduct: products[0].IsAlcoholicProduct,
-            SaleRetailPrice: products[0].SaleRetailPrice,
-            PercImpNBPTNational: products[0].PercImpNBPTNational,
-            CofinsPercentage: products[0].CofinsPercentage,
-            PisPercentage: products[0].PisPercentage,
-            CFOP: products[0].CFOP,
-            FiscalClassificationNCM: products[0].FiscalClassificationNCM,
-            TributarySituationCode: products[0].TributarySituationCode,
-            CSTPisCofins: products[0].CSTPisCofins,
-            CodeClass: products[0].CodeClass,
-            DepartmentName: products[0].DepartmentName,
-            SectionName: products[0].SectionName,
-            DateOfLastChanged: products[0].DateOfLastChanged,
-            GroupName: products[0].GroupName,
-            SaleRetailPraticedString: products[0].SaleRetailPraticedString,
-            PersonalizedCode: products[0].PersonalizedCode,
-            EanCode: products[0].EanCode,
-            NameComplete: products[0].NameComplete,
-            NameReduced: products[0].NameReduced,
-          ),
-          ProductsViewModel(
-            ProductsId: products[1].ProductsId,
-            SaleRetailPraticed: products[1].SaleRetailPraticed,
-            PriceLookupCode: products[1].PriceLookupCode,
-            Name: products[1].Name,
-            PackingAbbreviation: products[1].PackingAbbreviation,
-            InternalCodeOnERP: products[1].InternalCodeOnERP,
-            InternalCodeOfProductOnERP: products[1].InternalCodeOfProductOnERP,
-            EenterpriseId: products[1].EenterpriseId,
-            PackingQuantity: products[1].PackingQuantity,
-            OfferRetailPrice: products[1].OfferRetailPrice,
-            WholeSalePrice: products[1].WholeSalePrice,
-            WholeOfferPrice: products[1].WholeOfferPrice,
-            OfferECommercePrice: products[1].OfferECommercePrice,
-            SaleECommercePrice: products[1].SaleECommercePrice,
-            LiquidCost: products[1].LiquidCost,
-            LiquidCostMiddle: products[1].LiquidCostMiddle,
-            LiquidCostReal: products[1].LiquidCostReal,
-            RepositionCost: products[1].RepositionCost,
-            RepositionCostMiddle: products[1].RepositionCostMiddle,
-            RepositionCostReal: products[1].RepositionCostReal,
-            IcmsAliquot: products[1].IcmsAliquot,
-            IcmsIVAMargin: products[1].IcmsIVAMargin,
-            IcmsReductionMargin: products[1].IcmsReductionMargin,
-            IcmsStave: products[1].IcmsStave,
-            PercImpNBPTState: products[1].PercImpNBPTState,
-            PercImpNBPTMunicipal: products[1].PercImpNBPTMunicipal,
-            CofinsType: products[1].CofinsType,
-            PisType: products[1].PisType,
-            ProductIsFatherComposition: products[1].ProductIsFatherComposition,
-            QuantityMinimumWholeSale: products[1].QuantityMinimumWholeSale,
-            QuantityMinimumWholeSaleByClass:
-                products[1].QuantityMinimumWholeSaleByClass,
-            BalanceTare: products[1].BalanceTare,
-            FamilyCode: products[1].FamilyCode,
-            DepartmentCode: products[1].DepartmentCode,
-            SectionCode: products[1].SectionCode,
-            GroupCode: products[1].GroupCode,
-            SubGroupCode: products[1].SubGroupCode,
-            StockQuantity: products[1].StockQuantity,
-            AllowFractionate: products[1].AllowFractionate,
-            IsBalance: products[1].IsBalance,
-            CanBeWeightyInPdv: products[1].CanBeWeightyInPdv,
-            QuantityInBalance: products[1].QuantityInBalance,
-            AllowQuantityInPdv: products[1].AllowQuantityInPdv,
-            GoesForFastTable: products[1].GoesForFastTable,
-            IsAlcoholicProduct: products[1].IsAlcoholicProduct,
-            SaleRetailPrice: products[1].SaleRetailPrice,
-            PercImpNBPTNational: products[1].PercImpNBPTNational,
-            CofinsPercentage: products[1].CofinsPercentage,
-            PisPercentage: products[1].PisPercentage,
-            CFOP: products[1].CFOP,
-            FiscalClassificationNCM: products[1].FiscalClassificationNCM,
-            TributarySituationCode: products[1].TributarySituationCode,
-            CSTPisCofins: products[1].CSTPisCofins,
-            CodeClass: products[1].CodeClass,
-            DepartmentName: products[1].DepartmentName,
-            SectionName: products[1].SectionName,
-            DateOfLastChanged: products[1].DateOfLastChanged,
-            GroupName: products[1].GroupName,
-            SaleRetailPraticedString: products[1].SaleRetailPraticedString,
-            PersonalizedCode: products[1].PersonalizedCode,
-            EanCode: products[1].EanCode,
-            NameComplete: products[1].NameComplete,
-            NameReduced: products[1].NameReduced,
-          ),
-        ])));
+  group("UpdateSaleRequest", () {
+    test('Should return true on success to updateSaleRequestTemp', () async {
+      final isUpdated = await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
 
-    await sut.load(faker.randomGenerator.integer(3));
+      expect(isUpdated, true);
+    });
+    test('Should return false on error to updateSaleRequestTemp', () async {
+      updateSaleRequestTemp.mockUpdateSaleRequestTempError();
+
+      final isUpdated = await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+
+      expect(isUpdated, false);
+    });
+
+    test('Should emit correct events on UpdateSaleRequest success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
+
+    test('Should emit correct events on error to UpdateSaleRequest', () async {
+      updateSaleRequestTemp.mockUpdateSaleRequestTempError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
   });
 
   test('Should update indexOfSelectedProduct correctly', () async {
@@ -238,127 +360,83 @@ void main() {
     expect(sut.indexOfSelectedProduct, null);
   });
 
-  test('Should call loadSaleRequestTemp when updateSaleRequestTemp', () async {
-    await sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
-
-    verify(() => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: expansibleGroupsPresenter.commandNumberMock!,
-        )).called(1);
-  });
-
-  test('Should return true on success to updateSaleRequestTemp', () async {
-    final isUpdated = await sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
-
-    expect(isUpdated, true);
-  });
-
-  test('Should throw Unexpected error when updateSaleRequest throws', () async {
-    updateSaleRequestTemp.mockUpdateSaleRequestTempError();
-
-    final error = sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
-
-    expect(error, throwsA(DomainError.unexpected));
-  });
-
-  test('Should throw Unexpected error when loadSaleRequestTemp throws',
-      () async {
-    loadSaleRequestTemp.mockError();
-
-    final error = sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
-
-    expect(error, throwsA(DomainError.unexpected));
-  });
-
-  test('Should call UpdateProductComment when comment is not empty', () async {
-    await sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
-
-    verify(() => updateProductComment.update(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+  group("UpdateProductComment", () {
+    test('Should call UpdateProductComment when comment is not empty',
+        () async {
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        comments: comments)).called(1);
-  });
+      );
 
-  test('Should not call UpdateProductComment when comment is empty', () async {
-    await sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: "",
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
-
-    verifyNever(() => updateProductComment.update(
+      verify(() => updateProductComment.update(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           saleRequestProductTempId: saleRequestProductTempId,
-          comments: "",
-        ));
-  });
+          comments: comments)).called(1);
+    });
 
-  test('Should throw UnexpectedError on unexpectedError to AddProductComment',
-      () async {
-    updateProductComment.mockUpdateProductCommentError(DomainError.unexpected);
+    test('Should not call UpdateProductComment when comment is empty',
+        () async {
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: "",
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
 
-    final error = sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
+      verifyNever(() => updateProductComment.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            saleRequestProductTempId: saleRequestProductTempId,
+            comments: "",
+          ));
+    });
 
-    expect(error, throwsA(DomainError.unexpected));
-  });
+    test('Should emit correct events on UpdateProductComment success',
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
 
-  test('Should throw AddComment on addCommentError to AddProductComment',
-      () async {
-    updateProductComment.mockUpdateProductCommentError(DomainError.addComment);
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
 
-    final error = sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
+    test(
+        'Should emit correct events on UpdateProductComment throws UnexpectedError',
+        () async {
+      updateProductComment
+          .mockUpdateProductCommentError(DomainError.unexpected);
 
-    expect(error, throwsA(DomainError.addComment));
-  });
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-  test('Should correct events on updateProductComment success', () async {
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    // expectLater(
-    //     sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
+    test('Should emit correct events on UpdateProductComment throws addComment',
+        () async {
+      updateProductComment
+          .mockUpdateProductCommentError(DomainError.addComment);
 
-    await sut.updateSaleRequest(
-      entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-      comments: comments,
-      saleRequestProductTempId: saleRequestProductTempId,
-    );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.addComment]));
+
+      await sut.updateSaleRequest(
+        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+      );
+    });
   });
 }

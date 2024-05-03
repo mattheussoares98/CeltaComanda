@@ -3,7 +3,6 @@
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
@@ -24,9 +23,6 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
         .thenAnswer((_) => productsController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.goToCartPage()).thenAnswer((_) => Get.offNamed(
-          PageRoutes.saleRequestTemp,
-        ));
   }
 
   void mockProductStreamError(DomainError error) {

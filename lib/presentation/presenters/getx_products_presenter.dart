@@ -25,16 +25,20 @@ class GetxProductsPresenter extends GetxController
     required this.updateProductComment,
   });
 
-  final _products = Rx<List<ProductsViewModel>>([]);
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 
+  final _products = Rx<List<ProductsViewModel>>([]);
   @override
   Stream<List<ProductsViewModel>> get productsStream => _products.stream;
 
   @override
   Future<void> load(int? expansibleGroupId) async {
+    isLoading = true;
+    mainError = null;
     try {
-      isLoading = true;
-
       final products = await loadProducts.load(expansibleGroupId);
 
       if (products != null) {
@@ -42,21 +46,11 @@ class GetxProductsPresenter extends GetxController
             products.map((e) => ProductsViewModel.fromEntity(e)).toList();
       }
     } catch (e) {
-      _products.subject
-          .addError(UIError.unexpected.description, StackTrace.current);
-
       isLoading = false;
-      throw DomainError.unexpected;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }
-  }
-
-  @override
-  void goToCartPage() {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.saleRequestTemp,
-    );
   }
 
   int? _indexOfSelectedProduct;
@@ -80,6 +74,7 @@ class GetxProductsPresenter extends GetxController
     required int saleRequestProductTempId,
   }) async {
     isLoading = true;
+    mainError = null;
     try {
       await updateSaleRequestTemp.update(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -101,12 +96,13 @@ class GetxProductsPresenter extends GetxController
       }
       return true;
     } on DomainError catch (e) {
-      isLoading = false;
       switch (e) {
         case DomainError.addComment:
-          throw DomainError.addComment;
+          mainError = UIError.addComment;
+          return false;
         default:
-          throw DomainError.unexpected;
+          mainError = UIError.unexpected;
+          return false;
       }
     } finally {
       isLoading = false;

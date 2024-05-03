@@ -59,13 +59,4 @@ void main() {
 
     expect(find.byType(ReloadScreen), findsOneWidget);
   });
-
-  testWidgets('Should go to CartPage', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.goToCartPage();
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.saleRequestTemp);
-  });
 }

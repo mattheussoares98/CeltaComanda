@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/presentation/presenters/getx_expansible_groups_presenter.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -43,9 +44,26 @@ class _ProductsPageState extends State<ProductsPage>
       expansibleGroupEntity = Get.arguments as ExpansibleGroupEntity;
     }
 
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(expansibleGroupEntity?.Name ?? ""),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(expansibleGroupEntity?.Name ?? ""),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Comanda ${expansibleGroupsPresenter.commandNumber}",
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         primary: false,

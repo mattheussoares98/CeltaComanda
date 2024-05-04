@@ -14,6 +14,10 @@ class ProductDetails extends StatelessWidget {
   final String totalLiquid;
   final String? comments;
   final bool isPrintedProducts;
+  final bool showFormFieldUpdateComment;
+  final void Function()? onTapCommentIcon;
+  final TextEditingController? commentsController;
+  final FocusNode? commentsFocusNode;
 
   const ProductDetails({
     required this.Product,
@@ -24,6 +28,10 @@ class ProductDetails extends StatelessWidget {
     required this.value,
     required this.totalLiquid,
     required this.isPrintedProducts,
+    required this.showFormFieldUpdateComment,
+    required this.onTapCommentIcon,
+    required this.commentsController,
+    required this.commentsFocusNode,
     this.comments,
     super.key,
   });
@@ -31,6 +39,7 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,6 +68,14 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ],
                   ),
+                  GestureDetector(
+                    onTap: onTapCommentIcon,
+                    child: Icon(
+                      color: Theme.of(context).colorScheme.primary,
+                      comments != null ? Icons.edit : Icons.add_comment,
+                      size: 25,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -79,6 +96,15 @@ class ProductDetails extends StatelessWidget {
           ],
         ),
         if (comments != null) Text("Comentário: $comments"),
+        if (showFormFieldUpdateComment)
+          TextField(
+            focusNode: commentsFocusNode,
+            controller: commentsController,
+            maxLines: null,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            ),
+          ),
         const Divider(
           thickness: 0.2,
         )

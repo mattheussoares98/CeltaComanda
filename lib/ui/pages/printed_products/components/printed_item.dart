@@ -50,6 +50,10 @@ class PrintedItem extends StatelessWidget {
                         // ImageWidget(product: product),
                         Expanded(
                           child: ProductDetails(
+                            commentsController: null,
+                            onTapCommentIcon: null,
+                            showFormFieldUpdateComment: false,
+                            commentsFocusNode: null,
                             Product: product.Products,
                             isPrintedProducts: true,
                             onPressedAddQuantity: null,

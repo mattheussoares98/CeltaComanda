@@ -137,7 +137,7 @@ class GetxSaleRequestTempPresenter
           comments: comments,
         );
       }
-      
+
       updateIndexOfSelectedProduct(null);
     } catch (e) {
       mainError = UIError.addComment;
@@ -157,5 +157,6 @@ class GetxSaleRequestTempPresenter
     } else {
       _indexOfSelectedProduct = index;
     }
+    notifyListeners();
   }
 }

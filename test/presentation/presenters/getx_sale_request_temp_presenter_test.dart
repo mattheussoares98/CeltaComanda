@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -20,6 +21,7 @@ void main() {
   late UpdateProductCommentSpy updateProductComment;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
 
+  late SaleRequestTempEntity saleRequestTempEntity;
   late String commandNumber;
   late int saleRequestProductTempId;
   late String comments;
@@ -45,11 +47,15 @@ void main() {
     saleRequestProductTempId = faker.randomGenerator.integer(3);
     commandNumber = faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
   });
 
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(
+      EntityFactory.makeSaleRequestTempEntity(),
+    );
   });
 
   group("AddProductQuantity group", () {
@@ -282,6 +288,37 @@ void main() {
             printedProductsPresenter: printedProductsPresenter,
             saleRequestTempPresenter: sut,
           )).called(1);
+    });
+  });
+
+  group("FinishSaleRequestTemp", () {
+    test("Should call FinishSaleRequestTemp with correct values", () async {
+      await sut.finishSaleRequest(saleRequestTempEntity: saleRequestTempEntity);
+
+      verify(
+        () => finishSaleRequestTemp.finish(
+          saleRequestTempEntity: saleRequestTempEntity,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        ),
+      ).called(1);
+    });
+
+    test("Should emit correct events on FinishSaleRequestTemp success",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.finishSaleRequest(saleRequestTempEntity: saleRequestTempEntity);
+    });
+
+    test("Should emit correct events on FinishSaleRequestTemp throws",
+        () async {
+      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.finishSaleRequest(saleRequestTempEntity: saleRequestTempEntity);
     });
   });
 }

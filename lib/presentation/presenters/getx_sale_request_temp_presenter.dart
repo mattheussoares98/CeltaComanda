@@ -172,5 +172,18 @@ class GetxSaleRequestTempPresenter
   @override
   Future<void> finishSaleRequest({
     required SaleRequestTempEntity saleRequestTempEntity,
-  }) async {}
+  }) async {
+    mainError = null;
+    isLoading = true;
+    try {
+      await finishSaleRequestTemp.finish(
+        saleRequestTempEntity: saleRequestTempEntity,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      );
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../../presentation/presenters/presenters.dart';
-import '../../../components/product_details.dart';
 import '../../pages.dart';
 
 class PrintedItem extends StatelessWidget {
@@ -51,14 +51,7 @@ class PrintedItem extends StatelessWidget {
                         // ImageWidget(product: product),
                         Expanded(
                           child: ProductDetails(
-                            commentsController: null,
-                            onTapCommentIcon: null,
-                            showFormFieldUpdateComment: false,
-                            commentsFocusNode: null,
                             Product: product.Products,
-                            isPrintedProducts: true,
-                            onPressedAddQuantity: null,
-                            onPressedReduceQuantity: null,
                             onPressedRemoveProduct: () {
                               validateUserAndCancelProduct(
                                 context: context,

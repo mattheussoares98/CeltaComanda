@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../main/builders/builders.dart';
@@ -23,6 +22,9 @@ class SaleRequestTempProductItem extends StatefulWidget {
 
 class _SaleRequestTempProductItemState
     extends State<SaleRequestTempProductItem> {
+  TextEditingController commentsController = TextEditingController();
+  FocusNode commentsFocusNode = FocusNode();
+
   Future<void> onPressedAddQuantity({
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
@@ -53,18 +55,21 @@ class _SaleRequestTempProductItemState
     );
   }
 
-  void onTapCommentIcon({
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-    required TextEditingController commentsController,
-    required FocusNode commentsFocusNode,
-  }) {
+  void onTapCommentIcon(SaleRequestTempPresenter saleRequestTempPresenter) {
     saleRequestTempPresenter.updateIndexOfSelectedProduct(widget.index);
     //criar teste pra essa alteração do índice do produto que foi selecionado
     if (widget.product.Comments != null) {
       setState(() {
         commentsController.text = widget.product.Comments!;
       });
-      FocusScope.of(context).requestFocus(commentsFocusNode);
+    }
+
+    if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        FocusScope.of(context).requestFocus(commentsFocusNode);
+        commentsController.selection = TextSelection(
+            baseOffset: 0, extentOffset: commentsController.text.length);
+      });
     }
   }
 
@@ -75,54 +80,70 @@ class _SaleRequestTempProductItemState
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context, listen: false);
 
-    TextEditingController commentsController = TextEditingController();
-    FocusNode commentsFocusNode = FocusNode();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ProductDetails(
-          commentsFocusNode: commentsFocusNode,
-          showFormFieldUpdateComment:
-              saleRequestTempPresenter.indexOfSelectedProduct == widget.index,
-          commentsController: commentsController,
-          onTapCommentIcon: () {
-            onTapCommentIcon(
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              commentsController: commentsController,
-              commentsFocusNode: commentsFocusNode,
-            );
-          },
-          isPrintedProducts: false,
-          Product: widget.product.Product,
-          onPressedAddQuantity: () async {
-            await onPressedAddQuantity(
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              expansibleGroupsPresenter: expansibleGroupsPresenter,
-            );
-          },
-          onPressedReduceQuantity: () async {
-            await onPressedReduceQuantity(
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              expansibleGroupsPresenter: expansibleGroupsPresenter,
-            );
-          },
-          onPressedRemoveProduct: null,
-          quantity: widget.product.Quantity,
-          value: widget.product.Value,
-          totalLiquid: widget.product.TotalLiquid,
-          comments: widget.product.Comments,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ProductNameEanPluAndAddComment(
+              nameComplete: widget.product.Product.NameComplete,
+              name: widget.product.Product.Name,
+              eanCode: widget.product.Product.EanCode,
+              priceLookupCode: widget.product.Product.PriceLookupCode,
+              comments: widget.product.Comments,
+              onTapCommentIcon: () async {
+                onTapCommentIcon(saleRequestTempPresenter);
+              },
+            ),
+            PriceAndUpdateProductQuantity(
+              price: widget.product.Value,
+              totalLiquid: widget.product.TotalLiquid,
+              onPressedReduceQuantity: () async {
+                await onPressedReduceQuantity(
+                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  expansibleGroupsPresenter: expansibleGroupsPresenter,
+                );
+              },
+              onPressedAddQuantity: () async {
+                await onPressedAddQuantity(
+                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  expansibleGroupsPresenter: expansibleGroupsPresenter,
+                );
+              },
+              productQuantity: widget.product.Quantity,
+            ),
+          ],
         ),
-        // if (product.Comments != null) Text("Comments: ${product.Comments}"),
-        // Text("SaleRequestProductTempId ${product.SaleRequestProductTempId}"),
-        // Text("IsPrinted ${product.IsPrinted}"),
-
-        // Text("SaleRequestTempId ${product.SaleRequestTempId}"),
-        // Text("ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
-        // Text("TotalLiquid ${product.TotalLiquid}"),
-        // Text("Quantity ${product.Quantity}"),
-        // Text("Value ${product.Value}"),
-        // Text("PLU ${product.ProductPriceLookUpCode}"),
+        if (widget.product.Comments != null)
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  onTapCommentIcon(saleRequestTempPresenter);
+                },
+                child: Icon(
+                  color: Theme.of(context).colorScheme.primary,
+                  Icons.edit,
+                  size: 25,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(child: Text("Comentário: ${widget.product.Comments}")),
+            ],
+          ),
+        if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index)
+          TextField(
+            focusNode: commentsFocusNode,
+            controller: commentsController,
+            maxLines: null,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            ),
+          ),
+        const Divider(
+          thickness: 0.2,
+        )
       ],
     );
   }

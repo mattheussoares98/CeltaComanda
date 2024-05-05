@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../presentation/presenters/presenters.dart';
+import '../../../components/product_details.dart';
 import '../../pages.dart';
 
 class PrintedItem extends StatelessWidget {

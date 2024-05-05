@@ -79,6 +79,8 @@ class _SaleRequestTempProductItemState
         Provider.of(context, listen: false);
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context, listen: false);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,13 +135,36 @@ class _SaleRequestTempProductItemState
             ],
           ),
         if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index)
-          TextField(
-            focusNode: commentsFocusNode,
-            controller: commentsController,
-            maxLines: null,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  focusNode: commentsFocusNode,
+                  controller: commentsController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await saleRequestTempPresenter.updateComment(
+                    comments: commentsController.text,
+                    saleRequestProductTempId:
+                        int.parse(widget.product.SaleRequestProductTempId),
+                    expansibleGroupsPresenter: expansibleGroupsPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    saleRequestTempPresenter: saleRequestTempPresenter,
+                  );
+                },
+                child: const Text(
+                  "Alterar\ncomentário",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
         const Divider(
           thickness: 0.2,

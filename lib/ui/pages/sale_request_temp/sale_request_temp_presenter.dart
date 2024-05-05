@@ -26,6 +26,9 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Future<void> updateComment({
     required String comments,
     required int saleRequestProductTempId,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
   });
 
   int? get indexOfSelectedProduct;

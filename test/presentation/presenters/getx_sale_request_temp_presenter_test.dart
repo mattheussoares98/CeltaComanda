@@ -8,9 +8,13 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
+import '../../ui/mocks/mocks.dart';
 
 void main() {
   late GetxSaleRequestTempPresenter sut;
+  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
+
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
   late UpdateProductCommentSpy updateProductComment;
@@ -24,6 +28,9 @@ void main() {
     updateProductQuantity = UpdateProductQuantitySpy();
     updateProductComment = UpdateProductCommentSpy();
 
+    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
+
     sut = GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateProductQuantity: updateProductQuantity,
@@ -35,6 +42,11 @@ void main() {
     saleRequestProductTempId = faker.randomGenerator.integer(3);
     commandNumber = faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
+  });
+
+  setUpAll(() {
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(SaleRequestTempPresenterSpy());
   });
 
   group("AddProductQuantity group", () {
@@ -196,6 +208,9 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
       );
 
       verify(() => updateProductComment.update(
@@ -212,6 +227,9 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
       );
     });
 
@@ -225,6 +243,9 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
       );
     });
 
@@ -236,8 +257,28 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
       );
       expect(sut.indexOfSelectedProduct, null);
+    });
+
+    test("Should call expansibleGroups.load when UpdateComment", () async {
+      expansibleGroupsPresenter.commandNumberMock = commandNumber;
+      await sut.updateComment(
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+      );
+
+      verify(() => expansibleGroupsPresenter.load(
+            commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+            printedProductsPresenter: printedProductsPresenter,
+            saleRequestTempPresenter: sut,
+          )).called(1);
     });
   });
 }

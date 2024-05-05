@@ -126,17 +126,24 @@ class GetxSaleRequestTempPresenter
   Future<void> updateComment({
     required String comments,
     required int saleRequestProductTempId,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     mainError = null;
     isLoading = true;
     try {
-      if (comments.isNotEmpty) {
-        await updateProductComment.update(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          comments: comments,
-        );
-      }
+      await updateProductComment.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        saleRequestProductTempId: saleRequestProductTempId,
+        comments: comments,
+      );
+
+      await expansibleGroupsPresenter.load(
+        commandNumber: expansibleGroupsPresenter.commandNumber!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
 
       updateIndexOfSelectedProduct(null);
     } catch (e) {

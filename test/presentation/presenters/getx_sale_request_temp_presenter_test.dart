@@ -18,6 +18,7 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
   late UpdateProductCommentSpy updateProductComment;
+  late FinishSaleRequestTempSpy finishSaleRequestTemp;
 
   late String commandNumber;
   late int saleRequestProductTempId;
@@ -27,6 +28,7 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     updateProductQuantity = UpdateProductQuantitySpy();
     updateProductComment = UpdateProductCommentSpy();
+    finishSaleRequestTemp = FinishSaleRequestTempSpy();
 
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
@@ -35,6 +37,7 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateProductQuantity: updateProductQuantity,
       updateProductComment: updateProductComment,
+      finishSaleRequestTemp: finishSaleRequestTemp,
     );
 
     EnterpriseDataBuilder.enterpriseDataEntity =

@@ -94,6 +94,7 @@ Widget makePage(
           loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
           updateProductQuantity: makeRemoteUpdateProductQuantity(),
           updateProductComment: makeRemoteUpdateProductComment(),
+          finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
         ),
       ),
       ChangeNotifierProvider<GetxPrintedProductsPresenter>(

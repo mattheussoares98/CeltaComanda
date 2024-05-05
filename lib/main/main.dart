@@ -41,6 +41,7 @@ class App extends StatelessWidget {
             loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
             updateProductQuantity: makeRemoteUpdateProductQuantity(),
             updateProductComment: makeRemoteUpdateProductComment(),
+            finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
           ),
         ),
         ChangeNotifierProvider(

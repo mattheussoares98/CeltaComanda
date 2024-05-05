@@ -14,11 +14,13 @@ class GetxSaleRequestTempPresenter
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateProductQuantity updateProductQuantity;
   final UpdateProductComment updateProductComment;
+  final FinishSaleRequestTemp finishSaleRequestTemp;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
     required this.updateProductQuantity,
     required this.updateProductComment,
+    required this.finishSaleRequestTemp,
   });
 
   SaleRequestTempViewModel? _saleRequestTemp;
@@ -166,4 +168,9 @@ class GetxSaleRequestTempPresenter
     }
     notifyListeners();
   }
+
+  @override
+  Future<void> finishSaleRequest({
+    required SaleRequestTempEntity saleRequestTempEntity,
+  }) async {}
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -29,6 +30,10 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+  });
+
+  Future<void> finishSaleRequest({
+    required SaleRequestTempEntity saleRequestTempEntity,
   });
 
   int? get indexOfSelectedProduct;

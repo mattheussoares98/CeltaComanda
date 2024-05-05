@@ -6,6 +6,7 @@ import '../pages.dart';
 
 abstract class PrintedProductsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
+  Stream<bool> get isLoadingStream;
 
   Future<void> load(String commandNumber);
   void clear();

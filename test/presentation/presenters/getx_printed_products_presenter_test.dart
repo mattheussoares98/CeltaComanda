@@ -81,6 +81,7 @@ void main() {
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -95,6 +96,7 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -108,6 +110,7 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -117,6 +120,16 @@ void main() {
     });
   });
   group("Verify user can cancel", () {
+    test('Should emit correct values on success canCancel', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+    });
     test('Should call userCanCancel with correct values', () async {
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -147,6 +160,7 @@ void main() {
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -161,6 +175,7 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -174,6 +189,7 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -184,6 +200,12 @@ void main() {
   });
 
   group("Manipulate data", () {
+    test('Should emit correct values on success loadData', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.load(commandNumber);
+    });
     test("Should call loadPrintedProducts with correct values", () async {
       await sut.load(commandNumber);
 
@@ -222,6 +244,7 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.load(commandNumber);
     });

@@ -16,7 +16,7 @@ class PrintedProductsPage extends StatefulWidget {
 }
 
 class _PrintedProductsPageState extends State<PrintedProductsPage>
-    with UIErrorManager {
+    with UIErrorManager, LoadingManager {
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -34,6 +34,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                 builder: (context) {
                   handleMainError(
                       context, printedProductsPresenter.mainErrorStream);
+                  handleLoading(
+                      context, printedProductsPresenter.isLoadingStream);
 
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedItem(

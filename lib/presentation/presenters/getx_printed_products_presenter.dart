@@ -27,7 +27,7 @@ class GetxPrintedProductsPresenter
     required String password,
     required String saleRequestProductId,
   }) async {
-    // isLoading = true;
+    isLoading = true;
     mainError = null;
 
     try {
@@ -77,13 +77,13 @@ class GetxPrintedProductsPresenter
           mainError = UIError.unexpected;
       }
     } finally {
-      // isLoading = false;
+      isLoading = false;
     }
   }
 
   @override
   Future<void> load(String commandNumber) async {
-    // isLoading = true;
+    isLoading = true;
     mainError = null;
     clear();
     notifyListeners();
@@ -103,7 +103,7 @@ class GetxPrintedProductsPresenter
     } catch (error) {
       mainError = UIError.unexpected;
     } finally {
-      // isLoading = false;
+      isLoading = false;
       notifyListeners();
     }
   }
@@ -121,5 +121,13 @@ class GetxPrintedProductsPresenter
   @override
   void clear() {
     _printedProducts = null;
+  }
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+    notifyListeners();
   }
 }

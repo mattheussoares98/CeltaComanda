@@ -8,7 +8,7 @@ import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
 class ProductsPresenterSpy extends Mock implements ProductsPresenter {
-  final mainErrorController = StreamController<List<ProductsViewModel>>();
+  final mainErrorController = StreamController<UIError>();
   final isLoadingController = StreamController<bool>();
   final productsController = StreamController<List<ProductsViewModel>>();
   int? selectedProductIndex;
@@ -19,6 +19,8 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
         .thenAnswer((_) => productsController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
   }
 
   void mockProductStreamError(DomainError error) {

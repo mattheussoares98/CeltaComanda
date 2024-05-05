@@ -22,7 +22,6 @@ void main() {
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
 
   late SaleRequestTempEntity saleRequestTempEntity;
-  late String commandNumber;
   late int saleRequestProductTempId;
   late String comments;
 
@@ -45,7 +44,8 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     saleRequestProductTempId = faker.randomGenerator.integer(3);
-    commandNumber = faker.randomGenerator.integer(3).toString();
+    expansibleGroupsPresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
   });
@@ -63,7 +63,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: commandNumber,
+        commandNumber: expansibleGroupsPresenter.commandNumberMock!,
       );
 
       verify(
@@ -85,7 +85,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: commandNumber,
+        commandNumber: expansibleGroupsPresenter.commandNumberMock!,
       );
     });
 
@@ -94,20 +94,18 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: commandNumber,
-      );
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!);
     });
   });
   group("SubtractProductQuantity group", () {
     test("Should call SubtractProductQuantity with correct values", () async {
       await sut.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        productQuantity: 10,
-        commandNumber: commandNumber,
-      );
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          productQuantity: 10,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!);
 
       verify(
         () => updateProductQuantity.subtract(
@@ -126,11 +124,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        productQuantity: 10,
-        commandNumber: commandNumber,
-      );
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          productQuantity: 10,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!);
     });
 
     test("Should emits correct events on SubtractProductQuantity", () async {
@@ -138,21 +135,19 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        productQuantity: 10,
-        commandNumber: commandNumber,
-      );
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          productQuantity: 10,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!);
     });
 
     test("Should call delete product if productQuantity is less than 1",
         () async {
       await sut.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        productQuantity: 1,
-        commandNumber: commandNumber,
-      );
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          productQuantity: 1,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!);
 
       verify(
         () => updateProductQuantity.delete(
@@ -166,11 +161,10 @@ void main() {
         "Should call subtract product quantity if productQuantity is more than 1",
         () async {
       await sut.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        productQuantity: 2,
-        commandNumber: commandNumber,
-      );
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          saleRequestProductTempId: saleRequestProductTempId,
+          productQuantity: 2,
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!);
 
       verify(
         () => updateProductQuantity.subtract(
@@ -186,7 +180,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.load(commandNumber);
+      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
     });
 
     test("Should emits correct events on error to LoadSaleRequestTemp",
@@ -197,18 +191,18 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.load(commandNumber);
+      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
     });
 
     test("Should call LoadSaleRequestTemp with correct values", () async {
-      await sut.load(commandNumber);
+      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
 
       verify(() => loadSaleRequestTemp.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: commandNumber,
-          )).called(1);
+              url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+              enterpriseId:
+                  EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              commandNumber: expansibleGroupsPresenter.commandNumberMock!))
+          .called(1);
     });
   });
 
@@ -274,7 +268,6 @@ void main() {
     });
 
     test("Should call expansibleGroups.load when UpdateComment", () async {
-      expansibleGroupsPresenter.commandNumberMock = commandNumber;
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,

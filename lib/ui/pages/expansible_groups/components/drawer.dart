@@ -16,18 +16,9 @@ Widget drawer({
         children: <Widget>[
           DrawerHeader(
             child: Image.asset(
-              "lib/ui/assets/images/aguarde.gif",
+              "lib/ui/assets/images/logoCeltaTransparente.png",
               fit: BoxFit.cover,
             ),
-          ),
-          _drawerItem(
-            key: const Key("facebook"),
-            context: context,
-            onTap: () async {
-              //outra tela
-            },
-            text: "Facebook",
-            leading: const Text("Imagem"),
           ),
           _drawerItem(
             key: const Key("logout"),

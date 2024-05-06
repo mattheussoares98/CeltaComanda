@@ -18,7 +18,6 @@ import '../../ui/mocks/mocks.dart';
 void main() {
   Get.testMode = true;
   WidgetsFlutterBinding.ensureInitialized();
-
   late GetxProductsPresenter sut;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
   late HomePresenterSpy homePresenter;
@@ -26,47 +25,58 @@ void main() {
   late List<ProductEntity> products;
   late int expansibleGroupId;
   late SaleRequestTempEntity saleRequestTempEntity;
-  late String commandNumber;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
 
-  setUp(() {
-    expansibleGroupId = faker.randomGenerator.integer(3);
-    loadProducts = LoadProductsSpy();
-    products = EntityFactory.makeProductsEntitys();
-    loadProducts.mockLoadProducts(products);
-    navigateTo = NavigateToSpy();
-    navigateTo.mockNavigate();
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
-    commandNumber = faker.randomGenerator.integer(3).toString();
-
-    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
-    loadSaleRequestTemp = LoadSaleRequestTempSpy();
-
+  void initPresenters() {
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
     homePresenter = HomePresenterSpy();
-
-    updateSaleRequestTemp.mockUpdateSaleRequestTemp();
-    EnterpriseDataBuilder.enterpriseDataEntity =
-        EntityFactory.makeEnterpriseData();
-
-    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    homePresenter.commandNumberMock = commandNumber;
-
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,
       loadProducts: loadProducts,
       updateSaleRequestTemp: updateSaleRequestTemp,
     );
+  }
+
+  void initUsecases() {
+    loadProducts = LoadProductsSpy();
+    navigateTo = NavigateToSpy();
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
+  }
+
+  void initEntitys() {
+    expansibleGroupId = faker.randomGenerator.integer(3);
+    products = EntityFactory.makeProductsEntitys();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
+    homePresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
+  }
+
+  void mockSuccess() {
+    navigateTo.mockNavigate();
+    loadProducts.mockLoadProducts(products);
+    updateSaleRequestTemp.mockUpdateSaleRequestTemp();
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+  }
+
+  setUp(() {
+    initUsecases();
+    initPresenters();
+    initEntitys();
+    mockSuccess();
   });
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(ExpansibleGroupsPresenterSpy());
   });
 
   group("LoadSaleRequestTemp", () {
@@ -75,7 +85,7 @@ void main() {
       final value = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber,
+        commandNumber: homePresenter.commandNumberMock!,
       );
 
       expect(value, saleRequestTempEntity);
@@ -89,7 +99,9 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
-      verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
+      verify(() =>
+              saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+          .called(1);
     });
 
     test('Should emit UnexpectedError on error to loadSaleRequestTemp',

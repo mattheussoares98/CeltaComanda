@@ -60,4 +60,16 @@ class SaleRequestTempProductsViewModel extends Equatable {
         Comments: entity.Comments,
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
       );
+
+  SaleRequestTempProductEntity toEntity() => SaleRequestTempProductEntity(
+        Product: Product.toEntity(),
+        SaleRequestProductTempId: int.parse(SaleRequestProductTempId),
+        SaleRequestTempId: int.parse(SaleRequestTempId),
+        ProductInternalCodeOnErp: int.parse(ProductInternalCodeOnErp),
+        IsPrinted: bool.parse(IsPrinted),
+        TotalLiquid: double.parse(TotalLiquid.replaceAll(RegExp(r','), '.')),
+        Quantity: double.parse(Quantity.replaceAll(RegExp(r','), '.')),
+        Value: double.parse(Value.replaceAll(RegExp(r','), '.')),
+        ProductPriceLookUpCode: ProductPriceLookUpCode,
+      );
 }

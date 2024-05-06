@@ -1,10 +1,16 @@
+import 'package:provider/provider.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../../../presentation/presenters/presenters.dart';
 
 class SaveSaleRequestButton extends StatelessWidget {
   const SaveSaleRequestButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red,
@@ -16,7 +22,12 @@ class SaveSaleRequestButton extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {},
+      onPressed: () async {
+        await saleRequestTempPresenter.finishSaleRequest(
+          saleRequestTempEntity:
+              saleRequestTempPresenter.saleRequestTemp!.toEntity(),
+        );
+      },
       child: const Text(
         'Salvar/imprimir produtos',
         style: TextStyle(

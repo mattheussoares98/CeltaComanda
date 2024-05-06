@@ -1,4 +1,4 @@
-import '../../../domain/entities/entities.dart';
+import '../../entities/entities.dart';
 
 abstract class FinishSaleRequestTemp {
   Future<void> finish({

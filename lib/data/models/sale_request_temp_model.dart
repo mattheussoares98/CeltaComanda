@@ -71,7 +71,9 @@ class SaleRequestTempModel {
         Comments: Comments,
       );
   Map<String, dynamic> toJson() => {
-        "Products": Products,
+        "Products": Products.map(
+                (e) => SaleRequestTempProductsModel.fromEntity(e).toJson())
+            .toList(),
         "SaleRequestTempId": SaleRequestTempId,
         "PersonalizedCode": PersonalizedCode,
         "EnterpriseId": EnterpriseId,

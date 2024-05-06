@@ -76,73 +76,18 @@ class SaleRequestTempProductsModel {
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = <String, dynamic>{};
-  //   data['ProductsId'] = ProductsId;
-  //   data['InternalCodeOnERP'] = InternalCodeOnERP;
-  //   data['InternalCodeOfProductOnERP'] = InternalCodeOfProductOnERP;
-  //   data['EnterpriseId'] = EnterpriseId;
-  //   data['PriceLookupCode'] = PriceLookupCode;
-  //   data['PersonalizedCode'] = PersonalizedCode;
-  //   data['EanCode'] = EanCode;
-  //   data['Name'] = Name;
-  //   data['NameComplete'] = NameComplete;
-  //   data['NameReduced'] = NameReduced;
-  //   data['PackingAbbreviation'] = PackingAbbreviation;
-  //   data['PackingQuantity'] = PackingQuantity;
-  //   data['SaleRetailPrice'] = SaleRetailPrice;
-  //   data['OfferRetailPrice'] = OfferRetailPrice;
-  //   data['WholeSalePrice'] = WholeSalePrice;
-  //   data['WholeOfferPrice'] = WholeOfferPrice;
-  //   data['OfferECommercePrice'] = OfferECommercePrice;
-  //   data['SaleECommercePrice'] = SaleECommercePrice;
-  //   data['LiquidCost'] = LiquidCost;
-  //   data['LiquidCostMiddle'] = LiquidCostMiddle;
-  //   data['LiquidCostReal'] = LiquidCostReal;
-  //   data['RepositionCost'] = RepositionCost;
-  //   data['RepositionCostMiddle'] = RepositionCostMiddle;
-  //   data['RepositionCostReal'] = RepositionCostReal;
-  //   data['CFOP'] = CFOP;
-  //   data['FiscalClassificationNCM'] = FiscalClassificationNCM;
-  //   data['TributarySituationCode'] = TributarySituationCode;
-  //   data['IcmsAliquot'] = IcmsAliquot;
-  //   data['IcmsIVAMargin'] = IcmsIVAMargin;
-  //   data['IcmsReductionMargin'] = IcmsReductionMargin;
-  //   data['IcmsStave'] = IcmsStave;
-  //   data['PercImpNBPTNational'] = PercImpNBPTNational;
-  //   data['PercImpNBPTState'] = PercImpNBPTState;
-  //   data['PercImpNBPTMunicipal'] = PercImpNBPTMunicipal;
-  //   data['CofinsPercentage'] = CofinsPercentage;
-  //   data['PisPercentage'] = PisPercentage;
-  //   data['CofinsType'] = CofinsType;
-  //   data['PisType'] = PisType;
-  //   data['CSTPisCofins'] = CSTPisCofins;
-  //   data['ProductIsFatherComposition'] = ProductIsFatherComposition;
-  //   data['QuantityMinimumWholeSale'] = QuantityMinimumWholeSale;
-  //   data['QuantityMinimumWholeSaleByClass'] = QuantityMinimumWholeSaleByClass;
-  //   data['AllowFractionate'] = AllowFractionate;
-  //   data['IsBalance'] = IsBalance;
-  //   data['CanBeWeightyInPdv'] = CanBeWeightyInPdv;
-  //   data['QuantityInBalance'] = QuantityInBalance;
-  //   data['AllowQuantityInPdv'] = AllowQuantityInPdv;
-  //   data['GoesForFastTable'] = GoesForFastTable;
-  //   data['IsAlcoholicProduct'] = IsAlcoholicProduct;
-  //   data['BalanceTare'] = BalanceTare;
-  //   data['CodeClass'] = CodeClass;
-  //   data['FamilyCode'] = FamilyCode;
-  //   data['DepartmentCode'] = DepartmentCode;
-  //   data['DepartmentName'] = DepartmentName;
-  //   data['SectionCode'] = SectionCode;
-  //   data['SectionName'] = SectionName;
-  //   data['GroupCode'] = GroupCode;
-  //   data['GroupName'] = GroupName;
-  //   data['SubGroupCode'] = SubGroupCode;
-  //   data['DateOfLastChanged'] = DateOfLastChanged;
-  //   data['StockQuantity'] = StockQuantity;
-  //   data['SaleRetailPraticed'] = SaleRetailPraticed;
-  //   data['SaleRetailPraticedString'] = SaleRetailPraticedString;
-  //   return data;
-  // }
+  Map toJson() => {
+        "Product": Product.toJson(),
+        "SaleRequestProductTempId": SaleRequestProductTempId,
+        "IsPrinted": IsPrinted,
+        "Comments": Comments,
+        "SaleRequestTempId": SaleRequestTempId,
+        "ProductInternalCodeOnErp": ProductInternalCodeOnErp,
+        "TotalLiquid": TotalLiquid,
+        "Quantity": Quantity,
+        "Value": Value,
+        "ProductPriceLookUpCode": ProductPriceLookUpCode,
+      };
 
   SaleRequestTempProductEntity toEntity() => SaleRequestTempProductEntity(
         Product: Product.toEntity(),

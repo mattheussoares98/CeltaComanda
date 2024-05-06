@@ -48,4 +48,22 @@ class SaleRequestTempViewModel extends Equatable {
         Comments: entity.Comments,
         SaleRequestTempId: entity.SaleRequestTempId.toString(),
       );
+
+  SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
+        Products: Products.map((e) => e.toEntity()).toList(),
+        PersonalizedCode: PersonalizedCode,
+        SaleRequestTempId: int.parse(SaleRequestTempId),
+        EnterpriseId: int.parse(EnterpriseId),
+        DeliveryControl: int.parse(DeliveryControl),
+        TotalLiquid: double.parse(TotalLiquid.replaceAll(RegExp(r','), '.')),
+      );
+
+  Map toJson() => {
+        "Products": Products,
+        "PersonalizedCode": PersonalizedCode,
+        "SaleRequestTempId": SaleRequestTempId,
+        "EnterpriseId": EnterpriseId,
+        "DeliveryControl": DeliveryControl,
+        "TotalLiquid": TotalLiquid,
+      };
 }

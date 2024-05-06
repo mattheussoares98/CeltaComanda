@@ -1,6 +1,7 @@
-import '../../../../data/models/models.dart';
+import 'package:clean_celta_mobile/data/models/models.dart';
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
+
 import '../../../data/http/http_client.dart';
-import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
@@ -14,13 +15,15 @@ class RemoteFinishSaleRequestTemp implements FinishSaleRequestTemp {
     required SaleRequestTempEntity saleRequestTempEntity,
     required String url,
   }) async {
+    final body =
+        SaleRequestTempModel.fromEntity(saleRequestTempEntity).toJson();
+    body.toString();
     try {
-      final saleRequestTemp = await httpAdapter.request(
+      await httpAdapter.request(
         url: "$url/api/apiSaleRequest/FinishSaleRequestTemp",
         method: "post",
-        body: SaleRequestTempModel.fromEntity(saleRequestTempEntity).toJson(),
+        body: body,
       );
-      if (saleRequestTemp == null) throw Error();
     } catch (error) {
       throw DomainError.unexpected;
     }

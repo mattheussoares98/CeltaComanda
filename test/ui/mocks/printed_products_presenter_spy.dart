@@ -17,8 +17,6 @@ class PrintedProductsPresenterSpy extends Mock
     mockGetPrintedProducts();
     mockClearPrintedProducts();
 
-    when(() => this.mainErrorStream)
-        .thenAnswer((_) => mainErrorController.stream);
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
   }
 
@@ -30,6 +28,7 @@ class PrintedProductsPresenterSpy extends Mock
           expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
+          homePresenter: any(named: "homePresenter"),
         )).thenAnswer((_) async => _);
   }
 

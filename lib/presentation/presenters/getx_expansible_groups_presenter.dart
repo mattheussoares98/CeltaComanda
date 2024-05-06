@@ -23,21 +23,6 @@ class GetxExpansibleGroupsPresenter
     required this.ticketIsPermitted,
   });
 
-  final _isLoading = false.obs;
-
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.value = value;
-    notifyListeners();
-  }
-
-  final _mainError = Rx<UIError?>(null);
-
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
-
   late final LoadExpansibleGroups loadExpansibleGroups;
 
   List<ExpansibleGroupsViewModel> _expansibleGroups = [];
@@ -80,17 +65,8 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> load({
-    required String commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-  }) async {
-    isLoading = true;
-    mainError = null;
+  Future<void> load(String commandNumber) async {
     clear();
-    _commandNumber = commandNumber;
-    printedProductsPresenter.clear();
-    saleRequestTempPresenter.clear();
     notifyListeners();
 
     try {
@@ -106,31 +82,24 @@ class GetxExpansibleGroupsPresenter
             .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
             .toList());
       }
-
-      await saleRequestTempPresenter.load(commandNumber);
-      await printedProductsPresenter.load(commandNumber);
+      notifyListeners();
     } on DomainError catch (error) {
-      _commandNumber = null;
       switch (error) {
         case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
+          throw DomainError.commandNotAvailable;
         default:
-          mainError = UIError.unexpected;
+          throw DomainError.unexpected;
       }
-    } finally {
-      isLoading = false;
-      notifyListeners();
     }
   }
 
   @override
   void clear() {
     _expansibleGroups.clear();
-    _commandNumber = null;
   }
 
-  String? _commandNumber;
+  final _mainError = Rx<UIError?>(null);
   @override
-  String? get commandNumber => _commandNumber;
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 }

@@ -2,7 +2,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../main/factories/factories.dart';
 import '../../../presentation/presenters/presenters.dart';
+import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
 
@@ -13,7 +15,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with LoadingManager, UIErrorManager {
   final List<Widget> _screens = [
     const ExpansibleGroupsPage(),
     const PrintedProductsPage(),
@@ -36,14 +39,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  final homePresenter = GetxHomePresenter(
+    loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
+    localEnterpriseData: makeLocalEnterpriseData(),
+    navigateTo: makeNavigateTo(),
+    ticketIsPermitted: makeRemoteticketIsPermitted(),
+  );
+
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context);
+        Provider.of(context, listen: false);
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context);
+        Provider.of(context, listen: false);
     GetxPrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context);
+        Provider.of(context, listen: false);
 
     return Scaffold(
       drawer: drawer(
@@ -57,14 +67,19 @@ class _HomePageState extends State<HomePage> {
         actions: const [SearchCommandIcon()],
         title: AppBarTitle(
           currentIndex: _currentIndex,
-          commandNumber: expansibleGroupsPresenter.commandNumber,
+          commandNumber: homePresenter.commandNumber,
         ),
       ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: onPageChanged,
-        children: _screens,
-      ),
+      body: Builder(builder: (context) {
+        handleLoading(context, homePresenter.isLoadingStream);
+        handleMainError(context, homePresenter.mainErrorStream);
+    
+        return PageView(
+          controller: _pageController,
+          onPageChanged: onPageChanged,
+          children: _screens,
+        );
+      }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: onPageChanged,

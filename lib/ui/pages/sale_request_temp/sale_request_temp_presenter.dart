@@ -30,6 +30,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required HomePresenter homePresenter,
   });
 
   Future<void> finishSaleRequest({
@@ -37,6 +38,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required HomePresenter homePresenter,
   });
 
   int? get indexOfSelectedProduct;

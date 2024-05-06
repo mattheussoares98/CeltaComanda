@@ -52,7 +52,7 @@ class GetxProductsPresenter extends GetxController
   @override
   Future<bool> updateSaleRequest({
     required UpdateSaleRequestTempEntity entity,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     isLoading = true;
@@ -64,7 +64,7 @@ class GetxProductsPresenter extends GetxController
       );
 
       await saleRequestTempPresenter
-          .load(expansibleGroupsPresenter.commandNumber!);
+          .load(homePresenter.commandNumber!);
 
       return true;
     } on DomainError catch (e) {

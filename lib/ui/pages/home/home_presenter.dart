@@ -14,11 +14,13 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   });
 
   Future<void> goToSplashPage({
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   });
 
   void goToProductsPage(ExpansibleGroupEntity entity);

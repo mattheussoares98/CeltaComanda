@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
-
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
@@ -30,26 +30,11 @@ class GetxSaleRequestTempPresenter
     _saleRequestTemp = newValue;
   }
 
-  final _isLoading = false.obs;
-
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.value = value;
-    notifyListeners();
-  }
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
-
   @override
   Future<void> load(String commandNumber) async {
     _saleRequestTemp = null;
-    notifyListeners();
     isLoading = true;
-    mainError = null;
+    notifyListeners();
 
     try {
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
@@ -60,10 +45,10 @@ class GetxSaleRequestTempPresenter
 
       if (saleRequestTemp != null) {
         _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
-        notifyListeners();
       }
+      notifyListeners();
     } catch (e) {
-      mainError = UIError.unexpected;
+      throw DomainError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -80,7 +65,6 @@ class GetxSaleRequestTempPresenter
     required int saleRequestProductTempId,
     required String commandNumber,
   }) async {
-    mainError = null;
     isLoading = true;
     try {
       await updateProductQuantity.add(
@@ -90,7 +74,7 @@ class GetxSaleRequestTempPresenter
 
       await load(commandNumber);
     } catch (e) {
-      mainError = UIError.unexpected;
+      throw DomainError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -103,8 +87,8 @@ class GetxSaleRequestTempPresenter
     required int productQuantity,
     required String commandNumber,
   }) async {
-    mainError = null;
     isLoading = true;
+
     try {
       if (productQuantity <= 1) {
         await updateProductQuantity.delete(
@@ -118,7 +102,7 @@ class GetxSaleRequestTempPresenter
 
       await load(commandNumber);
     } catch (e) {
-      mainError = UIError.unexpected;
+      throw DomainError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -131,9 +115,10 @@ class GetxSaleRequestTempPresenter
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required HomePresenter homePresenter,
   }) async {
-    mainError = null;
     isLoading = true;
+
     try {
       await updateProductComment.update(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -141,15 +126,16 @@ class GetxSaleRequestTempPresenter
         comments: comments,
       );
 
-      await expansibleGroupsPresenter.load(
-        commandNumber: expansibleGroupsPresenter.commandNumber!,
+      await homePresenter.load(
+        commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
       );
 
       updateIndexOfSelectedProduct(null);
     } catch (e) {
-      mainError = UIError.addComment;
+      throw DomainError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -175,24 +161,38 @@ class GetxSaleRequestTempPresenter
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required HomePresenter homePresenter,
   }) async {
-    mainError = null;
     isLoading = true;
+
     try {
       await finishSaleRequestTemp.finish(
         saleRequestTempEntity: saleRequestTempEntity,
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await expansibleGroupsPresenter.load(
-        commandNumber: expansibleGroupsPresenter.commandNumber!,
+      await homePresenter.load(
+        commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
       );
     } catch (e) {
-      mainError = UIError.unexpected;
+      throw DomainError.unexpected;
     } finally {
       isLoading = false;
     }
   }
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+  }
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 }

@@ -26,8 +26,7 @@ class _ProductItemState extends State<ProductItem> {
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: true);
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context, listen: true);
+    GetxHomePresenter homePresenter = Provider.of(context, listen: true);
     ProductsPresenter productsPresenter = Provider.of(context, listen: true);
 
     return Padding(
@@ -148,7 +147,7 @@ class _ProductItemState extends State<ProductItem> {
 
                         await productsPresenter.updateSaleRequest(
                           entity: entity,
-                          expansibleGroupsPresenter: expansibleGroupsPresenter,
+                          homePresenter: homePresenter,
                           saleRequestTempPresenter: saleRequestTempPresenter,
                         );
                       },

@@ -19,5 +19,6 @@ abstract class PrintedProductsPresenter implements Listenable {
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
+    required HomePresenter homePresenter,
   });
 }

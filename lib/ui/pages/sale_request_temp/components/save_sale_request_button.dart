@@ -15,6 +15,8 @@ class SaveSaleRequestButton extends StatelessWidget {
         Provider.of(context, listen: false);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    GetxHomePresenter homePresenter = Provider.of(context, listen: false);
+    
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red,
@@ -33,6 +35,7 @@ class SaveSaleRequestButton extends StatelessWidget {
           expansibleGroupsPresenter: expansibleGroupsPresenter,
           printedProductsPresenter: printedProductsPresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
+          homePresenter: homePresenter,
         );
       },
       child: const Text(

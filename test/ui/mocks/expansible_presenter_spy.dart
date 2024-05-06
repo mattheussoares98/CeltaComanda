@@ -19,13 +19,8 @@ class ExpansibleGroupsPresenterSpy extends Mock
 
   ExpansibleGroupsPresenterSpy() {
     mockLoadCall().thenAnswer((_) async => _);
-    when(() => this.mainErrorStream)
-        .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
     when(() => this.expansibleGroups)
         .thenAnswer((_) => expansibleGroupsController);
-    when(() => this.isLoadingStream)
-        .thenAnswer((_) => isLoadingController.stream);
     when(() => this.clear()).thenAnswer((_) async => _);
 
     when(() => this.goToSplashPage(
@@ -47,11 +42,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
     mockLoadCall().thenThrow(error);
   }
 
-  When mockLoadCall() => when(() => this.load(
-        commandNumber: any(named: "commandNumber"),
-        printedProductsPresenter: any(named: "printedProductsPresenter"),
-        saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
-      ));
+  When mockLoadCall() => when(() => this.load(any()));
 
   void mockExpansibleGroupStreamError(DomainError error) {
     mainErrorController.add(UIError.unexpected);

@@ -27,20 +27,20 @@ class _SaleRequestTempProductItemState
 
   Future<void> onPressedAddQuantity({
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
   }) async {
     await saleRequestTempPresenter.addProductQuantity(
       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       saleRequestProductTempId: int.parse(
         widget.product.SaleRequestProductTempId,
       ),
-      commandNumber: expansibleGroupsPresenter.commandNumber!,
+      commandNumber: homePresenter.commandNumber!,
     );
   }
 
   Future<void> onPressedReduceQuantity({
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
   }) async {
     double? quantityDouble =
         double.tryParse(widget.product.Quantity.replaceAll(RegExp(r','), '.'));
@@ -51,7 +51,7 @@ class _SaleRequestTempProductItemState
       saleRequestProductTempId:
           int.parse(widget.product.SaleRequestProductTempId),
       productQuantity: quantityInt,
-      commandNumber: expansibleGroupsPresenter.commandNumber!,
+      commandNumber: homePresenter.commandNumber!,
     );
   }
 
@@ -81,6 +81,7 @@ class _SaleRequestTempProductItemState
         Provider.of(context, listen: false);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    GetxHomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,13 +105,13 @@ class _SaleRequestTempProductItemState
               onPressedReduceQuantity: () async {
                 await onPressedReduceQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
-                  expansibleGroupsPresenter: expansibleGroupsPresenter,
+                  homePresenter: homePresenter,
                 );
               },
               onPressedAddQuantity: () async {
                 await onPressedAddQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
-                  expansibleGroupsPresenter: expansibleGroupsPresenter,
+                  homePresenter: homePresenter,
                 );
               },
               productQuantity: widget.product.Quantity,
@@ -157,6 +158,7 @@ class _SaleRequestTempProductItemState
                     expansibleGroupsPresenter: expansibleGroupsPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
+                    homePresenter: homePresenter,
                   );
                 },
                 child: const Text(

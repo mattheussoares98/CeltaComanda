@@ -23,6 +23,8 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
         Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
+    GetxHomePresenter homePresenter = Provider.of(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -30,10 +32,10 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleMainError(
-                      context, saleRequestTempPresenter.mainErrorStream);
                   handleLoading(
                       context, saleRequestTempPresenter.isLoadingStream);
+                  handleMainError(
+                      context, saleRequestTempPresenter.mainErrorStream);
 
                   if (saleRequestTempPresenter
                           .saleRequestTemp?.Products.isNotEmpty ==
@@ -46,6 +48,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                     expansibleGroupsPresenter: expansibleGroupsPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
+                    homePresenter: homePresenter,
                   );
                 },
               ),

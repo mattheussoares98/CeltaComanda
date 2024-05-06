@@ -22,6 +22,7 @@ void main() {
   late GetxProductsPresenter sut;
   late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late HomePresenterSpy homePresenter;
 
   late List<ProductEntity> products;
   late int expansibleGroupId;
@@ -45,8 +46,10 @@ void main() {
 
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
+
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    homePresenter = HomePresenterSpy();
 
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -84,7 +87,7 @@ void main() {
         () async {
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
@@ -101,7 +104,7 @@ void main() {
 
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
@@ -112,7 +115,7 @@ void main() {
 
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
@@ -285,7 +288,7 @@ void main() {
     test('Should return true on success to updateSaleRequestTemp', () async {
       final isUpdated = await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
@@ -296,7 +299,7 @@ void main() {
 
       final isUpdated = await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
@@ -309,7 +312,7 @@ void main() {
 
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
@@ -323,7 +326,7 @@ void main() {
 
       await sut.updateSaleRequest(
         entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });

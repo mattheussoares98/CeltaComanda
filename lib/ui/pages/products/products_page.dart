@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/presentation/presenters/getx_expansible_groups_presenter.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../../../presentation/presenters/presenters.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import './products.dart';
@@ -44,8 +44,7 @@ class _ProductsPageState extends State<ProductsPage>
       expansibleGroupEntity = Get.arguments as ExpansibleGroupEntity;
     }
 
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context);
+    GetxHomePresenter homePresenter = Provider.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +56,7 @@ class _ProductsPageState extends State<ProductsPage>
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Comanda ${expansibleGroupsPresenter.commandNumber}",
+                  "Comanda ${homePresenter.commandNumber}",
                   style: const TextStyle(fontSize: 12),
                 ),
               ],

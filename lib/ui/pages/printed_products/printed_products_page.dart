@@ -25,6 +25,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
+    GetxHomePresenter homePresenter = Provider.of(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -32,10 +34,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleMainError(
-                      context, printedProductsPresenter.mainErrorStream);
                   handleLoading(
                       context, printedProductsPresenter.isLoadingStream);
+                  handleMainError(
+                      context, printedProductsPresenter.mainErrorStream);
 
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedItem(
@@ -46,6 +48,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     expansibleGroupsPresenter: expansibleGroupsPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
+                    homePresenter: homePresenter,
                   );
                 },
               ),

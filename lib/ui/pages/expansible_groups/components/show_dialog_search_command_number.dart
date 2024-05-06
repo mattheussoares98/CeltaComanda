@@ -5,7 +5,8 @@ import '../../pages.dart';
 Future<void> _validateFormAndSearchCommand({
   required GlobalKey<FormState> formKey,
   required BuildContext context,
-  required ExpansibleGroupsPresenter presenter,
+  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required HomePresenter homePresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required TextEditingController textController,
@@ -14,18 +15,20 @@ Future<void> _validateFormAndSearchCommand({
   if (!isValid) return;
 
   Navigator.of(context).pop();
-  await presenter.load(
+  await homePresenter.load(
     commandNumber: textController.text,
     printedProductsPresenter: printedProductsPresenter,
     saleRequestTempPresenter: saleRequestTempPresenter,
+    expansibleGroupsPresenter: expansibleGroupsPresenter,
   );
 }
 
 void showDialogSearchCommandNumber({
   required BuildContext context,
-  required ExpansibleGroupsPresenter presenter,
+  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
+  required HomePresenter homePresenter,
 }) {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController textController = TextEditingController();
@@ -43,9 +46,10 @@ void showDialogSearchCommandNumber({
                 await _validateFormAndSearchCommand(
                   formKey: formKey,
                   context: context,
-                  presenter: presenter,
+                  homePresenter: homePresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   saleRequestTempPresenter: saleRequestTempPresenter,
+                  expansibleGroupsPresenter: expansibleGroupsPresenter,
                   textController: textController,
                 );
               },
@@ -80,10 +84,11 @@ void showDialogSearchCommandNumber({
                 await _validateFormAndSearchCommand(
                   formKey: formKey,
                   context: context,
-                  presenter: presenter,
+                  homePresenter: homePresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   saleRequestTempPresenter: saleRequestTempPresenter,
                   textController: textController,
+                  expansibleGroupsPresenter: expansibleGroupsPresenter,
                 );
               },
               child: const Text("Consultar"),

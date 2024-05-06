@@ -11,6 +11,7 @@ Future<void> _removeProduct({
   required PrintedProductsPresenter printedProductsPresenter,
   required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
+  required HomePresenter homePresenter,
   required String saleRequestProductId,
 }) async {
   bool isValid = formKey.currentState!.validate();
@@ -24,6 +25,7 @@ Future<void> _removeProduct({
     expansibleGroupsPresenter: expansibleGroupsPresenter,
     printedProductsPresenter: printedProductsPresenter,
     saleRequestTempPresenter: saleRequestTempPresenter,
+    homePresenter: homePresenter,
   );
 }
 
@@ -35,6 +37,7 @@ void validateUserAndCancelProduct({
   required PrintedProductsPresenter printedProductsPresenter,
   required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
+  required HomePresenter homePresenter,
   required String saleRequestProductId,
   required FocusNode passwordFocus,
   required FocusNode userFocus,
@@ -108,6 +111,7 @@ void validateUserAndCancelProduct({
                           saleRequestProductId: saleRequestProductId,
                           expansibleGroupsPresenter: expansibleGroupsPresenter,
                           saleRequestTempPresenter: saleRequestTempPresenter,
+                          homePresenter: homePresenter,
                         );
                       },
                       validator: (value) {
@@ -139,6 +143,7 @@ void validateUserAndCancelProduct({
                       saleRequestProductId: saleRequestProductId,
                       expansibleGroupsPresenter: expansibleGroupsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
+                      homePresenter: homePresenter,
                     );
                   },
                   child: const Text("Validar usuário"),

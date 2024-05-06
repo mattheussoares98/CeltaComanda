@@ -21,15 +21,18 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
     GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
+    GetxHomePresenter homePresenter =
+        Provider.of(context);
 
     return GestureDetector(
       key: const Key("SearchCommandIcon"),
       onTap: () {
         showDialogSearchCommandNumber(
           context: context,
-          presenter: expansibleGroupsPresenterr,
+          expansibleGroupsPresenter: expansibleGroupsPresenterr,
           printedProductsPresenter: printedProductsPresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
+          homePresenter: homePresenter,
         );
       },
       child: FittedBox(
@@ -44,9 +47,10 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
               onPressed: () {
                 showDialogSearchCommandNumber(
                   context: context,
-                  presenter: expansibleGroupsPresenterr,
+                  expansibleGroupsPresenter: expansibleGroupsPresenterr,
                   printedProductsPresenter: printedProductsPresenter,
                   saleRequestTempPresenter: saleRequestTempPresenter,
+                  homePresenter: homePresenter,
                 );
               },
             ),

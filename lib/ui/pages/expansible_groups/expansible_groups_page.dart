@@ -19,9 +19,12 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
-    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
+    GetxHomePresenter homePresenter = Provider.of(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -29,16 +32,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
-                  handleMainError(
-                      context, expansibleGroupsPresenter.mainErrorStream);
+                  handleMainError(context, expansibleGroupsPresenter.mainErrorStream);
 
                   if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
                     return SearchDataByCommandNumber(
                       expansibleGroupsPresenter: expansibleGroupsPresenter,
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
+                      homePresenter: homePresenter,
                     );
                   }
 

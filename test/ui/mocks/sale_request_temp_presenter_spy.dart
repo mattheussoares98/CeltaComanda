@@ -14,9 +14,6 @@ class SaleRequestTempPresenterSpy extends Mock
   SaleRequestTempViewModel? saleRequestTempMock;
 
   SaleRequestTempPresenterSpy() {
-    when(() => this.mainErrorStream)
-        .thenAnswer((_) => mainErrorController.stream);
-
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
 
     when(() => this.load(any())).thenAnswer((_) async => _);

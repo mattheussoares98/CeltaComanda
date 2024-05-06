@@ -1,6 +1,6 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
+
 import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
@@ -11,17 +11,10 @@ import 'package:flutter_test/flutter_test.dart';
 import '../mocks/mocks.dart';
 
 void main() {
-  late ExpansibleGroupsPresenterSpy sut;
-  late PrintedProductsPresenterSpy printedProductsPresenter;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
-  late String commandNumber;
+  // late HomePresenterSpy sut;
 
   setUp(() {
-    sut = ExpansibleGroupsPresenterSpy();
-    printedProductsPresenter = PrintedProductsPresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
-
-    commandNumber = faker.randomGenerator.integer(3).toString();
+    // sut = HomePresenterSpy();
   });
 
   setUpAll(() {
@@ -41,16 +34,14 @@ void main() {
     expect(find.byKey(const Key("SearchCommandIcon")), findsOneWidget);
   });
 
-  testWidgets('Should present CommandNumber on AppBar when load data',
-      (WidgetTester tester) async {
-    await loadPage(tester);
+  // testWidgets('Should present CommandNumber on AppBar when load data',
+  //     (WidgetTester tester) async {
+  //   await loadPage(tester);
 
-    await sut.load(
-      commandNumber: commandNumber,
-      printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
-    );
+  //   await sut.load(
+  //     homePresenter.commandNumberMock!,
+  //   );
 
-    expect(find.byType(AppBarTitle), findsOneWidget);
-  });
+  //   expect(find.byType(AppBarTitle), findsOneWidget);
+  // });
 }

@@ -13,6 +13,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
   final TicketIsPermitted ticketIsPermitted;
+  final LoadExpansibleGroups loadExpansibleGroups;
 
   GetxHomePresenter({
     required this.loadExpansibleGroups,
@@ -27,16 +28,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Stream<bool> get isLoadingStream => _isLoading.stream;
   set isLoading(bool value) {
     _isLoading.value = value;
-    notifyListeners();
   }
 
   final _mainError = Rx<UIError?>(null);
-
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
-
-  late final LoadExpansibleGroups loadExpansibleGroups;
 
   @override
   void goToProductsPage(ExpansibleGroupEntity entity) {
@@ -50,11 +47,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> goToSplashPage({
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   }) async {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
 
-    //chamar método pra limpar grupos expansíveis
-    //_expansibleGroups = [];
+    _commandNumber = null;
+    expansibleGroupsPresenter.clear();
     printedProductsPresenter.clear();
     saleRequestTempPresenter.clear();
     await clearEnterpriseData();
@@ -78,15 +76,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
-    //limpar grupos expansíveis
-    // ExpansibleGroupsPresenter().clear();
     _commandNumber = commandNumber;
+    expansibleGroupsPresenter.clear();
     printedProductsPresenter.clear();
     saleRequestTempPresenter.clear();
-    notifyListeners();
 
     try {
       await ticketIsPermitted.verify(
@@ -94,13 +91,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         commandNumber: commandNumber,
       );
 
-      //chamar método pra carregar grupos expansíveis
-      // await ExpansibleGroupsPresenter().load(
-      //   commandNumber: commandNumber,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   saleRequestTempPresenter: saleRequestTempPresenter,
-      // );
-
+      await expansibleGroupsPresenter.load(commandNumber);
       await saleRequestTempPresenter.load(commandNumber);
       await printedProductsPresenter.load(commandNumber);
     } on DomainError catch (error) {
@@ -114,7 +105,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
 

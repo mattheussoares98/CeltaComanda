@@ -5,10 +5,12 @@ class SearchDataByCommandNumber extends StatelessWidget {
   final ExpansibleGroupsPresenter expansibleGroupsPresenter;
   final PrintedProductsPresenter printedProductsPresenter;
   final SaleRequestTempPresenter saleRequestTempPresenter;
+  final HomePresenter homePresenter;
   const SearchDataByCommandNumber({
     required this.expansibleGroupsPresenter,
     required this.printedProductsPresenter,
     required this.saleRequestTempPresenter,
+    required this.homePresenter,
     super.key,
   });
 
@@ -33,9 +35,10 @@ class SearchDataByCommandNumber extends StatelessWidget {
             onPressed: () {
               showDialogSearchCommandNumber(
                 context: context,
-                presenter: expansibleGroupsPresenter,
+                expansibleGroupsPresenter: expansibleGroupsPresenter,
                 printedProductsPresenter: printedProductsPresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
+                homePresenter: homePresenter,
               );
             },
             icon: const Icon(Icons.search),

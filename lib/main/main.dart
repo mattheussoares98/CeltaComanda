@@ -62,7 +62,6 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => GetxExpansibleGroupsPresenter(
             loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
-            localEnterpriseData: makeLocalEnterpriseData(),
             navigateTo: makeNavigateTo(),
             ticketIsPermitted: makeRemoteticketIsPermitted(),
           ),

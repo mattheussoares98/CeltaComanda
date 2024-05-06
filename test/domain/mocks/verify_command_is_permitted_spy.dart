@@ -19,7 +19,7 @@ class TicketIsPermittedSpy extends Mock
     this.mockTicketIsPermittedsCall().thenAnswer((_) async => entity);
   }
 
-  void mockError() {
-    this.mockTicketIsPermittedsCall().thenThrow(DomainError.commandNotAvailable);
+  void mockError(DomainError error) {
+    this.mockTicketIsPermittedsCall().thenThrow(error);
   }
 }

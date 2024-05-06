@@ -23,12 +23,12 @@ class ExpansibleGroupsPresenterSpy extends Mock
         .thenAnswer((_) => expansibleGroupsController);
     when(() => this.clear()).thenAnswer((_) async => _);
 
-    when(() => this.goToSplashPage(
-          printedProductsPresenter: any(named: "printedProductsPresenter"),
-          saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
-        )).thenAnswer((_) async => Get.offAllNamed(
-          PageRoutes.splash,
-        ));
+    // when(() => this.goToSplashPage(
+    //       printedProductsPresenter: any(named: "printedProductsPresenter"),
+    //       saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
+    //     )).thenAnswer((_) async => Get.offAllNamed(
+    //       PageRoutes.splash,
+    //     ));
   }
 
   void mockGoToProductsPage(ExpansibleGroupEntity entity) {

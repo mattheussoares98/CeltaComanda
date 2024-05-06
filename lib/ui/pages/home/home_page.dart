@@ -54,6 +54,8 @@ class _HomePageState extends State<HomePage>
         Provider.of(context, listen: false);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    GetxHomePresenter homePresenter =
+        Provider.of(context, listen: false);
 
     return Scaffold(
       drawer: drawer(
@@ -61,6 +63,7 @@ class _HomePageState extends State<HomePage>
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
       ),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),

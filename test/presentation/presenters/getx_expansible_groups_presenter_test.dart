@@ -1,7 +1,10 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -15,115 +18,102 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late GetxExpansibleGroupsPresenter sut;
-  late PrintedProductsPresenterSpy printedProductsPresenter;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late HomePresenterSpy homePresenter;
 
-  late EnterpriseEntity enterpriseEntity;
   late List<ExpansibleGroupEntity> expansibleGroups;
-  late SaleRequestTempEntity saleRequestTempEntity;
-  late PrintedEntity printedProducts;
-  late String commandNumber;
+  late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late NavigateToSpy navigateTo;
-  late LoadPrintedProductsSpy loadPrintedProducts;
   late TicketIsPermittedSpy ticketIsPermitted;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
-  setUp(() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
-        EntityFactory.makeEnterpriseData();
-    commandNumber = "001";
-    loadSaleRequestTemp = LoadSaleRequestTempSpy();
+  void initUseCases() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
-    loadPrintedProducts = LoadPrintedProductsSpy();
-    printedProductsPresenter = PrintedProductsPresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
-
-    expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
-    printedProducts = EntityFactory.makePrintedProductsEntity();
-
-    // expansibleGroupsViewModel = expansibleGroups
-    //     .map((e) => ExpansibleGroupsViewModel(
-    //           Name: e.Name,
-    //           ExpansibleGroupId: e.ExpansibleGroupId.toString(),
-    //           ExpansibleGroupType: e.ExpansibleGroupType.toString(),
-    //           OrderClassification: e.OrderClassification.toString(),
-    //         ))
-    //     .toList();
-
-    loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
-    saleRequestTempEntity = EntityFactory.makeApiSaleRequestEntity();
-    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    loadPrintedProducts.mockLoadPrintedProducts(printedProducts);
-
-    navigateTo = NavigateToSpy();
-    navigateTo.mockNavigate();
     localEnterpriseData = LocalEnterpriseDataSpy();
+    navigateTo = NavigateToSpy();
+  }
 
-    enterpriseEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-    );
-
-    localEnterpriseData.mockAdd(enterpriseEntity);
+  void initPresenters() {
+    homePresenter = HomePresenterSpy();
 
     sut = GetxExpansibleGroupsPresenter(
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
-      localEnterpriseData: localEnterpriseData,
       ticketIsPermitted: ticketIsPermitted,
     );
+  }
+
+  void initEntitys() {
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
+    expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
+    homePresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
+    expansibleGroupsViewModel = expansibleGroups
+        .map((e) => ExpansibleGroupsViewModel(
+              Name: e.Name,
+              ExpansibleGroupId: e.ExpansibleGroupId.toString(),
+              ExpansibleGroupType: e.ExpansibleGroupType.toString(),
+              OrderClassification: e.OrderClassification.toString(),
+            ))
+        .toList();
+  }
+
+  void mockSuccess() {
+    loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
+    localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
+    navigateTo.mockNavigate();
+  }
+
+  setUp(() {
+    initUseCases();
+    initPresenters();
+    initEntitys();
+    mockSuccess();
   });
 
   setUpAll(() {
     registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
-    registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
   });
 
-  // test('Should call load products', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
+  test('Should call LoadExpansibleGroups', () async {
+    await sut.load(homePresenter.commandNumberMock!);
 
-  //   verify(() => loadExpansibleGroups.load()).called(1);
-  // });
+    verify(() => loadExpansibleGroups.load()).called(1);
+  });
 
-  // test('Should throw DomainErrorUnexpected', () async {
-  //   loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
+  test('Should throw DomainErrorUnexpected', () async {
+    loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //   expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+    final error = sut.load(homePresenter.commandNumberMock!);
 
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
+    expect(sut.expansibleGroups, []);
+    expect(error, throwsA(DomainError.unexpected));
+  });
 
-  //   expect(sut.expansibleGroups, []);
-  // });
+  test('Should return correct value on success to load', () async {
+    await sut.load(homePresenter.commandNumberMock!);
 
-  // test('Should emit correct events on success load expansible groups',
-  //     () async {
-  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expect(sut.expansibleGroups, expansibleGroupsViewModel);
+  });
+  
+  test('Should clear expansibleGroups', () async {
+    await sut.load(homePresenter.commandNumberMock!);
+    expect(sut.expansibleGroups, expansibleGroupsViewModel);
 
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   expect(sut.expansibleGroups, expansibleGroupsViewModel);
-  // });
+    sut.clear();
+    expect(sut.expansibleGroups, []);
+  });
 
   test('Should go to products page ExpansibleGroupItem click', () async {
     sut.goToProductsPage(expansibleGroups[0]);
@@ -136,188 +126,32 @@ void main() {
     ).called(1);
   });
 
-  test('Should go to SplashPage on logout click', () async {
-    sut.goToSplashPage(
-      printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
-    );
+  test('Should call ticketIsPermitted on load data', () async {
+    await sut.load(homePresenter.commandNumberMock!);
 
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.splash,
-        clear: true,
-      ),
-    ).called(1);
+    verify(() => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: homePresenter.commandNumberMock!,
+        )).called(1);
   });
 
-  test('Should clear local data on logout', () async {
-    await sut.clearEnterpriseData();
+  test(
+      'Should throw DomainError.commandNotAvailable on ticketIsPermitted throws commandNotAvailable',
+      () async {
+    ticketIsPermitted.mockError(DomainError.commandNotAvailable);
 
-    verify(() => localEnterpriseData.add(enterpriseEntity)).called(1);
+    final error = sut.load(homePresenter.commandNumberMock!);
+
+    expect(error, throwsA(DomainError.commandNotAvailable));
   });
 
-  // test('Should emit correct events on verify command success', () async {
-  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //   expectLater(sut.mainErrorStream, emits(null));
+  test(
+      'Should throw DomainError.unexpected on ticketIsPermitted throws unexpected',
+      () async {
+    ticketIsPermitted.mockError(DomainError.unexpected);
 
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-  // });
-  test('Should return correct value on loadSaleRequestTemp', () async {
-    final value = await loadSaleRequestTemp.load(
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-      commandNumber: commandNumber,
-    );
+    final error = sut.load(homePresenter.commandNumberMock!);
 
-    expect(value, saleRequestTempEntity);
+    expect(error, throwsA(DomainError.unexpected));
   });
-
-  // test('Should correct events on load command throws commandNotAvailable',
-  //     () async {
-  //   loadExpansibleGroups
-  //       .mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
-
-  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //   expectLater(
-  //       sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
-
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-  // });
-
-  // test('Should call LoadSaleRequestTemp when load expansibleGroups', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
-  // });
-
-  // test('Should call LoadPrinted when load expansibleGroups', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   verify(() => printedProductsPresenter.load(commandNumber)).called(1);
-  // });
-
-  test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
-    await sut.goToSplashPage(
-      printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
-    );
-
-    expect(
-        EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName, isNotEmpty);
-    expect(EnterpriseDataBuilder.enterpriseDataEntity?.url, null);
-    expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId, null);
-  });
-
-  // test('Should clear SaleRequestTemp when go to SplashPage', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-  //   await sut.goToSplashPage(
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   expect(saleRequestTempPresenter.saleRequestTemp, null);
-  // });
-
-  // test('Should clear expansibleGroups when go to SplashPage', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   await sut.goToSplashPage(
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   expect(sut.expansibleGroups, []);
-  // });
-
-  test('Should return correct values on LoadPrintedProducts', () async {
-    final result = await loadPrintedProducts.load(
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-      commandNumber: 1,
-    );
-
-    expect(result, printedProducts);
-  });
-
-  // test('Should call clearPrintedProducts on load data', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   verify(() => printedProductsPresenter.clear()).called(1);
-  // });
-
-  // test('Should call clearSaleRequestTemp on load data', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   verify(() => saleRequestTempPresenter.clear()).called(1);
-  // });
-
-  // test('Should update commandNumber on load data', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   expect(sut.commandNumber, commandNumber);
-  // });
-
-  // test('Should call ticketIsPermitted on load data', () async {
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-
-  //   verify(() => ticketIsPermitted.verify(
-  //         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //         commandNumber: commandNumber,
-  //       )).called(1);
-  // });
-
-  // test('Should correct events on ticketIsPermitted throws commandNotAvailable',
-  //     () async {
-  //   ticketIsPermitted.mockError();
-
-  //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //   expectLater(
-  //       sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
-
-  //   await sut.load(
-  //     commandNumber: commandNumber,
-  //     printedProductsPresenter: printedProductsPresenter,
-  //     saleRequestTempPresenter: saleRequestTempPresenter,
-  //   );
-  // });
 }

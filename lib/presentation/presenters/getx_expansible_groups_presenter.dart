@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 
-import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -13,19 +11,17 @@ class GetxExpansibleGroupsPresenter
     with ChangeNotifier
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
-  final LocalEnterpriseData localEnterpriseData;
   final TicketIsPermitted ticketIsPermitted;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
-    required this.localEnterpriseData,
     required this.ticketIsPermitted,
   });
 
   late final LoadExpansibleGroups loadExpansibleGroups;
 
-  List<ExpansibleGroupsViewModel> _expansibleGroups = [];
+  final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
   List<ExpansibleGroupsViewModel> get expansibleGroups =>
       [..._expansibleGroups];
@@ -36,32 +32,6 @@ class GetxExpansibleGroupsPresenter
       pageRoute: PageRoutes.products,
       arguments: entity,
     );
-  }
-
-  @override
-  Future<void> goToSplashPage({
-    required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-  }) async {
-    navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
-
-    _expansibleGroups = [];
-    printedProductsPresenter.clear();
-    saleRequestTempPresenter.clear();
-    await clearEnterpriseData();
-  }
-
-  @override
-  Future<void> clearEnterpriseData() async {
-    final emptyEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName ?? "",
-      enterpriseId: null,
-      url: null,
-    );
-    EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
-
-    await localEnterpriseData.add(emptyEntity);
   }
 
   @override
@@ -97,9 +67,4 @@ class GetxExpansibleGroupsPresenter
   void clear() {
     _expansibleGroups.clear();
   }
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
 }

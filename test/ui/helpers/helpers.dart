@@ -84,7 +84,6 @@ Widget makePage(
       ChangeNotifierProvider<GetxExpansibleGroupsPresenter>(
         create: (_) => GetxExpansibleGroupsPresenter(
           loadExpansibleGroups: LoadExpansibleGroupsSpy(),
-          localEnterpriseData: LocalEnterpriseDataSpy(),
           navigateTo: NavigateToSpy(),
           ticketIsPermitted: TicketIsPermittedSpy(),
         ),

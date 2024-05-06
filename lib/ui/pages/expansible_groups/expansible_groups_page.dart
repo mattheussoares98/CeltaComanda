@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import '../../../presentation/presenters/presenters.dart';
 import '../../../ui/pages/pages.dart';
-import '../../mixins/mixins.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,7 @@ class ExpansibleGroupsPage extends StatefulWidget {
 }
 
 class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
-    with KeyboardManager, LoadingManager, UIErrorManager {
+     {
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
@@ -32,8 +31,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleMainError(context, expansibleGroupsPresenter.mainErrorStream);
-
                   if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
                     return SearchDataByCommandNumber(
                       expansibleGroupsPresenter: expansibleGroupsPresenter,

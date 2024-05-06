@@ -7,6 +7,7 @@ Widget drawer({
   required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
+  required HomePresenter homePresenter,
 }) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * 0.7,
@@ -24,11 +25,12 @@ Widget drawer({
             key: const Key("logout"),
             context: context,
             onTap: () async {
-              expansibleGroupsPresenter.goToSplashPage(
+              homePresenter.goToSplashPage(
                 printedProductsPresenter: printedProductsPresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
+                expansibleGroupsPresenter: expansibleGroupsPresenter,
               );
-              await expansibleGroupsPresenter.clearEnterpriseData();
+              await homePresenter.clearEnterpriseData();
             },
             text: "Sair",
             leading: Icon(

@@ -12,16 +12,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late ExpansibleGroupsPresenterSpy presenter;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
-  late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
 
   setUp(() {
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = ExpansibleGroupsPresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
-    printedProductsPresenter = PrintedProductsPresenterSpy();
   });
 
   setUpAll(() {
@@ -75,18 +71,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);
-  });
-
-  testWidgets('Should go to SplashPage', (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.goToSplashPage(
-      saleRequestTempPresenter: saleRequestTempPresenter,
-      printedProductsPresenter: printedProductsPresenter,
-    );
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.splash);
   });
 
   testWidgets(

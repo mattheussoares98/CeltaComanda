@@ -21,7 +21,6 @@ class HomePresenterSpy extends Mock implements GetxHomePresenter {
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),

@@ -108,15 +108,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     }
   }
 
-  @override
-  void clear() {
-    //limpar todos dados das 3 telas
-    // PrintedProductsPresenter().clear();
-    // SaleRequestTempPresenter().clear();
-    // ExpansibleGroupsPresenter().clear();
-    _commandNumber = null;
-  }
-
   String? _commandNumber;
   @override
   String? get commandNumber => _commandNumber;

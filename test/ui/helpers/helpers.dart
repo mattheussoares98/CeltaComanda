@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:clean_celta_mobile/main/factories/factories.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -90,10 +89,10 @@ Widget makePage(
       ),
       ChangeNotifierProvider<GetxSaleRequestTempPresenter>(
         create: (_) => GetxSaleRequestTempPresenter(
-          loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
-          updateProductQuantity: makeRemoteUpdateProductQuantity(),
-          updateProductComment: makeRemoteUpdateProductComment(),
-          finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
+          loadSaleRequestTemp: LoadSaleRequestTempSpy(),
+          updateProductQuantity: UpdateProductQuantitySpy(),
+          updateProductComment: UpdateProductCommentSpy(),
+          finishSaleRequestTemp: FinishSaleRequestTempSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxPrintedProductsPresenter>(
@@ -101,6 +100,14 @@ Widget makePage(
           userValidations: UserValidationsSpy(),
           loadPrintedProducts: LoadPrintedProductsSpy(),
           removePrintedProduct: RemovePrintedProductSpy(),
+        ),
+      ),
+      ChangeNotifierProvider<GetxHomePresenter>(
+        create: (_) => GetxHomePresenter(
+          loadExpansibleGroups: LoadExpansibleGroupsSpy(),
+          navigateTo: NavigateToSpy(),
+          localEnterpriseData: LocalEnterpriseDataSpy(),
+          ticketIsPermitted: TicketIsPermittedSpy(),
         ),
       ),
     ],

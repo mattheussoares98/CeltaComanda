@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../main/factories/factories.dart';
 import '../../../presentation/presenters/presenters.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
@@ -38,13 +37,6 @@ class _HomePageState extends State<HomePage>
       _currentIndex = index;
     });
   }
-
-  final homePresenter = GetxHomePresenter(
-    loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
-    localEnterpriseData: makeLocalEnterpriseData(),
-    navigateTo: makeNavigateTo(),
-    ticketIsPermitted: makeRemoteticketIsPermitted(),
-  );
 
   @override
   Widget build(BuildContext context) {

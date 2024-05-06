@@ -5,6 +5,7 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/entity_factory.dart';
+import '../../infra/mocks/mocks.dart';
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
 
@@ -14,8 +15,13 @@ void main() {
   late ExpansibleGroupsPresenterSpy presenter;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
+  late HiveSpy hive;
+  late BoxSpy mockHiveBox;
 
   setUp(() {
+    hive = HiveSpy();
+    mockHiveBox = BoxSpy();
+    hive.mockOpenBox(mockHiveBox);
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = ExpansibleGroupsPresenterSpy();
   });
@@ -23,6 +29,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeExpansibleGroupsEntity()[0]);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
   });

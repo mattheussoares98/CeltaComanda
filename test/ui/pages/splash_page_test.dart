@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
+import '../../domain/mocks/entity_factory.dart';
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
 
@@ -12,6 +13,10 @@ import '../navigation/navigation.dart';
 
 void main() {
   late SplashPresenterSpy presenter;
+
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+  });
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = SplashPresenterSpy();

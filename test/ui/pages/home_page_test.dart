@@ -1,25 +1,32 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'package:mocktail/mocktail.dart';
 
+import '../../domain/mocks/entity_factory.dart';
+import '../../infra/mocks/mocks.dart';
 import '../helpers/helpers.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../mocks/mocks.dart';
 
 void main() {
-  // late HomePresenterSpy sut;
+  late HiveSpy hive;
+  late BoxSpy mockHiveBox;
 
   setUp(() {
-    // sut = HomePresenterSpy();
+    mockHiveBox = BoxSpy();
+    hive = HiveSpy();
+    hive.mockOpenBox(mockHiveBox);
   });
 
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -31,7 +38,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    expect(find.byKey(const Key("SearchCommandIcon")), findsOneWidget);
+    expect(find.byType(SearchCommandIcon), findsOneWidget);
   });
 
   // testWidgets('Should present CommandNumber on AppBar when load data',

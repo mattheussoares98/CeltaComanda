@@ -20,7 +20,6 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   late GetxProductsPresenter sut;
-  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
   late HomePresenterSpy homePresenter;
 
@@ -47,7 +46,6 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
 
-    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
     homePresenter = HomePresenterSpy();
 
@@ -56,7 +54,7 @@ void main() {
         EntityFactory.makeEnterpriseData();
 
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    expansibleGroupsPresenter.commandNumberMock = commandNumber;
+    homePresenter.commandNumberMock = commandNumber;
 
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,

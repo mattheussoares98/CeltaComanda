@@ -1,6 +1,8 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -25,32 +27,42 @@ void main() {
   late String password;
   late String saleRequestProductId;
 
-  setUp(() {
-    personalizedCode = faker.randomGenerator.integer(5);
-    password = faker.randomGenerator.string(5);
-    EnterpriseDataBuilder.enterpriseDataEntity =
-        EntityFactory.makeEnterpriseData();
-    printedEntity = EntityFactory.makePrintedProductsEntity();
-    saleRequestProductId = faker.randomGenerator.integer(5).toString();
-
-    userValidations = UserValidationsSpy();
-    loadPrintedProducts = LoadPrintedProductsSpy();
-    removePrintedProduct = RemovePrintedProductSpy();
-
+  void initPresenters() {
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
     homePresenter = HomePresenterSpy();
-
-    expansibleGroupsPresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
 
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
     );
+  }
 
+  void initUsecases() {
+    userValidations = UserValidationsSpy();
+    loadPrintedProducts = LoadPrintedProductsSpy();
+    removePrintedProduct = RemovePrintedProductSpy();
+  }
+
+  void initEntitys() {
+    personalizedCode = faker.randomGenerator.integer(5);
+    password = faker.randomGenerator.string(5);
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
+    printedEntity = EntityFactory.makePrintedProductsEntity();
+    saleRequestProductId = faker.randomGenerator.integer(5).toString();
+    homePresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    homePresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
+  }
+
+  setUp(() {
+    initUsecases();
+    initPresenters();
+    initEntitys();
   });
 
   setUpAll(() {
@@ -92,73 +104,77 @@ void main() {
       expect(validPassword, true);
     });
 
-    // test('Should show invalidCredentials UIError on invalid credential',
-    //     () async {
-    //   userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
+    test('Should show invalidCredentials UIError on invalid credential',
+        () async {
+      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
 
-    //   expectLater(sut.mainErrorStream,
-    //       emitsInOrder([null, UIError.invalidCredentials]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
 
-    // test('Should show accessDenied UIError on user dont have permission',
-    //     () async {
-    //   userValidations.mockIsValidPasswordError(DomainError.accessDenied);
+    test('Should show accessDenied UIError on user dont have permission',
+        () async {
+      userValidations.mockIsValidPasswordError(DomainError.accessDenied);
 
-    //   expectLater(
-    //       sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
 
-    // test('Should show unexpected UIError on unexpected error', () async {
-    //   userValidations.mockIsValidPasswordError(DomainError.unexpected);
+    test('Should show unexpected UIError on unexpected error', () async {
+      userValidations.mockIsValidPasswordError(DomainError.unexpected);
 
-    //   expectLater(
-    //       sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
   });
   group("Verify user can cancel", () {
-    // test('Should emit correct values on success canCancel', () async {
-    //   expectLater(sut.mainErrorStream, emits(null));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    test('Should emit correct values on success canCancel', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
     test('Should call userCanCancel with correct values', () async {
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
@@ -187,76 +203,84 @@ void main() {
       expect(canCancel, true);
     });
 
-    // test('Should show invalidCredentials UIError on invalid credential',
-    //     () async {
-    //   userValidations.mockCanCancelError(DomainError.invalidCredentials);
+    test('Should show invalidCredentials UIError on invalid credential',
+        () async {
+      userValidations.mockCanCancelError(DomainError.invalidCredentials);
 
-    //   expectLater(sut.mainErrorStream,
-    //       emitsInOrder([null, UIError.invalidCredentials]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
 
-    // test('Should show accessDenied UIError on user dont have permission',
-    //     () async {
-    //   userValidations.mockCanCancelError(DomainError.accessDenied);
+    test('Should show accessDenied UIError on user dont have permission',
+        () async {
+      userValidations.mockCanCancelError(DomainError.accessDenied);
 
-    //   expectLater(
-    //       sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
 
-    // test('Should show unexpected UIError on unexpected error', () async {
-    //   userValidations.mockCanCancelError(DomainError.unexpected);
+    test('Should show unexpected UIError on unexpected error', () async {
+      userValidations.mockCanCancelError(DomainError.unexpected);
 
-    //   expectLater(
-    //       sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   await sut.removeProduct(
-    //     saleRequestProductId: saleRequestProductId,
-    //     personalizedCode: personalizedCode,
-    //     password: password,
-    //     expansibleGroupsPresenter: expansibleGroupsPresenter,
-    //     printedProductsPresenter: sut,
-    //     saleRequestTempPresenter: saleRequestTempPresenter,
-    //   );
-    // });
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
   });
 
   group("Manipulate data", () {
-    // test('Should emit correct values on success loadData', () async {
-    //   expectLater(sut.mainErrorStream, emits(null));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    test('Should emit correct values on success loadData', () async {
+      expectLater(sut.mainErrorStream, emits(null));
 
-    //   await sut.load(expansibleGroupsPresenter.commandNumberMock!);
-    // });
+      await sut.load(homePresenter.commandNumberMock!);
+    });
+    test('Should emit correct values on error to loadData', () async {
+      loadPrintedProducts.mockError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.load(homePresenter.commandNumberMock!);
+    });
     test("Should call loadPrintedProducts with correct values", () async {
-      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
+      await sut.load(homePresenter.commandNumberMock!);
 
       verify(() => loadPrintedProducts.load(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber:
-                int.parse(expansibleGroupsPresenter.commandNumberMock!),
+            commandNumber: int.parse(homePresenter.commandNumberMock!),
           )).called(1);
     });
 
@@ -265,7 +289,7 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: int.parse(expansibleGroupsPresenter.commandNumberMock!),
+        commandNumber: int.parse(homePresenter.commandNumberMock!),
       );
 
       expect(result, printedEntity);
@@ -276,23 +300,23 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: int.parse(expansibleGroupsPresenter.commandNumberMock!),
+        commandNumber: int.parse(homePresenter.commandNumberMock!),
       );
 
       expect(result, null);
     });
 
-    // test("Should emit correct events", () async {
-    //   loadPrintedProducts.mockError();
+    test("Should emit correct events", () async {
+      loadPrintedProducts.mockError();
 
-    //   expectLater(
-    //       sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    //   await sut.load(expansibleGroupsPresenter.commandNumberMock!);
-    // });
+      await sut.load(homePresenter.commandNumberMock!);
+    });
 
     test("Should clear printed on call clearPrinted", () async {
+      await sut.load(homePresenter.commandNumberMock!);
       sut.clear();
 
       expect(sut.printedProducts, null);
@@ -311,9 +335,12 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() =>
-              expansibleGroupsPresenter.load(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => homePresenter.load(
+            commandNumber: homePresenter.commandNumberMock!,
+            printedProductsPresenter: sut,
+            saleRequestTempPresenter: saleRequestTempPresenter,
+            expansibleGroupsPresenter: expansibleGroupsPresenter,
+          )).called(1);
     });
   });
 }

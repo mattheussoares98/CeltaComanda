@@ -31,6 +31,9 @@ class GetxPrintedProductsPresenter
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   }) async {
+    isLoading = true;
+    mainError = null;
+
     try {
       final isValidPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -39,7 +42,7 @@ class GetxPrintedProductsPresenter
       );
 
       if (!isValidPassword) {
-        throw DomainError.invalidCredentials;
+        mainError = UIError.invalidCredentials;
       }
 
       bool canCancel = false;
@@ -50,7 +53,7 @@ class GetxPrintedProductsPresenter
         );
       }
       if (!canCancel) {
-        throw DomainError.accessDenied;
+        mainError = UIError.accessDenied;
       }
 
       if (canCancel) {
@@ -69,19 +72,21 @@ class GetxPrintedProductsPresenter
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.invalidCredentials:
-          throw DomainError.invalidCredentials;
+          mainError = UIError.invalidCredentials;
         case DomainError.accessDenied:
-          throw DomainError.accessDenied;
+          mainError = UIError.accessDenied;
         default:
-          throw DomainError.unexpected;
+          mainError = UIError.unexpected;
       }
-    } finally {}
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override
   Future<void> load(String commandNumber) async {
     clear();
-    notifyListeners();
+    mainError = null;
 
     try {
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
@@ -95,7 +100,7 @@ class GetxPrintedProductsPresenter
       }
       notifyListeners();
     } catch (error) {
-      throw DomainError.unexpected;
+      mainError = UIError.unexpected;
     }
   }
 
@@ -106,6 +111,7 @@ class GetxPrintedProductsPresenter
   @override
   void clear() {
     _printedProducts = null;
+    notifyListeners();
   }
 
   final _isLoading = false.obs;

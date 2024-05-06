@@ -47,7 +47,7 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     saleRequestProductTempId = faker.randomGenerator.integer(3);
-    expansibleGroupsPresenter.commandNumberMock =
+    homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
@@ -66,7 +66,7 @@ void main() {
       await sut.addProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandNumberMock!,
       );
 
       verify(
@@ -88,7 +88,7 @@ void main() {
     //   await sut.addProductQuantity(
     //     url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
     //     saleRequestProductTempId: saleRequestProductTempId,
-    //     commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+    //     commandNumber: homePresenter.commandNumberMock!,
     //   );
     // });
 
@@ -99,7 +99,7 @@ void main() {
     //     await sut.addProductQuantity(
     //         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
     //         saleRequestProductTempId: saleRequestProductTempId,
-    //         commandNumber: expansibleGroupsPresenter.commandNumberMock!);
+    //         commandNumber: homePresenter.commandNumberMock!);
     //   });
     // });
     group("SubtractProductQuantity group", () {
@@ -108,7 +108,7 @@ void main() {
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             saleRequestProductTempId: saleRequestProductTempId,
             productQuantity: 10,
-            commandNumber: expansibleGroupsPresenter.commandNumberMock!);
+            commandNumber: homePresenter.commandNumberMock!);
 
         verify(
           () => updateProductQuantity.subtract(
@@ -130,7 +130,7 @@ void main() {
       //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       //       saleRequestProductTempId: saleRequestProductTempId,
       //       productQuantity: 10,
-      //       commandNumber: expansibleGroupsPresenter.commandNumberMock!);
+      //       commandNumber: homePresenter.commandNumberMock!);
       // });
 
       // test("Should emits correct events on SubtractProductQuantity", () async {
@@ -141,7 +141,7 @@ void main() {
       //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       //       saleRequestProductTempId: saleRequestProductTempId,
       //       productQuantity: 10,
-      //       commandNumber: expansibleGroupsPresenter.commandNumberMock!);
+      //       commandNumber: homePresenter.commandNumberMock!);
       // });
 
       test("Should call delete product if productQuantity is less than 1",
@@ -150,7 +150,7 @@ void main() {
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             saleRequestProductTempId: saleRequestProductTempId,
             productQuantity: 1,
-            commandNumber: expansibleGroupsPresenter.commandNumberMock!);
+            commandNumber: homePresenter.commandNumberMock!);
 
         verify(
           () => updateProductQuantity.delete(
@@ -167,7 +167,7 @@ void main() {
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             saleRequestProductTempId: saleRequestProductTempId,
             productQuantity: 2,
-            commandNumber: expansibleGroupsPresenter.commandNumberMock!);
+            commandNumber: homePresenter.commandNumberMock!);
 
         verify(
           () => updateProductQuantity.subtract(
@@ -183,7 +183,7 @@ void main() {
       //   expectLater(sut.mainErrorStream, emits(null));
       //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      //   await sut.load(expansibleGroupsPresenter.commandNumberMock!);
+      //   await sut.load(homePresenter.commandNumberMock!);
       // });
 
       // test("Should emits correct events on error to LoadSaleRequestTemp",
@@ -194,17 +194,17 @@ void main() {
       //       sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      //   await sut.load(expansibleGroupsPresenter.commandNumberMock!);
+      //   await sut.load(homePresenter.commandNumberMock!);
       // });
 
       test("Should call LoadSaleRequestTemp with correct values", () async {
-        await sut.load(expansibleGroupsPresenter.commandNumberMock!);
+        await sut.load(homePresenter.commandNumberMock!);
 
         verify(() => loadSaleRequestTemp.load(
                 url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
                 enterpriseId:
                     EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-                commandNumber: expansibleGroupsPresenter.commandNumberMock!))
+                commandNumber: homePresenter.commandNumberMock!))
             .called(1);
       });
     });

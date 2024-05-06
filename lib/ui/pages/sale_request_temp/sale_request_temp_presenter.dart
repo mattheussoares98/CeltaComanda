@@ -34,6 +34,9 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
 
   Future<void> finishSaleRequest({
     required SaleRequestTempEntity saleRequestTempEntity,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
   });
 
   int? get indexOfSelectedProduct;

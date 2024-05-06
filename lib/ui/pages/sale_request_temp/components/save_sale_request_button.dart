@@ -11,6 +11,10 @@ class SaveSaleRequestButton extends StatelessWidget {
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context, listen: false);
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red,
@@ -26,6 +30,9 @@ class SaveSaleRequestButton extends StatelessWidget {
         await saleRequestTempPresenter.finishSaleRequest(
           saleRequestTempEntity:
               saleRequestTempPresenter.saleRequestTemp!.toEntity(),
+          expansibleGroupsPresenter: expansibleGroupsPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter,
         );
       },
       child: const Text(

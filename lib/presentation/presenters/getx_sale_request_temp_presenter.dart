@@ -172,6 +172,9 @@ class GetxSaleRequestTempPresenter
   @override
   Future<void> finishSaleRequest({
     required SaleRequestTempEntity saleRequestTempEntity,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     mainError = null;
     isLoading = true;
@@ -179,6 +182,12 @@ class GetxSaleRequestTempPresenter
       await finishSaleRequestTemp.finish(
         saleRequestTempEntity: saleRequestTempEntity,
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      );
+
+      await expansibleGroupsPresenter.load(
+        commandNumber: expansibleGroupsPresenter.commandNumber!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     } catch (e) {
       mainError = UIError.unexpected;

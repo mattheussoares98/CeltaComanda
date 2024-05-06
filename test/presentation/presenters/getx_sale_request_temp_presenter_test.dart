@@ -15,6 +15,7 @@ void main() {
   late GetxSaleRequestTempPresenter sut;
   late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
+  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
@@ -33,6 +34,7 @@ void main() {
 
     expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
+    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
 
     sut = GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
@@ -286,7 +288,12 @@ void main() {
 
   group("FinishSaleRequestTemp", () {
     test("Should call FinishSaleRequestTemp with correct values", () async {
-      await sut.finishSaleRequest(saleRequestTempEntity: saleRequestTempEntity);
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
 
       verify(
         () => finishSaleRequestTemp.finish(
@@ -301,7 +308,12 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.finishSaleRequest(saleRequestTempEntity: saleRequestTempEntity);
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
     });
 
     test("Should emit correct events on FinishSaleRequestTemp throws",
@@ -311,7 +323,28 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.finishSaleRequest(saleRequestTempEntity: saleRequestTempEntity);
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+    });
+
+    test(
+        "Should call ExpansibleGroupsPresenter.load on FinishSaleRequest success",
+        () async {
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+
+      verify(() => expansibleGroupsPresenter.load(
+          commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+          printedProductsPresenter: printedProductsPresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter)).called(1);
     });
   });
 }

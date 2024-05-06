@@ -342,5 +342,21 @@ void main() {
             expansibleGroupsPresenter: expansibleGroupsPresenter,
           )).called(1);
     });
+    test("ShouldCall removeProduct on call sut.removeProduct", () async {
+      await sut.removeProduct(
+        personalizedCode: personalizedCode,
+        password: password,
+        saleRequestProductId: saleRequestProductId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        printedProductsPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => removePrintedProduct.remove(
+            productId: saleRequestProductId,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          )).called(1);
+    });
   });
 }

@@ -1,5 +1,6 @@
 export 'getx_sale_request_temp_presenter.dart';
 export 'getx_enterprise_presenter.dart';
+export './getx_home_presenter.dart';
 export './getx_expansible_groups_presenter.dart';
 export './getx_printed_products_presenter.dart';
 export './getx_product_details_presenter.dart';

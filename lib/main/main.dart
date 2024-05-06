@@ -45,6 +45,14 @@ class App extends StatelessWidget {
           ),
         ),
         ChangeNotifierProvider(
+          create: (_) => GetxHomePresenter(
+            loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
+            localEnterpriseData: makeLocalEnterpriseData(),
+            navigateTo: makeNavigateTo(),
+            ticketIsPermitted: makeRemoteticketIsPermitted(),
+          ),
+        ),
+        ChangeNotifierProvider(
           create: (_) => GetxPrintedProductsPresenter(
             userValidations: makeRemoteUserValidations(),
             loadPrintedProducts: makeRemoteLoadPrintedProducts(),

@@ -49,13 +49,13 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
     GetxPrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
     GetxHomePresenter homePresenter =
-        Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
 
     return Scaffold(
       drawer: drawer(

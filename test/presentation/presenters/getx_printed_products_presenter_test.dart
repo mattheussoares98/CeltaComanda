@@ -9,9 +9,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/mocks.dart';
+import '../../ui/mocks/mocks.dart';
 
 void main() {
   late GetxPrintedProductsPresenter sut;
+  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
 
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -21,7 +24,6 @@ void main() {
 
   late int personalizedCode;
   late String password;
-  late String commandNumber;
   late String saleRequestProductId;
 
   setUp(() {
@@ -29,13 +31,17 @@ void main() {
     password = faker.randomGenerator.string(5);
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    commandNumber = faker.randomGenerator.integer(3).toString();
     printedEntity = EntityFactory.makePrintedProductsEntity();
     saleRequestProductId = faker.randomGenerator.integer(5).toString();
 
     userValidations = UserValidationsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     removePrintedProduct = RemovePrintedProductSpy();
+
+    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    expansibleGroupsPresenter.commandNumberMock =
+        faker.randomGenerator.integer(3).toString();
 
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
@@ -46,12 +52,21 @@ void main() {
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
   });
 
+  setUpAll(() {
+    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+  });
+
   group("Validate password", () {
     test('Should call isValidPassword with correct values', () async {
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
       verify(
@@ -87,6 +102,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -102,6 +120,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -116,6 +137,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
   });
@@ -128,6 +152,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
     test('Should call userCanCancel with correct values', () async {
@@ -135,6 +162,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
       verify(
@@ -166,6 +196,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -181,6 +214,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
 
@@ -195,6 +231,9 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         personalizedCode: personalizedCode,
         password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
       );
     });
   });
@@ -204,16 +243,17 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.load(commandNumber);
+      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
     });
     test("Should call loadPrintedProducts with correct values", () async {
-      await sut.load(commandNumber);
+      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
 
       verify(() => loadPrintedProducts.load(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: int.parse(commandNumber),
+            commandNumber:
+                int.parse(expansibleGroupsPresenter.commandNumberMock!),
           )).called(1);
     });
 
@@ -222,7 +262,7 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: int.parse(commandNumber),
+        commandNumber: int.parse(expansibleGroupsPresenter.commandNumberMock!),
       );
 
       expect(result, printedEntity);
@@ -233,7 +273,7 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: int.parse(commandNumber),
+        commandNumber: int.parse(expansibleGroupsPresenter.commandNumberMock!),
       );
 
       expect(result, null);
@@ -246,13 +286,32 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.load(commandNumber);
+      await sut.load(expansibleGroupsPresenter.commandNumberMock!);
     });
 
     test("Should clear printed on call clearPrinted", () async {
       sut.clear();
 
       expect(sut.printedProducts, null);
+    });
+
+    test(
+        "ShouldCall ExpansibleGroupsPresenter.load on removeProduct success to data",
+        () async {
+      await sut.removeProduct(
+        personalizedCode: personalizedCode,
+        password: password,
+        saleRequestProductId: saleRequestProductId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        printedProductsPresenter: sut,
+      );
+
+      verify(() => expansibleGroupsPresenter.load(
+            commandNumber: expansibleGroupsPresenter.commandNumberMock!,
+            printedProductsPresenter: sut,
+            saleRequestTempPresenter: saleRequestTempPresenter,
+          )).called(1);
     });
   });
 }

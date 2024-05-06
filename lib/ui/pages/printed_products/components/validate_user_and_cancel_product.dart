@@ -9,6 +9,8 @@ Future<void> _removeProduct({
   required TextEditingController personalizedCodeController,
   required TextEditingController passwordController,
   required PrintedProductsPresenter printedProductsPresenter,
+  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required SaleRequestTempPresenter saleRequestTempPresenter,
   required String saleRequestProductId,
 }) async {
   bool isValid = formKey.currentState!.validate();
@@ -19,6 +21,9 @@ Future<void> _removeProduct({
     password: passwordController.text,
     personalizedCode: int.parse(personalizedCodeController.text),
     saleRequestProductId: saleRequestProductId,
+    expansibleGroupsPresenter: expansibleGroupsPresenter,
+    printedProductsPresenter: printedProductsPresenter,
+    saleRequestTempPresenter: saleRequestTempPresenter,
   );
 }
 
@@ -28,6 +33,8 @@ void validateUserAndCancelProduct({
   required TextEditingController personalizedCodeController,
   required TextEditingController passwordController,
   required PrintedProductsPresenter printedProductsPresenter,
+  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required SaleRequestTempPresenter saleRequestTempPresenter,
   required String saleRequestProductId,
   required FocusNode passwordFocus,
   required FocusNode userFocus,
@@ -99,6 +106,8 @@ void validateUserAndCancelProduct({
                           passwordController: passwordController,
                           printedProductsPresenter: printedProductsPresenter,
                           saleRequestProductId: saleRequestProductId,
+                          expansibleGroupsPresenter: expansibleGroupsPresenter,
+                          saleRequestTempPresenter: saleRequestTempPresenter,
                         );
                       },
                       validator: (value) {
@@ -128,6 +137,8 @@ void validateUserAndCancelProduct({
                       passwordController: passwordController,
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestProductId: saleRequestProductId,
+                      expansibleGroupsPresenter: expansibleGroupsPresenter,
+                      saleRequestTempPresenter: saleRequestTempPresenter,
                     );
                   },
                   child: const Text("Validar usuário"),

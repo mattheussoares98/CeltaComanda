@@ -20,22 +20,26 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
+  }
+
+  void mockRemoveProduct() {
     when(() => this.removeProduct(
           password: any(named: "password"),
           personalizedCode: any(named: "personalizedCode"),
           saleRequestProductId: any(named: "saleRequestProductId"),
+          expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
+          printedProductsPresenter: any(named: "printedProductsPresenter"),
+          saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
         )).thenAnswer((_) async => _);
   }
 
-  When mockGetPrintedProductsCall() =>
-      when(() => this.load(any()));
+  When mockGetPrintedProductsCall() => when(() => this.load(any()));
 
   mockGetPrintedProducts() {
     this.mockGetPrintedProductsCall().thenAnswer((_) async => _);
   }
 
-  When mockClearPrintedProductsCall() =>
-      when(() => this.clear());
+  When mockClearPrintedProductsCall() => when(() => this.clear());
 
   mockClearPrintedProducts() {
     this.mockClearPrintedProductsCall().thenAnswer((_) async => _);

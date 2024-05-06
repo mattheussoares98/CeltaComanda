@@ -16,5 +16,8 @@ abstract class PrintedProductsPresenter implements Listenable {
     required int personalizedCode,
     required String password,
     required String saleRequestProductId,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   });
 }

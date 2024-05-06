@@ -16,6 +16,10 @@ class PrintedItem extends StatelessWidget {
   Widget build(BuildContext context) {
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context, listen: false);
+    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final TextEditingController personalizedCodeController =
         TextEditingController();
@@ -65,6 +69,10 @@ class PrintedItem extends StatelessWidget {
                                     product.SaleRequestProductId,
                                 passwordFocus: FocusNode(),
                                 userFocus: FocusNode(),
+                                expansibleGroupsPresenter:
+                                    expansibleGroupsPresenter,
+                                saleRequestTempPresenter:
+                                    saleRequestTempPresenter,
                               );
                             },
                             quantity: product.Quantity,

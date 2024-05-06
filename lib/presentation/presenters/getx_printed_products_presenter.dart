@@ -26,6 +26,9 @@ class GetxPrintedProductsPresenter
     required int personalizedCode,
     required String password,
     required String saleRequestProductId,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -58,12 +61,11 @@ class GetxPrintedProductsPresenter
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         );
 
-        //depois precisa remover esse trecho de código abaixo. Pois o ideal é
-        //consultar os dados da comanda de novo. Vai que em algum outro local
-        //estão realizando alterações da comanda também...
-        _printedProducts?.Products.removeWhere(
-            (element) => element.SaleRequestProductId == saleRequestProductId);
-        notifyListeners();
+        await expansibleGroupsPresenter.load(
+          commandNumber: expansibleGroupsPresenter.commandNumber!,
+          printedProductsPresenter: printedProductsPresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter,
+        );
       }
     } on DomainError catch (error) {
       switch (error) {

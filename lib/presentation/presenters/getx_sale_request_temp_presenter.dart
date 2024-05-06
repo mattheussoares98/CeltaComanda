@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -33,8 +32,8 @@ class GetxSaleRequestTempPresenter
   @override
   Future<void> load(String commandNumber) async {
     _saleRequestTemp = null;
-    isLoading = true;
     notifyListeners();
+    mainError = null;
 
     try {
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
@@ -48,15 +47,14 @@ class GetxSaleRequestTempPresenter
       }
       notifyListeners();
     } catch (e) {
-      throw DomainError.unexpected;
-    } finally {
-      isLoading = false;
+      mainError = UIError.unexpected;
     }
   }
 
   @override
   void clear() {
     _saleRequestTemp = null;
+    notifyListeners();
   }
 
   @override
@@ -66,6 +64,8 @@ class GetxSaleRequestTempPresenter
     required String commandNumber,
   }) async {
     isLoading = true;
+    mainError = null;
+
     try {
       await updateProductQuantity.add(
         url: url,
@@ -74,7 +74,7 @@ class GetxSaleRequestTempPresenter
 
       await load(commandNumber);
     } catch (e) {
-      throw DomainError.unexpected;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -88,6 +88,7 @@ class GetxSaleRequestTempPresenter
     required String commandNumber,
   }) async {
     isLoading = true;
+    mainError = null;
 
     try {
       if (productQuantity <= 1) {
@@ -102,7 +103,7 @@ class GetxSaleRequestTempPresenter
 
       await load(commandNumber);
     } catch (e) {
-      throw DomainError.unexpected;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -118,6 +119,7 @@ class GetxSaleRequestTempPresenter
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
+    mainError = null;
 
     try {
       await updateProductComment.update(
@@ -135,7 +137,7 @@ class GetxSaleRequestTempPresenter
 
       updateIndexOfSelectedProduct(null);
     } catch (e) {
-      throw DomainError.unexpected;
+      mainError = UIError.addComment;
     } finally {
       isLoading = false;
     }
@@ -164,6 +166,7 @@ class GetxSaleRequestTempPresenter
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
+    mainError = null;
 
     try {
       await finishSaleRequestTemp.finish(
@@ -178,7 +181,7 @@ class GetxSaleRequestTempPresenter
         expansibleGroupsPresenter: expansibleGroupsPresenter,
       );
     } catch (e) {
-      throw DomainError.unexpected;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }

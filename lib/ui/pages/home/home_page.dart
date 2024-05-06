@@ -54,71 +54,70 @@ class _HomePageState extends State<HomePage>
         Provider.of(context, listen: true);
     GetxPrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: true);
-    GetxHomePresenter homePresenter =
-        Provider.of(context, listen: true);
+    GetxHomePresenter homePresenter = Provider.of(context, listen: true);
 
-    return Scaffold(
-      drawer: drawer(
-        context: context,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
-      ),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        actions: const [SearchCommandIcon()],
-        title: AppBarTitle(
-          currentIndex: _currentIndex,
-          commandNumber: homePresenter.commandNumber,
+    return Builder(builder: (context) {
+      handleLoading(context, homePresenter.isLoadingStream);
+      handleMainError(context, homePresenter.mainErrorStream);
+
+      return Scaffold(
+        drawer: drawer(
+          context: context,
+          expansibleGroupsPresenter: expansibleGroupsPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter,
+          homePresenter: homePresenter,
         ),
-      ),
-      body: Builder(builder: (context) {
-        handleLoading(context, homePresenter.isLoadingStream);
-        handleMainError(context, homePresenter.mainErrorStream);
-    
-        return PageView(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFF1F5F8),
+          actions: const [SearchCommandIcon()],
+          title: AppBarTitle(
+            currentIndex: _currentIndex,
+            commandNumber: homePresenter.commandNumber,
+          ),
+        ),
+        body: PageView(
           controller: _pageController,
           onPageChanged: onPageChanged,
           children: _screens,
-        );
-      }),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: onPageChanged,
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Inserir',
-          ),
-          BottomNavigationBarItem(
-            icon: IconWithNumberQuantity(
-              iconData: Icons.list_outlined,
-              productsQuantity: printedProductsPresenter.printedProducts ==
-                          null ||
-                      printedProductsPresenter
-                              .printedProducts?.Products.isEmpty ==
-                          true
-                  ? 0
-                  : printedProductsPresenter.printedProducts!.Products.length,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: onPageChanged,
+          items: [
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Inserir',
             ),
-            label: 'Impressos',
-          ),
-          BottomNavigationBarItem(
-            icon: IconWithNumberQuantity(
-              iconData: Icons.shopping_cart_outlined,
-              productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
-                          null ||
-                      saleRequestTempPresenter
-                              .saleRequestTemp?.Products.isEmpty ==
-                          true
-                  ? 0
-                  : saleRequestTempPresenter.saleRequestTemp!.Products.length,
+            BottomNavigationBarItem(
+              icon: IconWithNumberQuantity(
+                iconData: Icons.list_outlined,
+                productsQuantity: printedProductsPresenter.printedProducts ==
+                            null ||
+                        printedProductsPresenter
+                                .printedProducts?.Products.isEmpty ==
+                            true
+                    ? 0
+                    : printedProductsPresenter.printedProducts!.Products.length,
+              ),
+              label: 'Impressos',
             ),
-            label: 'Pendentes',
-          ),
-        ],
-      ),
-    );
+            BottomNavigationBarItem(
+              icon: IconWithNumberQuantity(
+                iconData: Icons.shopping_cart_outlined,
+                productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
+                            null ||
+                        saleRequestTempPresenter
+                                .saleRequestTemp?.Products.isEmpty ==
+                            true
+                    ? 0
+                    : saleRequestTempPresenter.saleRequestTemp!.Products.length,
+              ),
+              label: 'Pendentes',
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

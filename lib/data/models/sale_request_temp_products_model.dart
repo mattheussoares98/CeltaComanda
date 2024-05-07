@@ -66,7 +66,7 @@ class SaleRequestTempProductsModel {
       Product: ProductModel.fromEntity(entity.Product),
       SaleRequestProductTempId: entity.SaleRequestProductTempId,
       IsPrinted: entity.IsPrinted,
-      Comments: entity.Comments.toString(),
+      Comments: entity.Comments,
       SaleRequestTempId: entity.SaleRequestTempId,
       ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp,
       TotalLiquid: entity.TotalLiquid,

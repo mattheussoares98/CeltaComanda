@@ -44,6 +44,7 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (Product.EanCode != null)
                         Text(

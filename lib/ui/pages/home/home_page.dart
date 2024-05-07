@@ -41,12 +41,12 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context, listen: true);
+        Provider.of(context);
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: true);
+        Provider.of(context);
     GetxPrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: true);
-    GetxHomePresenter homePresenter = Provider.of(context, listen: true);
+        Provider.of(context);
+    GetxHomePresenter homePresenter = Provider.of(context);
 
     return Builder(builder: (context) {
       handleLoading(context, homePresenter.isLoadingStream);

@@ -35,7 +35,7 @@ class SaleRequestTempProductsViewModel extends Equatable {
     required this.Product,
     required this.SaleRequestProductTempId,
     required this.IsPrinted,
-    this.Comments,
+    required this.Comments,
     required this.SaleRequestTempId,
     required this.ProductInternalCodeOnErp,
     required this.TotalLiquid,
@@ -71,5 +71,6 @@ class SaleRequestTempProductsViewModel extends Equatable {
         Quantity: double.parse(Quantity.replaceAll(RegExp(r','), '.')),
         Value: double.parse(Value.replaceAll(RegExp(r','), '.')),
         ProductPriceLookUpCode: ProductPriceLookUpCode,
+        Comments: Comments,
       );
 }

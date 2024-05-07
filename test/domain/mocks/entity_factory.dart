@@ -394,6 +394,7 @@ class EntityFactory {
   static SaleRequestTempProductsViewModel
       makeSaleRequestTempProductsViewModel() =>
           SaleRequestTempProductsViewModel(
+            Comments: faker.randomGenerator.string(10),
             Product: makeProductViewModel(),
             SaleRequestProductTempId:
                 faker.randomGenerator.integer(10).toString(),

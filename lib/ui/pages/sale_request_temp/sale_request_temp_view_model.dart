@@ -56,6 +56,7 @@ class SaleRequestTempViewModel extends Equatable {
         EnterpriseId: int.parse(EnterpriseId),
         DeliveryControl: int.parse(DeliveryControl),
         TotalLiquid: double.parse(TotalLiquid.replaceAll(RegExp(r','), '.')),
+        Comments: Comments.toString(),
       );
 
   Map toJson() => {
@@ -65,5 +66,6 @@ class SaleRequestTempViewModel extends Equatable {
         "EnterpriseId": EnterpriseId,
         "DeliveryControl": DeliveryControl,
         "TotalLiquid": TotalLiquid,
+        "Comments": Comments,
       };
 }

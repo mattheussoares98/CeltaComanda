@@ -27,7 +27,7 @@ void main() {
     await tester.pumpWidget(
         makePage(
           path: PageRoutes.products,
-          page: () => ProductsPage(ProductsPresenterSpy()),
+          page: () => ProductsPage(presenter),
           arguments: faker.randomGenerator.integer(3),
         ),
         const Duration(seconds: 1));

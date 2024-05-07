@@ -90,9 +90,8 @@ class GetxExpansibleGroupsPresenter
       }
     } on DomainError catch (error) {
       switch (error) {
-        // case DomainError.unexpected:
-        //   mainError = UIError.unexpected;
-        //criar erro de produto não encontrado
+        case DomainError.productNotFound:
+          mainError = UIError.productNotFound;
         default:
           mainError = UIError.unexpected;
       }

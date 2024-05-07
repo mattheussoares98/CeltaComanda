@@ -24,11 +24,18 @@ class RemoteSearchProductByCode implements SearchProductByCode {
               "$url/api/APIProduct/get?_enterpriseId=$enterpriseId&_productCode=$value",
           method: "get");
 
-      if (response == null) return null;
+      if (response == null) {
+        throw DomainError.productNotFound;
+      }
 
       return ProductModel.fromJson(response).toEntity();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.productNotFound:
+          throw DomainError.productNotFound;
+        default:
+          throw DomainError.productNotFound;
+      }
     }
   }
 }

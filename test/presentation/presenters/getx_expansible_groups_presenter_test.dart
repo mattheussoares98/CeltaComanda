@@ -184,12 +184,24 @@ void main() {
       await sut.searchProduct(productText);
     });
 
-    test("Should emit correct values on dont found product", () async {
+    test(
+        "Should emit correct values on searchProductByCode throws unexpectedError",
+        () async {
       searchProductByCode.mockError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.searchProduct(productText);
+    });
+
+    test("Should emit correct values on dont found product", () async {
+      searchProductByCode.mockError(DomainError.productNotFound);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.productNotFound]));
 
       await sut.searchProduct(productText);
     });

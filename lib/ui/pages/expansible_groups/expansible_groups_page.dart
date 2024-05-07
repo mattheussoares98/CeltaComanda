@@ -46,9 +46,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                     );
                   }
 
-                  return GroupItems(
-                    expansibleGroupsViewModel:
-                        expansibleGroupsPresenter.expansibleGroups,
+                  return Column(
+                    children: [
+                      const SearchProduct(),
+                      GroupItems(
+                        expansibleGroupsViewModel:
+                            expansibleGroupsPresenter.expansibleGroups,
+                      ),
+                    ],
                   );
                 },
               ),

@@ -31,7 +31,7 @@ class GroupItem extends StatelessWidget {
         presenter.goToProductsPage(expansibleGroupsViewModel.toEntity());
       },
       child: Container(
-        margin: const EdgeInsets.all(8),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),

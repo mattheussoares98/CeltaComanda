@@ -72,6 +72,7 @@ class GetxExpansibleGroupsPresenter
   @override
   void clear() {
     _expansibleGroups.clear();
+    _searchedProduct = null;
   }
 
   @override
@@ -87,6 +88,7 @@ class GetxExpansibleGroupsPresenter
 
       if (product != null) {
         _searchedProduct = ProductsViewModel.fromEntity(product);
+        notifyListeners();
       }
     } on DomainError catch (error) {
       switch (error) {

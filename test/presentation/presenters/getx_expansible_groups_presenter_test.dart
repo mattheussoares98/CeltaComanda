@@ -223,5 +223,16 @@ void main() {
 
       expect(sut.searchedProduct, null);
     });
+
+    test("Chould clear searchedProduct when search command data", () async {
+      searchProductByCode.mockSearchProductByCode(productEntity);
+      expect(sut.searchedProduct, null);
+
+      await sut.searchProduct(productText);
+      expect(sut.searchedProduct, productsViewModel);
+
+      await sut.load(homePresenter.commandNumberMock!);
+      expect(sut.searchedProduct, null);
+    });
   });
 }

@@ -1,3 +1,4 @@
 import '../../../../ui/pages/pages.dart';
 
-HomePage makeHomePage() => const HomePage();
+HomePage makeHomePage(ProductsPresenter productsPresenter) =>
+    HomePage(productsPresenter);

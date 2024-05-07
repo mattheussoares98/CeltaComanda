@@ -18,9 +18,7 @@ Widget makePage(
   final allPages = [
     GetPage(
       name: PageRoutes.products,
-      page: () => ProductsPage(
-        ProductsPresenterSpy(),
-      ),
+      page: () => ProductsPage(ProductsPresenterSpy()),
     ),
     GetPage(
       name: PageRoutes.productDetails,
@@ -37,7 +35,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.expansibleGroups,
-      page: () => const ExpansibleGroupsPage(),
+      page: () => ExpansibleGroupsPage(ProductsPresenterSpy()),
     ),
     GetPage(
       name: PageRoutes.saleRequestTemp,
@@ -57,7 +55,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.home,
-      page: () => const HomePage(),
+      page: () => HomePage(ProductsPresenterSpy()),
     ),
   ];
 

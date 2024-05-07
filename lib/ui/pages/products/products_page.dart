@@ -82,10 +82,7 @@ class _ProductsPageState extends State<ProductsPage>
                     );
                   }
                   if (snapshot.hasData) {
-                    return ListenableProvider(
-                      create: (_) => widget.presenter,
-                      child: ProductsItems(products: snapshot.data!),
-                    );
+                    return ProductsItems(products: snapshot.data!);
                   }
                   return const SizedBox(height: 0);
                 });

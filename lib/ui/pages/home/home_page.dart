@@ -8,7 +8,8 @@ import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final ProductsPresenter productsPresenter;
+  const HomePage(this.productsPresenter, {super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,12 +17,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with LoadingManager, UIErrorManager {
-  final List<Widget> _screens = [
-    const ExpansibleGroupsPage(),
-    const PrintedProductsPage(),
-    const SaleRequestTempPage(),
-  ];
-
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
 
@@ -40,6 +35,12 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      ExpansibleGroupsPage(widget.productsPresenter),
+      const PrintedProductsPage(),
+      const SaleRequestTempPage(),
+    ];
+
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage>
         body: PageView(
           controller: _pageController,
           onPageChanged: onPageChanged,
-          children: _screens,
+          children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,

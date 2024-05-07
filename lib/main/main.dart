@@ -67,6 +67,10 @@ class App extends StatelessWidget {
             searchProductByCode: makeRemoteSearchProductByCode(),
           ),
         ),
+        ListenableProvider(
+          create: (_) => makeGetxProductsPresenter(),
+          child: makeProductsPage(makeGetxProductsPresenter()),
+        )
       ],
       child: GetMaterialApp(
         navigatorKey: NavigatorKey.navigatorKey,
@@ -88,12 +92,12 @@ class App extends StatelessWidget {
           ),
           GetPage(
             name: PageRoutes.expansibleGroups,
-            page: makeExpansibleGroupsPage,
+            page: () => makeExpansibleGroupsPage(makeGetxProductsPresenter()),
             transition: Transition.fadeIn,
           ),
           GetPage(
             name: PageRoutes.products,
-            page: makeProductsPage,
+            page: () => makeProductsPage(makeGetxProductsPresenter()),
             transition: Transition.fadeIn,
           ),
           GetPage(
@@ -118,7 +122,7 @@ class App extends StatelessWidget {
           ),
           GetPage(
             name: PageRoutes.home,
-            page: makeHomePage,
+            page: () => makeHomePage(makeGetxProductsPresenter()),
             transition: Transition.fadeIn,
           ),
         ],

@@ -38,7 +38,7 @@ void main() {
     await tester.pumpWidget(
       makePage(
           path: PageRoutes.expansibleGroups,
-          page: () => const ExpansibleGroupsPage()),
+          page: () => ExpansibleGroupsPage(ProductsPresenterSpy())),
     );
   }
 

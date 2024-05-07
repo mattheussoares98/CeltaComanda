@@ -7,7 +7,8 @@ import '../../../ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class ExpansibleGroupsPage extends StatefulWidget {
-  const ExpansibleGroupsPage({super.key});
+  final ProductsPresenter productsPresenter;
+  const ExpansibleGroupsPage(this.productsPresenter, {super.key});
 
   @override
   State<ExpansibleGroupsPage> createState() => _ExpansibleGroupsPageState();
@@ -34,6 +35,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                 builder: (context) {
                   handleLoading(
                       context, expansibleGroupsPresenter.isLoadingStream);
+                  handleLoading(
+                      context, widget.productsPresenter.isLoadingStream);
                   handleMainError(
                       context, expansibleGroupsPresenter.mainErrorStream);
 
@@ -49,6 +52,11 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   return Column(
                     children: [
                       const SearchProduct(),
+                      if (expansibleGroupsPresenter.searchedProduct != null)
+                        ProductItem(
+                          product: expansibleGroupsPresenter.searchedProduct!,
+                          productsPresenter: widget.productsPresenter,
+                        ),
                       GroupItems(
                         expansibleGroupsViewModel:
                             expansibleGroupsPresenter.expansibleGroups,

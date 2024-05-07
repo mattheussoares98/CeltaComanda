@@ -44,6 +44,8 @@ class GetxSaleRequestTempPresenter
 
       if (saleRequestTemp != null) {
         _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
+        _saleRequestTemp!.Products
+            .sort((a, b) => a.Product.Name.compareTo(b.Product.Name));
       }
       notifyListeners();
     } catch (e) {

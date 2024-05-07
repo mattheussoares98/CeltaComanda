@@ -17,7 +17,7 @@ class GroupItems extends StatelessWidget {
       itemCount: expansibleGroupsViewModel.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1.8,
       ),
       itemBuilder: (context, index) {
         final groupViewModel = expansibleGroupsViewModel[index];

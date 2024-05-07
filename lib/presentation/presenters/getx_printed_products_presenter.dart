@@ -97,6 +97,8 @@ class GetxPrintedProductsPresenter
 
       if (printedProducts != null) {
         _printedProducts = PrintedViewModel.fromEntity(printedProducts);
+        _printedProducts!.Products
+            .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
       }
       notifyListeners();
     } catch (error) {

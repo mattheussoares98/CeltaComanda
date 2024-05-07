@@ -27,6 +27,7 @@ void main() {
   late LocalEnterpriseDataSpy localEnterpriseData;
   late NavigateToSpy navigateTo;
   late TicketIsPermittedSpy ticketIsPermitted;
+  late SearchProductByCodeSpy searchProductByCode;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -36,6 +37,7 @@ void main() {
     ticketIsPermitted = TicketIsPermittedSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
+    searchProductByCode = SearchProductByCodeSpy();
   }
 
   void initPresenters() {
@@ -45,6 +47,7 @@ void main() {
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       ticketIsPermitted: ticketIsPermitted,
+      searchProductByCode: searchProductByCode,
     );
   }
 
@@ -106,7 +109,7 @@ void main() {
 
     expect(sut.expansibleGroups, expansibleGroupsViewModel);
   });
-  
+
   test('Should clear expansibleGroups', () async {
     await sut.load(homePresenter.commandNumberMock!);
     expect(sut.expansibleGroups, expansibleGroupsViewModel);

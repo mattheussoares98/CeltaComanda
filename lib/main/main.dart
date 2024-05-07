@@ -64,6 +64,7 @@ class App extends StatelessWidget {
             loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
             navigateTo: makeNavigateTo(),
             ticketIsPermitted: makeRemoteticketIsPermitted(),
+            searchProductByCode: makeRemoteSearchProductByCode(),
           ),
         ),
       ],

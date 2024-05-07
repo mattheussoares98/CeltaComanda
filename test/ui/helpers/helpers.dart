@@ -85,6 +85,7 @@ Widget makePage(
           loadExpansibleGroups: LoadExpansibleGroupsSpy(),
           navigateTo: NavigateToSpy(),
           ticketIsPermitted: TicketIsPermittedSpy(),
+          searchProductByCode: SearchProductByCodeSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxSaleRequestTempPresenter>(

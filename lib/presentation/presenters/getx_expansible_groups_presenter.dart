@@ -12,11 +12,13 @@ class GetxExpansibleGroupsPresenter
     implements ExpansibleGroupsPresenter {
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
+  final SearchProductByCode searchProductByCode;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.ticketIsPermitted,
+    required this.searchProductByCode,
   });
 
   late final LoadExpansibleGroups loadExpansibleGroups;
@@ -66,5 +68,10 @@ class GetxExpansibleGroupsPresenter
   @override
   void clear() {
     _expansibleGroups.clear();
+  }
+
+  @override
+  Future<ProductsViewModel> searchProduct(String value) {
+    throw UnimplementedError();
   }
 }

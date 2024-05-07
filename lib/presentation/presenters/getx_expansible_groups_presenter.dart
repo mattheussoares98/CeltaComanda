@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -13,6 +14,7 @@ class GetxExpansibleGroupsPresenter
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
   final SearchProductByCode searchProductByCode;
+  final LoadExpansibleGroups loadExpansibleGroups;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
@@ -21,7 +23,9 @@ class GetxExpansibleGroupsPresenter
     required this.searchProductByCode,
   });
 
-  late final LoadExpansibleGroups loadExpansibleGroups;
+  @override
+  ProductsViewModel? get searchedProduct => _searchedProduct;
+  ProductsViewModel? _searchedProduct;
 
   final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
   @override
@@ -71,7 +75,41 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<ProductsViewModel> searchProduct(String value) {
-    throw UnimplementedError();
+  Future<void> searchProduct(String value) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      final product = await searchProductByCode.search(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        value: value,
+      );
+
+      if (product != null) {
+        _searchedProduct = ProductsViewModel.fromEntity(product);
+      }
+    } on DomainError catch (error) {
+      switch (error) {
+        // case DomainError.unexpected:
+        //   mainError = UIError.unexpected;
+        //criar erro de produto não encontrado
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
   }
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+  }
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 }

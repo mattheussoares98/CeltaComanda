@@ -29,6 +29,10 @@ void main() {
   late TicketIsPermittedSpy ticketIsPermitted;
   late SearchProductByCodeSpy searchProductByCode;
 
+  late String productText;
+  late ProductEntity productEntity;
+  late ProductsViewModel productsViewModel;
+
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -65,6 +69,9 @@ void main() {
               OrderClassification: e.OrderClassification.toString(),
             ))
         .toList();
+    productText = faker.randomGenerator.string(13);
+    productEntity = EntityFactory.makeProductsEntitys()[0];
+    productsViewModel = ProductsViewModel.fromEntity(productEntity);
   }
 
   void mockSuccess() {
@@ -156,5 +163,53 @@ void main() {
     final error = sut.load(homePresenter.commandNumberMock!);
 
     expect(error, throwsA(DomainError.unexpected));
+  });
+
+  group("SearchProductByCode", () {
+    test("Should call searchProductByCode with correct values", () async {
+      await sut.searchProduct(productText);
+
+      verify(() => searchProductByCode.search(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            value: productText,
+          )).called(1);
+    });
+
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.searchProduct(productText);
+    });
+
+    test("Should emit correct values on dont found product", () async {
+      searchProductByCode.mockError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.searchProduct(productText);
+    });
+
+    test("Should return correct product on success", () async {
+      searchProductByCode.mockSearchProductByCode(productEntity);
+
+      expect(sut.searchedProduct, null);
+      await sut.searchProduct(productText);
+
+      expect(sut.searchedProduct, productsViewModel);
+    });
+
+    test("Should return null if product not found", () async {
+      searchProductByCode.mockSearchProductByCode(null);
+
+      expect(sut.searchedProduct, null);
+      await sut.searchProduct(productText);
+
+      expect(sut.searchedProduct, null);
+    });
   });
 }

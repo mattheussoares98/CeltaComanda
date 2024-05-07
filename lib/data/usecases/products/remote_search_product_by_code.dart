@@ -13,10 +13,10 @@ class RemoteSearchProductByCode implements SearchProductByCode {
   });
 
   @override
-  Future<ProductEntity> search({
+  Future<ProductEntity?> search({
     required String url,
     required String value,
-    required String enterpriseId,
+    required int enterpriseId,
   }) async {
     try {
       final response = await httpAdapter.request(
@@ -24,11 +24,9 @@ class RemoteSearchProductByCode implements SearchProductByCode {
               "$url/api/APIProduct/get?_enterpriseId=$enterpriseId&_productCode=$value",
           method: "get");
 
-      if (response == null) throw Error();
+      if (response == null) return null;
 
-      return response.map<ProductEntity>((element) {
-        return ProductModel.fromJson(element).toEntity();
-      }).toList();
+      return ProductModel.fromJson(response).toEntity();
     } catch (error) {
       throw DomainError.unexpected;
     }

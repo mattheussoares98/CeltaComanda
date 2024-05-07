@@ -1,7 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../domain/entities/entities.dart';
 
 class ProductsViewModel extends Equatable {
   final String ProductsId;

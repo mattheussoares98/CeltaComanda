@@ -1,9 +1,10 @@
-import 'package:clean_celta_mobile/ui/pages/enterprise_validation/enterprise_validation_presenter.dart';
-
-import '../../../helpers/helpers.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import '../../../../ui/pages/pages.dart';
+import '../../../helpers/helpers.dart';
+
 
 class EnterpriseInput extends StatelessWidget {
   const EnterpriseInput({super.key});

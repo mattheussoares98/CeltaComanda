@@ -1,9 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain/entities/entities.dart';
+import '../../../../ui/pages/pages.dart';
 
 class PrintedProductsViewModel extends Equatable {
   final ProductsViewModel Products;

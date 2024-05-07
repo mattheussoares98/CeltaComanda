@@ -1,8 +1,9 @@
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter/material.dart';
+
 import '../../presentation/presenters/presenters.dart';
+import '../../ui/pages/pages.dart';
 
 class SearchCommandIcon extends StatefulWidget {
   const SearchCommandIcon({

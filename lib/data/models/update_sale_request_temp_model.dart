@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:clean_celta_mobile/data/models/models.dart';
-
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
 class UpdateSaleRequestTempModel {

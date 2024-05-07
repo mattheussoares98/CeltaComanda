@@ -1,7 +1,6 @@
-import 'package:clean_celta_mobile/domain/entities/product_entity.dart';
-import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
-
+import '../../../domain/entities/product_entity.dart';
 import '../../../domain/helpers/helpers.dart';
+import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 

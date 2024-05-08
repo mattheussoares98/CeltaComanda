@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:619247462622:android:64c86f98e68cc6e4813a4f",
+        "mobilesdk_app_id": "1:619247462622:android:e79de7b35a35ec76813a4f",
         "android_client_info": {
-          "package_name": "com.example.clean_celta_mobile"
+          "package_name": "br.com.celtaware.comanda"
         }
       },
       "oauth_client": [],

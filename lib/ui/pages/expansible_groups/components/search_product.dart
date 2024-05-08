@@ -24,7 +24,7 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   void _requestFocusToFormField() {
-    Future.delayed(Duration.zero, () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       FocusScope.of(context).requestFocus(focusNode);
     });
   }
@@ -32,10 +32,17 @@ class _SearchProductState extends State<SearchProduct> {
   Future<void> _searchProduct(
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter,
   ) async {
+    if (!formKey.currentState!.validate()) {
+      _requestFocusToFormField();
+      return;
+    }
+
     await expansibleGroupsPresenter.searchProduct(controller.text);
 
     if (expansibleGroupsPresenter.searchedProduct != null) {
       controller.clear();
+    } else {
+      _requestFocusToFormField();
     }
   }
 
@@ -60,6 +67,14 @@ class _SearchProductState extends State<SearchProduct> {
                     keyboardType: TextInputType.number,
                     onFieldSubmitted: (value) async {
                       await _searchProduct(expansibleGroupsPresenter);
+                    },
+                    validator: (value) {
+                      if (value?.isEmpty == true) {
+                        return "Digite o EAN ou PLU";
+                      } else if (int.tryParse(value!) == null) {
+                        return "Digite somente números";
+                      }
+                      return null;
                     },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(

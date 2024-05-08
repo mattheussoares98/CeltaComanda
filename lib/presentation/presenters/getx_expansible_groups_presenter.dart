@@ -82,7 +82,7 @@ class GetxExpansibleGroupsPresenter
     isLoading = true;
     mainError = null;
 
-    if (value.toString().length <= 7) {
+    if (value.toString().length <= 6) {
       value = _formatPlu(value);
     }
 

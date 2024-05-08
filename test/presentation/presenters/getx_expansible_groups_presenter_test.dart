@@ -29,7 +29,7 @@ void main() {
   late TicketIsPermittedSpy ticketIsPermitted;
   late SearchProductByCodeSpy searchProductByCode;
 
-  late String productText;
+  late String productEan;
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
 
@@ -69,7 +69,7 @@ void main() {
               OrderClassification: e.OrderClassification.toString(),
             ))
         .toList();
-    productText = faker.randomGenerator.string(13);
+    productEan = faker.randomGenerator.integer(13).toString();
     productEntity = EntityFactory.makeProductsEntitys()[0];
     productsViewModel = ProductsViewModel.fromEntity(productEntity);
   }
@@ -167,14 +167,52 @@ void main() {
   });
 
   group("SearchProductByCode", () {
-    test("Should call searchProductByCode with correct values", () async {
-      await sut.searchProduct(productText);
+    test(
+        "Should call searchProductByCode with correct values and update string to correct format of plu",
+        () async {
+      await sut.searchProduct("123456");
 
       verify(() => searchProductByCode.search(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            value: productText,
+            value: "12345-6",
+          )).called(1);
+
+      await sut.searchProduct("12345");
+
+      verify(() => searchProductByCode.search(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            value: "01234-5",
+          )).called(1);
+
+      await sut.searchProduct("1");
+
+      verify(() => searchProductByCode.search(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            value: "00000-1",
+          )).called(1);
+
+      await sut.searchProduct("1234567890123");
+
+      verify(() => searchProductByCode.search(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            value: "1234567890123",
+          )).called(1);
+
+      await sut.searchProduct("1234567");
+
+      verify(() => searchProductByCode.search(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            value: "1234567",
           )).called(1);
     });
 
@@ -182,7 +220,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
     });
 
     test(
@@ -194,7 +232,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
     });
 
     test("Should emit correct values on dont found product", () async {
@@ -204,12 +242,12 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.productNotFound]));
 
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
     });
 
     test("Should return correct product on success", () async {
       expect(sut.searchedProduct, null);
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
 
       expect(sut.searchedProduct, productsViewModel);
     });
@@ -218,7 +256,7 @@ void main() {
       searchProductByCode.mockSearchProductByCode(null);
 
       expect(sut.searchedProduct, null);
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
 
       expect(sut.searchedProduct, null);
     });
@@ -226,7 +264,7 @@ void main() {
     test("Should clear searchedProduct when search command data", () async {
       expect(sut.searchedProduct, null);
 
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
       expect(sut.searchedProduct, productsViewModel);
 
       await sut.load(homePresenter.commandNumberMock!);
@@ -234,11 +272,11 @@ void main() {
     });
 
     test("Should clear searchedProduct not found product", () async {
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
       expect(sut.searchedProduct, productsViewModel);
 
       searchProductByCode.mockSearchProductByCode(null);
-      await sut.searchProduct(productText);
+      await sut.searchProduct(productEan);
       expect(sut.searchedProduct, null);
     });
   });

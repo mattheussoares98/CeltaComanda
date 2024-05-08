@@ -1,4 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:flutter/material.dart';
 
@@ -43,6 +45,26 @@ class _SearchProductState extends State<SearchProduct> {
       controller.clear();
     } else {
       _requestFocusToFormField();
+    }
+  }
+
+  Future<void> _readBarcodeAndSearchProduct(
+    GetxExpansibleGroupsPresenter expansibleGroupsPresenter,
+  ) async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancelar', true, ScanMode.BARCODE);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    if (barcodeScanRes != '-1') {
+      controller.text = barcodeScanRes;
+      await _searchProduct(expansibleGroupsPresenter);
+    } else {
+      controller.text = "";
     }
   }
 
@@ -98,7 +120,9 @@ class _SearchProductState extends State<SearchProduct> {
                 ),
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () async => await _readBarcodeAndSearchProduct(
+                        expansibleGroupsPresenter,
+                      ),
                   icon: Icon(
                     Icons.camera_alt,
                     color: Theme.of(context).colorScheme.primary,

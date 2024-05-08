@@ -30,30 +30,46 @@ class GroupItem extends StatelessWidget {
       onTap: () {
         presenter.goToProductsPage(expansibleGroupsViewModel.toEntity());
       },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        height: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        child: Center(
-          child: Text(
-            expansibleGroupsViewModel.Name,
-            style: const TextStyle(
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  color: Colors.black,
-                  blurRadius: 3,
-                  offset: Offset(2, 2),
-                ),
-              ],
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          const style = TextStyle(fontSize: 16);
+          final textSpan =
+              TextSpan(text: expansibleGroupsViewModel.Name, style: style);
+          final textPainter = TextPainter(
+              text: textSpan, textDirection: TextDirection.ltr, maxLines: 4);
+          textPainter.layout(maxWidth: constraints.maxWidth);
+
+          return Container(
+            margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Theme.of(context).colorScheme.primary,
             ),
-          ),
-        ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  expansibleGroupsViewModel.Name,
+                  textAlign: TextAlign.center,
+                  // maxLines: 2,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black,
+                        blurRadius: 3,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -358,5 +358,29 @@ void main() {
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
     });
+
+    test("Should not update printedProducts if the list of products is empty",
+        () async {
+      loadPrintedProducts.mockLoadPrintedProducts(PrintedEntity(
+        Products: [],
+        PersonalizedCode: faker.randomGenerator.string(10),
+        DateOfCreation: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        FlagStatus: faker.randomGenerator.string(10),
+        EnterpriseId: faker.randomGenerator.integer(10),
+        RequestType: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.boolean(),
+        IsUsing: faker.randomGenerator.boolean(),
+        TotalLiquid: faker.randomGenerator.decimal(),
+        Peoples: faker.randomGenerator.integer(10),
+        SaleRequestId: faker.randomGenerator.integer(10),
+        FlagOrigin: faker.randomGenerator.integer(10),
+        DeliveryControl: faker.randomGenerator.integer(10),
+      ));
+
+      await sut.load(homePresenter.commandNumberMock!);
+
+      expect(sut.printedProducts, null);
+    });
   });
 }

@@ -95,8 +95,8 @@ class GetxPrintedProductsPresenter
         commandNumber: int.tryParse(commandNumber) ?? 0,
       );
 
-      if (printedProducts != null) {
-        _printedProducts = PrintedViewModel.fromEntity(printedProducts);
+      if (printedProducts?.Products.isEmpty == false) {
+        _printedProducts = PrintedViewModel.fromEntity(printedProducts!);
         _printedProducts!.Products
             .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
       }

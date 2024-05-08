@@ -77,8 +77,15 @@ class GetxExpansibleGroupsPresenter
 
   @override
   Future<void> searchProduct(String value) async {
+    _searchedProduct = null;
+    notifyListeners();
     isLoading = true;
     mainError = null;
+
+    if (value.toString().length <= 7) {
+      value = _formatPlu(value);
+    }
+
     try {
       final product = await searchProductByCode.search(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -113,4 +120,17 @@ class GetxExpansibleGroupsPresenter
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
+
+  String _formatPlu(String number) {
+    // Adiciona zeros à esquerda para garantir que tenha pelo menos 6 dígitos
+    String paddedNumber = number.padLeft(6, '0');
+
+    // Separa os primeiros 5 dígitos e o último dígito
+    String firstPart = paddedNumber.substring(0, 5);
+    String lastPart = paddedNumber.substring(5);
+    final plu = '$firstPart-$lastPart';
+
+    // Retorna a variável formatada
+    return plu;
+  }
 }

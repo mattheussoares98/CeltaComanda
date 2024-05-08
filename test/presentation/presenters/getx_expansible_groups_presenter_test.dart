@@ -78,6 +78,7 @@ void main() {
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     navigateTo.mockNavigate();
+    searchProductByCode.mockSearchProductByCode(productEntity);
   }
 
   setUp(() {
@@ -207,8 +208,6 @@ void main() {
     });
 
     test("Should return correct product on success", () async {
-      searchProductByCode.mockSearchProductByCode(productEntity);
-
       expect(sut.searchedProduct, null);
       await sut.searchProduct(productText);
 
@@ -224,14 +223,22 @@ void main() {
       expect(sut.searchedProduct, null);
     });
 
-    test("Chould clear searchedProduct when search command data", () async {
-      searchProductByCode.mockSearchProductByCode(productEntity);
+    test("Should clear searchedProduct when search command data", () async {
       expect(sut.searchedProduct, null);
 
       await sut.searchProduct(productText);
       expect(sut.searchedProduct, productsViewModel);
 
       await sut.load(homePresenter.commandNumberMock!);
+      expect(sut.searchedProduct, null);
+    });
+
+    test("Should clear searchedProduct not found product", () async {
+      await sut.searchProduct(productText);
+      expect(sut.searchedProduct, productsViewModel);
+
+      searchProductByCode.mockSearchProductByCode(null);
+      await sut.searchProduct(productText);
       expect(sut.searchedProduct, null);
     });
   });

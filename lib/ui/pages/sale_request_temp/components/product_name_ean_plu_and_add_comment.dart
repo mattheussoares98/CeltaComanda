@@ -31,8 +31,9 @@ class ProductNameEanPluAndAddComment extends StatelessWidget {
             ),
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (eanCode != null)
+              if (eanCode?.isNotEmpty == true)
                 Text(
                   "EAN: ${eanCode!}",
                 ),

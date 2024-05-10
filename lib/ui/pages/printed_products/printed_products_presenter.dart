@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../pages.dart';
 
-abstract class PrintedProductsPresenter implements Listenable {
+abstract class PrintedProductsPresenter
+    with ChangeNotifier
+    implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 

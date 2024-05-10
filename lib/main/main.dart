@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 import '../../main/builders/builders.dart';
 import '../infra/helpers/helperts.dart';
-import '../presentation/presenters/presenters.dart';
 import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
 import '../firebase_options.dart';
@@ -37,39 +36,19 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => GetxSaleRequestTempPresenter(
-            loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
-            updateProductQuantity: makeRemoteUpdateProductQuantity(),
-            updateProductComment: makeRemoteUpdateProductComment(),
-            finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
-          ),
+          create: (_) => makeGetxSaleRequestTempPresenter(),
         ),
         ChangeNotifierProvider(
-          create: (_) => GetxHomePresenter(
-            loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
-            localEnterpriseData: makeLocalEnterpriseData(),
-            navigateTo: makeNavigateTo(),
-            ticketIsPermitted: makeRemoteticketIsPermitted(),
-          ),
+          create: (_) => makeGetxHomePresenter(),
         ),
         ChangeNotifierProvider(
-          create: (_) => GetxPrintedProductsPresenter(
-            userValidations: makeRemoteUserValidations(),
-            loadPrintedProducts: makeRemoteLoadPrintedProducts(),
-            removePrintedProduct: makeRemoteRemovePrintedProduct(),
-          ),
+          create: (_) => makeGetxPrintedProductsPresenter(),
         ),
         ChangeNotifierProvider(
-          create: (_) => GetxExpansibleGroupsPresenter(
-            loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
-            navigateTo: makeNavigateTo(),
-            ticketIsPermitted: makeRemoteticketIsPermitted(),
-            searchProductByCode: makeRemoteSearchProductByCode(),
-          ),
+          create: (_) => makeGetxExpansibleGroupsPresenter(),
         ),
         ListenableProvider(
           create: (_) => makeGetxProductsPresenter(),
-          child: makeProductsPage(makeGetxProductsPresenter()),
         )
       ],
       child: GetMaterialApp(

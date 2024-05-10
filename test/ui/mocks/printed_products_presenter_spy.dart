@@ -44,6 +44,7 @@ class PrintedProductsPresenterSpy extends Mock
     this.mockClearPrintedProductsCall().thenAnswer((_) async => _);
   }
 
+  @override
   void dispose() {
     mainErrorController.close();
   }

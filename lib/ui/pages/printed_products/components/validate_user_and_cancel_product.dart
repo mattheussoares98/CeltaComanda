@@ -27,6 +27,9 @@ Future<void> _removeProduct({
     saleRequestTempPresenter: saleRequestTempPresenter,
     homePresenter: homePresenter,
   );
+
+  personalizedCodeController.clear();
+  passwordController.clear();
 }
 
 void validateUserAndCancelProduct({

@@ -32,6 +32,7 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);
 
+  @override
   void dispose() {
     mainErrorController.close();
     isLoadingController.close();

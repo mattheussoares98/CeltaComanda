@@ -8,8 +8,7 @@ import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
 
 class HomePage extends StatefulWidget {
-  final ProductsPresenter productsPresenter;
-  const HomePage(this.productsPresenter, {super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      ExpansibleGroupsPage(widget.productsPresenter),
+      const ExpansibleGroupsPage(),
       const PrintedProductsPage(),
       const SaleRequestTempPage(),
     ];

@@ -71,12 +71,12 @@ class App extends StatelessWidget {
           ),
           GetPage(
             name: PageRoutes.expansibleGroups,
-            page: () => makeExpansibleGroupsPage(makeGetxProductsPresenter()),
+            page: makeExpansibleGroupsPage,
             transition: Transition.fadeIn,
           ),
           GetPage(
             name: PageRoutes.products,
-            page: () => makeProductsPage(makeGetxProductsPresenter()),
+            page: makeProductsPage,
             transition: Transition.fadeIn,
           ),
           GetPage(
@@ -101,7 +101,7 @@ class App extends StatelessWidget {
           ),
           GetPage(
             name: PageRoutes.home,
-            page: () => makeHomePage(makeGetxProductsPresenter()),
+            page: makeHomePage,
             transition: Transition.fadeIn,
           ),
         ],

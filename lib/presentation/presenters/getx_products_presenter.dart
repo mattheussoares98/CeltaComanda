@@ -1,16 +1,15 @@
 import 'package:get/get.dart';
 
+import 'package:flutter/foundation.dart';
+
 import '../../../domain/entities/entities.dart';
 import '../../../main/builders/builders.dart';
 import '../../../ui/pages/pages.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
-import '../mixins/mixins.dart';
 
-class GetxProductsPresenter extends GetxController
-    with LoadingManager
-    implements ProductsPresenter {
+class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
   final LoadProducts loadProducts;
   final NavigateTo navigateTo;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -20,11 +19,6 @@ class GetxProductsPresenter extends GetxController
     required this.loadProducts,
     required this.updateSaleRequestTemp,
   });
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
 
   final _products = Rx<List<ProductsViewModel>>([]);
   @override
@@ -63,8 +57,7 @@ class GetxProductsPresenter extends GetxController
         entity: entity,
       );
 
-      await saleRequestTempPresenter
-          .load(homePresenter.commandNumber!);
+      await saleRequestTempPresenter.load(homePresenter.commandNumber!);
 
       return true;
     } on DomainError catch (e) {
@@ -80,4 +73,14 @@ class GetxProductsPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) => _isLoading.value = value;
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 }

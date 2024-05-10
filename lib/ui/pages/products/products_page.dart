@@ -11,7 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {
-  const ProductsPage({super.key});
+  const ProductsPage({
+    super.key,
+  });
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();
@@ -20,6 +22,7 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage>
     with LoadingManager, UIErrorManager {
   ExpansibleGroupEntity? expansibleGroupEntity;
+  GetxProductsPresenter? _productsPresenter;
 
   bool _isLoaded = false;
   @override
@@ -31,9 +34,10 @@ class _ProductsPageState extends State<ProductsPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      GetxProductsPresenter productsPresenter = Provider.of(context);
+      _productsPresenter = Provider.of(context);
       Future.delayed(Duration.zero, () async {
-        await productsPresenter.load(expansibleGroupEntity?.ExpansibleGroupId);
+        await _productsPresenter
+            ?.load(expansibleGroupEntity?.ExpansibleGroupId);
       });
     }
   }
@@ -45,7 +49,6 @@ class _ProductsPageState extends State<ProductsPage>
     }
 
     GetxHomePresenter homePresenter = Provider.of(context);
-    GetxProductsPresenter productsPresenter = Provider.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -69,16 +72,16 @@ class _ProductsPageState extends State<ProductsPage>
         primary: false,
         child: Builder(
           builder: (context) {
-            handleLoading(context, productsPresenter.isLoadingStream);
-            handleMainError(context, productsPresenter.mainErrorStream);
+            handleLoading(context, _productsPresenter!.isLoadingStream);
+            handleMainError(context, _productsPresenter!.mainErrorStream);
 
             return StreamBuilder<List<ProductsViewModel>>(
-                stream: productsPresenter.productsStream,
+                stream: _productsPresenter!.productsStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: () async => await productsPresenter
+                      reload: () async => await _productsPresenter!
                           .load(expansibleGroupEntity!.ExpansibleGroupId),
                     );
                   }

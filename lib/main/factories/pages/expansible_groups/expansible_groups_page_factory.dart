@@ -1,5 +1,3 @@
 import '../../../../ui/pages/pages.dart';
 
-ExpansibleGroupsPage makeExpansibleGroupsPage(
-        ProductsPresenter productsPresenter) =>
-    ExpansibleGroupsPage(productsPresenter);
+ExpansibleGroupsPage makeExpansibleGroupsPage() => const ExpansibleGroupsPage();

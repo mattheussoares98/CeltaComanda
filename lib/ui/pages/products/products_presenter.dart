@@ -4,7 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
-abstract class ProductsPresenter implements Listenable {
+abstract class ProductsPresenter with ChangeNotifier implements Listenable {
   Stream<List<ProductsViewModel>> get productsStream;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;

@@ -35,7 +35,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.expansibleGroups,
-      page: () => ExpansibleGroupsPage(ProductsPresenterSpy()),
+      page: () => const ExpansibleGroupsPage(),
     ),
     GetPage(
       name: PageRoutes.saleRequestTemp,
@@ -55,7 +55,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.home,
-      page: () => HomePage(ProductsPresenterSpy()),
+      page: () => const HomePage(),
     ),
   ];
 
@@ -84,7 +84,7 @@ Widget makePage(
           navigateTo: NavigateToSpy(),
           ticketIsPermitted: TicketIsPermittedSpy(),
           searchProductByCode: SearchProductByCodeSpy(),
-          barcodeScanner : BarcodeScannerSpy(),
+          barcodeScanner: BarcodeScannerSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxSaleRequestTempPresenter>(

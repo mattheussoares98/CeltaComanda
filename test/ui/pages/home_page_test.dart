@@ -39,8 +39,8 @@ void main() {
   });
 
   Future<void> loadPage(WidgetTester tester) async {
-    await tester.pumpWidget(makePage(
-        path: PageRoutes.home, page: () => HomePage(ProductsPresenterSpy())));
+    await tester.pumpWidget(
+        makePage(path: PageRoutes.home, page: () => const HomePage()));
   }
 
   testWidgets('Should present SearchCommandIcon on AppBar',

@@ -1,9 +1,8 @@
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../../data/usecases/usecases.dart';
 import '../../../../presentation/presenters/presenters.dart';
 
 class SearchProduct extends StatefulWidget {
@@ -17,6 +16,8 @@ class _SearchProductState extends State<SearchProduct> {
   FocusNode focusNode = FocusNode();
   TextEditingController controller = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  CameraReadBarcodeScanner cameraReadBarcodeScanner =
+      CameraReadBarcodeScanner();
 
   @override
   void dispose() {
@@ -51,20 +52,14 @@ class _SearchProductState extends State<SearchProduct> {
   Future<void> _readBarcodeAndSearchProduct(
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter,
   ) async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancelar', true, ScanMode.BARCODE);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
+      final barcode = await cameraReadBarcodeScanner.read();
 
-    if (barcodeScanRes != '-1') {
-      controller.text = barcodeScanRes;
-      await _searchProduct(expansibleGroupsPresenter);
-    } else {
-      controller.text = "";
+      if (barcode.isNotEmpty) {
+        await expansibleGroupsPresenter.searchProduct(controller.text);
+      }
+    } catch (e) {
+      throw Error();
     }
   }
 

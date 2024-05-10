@@ -28,12 +28,12 @@ class RemoteSearchProductByCode implements SearchProductByCode {
       }
 
       return ProductModel.fromJson(response).toEntity();
-    } on DomainError catch (error) {
+    } catch (error) {
       switch (error) {
         case DomainError.productNotFound:
           throw DomainError.productNotFound;
         default:
-          throw DomainError.productNotFound;
+          throw DomainError.unexpected;
       }
     }
   }

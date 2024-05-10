@@ -33,6 +33,8 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required HomePresenter homePresenter,
   });
 
+  void updateLocalSaleRequestComment(String newComment);
+
   Future<void> finishSaleRequest({
     required SaleRequestTempEntity saleRequestTempEntity,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,

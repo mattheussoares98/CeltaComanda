@@ -6,5 +6,4 @@ GetxPrintedProductsPresenter makeGetxPrintedProductsPresenter() =>
       userValidations: makeRemoteUserValidations(),
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
       removePrintedProduct: makeRemoteRemovePrintedProduct(),
-      finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
     );

@@ -23,12 +23,4 @@ abstract class PrintedProductsPresenter
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   });
-
-  Future<void> updateComment({
-    required HomePresenter homePresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-    required String newComment,
-  });
 }

@@ -14,13 +14,11 @@ class GetxPrintedProductsPresenter
   final UserValidations userValidations;
   final LoadPrintedProducts loadPrintedProducts;
   final RemovePrintedProduct removePrintedProduct;
-  final FinishSaleRequestTemp finishSaleRequestTemp;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
     required this.removePrintedProduct,
-    required this.finishSaleRequestTemp,
   });
 
   @override
@@ -125,48 +123,4 @@ class GetxPrintedProductsPresenter
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
-
-  @override
-  Future<void> updateComment({
-    required HomePresenter homePresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-    required String newComment,
-  }) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      await finishSaleRequestTemp.finish(
-        saleRequestTempEntity: SaleRequestTempEntity(
-          Products: const [],
-          PersonalizedCode:
-              saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
-          SaleRequestTempId: int.parse(
-              saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-          EnterpriseId:
-              int.parse(saleRequestTempPresenter.saleRequestTemp!.EnterpriseId),
-          DeliveryControl: int.parse(
-              saleRequestTempPresenter.saleRequestTemp!.DeliveryControl),
-          TotalLiquid: double.parse(saleRequestTempPresenter
-              .saleRequestTemp!.TotalLiquid
-              .replaceAll(RegExp(r','), '.')),
-          Comments: newComment,
-        ),
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      );
-
-      await homePresenter.load(
-        commandNumber: homePresenter.commandNumber!,
-        printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
 }

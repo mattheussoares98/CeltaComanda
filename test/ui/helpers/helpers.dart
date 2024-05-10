@@ -100,7 +100,6 @@ Widget makePage(
           userValidations: UserValidationsSpy(),
           loadPrintedProducts: LoadPrintedProductsSpy(),
           removePrintedProduct: RemovePrintedProductSpy(),
-          finishSaleRequestTemp: FinishSaleRequestTempSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxHomePresenter>(

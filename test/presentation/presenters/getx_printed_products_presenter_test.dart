@@ -30,7 +30,6 @@ void main() {
   late int personalizedCode;
   late String password;
   late String saleRequestProductId;
-  late String newComment;
 
   void initPresenters() {
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
@@ -41,7 +40,6 @@ void main() {
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
-      finishSaleRequestTemp: finishSaleRequestTemp,
     );
   }
 
@@ -65,7 +63,6 @@ void main() {
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
-    newComment = faker.randomGenerator.string(10);
     saleRequestTempPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
   }
@@ -342,84 +339,6 @@ void main() {
       await sut.load(homePresenter.commandNumberMock!);
 
       expect(sut.printedProducts, null);
-    });
-  });
-
-  group("UpdateComment", () {
-    test("Should call updateComment with correct values", () async {
-      await sut.updateComment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        newComment: newComment,
-      );
-
-      verify(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: SaleRequestTempEntity(
-              Products: const [],
-              PersonalizedCode: saleRequestTempPresenter
-                  .saleRequestTempMock!.PersonalizedCode,
-              SaleRequestTempId: int.parse(saleRequestTempPresenter
-                  .saleRequestTempMock!.SaleRequestTempId),
-              EnterpriseId: int.parse(
-                  saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId),
-              DeliveryControl: int.parse(saleRequestTempPresenter
-                  .saleRequestTempMock!.DeliveryControl),
-              TotalLiquid: double.parse(saleRequestTempPresenter
-                  .saleRequestTempMock!.TotalLiquid
-                  .replaceAll(RegExp(r','), '.')),
-              Comments: newComment,
-            ),
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          )).called(1);
-    });
-
-    test("Should emit correct values on success updateComment", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateComment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        newComment: newComment,
-      );
-    });
-
-    test("Should emit correct values updateComment throws", () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateComment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        newComment: newComment,
-      );
-    });
-
-    test("Should call homePresenter.load when update comment success",
-        () async {
-      await sut.updateComment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        newComment: newComment,
-      );
-
-      verify(() => homePresenter.load(
-            commandNumber: homePresenter.commandNumberMock!,
-            printedProductsPresenter: sut,
-            saleRequestTempPresenter: saleRequestTempPresenter,
-            expansibleGroupsPresenter: expansibleGroupsPresenter,
-          )).called(1);
     });
   });
 }

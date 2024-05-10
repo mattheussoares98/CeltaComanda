@@ -200,4 +200,18 @@ class GetxSaleRequestTempPresenter
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
+
+  @override
+  void updateLocalSaleRequestComment(String newComment) {
+    _saleRequestTemp = SaleRequestTempViewModel(
+      Products: _saleRequestTemp!.Products,
+      PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
+      EnterpriseId: _saleRequestTemp!.EnterpriseId,
+      TotalLiquid: _saleRequestTemp!.TotalLiquid,
+      DeliveryControl: _saleRequestTemp!.DeliveryControl,
+      SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId,
+      Comments: newComment,
+    );
+    notifyListeners();
+  }
 }

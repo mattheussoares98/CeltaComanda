@@ -43,12 +43,7 @@ class _RequestSummaryState extends State<RequestSummary> {
 
   @override
   Widget build(BuildContext context) {
-    GetxPrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context);
-    GetxHomePresenter homePresenter = Provider.of(context);
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context);
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
@@ -115,13 +110,11 @@ class _RequestSummaryState extends State<RequestSummary> {
                 ),
                 TextButton(
                   onPressed: () async {
-                    await printedProductsPresenter.updateComment(
-                      printedProductsPresenter: printedProductsPresenter,
-                      newComment: commentsController.text,
-                      homePresenter: homePresenter,
-                      saleRequestTempPresenter: saleRequestTempPresenter,
-                      expansibleGroupsPresenter: expansibleGroupsPresenter,
-                    );
+                    saleRequestTempPresenter
+                        .updateLocalSaleRequestComment(commentsController.text);
+                    setState(() {
+                      showTextFormField = false;
+                    });
                   },
                   child: const Text(
                     "Alterar\ncomentário",

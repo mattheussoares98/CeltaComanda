@@ -109,6 +109,13 @@ Widget makePage(
           ticketIsPermitted: TicketIsPermittedSpy(),
         ),
       ),
+      ListenableProvider<GetxProductsPresenter>(
+        create: (_) => GetxProductsPresenter(
+          navigateTo: NavigateToSpy(),
+          loadProducts: LoadProductsSpy(),
+          updateSaleRequestTemp: UpdateSaleRequestTempSpy(),
+        ),
+      ),
     ],
     child: GetMaterialApp(
       initialRoute: path,

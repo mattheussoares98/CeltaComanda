@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../../presentation/presenters/presenters.dart';
+import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -21,11 +23,15 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     with UIErrorManager, LoadingManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? homeLoadingSubscription;
+  static bool isDialogShowing = false;
+
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    homeLoadingSubscription?.cancel();
   }
 
   @override
@@ -49,6 +55,23 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       context, printedProductsPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
                       context, printedProductsPresenter.mainErrorStream);
+
+                  homeLoadingSubscription =
+                      homePresenter.isLoadingStream.listen((isLoading) async {
+                    if (isLoading == true && !isDialogShowing) {
+                      isDialogShowing = true;
+                      showLoading(
+                        NavigatorKey.navigatorKey.currentState?.context ??
+                            context,
+                      );
+                    } else {
+                      hideLoading(
+                        NavigatorKey.navigatorKey.currentState?.context ??
+                            context,
+                      );
+                      isDialogShowing = false;
+                    }
+                  });
 
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedItem(

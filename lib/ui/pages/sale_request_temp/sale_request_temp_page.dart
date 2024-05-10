@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:provider/provider.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../../presentation/presenters/presenters.dart';
+import '../../components/components.dart';
 import '../pages.dart';
 import '../../mixins/mixins.dart';
 
@@ -19,11 +21,15 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
     with UIErrorManager, LoadingManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? homeLoadingSubscription;
+  static bool isDialogShowing = false;
+
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    homeLoadingSubscription?.cancel();
   }
 
   @override
@@ -47,6 +53,23 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                       context, saleRequestTempPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
                       context, saleRequestTempPresenter.mainErrorStream);
+
+                  homeLoadingSubscription =
+                      homePresenter.isLoadingStream.listen((isLoading) async {
+                    if (isLoading == true && !isDialogShowing) {
+                      isDialogShowing = true;
+                      showLoading(
+                        NavigatorKey.navigatorKey.currentState?.context ??
+                            context,
+                      );
+                    } else {
+                      hideLoading(
+                        NavigatorKey.navigatorKey.currentState?.context ??
+                            context,
+                      );
+                      isDialogShowing = false;
+                    }
+                  });
 
                   if (saleRequestTempPresenter
                           .saleRequestTemp?.Products.isNotEmpty ==

@@ -3,11 +3,13 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 import '../../ui/mocks/mocks.dart';
 
@@ -20,12 +22,15 @@ void main() {
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late RemovePrintedProductSpy removePrintedProduct;
+  late FinishSaleRequestTempSpy finishSaleRequestTemp;
 
   late PrintedEntity printedEntity;
+  late SaleRequestTempEntity saleRequestTempEntity;
 
   late int personalizedCode;
   late String password;
   late String saleRequestProductId;
+  late String newComment;
 
   void initPresenters() {
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
@@ -36,6 +41,7 @@ void main() {
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
+      finishSaleRequestTemp: finishSaleRequestTemp,
     );
   }
 
@@ -43,6 +49,7 @@ void main() {
     userValidations = UserValidationsSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     removePrintedProduct = RemovePrintedProductSpy();
+    finishSaleRequestTemp = FinishSaleRequestTempSpy();
   }
 
   void initEntitys() {
@@ -57,18 +64,28 @@ void main() {
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    newComment = faker.randomGenerator.string(10);
+    saleRequestTempPresenter.saleRequestTempMock =
+        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
+  }
+
+  void mockSuccess() {
+    finishSaleRequestTemp.mockFinishSaleRequestTemp();
   }
 
   setUp(() {
     initUsecases();
     initPresenters();
     initEntitys();
+    mockSuccess();
   });
 
   setUpAll(() {
     registerFallbackValue(SaleRequestTempPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
   });
 
   group("Validate password", () {
@@ -267,8 +284,7 @@ void main() {
       expect(sut.printedProducts, null);
     });
 
-    test(
-        "ShouldCall ExpansibleGroupsPresenter.load on removeProduct success to data",
+    test("ShouldCall HomePresenter.load on removeProduct success to data",
         () async {
       await sut.removeProduct(
         personalizedCode: personalizedCode,
@@ -326,6 +342,84 @@ void main() {
       await sut.load(homePresenter.commandNumberMock!);
 
       expect(sut.printedProducts, null);
+    });
+  });
+
+  group("UpdateComment", () {
+    test("Should call updateComment with correct values", () async {
+      await sut.updateComment(
+        homePresenter: homePresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        newComment: newComment,
+      );
+
+      verify(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: SaleRequestTempEntity(
+              Products: const [],
+              PersonalizedCode: saleRequestTempPresenter
+                  .saleRequestTempMock!.PersonalizedCode,
+              SaleRequestTempId: int.parse(saleRequestTempPresenter
+                  .saleRequestTempMock!.SaleRequestTempId),
+              EnterpriseId: int.parse(
+                  saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId),
+              DeliveryControl: int.parse(saleRequestTempPresenter
+                  .saleRequestTempMock!.DeliveryControl),
+              TotalLiquid: double.parse(saleRequestTempPresenter
+                  .saleRequestTempMock!.TotalLiquid
+                  .replaceAll(RegExp(r','), '.')),
+              Comments: newComment,
+            ),
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          )).called(1);
+    });
+
+    test("Should emit correct values on success updateComment", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateComment(
+        homePresenter: homePresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        newComment: newComment,
+      );
+    });
+
+    test("Should emit correct values updateComment throws", () async {
+      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateComment(
+        homePresenter: homePresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        newComment: newComment,
+      );
+    });
+
+    test("Should call homePresenter.load when update comment success",
+        () async {
+      await sut.updateComment(
+        homePresenter: homePresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        newComment: newComment,
+      );
+
+      verify(() => homePresenter.load(
+            commandNumber: homePresenter.commandNumberMock!,
+            printedProductsPresenter: sut,
+            saleRequestTempPresenter: saleRequestTempPresenter,
+            expansibleGroupsPresenter: expansibleGroupsPresenter,
+          )).called(1);
     });
   });
 }

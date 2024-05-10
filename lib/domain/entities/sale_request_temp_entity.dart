@@ -20,7 +20,7 @@ class SaleRequestTempEntity extends Equatable {
     required this.EnterpriseId,
     required this.TotalLiquid,
     required this.DeliveryControl,
-    this.Comments,
+    required this.Comments,
   });
 
   @override

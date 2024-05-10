@@ -84,6 +84,7 @@ Widget makePage(
           navigateTo: NavigateToSpy(),
           ticketIsPermitted: TicketIsPermittedSpy(),
           searchProductByCode: SearchProductByCodeSpy(),
+          barcodeScanner : BarcodeScannerSpy(),
         ),
       ),
       ChangeNotifierProvider<GetxSaleRequestTempPresenter>(

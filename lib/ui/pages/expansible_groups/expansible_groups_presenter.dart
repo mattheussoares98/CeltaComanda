@@ -15,6 +15,7 @@ abstract class ExpansibleGroupsPresenter
 
   Future<void> load(String commandNumber);
   Future<void> searchProduct(String value);
+  Future<void> readBarcodeAndSearchProduct();
 
   void goToProductsPage(ExpansibleGroupEntity entity);
   void clear();

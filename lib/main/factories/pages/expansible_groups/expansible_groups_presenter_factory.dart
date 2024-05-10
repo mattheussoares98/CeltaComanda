@@ -7,4 +7,5 @@ GetxExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       navigateTo: makeNavigateTo(),
       ticketIsPermitted: makeRemoteticketIsPermitted(),
       searchProductByCode: makeRemoteSearchProductByCode(),
+      barcodeScanner: makeCameraBarcodeScanner(),
     );

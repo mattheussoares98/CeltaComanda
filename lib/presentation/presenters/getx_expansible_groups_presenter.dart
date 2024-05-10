@@ -15,12 +15,14 @@ class GetxExpansibleGroupsPresenter
   final TicketIsPermitted ticketIsPermitted;
   final SearchProductByCode searchProductByCode;
   final LoadExpansibleGroups loadExpansibleGroups;
+  final BarcodeScanner barcodeScanner;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.ticketIsPermitted,
     required this.searchProductByCode,
+    required this.barcodeScanner,
   });
 
   @override
@@ -132,5 +134,27 @@ class GetxExpansibleGroupsPresenter
 
     // Retorna a variável formatada
     return plu;
+  }
+
+  @override
+  Future<void> readBarcodeAndSearchProduct() async {
+    mainError = null;
+    isLoading = true;
+    try {
+      final barcode = await barcodeScanner.read();
+
+      if (barcode.isNotEmpty) {
+        await searchProduct(barcode);
+      }
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.productNotFound:
+          mainError = UIError.productNotFound;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
   }
 }

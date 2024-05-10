@@ -1,3 +1,4 @@
+export './barcode_scanner_spy.dart';
 export './clear_sale_request_temp_spy.dart';
 export './entity_factory.dart';
 export './load_sale_request_printed_products_spy.dart';

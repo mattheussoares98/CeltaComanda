@@ -28,6 +28,7 @@ void main() {
   late NavigateToSpy navigateTo;
   late TicketIsPermittedSpy ticketIsPermitted;
   late SearchProductByCodeSpy searchProductByCode;
+  late BarcodeScannerSpy barcodeScanner;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -42,6 +43,7 @@ void main() {
     localEnterpriseData = LocalEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
     searchProductByCode = SearchProductByCodeSpy();
+    barcodeScanner = BarcodeScannerSpy();
   }
 
   void initPresenters() {
@@ -52,6 +54,7 @@ void main() {
       loadExpansibleGroups: loadExpansibleGroups,
       ticketIsPermitted: ticketIsPermitted,
       searchProductByCode: searchProductByCode,
+      barcodeScanner: barcodeScanner,
     );
   }
 

@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter/material.dart';
 
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -113,9 +114,7 @@ class GetxExpansibleGroupsPresenter
   final _isLoading = false.obs;
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.value = value;
-  }
+  set isLoading(bool value) => _isLoading.value = value;
 
   final _mainError = Rx<UIError?>(null);
   @override
@@ -139,11 +138,13 @@ class GetxExpansibleGroupsPresenter
   Future<void> readBarcodeAndSearchProduct() async {
     mainError = null;
     isLoading = true;
-    try {
-      final barcode = await barcodeScanner.read();
+    searchProductController.text = "";
 
-      if (barcode.isNotEmpty) {
-        await searchProduct(barcode);
+    try {
+      searchProductController.text = await barcodeScanner.read();
+
+      if (searchProductController.text.isNotEmpty) {
+        await searchProduct(searchProductController.text);
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -156,4 +157,8 @@ class GetxExpansibleGroupsPresenter
       isLoading = false;
     }
   }
+
+  final _searchProductController = TextEditingController();
+  @override
+  TextEditingController get searchProductController => _searchProductController;
 }

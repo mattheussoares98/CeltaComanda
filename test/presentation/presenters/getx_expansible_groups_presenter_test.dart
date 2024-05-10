@@ -329,5 +329,17 @@ void main() {
 
       await sut.readBarcodeAndSearchProduct();
     });
+
+    test("Should update searchProductController correctly", () async {
+      expect(sut.searchProductController.text, "");
+      
+      barcodeScanner.mockBarcodeScanner("1234567890123");
+      await sut.readBarcodeAndSearchProduct();
+      expect(sut.searchProductController.text, "1234567890123");
+
+      barcodeScanner.mockBarcodeScanner("");
+      await sut.readBarcodeAndSearchProduct();
+      expect(sut.searchProductController.text, "");
+    });
   });
 }

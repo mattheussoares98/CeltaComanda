@@ -13,6 +13,8 @@ abstract class ExpansibleGroupsPresenter
   List<ExpansibleGroupsViewModel> get expansibleGroups;
   ProductsViewModel? get searchedProduct;
 
+  TextEditingController get searchProductController;
+
   Future<void> load(String commandNumber);
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();

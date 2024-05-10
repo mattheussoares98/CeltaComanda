@@ -13,14 +13,12 @@ class SearchProduct extends StatefulWidget {
 
 class _SearchProductState extends State<SearchProduct> {
   FocusNode focusNode = FocusNode();
-  TextEditingController controller = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     super.dispose();
     focusNode.dispose();
-    controller.dispose();
   }
 
   void _requestFocusToFormField() {
@@ -37,11 +35,10 @@ class _SearchProductState extends State<SearchProduct> {
       return;
     }
 
-    await expansibleGroupsPresenter.searchProduct(controller.text);
+    await expansibleGroupsPresenter
+        .searchProduct(expansibleGroupsPresenter.searchProductController.text);
 
-    if (expansibleGroupsPresenter.searchedProduct != null) {
-      controller.clear();
-    } else {
+    if (expansibleGroupsPresenter.searchedProduct == null) {
       _requestFocusToFormField();
     }
   }
@@ -62,7 +59,8 @@ class _SearchProductState extends State<SearchProduct> {
                   key: formKey,
                   child: TextFormField(
                     focusNode: focusNode,
-                    controller: controller,
+                    controller:
+                        expansibleGroupsPresenter.searchProductController,
                     maxLength: 13,
                     keyboardType: TextInputType.number,
                     onFieldSubmitted: (value) async {
@@ -88,7 +86,8 @@ class _SearchProductState extends State<SearchProduct> {
                       counterText: "",
                       prefixIcon: IconButton(
                         onPressed: () {
-                          controller.clear();
+                          expansibleGroupsPresenter.searchProductController
+                              .clear();
                           _requestFocusToFormField();
                         },
                         icon: const Icon(Icons.delete, color: Colors.red),
@@ -106,7 +105,8 @@ class _SearchProductState extends State<SearchProduct> {
                   )),
               IconButton(
                   onPressed: () async {
-                    if (controller.text.isEmpty) {
+                    if (expansibleGroupsPresenter
+                        .searchProductController.text.isEmpty) {
                       _requestFocusToFormField();
                     } else {
                       await _searchProduct(expansibleGroupsPresenter);

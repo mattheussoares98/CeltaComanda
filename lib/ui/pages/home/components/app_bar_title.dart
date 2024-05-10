@@ -13,8 +13,8 @@ class AppBarTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> titles = [
       "Produtos",
-      "Produtos impressos",
       "Pendentes para impressão",
+      "Produtos solicitados",
     ];
 
     return Column(

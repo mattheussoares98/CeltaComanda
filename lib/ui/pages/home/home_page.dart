@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       const ExpansibleGroupsPage(),
-      const PrintedProductsPage(),
       const SaleRequestTempPage(),
+      const PrintedProductsPage(),
     ];
 
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
@@ -91,19 +91,6 @@ class _HomePageState extends State<HomePage>
             ),
             BottomNavigationBarItem(
               icon: IconWithNumberQuantity(
-                iconData: Icons.list_outlined,
-                productsQuantity: printedProductsPresenter.printedProducts ==
-                            null ||
-                        printedProductsPresenter
-                                .printedProducts?.Products.isEmpty ==
-                            true
-                    ? 0
-                    : printedProductsPresenter.printedProducts!.Products.length,
-              ),
-              label: 'Impressos',
-            ),
-            BottomNavigationBarItem(
-              icon: IconWithNumberQuantity(
                 iconData: Icons.shopping_cart_outlined,
                 productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
                             null ||
@@ -114,6 +101,19 @@ class _HomePageState extends State<HomePage>
                     : saleRequestTempPresenter.saleRequestTemp!.Products.length,
               ),
               label: 'Pendentes',
+            ),
+            BottomNavigationBarItem(
+              icon: IconWithNumberQuantity(
+                iconData: Icons.list_outlined,
+                productsQuantity: printedProductsPresenter.printedProducts ==
+                            null ||
+                        printedProductsPresenter
+                                .printedProducts?.Products.isEmpty ==
+                            true
+                    ? 0
+                    : printedProductsPresenter.printedProducts!.Products.length,
+              ),
+              label: 'Solicitados',
             ),
           ],
         ),

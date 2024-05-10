@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/usecases/barcode/camera_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -16,8 +17,7 @@ class _SearchProductState extends State<SearchProduct> {
   FocusNode focusNode = FocusNode();
   TextEditingController controller = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  CameraReadBarcodeScanner cameraReadBarcodeScanner =
-      CameraReadBarcodeScanner();
+  CameraBarcodeScanner cameraBarcodeScanner = CameraBarcodeScanner();
 
   @override
   void dispose() {
@@ -53,7 +53,7 @@ class _SearchProductState extends State<SearchProduct> {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter,
   ) async {
     try {
-      final barcode = await cameraReadBarcodeScanner.read();
+      final barcode = await cameraBarcodeScanner.read();
 
       if (barcode.isNotEmpty) {
         await expansibleGroupsPresenter.searchProduct(controller.text);

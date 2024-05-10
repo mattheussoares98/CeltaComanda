@@ -1,13 +1,13 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
+import 'package:flutter/services.dart';
 
 import '../../../domain/usecases/usecases.dart';
 
-class CameraReadBarcodeScanner implements ReadBarcodeScanner {
+class CameraBarcodeScanner implements BarcodeScanner {
   @override
   Future<String> read() async {
     String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancelar', true, ScanMode.BARCODE);

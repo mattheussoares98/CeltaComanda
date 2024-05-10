@@ -45,7 +45,6 @@ class GetxExpansibleGroupsPresenter
   @override
   Future<void> load(String commandNumber) async {
     clear();
-    notifyListeners();
 
     try {
       await ticketIsPermitted.verify(
@@ -60,7 +59,6 @@ class GetxExpansibleGroupsPresenter
             .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
             .toList());
       }
-      notifyListeners();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -68,6 +66,8 @@ class GetxExpansibleGroupsPresenter
         default:
           throw DomainError.unexpected;
       }
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -80,7 +80,6 @@ class GetxExpansibleGroupsPresenter
   @override
   Future<void> searchProduct(String value) async {
     _searchedProduct = null;
-    notifyListeners();
     isLoading = true;
     mainError = null;
 
@@ -97,7 +96,6 @@ class GetxExpansibleGroupsPresenter
 
       if (product != null) {
         _searchedProduct = ProductsViewModel.fromEntity(product);
-        notifyListeners();
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -108,6 +106,7 @@ class GetxExpansibleGroupsPresenter
       }
     } finally {
       isLoading = false;
+      notifyListeners();
     }
   }
 

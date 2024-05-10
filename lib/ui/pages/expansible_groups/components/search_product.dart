@@ -1,9 +1,7 @@
-import 'package:clean_celta_mobile/data/usecases/barcode/camera_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../data/usecases/usecases.dart';
 import '../../../../presentation/presenters/presenters.dart';
 
 class SearchProduct extends StatefulWidget {
@@ -17,7 +15,6 @@ class _SearchProductState extends State<SearchProduct> {
   FocusNode focusNode = FocusNode();
   TextEditingController controller = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  CameraBarcodeScanner cameraBarcodeScanner = CameraBarcodeScanner();
 
   @override
   void dispose() {
@@ -46,20 +43,6 @@ class _SearchProductState extends State<SearchProduct> {
       controller.clear();
     } else {
       _requestFocusToFormField();
-    }
-  }
-
-  Future<void> _readBarcodeAndSearchProduct(
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter,
-  ) async {
-    try {
-      final barcode = await cameraBarcodeScanner.read();
-
-      if (barcode.isNotEmpty) {
-        await expansibleGroupsPresenter.searchProduct(controller.text);
-      }
-    } catch (e) {
-      throw Error();
     }
   }
 
@@ -115,9 +98,8 @@ class _SearchProductState extends State<SearchProduct> {
                 ),
               ),
               IconButton(
-                  onPressed: () async => await _readBarcodeAndSearchProduct(
-                        expansibleGroupsPresenter,
-                      ),
+                  onPressed: () async => await expansibleGroupsPresenter
+                      .readBarcodeAndSearchProduct(),
                   icon: Icon(
                     Icons.camera_alt,
                     color: Theme.of(context).colorScheme.primary,

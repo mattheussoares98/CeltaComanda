@@ -283,4 +283,51 @@ void main() {
       expect(sut.searchedProduct, null);
     });
   });
+
+  group("BarcodeScanner", () {
+    test("Should search product if barcode is not empty", () async {
+      barcodeScanner.mockBarcodeScanner("1234567890123");
+      await sut.readBarcodeAndSearchProduct();
+
+      verify(() => barcodeScanner.read()).called(1);
+      verify(() => searchProductByCode.search(
+            value: "1234567890123",
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          )).called(1);
+    });
+
+    test("Should not search product if barcode is empty", () async {
+      barcodeScanner.mockBarcodeScanner("");
+      await sut.readBarcodeAndSearchProduct();
+
+      verify(() => barcodeScanner.read()).called(1);
+      verifyNever(() => searchProductByCode.search(
+            value: "",
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          ));
+    });
+
+    test("Should emit correct events if barcodeScanner throws", () async {
+      barcodeScanner.mockBarcodeScannerError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.readBarcodeAndSearchProduct();
+    });
+
+    test("Should emit correct events on barcodeScanner success", () async {
+      barcodeScanner.mockBarcodeScanner("1234567890123");
+
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.readBarcodeAndSearchProduct();
+    });
+  });
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -19,8 +21,12 @@ class _HomePageState extends State<HomePage>
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
 
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
   @override
   void dispose() {
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -49,8 +55,10 @@ class _HomePageState extends State<HomePage>
     GetxHomePresenter homePresenter = Provider.of(context);
 
     return Builder(builder: (context) {
-      handleLoading(context, homePresenter.isLoadingStream);
-      handleMainError(context, homePresenter.mainErrorStream);
+      loadingSubscription =
+          handleLoading(context, homePresenter.isLoadingStream);
+      mainErrorSubscription =
+          handleMainError(context, homePresenter.mainErrorStream);
 
       return Scaffold(
         drawer: drawer(

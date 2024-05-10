@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -42,6 +44,15 @@ class _ProductsPageState extends State<ProductsPage>
     }
   }
 
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (Get.arguments != null) {
@@ -72,8 +83,10 @@ class _ProductsPageState extends State<ProductsPage>
         primary: false,
         child: Builder(
           builder: (context) {
-            handleLoading(context, _productsPresenter!.isLoadingStream);
-            handleMainError(context, _productsPresenter!.mainErrorStream);
+            loadingSubscription =
+                handleLoading(context, _productsPresenter!.isLoadingStream);
+            mainErrorSubscription =
+                handleMainError(context, _productsPresenter!.mainErrorStream);
 
             return StreamBuilder<List<ProductsViewModel>>(
                 stream: _productsPresenter!.productsStream,

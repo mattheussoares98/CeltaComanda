@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 
 import '../../../presentation/presenters/presenters.dart';
@@ -15,6 +17,15 @@ class ExpansibleGroupsPage extends StatefulWidget {
 
 class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with LoadingManager, UIErrorManager {
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
@@ -33,9 +44,9 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
+                  loadingSubscription = handleLoading(
                       context, expansibleGroupsPresenter.isLoadingStream);
-                  handleMainError(
+                  mainErrorSubscription = handleMainError(
                       context, expansibleGroupsPresenter.mainErrorStream);
 
                   if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {

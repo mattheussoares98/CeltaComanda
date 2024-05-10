@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 
 import '../../../presentation/presenters/presenters.dart';
@@ -15,6 +17,15 @@ class SaleRequestTempPage extends StatefulWidget {
 
 class _SaleRequestTempPageState extends State<SaleRequestTempPage>
     with UIErrorManager, LoadingManager {
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -32,9 +43,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
+                  loadingSubscription = handleLoading(
                       context, saleRequestTempPresenter.isLoadingStream);
-                  handleMainError(
+                  mainErrorSubscription = handleMainError(
                       context, saleRequestTempPresenter.mainErrorStream);
 
                   if (saleRequestTempPresenter

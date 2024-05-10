@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
@@ -32,13 +34,25 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     }
   }
 
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          handleLoading(context, widget.presenter.isLoadingStream);
-          handleMainError(context, widget.presenter.mainErrorStream);
+          loadingSubscription =
+              handleLoading(context, widget.presenter.isLoadingStream);
+          mainErrorSubscription =
+              handleMainError(context, widget.presenter.mainErrorStream);
 
           return GestureDetector(
             onTap: () => hideKeyboard(context),

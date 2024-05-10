@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -17,6 +19,15 @@ class PrintedProductsPage extends StatefulWidget {
 
 class _PrintedProductsPageState extends State<PrintedProductsPage>
     with UIErrorManager, LoadingManager {
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     GetxSaleRequestTempPresenter saleRequestTempPresenter =
@@ -34,9 +45,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
-                  handleLoading(
+                  loadingSubscription = handleLoading(
                       context, printedProductsPresenter.isLoadingStream);
-                  handleMainError(
+                  mainErrorSubscription = handleMainError(
                       context, printedProductsPresenter.mainErrorStream);
 
                   if (printedProductsPresenter.printedProducts != null) {

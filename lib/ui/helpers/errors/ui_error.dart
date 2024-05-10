@@ -7,6 +7,7 @@ enum UIError {
   emailInUse,
   enterpriseOrUrlNotFound,
   invalidCredentials,
+  invalidCredentialsOrAccessDenied,
   invalidField,
   productNotFound,
   requiredField,
@@ -29,6 +30,8 @@ extension UIErrorExtension on UIError {
         return R.string.enterpriseOrUrlNotFound;
       case UIError.invalidCredentials:
         return R.string.msgInvalidCredentials;
+      case UIError.invalidCredentialsOrAccessDenied:
+        return R.string.msgInvalidCredentialsOrAccessDenied;
       case UIError.productNotFound:
         return R.string.msgProductNotFound;
       case UIError.requiredField:

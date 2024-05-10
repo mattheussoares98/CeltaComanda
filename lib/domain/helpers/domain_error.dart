@@ -4,6 +4,7 @@ enum DomainError {
   commandNotAvailable,
   enterpriseOrUrlNotFound,
   invalidCredentials,
+  invalidCredentialsOrAccessDenied,
   productNotFound,
   unexpected,
 }

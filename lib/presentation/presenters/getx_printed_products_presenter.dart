@@ -71,10 +71,8 @@ class GetxPrintedProductsPresenter
       }
     } on DomainError catch (error) {
       switch (error) {
-        case DomainError.invalidCredentials:
-          mainError = UIError.invalidCredentials;
-        case DomainError.accessDenied:
-          mainError = UIError.accessDenied;
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
         default:
           mainError = UIError.unexpected;
       }

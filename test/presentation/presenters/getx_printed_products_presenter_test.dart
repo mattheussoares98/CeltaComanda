@@ -106,10 +106,11 @@ void main() {
 
     test('Should show invalidCredentials UIError on invalid credential',
         () async {
-      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
+      userValidations.mockIsValidPasswordError(
+          DomainError.invalidCredentialsOrAccessDenied);
 
       expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentials]));
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
@@ -125,24 +126,6 @@ void main() {
 
     test('Should show accessDenied UIError on user dont have permission',
         () async {
-      userValidations.mockIsValidPasswordError(DomainError.accessDenied);
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test('Should show unexpected UIError on unexpected error', () async {
       userValidations.mockIsValidPasswordError(DomainError.unexpected);
 
       expectLater(
@@ -201,44 +184,6 @@ void main() {
       );
 
       expect(canCancel, true);
-    });
-
-    test('Should show invalidCredentials UIError on invalid credential',
-        () async {
-      userValidations.mockCanCancelError(DomainError.invalidCredentials);
-
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentials]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test('Should show accessDenied UIError on user dont have permission',
-        () async {
-      userValidations.mockCanCancelError(DomainError.accessDenied);
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
-      );
     });
 
     test('Should show unexpected UIError on unexpected error', () async {

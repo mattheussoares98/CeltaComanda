@@ -25,6 +25,9 @@ class RemoteUserValidations implements UserValidations {
 
       return isValidPassword;
     } catch (error) {
+      if(error == HttpError.serverError){
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
       throw DomainError.unexpected;
     }
   }

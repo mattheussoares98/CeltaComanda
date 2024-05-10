@@ -42,6 +42,7 @@ class SaleRequestProductsItems extends StatelessWidget {
             RequestSummary(
               totalLiquid: saleRequestTempViewModel.TotalLiquid,
               comments: saleRequestTempViewModel.Comments,
+              canUpdateComment: true,
             ),
           ],
         ),

@@ -18,7 +18,7 @@ class PrintedProductsModel {
   final int SaleRequestId;
   final int FlagOrigin;
   final int DeliveryControl;
-  String? Comments;
+  final String? Comments;
 
   PrintedProductsModel({
     required this.Products,
@@ -35,7 +35,7 @@ class PrintedProductsModel {
     required this.SaleRequestId,
     required this.FlagOrigin,
     required this.DeliveryControl,
-    this.Comments,
+    required this.Comments,
   });
 
   factory PrintedProductsModel.fromJson(Map json) {

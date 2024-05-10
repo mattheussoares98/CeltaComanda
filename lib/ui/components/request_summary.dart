@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
+import '../../presentation/presenters/presenters.dart';
 
 class RequestSummary extends StatefulWidget {
   final String totalLiquid;
   final String? comments;
+  final bool canUpdateComment;
   const RequestSummary({
     required this.totalLiquid,
     required this.comments,
+    required this.canUpdateComment,
     super.key,
   });
 
@@ -23,7 +25,7 @@ class _RequestSummaryState extends State<RequestSummary> {
 
   void onTapCommentIcon() {
     setState(() {
-      showTextFormField = true;
+      showTextFormField = !showTextFormField;
     });
 
     if (widget.comments != null) {
@@ -54,23 +56,42 @@ class _RequestSummaryState extends State<RequestSummary> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.comments != null)
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    onTapCommentIcon();
-                  },
-                  child: Icon(
-                    color: Theme.of(context).colorScheme.primary,
-                    Icons.edit,
-                    size: 25,
-                  ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total',
+              ),
+              Text("${widget.totalLiquid} R\$"),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              if (widget.canUpdateComment)
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        onTapCommentIcon();
+                      },
+                      child: Icon(
+                        color: Theme.of(context).colorScheme.primary,
+                        widget.comments == null
+                            ? Icons.add_comment_rounded
+                            : Icons.edit,
+                        size: 25,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ],
                 ),
-                const SizedBox(width: 10),
+              if (widget.comments != null)
                 Expanded(child: Text("Comentário: ${widget.comments}")),
-              ],
-            ),
+            ],
+          ),
           if (showTextFormField)
             Row(
               children: [
@@ -109,17 +130,6 @@ class _RequestSummaryState extends State<RequestSummary> {
                 ),
               ],
             ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Total',
-              ),
-              Text("${widget.totalLiquid} R\$"),
-            ],
-          ),
         ],
       ),
     );

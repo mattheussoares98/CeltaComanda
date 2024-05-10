@@ -7,4 +7,5 @@ export './loading_image.dart';
 export './loading_dialog.dart';
 export './notification_dialog.dart';
 export './reload_screen.dart';
+export './request_summary.dart';
 export './search_command_icon.dart';

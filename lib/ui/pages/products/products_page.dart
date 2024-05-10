@@ -11,8 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {
-  final ProductsPresenter presenter;
-  const ProductsPage(this.presenter, {super.key});
+  const ProductsPage({super.key});
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();
@@ -32,8 +31,9 @@ class _ProductsPageState extends State<ProductsPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
+      GetxProductsPresenter productsPresenter = Provider.of(context);
       Future.delayed(Duration.zero, () async {
-        await widget.presenter.load(expansibleGroupEntity?.ExpansibleGroupId);
+        await productsPresenter.load(expansibleGroupEntity?.ExpansibleGroupId);
       });
     }
   }
@@ -45,6 +45,7 @@ class _ProductsPageState extends State<ProductsPage>
     }
 
     GetxHomePresenter homePresenter = Provider.of(context);
+    GetxProductsPresenter productsPresenter = Provider.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -68,16 +69,16 @@ class _ProductsPageState extends State<ProductsPage>
         primary: false,
         child: Builder(
           builder: (context) {
-            handleLoading(context, widget.presenter.isLoadingStream);
-            handleMainError(context, widget.presenter.mainErrorStream);
+            handleLoading(context, productsPresenter.isLoadingStream);
+            handleMainError(context, productsPresenter.mainErrorStream);
 
             return StreamBuilder<List<ProductsViewModel>>(
-                stream: widget.presenter.productsStream,
+                stream: productsPresenter.productsStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ReloadScreen(
                       error: '${snapshot.error}',
-                      reload: () async => await widget.presenter
+                      reload: () async => await productsPresenter
                           .load(expansibleGroupEntity!.ExpansibleGroupId),
                     );
                   }

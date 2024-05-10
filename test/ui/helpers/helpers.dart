@@ -18,7 +18,7 @@ Widget makePage(
   final allPages = [
     GetPage(
       name: PageRoutes.products,
-      page: () => ProductsPage(ProductsPresenterSpy()),
+      page: () => const ProductsPage(),
     ),
     GetPage(
       name: PageRoutes.productDetails,

@@ -54,70 +54,63 @@ class _HomePageState extends State<HomePage>
         Provider.of(context);
     GetxHomePresenter homePresenter = Provider.of(context);
 
-    return Builder(builder: (context) {
-      loadingSubscription =
-          handleLoading(context, homePresenter.isLoadingStream);
-      mainErrorSubscription =
-          handleMainError(context, homePresenter.mainErrorStream);
-
-      return Scaffold(
-        drawer: drawer(
-          context: context,
-          expansibleGroupsPresenter: expansibleGroupsPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          homePresenter: homePresenter,
-        ),
-        appBar: AppBar(
-          backgroundColor: const Color(0xFFF1F5F8),
-          actions: const [SearchCommandIcon()],
-          title: AppBarTitle(
-            currentIndex: _currentIndex,
-            commandNumber: homePresenter.commandNumber,
-          ),
-        ),
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: onPageChanged,
-          children: screens,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
+    return Scaffold(
+      drawer: drawer(
+        context: context,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      ),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF1F5F8),
+        actions: const [SearchCommandIcon()],
+        title: AppBarTitle(
           currentIndex: _currentIndex,
-          onTap: onPageChanged,
-          items: [
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Inserir',
-            ),
-            BottomNavigationBarItem(
-              icon: IconWithNumberQuantity(
-                iconData: Icons.shopping_cart_outlined,
-                productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
-                            null ||
-                        saleRequestTempPresenter
-                                .saleRequestTemp?.Products.isEmpty ==
-                            true
-                    ? 0
-                    : saleRequestTempPresenter.saleRequestTemp!.Products.length,
-              ),
-              label: 'Pendentes',
-            ),
-            BottomNavigationBarItem(
-              icon: IconWithNumberQuantity(
-                iconData: Icons.list_outlined,
-                productsQuantity: printedProductsPresenter.printedProducts ==
-                            null ||
-                        printedProductsPresenter
-                                .printedProducts?.Products.isEmpty ==
-                            true
-                    ? 0
-                    : printedProductsPresenter.printedProducts!.Products.length,
-              ),
-              label: 'Solicitados',
-            ),
-          ],
+          commandNumber: homePresenter.commandNumber,
         ),
-      );
-    });
+      ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: onPageChanged,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: onPageChanged,
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Inserir',
+          ),
+          BottomNavigationBarItem(
+            icon: IconWithNumberQuantity(
+              iconData: Icons.shopping_cart_outlined,
+              productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
+                          null ||
+                      saleRequestTempPresenter
+                              .saleRequestTemp?.Products.isEmpty ==
+                          true
+                  ? 0
+                  : saleRequestTempPresenter.saleRequestTemp!.Products.length,
+            ),
+            label: 'Pendentes',
+          ),
+          BottomNavigationBarItem(
+            icon: IconWithNumberQuantity(
+              iconData: Icons.list_outlined,
+              productsQuantity: printedProductsPresenter.printedProducts ==
+                          null ||
+                      printedProductsPresenter
+                              .printedProducts?.Products.isEmpty ==
+                          true
+                  ? 0
+                  : printedProductsPresenter.printedProducts!.Products.length,
+            ),
+            label: 'Solicitados',
+          ),
+        ],
+      ),
+    );
   }
 }

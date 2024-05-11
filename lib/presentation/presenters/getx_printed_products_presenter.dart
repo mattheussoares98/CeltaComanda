@@ -33,6 +33,7 @@ class GetxPrintedProductsPresenter
   }) async {
     isLoading = true;
     mainError = null;
+    _canCancelProducts.subject.add(false);
 
     try {
       final isValidPassword = await userValidations.isValidPassword(
@@ -57,6 +58,7 @@ class GetxPrintedProductsPresenter
       }
 
       if (canCancel) {
+        _canCancelProducts.subject.add(true);
         await removePrintedProduct.remove(
           productId: saleRequestProductId,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -122,6 +124,11 @@ class GetxPrintedProductsPresenter
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
   set isLoading(bool value) => _isLoading.value = value;
+
+  final _canCancelProducts = false.obs;
+  @override
+  Stream<bool> get canCancelProductsStream => _canCancelProducts.stream;
+  set canCancelProducts(bool value) => _canCancelProducts.value = value;
 
   final _mainError = Rx<UIError?>(null);
   @override

@@ -9,6 +9,7 @@ abstract class PrintedProductsPresenter
     implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<bool> get canCancelProductsStream;
 
   Future<void> load(String commandNumber);
   void clear();
@@ -23,4 +24,6 @@ abstract class PrintedProductsPresenter
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   });
+
+
 }

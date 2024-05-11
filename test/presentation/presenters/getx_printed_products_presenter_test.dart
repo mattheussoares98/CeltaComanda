@@ -200,6 +200,24 @@ void main() {
       expect(canCancel, true);
     });
 
+    test('Should show accessDeniedError if user dont have permission', () async {
+      userValidations.mockCanCancelError(DomainError.accessDenied);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        personalizedCode: personalizedCode,
+        password: password,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+
     test('Should show unexpected UIError on unexpected error', () async {
       userValidations.mockCanCancelError(DomainError.unexpected);
 

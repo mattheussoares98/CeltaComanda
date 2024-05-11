@@ -53,7 +53,7 @@ class GetxPrintedProductsPresenter
         );
       }
       if (!canCancel) {
-        mainError = UIError.accessDenied;
+        throw DomainError.accessDenied;
       }
 
       if (canCancel) {
@@ -73,6 +73,8 @@ class GetxPrintedProductsPresenter
       switch (error) {
         case DomainError.invalidCredentialsOrAccessDenied:
           mainError = UIError.invalidCredentialsOrAccessDenied;
+        case DomainError.accessDenied:
+          mainError = UIError.accessDenied;
         default:
           mainError = UIError.unexpected;
       }

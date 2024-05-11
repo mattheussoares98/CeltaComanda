@@ -9,15 +9,13 @@ abstract class PrintedProductsPresenter
     implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<bool> get canCancelProductsStream;
+  bool get canCancelProducts;
 
   Future<void> load(String commandNumber);
   void clear();
   PrintedViewModel? get printedProducts;
 
   Future<void> removeProduct({
-    required int personalizedCode,
-    required String password,
     required String saleRequestProductId,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
@@ -25,5 +23,8 @@ abstract class PrintedProductsPresenter
     required HomePresenter homePresenter,
   });
 
-
+  Future<void> validateUserAndPermissionToCancelProducts({
+    required int personalizedCode,
+    required String password,
+  });
 }

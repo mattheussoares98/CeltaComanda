@@ -12,6 +12,22 @@ class PrintedItem extends StatelessWidget {
     super.key,
   });
 
+  Future<void> _removeProduct({
+    required PrintedProductsPresenter printedProductsPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required HomePresenter homePresenter,
+    required String saleRequestProductId,
+  }) async {
+    await printedProductsPresenter.removeProduct(
+      saleRequestProductId: saleRequestProductId,
+      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      printedProductsPresenter: printedProductsPresenter,
+      saleRequestTempPresenter: saleRequestTempPresenter,
+      homePresenter: homePresenter,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     GetxPrintedProductsPresenter printedProductsPresenter =
@@ -60,30 +76,25 @@ class PrintedItem extends StatelessWidget {
                             Expanded(
                               child: ProductDetails(
                                 Product: product.Products,
-                                onPressedRemoveProduct: () {
-                                  validateUserAndCancelProduct(
-                                    context: context,
-                                    formKey: formKey,
-                                    personalizedCodeController:
-                                        personalizedCodeController,
-                                    passwordController: passwordController,
+                                onPressedRemoveProduct: () async {
+                                  await _removeProduct(
                                     printedProductsPresenter:
                                         printedProductsPresenter,
-                                    saleRequestProductId:
-                                        product.SaleRequestProductId,
-                                    passwordFocus: FocusNode(),
-                                    userFocus: FocusNode(),
                                     expansibleGroupsPresenter:
                                         expansibleGroupsPresenter,
                                     saleRequestTempPresenter:
                                         saleRequestTempPresenter,
                                     homePresenter: homePresenter,
+                                    saleRequestProductId:
+                                        product.SaleRequestProductId,
                                   );
                                 },
                                 quantity: product.Quantity,
                                 value: product.Value,
                                 totalLiquid: product.TotalLiquid,
                                 comments: product.Comments,
+                                canCancelProducts:
+                                    printedProductsPresenter.canCancelProducts,
                               ),
                             ),
                           ],

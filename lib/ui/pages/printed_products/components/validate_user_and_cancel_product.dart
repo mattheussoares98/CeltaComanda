@@ -3,31 +3,26 @@ import 'package:flutter/services.dart';
 
 import '../../../../ui/pages/pages.dart';
 
-Future<void> _removeProduct({
+Future<void> validateUserAndPermissionToCancelProducts({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
+  required PrintedProductsPresenter printedProductsPresenter,
   required TextEditingController personalizedCodeController,
   required TextEditingController passwordController,
-  required PrintedProductsPresenter printedProductsPresenter,
-  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-  required SaleRequestTempPresenter saleRequestTempPresenter,
-  required HomePresenter homePresenter,
-  required String saleRequestProductId,
 }) async {
   bool isValid = formKey.currentState!.validate();
-  if (!isValid) return;
+  if (!isValid) {
+    return;
+  }
 
-  Navigator.of(context).pop();
-  await printedProductsPresenter.removeProduct(
-    password: passwordController.text,
+  if (Navigator.of(context).canPop()) {
+    Navigator.of(context).pop();
+  }
+
+  await printedProductsPresenter.validateUserAndPermissionToCancelProducts(
     personalizedCode: int.parse(personalizedCodeController.text),
-    saleRequestProductId: saleRequestProductId,
-    expansibleGroupsPresenter: expansibleGroupsPresenter,
-    printedProductsPresenter: printedProductsPresenter,
-    saleRequestTempPresenter: saleRequestTempPresenter,
-    homePresenter: homePresenter,
+    password: passwordController.text,
   );
-
   personalizedCodeController.clear();
   passwordController.clear();
 }
@@ -98,23 +93,13 @@ void validateUserAndCancelProduct({
                     TextFormField(
                       focusNode: passwordFocus,
                       onFieldSubmitted: (_) async {
-                        if (passwordController.text.isEmpty) {
-                          formKey.currentState!.validate();
-                          FocusScope.of(context).requestFocus(passwordFocus);
-                          return;
-                        }
-
-                        await _removeProduct(
+                        await validateUserAndPermissionToCancelProducts(
                           context: context,
                           formKey: formKey,
+                          printedProductsPresenter: printedProductsPresenter,
                           personalizedCodeController:
                               personalizedCodeController,
                           passwordController: passwordController,
-                          printedProductsPresenter: printedProductsPresenter,
-                          saleRequestProductId: saleRequestProductId,
-                          expansibleGroupsPresenter: expansibleGroupsPresenter,
-                          saleRequestTempPresenter: saleRequestTempPresenter,
-                          homePresenter: homePresenter,
                         );
                       },
                       validator: (value) {
@@ -137,16 +122,12 @@ void validateUserAndCancelProduct({
               actions: [
                 TextButton(
                   onPressed: () async {
-                    await _removeProduct(
+                    await validateUserAndPermissionToCancelProducts(
                       context: context,
                       formKey: formKey,
+                      printedProductsPresenter: printedProductsPresenter,
                       personalizedCodeController: personalizedCodeController,
                       passwordController: passwordController,
-                      printedProductsPresenter: printedProductsPresenter,
-                      saleRequestProductId: saleRequestProductId,
-                      expansibleGroupsPresenter: expansibleGroupsPresenter,
-                      saleRequestTempPresenter: saleRequestTempPresenter,
-                      homePresenter: homePresenter,
                     );
                   },
                   child: const Text("Validar usuário"),

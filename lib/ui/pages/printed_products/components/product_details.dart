@@ -1,9 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -13,6 +11,7 @@ class ProductDetails extends StatelessWidget {
   final String value;
   final String totalLiquid;
   final String? comments;
+  final bool canCancelProducts;
 
   const ProductDetails({
     required this.Product,
@@ -20,14 +19,13 @@ class ProductDetails extends StatelessWidget {
     required this.quantity,
     required this.value,
     required this.totalLiquid,
+    required this.canCancelProducts,
     this.comments,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    GetxPrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -69,28 +67,21 @@ class ProductDetails extends StatelessWidget {
                 Row(
                   children: [
                     Text("Qtd: $quantity"),
-                    StreamBuilder<bool>(
-                        stream:
-                            printedProductsPresenter.canCancelProductsStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.data == true) {
-                            return SizedBox(
-                              height: 35,
-                              width: 35,
-                              child: FittedBox(
-                                child: IconButton(
-                                  onPressed: onPressedRemoveProduct,
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  visualDensity: VisualDensity.compact,
-                                ),
-                              ),
-                            );
-                          }
-                          return const SizedBox();
-                        }),
+                    if (canCancelProducts)
+                      SizedBox(
+                        height: 35,
+                        width: 35,
+                        child: FittedBox(
+                          child: IconButton(
+                            onPressed: onPressedRemoveProduct,
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            visualDensity: VisualDensity.compact,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
                 Text("Total $totalLiquid R\$"),

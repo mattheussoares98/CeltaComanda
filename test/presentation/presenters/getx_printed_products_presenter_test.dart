@@ -89,8 +89,6 @@ void main() {
     test('Should call isValidPassword with correct values', () async {
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -111,8 +109,8 @@ void main() {
 
       final validPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        personalizedCode: personalizedCode,
         password: password,
+        personalizedCode: personalizedCode,
       );
 
       expect(validPassword, true);
@@ -128,8 +126,6 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -147,8 +143,6 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -163,8 +157,6 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -174,8 +166,6 @@ void main() {
     test('Should call userCanCancel with correct values', () async {
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -209,8 +199,6 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -227,8 +215,6 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        personalizedCode: personalizedCode,
-        password: password,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -302,8 +288,6 @@ void main() {
     test("ShouldCall HomePresenter.load on removeProduct success to data",
         () async {
       await sut.removeProduct(
-        personalizedCode: personalizedCode,
-        password: password,
         saleRequestProductId: saleRequestProductId,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
@@ -320,8 +304,6 @@ void main() {
     });
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
-        personalizedCode: personalizedCode,
-        password: password,
         saleRequestProductId: saleRequestProductId,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,

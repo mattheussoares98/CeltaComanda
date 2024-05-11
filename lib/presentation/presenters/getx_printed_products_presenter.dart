@@ -23,8 +23,6 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> removeProduct({
-    required int personalizedCode,
-    required String password,
     required String saleRequestProductId,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
@@ -33,55 +31,21 @@ class GetxPrintedProductsPresenter
   }) async {
     isLoading = true;
     mainError = null;
-    _canCancelProducts.subject.add(false);
 
     try {
-      final isValidPassword = await userValidations.isValidPassword(
+      await removePrintedProduct.remove(
+        productId: saleRequestProductId,
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        personalizedCode: personalizedCode,
-        password: password,
       );
 
-      if (!isValidPassword) {
-        throw DomainError.invalidCredentials;
-      }
-
-      bool canCancel = false;
-      if (isValidPassword) {
-        canCancel = await userValidations.canCancel(
-          personalizedCode: personalizedCode,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        );
-      }
-      if (!canCancel) {
-        throw DomainError.accessDenied;
-      }
-
-      if (canCancel) {
-        _canCancelProducts.subject.add(true);
-        await removePrintedProduct.remove(
-          productId: saleRequestProductId,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        );
-
-        await homePresenter.load(
-          commandNumber: homePresenter.commandNumber!,
-          printedProductsPresenter: printedProductsPresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          expansibleGroupsPresenter: expansibleGroupsPresenter,
-        );
-      }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-        case DomainError.accessDenied:
-          mainError = UIError.accessDenied;
-        case DomainError.invalidCredentials:
-          mainError = UIError.invalidCredentials;
-        default:
-          mainError = UIError.unexpected;
-      }
+      await homePresenter.load(
+        commandNumber: homePresenter.commandNumber!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+      );
+    } catch (error) {
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }
@@ -125,13 +89,63 @@ class GetxPrintedProductsPresenter
   Stream<bool> get isLoadingStream => _isLoading.stream;
   set isLoading(bool value) => _isLoading.value = value;
 
-  final _canCancelProducts = false.obs;
-  @override
-  Stream<bool> get canCancelProductsStream => _canCancelProducts.stream;
-  set canCancelProducts(bool value) => _canCancelProducts.value = value;
-
   final _mainError = Rx<UIError?>(null);
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
+
+  @override
+  Future<void> validateUserAndPermissionToCancelProducts({
+    required int personalizedCode,
+    required String password,
+  }) async {
+    isLoading = true;
+    mainError = null;
+    _canCancelProducts = false;
+
+    try {
+      final isValidPassword = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      if (!isValidPassword) {
+        throw DomainError.invalidCredentials;
+      }
+
+      bool canCancel = false;
+      if (isValidPassword) {
+        canCancel = await userValidations.canCancel(
+          personalizedCode: personalizedCode,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        );
+      }
+      if (!canCancel) {
+        throw DomainError.accessDenied;
+      }
+
+      if (canCancel) {
+        _canCancelProducts = true;
+      }
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+        case DomainError.accessDenied:
+          mainError = UIError.accessDenied;
+        case DomainError.invalidCredentials:
+          mainError = UIError.invalidCredentials;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  bool _canCancelProducts = false;
+  @override
+  bool get canCancelProducts => _canCancelProducts;
 }

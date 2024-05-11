@@ -22,8 +22,6 @@ class PrintedProductsPresenterSpy extends Mock
 
   void mockRemoveProduct() {
     when(() => this.removeProduct(
-          password: any(named: "password"),
-          personalizedCode: any(named: "personalizedCode"),
           saleRequestProductId: any(named: "saleRequestProductId"),
           expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),

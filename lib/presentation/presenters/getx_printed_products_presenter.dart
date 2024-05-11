@@ -42,7 +42,7 @@ class GetxPrintedProductsPresenter
       );
 
       if (!isValidPassword) {
-        mainError = UIError.invalidCredentials;
+        throw DomainError.invalidCredentials;
       }
 
       bool canCancel = false;
@@ -75,6 +75,8 @@ class GetxPrintedProductsPresenter
           mainError = UIError.invalidCredentialsOrAccessDenied;
         case DomainError.accessDenied:
           mainError = UIError.accessDenied;
+        case DomainError.invalidCredentials:
+          mainError = UIError.invalidCredentials;
         default:
           mainError = UIError.unexpected;
       }

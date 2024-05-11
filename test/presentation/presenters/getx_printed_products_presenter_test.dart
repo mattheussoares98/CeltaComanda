@@ -120,11 +120,10 @@ void main() {
 
     test('Should show invalidCredentials UIError on invalid credential',
         () async {
-      userValidations.mockIsValidPasswordError(
-          DomainError.invalidCredentialsOrAccessDenied);
+      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
 
       expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+          emitsInOrder([null, UIError.invalidCredentials]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
@@ -200,7 +199,8 @@ void main() {
       expect(canCancel, true);
     });
 
-    test('Should show accessDeniedError if user dont have permission', () async {
+    test('Should show accessDeniedError if user dont have permission',
+        () async {
       userValidations.mockCanCancelError(DomainError.accessDenied);
 
       expectLater(

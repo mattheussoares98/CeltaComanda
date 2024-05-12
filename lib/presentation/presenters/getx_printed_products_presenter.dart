@@ -101,7 +101,7 @@ class GetxPrintedProductsPresenter
   }) async {
     isLoading = true;
     mainError = null;
-    _canCancelProducts = false;
+    updateCanCancelProducts(false);
 
     try {
       final isValidPassword = await userValidations.isValidPassword(
@@ -126,7 +126,7 @@ class GetxPrintedProductsPresenter
       }
 
       if (canCancel) {
-        _canCancelProducts = true;
+        updateCanCancelProducts(true);
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -148,4 +148,9 @@ class GetxPrintedProductsPresenter
   bool _canCancelProducts = false;
   @override
   bool get canCancelProducts => _canCancelProducts;
+
+  @override
+  void updateCanCancelProducts(bool value) {
+    _canCancelProducts = value;
+  }
 }

@@ -11,6 +11,7 @@ abstract class PrintedProductsPresenter
   Stream<bool> get isLoadingStream;
   bool get canCancelProducts;
 
+  void updateCanCancelProducts(bool value);
   Future<void> load(String commandNumber);
   void clear();
   PrintedViewModel? get printedProducts;

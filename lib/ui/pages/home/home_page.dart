@@ -31,11 +31,15 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
-  void onPageChanged(int index) {
+  void onPageChanged({
+    required int index,
+    required PrintedProductsPresenter printedProductsPresenter,
+  }) {
     setState(() {
       _pageController.jumpToPage(index);
       _currentIndex = index;
     });
+    printedProductsPresenter.updateCanCancelProducts(false);
   }
 
   @override
@@ -72,12 +76,18 @@ class _HomePageState extends State<HomePage>
       ),
       body: PageView(
         controller: _pageController,
-        onPageChanged: onPageChanged,
+        onPageChanged: (index) {
+          onPageChanged(
+              index: index, printedProductsPresenter: printedProductsPresenter);
+        },
         children: screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: onPageChanged,
+        onTap: (index) {
+          onPageChanged(
+              index: index, printedProductsPresenter: printedProductsPresenter);
+        },
         items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.search),

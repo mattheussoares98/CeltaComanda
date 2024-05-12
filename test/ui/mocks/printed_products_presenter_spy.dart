@@ -12,12 +12,16 @@ class PrintedProductsPresenterSpy extends Mock
     implements PrintedProductsPresenter {
   final mainErrorController = StreamController<UIError?>();
   PrintedViewModel printedProductsMock = EntityFactory.makePrintedViewModel();
+  bool canCancelProductsController = false;
 
   PrintedProductsPresenterSpy() {
     mockGetPrintedProducts();
     mockClearPrintedProducts();
 
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
+    when(() => this.canCancelProducts)
+        .thenAnswer((_) => canCancelProductsController);
+    when(() => this.updateCanCancelProducts(any())).thenAnswer((_) => _);
   }
 
   void mockRemoveProduct() {

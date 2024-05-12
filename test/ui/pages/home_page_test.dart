@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/material.dart';
 
 import 'package:mocktail/mocktail.dart';
 
@@ -62,6 +63,19 @@ void main() {
     );
 
     expect(find.byType(AppBarTitle), findsOneWidget);
+  });
+
+  testWidgets('Should update canCancelProducts to false if change page',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    final bottomNavItem = find.byKey(const Key('BottomNavigationExpansibleGroups'));
+    expect(bottomNavItem, findsOneWidget);
+
+    printedProductsPresenter.updateCanCancelProducts(true);
+    await tester.tap(bottomNavItem);
+
+    expect(printedProductsPresenter.canCancelProducts, false);
   });
 
   //gastei muito tempo tentando arrumar esse teste. Fiz diversos testes mas

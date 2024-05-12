@@ -93,6 +93,7 @@ class _HomePageState extends State<HomePage>
             label: 'Inserir',
           ),
           BottomNavigationBarItem(
+            key: const Key("BottomNavigationExpansibleGroups"),
             icon: IconWithNumberQuantity(
               iconData: Icons.shopping_cart_outlined,
               productsQuantity: saleRequestTempPresenter.saleRequestTemp ==

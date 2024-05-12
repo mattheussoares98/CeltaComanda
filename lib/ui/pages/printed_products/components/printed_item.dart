@@ -93,8 +93,6 @@ class PrintedItem extends StatelessWidget {
                                 value: product.Value,
                                 totalLiquid: product.TotalLiquid,
                                 comments: product.Comments,
-                                canCancelProducts:
-                                    printedProductsPresenter.canCancelProducts,
                               ),
                             ),
                           ],

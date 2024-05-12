@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import '../../../../presentation/presenters/presenters.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -11,7 +14,6 @@ class ProductDetails extends StatelessWidget {
   final String value;
   final String totalLiquid;
   final String? comments;
-  final bool canCancelProducts;
 
   const ProductDetails({
     required this.Product,
@@ -19,13 +21,14 @@ class ProductDetails extends StatelessWidget {
     required this.quantity,
     required this.value,
     required this.totalLiquid,
-    required this.canCancelProducts,
     this.comments,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    GetxPrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -67,7 +70,7 @@ class ProductDetails extends StatelessWidget {
                 Row(
                   children: [
                     Text("Qtd: $quantity"),
-                    if (canCancelProducts)
+                    if (printedProductsPresenter.canCancelProducts)
                       SizedBox(
                         height: 35,
                         width: 35,

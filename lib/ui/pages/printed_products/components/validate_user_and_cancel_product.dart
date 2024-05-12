@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../../ui/pages/pages.dart';
 
-Future<void> validateUserAndPermissionToCancelProducts({
+Future<void> _validateUserAndPermissionToCancelProducts({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
   required PrintedProductsPresenter printedProductsPresenter,
@@ -27,19 +27,16 @@ Future<void> validateUserAndPermissionToCancelProducts({
   passwordController.clear();
 }
 
-void validateUserAndCancelProduct({
+void validateUserAndCancelProductDialog({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
   required TextEditingController personalizedCodeController,
   required TextEditingController passwordController,
   required PrintedProductsPresenter printedProductsPresenter,
-  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-  required SaleRequestTempPresenter saleRequestTempPresenter,
-  required HomePresenter homePresenter,
-  required String saleRequestProductId,
-  required FocusNode passwordFocus,
-  required FocusNode userFocus,
 }) {
+  FocusNode passwordFocus = FocusNode();
+  FocusNode userFocus = FocusNode();
+
   showDialog(
       context: context,
       barrierDismissible: true,
@@ -49,7 +46,7 @@ void validateUserAndCancelProduct({
             child: AlertDialog(
               key: const Key("AlertDialogSearchCommand"),
               title: const Text(
-                "Validar permissão de cancelamento",
+                "Liberar cancelamento de itens",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -93,7 +90,7 @@ void validateUserAndCancelProduct({
                     TextFormField(
                       focusNode: passwordFocus,
                       onFieldSubmitted: (_) async {
-                        await validateUserAndPermissionToCancelProducts(
+                        await _validateUserAndPermissionToCancelProducts(
                           context: context,
                           formKey: formKey,
                           printedProductsPresenter: printedProductsPresenter,
@@ -122,7 +119,7 @@ void validateUserAndCancelProduct({
               actions: [
                 TextButton(
                   onPressed: () async {
-                    await validateUserAndPermissionToCancelProducts(
+                    await _validateUserAndPermissionToCancelProducts(
                       context: context,
                       formKey: formKey,
                       printedProductsPresenter: printedProductsPresenter,
@@ -130,7 +127,7 @@ void validateUserAndCancelProduct({
                       passwordController: passwordController,
                     );
                   },
-                  child: const Text("Validar usuário"),
+                  child: const Text("Liberar cancelamento"),
                 )
               ],
             ),

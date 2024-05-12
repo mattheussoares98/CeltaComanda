@@ -10,6 +10,7 @@ import '../../pages.dart';
 class ProductDetails extends StatelessWidget {
   final ProductsViewModel Product;
   final void Function()? onPressedRemoveProduct;
+  final void Function()? validateUserAndCancelProducts;
   final String quantity;
   final String value;
   final String totalLiquid;
@@ -21,7 +22,8 @@ class ProductDetails extends StatelessWidget {
     required this.quantity,
     required this.value,
     required this.totalLiquid,
-    this.comments,
+    required this.validateUserAndCancelProducts,
+    required this.comments,
     super.key,
   });
 
@@ -70,21 +72,24 @@ class ProductDetails extends StatelessWidget {
                 Row(
                   children: [
                     Text("Qtd: $quantity"),
-                    if (printedProductsPresenter.canCancelProducts)
-                      SizedBox(
-                        height: 35,
-                        width: 35,
-                        child: FittedBox(
-                          child: IconButton(
-                            onPressed: onPressedRemoveProduct,
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                            visualDensity: VisualDensity.compact,
+                    SizedBox(
+                      height: 35,
+                      width: 35,
+                      child: FittedBox(
+                        child: IconButton(
+                          onPressed: printedProductsPresenter.canCancelProducts
+                              ? onPressedRemoveProduct
+                              : validateUserAndCancelProducts,
+                          icon: Icon(
+                            Icons.delete,
+                            color: printedProductsPresenter.canCancelProducts
+                                ? Colors.red
+                                : Colors.grey,
                           ),
+                          visualDensity: VisualDensity.compact,
                         ),
                       ),
+                    ),
                   ],
                 ),
                 Text("Total $totalLiquid R\$"),

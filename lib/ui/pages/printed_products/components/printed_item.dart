@@ -89,6 +89,17 @@ class PrintedItem extends StatelessWidget {
                                         product.SaleRequestProductId,
                                   );
                                 },
+                                validateUserAndCancelProducts: () {
+                                  validateUserAndCancelProductDialog(
+                                    context: context,
+                                    formKey: formKey,
+                                    personalizedCodeController:
+                                        personalizedCodeController,
+                                    passwordController: passwordController,
+                                    printedProductsPresenter:
+                                        printedProductsPresenter,
+                                  );
+                                },
                                 quantity: product.Quantity,
                                 value: product.Value,
                                 totalLiquid: product.TotalLiquid,
@@ -135,22 +146,22 @@ class PrintedItem extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: () async {
-            validateUserAndCancelProduct(
-              context: context,
-              formKey: formKey,
-              personalizedCodeController: personalizedCodeController,
-              passwordController: passwordController,
-              printedProductsPresenter: printedProductsPresenter,
-              saleRequestProductId: 'product.SaleRequestProductId',
-              passwordFocus: FocusNode(),
-              userFocus: FocusNode(),
-              expansibleGroupsPresenter: expansibleGroupsPresenter,
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              homePresenter: homePresenter,
-            );
-          },
-          child: const Text("Excluir produtos"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: printedProductsPresenter.canCancelProducts
+              ? null
+              : () async {
+                  validateUserAndCancelProductDialog(
+                    context: context,
+                    formKey: formKey,
+                    personalizedCodeController: personalizedCodeController,
+                    passwordController: passwordController,
+                    printedProductsPresenter: printedProductsPresenter,
+                  );
+                },
+          child: const Text("Liberar exclusão de itens"),
         ),
       ],
     );

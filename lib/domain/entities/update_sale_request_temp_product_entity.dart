@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class UpdateSaleRequestTempProductEntity {
+import 'package:equatable/equatable.dart';
+
+class UpdateSaleRequestTempProductEntity extends Equatable {
   final int ProductInternalCodeOnErp;
   final String ProductPriceLookUpCode;
   final double Quantity;
@@ -8,7 +10,7 @@ class UpdateSaleRequestTempProductEntity {
   final double TotalLiquid;
   final double Value;
 
-  UpdateSaleRequestTempProductEntity({
+  const UpdateSaleRequestTempProductEntity({
     required this.ProductInternalCodeOnErp,
     required this.ProductPriceLookUpCode,
     required this.Quantity,
@@ -16,4 +18,14 @@ class UpdateSaleRequestTempProductEntity {
     required this.TotalLiquid,
     required this.Value,
   });
+
+  @override
+  List<Object?> get props => [
+        ProductInternalCodeOnErp,
+        ProductPriceLookUpCode,
+        Quantity,
+        SaleRequestTempId,
+        TotalLiquid,
+        Value,
+      ];
 }

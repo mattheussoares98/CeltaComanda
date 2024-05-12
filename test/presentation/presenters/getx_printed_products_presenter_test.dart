@@ -69,6 +69,8 @@ void main() {
 
   void mockSuccess() {
     finishSaleRequestTemp.mockFinishSaleRequestTemp();
+    userValidations.mockIsValidPassword(true);
+    userValidations.mockCanCancel(true);
   }
 
   setUp(() {
@@ -87,12 +89,9 @@ void main() {
 
   group("Validate password", () {
     test('Should call isValidPassword with correct values', () async {
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
       );
 
       verify(
@@ -105,8 +104,6 @@ void main() {
     });
 
     test('Should return true on password is valid', () async {
-      userValidations.mockIsValidPassword(true);
-
       final validPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         password: password,
@@ -116,24 +113,109 @@ void main() {
       expect(validPassword, true);
     });
 
-    test('Should show invalidCredentials UIError on invalid credential',
+    test('Should return false on password is invalid', () async {
+      userValidations.mockIsValidPassword(false);
+
+      final validPassword = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        password: password,
+        personalizedCode: personalizedCode,
+      );
+
+      expect(validPassword, false);
+    });
+
+    test('Should emit correct values on success isValidPassword', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream,
+          emitsInOrder([null, R.string.msgSuccessToCancelProducts]));
+
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(sut.canCancelProducts, true);
+    });
+
+    test('Should show invalidCredentials UIError on invalid credentials',
         () async {
-      userValidations.mockIsValidPasswordError(DomainError.invalidCredentials);
+      userValidations.mockIsValidPassword(false);
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.invalidCredentials]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream, emits(null));
 
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(sut.canCancelProducts, false);
+    });
+
+    test('Should emit correct values on validateUserCanCancel throws',
+        () async {
+      userValidations.mockCanCancelError(DomainError.unexpected);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream, emits(null));
+
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(sut.canCancelProducts, false);
+    });
+
+    test('Should emit correct values on password is invalid', () async {
+      userValidations.mockIsValidPassword(false);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream, emits(null));
+
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(sut.canCancelProducts, false);
+    });
+
+    test('Should canCancelProducts is true if userValidations return true',
+        () async {
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(sut.canCancelProducts, true);
+    });
+
+    test(
+        'Should show invalidCredentialsOrAccessDenied UIError on error to validate password',
+        () async {
+      userValidations.mockIsValidPasswordError(
+          DomainError.invalidCredentialsOrAccessDenied);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
       );
     });
 
-    test('Should show accessDenied UIError on user dont have permission',
+    test('Should show unexpected UIError on error to validate password',
         () async {
       userValidations.mockIsValidPasswordError(DomainError.unexpected);
 
@@ -141,35 +223,17 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
       );
     });
   });
   group("Verify user can cancel", () {
-    test('Should emit correct values on success canCancel', () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
-      );
-    });
     test('Should call userCanCancel with correct values', () async {
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
       );
 
       verify(
@@ -189,37 +253,62 @@ void main() {
       expect(canCancel, true);
     });
 
-    test('Should show accessDeniedError if user dont have permission',
-        () async {
-      userValidations.mockCanCancelError(DomainError.accessDenied);
+    test('Should return false on user cant cancel', () async {
+      userValidations.mockCanCancel(false);
+
+      final canCancel = await userValidations.canCancel(
+        personalizedCode: personalizedCode,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      );
+
+      expect(canCancel, false);
+    });
+
+    test('Should emit correct values on success canCancel', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream,
+          emitsInOrder([null, R.string.msgSuccessToCancelProducts]));
+
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      expect(sut.canCancelProducts, true);
+    });
+
+    test('Should emit correct values on user cant cancel', () async {
+      userValidations.mockCanCancel(false);
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream, emits(null));
 
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
       );
+
+      expect(sut.canCancelProducts, false);
     });
 
-    test('Should show unexpected UIError on unexpected error', () async {
+    test('Should emit correct values on validateUserCanCancel throws',
+        () async {
       userValidations.mockCanCancelError(DomainError.unexpected);
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.alertMessageStream, emits(null));
 
-      await sut.removeProduct(
-        saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
+      await sut.validateUserAndPermissionToCancelProducts(
+        personalizedCode: personalizedCode,
+        password: password,
       );
+
+      expect(sut.canCancelProducts, false);
     });
   });
 
@@ -315,6 +404,64 @@ void main() {
             productId: saleRequestProductId,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
+    });
+
+    test("Should emit correct values on removeProduct success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        printedProductsPresenter: sut,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should emit correct values on removeProduct throws", () async {
+      removePrintedProduct.mockError(DomainError.unexpected);
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        printedProductsPresenter: sut,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should emit correct values on homepresenter.load throws", () async {
+      homePresenter.mockLoadDataError(DomainError.unexpected);
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        printedProductsPresenter: sut,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should emit correct values on homepresenter.load return commandNotAvailable", () async {
+      homePresenter.mockLoadDataError(DomainError.commandNotAvailable);
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.removeProduct(
+        saleRequestProductId: saleRequestProductId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        printedProductsPresenter: sut,
+        homePresenter: homePresenter,
+      );
     });
 
     test("Should not update printedProducts if the list of products is empty",

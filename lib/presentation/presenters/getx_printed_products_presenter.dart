@@ -44,8 +44,13 @@ class GetxPrintedProductsPresenter
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
       );
-    } catch (error) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }
@@ -115,18 +120,19 @@ class GetxPrintedProductsPresenter
         throw DomainError.invalidCredentials;
       }
 
-      bool canCancel = false;
       if (isValidPassword) {
-        canCancel = await userValidations.canCancel(
-          personalizedCode: personalizedCode,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        updateCanCancelProducts(
+          await userValidations.canCancel(
+            personalizedCode: personalizedCode,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          ),
         );
       }
-      if (!canCancel) {
+      if (!canCancelProducts) {
         throw DomainError.accessDenied;
       }
 
-      if (canCancel) {
+      if (canCancelProducts) {
         updateCanCancelProducts(true);
         alertMessage = R.string.msgSuccessToCancelProducts;
       }

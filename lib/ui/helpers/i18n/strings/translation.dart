@@ -5,6 +5,7 @@ abstract class Translation {
   String get msgInvalidField;
   String get msgProductNotFound;
   String get msgRequiredField;
+  String get msgSuccessToCancelProducts;
   String get msgVeryShortField;
   String get msgUnexpectedError;
 

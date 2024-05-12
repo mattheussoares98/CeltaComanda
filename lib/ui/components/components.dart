@@ -1,3 +1,4 @@
+export './alert_message.dart';
 export "./app_theme.dart";
 export './error_message.dart';
 export './headline1.dart';

@@ -9,6 +9,7 @@ abstract class PrintedProductsPresenter
     implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<String?> get alertMessageStream;
   bool get canCancelProducts;
 
   void updateCanCancelProducts(bool value);

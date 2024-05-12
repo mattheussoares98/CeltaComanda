@@ -20,10 +20,11 @@ class PrintedProductsPage extends StatefulWidget {
 }
 
 class _PrintedProductsPageState extends State<PrintedProductsPage>
-    with UIErrorManager, LoadingManager {
+    with UIErrorManager, LoadingManager, AlertMessageManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   StreamSubscription? homeLoadingSubscription;
+  StreamSubscription? alertMessageSubscription;
   static bool isDialogShowing = false;
 
   @override
@@ -32,6 +33,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     homeLoadingSubscription?.cancel();
+    alertMessageSubscription?.cancel();
   }
 
   @override
@@ -55,6 +57,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       context, printedProductsPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
                       context, printedProductsPresenter.mainErrorStream);
+                  alertMessageSubscription = handleAlertMessage(
+                      context, printedProductsPresenter.alertMessageStream);
 
                   homeLoadingSubscription =
                       homePresenter.isLoadingStream.listen((isLoading) async {

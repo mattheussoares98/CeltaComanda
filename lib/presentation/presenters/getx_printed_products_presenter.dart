@@ -101,6 +101,7 @@ class GetxPrintedProductsPresenter
   }) async {
     isLoading = true;
     mainError = null;
+    alertMessage = null;
     updateCanCancelProducts(false);
 
     try {
@@ -127,6 +128,7 @@ class GetxPrintedProductsPresenter
 
       if (canCancel) {
         updateCanCancelProducts(true);
+        alertMessage = R.string.msgSuccessToCancelProducts;
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -153,4 +155,9 @@ class GetxPrintedProductsPresenter
   void updateCanCancelProducts(bool value) {
     _canCancelProducts = value;
   }
+
+  final _alertMessage = Rx<String?>(null);
+  @override
+  Stream<String?> get alertMessageStream => _alertMessage.stream;
+  set alertMessage(String? value) => _alertMessage.value = value;
 }

@@ -33,15 +33,44 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context);
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context);
 
     return Scaffold(
+      drawer: drawer(
+        context: context,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      ),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF1F5F8),
+        actions: const [SearchCommandIcon()],
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const FittedBox(
+              child: Text(
+                "Pendentes para impressão",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            if (homePresenter.commandNumber != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Comanda ${homePresenter.commandNumber!}",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

@@ -49,30 +49,10 @@ class _HomePageState extends State<HomePage>
       const PrintedProductsPage(),
     ];
 
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context);
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context);
-    HomePresenter homePresenter = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
 
     return Scaffold(
-      drawer: drawer(
-        context: context,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        homePresenter: homePresenter,
-      ),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        actions: const [SearchCommandIcon()],
-        title: AppBarTitle(
-          currentIndex: _currentIndex,
-          commandNumber: homePresenter.commandNumber,
-        ),
-      ),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {

@@ -39,6 +39,38 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     HomePresenter homePresenter = Provider.of(context);
 
     return Scaffold(
+      drawer: drawer(
+        context: context,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        homePresenter: homePresenter,
+      ),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF1F5F8),
+        actions: const [SearchCommandIcon()],
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const FittedBox(
+              child: Text(
+                "Produtos",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            if (homePresenter.commandNumber != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Comanda ${homePresenter.commandNumber!}",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

@@ -1,7 +1,6 @@
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mocktail/mocktail.dart';
@@ -17,19 +16,19 @@ import '../mocks/mocks.dart';
 void main() {
   late HiveSpy hive;
   late BoxSpy mockHiveBox;
-  late HomePresenterSpy sut;
+  // late HomePresenterSpy sut;
   late PrintedProductsPresenter printedProductsPresenter;
-  late SaleRequestTempPresenter saleRequestTempPresenter;
-  late ExpansibleGroupsPresenter expansibleGroupsPresenter;
+  // late SaleRequestTempPresenter saleRequestTempPresenter;
+  // late ExpansibleGroupsPresenter expansibleGroupsPresenter;
 
   setUp(() {
     mockHiveBox = BoxSpy();
     hive = HiveSpy();
     hive.mockOpenBox(mockHiveBox);
     printedProductsPresenter = PrintedProductsPresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
-    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
-    sut = HomePresenterSpy();
+    // saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    // expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    // sut = HomePresenterSpy();
   });
 
   setUpAll(() {
@@ -51,25 +50,12 @@ void main() {
     expect(find.byType(SearchCommandIcon), findsOneWidget);
   });
 
-  testWidgets('Should present CommandNumber on AppBar when load data',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-
-    await sut.load(
-      commandNumber: faker.randomGenerator.integer(3).toString(),
-      printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
-    );
-
-    expect(find.byType(AppBarTitle), findsOneWidget);
-  });
-
   testWidgets('Should update canCancelProducts to false if change page',
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    final bottomNavItem = find.byKey(const Key('BottomNavigationExpansibleGroups'));
+    final bottomNavItem =
+        find.byKey(const Key('BottomNavigationExpansibleGroups'));
     expect(bottomNavItem, findsOneWidget);
 
     printedProductsPresenter.updateCanCancelProducts(true);

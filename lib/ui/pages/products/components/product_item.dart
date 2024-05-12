@@ -9,10 +9,8 @@ import '../../../../ui/pages/pages.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductsViewModel product;
-  final ProductsPresenter productsPresenter;
   const ProductItem({
     required this.product,
-    required this.productsPresenter,
     super.key,
   });
 
@@ -23,9 +21,9 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: true);
-    HomePresenter homePresenter = Provider.of(context, listen: true);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    HomePresenter homePresenter = Provider.of(context);
+    ProductsPresenter productsPresenter = Provider.of(context);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
@@ -143,7 +141,7 @@ class _ProductItemState extends State<ProductItem> {
                           ],
                         );
 
-                        await widget.productsPresenter.updateSaleRequest(
+                        await productsPresenter.updateSaleRequest(
                           entity: entity,
                           homePresenter: homePresenter,
                           saleRequestTempPresenter: saleRequestTempPresenter,

@@ -33,15 +33,11 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context);
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context);
+    ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context);
-    ProductsPresenter productsPresenter = Provider.of(context);
-
+    
     return Scaffold(
       body: Column(
         children: [
@@ -86,7 +82,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       if (expansibleGroupsPresenter.searchedProduct != null)
                         ProductItem(
                           product: expansibleGroupsPresenter.searchedProduct!,
-                          productsPresenter: productsPresenter,
                         ),
                       GroupItems(
                         expansibleGroupsViewModel:

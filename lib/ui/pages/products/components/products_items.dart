@@ -1,5 +1,3 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/products/products.dart';
@@ -13,8 +11,6 @@ class ProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductsPresenter presenter = Provider.of(context, listen: false);
-
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
       child: ListView.builder(
@@ -28,7 +24,6 @@ class ProductsItems extends StatelessWidget {
 
           return ProductItem(
             product: productViewModel,
-            productsPresenter: presenter,
           );
         },
       ),

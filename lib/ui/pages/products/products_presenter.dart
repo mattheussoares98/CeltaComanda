@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
@@ -12,7 +11,7 @@ abstract class ProductsPresenter with ChangeNotifier implements Listenable {
   Future<void> load(int? expansibleGroupId);
 
   Future<bool> updateSaleRequest({
-    required UpdateSaleRequestTempEntity entity,
+    required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   });

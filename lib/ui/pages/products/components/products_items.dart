@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/products/products.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../ui/pages/pages.dart';
 
 class ProductsItems extends StatelessWidget {
   final List<ProductsViewModel> products;
@@ -11,6 +13,11 @@ class ProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
+    ProductsPresenter productsPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
       child: ListView.builder(
@@ -24,6 +31,15 @@ class ProductsItems extends StatelessWidget {
 
           return ProductItem(
             product: productViewModel,
+            updateProductQuantity: () async {
+              () async {
+                await productsPresenter.updateSaleRequest(
+                  productsViewModel: productViewModel,
+                  homePresenter: homePresenter,
+                  saleRequestTempPresenter: saleRequestTempPresenter,
+                );
+              };
+            },
           );
         },
       ),

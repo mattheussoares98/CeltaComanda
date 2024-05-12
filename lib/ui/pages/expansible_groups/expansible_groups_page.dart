@@ -37,7 +37,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context);
-    
+
     return Scaffold(
       body: Column(
         children: [
@@ -82,6 +82,15 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       if (expansibleGroupsPresenter.searchedProduct != null)
                         ProductItem(
                           product: expansibleGroupsPresenter.searchedProduct!,
+                          updateProductQuantity: () async {
+                            await expansibleGroupsPresenter.updateSaleRequest(
+                              productsViewModel:
+                                  expansibleGroupsPresenter.searchedProduct!,
+                              homePresenter: homePresenter,
+                              saleRequestTempPresenter:
+                                  saleRequestTempPresenter,
+                            );
+                          },
                         ),
                       GroupItems(
                         expansibleGroupsViewModel:

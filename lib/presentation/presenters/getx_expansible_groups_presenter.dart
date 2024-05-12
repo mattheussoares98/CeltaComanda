@@ -17,6 +17,7 @@ class GetxExpansibleGroupsPresenter
   final SearchProductByCode searchProductByCode;
   final LoadExpansibleGroups loadExpansibleGroups;
   final BarcodeScanner barcodeScanner;
+  final UpdateSaleRequestTemp updateSaleRequestTemp;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
@@ -24,6 +25,7 @@ class GetxExpansibleGroupsPresenter
     required this.ticketIsPermitted,
     required this.searchProductByCode,
     required this.barcodeScanner,
+    required this.updateSaleRequestTemp,
   });
 
   @override
@@ -161,4 +163,64 @@ class GetxExpansibleGroupsPresenter
   final _searchProductController = TextEditingController();
   @override
   TextEditingController get searchProductController => _searchProductController;
+
+  @override
+  Future<bool> updateSaleRequest({
+    required ProductsViewModel productsViewModel,
+    required HomePresenter homePresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      String numberAmerican =
+          productsViewModel.SaleRetailPraticed.replaceAll(RegExp(r','), '.');
+
+      double saleRetailPraticed = double.parse(numberAmerican);
+
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: int.parse(
+            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl),
+        EnterpriseId:
+            int.parse(saleRequestTempPresenter.saleRequestTemp!.EnterpriseId),
+        PersonalizedCode:
+            saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
+        SaleRequestTempId: int.parse(
+            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+        TotalLiquid: saleRetailPraticed,
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                int.parse(productsViewModel.InternalCodeOnERP.toString()),
+            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+            Quantity: 1,
+            SaleRequestTempId: int.parse(
+                saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+            TotalLiquid: saleRetailPraticed,
+            Value: saleRetailPraticed,
+          )
+        ],
+      );
+
+      await updateSaleRequestTemp.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        entity: entity,
+      );
+
+      saleRequestTempPresenter.load(homePresenter.commandNumber!);
+
+      return true;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.addComment:
+          mainError = UIError.addComment;
+          return false;
+        default:
+          mainError = UIError.unexpected;
+          return false;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
 }

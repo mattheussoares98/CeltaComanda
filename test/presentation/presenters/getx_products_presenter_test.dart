@@ -25,6 +25,7 @@ void main() {
   late List<ProductEntity> products;
   late int expansibleGroupId;
   late SaleRequestTempEntity saleRequestTempEntity;
+  late ProductsViewModel productsViewModel;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -56,6 +57,8 @@ void main() {
         EntityFactory.makeEnterpriseData();
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
+    productsViewModel =
+        ProductsViewModel.fromEntity(saleRequestTempEntity.Products[0].Product);
   }
 
   void mockSuccess() {
@@ -93,8 +96,10 @@ void main() {
 
     test('Should call loadSaleRequestTemp when updateSaleRequestTemp',
         () async {
+      // loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+      // await saleRequestTempPresenter.load(homePresenter.commandNumberMock!);
       await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -113,7 +118,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -124,7 +129,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -297,7 +302,7 @@ void main() {
   group("UpdateSaleRequest", () {
     test('Should return true on success to updateSaleRequestTemp', () async {
       final isUpdated = await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -308,7 +313,7 @@ void main() {
       updateSaleRequestTemp.mockUpdateSaleRequestTempError();
 
       final isUpdated = await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -321,7 +326,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
@@ -335,7 +340,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.updateSaleRequest(
-        entity: EntityFactory.makeUpdateSaleRequestTempEntity(),
+        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );

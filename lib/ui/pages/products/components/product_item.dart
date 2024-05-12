@@ -4,13 +4,14 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/entities.dart';
 import '../../../../ui/pages/pages.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductsViewModel product;
+  final void Function()? updateProductQuantity;
   const ProductItem({
     required this.product,
+    required this.updateProductQuantity,
     super.key,
   });
 
@@ -22,8 +23,6 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    HomePresenter homePresenter = Provider.of(context);
-    ProductsPresenter productsPresenter = Provider.of(context);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
@@ -106,47 +105,8 @@ class _ProductItemState extends State<ProductItem> {
                         ),
                       ),
                     TextButton(
+                      onPressed: widget.updateProductQuantity,
                       child: const Text("Adicionar +1"),
-                      onPressed: () async {
-                        String numberAmerican = widget
-                            .product.SaleRetailPraticed
-                            .replaceAll(RegExp(r','), '.');
-
-                        double saleRetailPraticed =
-                            double.parse(numberAmerican);
-
-                        final entity = UpdateSaleRequestTempEntity(
-                          DeliveryControl: int.parse(saleRequestTempPresenter
-                              .saleRequestTemp!.DeliveryControl),
-                          EnterpriseId: int.parse(saleRequestTempPresenter
-                              .saleRequestTemp!.EnterpriseId),
-                          PersonalizedCode: saleRequestTempPresenter
-                              .saleRequestTemp!.PersonalizedCode,
-                          SaleRequestTempId: int.parse(saleRequestTempPresenter
-                              .saleRequestTemp!.SaleRequestTempId),
-                          TotalLiquid: saleRetailPraticed,
-                          Products: [
-                            UpdateSaleRequestTempProductEntity(
-                              ProductInternalCodeOnErp: int.parse(
-                                  widget.product.InternalCodeOnERP.toString()),
-                              ProductPriceLookUpCode:
-                                  widget.product.PriceLookupCode,
-                              Quantity: 1,
-                              SaleRequestTempId: int.parse(
-                                  saleRequestTempPresenter
-                                      .saleRequestTemp!.SaleRequestTempId),
-                              TotalLiquid: saleRetailPraticed,
-                              Value: saleRetailPraticed,
-                            )
-                          ],
-                        );
-
-                        await productsPresenter.updateSaleRequest(
-                          entity: entity,
-                          homePresenter: homePresenter,
-                          saleRequestTempPresenter: saleRequestTempPresenter,
-                        );
-                      },
                     ),
                   ],
                 ),

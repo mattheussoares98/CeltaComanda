@@ -9,4 +9,5 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       ticketIsPermitted: makeRemoteticketIsPermitted(),
       searchProductByCode: makeRemoteSearchProductByCode(),
       barcodeScanner: makeCameraBarcodeScanner(),
+      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
     );

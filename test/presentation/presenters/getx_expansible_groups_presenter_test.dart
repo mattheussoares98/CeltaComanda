@@ -29,6 +29,7 @@ void main() {
   late TicketIsPermittedSpy ticketIsPermitted;
   late SearchProductByCodeSpy searchProductByCode;
   late BarcodeScannerSpy barcodeScanner;
+  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -44,6 +45,7 @@ void main() {
     navigateTo = NavigateToSpy();
     searchProductByCode = SearchProductByCodeSpy();
     barcodeScanner = BarcodeScannerSpy();
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
   }
 
   void initPresenters() {
@@ -55,6 +57,7 @@ void main() {
       ticketIsPermitted: ticketIsPermitted,
       searchProductByCode: searchProductByCode,
       barcodeScanner: barcodeScanner,
+      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   }
 
@@ -332,7 +335,7 @@ void main() {
 
     test("Should update searchProductController correctly", () async {
       expect(sut.searchProductController.text, "");
-      
+
       barcodeScanner.mockBarcodeScanner("1234567890123");
       await sut.readBarcodeAndSearchProduct();
       expect(sut.searchProductController.text, "1234567890123");

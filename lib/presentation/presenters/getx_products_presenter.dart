@@ -45,13 +45,42 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
 
   @override
   Future<bool> updateSaleRequest({
-    required UpdateSaleRequestTempEntity entity,
     required HomePresenter homePresenter,
+    required ProductsViewModel productsViewModel,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     isLoading = true;
     mainError = null;
     try {
+      String numberAmerican =
+          productsViewModel.SaleRetailPraticed.replaceAll(RegExp(r','), '.');
+
+      double saleRetailPraticed = double.parse(numberAmerican);
+
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: int.parse(
+            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl),
+        EnterpriseId:
+            int.parse(saleRequestTempPresenter.saleRequestTemp!.EnterpriseId),
+        PersonalizedCode:
+            saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
+        SaleRequestTempId: int.parse(
+            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+        TotalLiquid: saleRetailPraticed,
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                int.parse(productsViewModel.InternalCodeOnERP.toString()),
+            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+            Quantity: 1,
+            SaleRequestTempId: int.parse(
+                saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+            TotalLiquid: saleRetailPraticed,
+            Value: saleRetailPraticed,
+          )
+        ],
+      );
+
       await updateSaleRequestTemp.update(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         entity: entity,

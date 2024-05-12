@@ -19,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late GetxExpansibleGroupsPresenter sut;
   late HomePresenterSpy homePresenter;
+  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
@@ -50,6 +51,7 @@ void main() {
 
   void initPresenters() {
     homePresenter = HomePresenterSpy();
+    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
 
     sut = GetxExpansibleGroupsPresenter(
       navigateTo: navigateTo,
@@ -78,6 +80,9 @@ void main() {
     productEan = faker.randomGenerator.integer(13).toString();
     productEntity = EntityFactory.makeProductsEntitys()[0];
     productsViewModel = ProductsViewModel.fromEntity(productEntity);
+    saleRequestTempPresenter.saleRequestTempMock =
+        EntityFactory.makeSaleRequestTempViewModel(
+            EntityFactory.makeProductModel());
   }
 
   void mockSuccess() {
@@ -101,6 +106,7 @@ void main() {
     registerFallbackValue(SaleRequestTempPresenterSpy());
     registerFallbackValue(ExpansibleGroupsPresenterSpy());
     registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
   test('Should call LoadExpansibleGroups', () async {
@@ -343,6 +349,87 @@ void main() {
       barcodeScanner.mockBarcodeScanner("");
       await sut.readBarcodeAndSearchProduct();
       expect(sut.searchProductController.text, "");
+    });
+  });
+
+  group("Add product quantity (updateSaleRequest)", () {
+    test("Should emit correct events on UpdateSaleRequest success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+    });
+
+    test("Should emit correct events on UpdateSaleRequest throws", () async {
+      updateSaleRequestTemp.mockUpdateSaleRequestTempError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+    });
+
+    test("Should call updateSaleRequestTemp", () async {
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+
+      String numberAmerican =
+          productsViewModel.SaleRetailPraticed.replaceAll(RegExp(r','), '.');
+
+      double saleRetailPraticed = double.parse(numberAmerican);
+
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: int.parse(
+            saleRequestTempPresenter.saleRequestTempMock!.DeliveryControl),
+        EnterpriseId: int.parse(
+            saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId),
+        PersonalizedCode:
+            saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
+        SaleRequestTempId: int.parse(
+            saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
+        TotalLiquid: saleRetailPraticed,
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                int.parse(productsViewModel.InternalCodeOnERP.toString()),
+            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+            Quantity: 1,
+            SaleRequestTempId: int.parse(saleRequestTempPresenter
+                .saleRequestTempMock!.SaleRequestTempId),
+            TotalLiquid: saleRetailPraticed,
+            Value: saleRetailPraticed,
+          )
+        ],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: entity,
+          )).called(1);
+    });
+
+    test('Should call SaleRequestTempPresenter.load', () async {
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+      );
+
+      verify(() =>
+              saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+          .called(1);
     });
   });
 }

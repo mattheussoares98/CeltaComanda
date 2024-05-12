@@ -5,6 +5,9 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class UpdateSaleRequestTempSpy extends Mock implements UpdateSaleRequestTemp {
+  UpdateSaleRequestTempSpy(){
+    this.mockUpdateSaleRequestTemp();
+  }
   When mocUpdateSaleRequestTempCall() => when(() => this.update(
         url: any(named: "url"),
         entity: any(named: "entity"),

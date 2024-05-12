@@ -165,7 +165,7 @@ class GetxExpansibleGroupsPresenter
   TextEditingController get searchProductController => _searchProductController;
 
   @override
-  Future<bool> updateSaleRequest({
+  Future<void> updateSaleRequest({
     required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
@@ -208,16 +208,12 @@ class GetxExpansibleGroupsPresenter
       );
 
       saleRequestTempPresenter.load(homePresenter.commandNumber!);
-
-      return true;
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.addComment:
           mainError = UIError.addComment;
-          return false;
         default:
           mainError = UIError.unexpected;
-          return false;
       }
     } finally {
       isLoading = false;

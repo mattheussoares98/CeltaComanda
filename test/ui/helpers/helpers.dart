@@ -3,12 +3,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
-import '../../data/mocks/mocks.dart';
-import '../../domain/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
 Widget makePage(
@@ -78,44 +75,20 @@ Widget makePage(
 
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider<GetxExpansibleGroupsPresenter>(
-        create: (_) => GetxExpansibleGroupsPresenter(
-          loadExpansibleGroups: LoadExpansibleGroupsSpy(),
-          navigateTo: NavigateToSpy(),
-          ticketIsPermitted: TicketIsPermittedSpy(),
-          searchProductByCode: SearchProductByCodeSpy(),
-          barcodeScanner: BarcodeScannerSpy(),
-        ),
+      ChangeNotifierProvider<ExpansibleGroupsPresenter>(
+        create: (_) => ExpansibleGroupsPresenterSpy(),
       ),
-      ChangeNotifierProvider<GetxSaleRequestTempPresenter>(
-        create: (_) => GetxSaleRequestTempPresenter(
-          loadSaleRequestTemp: LoadSaleRequestTempSpy(),
-          updateProductQuantity: UpdateProductQuantitySpy(),
-          updateProductComment: UpdateProductCommentSpy(),
-          finishSaleRequestTemp: FinishSaleRequestTempSpy(),
-        ),
+      ChangeNotifierProvider<SaleRequestTempPresenter>(
+        create: (_) => SaleRequestTempPresenterSpy(),
       ),
-      ChangeNotifierProvider<GetxPrintedProductsPresenter>(
-        create: (_) => GetxPrintedProductsPresenter(
-          userValidations: UserValidationsSpy(),
-          loadPrintedProducts: LoadPrintedProductsSpy(),
-          removePrintedProduct: RemovePrintedProductSpy(),
-        ),
+      ChangeNotifierProvider<PrintedProductsPresenter>(
+        create: (_) => PrintedProductsPresenterSpy(),
       ),
-      ChangeNotifierProvider<GetxHomePresenter>(
-        create: (_) => GetxHomePresenter(
-          loadExpansibleGroups: LoadExpansibleGroupsSpy(),
-          navigateTo: NavigateToSpy(),
-          localEnterpriseData: LocalEnterpriseDataSpy(),
-          ticketIsPermitted: TicketIsPermittedSpy(),
-        ),
+      ChangeNotifierProvider<HomePresenter>(
+        create: (_) => HomePresenterSpy(),
       ),
-      ListenableProvider<GetxProductsPresenter>(
-        create: (_) => GetxProductsPresenter(
-          navigateTo: NavigateToSpy(),
-          loadProducts: LoadProductsSpy(),
-          updateSaleRequestTemp: UpdateSaleRequestTempSpy(),
-        ),
+      ListenableProvider<ProductsPresenter>(
+        create: (_) => ProductsPresenterSpy(),
       ),
     ],
     child: GetMaterialApp(

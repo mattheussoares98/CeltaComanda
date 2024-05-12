@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../main/builders/builders.dart';
-import '../../../../presentation/presenters/presenters.dart';
 import '../../pages.dart';
 
 class SaleRequestTempProductItem extends StatefulWidget {
@@ -75,13 +74,13 @@ class _SaleRequestTempProductItemState
 
   @override
   Widget build(BuildContext context) {
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+    SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context, listen: false);
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    GetxHomePresenter homePresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

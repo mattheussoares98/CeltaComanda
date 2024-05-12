@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
 import '../../pages.dart';
 
 class PrintedItem extends StatelessWidget {
@@ -30,13 +29,13 @@ class PrintedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context, listen: false);
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+    SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    GetxHomePresenter homePresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final TextEditingController personalizedCodeController =
@@ -161,7 +160,7 @@ class PrintedItem extends StatelessWidget {
                     printedProductsPresenter: printedProductsPresenter,
                   );
                 },
-          child: const Text("Liberar exclusão de itens"),
+          child: const Text("Liberar cancelamento de itens"),
         ),
       ],
     );

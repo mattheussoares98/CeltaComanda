@@ -11,7 +11,6 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
   final mainErrorController = StreamController<UIError>();
   final isLoadingController = StreamController<bool>();
   final productsController = StreamController<List<ProductsViewModel>>();
-  int? selectedProductIndex;
 
   ProductsPresenterSpy() {
     when(() => this.load(any())).thenAnswer((_) async => _);

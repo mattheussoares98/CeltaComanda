@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -29,7 +28,7 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

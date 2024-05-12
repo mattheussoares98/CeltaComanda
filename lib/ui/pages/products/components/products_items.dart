@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
+import 'package:flutter/material.dart';
+
 import '../../../../ui/pages/products/products.dart';
 
 class ProductsItems extends StatelessWidget {
@@ -13,8 +13,8 @@ class ProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetxProductsPresenter presenter = Provider.of(context, listen: false);
-    
+    ProductsPresenter presenter = Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
       child: ListView.builder(

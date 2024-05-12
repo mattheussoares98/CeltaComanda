@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../expansible_groups/expansible_groups.dart';
 
@@ -24,7 +23,7 @@ class GroupItem extends StatelessWidget {
     // );
 
     final presenter =
-        Provider.of<GetxExpansibleGroupsPresenter>(context, listen: false);
+        Provider.of<ExpansibleGroupsPresenter>(context, listen: false);
 
     return GestureDetector(
       onTap: () {

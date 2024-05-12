@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../main/builders/builders.dart';
-import '../../../presentation/presenters/presenters.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -38,13 +37,13 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+    SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context);
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
-    GetxHomePresenter homePresenter = Provider.of(context);
+    HomePresenter homePresenter = Provider.of(context);
 
     return Scaffold(
       body: Column(

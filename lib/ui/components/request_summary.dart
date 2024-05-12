@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../presentation/presenters/presenters.dart';
+import '../pages/pages.dart';
 
 class RequestSummary extends StatefulWidget {
   final String totalLiquid;
@@ -43,8 +43,7 @@ class _RequestSummaryState extends State<RequestSummary> {
 
   @override
   Widget build(BuildContext context) {
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Column(

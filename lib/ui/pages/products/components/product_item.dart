@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/entities.dart';
-import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 
 class ProductItem extends StatefulWidget {
@@ -24,9 +23,9 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+    SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: true);
-    GetxHomePresenter homePresenter = Provider.of(context, listen: true);
+    HomePresenter homePresenter = Provider.of(context, listen: true);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),

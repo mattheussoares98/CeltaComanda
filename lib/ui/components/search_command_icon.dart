@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../presentation/presenters/presenters.dart';
 import '../../ui/pages/pages.dart';
 
 class SearchCommandIcon extends StatefulWidget {
@@ -17,13 +16,10 @@ class SearchCommandIcon extends StatefulWidget {
 class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenterr =
-        Provider.of(context);
-    GetxSaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    GetxPrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context);
-    GetxHomePresenter homePresenter =
-        Provider.of(context);
+    ExpansibleGroupsPresenter expansibleGroupsPresenterr = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    HomePresenter homePresenter = Provider.of(context);
 
     return GestureDetector(
       key: const Key("SearchCommandIcon"),

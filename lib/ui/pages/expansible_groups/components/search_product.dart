@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
+import '../../pages.dart';
 
 class SearchProduct extends StatefulWidget {
   const SearchProduct({super.key});
@@ -28,7 +28,7 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   Future<void> _searchProduct(
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter,
+    ExpansibleGroupsPresenter expansibleGroupsPresenter,
   ) async {
     if (!formKey.currentState!.validate()) {
       _requestFocusToFormField();
@@ -45,7 +45,7 @@ class _SearchProductState extends State<SearchProduct> {
 
   @override
   Widget build(BuildContext context) {
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
 
     return Padding(

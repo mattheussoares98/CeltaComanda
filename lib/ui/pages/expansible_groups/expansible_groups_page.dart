@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 
 import '../../../main/builders/builders.dart';
-import '../../../presentation/presenters/presenters.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
 
@@ -34,14 +33,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
 
   @override
   Widget build(BuildContext context) {
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context);
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+    SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context);
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context);
-    GetxHomePresenter homePresenter = Provider.of(context);
-    GetxProductsPresenter productsPresenter = Provider.of(context);
+    HomePresenter homePresenter = Provider.of(context);
+    ProductsPresenter productsPresenter = Provider.of(context);
 
     return Scaffold(
       body: Column(

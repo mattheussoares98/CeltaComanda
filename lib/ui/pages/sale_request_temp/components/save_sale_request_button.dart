@@ -2,20 +2,20 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../presentation/presenters/presenters.dart';
+import '../../pages.dart';
 
 class SaveSaleRequestButton extends StatelessWidget {
   const SaveSaleRequestButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    GetxSaleRequestTempPresenter saleRequestTempPresenter =
+    SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    GetxExpansibleGroupsPresenter expansibleGroupsPresenter =
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
         Provider.of(context, listen: false);
-    GetxPrintedProductsPresenter printedProductsPresenter =
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    GetxHomePresenter homePresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     
     return ElevatedButton(
       style: ElevatedButton.styleFrom(

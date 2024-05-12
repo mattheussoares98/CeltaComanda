@@ -11,10 +11,13 @@ import 'package:mocktail/mocktail.dart';
 class SaleRequestTempPresenterSpy extends Mock
     implements SaleRequestTempPresenter {
   final mainErrorController = StreamController<UIError?>();
+  final isLoadingController = StreamController<bool>();
   SaleRequestTempViewModel? saleRequestTempMock;
 
   SaleRequestTempPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
+    when(() => this.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
+    when(() => this.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
 
     when(() => this.load(any())).thenAnswer((_) async => _);
     mockAddProductQuantityCall().thenAnswer((_) async => _);

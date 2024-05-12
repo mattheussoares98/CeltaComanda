@@ -2,14 +2,14 @@
 
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class HomePresenterSpy extends Mock implements GetxHomePresenter {
+class HomePresenterSpy extends Mock implements HomePresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   String? commandNumberMock;

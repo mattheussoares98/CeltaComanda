@@ -1,7 +1,8 @@
 import '../../../../main/factories/factories.dart';
 import '../../../../presentation/presenters/presenters.dart';
+import '../../../../ui/pages/pages.dart';
 
-GetxSaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
+SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
     GetxSaleRequestTempPresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateProductQuantity: makeRemoteUpdateProductQuantity(),

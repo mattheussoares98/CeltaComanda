@@ -34,12 +34,12 @@ class _HomePageState extends State<HomePage>
     required int index,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
-    await _pageController.animateToPage(
-      index,
-      curve: Curves.ease,
-      duration: const Duration(milliseconds: 500),
-    );
     setState(() {
+      _pageController.animateToPage(
+        index,
+        curve: Curves.ease,
+        duration: const Duration(milliseconds: 500),
+      );
       _currentIndex = index;
     });
     printedProductsPresenter.updateCanCancelProducts(false);

@@ -150,6 +150,8 @@ class _SaleRequestTempProductItemState
               ),
               TextButton(
                 onPressed: () async {
+                  commentsFocusNode.unfocus();
+                  
                   await saleRequestTempPresenter.updateComment(
                     comments: commentsController.text,
                     saleRequestProductTempId:

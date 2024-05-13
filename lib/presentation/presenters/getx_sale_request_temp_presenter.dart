@@ -27,7 +27,7 @@ class GetxSaleRequestTempPresenter
 
   @override
   Future<void> loadSaleRequest(String commandNumber) async {
-    _saleRequestTemp = null;
+    clear();
 
     try {
       await ticketIsPermitted.verify(
@@ -46,7 +46,6 @@ class GetxSaleRequestTempPresenter
         _saleRequestTemp!.Products
             .sort((a, b) => a.Product.Name.compareTo(b.Product.Name));
       }
-      notifyListeners();
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:
@@ -54,13 +53,14 @@ class GetxSaleRequestTempPresenter
         default:
           throw DomainError.unexpected;
       }
+    } finally {
+      notifyListeners();
     }
   }
 
   @override
   void clear() {
     _saleRequestTemp = null;
-    notifyListeners();
   }
 
   @override

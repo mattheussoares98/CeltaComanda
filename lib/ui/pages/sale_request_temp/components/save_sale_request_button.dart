@@ -42,7 +42,7 @@ class SaveSaleRequestButton extends StatelessWidget {
             return AlertDialog(
               contentPadding: const EdgeInsets.all(8),
               title: const Text(
-                "Confirmar produtos e alterar comentário",
+                "Deseja confirmar os produtos e alterar o comentário?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 17,
@@ -79,7 +79,12 @@ class SaveSaleRequestButton extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text("Cancelar"),
+                      child: const Text(
+                        "Cancelar",
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
                     ),
                     TextButton(
                       child: const Text("Confirmar"),

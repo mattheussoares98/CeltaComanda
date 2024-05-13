@@ -45,13 +45,59 @@ class _SaleRequestTempProductItemState
         double.tryParse(widget.product.Quantity.replaceAll(RegExp(r','), '.'));
     int quantityInt = quantityDouble!.toInt();
 
-    await saleRequestTempPresenter.subtractProductQuantity(
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      saleRequestProductTempId:
-          int.parse(widget.product.SaleRequestProductTempId),
-      productQuantity: quantityInt,
-      commandNumber: homePresenter.commandNumber!,
-    );
+    if (quantityInt > 1) {
+      await saleRequestTempPresenter.subtractProductQuantity(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        saleRequestProductTempId:
+            int.parse(widget.product.SaleRequestProductTempId),
+        productQuantity: quantityInt,
+        commandNumber: homePresenter.commandNumber!,
+      );
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: const Text(
+                "Deseja realmente remover o produto?",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        "NÃO",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                        await saleRequestTempPresenter.subtractProductQuantity(
+                          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+                          saleRequestProductTempId: int.parse(
+                              widget.product.SaleRequestProductTempId),
+                          productQuantity: quantityInt,
+                          commandNumber: homePresenter.commandNumber!,
+                        );
+                      },
+                      child: const Text("SIM"),
+                    ),
+                  ],
+                )
+              ],
+            );
+          });
+    }
   }
 
   void onTapCommentIcon(SaleRequestTempPresenter saleRequestTempPresenter) {
@@ -151,7 +197,7 @@ class _SaleRequestTempProductItemState
               TextButton(
                 onPressed: () async {
                   commentsFocusNode.unfocus();
-                  
+
                   await saleRequestTempPresenter.updateComment(
                     comments: commentsController.text,
                     saleRequestProductTempId:

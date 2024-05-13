@@ -80,7 +80,6 @@ class GetxPrintedProductsPresenter
         _printedProducts!.Products
             .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
       }
-      notifyListeners();
     } catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -88,13 +87,14 @@ class GetxPrintedProductsPresenter
         default:
           throw DomainError.unexpected;
       }
+    } finally {
+      notifyListeners();
     }
   }
 
   @override
   void clear() {
     _printedProducts = null;
-    notifyListeners();
   }
 
   @override

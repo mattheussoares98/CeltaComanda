@@ -33,13 +33,9 @@ class _HomePageState extends State<HomePage>
   void onPageChanged({
     required int index,
     required PrintedProductsPresenter printedProductsPresenter,
-  }) async {
+  }) {
     setState(() {
-      _pageController.animateToPage(
-        index,
-        curve: Curves.ease,
-        duration: const Duration(milliseconds: 500),
-      );
+      _pageController.jumpToPage(index);
       _currentIndex = index;
     });
     printedProductsPresenter.updateCanCancelProducts(false);

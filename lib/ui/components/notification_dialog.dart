@@ -2,30 +2,47 @@ import 'package:flutter/material.dart';
 
 void notificationDialog({
   required BuildContext context,
-  required String title,
-  required String message,
-  required Function() onPress,
+  required String titleMessage,
+  required Widget? content,
+  required Future Function() onPress,
+  String? cancelMessage = "NÃO",
+  String? confirmMessage = "SIM",
 }) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Não'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+          title: Text(
+            titleMessage,
+            style: const TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
             ),
-            TextButton(
-              child: const Text('Sim'),
-              onPressed: () async {
-                Navigator.of(context).pop();
-                await onPress();
-              },
-            ),
+            textAlign: TextAlign.center,
+          ),
+          content: content,
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    cancelMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    await onPress();
+                  },
+                  child: Text(confirmMessage!),
+                ),
+              ],
+            )
           ],
         );
       });

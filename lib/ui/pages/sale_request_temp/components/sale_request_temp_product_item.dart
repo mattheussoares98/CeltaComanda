@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../main/builders/builders.dart';
+import '../../../../ui/components/components.dart';
 import '../../pages.dart';
 
 class SaleRequestTempProductItem extends StatefulWidget {
@@ -54,49 +55,20 @@ class _SaleRequestTempProductItemState
         commandNumber: homePresenter.commandNumber!,
       );
     } else {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: const Text(
-                "Deseja realmente remover o produto?",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(
-                        "NÃO",
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        Navigator.of(context).pop();
-                        await saleRequestTempPresenter.subtractProductQuantity(
-                          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-                          saleRequestProductTempId: int.parse(
-                              widget.product.SaleRequestProductTempId),
-                          productQuantity: quantityInt,
-                          commandNumber: homePresenter.commandNumber!,
-                        );
-                      },
-                      child: const Text("SIM"),
-                    ),
-                  ],
-                )
-              ],
-            );
-          });
+      notificationDialog(
+        context: context,
+        titleMessage: "Deseja realmente remover o produto?",
+        content: null,
+        onPress: () async {
+          await saleRequestTempPresenter.subtractProductQuantity(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            saleRequestProductTempId:
+                int.parse(widget.product.SaleRequestProductTempId),
+            productQuantity: quantityInt,
+            commandNumber: homePresenter.commandNumber!,
+          );
+        },
+      );
     }
   }
 

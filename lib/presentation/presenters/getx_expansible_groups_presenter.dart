@@ -215,7 +215,7 @@ class GetxExpansibleGroupsPresenter
     try {
       await loadGroups(commandNumber);
       await saleRequestTempPresenter.load(commandNumber);
-      await printedProductsPresenter.load(commandNumber);
+      await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);
       switch (error) {

@@ -14,11 +14,13 @@ class GetxPrintedProductsPresenter
   final UserValidations userValidations;
   final LoadPrintedProducts loadPrintedProducts;
   final RemovePrintedProduct removePrintedProduct;
+  final TicketIsPermitted ticketIsPermitted;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
     required this.removePrintedProduct,
+    required this.ticketIsPermitted,
   });
 
   @override
@@ -57,11 +59,16 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> load(String commandNumber) async {
+  Future<void> loadPrinted(String commandNumber) async {
     clear();
     mainError = null;
 
     try {
+      await ticketIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: commandNumber,
+      );
+
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
@@ -75,29 +82,20 @@ class GetxPrintedProductsPresenter
       }
       notifyListeners();
     } catch (error) {
-      mainError = UIError.unexpected;
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          throw DomainError.commandNotAvailable;
+        default:
+          throw DomainError.unexpected;
+      }
     }
   }
-
-  PrintedViewModel? _printedProducts;
-  @override
-  PrintedViewModel? get printedProducts => _printedProducts;
 
   @override
   void clear() {
     _printedProducts = null;
     notifyListeners();
   }
-
-  final _isLoading = false.obs;
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) => _isLoading.value = value;
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
 
   @override
   Future<void> validateUserAndPermissionToCancelProducts({
@@ -153,14 +151,59 @@ class GetxPrintedProductsPresenter
     }
   }
 
+  @override
+  Future<void> loadCommandData({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+    homePresenter.updateCommandNumber(commandNumber);
+    clear();
+    expansibleGroupsPresenter.clear();
+    saleRequestTempPresenter.clear();
+
+    try {
+      await loadPrinted(commandNumber);
+      await expansibleGroupsPresenter.loadGroups(commandNumber);
+      await saleRequestTempPresenter.load(commandNumber);
+    } on DomainError catch (error) {
+      homePresenter.updateCommandNumber(null);
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  PrintedViewModel? _printedProducts;
+  @override
+  PrintedViewModel? get printedProducts => _printedProducts;
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) => _isLoading.value = value;
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
+
   bool _canCancelProducts = false;
   @override
   bool get canCancelProducts => _canCancelProducts;
 
   @override
-  void updateCanCancelProducts(bool value) {
-    _canCancelProducts = value;
-  }
+  void updateCanCancelProducts(bool value) => _canCancelProducts = value;
 
   final _alertMessage = Rx<String?>(null);
   @override

@@ -455,4 +455,13 @@ class EntityFactory {
         ProductPriceLookUpCode: faker.randomGenerator.integer(5).toString(),
         Comments: faker.randomGenerator.string(10),
       );
+
+  static TicketIsPermittedEntity makeTicketIsPermittedEntity() =>
+      TicketIsPermittedEntity(
+        TicketAccessControlId: faker.randomGenerator.integer(999),
+        Number: faker.randomGenerator.integer(999).toString(),
+        Barcode: faker.randomGenerator.integer(9999999999999).toString(),
+        DateHourLastRelease: null,
+        RefIdNumber: null,
+      );
 }

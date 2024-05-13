@@ -119,7 +119,15 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,
-                    loadCommandData: () async {},
+                    loadCommandData: () async {
+                      await printedProductsPresenter.loadCommandData(
+                        commandNumber: homePresenter.commandNumber!,
+                        printedProductsPresenter: printedProductsPresenter,
+                        saleRequestTempPresenter: saleRequestTempPresenter,
+                        expansibleGroupsPresenter: expansibleGroupsPresenter,
+                        homePresenter: homePresenter,
+                      );
+                    },
                   );
                 },
               ),

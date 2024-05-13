@@ -561,7 +561,7 @@ void main() {
 
       verify(() => loadExpansibleGroups.load()).called(1);
       verify(() =>
-              printedProductsPresenter.load(homePresenter.commandNumberMock!))
+              printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
           .called(1);
       verify(() =>
               saleRequestTempPresenter.load(homePresenter.commandNumberMock!))

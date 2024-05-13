@@ -34,7 +34,7 @@ class PrintedProductsPresenterSpy extends Mock
         )).thenAnswer((_) async => _);
   }
 
-  When mockGetPrintedProductsCall() => when(() => this.load(any()));
+  When mockGetPrintedProductsCall() => when(() => this.loadPrinted(any()));
 
   mockGetPrintedProducts() {
     this.mockGetPrintedProductsCall().thenAnswer((_) async => _);

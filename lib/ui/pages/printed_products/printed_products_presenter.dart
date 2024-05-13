@@ -13,7 +13,7 @@ abstract class PrintedProductsPresenter
   bool get canCancelProducts;
 
   void updateCanCancelProducts(bool value);
-  Future<void> load(String commandNumber);
+  Future<void> loadPrinted(String commandNumber);
   void clear();
   PrintedViewModel? get printedProducts;
 
@@ -22,6 +22,14 @@ abstract class PrintedProductsPresenter
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
+    required HomePresenter homePresenter,
+  });
+
+  Future<void> loadCommandData({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required HomePresenter homePresenter,
   });
 

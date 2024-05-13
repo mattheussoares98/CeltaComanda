@@ -93,7 +93,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       await expansibleGroupsPresenter.loadGroups(commandNumber);
       await saleRequestTempPresenter.load(commandNumber);
-      await printedProductsPresenter.load(commandNumber);
+      await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       _commandNumber = null;
       switch (error) {

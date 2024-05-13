@@ -343,16 +343,23 @@ void main() {
       await sut.readBarcodeAndSearchProduct();
     });
 
-    test("Should update searchProductController correctly", () async {
+    test("Should update searchProductController correctly on success",
+        () async {
+      barcodeScanner.mockBarcodeScanner("1234567890123");
+      
+      await sut.readBarcodeAndSearchProduct();
+
+      expect(sut.searchProductController.text, "");
+    });
+
+    test("Should update searchProductController correctly on error", () async {
       expect(sut.searchProductController.text, "");
 
       barcodeScanner.mockBarcodeScanner("1234567890123");
+      searchProductByCode.mockError(DomainError.unexpected);
       await sut.readBarcodeAndSearchProduct();
-      expect(sut.searchProductController.text, "1234567890123");
 
-      barcodeScanner.mockBarcodeScanner("");
-      await sut.readBarcodeAndSearchProduct();
-      expect(sut.searchProductController.text, "");
+      expect(sut.searchProductController.text, "1234567890123");
     });
   });
 
@@ -431,9 +438,8 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
-      verify(() =>
-              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => saleRequestTempPresenter
+          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
   });
 
@@ -560,15 +566,15 @@ void main() {
       );
 
       verify(() => loadExpansibleGroups.load()).called(1);
-      verify(() =>
-              printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
-          .called(1);
-      verify(() =>
-              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => printedProductsPresenter
+          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
+      verify(() => saleRequestTempPresenter
+          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
 
-    test("Should update commandNumber with null value on error to LoadCommandData", () async {
+    test(
+        "Should update commandNumber with null value on error to LoadCommandData",
+        () async {
       ticketIsPermitted.mockError(DomainError.unexpected);
 
       await sut.loadCommandData(

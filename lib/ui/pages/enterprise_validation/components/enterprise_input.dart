@@ -21,6 +21,7 @@ class EnterpriseInput extends StatelessWidget {
               icon: Icon(Icons.business, color: Theme.of(context).primaryColor),
               errorText: snapshot.data?.description,
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: presenter.enterpriseNameController,
             onFieldSubmitted: (_) async {
               if (presenter.enterpriseNameController.text.isNotEmpty) {

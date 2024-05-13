@@ -29,8 +29,6 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     if (!_isLoaded) {
       _isLoaded = true;
       await widget.presenter.loadLocalData();
-      widget.presenter.validateEnterpriseInput(
-          widget.presenter.enterpriseNameController.text);
     }
   }
 

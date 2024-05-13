@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
-import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
@@ -21,19 +19,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.localEnterpriseData,
     required this.ticketIsPermitted,
   });
-
-  final _isLoading = false.obs;
-
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.value = value;
-  }
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
 
   @override
   void goToProductsPage(ExpansibleGroupEntity entity) {
@@ -69,43 +54,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 
     await localEnterpriseData.add(emptyEntity);
-  }
-
-  @override
-  Future<void> load({
-    required String commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-  }) async {
-    isLoading = true;
-    mainError = null;
-    _commandNumber = commandNumber;
-    expansibleGroupsPresenter.clear();
-    printedProductsPresenter.clear();
-    saleRequestTempPresenter.clear();
-
-    try {
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
-      );
-
-      await expansibleGroupsPresenter.loadGroups(commandNumber);
-      await saleRequestTempPresenter.loadSaleRequest(commandNumber);
-      await printedProductsPresenter.loadPrinted(commandNumber);
-    } on DomainError catch (error) {
-      _commandNumber = null;
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
-    } finally {
-      isLoading = false;
-    }
   }
 
   String? _commandNumber;

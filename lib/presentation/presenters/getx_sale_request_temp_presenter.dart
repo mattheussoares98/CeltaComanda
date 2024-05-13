@@ -136,15 +136,22 @@ class GetxSaleRequestTempPresenter
         comments: comments,
       );
 
-      await homePresenter.load(
+      await loadCommandData(
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
       );
 
       updateIndexOfSelectedProduct(null);
-    } catch (e) {
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.addComment:
+          mainError = UIError.addComment;
+        default:
+          mainError = UIError.unexpected;
+      }
       mainError = UIError.addComment;
     } finally {
       isLoading = false;
@@ -178,11 +185,12 @@ class GetxSaleRequestTempPresenter
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await homePresenter.load(
+      await loadCommandData(
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
       );
     } catch (e) {
       mainError = UIError.unexpected;

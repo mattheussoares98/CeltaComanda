@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:mocktail/mocktail.dart';
@@ -17,6 +18,6 @@ class UpdateProductCommentSpy extends Mock implements UpdateProductComment {
   void mockUpdateProductComment() =>
       this.mockUpdateProductCommentCall().thenAnswer((_) async => _);
 
-  void mockUpdateProductCommentError() =>
-      this.mockUpdateProductCommentCall().thenThrow(Exception());
+  void mockUpdateProductCommentError(DomainError error) =>
+      this.mockUpdateProductCommentCall().thenThrow(error);
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:provider/provider.dart';
 
-import '../../../main/builders/builders.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
 
@@ -22,7 +21,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   StreamSubscription? homeLoadingSubscription;
-  static bool isDialogShowing = false;
 
   @override
   void dispose() {
@@ -91,23 +89,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       context, expansibleGroupsPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
                       context, expansibleGroupsPresenter.mainErrorStream);
-
-                  homeLoadingSubscription =
-                      homePresenter.isLoadingStream.listen((isLoading) async {
-                    if (isLoading == true && !isDialogShowing) {
-                      isDialogShowing = true;
-                      showLoading(
-                        NavigatorKey.navigatorKey.currentState?.context ??
-                            context,
-                      );
-                    } else {
-                      hideLoading(
-                        NavigatorKey.navigatorKey.currentState?.context ??
-                            context,
-                      );
-                      isDialogShowing = false;
-                    }
-                  });
 
                   if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
                     return SearchDataByCommandNumber(

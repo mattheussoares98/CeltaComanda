@@ -15,12 +15,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   String? commandNumberMock;
 
   HomePresenterSpy() {
-    mockLoadCall().thenAnswer((_) async => _);
     when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
-    when(() => this.isLoadingStream)
-        .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.mainErrorStream)
-        .thenAnswer((_) => mainErrorController.stream);
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
@@ -37,17 +32,6 @@ class HomePresenterSpy extends Mock implements HomePresenter {
           arguments: entity,
         ));
   }
-
-  void mockLoadDataError(DomainError error) {
-    mockLoadCall().thenThrow(error);
-  }
-
-  When mockLoadCall() => when(() => this.load(
-        commandNumber: any(named: "commandNumber"),
-        printedProductsPresenter: any(named: "printedProductsPresenter"),
-        saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
-        expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
-      ));
 
   void mockExpansibleGroupStreamError(DomainError error) {
     mainErrorController.add(UIError.unexpected);

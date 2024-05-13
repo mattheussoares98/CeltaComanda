@@ -40,11 +40,12 @@ class GetxPrintedProductsPresenter
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await homePresenter.load(
+      await loadCommandData(
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
       );
     } on DomainError catch (error) {
       switch (error) {

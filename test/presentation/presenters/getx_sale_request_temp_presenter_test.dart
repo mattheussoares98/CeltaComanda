@@ -267,7 +267,27 @@ void main() {
     });
 
     test("Should emit correct events on UpdateComment throws", () async {
-      updateProductComment.mockUpdateProductCommentError();
+      updateProductComment
+          .mockUpdateProductCommentError(DomainError.unexpected);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateComment(
+        comments: comments,
+        saleRequestProductTempId: saleRequestProductTempId,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should emit correct events on UpdateComment cant add comment",
+        () async {
+      updateProductComment
+          .mockUpdateProductCommentError(DomainError.addComment);
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.addComment]));
@@ -309,12 +329,24 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => homePresenter.load(
+      verify(() => homePresenter
+          .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
+      verify(() => printedProductsPresenter.clear()).called(1);
+      verify(() => expansibleGroupsPresenter.clear()).called(1);
+      verify(() => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: homePresenter.commandNumberMock!)).called(1);
+      verify(() => loadSaleRequestTemp.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: homePresenter.commandNumberMock!,
-            printedProductsPresenter: printedProductsPresenter,
-            saleRequestTempPresenter: sut,
-            expansibleGroupsPresenter: expansibleGroupsPresenter,
           )).called(1);
+      expect(sut.indexOfSelectedProduct, null);
+      expect(
+        sut.saleRequestTemp,
+        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
+      );
     });
   });
 
@@ -377,12 +409,24 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => homePresenter.load(
+      verify(() => homePresenter
+          .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
+      verify(() => printedProductsPresenter.clear()).called(1);
+      verify(() => expansibleGroupsPresenter.clear()).called(1);
+      verify(() => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: homePresenter.commandNumberMock!)).called(1);
+      verify(() => loadSaleRequestTemp.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: homePresenter.commandNumberMock!,
-            printedProductsPresenter: printedProductsPresenter,
-            saleRequestTempPresenter: sut,
-            expansibleGroupsPresenter: expansibleGroupsPresenter,
           )).called(1);
+      expect(sut.indexOfSelectedProduct, null);
+      expect(
+        sut.saleRequestTemp,
+        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
+      );
     });
   });
 

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../main/builders/builders.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -24,7 +23,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   StreamSubscription? mainErrorSubscription;
   StreamSubscription? homeLoadingSubscription;
   StreamSubscription? alertMessageSubscription;
-  static bool isDialogShowing = false;
 
   @override
   void dispose() {
@@ -91,23 +89,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       context, printedProductsPresenter.mainErrorStream);
                   alertMessageSubscription = handleAlertMessage(
                       context, printedProductsPresenter.alertMessageStream);
-
-                  homeLoadingSubscription =
-                      homePresenter.isLoadingStream.listen((isLoading) async {
-                    if (isLoading == true && !isDialogShowing) {
-                      isDialogShowing = true;
-                      showLoading(
-                        NavigatorKey.navigatorKey.currentState?.context ??
-                            context,
-                      );
-                    } else {
-                      hideLoading(
-                        NavigatorKey.navigatorKey.currentState?.context ??
-                            context,
-                      );
-                      isDialogShowing = false;
-                    }
-                  });
 
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedItem(

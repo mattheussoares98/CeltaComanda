@@ -14,7 +14,7 @@ class RequestSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),

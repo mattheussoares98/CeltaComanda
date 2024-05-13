@@ -21,7 +21,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     with UIErrorManager, LoadingManager, AlertMessageManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  StreamSubscription? homeLoadingSubscription;
   StreamSubscription? alertMessageSubscription;
 
   @override
@@ -29,7 +28,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    homeLoadingSubscription?.cancel();
     alertMessageSubscription?.cancel();
   }
 
@@ -52,7 +50,15 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         backgroundColor: const Color(0xFFF1F5F8),
         actions: [
           SearchCommandIcon(
-            loadCommandData: () async {},
+            loadCommandData: () async {
+              await printedProductsPresenter.loadCommandData(
+                commandNumber: homePresenter.commandNumber!,
+                printedProductsPresenter: printedProductsPresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+                expansibleGroupsPresenter: expansibleGroupsPresenter,
+                homePresenter: homePresenter,
+              );
+            },
           )
         ],
         title: Column(

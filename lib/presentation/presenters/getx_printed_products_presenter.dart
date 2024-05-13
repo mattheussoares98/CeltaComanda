@@ -62,7 +62,6 @@ class GetxPrintedProductsPresenter
   @override
   Future<void> loadPrinted(String commandNumber) async {
     clear();
-    mainError = null;
 
     try {
       await ticketIsPermitted.verify(

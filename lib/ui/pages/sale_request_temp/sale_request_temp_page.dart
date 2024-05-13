@@ -48,7 +48,15 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
         backgroundColor: const Color(0xFFF1F5F8),
         actions: [
           SearchCommandIcon(
-            loadCommandData: () async {},
+            loadCommandData: () async {
+              await saleRequestTempPresenter.loadCommandData(
+                commandNumber: homePresenter.commandNumber!,
+                printedProductsPresenter: printedProductsPresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+                expansibleGroupsPresenter: expansibleGroupsPresenter,
+                homePresenter: homePresenter,
+              );
+            },
           )
         ],
         title: Column(
@@ -97,8 +105,12 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,
                     loadCommandData: () async {
-                      await saleRequestTempPresenter.loadSaleRequest(
-                        homePresenter.commandNumber!,
+                      await saleRequestTempPresenter.loadCommandData(
+                        commandNumber: homePresenter.commandNumber!,
+                        printedProductsPresenter: printedProductsPresenter,
+                        saleRequestTempPresenter: saleRequestTempPresenter,
+                        expansibleGroupsPresenter: expansibleGroupsPresenter,
+                        homePresenter: homePresenter,
                       );
                     },
                   );

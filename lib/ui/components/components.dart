@@ -3,7 +3,6 @@ export "./app_theme.dart";
 export './dialog_load_command_data.dart';
 export './error_message.dart';
 export './headline1.dart';
-export './icon_with_number_quantity.dart';
 export './login_header.dart';
 export './loading_image.dart';
 export './loading_dialog.dart';

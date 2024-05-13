@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
-import '../../components/components.dart';
+import 'components/components.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

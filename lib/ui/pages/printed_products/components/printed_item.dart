@@ -126,7 +126,6 @@ class PrintedItem extends StatelessWidget {
                 RequestSummary(
                   totalLiquid: printed.TotalLiquid,
                   comments: printed.Comments,
-                  canUpdateComment: false,
                 ),
                 // Text("Comanda: ${printed.PersonalizedCode}"),
                 // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),

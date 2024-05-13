@@ -1,49 +1,21 @@
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../pages/pages.dart';
-
-class RequestSummary extends StatefulWidget {
+class RequestSummary extends StatelessWidget {
   final String totalLiquid;
   final String? comments;
-  final bool canUpdateComment;
   const RequestSummary({
     required this.totalLiquid,
     required this.comments,
-    required this.canUpdateComment,
     super.key,
   });
 
   @override
-  State<RequestSummary> createState() => _RequestSummaryState();
-}
-
-class _RequestSummaryState extends State<RequestSummary> {
-  TextEditingController commentsController = TextEditingController();
-  FocusNode commentsFocusNode = FocusNode();
-  bool showTextFormField = false;
-
-  void onTapCommentIcon() {
-    setState(() {
-      showTextFormField = !showTextFormField;
-    });
-
-    if (widget.comments != null) {
-      setState(() {
-        commentsController.text = widget.comments!;
-      });
-    }
-
-    Future.delayed(const Duration(milliseconds: 300), () {
-      FocusScope.of(context).requestFocus(commentsFocusNode);
-      commentsController.selection = TextSelection(
-          baseOffset: 0, extentOffset: commentsController.text.length);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Column(
@@ -58,70 +30,13 @@ class _RequestSummaryState extends State<RequestSummary> {
               const Text(
                 'Total',
               ),
-              Text("${widget.totalLiquid} R\$"),
+              Text("$totalLiquid R\$"),
             ],
           ),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              if (widget.canUpdateComment)
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        onTapCommentIcon();
-                      },
-                      child: Icon(
-                        color: Theme.of(context).colorScheme.primary,
-                        widget.comments == null
-                            ? Icons.add_comment_rounded
-                            : Icons.edit,
-                        size: 25,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                  ],
-                ),
-              if (widget.comments != null)
-                Expanded(child: Text("Comentário: ${widget.comments}")),
-            ],
-          ),
-          if (showTextFormField)
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    focusNode: commentsFocusNode,
-                    controller: commentsController,
-                    maxLines: null,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value?.isEmpty == true) {
-                        return "Digite o comentário";
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    saleRequestTempPresenter
-                        .updateLocalSaleRequestComment(commentsController.text);
-                    setState(() {
-                      showTextFormField = false;
-                    });
-                  },
-                  child: const Text(
-                    "Alterar\ncomentário",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
+          if (printedProductsPresenter.printedProducts?.Comments != null)
+            Text(
+                "Comentário: ${printedProductsPresenter.printedProducts!.Comments!}"),
         ],
       ),
     );

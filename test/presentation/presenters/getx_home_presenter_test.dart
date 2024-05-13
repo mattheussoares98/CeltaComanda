@@ -217,7 +217,7 @@ void main() {
       );
 
       verify(() => printedProductsPresenter.loadPrinted(commandNumber)).called(1);
-      verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
+      verify(() => saleRequestTempPresenter.loadSaleRequest(commandNumber)).called(1);
       verify(() => expansibleGroupsPresenter.loadGroups(commandNumber)).called(1);
     });
 

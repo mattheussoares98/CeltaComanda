@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
@@ -14,28 +15,28 @@ class GetxSaleRequestTempPresenter
   final UpdateProductQuantity updateProductQuantity;
   final UpdateProductComment updateProductComment;
   final FinishSaleRequestTemp finishSaleRequestTemp;
+  final TicketIsPermitted ticketIsPermitted;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
     required this.updateProductQuantity,
     required this.updateProductComment,
     required this.finishSaleRequestTemp,
+    required this.ticketIsPermitted,
   });
 
-  SaleRequestTempViewModel? _saleRequestTemp;
   @override
-  SaleRequestTempViewModel? get saleRequestTemp => _saleRequestTemp;
-  set saleRequestTemp(SaleRequestTempViewModel? newValue) {
-    _saleRequestTemp = newValue;
-  }
-
-  @override
-  Future<void> load(String commandNumber) async {
+  Future<void> loadSaleRequest(String commandNumber) async {
     _saleRequestTemp = null;
     notifyListeners();
     mainError = null;
 
     try {
+      await ticketIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: commandNumber,
+      );
+
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
@@ -48,8 +49,13 @@ class GetxSaleRequestTempPresenter
             .sort((a, b) => a.Product.Name.compareTo(b.Product.Name));
       }
       notifyListeners();
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.commandNotAvailable:
+          throw DomainError.commandNotAvailable;
+        default:
+          throw DomainError.unexpected;
+      }
     }
   }
 
@@ -74,7 +80,7 @@ class GetxSaleRequestTempPresenter
         saleRequestProductTempId: saleRequestProductTempId,
       );
 
-      await load(commandNumber);
+      await loadSaleRequest(commandNumber);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -103,7 +109,7 @@ class GetxSaleRequestTempPresenter
         );
       }
 
-      await load(commandNumber);
+      await loadSaleRequest(commandNumber);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -145,10 +151,6 @@ class GetxSaleRequestTempPresenter
     }
   }
 
-  int? _indexOfSelectedProduct;
-  @override
-  int? get indexOfSelectedProduct => _indexOfSelectedProduct;
-
   @override
   void updateIndexOfSelectedProduct(int? index) {
     if (_indexOfSelectedProduct == index) {
@@ -189,18 +191,6 @@ class GetxSaleRequestTempPresenter
     }
   }
 
-  final _isLoading = false.obs;
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.value = value;
-  }
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
-
   @override
   void updateLocalSaleRequestComment(String newComment) {
     _saleRequestTemp = SaleRequestTempViewModel(
@@ -213,5 +203,61 @@ class GetxSaleRequestTempPresenter
       Comments: newComment,
     );
     notifyListeners();
+  }
+
+  @override
+  Future<void> loadCommandData({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+    homePresenter.updateCommandNumber(commandNumber);
+    clear();
+    printedProductsPresenter.clear();
+    expansibleGroupsPresenter.clear();
+
+    try {
+      await loadSaleRequest(commandNumber);
+      await expansibleGroupsPresenter.loadGroups(commandNumber);
+      await printedProductsPresenter.loadPrinted(commandNumber);
+    } on DomainError catch (error) {
+      homePresenter.updateCommandNumber(null);
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  int? _indexOfSelectedProduct;
+  @override
+  int? get indexOfSelectedProduct => _indexOfSelectedProduct;
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+  }
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
+
+  SaleRequestTempViewModel? _saleRequestTemp;
+  @override
+  SaleRequestTempViewModel? get saleRequestTemp => _saleRequestTemp;
+  set saleRequestTemp(SaleRequestTempViewModel? newValue) {
+    _saleRequestTemp = newValue;
   }
 }

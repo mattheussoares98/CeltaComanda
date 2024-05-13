@@ -169,7 +169,7 @@ class GetxPrintedProductsPresenter
     try {
       await loadPrinted(commandNumber);
       await expansibleGroupsPresenter.loadGroups(commandNumber);
-      await saleRequestTempPresenter.load(commandNumber);
+      await saleRequestTempPresenter.loadSaleRequest(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);
       switch (error) {

@@ -9,7 +9,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> load(String commandNumber);
+  Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({
     required String url,
     required int saleRequestProductTempId,
@@ -20,6 +20,14 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required int saleRequestProductTempId,
     required int productQuantity,
     required String commandNumber,
+  });
+
+  Future<void> loadCommandData({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
   });
 
   void clear();

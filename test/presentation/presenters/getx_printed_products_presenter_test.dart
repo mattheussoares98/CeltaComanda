@@ -622,7 +622,7 @@ void main() {
       verify(() => expansibleGroupsPresenter
           .loadGroups(homePresenter.commandNumberMock!)).called(1);
       verify(() =>
-              saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
           .called(1);
     });
 

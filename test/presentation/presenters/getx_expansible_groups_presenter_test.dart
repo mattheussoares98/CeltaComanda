@@ -432,7 +432,7 @@ void main() {
       );
 
       verify(() =>
-              saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
           .called(1);
     });
   });
@@ -564,7 +564,7 @@ void main() {
               printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
           .called(1);
       verify(() =>
-              saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
           .called(1);
     });
 

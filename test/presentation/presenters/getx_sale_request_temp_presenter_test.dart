@@ -1,7 +1,9 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +23,7 @@ void main() {
   late UpdateProductQuantitySpy updateProductQuantity;
   late UpdateProductCommentSpy updateProductComment;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
+  late TicketIsPermittedSpy ticketIsPermitted;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -31,6 +34,7 @@ void main() {
     updateProductQuantity = UpdateProductQuantitySpy();
     updateProductComment = UpdateProductCommentSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
+    ticketIsPermitted = TicketIsPermittedSpy();
   }
 
   void initPresenters() {
@@ -43,6 +47,7 @@ void main() {
       updateProductQuantity: updateProductQuantity,
       updateProductComment: updateProductComment,
       finishSaleRequestTemp: finishSaleRequestTemp,
+      ticketIsPermitted: ticketIsPermitted,
     );
   }
 
@@ -56,10 +61,15 @@ void main() {
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
   }
 
+  void initMockSuccess() {
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+  }
+
   setUp(() {
     initUsecases();
     initPresenters();
     initEntitys();
+    initMockSuccess();
   });
 
   setUpAll(() {
@@ -192,21 +202,29 @@ void main() {
     test("Should emits correct events on LoadSaleRequestTemp", () async {
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.load(homePresenter.commandNumberMock!);
+      await sut.loadSaleRequest(homePresenter.commandNumberMock!);
     });
 
-    test("Should emits correct events on error to LoadSaleRequestTemp",
+    test("Should emits correct events on LoadSaleRequestTemp throws", () async {
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
+
+      final error = sut.loadSaleRequest(homePresenter.commandNumberMock!);
+
+      expect(error, throwsA(DomainError.unexpected));
+    });
+
+    test(
+        "Should emits correct events on ticketIsNotPermitted when LoadSaleRequestTemp",
         () async {
-      loadSaleRequestTemp.mockError();
+      loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      final error = sut.loadSaleRequest(homePresenter.commandNumberMock!);
 
-      await sut.load(homePresenter.commandNumberMock!);
+      expect(error, throwsA(DomainError.commandNotAvailable));
     });
 
     test("Should call LoadSaleRequestTemp with correct values", () async {
-      await sut.load(homePresenter.commandNumberMock!);
+      await sut.loadSaleRequest(homePresenter.commandNumberMock!);
 
       verify(() => loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -365,6 +383,155 @@ void main() {
             saleRequestTempPresenter: sut,
             expansibleGroupsPresenter: expansibleGroupsPresenter,
           )).called(1);
+    });
+  });
+
+  group("Load commandData", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test(
+        "Should emit correct values on loadCommandData throws commandNotAvailable",
+        () async {
+      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should emit correct values on loadCommandData throws", () async {
+      ticketIsPermitted.mockError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should update commandNumber", () async {
+      homePresenter.commandNumberMock = "9999";
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      expect(homePresenter.commandNumberMock, "9999");
+    });
+
+    test("Should call clearData on LoadCommandData call", () async {
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      expect(
+        sut.saleRequestTemp,
+        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
+      );
+
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      expect(sut.saleRequestTemp, null);
+      verify(() => printedProductsPresenter.clear()).called(2);
+      verify(() => expansibleGroupsPresenter.clear()).called(2);
+      //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
+      //certeza que vai colocar dados no expansibleGroups e outro teste com
+      //erro, pra ter certeza que vai chamar a função para limpar a lista de
+      //grupos expansíveis
+    });
+
+    test("Should call ticketIsPermitted only one time", () async {
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: homePresenter.commandNumberMock!,
+          )).called(1);
+    });
+
+    test("Should call loadGroups, saleRequestTemp and PrintedProducts",
+        () async {
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => loadSaleRequestTemp.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            commandNumber: homePresenter.commandNumberMock!,
+          )).called(1);
+      verify(() => expansibleGroupsPresenter
+          .loadGroups(homePresenter.commandNumberMock!)).called(1);
+      verify(() => printedProductsPresenter
+          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
+    });
+
+    test(
+        "Should update commandNumber with null value on error to LoadCommandData",
+        () async {
+      ticketIsPermitted.mockError(DomainError.unexpected);
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => homePresenter.updateCommandNumber(null)).called(1);
     });
   });
 }

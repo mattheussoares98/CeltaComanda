@@ -184,7 +184,7 @@ class GetxExpansibleGroupsPresenter
         entity: entity,
       );
 
-      saleRequestTempPresenter.load(homePresenter.commandNumber!);
+      saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumber!);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.addComment:
@@ -214,7 +214,7 @@ class GetxExpansibleGroupsPresenter
 
     try {
       await loadGroups(commandNumber);
-      await saleRequestTempPresenter.load(commandNumber);
+      await saleRequestTempPresenter.loadSaleRequest(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);

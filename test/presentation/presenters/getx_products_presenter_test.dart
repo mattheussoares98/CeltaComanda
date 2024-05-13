@@ -105,7 +105,7 @@ void main() {
       );
 
       verify(() =>
-              saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
           .called(1);
     });
 
@@ -263,7 +263,7 @@ void main() {
     );
 
     verify(() =>
-            saleRequestTempPresenter.load(homePresenter.commandNumberMock!))
+            saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
         .called(1);
   });
 }

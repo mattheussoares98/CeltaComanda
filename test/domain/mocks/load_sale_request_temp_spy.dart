@@ -19,7 +19,7 @@ class LoadSaleRequestTempSpy extends Mock implements LoadSaleRequestTemp {
     this.mockLoadSaleRequestTempCall().thenAnswer((_) async => entity);
   }
 
-  void mockError() {
-    this.mockLoadSaleRequestTempCall().thenThrow(DomainError.unexpected);
+  void mockError(DomainError error) {
+    this.mockLoadSaleRequestTempCall().thenThrow(error);
   }
 }

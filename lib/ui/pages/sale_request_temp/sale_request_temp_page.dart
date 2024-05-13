@@ -115,7 +115,11 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,
-                    loadCommandData: () async {},
+                    loadCommandData: () async {
+                      await saleRequestTempPresenter.loadSaleRequest(
+                        homePresenter.commandNumber!,
+                      );
+                    },
                   );
                 },
               ),

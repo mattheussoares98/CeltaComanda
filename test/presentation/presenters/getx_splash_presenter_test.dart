@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -50,7 +51,7 @@ void main() {
 
   test('Should go to EnterpriseValidationPage if loadSaleRequestTemp throws',
       () async {
-    loadSaleRequestTemp.mockError();
+    loadSaleRequestTemp.mockError(DomainError.unexpected);
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 

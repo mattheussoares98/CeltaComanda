@@ -86,7 +86,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
         entity: entity,
       );
 
-      await saleRequestTempPresenter.load(homePresenter.commandNumber!);
+      await saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumber!);
 
       return true;
     } on DomainError catch (e) {

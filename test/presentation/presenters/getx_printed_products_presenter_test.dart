@@ -317,10 +317,10 @@ void main() {
   });
 
   group("Manipulate data", () {
-    test('Should emit correct values on success loadData', () async {
-      expectLater(sut.mainErrorStream, emits(null));
-
+    test('Should update printedProducts correctly on loadPrinted success', () async {
       await sut.loadPrinted(homePresenter.commandNumberMock!);
+
+      expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
     });
 
     test("Should call loadPrintedProducts with correct values", () async {

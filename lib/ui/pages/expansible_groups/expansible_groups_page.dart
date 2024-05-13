@@ -20,7 +20,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  StreamSubscription? homeLoadingSubscription;
 
   @override
   void dispose() {

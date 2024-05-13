@@ -28,8 +28,6 @@ class GetxSaleRequestTempPresenter
   @override
   Future<void> loadSaleRequest(String commandNumber) async {
     _saleRequestTemp = null;
-    notifyListeners();
-    mainError = null;
 
     try {
       await ticketIsPermitted.verify(

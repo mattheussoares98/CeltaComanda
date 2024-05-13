@@ -199,10 +199,11 @@ void main() {
   });
 
   group("LoadSaleRequestTemp", () {
-    test("Should emits correct events on LoadSaleRequestTemp", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-
+    test("Should update SaleRequestTemp correctly on LoadSaleRequestTemp", () async {
       await sut.loadSaleRequest(homePresenter.commandNumberMock!);
+
+      expect(sut.saleRequestTemp,
+          SaleRequestTempViewModel.fromEntity(saleRequestTempEntity));
     });
 
     test("Should emits correct events on LoadSaleRequestTemp throws", () async {

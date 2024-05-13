@@ -380,7 +380,9 @@ void main() {
       expect(sut.printedProducts, null);
     });
 
-    test("ShouldCall LoadCommandData on removeProduct success", () async {
+    test("ShouldCall LoadCommandData on removeProduct success and dont update permission to cancel products", () async {
+      sut.updateCanCancelProducts(true);
+
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
@@ -398,6 +400,7 @@ void main() {
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
+      expect(sut.canCancelProducts, true);
     });
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
@@ -508,6 +511,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
     });
 
@@ -526,6 +530,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
     });
 
@@ -542,6 +547,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
     });
 
@@ -554,6 +560,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       expect(homePresenter.commandNumberMock, "9999");
@@ -566,6 +573,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
@@ -578,6 +586,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       expect(sut.printedProducts, null);
@@ -596,6 +605,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -612,6 +622,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       verify(() => loadPrintedProducts.load(
@@ -637,6 +648,7 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
@@ -652,9 +664,26 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
       );
 
       expect(sut.canCancelProducts, false);
+    });
+
+    test("Should NOT update CanCancelProducts to false when loadCommandData",
+        () async {
+      sut.updateCanCancelProducts(true);
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: false,
+      );
+
+      expect(sut.canCancelProducts, true);
     });
   });
 }

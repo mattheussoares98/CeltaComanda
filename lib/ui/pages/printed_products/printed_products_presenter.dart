@@ -31,6 +31,7 @@ abstract class PrintedProductsPresenter
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required HomePresenter homePresenter,
+    required bool clearPermissionToCancelProducts,
   });
 
   Future<void> validateUserAndPermissionToCancelProducts({

@@ -46,6 +46,7 @@ class GetxPrintedProductsPresenter
         saleRequestTempPresenter: saleRequestTempPresenter,
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
+        clearPermissionToCancelProducts: false,
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -158,11 +159,14 @@ class GetxPrintedProductsPresenter
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required HomePresenter homePresenter,
+    required bool clearPermissionToCancelProducts,
   }) async {
     isLoading = true;
     mainError = null;
     homePresenter.updateCommandNumber(commandNumber);
-    updateCanCancelProducts(false);
+    if (clearPermissionToCancelProducts) {
+      updateCanCancelProducts(false);
+    }
     clear();
     expansibleGroupsPresenter.clear();
     saleRequestTempPresenter.clear();
@@ -204,7 +208,10 @@ class GetxPrintedProductsPresenter
   bool get canCancelProducts => _canCancelProducts;
 
   @override
-  void updateCanCancelProducts(bool value) => _canCancelProducts = value;
+  void updateCanCancelProducts(bool value) {
+    _canCancelProducts = value;
+    notifyListeners();
+  }
 
   final _alertMessage = Rx<String?>(null);
   @override

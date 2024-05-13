@@ -11,17 +11,29 @@ import '../../domain/mocks/mocks.dart';
 class PrintedProductsPresenterSpy extends Mock
     implements PrintedProductsPresenter {
   final mainErrorController = StreamController<UIError?>();
+  final isLoadingController = StreamController<bool>();
+  final alertMessageController = StreamController<String?>();
   PrintedViewModel printedProductsMock = EntityFactory.makePrintedViewModel();
   bool canCancelProductsController = false;
 
   PrintedProductsPresenterSpy() {
-    mockGetPrintedProducts();
-    mockClearPrintedProducts();
-
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
     when(() => this.canCancelProducts)
         .thenAnswer((_) => canCancelProductsController);
     when(() => this.updateCanCancelProducts(any())).thenAnswer((_) => _);
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
+    when(() => this.isLoadingStream)
+        .thenAnswer((_) => isLoadingController.stream);
+    when(() => this.alertMessageStream)
+        .thenAnswer((_) => alertMessageController.stream);
+
+    when(() => this.loadPrinted(any())).thenAnswer((_) async => _);
+    when(() => this.clear()).thenAnswer((_) async => _);
+    when(() => this.validateUserAndPermissionToCancelProducts(
+          personalizedCode: any(named: "personalizedCode"),
+          password: any(named: "password"),
+        )).thenAnswer((_) async => _);
   }
 
   void mockRemoveProduct() {
@@ -34,16 +46,16 @@ class PrintedProductsPresenterSpy extends Mock
         )).thenAnswer((_) async => _);
   }
 
-  When mockGetPrintedProductsCall() => when(() => this.loadPrinted(any()));
-
-  mockGetPrintedProducts() {
-    this.mockGetPrintedProductsCall().thenAnswer((_) async => _);
-  }
-
-  When mockClearPrintedProductsCall() => when(() => this.clear());
-
-  mockClearPrintedProducts() {
-    this.mockClearPrintedProductsCall().thenAnswer((_) async => _);
+  void mockLoadCommandData() {
+    when(() => this.loadCommandData(
+          commandNumber: any(named: "commandNumber"),
+          printedProductsPresenter: any(named: "printedProductsPresenter"),
+          saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
+          expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
+          homePresenter: any(named: "homePresenter"),
+          clearPermissionToCancelProducts:
+              any(named: "clearPermissionToCancelProducts"),
+        )).thenAnswer((_) async => _);
   }
 
   @override

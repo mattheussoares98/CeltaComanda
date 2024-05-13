@@ -59,7 +59,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                 saleRequestTempPresenter: saleRequestTempPresenter,
                 expansibleGroupsPresenter: expansibleGroupsPresenter,
                 homePresenter: homePresenter,
+                clearPermissionToCancelProducts: true,
               );
+              printedProductsPresenter.updateCanCancelProducts(false);
             },
           )
         ],
@@ -119,6 +121,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         saleRequestTempPresenter: saleRequestTempPresenter,
                         expansibleGroupsPresenter: expansibleGroupsPresenter,
                         homePresenter: homePresenter,
+                        clearPermissionToCancelProducts: true,
                       );
                     },
                   );

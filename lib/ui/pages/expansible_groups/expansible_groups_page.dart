@@ -111,18 +111,25 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                     children: [
                       const SearchProduct(),
                       if (expansibleGroupsPresenter.searchedProduct != null)
-                        ProductItem(
-                          product: expansibleGroupsPresenter.searchedProduct!,
-                          updateProductQuantity: () async {
-                            await expansibleGroupsPresenter.updateSaleRequest(
-                              productsViewModel:
-                                  expansibleGroupsPresenter.searchedProduct!,
-                              homePresenter: homePresenter,
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
-                            );
-                          },
-                        ),
+                        Builder(builder: (context) {
+                          loadingSubscription = handleLoading(context,
+                              expansibleGroupsPresenter.isLoadingStream);
+                          mainErrorSubscription = handleMainError(context,
+                              expansibleGroupsPresenter.mainErrorStream);
+
+                          return ProductItem(
+                            product: expansibleGroupsPresenter.searchedProduct!,
+                            updateProductQuantity: () async {
+                              await expansibleGroupsPresenter.updateSaleRequest(
+                                productsViewModel:
+                                    expansibleGroupsPresenter.searchedProduct!,
+                                homePresenter: homePresenter,
+                                saleRequestTempPresenter:
+                                    saleRequestTempPresenter,
+                              );
+                            },
+                          );
+                        }),
                       GroupItems(
                         expansibleGroupsViewModel:
                             expansibleGroupsPresenter.expansibleGroups,

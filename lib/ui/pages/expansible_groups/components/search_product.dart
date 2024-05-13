@@ -40,6 +40,9 @@ class _SearchProductState extends State<SearchProduct> {
 
     if (expansibleGroupsPresenter.searchedProduct == null) {
       _requestFocusToFormField();
+    } else {
+      focusNode.unfocus();
+      expansibleGroupsPresenter.searchProductController.clear();
     }
   }
 

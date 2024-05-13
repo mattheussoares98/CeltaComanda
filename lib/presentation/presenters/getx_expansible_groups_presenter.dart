@@ -90,6 +90,7 @@ class GetxExpansibleGroupsPresenter
 
       if (product != null) {
         _searchedProduct = ProductsViewModel.fromEntity(product);
+        notifyListeners();
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -100,7 +101,6 @@ class GetxExpansibleGroupsPresenter
       }
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
 
@@ -184,7 +184,7 @@ class GetxExpansibleGroupsPresenter
         entity: entity,
       );
 
-      saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumber!);
+      await saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumber!);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.addComment:

@@ -32,13 +32,11 @@ class ProductsItems extends StatelessWidget {
           return ProductItem(
             product: productViewModel,
             updateProductQuantity: () async {
-              () async {
-                await productsPresenter.updateSaleRequest(
-                  productsViewModel: productViewModel,
-                  homePresenter: homePresenter,
-                  saleRequestTempPresenter: saleRequestTempPresenter,
-                );
-              };
+              await productsPresenter.updateSaleRequest(
+                productsViewModel: productViewModel,
+                homePresenter: homePresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+              );
             },
           );
         },

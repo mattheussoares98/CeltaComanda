@@ -162,6 +162,7 @@ class GetxPrintedProductsPresenter
     isLoading = true;
     mainError = null;
     homePresenter.updateCommandNumber(commandNumber);
+    updateCanCancelProducts(false);
     clear();
     expansibleGroupsPresenter.clear();
     saleRequestTempPresenter.clear();

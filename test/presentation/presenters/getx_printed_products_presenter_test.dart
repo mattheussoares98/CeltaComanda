@@ -317,7 +317,8 @@ void main() {
   });
 
   group("Manipulate data", () {
-    test('Should update printedProducts correctly on loadPrinted success', () async {
+    test('Should update printedProducts correctly on loadPrinted success',
+        () async {
       await sut.loadPrinted(homePresenter.commandNumberMock!);
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
@@ -639,6 +640,21 @@ void main() {
       );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
+    });
+
+    test("Should update CanCancelProducts to false when loadCommandData",
+        () async {
+      sut.updateCanCancelProducts(true);
+
+      await sut.loadCommandData(
+        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: sut,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        homePresenter: homePresenter,
+      );
+
+      expect(sut.canCancelProducts, false);
     });
   });
 }

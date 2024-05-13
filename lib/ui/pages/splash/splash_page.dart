@@ -12,16 +12,11 @@ class SplashPage extends StatelessWidget {
     presenter.checkApiSaleRequest();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Celta restaurante')),
-      body: Builder(
-        builder: (context) {
-          // handleNavigation(presenter.navigateToStream, clear: true);
-
-          return Image.asset(
-            key: const Key("loading"),
-            'lib/ui/assets/images/aguarde.gif',
-          );
-        },
+      body: Center(
+        child: Image.asset(
+          key: const Key("loading"),
+          'lib/ui/assets/images/aguarde.gif',
+        ),
       ),
     );
   }

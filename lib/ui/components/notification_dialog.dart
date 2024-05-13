@@ -12,6 +12,7 @@ void notificationDialog({
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 8),
           title: Text(
             titleMessage,
             style: const TextStyle(
@@ -31,15 +32,30 @@ void notificationDialog({
                   },
                   child: Text(
                     cancelMessage!,
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                TextButton(
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   onPressed: () async {
                     Navigator.of(context).pop();
                     await onPress();
                   },
-                  child: Text(confirmMessage!),
+                  child: Text(confirmMessage!,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ),
               ],
             )

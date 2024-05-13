@@ -112,5 +112,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   String? get commandNumber => _commandNumber;
   @override
-  set commandNumber(String? value) => _commandNumber = value;
+  void updateCommandNumber(String? value) {
+    _commandNumber = value;
+  }
 }

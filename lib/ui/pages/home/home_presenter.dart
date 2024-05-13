@@ -8,7 +8,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   String? get commandNumber;
-  set commandNumber(String? value);
+  void updateCommandNumber(String? value);
 
   Future<void> clearEnterpriseData();
   Future<void> load({

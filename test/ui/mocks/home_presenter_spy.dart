@@ -28,6 +28,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         )).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));
+    when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
   }
 
   void mockGoToProductsPage(ExpansibleGroupEntity entity) {

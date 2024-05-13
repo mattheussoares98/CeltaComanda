@@ -72,7 +72,7 @@ Future<void> _validateFormAndUpdateCommandNumber({
   bool isValid = formKey.currentState!.validate();
   if (!isValid) return;
 
-  homePresenter.commandNumber = textController.text;
+  homePresenter.updateCommandNumber(textController.text);
 
   Navigator.of(context).pop();
 

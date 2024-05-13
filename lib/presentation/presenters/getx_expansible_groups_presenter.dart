@@ -29,15 +29,6 @@ class GetxExpansibleGroupsPresenter
   });
 
   @override
-  ProductsViewModel? get searchedProduct => _searchedProduct;
-  ProductsViewModel? _searchedProduct;
-
-  final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
-  @override
-  List<ExpansibleGroupsViewModel> get expansibleGroups =>
-      [..._expansibleGroups];
-
-  @override
   void goToProductsPage(ExpansibleGroupEntity entity) {
     navigateTo.navigate(
       pageRoute: PageRoutes.products,
@@ -113,16 +104,6 @@ class GetxExpansibleGroupsPresenter
     }
   }
 
-  final _isLoading = false.obs;
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) => _isLoading.value = value;
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
-
   String _formatPlu(String number) {
     // Adiciona zeros à esquerda para garantir que tenha pelo menos 6 dígitos
     String paddedNumber = number.padLeft(6, '0');
@@ -159,10 +140,6 @@ class GetxExpansibleGroupsPresenter
       isLoading = false;
     }
   }
-
-  final _searchProductController = TextEditingController();
-  @override
-  TextEditingController get searchProductController => _searchProductController;
 
   @override
   Future<void> updateSaleRequest({
@@ -221,30 +198,26 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> loadCommandData(
-      {required String commandNumber,
-      required PrintedProductsPresenter printedProductsPresenter,
-      required SaleRequestTempPresenter saleRequestTempPresenter,
-      required ExpansibleGroupsPresenter expansibleGroupsPresenter,
-      required HomePresenter homePresenter}) async {
+  Future<void> loadCommandData({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
+  }) async {
     isLoading = true;
     mainError = null;
-    homePresenter.commandNumber = commandNumber;
-    expansibleGroupsPresenter.clear();
+    homePresenter.updateCommandNumber(commandNumber);
+    clear();
     printedProductsPresenter.clear();
     saleRequestTempPresenter.clear();
 
     try {
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
-      );
-
-      await expansibleGroupsPresenter.loadGroups(commandNumber);
+      await loadGroups(commandNumber);
       await saleRequestTempPresenter.load(commandNumber);
       await printedProductsPresenter.load(commandNumber);
     } on DomainError catch (error) {
-      homePresenter.commandNumber = null;
+      homePresenter.updateCommandNumber(null);
       switch (error) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
@@ -256,4 +229,27 @@ class GetxExpansibleGroupsPresenter
       isLoading = false;
     }
   }
+
+  @override
+  ProductsViewModel? get searchedProduct => _searchedProduct;
+  ProductsViewModel? _searchedProduct;
+
+  final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
+  @override
+  List<ExpansibleGroupsViewModel> get expansibleGroups =>
+      [..._expansibleGroups];
+
+  final _searchProductController = TextEditingController();
+  @override
+  TextEditingController get searchProductController => _searchProductController;
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) => _isLoading.value = value;
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 }

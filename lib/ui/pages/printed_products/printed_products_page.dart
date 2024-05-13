@@ -52,7 +52,11 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
       ),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
-        actions: const [SearchCommandIcon()],
+        actions: [
+          SearchCommandIcon(
+            loadCommandData: () async {},
+          )
+        ],
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -115,6 +119,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,
+                    loadCommandData: () async {},
                   );
                 },
               ),

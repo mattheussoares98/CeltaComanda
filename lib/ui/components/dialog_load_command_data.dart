@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 
-import '../../pages.dart';
+import '../pages/pages.dart';
 
-Future<void> _validateFormAndSearchCommand({
+Future<void> _validateFormAndUpdateCommandNumber({
   required GlobalKey<FormState> formKey,
   required BuildContext context,
-  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   required HomePresenter homePresenter,
-  required PrintedProductsPresenter printedProductsPresenter,
-  required SaleRequestTempPresenter saleRequestTempPresenter,
   required TextEditingController textController,
+  required Future Function() loadCommandData,
 }) async {
   bool isValid = formKey.currentState!.validate();
   if (!isValid) return;
 
+  homePresenter.commandNumber = textController.text;
+
   Navigator.of(context).pop();
-  await homePresenter.load(
-    commandNumber: textController.text,
-    printedProductsPresenter: printedProductsPresenter,
-    saleRequestTempPresenter: saleRequestTempPresenter,
-    expansibleGroupsPresenter: expansibleGroupsPresenter,
-  );
+
+  await loadCommandData();
 }
 
-void showDialogSearchCommandNumber({
+void dialogLoadCommandData({
   required BuildContext context,
   required ExpansibleGroupsPresenter expansibleGroupsPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required HomePresenter homePresenter,
+  required Future Function() loadCommandData,
 }) {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController textController = TextEditingController();
@@ -43,14 +40,12 @@ void showDialogSearchCommandNumber({
             key: formKey,
             child: TextFormField(
               onFieldSubmitted: (_) async {
-                await _validateFormAndSearchCommand(
+                await _validateFormAndUpdateCommandNumber(
                   formKey: formKey,
                   context: context,
                   homePresenter: homePresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  saleRequestTempPresenter: saleRequestTempPresenter,
-                  expansibleGroupsPresenter: expansibleGroupsPresenter,
                   textController: textController,
+                  loadCommandData: loadCommandData,
                 );
               },
               autofocus: true,
@@ -81,14 +76,12 @@ void showDialogSearchCommandNumber({
           actions: [
             TextButton(
               onPressed: () async {
-                await _validateFormAndSearchCommand(
+                await _validateFormAndUpdateCommandNumber(
                   formKey: formKey,
                   context: context,
                   homePresenter: homePresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  saleRequestTempPresenter: saleRequestTempPresenter,
                   textController: textController,
-                  expansibleGroupsPresenter: expansibleGroupsPresenter,
+                  loadCommandData: loadCommandData,
                 );
               },
               child: const Text("Consultar"),

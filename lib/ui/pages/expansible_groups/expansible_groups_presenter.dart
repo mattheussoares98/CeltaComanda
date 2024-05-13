@@ -15,13 +15,20 @@ abstract class ExpansibleGroupsPresenter
 
   TextEditingController get searchProductController;
 
-  Future<void> load(String commandNumber);
+  Future<void> loadGroups(String commandNumber);
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
   Future<void> updateSaleRequest({
     required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+  });
+  Future<void> loadCommandData({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
   });
 
   void goToProductsPage(ExpansibleGroupEntity entity);

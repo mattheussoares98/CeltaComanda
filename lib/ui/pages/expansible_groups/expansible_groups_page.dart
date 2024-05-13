@@ -48,7 +48,17 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
       ),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
-        actions: const [SearchCommandIcon()],
+        actions: [
+          SearchCommandIcon(loadCommandData: () async {
+            await expansibleGroupsPresenter.loadCommandData(
+              commandNumber: homePresenter.commandNumber!,
+              printedProductsPresenter: printedProductsPresenter,
+              saleRequestTempPresenter: saleRequestTempPresenter,
+              expansibleGroupsPresenter: expansibleGroupsPresenter,
+              homePresenter: homePresenter,
+            );
+          })
+        ],
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,6 +115,15 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
                       homePresenter: homePresenter,
+                      loadCommandData: () async {
+                        await expansibleGroupsPresenter.loadCommandData(
+                          commandNumber: homePresenter.commandNumber!,
+                          printedProductsPresenter: printedProductsPresenter,
+                          saleRequestTempPresenter: saleRequestTempPresenter,
+                          expansibleGroupsPresenter: expansibleGroupsPresenter,
+                          homePresenter: homePresenter,
+                        );
+                      },
                     );
                   }
 

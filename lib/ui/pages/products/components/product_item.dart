@@ -8,7 +8,7 @@ import '../../../../ui/pages/pages.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductsViewModel product;
-  final void Function()? updateProductQuantity;
+  final Future Function() updateProductQuantity;
   const ProductItem({
     required this.product,
     required this.updateProductQuantity,
@@ -105,7 +105,9 @@ class _ProductItemState extends State<ProductItem> {
                         ),
                       ),
                     TextButton(
-                      onPressed: widget.updateProductQuantity,
+                      onPressed: () async {
+                        await widget.updateProductQuantity();
+                      },
                       child: const Text("Adicionar +1"),
                     ),
                   ],

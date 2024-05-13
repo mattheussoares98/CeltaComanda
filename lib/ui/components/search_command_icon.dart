@@ -3,9 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../ui/pages/pages.dart';
+import 'components.dart';
 
 class SearchCommandIcon extends StatefulWidget {
+  final Future Function() loadCommandData;
   const SearchCommandIcon({
+    required this.loadCommandData,
     super.key,
   });
 
@@ -23,14 +26,16 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
 
     return GestureDetector(
       key: const Key("SearchCommandIcon"),
-      onTap: () {
-        showDialogSearchCommandNumber(
-          context: context,
-          expansibleGroupsPresenter: expansibleGroupsPresenterr,
-          printedProductsPresenter: printedProductsPresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          homePresenter: homePresenter,
-        );
+      onTap: () async {
+        dialogLoadCommandData(
+            context: context,
+            expansibleGroupsPresenter: expansibleGroupsPresenterr,
+            printedProductsPresenter: printedProductsPresenter,
+            saleRequestTempPresenter: saleRequestTempPresenter,
+            homePresenter: homePresenter,
+            loadCommandData: () async {
+              await widget.loadCommandData();
+            });
       },
       child: FittedBox(
         child: Stack(
@@ -41,13 +46,16 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
                 color: Colors.grey,
                 size: 28,
               ),
-              onPressed: () {
-                showDialogSearchCommandNumber(
+              onPressed: () async {
+                dialogLoadCommandData(
                   context: context,
                   expansibleGroupsPresenter: expansibleGroupsPresenterr,
                   printedProductsPresenter: printedProductsPresenter,
                   saleRequestTempPresenter: saleRequestTempPresenter,
                   homePresenter: homePresenter,
+                  loadCommandData: () async {
+                    await widget.loadCommandData();
+                  },
                 );
               },
             ),

@@ -46,7 +46,7 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
-  Future<void> load(String commandNumber) async {
+  Future<void> loadGroups(String commandNumber) async {
     clear();
 
     try {
@@ -212,6 +212,43 @@ class GetxExpansibleGroupsPresenter
       switch (e) {
         case DomainError.addComment:
           mainError = UIError.addComment;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<void> loadCommandData(
+      {required String commandNumber,
+      required PrintedProductsPresenter printedProductsPresenter,
+      required SaleRequestTempPresenter saleRequestTempPresenter,
+      required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+      required HomePresenter homePresenter}) async {
+    isLoading = true;
+    mainError = null;
+    homePresenter.commandNumber = commandNumber;
+    expansibleGroupsPresenter.clear();
+    printedProductsPresenter.clear();
+    saleRequestTempPresenter.clear();
+
+    try {
+      await ticketIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: commandNumber,
+      );
+
+      await expansibleGroupsPresenter.loadGroups(commandNumber);
+      await saleRequestTempPresenter.load(commandNumber);
+      await printedProductsPresenter.load(commandNumber);
+    } on DomainError catch (error) {
+      homePresenter.commandNumber = null;
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+          break;
         default:
           mainError = UIError.unexpected;
       }

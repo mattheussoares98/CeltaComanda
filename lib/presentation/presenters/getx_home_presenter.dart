@@ -91,7 +91,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         commandNumber: commandNumber,
       );
 
-      await expansibleGroupsPresenter.load(commandNumber);
+      await expansibleGroupsPresenter.loadGroups(commandNumber);
       await saleRequestTempPresenter.load(commandNumber);
       await printedProductsPresenter.load(commandNumber);
     } on DomainError catch (error) {
@@ -111,4 +111,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   String? _commandNumber;
   @override
   String? get commandNumber => _commandNumber;
+  @override
+  set commandNumber(String? value) => _commandNumber = value;
 }

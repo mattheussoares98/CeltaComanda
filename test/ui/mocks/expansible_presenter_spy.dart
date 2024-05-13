@@ -44,7 +44,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
     mockLoadCall().thenThrow(error);
   }
 
-  When mockLoadCall() => when(() => this.load(any()));
+  When mockLoadCall() => when(() => this.loadGroups(any()));
 
   void mockExpansibleGroupStreamError(DomainError error) {
     mainErrorController.add(UIError.unexpected);

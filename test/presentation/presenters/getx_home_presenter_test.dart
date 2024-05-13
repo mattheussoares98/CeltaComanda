@@ -218,7 +218,7 @@ void main() {
 
       verify(() => printedProductsPresenter.load(commandNumber)).called(1);
       verify(() => saleRequestTempPresenter.load(commandNumber)).called(1);
-      verify(() => expansibleGroupsPresenter.load(commandNumber)).called(1);
+      verify(() => expansibleGroupsPresenter.loadGroups(commandNumber)).called(1);
     });
 
     test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {

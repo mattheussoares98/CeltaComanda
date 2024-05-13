@@ -32,9 +32,11 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
   @override
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    HomePresenter homePresenter = Provider.of(context);
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       drawer: drawer(
@@ -87,6 +89,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
+                  loadingSubscription?.cancel();
+                  mainErrorSubscription?.cancel();
+
                   loadingSubscription = handleLoading(
                       context, saleRequestTempPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(

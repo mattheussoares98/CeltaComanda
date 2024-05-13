@@ -33,10 +33,12 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    HomePresenter homePresenter = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
+    ExpansibleGroupsPresenter expansibleGroupsPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       drawer: drawer(
@@ -89,6 +91,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
+                  loadingSubscription?.cancel();
+                  mainErrorSubscription?.cancel();
+                  alertMessageSubscription?.cancel();
+
                   loadingSubscription = handleLoading(
                       context, printedProductsPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(

@@ -44,7 +44,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => makeGetxPrintedProductsPresenter(),
         ),
-        ChangeNotifierProvider(
+        ListenableProvider(
           create: (_) => makeGetxExpansibleGroupsPresenter(),
         ),
         ListenableProvider(

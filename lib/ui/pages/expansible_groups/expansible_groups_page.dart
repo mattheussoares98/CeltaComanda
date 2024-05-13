@@ -31,9 +31,11 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   @override
   Widget build(BuildContext context) {
     ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    HomePresenter homePresenter = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       drawer: drawer(
@@ -84,6 +86,9 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
+                  loadingSubscription?.cancel();
+                  mainErrorSubscription?.cancel();
+
                   loadingSubscription = handleLoading(
                       context, expansibleGroupsPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
@@ -111,25 +116,18 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                     children: [
                       const SearchProduct(),
                       if (expansibleGroupsPresenter.searchedProduct != null)
-                        Builder(builder: (context) {
-                          loadingSubscription = handleLoading(context,
-                              expansibleGroupsPresenter.isLoadingStream);
-                          mainErrorSubscription = handleMainError(context,
-                              expansibleGroupsPresenter.mainErrorStream);
-
-                          return ProductItem(
-                            product: expansibleGroupsPresenter.searchedProduct!,
-                            updateProductQuantity: () async {
-                              await expansibleGroupsPresenter.updateSaleRequest(
-                                productsViewModel:
-                                    expansibleGroupsPresenter.searchedProduct!,
-                                homePresenter: homePresenter,
-                                saleRequestTempPresenter:
-                                    saleRequestTempPresenter,
-                              );
-                            },
-                          );
-                        }),
+                        ProductItem(
+                          product: expansibleGroupsPresenter.searchedProduct!,
+                          updateProductQuantity: () async {
+                            await expansibleGroupsPresenter.updateSaleRequest(
+                              productsViewModel:
+                                  expansibleGroupsPresenter.searchedProduct!,
+                              homePresenter: homePresenter,
+                              saleRequestTempPresenter:
+                                  saleRequestTempPresenter,
+                            );
+                          },
+                        ),
                       GroupItems(
                         expansibleGroupsViewModel:
                             expansibleGroupsPresenter.expansibleGroups,

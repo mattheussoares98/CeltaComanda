@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -76,16 +77,26 @@ class PrintedItem extends StatelessWidget {
                               child: ProductDetails(
                                 Product: product.Products,
                                 onPressedRemoveProduct: () async {
-                                  await _removeProduct(
-                                    printedProductsPresenter:
-                                        printedProductsPresenter,
-                                    expansibleGroupsPresenter:
-                                        expansibleGroupsPresenter,
-                                    saleRequestTempPresenter:
-                                        saleRequestTempPresenter,
-                                    homePresenter: homePresenter,
-                                    saleRequestProductId:
-                                        product.SaleRequestProductId,
+                                  notificationDialog(
+                                    context: context,
+                                    titleMessage: "Remover produto",
+                                    content: const Text(
+                                      "Deseja realmente remover o produto dos produtos solicitados?",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPress: () async {
+                                      await _removeProduct(
+                                        printedProductsPresenter:
+                                            printedProductsPresenter,
+                                        expansibleGroupsPresenter:
+                                            expansibleGroupsPresenter,
+                                        saleRequestTempPresenter:
+                                            saleRequestTempPresenter,
+                                        homePresenter: homePresenter,
+                                        saleRequestProductId:
+                                            product.SaleRequestProductId,
+                                      );
+                                    },
                                   );
                                 },
                                 validateUserAndCancelProducts: () {

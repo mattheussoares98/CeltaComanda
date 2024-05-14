@@ -98,7 +98,7 @@ class _ProductItemState extends State<ProductItem> {
                                   fontSize: 15,
                                 )),
                             const TextSpan(
-                              text: ' no carrinho',
+                              text: ' pendente(s)',
                               style: TextStyle(color: Colors.red),
                             ),
                           ],

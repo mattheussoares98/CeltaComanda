@@ -9,7 +9,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   int? get indexOfSelectedProduct;
-  double get totalSaleRequestTempPrice;
+  String get totalSaleRequestTempPrice;
 
   Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({

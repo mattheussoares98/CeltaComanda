@@ -268,13 +268,16 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  double get totalSaleRequestTempPrice {
+  String get totalSaleRequestTempPrice {
     if (saleRequestTemp?.Products != null) {
-      return saleRequestTemp!.Products.fold(
-          0.0,
-          (previousValue, element) =>
-              element.toEntity().TotalLiquid + previousValue);
+      return saleRequestTemp!.Products
+          .fold(
+              0.0,
+              (previousValue, element) =>
+                  element.toEntity().TotalLiquid + previousValue)
+          .toStringAsFixed(2)
+          .replaceAll(RegExp(r'\.'), ',');
     }
-    return 0;
+    return "0";
   }
 }

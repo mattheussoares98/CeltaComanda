@@ -43,9 +43,7 @@ class SaleRequestProductsItems extends StatelessWidget {
               },
             ),
             RequestSummary(
-              totalLiquid: saleRequestTempPresenter.totalSaleRequestTempPrice
-                  .toString()
-                  .replaceAll(RegExp(r'\.'), ','),
+              totalLiquid: saleRequestTempPresenter.totalSaleRequestTempPrice,
               comments: saleRequestTempViewModel.Comments,
             ),
           ],

@@ -8,6 +8,8 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   SaleRequestTempViewModel? get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  int? get indexOfSelectedProduct;
+  double get totalSaleRequestTempPrice;
 
   Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({
@@ -50,8 +52,6 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
   });
-
-  int? get indexOfSelectedProduct;
 
   void updateIndexOfSelectedProduct(int? index);
 }

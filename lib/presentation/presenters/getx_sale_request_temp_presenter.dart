@@ -266,4 +266,15 @@ class GetxSaleRequestTempPresenter
   set saleRequestTemp(SaleRequestTempViewModel? newValue) {
     _saleRequestTemp = newValue;
   }
+
+  @override
+  double get totalSaleRequestTempPrice {
+    if (saleRequestTemp?.Products != null) {
+      return saleRequestTemp!.Products.fold(
+          0.0,
+          (previousValue, element) =>
+              element.toEntity().TotalLiquid + previousValue);
+    }
+    return 0;
+  }
 }

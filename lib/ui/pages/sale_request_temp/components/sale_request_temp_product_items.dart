@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
@@ -11,6 +12,8 @@ class SaleRequestProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -40,7 +43,9 @@ class SaleRequestProductsItems extends StatelessWidget {
               },
             ),
             RequestSummary(
-              totalLiquid: saleRequestTempViewModel.TotalLiquid,
+              totalLiquid: saleRequestTempPresenter.totalSaleRequestTempPrice
+                  .toString()
+                  .replaceAll(RegExp(r'\.'), ','),
               comments: saleRequestTempViewModel.Comments,
             ),
           ],

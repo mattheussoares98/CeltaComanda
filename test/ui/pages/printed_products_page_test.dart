@@ -32,7 +32,7 @@ void main() {
           path: PageRoutes.printedProducts,
           page: () => const PrintedProductsPage(),
         ),
-        const Duration(seconds: 1));
+        duration: const Duration(seconds: 1));
   }
 
   tearDown(() {
@@ -52,7 +52,8 @@ void main() {
   //   expect(find.byKey(const Key("loading")), findsNothing);
   // });
 
-  testWidgets('Should updateCanCancelProducts to false when loadCommandData with appBar button',
+  testWidgets(
+      'Should updateCanCancelProducts to false when loadCommandData with appBar button',
       (WidgetTester tester) async {
     // await loadPage(tester);
 

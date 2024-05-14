@@ -167,14 +167,14 @@ class GetxPrintedProductsPresenter
     if (clearPermissionToCancelProducts) {
       updateCanCancelProducts(false);
     }
-    clear();
     expansibleGroupsPresenter.clear();
     saleRequestTempPresenter.clear();
 
     try {
-      await loadPrinted(commandNumber);
       await expansibleGroupsPresenter.loadGroups(commandNumber);
       await saleRequestTempPresenter.loadSaleRequest(commandNumber);
+      clear();
+      await loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);
       switch (error) {

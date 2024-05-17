@@ -7,6 +7,23 @@ class ProductModel {
   final int? InternalCodeOnERP;
   final int? InternalCodeOfProductOnERP;
   final int? EnterpriseId;
+  final int? FamilyCode;
+  final int? DepartmentCode;
+  final int? SectionCode;
+  final int? GroupCode;
+  final int? SubGroupCode;
+  final int? CofinsType;
+  final int? PisType;
+  final int? ProductIsFatherComposition;
+  final double? QuantityMinimumWholeSale;
+  final double? QuantityMinimumWholeSaleByClass;
+  final double? BalanceTare;
+  final double? StockQuantity;
+  final double? SaleRetailPrice;
+  final double? PercImpNBPTNational;
+  final double SaleRetailPraticed;
+  final double? CofinsPercentage;
+  final double? PisPercentage;
   final double? PackingQuantity;
   final double? OfferRetailPrice;
   final double? WholeSalePrice;
@@ -25,30 +42,6 @@ class ProductModel {
   final double? IcmsStave;
   final double? PercImpNBPTState;
   final double? PercImpNBPTMunicipal;
-  final int? CofinsType;
-  final int? PisType;
-  final int? ProductIsFatherComposition;
-  final double? QuantityMinimumWholeSale;
-  final double? QuantityMinimumWholeSaleByClass;
-  final double? BalanceTare;
-  final int? FamilyCode;
-  final int? DepartmentCode;
-  final int? SectionCode;
-  final int? GroupCode;
-  final int? SubGroupCode;
-  final double? StockQuantity;
-  final bool? AllowFractionate;
-  final bool? IsBalance;
-  final bool? CanBeWeightyInPdv;
-  final bool? QuantityInBalance;
-  final bool? AllowQuantityInPdv;
-  final bool? GoesForFastTable;
-  final bool? IsAlcoholicProduct;
-  final double? SaleRetailPrice;
-  final double? PercImpNBPTNational;
-  final double SaleRetailPraticed;
-  final double? CofinsPercentage;
-  final double? PisPercentage;
   final String? CFOP;
   final String? FiscalClassificationNCM;
   final String? TributarySituationCode;
@@ -66,71 +59,80 @@ class ProductModel {
   final String? NameComplete;
   final String? NameReduced;
   final String PackingAbbreviation;
+  final bool? AllowFractionate;
+  final bool? IsBalance;
+  final bool? CanBeWeightyInPdv;
+  final bool? IsPromoCombox;
+  final bool? QuantityInBalance;
+  final bool? AllowQuantityInPdv;
+  final bool? GoesForFastTable;
+  final bool? IsAlcoholicProduct;
 
   ProductModel({
-    required this.SaleRetailPraticed,
-    required this.Name,
     required this.ProductsId,
-    required this.PackingAbbreviation,
+    required this.InternalCodeOnERP,
+    required this.InternalCodeOfProductOnERP,
+    required this.EnterpriseId,
+    required this.FamilyCode,
+    required this.DepartmentCode,
+    required this.SectionCode,
+    required this.GroupCode,
+    required this.SubGroupCode,
+    required this.CofinsType,
+    required this.PisType,
+    required this.ProductIsFatherComposition,
+    required this.QuantityMinimumWholeSale,
+    required this.QuantityMinimumWholeSaleByClass,
+    required this.BalanceTare,
+    required this.StockQuantity,
+    required this.SaleRetailPrice,
+    required this.PercImpNBPTNational,
+    required this.SaleRetailPraticed,
+    required this.CofinsPercentage,
+    required this.PisPercentage,
+    required this.PackingQuantity,
+    required this.OfferRetailPrice,
+    required this.WholeSalePrice,
+    required this.WholeOfferPrice,
+    required this.OfferECommercePrice,
+    required this.SaleECommercePrice,
+    required this.LiquidCost,
+    required this.LiquidCostMiddle,
+    required this.LiquidCostReal,
+    required this.RepositionCost,
+    required this.RepositionCostMiddle,
+    required this.RepositionCostReal,
+    required this.IcmsAliquot,
+    required this.IcmsIVAMargin,
+    required this.IcmsReductionMargin,
+    required this.IcmsStave,
+    required this.PercImpNBPTState,
+    required this.PercImpNBPTMunicipal,
+    required this.CFOP,
+    required this.FiscalClassificationNCM,
+    required this.TributarySituationCode,
+    required this.CSTPisCofins,
+    required this.CodeClass,
+    required this.DepartmentName,
+    required this.SectionName,
+    required this.DateOfLastChanged,
+    required this.GroupName,
+    required this.SaleRetailPraticedString,
     required this.PriceLookupCode,
-    this.InternalCodeOnERP,
-    this.InternalCodeOfProductOnERP,
-    this.EnterpriseId,
-    this.PackingQuantity,
-    this.OfferRetailPrice,
-    this.WholeSalePrice,
-    this.WholeOfferPrice,
-    this.OfferECommercePrice,
-    this.SaleECommercePrice,
-    this.LiquidCost,
-    this.LiquidCostMiddle,
-    this.LiquidCostReal,
-    this.RepositionCost,
-    this.RepositionCostMiddle,
-    this.RepositionCostReal,
-    this.IcmsAliquot,
-    this.IcmsIVAMargin,
-    this.IcmsReductionMargin,
-    this.IcmsStave,
-    this.PercImpNBPTState,
-    this.PercImpNBPTMunicipal,
-    this.CofinsType,
-    this.PisType,
-    this.ProductIsFatherComposition,
-    this.QuantityMinimumWholeSale,
-    this.QuantityMinimumWholeSaleByClass,
-    this.BalanceTare,
-    this.FamilyCode,
-    this.DepartmentCode,
-    this.SectionCode,
-    this.GroupCode,
-    this.SubGroupCode,
-    this.StockQuantity,
-    this.AllowFractionate,
-    this.IsBalance,
-    this.CanBeWeightyInPdv,
-    this.QuantityInBalance,
-    this.AllowQuantityInPdv,
-    this.GoesForFastTable,
-    this.IsAlcoholicProduct,
-    this.SaleRetailPrice,
-    this.PercImpNBPTNational,
-    this.CofinsPercentage,
-    this.PisPercentage,
-    this.CFOP,
-    this.FiscalClassificationNCM,
-    this.TributarySituationCode,
-    this.CSTPisCofins,
-    this.CodeClass,
-    this.DepartmentName,
-    this.SectionName,
-    this.DateOfLastChanged,
-    this.GroupName,
-    this.SaleRetailPraticedString,
-    this.PersonalizedCode,
-    this.EanCode,
-    this.NameComplete,
-    this.NameReduced,
+    required this.PersonalizedCode,
+    required this.EanCode,
+    required this.Name,
+    required this.NameComplete,
+    required this.NameReduced,
+    required this.PackingAbbreviation,
+    required this.AllowFractionate,
+    required this.IsBalance,
+    required this.CanBeWeightyInPdv,
+    required this.IsPromoCombox,
+    required this.QuantityInBalance,
+    required this.AllowQuantityInPdv,
+    required this.GoesForFastTable,
+    required this.IsAlcoholicProduct,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -148,6 +150,7 @@ class ProductModel {
 
     return ProductModel(
       SaleRetailPraticed: json["SaleRetailPraticed"],
+      IsPromoCombox: json["IsPromoCombox"],
       Name: json["Name"],
       ProductsId: json["ProductsId"],
       PackingAbbreviation: json["PackingAbbreviation"],
@@ -216,6 +219,7 @@ class ProductModel {
   factory ProductModel.fromEntity(ProductEntity entity) {
     return ProductModel(
       SaleRetailPraticed: entity.SaleRetailPraticed,
+      IsPromoCombox: entity.IsPromoCombox,
       Name: entity.Name,
       ProductsId: entity.ProductsId,
       PackingAbbreviation: entity.PackingAbbreviation,
@@ -350,6 +354,7 @@ class ProductModel {
   }
 
   ProductEntity toEntity() => ProductEntity(
+        IsPromoCombox: IsPromoCombox,
         ProductsId: ProductsId,
         InternalCodeOnERP: InternalCodeOnERP,
         InternalCodeOfProductOnERP: InternalCodeOfProductOnERP,

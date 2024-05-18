@@ -160,7 +160,7 @@ void main() {
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.combox,
+        pageRoute: PageRoutes.productComposition,
         arguments: int.parse(sut.searchedProduct!.InternalCodeOfProductOnERP!),
       ),
     ).called(1);

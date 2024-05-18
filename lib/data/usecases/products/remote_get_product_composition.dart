@@ -1,11 +1,11 @@
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/helpers/helpers.dart';
-import '../../../infra/http/http.dart';
+import '../../http/http_client.dart';
 import '../../models/models.dart';
 
 class RemoteGetProductComposition extends GetProductComposition {
-  final HttpAdapter httpAdapter;
+  final HttpClient httpAdapter;
 
   RemoteGetProductComposition(this.httpAdapter);
 

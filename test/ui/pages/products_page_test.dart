@@ -72,6 +72,6 @@ void main() {
     presenter.goToComboxPage(internalCodeOnERPCodeFather);
     await tester.pumpAndSettle();
 
-    expect(currentRoute, PageRoutes.combox);
+    expect(currentRoute, PageRoutes.productComposition);
   });
 }

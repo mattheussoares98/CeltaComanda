@@ -270,7 +270,7 @@ void main() {
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.combox,
+        pageRoute: PageRoutes.productComposition,
         arguments: products[0].InternalCodeOfProductOnERP!,
       ),
     ).called(1);

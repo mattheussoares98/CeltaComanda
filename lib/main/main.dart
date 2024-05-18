@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/pages/product_composition/product_composition_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -102,6 +103,11 @@ class App extends StatelessWidget {
           GetPage(
             name: PageRoutes.home,
             page: makeHomePage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.productComposition,
+            page: makeProductCompositionPage,
             transition: Transition.fadeIn,
           ),
         ],

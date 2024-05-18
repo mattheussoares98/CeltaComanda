@@ -1,5 +1,5 @@
 class PageRoutes {
-  static const String combox = "/combox";
+  static const String productComposition = "/product_composition";
   static const String enterpriseValidation = "/enterprise_validation";
   static const String expansibleGroups = "/expansible_groups";
   static const String home = "/home";

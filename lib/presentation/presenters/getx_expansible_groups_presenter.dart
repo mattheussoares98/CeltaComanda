@@ -39,7 +39,7 @@ class GetxExpansibleGroupsPresenter
   @override
   void goToComboxPage(int internalCodeOnERPCodeFather) {
     navigateTo.navigate(
-      pageRoute: PageRoutes.combox,
+      pageRoute: PageRoutes.productComposition,
       arguments: internalCodeOnERPCodeFather,
     );
   }

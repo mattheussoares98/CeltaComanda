@@ -55,7 +55,7 @@ Widget makePage(
       page: () => const HomePage(),
     ),
     GetPage(
-      name: PageRoutes.combox,
+      name: PageRoutes.productComposition,
       page: () => ProductCompositionPage(ProductCompositionPresenterSpy()),
     ),
   ];

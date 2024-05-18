@@ -1,12 +1,12 @@
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../main/builders/builders.dart';
+import '../../components/components.dart';
 import '../../mixins/mixins.dart';
-import 'product_composition_presenter.dart';
 
 class ProductCompositionPage extends StatefulWidget {
   final ProductCompositionPresenter presenter;
@@ -22,7 +22,9 @@ class ProductCompositionPage extends StatefulWidget {
 
 class _ProductCompositionPageState extends State<ProductCompositionPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
+  int? internalCodeOnErp;
   bool _isLoaded = false;
+
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
@@ -30,12 +32,15 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       _isLoaded = true;
 
       if (Get.arguments != null) {
-        await widget.presenter.loadProductComposition(
-          enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          internalCodeOnErp: Get.arguments,
-        );
+        internalCodeOnErp = Get.arguments;
+        Future.delayed(Duration.zero, () async {
+          await widget.presenter.loadProductComposition(
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            internalCodeOnErp: internalCodeOnErp!,
+          );
+        });
       }
     }
   }
@@ -60,27 +65,93 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
           mainErrorSubscription =
               handleMainError(context, widget.presenter.mainErrorStream);
 
-          return GestureDetector(
-            onTap: () => hideKeyboard(context),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: ListenableProvider(
-                      create: (_) => widget.presenter,
-                      child: const Form(
-                        child: Column(
-                          children: [],
-                        ),
-                      ),
+          return StreamBuilder<List<ProductCompositionViewModel>>(
+              stream: widget.presenter.productsCompositionStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return ReloadScreen(
+                    error: '${snapshot.error}',
+                    reload: () async =>
+                        await widget.presenter.loadProductComposition(
+                      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+                      enterpriseId: EnterpriseDataBuilder
+                          .enterpriseDataEntity!.enterpriseId!,
+                      internalCodeOnErp: internalCodeOnErp!,
                     ),
-                  )
-                ],
-              ),
-            ),
-          );
+                  );
+                }
+                if (snapshot.hasData) {
+                  return Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      primary: false,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final productViewModel = snapshot.data![index];
+
+                        return Column(
+                          children: [
+                            if (productViewModel.ProductCompositionId != null)
+                              Text(
+                                "productViewModel.ProductCompositionId: ${productViewModel.ProductCompositionId}",
+                              ),
+                            if (productViewModel.EnterpriseId != null)
+                              Text(
+                                "productViewModel.EnterpriseId: ${productViewModel.EnterpriseId}",
+                              ),
+                            if (productViewModel.InternalCodeOnERPCodeFather !=
+                                null)
+                              Text(
+                                "productViewModel.InternalCodeOnERPCodeFather: ${productViewModel.InternalCodeOnERPCodeFather}",
+                              ),
+                            if (productViewModel.InternalCodeOnERPCodeChild !=
+                                null)
+                              Text(
+                                "productViewModel.InternalCodeOnERPCodeChild: ${productViewModel.InternalCodeOnERPCodeChild}",
+                              ),
+                            if (productViewModel.PluChild != null)
+                              Text(
+                                "productViewModel.PluChild: ${productViewModel.PluChild}",
+                              ),
+                            if (productViewModel.ChildName != null)
+                              Text(
+                                "productViewModel.ChildName: ${productViewModel.ChildName}",
+                              ),
+                            if (productViewModel.Quantity != null)
+                              Text(
+                                "productViewModel.Quantity: ${productViewModel.Quantity}",
+                              ),
+                            if (productViewModel.SalePrice != null)
+                              Text(
+                                "productViewModel.SalePrice: ${productViewModel.SalePrice}",
+                              ),
+                            if (productViewModel.OfferPrice != null)
+                              Text(
+                                "productViewModel.OfferPrice: ${productViewModel.OfferPrice}",
+                              ),
+                            if (productViewModel.IncrementValue != null)
+                              Text(
+                                "productViewModel.IncrementValue: ${productViewModel.IncrementValue}",
+                              ),
+                            if (productViewModel.IsOptionalItem != null)
+                              Text(
+                                "productViewModel.IsOptionalItem: ${productViewModel.IsOptionalItem}",
+                              ),
+                            if (productViewModel.ProductOptions != null)
+                              Text(
+                                "productViewModel.ProductOptions: ${productViewModel.ProductOptions}",
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                }
+                return const SizedBox(height: 0);
+              });
         },
       ),
     );

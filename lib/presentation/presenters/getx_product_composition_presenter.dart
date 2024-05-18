@@ -23,7 +23,7 @@ class GetxProductCompositionPresenter extends GetxController
   Future<void> loadProductComposition({
     required String url,
     required int enterpriseId,
-    required int internalCodeOnERPCodeFather,
+    required int internalCodeOnErp,
   }) async {
     isLoading = true;
     mainError = null;
@@ -31,14 +31,14 @@ class GetxProductCompositionPresenter extends GetxController
       final productsComposition = await getProductComposition.get(
         url: url,
         enterpriseId: enterpriseId,
-        internalCodeOnERPCodeFather: internalCodeOnERPCodeFather,
+        internalCodeOnErp: internalCodeOnErp,
       );
 
-      _productsComposition.subject.add(
-        productsComposition
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
-            .toList(),
-      );
+      final products = productsComposition
+          .map((element) => ProductCompositionViewModel.fromEntity(element))
+          .toList();
+
+      _productsComposition.subject.add(products);
     } catch (e) {
       mainError = UIError.unexpected;
       _productsComposition.subject.add([]);

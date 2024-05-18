@@ -33,7 +33,7 @@ class ProductsItems extends StatelessWidget {
             goToComboxPage: () {
               productsPresenter.goToComboxPage(
                 int.parse(
-                  productViewModel.InternalCodeOfProductOnERP!,
+                  productViewModel.InternalCodeOnERP!,
                 ),
               );
             },

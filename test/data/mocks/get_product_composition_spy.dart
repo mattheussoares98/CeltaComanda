@@ -9,7 +9,7 @@ class GetProductCompositionSpy extends Mock implements GetProductComposition {
   When mockGetProductCompositionCall() => when(() => this.get(
         url: any(named: "url"),
         enterpriseId: any(named: "enterpriseId"),
-        internalCodeOnERPCodeFather: any(named: "internalCodeOnERPCodeFather"),
+        internalCodeOnErp: any(named: "internalCodeOnErp"),
       ));
 
   void mockGetProductComposition(

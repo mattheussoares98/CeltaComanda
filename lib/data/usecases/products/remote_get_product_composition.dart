@@ -13,12 +13,12 @@ class RemoteGetProductComposition extends GetProductComposition {
   Future<List<ProductCompositionEntity>> get({
     required String url,
     required int enterpriseId,
-    required int internalCodeOnERPCodeFather,
+    required int internalCodeOnErp,
   }) async {
     try {
       final response = await httpAdapter.request(
           url:
-              "$url/api/APIProduct/getproductcomposition?_enterpriseId=$enterpriseId&_internalCodeOnERPCodeFather=$internalCodeOnERPCodeFather",
+              "$url/api/APIProduct/getproductcomposition?_enterpriseId=$enterpriseId&_internalCodeOnERPCodeFather=$internalCodeOnErp",
           method: "get");
 
       if (response == null) {
@@ -26,7 +26,7 @@ class RemoteGetProductComposition extends GetProductComposition {
       }
 
       return response
-          .map(
+          .map<ProductCompositionEntity>(
               (element) => ProductCompositionModel.fromJson(element).toEntity())
           .toList();
     } catch (error) {

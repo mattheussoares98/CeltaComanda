@@ -4,6 +4,6 @@ abstract class GetProductComposition {
   Future<List<ProductCompositionEntity>> get({
     required String url,
     required int enterpriseId,
-    required int internalCodeOnERPCodeFather,
+    required int internalCodeOnErp,
   });
 }

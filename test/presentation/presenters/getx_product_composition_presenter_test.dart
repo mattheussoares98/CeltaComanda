@@ -20,7 +20,7 @@ void main() {
   late GetProductCompositionSpy getProductComposition;
 
   late List<ProductCompositionEntity> productsCompositions;
-  late int internalCodeOnERPCodeFather;
+  late int internalCodeOnErp;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -43,7 +43,7 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     productsCompositions = EntityFactory.makeProductsCompositionsEntity();
-    internalCodeOnERPCodeFather = faker.randomGenerator.integer(99);
+    internalCodeOnErp = faker.randomGenerator.integer(99);
   }
 
   setUp(() {
@@ -73,7 +73,7 @@ void main() {
       await sut.loadProductComposition(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        internalCodeOnERPCodeFather: internalCodeOnERPCodeFather,
+        internalCodeOnErp: internalCodeOnErp,
       );
     });
     test('Should emit correct values on getProductsComposition throws',
@@ -89,21 +89,21 @@ void main() {
       await sut.loadProductComposition(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        internalCodeOnERPCodeFather: internalCodeOnERPCodeFather,
+        internalCodeOnErp: internalCodeOnErp,
       );
     });
     test('Should call GetProductComposition with correct values', () async {
       await sut.loadProductComposition(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        internalCodeOnERPCodeFather: internalCodeOnERPCodeFather,
+        internalCodeOnErp: internalCodeOnErp,
       );
 
       verify(() => getProductComposition.get(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            internalCodeOnERPCodeFather: internalCodeOnERPCodeFather,
+            internalCodeOnErp: internalCodeOnErp,
           )).called(1);
     });
   });

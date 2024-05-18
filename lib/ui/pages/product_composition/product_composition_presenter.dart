@@ -11,6 +11,6 @@ abstract class ProductCompositionPresenter implements Listenable {
   Future<void> loadProductComposition({
     required String url,
     required int enterpriseId,
-    required int internalCodeOnERPCodeFather,
+    required int internalCodeOnErp,
   });
 }

@@ -34,7 +34,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          internalCodeOnERPCodeFather: Get.arguments,
+          internalCodeOnErp: Get.arguments,
         );
       }
     }

@@ -28,8 +28,8 @@ class ProductCompositionPresenterSpy extends Mock
     when(() => this.loadProductComposition(
           url: any(named: "url"),
           enterpriseId: any(named: "enterpriseId"),
-          internalCodeOnERPCodeFather:
-              any(named: "internalCodeOnERPCodeFather"),
+          internalCodeOnErp:
+              any(named: "internalCodeOnErp"),
         )).thenAnswer((_) async => _);
   }
 

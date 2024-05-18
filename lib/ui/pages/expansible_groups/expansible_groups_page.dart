@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:provider/provider.dart';
+
+import 'dart:async';
+import 'package:flutter/material.dart';
 
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
-
-import 'package:flutter/material.dart';
-
 import '../../components/components.dart';
 
 class ExpansibleGroupsPage extends StatefulWidget {
@@ -117,6 +115,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       const SearchProduct(),
                       if (expansibleGroupsPresenter.searchedProduct != null)
                         ProductItem(
+                          goToComboxPage: () {
+                            expansibleGroupsPresenter.goToComboxPage(
+                              int.parse(
+                                expansibleGroupsPresenter.searchedProduct!
+                                    .InternalCodeOfProductOnERP!,
+                              ),
+                            );
+                          },
                           product: expansibleGroupsPresenter.searchedProduct!,
                           updateProductQuantity: () async {
                             await expansibleGroupsPresenter.updateSaleRequest(

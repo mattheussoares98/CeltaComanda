@@ -37,6 +37,14 @@ class GetxExpansibleGroupsPresenter
   }
 
   @override
+  void goToComboxPage(int internalCodeOnERPCodeFather) {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.combox,
+      arguments: internalCodeOnERPCodeFather,
+    );
+  }
+
+  @override
   Future<void> loadGroups(String commandNumber) async {
     clear();
 

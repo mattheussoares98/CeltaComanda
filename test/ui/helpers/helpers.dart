@@ -54,6 +54,10 @@ Widget makePage(
       name: PageRoutes.home,
       page: () => const HomePage(),
     ),
+    GetPage(
+      name: PageRoutes.combox,
+      page: () => ProductCompositionPage(ProductCompositionPresenterSpy()),
+    ),
   ];
 
   final index = allPages.indexWhere((element) => element.name == path);

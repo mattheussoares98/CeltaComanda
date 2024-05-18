@@ -5,6 +5,8 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'dart:async';
+
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
 class ProductsPresenterSpy extends Mock implements ProductsPresenter {
@@ -27,6 +29,13 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
       UIError.unexpected.description,
       StackTrace.current,
     );
+  }
+
+  void mockGoToComboxPage(int internalCodeOnERPCodeFather) {
+    when(() => this.goToComboxPage(any())).thenAnswer((_) => Get.offNamed(
+          PageRoutes.combox,
+          arguments: internalCodeOnERPCodeFather,
+        ));
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

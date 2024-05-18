@@ -86,7 +86,8 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
         entity: entity,
       );
 
-      await saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumber!);
+      await saleRequestTempPresenter
+          .loadSaleRequest(homePresenter.commandNumber!);
 
       return true;
     } on DomainError catch (e) {
@@ -101,6 +102,14 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
     } finally {
       isLoading = false;
     }
+  }
+
+  @override
+  void goToComboxPage(int internalCodeOnERPCodeFather) {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.combox,
+      arguments: internalCodeOnERPCodeFather,
+    );
   }
 
   final _isLoading = false.obs;

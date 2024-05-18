@@ -1,7 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:clean_celta_mobile/ui/helpers/errors/errors.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
@@ -104,9 +104,8 @@ void main() {
         saleRequestTempPresenter: saleRequestTempPresenter,
       );
 
-      verify(() =>
-              saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => saleRequestTempPresenter
+          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
 
     test('Should emit UnexpectedError on error to loadSaleRequestTemp',
@@ -262,8 +261,18 @@ void main() {
       saleRequestTempPresenter: saleRequestTempPresenter,
     );
 
-    verify(() =>
-            saleRequestTempPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
-        .called(1);
+    verify(() => saleRequestTempPresenter
+        .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+  });
+
+  test('Should go to ComboxPage', () async {
+    sut.goToComboxPage(products[0].InternalCodeOfProductOnERP!);
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.combox,
+        arguments: products[0].InternalCodeOfProductOnERP!,
+      ),
+    ).called(1);
   });
 }

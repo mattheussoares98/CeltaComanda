@@ -152,6 +152,19 @@ void main() {
       ),
     ).called(1);
   });
+  test('Should go to ComboxPage', () async {
+    await sut.searchProduct(productEan);
+
+    sut.goToComboxPage(
+        int.parse(sut.searchedProduct!.InternalCodeOfProductOnERP!));
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.combox,
+        arguments: int.parse(sut.searchedProduct!.InternalCodeOfProductOnERP!),
+      ),
+    ).called(1);
+  });
 
   test('Should call ticketIsPermitted on load data', () async {
     await sut.loadGroups(homePresenter.commandNumberMock!);
@@ -346,7 +359,7 @@ void main() {
     test("Should update searchProductController correctly on success",
         () async {
       barcodeScanner.mockBarcodeScanner("1234567890123");
-      
+
       await sut.readBarcodeAndSearchProduct();
 
       expect(sut.searchProductController.text, "");

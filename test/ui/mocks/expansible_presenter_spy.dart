@@ -40,6 +40,13 @@ class ExpansibleGroupsPresenterSpy extends Mock
         ));
   }
 
+  void mockGoToComboxPage(int internalCodeOnERPCodeFather) {
+    when(() => this.goToComboxPage(any())).thenAnswer((_) => Get.offNamed(
+          PageRoutes.combox,
+          arguments: internalCodeOnERPCodeFather,
+        ));
+  }
+
   void mockLoadDataError(DomainError error) {
     mockLoadCall().thenThrow(error);
   }

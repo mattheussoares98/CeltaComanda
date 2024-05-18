@@ -1,20 +1,19 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../mixins/mixins.dart';
 import 'product_composition_presenter.dart';
 
 class ProductCompositionPage extends StatefulWidget {
   final ProductCompositionPresenter presenter;
-  final int internalCodeOnERPCodeFather;
 
-  const ProductCompositionPage({
+  const ProductCompositionPage(
+    this.presenter, {
     super.key,
-    required this.presenter,
-    required this.internalCodeOnERPCodeFather,
   });
 
   @override
@@ -29,11 +28,15 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      await widget.presenter.loadProductComposition(
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        internalCodeOnERPCodeFather: widget.internalCodeOnERPCodeFather,
-      );
+
+      if (Get.arguments != null) {
+        await widget.presenter.loadProductComposition(
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          internalCodeOnERPCodeFather: Get.arguments,
+        );
+      }
     }
   }
 

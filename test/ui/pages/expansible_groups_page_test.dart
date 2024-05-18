@@ -1,8 +1,10 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/components/search_data_by_command_number.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/entity_factory.dart';
@@ -18,6 +20,7 @@ void main() {
   late ExpansibleGroupEntity expansibleGroupEntity;
   late HiveSpy hive;
   late BoxSpy mockHiveBox;
+  late int internalCodeOnERPCodeFather;
 
   setUp(() {
     hive = HiveSpy();
@@ -25,6 +28,8 @@ void main() {
     hive.mockOpenBox(mockHiveBox);
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = ExpansibleGroupsPresenterSpy();
+    internalCodeOnERPCodeFather = faker.randomGenerator.integer(100);
+    EnterpriseDataBuilder.enterpriseDataEntity = EntityFactory.makeEnterpriseData();
   });
 
   setUpAll(() {
@@ -80,6 +85,16 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);
+  });
+
+  testWidgets('Should go to ComboxPage', (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.mockGoToComboxPage(internalCodeOnERPCodeFather);
+
+    presenter.goToComboxPage(internalCodeOnERPCodeFather);
+    await tester.pumpAndSettle();
+
+    expect(currentRoute, PageRoutes.combox);
   });
 
   testWidgets(

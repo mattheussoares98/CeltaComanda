@@ -9,9 +9,11 @@ import '../../../../ui/pages/pages.dart';
 class ProductItem extends StatefulWidget {
   final ProductsViewModel product;
   final Future Function() updateProductQuantity;
+  final void Function()? goToComboxPage;
   const ProductItem({
     required this.product,
     required this.updateProductQuantity,
+    required this.goToComboxPage,
     super.key,
   });
 
@@ -104,12 +106,18 @@ class _ProductItemState extends State<ProductItem> {
                           ],
                         ),
                       ),
-                    TextButton(
-                      onPressed: () async {
-                        await widget.updateProductQuantity();
-                      },
-                      child: const Text("Adicionar +1"),
-                    ),
+                    if (widget.product.IsPromoCombox == "true")
+                      TextButton(
+                        onPressed: widget.goToComboxPage,
+                        child: const Text("Montar combo"),
+                      ),
+                    if (widget.product.IsPromoCombox == "false")
+                      TextButton(
+                        onPressed: () async {
+                          await widget.updateProductQuantity();
+                        },
+                        child: const Text("Adicionar +1"),
+                      ),
                   ],
                 ),
               ],

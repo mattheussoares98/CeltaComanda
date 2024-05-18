@@ -30,6 +30,13 @@ class ProductsItems extends StatelessWidget {
           final productViewModel = products[index];
 
           return ProductItem(
+            goToComboxPage: () {
+              productsPresenter.goToComboxPage(
+                int.parse(
+                  productViewModel.InternalCodeOfProductOnERP!,
+                ),
+              );
+            },
             product: productViewModel,
             updateProductQuantity: () async {
               await productsPresenter.updateSaleRequest(

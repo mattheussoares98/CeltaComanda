@@ -10,7 +10,7 @@ class RemoteGetProductComposition extends GetProductComposition {
   RemoteGetProductComposition(this.httpAdapter);
 
   @override
-  Future<ProductCompositionEntity> getProducts({
+  Future<List<ProductCompositionEntity>> getProducts({
     required String url,
     required int enterpriseId,
     required int internalCodeOnERPCodeFather,
@@ -25,7 +25,10 @@ class RemoteGetProductComposition extends GetProductComposition {
         throw DomainError.unexpected;
       }
 
-      return ProductCompositionModel.fromJson(response).toEntity();
+      return response
+          .map(
+              (element) => ProductCompositionModel.fromJson(element).toEntity())
+          .toList();
     } catch (error) {
       throw DomainError.unexpected;
     }

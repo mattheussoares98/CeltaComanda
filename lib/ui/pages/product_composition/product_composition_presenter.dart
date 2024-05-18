@@ -6,7 +6,7 @@ import 'product_composition_view_model.dart';
 abstract class ProductCompositionPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<ProductCompositionViewModel>?> get productsComposition;
+  Stream<List<ProductCompositionViewModel>> get productsCompositionStream;
 
   Future<void> loadProductComposition({
     required String url,

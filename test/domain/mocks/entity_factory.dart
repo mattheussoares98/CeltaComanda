@@ -583,4 +583,35 @@ class EntityFactory {
         DateHourLastRelease: null,
         RefIdNumber: null,
       );
+
+  static List<ProductCompositionEntity> makeProductsCompositionsEntity() => [
+        ProductCompositionEntity(
+          ProductCompositionId: faker.randomGenerator.integer(99),
+          EnterpriseId: faker.randomGenerator.integer(99),
+          InternalCodeOnERPCodeFather: faker.randomGenerator.integer(99),
+          InternalCodeOnERPCodeChild: faker.randomGenerator.integer(99),
+          PluChild: faker.randomGenerator.string(10),
+          ChildName: faker.randomGenerator.string(10),
+          Quantity: faker.randomGenerator.decimal(),
+          SalePrice: faker.randomGenerator.decimal(),
+          OfferPrice: faker.randomGenerator.decimal(),
+          IncrementValue: faker.randomGenerator.decimal(),
+          IsOptionalItem: faker.randomGenerator.boolean(),
+          ProductOptions: faker.randomGenerator.string(10),
+        ),
+        ProductCompositionEntity(
+          ProductCompositionId: faker.randomGenerator.integer(99),
+          EnterpriseId: faker.randomGenerator.integer(99),
+          InternalCodeOnERPCodeFather: faker.randomGenerator.integer(99),
+          InternalCodeOnERPCodeChild: faker.randomGenerator.integer(99),
+          PluChild: faker.randomGenerator.string(10),
+          ChildName: faker.randomGenerator.string(10),
+          Quantity: faker.randomGenerator.decimal(),
+          SalePrice: faker.randomGenerator.decimal(),
+          OfferPrice: faker.randomGenerator.decimal(),
+          IncrementValue: faker.randomGenerator.decimal(),
+          IsOptionalItem: faker.randomGenerator.boolean(),
+          ProductOptions: faker.randomGenerator.string(10),
+        ),
+      ];
 }

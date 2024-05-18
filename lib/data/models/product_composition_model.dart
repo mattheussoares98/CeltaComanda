@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/entities.dart';
 
-class ProductCompositionModel {
+class ProductCompositionModel extends Equatable {
   final int? ProductCompositionId;
   final int? EnterpriseId;
   final int? InternalCodeOnERPCodeFather;
@@ -16,7 +18,7 @@ class ProductCompositionModel {
   final bool? IsOptionalItem;
   final dynamic ProductOptions;
 
-  ProductCompositionModel({
+  const ProductCompositionModel({
     required this.ProductCompositionId,
     required this.EnterpriseId,
     required this.InternalCodeOnERPCodeFather,
@@ -107,4 +109,20 @@ class ProductCompositionModel {
         IsOptionalItem: IsOptionalItem,
         ProductOptions: ProductOptions,
       );
+
+  @override
+  List<Object?> get props => [
+        ProductCompositionId,
+        EnterpriseId,
+        InternalCodeOnERPCodeFather,
+        InternalCodeOnERPCodeChild,
+        PluChild,
+        ChildName,
+        Quantity,
+        SalePrice,
+        OfferPrice,
+        IncrementValue,
+        IsOptionalItem,
+        ProductOptions,
+      ];
 }

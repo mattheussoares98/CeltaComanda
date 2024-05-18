@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -8,8 +9,13 @@ import 'product_composition_presenter.dart';
 
 class ProductCompositionPage extends StatefulWidget {
   final ProductCompositionPresenter presenter;
+  final int internalCodeOnERPCodeFather;
 
-  const ProductCompositionPage(this.presenter, {super.key});
+  const ProductCompositionPage({
+    super.key,
+    required this.presenter,
+    required this.internalCodeOnERPCodeFather,
+  });
 
   @override
   State<ProductCompositionPage> createState() => _ProductCompositionPageState();
@@ -23,7 +29,11 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      await widget.presenter.loadProductComposition();
+      await widget.presenter.loadProductComposition(
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        internalCodeOnERPCodeFather: widget.internalCodeOnERPCodeFather,
+      );
     }
   }
 

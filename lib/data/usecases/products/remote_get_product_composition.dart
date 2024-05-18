@@ -10,7 +10,7 @@ class RemoteGetProductComposition extends GetProductComposition {
   RemoteGetProductComposition(this.httpAdapter);
 
   @override
-  Future<List<ProductCompositionEntity>> getProducts({
+  Future<List<ProductCompositionEntity>> get({
     required String url,
     required int enterpriseId,
     required int internalCodeOnERPCodeFather,

@@ -112,15 +112,31 @@ class _ProductItemState extends State<ProductItem> {
                       ),
                     if (widget.product.IsPromoCombox == "true")
                       TextButton(
+                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          padding: const EdgeInsets.all(3),
+                        ),
                         onPressed: widget.goToComboxPage,
-                        child: const Text("Montar combo"),
+                        child: const Text("Montar\ncombo"),
                       ),
                     if (widget.product.IsPromoCombox == "false")
-                      TextButton(
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          padding: const EdgeInsets.all(0),
+                        ),
                         onPressed: () async {
                           await widget.updateProductQuantity();
                         },
-                        child: const Text("Adicionar +1"),
+                        child: const FittedBox(child: Text("+1", style: TextStyle(fontSize: 17))),
                       ),
                   ],
                 ),

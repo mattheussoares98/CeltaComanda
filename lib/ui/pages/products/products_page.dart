@@ -56,7 +56,7 @@ class _ProductsPageState extends State<ProductsPage>
       expansibleGroupEntity = Get.arguments as ExpansibleGroupEntity;
     }
 
-    HomePresenter homePresenter = Provider.of(context);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     ProductsPresenter productsPresenter = Provider.of(context);
 
     return Scaffold(

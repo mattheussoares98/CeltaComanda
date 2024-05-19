@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../pages/pages.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductsViewModel product;

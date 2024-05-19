@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../components/components.dart';
 
 class ProductsItems extends StatelessWidget {
   final List<ProductsViewModel> products;

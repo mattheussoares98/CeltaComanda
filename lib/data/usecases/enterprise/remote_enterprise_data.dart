@@ -4,6 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../cache/cache.dart';
 
 class RemoteEnterpriseData implements LoadEnterpriseData {
@@ -28,7 +29,7 @@ class RemoteEnterpriseData implements LoadEnterpriseData {
         valueToSearch: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseName
             .toLowerCase()
-            .replaceAll(RegExp(r'\s+'), ''),
+            .removeWhiteSpaces(),
       );
 
       if (querySnapshot.docs.isEmpty) {
@@ -40,6 +41,7 @@ class RemoteEnterpriseData implements LoadEnterpriseData {
           url: data[FirebaseKeys.url.name] ?? "",
           enterpriseId: data[FirebaseKeys.enterpriseId.name],
           enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
+          concentradorUrl: data[FirebaseKeys.concentradorUrl.name] ?? "",
         );
       }
     } catch (error) {

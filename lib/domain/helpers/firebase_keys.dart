@@ -9,4 +9,5 @@ enum FirebaseKeys {
   urlWeb,
   enterpriseName,
   enterpriseId,
+  concentradorUrl,
 }

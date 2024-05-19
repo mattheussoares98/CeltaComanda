@@ -13,4 +13,8 @@ extension StringModifier on String {
   String toBrazilianPrice() {
     return "$this R\$";
   }
+
+  String removeWhiteSpaces() {
+    return replaceAll(RegExp(r'\s+'), '');
+  }
 }

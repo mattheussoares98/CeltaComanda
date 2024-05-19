@@ -1,26 +1,33 @@
+import '../../ui/helpers/helpers.dart';
 import '../../domain/entities/entities.dart';
 
 class EnterpriseValidationModel {
-  final String? url;
   final String enterpriseName;
+  final String? url;
   final int? enterpriseId;
+  final String? concentradorUrl;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
-    this.url,
-    this.enterpriseId,
+    required this.url,
+    required this.enterpriseId,
+    required this.concentradorUrl,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
-    if (!json.keys
-        .toSet()
-        .containsAll(['url', 'enterpriseId', 'enterpriseName'])) {
+    if (!json.keys.toSet().containsAll([
+      'url',
+      'enterpriseId',
+      'enterpriseName',
+      'concentradorUrl',
+    ])) {
       throw Exception();
     }
     return EnterpriseValidationModel(
       url: json['url'],
       enterpriseName: json["enterpriseName"],
       enterpriseId: json["enterpriseId"],
+      concentradorUrl: json["concentradorUrl"],
     );
   }
 
@@ -29,19 +36,19 @@ class EnterpriseValidationModel {
         url: entity.url,
         enterpriseName: entity.enterpriseName,
         enterpriseId: entity.enterpriseId,
+        concentradorUrl: entity.concentradorUrl,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
-        url: url?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
-        enterpriseName:
-            enterpriseName.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
-        enterpriseId: enterpriseId,
-      );
+      enterpriseName: enterpriseName.toLowerCase().removeWhiteSpaces(),
+      url: url!.toLowerCase().removeWhiteSpaces(),
+      enterpriseId: enterpriseId!,
+      concentradorUrl: concentradorUrl!.toLowerCase().removeWhiteSpaces());
 
   Map<String, dynamic> toJson() => {
-        'url': url?.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
-        'enterpriseName':
-            enterpriseName.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+        'enterpriseName': enterpriseName.toLowerCase().removeWhiteSpaces(),
         'enterpriseId': enterpriseId,
+        'url': url?.toLowerCase().removeWhiteSpaces(),
+        'concentradorUrl': concentradorUrl?.toLowerCase().removeWhiteSpaces(),
       };
 }

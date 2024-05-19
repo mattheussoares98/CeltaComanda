@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/data/usecases/enterprise/enterprise.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../../infra/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
@@ -35,11 +36,16 @@ void main() {
       expect(
         enterpriseDataEntity,
         EnterpriseEntity(
-          url: data['url'].toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+          url: data['url'].toString().toLowerCase().removeWhiteSpaces(),
           enterpriseName: data['enterpriseName']
+              .toString()
               .toLowerCase()
-              .replaceAll(RegExp(r'\s+'), ''),
+              .removeWhiteSpaces(),
           enterpriseId: data["enterpriseId"],
+          concentradorUrl: data["concentradorUrl"]
+              .toString()
+              .toLowerCase()
+              .removeWhiteSpaces(),
         ),
       );
     });

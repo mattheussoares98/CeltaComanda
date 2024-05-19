@@ -1,10 +1,10 @@
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../main/builders/builders.dart';
+import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 
@@ -58,6 +58,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Montagem do combo"),
+      ),
       body: Builder(
         builder: (context) {
           loadingSubscription =
@@ -81,74 +84,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                   );
                 }
                 if (snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final productViewModel = snapshot.data![index];
-
-                        return Column(
-                          children: [
-                            if (productViewModel.PluChild != null)
-                              Text(
-                                "productViewModel.PluChild: ${productViewModel.PluChild}",
-                              ),
-                            if (productViewModel.ChildName != null)
-                              Text(
-                                "productViewModel.ChildName: ${productViewModel.ChildName}",
-                              ),
-                            if (productViewModel.Quantity != null)
-                              Text(
-                                "productViewModel.Quantity: ${productViewModel.Quantity}",
-                              ),
-                            if (productViewModel.SalePrice != null)
-                              Text(
-                                "productViewModel.SalePrice: ${productViewModel.SalePrice}",
-                              ),
-                            if (productViewModel.OfferPrice != null)
-                              Text(
-                                "productViewModel.OfferPrice: ${productViewModel.OfferPrice}",
-                              ),
-                            if (productViewModel.IsOptionalItem != null)
-                              Text(
-                                "productViewModel.IsOptionalItem: ${productViewModel.IsOptionalItem}",
-                              ),
-                            // if (productViewModel.ProductCompositionId != null)
-                            //   Text(
-                            //     "productViewModel.ProductCompositionId: ${productViewModel.ProductCompositionId}",
-                            //   ),
-                            // if (productViewModel.EnterpriseId != null)
-                            //   Text(
-                            //     "productViewModel.EnterpriseId: ${productViewModel.EnterpriseId}",
-                            //   ),
-                            // if (productViewModel.InternalCodeOnERPCodeFather !=
-                            //     null)
-                            //   Text(
-                            //     "productViewModel.InternalCodeOnERPCodeFather: ${productViewModel.InternalCodeOnERPCodeFather}",
-                            //   ),
-                            // if (productViewModel.InternalCodeOnERPCodeChild !=
-                            //     null)
-                            //   Text(
-                            //     "productViewModel.InternalCodeOnERPCodeChild: ${productViewModel.InternalCodeOnERPCodeChild}",
-                            //   ),
-                            // if (productViewModel.IncrementValue != null)
-                            //   Text(
-                            //     "productViewModel.IncrementValue: ${productViewModel.IncrementValue}",
-                            //   ),
-                            // if (productViewModel.ProductOptions != null)
-                            //   Text(
-                            //     "productViewModel.ProductOptions: ${productViewModel.ProductOptions}",
-                            //   ),
-                          ],
-                        );
-                      },
-                    ),
-                  );
+                  return FatherItems(snapshot.data!);
                 }
                 return const SizedBox(height: 0);
               });

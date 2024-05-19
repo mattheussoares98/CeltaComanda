@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:equatable/equatable.dart';
 
@@ -18,8 +18,9 @@ class ProductCompositionViewModel extends Equatable {
   final String? IsOptionalItem;
   final String? ProductOptions;
   final List<ProductCompositionViewModel>? childs;
+  int? indexOfSelectedChild;
 
-  const ProductCompositionViewModel({
+  ProductCompositionViewModel({
     required this.ProductCompositionId,
     required this.EnterpriseId,
     required this.InternalCodeOnERPCodeFather,
@@ -32,6 +33,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductOptions,
+    this.indexOfSelectedChild = -1,
     this.childs,
   });
 

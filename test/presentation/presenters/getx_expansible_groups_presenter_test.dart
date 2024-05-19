@@ -155,13 +155,12 @@ void main() {
   test('Should go to ComboxPage', () async {
     await sut.searchProduct(productEan);
 
-    sut.goToComboxPage(
-        int.parse(sut.searchedProduct!.InternalCodeOfProductOnERP!));
+    sut.goToComboxPage(ProductsViewModel.fromEntity(productEntity));
 
     verify(
       () => navigateTo.navigate(
         pageRoute: PageRoutes.productComposition,
-        arguments: int.parse(sut.searchedProduct!.InternalCodeOfProductOnERP!),
+        arguments: ProductsViewModel.fromEntity(productEntity),
       ),
     ).called(1);
   });

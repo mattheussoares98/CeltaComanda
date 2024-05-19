@@ -1,18 +1,18 @@
+import 'package:mocktail/mocktail.dart';
+
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/components/search_data_by_command_number.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/entity_factory.dart';
 import '../../infra/mocks/mocks.dart';
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
-
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late ExpansibleGroupsPresenterSpy presenter;
@@ -20,7 +20,7 @@ void main() {
   late ExpansibleGroupEntity expansibleGroupEntity;
   late HiveSpy hive;
   late BoxSpy mockHiveBox;
-  late int internalCodeOnERPCodeFather;
+  late ProductsViewModel productsViewModel;
 
   setUp(() {
     hive = HiveSpy();
@@ -28,8 +28,9 @@ void main() {
     hive.mockOpenBox(mockHiveBox);
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = ExpansibleGroupsPresenterSpy();
-    internalCodeOnERPCodeFather = faker.randomGenerator.integer(100);
-    EnterpriseDataBuilder.enterpriseDataEntity = EntityFactory.makeEnterpriseData();
+    productsViewModel = EntityFactory.makeProductViewModel();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
   });
 
   setUpAll(() {
@@ -39,6 +40,7 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
     registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -89,9 +91,9 @@ void main() {
 
   testWidgets('Should go to ComboxPage', (WidgetTester tester) async {
     await loadPage(tester);
-    presenter.mockGoToComboxPage(internalCodeOnERPCodeFather);
+    presenter.mockGoToComboxPage(productsViewModel);
 
-    presenter.goToComboxPage(internalCodeOnERPCodeFather);
+    presenter.goToComboxPage(productsViewModel);
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.productComposition);

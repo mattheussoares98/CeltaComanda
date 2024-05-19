@@ -205,7 +205,7 @@ class EntityFactory {
       EanCode: faker.randomGenerator.integer(20).toString(),
       PriceLookupCode: faker.randomGenerator.string(10),
       ProductsId: faker.randomGenerator.integer(10).toString(),
-      InternalCodeOnERP: faker.randomGenerator.string(10),
+      InternalCodeOnERP: faker.randomGenerator.integer(10).toString(),
       InternalCodeOfProductOnERP: faker.randomGenerator.string(10),
       EenterpriseId: faker.randomGenerator.string(10),
       PackingQuantity: faker.randomGenerator.string(10),

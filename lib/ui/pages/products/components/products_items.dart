@@ -32,11 +32,7 @@ class ProductsItems extends StatelessWidget {
 
           return ProductItem(
             goToComboxPage: () {
-              productsPresenter.goToComboxPage(
-                int.parse(
-                  productViewModel.InternalCodeOnERP!,
-                ),
-              );
+              productsPresenter.goToComboxPage(productViewModel);
             },
             product: productViewModel,
             updateProductQuantity: () async {

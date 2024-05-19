@@ -266,12 +266,12 @@ void main() {
   });
 
   test('Should go to ComboxPage', () async {
-    sut.goToComboxPage(products[0].InternalCodeOfProductOnERP!);
+    sut.goToComboxPage(productsViewModel);
 
     verify(
       () => navigateTo.navigate(
         pageRoute: PageRoutes.productComposition,
-        arguments: products[0].InternalCodeOfProductOnERP!,
+        arguments: productsViewModel,
       ),
     ).called(1);
   });

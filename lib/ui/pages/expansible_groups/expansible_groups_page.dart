@@ -117,10 +117,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                         ProductItem(
                           goToComboxPage: () {
                             expansibleGroupsPresenter.goToComboxPage(
-                              int.parse(
-                                expansibleGroupsPresenter.searchedProduct!
-                                    .InternalCodeOfProductOnERP!,
-                              ),
+                              expansibleGroupsPresenter.searchedProduct!,
                             );
                           },
                           product: expansibleGroupsPresenter.searchedProduct!,

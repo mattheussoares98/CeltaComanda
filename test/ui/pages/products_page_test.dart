@@ -1,24 +1,25 @@
+import 'package:mocktail/mocktail.dart';
+
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/mocks.dart';
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
 
-import 'package:flutter_test/flutter_test.dart';
-
 void main() {
   late ProductsPresenterSpy presenter;
 
-  late int internalCodeOnERPCodeFather;
+  late ProductsViewModel products;
 
   setUp(() {
     presenter = ProductsPresenterSpy();
-    internalCodeOnERPCodeFather = faker.randomGenerator.integer(10);
-    EnterpriseDataBuilder.enterpriseDataEntity = EntityFactory.makeEnterpriseData();
+    products = EntityFactory.makeProductViewModel();
+    EnterpriseDataBuilder.enterpriseDataEntity =
+        EntityFactory.makeEnterpriseData();
   });
 
   setUpAll(() {
@@ -33,7 +34,7 @@ void main() {
       makePage(
         path: PageRoutes.products,
         page: () => const ProductsPage(),
-        arguments: faker.randomGenerator.integer(3),
+        arguments: products,
       ),
     );
   }
@@ -67,9 +68,9 @@ void main() {
 
   testWidgets('Should go to ComboxPage', (WidgetTester tester) async {
     await loadPage(tester);
-    presenter.mockGoToComboxPage(internalCodeOnERPCodeFather);
+    presenter.mockGoToComboxPage(products);
 
-    presenter.goToComboxPage(internalCodeOnERPCodeFather);
+    presenter.goToComboxPage(products);
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.productComposition);

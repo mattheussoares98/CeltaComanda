@@ -16,5 +16,5 @@ abstract class ProductsPresenter with ChangeNotifier implements Listenable {
     required SaleRequestTempPresenter saleRequestTempPresenter,
   });
 
-  void goToComboxPage(int internalCodeOnERPCodeFather);
+  void goToComboxPage(ProductsViewModel product);
 }

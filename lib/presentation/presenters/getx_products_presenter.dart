@@ -105,10 +105,10 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
   }
 
   @override
-  void goToComboxPage(int internalCodeOnERPCodeFather) {
+  void goToComboxPage(ProductsViewModel product) {
     navigateTo.navigate(
       pageRoute: PageRoutes.productComposition,
-      arguments: internalCodeOnERPCodeFather,
+      arguments: product,
     );
   }
 

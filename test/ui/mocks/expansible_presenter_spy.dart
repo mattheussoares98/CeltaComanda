@@ -40,10 +40,10 @@ class ExpansibleGroupsPresenterSpy extends Mock
         ));
   }
 
-  void mockGoToComboxPage(int internalCodeOnERPCodeFather) {
+  void mockGoToComboxPage(ProductsViewModel product) {
     when(() => this.goToComboxPage(any())).thenAnswer((_) => Get.offNamed(
           PageRoutes.productComposition,
-          arguments: internalCodeOnERPCodeFather,
+          arguments: product,
         ));
   }
 

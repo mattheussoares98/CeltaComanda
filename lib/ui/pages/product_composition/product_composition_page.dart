@@ -22,7 +22,7 @@ class ProductCompositionPage extends StatefulWidget {
 
 class _ProductCompositionPageState extends State<ProductCompositionPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
-  int? internalCodeOnErp;
+  ProductsViewModel? product;
   bool _isLoaded = false;
 
   @override
@@ -32,13 +32,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       _isLoaded = true;
 
       if (Get.arguments != null) {
-        internalCodeOnErp = Get.arguments;
+        product = Get.arguments;
         Future.delayed(Duration.zero, () async {
           await widget.presenter.loadProductComposition(
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            internalCodeOnErp: internalCodeOnErp!,
+            internalCodeOnErp: int.parse(product!.InternalCodeOnERP!),
           );
         });
       }
@@ -59,7 +59,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Montagem do combo"),
+        title: FittedBox(child: Text(product?.Name ?? "")),
       ),
       body: Builder(
         builder: (context) {
@@ -79,7 +79,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
                       enterpriseId: EnterpriseDataBuilder
                           .enterpriseDataEntity!.enterpriseId!,
-                      internalCodeOnErp: internalCodeOnErp!,
+                      internalCodeOnErp: int.parse(product!.InternalCodeOnERP!),
                     ),
                   );
                 }

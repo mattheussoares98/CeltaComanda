@@ -32,6 +32,6 @@ abstract class ExpansibleGroupsPresenter
   });
 
   void goToProductsPage(ExpansibleGroupEntity entity);
-  void goToComboxPage(int internalCodeOnERPCodeFather);
+  void goToComboxPage(ProductsViewModel product);
   void clear();
 }

@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../../../domain/entities/entities.dart';
 
 class ProductsViewModel extends Equatable {
@@ -225,37 +226,36 @@ class ProductsViewModel extends Equatable {
         NameComplete: entity.NameComplete,
         NameReduced: entity.NameReduced,
         ProductsId: entity.ProductsId.toString(),
-        SaleRetailPrice: entity.SaleRetailPrice?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        SaleRetailPraticed: entity.SaleRetailPraticed.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
+        SaleRetailPrice:
+            entity.SaleRetailPrice?.toStringAsFixed(2).toBrazilianNumber(),
+        SaleRetailPraticed:
+            entity.SaleRetailPraticed.toStringAsFixed(2).toBrazilianNumber(),
         InternalCodeOnERP: entity.InternalCodeOnERP.toString(),
         InternalCodeOfProductOnERP:
             entity.InternalCodeOfProductOnERP.toString(),
         EenterpriseId: entity.EenterpriseId.toString(),
         PackingQuantity: entity.PackingQuantity.toString(),
-        OfferRetailPrice: entity.OfferRetailPrice?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        WholeSalePrice: entity.WholeSalePrice?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        WholeOfferPrice: entity.WholeOfferPrice?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        OfferECommercePrice: entity.OfferECommercePrice?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        SaleECommercePrice: entity.SaleECommercePrice?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        LiquidCost: entity.LiquidCost?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        LiquidCostMiddle: entity.LiquidCostMiddle?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        LiquidCostReal: entity.LiquidCostReal?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        RepositionCost: entity.RepositionCost?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        RepositionCostMiddle: entity.RepositionCostMiddle?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        RepositionCostReal: entity.RepositionCostReal?.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
+        OfferRetailPrice:
+            entity.OfferRetailPrice?.toStringAsFixed(2).toBrazilianNumber(),
+        WholeSalePrice:
+            entity.WholeSalePrice?.toStringAsFixed(2).toBrazilianNumber(),
+        WholeOfferPrice:
+            entity.WholeOfferPrice?.toStringAsFixed(2).toBrazilianNumber(),
+        OfferECommercePrice:
+            entity.OfferECommercePrice?.toStringAsFixed(2).toBrazilianNumber(),
+        SaleECommercePrice:
+            entity.SaleECommercePrice?.toStringAsFixed(2).toBrazilianNumber(),
+        LiquidCost: entity.LiquidCost?.toStringAsFixed(2).toBrazilianNumber(),
+        LiquidCostMiddle:
+            entity.LiquidCostMiddle?.toStringAsFixed(2).toBrazilianNumber(),
+        LiquidCostReal:
+            entity.LiquidCostReal?.toStringAsFixed(2).toBrazilianNumber(),
+        RepositionCost:
+            entity.RepositionCost?.toStringAsFixed(2).toBrazilianNumber(),
+        RepositionCostMiddle:
+            entity.RepositionCostMiddle?.toStringAsFixed(2).toBrazilianNumber(),
+        RepositionCostReal:
+            entity.RepositionCostReal?.toStringAsFixed(2).toBrazilianNumber(),
         IcmsAliquot: entity.IcmsAliquot.toString(),
         IcmsIVAMargin: entity.IcmsIVAMargin.toString(),
         IcmsReductionMargin: entity.IcmsReductionMargin.toString(),

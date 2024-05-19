@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain/entities/entities.dart';
+import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/pages/pages.dart';
 
 class PrintedProductsViewModel extends Equatable {
@@ -53,11 +54,9 @@ class PrintedProductsViewModel extends Equatable {
         Comments: entity.Comments,
         DateHourOfCreation: entity.DateHourOfCreation,
         SaleRequestProductId: entity.SaleRequestProductId.toString(),
-        Value: entity.Value.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
-        Quantity:
-            entity.Quantity.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
-        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
+        Value: entity.Value.toStringAsFixed(2).toBrazilianNumber(),
+        Quantity: entity.Quantity.toStringAsFixed(2).toBrazilianNumber(),
+        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).toBrazilianNumber(),
         UserId: entity.UserId.toString(),
         IsCancelled: entity.IsCancelled.toString(),
         IsDelivered: entity.IsDelivered.toString(),

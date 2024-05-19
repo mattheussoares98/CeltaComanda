@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 
 class SaleRequestTempProductsViewModel extends Equatable {
@@ -52,11 +53,9 @@ class SaleRequestTempProductsViewModel extends Equatable {
         IsPrinted: entity.IsPrinted.toString(),
         SaleRequestTempId: entity.SaleRequestTempId.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
-        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ','),
-        Quantity:
-            entity.Quantity.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
-        Value: entity.Value.toStringAsFixed(2).replaceAll(RegExp(r'\.'), ','),
+        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).toBrazilianNumber(),
+        Quantity: entity.Quantity.toStringAsFixed(2).toBrazilianNumber(),
+        Value: entity.Value.toStringAsFixed(2).toBrazilianNumber(),
         Comments: entity.Comments,
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
       );

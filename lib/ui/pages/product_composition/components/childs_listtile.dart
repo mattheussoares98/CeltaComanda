@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
@@ -43,10 +44,10 @@ class _ChildsListTileState extends State<ChildsListTile> {
                 ),
               if (child?.PluChild != null) Text("PLU ${child!.PluChild!}"),
               if (child?.Quantity != null)
-                Text("Quantidade ${child!.Quantity!}"),
+                Text("Quantidade ${child!.Quantity!.toBrazilianNumber()}"),
               Text(child?.OfferPrice != null && child?.OfferPrice! == "0.0"
-                  ? "Preço ${child?.SalePrice!}"
-                  : "Preço ${child?.OfferPrice!}"),
+                  ? "Preço ${child?.SalePrice!.toBrazilianNumber()}".toBrazilianPrice()
+                  : "Preço ${child?.OfferPrice!.toBrazilianNumber()}".toBrazilianPrice()),
             ],
           ),
         );

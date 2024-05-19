@@ -276,7 +276,7 @@ class GetxSaleRequestTempPresenter
               (previousValue, element) =>
                   element.toEntity().TotalLiquid + previousValue)
           .toStringAsFixed(2)
-          .replaceAll(RegExp(r'\.'), ',');
+          .toBrazilianNumber();
     }
     return "0";
   }

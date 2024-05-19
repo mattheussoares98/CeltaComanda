@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class FatherItems extends StatelessWidget {
@@ -47,12 +48,14 @@ class FatherItems extends StatelessWidget {
                     children: [
                       if (father.Quantity != null)
                         Text(
-                          "Quantidade ${father.Quantity}",
+                          "Quantidade ${father.Quantity!.toBrazilianNumber()}",
                         ),
                       Text(father.OfferPrice != null &&
                               father.OfferPrice! == "0.0"
-                          ? "Preço ${father.SalePrice!}"
-                          : "Preço ${father.OfferPrice!}"),
+                          ? "Preço ${father.SalePrice!.toBrazilianNumber()}"
+                              .toBrazilianPrice()
+                          : "Preço ${father.OfferPrice!.toBrazilianNumber()}"
+                              .toBrazilianPrice()),
                     ],
                   ),
                   if (father.IsOptionalItem != null)

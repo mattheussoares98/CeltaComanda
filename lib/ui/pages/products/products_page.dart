@@ -52,10 +52,6 @@ class _ProductsPageState extends State<ProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    if (Get.arguments != null) {
-      expansibleGroupEntity = Get.arguments as ExpansibleGroupEntity;
-    }
-
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ProductsPresenter productsPresenter = Provider.of(context);
 

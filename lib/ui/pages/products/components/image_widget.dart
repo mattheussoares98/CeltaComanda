@@ -1,15 +1,16 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/material.dart';
 
-import '../products.dart';
-
 class ImageWidget extends StatelessWidget {
-  final ProductsViewModel product;
+  final String? ean;
+  final String plu;
   final double height;
   final double width;
   const ImageWidget({
     this.height = 80,
     this.width = 80,
-    required this.product,
+    required this.ean,
+    required this.plu,
     super.key,
   });
 
@@ -18,7 +19,7 @@ class ImageWidget extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: Image.network(
-        product.SaleRetailPraticed,
+        "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/Images/${ean ?? plu}.PNG",
         width: width,
         height: height,
         fit: BoxFit.cover,

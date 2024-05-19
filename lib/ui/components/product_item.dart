@@ -50,7 +50,11 @@ class _ProductItemState extends State<ProductItem> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ImageWidget(product: product),
+                ImageWidget(
+                  ean: widget.product.EanCode,
+                  plu: widget.product.PriceLookupCode,
+                ),
+                const SizedBox(width: 5),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

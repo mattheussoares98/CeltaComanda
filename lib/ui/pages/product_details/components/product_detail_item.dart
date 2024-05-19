@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/pages.dart';
+
 class ProductDetailItem extends StatelessWidget {
   final ProductsViewModel product;
   final ProductDetailsPresenter presenter;
@@ -12,7 +13,6 @@ class ProductDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // GetxSaleRequestTempPresenter cartPresenter = Provider.of(context);
     return Column(
       children: [
         Expanded(
@@ -23,7 +23,8 @@ class ProductDetailItem extends StatelessWidget {
                 Stack(
                   children: [
                     ImageWidget(
-                      product: product,
+                      ean: product.EanCode,
+                      plu: product.PriceLookupCode,
                       height: 250,
                       width: double.infinity,
                     ),

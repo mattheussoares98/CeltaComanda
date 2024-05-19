@@ -28,15 +28,30 @@ class GetxProductCompositionPresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      final productsComposition = await getProductComposition.get(
+      final fathers = await getProductComposition.get(
         url: url,
         enterpriseId: enterpriseId,
         internalCodeOnErp: internalCodeOnErp,
       );
 
-      final products = productsComposition
-          .map((element) => ProductCompositionViewModel.fromEntity(element))
-          .toList();
+      List<ProductCompositionViewModel> products = [];
+
+      for (var father in fathers) {
+        // Consultando os filhos de cada produto pai
+        final childrenOfFather = await getProductComposition.get(
+          url: url,
+          enterpriseId: enterpriseId,
+          internalCodeOnErp: father.InternalCodeOnERPCodeChild!,
+        );
+
+        final fatherWithChildrens =
+            ProductCompositionViewModel.fromEntityWithChilds(
+          father,
+          childrenOfFather,
+        );
+
+        products.add(fatherWithChildrens);
+      }
 
       _productsComposition.subject.add(products);
     } catch (e) {

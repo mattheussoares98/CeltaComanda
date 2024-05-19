@@ -17,6 +17,7 @@ class ProductCompositionViewModel extends Equatable {
   final String? IncrementValue;
   final String? IsOptionalItem;
   final String? ProductOptions;
+  final List<ProductCompositionViewModel>? childs;
 
   const ProductCompositionViewModel({
     required this.ProductCompositionId,
@@ -31,6 +32,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductOptions,
+    this.childs,
   });
 
   @override
@@ -47,6 +49,7 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue,
         IsOptionalItem,
         ProductOptions,
+        childs,
       ];
 
   factory ProductCompositionViewModel.fromEntity(
@@ -67,6 +70,29 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem.toString(),
         ProductOptions: entity.ProductOptions.toString(),
       );
+
+  factory ProductCompositionViewModel.fromEntityWithChilds(
+    ProductCompositionEntity entity,
+    List<ProductCompositionEntity> childs,
+  ) =>
+      ProductCompositionViewModel(
+          ProductCompositionId: entity.ProductCompositionId.toString(),
+          EnterpriseId: entity.EnterpriseId.toString(),
+          InternalCodeOnERPCodeFather:
+              entity.InternalCodeOnERPCodeFather.toString(),
+          InternalCodeOnERPCodeChild:
+              entity.InternalCodeOnERPCodeChild.toString(),
+          PluChild: entity.PluChild.toString(),
+          ChildName: entity.ChildName.toString(),
+          Quantity: _convertToDouble(entity.Quantity).toString(),
+          SalePrice: _convertToDouble(entity.SalePrice).toString(),
+          OfferPrice: _convertToDouble(entity.OfferPrice).toString(),
+          IncrementValue: _convertToDouble(entity.IncrementValue).toString(),
+          IsOptionalItem: entity.IsOptionalItem.toString(),
+          ProductOptions: entity.ProductOptions.toString(),
+          childs: childs
+              .map((element) => ProductCompositionViewModel.fromEntity(element))
+              .toList());
 
   ProductCompositionEntity toEntity() => ProductCompositionEntity(
         ProductCompositionId: int.tryParse(ProductCompositionId.toString()),

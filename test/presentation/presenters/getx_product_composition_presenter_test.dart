@@ -64,10 +64,14 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       sut.productsCompositionStream.listen(
           expectAsync1((productComposition) => expect(productComposition, [
-                ProductCompositionViewModel.fromEntity(
-                    productComposition[0].toEntity()),
-                ProductCompositionViewModel.fromEntity(
-                    productComposition[1].toEntity()),
+                ProductCompositionViewModel.fromEntityWithChilds(
+                  productComposition[0].toEntity(),
+                  productsCompositions,
+                ),
+                ProductCompositionViewModel.fromEntityWithChilds(
+                  productComposition[1].toEntity(),
+                  productsCompositions,
+                ),
               ])));
 
       await sut.loadProductComposition(

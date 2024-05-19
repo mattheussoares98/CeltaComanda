@@ -94,24 +94,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
                         return Column(
                           children: [
-                            if (productViewModel.ProductCompositionId != null)
-                              Text(
-                                "productViewModel.ProductCompositionId: ${productViewModel.ProductCompositionId}",
-                              ),
-                            if (productViewModel.EnterpriseId != null)
-                              Text(
-                                "productViewModel.EnterpriseId: ${productViewModel.EnterpriseId}",
-                              ),
-                            if (productViewModel.InternalCodeOnERPCodeFather !=
-                                null)
-                              Text(
-                                "productViewModel.InternalCodeOnERPCodeFather: ${productViewModel.InternalCodeOnERPCodeFather}",
-                              ),
-                            if (productViewModel.InternalCodeOnERPCodeChild !=
-                                null)
-                              Text(
-                                "productViewModel.InternalCodeOnERPCodeChild: ${productViewModel.InternalCodeOnERPCodeChild}",
-                              ),
                             if (productViewModel.PluChild != null)
                               Text(
                                 "productViewModel.PluChild: ${productViewModel.PluChild}",
@@ -132,18 +114,36 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                               Text(
                                 "productViewModel.OfferPrice: ${productViewModel.OfferPrice}",
                               ),
-                            if (productViewModel.IncrementValue != null)
-                              Text(
-                                "productViewModel.IncrementValue: ${productViewModel.IncrementValue}",
-                              ),
                             if (productViewModel.IsOptionalItem != null)
                               Text(
                                 "productViewModel.IsOptionalItem: ${productViewModel.IsOptionalItem}",
                               ),
-                            if (productViewModel.ProductOptions != null)
-                              Text(
-                                "productViewModel.ProductOptions: ${productViewModel.ProductOptions}",
-                              ),
+                            // if (productViewModel.ProductCompositionId != null)
+                            //   Text(
+                            //     "productViewModel.ProductCompositionId: ${productViewModel.ProductCompositionId}",
+                            //   ),
+                            // if (productViewModel.EnterpriseId != null)
+                            //   Text(
+                            //     "productViewModel.EnterpriseId: ${productViewModel.EnterpriseId}",
+                            //   ),
+                            // if (productViewModel.InternalCodeOnERPCodeFather !=
+                            //     null)
+                            //   Text(
+                            //     "productViewModel.InternalCodeOnERPCodeFather: ${productViewModel.InternalCodeOnERPCodeFather}",
+                            //   ),
+                            // if (productViewModel.InternalCodeOnERPCodeChild !=
+                            //     null)
+                            //   Text(
+                            //     "productViewModel.InternalCodeOnERPCodeChild: ${productViewModel.InternalCodeOnERPCodeChild}",
+                            //   ),
+                            // if (productViewModel.IncrementValue != null)
+                            //   Text(
+                            //     "productViewModel.IncrementValue: ${productViewModel.IncrementValue}",
+                            //   ),
+                            // if (productViewModel.ProductOptions != null)
+                            //   Text(
+                            //     "productViewModel.ProductOptions: ${productViewModel.ProductOptions}",
+                            //   ),
                           ],
                         );
                       },

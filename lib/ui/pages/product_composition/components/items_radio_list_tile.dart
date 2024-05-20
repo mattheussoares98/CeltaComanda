@@ -33,7 +33,11 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
             : widget.productComposition.childs?[childIndex];
         return RadioListTile<int>(
           value: childIndex,
-          groupValue: widget.productComposition.indexOfSelectedChild,
+          groupValue: widget.isFixedItemInCombox &&
+                  widget.productComposition.IsOptionalItem == "false"
+              //se o item for obrigatório, já seleciona ele automaticamente e não deixa retirar a seleção
+              ? 0
+              : widget.productComposition.indexOfSelectedChild,
           dense: true,
           controlAffinity: ListTileControlAffinity.trailing,
           toggleable: widget.productComposition.IsOptionalItem == "true",

@@ -20,6 +20,24 @@ class FatherItems extends StatelessWidget {
         itemBuilder: (context, fatherIndex) {
           final father = productsCompositions[fatherIndex];
 
+          if (father.childs?.isEmpty == true) {
+            return Card(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ItemsRadioListTile(
+                      isFixedItemInCombox: true,
+                      productComposition: father,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             elevation: 5,
@@ -70,7 +88,10 @@ class FatherItems extends StatelessWidget {
                         fontSize: 17,
                       ),
                     ),
-                  ChildsListTile(father),
+                  ItemsRadioListTile(
+                    isFixedItemInCombox: father.childs?.isEmpty == true,
+                    productComposition: father,
+                  ),
                 ],
               ),
             ),

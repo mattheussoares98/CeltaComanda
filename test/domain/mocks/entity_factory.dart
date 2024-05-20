@@ -548,6 +548,7 @@ class EntityFactory {
             Quantity: faker.randomGenerator.decimal(),
             TotalLiquid: faker.randomGenerator.decimal(),
             Value: faker.randomGenerator.decimal(),
+            Comments: faker.randomGenerator.string(10),
           );
 
   static SaleRequestTempEntity makeSaleRequestTempEntity() =>

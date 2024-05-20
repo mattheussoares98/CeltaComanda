@@ -9,6 +9,7 @@ class UpdateSaleRequestTempProductEntity extends Equatable {
   final int SaleRequestTempId;
   final double TotalLiquid;
   final double Value;
+  final String? Comments;
 
   const UpdateSaleRequestTempProductEntity({
     required this.ProductInternalCodeOnErp,
@@ -17,6 +18,7 @@ class UpdateSaleRequestTempProductEntity extends Equatable {
     required this.SaleRequestTempId,
     required this.TotalLiquid,
     required this.Value,
+    required this.Comments,
   });
 
   @override
@@ -27,5 +29,6 @@ class UpdateSaleRequestTempProductEntity extends Equatable {
         SaleRequestTempId,
         TotalLiquid,
         Value,
+        Comments,
       ];
 }

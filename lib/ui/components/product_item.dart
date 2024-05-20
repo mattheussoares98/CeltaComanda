@@ -10,10 +10,12 @@ class ProductItem extends StatefulWidget {
   final ProductsViewModel product;
   final Future Function() updateProductQuantity;
   final void Function()? goToComboxPage;
+  final TextEditingController productCommentController;
   const ProductItem({
     required this.product,
     required this.updateProductQuantity,
     required this.goToComboxPage,
+    required this.productCommentController,
     super.key,
   });
 
@@ -22,6 +24,8 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
+  bool _showCommentFormField = false;
+
   @override
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
@@ -112,7 +116,7 @@ class _ProductItemState extends State<ProductItem> {
                       ),
                     if (widget.product.IsPromoCombox == "true")
                       TextButton(
-                         style: ElevatedButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -124,22 +128,63 @@ class _ProductItemState extends State<ProductItem> {
                         child: const Text("Montar\ncombo"),
                       ),
                     if (widget.product.IsPromoCombox == "false")
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _showCommentFormField = !_showCommentFormField;
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.add_comment,
+                              color: Colors.green,
+                              size: 30,
+                            ),
                           ),
-                          padding: const EdgeInsets.all(0),
-                        ),
-                        onPressed: () async {
-                          await widget.updateProductQuantity();
-                        },
-                        child: const FittedBox(child: Text("+1", style: TextStyle(fontSize: 17))),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              maximumSize: const Size(30, 30),
+                              minimumSize: const Size(30, 30),
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              padding: const EdgeInsets.all(0),
+                            ),
+                            onPressed: () async {
+                              await widget.updateProductQuantity();
+                            },
+                            child: const FittedBox(
+                                child:
+                                    Text("+1", style: TextStyle(fontSize: 14))),
+                          ),
+                        ],
                       ),
                   ],
                 ),
+              ],
+            ),
+            Row(
+              children: [
+                if (_showCommentFormField)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: TextFormField(
+                        maxLines: null,
+                        decoration: const InputDecoration(
+                          hintText: "Comentário",
+                          label: Text("Comentário"),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 3,
+                            horizontal: 8,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ],

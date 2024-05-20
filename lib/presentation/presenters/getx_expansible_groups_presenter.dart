@@ -155,6 +155,7 @@ class GetxExpansibleGroupsPresenter
     required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required String? productComment,
   }) async {
     isLoading = true;
     mainError = null;
@@ -182,6 +183,7 @@ class GetxExpansibleGroupsPresenter
                 saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
             Value: saleRetailPraticed,
+            Comments: productComment,
           )
         ],
       );

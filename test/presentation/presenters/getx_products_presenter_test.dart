@@ -26,6 +26,7 @@ void main() {
   late int expansibleGroupId;
   late SaleRequestTempEntity saleRequestTempEntity;
   late ProductsViewModel productsViewModel;
+  late String productComment;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -61,6 +62,7 @@ void main() {
         ProductsViewModel.fromEntity(saleRequestTempEntity.Products[0].Product);
     saleRequestTempPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
+    productComment = faker.randomGenerator.string(10);
   }
 
   void mockSuccess() {
@@ -102,6 +104,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
 
       verify(() => saleRequestTempPresenter
@@ -120,6 +123,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
     });
 
@@ -131,6 +135,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
     });
   });
@@ -170,6 +175,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
 
       expect(isUpdated, true);
@@ -181,6 +187,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
 
       expect(isUpdated, false);
@@ -194,6 +201,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
     });
 
@@ -208,6 +216,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
     });
 
@@ -216,6 +225,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
 
       double saleRetailPraticed =
@@ -241,6 +251,7 @@ void main() {
                 .saleRequestTempMock!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
             Value: saleRetailPraticed,
+            Comments: productComment,
           )
         ],
       );
@@ -257,6 +268,7 @@ void main() {
       productsViewModel: productsViewModel,
       homePresenter: homePresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
+      productComment: productComment,
     );
 
     verify(() => saleRequestTempPresenter

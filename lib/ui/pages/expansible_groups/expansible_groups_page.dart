@@ -18,6 +18,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  TextEditingController productCommentController = TextEditingController();
 
   @override
   void dispose() {
@@ -115,6 +116,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       const SearchProduct(),
                       if (expansibleGroupsPresenter.searchedProduct != null)
                         ProductItem(
+                          productCommentController: productCommentController,
                           goToComboxPage: () {
                             expansibleGroupsPresenter.goToComboxPage(
                               expansibleGroupsPresenter.searchedProduct!,
@@ -128,6 +130,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                               homePresenter: homePresenter,
                               saleRequestTempPresenter:
                                   saleRequestTempPresenter,
+                              productComment: "teste",
                             );
                           },
                         ),

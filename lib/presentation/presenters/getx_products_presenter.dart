@@ -48,6 +48,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
     required HomePresenter homePresenter,
     required ProductsViewModel productsViewModel,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required String? productComment,
   }) async {
     isLoading = true;
     mainError = null;
@@ -75,6 +76,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
                 saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
             Value: saleRetailPraticed,
+            Comments: productComment,
           )
         ],
       );

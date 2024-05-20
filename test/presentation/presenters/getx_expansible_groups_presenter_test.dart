@@ -37,6 +37,7 @@ void main() {
   late String productEan;
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
+  late String productComment;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -87,6 +88,7 @@ void main() {
     saleRequestTempPresenter.saleRequestTempMock =
         EntityFactory.makeSaleRequestTempViewModel(
             EntityFactory.makeProductModel());
+    productComment = faker.randomGenerator.string(10);
   }
 
   void mockSuccess() {
@@ -384,6 +386,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
     });
 
@@ -398,6 +401,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
     });
 
@@ -406,6 +410,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
 
       double saleRetailPraticed =
@@ -431,6 +436,7 @@ void main() {
                 .saleRequestTempMock!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
             Value: saleRetailPraticed,
+            Comments: productComment,
           )
         ],
       );
@@ -446,6 +452,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
       );
 
       verify(() => saleRequestTempPresenter

@@ -19,7 +19,7 @@ class UpdateSaleRequestTempModel {
     required this.SaleRequestTempId,
     required this.TotalLiquid,
     required this.Products,
-    this.Comments,
+    required this.Comments,
   });
 
   factory UpdateSaleRequestTempModel.fromJson(Map json) {

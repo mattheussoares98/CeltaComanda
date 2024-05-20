@@ -18,6 +18,7 @@ class ProductsItems extends StatelessWidget {
         Provider.of(context, listen: false);
     ProductsPresenter productsPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    TextEditingController productCommentController = TextEditingController();
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
@@ -31,6 +32,7 @@ class ProductsItems extends StatelessWidget {
           final productViewModel = products[index];
 
           return ProductItem(
+            productCommentController: productCommentController,
             goToComboxPage: () {
               productsPresenter.goToComboxPage(productViewModel);
             },
@@ -40,6 +42,7 @@ class ProductsItems extends StatelessWidget {
                 productsViewModel: productViewModel,
                 homePresenter: homePresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
+                productComment: "teste",
               );
             },
           );

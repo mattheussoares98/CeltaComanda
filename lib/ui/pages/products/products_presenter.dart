@@ -14,6 +14,7 @@ abstract class ProductsPresenter with ChangeNotifier implements Listenable {
     required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required String? productComment,
   });
 
   void goToComboxPage(ProductsViewModel product);

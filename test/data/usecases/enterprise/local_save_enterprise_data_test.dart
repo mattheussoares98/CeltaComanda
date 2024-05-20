@@ -21,6 +21,7 @@ void main() {
       url: faker.internet.httpUrl(),
      enterpriseName: faker.company.name(),
      enterpriseId: faker.randomGenerator.integer(3),
+     concentradorUrl: faker.internet.httpUrl(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

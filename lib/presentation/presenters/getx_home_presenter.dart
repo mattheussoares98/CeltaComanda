@@ -50,6 +50,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName ?? "",
       enterpriseId: null,
       url: null,
+      concentradorUrl: null,
     );
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 

@@ -6,6 +6,7 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../cache/cache.dart';
+import '../../models/models.dart';
 
 class RemoteEnterpriseData implements LoadEnterpriseData {
   final FirebaseStorage firebaseStorage;
@@ -37,12 +38,7 @@ class RemoteEnterpriseData implements LoadEnterpriseData {
       } else {
         Map<String, dynamic> data = querySnapshot.docs[0].data();
 
-        return EnterpriseEntity(
-          url: data[FirebaseKeys.url.name] ?? "",
-          enterpriseId: data[FirebaseKeys.enterpriseId.name],
-          enterpriseName: data[FirebaseKeys.enterpriseName.name] ?? "",
-          concentradorUrl: data[FirebaseKeys.concentradorUrl.name] ?? "",
-        );
+        return EnterpriseValidationModel.fromJson(data).toEntity();
       }
     } catch (error) {
       throw DomainError.enterpriseOrUrlNotFound;

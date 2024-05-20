@@ -41,9 +41,9 @@ class EnterpriseValidationModel {
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
       enterpriseName: enterpriseName.toLowerCase().removeWhiteSpaces(),
-      url: url!.toLowerCase().removeWhiteSpaces(),
-      enterpriseId: enterpriseId!,
-      concentradorUrl: concentradorUrl!.toLowerCase().removeWhiteSpaces());
+      url: url?.toLowerCase().removeWhiteSpaces(),
+      enterpriseId: enterpriseId,
+      concentradorUrl: concentradorUrl?.toLowerCase().removeWhiteSpaces());
 
   Map<String, dynamic> toJson() => {
         'enterpriseName': enterpriseName.toLowerCase().removeWhiteSpaces(),

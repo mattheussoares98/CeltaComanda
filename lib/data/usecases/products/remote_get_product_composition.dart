@@ -25,10 +25,14 @@ class RemoteGetProductComposition extends GetProductComposition {
         throw DomainError.unexpected;
       }
 
-      return response
+      List<ProductCompositionEntity> list = response
           .map<ProductCompositionEntity>(
               (element) => ProductCompositionModel.fromJson(element).toEntity())
           .toList();
+
+      list.sort((a, b) => a.ChildName!.compareTo(b.ChildName!));
+
+      return list;
     } catch (error) {
       throw DomainError.unexpected;
     }

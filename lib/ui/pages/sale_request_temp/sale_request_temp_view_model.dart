@@ -55,7 +55,7 @@ class SaleRequestTempViewModel extends Equatable {
         SaleRequestTempId: int.parse(SaleRequestTempId),
         EnterpriseId: int.parse(EnterpriseId),
         DeliveryControl: int.parse(DeliveryControl),
-        TotalLiquid: double.parse(TotalLiquid.replaceAll(RegExp(r','), '.')),
+        TotalLiquid: TotalLiquid.toDouble(),
         Comments: Comments,
       );
 

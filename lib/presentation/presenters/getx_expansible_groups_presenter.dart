@@ -159,10 +159,8 @@ class GetxExpansibleGroupsPresenter
     isLoading = true;
     mainError = null;
     try {
-      String numberAmerican =
-          productsViewModel.SaleRetailPraticed.replaceAll(RegExp(r','), '.');
-
-      double saleRetailPraticed = double.parse(numberAmerican);
+      double saleRetailPraticed =
+          productsViewModel.SaleRetailPraticed.toDouble();
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: int.parse(

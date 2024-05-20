@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 class PriceAndUpdateProductQuantity extends StatelessWidget {
@@ -32,10 +33,7 @@ class PriceAndUpdateProductQuantity extends StatelessWidget {
               IconButton(
                 key: const Key("IconButtonSubtractQuantity"),
                 icon: Icon(
-                  double.parse(productQuantity.replaceAll(RegExp(r','), '.')) <=
-                          1
-                      ? Icons.delete
-                      : Icons.remove,
+                  productQuantity.toDouble() <= 1 ? Icons.delete : Icons.remove,
                 ),
                 iconSize: 20,
                 visualDensity: VisualDensity.compact,

@@ -17,4 +17,16 @@ extension StringModifier on String {
   String removeWhiteSpaces() {
     return replaceAll(RegExp(r'\s+'), '');
   }
+
+  double toDouble() {
+    RegExp regex = RegExp(r'^\d{1,3}(\.\d{3})*,\d{2}$');
+
+    if (!regex.hasMatch(this)) {
+      return -1.0;
+    }
+
+    String value = replaceAll('.', '').replaceAll(',', '.');
+
+    return double.parse(value);
+  }
 }

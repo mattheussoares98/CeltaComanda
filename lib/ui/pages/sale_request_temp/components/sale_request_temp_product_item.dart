@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../main/builders/builders.dart';
 import '../../../../ui/components/components.dart';
+import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class SaleRequestTempProductItem extends StatefulWidget {
@@ -42,9 +43,8 @@ class _SaleRequestTempProductItemState
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
   }) async {
-    double? quantityDouble =
-        double.tryParse(widget.product.Quantity.replaceAll(RegExp(r','), '.'));
-    int quantityInt = quantityDouble!.toInt();
+    double? quantityDouble = widget.product.Quantity.toDouble();
+    int quantityInt = quantityDouble.toInt();
 
     if (quantityInt > 1) {
       await saleRequestTempPresenter.subtractProductQuantity(

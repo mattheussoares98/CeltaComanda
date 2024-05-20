@@ -65,10 +65,10 @@ class ProductCompositionViewModel extends Equatable {
             entity.InternalCodeOnERPCodeChild.toString(),
         PluChild: entity.PluChild.toString(),
         ChildName: entity.ChildName.toString(),
-        Quantity: _convertToDouble(entity.Quantity).toString(),
-        SalePrice: _convertToDouble(entity.SalePrice).toString(),
-        OfferPrice: _convertToDouble(entity.OfferPrice).toString(),
-        IncrementValue: _convertToDouble(entity.IncrementValue).toString(),
+        Quantity: entity.Quantity?.toDouble().toString(),
+        SalePrice: entity.SalePrice?.toDouble().toString(),
+        OfferPrice: entity.OfferPrice?.toDouble().toString(),
+        IncrementValue: entity.IncrementValue?.toDouble().toString(),
         IsOptionalItem: entity.IsOptionalItem.toString(),
         ProductOptions: entity.ProductOptions.toString(),
       );
@@ -86,10 +86,10 @@ class ProductCompositionViewModel extends Equatable {
               entity.InternalCodeOnERPCodeChild.toString(),
           PluChild: entity.PluChild.toString(),
           ChildName: entity.ChildName.toString(),
-          Quantity: _convertToDouble(entity.Quantity).toString(),
-          SalePrice: _convertToDouble(entity.SalePrice).toString(),
-          OfferPrice: _convertToDouble(entity.OfferPrice).toString(),
-          IncrementValue: _convertToDouble(entity.IncrementValue).toString(),
+          Quantity: entity.Quantity?.toDouble().toString(),
+          SalePrice: entity.SalePrice?.toDouble().toString(),
+          OfferPrice: entity.OfferPrice?.toDouble().toString(),
+          IncrementValue: entity.IncrementValue?.toDouble().toString(),
           IsOptionalItem: entity.IsOptionalItem.toString(),
           ProductOptions: entity.ProductOptions.toString(),
           childs: childs
@@ -112,7 +112,4 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
       );
-
-  static double? _convertToDouble(dynamic value) =>
-      double.tryParse(value.toString().replaceAll(RegExp(r','), '.'));
 }

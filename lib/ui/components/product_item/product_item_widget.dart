@@ -56,7 +56,8 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context, listen: false);
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
@@ -120,17 +121,18 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                           .toDouble(),
                     ),
                     if (widget.productsViewModel.IsPromoCombox == "true")
-                      TextButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 35, 39, 35),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                      GestureDetector(
+                        onTap: widget.goToComboxPage,
+                        child: const Padding(
+                          padding: EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                            "Montar combo",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          padding: const EdgeInsets.all(3),
                         ),
-                        onPressed: widget.goToComboxPage,
-                        child: const Text("Montar\ncombo"),
                       ),
                   ],
                 ),

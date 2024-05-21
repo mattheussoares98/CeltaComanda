@@ -23,6 +23,7 @@ abstract class ExpansibleGroupsPresenter
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required String? productComment,
+    required double productQuantity,
   });
   Future<void> loadCommandData({
     required String commandNumber,

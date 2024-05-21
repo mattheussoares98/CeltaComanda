@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
-  final String productQuantity;
-  final String price;
-  final String totalLiquid;
+  final double productQuantity;
+  final double price;
+  final double totalLiquid;
   const PriceAndUpdateProductQuantity({
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
@@ -17,16 +17,18 @@ class PriceAndUpdateProductQuantity extends StatefulWidget {
   });
 
   @override
-  State<PriceAndUpdateProductQuantity> createState() => _PriceAndUpdateProductQuantityState();
+  State<PriceAndUpdateProductQuantity> createState() =>
+      _PriceAndUpdateProductQuantityState();
 }
 
-class _PriceAndUpdateProductQuantityState extends State<PriceAndUpdateProductQuantity> {
+class _PriceAndUpdateProductQuantityState
+    extends State<PriceAndUpdateProductQuantity> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("${widget.price} R\$"),
+        Text("${widget.price.toString().toBrazilianNumber()} R\$"),
         Container(
           height: 30,
           decoration: BoxDecoration(
@@ -38,14 +40,14 @@ class _PriceAndUpdateProductQuantityState extends State<PriceAndUpdateProductQua
               IconButton(
                 key: const Key("IconButtonSubtractQuantity"),
                 icon: Icon(
-                  widget.productQuantity .toDouble() <= 1 ? Icons.delete : Icons.remove,
+                  widget.productQuantity <= 1 ? Icons.delete : Icons.remove,
                 ),
                 iconSize: 20,
                 visualDensity: VisualDensity.compact,
                 onPressed: widget.onPressedReduceQuantity,
                 color: const Color(0xFFFF5963),
               ),
-              Text(widget.productQuantity),
+              Text(widget.productQuantity.toString().toBrazilianNumber()),
               IconButton(
                 icon: const Icon(
                   Icons.add,
@@ -58,7 +60,10 @@ class _PriceAndUpdateProductQuantityState extends State<PriceAndUpdateProductQua
             ],
           ),
         ),
-        Text("${widget.totalLiquid} R\$"),
+        Text(widget.totalLiquid
+            .toString()
+            .toBrazilianNumber()
+            .addBrazilianCoin()),
       ],
     );
   }

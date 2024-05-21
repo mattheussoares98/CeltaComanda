@@ -9,7 +9,7 @@ extension StringModifier on String {
     return parts.join(',');
   }
 
-  String toBrazilianPrice() {
+  String addBrazilianCoin() {
     return "$this R\$";
   }
 

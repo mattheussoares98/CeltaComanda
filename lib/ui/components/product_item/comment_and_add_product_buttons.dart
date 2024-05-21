@@ -16,6 +16,7 @@ class CommentAndAddProductButtons extends StatefulWidget {
   final bool isConfirmedComment;
   final Function() updateIsConfirmendCommentToFalse;
   final Function() clearProductQuantity;
+  final double productQuantity;
 
   const CommentAndAddProductButtons({
     required this.isExpansibleGroups,
@@ -28,6 +29,7 @@ class CommentAndAddProductButtons extends StatefulWidget {
     required this.isConfirmedComment,
     required this.updateIsConfirmendCommentToFalse,
     required this.clearProductQuantity,
+    required this.productQuantity,
     super.key,
   });
 
@@ -50,6 +52,7 @@ class _CommentAndAddProductButtonsState
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required ProductsPresenter productsPresenter,
+    required double productQuantity,
   }) async {
     if (widget.isExpansibleGroups) {
       try {
@@ -58,6 +61,7 @@ class _CommentAndAddProductButtonsState
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
           productComment: widget.commentTextController.text,
+          productQuantity: productQuantity,
         );
         _clearDataOnSuccess();
       } catch (e) {
@@ -70,6 +74,7 @@ class _CommentAndAddProductButtonsState
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
           productComment: widget.commentTextController.text,
+          productQuantity: productQuantity,
         );
         _clearDataOnSuccess();
       } catch (e) {
@@ -146,6 +151,7 @@ class _CommentAndAddProductButtonsState
                     homePresenter: homePresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     productsPresenter: productsPresenter,
+                    productQuantity: widget.productQuantity,
                   );
                 },
               );
@@ -155,6 +161,7 @@ class _CommentAndAddProductButtonsState
                 homePresenter: homePresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
                 productsPresenter: productsPresenter,
+                productQuantity: widget.productQuantity,
               );
             }
           },

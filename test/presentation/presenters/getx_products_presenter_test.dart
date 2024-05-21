@@ -27,6 +27,7 @@ void main() {
   late SaleRequestTempEntity saleRequestTempEntity;
   late ProductsViewModel productsViewModel;
   late String productComment;
+  late double productQuantity;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -63,6 +64,7 @@ void main() {
     saleRequestTempPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
     productComment = faker.randomGenerator.string(10);
+    productQuantity = faker.randomGenerator.decimal();
   }
 
   void mockSuccess() {
@@ -105,6 +107,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
 
       verify(() => saleRequestTempPresenter
@@ -124,6 +127,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
     });
 
@@ -136,6 +140,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
     });
   });
@@ -176,6 +181,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
 
       expect(isUpdated, true);
@@ -188,6 +194,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
 
       expect(isUpdated, false);
@@ -202,6 +209,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
     });
 
@@ -217,15 +225,17 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
     });
 
-    test('Should call updateSaleRequestTemp', () async {
+    test('Should call updateSaleRequestTemp with correct entity', () async {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
 
       double saleRetailPraticed =
@@ -246,7 +256,7 @@ void main() {
             ProductInternalCodeOnErp:
                 int.parse(productsViewModel.InternalCodeOnERP.toString()),
             ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: 1,
+            Quantity: productQuantity,
             SaleRequestTempId: int.parse(saleRequestTempPresenter
                 .saleRequestTempMock!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
@@ -261,12 +271,15 @@ void main() {
             entity: entity,
           )).called(1);
     });
-    test('Should call updateSaleRequestTemp with null comment if comment is empty', () async {
+    test(
+        'Should call updateSaleRequestTemp with null comment if comment is empty',
+        () async {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: "",
+        productQuantity: productQuantity,
       );
 
       double saleRetailPraticed =
@@ -287,7 +300,7 @@ void main() {
             ProductInternalCodeOnErp:
                 int.parse(productsViewModel.InternalCodeOnERP.toString()),
             ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: 1,
+            Quantity: productQuantity,
             SaleRequestTempId: int.parse(saleRequestTempPresenter
                 .saleRequestTempMock!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
@@ -310,6 +323,7 @@ void main() {
       homePresenter: homePresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
       productComment: productComment,
+      productQuantity: productQuantity,
     );
 
     verify(() => saleRequestTempPresenter

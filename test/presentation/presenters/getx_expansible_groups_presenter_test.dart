@@ -38,6 +38,7 @@ void main() {
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
   late String productComment;
+  late double productQuantity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -89,6 +90,7 @@ void main() {
         EntityFactory.makeSaleRequestTempViewModel(
             EntityFactory.makeProductModel());
     productComment = faker.randomGenerator.string(10);
+    productQuantity = faker.randomGenerator.decimal();
   }
 
   void mockSuccess() {
@@ -387,6 +389,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
     });
 
@@ -402,6 +405,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
     });
 
@@ -411,6 +415,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
 
       double saleRetailPraticed =
@@ -431,7 +436,7 @@ void main() {
             ProductInternalCodeOnErp:
                 int.parse(productsViewModel.InternalCodeOnERP.toString()),
             ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: 1,
+            Quantity: productQuantity,
             SaleRequestTempId: int.parse(saleRequestTempPresenter
                 .saleRequestTempMock!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
@@ -454,6 +459,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: "",
+        productQuantity: productQuantity,
       );
 
       double saleRetailPraticed =
@@ -474,7 +480,7 @@ void main() {
             ProductInternalCodeOnErp:
                 int.parse(productsViewModel.InternalCodeOnERP.toString()),
             ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: 1,
+            Quantity: productQuantity,
             SaleRequestTempId: int.parse(saleRequestTempPresenter
                 .saleRequestTempMock!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
@@ -496,6 +502,7 @@ void main() {
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         productComment: productComment,
+        productQuantity: productQuantity,
       );
 
       verify(() => saleRequestTempPresenter

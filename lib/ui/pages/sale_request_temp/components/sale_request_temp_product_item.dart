@@ -117,8 +117,8 @@ class _SaleRequestTempProductItemState
               },
             ),
             PriceAndUpdateProductQuantity(
-              price: widget.product.Value,
-              totalLiquid: widget.product.TotalLiquid,
+              price: widget.product.Value.toDouble(),
+              totalLiquid: widget.product.TotalLiquid.toDouble(),
               onPressedReduceQuantity: () async {
                 await onPressedReduceQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
@@ -131,7 +131,7 @@ class _SaleRequestTempProductItemState
                   homePresenter: homePresenter,
                 );
               },
-              productQuantity: widget.product.Quantity,
+              productQuantity: widget.product.Quantity.toDouble(),
             ),
           ],
         ),

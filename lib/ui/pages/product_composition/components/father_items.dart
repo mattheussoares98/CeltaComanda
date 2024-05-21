@@ -71,9 +71,9 @@ class FatherItems extends StatelessWidget {
                       Text(father.OfferPrice != null &&
                               father.OfferPrice! == "0.0"
                           ? "Preço ${father.SalePrice!.toBrazilianNumber()}"
-                              .toBrazilianPrice()
+                              .addBrazilianCoin()
                           : "Preço ${father.OfferPrice!.toBrazilianNumber()}"
-                              .toBrazilianPrice()),
+                              .addBrazilianCoin()),
                     ],
                   ),
                   if (father.IsOptionalItem != null)

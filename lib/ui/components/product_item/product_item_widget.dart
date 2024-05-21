@@ -33,7 +33,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
   final commentTextController = TextEditingController();
   FocusNode commentFocusNode = FocusNode();
   String confirmedComment = "";
-  int productQuantity = 1;
+  double productQuantity = 1.0;
 
   void _clearDataOnSuccess() {
     setState(() {
@@ -110,18 +110,19 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                           productQuantity++;
                         });
                       },
-                      productQuantity: productQuantity.toString(),
-                      price: widget.productsViewModel.SaleRetailPraticed,
+                      productQuantity: productQuantity,
+                      price: widget.productsViewModel.SaleRetailPraticed
+                          .toDouble(),
                       totalLiquid: (widget.productsViewModel.SaleRetailPraticed
                                   .toDouble() *
                               productQuantity)
                           .toString()
-                          .toBrazilianNumber(),
+                          .toDouble(),
                     ),
                     if (widget.productsViewModel.IsPromoCombox == "true")
                       TextButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: const Color.fromARGB(255, 35, 39, 35),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
@@ -145,6 +146,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                 changeFocusToCommentFocusNode: () async {
                   await changeFocusToCommentFocusNode();
                 },
+                productQuantity: productQuantity,
                 commentTextController: commentTextController,
                 isConfirmedComment: confirmedComment != "",
                 updateIsConfirmendCommentToFalse: () {

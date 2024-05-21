@@ -156,6 +156,7 @@ class GetxExpansibleGroupsPresenter
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required String? productComment,
+    required double productQuantity,
   }) async {
     isLoading = true;
     mainError = null;
@@ -178,7 +179,7 @@ class GetxExpansibleGroupsPresenter
             ProductInternalCodeOnErp:
                 int.parse(productsViewModel.InternalCodeOnERP.toString()),
             ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: 1,
+            Quantity: productQuantity,
             SaleRequestTempId: int.parse(
                 saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,

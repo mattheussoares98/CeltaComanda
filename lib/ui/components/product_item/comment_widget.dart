@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+
+class CommentWidget extends StatefulWidget {
+  final FocusNode commentFocusNode;
+  final TextEditingController commentTextController;
+  final Function() changeFocusToCommentFocusNode;
+  final Function() updateSelectedIndex;
+  final int index;
+  final int selectedIndex;
+
+  const CommentWidget({
+    required this.commentFocusNode,
+    required this.commentTextController,
+    required this.changeFocusToCommentFocusNode,
+    required this.updateSelectedIndex,
+    required this.index,
+    required this.selectedIndex,
+    super.key,
+  });
+
+  @override
+  State<CommentWidget> createState() => _CommentWidgetState();
+}
+
+class _CommentWidgetState extends State<CommentWidget> {
+  bool isConfirmedComment = false;
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (widget.index == widget.selectedIndex)
+          Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: Form(
+              key: formKey,
+              child: TextFormField(
+                focusNode: widget.commentFocusNode,
+                controller: widget.commentTextController,
+                validator: (value) {
+                  if (value?.isEmpty == true) {
+                    return "Digite algo para confirmar";
+                  }
+                  return null;
+                },
+                maxLines: null,
+                decoration: InputDecoration(
+                  suffixIcon: TextButton(
+                    onPressed: () async {
+                      bool isValid = formKey.currentState!.validate();
+                      if (!isValid) {
+                        await widget.changeFocusToCommentFocusNode();
+                      } else {
+                        widget.updateSelectedIndex();
+                        setState(() {
+                          isConfirmedComment = true;
+                        });
+                      }
+                    },
+                    child: const Text(
+                      "confirmar\ncomentário",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  hintText: "Comentário",
+                  label: const Text("Comentário"),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 3,
+                    horizontal: 8,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        if (isConfirmedComment)
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                const TextSpan(
+                  text: "Comentário: ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: widget.commentTextController.text,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}

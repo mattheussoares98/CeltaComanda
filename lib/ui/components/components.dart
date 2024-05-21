@@ -1,3 +1,4 @@
+export './product_item/product_item.dart';
 export './alert_message.dart';
 export "./app_theme.dart";
 export './dialog_load_command_data.dart';
@@ -7,7 +8,7 @@ export './login_header.dart';
 export './loading_image.dart';
 export './loading_dialog.dart';
 export './notification_dialog.dart';
-export './product_item.dart';
+export 'product_item/product_item_widget.dart';
 export './reload_screen.dart';
 export './request_summary.dart';
 export './search_command_icon.dart';

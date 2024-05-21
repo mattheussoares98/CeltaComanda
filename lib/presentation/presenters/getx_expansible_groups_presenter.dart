@@ -183,7 +183,7 @@ class GetxExpansibleGroupsPresenter
                 saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
             Value: saleRetailPraticed,
-            Comments: productComment,
+            Comments: productComment?.isEmpty == true ? null : productComment,
           )
         ],
       );

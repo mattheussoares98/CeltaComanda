@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../components/components.dart';
 
-class ProductsItems extends StatelessWidget {
+class ProductsItems extends StatefulWidget {
   final List<ProductsViewModel> products;
   const ProductsItems({
     required this.products,
@@ -13,12 +13,15 @@ class ProductsItems extends StatelessWidget {
   });
 
   @override
+  State<ProductsItems> createState() => _ProductsItemsState();
+}
+
+class _ProductsItemsState extends State<ProductsItems> {
+  int selectedIndex = -1;
+
+  @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: false);
     ProductsPresenter productsPresenter = Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    TextEditingController productCommentController = TextEditingController();
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
@@ -27,24 +30,29 @@ class ProductsItems extends StatelessWidget {
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemCount: products.length,
+        itemCount: widget.products.length,
         itemBuilder: (context, index) {
-          final productViewModel = products[index];
+          final productViewModel = widget.products[index];
 
-          return ProductItem(
-            productCommentController: productCommentController,
+          return ProductItemWidget(
+            isExpansibleGroups: false,
+            index: index,
+            selectedIndex: selectedIndex,
+            updateSelectedIndex: () {
+              if (selectedIndex == index) {
+                setState(() {
+                  selectedIndex = -1;
+                });
+              } else {
+                setState(() {
+                  selectedIndex = index;
+                });
+              }
+            },
             goToComboxPage: () {
               productsPresenter.goToComboxPage(productViewModel);
             },
-            product: productViewModel,
-            updateProductQuantity: () async {
-              await productsPresenter.updateSaleRequest(
-                productsViewModel: productViewModel,
-                homePresenter: homePresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-                productComment: "teste",
-              );
-            },
+            productsViewModel: productViewModel,
           );
         },
       ),

@@ -446,6 +446,49 @@ void main() {
             entity: entity,
           )).called(1);
     });
+    test(
+        "Should call updateSaleRequestTemp with null comment if comment is empty",
+        () async {
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: "",
+      );
+
+      double saleRetailPraticed =
+          productsViewModel.SaleRetailPraticed.toDouble();
+
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: int.parse(
+            saleRequestTempPresenter.saleRequestTempMock!.DeliveryControl),
+        EnterpriseId: int.parse(
+            saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId),
+        PersonalizedCode:
+            saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
+        SaleRequestTempId: int.parse(
+            saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
+        TotalLiquid: saleRetailPraticed,
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                int.parse(productsViewModel.InternalCodeOnERP.toString()),
+            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+            Quantity: 1,
+            SaleRequestTempId: int.parse(saleRequestTempPresenter
+                .saleRequestTempMock!.SaleRequestTempId),
+            TotalLiquid: saleRetailPraticed,
+            Value: saleRetailPraticed,
+            Comments: null,
+          )
+        ],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: entity,
+          )).called(1);
+    });
 
     test('Should call SaleRequestTempPresenter.load', () async {
       await sut.updateSaleRequest(

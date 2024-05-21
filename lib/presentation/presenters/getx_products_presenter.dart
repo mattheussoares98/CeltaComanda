@@ -76,7 +76,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
                 saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
             TotalLiquid: saleRetailPraticed,
             Value: saleRetailPraticed,
-            Comments: productComment,
+            Comments: productComment?.isEmpty == true ? null : productComment,
           )
         ],
       );

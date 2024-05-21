@@ -18,7 +18,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  TextEditingController productCommentController = TextEditingController();
 
   @override
   void dispose() {
@@ -26,6 +25,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
   }
+
+  int indexOfSelectedProductCommentIcon = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -115,24 +116,28 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                     children: [
                       const SearchProduct(),
                       if (expansibleGroupsPresenter.searchedProduct != null)
-                        ProductItem(
-                          productCommentController: productCommentController,
+                        ProductItemWidget(
+                          isExpansibleGroups: true,
+                          index: 0,
+                          selectedIndex: indexOfSelectedProductCommentIcon,
+                          updateSelectedIndex: () {
+                            if (indexOfSelectedProductCommentIcon == 0) {
+                              setState(() {
+                                indexOfSelectedProductCommentIcon = -1;
+                              });
+                            } else {
+                              setState(() {
+                                indexOfSelectedProductCommentIcon = 0;
+                              });
+                            }
+                          },
                           goToComboxPage: () {
                             expansibleGroupsPresenter.goToComboxPage(
                               expansibleGroupsPresenter.searchedProduct!,
                             );
                           },
-                          product: expansibleGroupsPresenter.searchedProduct!,
-                          updateProductQuantity: () async {
-                            await expansibleGroupsPresenter.updateSaleRequest(
-                              productsViewModel:
-                                  expansibleGroupsPresenter.searchedProduct!,
-                              homePresenter: homePresenter,
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
-                              productComment: "teste",
-                            );
-                          },
+                          productsViewModel:
+                              expansibleGroupsPresenter.searchedProduct!,
                         ),
                       GroupItems(
                         expansibleGroupsViewModel:

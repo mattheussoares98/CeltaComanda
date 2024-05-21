@@ -13,6 +13,9 @@ class CommentAndAddProductButtons extends StatefulWidget {
   final int selectedIndex;
   final TextEditingController commentTextController;
   final Function() changeFocusToCommentFocusNode;
+  final bool isConfirmedComment;
+  final Function() updateIsConfirmendCommentToFalse;
+
   const CommentAndAddProductButtons({
     required this.isExpansibleGroups,
     required this.productsViewModel,
@@ -21,6 +24,8 @@ class CommentAndAddProductButtons extends StatefulWidget {
     required this.selectedIndex,
     required this.commentTextController,
     required this.changeFocusToCommentFocusNode,
+    required this.isConfirmedComment,
+    required this.updateIsConfirmendCommentToFalse,
     super.key,
   });
 
@@ -31,8 +36,6 @@ class CommentAndAddProductButtons extends StatefulWidget {
 
 class _CommentAndAddProductButtonsState
     extends State<CommentAndAddProductButtons> {
-  bool isConfirmedComment = false;
-
   Future<void> updateSaleRequestTemp({
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required HomePresenter homePresenter,
@@ -48,9 +51,7 @@ class _CommentAndAddProductButtonsState
           productComment: widget.commentTextController.text,
         );
         widget.commentTextController.clear();
-        setState(() {
-          isConfirmedComment = false;
-        });
+        widget.updateIsConfirmendCommentToFalse();
         widget.updateSelectedIndex();
       } catch (e) {
         e;
@@ -63,9 +64,7 @@ class _CommentAndAddProductButtonsState
           saleRequestTempPresenter: saleRequestTempPresenter,
           productComment: widget.commentTextController.text,
         );
-        setState(() {
-          isConfirmedComment = false;
-        });
+        widget.updateIsConfirmendCommentToFalse();
         widget.updateSelectedIndex();
       } catch (e) {
         e;
@@ -83,9 +82,11 @@ class _CommentAndAddProductButtonsState
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconButton(
-          onPressed: () async {
+        InkWell(
+          onTap: () async {
             widget.updateSelectedIndex();
 
             if (widget.index != widget.selectedIndex) {
@@ -94,26 +95,40 @@ class _CommentAndAddProductButtonsState
               await widget.changeFocusToCommentFocusNode();
             }
           },
-          icon: Icon(
-            isConfirmedComment ? Icons.edit : Icons.add_comment,
-            color: Colors.green,
-            size: 37,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(5, 3, 0, 3),
+            child: Row(
+              children: [
+                Icon(
+                  widget.isConfirmedComment ? Icons.edit : Icons.add_comment,
+                  color: Colors.green,
+                  size: 20,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  widget.isConfirmedComment
+                      ? "Alterar comentário"
+                      : "Inserir comentário",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            maximumSize: const Size(33, 33),
-            minimumSize: const Size(33, 33),
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+        GestureDetector(
+          child: Text(
+            "Adicionar",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
             ),
-            padding: const EdgeInsets.all(0),
           ),
-          onPressed: () async {
+          onTap: () async {
             if (widget.commentTextController.text.isNotEmpty &&
-                !isConfirmedComment) {
+                !widget.isConfirmedComment) {
               notificationDialog(
                 context: context,
                 titleMessage: "Inserir produto sem comentário",
@@ -137,8 +152,6 @@ class _CommentAndAddProductButtonsState
               );
             }
           },
-          child: const FittedBox(
-              child: Text("+1", style: TextStyle(fontSize: 15))),
         ),
       ],
     );

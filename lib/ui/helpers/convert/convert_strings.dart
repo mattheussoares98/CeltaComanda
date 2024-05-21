@@ -3,7 +3,6 @@ extension StringModifier on String {
     double value = double.parse(this);
     String formatted = value.toStringAsFixed(decimalHouses);
 
-    // Converte para o formato brasileiro
     List<String> parts = formatted.split('.');
     parts[0] = parts[0]
         .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => '.');
@@ -19,14 +18,22 @@ extension StringModifier on String {
   }
 
   double toDouble() {
-    RegExp regex = RegExp(r'^\d{1,3}(\.\d{3})*,\d{2}$');
+    try {
+      String string = replaceAll(RegExp(r','), '.');
+      final quantidadeDePontos = '.'.allMatches(string).length;
 
-    if (!regex.hasMatch(this)) {
+      quantidadeDePontos.toString();
+      if (quantidadeDePontos > 1) {
+        for (var x = 1; x < quantidadeDePontos; x++) {
+          if (x < quantidadeDePontos) {
+            string = string.replaceFirst(RegExp(r'\.'), '');
+          }
+        }
+      }
+
+      return double.parse(string);
+    } catch (e) {
       return -1.0;
     }
-
-    String value = replaceAll('.', '').replaceAll(',', '.');
-
-    return double.parse(value);
   }
 }

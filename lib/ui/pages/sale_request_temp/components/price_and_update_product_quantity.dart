@@ -1,7 +1,7 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
-class PriceAndUpdateProductQuantity extends StatelessWidget {
+class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
   final String productQuantity;
@@ -17,11 +17,16 @@ class PriceAndUpdateProductQuantity extends StatelessWidget {
   });
 
   @override
+  State<PriceAndUpdateProductQuantity> createState() => _PriceAndUpdateProductQuantityState();
+}
+
+class _PriceAndUpdateProductQuantityState extends State<PriceAndUpdateProductQuantity> {
+  @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("Preço $price R\$"),
+        Text("${widget.price} R\$"),
         Container(
           height: 30,
           decoration: BoxDecoration(
@@ -33,27 +38,27 @@ class PriceAndUpdateProductQuantity extends StatelessWidget {
               IconButton(
                 key: const Key("IconButtonSubtractQuantity"),
                 icon: Icon(
-                  productQuantity.toDouble() <= 1 ? Icons.delete : Icons.remove,
+                  widget.productQuantity .toDouble() <= 1 ? Icons.delete : Icons.remove,
                 ),
                 iconSize: 20,
                 visualDensity: VisualDensity.compact,
-                onPressed: onPressedReduceQuantity,
+                onPressed: widget.onPressedReduceQuantity,
                 color: const Color(0xFFFF5963),
               ),
-              Text(productQuantity),
+              Text(widget.productQuantity),
               IconButton(
                 icon: const Icon(
                   Icons.add,
                 ),
                 iconSize: 20,
                 visualDensity: VisualDensity.compact,
-                onPressed: onPressedAddQuantity,
+                onPressed: widget.onPressedAddQuantity,
                 color: const Color(0xFFFF5963),
               ),
             ],
           ),
         ),
-        Text("Total $totalLiquid R\$"),
+        Text("${widget.totalLiquid} R\$"),
       ],
     );
   }

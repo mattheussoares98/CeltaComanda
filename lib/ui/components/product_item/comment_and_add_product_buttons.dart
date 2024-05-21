@@ -85,11 +85,11 @@ class _CommentAndAddProductButtonsState
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
     ExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context, listen: widget.isExpansibleGroups);
-    ProductsPresenter productsPresenter =
-        Provider.of(context, listen: !widget.isExpansibleGroups);
+        Provider.of(context, listen: false);
+    ProductsPresenter productsPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Row(

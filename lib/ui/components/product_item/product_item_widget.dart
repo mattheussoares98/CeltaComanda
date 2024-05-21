@@ -35,6 +35,12 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
   String confirmedComment = "";
   int productQuantity = 1;
 
+  void _clearDataOnSuccess() {
+    setState(() {
+      productQuantity = 1;
+    });
+  }
+
   Future<void> changeFocusToCommentFocusNode() async {
     if (commentFocusNode.hasFocus &&
         MediaQuery.of(NavigatorKey.navigatorKey.currentState!.context)
@@ -146,6 +152,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                   confirmedComment = "";
                   widget.updateSelectedIndex();
                 },
+                clearProductQuantity: _clearDataOnSuccess,
               ),
             CommentWidget(
               index: widget.index,

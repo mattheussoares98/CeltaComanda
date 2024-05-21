@@ -15,6 +15,7 @@ class CommentAndAddProductButtons extends StatefulWidget {
   final Function() changeFocusToCommentFocusNode;
   final bool isConfirmedComment;
   final Function() updateIsConfirmendCommentToFalse;
+  final Function() clearProductQuantity;
 
   const CommentAndAddProductButtons({
     required this.isExpansibleGroups,
@@ -26,6 +27,7 @@ class CommentAndAddProductButtons extends StatefulWidget {
     required this.changeFocusToCommentFocusNode,
     required this.isConfirmedComment,
     required this.updateIsConfirmendCommentToFalse,
+    required this.clearProductQuantity,
     super.key,
   });
 
@@ -36,6 +38,13 @@ class CommentAndAddProductButtons extends StatefulWidget {
 
 class _CommentAndAddProductButtonsState
     extends State<CommentAndAddProductButtons> {
+  void _clearDataOnSuccess() {
+    widget.commentTextController.clear();
+    widget.updateIsConfirmendCommentToFalse();
+    widget.updateSelectedIndex();
+    widget.clearProductQuantity();
+  }
+
   Future<void> updateSaleRequestTemp({
     required ExpansibleGroupsPresenter expansibleGroupsPresenter,
     required HomePresenter homePresenter,
@@ -50,9 +59,7 @@ class _CommentAndAddProductButtonsState
           saleRequestTempPresenter: saleRequestTempPresenter,
           productComment: widget.commentTextController.text,
         );
-        widget.commentTextController.clear();
-        widget.updateIsConfirmendCommentToFalse();
-        widget.updateSelectedIndex();
+        _clearDataOnSuccess();
       } catch (e) {
         e;
       }
@@ -64,8 +71,7 @@ class _CommentAndAddProductButtonsState
           saleRequestTempPresenter: saleRequestTempPresenter,
           productComment: widget.commentTextController.text,
         );
-        widget.updateIsConfirmendCommentToFalse();
-        widget.updateSelectedIndex();
+        _clearDataOnSuccess();
       } catch (e) {
         e;
       }

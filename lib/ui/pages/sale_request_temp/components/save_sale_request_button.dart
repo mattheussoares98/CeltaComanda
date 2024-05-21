@@ -39,10 +39,13 @@ class SaveSaleRequestButton extends StatelessWidget {
         }
         notificationDialog(
           context: context,
-          titleMessage: "Deseja confirmar os produtos e alterar o comentário?",
+          titleMessage: "Deseja confirmar os produtos?",
           content: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 15),
+                const Text(
+                    "Esse comentário abaixo é o da comanda inteira, não é o comentário de um produto específico. Você não é obrigado a colocar um comentário"),
                 const SizedBox(height: 15),
                 ConstrainedBox(
                   constraints: const BoxConstraints(
@@ -54,7 +57,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                     maxLines: null,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(3, 10, 3, 3),
-                      label: Text("Inserir comentário"),
+                      label: Text("Inserir comentário na comanda"),
                       hintText: "Comentário",
                     ),
                   ),

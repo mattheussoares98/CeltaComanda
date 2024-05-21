@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -36,6 +37,8 @@ class ProductDetails extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ImageWidget(ean: Product.EanCode, plu: Product.PriceLookupCode),
+            const SizedBox(width: 3),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,28 +52,23 @@ class ProductDetails extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (Product.EanCode != null)
-                        Text(
-                          "EAN: ${Product.EanCode!}",
-                        ),
-                      Text(
-                        "PLU: ${Product.PriceLookupCode}",
-                      ),
-                    ],
+                  Text(
+                    Product.PriceLookupCode,
                   ),
+                  if (Product.EanCode != null)
+                    Text(
+                      Product.EanCode!,
+                    ),
                 ],
               ),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("Preço $value R\$"),
+                Text(value.addBrazilianCoin()),
                 Row(
                   children: [
-                    Text("Qtd: $quantity"),
+                    Text("Qtd $quantity"),
                     SizedBox(
                       height: 35,
                       width: 35,
@@ -91,12 +89,34 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text("Total $totalLiquid R\$"),
+                Text(totalLiquid.addBrazilianCoin()),
               ],
             ),
           ],
         ),
-        if (comments != null) Text("Comentário: $comments"),
+        if (comments != null)
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                const TextSpan(
+                  text: "Comentário: ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: comments,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
         const Divider(
           thickness: 0.2,
         )

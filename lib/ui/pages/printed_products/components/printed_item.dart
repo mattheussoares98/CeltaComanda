@@ -56,7 +56,7 @@ class PrintedItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(3, 3, 8, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -70,53 +70,46 @@ class PrintedItem extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Row(
-                          children: [
-                            // ImageWidget(product: product),
-                            Expanded(
-                              child: ProductDetails(
-                                Product: product.Products,
-                                onPressedRemoveProduct: () async {
-                                  notificationDialog(
-                                    context: context,
-                                    titleMessage: "Remover produto",
-                                    content: const Text(
-                                      "Deseja realmente remover o produto dos produtos solicitados?",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    onPress: () async {
-                                      await _removeProduct(
-                                        printedProductsPresenter:
-                                            printedProductsPresenter,
-                                        expansibleGroupsPresenter:
-                                            expansibleGroupsPresenter,
-                                        saleRequestTempPresenter:
-                                            saleRequestTempPresenter,
-                                        homePresenter: homePresenter,
-                                        saleRequestProductId:
-                                            product.SaleRequestProductId,
-                                      );
-                                    },
-                                  );
-                                },
-                                validateUserAndCancelProducts: () {
-                                  validateUserAndCancelProductDialog(
-                                    context: context,
-                                    formKey: formKey,
-                                    personalizedCodeController:
-                                        personalizedCodeController,
-                                    passwordController: passwordController,
-                                    printedProductsPresenter:
-                                        printedProductsPresenter,
-                                  );
-                                },
-                                quantity: product.Quantity,
-                                value: product.Value,
-                                totalLiquid: product.TotalLiquid,
-                                comments: product.Comments,
+                        ProductDetails(
+                          Product: product.Products,
+                          onPressedRemoveProduct: () async {
+                            notificationDialog(
+                              context: context,
+                              titleMessage: "Remover produto",
+                              content: const Text(
+                                "Deseja realmente remover o produto dos produtos solicitados?",
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ],
+                              onPress: () async {
+                                await _removeProduct(
+                                  printedProductsPresenter:
+                                      printedProductsPresenter,
+                                  expansibleGroupsPresenter:
+                                      expansibleGroupsPresenter,
+                                  saleRequestTempPresenter:
+                                      saleRequestTempPresenter,
+                                  homePresenter: homePresenter,
+                                  saleRequestProductId:
+                                      product.SaleRequestProductId,
+                                );
+                              },
+                            );
+                          },
+                          validateUserAndCancelProducts: () {
+                            validateUserAndCancelProductDialog(
+                              context: context,
+                              formKey: formKey,
+                              personalizedCodeController:
+                                  personalizedCodeController,
+                              passwordController: passwordController,
+                              printedProductsPresenter:
+                                  printedProductsPresenter,
+                            );
+                          },
+                          quantity: product.Quantity,
+                          value: product.Value,
+                          totalLiquid: product.TotalLiquid,
+                          comments: product.Comments,
                         ),
                         // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
                         // Text(
@@ -134,9 +127,12 @@ class PrintedItem extends StatelessWidget {
                     );
                   },
                 ),
-                RequestSummary(
-                  totalLiquid: printed.TotalLiquid,
-                  comments: printed.Comments,
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: RequestSummary(
+                    totalLiquid: printed.TotalLiquid,
+                    comments: printed.Comments,
+                  ),
                 ),
                 // Text("Comanda: ${printed.PersonalizedCode}"),
                 // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),

@@ -7,8 +7,8 @@ class ImageWidget extends StatelessWidget {
   final double height;
   final double width;
   const ImageWidget({
-    this.height = 80,
-    this.width = 80,
+    this.height = 65,
+    this.width = 65,
     required this.ean,
     required this.plu,
     super.key,
@@ -24,7 +24,7 @@ class ImageWidget extends StatelessWidget {
               context: context,
               builder: (context) {
                 return GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.of(context).pop();
                   },
                   child: AlertDialog(
@@ -66,11 +66,28 @@ Image _getImageNetwork({
     height: height,
     fit: BoxFit.contain,
     errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-      return Image.asset(
-        'lib/ui/assets/images/image_not_found.png',
-        width: width,
+      return SizedBox(
         height: height,
-        fit: BoxFit.cover,
+        width: width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.image_not_supported_outlined,
+              color: Colors.grey[350],
+            ),
+            const FittedBox(
+                child: Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                "SEM IMAGEM",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            )),
+          ],
+        ),
       );
     },
     loadingBuilder:

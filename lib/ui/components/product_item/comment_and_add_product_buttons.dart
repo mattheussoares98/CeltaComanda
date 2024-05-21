@@ -117,9 +117,7 @@ class _CommentAndAddProductButtonsState
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  widget.isConfirmedComment
-                      ? "Alterar comentário"
-                      : "Inserir comentário",
+                  "Comentário",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,

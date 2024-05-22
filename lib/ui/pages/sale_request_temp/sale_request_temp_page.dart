@@ -123,9 +123,6 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
               ),
             ),
           ),
-          if (saleRequestTempPresenter.saleRequestTemp?.Products.isNotEmpty ==
-              true)
-            const SaveSaleRequestButton(),
         ],
       ),
     );

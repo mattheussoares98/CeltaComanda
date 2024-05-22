@@ -66,6 +66,14 @@ ThemeData makeAppTheme() {
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
 
+  final elevatedButtonTheme = ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    backgroundColor: Colors.red,
+    foregroundColor: Colors.white,
+  ));
+
   return ThemeData(
     primaryColor: primaryColor,
     primaryColorDark: primaryColorDark,
@@ -79,5 +87,6 @@ ThemeData makeAppTheme() {
     textTheme: textTheme,
     inputDecorationTheme: inputDecorationTheme,
     buttonTheme: buttonTheme,
+    elevatedButtonTheme: elevatedButtonTheme,
   );
 }

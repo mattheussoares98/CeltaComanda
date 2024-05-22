@@ -14,41 +14,49 @@ class SaleRequestProductsItems extends StatelessWidget {
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
 
-    return Container(
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-              blurRadius: 4, color: Color(0x33000000), offset: Offset(0, 2))
-        ],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: saleRequestTempViewModel.Products.length,
-              itemBuilder: (context, index) {
-                final productViewModel =
-                    saleRequestTempViewModel.Products[index];
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                  blurRadius: 4, color: Color(0x33000000), offset: Offset(0, 2))
+            ],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: saleRequestTempViewModel.Products.length,
+                  itemBuilder: (context, index) {
+                    final productViewModel =
+                        saleRequestTempViewModel.Products[index];
 
-                return SaleRequestTempProductItem(
-                  product: productViewModel,
-                  index: index,
-                );
-              },
+                    return SaleRequestTempProductItem(
+                      product: productViewModel,
+                      index: index,
+                    );
+                  },
+                ),
+                RequestSummary(
+                  totalLiquid:
+                      saleRequestTempPresenter.totalSaleRequestTempPrice,
+                  comments: saleRequestTempViewModel.Comments,
+                ),
+              ],
             ),
-            RequestSummary(
-              totalLiquid: saleRequestTempPresenter.totalSaleRequestTempPrice,
-              comments: saleRequestTempViewModel.Comments,
-            ),
-          ],
+          ),
         ),
-      ),
+        if (saleRequestTempPresenter.saleRequestTemp?.Products.isNotEmpty ==
+            true)
+          const SaveSaleRequestButton(),
+      ],
     );
   }
 }

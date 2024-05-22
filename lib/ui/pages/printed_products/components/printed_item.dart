@@ -150,23 +150,25 @@ class PrintedItem extends StatelessWidget {
             ),
           ),
         ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 40),
+            ),
+            onPressed: printedProductsPresenter.canCancelProducts
+                ? null
+                : () async {
+                    validateUserAndCancelProductDialog(
+                      context: context,
+                      formKey: formKey,
+                      personalizedCodeController: personalizedCodeController,
+                      passwordController: passwordController,
+                      printedProductsPresenter: printedProductsPresenter,
+                    );
+                  },
+            child: const Text("Liberar cancelamento de itens"),
           ),
-          onPressed: printedProductsPresenter.canCancelProducts
-              ? null
-              : () async {
-                  validateUserAndCancelProductDialog(
-                    context: context,
-                    formKey: formKey,
-                    personalizedCodeController: personalizedCodeController,
-                    passwordController: passwordController,
-                    printedProductsPresenter: printedProductsPresenter,
-                  );
-                },
-          child: const Text("Liberar cancelamento de itens"),
         ),
       ],
     );

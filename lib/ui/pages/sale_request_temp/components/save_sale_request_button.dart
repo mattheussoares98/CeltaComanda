@@ -21,72 +21,68 @@ class SaveSaleRequestButton extends StatelessWidget {
     TextEditingController commentsController = TextEditingController();
     FocusNode commentsFocusNode = FocusNode();
 
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red,
-        minimumSize: const Size(double.infinity, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: const BorderSide(
-            color: Color(0xFFE0E3E7),
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(double.infinity, 40),
         ),
-      ),
-      onPressed: () async {
-        if (printedProductsPresenter.printedProducts?.Comments != null) {
-          commentsController.text =
-              printedProductsPresenter.printedProducts!.Comments!;
-        }
-        notificationDialog(
-          context: context,
-          titleMessage: "Deseja confirmar os produtos?",
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 15),
-                const Text(
-                    "Esse comentário abaixo é o da comanda inteira, não é o comentário de um produto específico. Você não é obrigado a colocar um comentário"),
-                const SizedBox(height: 15),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxHeight: 100,
-                  ),
-                  child: TextFormField(
-                    focusNode: commentsFocusNode,
-                    controller: commentsController,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(3, 10, 3, 3),
-                      label: Text("Inserir comentário na comanda"),
-                      hintText: "Comentário",
+        onPressed: () async {
+          if (printedProductsPresenter.printedProducts?.Comments != null) {
+            commentsController.text =
+                printedProductsPresenter.printedProducts!.Comments!;
+          }
+          notificationDialog(
+            context: context,
+            titleMessage: "Deseja confirmar os produtos?",
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  const Text(
+                      "Esse comentário abaixo é o da comanda inteira, não é o comentário de um produto específico. Você não é obrigado a colocar um comentário"),
+                  const SizedBox(height: 15),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 100,
+                    ),
+                    child: TextFormField(
+                      focusNode: commentsFocusNode,
+                      controller: commentsController,
+                      maxLines: null,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(3, 10, 3, 3),
+                        label: Text("Inserir comentário na comanda"),
+                        hintText: "Comentário",
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          onPress: () async {
-            if (commentsController.text.isNotEmpty) {
-              saleRequestTempPresenter.updateLocalSaleRequestComment(
-                commentsController.text,
-              );
-            }
+            onPress: () async {
+              if (commentsController.text.isNotEmpty) {
+                saleRequestTempPresenter.updateLocalSaleRequestComment(
+                  commentsController.text,
+                );
+              }
 
-            await saleRequestTempPresenter.finishSaleRequest(
-              saleRequestTempEntity:
-                  saleRequestTempPresenter.saleRequestTemp!.toEntity(),
-              expansibleGroupsPresenter: expansibleGroupsPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              homePresenter: homePresenter,
-            );
-          },
-        );
-      },
-      child: const Text(
-        'Salvar/imprimir produtos',
-        style: TextStyle(
-          color: Colors.white,
+              await saleRequestTempPresenter.finishSaleRequest(
+                saleRequestTempEntity:
+                    saleRequestTempPresenter.saleRequestTemp!.toEntity(),
+                expansibleGroupsPresenter: expansibleGroupsPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+                homePresenter: homePresenter,
+              );
+            },
+          );
+        },
+        child: const Text(
+          'Salvar/imprimir produtos',
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );

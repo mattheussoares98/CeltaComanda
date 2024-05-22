@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
@@ -14,8 +15,7 @@ abstract class ProductsPresenter with ChangeNotifier implements Listenable {
     required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required String? productComment,
-    required double productQuantity,
+    required List<UpdateSaleRequestTempProductEntity> products,
   });
 
   void goToComboxPage(ProductsViewModel product);

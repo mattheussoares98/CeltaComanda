@@ -36,4 +36,12 @@ extension StringModifier on String {
       return -1.0;
     }
   }
+
+  int toInt() {
+    try {
+      return int.parse(this);
+    } catch (e) {
+      return -1;
+    }
+  }
 }

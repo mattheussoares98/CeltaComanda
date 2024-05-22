@@ -26,8 +26,7 @@ void main() {
   late int expansibleGroupId;
   late SaleRequestTempEntity saleRequestTempEntity;
   late ProductsViewModel productsViewModel;
-  late String productComment;
-  late double productQuantity;
+  late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
 
   late NavigateToSpy navigateTo;
   late LoadProductsSpy loadProducts;
@@ -63,8 +62,8 @@ void main() {
         ProductsViewModel.fromEntity(saleRequestTempEntity.Products[0].Product);
     saleRequestTempPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
-    productComment = faker.randomGenerator.string(10);
-    productQuantity = faker.randomGenerator.decimal();
+    updateSaleRequestTempEntity =
+        EntityFactory.makeUpdateSaleRequestTempEntity();
   }
 
   void mockSuccess() {
@@ -106,8 +105,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
 
       verify(() => saleRequestTempPresenter
@@ -126,8 +124,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
     });
 
@@ -139,8 +136,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
     });
   });
@@ -180,8 +176,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
 
       expect(isUpdated, true);
@@ -193,8 +188,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
 
       expect(isUpdated, false);
@@ -208,8 +202,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
     });
 
@@ -224,8 +217,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
     });
 
@@ -234,8 +226,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: productComment,
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
 
       double saleRetailPraticed =
@@ -251,19 +242,7 @@ void main() {
         SaleRequestTempId: int.parse(
             saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
         TotalLiquid: saleRetailPraticed,
-        Products: [
-          UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                int.parse(productsViewModel.InternalCodeOnERP.toString()),
-            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: productQuantity,
-            SaleRequestTempId: int.parse(saleRequestTempPresenter
-                .saleRequestTempMock!.SaleRequestTempId),
-            TotalLiquid: saleRetailPraticed,
-            Value: saleRetailPraticed,
-            Comments: productComment,
-          )
-        ],
+        Products: updateSaleRequestTempEntity.Products,
       );
 
       verify(() => updateSaleRequestTemp.update(
@@ -278,8 +257,7 @@ void main() {
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productComment: "",
-        productQuantity: productQuantity,
+        products: updateSaleRequestTempEntity.Products,
       );
 
       double saleRetailPraticed =
@@ -295,19 +273,7 @@ void main() {
         SaleRequestTempId: int.parse(
             saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
         TotalLiquid: saleRetailPraticed,
-        Products: [
-          UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                int.parse(productsViewModel.InternalCodeOnERP.toString()),
-            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: productQuantity,
-            SaleRequestTempId: int.parse(saleRequestTempPresenter
-                .saleRequestTempMock!.SaleRequestTempId),
-            TotalLiquid: saleRetailPraticed,
-            Value: saleRetailPraticed,
-            Comments: null,
-          )
-        ],
+        Products: updateSaleRequestTempEntity.Products,
       );
 
       verify(() => updateSaleRequestTemp.update(
@@ -322,8 +288,7 @@ void main() {
       productsViewModel: productsViewModel,
       homePresenter: homePresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
-      productComment: productComment,
-      productQuantity: productQuantity,
+      products: updateSaleRequestTempEntity.Products,
     );
 
     verify(() => saleRequestTempPresenter

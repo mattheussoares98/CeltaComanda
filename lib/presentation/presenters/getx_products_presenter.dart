@@ -48,8 +48,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
     required HomePresenter homePresenter,
     required ProductsViewModel productsViewModel,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required String? productComment,
-    required double productQuantity,
+    required List<UpdateSaleRequestTempProductEntity> products,
   }) async {
     isLoading = true;
     mainError = null;
@@ -67,19 +66,20 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
         SaleRequestTempId: int.parse(
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
         TotalLiquid: saleRetailPraticed,
-        Products: [
-          UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                int.parse(productsViewModel.InternalCodeOnERP.toString()),
-            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: productQuantity,
-            SaleRequestTempId: int.parse(
-                saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-            TotalLiquid: saleRetailPraticed,
-            Value: saleRetailPraticed,
-            Comments: productComment?.isEmpty == true ? null : productComment,
-          )
-        ],
+        Products: products,
+        // [
+        //   UpdateSaleRequestTempProductEntity(
+        //     ProductInternalCodeOnErp:
+        //         int.parse(productsViewModel.InternalCodeOnERP.toString()),
+        //     ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+        //     Quantity: productQuantity,
+        //     SaleRequestTempId: int.parse(
+        //         saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+        //     TotalLiquid: saleRetailPraticed,
+        //     Value: saleRetailPraticed,
+        //     Comments: productComment?.isEmpty == true ? null : productComment,
+        //   )
+        // ],
       );
 
       await updateSaleRequestTemp.update(

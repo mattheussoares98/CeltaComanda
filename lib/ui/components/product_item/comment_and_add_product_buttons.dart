@@ -1,7 +1,9 @@
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../pages/pages.dart';
 import '../components.dart';
 
@@ -70,12 +72,28 @@ class _CommentAndAddProductButtonsState
     } else {
       try {
         await productsPresenter.updateSaleRequest(
-          productsViewModel: widget.productsViewModel,
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          productComment: widget.commentTextController.text,
-          productQuantity: productQuantity,
-        );
+            productsViewModel: widget.productsViewModel,
+            homePresenter: homePresenter,
+            saleRequestTempPresenter: saleRequestTempPresenter,
+            products: [
+              UpdateSaleRequestTempProductEntity(
+                ProductInternalCodeOnErp: widget
+                    .productsViewModel.InternalCodeOnERP
+                    .toString()
+                    .toInt(),
+                ProductPriceLookUpCode:
+                    widget.productsViewModel.PriceLookupCode,
+                Quantity: productQuantity,
+                SaleRequestTempId: int.parse(saleRequestTempPresenter
+                    .saleRequestTemp!.SaleRequestTempId),
+                TotalLiquid:
+                    widget.productsViewModel.SaleRetailPraticed.toDouble(),
+                Value: widget.productsViewModel.SaleRetailPraticed.toDouble(),
+                Comments: widget.commentTextController.text.isEmpty == true
+                    ? null
+                    : widget.commentTextController.text,
+              )
+            ]);
         _clearDataOnSuccess();
       } catch (e) {
         e;

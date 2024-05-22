@@ -4,9 +4,8 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/pages/pages.dart';
 
 class ItemsRadioListTile extends StatefulWidget {
-  final ProductCompositionViewModel productComposition;
-  final bool isFixedItemInCombox;
   final ProductCompositionViewModel father;
+  final bool isFixedItemInCombox;
   final FocusNode commentFocusNode;
   final Function() changeFocusToCommentFocusNode;
   final Function() updateSelectedIndex;
@@ -14,9 +13,8 @@ class ItemsRadioListTile extends StatefulWidget {
   final int index;
   final int selectedIndex;
   const ItemsRadioListTile({
-    required this.productComposition,
-    required this.isFixedItemInCombox,
     required this.father,
+    required this.isFixedItemInCombox,
     required this.commentFocusNode,
     required this.changeFocusToCommentFocusNode,
     required this.updateSelectedIndex,
@@ -42,27 +40,27 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
           scrollDirection: Axis.vertical,
           itemCount: widget.isFixedItemInCombox
               ? 1
-              : widget.productComposition.childs?.length,
+              : widget.father.childs?.length,
           itemBuilder: (context, childIndex) {
             final child = widget.isFixedItemInCombox
-                ? widget.productComposition
-                : widget.productComposition.childs?[childIndex];
+                ? widget.father
+                : widget.father.childs?[childIndex];
             return Column(
               children: [
                 RadioListTile<int>(
                   value: childIndex,
                   groupValue: widget.isFixedItemInCombox &&
-                          widget.productComposition.IsOptionalItem == "false"
+                          widget.father.IsOptionalItem == "false"
                       //se o item for obrigatório, já seleciona ele automaticamente e não deixa retirar a seleção
                       ? 0
-                      : widget.productComposition.indexOfSelectedChild,
+                      : widget.father.indexOfSelectedChild,
                   dense: true,
                   controlAffinity: ListTileControlAffinity.trailing,
                   toggleable:
-                      widget.productComposition.IsOptionalItem == "true",
+                      widget.father.IsOptionalItem == "true",
                   onChanged: (int? value) {
                     setState(() {
-                      widget.productComposition.indexOfSelectedChild = value;
+                      widget.father.indexOfSelectedChild = value;
                     });
                   },
                   subtitle: Column(

@@ -64,7 +64,6 @@ class _FatherItemsState extends State<FatherItems> {
                   children: [
                     ItemsRadioListTile(
                       isFixedItemInCombox: true,
-                      productComposition: father,
                       father: father,
                       commentFocusNode: commentFocusNode,
                       changeFocusToCommentFocusNode:
@@ -157,7 +156,6 @@ class _FatherItemsState extends State<FatherItems> {
                     ),
                   ItemsRadioListTile(
                     isFixedItemInCombox: father.childs?.isEmpty == true,
-                    productComposition: father,
                     father: father,
                     commentFocusNode: commentFocusNode,
                     changeFocusToCommentFocusNode:

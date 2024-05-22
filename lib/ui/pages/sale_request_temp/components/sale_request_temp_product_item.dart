@@ -118,7 +118,8 @@ class _SaleRequestTempProductItemState
             ),
             PriceAndUpdateProductQuantity(
               price: widget.product.Value.toDouble(),
-              totalLiquid: widget.product.TotalLiquid.toDouble(),
+              totalLiquid: widget.product.Quantity.toDouble() *
+                  widget.product.Value.toDouble(),
               onPressedReduceQuantity: () async {
                 await onPressedReduceQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,

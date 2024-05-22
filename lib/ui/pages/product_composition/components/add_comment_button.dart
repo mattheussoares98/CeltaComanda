@@ -12,13 +12,15 @@ class AddCommentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: () {
-        updateShowCommentFormField!();
-        changeFocusToCommentFocusNode();
-      },
-      label: const Text("Comentário"),
-      icon: const Icon(Icons.add_comment_rounded),
+    return Flexible(
+      child: TextButton.icon(
+        onPressed: () {
+          updateShowCommentFormField!();
+          changeFocusToCommentFocusNode();
+        },
+        label: const Text("Comentário"),
+        icon: const Icon(Icons.add_comment_rounded),
+      ),
     );
   }
 }

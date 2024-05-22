@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/ui/pages/product_composition/product_composition_view_model.dart';
+
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/helpers/helpers.dart';
@@ -10,7 +12,7 @@ class RemoteGetProductComposition extends GetProductComposition {
   RemoteGetProductComposition(this.httpAdapter);
 
   @override
-  Future<List<ProductCompositionEntity>> get({
+  Future<List<ProductCompositionEntity>> getFathers({
     required String url,
     required int enterpriseId,
     required int internalCodeOnErp,
@@ -33,6 +35,38 @@ class RemoteGetProductComposition extends GetProductComposition {
       list.sort((a, b) => a.ChildName!.compareTo(b.ChildName!));
 
       return list;
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  @override
+  Future<List<ProductCompositionViewModel>> getChildsOfFather({
+    required String url,
+    required int enterpriseId,
+    required int internalCodeOnErp,
+    required List<ProductCompositionEntity> fathers,
+  }) async {
+    try {
+      List<ProductCompositionViewModel> childs = [];
+
+      for (var father in fathers) {
+        final childrenOfFather = await getFathers(
+          url: url,
+          enterpriseId: enterpriseId,
+          internalCodeOnErp: father.InternalCodeOnERPCodeChild!,
+        );
+
+        final fatherWithChildrens =
+            ProductCompositionViewModel.fromEntityWithChilds(
+          father,
+          childrenOfFather,
+        );
+
+        childs.add(fatherWithChildrens);
+      }
+
+      return childs;
     } catch (error) {
       throw DomainError.unexpected;
     }

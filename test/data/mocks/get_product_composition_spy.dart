@@ -2,22 +2,31 @@
 
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'package:mocktail/mocktail.dart';
 
 class GetProductCompositionSpy extends Mock implements GetProductComposition {
-  When mockGetProductCompositionCall() => when(() => this.get(
+  When mockGetFathersCall() => when(() => this.getFathers(
         url: any(named: "url"),
         enterpriseId: any(named: "enterpriseId"),
         internalCodeOnErp: any(named: "internalCodeOnErp"),
       ));
 
-  void mockGetProductComposition(
-          List<ProductCompositionEntity> productsCompositions) =>
-      this
-          .mockGetProductCompositionCall()
-          .thenAnswer((_) async => productsCompositions);
+  void mockGetFathers(List<ProductCompositionEntity> productsCompositions) =>
+      this.mockGetFathersCall().thenAnswer((_) async => productsCompositions);
 
-  void mockGetProductCompositionError() =>
-      this.mockGetProductCompositionCall().thenThrow(Exception());
+  void mockGetFathersError() =>
+      this.mockGetFathersCall().thenThrow(Exception());
+
+  When mockGetChildsOfFatherCall() => when(() => this.getChildsOfFather(
+        url: any(named: "url"),
+        enterpriseId: any(named: "enterpriseId"),
+        internalCodeOnErp: any(named: "internalCodeOnErp"),
+        fathers: any(named: "fathers"),
+      ));
+  void mockGetChildsOfFather(List<ProductCompositionViewModel> childs) =>
+      this.mockGetChildsOfFatherCall().thenAnswer((_) async => childs);
+  void mockGetChildsOfFatherError() =>
+      this.mockGetFathersCall().thenThrow(Exception());
 }

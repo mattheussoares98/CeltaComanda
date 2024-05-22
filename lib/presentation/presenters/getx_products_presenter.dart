@@ -67,19 +67,6 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
         TotalLiquid: saleRetailPraticed,
         Products: products,
-        // [
-        //   UpdateSaleRequestTempProductEntity(
-        //     ProductInternalCodeOnErp:
-        //         int.parse(productsViewModel.InternalCodeOnERP.toString()),
-        //     ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-        //     Quantity: productQuantity,
-        //     SaleRequestTempId: int.parse(
-        //         saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-        //     TotalLiquid: saleRetailPraticed,
-        //     Value: saleRetailPraticed,
-        //     Comments: productComment?.isEmpty == true ? null : productComment,
-        //   )
-        // ],
       );
 
       await updateSaleRequestTemp.update(

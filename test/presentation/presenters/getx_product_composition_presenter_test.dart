@@ -19,7 +19,8 @@ void main() {
 
   late GetProductCompositionSpy getProductComposition;
 
-  late List<ProductCompositionEntity> productsCompositions;
+  late List<ProductCompositionEntity> optionalFathers;
+  late List<ProductCompositionEntity> obligatoryFathers;
   late int internalCodeOnErp;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,13 +37,20 @@ void main() {
   }
 
   void initMocks() {
-    getProductComposition.mockGetProductComposition(productsCompositions);
+    getProductComposition.mockGetFathers(optionalFathers);
+    getProductComposition.mockGetChildsOfFather(optionalFathers
+        .map((element) => ProductCompositionViewModel.fromEntityWithChilds(
+            element, optionalFathers))
+        .toList());
   }
 
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    productsCompositions = EntityFactory.makeProductsCompositionsEntity();
+    optionalFathers =
+        EntityFactory.makeProductsCompositionsEntity(isOptionalItem: true);
+    obligatoryFathers =
+        EntityFactory.makeProductsCompositionsEntity(isOptionalItem: false);
     internalCodeOnErp = faker.randomGenerator.integer(99);
   }
 
@@ -66,11 +74,11 @@ void main() {
           expectAsync1((productComposition) => expect(productComposition, [
                 ProductCompositionViewModel.fromEntityWithChilds(
                   productComposition[0].toEntity(),
-                  productsCompositions,
+                  optionalFathers,
                 ),
                 ProductCompositionViewModel.fromEntityWithChilds(
                   productComposition[1].toEntity(),
-                  productsCompositions,
+                  optionalFathers,
                 ),
               ])));
 
@@ -82,7 +90,7 @@ void main() {
     });
     test('Should emit correct values on getProductsComposition throws',
         () async {
-      getProductComposition.mockGetProductCompositionError();
+      getProductComposition.mockGetFathersError();
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -103,34 +111,57 @@ void main() {
         internalCodeOnErp: internalCodeOnErp,
       );
 
-      verify(() => getProductComposition.get(
+      verify(() => getProductComposition.getFathers(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             internalCodeOnErp: internalCodeOnErp,
           )).called(1);
     });
+
+    test('Should call get childs', () async {
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+
+      verify(
+        () => getProductComposition.getChildsOfFather(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          internalCodeOnErp: internalCodeOnErp,
+          fathers: optionalFathers,
+        ),
+      );
+    });
   });
 
   group("Validate combox", () {
     test("Should return false if all fathers is obligatorys and not selecteds",
         () async {
-      final fatherNotOptional = ProductCompositionEntity(
-        ProductCompositionId: faker.randomGenerator.integer(10),
-        EnterpriseId: faker.randomGenerator.integer(10),
-        InternalCodeOnERPCodeFather: faker.randomGenerator.integer(10),
-        InternalCodeOnERPCodeChild: faker.randomGenerator.integer(10),
-        PluChild: faker.randomGenerator.string(10),
-        ChildName: faker.randomGenerator.string(10),
-        Quantity: faker.randomGenerator.decimal(),
-        SalePrice: faker.randomGenerator.decimal(),
-        OfferPrice: faker.randomGenerator.decimal(),
-        IncrementValue: faker.randomGenerator.decimal(),
-        IsOptionalItem: false,
-        ProductOptions: null,
-      );
-
-      getProductComposition.mockGetProductComposition([fatherNotOptional]);
+      getProductComposition.mockGetFathers(obligatoryFathers);
+      getProductComposition.mockGetChildsOfFather([
+        ProductCompositionViewModel(
+          ProductCompositionId:
+              obligatoryFathers[0].ProductCompositionId.toString(),
+          EnterpriseId: obligatoryFathers[0].EnterpriseId.toString(),
+          InternalCodeOnERPCodeFather:
+              obligatoryFathers[0].InternalCodeOnERPCodeFather.toString(),
+          InternalCodeOnERPCodeChild:
+              obligatoryFathers[0].InternalCodeOnERPCodeChild.toString(),
+          PluChild: obligatoryFathers[0].PluChild.toString(),
+          ChildName: obligatoryFathers[0].ChildName.toString(),
+          Quantity: obligatoryFathers[0].Quantity.toString(),
+          SalePrice: obligatoryFathers[0].SalePrice.toString(),
+          OfferPrice: obligatoryFathers[0].OfferPrice.toString(),
+          IncrementValue: obligatoryFathers[0].IncrementValue.toString(),
+          IsOptionalItem: obligatoryFathers[0].IsOptionalItem.toString(),
+          ProductOptions: obligatoryFathers[0].ProductOptions.toString(),
+          indexOfSelectedChild: null,
+        ),
+      ]);
 
       await sut.loadProductComposition(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -141,6 +172,110 @@ void main() {
       final isValid = sut.comboxIsValid();
 
       expect(isValid, false);
+    });
+
+    test("Should return true if all fathers is obligatorys and are selecteds",
+        () async {
+      getProductComposition.mockGetFathers(obligatoryFathers);
+      getProductComposition.mockGetChildsOfFather([
+        ProductCompositionViewModel(
+          ProductCompositionId:
+              obligatoryFathers[0].ProductCompositionId.toString(),
+          EnterpriseId: obligatoryFathers[0].EnterpriseId.toString(),
+          InternalCodeOnERPCodeFather:
+              obligatoryFathers[0].InternalCodeOnERPCodeFather.toString(),
+          InternalCodeOnERPCodeChild:
+              obligatoryFathers[0].InternalCodeOnERPCodeChild.toString(),
+          PluChild: obligatoryFathers[0].PluChild.toString(),
+          ChildName: obligatoryFathers[0].ChildName.toString(),
+          Quantity: obligatoryFathers[0].Quantity.toString(),
+          SalePrice: obligatoryFathers[0].SalePrice.toString(),
+          OfferPrice: obligatoryFathers[0].OfferPrice.toString(),
+          IncrementValue: obligatoryFathers[0].IncrementValue.toString(),
+          IsOptionalItem: obligatoryFathers[0].IsOptionalItem.toString(),
+          ProductOptions: obligatoryFathers[0].ProductOptions.toString(),
+          indexOfSelectedChild: 0,
+        ),
+      ]);
+
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+
+      final isValid = sut.comboxIsValid();
+
+      expect(isValid, true);
+    });
+
+    test("Should return true if all fathers is optional and not selecteds",
+        () async {
+      getProductComposition.mockGetFathers(optionalFathers);
+      getProductComposition.mockGetChildsOfFather([
+        ProductCompositionViewModel(
+          ProductCompositionId:
+              optionalFathers[0].ProductCompositionId.toString(),
+          EnterpriseId: optionalFathers[0].EnterpriseId.toString(),
+          InternalCodeOnERPCodeFather:
+              optionalFathers[0].InternalCodeOnERPCodeFather.toString(),
+          InternalCodeOnERPCodeChild:
+              optionalFathers[0].InternalCodeOnERPCodeChild.toString(),
+          PluChild: optionalFathers[0].PluChild.toString(),
+          ChildName: optionalFathers[0].ChildName.toString(),
+          Quantity: optionalFathers[0].Quantity.toString(),
+          SalePrice: optionalFathers[0].SalePrice.toString(),
+          OfferPrice: optionalFathers[0].OfferPrice.toString(),
+          IncrementValue: optionalFathers[0].IncrementValue.toString(),
+          IsOptionalItem: optionalFathers[0].IsOptionalItem.toString(),
+          ProductOptions: optionalFathers[0].ProductOptions.toString(),
+          indexOfSelectedChild: null,
+        ),
+      ]);
+
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+
+      final isValid = sut.comboxIsValid();
+
+      expect(isValid, true);
+    });
+    test("Should return true if all fathers is optional and selecteds",
+        () async {
+      getProductComposition.mockGetFathers(optionalFathers);
+      getProductComposition.mockGetChildsOfFather([
+        ProductCompositionViewModel(
+          ProductCompositionId:
+              optionalFathers[0].ProductCompositionId.toString(),
+          EnterpriseId: optionalFathers[0].EnterpriseId.toString(),
+          InternalCodeOnERPCodeFather:
+              optionalFathers[0].InternalCodeOnERPCodeFather.toString(),
+          InternalCodeOnERPCodeChild:
+              optionalFathers[0].InternalCodeOnERPCodeChild.toString(),
+          PluChild: optionalFathers[0].PluChild.toString(),
+          ChildName: optionalFathers[0].ChildName.toString(),
+          Quantity: optionalFathers[0].Quantity.toString(),
+          SalePrice: optionalFathers[0].SalePrice.toString(),
+          OfferPrice: optionalFathers[0].OfferPrice.toString(),
+          IncrementValue: optionalFathers[0].IncrementValue.toString(),
+          IsOptionalItem: optionalFathers[0].IsOptionalItem.toString(),
+          ProductOptions: optionalFathers[0].ProductOptions.toString(),
+          indexOfSelectedChild: 0,
+        ),
+      ]);
+
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+
+      final isValid = sut.comboxIsValid();
+
+      expect(isValid, true);
     });
   });
 }

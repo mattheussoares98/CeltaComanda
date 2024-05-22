@@ -585,7 +585,9 @@ class EntityFactory {
         RefIdNumber: null,
       );
 
-  static List<ProductCompositionEntity> makeProductsCompositionsEntity() => [
+  static List<ProductCompositionEntity> makeProductsCompositionsEntity(
+          {required bool isOptionalItem}) =>
+      [
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
           EnterpriseId: faker.randomGenerator.integer(99),
@@ -597,8 +599,8 @@ class EntityFactory {
           SalePrice: faker.randomGenerator.decimal(),
           OfferPrice: faker.randomGenerator.decimal(),
           IncrementValue: faker.randomGenerator.decimal(),
-          IsOptionalItem: faker.randomGenerator.boolean(),
           ProductOptions: faker.randomGenerator.string(10),
+          IsOptionalItem: isOptionalItem,
         ),
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
@@ -611,8 +613,8 @@ class EntityFactory {
           SalePrice: faker.randomGenerator.decimal(),
           OfferPrice: faker.randomGenerator.decimal(),
           IncrementValue: faker.randomGenerator.decimal(),
-          IsOptionalItem: faker.randomGenerator.boolean(),
           ProductOptions: faker.randomGenerator.string(10),
+          IsOptionalItem: isOptionalItem,
         ),
       ];
 }

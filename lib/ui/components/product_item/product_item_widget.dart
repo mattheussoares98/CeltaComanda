@@ -99,6 +99,8 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                       productsViewModel: widget.productsViewModel,
                     ),
                     PriceAndUpdateProductQuantity(
+                      showUpdateProductQuantity:
+                          widget.productsViewModel.IsPromoCombox == "false",
                       onPressedReduceQuantity: productQuantity <= 1
                           ? null
                           : () {

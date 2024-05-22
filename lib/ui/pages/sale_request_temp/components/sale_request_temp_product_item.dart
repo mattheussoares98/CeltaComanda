@@ -122,6 +122,7 @@ class _SaleRequestTempProductItemState
               },
             ),
             PriceAndUpdateProductQuantity(
+              showUpdateProductQuantity: true,
               price: widget.saleRequestTemp.Value.toDouble(),
               totalLiquid: widget.saleRequestTemp.Quantity.toDouble() *
                   widget.saleRequestTemp.Value.toDouble(),

@@ -40,7 +40,7 @@ class SaleRequestProductsItems extends StatelessWidget {
                         saleRequestTempViewModel.Products[index];
 
                     return SaleRequestTempProductItem(
-                      product: productViewModel,
+                      saleRequestTemp: productViewModel,
                       index: index,
                     );
                   },

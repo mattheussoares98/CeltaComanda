@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProductNameEanPluAndAddComment extends StatelessWidget {
+class ProductNamePluAndEan extends StatelessWidget {
   final String? nameComplete;
   final String name;
   final String? eanCode;
   final String priceLookupCode;
   final String? comments;
   final void Function()? onTapCommentIcon;
-  const ProductNameEanPluAndAddComment({
+  const ProductNamePluAndEan({
     required this.nameComplete,
     required this.name,
     required this.eanCode,
@@ -33,24 +33,10 @@ class ProductNameEanPluAndAddComment extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (eanCode?.isNotEmpty == true)
-                Text(
-                  "EAN: ${eanCode!}",
-                ),
-              Text(
-                "PLU: $priceLookupCode",
-              ),
+              Text(priceLookupCode),
+              if (eanCode?.isNotEmpty == true) Text(eanCode!),
             ],
           ),
-          if (comments == null)
-            GestureDetector(
-              onTap: onTapCommentIcon,
-              child: Icon(
-                color: Theme.of(context).colorScheme.primary,
-                Icons.add_comment,
-                size: 25,
-              ),
-            ),
         ],
       ),
     );

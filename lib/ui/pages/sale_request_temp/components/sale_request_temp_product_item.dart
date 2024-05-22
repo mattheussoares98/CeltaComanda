@@ -7,11 +7,11 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class SaleRequestTempProductItem extends StatefulWidget {
-  final SaleRequestTempProductsViewModel product;
+  final SaleRequestTempProductsViewModel saleRequestTemp;
   final int index;
 
   const SaleRequestTempProductItem({
-    required this.product,
+    required this.saleRequestTemp,
     required this.index,
     super.key,
   });
@@ -33,7 +33,7 @@ class _SaleRequestTempProductItemState
     await saleRequestTempPresenter.addProductQuantity(
       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       saleRequestProductTempId: int.parse(
-        widget.product.SaleRequestProductTempId,
+        widget.saleRequestTemp.SaleRequestProductTempId,
       ),
       commandNumber: homePresenter.commandNumber!,
     );
@@ -43,14 +43,14 @@ class _SaleRequestTempProductItemState
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
   }) async {
-    double? quantityDouble = widget.product.Quantity.toDouble();
+    double? quantityDouble = widget.saleRequestTemp.Quantity.toDouble();
     int quantityInt = quantityDouble.toInt();
 
     if (quantityInt > 1) {
       await saleRequestTempPresenter.subtractProductQuantity(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         saleRequestProductTempId:
-            int.parse(widget.product.SaleRequestProductTempId),
+            int.parse(widget.saleRequestTemp.SaleRequestProductTempId),
         productQuantity: quantityInt,
         commandNumber: homePresenter.commandNumber!,
       );
@@ -63,7 +63,7 @@ class _SaleRequestTempProductItemState
           await saleRequestTempPresenter.subtractProductQuantity(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             saleRequestProductTempId:
-                int.parse(widget.product.SaleRequestProductTempId),
+                int.parse(widget.saleRequestTemp.SaleRequestProductTempId),
             productQuantity: quantityInt,
             commandNumber: homePresenter.commandNumber!,
           );
@@ -75,9 +75,9 @@ class _SaleRequestTempProductItemState
   void onTapCommentIcon(SaleRequestTempPresenter saleRequestTempPresenter) {
     saleRequestTempPresenter.updateIndexOfSelectedProduct(widget.index);
     //criar teste pra essa alteração do índice do produto que foi selecionado
-    if (widget.product.Comments != null) {
+    if (widget.saleRequestTemp.Comments != null) {
       setState(() {
-        commentsController.text = widget.product.Comments!;
+        commentsController.text = widget.saleRequestTemp.Comments!;
       });
     }
 
@@ -106,20 +106,25 @@ class _SaleRequestTempProductItemState
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProductNameEanPluAndAddComment(
-              nameComplete: widget.product.Product.NameComplete,
-              name: widget.product.Product.Name,
-              eanCode: widget.product.Product.EanCode,
-              priceLookupCode: widget.product.Product.PriceLookupCode,
-              comments: widget.product.Comments,
+            ImageWidget(
+              ean: widget.saleRequestTemp.Product.EanCode,
+              plu: widget.saleRequestTemp.Product.PriceLookupCode,
+            ),
+            const SizedBox(width: 3),
+            ProductNamePluAndEan(
+              nameComplete: widget.saleRequestTemp.Product.NameComplete,
+              name: widget.saleRequestTemp.Product.Name,
+              eanCode: widget.saleRequestTemp.Product.EanCode,
+              priceLookupCode: widget.saleRequestTemp.Product.PriceLookupCode,
+              comments: widget.saleRequestTemp.Comments,
               onTapCommentIcon: () async {
                 onTapCommentIcon(saleRequestTempPresenter);
               },
             ),
             PriceAndUpdateProductQuantity(
-              price: widget.product.Value.toDouble(),
-              totalLiquid: widget.product.Quantity.toDouble() *
-                  widget.product.Value.toDouble(),
+              price: widget.saleRequestTemp.Value.toDouble(),
+              totalLiquid: widget.saleRequestTemp.Quantity.toDouble() *
+                  widget.saleRequestTemp.Value.toDouble(),
               onPressedReduceQuantity: () async {
                 await onPressedReduceQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
@@ -132,27 +137,24 @@ class _SaleRequestTempProductItemState
                   homePresenter: homePresenter,
                 );
               },
-              productQuantity: widget.product.Quantity.toDouble(),
+              productQuantity: widget.saleRequestTemp.Quantity.toDouble(),
             ),
           ],
         ),
-        if (widget.product.Comments != null)
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  onTapCommentIcon(saleRequestTempPresenter);
-                },
-                child: Icon(
-                  color: Theme.of(context).colorScheme.primary,
-                  Icons.edit,
-                  size: 25,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(child: Text("Comentário: ${widget.product.Comments}")),
-            ],
+        GestureDetector(
+          onTap: () {
+            onTapCommentIcon(saleRequestTempPresenter);
+          },
+          child: Icon(
+            color: Theme.of(context).colorScheme.primary,
+            widget.saleRequestTemp.Comments == null
+                ? Icons.add_comment
+                : Icons.edit,
+            size: 25,
           ),
+        ),
+        if (widget.saleRequestTemp.Comments != null)
+          CommentRichText(comment: widget.saleRequestTemp.Comments!),
         if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index)
           Row(
             children: [
@@ -173,8 +175,8 @@ class _SaleRequestTempProductItemState
 
                   await saleRequestTempPresenter.updateComment(
                     comments: commentsController.text,
-                    saleRequestProductTempId:
-                        int.parse(widget.product.SaleRequestProductTempId),
+                    saleRequestProductTempId: int.parse(
+                        widget.saleRequestTemp.SaleRequestProductTempId),
                     expansibleGroupsPresenter: expansibleGroupsPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,23 +25,8 @@ class RequestSummary extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           if (printedProductsPresenter.printedProducts?.Comments != null)
-            RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "Comentário: ",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  TextSpan(
-                    text: printedProductsPresenter.printedProducts!.Comments!,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
-              ),
+            CommentRichText(
+              comment: printedProductsPresenter.printedProducts!.Comments!,
             ),
           const SizedBox(height: 10),
           Row(

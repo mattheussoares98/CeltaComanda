@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 
@@ -94,29 +95,7 @@ class ProductDetails extends StatelessWidget {
             ),
           ],
         ),
-        if (comments != null)
-          RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                const TextSpan(
-                  text: "Comentário: ",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextSpan(
-                  text: comments,
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        if (comments != null) CommentRichText(comment: comments!),
         const Divider(
           thickness: 0.2,
         )

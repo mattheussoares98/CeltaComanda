@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
@@ -82,28 +83,7 @@ class _CommentWidgetState extends State<CommentFormField> {
               ),
             ),
           if (widget.father.commentFather != null)
-            RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  const TextSpan(
-                    text: "Comentário: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextSpan(
-                    text: widget.father.commentFather,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            CommentRichText(comment: widget.father.commentFather!),
         ],
       ),
     );

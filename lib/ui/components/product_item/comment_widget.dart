@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 class CommentWidget extends StatefulWidget {
@@ -81,28 +82,7 @@ class _CommentWidgetState extends State<CommentWidget> {
               ),
             ),
           if (widget.confirmedComment != "")
-            RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  const TextSpan(
-                    text: "Comentário: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextSpan(
-                    text: widget.confirmedComment,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            CommentRichText(comment: widget.confirmedComment),
         ],
       ),
     );

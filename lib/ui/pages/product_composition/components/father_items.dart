@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class FatherItems extends StatelessWidget {
+class FatherItems extends StatefulWidget {
   final List<ProductCompositionViewModel> productsCompositions;
   const FatherItems(this.productsCompositions, {super.key});
+
+  @override
+  State<FatherItems> createState() => _FatherItemsState();
+}
+
+class _FatherItemsState extends State<FatherItems> {
+  int selectedIndex = -1;
+  final commentFocusNode = FocusNode();
+
+  Future<void> changeFocusToCommentFocusNode() async {
+    if (commentFocusNode.hasFocus &&
+        MediaQuery.of(NavigatorKey.navigatorKey.currentState!.context)
+                .viewInsets
+                .bottom ==
+            0) {
+      await Future.delayed(Duration.zero);
+      commentFocusNode.unfocus();
+    }
+    await Future.delayed(Duration.zero);
+    commentFocusNode.requestFocus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +38,9 @@ class FatherItems extends StatelessWidget {
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemCount: productsCompositions.length,
-        itemBuilder: (context, fatherIndex) {
-          final father = productsCompositions[fatherIndex];
+        itemCount: widget.productsCompositions.length,
+        itemBuilder: (context, index) {
+          final father = widget.productsCompositions[index];
 
           if (father.childs?.isEmpty == true) {
             return Card(
@@ -77,17 +99,57 @@ class FatherItems extends StatelessWidget {
                     ],
                   ),
                   if (father.IsOptionalItem != null)
-                    Text(
-                      father.IsOptionalItem == "true"
-                          ? "Item opcional"
-                          : "Item obrigatório",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.green,
-                        fontSize: 17,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          father.IsOptionalItem == "true"
+                              ? "Item opcional"
+                              : "Item obrigatório",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.green,
+                            fontSize: 17,
+                          ),
+                        ),
+                        AddCommentButton(
+                          updateShowCommentFormField: () {
+                            if (selectedIndex == index) {
+                              setState(() {
+                                selectedIndex = -1;
+                              });
+                            } else {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            }
+                          },
+                          changeFocusToCommentFocusNode: () async {
+                            changeFocusToCommentFocusNode();
+                          },
+                        ),
+                      ],
                     ),
+                  CommentFormField(
+                    father: father,
+                    commentFocusNode: commentFocusNode,
+                    changeFocusToCommentFocusNode:
+                        changeFocusToCommentFocusNode,
+                    updateSelectedIndex: () {
+                      if (selectedIndex == index) {
+                        setState(() {
+                          selectedIndex = -1;
+                        });
+                      } else {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      }
+                    },
+                    index: index,
+                    selectedIndex: selectedIndex,
+                  ),
                   ItemsRadioListTile(
                     isFixedItemInCombox: father.childs?.isEmpty == true,
                     productComposition: father,

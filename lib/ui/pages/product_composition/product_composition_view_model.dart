@@ -19,6 +19,7 @@ class ProductCompositionViewModel extends Equatable {
   final String? ProductOptions;
   final List<ProductCompositionViewModel>? childs;
   int? indexOfSelectedChild;
+  String? commentFather;
 
   ProductCompositionViewModel({
     required this.ProductCompositionId,
@@ -35,6 +36,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.ProductOptions,
     this.indexOfSelectedChild = -1,
     this.childs,
+    this.commentFather,
   });
 
   @override

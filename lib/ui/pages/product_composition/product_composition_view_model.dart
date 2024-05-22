@@ -34,7 +34,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductOptions,
-    this.indexOfSelectedChild = -1,
+    this.indexOfSelectedChild,
     this.childs,
     this.commentFather,
   });

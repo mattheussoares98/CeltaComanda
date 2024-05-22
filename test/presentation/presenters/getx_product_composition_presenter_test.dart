@@ -111,4 +111,36 @@ void main() {
           )).called(1);
     });
   });
+
+  group("Validate combox", () {
+    test("Should return false if all fathers is obligatorys and not selecteds",
+        () async {
+      final fatherNotOptional = ProductCompositionEntity(
+        ProductCompositionId: faker.randomGenerator.integer(10),
+        EnterpriseId: faker.randomGenerator.integer(10),
+        InternalCodeOnERPCodeFather: faker.randomGenerator.integer(10),
+        InternalCodeOnERPCodeChild: faker.randomGenerator.integer(10),
+        PluChild: faker.randomGenerator.string(10),
+        ChildName: faker.randomGenerator.string(10),
+        Quantity: faker.randomGenerator.decimal(),
+        SalePrice: faker.randomGenerator.decimal(),
+        OfferPrice: faker.randomGenerator.decimal(),
+        IncrementValue: faker.randomGenerator.decimal(),
+        IsOptionalItem: false,
+        ProductOptions: null,
+      );
+
+      getProductComposition.mockGetProductComposition([fatherNotOptional]);
+
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+
+      final isValid = sut.comboxIsValid();
+
+      expect(isValid, false);
+    });
+  });
 }

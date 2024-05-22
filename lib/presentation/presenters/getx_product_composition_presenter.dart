@@ -61,4 +61,17 @@ class GetxProductCompositionPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  bool comboxIsValid() {
+    bool isValid = true;
+    for (var element in _productsComposition.subject.value!) {
+      if (element.IsOptionalItem == "false" &&
+          element.indexOfSelectedChild == null) {
+        return false;
+      }
+    }
+
+    return isValid;
+  }
 }

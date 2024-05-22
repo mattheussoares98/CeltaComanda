@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../main/builders/builders.dart';
 import '../../../ui/pages/pages.dart';
@@ -69,9 +70,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 builder: (context) {
                   loadingSubscription =
                       handleLoading(context, widget.presenter.isLoadingStream);
-                  mainErrorSubscription =
-                      handleMainError(context, widget.presenter.mainErrorStream);
-              
+                  mainErrorSubscription = handleMainError(
+                      context, widget.presenter.mainErrorStream);
+
                   return StreamBuilder<List<ProductCompositionViewModel>>(
                       stream: widget.presenter.productsCompositionStream,
                       builder: (context, snapshot) {
@@ -80,15 +81,20 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                             error: '${snapshot.error}',
                             reload: () async =>
                                 await widget.presenter.loadProductComposition(
-                              url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+                              url: EnterpriseDataBuilder
+                                  .enterpriseDataEntity!.url!,
                               enterpriseId: EnterpriseDataBuilder
                                   .enterpriseDataEntity!.enterpriseId!,
-                              internalCodeOnErp: int.parse(product!.InternalCodeOnERP!),
+                              internalCodeOnErp:
+                                  int.parse(product!.InternalCodeOnERP!),
                             ),
                           );
                         }
                         if (snapshot.hasData) {
-                          return FatherItems(snapshot.data!);
+                          return ListenableProvider(
+                            create: (_) => widget.presenter,
+                            child: FatherItems(snapshot.data!),
+                          );
                         }
                         return const SizedBox(height: 0);
                       });

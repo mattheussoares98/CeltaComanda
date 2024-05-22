@@ -13,4 +13,6 @@ abstract class ProductCompositionPresenter implements Listenable {
     required int enterpriseId,
     required int internalCodeOnErp,
   });
+
+  bool comboxIsValid();
 }

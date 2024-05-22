@@ -38,26 +38,27 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
           primary: false,
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
-          itemCount: widget.isFixedItemInCombox
-              ? 1
-              : widget.father.childs?.length,
+          itemCount:
+              widget.isFixedItemInCombox ? 1 : widget.father.childs?.length,
           itemBuilder: (context, childIndex) {
             final child = widget.isFixedItemInCombox
                 ? widget.father
                 : widget.father.childs?[childIndex];
+
+            if (widget.isFixedItemInCombox &&
+                widget.father.IsOptionalItem == "false") {
+              //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
+              widget.father.indexOfSelectedChild = childIndex;
+            }
+
             return Column(
               children: [
                 RadioListTile<int>(
                   value: childIndex,
-                  groupValue: widget.isFixedItemInCombox &&
-                          widget.father.IsOptionalItem == "false"
-                      //se o item for obrigatório, já seleciona ele automaticamente e não deixa retirar a seleção
-                      ? 0
-                      : widget.father.indexOfSelectedChild,
+                  groupValue: widget.father.indexOfSelectedChild,
                   dense: true,
                   controlAffinity: ListTileControlAffinity.trailing,
-                  toggleable:
-                      widget.father.IsOptionalItem == "true",
+                  toggleable: widget.father.IsOptionalItem == "true",
                   onChanged: (int? value) {
                     setState(() {
                       widget.father.indexOfSelectedChild = value;

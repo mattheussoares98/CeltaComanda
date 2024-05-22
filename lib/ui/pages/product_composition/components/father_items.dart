@@ -1,4 +1,6 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../main/builders/builders.dart';
 import '../../../../ui/helpers/helpers.dart';
@@ -43,6 +45,9 @@ class _FatherItemsState extends State<FatherItems> {
 
   @override
   Widget build(BuildContext context) {
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(3, 12, 3, 0),
       child: Column(
@@ -187,7 +192,15 @@ class _FatherItemsState extends State<FatherItems> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 40),
             ),
-            onPressed: () {},
+            onPressed: () {
+              bool comboxIsValid = productCompositionPresenter.comboxIsValid();
+              if (!comboxIsValid) {
+                showErrorMessage(
+                  context,
+                  R.string.msgInvalidCombox,
+                );
+              }
+            },
             child: const Text("Salvar combo"),
           ),
         ],

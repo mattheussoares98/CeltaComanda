@@ -29,6 +29,18 @@ class _FatherItemsState extends State<FatherItems> {
     commentFocusNode.requestFocus();
   }
 
+  void updateShowCommentFormField(int index) {
+    if (selectedIndex == index) {
+      setState(() {
+        selectedIndex = -1;
+      });
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,6 +65,26 @@ class _FatherItemsState extends State<FatherItems> {
                     ItemsRadioListTile(
                       isFixedItemInCombox: true,
                       productComposition: father,
+                      father: father,
+                      commentFocusNode: commentFocusNode,
+                      changeFocusToCommentFocusNode:
+                          changeFocusToCommentFocusNode,
+                      updateShowCommentFormField: () {
+                        updateShowCommentFormField(index);
+                      },
+                      updateSelectedIndex: () {
+                        if (selectedIndex == index) {
+                          setState(() {
+                            selectedIndex = -1;
+                          });
+                        } else {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        }
+                      },
+                      index: index,
+                      selectedIndex: selectedIndex,
                     ),
                   ],
                 ),
@@ -115,15 +147,7 @@ class _FatherItemsState extends State<FatherItems> {
                         ),
                         AddCommentButton(
                           updateShowCommentFormField: () {
-                            if (selectedIndex == index) {
-                              setState(() {
-                                selectedIndex = -1;
-                              });
-                            } else {
-                              setState(() {
-                                selectedIndex = index;
-                              });
-                            }
+                            updateShowCommentFormField(index);
                           },
                           changeFocusToCommentFocusNode: () async {
                             changeFocusToCommentFocusNode();
@@ -131,11 +155,16 @@ class _FatherItemsState extends State<FatherItems> {
                         ),
                       ],
                     ),
-                  CommentFormField(
+                  ItemsRadioListTile(
+                    isFixedItemInCombox: father.childs?.isEmpty == true,
+                    productComposition: father,
                     father: father,
                     commentFocusNode: commentFocusNode,
                     changeFocusToCommentFocusNode:
                         changeFocusToCommentFocusNode,
+                    updateShowCommentFormField: () {
+                      updateShowCommentFormField(index);
+                    },
                     updateSelectedIndex: () {
                       if (selectedIndex == index) {
                         setState(() {
@@ -149,10 +178,6 @@ class _FatherItemsState extends State<FatherItems> {
                     },
                     index: index,
                     selectedIndex: selectedIndex,
-                  ),
-                  ItemsRadioListTile(
-                    isFixedItemInCombox: father.childs?.isEmpty == true,
-                    productComposition: father,
                   ),
                 ],
               ),

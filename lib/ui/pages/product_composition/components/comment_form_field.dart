@@ -81,7 +81,7 @@ class _CommentWidgetState extends State<CommentFormField> {
                 ),
               ),
             ),
-          if (widget.father.commentFather != "")
+          if (widget.father.commentFather != null)
             RichText(
               text: TextSpan(
                 children: <TextSpan>[

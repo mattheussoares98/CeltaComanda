@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../components/components.dart';
 
 class ProductDetailItem extends StatelessWidget {
   final ProductsViewModel product;

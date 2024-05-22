@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/components/components.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -52,54 +54,69 @@ class _HomePageState extends State<HomePage>
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
 
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          onPageChanged(
-              index: index, printedProductsPresenter: printedProductsPresenter);
-        },
-        children: screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          onPageChanged(
-              index: index, printedProductsPresenter: printedProductsPresenter);
-        },
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Inserir',
-          ),
-          BottomNavigationBarItem(
-            key: const Key("BottomNavigationExpansibleGroups"),
-            icon: IconWithNumberQuantity(
-              iconData: Icons.shopping_cart_outlined,
-              productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
-                          null ||
-                      saleRequestTempPresenter
-                              .saleRequestTemp?.Products.isEmpty ==
-                          true
-                  ? 0
-                  : saleRequestTempPresenter.saleRequestTemp!.Products.length,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        notificationDialog(
+          context: context,
+          titleMessage: "Fechar aplicativo",
+          content: const Text("Deseja realmente fechar o aplicativo?"),
+          onPress: () async {
+            SystemNavigator.pop();
+          },
+        );
+      },
+      child: Scaffold(
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            onPageChanged(
+                index: index,
+                printedProductsPresenter: printedProductsPresenter);
+          },
+          children: screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            onPageChanged(
+                index: index,
+                printedProductsPresenter: printedProductsPresenter);
+          },
+          items: [
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Inserir',
             ),
-            label: 'Pendentes',
-          ),
-          BottomNavigationBarItem(
-            icon: IconWithNumberQuantity(
-              iconData: Icons.list_outlined,
-              productsQuantity: printedProductsPresenter.printedProducts ==
-                          null ||
-                      printedProductsPresenter
-                              .printedProducts?.Products.isEmpty ==
-                          true
-                  ? 0
-                  : printedProductsPresenter.printedProducts!.Products.length,
+            BottomNavigationBarItem(
+              key: const Key("BottomNavigationExpansibleGroups"),
+              icon: IconWithNumberQuantity(
+                iconData: Icons.shopping_cart_outlined,
+                productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
+                            null ||
+                        saleRequestTempPresenter
+                                .saleRequestTemp?.Products.isEmpty ==
+                            true
+                    ? 0
+                    : saleRequestTempPresenter.saleRequestTemp!.Products.length,
+              ),
+              label: 'Pendentes',
             ),
-            label: 'Solicitados',
-          ),
-        ],
+            BottomNavigationBarItem(
+              icon: IconWithNumberQuantity(
+                iconData: Icons.list_outlined,
+                productsQuantity: printedProductsPresenter.printedProducts ==
+                            null ||
+                        printedProductsPresenter
+                                .printedProducts?.Products.isEmpty ==
+                            true
+                    ? 0
+                    : printedProductsPresenter.printedProducts!.Products.length,
+              ),
+              label: 'Solicitados',
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -152,18 +152,14 @@ class GetxExpansibleGroupsPresenter
 
   @override
   Future<void> updateSaleRequest({
-    required ProductsViewModel productsViewModel,
+    required List<UpdateSaleRequestTempProductEntity> products,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required String? productComment,
-    required double productQuantity,
+    required double saleRetailPraticed,
   }) async {
     isLoading = true;
     mainError = null;
     try {
-      double saleRetailPraticed =
-          productsViewModel.SaleRetailPraticed.toDouble();
-
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: int.parse(
             saleRequestTempPresenter.saleRequestTemp!.DeliveryControl),
@@ -174,19 +170,20 @@ class GetxExpansibleGroupsPresenter
         SaleRequestTempId: int.parse(
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
         TotalLiquid: saleRetailPraticed,
-        Products: [
-          UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                int.parse(productsViewModel.InternalCodeOnERP.toString()),
-            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-            Quantity: productQuantity,
-            SaleRequestTempId: int.parse(
-                saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-            TotalLiquid: saleRetailPraticed,
-            Value: saleRetailPraticed,
-            Comments: productComment?.isEmpty == true ? null : productComment,
-          )
-        ],
+        Products: products,
+        //  [
+        // UpdateSaleRequestTempProductEntity(
+        //   ProductInternalCodeOnErp:
+        //       int.parse(productsViewModel.InternalCodeOnERP.toString()),
+        //   ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+        //   Quantity: productQuantity,
+        //   SaleRequestTempId: int.parse(
+        //       saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+        //   TotalLiquid: saleRetailPraticed,
+        //   Value: saleRetailPraticed,
+        //   Comments: productComment?.isEmpty == true ? null : productComment,
+        // )
+        // ],
       );
 
       await updateSaleRequestTemp.update(

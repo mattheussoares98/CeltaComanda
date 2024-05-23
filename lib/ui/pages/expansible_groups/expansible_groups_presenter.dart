@@ -19,11 +19,10 @@ abstract class ExpansibleGroupsPresenter
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
   Future<void> updateSaleRequest({
-    required ProductsViewModel productsViewModel,
+    required List<UpdateSaleRequestTempProductEntity> products,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required String? productComment,
-    required double productQuantity,
+    required double saleRetailPraticed,
   });
   Future<void> loadCommandData({
     required String commandNumber,

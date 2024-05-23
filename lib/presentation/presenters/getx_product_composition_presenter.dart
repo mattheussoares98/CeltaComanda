@@ -72,7 +72,6 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
-    required ProductsViewModel productsViewModel,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required List<UpdateSaleRequestTempProductEntity> products,
   }) async {
@@ -88,7 +87,8 @@ class GetxProductCompositionPresenter extends GetxController
             saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble(),
+        TotalLiquid: products.fold(
+            0, (previousValue, element) => previousValue + element.TotalLiquid),
         Products: products,
       );
 

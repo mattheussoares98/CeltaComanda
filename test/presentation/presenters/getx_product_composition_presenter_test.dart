@@ -31,7 +31,7 @@ void main() {
   late int internalCodeOnErp;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
-  late ProductsViewModel productsViewModel;
+  late List<UpdateSaleRequestTempProductEntity> products;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -57,7 +57,7 @@ void main() {
         .map((element) => ProductCompositionViewModel.fromEntityWithChilds(
             element, optionalFathers))
         .toList());
-         loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
   }
 
   void initEntitys() {
@@ -70,10 +70,10 @@ void main() {
     internalCodeOnErp = faker.randomGenerator.integer(99);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
 
-    productsViewModel =
-        ProductsViewModel.fromEntity(saleRequestTempEntity.Products[0].Product);
     saleRequestTempPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
+
+    products = [EntityFactory.makeUpdateSaleRequestTempProductEntity()];
 
     updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
       DeliveryControl: int.parse(
@@ -84,8 +84,9 @@ void main() {
           saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
       SaleRequestTempId: int.parse(
           saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
-      TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble(),
-      Products: [EntityFactory.makeUpdateSaleRequestTempProductEntity()],
+      TotalLiquid: products.fold(
+          0, (previousValue, element) => previousValue + element.TotalLiquid),
+      Products: products,
     );
 
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -328,7 +329,6 @@ void main() {
     test("Should call sut.updateSaleRequest with correct values", () async {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        productsViewModel: productsViewModel,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
@@ -344,7 +344,6 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
@@ -353,13 +352,13 @@ void main() {
     test(
         "Should emit correct events on updateSaleRequestTemp.update throws (unexpected)",
         () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError(DomainError.unexpected);
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
@@ -368,13 +367,13 @@ void main() {
     test(
         "Should emit correct events on updateSaleRequestTemp.update throws (commandNotAvailable)",
         () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
@@ -384,7 +383,6 @@ void main() {
         "Should call saleRequestTempPresenter.loadSaleRequest with correct values",
         () async {
       await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
@@ -415,7 +413,6 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
@@ -432,7 +429,6 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,

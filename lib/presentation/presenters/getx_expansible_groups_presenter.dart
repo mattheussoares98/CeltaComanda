@@ -155,35 +155,22 @@ class GetxExpansibleGroupsPresenter
     required List<UpdateSaleRequestTempProductEntity> products,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required double saleRetailPraticed,
   }) async {
     isLoading = true;
     mainError = null;
     try {
       final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: int.parse(
-            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl),
+        DeliveryControl:
+            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId:
-            int.parse(saleRequestTempPresenter.saleRequestTemp!.EnterpriseId),
+            saleRequestTempPresenter.saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode:
             saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
-        SaleRequestTempId: int.parse(
-            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-        TotalLiquid: saleRetailPraticed,
+        SaleRequestTempId:
+            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
+        TotalLiquid: products[0].Quantity *
+            searchedProduct!.SaleRetailPraticed.toDouble(),
         Products: products,
-        //  [
-        // UpdateSaleRequestTempProductEntity(
-        //   ProductInternalCodeOnErp:
-        //       int.parse(productsViewModel.InternalCodeOnERP.toString()),
-        //   ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-        //   Quantity: productQuantity,
-        //   SaleRequestTempId: int.parse(
-        //       saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-        //   TotalLiquid: saleRetailPraticed,
-        //   Value: saleRetailPraticed,
-        //   Comments: productComment?.isEmpty == true ? null : productComment,
-        // )
-        // ],
       );
 
       await updateSaleRequestTemp.update(

@@ -88,6 +88,7 @@ void main() {
     productEan = faker.randomGenerator.integer(13).toString();
     productEntity = EntityFactory.makeProductsEntitys()[0];
     productsViewModel = ProductsViewModel.fromEntity(productEntity);
+
     saleRequestTempPresenter.saleRequestTempMock =
         EntityFactory.makeSaleRequestTempViewModel(
             EntityFactory.makeProductModel());
@@ -118,7 +119,8 @@ void main() {
       SaleRequestTempId: saleRequestTempPresenter
           .saleRequestTempMock!.SaleRequestTempId
           .toInt(),
-      TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble(),
+      TotalLiquid: updateSaleRequestTempProductEntity.Quantity *
+          productsViewModel.SaleRetailPraticed.toDouble(),
       Products: [updateSaleRequestTempProductEntity],
     );
   }
@@ -414,10 +416,11 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
+      await sut.searchProduct(productEan);
+      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
       await sut.updateSaleRequest(
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
-          saleRetailPraticed: productsViewModel.SaleRetailPraticed.toDouble(),
           products: [updateSaleRequestTempProductEntity]);
     });
 
@@ -430,10 +433,11 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
+      await sut.searchProduct(productEan);
+      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
       await sut.updateSaleRequest(
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
-          saleRetailPraticed: productsViewModel.SaleRetailPraticed.toDouble(),
           products: [updateSaleRequestTempProductEntity]);
     });
 
@@ -447,19 +451,23 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
+      await sut.searchProduct(productEan);
+      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
       await sut.updateSaleRequest(
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
-          saleRetailPraticed: productsViewModel.SaleRetailPraticed.toDouble(),
           products: [updateSaleRequestTempProductEntity]);
     });
 
     test("Should call updateSaleRequestTemp with correct values", () async {
+      await sut.searchProduct(productEan);
+      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
+
       await sut.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          saleRetailPraticed: productsViewModel.SaleRetailPraticed.toDouble(),
-          products: [updateSaleRequestTempProductEntity]);
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        products: updateSaleRequestTempEntity.Products,
+      );
 
       verify(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -468,10 +476,12 @@ void main() {
     });
 
     test('Should call SaleRequestTempPresenter.load', () async {
+      await sut.searchProduct(productEan);
+      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
+
       await sut.updateSaleRequest(
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
-          saleRetailPraticed: productsViewModel.SaleRetailPraticed.toDouble(),
           products: [
             UpdateSaleRequestTempProductEntity(
               ProductInternalCodeOnErp:

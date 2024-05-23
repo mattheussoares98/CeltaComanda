@@ -1,8 +1,10 @@
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
@@ -27,6 +29,85 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   }
 
   int indexOfSelectedProductCommentIcon = -1;
+  final commentTextController = TextEditingController();
+
+  Future<void> _updateSaleRequest({
+    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required HomePresenter homePresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+  }) async {
+    try {
+      await expansibleGroupsPresenter.updateSaleRequest(
+          homePresenter: homePresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter,
+          products: [
+            UpdateSaleRequestTempProductEntity(
+              ProductInternalCodeOnErp: expansibleGroupsPresenter
+                  .searchedProduct!.InternalCodeOnERP
+                  .toString()
+                  .toInt(),
+              ProductPriceLookUpCode:
+                  expansibleGroupsPresenter.searchedProduct!.PriceLookupCode,
+              Quantity:
+                  expansibleGroupsPresenter.searchedProduct!.productQuantity,
+              SaleRequestTempId: int.parse(
+                  saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
+              TotalLiquid: expansibleGroupsPresenter
+                      .searchedProduct!.SaleRetailPraticed
+                      .toDouble() *
+                  expansibleGroupsPresenter.searchedProduct!.productQuantity,
+              Value: expansibleGroupsPresenter
+                  .searchedProduct!.SaleRetailPraticed
+                  .toDouble(),
+              Comments: commentTextController.text.isEmpty == true
+                  ? null
+                  : commentTextController.text,
+            ),
+          ]);
+      _hideFormField();
+    } catch (e) {
+      e;
+    }
+  }
+
+  void _addProductQuantity(
+      ExpansibleGroupsPresenter expansibleGroupsPresenter) {
+    setState(() {
+      expansibleGroupsPresenter.searchedProduct!.productQuantity++;
+    });
+  }
+
+  void _subtractProductQuantity(
+      ExpansibleGroupsPresenter expansibleGroupsPresenter) {
+    setState(() {
+      expansibleGroupsPresenter.searchedProduct!.productQuantity--;
+    });
+  }
+
+  void _clearProductQuantity(
+      ExpansibleGroupsPresenter expansibleGroupsPresenter) {
+    setState(() {
+      expansibleGroupsPresenter.searchedProduct!.productQuantity = 1;
+    });
+  }
+
+  void _hideFormField() {
+    setState(() {
+      indexOfSelectedProductCommentIcon = -1;
+    });
+  }
+
+  void _updateSelectedIndex() {
+    if (indexOfSelectedProductCommentIcon == 0) {
+      setState(() {
+        indexOfSelectedProductCommentIcon = -1;
+      });
+    } else {
+      setState(() {
+        indexOfSelectedProductCommentIcon = 0;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,20 +198,29 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       const SearchProduct(),
                       if (expansibleGroupsPresenter.searchedProduct != null)
                         ProductItemWidget(
-                          isExpansibleGroups: true,
+                          addProductQuantity: () {
+                            _addProductQuantity(expansibleGroupsPresenter);
+                          },
+                          clearProductQuantity: () {
+                            _clearProductQuantity(expansibleGroupsPresenter);
+                          },
+                          subtractProductQuantity: () {
+                            _subtractProductQuantity(expansibleGroupsPresenter);
+                          },
+                          updateSaleRequest: () async {
+                            await _updateSaleRequest(
+                              expansibleGroupsPresenter:
+                                  expansibleGroupsPresenter,
+                              homePresenter: homePresenter,
+                              saleRequestTempPresenter:
+                                  saleRequestTempPresenter,
+                            );
+                          },
+                          productQuantity: expansibleGroupsPresenter
+                              .searchedProduct!.productQuantity,
                           index: 0,
                           selectedIndex: indexOfSelectedProductCommentIcon,
-                          updateSelectedIndex: () {
-                            if (indexOfSelectedProductCommentIcon == 0) {
-                              setState(() {
-                                indexOfSelectedProductCommentIcon = -1;
-                              });
-                            } else {
-                              setState(() {
-                                indexOfSelectedProductCommentIcon = 0;
-                              });
-                            }
-                          },
+                          updateSelectedIndex: _updateSelectedIndex,
                           goToComboxPage: () {
                             expansibleGroupsPresenter.goToComboxPage(
                               expansibleGroupsPresenter.searchedProduct!,
@@ -138,6 +228,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                           },
                           productsViewModel:
                               expansibleGroupsPresenter.searchedProduct!,
+                          commentTextController: commentTextController,
                         ),
                       GroupItems(
                         expansibleGroupsViewModel:

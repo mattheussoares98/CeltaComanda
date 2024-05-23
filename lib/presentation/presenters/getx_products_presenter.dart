@@ -53,19 +53,17 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
     isLoading = true;
     mainError = null;
     try {
-      double saleRetailPraticed =
-          productsViewModel.SaleRetailPraticed.toDouble();
-
       final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: int.parse(
-            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl),
+        DeliveryControl:
+            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId:
-            int.parse(saleRequestTempPresenter.saleRequestTemp!.EnterpriseId),
+            saleRequestTempPresenter.saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode:
             saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
-        SaleRequestTempId: int.parse(
-            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-        TotalLiquid: saleRetailPraticed,
+        SaleRequestTempId:
+            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
+        TotalLiquid: productsViewModel.productQuantity *
+            productsViewModel.SaleRetailPraticed.toDouble(),
         Products: products,
       );
 

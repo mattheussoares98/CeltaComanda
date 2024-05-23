@@ -22,7 +22,6 @@ abstract class ExpansibleGroupsPresenter
     required List<UpdateSaleRequestTempProductEntity> products,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required double saleRetailPraticed,
   });
   Future<void> loadCommandData({
     required String commandNumber,

@@ -11,9 +11,14 @@ class ProductItemWidget extends StatefulWidget {
   final ProductsViewModel productsViewModel;
   final void Function()? goToComboxPage;
   final void Function() updateSelectedIndex;
+  final Function() updateSaleRequest;
+  final Function() addProductQuantity;
+  final Function() subtractProductQuantity;
+  final Function() clearProductQuantity;
+  final double productQuantity;
   final int index;
   final int selectedIndex;
-  final bool isExpansibleGroups;
+  final TextEditingController commentTextController;
 
   const ProductItemWidget({
     required this.productsViewModel,
@@ -21,7 +26,12 @@ class ProductItemWidget extends StatefulWidget {
     required this.index,
     required this.selectedIndex,
     required this.updateSelectedIndex,
-    required this.isExpansibleGroups,
+    required this.updateSaleRequest,
+    required this.addProductQuantity,
+    required this.subtractProductQuantity,
+    required this.productQuantity,
+    required this.clearProductQuantity,
+    required this.commentTextController,
     super.key,
   });
 
@@ -30,16 +40,8 @@ class ProductItemWidget extends StatefulWidget {
 }
 
 class _ProductItemWidgetState extends State<ProductItemWidget> {
-  final commentTextController = TextEditingController();
   FocusNode commentFocusNode = FocusNode();
   String confirmedComment = "";
-  double productQuantity = 1.0;
-
-  void _clearDataOnSuccess() {
-    setState(() {
-      productQuantity = 1;
-    });
-  }
 
   Future<void> changeFocusToCommentFocusNode() async {
     if (commentFocusNode.hasFocus &&
@@ -101,24 +103,16 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                     PriceAndUpdateProductQuantity(
                       showUpdateProductQuantity:
                           widget.productsViewModel.IsPromoCombox == "false",
-                      onPressedReduceQuantity: productQuantity <= 1
+                      onPressedReduceQuantity: widget.productQuantity <= 1
                           ? null
-                          : () {
-                              setState(() {
-                                productQuantity--;
-                              });
-                            },
-                      onPressedAddQuantity: () {
-                        setState(() {
-                          productQuantity++;
-                        });
-                      },
-                      productQuantity: productQuantity,
+                          : widget.subtractProductQuantity,
+                      onPressedAddQuantity: widget.addProductQuantity,
+                      productQuantity: widget.productQuantity,
                       price: widget.productsViewModel.SaleRetailPraticed
                           .toDouble(),
                       totalLiquid: (widget.productsViewModel.SaleRetailPraticed
                                   .toDouble() *
-                              productQuantity)
+                              widget.productQuantity)
                           .toString()
                           .toDouble(),
                     ),
@@ -142,35 +136,35 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
             ),
             if (widget.productsViewModel.IsPromoCombox == "false")
               CommentAndAddProductButtons(
-                isExpansibleGroups: widget.isExpansibleGroups,
-                productsViewModel: widget.productsViewModel,
                 updateSelectedIndex: widget.updateSelectedIndex,
                 index: widget.index,
                 selectedIndex: widget.selectedIndex,
                 changeFocusToCommentFocusNode: () async {
                   await changeFocusToCommentFocusNode();
                 },
-                productQuantity: productQuantity,
-                commentTextController: commentTextController,
+                updateSaleRequest: () async {
+                  await widget.updateSaleRequest();
+                },
+                commentTextController: widget.commentTextController,
                 isConfirmedComment: confirmedComment != "",
                 updateIsConfirmendCommentToFalse: () {
-                  commentTextController.clear();
+                  widget.commentTextController.clear();
                   confirmedComment = "";
                   widget.updateSelectedIndex();
                 },
-                clearProductQuantity: _clearDataOnSuccess,
+                clearProductQuantity: widget.clearProductQuantity,
               ),
             CommentWidget(
               index: widget.index,
               selectedIndex: widget.selectedIndex,
               commentFocusNode: commentFocusNode,
-              commentTextController: commentTextController,
+              commentTextController: widget.commentTextController,
               confirmedComment: confirmedComment,
               changeFocusToCommentFocusNode: () async {
                 await changeFocusToCommentFocusNode();
               },
               updateConfirmedComment: () {
-                confirmedComment = commentTextController.text;
+                confirmedComment = widget.commentTextController.text;
               },
               updateSelectedIndex: () {
                 widget.updateSelectedIndex();

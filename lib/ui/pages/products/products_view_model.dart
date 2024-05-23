@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:equatable/equatable.dart';
 
@@ -70,8 +70,9 @@ class ProductsViewModel extends Equatable {
   final String? NameReduced;
   final String PackingAbbreviation;
   final String IsPromoCombox;
+  double productQuantity;
 
-  const ProductsViewModel({
+  ProductsViewModel({
     required this.IsPromoCombox,
     required this.ProductsId,
     required this.SaleRetailPraticed,
@@ -136,6 +137,7 @@ class ProductsViewModel extends Equatable {
     required this.EanCode,
     required this.NameComplete,
     required this.NameReduced,
+    this.productQuantity = 1,
   });
 
   @override

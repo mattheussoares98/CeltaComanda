@@ -5,4 +5,5 @@ import '../../../../ui/pages/pages.dart';
 ProductCompositionPresenter makeGetxProductCompositionPresenter() =>
     GetxProductCompositionPresenter(
       getProductComposition: makeRemoteGetProductComposition(),
+      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
     );

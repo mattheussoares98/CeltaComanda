@@ -44,7 +44,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
   }
 
   @override
-  Future<bool> updateSaleRequest({
+  Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
     required ProductsViewModel productsViewModel,
     required SaleRequestTempPresenter saleRequestTempPresenter,
@@ -76,16 +76,12 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
 
       await saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumber!);
-
-      return true;
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.addComment:
-          mainError = UIError.addComment;
-          return false;
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
         default:
           mainError = UIError.unexpected;
-          return false;
       }
     } finally {
       isLoading = false;

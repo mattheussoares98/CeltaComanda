@@ -200,6 +200,8 @@ class GetxExpansibleGroupsPresenter
       switch (e) {
         case DomainError.addComment:
           mainError = UIError.addComment;
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
         default:
           mainError = UIError.unexpected;
       }

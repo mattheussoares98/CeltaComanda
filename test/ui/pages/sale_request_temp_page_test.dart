@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -63,7 +64,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockLoadSaleRequestTempError();
+    presenter.mockLoadSaleRequestTempError(DomainError.unexpected);
     await tester.pumpAndSettle();
 
     expect(find.byType(SearchDataByCommandNumber), findsOneWidget);

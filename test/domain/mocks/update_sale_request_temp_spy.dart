@@ -17,7 +17,7 @@ class UpdateSaleRequestTempSpy extends Mock implements UpdateSaleRequestTemp {
     this.mocUpdateSaleRequestTempCall().thenAnswer((_) async => _);
   }
 
-  void mockUpdateSaleRequestTempError(){
-    this.mocUpdateSaleRequestTempCall().thenThrow(DomainError.unexpected);
+  void mockUpdateSaleRequestTempError(DomainError error){
+    this.mocUpdateSaleRequestTempCall().thenThrow(error);
   }
 }

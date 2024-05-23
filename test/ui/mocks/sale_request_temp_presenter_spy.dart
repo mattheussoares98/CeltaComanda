@@ -16,8 +16,10 @@ class SaleRequestTempPresenterSpy extends Mock
 
   SaleRequestTempPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
-    when(() => this.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
-    when(() => this.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
+    when(() => this.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
+    when(() => this.isLoadingStream)
+        .thenAnswer((_) => isLoadingController.stream);
 
     when(() => this.loadSaleRequest(any())).thenAnswer((_) async => _);
     mockAddProductQuantityCall().thenAnswer((_) async => _);
@@ -26,10 +28,8 @@ class SaleRequestTempPresenterSpy extends Mock
     when(() => this.clear()).thenAnswer((_) async => _);
   }
 
-  void mockLoadSaleRequestTempError() {
-    when(() => this.loadSaleRequest(any())).thenThrow(
-      DomainError.unexpected,
-    );
+  void mockLoadSaleRequestTempError(DomainError error) {
+    when(() => this.loadSaleRequest(any())).thenThrow(error);
   }
 
   When mockSubtractProductQuantityCall() {

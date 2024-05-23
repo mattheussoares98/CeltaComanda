@@ -393,11 +393,32 @@ void main() {
       );
     });
 
-    test("Should emit correct events on UpdateSaleRequest throws", () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError();
+    test("Should emit correct events on UpdateSaleRequest throws unexpected",
+        () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productComment: productComment,
+        productQuantity: productQuantity,
+      );
+    });
+
+    test(
+        "Should emit correct events on UpdateSaleRequest throws commandNotAvailable",
+        () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateSaleRequest(

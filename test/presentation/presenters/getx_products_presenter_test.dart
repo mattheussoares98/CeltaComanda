@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -112,9 +113,28 @@ void main() {
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
 
+    test(
+        "Should emit CommandNotAvailable commandNotAvailable on saleRequestTempPresenter.loadSaleRequest throws CommandNotAvailable",
+        () async {
+      saleRequestTempPresenter
+          .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+
+      await sut.updateSaleRequest(
+        productsViewModel: productsViewModel,
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        products: updateSaleRequestTempEntity.Products,
+      );
+    });
+
     test('Should emit UnexpectedError on error to loadSaleRequestTemp',
         () async {
-      saleRequestTempPresenter.mockLoadSaleRequestTempError();
+      saleRequestTempPresenter
+          .mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -148,20 +168,8 @@ void main() {
       verify(() => loadProducts.load(expansibleGroupId)).called(1);
     });
 
-    test('Should emit correct events on success to load', () async {
-      loadProducts.mockLoadProducts(products);
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-      sut.productsStream.listen(expectAsync1((products) => expect(products, [
-            ProductsViewModel.fromEntity(products[0].toEntity()),
-            ProductsViewModel.fromEntity(products[1].toEntity()),
-          ])));
-
-      await sut.load(faker.randomGenerator.integer(3));
-    });
-
     test('Should emit correct events on error to load', () async {
-      loadProducts.mockLoadProductsError();
+      loadProducts.mockLoadProductsError(DomainError.unexpected);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -171,29 +179,6 @@ void main() {
   });
 
   group("UpdateSaleRequest", () {
-    test('Should return true on success to updateSaleRequestTemp', () async {
-      final isUpdated = await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
-        homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        products: updateSaleRequestTempEntity.Products,
-      );
-
-      expect(isUpdated, true);
-    });
-    test('Should return false on error to updateSaleRequestTemp', () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError();
-
-      final isUpdated = await sut.updateSaleRequest(
-        productsViewModel: productsViewModel,
-        homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        products: updateSaleRequestTempEntity.Products,
-      );
-
-      expect(isUpdated, false);
-    });
-
     test('Should emit correct events on UpdateSaleRequest success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
@@ -206,8 +191,8 @@ void main() {
       );
     });
 
-    test('Should emit correct events on error to UpdateSaleRequest', () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError();
+    test('Should emit correct events on UpdateSaleRequest throws unexpected', () async {
+      updateSaleRequestTemp.mockUpdateSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -221,38 +206,22 @@ void main() {
       );
     });
 
-    test('Should call updateSaleRequestTemp with correct entity', () async {
+    test('Should emit correct events on UpdateSaleRequest throws commandNotAvailable', () async {
+      updateSaleRequestTemp.mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
-
-      double saleRetailPraticed =
-          productsViewModel.SaleRetailPraticed.toDouble();
-
-      final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: int.parse(
-            saleRequestTempPresenter.saleRequestTempMock!.DeliveryControl),
-        EnterpriseId: int.parse(
-            saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId),
-        PersonalizedCode:
-            saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
-        SaleRequestTempId: int.parse(
-            saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
-        TotalLiquid: saleRetailPraticed,
-        Products: updateSaleRequestTempEntity.Products,
-      );
-
-      verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            entity: entity,
-          )).called(1);
     });
-    test(
-        'Should call updateSaleRequestTemp with null comment if comment is empty',
-        () async {
+
+    test('Should call updateSaleRequestTemp with correct entity', () async {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,

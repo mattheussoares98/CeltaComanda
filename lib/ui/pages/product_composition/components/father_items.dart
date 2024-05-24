@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -249,11 +251,17 @@ class _FatherItemsState extends State<FatherItems> {
                           totalPrice: snapshot.data!,
                         ),
                         onPress: () async {
-                          await productCompositionPresenter.updateSaleRequest(
+                          bool updated = await productCompositionPresenter
+                              .updateSaleRequest(
                             homePresenter: homePresenter,
                             saleRequestTempPresenter: saleRequestTempPresenter,
                             productsCompositions: widget.productsCompositions,
                           );
+
+                          if(updated){
+                            Navigator.of(context).pop();
+                            showAlertMessage(context, "Combo adicionado com sucesso");
+                          }
                         },
                       );
                     },

@@ -19,7 +19,7 @@ abstract class ProductCompositionPresenter implements Listenable {
     required int internalCodeOnErp,
   });
 
-  Future<void> updateSaleRequest({
+  Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required List<ProductCompositionViewModel> productsCompositions,

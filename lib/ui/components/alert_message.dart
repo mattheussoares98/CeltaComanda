@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-void showAlertMessage(BuildContext context, String error) {
+void showAlertMessage(BuildContext context, String message) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     backgroundColor: Colors.green,
-    content: Text(error, textAlign: TextAlign.center),
+    content: Text(message, textAlign: TextAlign.center),
   ));
 }

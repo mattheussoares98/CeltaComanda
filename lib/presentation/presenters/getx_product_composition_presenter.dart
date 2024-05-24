@@ -166,7 +166,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  Future<void> updateSaleRequest({
+  Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required List<ProductCompositionViewModel> productsCompositions,
@@ -200,6 +200,7 @@ class GetxProductCompositionPresenter extends GetxController
 
       await saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumber!);
+      return true;
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.invalidCombox:
@@ -209,6 +210,7 @@ class GetxProductCompositionPresenter extends GetxController
         default:
           mainError = UIError.unexpected;
       }
+      return false;
     } finally {
       isLoading = false;
     }

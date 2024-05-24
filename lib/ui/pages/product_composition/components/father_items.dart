@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +8,12 @@ import '../../pages.dart';
 
 class FatherItems extends StatefulWidget {
   final List<ProductCompositionViewModel> productsCompositions;
-  const FatherItems(this.productsCompositions, {super.key});
+  final ProductsViewModel product;
+  const FatherItems({
+    required this.productsCompositions,
+    required this.product,
+    super.key,
+  });
 
   @override
   State<FatherItems> createState() => _FatherItemsState();
@@ -42,6 +48,8 @@ class _FatherItemsState extends State<FatherItems> {
     }
   }
 
+  ProductCompositionViewModel? father;
+
   @override
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
@@ -62,9 +70,9 @@ class _FatherItemsState extends State<FatherItems> {
               scrollDirection: Axis.vertical,
               itemCount: widget.productsCompositions.length,
               itemBuilder: (context, index) {
-                final father = widget.productsCompositions[index];
+                father = widget.productsCompositions[index];
 
-                if (father.childs?.isEmpty == true) {
+                if (father!.childs?.isEmpty == true) {
                   return Card(
                     elevation: 5,
                     child: Padding(
@@ -75,7 +83,7 @@ class _FatherItemsState extends State<FatherItems> {
                             productsCompositionsViewModel:
                                 widget.productsCompositions,
                             isFixedItemInCombox: true,
-                            father: father,
+                            father: father!,
                             commentFocusNode: commentFocusNode,
                             changeFocusToCommentFocusNode:
                                 changeFocusToCommentFocusNode,
@@ -112,14 +120,14 @@ class _FatherItemsState extends State<FatherItems> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            if (father.ChildName != null)
+                            if (father!.ChildName != null)
                               Text(
-                                father.ChildName!,
+                                father!.ChildName!,
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
-                            if (father.PluChild != null)
+                            if (father!.PluChild != null)
                               Text(
-                                "PLU ${father.PluChild!}",
+                                "PLU ${father!.PluChild!}",
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                           ],
@@ -127,19 +135,19 @@ class _FatherItemsState extends State<FatherItems> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            if (father.Quantity != null)
+                            if (father!.Quantity != null)
                               Text(
-                                "Quantidade ${father.Quantity!.toBrazilianNumber()}",
+                                "Quantidade ${father!.Quantity!.toBrazilianNumber()}",
                               ),
-                            Text(father.OfferPrice != null &&
-                                    father.OfferPrice! == "0.0"
-                                ? "Preço ${father.SalePrice!.toBrazilianNumber()}"
+                            Text(father!.OfferPrice != null &&
+                                    father!.OfferPrice! == "0.0"
+                                ? "Preço ${father!.SalePrice!.toBrazilianNumber()}"
                                     .addBrazilianCoin()
-                                : "Preço ${father.OfferPrice!.toBrazilianNumber()}"
+                                : "Preço ${father!.OfferPrice!.toBrazilianNumber()}"
                                     .addBrazilianCoin()),
                           ],
                         ),
-                        if (father.IncrementValue.toString().toDouble() > 0)
+                        if (father!.IncrementValue.toString().toDouble() > 0)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -150,19 +158,19 @@ class _FatherItemsState extends State<FatherItems> {
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   Text(
-                                    "Acréscimo: ${father.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                    "Acréscimo: ${father!.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                                     style: const TextStyle(color: Colors.red),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        if (father.IsOptionalItem != null)
+                        if (father!.IsOptionalItem != null)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                father.IsOptionalItem == "true"
+                                father!.IsOptionalItem == "true"
                                     ? "Item opcional"
                                     : "Item obrigatório",
                                 style: const TextStyle(
@@ -185,8 +193,8 @@ class _FatherItemsState extends State<FatherItems> {
                         ItemsRadioListTile(
                           productsCompositionsViewModel:
                               widget.productsCompositions,
-                          isFixedItemInCombox: father.childs?.isEmpty == true,
-                          father: father,
+                          isFixedItemInCombox: father!.childs?.isEmpty == true,
+                          father: father!,
                           commentFocusNode: commentFocusNode,
                           changeFocusToCommentFocusNode:
                               changeFocusToCommentFocusNode,
@@ -214,40 +222,132 @@ class _FatherItemsState extends State<FatherItems> {
               },
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 40),
-            ),
-            onPressed: () async {
-              await productCompositionPresenter.updateSaleRequest(
-                homePresenter: homePresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-              );
-            },
-            child: Builder(builder: (context) {
-              Future.delayed(Duration.zero, () {
-                productCompositionPresenter
-                    .updateTotalLiquidCombox(widget.productsCompositions);
-              });
+          Builder(builder: (context) {
+            return StreamBuilder<double>(
+                stream: productCompositionPresenter.totalPriceComboxStream,
+                builder: (context, snapshot) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 40),
+                    ),
+                    onPressed: () async {
+                      final selectedProducts = widget.productsCompositions
+                          .where((element) =>
+                              element.indexOfSelectedChild != null);
 
-              return StreamBuilder<double>(
-                  stream: productCompositionPresenter.totalPriceComboxStream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "TOTAL: ${snapshot.data.toString().toBrazilianNumber().addBrazilianCoin()}",
-                          ),
-                          const Text("Salvar combo"),
-                        ],
+                      final textWidgets = selectedProducts.map((element) {
+                        ProductCompositionViewModel selectedChild;
+
+                        if (element.childs?.isEmpty == true) {
+                          selectedChild = element;
+                        } else {
+                          selectedChild =
+                              element.childs![element.indexOfSelectedChild!];
+                        }
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              selectedChild.ChildName.toString(),
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            if (selectedChild.commentFather != null)
+                              CommentRichText(
+                                  comment: selectedChild.commentFather!),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  selectedChild.SalePrice.toString()
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin(),
+                                  style: const TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                if (selectedChild.IncrementValue.toString()
+                                        .toDouble() >
+                                    0)
+                                  Text(
+                                    "Acréscimo: ${selectedChild.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                    style: const TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            const Divider(thickness: 0.2),
+                          ],
+                        );
+                      }).toList();
+
+                      notificationDialog(
+                        context: context,
+                        titleMessage: "Salvar combo?",
+                        content: Column(
+                          children: [
+                            Text(
+                              widget.product.Name,
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                            const Divider(thickness: 0.2),
+                            Column(
+                              children: textWidgets,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "Total: ${snapshot.data.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                  style: const TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        onPress: () async {
+                          await productCompositionPresenter.updateSaleRequest(
+                            homePresenter: homePresenter,
+                            saleRequestTempPresenter: saleRequestTempPresenter,
+                          );
+                        },
                       );
-                    }
-                    return const SizedBox(height: 0);
-                  });
-            }),
-          ),
+                    },
+                    child: Builder(builder: (context) {
+                      Future.delayed(Duration.zero, () {
+                        productCompositionPresenter.updateTotalLiquidCombox(
+                            widget.productsCompositions);
+                      });
+
+                      return StreamBuilder<double>(
+                          stream: productCompositionPresenter
+                              .totalPriceComboxStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "TOTAL: ${snapshot.data != null ? snapshot.data.toString().toBrazilianNumber().addBrazilianCoin() : 0.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                  ),
+                                  const Text("Salvar combo"),
+                                ],
+                              );
+                            }
+                            return const SizedBox(height: 0);
+                          });
+                    }),
+                  );
+                });
+          }),
         ],
       ),
     );

@@ -231,86 +231,13 @@ class _FatherItemsState extends State<FatherItems> {
                       minimumSize: const Size(double.infinity, 40),
                     ),
                     onPressed: () async {
-                      final selectedProducts = widget.productsCompositions
-                          .where((element) =>
-                              element.indexOfSelectedChild != null);
-
-                      final textWidgets = selectedProducts.map((element) {
-                        ProductCompositionViewModel selectedChild;
-
-                        if (element.childs?.isEmpty == true) {
-                          selectedChild = element;
-                        } else {
-                          selectedChild =
-                              element.childs![element.indexOfSelectedChild!];
-                        }
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              selectedChild.ChildName.toString(),
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            if (selectedChild.commentFather != null)
-                              CommentRichText(
-                                  comment: selectedChild.commentFather!),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  selectedChild.SalePrice.toString()
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin(),
-                                  style: const TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                if (selectedChild.IncrementValue.toString()
-                                        .toDouble() >
-                                    0)
-                                  Text(
-                                    "Acréscimo: ${selectedChild.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                                    style: const TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            const Divider(thickness: 0.2),
-                          ],
-                        );
-                      }).toList();
-
                       notificationDialog(
                         context: context,
                         titleMessage: "Salvar combo?",
-                        content: Column(
-                          children: [
-                            Text(
-                              widget.product.Name,
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                            const Divider(thickness: 0.2),
-                            Column(
-                              children: textWidgets,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Total: ${snapshot.data.toString().toBrazilianNumber().addBrazilianCoin()}",
-                                  style: const TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                        content: ComboxSummaryNotification(
+                          fatherName: widget.product.Name,
+                          productsCompositions: widget.productsCompositions,
+                          totalPrice: snapshot.data!,
                         ),
                         onPress: () async {
                           await productCompositionPresenter.updateSaleRequest(

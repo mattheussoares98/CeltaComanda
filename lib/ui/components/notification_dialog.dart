@@ -12,7 +12,7 @@ void notificationDialog({
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          insetPadding: const EdgeInsets.symmetric(horizontal: 8),
+          insetPadding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
           title: Text(
             titleMessage,
             style: const TextStyle(

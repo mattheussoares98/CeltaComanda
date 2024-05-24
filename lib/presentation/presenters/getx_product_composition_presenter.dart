@@ -61,13 +61,17 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  validateCombox() {
+  bool comboxIsValid() {
+    mainError = null;
+    bool isValid = true;
     for (var element in _productsComposition.subject.value!) {
       if (element.IsOptionalItem == "false" &&
           element.indexOfSelectedChild == null) {
-        throw DomainError.invalidCombox;
+        mainError = UIError.invalidCombox;
+        return false;
       }
     }
+    return isValid;
   }
 
   @override
@@ -122,11 +126,12 @@ class GetxProductCompositionPresenter extends GetxController
   List<UpdateSaleRequestTempProductEntity>
       _productsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,
+    required List<ProductCompositionViewModel> productsCompositions,
   }) {
     List<UpdateSaleRequestTempProductEntity> products = [];
 
     try {
-      for (var product in _productsComposition.value) {
+      for (var product in productsCompositions) {
         if (product.indexOfSelectedChild == null) {
           continue;
         }
@@ -146,7 +151,8 @@ class GetxProductCompositionPresenter extends GetxController
           Quantity: selectedChild.Quantity!.toDouble(),
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: _calculateTotalLiquid(selectedChild),
-          Value: _calculatePrice(selectedChild),
+          Value:
+              _calculatePrice(product) * product.Quantity.toString().toDouble(),
           Comments: selectedChild.commentFather,
         );
 
@@ -163,13 +169,12 @@ class GetxProductCompositionPresenter extends GetxController
   Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required List<ProductCompositionViewModel> productsCompositions,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      validateCombox();
-
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl:
             saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
@@ -184,6 +189,7 @@ class GetxProductCompositionPresenter extends GetxController
           saleRequestTempId: saleRequestTempPresenter
               .saleRequestTemp!.SaleRequestTempId
               .toInt(),
+          productsCompositions: productsCompositions,
         ),
       );
 

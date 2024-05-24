@@ -22,7 +22,8 @@ abstract class ProductCompositionPresenter implements Listenable {
   Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
+    required List<ProductCompositionViewModel> productsCompositions,
   });
 
-  void validateCombox();
+  bool comboxIsValid();
 }

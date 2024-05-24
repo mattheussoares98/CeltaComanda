@@ -231,9 +231,16 @@ class _FatherItemsState extends State<FatherItems> {
                       minimumSize: const Size(double.infinity, 40),
                     ),
                     onPressed: () async {
+                      bool isValid =
+                          productCompositionPresenter.comboxIsValid();
+                      if (!isValid) {
+                        return;
+                      }
                       notificationDialog(
                         context: context,
                         titleMessage: "Salvar combo?",
+                        cancelMessage: "Cancelar",
+                        confirmMessage: "Confirmar",
                         content: ComboxSummaryNotification(
                           fatherName: widget.product.Name,
                           productsCompositions: widget.productsCompositions,
@@ -243,6 +250,7 @@ class _FatherItemsState extends State<FatherItems> {
                           await productCompositionPresenter.updateSaleRequest(
                             homePresenter: homePresenter,
                             saleRequestTempPresenter: saleRequestTempPresenter,
+                            productsCompositions: widget.productsCompositions,
                           );
                         },
                       );

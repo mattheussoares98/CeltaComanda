@@ -85,7 +85,10 @@ class GetxProductCompositionPresenter extends GetxController
         continue;
       }
 
-      totalLiquid += _calculateTotalLiquid(product);
+      totalLiquid += _calculateTotalLiquid(
+        itemPrice: _calculatePrice(product),
+        product: product,
+      );
     }
     _totalPriceComboxStream.subject.add(totalLiquid);
   }
@@ -99,16 +102,11 @@ class GetxProductCompositionPresenter extends GetxController
     }
   }
 
-  double _calculateTotalLiquid(ProductCompositionViewModel product) {
-    if (product.IsOptionalItem == "true") {
-      return _calculateIncrementValue(product);
-    } else if (product.OfferPrice!.toDouble() > 0) {
-      return (product.OfferPrice!.toDouble() * product.Quantity!.toDouble()) +
-          _calculateIncrementValue(product);
-    } else {
-      return (product.SalePrice!.toDouble() * product.Quantity!.toDouble()) +
-          _calculateIncrementValue(product);
-    }
+  double _calculateTotalLiquid({
+    required ProductCompositionViewModel product,
+    required double itemPrice,
+  }) {
+    return (itemPrice * product.Quantity.toString().toDouble());
   }
 
   double _calculatePrice(ProductCompositionViewModel product) {
@@ -150,9 +148,11 @@ class GetxProductCompositionPresenter extends GetxController
           ProductPriceLookUpCode: selectedChild.PluChild!,
           Quantity: selectedChild.Quantity!.toDouble(),
           SaleRequestTempId: saleRequestTempId,
-          TotalLiquid: _calculateTotalLiquid(selectedChild),
-          Value:
-              _calculatePrice(product) * product.Quantity.toString().toDouble(),
+          TotalLiquid: _calculateTotalLiquid(
+            itemPrice: _calculatePrice(product),
+            product: product,
+          ),
+          Value: _calculatePrice(selectedChild),
           Comments: selectedChild.commentFather,
         );
 

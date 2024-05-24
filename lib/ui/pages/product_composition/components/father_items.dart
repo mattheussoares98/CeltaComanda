@@ -121,9 +121,11 @@ class _FatherItemsState extends State<FatherItems> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             if (father!.ChildName != null)
-                              Text(
-                                father!.ChildName!,
-                                style: Theme.of(context).textTheme.titleLarge,
+                              Expanded(
+                                child: Text(
+                                  father!.ChildName!,
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
                               ),
                             if (father!.PluChild != null)
                               Text(

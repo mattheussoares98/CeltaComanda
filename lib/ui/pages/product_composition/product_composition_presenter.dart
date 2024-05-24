@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -8,6 +7,11 @@ abstract class ProductCompositionPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<List<ProductCompositionViewModel>> get productsCompositionStream;
+  Stream<double> get totalPriceComboxStream;
+
+  void updateTotalLiquidCombox(
+    List<ProductCompositionViewModel> productsCompositionsViewModel,
+  );
 
   Future<void> loadProductComposition({
     required String url,
@@ -18,8 +22,7 @@ abstract class ProductCompositionPresenter implements Listenable {
   Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required List<UpdateSaleRequestTempProductEntity> products,
   });
 
-  bool comboxIsValid();
+  void validateCombox();
 }

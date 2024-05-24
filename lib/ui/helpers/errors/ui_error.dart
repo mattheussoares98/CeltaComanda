@@ -6,6 +6,7 @@ enum UIError {
   commandNotAvailable,
   emailInUse,
   enterpriseOrUrlNotFound,
+  invalidCombox,
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   invalidField,
@@ -28,6 +29,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgEmailInUse;
       case UIError.enterpriseOrUrlNotFound:
         return R.string.enterpriseOrUrlNotFound;
+      case UIError.invalidCombox:
+        return R.string.msgInvalidCombox;
       case UIError.invalidCredentials:
         return R.string.msgInvalidCredentials;
       case UIError.invalidCredentialsOrAccessDenied:

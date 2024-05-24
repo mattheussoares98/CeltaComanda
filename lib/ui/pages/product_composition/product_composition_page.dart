@@ -62,47 +62,40 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       appBar: AppBar(
         title: FittedBox(child: Text(product?.Name ?? "")),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Builder(
-                builder: (context) {
-                  loadingSubscription =
-                      handleLoading(context, widget.presenter.isLoadingStream);
-                  mainErrorSubscription = handleMainError(
-                      context, widget.presenter.mainErrorStream);
-
-                  return StreamBuilder<List<ProductCompositionViewModel>>(
-                      stream: widget.presenter.productsCompositionStream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return ReloadScreen(
-                            error: '${snapshot.error}',
-                            reload: () async =>
-                                await widget.presenter.loadProductComposition(
-                              url: EnterpriseDataBuilder
-                                  .enterpriseDataEntity!.url!,
-                              enterpriseId: EnterpriseDataBuilder
-                                  .enterpriseDataEntity!.enterpriseId!,
-                              internalCodeOnErp:
-                                  int.parse(product!.InternalCodeOnERP!),
-                            ),
-                          );
-                        }
-                        if (snapshot.hasData) {
-                          return ListenableProvider(
-                            create: (_) => widget.presenter,
-                            child: FatherItems(snapshot.data!),
-                          );
-                        }
-                        return const SizedBox(height: 0);
-                      });
-                },
-              ),
-            ),
-          ),
-        ],
+      body: Builder(
+        builder: (context) {
+          loadingSubscription =
+              handleLoading(context, widget.presenter.isLoadingStream);
+          mainErrorSubscription = handleMainError(
+              context, widget.presenter.mainErrorStream);
+      
+          return StreamBuilder<List<ProductCompositionViewModel>>(
+              stream: widget.presenter.productsCompositionStream,
+              builder: (context, snapshot) {
+                
+                if (snapshot.hasError) {
+                  return ReloadScreen(
+                    error: '${snapshot.error}',
+                    reload: () async =>
+                        await widget.presenter.loadProductComposition(
+                      url: EnterpriseDataBuilder
+                          .enterpriseDataEntity!.url!,
+                      enterpriseId: EnterpriseDataBuilder
+                          .enterpriseDataEntity!.enterpriseId!,
+                      internalCodeOnErp:
+                          int.parse(product!.InternalCodeOnERP!),
+                    ),
+                  );
+                }
+                if (snapshot.hasData) {
+                  return ListenableProvider(
+                    create: (_) => widget.presenter,
+                    child: FatherItems(snapshot.data!),
+                  );
+                }
+                return const SizedBox(height: 0);
+              });
+        },
       ),
     );
   }

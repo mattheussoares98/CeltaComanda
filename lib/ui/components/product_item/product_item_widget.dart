@@ -122,7 +122,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                         child: const Padding(
                           padding: EdgeInsets.only(bottom: 5.0),
                           child: Text(
-                            "Montar combo",
+                            "Montar\ncombo",
                             style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,

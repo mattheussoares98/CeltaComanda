@@ -24,6 +24,10 @@ class GetxProductCompositionPresenter extends GetxController
   Stream<List<ProductCompositionViewModel>> get productsCompositionStream =>
       _productsComposition.stream;
 
+  final _totalPriceComboxStream = Rx<double>(0);
+  @override
+  Stream<double> get totalPriceComboxStream => _totalPriceComboxStream.stream;
+
   @override
   Future<void> loadProductComposition({
     required String url,
@@ -57,27 +61,115 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  bool comboxIsValid() {
-    bool isValid = true;
+  validateCombox() {
     for (var element in _productsComposition.subject.value!) {
       if (element.IsOptionalItem == "false" &&
           element.indexOfSelectedChild == null) {
-        return false;
+        throw DomainError.invalidCombox;
       }
     }
+  }
 
-    return isValid;
+  @override
+  void updateTotalLiquidCombox(
+    List<ProductCompositionViewModel> productsCompositionsViewModel,
+  ) {
+    double totalLiquid = 0;
+    for (var product in productsCompositionsViewModel) {
+      if (product.IsOptionalItem == "true" &&
+          product.indexOfSelectedChild == null) {
+        continue;
+      }
+
+      totalLiquid += _calculateTotalLiquid(product);
+    }
+    _totalPriceComboxStream.subject.add(totalLiquid);
+  }
+
+  double _calculateIncrementValue(ProductCompositionViewModel product) {
+    if (product.IncrementValue.toString().toDouble() > 0) {
+      return product.IncrementValue.toString().toDouble() *
+          product.Quantity.toString().toDouble();
+    } else {
+      return 0;
+    }
+  }
+
+  double _calculateTotalLiquid(ProductCompositionViewModel product) {
+    if (product.IsOptionalItem == "true") {
+      return _calculateIncrementValue(product);
+    } else if (product.OfferPrice!.toDouble() > 0) {
+      return (product.OfferPrice!.toDouble() * product.Quantity!.toDouble()) +
+          _calculateIncrementValue(product);
+    } else {
+      return (product.SalePrice!.toDouble() * product.Quantity!.toDouble()) +
+          _calculateIncrementValue(product);
+    }
+  }
+
+  double _calculatePrice(ProductCompositionViewModel product) {
+    if (product.IsOptionalItem == "true") {
+      return _calculateIncrementValue(product);
+    } else if (product.OfferPrice.toString().toDouble() > 0) {
+      return product.OfferPrice.toString().toDouble() +
+          _calculateIncrementValue(product);
+    } else {
+      return product.SalePrice.toString().toDouble() +
+          _calculateIncrementValue(product);
+    }
+  }
+
+  List<UpdateSaleRequestTempProductEntity>
+      _productsCompositionToUpdateSaleRequestTempProductEntity({
+    required int saleRequestTempId,
+  }) {
+    List<UpdateSaleRequestTempProductEntity> products = [];
+
+    try {
+      for (var product in _productsComposition.value) {
+        if (product.indexOfSelectedChild == null) {
+          continue;
+        }
+
+        ProductCompositionViewModel selectedChild;
+        if (product.childs?.isEmpty == true) {
+          selectedChild = product;
+        } else {
+          selectedChild = product.childs![product.indexOfSelectedChild!];
+        }
+
+        final updateSaleRequestTempProductEntity =
+            UpdateSaleRequestTempProductEntity(
+          ProductInternalCodeOnErp:
+              selectedChild.InternalCodeOnERPCodeChild.toString().toInt(),
+          ProductPriceLookUpCode: selectedChild.PluChild!,
+          Quantity: selectedChild.Quantity!.toDouble(),
+          SaleRequestTempId: saleRequestTempId,
+          TotalLiquid: _calculateTotalLiquid(selectedChild),
+          Value: _calculatePrice(selectedChild),
+          Comments: selectedChild.commentFather,
+        );
+
+        products.add(updateSaleRequestTempProductEntity);
+      }
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
+
+    return products;
   }
 
   @override
   Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required List<UpdateSaleRequestTempProductEntity> products,
   }) async {
     isLoading = true;
     mainError = null;
+
     try {
+      validateCombox();
+
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl:
             saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
@@ -87,9 +179,12 @@ class GetxProductCompositionPresenter extends GetxController
             saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: products.fold(
-            0, (previousValue, element) => previousValue + element.TotalLiquid),
-        Products: products,
+        TotalLiquid: _totalPriceComboxStream.value,
+        Products: _productsCompositionToUpdateSaleRequestTempProductEntity(
+          saleRequestTempId: saleRequestTempPresenter
+              .saleRequestTemp!.SaleRequestTempId
+              .toInt(),
+        ),
       );
 
       await updateSaleRequestTemp.update(
@@ -101,6 +196,8 @@ class GetxProductCompositionPresenter extends GetxController
           .loadSaleRequest(homePresenter.commandNumber!);
     } on DomainError catch (e) {
       switch (e) {
+        case DomainError.invalidCombox:
+          mainError = UIError.invalidCombox;
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
         default:

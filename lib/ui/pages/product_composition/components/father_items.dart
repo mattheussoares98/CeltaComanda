@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,29 +46,146 @@ class _FatherItemsState extends State<FatherItems> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(3, 12, 3, 0),
       child: Column(
         children: [
-          ListView.builder(
-            padding: EdgeInsets.zero,
-            primary: false,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: widget.productsCompositions.length,
-            itemBuilder: (context, index) {
-              final father = widget.productsCompositions[index];
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              primary: false,
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: widget.productsCompositions.length,
+              itemBuilder: (context, index) {
+                final father = widget.productsCompositions[index];
 
-              if (father.childs?.isEmpty == true) {
+                if (father.childs?.isEmpty == true) {
+                  return Card(
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          ItemsRadioListTile(
+                            productsCompositionsViewModel:
+                                widget.productsCompositions,
+                            isFixedItemInCombox: true,
+                            father: father,
+                            commentFocusNode: commentFocusNode,
+                            changeFocusToCommentFocusNode:
+                                changeFocusToCommentFocusNode,
+                            updateShowCommentFormField: () {
+                              updateShowCommentFormField(index);
+                            },
+                            updateSelectedIndex: () {
+                              if (selectedIndex == index) {
+                                setState(() {
+                                  selectedIndex = -1;
+                                });
+                              } else {
+                                setState(() {
+                                  selectedIndex = index;
+                                });
+                              }
+                            },
+                            index: index,
+                            selectedIndex: selectedIndex,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
                 return Card(
                   elevation: 5,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (father.ChildName != null)
+                              Text(
+                                father.ChildName!,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            if (father.PluChild != null)
+                              Text(
+                                "PLU ${father.PluChild!}",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (father.Quantity != null)
+                              Text(
+                                "Quantidade ${father.Quantity!.toBrazilianNumber()}",
+                              ),
+                            Text(father.OfferPrice != null &&
+                                    father.OfferPrice! == "0.0"
+                                ? "Preço ${father.SalePrice!.toBrazilianNumber()}"
+                                    .addBrazilianCoin()
+                                : "Preço ${father.OfferPrice!.toBrazilianNumber()}"
+                                    .addBrazilianCoin()),
+                          ],
+                        ),
+                        if (father.IncrementValue.toString().toDouble() > 0)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Column(
+                                children: [
+                                  const Text(
+                                    "+",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  Text(
+                                    "Acréscimo: ${father.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        if (father.IsOptionalItem != null)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                father.IsOptionalItem == "true"
+                                    ? "Item opcional"
+                                    : "Item obrigatório",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.green,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              AddCommentButton(
+                                updateShowCommentFormField: () {
+                                  updateShowCommentFormField(index);
+                                },
+                                changeFocusToCommentFocusNode: () async {
+                                  changeFocusToCommentFocusNode();
+                                },
+                              ),
+                            ],
+                          ),
                         ItemsRadioListTile(
-                          isFixedItemInCombox: true,
+                          productsCompositionsViewModel:
+                              widget.productsCompositions,
+                          isFixedItemInCombox: father.childs?.isEmpty == true,
                           father: father,
                           commentFocusNode: commentFocusNode,
                           changeFocusToCommentFocusNode:
@@ -95,113 +211,42 @@ class _FatherItemsState extends State<FatherItems> {
                     ),
                   ),
                 );
-              }
-
-              return Card(
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          if (father.ChildName != null)
-                            Text(
-                              father.ChildName!,
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          if (father.PluChild != null)
-                            Text(
-                              "PLU ${father.PluChild!}",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          if (father.Quantity != null)
-                            Text(
-                              "Quantidade ${father.Quantity!.toBrazilianNumber()}",
-                            ),
-                          Text(father.OfferPrice != null &&
-                                  father.OfferPrice! == "0.0"
-                              ? "Preço ${father.SalePrice!.toBrazilianNumber()}"
-                                  .addBrazilianCoin()
-                              : "Preço ${father.OfferPrice!.toBrazilianNumber()}"
-                                  .addBrazilianCoin()),
-                        ],
-                      ),
-                      if (father.IsOptionalItem != null)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              father.IsOptionalItem == "true"
-                                  ? "Item opcional"
-                                  : "Item obrigatório",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                color: Colors.green,
-                                fontSize: 17,
-                              ),
-                            ),
-                            AddCommentButton(
-                              updateShowCommentFormField: () {
-                                updateShowCommentFormField(index);
-                              },
-                              changeFocusToCommentFocusNode: () async {
-                                changeFocusToCommentFocusNode();
-                              },
-                            ),
-                          ],
-                        ),
-                      ItemsRadioListTile(
-                        isFixedItemInCombox: father.childs?.isEmpty == true,
-                        father: father,
-                        commentFocusNode: commentFocusNode,
-                        changeFocusToCommentFocusNode:
-                            changeFocusToCommentFocusNode,
-                        updateShowCommentFormField: () {
-                          updateShowCommentFormField(index);
-                        },
-                        updateSelectedIndex: () {
-                          if (selectedIndex == index) {
-                            setState(() {
-                              selectedIndex = -1;
-                            });
-                          } else {
-                            setState(() {
-                              selectedIndex = index;
-                            });
-                          }
-                        },
-                        index: index,
-                        selectedIndex: selectedIndex,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
+              },
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 40),
             ),
-            onPressed: () {
-              bool comboxIsValid = productCompositionPresenter.comboxIsValid();
-              if (!comboxIsValid) {
-                showErrorMessage(
-                  context,
-                  R.string.msgInvalidCombox,
-                );
-              }
+            onPressed: () async {
+              await productCompositionPresenter.updateSaleRequest(
+                homePresenter: homePresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+              );
             },
-            child: const Text("Salvar combo"),
+            child: Builder(builder: (context) {
+              Future.delayed(Duration.zero, () {
+                productCompositionPresenter
+                    .updateTotalLiquidCombox(widget.productsCompositions);
+              });
+
+              return StreamBuilder<double>(
+                  stream: productCompositionPresenter.totalPriceComboxStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "TOTAL: ${snapshot.data.toString().toBrazilianNumber().addBrazilianCoin()}",
+                          ),
+                          const Text("Salvar combo"),
+                        ],
+                      );
+                    }
+                    return const SizedBox(height: 0);
+                  });
+            }),
           ),
         ],
       ),

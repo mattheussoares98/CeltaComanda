@@ -3,6 +3,7 @@ enum DomainError {
   addComment,
   commandNotAvailable,
   enterpriseOrUrlNotFound,
+  invalidCombox,
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   productNotFound,

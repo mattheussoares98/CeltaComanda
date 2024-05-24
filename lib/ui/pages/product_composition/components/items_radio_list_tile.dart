@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/pages/pages.dart';
@@ -12,6 +13,7 @@ class ItemsRadioListTile extends StatefulWidget {
   final Function() updateShowCommentFormField;
   final int index;
   final int selectedIndex;
+  final List<ProductCompositionViewModel> productsCompositionsViewModel;
   const ItemsRadioListTile({
     required this.father,
     required this.isFixedItemInCombox,
@@ -21,6 +23,7 @@ class ItemsRadioListTile extends StatefulWidget {
     required this.index,
     required this.selectedIndex,
     required this.updateShowCommentFormField,
+    required this.productsCompositionsViewModel,
     super.key,
   });
 
@@ -31,6 +34,8 @@ class ItemsRadioListTile extends StatefulWidget {
 class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
   @override
   Widget build(BuildContext context) {
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
     return Column(
       children: [
         ListView.builder(
@@ -63,6 +68,8 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                     setState(() {
                       widget.father.indexOfSelectedChild = value;
                     });
+                    productCompositionPresenter.updateTotalLiquidCombox(
+                        widget.productsCompositionsViewModel);
                   },
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,6 +90,21 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                               .addBrazilianCoin()
                           : "Preço ${child?.OfferPrice!.toBrazilianNumber()}"
                               .addBrazilianCoin()),
+                      if (widget.isFixedItemInCombox)
+                        if (widget.father.IncrementValue.toString().toDouble() >
+                            0)
+                          Column(
+                            children: [
+                              const Text(
+                                "+",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              Text(
+                                "Acréscimo: ${widget.father.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
                     ],
                   ),
                 ),

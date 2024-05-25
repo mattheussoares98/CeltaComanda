@@ -246,11 +246,6 @@ class _FatherItemsState extends State<FatherItems> {
                       minimumSize: const Size(double.infinity, 40),
                     ),
                     onPressed: () async {
-                      bool isValid =
-                          productCompositionPresenter.comboxIsValid();
-                      if (!isValid) {
-                        return;
-                      }
                       notificationDialog(
                         context: context,
                         titleMessage: "Salvar combo?",

@@ -24,6 +24,4 @@ abstract class ProductCompositionPresenter implements Listenable {
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required List<ProductCompositionViewModel> productsCompositions,
   });
-
-  bool comboxIsValid();
 }

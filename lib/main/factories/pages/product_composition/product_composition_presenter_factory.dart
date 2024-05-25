@@ -6,4 +6,5 @@ ProductCompositionPresenter makeGetxProductCompositionPresenter() =>
     GetxProductCompositionPresenter(
       getProductComposition: makeRemoteGetProductComposition(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
+        validateCombox: makeLocalValidateCombox(),
     );

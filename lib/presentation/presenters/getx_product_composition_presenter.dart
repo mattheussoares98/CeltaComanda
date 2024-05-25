@@ -13,10 +13,12 @@ class GetxProductCompositionPresenter extends GetxController
     implements ProductCompositionPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
+  final ValidateCombox validateCombox;
 
   GetxProductCompositionPresenter({
     required this.getProductComposition,
     required this.updateSaleRequestTemp,
+    required this.validateCombox,
   });
 
   final _productsComposition = Rx<List<ProductCompositionViewModel>>([]);
@@ -58,20 +60,6 @@ class GetxProductCompositionPresenter extends GetxController
     } finally {
       isLoading = false;
     }
-  }
-
-  @override
-  bool comboxIsValid() {
-    mainError = null;
-    bool isValid = true;
-    for (var element in _productsComposition.subject.value!) {
-      if (element.IsOptionalItem == "false" &&
-          element.indexOfSelectedChild == null) {
-        mainError = UIError.invalidCombox;
-        return false;
-      }
-    }
-    return isValid;
   }
 
   @override
@@ -175,6 +163,8 @@ class GetxProductCompositionPresenter extends GetxController
     mainError = null;
 
     try {
+      validateCombox.comboxIsValid(productsCompositions);
+
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl:
             saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),

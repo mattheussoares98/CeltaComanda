@@ -36,6 +36,9 @@ class ComboxSummaryNotification extends StatelessWidget {
             selectedChild.ChildName.toString(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
+          Text(
+            selectedChild.PluChild.toString(),
+          ),
           if (selectedChild.commentFather != null)
             CommentRichText(comment: selectedChild.commentFather!),
           Column(

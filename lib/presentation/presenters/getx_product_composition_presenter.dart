@@ -153,7 +153,7 @@ class GetxProductCompositionPresenter extends GetxController
             product: product,
           ),
           Value: _calculatePrice(selectedChild),
-          Comments: selectedChild.commentFather,
+          Comments: product.commentFather,
         );
 
         products.add(updateSaleRequestTempProductEntity);

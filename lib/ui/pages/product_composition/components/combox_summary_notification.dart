@@ -39,8 +39,8 @@ class ComboxSummaryNotification extends StatelessWidget {
           Text(
             selectedChild.PluChild.toString(),
           ),
-          if (selectedChild.commentFather != null)
-            CommentRichText(comment: selectedChild.commentFather!),
+          if (element.commentFather != null)
+            CommentRichText(comment: element.commentFather!),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

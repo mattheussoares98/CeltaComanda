@@ -194,6 +194,17 @@ class _FatherItemsState extends State<FatherItems> {
                               ),
                             ],
                           ),
+                        CommentFormField(
+                          father: father!,
+                          commentFocusNode: commentFocusNode,
+                          changeFocusToCommentFocusNode:
+                              changeFocusToCommentFocusNode,
+                          updateSelectedIndex: () {
+                            updateShowCommentFormField(index);
+                          },
+                          index: index,
+                          selectedIndex: selectedIndex,
+                        ),
                         ItemsRadioListTile(
                           productsCompositionsViewModel:
                               widget.productsCompositions,
@@ -258,9 +269,10 @@ class _FatherItemsState extends State<FatherItems> {
                             productsCompositions: widget.productsCompositions,
                           );
 
-                          if(updated){
+                          if (updated) {
                             Navigator.of(context).pop();
-                            showAlertMessage(context, "Combo adicionado com sucesso");
+                            showAlertMessage(
+                                context, "Combo adicionado com sucesso");
                           }
                         },
                       );

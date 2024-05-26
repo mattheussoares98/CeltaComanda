@@ -10,12 +10,7 @@ import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 
 class ProductCompositionPage extends StatefulWidget {
-  final ProductCompositionPresenter presenter;
-
-  const ProductCompositionPage(
-    this.presenter, {
-    super.key,
-  });
+  const ProductCompositionPage({super.key});
 
   @override
   State<ProductCompositionPage> createState() => _ProductCompositionPageState();
@@ -34,8 +29,11 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
       if (Get.arguments != null) {
         product = Get.arguments;
+        ProductCompositionPresenter productCompositionPresenter =
+            Provider.of(context, listen: false);
+
         Future.delayed(Duration.zero, () async {
-          await widget.presenter.loadProductComposition(
+          await productCompositionPresenter.loadProductComposition(
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -58,25 +56,28 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
   @override
   Widget build(BuildContext context) {
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(child: Text(product?.Name ?? "")),
       ),
       body: Builder(
         builder: (context) {
-          loadingSubscription =
-              handleLoading(context, widget.presenter.isLoadingStream);
-          mainErrorSubscription =
-              handleMainError(context, widget.presenter.mainErrorStream);
+          loadingSubscription = handleLoading(
+              context, productCompositionPresenter.isLoadingStream);
+          mainErrorSubscription = handleMainError(
+              context, productCompositionPresenter.mainErrorStream);
 
           return StreamBuilder<List<ProductCompositionViewModel>>(
-              stream: widget.presenter.productsCompositionStream,
+              stream: productCompositionPresenter.productsCompositionStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return ReloadScreen(
                     error: '${snapshot.error}',
-                    reload: () async =>
-                        await widget.presenter.loadProductComposition(
+                    reload: () async => await productCompositionPresenter
+                        .loadProductComposition(
                       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
                       enterpriseId: EnterpriseDataBuilder
                           .enterpriseDataEntity!.enterpriseId!,
@@ -85,12 +86,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                   );
                 }
                 if (snapshot.hasData) {
-                  return ListenableProvider(
-                    create: (_) => widget.presenter,
-                    child: FatherItems(
-                      product: product!,
-                      productsCompositions: snapshot.data!,
-                    ),
+                  return FatherItems(
+                    product: product!,
+                    productsCompositions: snapshot.data!,
                   );
                 }
                 return const SizedBox(height: 0);

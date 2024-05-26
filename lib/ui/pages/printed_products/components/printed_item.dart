@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/ui/components/components.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -107,7 +108,10 @@ class PrintedItem extends StatelessWidget {
                             );
                           },
                           quantity: product.Quantity,
-                          value: product.Value,
+                          value: (product.TotalLiquid.toDouble() /
+                                  product.Quantity.toDouble())
+                              .toString()
+                              .toBrazilianNumber(),
                           totalLiquid: product.TotalLiquid,
                           comments: product.Comments,
                         ),

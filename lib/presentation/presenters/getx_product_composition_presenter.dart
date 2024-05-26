@@ -30,6 +30,10 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<double> get totalPriceComboxStream => _totalPriceComboxStream.stream;
 
+  double _totalComboxQuantity = 1;
+  @override
+  double get totalComboxQuantity => _totalComboxQuantity;
+
   @override
   Future<void> loadProductComposition({
     required String url,
@@ -62,8 +66,7 @@ class GetxProductCompositionPresenter extends GetxController
     }
   }
 
-  @override
-  void updateTotalLiquidCombox(
+  double _getTotalLiquidCombox(
     List<ProductCompositionViewModel> productsCompositionsViewModel,
   ) {
     double totalLiquid = 0;
@@ -78,6 +81,16 @@ class GetxProductCompositionPresenter extends GetxController
         product: product,
       );
     }
+
+    return totalLiquid;
+  }
+
+  @override
+  void updateTotalLiquidCombox(
+    List<ProductCompositionViewModel> productsCompositionsViewModel,
+  ) {
+    double totalLiquid = _getTotalLiquidCombox(productsCompositionsViewModel);
+
     _totalPriceComboxStream.subject.add(totalLiquid);
   }
 
@@ -134,13 +147,14 @@ class GetxProductCompositionPresenter extends GetxController
           ProductInternalCodeOnErp:
               selectedChild.InternalCodeOnERPCodeChild.toString().toInt(),
           ProductPriceLookUpCode: selectedChild.PluChild!,
-          Quantity: selectedChild.Quantity!.toDouble(),
+          Quantity: selectedChild.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: _calculateTotalLiquid(
-            itemPrice: _calculatePrice(product),
-            product: product,
-          ),
-          Value: _calculatePrice(selectedChild),
+                itemPrice: _calculatePrice(product),
+                product: product,
+              ) *
+              totalComboxQuantity,
+          Value: _calculatePrice(product),
           Comments: product.commentFather,
         );
 
@@ -174,7 +188,8 @@ class GetxProductCompositionPresenter extends GetxController
             saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: _totalPriceComboxStream.value,
+        TotalLiquid:
+            _getTotalLiquidCombox(productsCompositions) * totalComboxQuantity,
         Products: _productsCompositionToUpdateSaleRequestTempProductEntity(
           saleRequestTempId: saleRequestTempPresenter
               .saleRequestTemp!.SaleRequestTempId
@@ -216,6 +231,15 @@ class GetxProductCompositionPresenter extends GetxController
     } catch (e) {
       mainError = UIError.invalidCombox;
       throw DomainError.invalidCombox;
+    }
+  }
+
+  @override
+  void updateComboxQuantity(bool isAddingQuantity) {
+    if (isAddingQuantity) {
+      _totalComboxQuantity++;
+    } else {
+      _totalComboxQuantity--;
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/main/factories/pages/product_composition/product_composition_page_factory.dart';
+import 'package:clean_celta_mobile/main/factories/pages/product_composition/product_composition_presenter_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -50,6 +51,9 @@ class App extends StatelessWidget {
         ),
         ListenableProvider(
           create: (_) => makeGetxProductsPresenter(),
+        ),
+        ListenableProvider(
+          create: (_) => makeGetxProductCompositionPresenter(),
         )
       ],
       child: GetMaterialApp(

@@ -56,7 +56,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.productComposition,
-      page: () => ProductCompositionPage(ProductCompositionPresenterSpy()),
+      page: () => const ProductCompositionPage(),
     ),
   ];
 

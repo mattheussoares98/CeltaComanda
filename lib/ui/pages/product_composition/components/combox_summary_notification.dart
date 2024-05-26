@@ -45,7 +45,7 @@ class ComboxSummaryNotification extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                selectedChild.SalePrice.toString()
+                element.SalePrice.toString()
                     .toBrazilianNumber()
                     .addBrazilianCoin(),
                 style: const TextStyle(
@@ -53,9 +53,9 @@ class ComboxSummaryNotification extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (selectedChild.IncrementValue.toString().toDouble() > 0)
+              if (element.IncrementValue.toString().toDouble() > 0)
                 Text(
-                  "Acréscimo: ${selectedChild.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                  "Acréscimo: ${element.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,

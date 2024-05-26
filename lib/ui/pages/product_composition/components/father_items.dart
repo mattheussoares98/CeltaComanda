@@ -246,31 +246,39 @@ class _FatherItemsState extends State<FatherItems> {
                       minimumSize: const Size(double.infinity, 40),
                     ),
                     onPressed: () async {
-                      notificationDialog(
-                        context: context,
-                        titleMessage: "Salvar combo?",
-                        cancelMessage: "Cancelar",
-                        confirmMessage: "Confirmar",
-                        content: ComboxSummaryNotification(
-                          fatherName: widget.product.Name,
-                          productsCompositions: widget.productsCompositions,
-                          totalPrice: snapshot.data!,
-                        ),
-                        onPress: () async {
-                          bool updated = await productCompositionPresenter
-                              .updateSaleRequest(
-                            homePresenter: homePresenter,
-                            saleRequestTempPresenter: saleRequestTempPresenter,
-                            productsCompositions: widget.productsCompositions,
-                          );
+                      try {
+                        productCompositionPresenter
+                            .certifyComboxIsValid(widget.productsCompositions);
 
-                          if (updated) {
-                            Navigator.of(context).pop();
-                            showAlertMessage(
-                                context, "Combo adicionado com sucesso");
-                          }
-                        },
-                      );
+                        notificationDialog(
+                          context: context,
+                          titleMessage: "Salvar combo?",
+                          cancelMessage: "Cancelar",
+                          confirmMessage: "Confirmar",
+                          content: ComboxSummaryNotification(
+                            fatherName: widget.product.Name,
+                            productsCompositions: widget.productsCompositions,
+                            totalPrice: snapshot.data!,
+                          ),
+                          onPress: () async {
+                            bool updated = await productCompositionPresenter
+                                .updateSaleRequest(
+                              homePresenter: homePresenter,
+                              saleRequestTempPresenter:
+                                  saleRequestTempPresenter,
+                              productsCompositions: widget.productsCompositions,
+                            );
+
+                            if (updated) {
+                              Navigator.of(context).pop();
+                              showAlertMessage(
+                                  context, "Combo adicionado com sucesso");
+                            }
+                          },
+                        );
+                      } catch (e) {
+                        e;
+                      }
                     },
                     child: Builder(builder: (context) {
                       Future.delayed(Duration.zero, () {

@@ -19,6 +19,8 @@ abstract class ProductCompositionPresenter implements Listenable {
     required int internalCodeOnErp,
   });
 
+  void certifyComboxIsValid(List<ProductCompositionViewModel> productsCompositions);
+
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,

@@ -84,12 +84,6 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                       if (child?.Quantity != null)
                         Text(
                             "Quantidade ${child!.Quantity!.toBrazilianNumber()}"),
-                      Text(child?.OfferPrice != null &&
-                              child?.OfferPrice! == "0.0"
-                          ? "Preço ${child?.SalePrice!.toBrazilianNumber()}"
-                              .addBrazilianCoin()
-                          : "Preço ${child?.OfferPrice!.toBrazilianNumber()}"
-                              .addBrazilianCoin()),
                       if (widget.isFixedItemInCombox)
                         if (widget.father.IncrementValue.toString().toDouble() >
                             0)

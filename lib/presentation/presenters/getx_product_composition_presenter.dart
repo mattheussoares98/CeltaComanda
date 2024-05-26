@@ -43,6 +43,7 @@ class GetxProductCompositionPresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
+      updateComboxQuantity(false, true);
       final fathers = await getProductComposition.getFathers(
         url: url,
         enterpriseId: enterpriseId,
@@ -235,8 +236,11 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateComboxQuantity(bool isAddingQuantity) {
-    if (isAddingQuantity) {
+  void updateComboxQuantity(bool isAddingQuantity,
+      [bool clearTotalComboxQuantity = false]) {
+    if (clearTotalComboxQuantity) {
+      _totalComboxQuantity = 1;
+    } else if (isAddingQuantity) {
       _totalComboxQuantity++;
     } else {
       _totalComboxQuantity--;

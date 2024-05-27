@@ -120,8 +120,8 @@ void main() {
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
@@ -191,8 +191,10 @@ void main() {
       );
     });
 
-    test('Should emit correct events on UpdateSaleRequest throws unexpected', () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError(DomainError.unexpected);
+    test('Should emit correct events on UpdateSaleRequest throws unexpected',
+        () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -206,12 +208,15 @@ void main() {
       );
     });
 
-    test('Should emit correct events on UpdateSaleRequest throws commandNotAvailable', () async {
-      updateSaleRequestTemp.mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
+    test(
+        'Should emit correct events on UpdateSaleRequest throws commandNotAvailable',
+        () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
@@ -229,9 +234,6 @@ void main() {
         products: updateSaleRequestTempEntity.Products,
       );
 
-      double saleRetailPraticed =
-          productsViewModel.SaleRetailPraticed.toDouble();
-
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: int.parse(
             saleRequestTempPresenter.saleRequestTempMock!.DeliveryControl),
@@ -241,7 +243,8 @@ void main() {
             saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
         SaleRequestTempId: int.parse(
             saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
-        TotalLiquid: saleRetailPraticed,
+        TotalLiquid: updateSaleRequestTempEntity.Products.fold(0.0,
+            (previousValue, element) => element.TotalLiquid + previousValue),
         Products: updateSaleRequestTempEntity.Products,
       );
 

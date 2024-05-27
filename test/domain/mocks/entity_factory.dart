@@ -528,28 +528,36 @@ class EntityFactory {
             Value: faker.randomGenerator.decimal().toString(),
           );
 
-  static UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity() =>
-      UpdateSaleRequestTempEntity(
-        DeliveryControl: faker.randomGenerator.integer(5),
-        EnterpriseId: faker.randomGenerator.integer(5),
-        SaleRequestTempId: faker.randomGenerator.integer(5),
-        PersonalizedCode: faker.randomGenerator.integer(3).toString(),
-        TotalLiquid: faker.randomGenerator.decimal(),
-        Products: [makeUpdateSaleRequestTempProductEntity()],
-        Comments: faker.randomGenerator.string(10),
-      );
+  static UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity() {
+    final products = [makeUpdateSaleRequestTempProductEntity()];
+
+    return UpdateSaleRequestTempEntity(
+      DeliveryControl: faker.randomGenerator.integer(5),
+      EnterpriseId: faker.randomGenerator.integer(5),
+      SaleRequestTempId: faker.randomGenerator.integer(5),
+      PersonalizedCode: faker.randomGenerator.integer(3).toString(),
+      TotalLiquid: products.fold(
+          0.0, (previousValue, element) => element.TotalLiquid + previousValue),
+      Products: products,
+      Comments: faker.randomGenerator.string(10),
+    );
+  }
 
   static UpdateSaleRequestTempProductEntity
-      makeUpdateSaleRequestTempProductEntity() =>
-          UpdateSaleRequestTempProductEntity(
-            ProductPriceLookUpCode: faker.randomGenerator.integer(7).toString(),
-            ProductInternalCodeOnErp: faker.randomGenerator.integer(10),
-            SaleRequestTempId: faker.randomGenerator.integer(10),
-            Quantity: faker.randomGenerator.decimal(),
-            TotalLiquid: faker.randomGenerator.decimal(),
-            Value: faker.randomGenerator.decimal(),
-            Comments: faker.randomGenerator.string(10),
-          );
+      makeUpdateSaleRequestTempProductEntity() {
+    double quantity = faker.randomGenerator.decimal();
+    double value = faker.randomGenerator.decimal();
+
+    return UpdateSaleRequestTempProductEntity(
+      ProductPriceLookUpCode: faker.randomGenerator.integer(7).toString(),
+      ProductInternalCodeOnErp: faker.randomGenerator.integer(10),
+      SaleRequestTempId: faker.randomGenerator.integer(10),
+      Quantity: quantity,
+      TotalLiquid: quantity * value,
+      Value: value,
+      Comments: faker.randomGenerator.string(10),
+    );
+  }
 
   static SaleRequestTempEntity makeSaleRequestTempEntity() =>
       SaleRequestTempEntity(

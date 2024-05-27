@@ -62,8 +62,8 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
             saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
             saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: productsViewModel.productQuantity *
-            productsViewModel.SaleRetailPraticed.toDouble(),
+        TotalLiquid: products.fold(0.0,
+            (previousValue, element) => element.TotalLiquid + previousValue),
         Products: products,
       );
 

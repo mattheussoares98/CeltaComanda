@@ -39,9 +39,11 @@ class _ProductsItemsState extends State<ProductsItems> {
                   productsViewModel.InternalCodeOnERP.toString().toInt(),
               ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
               Quantity: productsViewModel.productQuantity,
-              SaleRequestTempId: int.parse(
-                  saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-              TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble(),
+              SaleRequestTempId: saleRequestTempPresenter
+                  .saleRequestTemp!.SaleRequestTempId
+                  .toInt(),
+              TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble() *
+                  productsViewModel.productQuantity,
               Value: productsViewModel.SaleRetailPraticed.toDouble(),
               Comments: commentTextController.text.isEmpty == true
                   ? null

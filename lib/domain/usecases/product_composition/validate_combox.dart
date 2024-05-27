@@ -1,5 +1,5 @@
 import '../../../ui/pages/pages.dart';
 
 abstract class ValidateCombox {
-  comboxIsValid(List<ProductCompositionViewModel> productCompositions);
+  void comboxIsValid(List<ProductCompositionViewModel> productCompositions);
 }

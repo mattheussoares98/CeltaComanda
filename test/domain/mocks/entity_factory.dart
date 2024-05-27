@@ -617,4 +617,29 @@ class EntityFactory {
           IsOptionalItem: isOptionalItem,
         ),
       ];
+
+  static ProductCompositionViewModel makeProductCompositionViewModel({
+    required double quantity,
+    required double salePrice,
+    required double offerPrice,
+    required double incrementValue,
+    required bool isOptionalItem,
+  }) =>
+      ProductCompositionViewModel(
+        ProductCompositionId: "1",
+        EnterpriseId: "1",
+        InternalCodeOnERPCodeFather: "1",
+        InternalCodeOnERPCodeChild: "1",
+        PluChild: "PluChild",
+        ChildName: "ChildName",
+        Quantity: quantity.toString(),
+        SalePrice: salePrice.toString(),
+        OfferPrice: offerPrice.toString(),
+        IncrementValue: incrementValue.toString(),
+        IsOptionalItem: isOptionalItem.toString(),
+        ProductOptions: "",
+        indexOfSelectedChild: 0,
+        childs: const [],
+        commentFather: "",
+      );
 }

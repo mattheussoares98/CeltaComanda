@@ -97,8 +97,7 @@ class GetxProductCompositionPresenter extends GetxController
 
   double _calculateIncrementValue(ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
-      return product.IncrementValue.toString().toDouble() *
-          product.Quantity.toString().toDouble();
+      return product.IncrementValue.toString().toDouble();
     } else {
       return 0;
     }

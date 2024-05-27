@@ -33,9 +33,9 @@
 //   Future<void> loadPage(WidgetTester tester) async {
 //     await tester.pumpWidget(
 //       makePage(
-//         path: PageRoutes.combox,
-//         page: () => ProductCompositionPage(presenter),
-//         arguments: faker.randomGenerator.integer(3),
+//         path: PageRoutes.productComposition,
+//         page: () => const ProductCompositionPage(),
+//         arguments: internalCodeOnERPCodeFather,
 //       ),
 //     );
 //   }
@@ -48,11 +48,11 @@
 //       (WidgetTester tester) async {
 //     await loadPage(tester);
 
-//     verify(() => presenter.loadProductComposition(
-//           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-//           enterpriseId:
-//               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-//           internalCodeOnERPCodeFather: internalCodeOnERPCodeFather,
-//         )).called(1);
+//     // verify(() => presenter.loadProductComposition(
+//     //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+//     //       enterpriseId:
+//     //           EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+//     //       internalCodeOnErp: internalCodeOnERPCodeFather,
+//     //     )).called(1);
 //   });
 // }

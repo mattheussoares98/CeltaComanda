@@ -400,7 +400,7 @@ void main() {
             ),
           )).called(1);
     });
-    test("Should emit correct events on sut.pdateSaleRequest success",
+    test("Should emit correct events on sut.updateSaleRequest success",
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
@@ -408,8 +408,115 @@ void main() {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productsCompositions: [],
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
       );
+    });
+    test("Should return true on updateSaleRequest success", () async {
+      final updated = await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
+      );
+
+      expect(updated, true);
+    });
+    test("Should return false on updateSaleRequest throws", () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
+      final updated = await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
+      );
+
+      expect(updated, false);
+    });
+    test("Should call validateCombox on updateSaleRequest", () async {
+      await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
+      );
+
+      verify(() => validateCombox.comboxIsValid(optionalFathers
+          .map((element) => ProductCompositionViewModel.fromEntity(element))
+          .toList())).called(1);
+    });
+
+    test("Should emit correct values when validateCombox throws", () async {
+      validateCombox.mockError();
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
+
+      await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
+      );
+    });
+    test(
+        "Should not call updateSaleRequest and loadSaleRequest when combox is invalid",
+        () async {
+      validateCombox.mockError();
+      final case1 = EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 10,
+        offerPrice: 0,
+        incrementValue: 0,
+        isOptionalItem: false,
+      );
+
+      await sut.updateSaleRequest(
+          homePresenter: homePresenter,
+          saleRequestTempPresenter: saleRequestTempPresenter,
+          productsCompositions: [case1]);
+
+      verifyNever(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: makeUpdateSaleRequestTempEntity(
+              productCompositionViewModel: case1,
+              totalLiquid: 10,
+              productValue: 10,
+            ),
+          ));
+
+      verifyNever(() => saleRequestTempPresenter
+          .loadSaleRequest(homePresenter.commandNumberMock!));
+    });
+    test("Should call updateSaleRequestTemp on updateSaleRequest", () async {
+      final case1 = EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 10,
+        offerPrice: 0,
+        incrementValue: 0,
+        isOptionalItem: false,
+      );
+
+      await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: [case1],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: makeUpdateSaleRequestTempEntity(
+              productCompositionViewModel: case1,
+              totalLiquid: 10,
+              productValue: 10,
+            ),
+          ));
     });
     test(
         "Should emit correct events on updateSaleRequestTemp.update throws (unexpected)",
@@ -423,7 +530,9 @@ void main() {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productsCompositions: [],
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
       );
     });
     test(
@@ -438,7 +547,9 @@ void main() {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productsCompositions: [],
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
       );
     });
     test(
@@ -447,12 +558,51 @@ void main() {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productsCompositions: [],
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
       );
 
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
+    test(
+        "Should emit correct values on saleRequestTempPresenter.load throws unexpected",
+        () async {
+      saleRequestTempPresenter
+          .mockLoadSaleRequestTempError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
+      );
+    });
+    test(
+        "Should emit correct values on saleRequestTempPresenter.load throws commandNotAvailable",
+        () async {
+      saleRequestTempPresenter
+          .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+
+      await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        saleRequestTempPresenter: saleRequestTempPresenter,
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
+      );
+    });
+
     test('Should return correct entity on success to loadSaleRequestTemp',
         () async {
       final value = await loadSaleRequestTemp.load(
@@ -465,7 +615,7 @@ void main() {
     });
 
     test(
-        "Should emit CommandNotAvailable commandNotAvailable on saleRequestTempPresenter.loadSaleRequest throws CommandNotAvailable",
+        "Should emit CommandNotAvailable on saleRequestTempPresenter.loadSaleRequest throws CommandNotAvailable",
         () async {
       saleRequestTempPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
@@ -477,11 +627,13 @@ void main() {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productsCompositions: [],
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
       );
     });
     test(
-        "Should emit unexpected unexpected on saleRequestTempPresenter.loadSaleRequest throws unexpected",
+        "Should emit unexpected on saleRequestTempPresenter.loadSaleRequest throws unexpected",
         () async {
       saleRequestTempPresenter
           .mockLoadSaleRequestTempError(DomainError.unexpected);
@@ -493,7 +645,9 @@ void main() {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        productsCompositions: [],
+        productsCompositions: optionalFathers
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .toList(),
       );
     });
   });

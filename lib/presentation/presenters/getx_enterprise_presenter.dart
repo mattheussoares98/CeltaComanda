@@ -15,14 +15,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
     implements EnterpriseValidationPresenter {
   final Validation validation;
   final LocalEnterpriseData localEntepriseData;
-  final RemoteEnterpriseData remoteEnterpriseData;
+  final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final LoadSaleRequestTemp loadSaleRequestTemp;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
     required this.localEntepriseData,
-    required this.remoteEnterpriseData,
+    required this.loadEnterpriseData,
     required this.navigateTo,
     required this.loadSaleRequestTemp,
   });
@@ -50,7 +50,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   Future<void> loadRemoteData() async {
     try {
       EnterpriseDataBuilder.enterpriseDataEntity =
-          await remoteEnterpriseData.load();
+          await loadEnterpriseData.load();
 
       if (EnterpriseDataBuilder
               .enterpriseDataEntity?.enterpriseName.isNotEmpty ==

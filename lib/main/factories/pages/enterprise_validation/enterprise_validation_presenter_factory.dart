@@ -6,7 +6,7 @@ EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
     GetxEnterpriseValidationPresenter(
       validation: makeEnterpriseValidation(),
       localEntepriseData: makeLocalEnterpriseData(),
-      remoteEnterpriseData: makeRemoteEnterpriseData(),
+      loadEnterpriseData: makeRemoteLoadEnterpriseData(),
       navigateTo: makeNavigateTo(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
     );

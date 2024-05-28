@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/cache/cache.dart';
@@ -20,5 +21,32 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> update(QuerySnapshot<Object?> querySnapshot) async {}
+  Future<void> addNewPrintRequest() async {
+// Obtém a instância do Firestore
+    var firestore = FirebaseFirestore.instance;
+
+    // Obtém a data atual
+    var agora = DateTime.now();
+    var mesAnoAtual = '${agora.month}/${agora.year}';
+
+    // Referência para o documento do mês e ano atual na coleção "minhaColecao"
+    var docRef = firestore.collection('printRequests').doc(mesAnoAtual);
+
+    // Incrementa o contador usando FieldValue.increment()
+    var incremento = FieldValue.increment(1);
+
+    // Adiciona a data atual à lista de datas, se ainda não estiver presente
+    var dataAtual = agora.toIso8601String();
+    var adicionarData = FieldValue.arrayUnion([dataAtual]);
+
+    // Atualiza o documento
+    await docRef.set({
+      'requests': {
+        EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName: {
+          'contador': incremento,
+          'datas': adicionarData
+        }
+      }
+    }, SetOptions(merge: true));
+  }
 }

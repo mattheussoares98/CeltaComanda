@@ -16,14 +16,14 @@ void main() {
   late GetxEnterpriseValidationPresenter sut;
   late ValidationSpy validation;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late RemoteEnterpriseDataSpy remoteEnterpriseData;
+  late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
 
   setUp(() {
     validation = ValidationSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
-    remoteEnterpriseData = RemoteEnterpriseDataSpy();
+    remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
@@ -31,13 +31,13 @@ void main() {
 
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
-    remoteEnterpriseData
+    remoteLoadEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
 
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,
-      remoteEnterpriseData: remoteEnterpriseData,
+      loadEnterpriseData: remoteLoadEnterpriseData,
       navigateTo: navigateTo,
       loadSaleRequestTemp: loadSaleRequestTemp,
     );
@@ -111,7 +111,7 @@ void main() {
   });
 
   test('Should error if enterprise not exists in firebase', () {
-    remoteEnterpriseData.mockRemoteLoadError();
+    remoteLoadEnterpriseData.mockRemoteLoadError();
     // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
     //     updateEnterpriseNameController: true);
 
@@ -133,7 +133,7 @@ void main() {
   test("Should call LoadRemoteData on loadData", () async {
     await sut.loadRemoteData();
 
-    verify(() => remoteEnterpriseData.load()).called(1);
+    verify(() => remoteLoadEnterpriseData.load()).called(1);
   });
   test("Should change controllers with remoteEnterpriseData", () async {
     await sut.loadRemoteData();
@@ -155,7 +155,7 @@ void main() {
 
     await sut.validateApiSaleRequest();
 
-    verify(() => remoteEnterpriseData.load()).called(1);
+    verify(() => remoteLoadEnterpriseData.load()).called(1);
   });
 
   test(

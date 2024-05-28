@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class RemoteEnterpriseDataSpy extends Mock implements RemoteEnterpriseData {
+class RemoteEnterpriseDataSpy extends Mock implements RemoteLoadEnterpriseData {
   // When mockAddCall() => when(() => this.add(any()));
   // void mockAdd(EnterpriseDataEntity entity) =>
   //     this.mockAddCall().thenAnswer((_) async => entity);

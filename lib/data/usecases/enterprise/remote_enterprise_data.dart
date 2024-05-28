@@ -8,10 +8,10 @@ import '../../../ui/helpers/helpers.dart';
 import '../../cache/cache.dart';
 import '../../models/models.dart';
 
-class RemoteEnterpriseData implements LoadEnterpriseData {
+class RemoteLoadEnterpriseData implements LoadEnterpriseData {
   final FirebaseStorage firebaseStorage;
 
-  RemoteEnterpriseData({
+  RemoteLoadEnterpriseData({
     required this.firebaseStorage,
   });
 

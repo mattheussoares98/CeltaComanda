@@ -8,5 +8,5 @@ abstract class FirebaseStorage {
     required String valueToSearch,
   });
 
-  Future<void> update(QuerySnapshot querySnapshot);
+  Future<void> addNewPrintRequest();
 }

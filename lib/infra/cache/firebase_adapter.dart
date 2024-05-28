@@ -1,7 +1,8 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/cache/cache.dart';
+import '../../domain/helpers/helpers.dart';
+import '../../main/builders/builders.dart';
 
 class FirebaseAdapter implements FirebaseStorage {
   final FirebaseFirestore firestore;
@@ -22,31 +23,26 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> addNewPrintRequest() async {
-// Obtém a instância do Firestore
-    var firestore = FirebaseFirestore.instance;
+    try {
+      var agora = DateTime.now();
+      var mesAnoAtual = '${agora.month}-${agora.year}';
+      var mesAnoDiaAtual = '${agora.day}-${agora.month}-${agora.year}';
 
-    // Obtém a data atual
-    var agora = DateTime.now();
-    var mesAnoAtual = '${agora.month}/${agora.year}';
+      var docRef = firestore
+          .collection('requests')
+          .doc(mesAnoAtual)
+          .collection("requestsInformations")
+          .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
 
-    // Referência para o documento do mês e ano atual na coleção "minhaColecao"
-    var docRef = firestore.collection('printRequests').doc(mesAnoAtual);
+      var incremento = FieldValue.increment(1);
+      var adicionarData = FieldValue.arrayUnion([mesAnoDiaAtual]);
 
-    // Incrementa o contador usando FieldValue.increment()
-    var incremento = FieldValue.increment(1);
-
-    // Adiciona a data atual à lista de datas, se ainda não estiver presente
-    var dataAtual = agora.toIso8601String();
-    var adicionarData = FieldValue.arrayUnion([dataAtual]);
-
-    // Atualiza o documento
-    await docRef.set({
-      'requests': {
-        EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName: {
-          'contador': incremento,
-          'datas': adicionarData
-        }
-      }
-    }, SetOptions(merge: true));
+      await docRef.set({
+        'timesUsed': incremento,
+        'dates': adicionarData,
+      }, SetOptions(merge: true));
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
   }
 }

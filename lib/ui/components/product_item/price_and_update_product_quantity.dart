@@ -33,6 +33,7 @@ class _PriceAndUpdateProductQuantityState
         Text("${widget.price.toString().toBrazilianNumber()} R\$"),
         if (widget.showUpdateProductQuantity)
           Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
                 height: 30,

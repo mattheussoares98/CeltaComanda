@@ -16,6 +16,7 @@ class GetxSaleRequestTempPresenter
   final UpdateProductComment updateProductComment;
   final FinishSaleRequestTemp finishSaleRequestTemp;
   final TicketIsPermitted ticketIsPermitted;
+  final AddPrintRequest addPrintRequest;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
@@ -23,6 +24,7 @@ class GetxSaleRequestTempPresenter
     required this.updateProductComment,
     required this.finishSaleRequestTemp,
     required this.ticketIsPermitted,
+    required this.addPrintRequest,
   });
 
   @override
@@ -190,6 +192,8 @@ class GetxSaleRequestTempPresenter
         expansibleGroupsPresenter: expansibleGroupsPresenter,
         homePresenter: homePresenter,
       );
+
+      await addPrintRequest.add();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

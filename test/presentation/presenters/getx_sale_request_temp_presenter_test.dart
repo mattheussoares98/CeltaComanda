@@ -24,6 +24,7 @@ void main() {
   late UpdateProductCommentSpy updateProductComment;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
   late TicketIsPermittedSpy ticketIsPermitted;
+  late AddPrintRequestSpy addPrintRequest;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -35,6 +36,7 @@ void main() {
     updateProductComment = UpdateProductCommentSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
+    addPrintRequest = AddPrintRequestSpy();
   }
 
   void initPresenters() {
@@ -48,6 +50,7 @@ void main() {
       updateProductComment: updateProductComment,
       finishSaleRequestTemp: finishSaleRequestTemp,
       ticketIsPermitted: ticketIsPermitted,
+      addPrintRequest: addPrintRequest,
     );
   }
 
@@ -199,7 +202,8 @@ void main() {
   });
 
   group("LoadSaleRequestTemp", () {
-    test("Should update SaleRequestTemp correctly on LoadSaleRequestTemp", () async {
+    test("Should update SaleRequestTemp correctly on LoadSaleRequestTemp",
+        () async {
       await sut.loadSaleRequest(homePresenter.commandNumberMock!);
 
       expect(sut.saleRequestTemp,
@@ -428,6 +432,20 @@ void main() {
         sut.saleRequestTemp,
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
       );
+    });
+
+    test("Should call addPrintRequest when finish success", () async {
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => addPrintRequest.add(),
+      ).called(1);
     });
   });
 

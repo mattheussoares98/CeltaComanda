@@ -9,4 +9,5 @@ SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
       updateProductComment: makeRemoteUpdateProductComment(),
       finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
       ticketIsPermitted: makeRemoteticketIsPermitted(),
+      addPrintRequest: makeRemoteAddPrintRequest(),
     );

@@ -4,5 +4,4 @@ import '../../../../main/factories/factories.dart';
 
 AddPrintRequest makeRemoteAddPrintRequest() => RemoteAddPrintRequest(
       firebaseAdapter: makeFirebaseAdapter(),
-      localPrintRequest: makeLocalPrintRequest(),
     );

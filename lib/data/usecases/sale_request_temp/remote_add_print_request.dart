@@ -1,25 +1,20 @@
 import '../../../data/cache/cache.dart';
-import '../../../data/usecases/usecases.dart';
+import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class RemoteAddPrintRequest implements AddPrintRequest {
   final FirebaseStorage firebaseAdapter;
-  final LocalPrintRequest localPrintRequest;
 
   RemoteAddPrintRequest({
     required this.firebaseAdapter,
-    required this.localPrintRequest,
   });
 
   @override
-  Future<void> add() async {
+  Future<void> add(PrintRequestEntity entity) async {
     try {
-      final localData = await localPrintRequest.getMergedPrintedEntity();
-
-      await firebaseAdapter.addNewPrintRequest(localData);
-      await localPrintRequest.clear();
+      await firebaseAdapter.addNewPrintRequest(entity);
     } catch (e) {
-      await localPrintRequest.add();
+      throw Exception();
     }
   }
 }

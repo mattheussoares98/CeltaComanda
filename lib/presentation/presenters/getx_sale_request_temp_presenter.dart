@@ -1,6 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import 'package:flutter/foundation.dart';
+
+import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -17,6 +19,7 @@ class GetxSaleRequestTempPresenter
   final FinishSaleRequestTemp finishSaleRequestTemp;
   final TicketIsPermitted ticketIsPermitted;
   final AddPrintRequest addPrintRequest;
+  final LocalPrintRequest localPrintRequest;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
@@ -25,6 +28,7 @@ class GetxSaleRequestTempPresenter
     required this.finishSaleRequestTemp,
     required this.ticketIsPermitted,
     required this.addPrintRequest,
+    required this.localPrintRequest,
   });
 
   @override
@@ -193,9 +197,10 @@ class GetxSaleRequestTempPresenter
         homePresenter: homePresenter,
       );
 
-      await addPrintRequest.add();
+      await addNewPrintRequest();
     } catch (e) {
       mainError = UIError.unexpected;
+      await addNewPrintRequest();
     } finally {
       isLoading = false;
     }
@@ -283,5 +288,33 @@ class GetxSaleRequestTempPresenter
           .toBrazilianNumber();
     }
     return "0";
+  }
+
+  @override
+  Future<void> addNewPrintRequest() async {
+    PrintRequestEntity newRequest = PrintRequestEntity(
+      dates: [
+        "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+      ],
+      timesUsed: 1,
+    );
+    try {
+      final localEntity = await localPrintRequest.getLocalPrintedEntity();
+
+      if (localEntity != null) {
+        newRequest = PrintRequestEntity(
+          dates: [
+            ...localEntity.dates,
+            "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+          ],
+          timesUsed: localEntity.timesUsed + 1,
+        );
+      }
+
+      await addPrintRequest.add(newRequest);
+      await localPrintRequest.clear();
+    } catch (e) {
+      await localPrintRequest.add(newRequest);
+    }
   }
 }

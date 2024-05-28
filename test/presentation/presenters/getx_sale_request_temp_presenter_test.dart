@@ -25,10 +25,12 @@ void main() {
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
   late TicketIsPermittedSpy ticketIsPermitted;
   late AddPrintRequestSpy addPrintRequest;
+  late LocalPrintRequestSpy localPrintRequest;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
   late String comments;
+  late PrintRequestEntity printRequestEntity;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -37,6 +39,7 @@ void main() {
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
     addPrintRequest = AddPrintRequestSpy();
+    localPrintRequest = LocalPrintRequestSpy();
   }
 
   void initPresenters() {
@@ -51,6 +54,7 @@ void main() {
       finishSaleRequestTemp: finishSaleRequestTemp,
       ticketIsPermitted: ticketIsPermitted,
       addPrintRequest: addPrintRequest,
+      localPrintRequest: localPrintRequest,
     );
   }
 
@@ -62,10 +66,12 @@ void main() {
         faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    printRequestEntity = EntityFactory.makePrintRequestEntity();
   }
 
   void initMockSuccess() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    localPrintRequest.mockGetMergedPrinted(null);
   }
 
   setUp(() {
@@ -79,9 +85,8 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
     registerFallbackValue(ExpansibleGroupsPresenterSpy());
-    registerFallbackValue(
-      EntityFactory.makeSaleRequestTempEntity(),
-    );
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makePrintRequestEntity());
   });
 
   group("AddProductQuantity group", () {
@@ -433,7 +438,9 @@ void main() {
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
       );
     });
+  });
 
+  group("Add PrintRequest", () {
     test("Should call addPrintRequest when finish success", () async {
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
@@ -444,7 +451,118 @@ void main() {
       );
 
       verify(
-        () => addPrintRequest.add(),
+        () => addPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
+
+    test(
+        "Should call correct printRequests when finish success and has printRequestEntity in local data",
+        () async {
+      localPrintRequest.mockGetMergedPrinted(printRequestEntity);
+
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => localPrintRequest.getLocalPrintedEntity(),
+      ).called(1);
+      verify(
+        () => localPrintRequest.clear(),
+      ).called(1);
+      verify(
+        () => addPrintRequest.add(
+          PrintRequestEntity(
+            dates: [
+              ...printRequestEntity.dates,
+              "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+            ],
+            timesUsed: printRequestEntity.timesUsed + 1,
+          ),
+        ),
+      ).called(1);
+    });
+
+    test(
+        "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
+        () async {
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => localPrintRequest.getLocalPrintedEntity(),
+      ).called(1);
+      verify(
+        () => localPrintRequest.clear(),
+      ).called(1);
+      verify(
+        () => addPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
+
+    test("Should call correct printRequests when finish throw", () async {
+      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => localPrintRequest.getLocalPrintedEntity(),
+      ).called(1);
+      verify(
+        () => localPrintRequest.clear(),
+      ).called(1);
+      verify(
+        () => addPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
+
+    test("Should call LocalAddPrintRequest when addPrintRequest throws",
+        () async {
+      addPrintRequest.mockRemoteAddError();
+
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => localPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
+
+    test(
+        "Should call LocalAddPrintRequest when localPrintRequest.GetMergedPrint throws",
+        () async {
+      localPrintRequest.mockGetMergedPrintedError();
+
+      await sut.finishSaleRequest(
+        saleRequestTempEntity: saleRequestTempEntity,
+        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        saleRequestTempPresenter: sut,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => localPrintRequest.add(printRequestEntity),
       ).called(1);
     });
   });

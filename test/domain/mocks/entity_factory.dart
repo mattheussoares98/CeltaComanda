@@ -650,4 +650,11 @@ class EntityFactory {
         childs: const [],
         commentFather: "",
       );
+
+  static PrintRequestEntity makePrintRequestEntity() => PrintRequestEntity(
+        dates: [
+          "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+        ],
+        timesUsed: 1,
+      );
 }

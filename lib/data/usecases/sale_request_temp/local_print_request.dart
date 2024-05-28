@@ -12,40 +12,28 @@ class LocalPrintRequest
   LocalPrintRequest({required this.hiveStorage});
 
   @override
-  Future<void> add() async {
-    final newPrintRequest = await getMergedPrintedEntity();
+  Future<void> add(PrintRequestEntity entity) async {
     try {
       await hiveStorage.put(
         CacheKeys.printRequest.name,
-        PrintRequestModel.fromEntity(newPrintRequest).toJson(),
+        PrintRequestModel.fromEntity(entity).toJson(),
       );
     } catch (e) {
-      throw DomainError.unexpected;
+      throw Exception();
     }
   }
 
   @override
-  Future<PrintRequestEntity> getMergedPrintedEntity() async {
+  Future<PrintRequestEntity?> getLocalPrintedEntity() async {
     try {
       final json = await hiveStorage.get(
         CacheKeys.printRequest.name,
       );
 
       if (json != null) {
-        return PrintRequestEntity(
-          dates: [
-            ..._mapToEntity(json).dates,
-            "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
-          ],
-          timesUsed: _mapToEntity(json).timesUsed + 1,
-        );
+        return _mapToEntity(json);
       } else {
-        return PrintRequestEntity(
-          dates: [
-            "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
-          ],
-          timesUsed: 1,
-        );
+        return null;
       }
     } catch (error) {
       throw DomainError.unexpected;
@@ -62,7 +50,7 @@ class LocalPrintRequest
         CacheKeys.printRequest.name,
       );
     } catch (e) {
-      // throw DomainError.unexpected;
+      throw DomainError.unexpected;
     }
   }
 }

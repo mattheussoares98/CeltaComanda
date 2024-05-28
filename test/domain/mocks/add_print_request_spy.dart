@@ -5,12 +5,12 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 class AddPrintRequestSpy extends Mock implements AddPrintRequest {
   AddPrintRequestSpy() {
-    this.mockRemoteLoad();
+    this.mockRemoteAdd();
   }
 
-  When mockAddPrintRequestCall() => when(() => add());
-  void mockRemoteLoad() =>
+  When mockAddPrintRequestCall() => when(() => add(any()));
+  void mockRemoteAdd() =>
       this.mockAddPrintRequestCall().thenAnswer((_) async => _);
-  void mockRemoteLoadError() =>
+  void mockRemoteAddError() =>
       this.mockAddPrintRequestCall().thenThrow(Exception());
 }

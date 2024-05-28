@@ -8,12 +8,14 @@ class SearchDataByCommandNumber extends StatelessWidget {
   final SaleRequestTempPresenter saleRequestTempPresenter;
   final HomePresenter homePresenter;
   final Future Function() loadCommandData;
+  final String emptyMessage;
   const SearchDataByCommandNumber({
     required this.expansibleGroupsPresenter,
     required this.printedProductsPresenter,
     required this.saleRequestTempPresenter,
     required this.homePresenter,
     required this.loadCommandData,
+    required this.emptyMessage,
     super.key,
   });
 
@@ -30,8 +32,8 @@ class SearchDataByCommandNumber extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            "Não há dados",
+          Text(
+            emptyMessage,
             textAlign: TextAlign.center,
           ),
           TextButton.icon(

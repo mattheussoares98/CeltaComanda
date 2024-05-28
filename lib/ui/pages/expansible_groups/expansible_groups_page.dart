@@ -181,6 +181,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
                       homePresenter: homePresenter,
+                      emptyMessage:
+                          "Consulte alguma comanda para conseguir visualizar os produtos/combos e adicionar na comanda",
                       loadCommandData: () async {
                         await expansibleGroupsPresenter.loadCommandData(
                           commandNumber: homePresenter.commandNumber!,

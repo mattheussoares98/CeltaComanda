@@ -109,6 +109,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,
+                    emptyMessage: homePresenter.commandNumber == null
+                        ? "Consulte alguma comanda para visualizar os produtos que estão pendentes"
+                        : "Não há produtos pendentes nessa comanda",
                     loadCommandData: () async {
                       await saleRequestTempPresenter.loadCommandData(
                         commandNumber: homePresenter.commandNumber!,

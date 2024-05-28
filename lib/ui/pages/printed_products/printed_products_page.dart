@@ -114,6 +114,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,
+                    emptyMessage: homePresenter.commandNumber == null
+                        ? "Consulte alguma comanda para visualizar os produtos solicitados"
+                        : "Não há produtos solicitados nessa comanda",
                     loadCommandData: () async {
                       await printedProductsPresenter.loadCommandData(
                         commandNumber: homePresenter.commandNumber!,

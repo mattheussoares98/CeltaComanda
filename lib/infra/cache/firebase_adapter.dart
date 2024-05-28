@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/print_request_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/cache/cache.dart';
@@ -22,11 +23,10 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> addNewPrintRequest() async {
+  Future<void> addNewPrintRequest(PrintRequestEntity entity) async {
     try {
       var agora = DateTime.now();
       var mesAnoAtual = '${agora.month}-${agora.year}';
-      var mesAnoDiaAtual = '${agora.day}-${agora.month}-${agora.year}';
 
       var docRef = firestore
           .collection('requests')
@@ -34,8 +34,8 @@ class FirebaseAdapter implements FirebaseStorage {
           .collection("requestsInformations")
           .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
 
-      var incremento = FieldValue.increment(1);
-      var adicionarData = FieldValue.arrayUnion([mesAnoDiaAtual]);
+      var incremento = FieldValue.increment(entity.timesUsed);
+      var adicionarData = FieldValue.arrayUnion(entity.dates);
 
       await docRef.set({
         'timesUsed': incremento,

@@ -1,6 +1,7 @@
 enum CacheKeys {
+  apiSaleRequest,
   crossId,
   enterprise,
   hiveBoxName,
-  apiSaleRequest,
+  printRequest,
 }

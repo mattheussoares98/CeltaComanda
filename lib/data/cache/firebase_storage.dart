@@ -1,4 +1,4 @@
-// import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import '../../domain/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirebaseStorage {
@@ -8,5 +8,5 @@ abstract class FirebaseStorage {
     required String valueToSearch,
   });
 
-  Future<void> addNewPrintRequest();
+  Future<void> addNewPrintRequest(PrintRequestEntity entity);
 }

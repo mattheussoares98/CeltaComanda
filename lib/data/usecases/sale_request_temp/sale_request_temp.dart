@@ -1,4 +1,4 @@
-export './local_clear_sale_request_temp.dart';
+export 'local_print_request.dart';
 export './remote_add_print_request.dart';
 export './remote_finish_sale_request_temp.dart';
 export 'remote_load_sale_request_temp.dart';

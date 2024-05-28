@@ -1,18 +1,25 @@
 import '../../../data/cache/cache.dart';
-import '../../../domain/helpers/domain_error.dart';
+import '../../../data/usecases/usecases.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class RemoteAddPrintRequest implements AddPrintRequest {
   final FirebaseStorage firebaseAdapter;
+  final LocalPrintRequest localPrintRequest;
 
-  RemoteAddPrintRequest({required this.firebaseAdapter});
+  RemoteAddPrintRequest({
+    required this.firebaseAdapter,
+    required this.localPrintRequest,
+  });
 
   @override
   Future<void> add() async {
     try {
-      await firebaseAdapter.addNewPrintRequest();
+      final localData = await localPrintRequest.getMergedPrintedEntity();
+
+      await firebaseAdapter.addNewPrintRequest(localData);
+      await localPrintRequest.clear();
     } catch (e) {
-      throw DomainError.unexpected;
+      await localPrintRequest.add();
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../pages.dart';
+import '../pages/pages.dart';
 
 Widget drawer({
   required BuildContext context,

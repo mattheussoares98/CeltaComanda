@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -109,6 +110,41 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     }
   }
 
+  static const platform = MethodChannel('seu_channel');
+
+  bool isLoading = false;
+  Future<void> iniciarRedeSdk() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final redeSdk = await platform.invokeMethod('startredesdk');
+      // Faça o que for necessário com o objeto redeSdk
+      print('SDK iniciado com sucesso: $redeSdk');
+    } on PlatformException catch (e) {
+      print('Erro ao iniciar o SDK: $e');
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  Future<void> chamarCreditoParcelado() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final redeSdk = await platform.invokeMethod('creditoparcelado');
+      // Faça o que for necessário com o objeto redeSdk
+      print('credito parcelado chamado com sucesso: $redeSdk');
+    } on PlatformException catch (e) {
+      print('erro para chamar o crédito parcelado: $e');
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
@@ -161,87 +197,109 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Builder(
-                builder: (context) {
-                  loadingSubscription?.cancel();
-                  mainErrorSubscription?.cancel();
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                ElevatedButton(
+                  onPressed: iniciarRedeSdk,
+                  child: const Text('Iniciar SDK'),
+                ),
+                ElevatedButton(
+                  onPressed: chamarCreditoParcelado,
+                  child: const Text('Chamar crédito parcelado'),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Builder(
+                      builder: (context) {
+                        loadingSubscription?.cancel();
+                        mainErrorSubscription?.cancel();
 
-                  loadingSubscription = handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
-                  mainErrorSubscription = handleMainError(
-                      context, expansibleGroupsPresenter.mainErrorStream);
+                        loadingSubscription = handleLoading(
+                            context, expansibleGroupsPresenter.isLoadingStream);
+                        mainErrorSubscription = handleMainError(
+                            context, expansibleGroupsPresenter.mainErrorStream);
 
-                  if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
-                    return SearchDataByCommandNumber(
-                      expansibleGroupsPresenter: expansibleGroupsPresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      saleRequestTempPresenter: saleRequestTempPresenter,
-                      homePresenter: homePresenter,
-                      loadCommandData: () async {
-                        await expansibleGroupsPresenter.loadCommandData(
-                          commandNumber: homePresenter.commandNumber!,
-                          printedProductsPresenter: printedProductsPresenter,
-                          saleRequestTempPresenter: saleRequestTempPresenter,
-                          expansibleGroupsPresenter: expansibleGroupsPresenter,
-                          homePresenter: homePresenter,
+                        if (expansibleGroupsPresenter
+                            .expansibleGroups.isEmpty) {
+                          return SearchDataByCommandNumber(
+                            expansibleGroupsPresenter:
+                                expansibleGroupsPresenter,
+                            printedProductsPresenter: printedProductsPresenter,
+                            saleRequestTempPresenter: saleRequestTempPresenter,
+                            homePresenter: homePresenter,
+                            loadCommandData: () async {
+                              await expansibleGroupsPresenter.loadCommandData(
+                                commandNumber: homePresenter.commandNumber!,
+                                printedProductsPresenter:
+                                    printedProductsPresenter,
+                                saleRequestTempPresenter:
+                                    saleRequestTempPresenter,
+                                expansibleGroupsPresenter:
+                                    expansibleGroupsPresenter,
+                                homePresenter: homePresenter,
+                              );
+                            },
+                          );
+                        }
+
+                        return Column(
+                          children: [
+                            const SearchProduct(),
+                            if (expansibleGroupsPresenter.searchedProduct !=
+                                null)
+                              ProductItemWidget(
+                                addProductQuantity: () {
+                                  _addProductQuantity(
+                                      expansibleGroupsPresenter);
+                                },
+                                clearProductQuantity: () {
+                                  _clearProductQuantity(
+                                      expansibleGroupsPresenter);
+                                },
+                                subtractProductQuantity: () {
+                                  _subtractProductQuantity(
+                                      expansibleGroupsPresenter);
+                                },
+                                updateSaleRequest: () async {
+                                  await _updateSaleRequest(
+                                    expansibleGroupsPresenter:
+                                        expansibleGroupsPresenter,
+                                    homePresenter: homePresenter,
+                                    saleRequestTempPresenter:
+                                        saleRequestTempPresenter,
+                                  );
+                                },
+                                productQuantity: expansibleGroupsPresenter
+                                    .searchedProduct!.productQuantity,
+                                index: 0,
+                                selectedIndex:
+                                    indexOfSelectedProductCommentIcon,
+                                updateSelectedIndex: _updateSelectedIndex,
+                                goToComboxPage: () {
+                                  expansibleGroupsPresenter.goToComboxPage(
+                                    expansibleGroupsPresenter.searchedProduct!,
+                                  );
+                                },
+                                productsViewModel:
+                                    expansibleGroupsPresenter.searchedProduct!,
+                                commentTextController: commentTextController,
+                              ),
+                            GroupItems(
+                              expansibleGroupsViewModel:
+                                  expansibleGroupsPresenter.expansibleGroups,
+                            ),
+                          ],
                         );
                       },
-                    );
-                  }
-
-                  return Column(
-                    children: [
-                      const SearchProduct(),
-                      if (expansibleGroupsPresenter.searchedProduct != null)
-                        ProductItemWidget(
-                          addProductQuantity: () {
-                            _addProductQuantity(expansibleGroupsPresenter);
-                          },
-                          clearProductQuantity: () {
-                            _clearProductQuantity(expansibleGroupsPresenter);
-                          },
-                          subtractProductQuantity: () {
-                            _subtractProductQuantity(expansibleGroupsPresenter);
-                          },
-                          updateSaleRequest: () async {
-                            await _updateSaleRequest(
-                              expansibleGroupsPresenter:
-                                  expansibleGroupsPresenter,
-                              homePresenter: homePresenter,
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
-                            );
-                          },
-                          productQuantity: expansibleGroupsPresenter
-                              .searchedProduct!.productQuantity,
-                          index: 0,
-                          selectedIndex: indexOfSelectedProductCommentIcon,
-                          updateSelectedIndex: _updateSelectedIndex,
-                          goToComboxPage: () {
-                            expansibleGroupsPresenter.goToComboxPage(
-                              expansibleGroupsPresenter.searchedProduct!,
-                            );
-                          },
-                          productsViewModel:
-                              expansibleGroupsPresenter.searchedProduct!,
-                          commentTextController: commentTextController,
-                        ),
-                      GroupItems(
-                        expansibleGroupsViewModel:
-                            expansibleGroupsPresenter.expansibleGroups,
-                      ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

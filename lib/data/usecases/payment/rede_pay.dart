@@ -6,7 +6,7 @@ import '../../../domain/usecases/usecases.dart';
 class RedePay implements Pay {
   @override
   Future<void> pay({
-    required PaymantMode paymentMode,
+    required PaymentMode paymentMode,
     required PayParams params,
   }) async {
     const platform = MethodChannel('rede_channel');
@@ -23,7 +23,7 @@ class RedePay implements Pay {
 }
 
 class RedePayParams {
-  final int longAmountValue;
+  final double longAmountValue;
   final int portionQuantity;
 
   RedePayParams({

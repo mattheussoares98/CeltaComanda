@@ -1,4 +1,4 @@
-enum PaymantMode {
+enum PaymentMode {
   startRedeSdk,
   credit,
   creditPortion,

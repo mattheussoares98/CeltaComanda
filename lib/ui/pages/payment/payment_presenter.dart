@@ -2,7 +2,24 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
 
-abstract class PaymentPresenter with ChangeNotifier implements Listenable {
+abstract class PaymentPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+
+  Future<void> payWithCredit({
+    required double longAmountValue,
+    required int portionQuantity,
+  });
+  Future<void> payWithCredithPortion({
+    required double longAmountValue,
+    required int portionQuantity,
+  });
+  Future<void> payWithDebit({
+    required double longAmountValue,
+    required int portionQuantity,
+  });
+  Future<void> payWithPix({
+    required double longAmountValue,
+    required int portionQuantity,
+  });
 }

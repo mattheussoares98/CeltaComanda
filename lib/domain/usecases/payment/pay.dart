@@ -4,13 +4,13 @@ import '../../helpers/helpers.dart';
 
 abstract class Pay {
   Future<void> pay({
-    required PaymantMode paymentMode,
+    required PaymentMode paymentMode,
     required PayParams params,
   });
 }
 
 class PayParams extends Equatable {
-  final int longAmountValue;
+  final double longAmountValue;
   final int portionQuantity;
 
   @override

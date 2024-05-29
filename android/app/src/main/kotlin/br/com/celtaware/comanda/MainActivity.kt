@@ -31,8 +31,8 @@ class MainActivity : FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).setMethodCallHandler { call, result ->
             var argumentsWithFlutter = call.arguments as? Map<String, String>
             if (argumentsWithFlutter != null) {
-                var longAmountValue = (argumentsWithFlutter["longAmount"] as? Int)?.toLong() ?: 0L
-                var portion = (argumentsWithFlutter["portion"] as? Int) ?: 0
+                var longAmountValue = (argumentsWithFlutter["longAmountValue"] as? Int)?.toLong() ?: 0L
+                var portionQuantity = (argumentsWithFlutter["portionQuantity"] as? Int) ?: 0
 
                 when (call.method) {
                     "startredesdk" -> {
@@ -42,7 +42,7 @@ class MainActivity : FlutterActivity() {
                         collectPayment(result, FlexTipoPagamento.CREDITO_A_VISTA, longAmountValue)
                     }
                     "creditoparcelado" -> {
-                        collectPayment(result, FlexTipoPagamento.CREDITO_PARCELADO, longAmountValue, true, portion)
+                        collectPayment(result, FlexTipoPagamento.CREDITO_PARCELADO, longAmountValue, true, portionQuantity)
                     }
                     "debito" -> {
                         collectPayment(result, FlexTipoPagamento.DEBITO, longAmountValue)
@@ -61,7 +61,7 @@ class MainActivity : FlutterActivity() {
         tipoPagamento: FlexTipoPagamento,
         longAmountValue: Long?,
         setInstallments: Boolean = false,
-        portion: Int? = null
+        portionQuantity: Int? = null
     ) {
         try {
             if (!sdkInitialized) {
@@ -73,8 +73,8 @@ class MainActivity : FlutterActivity() {
                 var collectPaymentIntent = redePayments
                     .intentForPaymentBuilder(tipoPagamento, longAmountValue ?: 0)
 
-                if (setInstallments && portion != null) {
-                    collectPaymentIntent.setInstallments(portion)
+                if (setInstallments && portionQuantity != null) {
+                    collectPaymentIntent.setInstallments(portionQuantity)
                 }
 
                 startActivityForResult(collectPaymentIntent.build(), PAYMENT_REQUEST_CODE)

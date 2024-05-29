@@ -1,12 +1,10 @@
 package br.com.celtaware.comanda
 
 import android.content.ActivityNotFoundException
-import android.os.Bundle
 import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,45 +21,93 @@ import android.widget.Toast
 
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "seu_channel"
+    private val channel = "rede_channel"
     private lateinit var redeSdk: IRedeSdk
-    private lateinit var redePayments: RedePayments // Alteração feita aqui
+    private lateinit var redePayments: RedePayments
+    var sdkInitialized = false
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
-            when (call.method) {
-                "startredesdk" -> {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        redeSdk = IRedeSdk.newInstance(applicationContext)
-                        redePayments = withContext(Dispatchers.IO) {
-                            redeSdk.getRedePayments(this@MainActivity)
-                        }
-                        result.success("message")
-                    }
-                }
-                "creditoparcelado" -> {
-                    try {
-                        val longAmount = call.argument<Long>("amount") // Supondo que você esteja recebendo o valor como argumento
-                        val collectPaymentIntent = redePayments
-                            .intentForPaymentBuilder(FlexTipoPagamento.CREDITO_PARCELADO, longAmount ?: 0)
-                            .setInstallments(4)
-                            .build()
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).setMethodCallHandler { call, result ->
+            var argumentsWithFlutter = call.arguments as? Map<String, String>
+            if (argumentsWithFlutter != null) {
+                var longAmountValue = (argumentsWithFlutter["longAmount"] as? Int)?.toLong() ?: 0L
+                var portion = (argumentsWithFlutter["portion"] as? Int) ?: 0
 
-                        startActivityForResult(collectPaymentIntent, PAYMENT_REQUEST_CODE)
-                    } catch (ex: ActivityNotFoundException) {
-                        Log.e("Pagamentos", "Application Pagamentos not found")
-                    } catch (ex: RedePaymentValidationError) {
-                        Log.e("Pagamentos", "Intent validation error")
+                when (call.method) {
+                    "startredesdk" -> {
+                        initializeRedeSdk(result)
                     }
-                    result.success("Method executed for creditoparcelado")
+                    "creditoavista" -> {
+                        collectPayment(result, FlexTipoPagamento.CREDITO_A_VISTA, longAmountValue)
+                    }
+                    "creditoparcelado" -> {
+                        collectPayment(result, FlexTipoPagamento.CREDITO_PARCELADO, longAmountValue, true, portion)
+                    }
+                    "debito" -> {
+                        collectPayment(result, FlexTipoPagamento.DEBITO, longAmountValue)
+                    }
+                    "pix" -> {
+                        collectPayment(result, FlexTipoPagamento.PIX, longAmountValue)
+                    }
+                    else -> result.notImplemented()
                 }
-                else -> result.notImplemented()
             }
         }
     }
+
+    fun collectPayment(
+        result: MethodChannel.Result,
+        tipoPagamento: FlexTipoPagamento,
+        longAmountValue: Long?,
+        setInstallments: Boolean = false,
+        portion: Int? = null
+    ) {
+        try {
+            if (!sdkInitialized) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    initializeRedeSdk(result)
+                }
+            }
+            if (sdkInitialized) {
+                var collectPaymentIntent = redePayments
+                    .intentForPaymentBuilder(tipoPagamento, longAmountValue ?: 0)
+
+                if (setInstallments && portion != null) {
+                    collectPaymentIntent.setInstallments(portion)
+                }
+
+                startActivityForResult(collectPaymentIntent.build(), PAYMENT_REQUEST_CODE)
+            }
+            result.success("Método chamado com sucesso")
+        } catch (ex: ActivityNotFoundException) {
+            Log.e("Pagamentos", "Application Pagamentos not found")
+            result.error("ActivityNotFoundException", "Application Pagamentos not found", null)
+        } catch (ex: RedePaymentValidationError) {
+            Log.e("Pagamentos", "Intent validation error")
+            result.error("RedePaymentValidationError", "Intent validation error", null)
+        }
+    }
+
+    private fun initializeRedeSdk(result: MethodChannel.Result) {
+        try {
+            if (!sdkInitialized) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    redeSdk = IRedeSdk.newInstance(applicationContext)
+                    redePayments = withContext(Dispatchers.IO) {
+                        redeSdk.getRedePayments(this@MainActivity)
+                    }
+                    Toast.makeText(this@MainActivity, "SDK INICIALIZADO", Toast.LENGTH_LONG).show()
+                    sdkInitialized = true
+                }
+            }
+        } catch(e: Exception){
+            Toast.makeText(this@MainActivity, "ERRO NA INICIALIZAÇÃO DO SDK", Toast.LENGTH_LONG).show()
+            throw e
+        }
+    }
     companion object {
-        private const val PAYMENT_REQUEST_CODE = 1001 // Defina um valor adequado para o seu caso
+        private var PAYMENT_REQUEST_CODE: Int = 0
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,7 +115,7 @@ class MainActivity : FlutterActivity() {
         if (requestCode == PAYMENT_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    val payment = RedePayments.getPaymentFromIntent(data)
+                    var payment = RedePayments.getPaymentFromIntent(data)
                     when (payment?.status) {
                         PaymentStatus.AUTHORIZED -> {
                             Toast.makeText(this, "Payment Authorized", Toast.LENGTH_LONG).show()

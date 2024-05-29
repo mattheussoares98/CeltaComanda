@@ -35,16 +35,16 @@ class MainActivity : FlutterActivity() {
                 var portionQuantity = (argumentsWithFlutter["portionQuantity"] as? Int) ?: 0
 
                 when (call.method) {
-                    "startredesdk" -> {
+                    "startRedeSdk" -> {
                         initializeRedeSdk(result)
                     }
-                    "creditoavista" -> {
+                    "credit" -> {
                         collectPayment(result, FlexTipoPagamento.CREDITO_A_VISTA, longAmountValue)
                     }
-                    "creditoparcelado" -> {
+                    "creditPortion" -> {
                         collectPayment(result, FlexTipoPagamento.CREDITO_PARCELADO, longAmountValue, true, portionQuantity)
                     }
-                    "debito" -> {
+                    "debit" -> {
                         collectPayment(result, FlexTipoPagamento.DEBITO, longAmountValue)
                     }
                     "pix" -> {

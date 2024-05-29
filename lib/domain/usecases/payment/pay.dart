@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 
+import '../../helpers/helpers.dart';
+
 abstract class Pay {
   Future<void> pay({
-    required String paymentMode,
+    required PaymantMode paymentMode,
     required PayParams params,
   });
 }

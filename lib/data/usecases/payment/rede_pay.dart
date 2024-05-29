@@ -6,14 +6,14 @@ import '../../../domain/usecases/usecases.dart';
 class RedePay implements Pay {
   @override
   Future<void> pay({
-    required String paymentMode,
+    required PaymantMode paymentMode,
     required PayParams params,
   }) async {
     const platform = MethodChannel('rede_channel');
 
     try {
       await platform.invokeMethod(
-        paymentMode,
+        paymentMode.name,
         RedePayParams.fromDomain(params).toJson(),
       );
     } catch (e) {

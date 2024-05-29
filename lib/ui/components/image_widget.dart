@@ -1,5 +1,6 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/material.dart';
+
+import '../../main/builders/builders.dart';
 
 class ImageWidget extends StatelessWidget {
   final String? ean;

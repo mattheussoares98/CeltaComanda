@@ -1,11 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:clean_celta_mobile/ui/components/components.dart';
-import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../../ui/components/components.dart';
+import '../../../../ui/helpers/convert/convert.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {

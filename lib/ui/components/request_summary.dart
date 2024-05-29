@@ -1,7 +1,8 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../ui/components/components.dart';
+import '../../ui/pages/pages.dart';
 
 class RequestSummary extends StatelessWidget {
   final String totalLiquid;

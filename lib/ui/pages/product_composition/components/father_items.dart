@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:clean_celta_mobile/ui/components/components.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter/material.dart';
+
 import '../../../../main/builders/builders.dart';
+import '../../../../ui/components/components.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 

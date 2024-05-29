@@ -1,9 +1,9 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
-import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
+import 'package:flutter/material.dart';
+
+import '../../../../domain/entities/entities.dart';
+import '../../../../ui/helpers/convert/convert.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../components/components.dart';
 

@@ -1,5 +1,6 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
+
+import '../../../ui/components/components.dart';
 
 class CommentWidget extends StatefulWidget {
   final FocusNode commentFocusNode;

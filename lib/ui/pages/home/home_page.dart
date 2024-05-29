@@ -1,11 +1,10 @@
-import 'dart:async';
-
-import 'package:clean_celta_mobile/ui/components/components.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
 import 'components/components.dart';

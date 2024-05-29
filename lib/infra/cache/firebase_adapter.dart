@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/domain/entities/print_request_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/cache/cache.dart';
+import '../../domain/entities/print_request_entity.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 

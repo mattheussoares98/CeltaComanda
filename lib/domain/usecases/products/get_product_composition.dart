@@ -1,5 +1,4 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
-
+import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 
 abstract class GetProductComposition {

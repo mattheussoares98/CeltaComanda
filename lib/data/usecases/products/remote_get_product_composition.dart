@@ -1,5 +1,4 @@
-import 'package:clean_celta_mobile/ui/pages/product_composition/product_composition_view_model.dart';
-
+import '../../../../ui/pages/product_composition/product_composition_view_model.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/helpers/helpers.dart';

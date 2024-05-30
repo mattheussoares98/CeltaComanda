@@ -9,7 +9,7 @@ import 'package:mocktail/mocktail.dart';
 class LoadExpansibleGroupsSpy extends Mock implements LoadExpansibleGroups {
   When mockLoadExpansibleGroupsCall() => when(() => this.load());
 
-  void mockLoadExpansibleGroups(List<ExpansibleGroupEntity>? expansibleGroups) =>
+  void mockLoadExpansibleGroups(List<ExpansibleGroupEntity> expansibleGroups) =>
       this.mockLoadExpansibleGroupsCall().thenAnswer((_) async => expansibleGroups);
 
   void mockLoadExpansibleGroupsError(DomainError error) =>

@@ -25,6 +25,7 @@ void main() {
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
+  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuList;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -42,6 +43,7 @@ void main() {
   late double productQuantity;
   late UpdateSaleRequestTempProductEntity updateSaleRequestTempProductEntity;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
+  late List<ProductEntity> products;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -126,6 +128,16 @@ void main() {
           productsViewModel.SaleRetailPraticed.toDouble(),
       Products: [updateSaleRequestTempProductEntity],
     );
+
+    products = EntityFactory.makeProductsEntitys();
+
+    menuList = expansibleGroupsViewModel
+        .map((expansibleGroup) => {
+              expansibleGroup: products
+                  .map((product) => ProductsViewModel.fromEntity(product))
+                  .toList(),
+            })
+        .toList();
   }
 
   void mockSuccess() {
@@ -133,6 +145,7 @@ void main() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     navigateTo.mockNavigate();
     searchProductByCode.mockSearchProductByCode(productEntity);
+    loadProducts.mockLoadProducts(products);
   }
 
   setUp(() {
@@ -170,12 +183,12 @@ void main() {
   test('Should return correct value on success to load', () async {
     await sut.getGroups(homePresenter.commandNumberMock!);
 
-    expect(sut.expansibleGroups, expansibleGroupsViewModel);
+    expect(sut.expansibleGroups, menuList);
   });
 
   test('Should clear expansibleGroups', () async {
     await sut.getGroups(homePresenter.commandNumberMock!);
-    expect(sut.expansibleGroups, expansibleGroupsViewModel);
+    expect(sut.expansibleGroups, menuList);
 
     sut.clear();
     expect(sut.expansibleGroups, []);
@@ -586,11 +599,7 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      expect(
-          sut.expansibleGroups,
-          expansibleGroups
-              .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
-              .toList());
+      expect(sut.expansibleGroups, menuList);
 
       loadExpansibleGroups
           .mockLoadExpansibleGroupsError(DomainError.unexpected);

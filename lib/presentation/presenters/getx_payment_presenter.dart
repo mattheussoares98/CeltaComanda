@@ -21,7 +21,7 @@ class GetxPaymentPresenter extends GetxController
     required int portionQuantity,
   }) async {
     mainError = null;
-    isLoading = false;
+    isLoading = true;
     try {
       await pay.pay(
         paymentMode: PaymentMode

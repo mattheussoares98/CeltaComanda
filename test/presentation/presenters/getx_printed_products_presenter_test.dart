@@ -396,7 +396,7 @@ void main() {
       verify(() => expansibleGroupsPresenter.clear()).called(1);
       verify(() => saleRequestTempPresenter.clear()).called(1);
       verify(() => expansibleGroupsPresenter
-          .loadGroups(homePresenter.commandNumberMock!)).called(1);
+          .getGroups(homePresenter.commandNumberMock!)).called(1);
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
@@ -632,7 +632,7 @@ void main() {
             commandNumber: int.parse(homePresenter.commandNumberMock!),
           )).called(1);
       verify(() => expansibleGroupsPresenter
-          .loadGroups(homePresenter.commandNumberMock!)).called(1);
+          .getGroups(homePresenter.commandNumberMock!)).called(1);
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });

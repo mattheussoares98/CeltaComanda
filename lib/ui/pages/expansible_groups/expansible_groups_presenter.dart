@@ -13,12 +13,12 @@ abstract class ExpansibleGroupsPresenter
   int get indexOfSelectedGroup;
   set indexOfSelectedGroup(int newValue);
 
-  List<ExpansibleGroupsViewModel> get expansibleGroups;
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get expansibleGroups;
   ProductsViewModel? get searchedProduct;
 
   TextEditingController get searchProductController;
 
-  Future<void> loadGroups(String commandNumber);
+  Future<void> getGroups(String commandNumber);
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
   Future<void> updateSaleRequest({

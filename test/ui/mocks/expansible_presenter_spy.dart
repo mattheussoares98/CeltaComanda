@@ -14,7 +14,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
     implements ExpansibleGroupsPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
-  final List<ExpansibleGroupsViewModel> expansibleGroupsController = [];
+  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> expansibleGroupsController = [];
   ProductsViewModel? searchedProductController;
   TextEditingController searchProductControllerMock = TextEditingController();
 
@@ -51,7 +51,7 @@ class ExpansibleGroupsPresenterSpy extends Mock
     mockLoadCall().thenThrow(error);
   }
 
-  When mockLoadCall() => when(() => this.loadGroups(any()));
+  When mockLoadCall() => when(() => this.getGroups(any()));
 
   void mockExpansibleGroupStreamError(DomainError error) {
     mainErrorController.add(UIError.unexpected);

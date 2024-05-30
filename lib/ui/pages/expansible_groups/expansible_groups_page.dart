@@ -222,6 +222,12 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                         children: [
                           SafeArea(
                             child: Container(
+                              width: MediaQuery.of(context).size.width * 0.27,
+                              height: MediaQuery.of(context).size.height -
+                                  AppBar().preferredSize.height -
+                                  MediaQuery.of(context).padding.bottom -
+                                  kBottomNavigationBarHeight -
+                                  72,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: const [
@@ -233,16 +239,22 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               margin: const EdgeInsets.only(top: 5),
-                              height: MediaQuery.of(context).size.height -
-                                  AppBar().preferredSize.height -
-                                  MediaQuery.of(context).padding.bottom -
-                                  kBottomNavigationBarHeight -
-                                  72,
-                              width: MediaQuery.of(context).size.width * 0.27,
                               child: GroupItems(
                                 expansibleGroupsViewModel:
-                                    expansibleGroupsPresenter.expansibleGroups,
+                                    expansibleGroupsPresenter.expansibleGroups
+                                        .map((element) => element.keys.first)
+                                        .toList(),
                               ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ProductsItems(
+                              products: expansibleGroupsPresenter
+                                  .expansibleGroups[expansibleGroupsPresenter
+                                      .indexOfSelectedGroup]
+                                  .entries
+                                  .first
+                                  .value,
                             ),
                           ),
                         ],

@@ -171,7 +171,7 @@ class GetxPrintedProductsPresenter
     saleRequestTempPresenter.clear();
 
     try {
-      await expansibleGroupsPresenter.loadGroups(commandNumber);
+      await expansibleGroupsPresenter.getGroups(commandNumber);
       await saleRequestTempPresenter.loadSaleRequest(commandNumber);
       clear();
       await loadPrinted(commandNumber);

@@ -33,6 +33,7 @@ void main() {
   late SearchProductByCodeSpy searchProductByCode;
   late BarcodeScannerSpy barcodeScanner;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
+  late LoadProductsSpy loadProducts;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -53,6 +54,7 @@ void main() {
     searchProductByCode = SearchProductByCodeSpy();
     barcodeScanner = BarcodeScannerSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+    loadProducts = LoadProductsSpy();
   }
 
   void initPresenters() {
@@ -68,6 +70,7 @@ void main() {
       searchProductByCode: searchProductByCode,
       barcodeScanner: barcodeScanner,
       updateSaleRequestTemp: updateSaleRequestTemp,
+      loadProducts: loadProducts,
     );
   }
 
@@ -150,7 +153,7 @@ void main() {
   });
 
   test('Should call LoadExpansibleGroups', () async {
-    await sut.loadGroups(homePresenter.commandNumberMock!);
+    await sut.getGroups(homePresenter.commandNumberMock!);
 
     verify(() => loadExpansibleGroups.load()).called(1);
   });
@@ -158,20 +161,20 @@ void main() {
   test('Should throw DomainErrorUnexpected', () async {
     loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-    final error = sut.loadGroups(homePresenter.commandNumberMock!);
+    final error = sut.getGroups(homePresenter.commandNumberMock!);
 
     expect(sut.expansibleGroups, []);
     expect(error, throwsA(DomainError.unexpected));
   });
 
   test('Should return correct value on success to load', () async {
-    await sut.loadGroups(homePresenter.commandNumberMock!);
+    await sut.getGroups(homePresenter.commandNumberMock!);
 
     expect(sut.expansibleGroups, expansibleGroupsViewModel);
   });
 
   test('Should clear expansibleGroups', () async {
-    await sut.loadGroups(homePresenter.commandNumberMock!);
+    await sut.getGroups(homePresenter.commandNumberMock!);
     expect(sut.expansibleGroups, expansibleGroupsViewModel);
 
     sut.clear();
@@ -202,7 +205,7 @@ void main() {
   });
 
   test('Should call ticketIsPermitted on load data', () async {
-    await sut.loadGroups(homePresenter.commandNumberMock!);
+    await sut.getGroups(homePresenter.commandNumberMock!);
 
     verify(() => ticketIsPermitted.verify(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -215,7 +218,7 @@ void main() {
       () async {
     ticketIsPermitted.mockError(DomainError.commandNotAvailable);
 
-    final error = sut.loadGroups(homePresenter.commandNumberMock!);
+    final error = sut.getGroups(homePresenter.commandNumberMock!);
 
     expect(error, throwsA(DomainError.commandNotAvailable));
   });
@@ -225,7 +228,7 @@ void main() {
       () async {
     ticketIsPermitted.mockError(DomainError.unexpected);
 
-    final error = sut.loadGroups(homePresenter.commandNumberMock!);
+    final error = sut.getGroups(homePresenter.commandNumberMock!);
 
     expect(error, throwsA(DomainError.unexpected));
   });
@@ -341,7 +344,7 @@ void main() {
       await sut.searchProduct(productEan);
       expect(sut.searchedProduct, productsViewModel);
 
-      await sut.loadGroups(homePresenter.commandNumberMock!);
+      await sut.getGroups(homePresenter.commandNumberMock!);
       expect(sut.searchedProduct, null);
     });
 

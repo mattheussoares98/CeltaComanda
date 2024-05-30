@@ -694,7 +694,7 @@ void main() {
             commandNumber: homePresenter.commandNumberMock!,
           )).called(1);
       verify(() => expansibleGroupsPresenter
-          .loadGroups(homePresenter.commandNumberMock!)).called(1);
+          .getGroups(homePresenter.commandNumberMock!)).called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
     });

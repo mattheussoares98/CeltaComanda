@@ -18,6 +18,7 @@ class GetxExpansibleGroupsPresenter
   final LoadExpansibleGroups loadExpansibleGroups;
   final BarcodeScanner barcodeScanner;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
+  final LoadProducts loadProducts;
 
   GetxExpansibleGroupsPresenter({
     required this.loadExpansibleGroups,
@@ -26,6 +27,7 @@ class GetxExpansibleGroupsPresenter
     required this.searchProductByCode,
     required this.barcodeScanner,
     required this.updateSaleRequestTemp,
+    required this.loadProducts,
   });
 
   @override
@@ -42,35 +44,6 @@ class GetxExpansibleGroupsPresenter
       pageRoute: PageRoutes.productComposition,
       arguments: product,
     );
-  }
-
-  @override
-  Future<void> loadGroups(String commandNumber) async {
-    clear();
-
-    try {
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
-      );
-
-      final expansibleGroups = await loadExpansibleGroups.load();
-
-      if (expansibleGroups != null) {
-        _expansibleGroups.addAll(expansibleGroups
-            .map((e) => ExpansibleGroupsViewModel.fromEntity(e))
-            .toList());
-      }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          throw DomainError.commandNotAvailable;
-        default:
-          throw DomainError.unexpected;
-      }
-    } finally {
-      notifyListeners();
-    }
   }
 
   @override
@@ -210,7 +183,7 @@ class GetxExpansibleGroupsPresenter
     saleRequestTempPresenter.clear();
 
     try {
-      await loadGroups(commandNumber);
+      await getGroups(commandNumber);
       await saleRequestTempPresenter.loadSaleRequest(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
@@ -231,10 +204,11 @@ class GetxExpansibleGroupsPresenter
   ProductsViewModel? get searchedProduct => _searchedProduct;
   ProductsViewModel? _searchedProduct;
 
-  final List<ExpansibleGroupsViewModel> _expansibleGroups = [];
+  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      _expansibleGroups = [];
   @override
-  List<ExpansibleGroupsViewModel> get expansibleGroups =>
-      [..._expansibleGroups];
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      get expansibleGroups => [..._expansibleGroups];
 
   final _searchProductController = TextEditingController();
   @override
@@ -255,4 +229,43 @@ class GetxExpansibleGroupsPresenter
   int get indexOfSelectedGroup => _indexOfSelectedGroup;
   @override
   set indexOfSelectedGroup(int newValue) => _indexOfSelectedGroup = newValue;
+
+  @override
+  Future<void> getGroups(String commandNumber) async {
+    clear();
+
+    try {
+      await ticketIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: commandNumber,
+      );
+
+      final expansibleGroups = await loadExpansibleGroups.load();
+
+      if (expansibleGroups != null) {
+        for (var expansibleGroup in expansibleGroups) {
+          final products =
+              await loadProducts.load(expansibleGroup.ExpansibleGroupId);
+
+          if (products != null) {
+            _expansibleGroups.add({
+              ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
+                  products.map((e) => ProductsViewModel.fromEntity(e)).toList()
+            });
+          } else {
+            throw DomainError.unexpected;
+          }
+        }
+      }
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          throw DomainError.commandNotAvailable;
+        default:
+          throw DomainError.unexpected;
+      }
+    } finally {
+      notifyListeners();
+    }
+  }
 }

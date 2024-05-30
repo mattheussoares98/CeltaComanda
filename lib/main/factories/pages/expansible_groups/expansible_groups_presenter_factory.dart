@@ -10,4 +10,5 @@ ExpansibleGroupsPresenter makeGetxExpansibleGroupsPresenter() =>
       searchProductByCode: makeRemoteSearchProductByCode(),
       barcodeScanner: makeCameraBarcodeScanner(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
+      loadProducts: makeRemoteLoadProducts(),
     );

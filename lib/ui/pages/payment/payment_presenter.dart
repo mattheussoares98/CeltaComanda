@@ -10,7 +10,7 @@ abstract class PaymentPresenter implements Listenable {
     required double longAmountValue,
     required int portionQuantity,
   });
-  Future<void> payWithCredithPortion({
+  Future<void> payWithCreditPortion({
     required double longAmountValue,
     required int portionQuantity,
   });

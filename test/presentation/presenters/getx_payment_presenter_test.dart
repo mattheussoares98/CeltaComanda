@@ -40,7 +40,7 @@ void main() {
   }
 
   mockSuccess() {
-    pay.mockPaytCall();
+    pay.mockPay();
   }
 
   setUp(() {
@@ -83,16 +83,127 @@ void main() {
       );
     });
     test('Should emit correct values on payWithCredit throws', () async {
-      when(() => pay.pay(
-            paymentMode: PaymentMode.credit,
-            params: any(named: "params"),
-          )).thenThrow(DomainError.unexpected);
+      pay.mockPayError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.payWithCredit(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+    });
+  });
+
+  group("CreditPortion payment", () {
+    test('Should call payWithCreditPortion with correct values', () async {
+      await sut.payWithCreditPortion(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.creditPortion,
+            params: PayParams(
+              longAmountValue: longAmountValue,
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should emit correct values on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.payWithCreditPortion(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+    });
+    test('Should emit correct values on payWithCreditPortion throws', () async {
+      pay.mockPayError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.payWithCreditPortion(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+    });
+  });
+
+  group("Debit payment", () {
+    test('Should call payWithDebit with correct values', () async {
+      await sut.payWithDebit(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.debit,
+            params: PayParams(
+              longAmountValue: longAmountValue,
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should emit correct values on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.payWithDebit(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+    });
+    test('Should emit correct values on payWithDebit throws', () async {
+      pay.mockPayError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.payWithDebit(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+    });
+  });
+
+  group("Pix payment", () {
+    test('Should call payWithPix with correct values', () async {
+      await sut.payWithPix(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.pix,
+            params: PayParams(
+              longAmountValue: longAmountValue,
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should emit correct values on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.payWithPix(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+      );
+    });
+    test('Should emit correct values on payWithPix throws', () async {
+      pay.mockPayError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.payWithPix(
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
       );

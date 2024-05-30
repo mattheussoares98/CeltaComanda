@@ -1,10 +1,10 @@
-import 'package:clean_celta_mobile/domain/usecases/payment/payment.dart';
-import 'package:clean_celta_mobile/presentation/mixins/mixins.dart';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:clean_celta_mobile/ui/pages/payment/payment_presenter.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
+import '../../domain/usecases/payment/payment.dart';
+import '../../presentation/mixins/mixins.dart';
+import '../../ui/helpers/helpers.dart';
+import '../../ui/pages/payment/payment_presenter.dart';
 
 class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
@@ -39,12 +39,12 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> payWithCredithPortion({
+  Future<void> payWithCreditPortion({
     required double longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
-    isLoading = false;
+    isLoading = true;
     try {
       await pay.pay(
         paymentMode: PaymentMode.creditPortion,
@@ -66,7 +66,7 @@ class GetxPaymentPresenter extends GetxController
     required int portionQuantity,
   }) async {
     mainError = null;
-    isLoading = false;
+    isLoading = true;
     try {
       await pay.pay(
         paymentMode: PaymentMode.debit,
@@ -88,7 +88,7 @@ class GetxPaymentPresenter extends GetxController
     required int portionQuantity,
   }) async {
     mainError = null;
-    isLoading = false;
+    isLoading = true;
     try {
       await pay.pay(
         paymentMode: PaymentMode.pix,

@@ -234,13 +234,12 @@ void main() {
   });
 
   test('Should update indexOfSelectedProduct correctly', () async {
-    expect(sut.indexOfSelectedGroup, 0);
+    expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 2, 0, 5]));
 
-    sut.indexOfSelectedGroup = 1;
-    expect(sut.indexOfSelectedGroup, 1);
-
-    sut.indexOfSelectedGroup = 10;
-    expect(sut.indexOfSelectedGroup, 10);
+    sut.updateIndexOfSelectedGroup(1);
+    sut.updateIndexOfSelectedGroup(2);
+    sut.updateIndexOfSelectedGroup(0);
+    sut.updateIndexOfSelectedGroup(5);
   });
 
   group("SearchProductByCode", () {

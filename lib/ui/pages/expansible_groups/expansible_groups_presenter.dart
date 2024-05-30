@@ -10,8 +10,7 @@ abstract class ExpansibleGroupsPresenter
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  int get indexOfSelectedGroup;
-  set indexOfSelectedGroup(int newValue);
+  Stream<int> get indexOfSelectedGroupStream;
 
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get expansibleGroups;
   ProductsViewModel? get searchedProduct;
@@ -37,4 +36,5 @@ abstract class ExpansibleGroupsPresenter
   void goToProductsPage(ExpansibleGroupEntity entity);
   void goToComboxPage(ProductsViewModel product);
   void clear();
+  void updateIndexOfSelectedGroup(int index);
 }

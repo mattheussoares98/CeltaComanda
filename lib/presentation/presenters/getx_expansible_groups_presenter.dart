@@ -224,11 +224,10 @@ class GetxExpansibleGroupsPresenter
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
 
-  int _indexOfSelectedGroup = 0;
+  final _inexOfSelectedGroup = Rx<int>(0);
   @override
-  int get indexOfSelectedGroup => _indexOfSelectedGroup;
-  @override
-  set indexOfSelectedGroup(int newValue) => _indexOfSelectedGroup = newValue;
+  Stream<int> get indexOfSelectedGroupStream => _inexOfSelectedGroup.stream;
+  set indexOfSelectedGroup(int value) => _inexOfSelectedGroup.value = value;
 
   @override
   Future<void> getGroups(String commandNumber) async {
@@ -267,5 +266,10 @@ class GetxExpansibleGroupsPresenter
     } finally {
       notifyListeners();
     }
+  }
+
+  @override
+  void updateIndexOfSelectedGroup(int index) {
+    _inexOfSelectedGroup.value = index;
   }
 }

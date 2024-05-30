@@ -217,48 +217,38 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                               expansibleGroupsPresenter.searchedProduct!,
                           commentTextController: commentTextController,
                         ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SafeArea(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.27,
-                              height: MediaQuery.of(context).size.height -
-                                  AppBar().preferredSize.height -
-                                  MediaQuery.of(context).padding.bottom -
-                                  kBottomNavigationBarHeight -
-                                  72,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                      blurRadius: 4,
-                                      color: Color(0x33000000),
-                                      offset: Offset(0, 2))
-                                ],
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              margin: const EdgeInsets.only(top: 5),
-                              child: GroupItems(
-                                expansibleGroupsViewModel:
-                                    expansibleGroupsPresenter.expansibleGroups
-                                        .map((element) => element.keys.first)
-                                        .toList(),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ProductsItems(
-                              products: expansibleGroupsPresenter
-                                  .expansibleGroups[expansibleGroupsPresenter
-                                      .indexOfSelectedGroup]
-                                  .entries
-                                  .first
-                                  .value,
-                            ),
-                          ),
-                        ],
-                      ),
+                      StreamBuilder<int>(
+                          stream: expansibleGroupsPresenter
+                              .indexOfSelectedGroupStream,
+                          builder: (context, snapshot) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 27,
+                                  child: GroupItems(
+                                    expansibleGroupsViewModel:
+                                        expansibleGroupsPresenter
+                                            .expansibleGroups
+                                            .map((element) =>
+                                                element.keys.first)
+                                            .toList(),
+                                    selectedIndex: snapshot.data ?? 0,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 73,
+                                  child: ProductsItems(
+                                    products: expansibleGroupsPresenter
+                                        .expansibleGroups[snapshot.data ?? 0]
+                                        .entries
+                                        .first
+                                        .value,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
                     ],
                   );
                 },

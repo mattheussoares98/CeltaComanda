@@ -1,0 +1,1 @@
+export './rede_pay.dart';

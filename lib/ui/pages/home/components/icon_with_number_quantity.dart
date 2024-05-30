@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
-class IconWithNumberQuantity extends StatefulWidget {
+class IconWithNumberQuantity extends StatelessWidget {
   final int productsQuantity;
   final IconData iconData;
+  final Color iconColor;
   const IconWithNumberQuantity({
     required this.iconData,
     required this.productsQuantity,
+    required this.iconColor,
     super.key,
   });
 
-  @override
-  State<IconWithNumberQuantity> createState() => _IconWithNumberQuantityState();
-}
-
-class _IconWithNumberQuantityState extends State<IconWithNumberQuantity> {
   @override
   Widget build(BuildContext context) {
     return FittedBox(
@@ -21,9 +18,8 @@ class _IconWithNumberQuantityState extends State<IconWithNumberQuantity> {
       child: Stack(
         children: [
           Icon(
-            widget.iconData,
-            // Icons.list_outlined,
-            color: Colors.grey,
+            iconData,
+            color: iconColor,
             size: 28,
           ),
           Positioned(
@@ -34,10 +30,7 @@ class _IconWithNumberQuantityState extends State<IconWithNumberQuantity> {
               maxRadius: 7,
               child: FittedBox(
                 child: Text(
-                  widget.productsQuantity.toString(),
-                  // presenter.printedProducts == null
-                  //     ? "0"
-                  //     : presenter.printedProducts!.Products.length.toString(),
+                  productsQuantity.toString(),
                   style: const TextStyle(color: Colors.white),
                 ),
               ),

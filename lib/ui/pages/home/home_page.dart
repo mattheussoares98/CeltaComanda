@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../data/usecases/usecases.dart';
+import '../../../presentation/presenters/presenters.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
@@ -48,6 +50,9 @@ class _HomePageState extends State<HomePage>
       const ExpansibleGroupsPage(),
       const SaleRequestTempPage(),
       const PrintedProductsPage(),
+      PaymentPage(GetxPaymentPresenter(
+        pay: RedePay(),
+      )),
     ];
 
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
@@ -76,6 +81,11 @@ class _HomePageState extends State<HomePage>
           children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          selectedIconTheme:
+              IconThemeData(color: Theme.of(context).colorScheme.primary),
+          showUnselectedLabels: true,
           currentIndex: _currentIndex,
           onTap: (index) {
             onPageChanged(
@@ -84,12 +94,17 @@ class _HomePageState extends State<HomePage>
           },
           items: [
             const BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Inserir',
+              icon: Icon(
+                Icons.search,
+              ),
+              label: 'Menu',
             ),
             BottomNavigationBarItem(
               key: const Key("BottomNavigationExpansibleGroups"),
               icon: IconWithNumberQuantity(
+                iconColor: _currentIndex == 1
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.grey,
                 iconData: Icons.shopping_cart_outlined,
                 productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
                             null ||
@@ -103,6 +118,9 @@ class _HomePageState extends State<HomePage>
             ),
             BottomNavigationBarItem(
               icon: IconWithNumberQuantity(
+                iconColor: _currentIndex == 2
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.grey,
                 iconData: Icons.list_outlined,
                 productsQuantity: printedProductsPresenter.printedProducts ==
                             null ||
@@ -113,6 +131,10 @@ class _HomePageState extends State<HomePage>
                     : printedProductsPresenter.printedProducts!.Products.length,
               ),
               label: 'Solicitados',
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.paypal),
+              label: 'Pagar',
             ),
           ],
         ),

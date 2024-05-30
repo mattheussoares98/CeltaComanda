@@ -230,6 +230,16 @@ void main() {
     expect(error, throwsA(DomainError.unexpected));
   });
 
+  test('Should update indexOfSelectedProduct correctly', () async {
+    expect(sut.indexOfSelectedGroup, 0);
+
+    sut.indexOfSelectedGroup = 1;
+    expect(sut.indexOfSelectedGroup, 1);
+
+    sut.indexOfSelectedGroup = 10;
+    expect(sut.indexOfSelectedGroup, 10);
+  });
+
   group("SearchProductByCode", () {
     test(
         "Should call searchProductByCode with correct values and update string to correct format of plu",

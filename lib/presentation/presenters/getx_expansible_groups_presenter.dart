@@ -249,4 +249,10 @@ class GetxExpansibleGroupsPresenter
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
+
+  int _indexOfSelectedGroup = 0;
+  @override
+  int get indexOfSelectedGroup => _indexOfSelectedGroup;
+  @override
+  set indexOfSelectedGroup(int newValue) => _indexOfSelectedGroup = newValue;
 }

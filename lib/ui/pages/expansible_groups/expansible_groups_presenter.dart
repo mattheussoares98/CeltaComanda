@@ -10,6 +10,9 @@ abstract class ExpansibleGroupsPresenter
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
+  int get indexOfSelectedGroup;
+  set indexOfSelectedGroup(int newValue);
+
   List<ExpansibleGroupsViewModel> get expansibleGroups;
   ProductsViewModel? get searchedProduct;
 

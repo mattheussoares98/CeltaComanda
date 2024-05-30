@@ -52,7 +52,7 @@ class _SearchProductState extends State<SearchProduct> {
         Provider.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       child: Column(
         children: [
           Row(

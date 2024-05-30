@@ -139,29 +139,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
             );
           })
         ],
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FittedBox(
-              child: Text(
-                "Produtos",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            if (homePresenter.commandNumber != null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Comanda ${homePresenter.commandNumber!}",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-          ],
+        title: const FittedBox(
+          child: Text(
+            "Menu",
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
-      body: Column(
+      body: Row(
         children: [
           Expanded(
             child: SingleChildScrollView(
@@ -232,9 +217,35 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                               expansibleGroupsPresenter.searchedProduct!,
                           commentTextController: commentTextController,
                         ),
-                      GroupItems(
-                        expansibleGroupsViewModel:
-                            expansibleGroupsPresenter.expansibleGroups,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SafeArea(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2))
+                                ],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              margin: const EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.height -
+                                  AppBar().preferredSize.height -
+                                  MediaQuery.of(context).padding.bottom -
+                                  kBottomNavigationBarHeight -
+                                  72,
+                              width: MediaQuery.of(context).size.width * 0.27,
+                              child: GroupItems(
+                                expansibleGroupsViewModel:
+                                    expansibleGroupsPresenter.expansibleGroups,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   );

@@ -11,18 +11,16 @@ class GroupItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: expansibleGroupsViewModel.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.7,
-      ),
       itemBuilder: (context, index) {
         final groupViewModel = expansibleGroupsViewModel[index];
 
-        return GroupItem(expansibleGroupsViewModel: groupViewModel);
+        return GroupItem(
+          expansibleGroupsViewModel: groupViewModel,
+        );
       },
     );
   }

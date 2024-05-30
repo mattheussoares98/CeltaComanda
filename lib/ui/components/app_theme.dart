@@ -70,7 +70,7 @@ ThemeData makeAppTheme() {
       style: ElevatedButton.styleFrom(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-    backgroundColor: Colors.red,
+    backgroundColor: primaryColorDark,
     foregroundColor: Colors.white,
   ));
 

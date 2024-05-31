@@ -44,20 +44,11 @@ class NameImagePluAndEan extends StatelessWidget {
         Text(
           productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
           textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Theme.of(context).primaryColorDark,
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
-              shadows: const [
-                Shadow(
-                    color: Colors.black,
-                    blurRadius: 0.2,
-                    offset: Offset(0.03, 0.03)),
-                Shadow(
-                    color: Colors.black,
-                    blurRadius: 0.2,
-                    offset: Offset(-0.03, -0.03)),
-              ]),
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
         ),
       ],
     );

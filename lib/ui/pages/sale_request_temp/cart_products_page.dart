@@ -66,12 +66,10 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                   mainErrorSubscription = handleMainError(
                       context, saleRequestTempPresenter.mainErrorStream);
 
-                  if (saleRequestTempPresenter
-                          .saleRequestTemp?.Products.isNotEmpty ==
+                  if (saleRequestTempPresenter.cartProducts.isNotEmpty ==
                       true) {
                     return SaleRequestProductsItems(
-                        saleRequestTempViewModel:
-                            saleRequestTempPresenter.saleRequestTemp!);
+                        cartProducts: saleRequestTempPresenter.cartProducts);
                   }
                   return SizedBox(
                     height: MediaQuery.of(context).size.height -

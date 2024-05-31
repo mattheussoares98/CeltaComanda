@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../main/builders/builders.dart';
+import 'package:flutter/material.dart';
+
 import '../../../../ui/components/components.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class SaleRequestTempProductItem extends StatefulWidget {
-  final SaleRequestTempProductsViewModel saleRequestTemp;
+  final CartProductsViewModel cartProduct;
   final int index;
 
   const SaleRequestTempProductItem({
-    required this.saleRequestTemp,
+    required this.cartProduct,
     required this.index,
     super.key,
   });
@@ -30,43 +30,43 @@ class _SaleRequestTempProductItemState
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
   }) async {
-    await saleRequestTempPresenter.addProductQuantity(
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      saleRequestProductTempId: int.parse(
-        widget.saleRequestTemp.SaleRequestProductTempId,
-      ),
-      commandNumber: homePresenter.commandNumber!,
-    );
+    // await saleRequestTempPresenter.addProductQuantity(
+    //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+    //   saleRequestProductTempId: int.parse(
+    //     widget.cartProduct.SaleRequestProductTempId,
+    //   ),
+    //   commandNumber: homePresenter.commandNumber!,
+    // );
   }
 
   Future<void> onPressedReduceQuantity({
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
   }) async {
-    double? quantityDouble = widget.saleRequestTemp.Quantity.toDouble();
+    double? quantityDouble = widget.cartProduct.Quantity.toDouble();
     int quantityInt = quantityDouble.toInt();
 
     if (quantityInt > 1) {
-      await saleRequestTempPresenter.subtractProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId:
-            int.parse(widget.saleRequestTemp.SaleRequestProductTempId),
-        productQuantity: quantityInt,
-        commandNumber: homePresenter.commandNumber!,
-      );
+      // await saleRequestTempPresenter.subtractProductQuantity(
+      //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      //   saleRequestProductTempId:
+      //       int.parse(widget.cartProduct.SaleRequestProductTempId),
+      //   productQuantity: quantityInt,
+      //   commandNumber: homePresenter.commandNumber!,
+      // );
     } else {
       notificationDialog(
         context: context,
         titleMessage: "Deseja realmente remover o produto?",
         content: null,
         onPress: () async {
-          await saleRequestTempPresenter.subtractProductQuantity(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            saleRequestProductTempId:
-                int.parse(widget.saleRequestTemp.SaleRequestProductTempId),
-            productQuantity: quantityInt,
-            commandNumber: homePresenter.commandNumber!,
-          );
+          // await saleRequestTempPresenter.subtractProductQuantity(
+          //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          //   saleRequestProductTempId:
+          //       int.parse(widget.cartProduct.SaleRequestProductTempId),
+          //   productQuantity: quantityInt,
+          //   commandNumber: homePresenter.commandNumber!,
+          // );
         },
       );
     }
@@ -75,9 +75,9 @@ class _SaleRequestTempProductItemState
   void onTapCommentIcon(SaleRequestTempPresenter saleRequestTempPresenter) {
     saleRequestTempPresenter.updateIndexOfSelectedProduct(widget.index);
     //criar teste pra essa alteração do índice do produto que foi selecionado
-    if (widget.saleRequestTemp.Comments != null) {
+    if (widget.cartProduct.Comments != null) {
       setState(() {
-        commentsController.text = widget.saleRequestTemp.Comments!;
+        commentsController.text = widget.cartProduct.Comments!;
       });
     }
 
@@ -94,10 +94,6 @@ class _SaleRequestTempProductItemState
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    MenuPresenter menuPresenter =
-        Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
@@ -107,26 +103,26 @@ class _SaleRequestTempProductItemState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageWidget(
-              ean: widget.saleRequestTemp.Product.EanCode,
-              plu: widget.saleRequestTemp.Product.PriceLookupCode,
+              ean: widget.cartProduct.Product.EanCode,
+              plu: widget.cartProduct.Product.PriceLookupCode,
               showLargeImageInShowDialog: true,
             ),
             const SizedBox(width: 3),
             ProductNamePluAndEan(
-              nameComplete: widget.saleRequestTemp.Product.NameComplete,
-              name: widget.saleRequestTemp.Product.Name,
-              eanCode: widget.saleRequestTemp.Product.EanCode,
-              priceLookupCode: widget.saleRequestTemp.Product.PriceLookupCode,
-              comments: widget.saleRequestTemp.Comments,
+              nameComplete: widget.cartProduct.Product.NameComplete,
+              name: widget.cartProduct.Product.Name,
+              eanCode: widget.cartProduct.Product.EanCode,
+              priceLookupCode: widget.cartProduct.Product.PriceLookupCode,
+              comments: widget.cartProduct.Comments,
               onTapCommentIcon: () async {
                 onTapCommentIcon(saleRequestTempPresenter);
               },
             ),
             PriceAndUpdateProductQuantity(
               showUpdateProductQuantity: true,
-              price: widget.saleRequestTemp.Value.toDouble(),
-              totalLiquid: widget.saleRequestTemp.Quantity.toDouble() *
-                  widget.saleRequestTemp.Value.toDouble(),
+              price: widget.cartProduct.Value.toDouble(),
+              totalLiquid: widget.cartProduct.Quantity.toDouble() *
+                  widget.cartProduct.Value.toDouble(),
               onPressedReduceQuantity: () async {
                 await onPressedReduceQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
@@ -139,7 +135,7 @@ class _SaleRequestTempProductItemState
                   homePresenter: homePresenter,
                 );
               },
-              productQuantity: widget.saleRequestTemp.Quantity.toDouble(),
+              productQuantity: widget.cartProduct.Quantity.toDouble(),
             ),
           ],
         ),
@@ -149,14 +145,14 @@ class _SaleRequestTempProductItemState
           },
           child: Icon(
             color: Theme.of(context).colorScheme.primary,
-            widget.saleRequestTemp.Comments == null
+            widget.cartProduct.Comments == null
                 ? Icons.add_comment
                 : Icons.edit,
             size: 25,
           ),
         ),
-        if (widget.saleRequestTemp.Comments != null)
-          CommentRichText(comment: widget.saleRequestTemp.Comments!),
+        if (widget.cartProduct.Comments != null)
+          CommentRichText(comment: widget.cartProduct.Comments!),
         if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index)
           Row(
             children: [
@@ -175,15 +171,15 @@ class _SaleRequestTempProductItemState
                 onPressed: () async {
                   commentsFocusNode.unfocus();
 
-                  await saleRequestTempPresenter.updateComment(
-                    comments: commentsController.text,
-                    saleRequestProductTempId: int.parse(
-                        widget.saleRequestTemp.SaleRequestProductTempId),
-                    menuPresenter: menuPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    saleRequestTempPresenter: saleRequestTempPresenter,
-                    homePresenter: homePresenter,
-                  );
+                  // await saleRequestTempPresenter.updateComment(
+                  //   comments: commentsController.text,
+                  //   saleRequestProductTempId: int.parse(
+                  //       widget.cartProduct.SaleRequestProductTempId),
+                  //   menuPresenter: menuPresenter,
+                  //   printedProductsPresenter: printedProductsPresenter,
+                  //   saleRequestTempPresenter: saleRequestTempPresenter,
+                  //   homePresenter: homePresenter,
+                  // );
                 },
                 child: const Text(
                   "Alterar\ncomentário",

@@ -5,9 +5,9 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class SaleRequestProductsItems extends StatelessWidget {
-  final SaleRequestTempViewModel saleRequestTempViewModel;
+  final List<CartProductsViewModel> cartProducts;
   const SaleRequestProductsItems({
-    required this.saleRequestTempViewModel,
+    required this.cartProducts,
     super.key,
   });
 
@@ -34,13 +34,12 @@ class SaleRequestProductsItems extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: saleRequestTempViewModel.Products.length,
+                  itemCount: cartProducts.length,
                   itemBuilder: (context, index) {
-                    final productViewModel =
-                        saleRequestTempViewModel.Products[index];
+                    final cartProduct = cartProducts[index];
 
                     return SaleRequestTempProductItem(
-                      saleRequestTemp: productViewModel,
+                      cartProduct: cartProduct,
                       index: index,
                     );
                   },
@@ -48,7 +47,8 @@ class SaleRequestProductsItems extends StatelessWidget {
                 RequestSummary(
                   totalLiquid:
                       saleRequestTempPresenter.totalSaleRequestTempPrice,
-                  comments: saleRequestTempViewModel.Comments,
+                  comments:
+                      "Agora eu posso adicionar um comentário qualquer aqui, por exemplo o número da mesa pra ficar mais fácil pro cliente. Aí eu deixo ele adicionar somente comentário no produto",
                 ),
               ],
             ),

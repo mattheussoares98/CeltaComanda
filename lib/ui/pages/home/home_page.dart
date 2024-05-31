@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage>
           items: [
             const BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
+                Icons.menu_book_rounded,
               ),
               label: 'Menu',
             ),

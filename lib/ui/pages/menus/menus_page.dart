@@ -138,17 +138,6 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
       ),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
-        actions: [
-          SearchCommandIcon(loadCommandData: () async {
-            await menuPresenter.loadCommandData(
-              commandNumber: homePresenter.commandNumber!,
-              printedProductsPresenter: printedProductsPresenter,
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              menuPresenter: menuPresenter,
-              homePresenter: homePresenter,
-            );
-          })
-        ],
         title: const FittedBox(
           child: Text(
             "Menu",
@@ -171,22 +160,11 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                       handleMainError(context, menuPresenter.mainErrorStream);
 
                   if (menuPresenter.menus.isEmpty) {
-                    return SearchDataByCommandNumber(
-                      menuPresenter: menuPresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      saleRequestTempPresenter: saleRequestTempPresenter,
-                      homePresenter: homePresenter,
-                      emptyMessage:
-                          "Consulte alguma comanda para conseguir visualizar os produtos/combos e adicionar na comanda",
-                      loadCommandData: () async {
-                        await menuPresenter.loadCommandData(
-                          commandNumber: homePresenter.commandNumber!,
-                          printedProductsPresenter: printedProductsPresenter,
-                          saleRequestTempPresenter: saleRequestTempPresenter,
-                          menuPresenter: menuPresenter,
-                          homePresenter: homePresenter,
-                        );
+                    return TextButton(
+                      onPressed: () async {
+                        _loadGroupsAndProducts(menuPresenter);
                       },
+                      child: const Text("Carregar menu"),
                     );
                   }
 

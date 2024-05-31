@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/entities.dart';
-import '../../../../ui/helpers/convert/convert.dart';
 import '../../../../ui/pages/pages.dart';
+import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 
 class ProductsItems extends StatefulWidget {
@@ -23,14 +23,13 @@ class _ProductsItemsState extends State<ProductsItems> {
   final commentTextController = TextEditingController();
 
   Future<void> _updateSaleRequest({
-    required ProductsPresenter productsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required ProductsViewModel productsViewModel,
   }) async {
     try {
-      await productsPresenter.updateSaleRequest(
-          productsViewModel: productsViewModel,
+      await menuPresenter.updateSaleRequest(
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
           products: [
@@ -52,7 +51,9 @@ class _ProductsItemsState extends State<ProductsItems> {
           ]);
       _updateSelectedIndex(-1);
     } catch (e) {
-      e;
+      Future.delayed(Duration.zero, () {
+        showErrorMessage(context, R.string.msgUnexpectedError);
+      });
     }
   }
 
@@ -88,10 +89,10 @@ class _ProductsItemsState extends State<ProductsItems> {
 
   @override
   Widget build(BuildContext context) {
-    ProductsPresenter productsPresenter = Provider.of(context, listen: false);
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
@@ -116,7 +117,7 @@ class _ProductsItemsState extends State<ProductsItems> {
             },
             updateSaleRequest: () async {
               await _updateSaleRequest(
-                productsPresenter: productsPresenter,
+                menuPresenter: menuPresenter,
                 homePresenter: homePresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
                 productsViewModel: productsViewModel,
@@ -130,7 +131,7 @@ class _ProductsItemsState extends State<ProductsItems> {
               _updateSelectedIndex(index);
             },
             goToComboxPage: () {
-              productsPresenter.goToComboxPage(productsViewModel);
+              menuPresenter.goToComboxPage(productsViewModel);
             },
             productsViewModel: productsViewModel,
           );

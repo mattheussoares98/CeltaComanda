@@ -29,54 +29,6 @@ class _MenuPageState extends State<MenuPage>
   int indexOfSelectedProductCommentIcon = -1;
   final commentTextController = TextEditingController();
 
-  Future<void> _addProductInCart({
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-  }) async {
-    try {
-      _hideFormField();
-    } catch (e) {
-      e;
-    }
-  }
-
-  void _addProductQuantity(MenuPresenter menuPresenter) {
-    setState(() {
-      menuPresenter.searchedProduct!.productQuantity++;
-    });
-  }
-
-  void _subtractProductQuantity(MenuPresenter menuPresenter) {
-    setState(() {
-      menuPresenter.searchedProduct!.productQuantity--;
-    });
-  }
-
-  void _clearProductQuantity(MenuPresenter menuPresenter) {
-    setState(() {
-      menuPresenter.searchedProduct!.productQuantity = 1;
-    });
-  }
-
-  void _hideFormField() {
-    setState(() {
-      indexOfSelectedProductCommentIcon = -1;
-    });
-  }
-
-  void _updateSelectedIndex() {
-    if (indexOfSelectedProductCommentIcon == 0) {
-      setState(() {
-        indexOfSelectedProductCommentIcon = -1;
-      });
-    } else {
-      setState(() {
-        indexOfSelectedProductCommentIcon = 0;
-      });
-    }
-  }
-
   Future<void> _loadGroupsAndProducts(MenuPresenter menuPresenter) async {
     await menuPresenter.getGroupsAndProducts("001");
   }
@@ -167,75 +119,15 @@ class _MenuPageState extends State<MenuPage>
                       return SizedBox(
                         height: MediaQuery.of(context).size.height -
                             AppBar().preferredSize.height -
-                            kBottomNavigationBarHeight -
-                            50,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                            kBottomNavigationBarHeight,
+                        child: Column(
                           children: [
-                            Expanded(
-                              flex: 20,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: GroupItems(
-                                  expansibleGroupsViewModel: menuPresenter
-                                      .loadedMenu
-                                      .map((element) => element.keys.first)
-                                      .toList(),
-                                  selectedIndex: snapshot.data ?? 0,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              flex: 80,
-                              child: ProductsItems(
-                                itensPerLine: 2,
-                                products: menuPresenter
-                                    .loadedMenu[snapshot.data ?? 0]
-                                    .entries
-                                    .first
-                                    .value,
-                              ),
-                            ),
+                            GroupsAndProducts(selectedIndex: snapshot.data),
+                            const InsertProduct(),
                           ],
                         ),
                       );
                     });
-                // const SearchProduct(),
-                // if (menuPresenter.searchedProduct != null)
-                //   ProductItemWidget(
-                //     addProductQuantity: () {
-                //       _addProductQuantity(menuPresenter);
-                //     },
-                //     clearProductQuantity: () {
-                //       _clearProductQuantity(menuPresenter);
-                //     },
-                //     subtractProductQuantity: () {
-                //       _subtractProductQuantity(menuPresenter);
-                //     },
-                //     updateSaleRequest: () async {
-                //       await _addProductInCart(
-                //         menuPresenter: menuPresenter,
-                //         homePresenter: homePresenter,
-                //         saleRequestTempPresenter:
-                //             saleRequestTempPresenter,
-                //       );
-                //     },
-                //     productQuantity: menuPresenter
-                //         .searchedProduct!.productQuantity,
-                //     index: 0,
-                //     selectedIndex:
-                //         indexOfSelectedProductCommentIcon,
-                //     updateSelectedIndex: _updateSelectedIndex,
-                //     goToComboxPage: () {
-                //       menuPresenter.goToComboxPage(
-                //         menuPresenter.searchedProduct!,
-                //       );
-                //     },
-                //     productsViewModel:
-                //         menuPresenter.searchedProduct!,
-                //     commentTextController: commentTextController,
-                //   ),
               }
             },
           );

@@ -158,7 +158,7 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  ProductsViewModel? get searchedProduct => _searchedProduct;
+  ProductsViewModel? get selectedProduct => _searchedProduct;
   ProductsViewModel? _searchedProduct;
 
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> _loadedMenu =

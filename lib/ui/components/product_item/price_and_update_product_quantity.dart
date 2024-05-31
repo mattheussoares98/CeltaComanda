@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
+
 import '../../helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
@@ -41,31 +43,10 @@ class _PriceAndUpdateProductQuantityState
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey[300],
                 ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      key: const Key("IconButtonSubtractQuantity"),
-                      icon: Icon(
-                        widget.productQuantity <= 1
-                            ? Icons.delete
-                            : Icons.remove,
-                      ),
-                      iconSize: 20,
-                      visualDensity: VisualDensity.compact,
-                      onPressed: widget.onPressedReduceQuantity,
-                      color: const Color(0xFFFF5963),
-                    ),
-                    Text(widget.productQuantity.toString().toBrazilianNumber()),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.add,
-                      ),
-                      iconSize: 20,
-                      visualDensity: VisualDensity.compact,
-                      onPressed: widget.onPressedAddQuantity,
-                      color: const Color(0xFFFF5963),
-                    ),
-                  ],
+                child: UpdateQuantity(
+                  productQuantity: widget.productQuantity,
+                  onPressedReduceQuantity: widget.onPressedReduceQuantity,
+                  onPressedAddQuantity: widget.onPressedAddQuantity,
                 ),
               ),
               Text(widget.totalLiquid

@@ -338,38 +338,38 @@ void main() {
     });
 
     test("Should return correct product on success", () async {
-      expect(sut.searchedProduct, null);
+      expect(sut.selectedProduct, null);
       await sut.searchProduct(productEan);
 
-      expect(sut.searchedProduct, productsViewModel);
+      expect(sut.selectedProduct, productsViewModel);
     });
 
     test("Should return null if product not found", () async {
       searchProductByCode.mockSearchProductByCode(null);
 
-      expect(sut.searchedProduct, null);
+      expect(sut.selectedProduct, null);
       await sut.searchProduct(productEan);
 
-      expect(sut.searchedProduct, null);
+      expect(sut.selectedProduct, null);
     });
 
     test("Should clear searchedProduct when search command data", () async {
-      expect(sut.searchedProduct, null);
+      expect(sut.selectedProduct, null);
 
       await sut.searchProduct(productEan);
-      expect(sut.searchedProduct, productsViewModel);
+      expect(sut.selectedProduct, productsViewModel);
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-      expect(sut.searchedProduct, null);
+      expect(sut.selectedProduct, null);
     });
 
     test("Should clear searchedProduct not found product", () async {
       await sut.searchProduct(productEan);
-      expect(sut.searchedProduct, productsViewModel);
+      expect(sut.selectedProduct, productsViewModel);
 
       searchProductByCode.mockSearchProductByCode(null);
       await sut.searchProduct(productEan);
-      expect(sut.searchedProduct, null);
+      expect(sut.selectedProduct, null);
     });
   });
 

@@ -12,7 +12,7 @@ abstract class MenuPresenter implements Listenable {
   Stream<int> get indexOfSelectedGroupStream;
 
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu;
-  ProductsViewModel? get searchedProduct;
+  ProductsViewModel? get selectedProduct;
 
   TextEditingController get searchProductController;
 

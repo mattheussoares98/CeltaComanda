@@ -38,7 +38,7 @@ class _SearchProductState extends State<SearchProduct> {
     await menuPresenter.searchProduct(
         menuPresenter.searchProductController.text);
 
-    if (menuPresenter.searchedProduct == null) {
+    if (menuPresenter.selectedProduct == null) {
       _requestFocusToFormField();
     } else {
       focusNode.unfocus();

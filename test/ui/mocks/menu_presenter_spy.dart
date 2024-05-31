@@ -30,7 +30,7 @@ class MenuPresenterSpy extends Mock
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.searchedProduct)
+    when(() => this.selectedProduct)
         .thenAnswer((_) => searchedProductController);
     when(() => this.searchProductController)
         .thenAnswer((_) => searchProductControllerMock);

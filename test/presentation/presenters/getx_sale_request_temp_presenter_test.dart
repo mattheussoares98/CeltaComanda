@@ -31,6 +31,7 @@ void main() {
   late int saleRequestProductTempId;
   late String comments;
   late PrintRequestEntity printRequestEntity;
+  late CartProductEntity cartProductEntity;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -67,6 +68,7 @@ void main() {
     comments = faker.randomGenerator.string(10);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
     printRequestEntity = EntityFactory.makePrintRequestEntity();
+    cartProductEntity = EntityFactory.makeCartProductEntity();
   }
 
   void initMockSuccess() {
@@ -692,8 +694,8 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: homePresenter.commandNumberMock!,
           )).called(1);
-      verify(() => menuPresenter.getGroupsAndProducts(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => menuPresenter
+          .getGroupsAndProducts(homePresenter.commandNumberMock!)).called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
     });
@@ -712,6 +714,17 @@ void main() {
       );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
+    });
+  });
+
+  group("Cart products", () {
+    test("Should add correctly CartProduct", () {
+      expect(sut.cartProducts, []);
+
+      sut.addProductInCart(cartProductEntity);
+
+      expect(sut.cartProducts,
+          [CartProductsViewModel.fromEntity(cartProductEntity)]);
     });
   });
 }

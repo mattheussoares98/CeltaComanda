@@ -657,4 +657,13 @@ class EntityFactory {
         ],
         timesUsed: 1,
       );
+
+  static CartProductEntity makeCartProductEntity() => CartProductEntity(
+        Product: makeProductsEntitys()[0],
+        Comments: faker.randomGenerator.string(20),
+        TotalLiquid: faker.randomGenerator.decimal(),
+        Quantity: faker.randomGenerator.decimal(),
+        Value: faker.randomGenerator.decimal(),
+        ProductPriceLookUpCode: faker.randomGenerator.string(20),
+      );
 }

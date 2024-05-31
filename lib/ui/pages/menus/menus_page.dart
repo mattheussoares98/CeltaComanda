@@ -112,9 +112,9 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
-    if (!_isLoaded) {
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    if (!_isLoaded && menuPresenter.menus.isEmpty) {
       _isLoaded = true;
-      MenuPresenter menuPresenter = Provider.of(context, listen: false);
       await _loadGroupsAndProducts(menuPresenter);
     }
   }

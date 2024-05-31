@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../../main/builders/builders.dart';
 
 class ImageWidget extends StatelessWidget {
-  final String? ean;
-  final String plu;
+  final String?
+      ean; //precisa o ean ou plu pra carregar a imagem do concentrador
+  final String plu; //precisa o ean ou plu pra carregar a imagem do concentrador
   final double height;
   final double width;
   final bool showLargeImageInShowDialog;

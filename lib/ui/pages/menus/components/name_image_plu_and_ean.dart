@@ -33,15 +33,6 @@ class NameImagePluAndEan extends StatelessWidget {
           showLargeImageInShowDialog: false,
         ),
         Text(
-          productsViewModel.PriceLookupCode,
-          textAlign: TextAlign.left,
-        ),
-        if (productsViewModel.EanCode != null)
-          Text(
-            productsViewModel.EanCode!,
-            textAlign: TextAlign.left,
-          ),
-        Text(
           productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
           textAlign: TextAlign.center,
           style: const TextStyle(

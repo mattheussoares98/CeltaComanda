@@ -94,6 +94,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                           )),
                         ),
                         Image.asset(
+                          key: const Key("emptyCartKey"),
                           "lib/ui/assets/images/empty_cart.jpg",
                           width: double.infinity,
                         ),

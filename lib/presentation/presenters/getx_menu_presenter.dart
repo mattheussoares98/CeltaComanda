@@ -52,11 +52,12 @@ class GetxMenuPresenter extends GetxController
     _menu.value = [];
     _loadedMenu.clear();
     _selectedProduct.value = null;
+    _searchedProduct = null;
   }
 
   @override
   Future<void> searchProduct(String value) async {
-    _selectedProduct.value = null;
+    _searchedProduct = null;
     isLoading = true;
     mainError = null;
 
@@ -72,7 +73,7 @@ class GetxMenuPresenter extends GetxController
       );
 
       if (product != null) {
-        _selectedProduct.value = ProductsViewModel.fromEntity(product);
+        _searchedProduct = ProductsViewModel.fromEntity(product);
         searchProductController.clear();
       }
     } on DomainError catch (error) {
@@ -242,4 +243,8 @@ class GetxMenuPresenter extends GetxController
     _selectedProduct.value?.productQuantity = 1;
     _selectedProduct.value = selectedProduct;
   }
+
+  ProductsViewModel? _searchedProduct;
+  @override
+  ProductsViewModel? get searchedProduct => _searchedProduct;
 }

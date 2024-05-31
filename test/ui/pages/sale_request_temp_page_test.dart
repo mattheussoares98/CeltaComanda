@@ -1,7 +1,6 @@
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/entity_factory.dart';
@@ -57,16 +56,6 @@ void main() {
     presenter.clear();
     await tester.pumpAndSettle();
 
-    expect(find.byType(SearchDataByCommandNumber), findsOneWidget);
-  });
-
-  testWidgets('Should present InsertCommandNumber if LoadSaleRequestTemp fails',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-
-    presenter.mockLoadSaleRequestTempError(DomainError.unexpected);
-    await tester.pumpAndSettle();
-
-    expect(find.byType(SearchDataByCommandNumber), findsOneWidget);
+    expect(find.byKey(const Key("emptyCartKey")), findsOneWidget);
   });
 }

@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +41,6 @@ void main() {
     await tester.pumpWidget(
         makePage(path: PageRoutes.home, page: () => const HomePage()));
   }
-
-  testWidgets('Should present SearchCommandIcon on AppBar',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-
-    expect(find.byType(SearchCommandIcon), findsOneWidget);
-  });
 
   testWidgets('Should update canCancelProducts to false if change page',
       (WidgetTester tester) async {

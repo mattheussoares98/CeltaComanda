@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../helpers/convert/convert.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 import '../../components/components.dart';
@@ -31,36 +29,12 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   int indexOfSelectedProductCommentIcon = -1;
   final commentTextController = TextEditingController();
 
-  Future<void> _updateSaleRequest({
+  Future<void> _addProductInCart({
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     try {
-      await menuPresenter.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          products: [
-            UpdateSaleRequestTempProductEntity(
-              ProductInternalCodeOnErp: menuPresenter
-                  .searchedProduct!.InternalCodeOnERP
-                  .toString()
-                  .toInt(),
-              ProductPriceLookUpCode:
-                  menuPresenter.searchedProduct!.PriceLookupCode,
-              Quantity: menuPresenter.searchedProduct!.productQuantity,
-              SaleRequestTempId: int.parse(
-                  saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-              TotalLiquid:
-                  menuPresenter.searchedProduct!.SaleRetailPraticed.toDouble() *
-                      menuPresenter.searchedProduct!.productQuantity,
-              Value:
-                  menuPresenter.searchedProduct!.SaleRetailPraticed.toDouble(),
-              Comments: commentTextController.text.isEmpty == true
-                  ? null
-                  : commentTextController.text,
-            ),
-          ]);
       _hideFormField();
     } catch (e) {
       e;
@@ -183,7 +157,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                             _subtractProductQuantity(menuPresenter);
                           },
                           updateSaleRequest: () async {
-                            await _updateSaleRequest(
+                            await _addProductInCart(
                               menuPresenter: menuPresenter,
                               homePresenter: homePresenter,
                               saleRequestTempPresenter:

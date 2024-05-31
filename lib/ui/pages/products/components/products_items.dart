@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/entities.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
@@ -22,33 +21,14 @@ class _ProductsItemsState extends State<ProductsItems> {
   int indexOfSelectedProductCommentIcon = -1;
   final commentTextController = TextEditingController();
 
-  Future<void> _updateSaleRequest({
+  Future<void> _addProductInCart({
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required ProductsViewModel productsViewModel,
   }) async {
     try {
-      await menuPresenter.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          products: [
-            UpdateSaleRequestTempProductEntity(
-              ProductInternalCodeOnErp:
-                  productsViewModel.InternalCodeOnERP.toString().toInt(),
-              ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-              Quantity: productsViewModel.productQuantity,
-              SaleRequestTempId: saleRequestTempPresenter
-                  .saleRequestTemp!.SaleRequestTempId
-                  .toInt(),
-              TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble() *
-                  productsViewModel.productQuantity,
-              Value: productsViewModel.SaleRetailPraticed.toDouble(),
-              Comments: commentTextController.text.isEmpty == true
-                  ? null
-                  : commentTextController.text,
-            )
-          ]);
+      //addProductInCart
       _updateSelectedIndex(-1);
     } catch (e) {
       Future.delayed(Duration.zero, () {
@@ -116,7 +96,7 @@ class _ProductsItemsState extends State<ProductsItems> {
               _subtractProductQuantity(productsViewModel);
             },
             updateSaleRequest: () async {
-              await _updateSaleRequest(
+              await _addProductInCart(
                 menuPresenter: menuPresenter,
                 homePresenter: homePresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,

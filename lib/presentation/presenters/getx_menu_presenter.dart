@@ -122,50 +122,6 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
   }
 
   @override
-  Future<void> updateSaleRequest({
-    required List<UpdateSaleRequestTempProductEntity> products,
-    required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-  }) async {
-    isLoading = true;
-    mainError = null;
-    try {
-      final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl:
-            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
-        EnterpriseId:
-            saleRequestTempPresenter.saleRequestTemp!.EnterpriseId.toInt(),
-        PersonalizedCode:
-            saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
-        SaleRequestTempId:
-            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: products[0].Quantity *
-            searchedProduct!.SaleRetailPraticed.toDouble(),
-        Products: products,
-      );
-
-      await updateSaleRequestTemp.update(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        entity: entity,
-      );
-
-      await saleRequestTempPresenter
-          .loadSaleRequest(homePresenter.commandNumber!);
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.addComment:
-          mainError = UIError.addComment;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        default:
-          mainError = UIError.unexpected;
-      }
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,

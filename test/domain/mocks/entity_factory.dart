@@ -155,15 +155,15 @@ class EntityFactory {
     return [
       ExpansibleGroupEntity(
         Name: faker.randomGenerator.string(30),
-        ExpansibleGroupId: faker.randomGenerator.integer(3),
-        ExpansibleGroupType: faker.randomGenerator.integer(3),
-        OrderClassification: faker.randomGenerator.integer(3),
+        ExpansibleGroupId: faker.randomGenerator.integer(99),
+        ExpansibleGroupType: faker.randomGenerator.integer(99),
+        OrderClassification: faker.randomGenerator.integer(99),
       ),
       ExpansibleGroupEntity(
         Name: faker.randomGenerator.string(30),
-        ExpansibleGroupId: faker.randomGenerator.integer(3),
-        ExpansibleGroupType: faker.randomGenerator.integer(3),
-        OrderClassification: faker.randomGenerator.integer(3),
+        ExpansibleGroupId: faker.randomGenerator.integer(99),
+        ExpansibleGroupType: faker.randomGenerator.integer(99),
+        OrderClassification: faker.randomGenerator.integer(99),
       ),
     ];
   }

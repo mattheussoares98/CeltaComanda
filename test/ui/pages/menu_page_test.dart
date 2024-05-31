@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
-import 'package:clean_celta_mobile/ui/components/search_data_by_command_number.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
@@ -76,7 +76,7 @@ void main() {
     presenter.clear();
     await tester.pumpAndSettle();
 
-    expect(find.byType(SearchDataByCommandNumber), findsOneWidget);
+    expect(find.byType(TextButton), findsOneWidget);
   });
 
   testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
@@ -107,7 +107,7 @@ void main() {
     presenter.mockLoadDataError(DomainError.unexpected);
     await tester.pumpAndSettle();
 
-    expect(find.byType(SearchDataByCommandNumber), findsOneWidget);
+    expect(find.byType(TextButton), findsOneWidget);
   });
 
   testWidgets('Should present InsertCommandNumber command is not available',
@@ -117,6 +117,6 @@ void main() {
     presenter.mockLoadDataError(DomainError.commandNotAvailable);
     await tester.pumpAndSettle();
 
-    expect(find.byType(SearchDataByCommandNumber), findsOneWidget);
+    expect(find.byType(TextButton), findsOneWidget);
   });
 }

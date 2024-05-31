@@ -4,9 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../pages.dart';
 import '../../helpers/helpers.dart';
 
-abstract class MenuPresenter
-    with ChangeNotifier
-    implements Listenable {
+abstract class MenuPresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
@@ -20,11 +18,7 @@ abstract class MenuPresenter
   Future<void> getGroupsAndProducts(String commandNumber);
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
-  Future<void> updateSaleRequest({
-    required List<UpdateSaleRequestTempProductEntity> products,
-    required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-  });
+
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,

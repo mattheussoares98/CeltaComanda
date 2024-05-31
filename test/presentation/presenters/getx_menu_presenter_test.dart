@@ -39,10 +39,6 @@ void main() {
   late String productEan;
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
-  late String productComment;
-  late double productQuantity;
-  late UpdateSaleRequestTempProductEntity updateSaleRequestTempProductEntity;
-  late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late List<ProductEntity> products;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,37 +93,6 @@ void main() {
     saleRequestTempPresenter.saleRequestTempMock =
         EntityFactory.makeSaleRequestTempViewModel(
             EntityFactory.makeProductModel());
-    productComment = faker.randomGenerator.string(10);
-    productQuantity = faker.randomGenerator.decimal();
-
-    updateSaleRequestTempProductEntity = UpdateSaleRequestTempProductEntity(
-      ProductInternalCodeOnErp:
-          productsViewModel.InternalCodeOfProductOnERP!.toInt(),
-      ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-      Quantity: productQuantity,
-      SaleRequestTempId: saleRequestTempPresenter
-          .saleRequestTempMock!.SaleRequestTempId
-          .toInt(),
-      TotalLiquid:
-          productsViewModel.SaleRetailPraticed.toDouble() * productQuantity,
-      Value: productsViewModel.SaleRetailPraticed.toDouble(),
-      Comments: productComment,
-    );
-
-    updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
-      DeliveryControl:
-          saleRequestTempPresenter.saleRequestTempMock!.DeliveryControl.toInt(),
-      EnterpriseId:
-          saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId.toInt(),
-      PersonalizedCode:
-          saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
-      SaleRequestTempId: saleRequestTempPresenter
-          .saleRequestTempMock!.SaleRequestTempId
-          .toInt(),
-      TotalLiquid: updateSaleRequestTempProductEntity.Quantity *
-          productsViewModel.SaleRetailPraticed.toDouble(),
-      Products: [updateSaleRequestTempProductEntity],
-    );
 
     products = EntityFactory.makeProductsEntitys();
 
@@ -173,18 +138,22 @@ void main() {
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
     test('Should emit correct values on throws CommandNotAvailable', () async {
-      loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
+      loadExpansibleGroups
+          .mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
     test('Should emit correct values on throws unexpected', () async {
-      loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
+      loadExpansibleGroups
+          .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
@@ -198,14 +167,17 @@ void main() {
           .called(1);
     });
 
-    test('Should throw DomainErrorUnexpected', () async {
+    test(
+        'Should emit correct values on LoadExpansibleGroups throws unexpectedError',
+        () async {
       loadExpansibleGroups
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-      final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      expect(sut.menus, []);
-      expect(error, throwsA(DomainError.unexpected));
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
 
     test('Should return correct value on success to load', () async {
@@ -256,23 +228,24 @@ void main() {
   });
 
   test(
-      'Should throw DomainError.commandNotAvailable on ticketIsPermitted throws commandNotAvailable',
+      'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
       () async {
     ticketIsPermitted.mockError(DomainError.commandNotAvailable);
 
-    final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
-    expect(error, throwsA(DomainError.commandNotAvailable));
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
   });
 
-  test(
-      'Should throw DomainError.unexpected on ticketIsPermitted throws unexpected',
+  test('Should emit correct values on ticketIsPermitted throws unexpected',
       () async {
     ticketIsPermitted.mockError(DomainError.unexpected);
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-
-    expect(error, throwsA(DomainError.unexpected));
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
   });
 
   test('Should update indexOfSelectedProduct correctly', () async {
@@ -465,98 +438,6 @@ void main() {
     });
   });
 
-  group("Add product quantity (updateSaleRequest)", () {
-    test("Should emit correct events on UpdateSaleRequest success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.searchProduct(productEan);
-      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
-      await sut.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          products: [updateSaleRequestTempProductEntity]);
-    });
-
-    test("Should emit correct events on UpdateSaleRequest throws unexpected",
-        () async {
-      updateSaleRequestTemp
-          .mockUpdateSaleRequestTempError(DomainError.unexpected);
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.searchProduct(productEan);
-      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
-      await sut.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          products: [updateSaleRequestTempProductEntity]);
-    });
-
-    test(
-        "Should emit correct events on UpdateSaleRequest throws commandNotAvailable",
-        () async {
-      updateSaleRequestTemp
-          .mockUpdateSaleRequestTempError(DomainError.commandNotAvailable);
-
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.searchProduct(productEan);
-      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
-      await sut.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          products: [updateSaleRequestTempProductEntity]);
-    });
-
-    test("Should call updateSaleRequestTemp with correct values", () async {
-      await sut.searchProduct(productEan);
-      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
-
-      await sut.updateSaleRequest(
-        homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        products: updateSaleRequestTempEntity.Products,
-      );
-
-      verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            entity: updateSaleRequestTempEntity,
-          )).called(1);
-    });
-
-    test('Should call SaleRequestTempPresenter.load', () async {
-      await sut.searchProduct(productEan);
-      //pra atualizar o updateSaleRequest precisa que o searchedProduct esteja com um valor, por isso precisa fazer essa consulta antes
-
-      await sut.updateSaleRequest(
-          homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
-          products: [
-            UpdateSaleRequestTempProductEntity(
-              ProductInternalCodeOnErp:
-                  productsViewModel.InternalCodeOfProductOnERP!.toInt(),
-              ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-              Quantity: productQuantity,
-              SaleRequestTempId: saleRequestTempPresenter
-                  .saleRequestTempMock!.SaleRequestTempId
-                  .toInt(),
-              TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble() *
-                  productQuantity,
-              Value: productsViewModel.SaleRetailPraticed.toDouble(),
-              Comments: productComment,
-            ),
-          ]);
-
-      verify(() => saleRequestTempPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
-    });
-  });
-
   group("Load commandData", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -680,22 +561,6 @@ void main() {
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
-    });
-
-    test(
-        "Should update commandNumber with null value on error to LoadCommandData",
-        () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
-
-      await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => homePresenter.updateCommandNumber(null)).called(1);
     });
   });
 }

@@ -121,123 +121,128 @@ class _MenuPageState extends State<MenuPage>
           ),
         ),
       ),
-      body: Row(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Builder(
-                builder: (context) {
-                  loadingSubscription?.cancel();
-                  mainErrorSubscription?.cancel();
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _loadGroupsAndProducts(menuPresenter);
+        },
+        child: Row(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Builder(
+                  builder: (context) {
+                    loadingSubscription?.cancel();
+                    mainErrorSubscription?.cancel();
 
-                  loadingSubscription =
-                      handleLoading(context, menuPresenter.isLoadingStream);
-                  mainErrorSubscription =
-                      handleMainError(context, menuPresenter.mainErrorStream);
+                    loadingSubscription =
+                        handleLoading(context, menuPresenter.isLoadingStream);
+                    mainErrorSubscription =
+                        handleMainError(context, menuPresenter.mainErrorStream);
 
-                  return StreamBuilder<
-                      List<
-                          Map<ExpansibleGroupsViewModel,
-                              List<ProductsViewModel>>>>(
-                    stream: menuPresenter.menuStream,
-                    builder: (context, snapshot) {
-                      if (menuPresenter.loadedMenu.isEmpty) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height -
-                              AppBar().preferredSize.height,
-                          child: Center(
-                            child: TextButton(
-                              onPressed: () async {
-                                _loadGroupsAndProducts(menuPresenter);
-                              },
-                              child: const Text("Carregar menu"),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return Column(
-                          children: [
-                            // const SearchProduct(),
-                            if (menuPresenter.searchedProduct != null)
-                              ProductItemWidget(
-                                addProductQuantity: () {
-                                  _addProductQuantity(menuPresenter);
+                    return StreamBuilder<
+                        List<
+                            Map<ExpansibleGroupsViewModel,
+                                List<ProductsViewModel>>>>(
+                      stream: menuPresenter.menuStream,
+                      builder: (context, snapshot) {
+                        if (menuPresenter.loadedMenu.isEmpty) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height -
+                                AppBar().preferredSize.height,
+                            child: Center(
+                              child: TextButton(
+                                onPressed: () async {
+                                  _loadGroupsAndProducts(menuPresenter);
                                 },
-                                clearProductQuantity: () {
-                                  _clearProductQuantity(menuPresenter);
-                                },
-                                subtractProductQuantity: () {
-                                  _subtractProductQuantity(menuPresenter);
-                                },
-                                updateSaleRequest: () async {
-                                  await _addProductInCart(
-                                    menuPresenter: menuPresenter,
-                                    homePresenter: homePresenter,
-                                    saleRequestTempPresenter:
-                                        saleRequestTempPresenter,
-                                  );
-                                },
-                                productQuantity: menuPresenter
-                                    .searchedProduct!.productQuantity,
-                                index: 0,
-                                selectedIndex:
-                                    indexOfSelectedProductCommentIcon,
-                                updateSelectedIndex: _updateSelectedIndex,
-                                goToComboxPage: () {
-                                  menuPresenter.goToComboxPage(
-                                    menuPresenter.searchedProduct!,
-                                  );
-                                },
-                                productsViewModel:
-                                    menuPresenter.searchedProduct!,
-                                commentTextController: commentTextController,
+                                child: const Text("Carregar menu"),
                               ),
-                            StreamBuilder<int>(
-                                stream:
-                                    menuPresenter.indexOfSelectedGroupStream,
-                                builder: (context, snapshot) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          flex: 20,
-                                          child: GroupItems(
-                                            expansibleGroupsViewModel:
-                                                menuPresenter
-                                                    .loadedMenu
-                                                    .map((element) =>
-                                                        element.keys.first)
-                                                    .toList(),
-                                            selectedIndex: snapshot.data ?? 0,
+                            ),
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              // const SearchProduct(),
+                              if (menuPresenter.searchedProduct != null)
+                                ProductItemWidget(
+                                  addProductQuantity: () {
+                                    _addProductQuantity(menuPresenter);
+                                  },
+                                  clearProductQuantity: () {
+                                    _clearProductQuantity(menuPresenter);
+                                  },
+                                  subtractProductQuantity: () {
+                                    _subtractProductQuantity(menuPresenter);
+                                  },
+                                  updateSaleRequest: () async {
+                                    await _addProductInCart(
+                                      menuPresenter: menuPresenter,
+                                      homePresenter: homePresenter,
+                                      saleRequestTempPresenter:
+                                          saleRequestTempPresenter,
+                                    );
+                                  },
+                                  productQuantity: menuPresenter
+                                      .searchedProduct!.productQuantity,
+                                  index: 0,
+                                  selectedIndex:
+                                      indexOfSelectedProductCommentIcon,
+                                  updateSelectedIndex: _updateSelectedIndex,
+                                  goToComboxPage: () {
+                                    menuPresenter.goToComboxPage(
+                                      menuPresenter.searchedProduct!,
+                                    );
+                                  },
+                                  productsViewModel:
+                                      menuPresenter.searchedProduct!,
+                                  commentTextController: commentTextController,
+                                ),
+                              StreamBuilder<int>(
+                                  stream:
+                                      menuPresenter.indexOfSelectedGroupStream,
+                                  builder: (context, snapshot) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            flex: 20,
+                                            child: GroupItems(
+                                              expansibleGroupsViewModel:
+                                                  menuPresenter.loadedMenu
+                                                      .map((element) =>
+                                                          element.keys.first)
+                                                      .toList(),
+                                              selectedIndex: snapshot.data ?? 0,
+                                            ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          flex: 80,
-                                          child: ProductsItems(
-                                            products: menuPresenter
-                                                .loadedMenu[snapshot.data ?? 0]
-                                                .entries
-                                                .first
-                                                .value,
+                                          Expanded(
+                                            flex: 80,
+                                            child: ProductsItems(
+                                              products: menuPresenter
+                                                  .loadedMenu[
+                                                      snapshot.data ?? 0]
+                                                  .entries
+                                                  .first
+                                                  .value,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ],
-                        );
-                      }
-                    },
-                  );
-                },
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            ],
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

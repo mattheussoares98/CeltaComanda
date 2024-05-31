@@ -64,7 +64,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
             blurRadius: 3,
             color: Color(0x411D2429),
             offset: Offset(
-              0.0,
+              -1,
               1,
             ),
           )

@@ -76,7 +76,7 @@ class _ProductsItemsState extends State<ProductsItems> {
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) =>
       Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 5, 5),
+        padding: const EdgeInsets.fromLTRB(0, 8, 5, 0),
         child: ProductItemWidget(
           productsViewModel: widget.products[index],
           addProductQuantity: () {
@@ -116,23 +116,29 @@ class _ProductsItemsState extends State<ProductsItems> {
     HomePresenter homePresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Column(
-      children: [
-        for (int i = 0; i < widget.products.length; i += widget.itensPerLine)
-          Row(
+    return ListView.builder(
+      itemCount: (widget.products.length / widget.itensPerLine).ceil(),
+      itemBuilder: (context, rowIndex) {
+        return IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (int row = i; row < i + widget.itensPerLine; row++)
-                if (row < widget.products.length)
+              for (int i = rowIndex * widget.itensPerLine;
+                  i < (rowIndex + 1) * widget.itensPerLine;
+                  i++)
+                if (i < widget.products.length)
                   Expanded(
                     child: product(
-                        index: i,
-                        menuPresenter: menuPresenter,
-                        homePresenter: homePresenter,
-                        saleRequestTempPresenter: saleRequestTempPresenter),
+                      index: i,
+                      menuPresenter: menuPresenter,
+                      homePresenter: homePresenter,
+                      saleRequestTempPresenter: saleRequestTempPresenter,
+                    ),
                   ),
             ],
           ),
-      ],
+        );
+      },
     );
   }
 }

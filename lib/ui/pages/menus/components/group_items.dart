@@ -21,10 +21,7 @@ class _GroupItemsState extends State<GroupItems> {
     MenuPresenter presenter = Provider.of(context);
     return Container(
       width: MediaQuery.of(context).size.width * 0.27,
-      height: MediaQuery.of(context).size.height -
-          AppBar().preferredSize.height -
-          MediaQuery.of(context).padding.bottom -
-          kBottomNavigationBarHeight,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: const [
@@ -35,7 +32,6 @@ class _GroupItemsState extends State<GroupItems> {
       ),
       child: ListView.separated(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.expansibleGroupsViewModel.length,
         itemBuilder: (context, index) {
           final groupViewModel = widget.expansibleGroupsViewModel[index];

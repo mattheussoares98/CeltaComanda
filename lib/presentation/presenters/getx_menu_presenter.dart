@@ -234,6 +234,7 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateIndexOfSelectedGroup(int index) {
     _inexOfSelectedGroup.value = index;
+    _selectedProduct.value = null;
   }
 
   @override

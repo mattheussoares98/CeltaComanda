@@ -564,6 +564,11 @@ void main() {
     sut.updateIndexOfSelectedGroup(0);
     sut.updateIndexOfSelectedGroup(5);
   });
+  test('Should unselect product when change selected group', () async {
+    expectLater(sut.selectedProductStream, emits(null));
+
+    sut.updateIndexOfSelectedGroup(0);
+  });
 
   test('Should update indexOfSelectedProduct correctly', () async {
     expect(sut.selectedProductStream, null);

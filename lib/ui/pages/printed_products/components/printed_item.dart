@@ -15,14 +15,14 @@ class PrintedItem extends StatelessWidget {
 
   Future<void> _removeProduct({
     required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
     required String saleRequestProductId,
   }) async {
     await printedProductsPresenter.removeProduct(
       saleRequestProductId: saleRequestProductId,
-      expansibleGroupsPresenter: expansibleGroupsPresenter,
+      menuPresenter: menuPresenter,
       printedProductsPresenter: printedProductsPresenter,
       saleRequestTempPresenter: saleRequestTempPresenter,
       homePresenter: homePresenter,
@@ -33,7 +33,7 @@ class PrintedItem extends StatelessWidget {
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
+    MenuPresenter menuPresenter =
         Provider.of(context, listen: false);
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
@@ -85,8 +85,8 @@ class PrintedItem extends StatelessWidget {
                                 await _removeProduct(
                                   printedProductsPresenter:
                                       printedProductsPresenter,
-                                  expansibleGroupsPresenter:
-                                      expansibleGroupsPresenter,
+                                  menuPresenter:
+                                      menuPresenter,
                                   saleRequestTempPresenter:
                                       saleRequestTempPresenter,
                                   homePresenter: homePresenter,

@@ -85,7 +85,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
   });
 
   group("LoadSaleRequestTemp", () {

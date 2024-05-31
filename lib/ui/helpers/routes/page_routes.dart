@@ -1,6 +1,6 @@
 class PageRoutes {
   static const String enterpriseValidation = "/enterprise_validation";
-  static const String expansibleGroups = "/expansible_groups";
+  static const String menus = "/menus";
   static const String home = "/home";
   static const String printedProducts = "/printed_products";
   static const String payment = "/payment";

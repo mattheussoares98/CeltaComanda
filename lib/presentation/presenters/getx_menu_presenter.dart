@@ -9,9 +9,9 @@ import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxExpansibleGroupsPresenter
+class GetxMenuPresenter
     with ChangeNotifier
-    implements ExpansibleGroupsPresenter {
+    implements MenuPresenter {
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
   final SearchProductByCode searchProductByCode;
@@ -20,7 +20,7 @@ class GetxExpansibleGroupsPresenter
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadProducts loadProducts;
 
-  GetxExpansibleGroupsPresenter({
+  GetxMenuPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.ticketIsPermitted,
@@ -48,7 +48,7 @@ class GetxExpansibleGroupsPresenter
 
   @override
   void clear() {
-    _expansibleGroups.clear();
+    _menus.clear();
     _searchedProduct = null;
   }
 
@@ -172,7 +172,7 @@ class GetxExpansibleGroupsPresenter
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
@@ -205,10 +205,10 @@ class GetxExpansibleGroupsPresenter
   ProductsViewModel? _searchedProduct;
 
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      _expansibleGroups = [];
+      _menus = [];
   @override
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      get expansibleGroups => [..._expansibleGroups];
+      get menus => [..._menus];
 
   final _searchProductController = TextEditingController();
   @override
@@ -247,7 +247,7 @@ class GetxExpansibleGroupsPresenter
               await loadProducts.load(expansibleGroup.ExpansibleGroupId);
 
           if (products != null) {
-            _expansibleGroups.add({
+            _menus.add({
               ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
                   products.map((e) => ProductsViewModel.fromEntity(e)).toList()
             });

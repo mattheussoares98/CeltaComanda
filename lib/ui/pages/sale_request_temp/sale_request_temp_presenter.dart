@@ -28,7 +28,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   });
 
@@ -37,7 +37,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Future<void> updateComment({
     required String comments,
     required int saleRequestProductTempId,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
@@ -47,7 +47,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
 
   Future<void> finishSaleRequest({
     required SaleRequestTempEntity saleRequestTempEntity,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,

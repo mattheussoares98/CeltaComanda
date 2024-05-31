@@ -26,7 +26,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {

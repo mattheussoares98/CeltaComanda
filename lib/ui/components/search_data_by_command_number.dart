@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../pages/pages.dart';
 
 class SearchDataByCommandNumber extends StatelessWidget {
-  final ExpansibleGroupsPresenter expansibleGroupsPresenter;
+  final MenuPresenter menuPresenter;
   final PrintedProductsPresenter printedProductsPresenter;
   final SaleRequestTempPresenter saleRequestTempPresenter;
   final HomePresenter homePresenter;
   final Future Function() loadCommandData;
   final String emptyMessage;
   const SearchDataByCommandNumber({
-    required this.expansibleGroupsPresenter,
+    required this.menuPresenter,
     required this.printedProductsPresenter,
     required this.saleRequestTempPresenter,
     required this.homePresenter,
@@ -40,7 +40,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
             onPressed: () async {
               _showDialogLoadCommandData(
                 context: context,
-                expansibleGroupsPresenter: expansibleGroupsPresenter,
+                menuPresenter: menuPresenter,
                 printedProductsPresenter: printedProductsPresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
                 homePresenter: homePresenter,
@@ -83,7 +83,7 @@ Future<void> _validateFormAndUpdateCommandNumber({
 
 void _showDialogLoadCommandData({
   required BuildContext context,
-  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required MenuPresenter menuPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required HomePresenter homePresenter,

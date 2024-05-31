@@ -125,7 +125,7 @@ class GetxSaleRequestTempPresenter
   Future<void> updateComment({
     required String comments,
     required int saleRequestProductTempId,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
@@ -144,7 +144,7 @@ class GetxSaleRequestTempPresenter
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -175,7 +175,7 @@ class GetxSaleRequestTempPresenter
   @override
   Future<void> finishSaleRequest({
     required SaleRequestTempEntity saleRequestTempEntity,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required HomePresenter homePresenter,
@@ -193,7 +193,7 @@ class GetxSaleRequestTempPresenter
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -225,7 +225,7 @@ class GetxSaleRequestTempPresenter
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
@@ -233,11 +233,11 @@ class GetxSaleRequestTempPresenter
     homePresenter.updateCommandNumber(commandNumber);
     clear();
     printedProductsPresenter.clear();
-    expansibleGroupsPresenter.clear();
+    menuPresenter.clear();
 
     try {
       await loadSaleRequest(commandNumber);
-      await expansibleGroupsPresenter.getGroups(commandNumber);
+      await menuPresenter.getGroups(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);

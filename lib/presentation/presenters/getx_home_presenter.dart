@@ -32,12 +32,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> goToSplashPage({
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
   }) async {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
 
     _commandNumber = null;
-    expansibleGroupsPresenter.clear();
+    menuPresenter.clear();
     printedProductsPresenter.clear();
     saleRequestTempPresenter.clear();
     await clearEnterpriseData();

@@ -26,7 +26,7 @@ class GetxPrintedProductsPresenter
   @override
   Future<void> removeProduct({
     required String saleRequestProductId,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
@@ -44,7 +44,7 @@ class GetxPrintedProductsPresenter
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
       );
@@ -157,7 +157,7 @@ class GetxPrintedProductsPresenter
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
   }) async {
@@ -167,11 +167,11 @@ class GetxPrintedProductsPresenter
     if (clearPermissionToCancelProducts) {
       updateCanCancelProducts(false);
     }
-    expansibleGroupsPresenter.clear();
+    menuPresenter.clear();
     saleRequestTempPresenter.clear();
 
     try {
-      await expansibleGroupsPresenter.getGroups(commandNumber);
+      await menuPresenter.getGroups(commandNumber);
       await saleRequestTempPresenter.loadSaleRequest(commandNumber);
       clear();
       await loadPrinted(commandNumber);

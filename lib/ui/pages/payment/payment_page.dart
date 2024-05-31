@@ -32,7 +32,7 @@ class _PaymentPageState extends State<PaymentPage>
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context);
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
@@ -42,7 +42,7 @@ class _PaymentPageState extends State<PaymentPage>
     return Scaffold(
       drawer: drawer(
         context: context,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         homePresenter: homePresenter,
@@ -51,11 +51,11 @@ class _PaymentPageState extends State<PaymentPage>
         backgroundColor: const Color(0xFFF1F5F8),
         actions: [
           SearchCommandIcon(loadCommandData: () async {
-            await expansibleGroupsPresenter.loadCommandData(
+            await menuPresenter.loadCommandData(
               commandNumber: homePresenter.commandNumber!,
               printedProductsPresenter: printedProductsPresenter,
               saleRequestTempPresenter: saleRequestTempPresenter,
-              expansibleGroupsPresenter: expansibleGroupsPresenter,
+              menuPresenter: menuPresenter,
               homePresenter: homePresenter,
             );
           })
@@ -92,15 +92,15 @@ class _PaymentPageState extends State<PaymentPage>
                   mainErrorSubscription?.cancel();
 
                   loadingSubscription = handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
+                      context, menuPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
-                      context, expansibleGroupsPresenter.mainErrorStream);
+                      context, menuPresenter.mainErrorStream);
 
                   if (printedProductsPresenter
                           .printedProducts?.Products.isEmpty ==
                       true) {
                     return SearchDataByCommandNumber(
-                      expansibleGroupsPresenter: expansibleGroupsPresenter,
+                      menuPresenter: menuPresenter,
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
                       homePresenter: homePresenter,
@@ -108,11 +108,11 @@ class _PaymentPageState extends State<PaymentPage>
                           ? "Consulte alguma comanda para conseguir visualizar os produtos/combos e adicionar na comanda"
                           : "O pagamento fica disponível somente quando há produtos confirmados na comanda selecionada",
                       loadCommandData: () async {
-                        await expansibleGroupsPresenter.loadCommandData(
+                        await menuPresenter.loadCommandData(
                           commandNumber: homePresenter.commandNumber!,
                           printedProductsPresenter: printedProductsPresenter,
                           saleRequestTempPresenter: saleRequestTempPresenter,
-                          expansibleGroupsPresenter: expansibleGroupsPresenter,
+                          menuPresenter: menuPresenter,
                           homePresenter: homePresenter,
                         );
                       },

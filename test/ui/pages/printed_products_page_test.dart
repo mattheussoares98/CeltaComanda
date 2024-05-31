@@ -21,7 +21,7 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
   });
 

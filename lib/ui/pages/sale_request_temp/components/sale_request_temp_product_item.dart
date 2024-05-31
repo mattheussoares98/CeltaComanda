@@ -94,7 +94,7 @@ class _SaleRequestTempProductItemState
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
+    MenuPresenter menuPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
@@ -178,7 +178,7 @@ class _SaleRequestTempProductItemState
                     comments: commentsController.text,
                     saleRequestProductTempId: int.parse(
                         widget.saleRequestTemp.SaleRequestProductTempId),
-                    expansibleGroupsPresenter: expansibleGroupsPresenter,
+                    menuPresenter: menuPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     saleRequestTempPresenter: saleRequestTempPresenter,
                     homePresenter: homePresenter,

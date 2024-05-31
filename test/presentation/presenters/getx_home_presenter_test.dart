@@ -17,7 +17,7 @@ void main() {
   late GetxHomePresenter sut;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
-  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
+  late MenuPresenterSpy menuPresenter;
 
   late NavigateToSpy navigateTo;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
@@ -32,7 +32,7 @@ void main() {
   void initPresenters() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
-    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    menuPresenter = MenuPresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
       navigateTo: navigateTo,
@@ -83,7 +83,7 @@ void main() {
       await sut.goToSplashPage(
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
       );
 
       verify(() => navigateTo.navigate(
@@ -108,7 +108,7 @@ void main() {
     });
     test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
       await sut.goToSplashPage(
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
       );

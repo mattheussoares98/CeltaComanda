@@ -19,7 +19,7 @@ abstract class PrintedProductsPresenter
 
   Future<void> removeProduct({
     required String saleRequestProductId,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
@@ -29,7 +29,7 @@ abstract class PrintedProductsPresenter
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
   });

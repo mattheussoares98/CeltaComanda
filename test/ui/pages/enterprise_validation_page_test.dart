@@ -44,13 +44,13 @@ void main() {
     await tester.pump();
     expect(find.byKey(const Key("loading")), findsNothing);
   });
-  testWidgets('Should go to expansibleGroupsPage on success validation',
+  testWidgets('Should go to MenusPage on success validation',
       (WidgetTester tester) async {
     await loadPage(tester);
 
     presenter.goToHomePage();
 
-    expect(currentRoute, PageRoutes.expansibleGroups);
+    expect(currentRoute, PageRoutes.menus);
   });
 
   testWidgets('Should show error error to load enterprise',

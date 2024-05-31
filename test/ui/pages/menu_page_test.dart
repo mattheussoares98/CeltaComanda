@@ -15,7 +15,7 @@ import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
 
 void main() {
-  late ExpansibleGroupsPresenterSpy presenter;
+  late MenuPresenterSpy presenter;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
   late HiveSpy hive;
@@ -27,7 +27,7 @@ void main() {
     mockHiveBox = BoxSpy();
     hive.mockOpenBox(mockHiveBox);
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
-    presenter = ExpansibleGroupsPresenterSpy();
+    presenter = MenuPresenterSpy();
     productsViewModel = EntityFactory.makeProductViewModel();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
@@ -39,14 +39,14 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makeProductViewModel());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
       makePage(
-          path: PageRoutes.expansibleGroups,
+          path: PageRoutes.menus,
           page: () => const ExpansibleGroupsPage()),
     );
   }

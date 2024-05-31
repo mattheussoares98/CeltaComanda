@@ -15,7 +15,7 @@ import '../../ui/mocks/mocks.dart';
 
 void main() {
   late GetxSaleRequestTempPresenter sut;
-  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
+  late MenuPresenterSpy menuPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late HomePresenterSpy homePresenter;
 
@@ -43,7 +43,7 @@ void main() {
   }
 
   void initPresenters() {
-    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    menuPresenter = MenuPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     homePresenter = HomePresenterSpy();
 
@@ -84,7 +84,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
   });
@@ -249,7 +249,7 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -269,7 +269,7 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -287,7 +287,7 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -306,7 +306,7 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -321,7 +321,7 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -333,7 +333,7 @@ void main() {
       await sut.updateComment(
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -342,7 +342,7 @@ void main() {
       verify(() => homePresenter
           .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
       verify(() => printedProductsPresenter.clear()).called(1);
-      verify(() => expansibleGroupsPresenter.clear()).called(1);
+      verify(() => menuPresenter.clear()).called(1);
       verify(() => ticketIsPermitted.verify(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           commandNumber: homePresenter.commandNumberMock!)).called(1);
@@ -364,7 +364,7 @@ void main() {
     test("Should call FinishSaleRequestTemp with correct values", () async {
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -385,7 +385,7 @@ void main() {
 
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -401,19 +401,18 @@ void main() {
 
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
       );
     });
 
-    test(
-        "Should call ExpansibleGroupsPresenter.load on FinishSaleRequest success",
+    test("Should call MenuPresenter.load on FinishSaleRequest success",
         () async {
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -422,7 +421,7 @@ void main() {
       verify(() => homePresenter
           .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
       verify(() => printedProductsPresenter.clear()).called(1);
-      verify(() => expansibleGroupsPresenter.clear()).called(1);
+      verify(() => menuPresenter.clear()).called(1);
       verify(() => ticketIsPermitted.verify(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           commandNumber: homePresenter.commandNumberMock!)).called(1);
@@ -444,7 +443,7 @@ void main() {
     test("Should call addPrintRequest when finish success", () async {
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -462,7 +461,7 @@ void main() {
 
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -492,7 +491,7 @@ void main() {
         () async {
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -514,7 +513,7 @@ void main() {
 
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -537,7 +536,7 @@ void main() {
 
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -555,7 +554,7 @@ void main() {
 
       await sut.finishSaleRequest(
         saleRequestTempEntity: saleRequestTempEntity,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
         homePresenter: homePresenter,
@@ -576,7 +575,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
     });
@@ -594,7 +593,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
     });
@@ -610,7 +609,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
     });
@@ -622,7 +621,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -634,7 +633,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -649,13 +648,13 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
       expect(sut.saleRequestTemp, null);
       verify(() => printedProductsPresenter.clear()).called(2);
-      verify(() => expansibleGroupsPresenter.clear()).called(2);
+      verify(() => menuPresenter.clear()).called(2);
       //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
       //certeza que vai colocar dados no expansibleGroups e outro teste com
       //erro, pra ter certeza que vai chamar a função para limpar a lista de
@@ -667,7 +666,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -683,7 +682,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -693,8 +692,8 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: homePresenter.commandNumberMock!,
           )).called(1);
-      verify(() => expansibleGroupsPresenter
-          .getGroups(homePresenter.commandNumberMock!)).called(1);
+      verify(() => menuPresenter.getGroups(homePresenter.commandNumberMock!))
+          .called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
     });
@@ -708,7 +707,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: sut,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 

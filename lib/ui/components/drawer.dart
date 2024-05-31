@@ -4,7 +4,7 @@ import '../pages/pages.dart';
 
 Widget drawer({
   required BuildContext context,
-  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required MenuPresenter menuPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required HomePresenter homePresenter,
@@ -28,7 +28,7 @@ Widget drawer({
               homePresenter.goToSplashPage(
                 printedProductsPresenter: printedProductsPresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
-                expansibleGroupsPresenter: expansibleGroupsPresenter,
+                menuPresenter: menuPresenter,
               );
               await homePresenter.clearEnterpriseData();
             },

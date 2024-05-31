@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../ui/helpers/convert/convert.dart';
-import '../../../ui/mixins/mixins.dart';
-import '../../../ui/pages/pages.dart';
+import '../../helpers/convert/convert.dart';
+import '../../mixins/mixins.dart';
+import '../pages.dart';
 import '../../components/components.dart';
 
 class ExpansibleGroupsPage extends StatefulWidget {
@@ -32,31 +32,31 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   final commentTextController = TextEditingController();
 
   Future<void> _updateSaleRequest({
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) async {
     try {
-      await expansibleGroupsPresenter.updateSaleRequest(
+      await menuPresenter.updateSaleRequest(
           homePresenter: homePresenter,
           saleRequestTempPresenter: saleRequestTempPresenter,
           products: [
             UpdateSaleRequestTempProductEntity(
-              ProductInternalCodeOnErp: expansibleGroupsPresenter
+              ProductInternalCodeOnErp: menuPresenter
                   .searchedProduct!.InternalCodeOnERP
                   .toString()
                   .toInt(),
               ProductPriceLookUpCode:
-                  expansibleGroupsPresenter.searchedProduct!.PriceLookupCode,
+                  menuPresenter.searchedProduct!.PriceLookupCode,
               Quantity:
-                  expansibleGroupsPresenter.searchedProduct!.productQuantity,
+                  menuPresenter.searchedProduct!.productQuantity,
               SaleRequestTempId: int.parse(
                   saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-              TotalLiquid: expansibleGroupsPresenter
+              TotalLiquid: menuPresenter
                       .searchedProduct!.SaleRetailPraticed
                       .toDouble() *
-                  expansibleGroupsPresenter.searchedProduct!.productQuantity,
-              Value: expansibleGroupsPresenter
+                  menuPresenter.searchedProduct!.productQuantity,
+              Value: menuPresenter
                   .searchedProduct!.SaleRetailPraticed
                   .toDouble(),
               Comments: commentTextController.text.isEmpty == true
@@ -71,23 +71,23 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   }
 
   void _addProductQuantity(
-      ExpansibleGroupsPresenter expansibleGroupsPresenter) {
+      MenuPresenter menuPresenter) {
     setState(() {
-      expansibleGroupsPresenter.searchedProduct!.productQuantity++;
+      menuPresenter.searchedProduct!.productQuantity++;
     });
   }
 
   void _subtractProductQuantity(
-      ExpansibleGroupsPresenter expansibleGroupsPresenter) {
+      MenuPresenter menuPresenter) {
     setState(() {
-      expansibleGroupsPresenter.searchedProduct!.productQuantity--;
+      menuPresenter.searchedProduct!.productQuantity--;
     });
   }
 
   void _clearProductQuantity(
-      ExpansibleGroupsPresenter expansibleGroupsPresenter) {
+      MenuPresenter menuPresenter) {
     setState(() {
-      expansibleGroupsPresenter.searchedProduct!.productQuantity = 1;
+      menuPresenter.searchedProduct!.productQuantity = 1;
     });
   }
 
@@ -111,7 +111,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupsPresenter expansibleGroupsPresenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context);
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
@@ -121,7 +121,7 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     return Scaffold(
       drawer: drawer(
         context: context,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         homePresenter: homePresenter,
@@ -130,11 +130,11 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
         backgroundColor: const Color(0xFFF1F5F8),
         actions: [
           SearchCommandIcon(loadCommandData: () async {
-            await expansibleGroupsPresenter.loadCommandData(
+            await menuPresenter.loadCommandData(
               commandNumber: homePresenter.commandNumber!,
               printedProductsPresenter: printedProductsPresenter,
               saleRequestTempPresenter: saleRequestTempPresenter,
-              expansibleGroupsPresenter: expansibleGroupsPresenter,
+              menuPresenter: menuPresenter,
               homePresenter: homePresenter,
             );
           })
@@ -156,24 +156,24 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   mainErrorSubscription?.cancel();
 
                   loadingSubscription = handleLoading(
-                      context, expansibleGroupsPresenter.isLoadingStream);
+                      context, menuPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
-                      context, expansibleGroupsPresenter.mainErrorStream);
+                      context, menuPresenter.mainErrorStream);
 
-                  if (expansibleGroupsPresenter.expansibleGroups.isEmpty) {
+                  if (menuPresenter.menus.isEmpty) {
                     return SearchDataByCommandNumber(
-                      expansibleGroupsPresenter: expansibleGroupsPresenter,
+                      menuPresenter: menuPresenter,
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
                       homePresenter: homePresenter,
                       emptyMessage:
                           "Consulte alguma comanda para conseguir visualizar os produtos/combos e adicionar na comanda",
                       loadCommandData: () async {
-                        await expansibleGroupsPresenter.loadCommandData(
+                        await menuPresenter.loadCommandData(
                           commandNumber: homePresenter.commandNumber!,
                           printedProductsPresenter: printedProductsPresenter,
                           saleRequestTempPresenter: saleRequestTempPresenter,
-                          expansibleGroupsPresenter: expansibleGroupsPresenter,
+                          menuPresenter: menuPresenter,
                           homePresenter: homePresenter,
                         );
                       },
@@ -183,42 +183,42 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   return Column(
                     children: [
                       const SearchProduct(),
-                      if (expansibleGroupsPresenter.searchedProduct != null)
+                      if (menuPresenter.searchedProduct != null)
                         ProductItemWidget(
                           addProductQuantity: () {
-                            _addProductQuantity(expansibleGroupsPresenter);
+                            _addProductQuantity(menuPresenter);
                           },
                           clearProductQuantity: () {
-                            _clearProductQuantity(expansibleGroupsPresenter);
+                            _clearProductQuantity(menuPresenter);
                           },
                           subtractProductQuantity: () {
-                            _subtractProductQuantity(expansibleGroupsPresenter);
+                            _subtractProductQuantity(menuPresenter);
                           },
                           updateSaleRequest: () async {
                             await _updateSaleRequest(
-                              expansibleGroupsPresenter:
-                                  expansibleGroupsPresenter,
+                              menuPresenter:
+                                  menuPresenter,
                               homePresenter: homePresenter,
                               saleRequestTempPresenter:
                                   saleRequestTempPresenter,
                             );
                           },
-                          productQuantity: expansibleGroupsPresenter
+                          productQuantity: menuPresenter
                               .searchedProduct!.productQuantity,
                           index: 0,
                           selectedIndex: indexOfSelectedProductCommentIcon,
                           updateSelectedIndex: _updateSelectedIndex,
                           goToComboxPage: () {
-                            expansibleGroupsPresenter.goToComboxPage(
-                              expansibleGroupsPresenter.searchedProduct!,
+                            menuPresenter.goToComboxPage(
+                              menuPresenter.searchedProduct!,
                             );
                           },
                           productsViewModel:
-                              expansibleGroupsPresenter.searchedProduct!,
+                              menuPresenter.searchedProduct!,
                           commentTextController: commentTextController,
                         ),
                       StreamBuilder<int>(
-                          stream: expansibleGroupsPresenter
+                          stream: menuPresenter
                               .indexOfSelectedGroupStream,
                           builder: (context, snapshot) {
                             return Row(
@@ -228,8 +228,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                                   flex: 27,
                                   child: GroupItems(
                                     expansibleGroupsViewModel:
-                                        expansibleGroupsPresenter
-                                            .expansibleGroups
+                                        menuPresenter
+                                            .menus
                                             .map((element) =>
                                                 element.keys.first)
                                             .toList(),
@@ -239,8 +239,8 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                                 Expanded(
                                   flex: 73,
                                   child: ProductsItems(
-                                    products: expansibleGroupsPresenter
-                                        .expansibleGroups[snapshot.data ?? 0]
+                                    products: menuPresenter
+                                        .menus[snapshot.data ?? 0]
                                         .entries
                                         .first
                                         .value,

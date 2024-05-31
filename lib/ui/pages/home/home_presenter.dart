@@ -12,7 +12,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Future<void> goToSplashPage({
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
   });
 
   void goToProductsPage(ExpansibleGroupEntity entity);

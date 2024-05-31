@@ -19,7 +19,7 @@ class SearchCommandIcon extends StatefulWidget {
 class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupsPresenter expansibleGroupsPresenterr = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context);
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context);
@@ -29,7 +29,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
       onTap: () async {
         dialogLoadCommandData(
             context: context,
-            expansibleGroupsPresenter: expansibleGroupsPresenterr,
+            menuPresenter: menuPresenter,
             printedProductsPresenter: printedProductsPresenter,
             saleRequestTempPresenter: saleRequestTempPresenter,
             homePresenter: homePresenter,
@@ -49,7 +49,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
               onPressed: () async {
                 dialogLoadCommandData(
                   context: context,
-                  expansibleGroupsPresenter: expansibleGroupsPresenterr,
+                  menuPresenter: menuPresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   saleRequestTempPresenter: saleRequestTempPresenter,
                   homePresenter: homePresenter,

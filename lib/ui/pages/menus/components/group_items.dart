@@ -18,7 +18,7 @@ class GroupItems extends StatefulWidget {
 class _GroupItemsState extends State<GroupItems> {
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupsPresenter presenter = Provider.of(context);
+    MenuPresenter presenter = Provider.of(context);
     return Container(
       width: MediaQuery.of(context).size.width * 0.27,
       height: MediaQuery.of(context).size.height -

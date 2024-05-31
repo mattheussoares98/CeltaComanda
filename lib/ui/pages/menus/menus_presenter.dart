@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../ui/pages/pages.dart';
+import '../pages.dart';
 import '../../helpers/helpers.dart';
 
-abstract class ExpansibleGroupsPresenter
+abstract class MenuPresenter
     with ChangeNotifier
     implements Listenable {
   Stream<UIError?> get mainErrorStream;
@@ -12,7 +12,7 @@ abstract class ExpansibleGroupsPresenter
 
   Stream<int> get indexOfSelectedGroupStream;
 
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get expansibleGroups;
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get menus;
   ProductsViewModel? get searchedProduct;
 
   TextEditingController get searchProductController;
@@ -29,7 +29,7 @@ abstract class ExpansibleGroupsPresenter
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   });
 

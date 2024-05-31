@@ -12,7 +12,7 @@ class SaveSaleRequestButton extends StatelessWidget {
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
+    MenuPresenter menuPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
@@ -70,7 +70,7 @@ class SaveSaleRequestButton extends StatelessWidget {
               await saleRequestTempPresenter.finishSaleRequest(
                 saleRequestTempEntity:
                     saleRequestTempPresenter.saleRequestTemp!.toEntity(),
-                expansibleGroupsPresenter: expansibleGroupsPresenter,
+                menuPresenter: menuPresenter,
                 printedProductsPresenter: printedProductsPresenter,
                 saleRequestTempPresenter: saleRequestTempPresenter,
                 homePresenter: homePresenter,

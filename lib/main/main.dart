@@ -45,7 +45,7 @@ class App extends StatelessWidget {
           create: (_) => makeGetxPrintedProductsPresenter(),
         ),
         ListenableProvider(
-          create: (_) => makeGetxExpansibleGroupsPresenter(),
+          create: (_) => makeGetxMenuPresenter(),
         ),
         ListenableProvider(
           create: (_) => makeGetxProductsPresenter(),
@@ -73,8 +73,8 @@ class App extends StatelessWidget {
             transition: Transition.fadeIn,
           ),
           GetPage(
-            name: PageRoutes.expansibleGroups,
-            page: makeExpansibleGroupsPage,
+            name: PageRoutes.menus,
+            page: makeMenusPage,
             transition: Transition.fadeIn,
           ),
           GetPage(

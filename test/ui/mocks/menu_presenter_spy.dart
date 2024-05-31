@@ -10,17 +10,17 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class ExpansibleGroupsPresenterSpy extends Mock
-    implements ExpansibleGroupsPresenter {
+class MenuPresenterSpy extends Mock
+    implements MenuPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> expansibleGroupsController = [];
   ProductsViewModel? searchedProductController;
   TextEditingController searchProductControllerMock = TextEditingController();
 
-  ExpansibleGroupsPresenterSpy() {
+  MenuPresenterSpy() {
     mockLoadCall().thenAnswer((_) async => _);
-    when(() => this.expansibleGroups)
+    when(() => this.menus)
         .thenAnswer((_) => expansibleGroupsController);
     when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)

@@ -19,7 +19,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
-          expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
+          menuPresenter: any(named: "menuPresenter"),
         )).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));

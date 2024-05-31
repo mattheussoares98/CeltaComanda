@@ -21,7 +21,7 @@ Future<void> _validateFormAndUpdateCommandNumber({
 
 void dialogLoadCommandData({
   required BuildContext context,
-  required ExpansibleGroupsPresenter expansibleGroupsPresenter,
+  required MenuPresenter menuPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required SaleRequestTempPresenter saleRequestTempPresenter,
   required HomePresenter homePresenter,

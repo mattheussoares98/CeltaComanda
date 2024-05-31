@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../../pages.dart';
 
 class GroupItem extends StatelessWidget {
   final ExpansibleGroupsViewModel expansibleGroupsViewModel;

@@ -18,7 +18,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -55,11 +55,11 @@ void main() {
   testWidgets('Should change to ExpansibleGroupsPage',
       (WidgetTester tester) async {
     await loadPage(tester);
-    mockNavigation(routeName: PageRoutes.expansibleGroups);
+    mockNavigation(routeName: PageRoutes.menus);
 
     // presenter.navigateToExpansibleGroupsPage();
     await tester.pumpAndSettle();
 
-    expect(currentRoute, PageRoutes.expansibleGroups);
+    expect(currentRoute, PageRoutes.menus);
   });
 }

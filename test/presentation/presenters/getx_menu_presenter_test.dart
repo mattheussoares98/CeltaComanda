@@ -17,11 +17,11 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late GetxExpansibleGroupsPresenter sut;
+  late GetxMenuPresenter sut;
   late HomePresenterSpy homePresenter;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
-  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
+  late MenuPresenterSpy menuPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
@@ -63,9 +63,9 @@ void main() {
     homePresenter = HomePresenterSpy();
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
-    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    menuPresenter = MenuPresenterSpy();
 
-    sut = GetxExpansibleGroupsPresenter(
+    sut = GetxMenuPresenter(
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
       ticketIsPermitted: ticketIsPermitted,
@@ -160,7 +160,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(SaleRequestTempPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
@@ -176,22 +176,22 @@ void main() {
 
     final error = sut.getGroups(homePresenter.commandNumberMock!);
 
-    expect(sut.expansibleGroups, []);
+    expect(sut.menus, []);
     expect(error, throwsA(DomainError.unexpected));
   });
 
   test('Should return correct value on success to load', () async {
     await sut.getGroups(homePresenter.commandNumberMock!);
 
-    expect(sut.expansibleGroups, menuList);
+    expect(sut.menus, menuList);
   });
 
   test('Should clear expansibleGroups', () async {
     await sut.getGroups(homePresenter.commandNumberMock!);
-    expect(sut.expansibleGroups, menuList);
+    expect(sut.menus, menuList);
 
     sut.clear();
-    expect(sut.expansibleGroups, []);
+    expect(sut.menus, []);
   });
 
   test('Should go to products page ExpansibleGroupItem click', () async {
@@ -537,7 +537,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
     });
@@ -555,7 +555,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
     });
@@ -571,7 +571,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
     });
@@ -583,7 +583,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -595,11 +595,11 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
-      expect(sut.expansibleGroups, menuList);
+      expect(sut.menus, menuList);
 
       loadExpansibleGroups
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
@@ -608,11 +608,11 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
-      expect(sut.expansibleGroups, []);
+      expect(sut.menus, []);
       verify(() => printedProductsPresenter.clear()).called(2);
       verify(() => saleRequestTempPresenter.clear()).called(2);
       //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
@@ -626,7 +626,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -642,7 +642,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
@@ -662,7 +662,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 

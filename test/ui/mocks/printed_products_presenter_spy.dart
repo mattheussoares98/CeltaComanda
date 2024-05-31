@@ -39,7 +39,7 @@ class PrintedProductsPresenterSpy extends Mock
   void mockRemoveProduct() {
     when(() => this.removeProduct(
           saleRequestProductId: any(named: "saleRequestProductId"),
-          expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
+          menuPresenter: any(named: "menuPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
           homePresenter: any(named: "homePresenter"),
@@ -51,7 +51,7 @@ class PrintedProductsPresenterSpy extends Mock
           commandNumber: any(named: "commandNumber"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
-          expansibleGroupsPresenter: any(named: "expansibleGroupsPresenter"),
+          menuPresenter: any(named: "menuPresenter"),
           homePresenter: any(named: "homePresenter"),
           clearPermissionToCancelProducts:
               any(named: "clearPermissionToCancelProducts"),

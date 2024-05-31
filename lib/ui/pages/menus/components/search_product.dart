@@ -28,28 +28,27 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   Future<void> _searchProduct(
-    ExpansibleGroupsPresenter expansibleGroupsPresenter,
+    MenuPresenter menuPresenter,
   ) async {
     if (!formKey.currentState!.validate()) {
       _requestFocusToFormField();
       return;
     }
 
-    await expansibleGroupsPresenter
-        .searchProduct(expansibleGroupsPresenter.searchProductController.text);
+    await menuPresenter.searchProduct(
+        menuPresenter.searchProductController.text);
 
-    if (expansibleGroupsPresenter.searchedProduct == null) {
+    if (menuPresenter.searchedProduct == null) {
       _requestFocusToFormField();
     } else {
       focusNode.unfocus();
-      expansibleGroupsPresenter.searchProductController.clear();
+      menuPresenter.searchProductController.clear();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupsPresenter expansibleGroupsPresenter =
-        Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -62,12 +61,11 @@ class _SearchProductState extends State<SearchProduct> {
                   key: formKey,
                   child: TextFormField(
                     focusNode: focusNode,
-                    controller:
-                        expansibleGroupsPresenter.searchProductController,
+                    controller: menuPresenter.searchProductController,
                     maxLength: 13,
                     keyboardType: TextInputType.number,
                     onFieldSubmitted: (value) async {
-                      await _searchProduct(expansibleGroupsPresenter);
+                      await _searchProduct(menuPresenter);
                     },
                     validator: (value) {
                       if (value?.isEmpty == true) {
@@ -89,8 +87,7 @@ class _SearchProductState extends State<SearchProduct> {
                       counterText: "",
                       prefixIcon: IconButton(
                         onPressed: () {
-                          expansibleGroupsPresenter.searchProductController
-                              .clear();
+                          menuPresenter.searchProductController.clear();
                           _requestFocusToFormField();
                         },
                         icon: const Icon(Icons.delete, color: Colors.red),
@@ -100,19 +97,18 @@ class _SearchProductState extends State<SearchProduct> {
                 ),
               ),
               IconButton(
-                  onPressed: () async => await expansibleGroupsPresenter
-                      .readBarcodeAndSearchProduct(),
+                  onPressed: () async =>
+                      await menuPresenter.readBarcodeAndSearchProduct(),
                   icon: Icon(
                     Icons.camera_alt,
                     color: Theme.of(context).colorScheme.primary,
                   )),
               IconButton(
                   onPressed: () async {
-                    if (expansibleGroupsPresenter
-                        .searchProductController.text.isEmpty) {
+                    if (menuPresenter.searchProductController.text.isEmpty) {
                       _requestFocusToFormField();
                     } else {
-                      await _searchProduct(expansibleGroupsPresenter);
+                      await _searchProduct(menuPresenter);
                     }
                   },
                   icon: Icon(

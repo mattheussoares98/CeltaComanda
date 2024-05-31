@@ -16,7 +16,7 @@ import '../../ui/mocks/mocks.dart';
 void main() {
   late GetxPrintedProductsPresenter sut;
   late SaleRequestTempPresenterSpy saleRequestTempPresenter;
-  late ExpansibleGroupsPresenterSpy expansibleGroupsPresenter;
+  late MenuPresenterSpy menuPresenter;
   late HomePresenterSpy homePresenter;
 
   late UserValidationsSpy userValidations;
@@ -34,7 +34,7 @@ void main() {
 
   void initPresenters() {
     saleRequestTempPresenter = SaleRequestTempPresenterSpy();
-    expansibleGroupsPresenter = ExpansibleGroupsPresenterSpy();
+    menuPresenter = MenuPresenterSpy();
     homePresenter = HomePresenterSpy();
 
     sut = GetxPrintedProductsPresenter(
@@ -87,7 +87,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(SaleRequestTempPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(ExpansibleGroupsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
   });
 
@@ -385,7 +385,7 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         printedProductsPresenter: sut,
         homePresenter: homePresenter,
@@ -393,9 +393,9 @@ void main() {
 
       verify(() => homePresenter
           .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
-      verify(() => expansibleGroupsPresenter.clear()).called(1);
+      verify(() => menuPresenter.clear()).called(1);
       verify(() => saleRequestTempPresenter.clear()).called(1);
-      verify(() => expansibleGroupsPresenter
+      verify(() => menuPresenter
           .getGroups(homePresenter.commandNumberMock!)).called(1);
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
@@ -405,7 +405,7 @@ void main() {
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         printedProductsPresenter: sut,
         homePresenter: homePresenter,
@@ -423,7 +423,7 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         printedProductsPresenter: sut,
         homePresenter: homePresenter,
@@ -438,7 +438,7 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         printedProductsPresenter: sut,
         homePresenter: homePresenter,
@@ -453,7 +453,7 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         printedProductsPresenter: sut,
         homePresenter: homePresenter,
@@ -468,7 +468,7 @@ void main() {
 
       await sut.removeProduct(
         saleRequestProductId: saleRequestProductId,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         saleRequestTempPresenter: saleRequestTempPresenter,
         printedProductsPresenter: sut,
         homePresenter: homePresenter,
@@ -509,7 +509,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -528,7 +528,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -545,7 +545,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -558,7 +558,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -571,7 +571,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -584,13 +584,13 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
 
       expect(sut.printedProducts, null);
-      verify(() => expansibleGroupsPresenter.clear()).called(2);
+      verify(() => menuPresenter.clear()).called(2);
       verify(() => saleRequestTempPresenter.clear()).called(2);
       //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
       //certeza que vai colocar dados no expansibleGroups e outro teste com
@@ -603,7 +603,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -620,7 +620,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -631,7 +631,7 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: int.parse(homePresenter.commandNumberMock!),
           )).called(1);
-      verify(() => expansibleGroupsPresenter
+      verify(() => menuPresenter
           .getGroups(homePresenter.commandNumberMock!)).called(1);
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
@@ -646,7 +646,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -662,7 +662,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
       );
@@ -678,7 +678,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         saleRequestTempPresenter: saleRequestTempPresenter,
-        expansibleGroupsPresenter: expansibleGroupsPresenter,
+        menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
       );

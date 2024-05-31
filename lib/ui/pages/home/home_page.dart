@@ -106,13 +106,7 @@ class _HomePageState extends State<HomePage>
                     ? Theme.of(context).colorScheme.primary
                     : Colors.grey,
                 iconData: Icons.shopping_cart_outlined,
-                productsQuantity: saleRequestTempPresenter.saleRequestTemp ==
-                            null ||
-                        saleRequestTempPresenter
-                                .saleRequestTemp?.Products.isEmpty ==
-                            true
-                    ? 0
-                    : saleRequestTempPresenter.saleRequestTemp!.Products.length,
+                productsQuantity: saleRequestTempPresenter.cartProducts.length,
               ),
               label: 'Carrinho',
             ),

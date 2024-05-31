@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,17 @@ class _InsertProductState extends State<InsertProduct> {
       required SaleRequestTempPresenter saleRequestTempPresenter,
     }) async {
       try {
-        // _hideFormField();
+        saleRequestTempPresenter.addProductInCart(
+          CartProductEntity(
+            Product: widget.selectedProduct!.toEntity(),
+            Comments: "implementar a parte de comentário",
+            TotalLiquid: widget.selectedProduct!.productQuantity *
+                widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+            Quantity: widget.selectedProduct!.productQuantity,
+            Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+            ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
+          ),
+        );
       } catch (e) {
         e;
       }

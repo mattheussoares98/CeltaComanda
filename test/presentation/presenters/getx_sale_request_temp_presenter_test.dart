@@ -692,7 +692,7 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: homePresenter.commandNumberMock!,
           )).called(1);
-      verify(() => menuPresenter.getGroups(homePresenter.commandNumberMock!))
+      verify(() => menuPresenter.getGroupsAndProducts(homePresenter.commandNumberMock!))
           .called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);

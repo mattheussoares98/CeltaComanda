@@ -165,29 +165,31 @@ void main() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
-  test('Should call LoadExpansibleGroups', () async {
-    await sut.getGroups(homePresenter.commandNumberMock!);
+  test('Should call LoadExpansibleGroups and loadProducts', () async {
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
     verify(() => loadExpansibleGroups.load()).called(1);
+    verify(() => loadProducts.load(expansibleGroups[0].ExpansibleGroupId)).called(1);
+    verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId)).called(1);
   });
 
   test('Should throw DomainErrorUnexpected', () async {
     loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-    final error = sut.getGroups(homePresenter.commandNumberMock!);
+    final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
     expect(sut.menus, []);
     expect(error, throwsA(DomainError.unexpected));
   });
 
   test('Should return correct value on success to load', () async {
-    await sut.getGroups(homePresenter.commandNumberMock!);
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
     expect(sut.menus, menuList);
   });
 
   test('Should clear expansibleGroups', () async {
-    await sut.getGroups(homePresenter.commandNumberMock!);
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     expect(sut.menus, menuList);
 
     sut.clear();
@@ -218,7 +220,7 @@ void main() {
   });
 
   test('Should call ticketIsPermitted on load data', () async {
-    await sut.getGroups(homePresenter.commandNumberMock!);
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
     verify(() => ticketIsPermitted.verify(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -231,7 +233,7 @@ void main() {
       () async {
     ticketIsPermitted.mockError(DomainError.commandNotAvailable);
 
-    final error = sut.getGroups(homePresenter.commandNumberMock!);
+    final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
     expect(error, throwsA(DomainError.commandNotAvailable));
   });
@@ -241,7 +243,7 @@ void main() {
       () async {
     ticketIsPermitted.mockError(DomainError.unexpected);
 
-    final error = sut.getGroups(homePresenter.commandNumberMock!);
+    final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
     expect(error, throwsA(DomainError.unexpected));
   });
@@ -356,7 +358,7 @@ void main() {
       await sut.searchProduct(productEan);
       expect(sut.searchedProduct, productsViewModel);
 
-      await sut.getGroups(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
       expect(sut.searchedProduct, null);
     });
 

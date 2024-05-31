@@ -48,17 +48,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   .toInt(),
               ProductPriceLookUpCode:
                   menuPresenter.searchedProduct!.PriceLookupCode,
-              Quantity:
-                  menuPresenter.searchedProduct!.productQuantity,
+              Quantity: menuPresenter.searchedProduct!.productQuantity,
               SaleRequestTempId: int.parse(
                   saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId),
-              TotalLiquid: menuPresenter
-                      .searchedProduct!.SaleRetailPraticed
-                      .toDouble() *
-                  menuPresenter.searchedProduct!.productQuantity,
-              Value: menuPresenter
-                  .searchedProduct!.SaleRetailPraticed
-                  .toDouble(),
+              TotalLiquid:
+                  menuPresenter.searchedProduct!.SaleRetailPraticed.toDouble() *
+                      menuPresenter.searchedProduct!.productQuantity,
+              Value:
+                  menuPresenter.searchedProduct!.SaleRetailPraticed.toDouble(),
               Comments: commentTextController.text.isEmpty == true
                   ? null
                   : commentTextController.text,
@@ -70,22 +67,19 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
     }
   }
 
-  void _addProductQuantity(
-      MenuPresenter menuPresenter) {
+  void _addProductQuantity(MenuPresenter menuPresenter) {
     setState(() {
       menuPresenter.searchedProduct!.productQuantity++;
     });
   }
 
-  void _subtractProductQuantity(
-      MenuPresenter menuPresenter) {
+  void _subtractProductQuantity(MenuPresenter menuPresenter) {
     setState(() {
       menuPresenter.searchedProduct!.productQuantity--;
     });
   }
 
-  void _clearProductQuantity(
-      MenuPresenter menuPresenter) {
+  void _clearProductQuantity(MenuPresenter menuPresenter) {
     setState(() {
       menuPresenter.searchedProduct!.productQuantity = 1;
     });
@@ -106,6 +100,22 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
       setState(() {
         indexOfSelectedProductCommentIcon = 0;
       });
+    }
+  }
+
+  Future<void> _loadGroupsAndProducts(MenuPresenter menuPresenter) async {
+    await menuPresenter.getGroupsAndProducts("001");
+  }
+
+  bool _isLoaded = false;
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    if (!_isLoaded) {
+      _isLoaded = true;
+      MenuPresenter menuPresenter = Provider.of(context, listen: false);
+      await _loadGroupsAndProducts(menuPresenter);
     }
   }
 
@@ -155,10 +165,10 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   loadingSubscription?.cancel();
                   mainErrorSubscription?.cancel();
 
-                  loadingSubscription = handleLoading(
-                      context, menuPresenter.isLoadingStream);
-                  mainErrorSubscription = handleMainError(
-                      context, menuPresenter.mainErrorStream);
+                  loadingSubscription =
+                      handleLoading(context, menuPresenter.isLoadingStream);
+                  mainErrorSubscription =
+                      handleMainError(context, menuPresenter.mainErrorStream);
 
                   if (menuPresenter.menus.isEmpty) {
                     return SearchDataByCommandNumber(
@@ -196,15 +206,14 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                           },
                           updateSaleRequest: () async {
                             await _updateSaleRequest(
-                              menuPresenter:
-                                  menuPresenter,
+                              menuPresenter: menuPresenter,
                               homePresenter: homePresenter,
                               saleRequestTempPresenter:
                                   saleRequestTempPresenter,
                             );
                           },
-                          productQuantity: menuPresenter
-                              .searchedProduct!.productQuantity,
+                          productQuantity:
+                              menuPresenter.searchedProduct!.productQuantity,
                           index: 0,
                           selectedIndex: indexOfSelectedProductCommentIcon,
                           updateSelectedIndex: _updateSelectedIndex,
@@ -213,13 +222,11 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                               menuPresenter.searchedProduct!,
                             );
                           },
-                          productsViewModel:
-                              menuPresenter.searchedProduct!,
+                          productsViewModel: menuPresenter.searchedProduct!,
                           commentTextController: commentTextController,
                         ),
                       StreamBuilder<int>(
-                          stream: menuPresenter
-                              .indexOfSelectedGroupStream,
+                          stream: menuPresenter.indexOfSelectedGroupStream,
                           builder: (context, snapshot) {
                             return Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,12 +234,10 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                                 Expanded(
                                   flex: 27,
                                   child: GroupItems(
-                                    expansibleGroupsViewModel:
-                                        menuPresenter
-                                            .menus
-                                            .map((element) =>
-                                                element.keys.first)
-                                            .toList(),
+                                    expansibleGroupsViewModel: menuPresenter
+                                        .menus
+                                        .map((element) => element.keys.first)
+                                        .toList(),
                                     selectedIndex: snapshot.data ?? 0,
                                   ),
                                 ),

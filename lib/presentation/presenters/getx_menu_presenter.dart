@@ -183,7 +183,7 @@ class GetxMenuPresenter
     saleRequestTempPresenter.clear();
 
     try {
-      await getGroups(commandNumber);
+      await getGroupsAndProducts(commandNumber);
       await saleRequestTempPresenter.loadSaleRequest(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
@@ -230,7 +230,7 @@ class GetxMenuPresenter
   set indexOfSelectedGroup(int value) => _inexOfSelectedGroup.value = value;
 
   @override
-  Future<void> getGroups(String commandNumber) async {
+  Future<void> getGroupsAndProducts(String commandNumber) async {
     clear();
 
     try {
@@ -248,7 +248,7 @@ class GetxMenuPresenter
 
           if (products != null) {
             _menus.add({
-              ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
+              ExpansibleGroupsViewModel.fromEntity(expansibleGroup):  
                   products.map((e) => ProductsViewModel.fromEntity(e)).toList()
             });
           } else {

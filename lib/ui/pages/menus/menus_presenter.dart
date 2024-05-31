@@ -17,7 +17,7 @@ abstract class MenuPresenter
 
   TextEditingController get searchProductController;
 
-  Future<void> getGroups(String commandNumber);
+  Future<void> getGroupsAndProducts(String commandNumber);
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
   Future<void> updateSaleRequest({

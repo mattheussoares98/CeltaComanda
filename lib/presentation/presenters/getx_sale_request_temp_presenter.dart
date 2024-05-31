@@ -237,7 +237,7 @@ class GetxSaleRequestTempPresenter
 
     try {
       await loadSaleRequest(commandNumber);
-      await menuPresenter.getGroups(commandNumber);
+      await menuPresenter.getGroupsAndProducts(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);

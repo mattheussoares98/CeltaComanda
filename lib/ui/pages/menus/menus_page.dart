@@ -7,14 +7,14 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 import '../../components/components.dart';
 
-class ExpansibleGroupsPage extends StatefulWidget {
-  const ExpansibleGroupsPage({super.key});
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
 
   @override
-  State<ExpansibleGroupsPage> createState() => _ExpansibleGroupsPageState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
+class _MenuPageState extends State<MenuPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -85,17 +85,19 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    if (!_isLoaded && menuPresenter.menus.isEmpty) {
+
+    if (!_isLoaded && menuPresenter.loadedMenu.isEmpty) {
       _isLoaded = true;
-      await _loadGroupsAndProducts(menuPresenter);
+      Future.delayed(Duration.zero, () async {
+        await _loadGroupsAndProducts(menuPresenter);
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
@@ -133,80 +135,103 @@ class _ExpansibleGroupsPageState extends State<ExpansibleGroupsPage>
                   mainErrorSubscription =
                       handleMainError(context, menuPresenter.mainErrorStream);
 
-                  if (menuPresenter.menus.isEmpty) {
-                    return TextButton(
-                      onPressed: () async {
-                        _loadGroupsAndProducts(menuPresenter);
-                      },
-                      child: const Text("Carregar menu"),
-                    );
-                  }
-
-                  return Column(
-                    children: [
-                      const SearchProduct(),
-                      if (menuPresenter.searchedProduct != null)
-                        ProductItemWidget(
-                          addProductQuantity: () {
-                            _addProductQuantity(menuPresenter);
-                          },
-                          clearProductQuantity: () {
-                            _clearProductQuantity(menuPresenter);
-                          },
-                          subtractProductQuantity: () {
-                            _subtractProductQuantity(menuPresenter);
-                          },
-                          updateSaleRequest: () async {
-                            await _addProductInCart(
-                              menuPresenter: menuPresenter,
-                              homePresenter: homePresenter,
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
-                            );
-                          },
-                          productQuantity:
-                              menuPresenter.searchedProduct!.productQuantity,
-                          index: 0,
-                          selectedIndex: indexOfSelectedProductCommentIcon,
-                          updateSelectedIndex: _updateSelectedIndex,
-                          goToComboxPage: () {
-                            menuPresenter.goToComboxPage(
-                              menuPresenter.searchedProduct!,
-                            );
-                          },
-                          productsViewModel: menuPresenter.searchedProduct!,
-                          commentTextController: commentTextController,
-                        ),
-                      StreamBuilder<int>(
-                          stream: menuPresenter.indexOfSelectedGroupStream,
-                          builder: (context, snapshot) {
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 27,
-                                  child: GroupItems(
-                                    expansibleGroupsViewModel: menuPresenter
-                                        .menus
-                                        .map((element) => element.keys.first)
-                                        .toList(),
-                                    selectedIndex: snapshot.data ?? 0,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 73,
-                                  child: ProductsItems(
-                                    products: menuPresenter
-                                        .menus[snapshot.data ?? 0]
-                                        .entries
-                                        .first
-                                        .value,
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
-                    ],
+                  return StreamBuilder<
+                      List<
+                          Map<ExpansibleGroupsViewModel,
+                              List<ProductsViewModel>>>>(
+                    stream: menuPresenter.menuStream,
+                    builder: (context, snapshot) {
+                      if (menuPresenter.loadedMenu.isEmpty) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height -
+                              AppBar().preferredSize.height,
+                          child: Center(
+                            child: TextButton(
+                              onPressed: () async {
+                                _loadGroupsAndProducts(menuPresenter);
+                              },
+                              child: const Text("Carregar menu"),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Column(
+                          children: [
+                            // const SearchProduct(),
+                            if (menuPresenter.searchedProduct != null)
+                              ProductItemWidget(
+                                addProductQuantity: () {
+                                  _addProductQuantity(menuPresenter);
+                                },
+                                clearProductQuantity: () {
+                                  _clearProductQuantity(menuPresenter);
+                                },
+                                subtractProductQuantity: () {
+                                  _subtractProductQuantity(menuPresenter);
+                                },
+                                updateSaleRequest: () async {
+                                  await _addProductInCart(
+                                    menuPresenter: menuPresenter,
+                                    homePresenter: homePresenter,
+                                    saleRequestTempPresenter:
+                                        saleRequestTempPresenter,
+                                  );
+                                },
+                                productQuantity: menuPresenter
+                                    .searchedProduct!.productQuantity,
+                                index: 0,
+                                selectedIndex:
+                                    indexOfSelectedProductCommentIcon,
+                                updateSelectedIndex: _updateSelectedIndex,
+                                goToComboxPage: () {
+                                  menuPresenter.goToComboxPage(
+                                    menuPresenter.searchedProduct!,
+                                  );
+                                },
+                                productsViewModel:
+                                    menuPresenter.searchedProduct!,
+                                commentTextController: commentTextController,
+                              ),
+                            StreamBuilder<int>(
+                                stream:
+                                    menuPresenter.indexOfSelectedGroupStream,
+                                builder: (context, snapshot) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 20,
+                                          child: GroupItems(
+                                            expansibleGroupsViewModel:
+                                                menuPresenter
+                                                    .loadedMenu
+                                                    .map((element) =>
+                                                        element.keys.first)
+                                                    .toList(),
+                                            selectedIndex: snapshot.data ?? 0,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 80,
+                                          child: ProductsItems(
+                                            products: menuPresenter
+                                                .loadedMenu[snapshot.data ?? 0]
+                                                .entries
+                                                .first
+                                                .value,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ],
+                        );
+                      }
+                    },
                   );
                 },
               ),

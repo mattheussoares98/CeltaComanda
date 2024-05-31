@@ -14,14 +14,17 @@ class MenuPresenterSpy extends Mock
     implements MenuPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
+  final menuController = StreamController<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>();
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> expansibleGroupsController = [];
   ProductsViewModel? searchedProductController;
   TextEditingController searchProductControllerMock = TextEditingController();
 
   MenuPresenterSpy() {
     mockLoadCall().thenAnswer((_) async => _);
-    when(() => this.menus)
+    when(() => this.loadedMenu)
         .thenAnswer((_) => expansibleGroupsController);
+    when(() => this.menuStream)
+        .thenAnswer((_) => menuController.stream);
     when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);

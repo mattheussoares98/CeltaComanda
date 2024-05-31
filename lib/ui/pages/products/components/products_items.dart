@@ -74,49 +74,46 @@ class _ProductsItemsState extends State<ProductsItems> {
     HomePresenter homePresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        primary: false,
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: widget.products.length,
-        itemBuilder: (context, index) {
-          final productsViewModel = widget.products[index];
-
-          return ProductItemWidget(
-            addProductQuantity: () {
-              _addProductQuantity(productsViewModel);
-            },
-            clearProductQuantity: () {
-              _clearProductQuantity(productsViewModel);
-            },
-            subtractProductQuantity: () {
-              _subtractProductQuantity(productsViewModel);
-            },
-            updateSaleRequest: () async {
-              await _addProductInCart(
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-                productsViewModel: productsViewModel,
-              );
-            },
-            productQuantity: productsViewModel.productQuantity,
-            commentTextController: commentTextController,
-            index: index,
-            selectedIndex: indexOfSelectedProductCommentIcon,
-            updateSelectedIndex: () {
-              _updateSelectedIndex(index);
-            },
-            goToComboxPage: () {
-              menuPresenter.goToComboxPage(productsViewModel);
-            },
-            productsViewModel: productsViewModel,
-          );
-        },
-      ),
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      primary: false,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemCount: widget.products.length,
+      itemBuilder: (context, index) {
+        final productsViewModel = widget.products[index];
+    
+        return ProductItemWidget(
+          addProductQuantity: () {
+            _addProductQuantity(productsViewModel);
+          },
+          clearProductQuantity: () {
+            _clearProductQuantity(productsViewModel);
+          },
+          subtractProductQuantity: () {
+            _subtractProductQuantity(productsViewModel);
+          },
+          updateSaleRequest: () async {
+            await _addProductInCart(
+              menuPresenter: menuPresenter,
+              homePresenter: homePresenter,
+              saleRequestTempPresenter: saleRequestTempPresenter,
+              productsViewModel: productsViewModel,
+            );
+          },
+          productQuantity: productsViewModel.productQuantity,
+          commentTextController: commentTextController,
+          index: index,
+          selectedIndex: indexOfSelectedProductCommentIcon,
+          updateSelectedIndex: () {
+            _updateSelectedIndex(index);
+          },
+          goToComboxPage: () {
+            menuPresenter.goToComboxPage(productsViewModel);
+          },
+          productsViewModel: productsViewModel,
+        );
+      },
     );
   }
 }

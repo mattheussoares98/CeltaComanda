@@ -32,7 +32,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.menus,
-      page: () => const ExpansibleGroupsPage(),
+      page: () => const MenuPage(),
     ),
     GetPage(
       name: PageRoutes.saleRequestTemp,
@@ -79,7 +79,7 @@ Widget makePage(
 
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider<MenuPresenter>(
+      ListenableProvider<MenuPresenter>(
         create: (_) => MenuPresenterSpy(),
       ),
       ChangeNotifierProvider<SaleRequestTempPresenter>(

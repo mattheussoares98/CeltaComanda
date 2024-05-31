@@ -4,13 +4,14 @@ import '../../../domain/entities/entities.dart';
 import '../pages.dart';
 import '../../helpers/helpers.dart';
 
-abstract class MenuPresenter with ChangeNotifier implements Listenable {
+abstract class MenuPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>> get menuStream;
 
   Stream<int> get indexOfSelectedGroupStream;
 
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get menus;
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu;
   ProductsViewModel? get searchedProduct;
 
   TextEditingController get searchProductController;

@@ -46,14 +46,9 @@ void main() {
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
       makePage(
-          path: PageRoutes.menus,
-          page: () => const ExpansibleGroupsPage()),
+          path: PageRoutes.menus, page: () => const MenuPage()),
     );
   }
-
-  tearDown(() {
-    presenter.dispose();
-  });
 
   //gastei muito tempo tentando arrumar esse teste. Fiz diversos testes mas
   // nenhum deu certo. No ambiente de produção está funcionando

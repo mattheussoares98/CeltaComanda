@@ -134,6 +134,7 @@ void main() {
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.menuStream, emitsInOrder([[], menuList]));
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
@@ -183,15 +184,15 @@ void main() {
     test('Should return correct value on success to load', () async {
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
-      expect(sut.menus, menuList);
+      expect(sut.loadedMenu, menuList);
     });
 
     test('Should clear expansibleGroups', () async {
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-      expect(sut.menus, menuList);
+      expect(sut.loadedMenu, menuList);
 
       sut.clear();
-      expect(sut.menus, []);
+      expect(sut.loadedMenu, []);
     });
   });
 
@@ -509,7 +510,7 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      expect(sut.menus, menuList);
+      expect(sut.loadedMenu, menuList);
 
       loadExpansibleGroups
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
@@ -522,7 +523,7 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      expect(sut.menus, []);
+      expect(sut.loadedMenu, []);
       verify(() => printedProductsPresenter.clear()).called(2);
       verify(() => saleRequestTempPresenter.clear()).called(2);
       //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter

@@ -24,8 +24,7 @@ class _GroupItemsState extends State<GroupItems> {
       height: MediaQuery.of(context).size.height -
           AppBar().preferredSize.height -
           MediaQuery.of(context).padding.bottom -
-          kBottomNavigationBarHeight -
-          72,
+          kBottomNavigationBarHeight,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: const [
@@ -34,7 +33,6 @@ class _GroupItemsState extends State<GroupItems> {
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: const EdgeInsets.only(top: 8),
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),

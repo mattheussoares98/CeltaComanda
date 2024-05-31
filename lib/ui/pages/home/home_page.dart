@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      const ExpansibleGroupsPage(),
+      const MenuPage(),
       const SaleRequestTempPage(),
       const PrintedProductsPage(),
       PaymentPage(GetxPaymentPresenter(

@@ -52,6 +52,7 @@ void main() {
 
     printedProductsPresenter.updateCanCancelProducts(true);
     await tester.tap(bottomNavItem);
+     await tester.pumpAndSettle();
 
     expect(printedProductsPresenter.canCancelProducts, false);
   });

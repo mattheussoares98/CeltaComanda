@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/presentation/mixins/mixins.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,9 @@ import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
+class GetxMenuPresenter extends GetxController
+    with LoadingManager, UIErrorManager
+    implements MenuPresenter {
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
   final SearchProductByCode searchProductByCode;
@@ -46,7 +49,8 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
 
   @override
   void clear() {
-    _menus.clear();
+    _menu.value = [];
+    _loadedMenu.clear();
     _searchedProduct = null;
   }
 
@@ -70,7 +74,6 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
       if (product != null) {
         _searchedProduct = ProductsViewModel.fromEntity(product);
         searchProductController.clear();
-        notifyListeners();
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -158,30 +161,25 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
   ProductsViewModel? get searchedProduct => _searchedProduct;
   ProductsViewModel? _searchedProduct;
 
-  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> _menus =
+  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> _loadedMenu =
       [];
   @override
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get menus =>
-      [..._menus];
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu =>
+      [..._loadedMenu];
 
   final _searchProductController = TextEditingController();
   @override
   TextEditingController get searchProductController => _searchProductController;
 
-  final _isLoading = false.obs;
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) => _isLoading.value = value;
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
-
   final _inexOfSelectedGroup = Rx<int>(0);
   @override
   Stream<int> get indexOfSelectedGroupStream => _inexOfSelectedGroup.stream;
   set indexOfSelectedGroup(int value) => _inexOfSelectedGroup.value = value;
+
+  final _menu = Rx<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>([]);
+  @override
+  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>> get menuStream => _menu.stream;
+  set menu(List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> value) => _menu.value = value;
 
   @override
   Future<void> getGroupsAndProducts(String commandNumber) async {
@@ -203,7 +201,7 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
               await loadProducts.load(expansibleGroup.ExpansibleGroupId);
 
           if (products != null) {
-            _menus.add({
+            _loadedMenu.add({
               ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
                   products.map((e) => ProductsViewModel.fromEntity(e)).toList()
             });
@@ -212,6 +210,7 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
           }
         }
       }
+      _menu.subject.add(_loadedMenu);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -221,7 +220,6 @@ class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
       }
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
 

@@ -1,3 +1,3 @@
 import '../../../../ui/pages/pages.dart';
 
-ExpansibleGroupsPage makeMenusPage() => const ExpansibleGroupsPage();
+MenuPage makeMenusPage() => const MenuPage();

@@ -197,10 +197,10 @@ class GetxSaleRequestTempPresenter
         homePresenter: homePresenter,
       );
 
-      await addNewPrintRequest();
+      await addNewPrintRequestInFirebase();
     } catch (e) {
       mainError = UIError.unexpected;
-      await addNewPrintRequest();
+      await addNewPrintRequestInFirebase();
     } finally {
       isLoading = false;
     }
@@ -291,7 +291,7 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  Future<void> addNewPrintRequest() async {
+  Future<void> addNewPrintRequestInFirebase() async {
     PrintRequestEntity newRequest = PrintRequestEntity(
       dates: [
         "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",

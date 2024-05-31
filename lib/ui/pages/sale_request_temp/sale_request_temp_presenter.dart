@@ -55,5 +55,5 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
 
   void updateIndexOfSelectedProduct(int? index);
 
-  Future<void> addNewPrintRequest();
+  Future<void> addNewPrintRequestInFirebase();
 }

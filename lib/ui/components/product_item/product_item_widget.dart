@@ -55,100 +55,97 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 3,
-              color: Color(0x411D2429),
-              offset: Offset(
-                0.0,
-                1,
-              ),
-            )
-          ],
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            NameImagePluAndEan(productsViewModel: widget.productsViewModel),
-            // PendingProductQuantity(
-            //   saleRequestTempPresenter: saleRequestTempPresenter,
-            //   productsViewModel: widget.productsViewModel,
-            // ),
-            // PriceAndUpdateProductQuantity(
-            //   showUpdateProductQuantity:
-            //       widget.productsViewModel.IsPromoCombox == "false",
-            //   onPressedReduceQuantity: widget.productQuantity <= 1
-            //       ? null
-            //       : widget.subtractProductQuantity,
-            //   onPressedAddQuantity: widget.addProductQuantity,
-            //   productQuantity: widget.productQuantity,
-            //   price: widget.productsViewModel.SaleRetailPraticed
-            //       .toDouble(),
-            //   totalLiquid: (widget.productsViewModel.SaleRetailPraticed
-            //               .toDouble() *
-            //           widget.productQuantity)
-            //       .toString()
-            //       .toDouble(),
-            // ),
-            if (widget.productsViewModel.IsPromoCombox == "true")
-              GestureDetector(
-                onTap: widget.goToComboxPage,
-                child: const Padding(
-                  padding: EdgeInsets.only(bottom: 5.0),
-                  child: Text(
-                    "Montar\ncombo",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 3,
+            color: Color(0x411D2429),
+            offset: Offset(
+              0.0,
+              1,
+            ),
+          )
+        ],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          NameImagePluAndEan(productsViewModel: widget.productsViewModel),
+          // PendingProductQuantity(
+          //   saleRequestTempPresenter: saleRequestTempPresenter,
+          //   productsViewModel: widget.productsViewModel,
+          // ),
+          // PriceAndUpdateProductQuantity(
+          //   showUpdateProductQuantity:
+          //       widget.productsViewModel.IsPromoCombox == "false",
+          //   onPressedReduceQuantity: widget.productQuantity <= 1
+          //       ? null
+          //       : widget.subtractProductQuantity,
+          //   onPressedAddQuantity: widget.addProductQuantity,
+          //   productQuantity: widget.productQuantity,
+          //   price: widget.productsViewModel.SaleRetailPraticed
+          //       .toDouble(),
+          //   totalLiquid: (widget.productsViewModel.SaleRetailPraticed
+          //               .toDouble() *
+          //           widget.productQuantity)
+          //       .toString()
+          //       .toDouble(),
+          // ),
+          if (widget.productsViewModel.IsPromoCombox == "true")
+            GestureDetector(
+              onTap: widget.goToComboxPage,
+              child: const Padding(
+                padding: EdgeInsets.only(bottom: 5.0),
+                child: Text(
+                  "Montar\ncombo",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            // if (widget.productsViewModel.IsPromoCombox == "false")
-            //   CommentAndAddProductButtons(
-            //     updateSelectedIndex: widget.updateSelectedIndex,
-            //     index: widget.index,
-            //     selectedIndex: widget.selectedIndex,
-            //     changeFocusToCommentFocusNode: () async {
-            //       await changeFocusToCommentFocusNode();
-            //     },
-            //     updateSaleRequest: () async {
-            //       await widget.updateSaleRequest();
-            //     },
-            //     commentTextController: widget.commentTextController,
-            //     isConfirmedComment: confirmedComment != "",
-            //     updateIsConfirmendCommentToFalse: () {
-            //       widget.commentTextController.clear();
-            //       confirmedComment = "";
-            //       widget.updateSelectedIndex();
-            //     },
-            //     clearProductQuantity: widget.clearProductQuantity,
-            //   ),
-            CommentWidget(
-              index: widget.index,
-              selectedIndex: widget.selectedIndex,
-              commentFocusNode: commentFocusNode,
-              commentTextController: widget.commentTextController,
-              confirmedComment: confirmedComment,
-              changeFocusToCommentFocusNode: () async {
-                await changeFocusToCommentFocusNode();
-              },
-              updateConfirmedComment: () {
-                confirmedComment = widget.commentTextController.text;
-              },
-              updateSelectedIndex: () {
-                widget.updateSelectedIndex();
-              },
             ),
-          ],
-        ),
+          // if (widget.productsViewModel.IsPromoCombox == "false")
+          //   CommentAndAddProductButtons(
+          //     updateSelectedIndex: widget.updateSelectedIndex,
+          //     index: widget.index,
+          //     selectedIndex: widget.selectedIndex,
+          //     changeFocusToCommentFocusNode: () async {
+          //       await changeFocusToCommentFocusNode();
+          //     },
+          //     updateSaleRequest: () async {
+          //       await widget.updateSaleRequest();
+          //     },
+          //     commentTextController: widget.commentTextController,
+          //     isConfirmedComment: confirmedComment != "",
+          //     updateIsConfirmendCommentToFalse: () {
+          //       widget.commentTextController.clear();
+          //       confirmedComment = "";
+          //       widget.updateSelectedIndex();
+          //     },
+          //     clearProductQuantity: widget.clearProductQuantity,
+          //   ),
+          CommentWidget(
+            index: widget.index,
+            selectedIndex: widget.selectedIndex,
+            commentFocusNode: commentFocusNode,
+            commentTextController: widget.commentTextController,
+            confirmedComment: confirmedComment,
+            changeFocusToCommentFocusNode: () async {
+              await changeFocusToCommentFocusNode();
+            },
+            updateConfirmedComment: () {
+              confirmedComment = widget.commentTextController.text;
+            },
+            updateSelectedIndex: () {
+              widget.updateSelectedIndex();
+            },
+          ),
+        ],
       ),
     );
   }

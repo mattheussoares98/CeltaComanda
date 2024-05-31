@@ -182,9 +182,11 @@ class _MenuPageState extends State<MenuPage>
                                               selectedIndex: snapshot.data ?? 0,
                                             ),
                                           ),
+                                          const SizedBox(width: 5),
                                           Expanded(
                                             flex: 80,
                                             child: ProductsItems(
+                                              itensPerLine: 2,
                                               products: menuPresenter
                                                   .loadedMenu[
                                                       snapshot.data ?? 0]

@@ -51,12 +51,12 @@ class GetxMenuPresenter extends GetxController
   void clear() {
     _menu.value = [];
     _loadedMenu.clear();
-    _searchedProduct = null;
+    _selectedProduct = null;
   }
 
   @override
   Future<void> searchProduct(String value) async {
-    _searchedProduct = null;
+    _selectedProduct = null;
     isLoading = true;
     mainError = null;
 
@@ -72,7 +72,7 @@ class GetxMenuPresenter extends GetxController
       );
 
       if (product != null) {
-        _searchedProduct = ProductsViewModel.fromEntity(product);
+        _selectedProduct = ProductsViewModel.fromEntity(product);
         searchProductController.clear();
       }
     } on DomainError catch (error) {
@@ -158,14 +158,14 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  ProductsViewModel? get selectedProduct => _searchedProduct;
-  ProductsViewModel? _searchedProduct;
+  ProductsViewModel? get selectedProduct => _selectedProduct;
+  ProductsViewModel? _selectedProduct;
 
-  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> _loadedMenu =
-      [];
+  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      _loadedMenu = [];
   @override
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu =>
-      [..._loadedMenu];
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      get loadedMenu => [..._loadedMenu];
 
   final _searchProductController = TextEditingController();
   @override
@@ -176,10 +176,15 @@ class GetxMenuPresenter extends GetxController
   Stream<int> get indexOfSelectedGroupStream => _inexOfSelectedGroup.stream;
   set indexOfSelectedGroup(int value) => _inexOfSelectedGroup.value = value;
 
-  final _menu = Rx<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>([]);
+  final _menu =
+      Rx<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>([]);
   @override
-  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>> get menuStream => _menu.stream;
-  set menu(List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> value) => _menu.value = value;
+  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
+      get menuStream => _menu.stream;
+  set menu(
+          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+              value) =>
+      _menu.value = value;
 
   @override
   Future<void> getGroupsAndProducts(String commandNumber) async {
@@ -226,5 +231,10 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateIndexOfSelectedGroup(int index) {
     _inexOfSelectedGroup.value = index;
+  }
+
+  @override
+  void updateSelectedProduct(ProductsViewModel? selectedProduct) {
+    _selectedProduct = selectedProduct;
   }
 }

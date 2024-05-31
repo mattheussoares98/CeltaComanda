@@ -7,7 +7,8 @@ import '../../helpers/helpers.dart';
 abstract class MenuPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>> get menuStream;
+  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
+      get menuStream;
 
   Stream<int> get indexOfSelectedGroupStream;
 
@@ -32,4 +33,5 @@ abstract class MenuPresenter implements Listenable {
   void goToComboxPage(ProductsViewModel product);
   void clear();
   void updateIndexOfSelectedGroup(int index);
+  void updateSelectedProduct(ProductsViewModel? selectedProduct);
 }

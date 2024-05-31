@@ -196,68 +196,6 @@ void main() {
     });
   });
 
-  test('Should go to products page ExpansibleGroupItem click', () async {
-    sut.goToProductsPage(expansibleGroups[0]);
-
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.products,
-        arguments: expansibleGroups[0],
-      ),
-    ).called(1);
-  });
-  test('Should go to ComboxPage', () async {
-    await sut.searchProduct(productEan);
-
-    sut.goToComboxPage(ProductsViewModel.fromEntity(productEntity));
-
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.productComposition,
-        arguments: ProductsViewModel.fromEntity(productEntity),
-      ),
-    ).called(1);
-  });
-
-  test('Should call ticketIsPermitted on load data', () async {
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-
-    verify(() => ticketIsPermitted.verify(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: homePresenter.commandNumberMock!,
-        )).called(1);
-  });
-
-  test(
-      'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
-      () async {
-    ticketIsPermitted.mockError(DomainError.commandNotAvailable);
-
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(
-        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
-
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-  });
-
-  test('Should emit correct values on ticketIsPermitted throws unexpected',
-      () async {
-    ticketIsPermitted.mockError(DomainError.unexpected);
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-  });
-
-  test('Should update indexOfSelectedProduct correctly', () async {
-    expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 2, 0, 5]));
-
-    sut.updateIndexOfSelectedGroup(1);
-    sut.updateIndexOfSelectedGroup(2);
-    sut.updateIndexOfSelectedGroup(0);
-    sut.updateIndexOfSelectedGroup(5);
-  });
-
   group("SearchProductByCode", () {
     test(
         "Should call searchProductByCode with correct values and update string to correct format of plu",
@@ -563,5 +501,75 @@ void main() {
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
+  });
+
+  test('Should go to products page ExpansibleGroupItem click', () async {
+    sut.goToProductsPage(expansibleGroups[0]);
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.products,
+        arguments: expansibleGroups[0],
+      ),
+    ).called(1);
+  });
+  test('Should go to ComboxPage', () async {
+    await sut.searchProduct(productEan);
+
+    sut.goToComboxPage(ProductsViewModel.fromEntity(productEntity));
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.productComposition,
+        arguments: ProductsViewModel.fromEntity(productEntity),
+      ),
+    ).called(1);
+  });
+
+  test('Should call ticketIsPermitted on load data', () async {
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+
+    verify(() => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: homePresenter.commandNumberMock!,
+        )).called(1);
+  });
+
+  test(
+      'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
+      () async {
+    ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+  });
+
+  test('Should emit correct values on ticketIsPermitted throws unexpected',
+      () async {
+    ticketIsPermitted.mockError(DomainError.unexpected);
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+  });
+
+  test('Should update indexOfSelectedProduct correctly', () async {
+    expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 2, 0, 5]));
+
+    sut.updateIndexOfSelectedGroup(1);
+    sut.updateIndexOfSelectedGroup(2);
+    sut.updateIndexOfSelectedGroup(0);
+    sut.updateIndexOfSelectedGroup(5);
+  });
+
+  test('Should update indexOfSelectedProduct correctly', () async {
+    expect(sut.selectedProduct, null);
+
+    sut.updateSelectedProduct(productsViewModel);
+
+    expect(sut.selectedProduct, productsViewModel);
   });
 }

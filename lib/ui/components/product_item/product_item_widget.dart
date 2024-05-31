@@ -1,10 +1,7 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../../main/builders/builders.dart';
 import '../../../ui/components/components.dart';
-import '../../../ui/helpers/helpers.dart';
 import '../../pages/pages.dart';
 
 class ProductItemWidget extends StatefulWidget {
@@ -58,13 +55,9 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: false);
-
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
+      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
       child: Container(
-        padding: const EdgeInsets.fromLTRB(3, 5, 8, 0),
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -81,79 +74,63 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ImageWidget(
-                  ean: widget.productsViewModel.EanCode,
-                  plu: widget.productsViewModel.PriceLookupCode,
-                ),
-                const SizedBox(width: 5),
-                PluAndEan(productsViewModel: widget.productsViewModel),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    PendingProductQuantity(
-                      saleRequestTempPresenter: saleRequestTempPresenter,
-                      productsViewModel: widget.productsViewModel,
+            NameImagePluAndEan(productsViewModel: widget.productsViewModel),
+            // PendingProductQuantity(
+            //   saleRequestTempPresenter: saleRequestTempPresenter,
+            //   productsViewModel: widget.productsViewModel,
+            // ),
+            // PriceAndUpdateProductQuantity(
+            //   showUpdateProductQuantity:
+            //       widget.productsViewModel.IsPromoCombox == "false",
+            //   onPressedReduceQuantity: widget.productQuantity <= 1
+            //       ? null
+            //       : widget.subtractProductQuantity,
+            //   onPressedAddQuantity: widget.addProductQuantity,
+            //   productQuantity: widget.productQuantity,
+            //   price: widget.productsViewModel.SaleRetailPraticed
+            //       .toDouble(),
+            //   totalLiquid: (widget.productsViewModel.SaleRetailPraticed
+            //               .toDouble() *
+            //           widget.productQuantity)
+            //       .toString()
+            //       .toDouble(),
+            // ),
+            if (widget.productsViewModel.IsPromoCombox == "true")
+              GestureDetector(
+                onTap: widget.goToComboxPage,
+                child: const Padding(
+                  padding: EdgeInsets.only(bottom: 5.0),
+                  child: Text(
+                    "Montar\ncombo",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
                     ),
-                    PriceAndUpdateProductQuantity(
-                      showUpdateProductQuantity:
-                          widget.productsViewModel.IsPromoCombox == "false",
-                      onPressedReduceQuantity: widget.productQuantity <= 1
-                          ? null
-                          : widget.subtractProductQuantity,
-                      onPressedAddQuantity: widget.addProductQuantity,
-                      productQuantity: widget.productQuantity,
-                      price: widget.productsViewModel.SaleRetailPraticed
-                          .toDouble(),
-                      totalLiquid: (widget.productsViewModel.SaleRetailPraticed
-                                  .toDouble() *
-                              widget.productQuantity)
-                          .toString()
-                          .toDouble(),
-                    ),
-                    if (widget.productsViewModel.IsPromoCombox == "true")
-                      GestureDetector(
-                        onTap: widget.goToComboxPage,
-                        child: const Padding(
-                          padding: EdgeInsets.only(bottom: 5.0),
-                          child: Text(
-                            "Montar\ncombo",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
+                  ),
                 ),
-              ],
-            ),
-            if (widget.productsViewModel.IsPromoCombox == "false")
-              CommentAndAddProductButtons(
-                updateSelectedIndex: widget.updateSelectedIndex,
-                index: widget.index,
-                selectedIndex: widget.selectedIndex,
-                changeFocusToCommentFocusNode: () async {
-                  await changeFocusToCommentFocusNode();
-                },
-                updateSaleRequest: () async {
-                  await widget.updateSaleRequest();
-                },
-                commentTextController: widget.commentTextController,
-                isConfirmedComment: confirmedComment != "",
-                updateIsConfirmendCommentToFalse: () {
-                  widget.commentTextController.clear();
-                  confirmedComment = "";
-                  widget.updateSelectedIndex();
-                },
-                clearProductQuantity: widget.clearProductQuantity,
               ),
+            // if (widget.productsViewModel.IsPromoCombox == "false")
+            //   CommentAndAddProductButtons(
+            //     updateSelectedIndex: widget.updateSelectedIndex,
+            //     index: widget.index,
+            //     selectedIndex: widget.selectedIndex,
+            //     changeFocusToCommentFocusNode: () async {
+            //       await changeFocusToCommentFocusNode();
+            //     },
+            //     updateSaleRequest: () async {
+            //       await widget.updateSaleRequest();
+            //     },
+            //     commentTextController: widget.commentTextController,
+            //     isConfirmedComment: confirmedComment != "",
+            //     updateIsConfirmendCommentToFalse: () {
+            //       widget.commentTextController.clear();
+            //       confirmedComment = "";
+            //       widget.updateSelectedIndex();
+            //     },
+            //     clearProductQuantity: widget.clearProductQuantity,
+            //   ),
             CommentWidget(
               index: widget.index,
               selectedIndex: widget.selectedIndex,

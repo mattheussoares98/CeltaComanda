@@ -38,7 +38,10 @@ class ProductDetails extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImageWidget(ean: Product.EanCode, plu: Product.PriceLookupCode),
+            ImageWidget(
+                ean: Product.EanCode,
+                plu: Product.PriceLookupCode,
+                showLargeImageInShowDialog: true),
             const SizedBox(width: 3),
             Expanded(
               child: Column(

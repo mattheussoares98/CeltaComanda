@@ -109,6 +109,7 @@ class _SaleRequestTempProductItemState
             ImageWidget(
               ean: widget.saleRequestTemp.Product.EanCode,
               plu: widget.saleRequestTemp.Product.PriceLookupCode,
+              showLargeImageInShowDialog: true,
             ),
             const SizedBox(width: 3),
             ProductNamePluAndEan(

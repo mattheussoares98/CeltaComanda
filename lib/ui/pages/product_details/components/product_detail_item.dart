@@ -28,6 +28,7 @@ class ProductDetailItem extends StatelessWidget {
                       plu: product.PriceLookupCode,
                       height: 250,
                       width: double.infinity,
+                      showLargeImageInShowDialog: true,
                     ),
                     const Padding(
                       padding: EdgeInsetsDirectional.only(

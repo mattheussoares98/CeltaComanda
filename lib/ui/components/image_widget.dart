@@ -7,11 +7,13 @@ class ImageWidget extends StatelessWidget {
   final String plu;
   final double height;
   final double width;
+  final bool showLargeImageInShowDialog;
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
+    required this.showLargeImageInShowDialog,
     super.key,
   });
 
@@ -21,6 +23,7 @@ class ImageWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(6),
       child: GestureDetector(
         onTap: () {
+          if (!showLargeImageInShowDialog) return;
           showDialog(
               context: context,
               builder: (context) {

@@ -165,35 +165,62 @@ void main() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
-  test('Should call LoadExpansibleGroups and loadProducts', () async {
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+  group("Get groups and products", () {
+    test('Should emit correct values on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
 
-    verify(() => loadExpansibleGroups.load()).called(1);
-    verify(() => loadProducts.load(expansibleGroups[0].ExpansibleGroupId)).called(1);
-    verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId)).called(1);
-  });
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
+    test('Should emit correct values on throws CommandNotAvailable', () async {
+      loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
-  test('Should throw DomainErrorUnexpected', () async {
-    loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
 
-    final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
+    test('Should emit correct values on throws unexpected', () async {
+      loadExpansibleGroups.mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-    expect(sut.menus, []);
-    expect(error, throwsA(DomainError.unexpected));
-  });
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-  test('Should return correct value on success to load', () async {
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
+    test('Should call LoadExpansibleGroups and loadProducts', () async {
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
 
-    expect(sut.menus, menuList);
-  });
+      verify(() => loadExpansibleGroups.load()).called(1);
+      verify(() => loadProducts.load(expansibleGroups[0].ExpansibleGroupId))
+          .called(1);
+      verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId))
+          .called(1);
+    });
 
-  test('Should clear expansibleGroups', () async {
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-    expect(sut.menus, menuList);
+    test('Should throw DomainErrorUnexpected', () async {
+      loadExpansibleGroups
+          .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-    sut.clear();
-    expect(sut.menus, []);
+      final error = sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+
+      expect(sut.menus, []);
+      expect(error, throwsA(DomainError.unexpected));
+    });
+
+    test('Should return correct value on success to load', () async {
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+
+      expect(sut.menus, menuList);
+    });
+
+    test('Should clear expansibleGroups', () async {
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      expect(sut.menus, menuList);
+
+      sut.clear();
+      expect(sut.menus, []);
+    });
   });
 
   test('Should go to products page ExpansibleGroupItem click', () async {

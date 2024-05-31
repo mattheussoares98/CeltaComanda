@@ -9,9 +9,7 @@ import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxMenuPresenter
-    with ChangeNotifier
-    implements MenuPresenter {
+class GetxMenuPresenter with ChangeNotifier implements MenuPresenter {
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
   final SearchProductByCode searchProductByCode;
@@ -204,11 +202,11 @@ class GetxMenuPresenter
   ProductsViewModel? get searchedProduct => _searchedProduct;
   ProductsViewModel? _searchedProduct;
 
-  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      _menus = [];
+  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> _menus =
+      [];
   @override
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      get menus => [..._menus];
+  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get menus =>
+      [..._menus];
 
   final _searchProductController = TextEditingController();
   @override
@@ -231,6 +229,8 @@ class GetxMenuPresenter
 
   @override
   Future<void> getGroupsAndProducts(String commandNumber) async {
+    isLoading = true;
+    mainError = null;
     clear();
 
     try {
@@ -248,7 +248,7 @@ class GetxMenuPresenter
 
           if (products != null) {
             _menus.add({
-              ExpansibleGroupsViewModel.fromEntity(expansibleGroup):  
+              ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
                   products.map((e) => ProductsViewModel.fromEntity(e)).toList()
             });
           } else {
@@ -259,11 +259,12 @@ class GetxMenuPresenter
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
-          throw DomainError.commandNotAvailable;
+          mainError = UIError.commandNotAvailable;
         default:
-          throw DomainError.unexpected;
+          mainError = UIError.unexpected;
       }
     } finally {
+      isLoading = false;
       notifyListeners();
     }
   }

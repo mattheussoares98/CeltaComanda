@@ -327,4 +327,9 @@ class GetxSaleRequestTempPresenter
     _cartProducts.add(CartProductsViewModel.fromEntity(product));
     notifyListeners();
   }
+
+  @override
+  void removeProductFromCart(int index) {
+    _cartProducts.removeAt(index);
+  }
 }

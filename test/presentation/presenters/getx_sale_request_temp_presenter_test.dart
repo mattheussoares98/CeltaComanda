@@ -726,5 +726,24 @@ void main() {
       expect(sut.cartProducts,
           [CartProductsViewModel.fromEntity(cartProductEntity)]);
     });
+    test("Should remove correct product from cart", () {
+      expect(sut.cartProducts, []);
+      final cartProduct1 = EntityFactory.makeCartProductEntity();
+
+      sut.addProductInCart(cartProductEntity);
+      sut.addProductInCart(cartProduct1);
+
+      expect(sut.cartProducts, [
+        CartProductsViewModel.fromEntity(cartProductEntity), //0
+        CartProductsViewModel.fromEntity(cartProduct1), //1
+      ]);
+
+      sut.removeProductFromCart(0);
+      expect(
+          sut.cartProducts, [CartProductsViewModel.fromEntity(cartProduct1)]);
+
+      sut.removeProductFromCart(0);
+      expect(sut.cartProducts, []);
+    });
   });
 }

@@ -59,4 +59,5 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
 
   List<CartProductsViewModel> get cartProducts;
   void addProductInCart(CartProductEntity product);
+  void removeProductFromCart(int index);
 }

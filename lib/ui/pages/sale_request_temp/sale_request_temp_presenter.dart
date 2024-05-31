@@ -11,8 +11,6 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   int? get indexOfSelectedProduct;
   String get totalSaleRequestTempPrice;
 
-  List<CartProductsViewModel> get cartProducts;
-
   Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({
     required String url,
@@ -58,4 +56,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   void updateIndexOfSelectedProduct(int? index);
 
   Future<void> addNewPrintRequestInFirebase();
+
+  List<CartProductsViewModel> get cartProducts;
+  void addProductInCart(CartProductEntity product);
 }

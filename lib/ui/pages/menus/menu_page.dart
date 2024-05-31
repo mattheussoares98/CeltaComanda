@@ -115,17 +115,26 @@ class _MenuPageState extends State<MenuPage>
               } else {
                 return StreamBuilder<int>(
                     stream: menuPresenter.indexOfSelectedGroupStream,
-                    builder: (context, snapshot) {
+                    builder: (context, selectedGroupIndex) {
                       return SizedBox(
                         height: MediaQuery.of(context).size.height -
                             AppBar().preferredSize.height -
                             kBottomNavigationBarHeight,
-                        child: Column(
-                          children: [
-                            GroupsAndProducts(selectedIndex: snapshot.data),
-                            const InsertProduct(),
-                          ],
-                        ),
+                        child: StreamBuilder<ProductsViewModel?>(
+                            stream: menuPresenter.selectedProductStream,
+                            builder: (context, selectedProduct) {
+                              return Column(
+                                children: [
+                                  GroupsAndProducts(
+                                    selectedIndex: selectedGroupIndex.data,
+                                    selectedProduct: selectedProduct.data,
+                                  ),
+                                  InsertProduct(
+                                    selectedProduct: selectedProduct.data,
+                                  ),
+                                ],
+                              );
+                            }),
                       );
                     });
               }

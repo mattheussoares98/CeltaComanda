@@ -92,12 +92,14 @@ class _ProductsPageState extends State<ProductsPage>
                           .load(expansibleGroupEntity!.ExpansibleGroupId),
                     );
                   }
-                  if (snapshot.hasData) {
-                    return ProductsItems(
-                      products: snapshot.data!,
-                      itensPerLine: 1,
-                    );
-                  }
+                  // if (snapshot.hasData) {
+                  //   return ProductsItems(
+                  //     products: snapshot.data!,
+                  //     itensPerLine: 1,
+                  //     updateSelectedProductWhenClick: false,
+                  //     selectedProduct: null,
+                  //   );
+                  // }
                   return const SizedBox(height: 0);
                 });
           },

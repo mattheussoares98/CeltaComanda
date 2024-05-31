@@ -30,20 +30,21 @@ class _SearchProductState extends State<SearchProduct> {
   Future<void> _searchProduct(
     MenuPresenter menuPresenter,
   ) async {
-    if (!formKey.currentState!.validate()) {
-      _requestFocusToFormField();
-      return;
-    }
+    //não está mais utilizando esse widget. Comentei abaixo por conta disso e porque estava dando um erro nele
+    // if (!formKey.currentState!.validate()) {
+    //   _requestFocusToFormField();
+    //   return;
+    // }
 
-    await menuPresenter.searchProduct(
-        menuPresenter.searchProductController.text);
+    // await menuPresenter.searchProduct(
+    //     menuPresenter.searchProductController.text);
 
-    if (menuPresenter.selectedProduct == null) {
-      _requestFocusToFormField();
-    } else {
-      focusNode.unfocus();
-      menuPresenter.searchProductController.clear();
-    }
+    // if (menuPresenter.selectedProductStream == null) {
+    //   _requestFocusToFormField();
+    // } else {
+    //   focusNode.unfocus();
+    //   menuPresenter.searchProductController.clear();
+    // }
   }
 
   @override

@@ -6,7 +6,11 @@ import 'package:provider/provider.dart';
 import '../../../components/components.dart';
 
 class InsertProduct extends StatelessWidget {
-  const InsertProduct({super.key});
+  final ProductsViewModel? selectedProduct;
+  const InsertProduct({
+    required this.selectedProduct,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +27,11 @@ class InsertProduct extends StatelessWidget {
     }
 
     void addProductQuantity(MenuPresenter menuPresenter) {
-      menuPresenter.selectedProduct!.productQuantity++;
+      selectedProduct?.productQuantity++;
     }
 
     void subtractProductQuantity(MenuPresenter menuPresenter) {
-      menuPresenter.selectedProduct!.productQuantity--;
+      selectedProduct?.productQuantity--;
     }
 
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -37,7 +41,7 @@ class InsertProduct extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
-      child: menuPresenter.selectedProduct == null
+      child: selectedProduct?.productQuantity == null
           ? const TextButton(
               onPressed: null,
               child: Text("Selecione um produto"),
@@ -75,12 +79,11 @@ class InsertProduct extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Inserir"),
-                        Text(
-                            menuPresenter.selectedProduct?.SaleRetailPraticed ??
-                                "0"
-                                    .toString()
-                                    .toBrazilianNumber()
-                                    .addBrazilianCoin()),
+                        Text(selectedProduct?.SaleRetailPraticed ??
+                            "0"
+                                .toString()
+                                .toBrazilianNumber()
+                                .addBrazilianCoin()),
                       ],
                     ),
                   ),

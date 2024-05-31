@@ -9,11 +9,11 @@ abstract class MenuPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
       get menuStream;
+  Stream<ProductsViewModel?> get selectedProductStream;
 
   Stream<int> get indexOfSelectedGroupStream;
 
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu;
-  ProductsViewModel? get selectedProduct;
 
   TextEditingController get searchProductController;
 

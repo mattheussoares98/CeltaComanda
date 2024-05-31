@@ -51,12 +51,12 @@ class GetxMenuPresenter extends GetxController
   void clear() {
     _menu.value = [];
     _loadedMenu.clear();
-    _selectedProduct = null;
+    _selectedProduct.value = null;
   }
 
   @override
   Future<void> searchProduct(String value) async {
-    _selectedProduct = null;
+    _selectedProduct.value = null;
     isLoading = true;
     mainError = null;
 
@@ -72,7 +72,7 @@ class GetxMenuPresenter extends GetxController
       );
 
       if (product != null) {
-        _selectedProduct = ProductsViewModel.fromEntity(product);
+        _selectedProduct.value = ProductsViewModel.fromEntity(product);
         searchProductController.clear();
       }
     } on DomainError catch (error) {
@@ -157,9 +157,12 @@ class GetxMenuPresenter extends GetxController
     }
   }
 
+  final _selectedProduct = Rx<ProductsViewModel?>(null);
   @override
-  ProductsViewModel? get selectedProduct => _selectedProduct;
-  ProductsViewModel? _selectedProduct;
+  Stream<ProductsViewModel?> get selectedProductStream =>
+      _selectedProduct.stream;
+  set selectedProduct(ProductsViewModel? value) =>
+      _selectedProduct.value = value;
 
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       _loadedMenu = [];
@@ -235,6 +238,6 @@ class GetxMenuPresenter extends GetxController
 
   @override
   void updateSelectedProduct(ProductsViewModel? selectedProduct) {
-    _selectedProduct = selectedProduct;
+    _selectedProduct.value = selectedProduct;
   }
 }

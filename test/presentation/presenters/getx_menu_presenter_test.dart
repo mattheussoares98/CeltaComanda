@@ -276,38 +276,38 @@ void main() {
     });
 
     test("Should return correct product on success", () async {
-      expect(sut.selectedProduct, null);
+      expect(sut.selectedProductStream, null);
       await sut.searchProduct(productEan);
 
-      expect(sut.selectedProduct, productsViewModel);
+      expect(sut.selectedProductStream, productsViewModel);
     });
 
     test("Should return null if product not found", () async {
       searchProductByCode.mockSearchProductByCode(null);
 
-      expect(sut.selectedProduct, null);
+      expect(sut.selectedProductStream, null);
       await sut.searchProduct(productEan);
 
-      expect(sut.selectedProduct, null);
+      expect(sut.selectedProductStream, null);
     });
 
     test("Should clear searchedProduct when search command data", () async {
-      expect(sut.selectedProduct, null);
+      expect(sut.selectedProductStream, null);
 
       await sut.searchProduct(productEan);
-      expect(sut.selectedProduct, productsViewModel);
+      expect(sut.selectedProductStream, productsViewModel);
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-      expect(sut.selectedProduct, null);
+      expect(sut.selectedProductStream, null);
     });
 
     test("Should clear searchedProduct not found product", () async {
       await sut.searchProduct(productEan);
-      expect(sut.selectedProduct, productsViewModel);
+      expect(sut.selectedProductStream, productsViewModel);
 
       searchProductByCode.mockSearchProductByCode(null);
       await sut.searchProduct(productEan);
-      expect(sut.selectedProduct, null);
+      expect(sut.selectedProductStream, null);
     });
   });
 
@@ -566,10 +566,10 @@ void main() {
   });
 
   test('Should update indexOfSelectedProduct correctly', () async {
-    expect(sut.selectedProduct, null);
+    expect(sut.selectedProductStream, null);
 
     sut.updateSelectedProduct(productsViewModel);
 
-    expect(sut.selectedProduct, productsViewModel);
+    expect(sut.selectedProductStream, productsViewModel);
   });
 }

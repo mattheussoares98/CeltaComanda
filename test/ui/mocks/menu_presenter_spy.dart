@@ -10,28 +10,28 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class MenuPresenterSpy extends Mock
-    implements MenuPresenter {
+class MenuPresenterSpy extends Mock implements MenuPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
-  final menuController = StreamController<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>();
-  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> expansibleGroupsController = [];
+  final menuController = StreamController<
+      List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>();
+  final selectedProductController = StreamController<ProductsViewModel?>();
+  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      expansibleGroupsController = [];
   ProductsViewModel? searchedProductController;
   TextEditingController searchProductControllerMock = TextEditingController();
 
   MenuPresenterSpy() {
     mockLoadCall().thenAnswer((_) async => _);
-    when(() => this.loadedMenu)
-        .thenAnswer((_) => expansibleGroupsController);
-    when(() => this.menuStream)
-        .thenAnswer((_) => menuController.stream);
+    when(() => this.loadedMenu).thenAnswer((_) => expansibleGroupsController);
+    when(() => this.menuStream).thenAnswer((_) => menuController.stream);
     when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.selectedProduct)
-        .thenAnswer((_) => searchedProductController);
+    when(() => this.selectedProductStream)
+        .thenAnswer((_) => selectedProductController.stream);
     when(() => this.searchProductController)
         .thenAnswer((_) => searchProductControllerMock);
   }

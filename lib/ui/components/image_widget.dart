@@ -22,31 +22,33 @@ class ImageWidget extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: GestureDetector(
-        onTap: () {
-          if (!showLargeImageInShowDialog) return;
-          showDialog(
-              context: context,
-              builder: (context) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: AlertDialog(
-                    insetPadding: const EdgeInsets.symmetric(horizontal: 8),
-                    content: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: _getImageNetwork(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        ean: ean,
-                        plu: plu,
-                      ),
-                    ),
-                  ),
-                );
-              });
-        },
+        onTap: !showLargeImageInShowDialog
+            ? null
+            : () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: AlertDialog(
+                          insetPadding:
+                              const EdgeInsets.symmetric(horizontal: 8),
+                          content: SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: _getImageNetwork(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              ean: ean,
+                              plu: plu,
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+              },
         child: _getImageNetwork(
           width: width,
           height: height,

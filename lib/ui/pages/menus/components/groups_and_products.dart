@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 
 class GroupsAndProducts extends StatelessWidget {
   final int? selectedIndex;
+  final ProductsViewModel? selectedProduct;
   const GroupsAndProducts({
     required this.selectedIndex,
+    required this.selectedProduct,
     super.key,
   });
 
@@ -19,7 +21,7 @@ class GroupsAndProducts extends StatelessWidget {
           Expanded(
             flex: 20,
             child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 5.0),
               child: GroupItems(
                 expansibleGroupsViewModel: menuPresenter.loadedMenu
                     .map((element) => element.keys.first)
@@ -28,13 +30,14 @@ class GroupsAndProducts extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 5),
           Expanded(
             flex: 80,
             child: ProductsItems(
               itensPerLine: 2,
               products: menuPresenter
                   .loadedMenu[selectedIndex ?? 0].entries.first.value,
+              updateSelectedProductWhenClick: true,
+              selectedProduct: selectedProduct,
             ),
           ),
         ],

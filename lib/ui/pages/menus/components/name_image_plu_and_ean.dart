@@ -1,7 +1,8 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
-import '../../../ui/pages/pages.dart';
-import '../components.dart';
+import '../../pages.dart';
+import '../../../components/components.dart';
 
 class NameImagePluAndEan extends StatelessWidget {
   final ProductsViewModel productsViewModel;
@@ -14,6 +15,7 @@ class NameImagePluAndEan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
           productsViewModel.Name,
@@ -32,11 +34,21 @@ class NameImagePluAndEan extends StatelessWidget {
         ),
         Text(
           productsViewModel.PriceLookupCode,
+          textAlign: TextAlign.left,
         ),
         if (productsViewModel.EanCode != null)
           Text(
             productsViewModel.EanCode!,
+            textAlign: TextAlign.left,
           ),
+        Text(
+          productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.bold,
+          ),
+        )
       ],
     );
   }

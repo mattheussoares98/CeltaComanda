@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData makeAppTheme() {
   const primaryColor = Color.fromARGB(255, 76, 175, 80);
   const primaryColorDark = Color.fromARGB(255, 50, 120, 53);
-  const primaryColorLight = Color.fromARGB(255, 120, 238, 124);
+  const primaryColorLight = Color.fromARGB(255, 142, 244, 145);
   const secondaryColor = Color.fromRGBO(0, 77, 64, 1);
   const secondaryColorDark = Color.fromRGBO(0, 37, 26, 1);
   final disabledColor = Colors.grey[400];

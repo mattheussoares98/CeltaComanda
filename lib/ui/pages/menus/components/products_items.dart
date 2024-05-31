@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
-import '../../../helpers/helpers.dart';
-import '../../../components/components.dart';
 
 class ProductsItems extends StatefulWidget {
   final List<ProductsViewModel> products;
@@ -27,52 +25,6 @@ class _ProductsItemsState extends State<ProductsItems> {
   int indexOfSelectedProductCommentIcon = -1;
   final commentTextController = TextEditingController();
 
-  Future<void> _addProductInCart({
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
-    required ProductsViewModel productsViewModel,
-  }) async {
-    try {
-      //addProductInCart
-      _updateSelectedIndex(-1);
-    } catch (e) {
-      Future.delayed(Duration.zero, () {
-        showErrorMessage(context, R.string.msgUnexpectedError);
-      });
-    }
-  }
-
-  void _addProductQuantity(ProductsViewModel productsViewModel) {
-    setState(() {
-      productsViewModel.productQuantity++;
-    });
-  }
-
-  void _subtractProductQuantity(ProductsViewModel productsViewModel) {
-    setState(() {
-      productsViewModel.productQuantity--;
-    });
-  }
-
-  void _clearProductQuantity(ProductsViewModel productsViewModel) {
-    setState(() {
-      productsViewModel.productQuantity = 1;
-    });
-  }
-
-  void _updateSelectedIndex(int index) {
-    if (indexOfSelectedProductCommentIcon == index) {
-      setState(() {
-        indexOfSelectedProductCommentIcon = -1;
-      });
-    } else {
-      setState(() {
-        indexOfSelectedProductCommentIcon = index;
-      });
-    }
-  }
-
   Widget product({
     required int index,
     required MenuPresenter menuPresenter,
@@ -88,33 +40,6 @@ class _ProductsItemsState extends State<ProductsItems> {
           child: ProductItem(
             productIsSelected: widget.products[index] == widget.selectedProduct,
             productsViewModel: widget.products[index],
-            addProductQuantity: () {
-              _addProductQuantity(widget.products[index]);
-            },
-            clearProductQuantity: () {
-              _clearProductQuantity(widget.products[index]);
-            },
-            subtractProductQuantity: () {
-              _subtractProductQuantity(widget.products[index]);
-            },
-            updateSaleRequest: () async {
-              await _addProductInCart(
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-                productsViewModel: widget.products[index],
-              );
-            },
-            productQuantity: widget.products[index].productQuantity,
-            commentTextController: commentTextController,
-            index: index,
-            selectedIndex: indexOfSelectedProductCommentIcon,
-            updateSelectedIndex: () {
-              _updateSelectedIndex(index);
-            },
-            goToComboxPage: () {
-              menuPresenter.goToComboxPage(widget.products[index]);
-            },
           ),
         ),
       );

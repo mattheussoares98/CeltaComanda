@@ -5,30 +5,11 @@ import '../../pages.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductsViewModel productsViewModel;
-  final void Function()? goToComboxPage;
-  final void Function() updateSelectedIndex;
-  final Function() updateSaleRequest;
-  final Function() addProductQuantity;
-  final Function() subtractProductQuantity;
-  final Function() clearProductQuantity;
-  final double productQuantity;
-  final int index;
-  final int selectedIndex;
-  final TextEditingController commentTextController;
+
   final bool productIsSelected;
 
   const ProductItem({
     required this.productsViewModel,
-    required this.goToComboxPage,
-    required this.index,
-    required this.selectedIndex,
-    required this.updateSelectedIndex,
-    required this.updateSaleRequest,
-    required this.addProductQuantity,
-    required this.subtractProductQuantity,
-    required this.productQuantity,
-    required this.clearProductQuantity,
-    required this.commentTextController,
     required this.productIsSelected,
     super.key,
   });
@@ -60,7 +41,7 @@ class _ProductItemState extends State<ProductItem> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: widget.productIsSelected
-            ? Theme.of(context).colorScheme.primary
+            ? Theme.of(context).primaryColorLight
             : Colors.white,
         boxShadow: const [
           BoxShadow(

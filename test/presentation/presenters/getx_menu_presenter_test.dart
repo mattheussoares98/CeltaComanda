@@ -571,10 +571,18 @@ void main() {
   });
 
   test('Should update indexOfSelectedProduct correctly', () async {
-    expect(sut.selectedProductStream, null);
+    expectLater(sut.selectedProductStream, emits(productsViewModel));
 
     sut.updateSelectedProduct(productsViewModel);
+  });
 
-    expect(sut.selectedProductStream, productsViewModel);
+  test('Should clear product quantity when click in other product', () async {
+    sut.updateSelectedProduct(productsViewModel);
+    productsViewModel.productQuantity = 2;
+    expect(productsViewModel.productQuantity, 2);
+
+    sut.updateSelectedProduct(null);
+    sut.updateSelectedProduct(productsViewModel);
+    expect(productsViewModel.productQuantity, 1);
   });
 }

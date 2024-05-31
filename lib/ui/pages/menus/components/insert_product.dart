@@ -5,13 +5,18 @@ import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 
-class InsertProduct extends StatelessWidget {
+class InsertProduct extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
   const InsertProduct({
     required this.selectedProduct,
     super.key,
   });
 
+  @override
+  State<InsertProduct> createState() => _InsertProductState();
+}
+
+class _InsertProductState extends State<InsertProduct> {
   @override
   Widget build(BuildContext context) {
     Future<void> addProductInCart({
@@ -27,11 +32,15 @@ class InsertProduct extends StatelessWidget {
     }
 
     void addProductQuantity(MenuPresenter menuPresenter) {
-      selectedProduct?.productQuantity++;
+      setState(() {
+        widget.selectedProduct?.productQuantity++;
+      });
     }
 
     void subtractProductQuantity(MenuPresenter menuPresenter) {
-      selectedProduct?.productQuantity--;
+      setState(() {
+        widget.selectedProduct?.productQuantity--;
+      });
     }
 
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -41,7 +50,7 @@ class InsertProduct extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
-      child: selectedProduct?.productQuantity == null
+      child: widget.selectedProduct?.productQuantity == null
           ? const TextButton(
               onPressed: null,
               child: Text("Selecione um produto"),
@@ -56,10 +65,13 @@ class InsertProduct extends StatelessWidget {
                   ),
                 ),
                 UpdateQuantity(
-                  productQuantity: 1,
-                  onPressedReduceQuantity: () {
-                    subtractProductQuantity(menuPresenter);
-                  },
+                  productQuantity: widget.selectedProduct!.productQuantity,
+                  onPressedReduceQuantity: widget.selectedProduct != null &&
+                          widget.selectedProduct!.productQuantity <= 1
+                      ? null
+                      : () {
+                          subtractProductQuantity(menuPresenter);
+                        },
                   onPressedAddQuantity: () {
                     addProductQuantity(menuPresenter);
                   },
@@ -79,11 +91,13 @@ class InsertProduct extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Inserir"),
-                        Text(selectedProduct?.SaleRetailPraticed ??
-                            "0"
-                                .toString()
-                                .toBrazilianNumber()
-                                .addBrazilianCoin()),
+                        Text((widget.selectedProduct!.SaleRetailPraticed
+                                    .toDouble() *
+                                widget.selectedProduct!.productQuantity
+                                    .toDouble())
+                            .toString()
+                            .toBrazilianNumber()
+                            .addBrazilianCoin()),
                       ],
                     ),
                   ),

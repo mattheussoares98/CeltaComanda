@@ -11,6 +11,8 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   int? get indexOfSelectedProduct;
   String get totalSaleRequestTempPrice;
 
+  List<CartProductsViewModel> get cartProducts;
+
   Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({
     required String url,

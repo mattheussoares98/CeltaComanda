@@ -317,4 +317,8 @@ class GetxSaleRequestTempPresenter
       await localPrintRequest.add(newRequest);
     }
   }
+
+  final List<CartProductsViewModel> _cartProducts = [];
+  @override
+  List<CartProductsViewModel> get cartProducts => _cartProducts;
 }

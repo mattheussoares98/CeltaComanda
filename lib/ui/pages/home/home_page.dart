@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage>
                     ? 0
                     : saleRequestTempPresenter.saleRequestTemp!.Products.length,
               ),
-              label: 'Pendentes',
+              label: 'Carrinho',
             ),
             BottomNavigationBarItem(
               icon: IconWithNumberQuantity(

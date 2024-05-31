@@ -32,8 +32,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
   @override
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    MenuPresenter menuPresenter =
-        Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
@@ -48,39 +47,9 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
       ),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F5F8),
-        actions: [
-          SearchCommandIcon(
-            loadCommandData: () async {
-              await saleRequestTempPresenter.loadCommandData(
-                commandNumber: homePresenter.commandNumber!,
-                printedProductsPresenter: printedProductsPresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-              );
-            },
-          )
-        ],
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FittedBox(
-              child: Text(
-                "Pendentes para impressão",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            if (homePresenter.commandNumber != null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Comanda ${homePresenter.commandNumber!}",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-          ],
+        title: Text(
+          "Carrinho",
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       body: Column(
@@ -104,23 +73,32 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                         saleRequestTempViewModel:
                             saleRequestTempPresenter.saleRequestTemp!);
                   }
-                  return SearchDataByCommandNumber(
-                    menuPresenter: menuPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    saleRequestTempPresenter: saleRequestTempPresenter,
-                    homePresenter: homePresenter,
-                    emptyMessage: homePresenter.commandNumber == null
-                        ? "Consulte alguma comanda para visualizar os produtos que estão pendentes"
-                        : "Não há produtos pendentes nessa comanda",
-                    loadCommandData: () async {
-                      await saleRequestTempPresenter.loadCommandData(
-                        commandNumber: homePresenter.commandNumber!,
-                        printedProductsPresenter: printedProductsPresenter,
-                        saleRequestTempPresenter: saleRequestTempPresenter,
-                        menuPresenter: menuPresenter,
-                        homePresenter: homePresenter,
-                      );
-                    },
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height -
+                        AppBar().preferredSize.height -
+                        kBottomNavigationBarHeight,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: FittedBox(
+                              child: Text(
+                            "O carrinho está vazio",
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          )),
+                        ),
+                        Image.asset(
+                          "lib/ui/assets/images/empty_cart.jpg",
+                          width: double.infinity,
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

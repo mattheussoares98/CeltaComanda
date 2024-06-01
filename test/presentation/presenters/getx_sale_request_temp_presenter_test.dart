@@ -808,7 +808,8 @@ void main() {
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
-      expect(sut.cartProducts[0].TotalLiquid, cartProductEntity.TotalLiquid.toString());
+      expect(sut.cartProducts[0].TotalLiquid,
+          cartProductEntity.TotalLiquid.toString());
 
       sut.reduceCartProductQuantity(0);
       expect(
@@ -827,6 +828,21 @@ void main() {
 
       expect(sut.cartProducts[0].Quantity,
           (cartProductEntity.Quantity + 1).toString());
+    });
+
+    test("Should update totalLiquid correctly when add quantity", () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+      expect(sut.cartProducts[0].TotalLiquid,
+          cartProductEntity.TotalLiquid.toString());
+
+      sut.addCartProductQuantity(0);
+      expect(
+        sut.cartProducts[0].TotalLiquid,
+        (cartProductEntity.Value * (cartProductEntity.Quantity + 1)).toString(),
+      );
     });
 
     test("Should clear indexOfSelectedProduct when add a product", () {

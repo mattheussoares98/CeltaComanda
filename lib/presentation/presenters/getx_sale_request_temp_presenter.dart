@@ -363,7 +363,8 @@ class GetxSaleRequestTempPresenter
       final productWithNewQuantity = CartProductsViewModel(
         Comments: _cartProducts[index].Comments,
         Product: _cartProducts[index].Product,
-        TotalLiquid: (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
+        TotalLiquid:
+            (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
         Quantity: newQuantity.toString(),
         Value: _cartProducts[index].Value,
         ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
@@ -375,11 +376,13 @@ class GetxSaleRequestTempPresenter
 
   @override
   void addCartProductQuantity(int index) {
+    final newQuantity = _cartProducts[index].Quantity.toDouble() + 1;
+
     final productWithNewQuantity = CartProductsViewModel(
       Comments: _cartProducts[index].Comments,
       Product: _cartProducts[index].Product,
-      TotalLiquid: _cartProducts[index].TotalLiquid,
-      Quantity: (_cartProducts[index].Quantity.toDouble() + 1).toString(),
+      TotalLiquid: (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
+      Quantity: newQuantity.toString(),
       Value: _cartProducts[index].Value,
       ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
     );

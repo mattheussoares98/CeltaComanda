@@ -254,7 +254,7 @@ class GetxMenuPresenter extends GetxController
   Stream<String?> get productCommentStream => _productComment.stream;
   
   @override
-  void updateProductComment(String newComment) {
+  void updateProductComment(String? newComment) {
     _productComment.value = newComment;
   }
 }

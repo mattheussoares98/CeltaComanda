@@ -35,5 +35,5 @@ abstract class MenuPresenter implements Listenable {
   void clear();
   void updateIndexOfSelectedGroup(int index);
   void updateSelectedProduct(ProductsViewModel? selectedProduct);
-  void updateProductComment(String newComment);
+  void updateProductComment(String? newComment);
 }

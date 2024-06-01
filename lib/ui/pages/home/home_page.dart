@@ -36,12 +36,15 @@ class _HomePageState extends State<HomePage>
   void onPageChanged({
     required int index,
     required PrintedProductsPresenter printedProductsPresenter,
+    required HomePresenter homePresenter,
+    required MenuPresenter menuPresenter,
   }) {
     setState(() {
       _pageController.jumpToPage(index);
       _currentIndex = index;
     });
     printedProductsPresenter.updateCanCancelProducts(false);
+    homePresenter.onChangePage(menuPresenter: menuPresenter);
   }
 
   @override
@@ -57,6 +60,8 @@ class _HomePageState extends State<HomePage>
 
     SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return PopScope(
       canPop: false,
@@ -75,8 +80,11 @@ class _HomePageState extends State<HomePage>
           controller: _pageController,
           onPageChanged: (index) {
             onPageChanged(
-                index: index,
-                printedProductsPresenter: printedProductsPresenter);
+              index: index,
+              printedProductsPresenter: printedProductsPresenter,
+              menuPresenter: menuPresenter,
+              homePresenter: homePresenter,
+            );
           },
           children: screens,
         ),
@@ -89,8 +97,11 @@ class _HomePageState extends State<HomePage>
           currentIndex: _currentIndex,
           onTap: (index) {
             onPageChanged(
-                index: index,
-                printedProductsPresenter: printedProductsPresenter);
+              index: index,
+              printedProductsPresenter: printedProductsPresenter,
+              menuPresenter: menuPresenter,
+              homePresenter: homePresenter,
+            );
           },
           items: [
             const BottomNavigationBarItem(

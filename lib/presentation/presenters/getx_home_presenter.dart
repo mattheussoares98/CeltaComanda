@@ -64,4 +64,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   void updateCommandNumber(String? value) {
     _commandNumber = value;
   }
+
+  @override
+  void onChangePage({required MenuPresenter menuPresenter}) {
+    menuPresenter.updateSelectedProduct(null);
+  }
 }

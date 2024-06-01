@@ -119,4 +119,12 @@ void main() {
       expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId, null);
     });
   });
+
+  group("On page change", () {
+    test("Should clear selectedProduct when changePage", () {
+      sut.onChangePage(menuPresenter: menuPresenter);
+
+      verify(() => menuPresenter.updateSelectedProduct(null)).called(1);
+    });
+  });
 }

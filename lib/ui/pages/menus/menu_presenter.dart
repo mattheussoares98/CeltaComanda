@@ -11,7 +11,7 @@ abstract class MenuPresenter implements Listenable {
       get menuStream;
   Stream<ProductsViewModel?> get selectedProductStream;
   Stream<int> get indexOfSelectedGroupStream;
-
+  Stream<String?> get productCommentStream;
 
   ProductsViewModel? get searchedProduct;
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu;
@@ -35,4 +35,5 @@ abstract class MenuPresenter implements Listenable {
   void clear();
   void updateIndexOfSelectedGroup(int index);
   void updateSelectedProduct(ProductsViewModel? selectedProduct);
+  void updateProductComment(String newComment);
 }

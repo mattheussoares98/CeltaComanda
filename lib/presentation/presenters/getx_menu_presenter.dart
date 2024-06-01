@@ -247,4 +247,13 @@ class GetxMenuPresenter extends GetxController
   ProductsViewModel? _searchedProduct;
   @override
   ProductsViewModel? get searchedProduct => _searchedProduct;
+
+  final _productComment = Rx<String?>(null);
+  @override
+  Stream<String?> get productCommentStream => _productComment.stream;
+  
+  @override
+  void updateProductComment(String newComment) {
+    _productComment.value = newComment;
+  }
 }

@@ -724,7 +724,10 @@ void main() {
     test("Should add correctly CartProduct", () {
       expect(sut.cartProducts, []);
 
-      sut.addProductInCart(cartProductEntity);
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
 
       expect(sut.cartProducts,
           [CartProductsViewModel.fromEntity(cartProductEntity)]);
@@ -736,8 +739,14 @@ void main() {
         minimumProductQuantity: 1, //tanto faz pra esse teste
       );
 
-      sut.addProductInCart(cartProductEntity);
-      sut.addProductInCart(cartProduct1);
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+      sut.addProductInCart(
+        product: cartProduct1,
+        menuPresenter: menuPresenter,
+      );
 
       expect(sut.cartProducts, [
         CartProductsViewModel.fromEntity(cartProductEntity), //0
@@ -753,7 +762,10 @@ void main() {
     });
 
     test("Should update comment correctly", () {
-      sut.addProductInCart(cartProductEntity);
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
 
       final newComment = faker.randomGenerator.string(20);
       sut.updateCommentOfProductCart(index: 0, newComment: newComment);
@@ -771,12 +783,16 @@ void main() {
     });
 
     test("Should reduce quantity correctly", () {
-      sut.addProductInCart(cartProductEntity);
       sut.addProductInCart(
-        EntityFactory.makeCartProductEntity(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+      sut.addProductInCart(
+        product: EntityFactory.makeCartProductEntity(
           maximumProductQuantity: 1,
           minimumProductQuantity: 1,
         ),
+        menuPresenter: menuPresenter,
       );
 
       sut.reduceCartProductQuantity(0);
@@ -785,6 +801,15 @@ void main() {
 
       sut.reduceCartProductQuantity(1);
       expect(sut.cartProducts.length, 1);
+    });
+
+    test("Should clear indexOfSelectedProduct when add a product", () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      expect(sut.indexOfSelectedProduct, null);
     });
   });
 }

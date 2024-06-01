@@ -323,8 +323,12 @@ class GetxSaleRequestTempPresenter
   List<CartProductsViewModel> get cartProducts => _cartProducts;
 
   @override
-  void addProductInCart(CartProductEntity product) {
+  void addProductInCart({
+    required CartProductEntity product,
+    required MenuPresenter menuPresenter,
+  }) {
     _cartProducts.add(CartProductsViewModel.fromEntity(product));
+    menuPresenter.updateSelectedProduct(null);
     notifyListeners();
   }
 

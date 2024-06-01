@@ -13,9 +13,11 @@ class SaleRequestTempPresenterSpy extends Mock
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   SaleRequestTempViewModel? saleRequestTempMock;
+  List<CartProductsViewModel> cartProductsController = [];
 
   SaleRequestTempPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
+    when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

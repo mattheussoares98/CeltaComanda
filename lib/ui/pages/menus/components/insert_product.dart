@@ -27,7 +27,7 @@ class _InsertProductState extends State<InsertProduct> {
     }) async {
       try {
         saleRequestTempPresenter.addProductInCart(
-          CartProductEntity(
+          product: CartProductEntity(
             Product: widget.selectedProduct!.toEntity(),
             Comments: "implementar a parte de comentário",
             TotalLiquid: widget.selectedProduct!.productQuantity *
@@ -36,7 +36,9 @@ class _InsertProductState extends State<InsertProduct> {
             Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
             ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
           ),
+          menuPresenter: menuPresenter,
         );
+        setState(() {});
       } catch (e) {
         e;
       }

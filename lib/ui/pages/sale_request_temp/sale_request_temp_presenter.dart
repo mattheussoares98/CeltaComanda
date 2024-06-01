@@ -58,7 +58,10 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Future<void> addNewPrintRequestInFirebase();
 
   List<CartProductsViewModel> get cartProducts;
-  void addProductInCart(CartProductEntity product);
+  void addProductInCart({
+    required CartProductEntity product,
+    required MenuPresenter menuPresenter,
+  });
   void removeProductFromCart(int index);
   void updateCommentOfProductCart({
     required int index,

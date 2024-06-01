@@ -352,6 +352,7 @@ class GetxSaleRequestTempPresenter
     );
 
     _cartProducts[index] = productWithNewComment;
+    _indexOfSelectedProduct = null;
     notifyListeners();
   }
 

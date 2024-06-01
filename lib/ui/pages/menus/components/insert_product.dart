@@ -29,7 +29,7 @@ class _InsertProductState extends State<InsertProduct> {
         saleRequestTempPresenter.addProductInCart(
           product: CartProductEntity(
             Product: widget.selectedProduct!.toEntity(),
-            Comments: "implementar a parte de comentário",
+            Comments: "implementar a parte de comentário quando está adicionando o produto pelo menu",
             TotalLiquid: widget.selectedProduct!.productQuantity *
                 widget.selectedProduct!.SaleRetailPraticed.toDouble(),
             Quantity: widget.selectedProduct!.productQuantity,

@@ -144,8 +144,12 @@ class _SaleRequestTempProductItemState
               ),
               TextButton(
                 onPressed: () async {
-                  commentsFocusNode.unfocus();
+                  saleRequestTempPresenter.updateCommentOfProductCart(
+                    index: widget.index,
+                    newComment: commentsController.text,
+                  );
 
+                  commentsFocusNode.unfocus();
                   // await saleRequestTempPresenter.updateComment(
                   //   comments: commentsController.text,
                   //   saleRequestProductTempId: int.parse(

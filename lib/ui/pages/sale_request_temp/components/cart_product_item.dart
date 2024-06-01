@@ -26,17 +26,10 @@ class _SaleRequestTempProductItemState
   TextEditingController commentsController = TextEditingController();
   FocusNode commentsFocusNode = FocusNode();
 
-  Future<void> onPressedAddQuantity({
+  void onPressedAddQuantity({
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required HomePresenter homePresenter,
-  }) async {
-    // await saleRequestTempPresenter.addProductQuantity(
-    //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-    //   saleRequestProductTempId: int.parse(
-    //     widget.cartProduct.SaleRequestProductTempId,
-    //   ),
-    //   commandNumber: homePresenter.commandNumber!,
-    // );
+  }) {
+    saleRequestTempPresenter.addCartProductQuantity(widget.index);
   }
 
   void onPressedReduceQuantity({
@@ -78,7 +71,6 @@ class _SaleRequestTempProductItemState
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,10 +105,9 @@ class _SaleRequestTempProductItemState
                   saleRequestTempPresenter: saleRequestTempPresenter,
                 );
               },
-              onPressedAddQuantity: () async {
-                await onPressedAddQuantity(
+              onPressedAddQuantity: () {
+                onPressedAddQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
-                  homePresenter: homePresenter,
                 );
               },
               productQuantity: widget.cartProduct.Quantity.toDouble(),

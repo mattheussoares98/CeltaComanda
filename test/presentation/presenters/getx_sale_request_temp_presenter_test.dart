@@ -803,6 +803,18 @@ void main() {
       expect(sut.cartProducts.length, 1);
     });
 
+    test("Should add quantity correctly", () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      sut.addCartProductQuantity(0);
+
+      expect(sut.cartProducts[0].Quantity,
+          (cartProductEntity.Quantity + 1).toString());
+    });
+
     test("Should clear indexOfSelectedProduct when add a product", () {
       sut.addProductInCart(
         product: cartProductEntity,

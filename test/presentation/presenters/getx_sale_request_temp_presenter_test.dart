@@ -68,7 +68,10 @@ void main() {
     comments = faker.randomGenerator.string(10);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
     printRequestEntity = EntityFactory.makePrintRequestEntity();
-    cartProductEntity = EntityFactory.makeCartProductEntity();
+    cartProductEntity = EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 200,
+      minimumProductQuantity: 2,
+    );
   }
 
   void initMockSuccess() {
@@ -728,7 +731,10 @@ void main() {
     });
     test("Should remove correct product from cart", () {
       expect(sut.cartProducts, []);
-      final cartProduct1 = EntityFactory.makeCartProductEntity();
+      final cartProduct1 = EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 100, //tanto faz pra esse teste
+        minimumProductQuantity: 1, //tanto faz pra esse teste
+      );
 
       sut.addProductInCart(cartProductEntity);
       sut.addProductInCart(cartProduct1);
@@ -762,6 +768,23 @@ void main() {
           ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
         )
       ]);
+    });
+
+    test("Should reduce quantity correctly", () {
+      sut.addProductInCart(cartProductEntity);
+      sut.addProductInCart(
+        EntityFactory.makeCartProductEntity(
+          maximumProductQuantity: 1,
+          minimumProductQuantity: 1,
+        ),
+      );
+
+      sut.reduceCartProductQuantity(0);
+      expect(sut.cartProducts[0].Quantity,
+          (cartProductEntity.Quantity - 1).toString());
+
+      sut.reduceCartProductQuantity(1);
+      expect(sut.cartProducts.length, 1);
     });
   });
 }

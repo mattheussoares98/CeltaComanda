@@ -658,11 +658,17 @@ class EntityFactory {
         timesUsed: 1,
       );
 
-  static CartProductEntity makeCartProductEntity() => CartProductEntity(
+  static CartProductEntity makeCartProductEntity({
+    required int maximumProductQuantity,
+    required int minimumProductQuantity,
+  }) =>
+      CartProductEntity(
         Product: makeProductsEntitys()[0],
         Comments: faker.randomGenerator.string(20),
         TotalLiquid: faker.randomGenerator.decimal(),
-        Quantity: faker.randomGenerator.decimal(),
+        Quantity: faker.randomGenerator
+            .integer(maximumProductQuantity, min: minimumProductQuantity)
+            .toDouble(),
         Value: faker.randomGenerator.decimal(),
         ProductPriceLookUpCode: faker.randomGenerator.string(20),
       );

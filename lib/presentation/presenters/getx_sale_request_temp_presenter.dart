@@ -350,4 +350,22 @@ class GetxSaleRequestTempPresenter
     _cartProducts[index] = productWithNewComment;
     notifyListeners();
   }
+
+  @override
+  void reduceCartProductQuantity(int index) {
+    if (_cartProducts[index].Quantity.toDouble() <= 1) {
+      _cartProducts.removeAt(index);
+    } else {
+      final productWithNewQuantity = CartProductsViewModel(
+        Comments: _cartProducts[index].Comments,
+        Product: _cartProducts[index].Product,
+        TotalLiquid: _cartProducts[index].TotalLiquid,
+        Quantity: (_cartProducts[index].Quantity.toDouble() - 1).toString(),
+        Value: _cartProducts[index].Value,
+        ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
+      );
+      _cartProducts[index] = productWithNewQuantity;
+    }
+    notifyListeners();
+  }
 }

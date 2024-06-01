@@ -242,6 +242,7 @@ class GetxMenuPresenter extends GetxController
   void updateSelectedProduct(ProductsViewModel? selectedProduct) {
     _selectedProduct.value?.productQuantity = 1;
     _selectedProduct.value = selectedProduct;
+    _productComment.value = null;
   }
 
   ProductsViewModel? _searchedProduct;

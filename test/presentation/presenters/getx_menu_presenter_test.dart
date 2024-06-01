@@ -594,5 +594,11 @@ void main() {
 
       sut.updateProductComment(newComment);
     });
+
+    test("Should emit correct values on update selected product", () {
+      expectLater(sut.productCommentStream, emits(null));
+
+      sut.updateSelectedProduct(productsViewModel);
+    });
   });
 }

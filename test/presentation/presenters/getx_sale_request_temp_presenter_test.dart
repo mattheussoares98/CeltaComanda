@@ -745,5 +745,23 @@ void main() {
       sut.removeProductFromCart(0);
       expect(sut.cartProducts, []);
     });
+
+    test("Should update comment correctly", () {
+      sut.addProductInCart(cartProductEntity);
+
+      final newComment = faker.randomGenerator.string(20);
+      sut.updateCommentOfProductCart(index: 0, newComment: newComment);
+
+      expect(sut.cartProducts, [
+        CartProductsViewModel(
+          Comments: newComment,
+          Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
+          TotalLiquid: cartProductEntity.TotalLiquid.toString(),
+          Quantity: cartProductEntity.Quantity.toString(),
+          Value: cartProductEntity.Value.toString(),
+          ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+        )
+      ]);
+    });
   });
 }

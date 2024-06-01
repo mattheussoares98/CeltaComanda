@@ -332,4 +332,22 @@ class GetxSaleRequestTempPresenter
   void removeProductFromCart(int index) {
     _cartProducts.removeAt(index);
   }
+
+  @override
+  void updateCommentOfProductCart({
+    required int index,
+    required String newComment,
+  }) {
+    final productWithNewComment = CartProductsViewModel(
+      Comments: newComment,
+      Product: _cartProducts[index].Product,
+      TotalLiquid: _cartProducts[index].TotalLiquid,
+      Quantity: _cartProducts[index].Quantity,
+      Value: _cartProducts[index].Value,
+      ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
+    );
+
+    _cartProducts[index] = productWithNewComment;
+    notifyListeners();
+  }
 }

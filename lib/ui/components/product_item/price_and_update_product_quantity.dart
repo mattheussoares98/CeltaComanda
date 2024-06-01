@@ -10,6 +10,7 @@ class PriceAndUpdateProductQuantity extends StatefulWidget {
   final double price;
   final double totalLiquid;
   final bool showUpdateProductQuantity;
+  final bool showDeleteIcon;
   const PriceAndUpdateProductQuantity({
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
@@ -17,6 +18,7 @@ class PriceAndUpdateProductQuantity extends StatefulWidget {
     required this.price,
     required this.totalLiquid,
     required this.showUpdateProductQuantity,
+    required this.showDeleteIcon,
     super.key,
   });
 
@@ -44,6 +46,7 @@ class _PriceAndUpdateProductQuantityState
                   color: Colors.grey[300],
                 ),
                 child: UpdateQuantity(
+                  showDeleteIcon: widget.showDeleteIcon,
                   productQuantity: widget.productQuantity,
                   onPressedReduceQuantity: widget.onPressedReduceQuantity,
                   onPressedAddQuantity: widget.onPressedAddQuantity,

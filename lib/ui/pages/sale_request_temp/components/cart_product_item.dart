@@ -39,36 +39,20 @@ class _SaleRequestTempProductItemState
     // );
   }
 
-  Future<void> onPressedReduceQuantity({
+  void onPressedReduceQuantity({
     required SaleRequestTempPresenter saleRequestTempPresenter,
-    required HomePresenter homePresenter,
-  }) async {
-    double? quantityDouble = widget.cartProduct.Quantity.toDouble();
-    int quantityInt = quantityDouble.toInt();
-
-    if (quantityInt > 1) {
-      // await saleRequestTempPresenter.subtractProductQuantity(
-      //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      //   saleRequestProductTempId:
-      //       int.parse(widget.cartProduct.SaleRequestProductTempId),
-      //   productQuantity: quantityInt,
-      //   commandNumber: homePresenter.commandNumber!,
-      // );
-    } else {
+  }) {
+    if (widget.cartProduct.Quantity.toDouble() <= 1) {
       notificationDialog(
         context: context,
-        titleMessage: "Deseja realmente remover o produto?",
+        titleMessage: "Remover produto do carrinho?",
         content: null,
         onPress: () async {
-          // await saleRequestTempPresenter.subtractProductQuantity(
-          //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          //   saleRequestProductTempId:
-          //       int.parse(widget.cartProduct.SaleRequestProductTempId),
-          //   productQuantity: quantityInt,
-          //   commandNumber: homePresenter.commandNumber!,
-          // );
+          saleRequestTempPresenter.reduceCartProductQuantity(widget.index);
         },
       );
+    } else {
+      saleRequestTempPresenter.reduceCartProductQuantity(widget.index);
     }
   }
 
@@ -119,14 +103,14 @@ class _SaleRequestTempProductItemState
               },
             ),
             PriceAndUpdateProductQuantity(
+              showDeleteIcon: widget.cartProduct.Quantity.toDouble() <= 1,
               showUpdateProductQuantity: true,
               price: widget.cartProduct.Value.toDouble(),
               totalLiquid: widget.cartProduct.Quantity.toDouble() *
                   widget.cartProduct.Value.toDouble(),
-              onPressedReduceQuantity: () async {
-                await onPressedReduceQuantity(
+              onPressedReduceQuantity: () {
+                onPressedReduceQuantity(
                   saleRequestTempPresenter: saleRequestTempPresenter,
-                  homePresenter: homePresenter,
                 );
               },
               onPressedAddQuantity: () async {

@@ -61,9 +61,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
     final selectedProducts = widget.productsCompositions
         .where((element) => element.indexOfSelectedChild != null);
 
+    ProductCompositionViewModel? selectedChild;
     final textWidgets = selectedProducts.map((element) {
-      ProductCompositionViewModel selectedChild;
-
       if (element.childs?.isEmpty == true) {
         selectedChild = element;
       } else {
@@ -74,11 +73,11 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            selectedChild.ChildName.toString(),
+            selectedChild!.ChildName.toString(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Text(
-            selectedChild.PluChild.toString(),
+            selectedChild!.PluChild.toString(),
           ),
           if (element.commentFather != null)
             CommentRichText(comment: element.commentFather!),
@@ -144,6 +143,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               PriceAndUpdateProductQuantity(
+                showDeleteIcon: selectedChild != null &&
+                    selectedChild!.Quantity!.toDouble() <= 1,
                 onPressedReduceQuantity:
                     productCompositionPresenter.totalComboxQuantity <= 1
                         ? null

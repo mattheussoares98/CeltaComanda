@@ -76,6 +76,7 @@ class _InsertProductState extends State<InsertProduct> {
                   ),
                 ),
                 UpdateQuantity(
+                  showDeleteIcon: false,
                   productQuantity: widget.selectedProduct!.productQuantity,
                   onPressedReduceQuantity: widget.selectedProduct != null &&
                           widget.selectedProduct!.productQuantity <= 1

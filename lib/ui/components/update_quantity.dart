@@ -6,10 +6,12 @@ class UpdateQuantity extends StatelessWidget {
   final double productQuantity;
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
+  final bool showDeleteIcon;
   const UpdateQuantity({
     required this.productQuantity,
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
+    required this.showDeleteIcon,
     super.key,
   });
 
@@ -19,7 +21,10 @@ class UpdateQuantity extends StatelessWidget {
       children: [
         IconButton(
           key: const Key("IconButtonSubtractQuantity"),
-          icon: const Icon(Icons.remove),
+          icon: Icon(
+            showDeleteIcon ? Icons.delete : Icons.remove,
+            color: showDeleteIcon ? Colors.red : Theme.of(context).primaryColor,
+          ),
           iconSize: 20,
           visualDensity: VisualDensity.compact,
           onPressed: onPressedReduceQuantity,

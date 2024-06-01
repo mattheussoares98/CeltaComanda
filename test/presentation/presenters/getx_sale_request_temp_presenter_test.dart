@@ -803,6 +803,20 @@ void main() {
       expect(sut.cartProducts.length, 1);
     });
 
+    test("Should update totalLiquid correctly when reduce quantity", () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+      expect(sut.cartProducts[0].TotalLiquid, cartProductEntity.TotalLiquid.toString());
+
+      sut.reduceCartProductQuantity(0);
+      expect(
+        sut.cartProducts[0].TotalLiquid,
+        (cartProductEntity.Value * (cartProductEntity.Quantity - 1)).toString(),
+      );
+    });
+
     test("Should add quantity correctly", () {
       sut.addProductInCart(
         product: cartProductEntity,

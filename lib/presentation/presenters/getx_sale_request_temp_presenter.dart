@@ -278,16 +278,14 @@ class GetxSaleRequestTempPresenter
 
   @override
   String get totalSaleRequestTempPrice {
-    if (saleRequestTemp?.Products != null) {
-      return saleRequestTemp!.Products
-          .fold(
-              0.0,
-              (previousValue, element) =>
-                  element.toEntity().TotalLiquid + previousValue)
-          .toStringAsFixed(2)
-          .toBrazilianNumber();
-    }
-    return "0";
+    return _cartProducts
+        .fold(
+            0.0,
+            (previousValue, element) =>
+                element.TotalLiquid.toDouble() + previousValue)
+        .toString()
+        .toBrazilianNumber()
+        .addBrazilianCoin();
   }
 
   @override
@@ -361,11 +359,12 @@ class GetxSaleRequestTempPresenter
     if (_cartProducts[index].Quantity.toDouble() <= 1) {
       _cartProducts.removeAt(index);
     } else {
+      final newQuantity = _cartProducts[index].Quantity.toDouble() - 1;
       final productWithNewQuantity = CartProductsViewModel(
         Comments: _cartProducts[index].Comments,
         Product: _cartProducts[index].Product,
-        TotalLiquid: _cartProducts[index].TotalLiquid,
-        Quantity: (_cartProducts[index].Quantity.toDouble() - 1).toString(),
+        TotalLiquid: (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
+        Quantity: newQuantity.toString(),
         Value: _cartProducts[index].Value,
         ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
       );

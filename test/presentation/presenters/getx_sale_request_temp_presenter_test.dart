@@ -33,6 +33,7 @@ void main() {
   late String comments;
   late PrintRequestEntity printRequestEntity;
   late CartProductEntity cartProductEntity;
+  late String commandNumber;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -75,6 +76,7 @@ void main() {
       maximumProductQuantity: 200,
       minimumProductQuantity: 2,
     );
+    commandNumber = faker.randomGenerator.integer(100).toString();
   }
 
   void initMockSuccess() {
@@ -95,6 +97,8 @@ void main() {
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
+    registerFallbackValue(UpdateSaleRequestTempEntity);
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
   group("AddProductQuantity group", () {
@@ -918,6 +922,60 @@ void main() {
       );
 
       expect(sut.cartProducts.length, 2);
+    });
+  });
+
+  group("Save cart products in saleRequesTemp", () {
+    test("Should call correct functions on save products in SaleRequestTemp",
+        () async {
+      await sut.saveProducts(commandNumber);
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      ).called(2);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: commandNumber,
+          )).called(1);
+
+      final products = sut.cartProducts
+          .map((element) => UpdateSaleRequestTempProductEntity(
+              ProductInternalCodeOnErp:
+                  element.toEntity().Product.InternalCodeOnERP!.toInt(),
+              ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
+              Quantity: element.Quantity.toDouble(),
+              SaleRequestTempId:
+                  saleRequestTempEntity.SaleRequestTempId.toInt(),
+              TotalLiquid: element.TotalLiquid.toDouble(),
+              Value: element.Value.toDouble(),
+              Comments: element.Comments))
+          .toList();
+
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: saleRequestTempEntity.DeliveryControl.toInt(),
+        EnterpriseId: saleRequestTempEntity.EnterpriseId.toInt(),
+        PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+        SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId.toInt(),
+        TotalLiquid: products.fold(0.0,
+            (previousValue, element) => element.TotalLiquid + previousValue),
+        Products: products,
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: entity,
+          )).called(1);
+
+      verify(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: saleRequestTempEntity,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          ));
     });
   });
 }

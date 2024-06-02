@@ -444,6 +444,9 @@ class GetxSaleRequestTempPresenter
     clear();
 
     try {
+      // bool cartProductsAlreadyConfirmed =
+      await confirmedCartProducts.isConfirmed();
+
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber,

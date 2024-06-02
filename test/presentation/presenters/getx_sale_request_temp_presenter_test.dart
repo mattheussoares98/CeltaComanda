@@ -1004,5 +1004,11 @@ void main() {
 
       await sut.saveProducts(commandNumber);
     });
+
+    test("Should call ConfirmedCartProducts when call saveCartProducts", ()async{
+      await sut.saveProducts(commandNumber);
+
+      verify(() => confirmedCartProducts.isConfirmed()).called(1);
+    });
   });
 }

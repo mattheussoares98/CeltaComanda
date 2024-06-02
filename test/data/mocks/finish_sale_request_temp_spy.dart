@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:mocktail/mocktail.dart';
@@ -17,5 +18,5 @@ class FinishSaleRequestTempSpy extends Mock implements FinishSaleRequestTemp {
       this.mockFinishSaleRequestTempCall().thenAnswer((_) async => _);
 
   void mockFinishSaleRequestTempError() =>
-      this.mockFinishSaleRequestTempCall().thenThrow(Exception());
+      this.mockFinishSaleRequestTempCall().thenThrow(DomainError.unexpected);
 }

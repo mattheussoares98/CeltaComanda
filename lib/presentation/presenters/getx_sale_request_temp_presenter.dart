@@ -489,9 +489,8 @@ class GetxSaleRequestTempPresenter
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           entity: entity,
         );
+        await confirmedCartProducts.updateValue(true);
       }
-
-      await confirmedCartProducts.updateValue(true);
 
       saleRequestTempResult = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,

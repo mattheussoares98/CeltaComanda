@@ -14,7 +14,7 @@ class LocalConfirmedCartProducts implements ConfirmedCartProducts {
     try {
       final value =
           await hiveStorage.get(CacheKeys.updatedSaleRequestTemp.name);
-      return value == "true";
+      return value;
     } catch (e) {
       throw DomainError.unexpected;
     }

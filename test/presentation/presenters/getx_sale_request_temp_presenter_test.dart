@@ -984,5 +984,14 @@ void main() {
 
       await sut.saveProducts(commandNumber);
     });
+    test("Should emit correct values updateSaleRequestTemp throws", () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.saveProducts(commandNumber);
+    });
   });
 }

@@ -320,12 +320,52 @@ class GetxSaleRequestTempPresenter
   @override
   List<CartProductsViewModel> get cartProducts => _cartProducts;
 
+  int _getIndexOfEqualProduct(CartProductEntity product) {
+    return _cartProducts.indexWhere(
+      (cartProduct) =>
+          cartProduct.ProductPriceLookUpCode ==
+              product.ProductPriceLookUpCode &&
+          cartProduct.Comments == product.Comments &&
+          cartProduct.Value == product.Value.toString(),
+    );
+  }
+
+  void _updateProductWithNewQuantity({
+    required int indexOfEqualProduct,
+    required CartProductEntity newProduct,
+  }) {
+    final productWithNewQuantity = CartProductsViewModel(
+      Product: _cartProducts[indexOfEqualProduct].Product,
+      Comments: _cartProducts[indexOfEqualProduct].Comments,
+      TotalLiquid: (_cartProducts[indexOfEqualProduct].TotalLiquid.toDouble() +
+              newProduct.TotalLiquid)
+          .toString(),
+      Quantity: (_cartProducts[indexOfEqualProduct].Quantity.toDouble() +
+              newProduct.Quantity)
+          .toString(),
+      Value: newProduct.Value.toString(),
+      ProductPriceLookUpCode: newProduct.ProductPriceLookUpCode,
+    );
+
+    _cartProducts[indexOfEqualProduct] = productWithNewQuantity;
+  }
+
   @override
   void addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
   }) {
-    _cartProducts.add(CartProductsViewModel.fromEntity(product));
+    final indexOfEqualProduct = _getIndexOfEqualProduct(product);
+
+    if (indexOfEqualProduct == -1) {
+      _cartProducts.add(CartProductsViewModel.fromEntity(product));
+    } else {
+      _updateProductWithNewQuantity(
+        indexOfEqualProduct: indexOfEqualProduct,
+        newProduct: product,
+      );
+    }
+
     menuPresenter.updateSelectedProduct(null);
     notifyListeners();
   }
@@ -381,7 +421,8 @@ class GetxSaleRequestTempPresenter
     final productWithNewQuantity = CartProductsViewModel(
       Comments: _cartProducts[index].Comments,
       Product: _cartProducts[index].Product,
-      TotalLiquid: (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
+      TotalLiquid:
+          (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
       Quantity: newQuantity.toString(),
       Value: _cartProducts[index].Value,
       ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,

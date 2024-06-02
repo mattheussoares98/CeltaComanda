@@ -853,5 +853,68 @@ void main() {
 
       expect(sut.indexOfSelectedProduct, null);
     });
+
+    test(
+        "Should update product quantity when add equal product in cart instead of add other product",
+        () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      expect(sut.cartProducts.length, 1);
+    });
+
+    test(
+        "Should add new product in cart if already contains equal PLU in cart but the comment is differente",
+        () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      final productWithNewComment = CartProductEntity(
+        Product: cartProductEntity.Product,
+        Comments: "comentário diferente",
+        TotalLiquid: cartProductEntity.TotalLiquid,
+        Quantity: cartProductEntity.Quantity,
+        Value: cartProductEntity.Value,
+        ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+      );
+      sut.addProductInCart(
+        product: productWithNewComment,
+        menuPresenter: menuPresenter,
+      );
+
+      expect(sut.cartProducts.length, 2);
+    });
+
+    test(
+        "Should add new product in cart if already contains equal PLU in cart but the value is differente",
+        () {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      final productWithNewComment = CartProductEntity(
+        Product: cartProductEntity.Product,
+        Comments: cartProductEntity.Comments,
+        TotalLiquid: cartProductEntity.TotalLiquid,
+        Quantity: cartProductEntity.Quantity,
+        Value: 726871278512785348193219.0,
+        ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+      );
+      sut.addProductInCart(
+        product: productWithNewComment,
+        menuPresenter: menuPresenter,
+      );
+
+      expect(sut.cartProducts.length, 2);
+    });
   });
 }

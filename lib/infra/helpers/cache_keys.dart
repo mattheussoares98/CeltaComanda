@@ -4,4 +4,5 @@ enum CacheKeys {
   enterprise,
   hiveBoxName,
   printRequest,
+  updatedSaleRequestTemp,
 }

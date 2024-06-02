@@ -1,5 +1,6 @@
 export './add_print_request.dart';
 export './clear_sale_request_temp.dart';
+export './confirmed_cart_products.dart';
 export './finish_sale_request_temp.dart';
 export './load_print_request.dart';
 export './load_sale_request_temp.dart';

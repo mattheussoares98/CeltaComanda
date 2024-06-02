@@ -12,13 +12,10 @@ class SaveSaleRequestButton extends StatelessWidget {
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    MenuPresenter menuPresenter =
-        Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    TextEditingController commentsController = TextEditingController();
+    TextEditingController commandNumberController = TextEditingController();
     FocusNode commentsFocusNode = FocusNode();
 
     return Padding(
@@ -29,18 +26,18 @@ class SaveSaleRequestButton extends StatelessWidget {
         ),
         onPressed: () async {
           if (printedProductsPresenter.printedProducts?.Comments != null) {
-            commentsController.text =
+            commandNumberController.text =
                 printedProductsPresenter.printedProducts!.Comments!;
           }
           notificationDialog(
             context: context,
-            titleMessage: "Deseja confirmar os produtos?",
+            titleMessage: "Número da comanda",
             content: SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(height: 15),
                   const Text(
-                      "Esse comentário abaixo é o da comanda inteira, não é o comentário de um produto específico. Você não é obrigado a colocar um comentário"),
+                      "Consulte a comanda para verificar se ela está disponível"),
                   const SizedBox(height: 15),
                   ConstrainedBox(
                     constraints: const BoxConstraints(
@@ -48,12 +45,13 @@ class SaveSaleRequestButton extends StatelessWidget {
                     ),
                     child: TextFormField(
                       focusNode: commentsFocusNode,
-                      controller: commentsController,
+                      controller: commandNumberController,
                       maxLines: null,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(3, 10, 3, 3),
-                        label: Text("Inserir comentário na comanda"),
-                        hintText: "Comentário",
+                        label: Text("Insira o número da comanda"),
+                        hintText: "Número da comanda",
                       ),
                     ),
                   ),
@@ -61,20 +59,23 @@ class SaveSaleRequestButton extends StatelessWidget {
               ),
             ),
             onPress: () async {
-              if (commentsController.text.isNotEmpty) {
-                saleRequestTempPresenter.updateLocalSaleRequestComment(
-                  commentsController.text,
-                );
-              }
+              // if (commandNumberController.text.isNotEmpty) {
+              //   saleRequestTempPresenter.updateLocalSaleRequestComment(
+              //     commandNumberController.text,
+              //   );
+              // }
 
-              await saleRequestTempPresenter.finishSaleRequest(
-                saleRequestTempEntity:
-                    saleRequestTempPresenter.saleRequestTemp!.toEntity(),
-                menuPresenter: menuPresenter,
-                printedProductsPresenter: printedProductsPresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-                homePresenter: homePresenter,
-              );
+              // await saleRequestTempPresenter.loadSaleRequest(commandNumberController.text);
+              await saleRequestTempPresenter.saveProducts(commandNumberController.text);
+
+              // await saleRequestTempPresenter.finishSaleRequest(
+              //   saleRequestTempEntity:
+              //       saleRequestTempPresenter.saleRequestTemp!.toEntity(),
+              //   menuPresenter: menuPresenter,
+              //   printedProductsPresenter: printedProductsPresenter,
+              //   saleRequestTempPresenter: saleRequestTempPresenter,
+              //   homePresenter: homePresenter,
+              // );
             },
           );
         },

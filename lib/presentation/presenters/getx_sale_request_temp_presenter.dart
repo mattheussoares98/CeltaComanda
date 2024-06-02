@@ -20,6 +20,7 @@ class GetxSaleRequestTempPresenter
   final TicketIsPermitted ticketIsPermitted;
   final AddPrintRequest addPrintRequest;
   final LocalPrintRequest localPrintRequest;
+  final UpdateSaleRequestTemp updateSaleRequestTemp;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
@@ -29,10 +30,12 @@ class GetxSaleRequestTempPresenter
     required this.ticketIsPermitted,
     required this.addPrintRequest,
     required this.localPrintRequest,
+    required this.updateSaleRequestTemp,
   });
 
   @override
   Future<void> loadSaleRequest(String commandNumber) async {
+    isLoading = true;
     clear();
 
     try {
@@ -430,5 +433,91 @@ class GetxSaleRequestTempPresenter
     _cartProducts[index] = productWithNewQuantity;
 
     notifyListeners();
+  }
+
+  @override
+  Future<void> saveProducts(String commandNumber) async {
+    isLoading = true;
+    mainError = null;
+    clear();
+
+    try {
+      await ticketIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: commandNumber,
+      );
+
+      SaleRequestTempEntity? saleRequestTempResult =
+          await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
+
+      if (saleRequestTempResult != null) {
+        _saleRequestTemp =
+            SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
+
+        final products = _cartProducts
+            .map((element) => UpdateSaleRequestTempProductEntity(
+                  ProductInternalCodeOnErp:
+                      element.toEntity().Product.InternalCodeOnERP!.toInt(),
+                  ProductPriceLookUpCode:
+                      element.toEntity().ProductPriceLookUpCode,
+                  Quantity: element.Quantity.toDouble(),
+                  SaleRequestTempId:
+                      _saleRequestTemp!.SaleRequestTempId.toInt(),
+                  TotalLiquid: element.TotalLiquid.toDouble(),
+                  Value: element.Value.toDouble(),
+                  Comments: element.Comments,
+                ))
+            .toList();
+
+        final entity = UpdateSaleRequestTempEntity(
+          DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
+          EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
+          PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
+          SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+          TotalLiquid: products.fold(0.0,
+              (previousValue, element) => element.TotalLiquid + previousValue),
+          Products: products,
+        );
+
+        await updateSaleRequestTemp.update(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          entity: entity,
+        );
+
+        saleRequestTempResult = await loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        );
+
+        await finishSaleRequestTemp.finish(
+          saleRequestTempEntity: SaleRequestTempEntity(
+            Products: saleRequestTempResult!.Products,
+            SaleRequestTempId: saleRequestTempResult.SaleRequestTempId,
+            PersonalizedCode: saleRequestTempResult.PersonalizedCode,
+            EnterpriseId: saleRequestTempResult.EnterpriseId,
+            TotalLiquid: saleRequestTempResult.TotalLiquid,
+            DeliveryControl: saleRequestTempResult.DeliveryControl,
+            Comments: saleRequestTempResult.Comments,
+          ),
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        );
+      }
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 }

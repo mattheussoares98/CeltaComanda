@@ -26,6 +26,7 @@ void main() {
   late TicketIsPermittedSpy ticketIsPermitted;
   late AddPrintRequestSpy addPrintRequest;
   late LocalPrintRequestSpy localPrintRequest;
+  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -41,6 +42,7 @@ void main() {
     ticketIsPermitted = TicketIsPermittedSpy();
     addPrintRequest = AddPrintRequestSpy();
     localPrintRequest = LocalPrintRequestSpy();
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
   }
 
   void initPresenters() {
@@ -56,6 +58,7 @@ void main() {
       ticketIsPermitted: ticketIsPermitted,
       addPrintRequest: addPrintRequest,
       localPrintRequest: localPrintRequest,
+      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   }
 

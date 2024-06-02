@@ -11,4 +11,5 @@ SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
       ticketIsPermitted: makeRemoteticketIsPermitted(),
       addPrintRequest: makeRemoteAddPrintRequest(),
       localPrintRequest: makeLocalPrintRequest(),
+      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
     );

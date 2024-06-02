@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../ui/components/components.dart';
-import '../../ui/pages/pages.dart';
 
 class RequestSummary extends StatelessWidget {
   final String totalLiquid;
@@ -15,9 +13,6 @@ class RequestSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: true);
-
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Column(
@@ -25,9 +20,9 @@ class RequestSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          if (printedProductsPresenter.printedProducts?.Comments != null)
+          if (comments != null)
             CommentRichText(
-              comment: printedProductsPresenter.printedProducts!.Comments!,
+              comment: comments!,
             ),
           const SizedBox(height: 10),
           Row(

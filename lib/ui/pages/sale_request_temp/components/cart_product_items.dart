@@ -54,8 +54,7 @@ class SaleRequestProductsItems extends StatelessWidget {
             ),
           ),
         ),
-        if (saleRequestTempPresenter.saleRequestTemp?.Products.isNotEmpty ==
-            true)
+        if (saleRequestTempPresenter.cartProducts.isNotEmpty)
           const SaveSaleRequestButton(),
       ],
     );

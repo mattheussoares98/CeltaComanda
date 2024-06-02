@@ -84,15 +84,14 @@ class _SaleRequestTempProductItemState
               showLargeImageInShowDialog: true,
             ),
             const SizedBox(width: 3),
-            ProductNamePluAndEan(
-              nameComplete: widget.cartProduct.Product.NameComplete,
-              name: widget.cartProduct.Product.Name,
-              eanCode: widget.cartProduct.Product.EanCode,
-              priceLookupCode: widget.cartProduct.Product.PriceLookupCode,
-              comments: widget.cartProduct.Comments,
-              onTapCommentIcon: () async {
-                onTapCommentIcon(saleRequestTempPresenter);
-              },
+            Expanded(
+              child: Text(
+                widget.cartProduct.Product.Name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
             ),
             PriceAndUpdateProductQuantity(
               showDeleteIcon: widget.cartProduct.Quantity.toDouble() <= 1,

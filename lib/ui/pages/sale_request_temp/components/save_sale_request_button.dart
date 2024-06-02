@@ -79,7 +79,7 @@ class SaveSaleRequestButton extends StatelessWidget {
           );
         },
         child: const Text(
-          'Salvar/imprimir produtos',
+          'Confirmar',
           style: TextStyle(
             color: Colors.white,
           ),

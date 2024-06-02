@@ -503,89 +503,94 @@ void main() {
       verify(() => saleRequestTempPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
+
+    test('Should call ticketIsPermitted on load data', () async {
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: homePresenter.commandNumberMock!,
+          )).called(1);
+    });
+
+    test(
+        'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
+        () async {
+      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
+
+    test('Should emit correct values on ticketIsPermitted throws unexpected',
+        () async {
+      ticketIsPermitted.mockError(DomainError.unexpected);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
   });
 
-  test('Should go to products page ExpansibleGroupItem click', () async {
-    sut.goToProductsPage(expansibleGroups[0]);
+  group("Navigation", () {
+    test('Should go to products page ExpansibleGroupItem click', () async {
+      sut.goToProductsPage(expansibleGroups[0]);
 
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.products,
-        arguments: expansibleGroups[0],
-      ),
-    ).called(1);
-  });
-  test('Should go to ComboxPage', () async {
-    await sut.searchProduct(productEan);
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.products,
+          arguments: expansibleGroups[0],
+        ),
+      ).called(1);
+    });
+    test('Should go to ComboxPage', () async {
+      await sut.searchProduct(productEan);
 
-    sut.goToComboxPage(ProductsViewModel.fromEntity(productEntity));
+      sut.goToComboxPage(ProductsViewModel.fromEntity(productEntity));
 
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.productComposition,
-        arguments: ProductsViewModel.fromEntity(productEntity),
-      ),
-    ).called(1);
-  });
-
-  test('Should call ticketIsPermitted on load data', () async {
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-
-    verify(() => ticketIsPermitted.verify(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: homePresenter.commandNumberMock!,
-        )).called(1);
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.productComposition,
+          arguments: ProductsViewModel.fromEntity(productEntity),
+        ),
+      ).called(1);
+    });
   });
 
-  test(
-      'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
-      () async {
-    ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+  group("selected product", () {
+    test('Should update indexOfSelectedProduct correctly', () async {
+      expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 2, 0, 5]));
 
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(
-        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      sut.updateIndexOfSelectedGroup(1);
+      sut.updateIndexOfSelectedGroup(2);
+      sut.updateIndexOfSelectedGroup(0);
+      sut.updateIndexOfSelectedGroup(5);
+    });
+    test('Should unselect product when change selected group', () async {
+      expectLater(sut.selectedProductStream, emits(null));
 
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-  });
+      sut.updateIndexOfSelectedGroup(0);
+    });
 
-  test('Should emit correct values on ticketIsPermitted throws unexpected',
-      () async {
-    ticketIsPermitted.mockError(DomainError.unexpected);
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+    test('Should update indexOfSelectedProduct correctly', () async {
+      expectLater(sut.selectedProductStream, emits(productsViewModel));
 
-    await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-  });
+      sut.updateSelectedProduct(productsViewModel);
+    });
 
-  test('Should update indexOfSelectedProduct correctly', () async {
-    expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 2, 0, 5]));
+    test('Should clear product quantity when click in other product', () async {
+      sut.updateSelectedProduct(productsViewModel);
+      productsViewModel.productQuantity = 2;
+      expect(productsViewModel.productQuantity, 2);
 
-    sut.updateIndexOfSelectedGroup(1);
-    sut.updateIndexOfSelectedGroup(2);
-    sut.updateIndexOfSelectedGroup(0);
-    sut.updateIndexOfSelectedGroup(5);
-  });
-  test('Should unselect product when change selected group', () async {
-    expectLater(sut.selectedProductStream, emits(null));
-
-    sut.updateIndexOfSelectedGroup(0);
-  });
-
-  test('Should update indexOfSelectedProduct correctly', () async {
-    expectLater(sut.selectedProductStream, emits(productsViewModel));
-
-    sut.updateSelectedProduct(productsViewModel);
-  });
-
-  test('Should clear product quantity when click in other product', () async {
-    sut.updateSelectedProduct(productsViewModel);
-    productsViewModel.productQuantity = 2;
-    expect(productsViewModel.productQuantity, 2);
-
-    sut.updateSelectedProduct(null);
-    sut.updateSelectedProduct(productsViewModel);
-    expect(productsViewModel.productQuantity, 1);
+      sut.updateSelectedProduct(null);
+      sut.updateSelectedProduct(productsViewModel);
+      expect(productsViewModel.productQuantity, 1);
+    });
   });
 
   group("Product comment", () {

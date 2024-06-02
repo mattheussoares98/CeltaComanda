@@ -73,17 +73,4 @@ void main() {
       ),
     ).called(1);
   });
-
-  test('Should go to enterprise page if loadSaleRequestTemp returns null',
-      () async {
-    loadSaleRequestTemp.mockLoadSaleRequestTemp(null);
-    await sut.checkApiSaleRequest(durationInSeconds: 0);
-
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.enterpriseValidation,
-        clear: true,
-      ),
-    ).called(1);
-  });
 }

@@ -19,6 +19,7 @@ void main() {
   late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late SaleRequestTempEntity saleRequestTempEntity;
 
   setUp(() {
     validation = ValidationSpy();
@@ -34,6 +35,9 @@ void main() {
     remoteLoadEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
 
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,

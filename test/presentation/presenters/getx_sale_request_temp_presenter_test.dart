@@ -35,6 +35,9 @@ void main() {
   late PrintRequestEntity printRequestEntity;
   late CartProductEntity cartProductEntity;
   late String commandNumber;
+  late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
+  late List<UpdateSaleRequestTempProductEntity>
+      updateSaleRequestTempProductsEntity;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -80,6 +83,27 @@ void main() {
       minimumProductQuantity: 2,
     );
     commandNumber = faker.randomGenerator.integer(100).toString();
+
+    updateSaleRequestTempProductsEntity = sut.cartProducts
+        .map((element) => UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                element.toEntity().Product.InternalCodeOnERP!.toInt(),
+            ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
+            Quantity: element.Quantity.toDouble(),
+            SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId.toInt(),
+            TotalLiquid: element.TotalLiquid.toDouble(),
+            Value: element.Value.toDouble(),
+            Comments: element.Comments))
+        .toList();
+    updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
+      DeliveryControl: saleRequestTempEntity.DeliveryControl.toInt(),
+      EnterpriseId: saleRequestTempEntity.EnterpriseId.toInt(),
+      PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+      SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId.toInt(),
+      TotalLiquid: updateSaleRequestTempProductsEntity.fold(
+          0.0, (previousValue, element) => element.TotalLiquid + previousValue),
+      Products: updateSaleRequestTempProductsEntity,
+    );
   }
 
   void initMockSuccess() {
@@ -915,7 +939,13 @@ void main() {
   group("Save cart products in saleRequesTemp", () {
     test("Should call correct functions on save products in SaleRequestTemp",
         () async {
+      confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(commandNumber);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: commandNumber,
+          )).called(1);
 
       verify(
         () => loadSaleRequestTemp.load(
@@ -926,43 +956,19 @@ void main() {
         ),
       ).called(2);
 
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: commandNumber,
-          )).called(1);
-
-      final products = sut.cartProducts
-          .map((element) => UpdateSaleRequestTempProductEntity(
-              ProductInternalCodeOnErp:
-                  element.toEntity().Product.InternalCodeOnERP!.toInt(),
-              ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
-              Quantity: element.Quantity.toDouble(),
-              SaleRequestTempId:
-                  saleRequestTempEntity.SaleRequestTempId.toInt(),
-              TotalLiquid: element.TotalLiquid.toDouble(),
-              Value: element.Value.toDouble(),
-              Comments: element.Comments))
-          .toList();
-
-      final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: saleRequestTempEntity.DeliveryControl.toInt(),
-        EnterpriseId: saleRequestTempEntity.EnterpriseId.toInt(),
-        PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
-        SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId.toInt(),
-        TotalLiquid: products.fold(0.0,
-            (previousValue, element) => element.TotalLiquid + previousValue),
-        Products: products,
-      );
+      verify(() => confirmedCartProducts.isConfirmed()).called(1);
+      verify(() => confirmedCartProducts.updateValue(true)).called(1);
+      verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
       verify(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            entity: entity,
+            entity: updateSaleRequestTempEntity,
           )).called(1);
 
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: saleRequestTempEntity,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          ));
+          )).called(1);
     });
     test("Should emit correct values on success to save cart products",
         () async {
@@ -979,6 +985,39 @@ void main() {
 
       await sut.saveProducts(commandNumber);
     });
+    test("Should call correct functions LoadSaleRequestTemp throws", () async {
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
+
+      await sut.saveProducts(commandNumber);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: commandNumber,
+          )).called(1);
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      ).called(1);
+
+      verifyNever(() => confirmedCartProducts.isConfirmed());
+      verifyNever(() => confirmedCartProducts.updateValue(true));
+      verifyNever(() => confirmedCartProducts.updateValue(false));
+
+      verifyNever(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          ));
+
+      verifyNever(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: saleRequestTempEntity,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          ));
+    });
     test("Should emit correct values TicketIsPermited throws", () async {
       ticketIsPermitted.mockError();
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -987,6 +1026,40 @@ void main() {
 
       await sut.saveProducts(commandNumber);
     });
+    test("Should call correct functions when TicketIsPermited throws",
+        () async {
+      ticketIsPermitted.mockError();
+
+      await sut.saveProducts(commandNumber);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: commandNumber,
+          )).called(1);
+
+      verifyNever(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      );
+
+      verifyNever(() => confirmedCartProducts.isConfirmed());
+      verifyNever(() => confirmedCartProducts.updateValue(true));
+      verifyNever(() => confirmedCartProducts.updateValue(false));
+
+      verifyNever(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          ));
+
+      verifyNever(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: saleRequestTempEntity,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          ));
+    });
     test("Should emit correct values updateSaleRequestTemp throws", () async {
       updateSaleRequestTemp
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
@@ -994,9 +1067,46 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
+      confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(commandNumber);
     });
-    test("Should emit correct values updateSaleRequestTemp throws", () async {
+    test("Should call correct functions updateSaleRequestTemp throws",
+        () async {
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
+      confirmedCartProducts.mockIsConfirmed(false);
+
+      await sut.saveProducts(commandNumber);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: commandNumber,
+          )).called(1);
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      ).called(1);
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          )).called(1);
+
+      verify(() => confirmedCartProducts.isConfirmed()).called(1);
+      verifyNever(() => confirmedCartProducts.updateValue(true));
+      verifyNever(() => confirmedCartProducts.updateValue(false));
+
+      verifyNever(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: saleRequestTempEntity,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          ));
+    });
+    test("Should emit correct values finishSaleRequestTemp throws", () async {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -1004,11 +1114,102 @@ void main() {
 
       await sut.saveProducts(commandNumber);
     });
+    test("Should call correct functions when finishSaleRequestTemp throws",
+        () async {
+      finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
-    test("Should call ConfirmedCartProducts when call saveCartProducts", ()async{
+      await sut.saveProducts(commandNumber);
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: commandNumber,
+          )).called(1);
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      ).called(2);
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          )).called(1);
+
+      verify(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: saleRequestTempEntity,
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          )).called(1);
+
+      verify(() => confirmedCartProducts.isConfirmed()).called(1);
+      verify(() => confirmedCartProducts.updateValue(true)).called(1);
+      verifyNever(() => confirmedCartProducts.updateValue(false));
+    });
+
+    test(
+        "Should call verify is confirmed cart products when call saveCartProducts",
+        () async {
       await sut.saveProducts(commandNumber);
 
       verify(() => confirmedCartProducts.isConfirmed()).called(1);
+    });
+    test(
+        "Should call udpate confirmedCartProducts with true value when saveCartProducts succeeds",
+        () async {
+      await sut.saveProducts(commandNumber);
+
+      verify(() => confirmedCartProducts.updateValue(true)).called(1);
+    });
+    test(
+        "Should NOT call udpate confirmedCartProducts with true value when updateSaleRequest throws",
+        () async {
+      confirmedCartProducts.mockIsConfirmed(false);
+      updateSaleRequestTemp
+          .mockUpdateSaleRequestTempError(DomainError.unexpected);
+      await sut.saveProducts(commandNumber);
+
+      verifyNever(() => confirmedCartProducts.updateValue(true));
+    });
+    test(
+        "Should call udpate confirmedCartProducts with false value when finishSaleRequestTemp succeeds",
+        () async {
+      await sut.saveProducts(commandNumber);
+
+      verify(() => confirmedCartProducts.updateValue(false)).called(1);
+    });
+    test(
+        "Should NOT call udpate confirmedCartProducts with false value when finishSaleRequestTemp throws",
+        () async {
+      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+
+      await sut.saveProducts(commandNumber);
+
+      verifyNever(() => confirmedCartProducts.updateValue(false));
+    });
+    test(
+        "Should not call updateSaleRequestTemp when confirmedCartProducts return true",
+        () async {
+      confirmedCartProducts.mockIsConfirmed(true);
+      await sut.saveProducts(commandNumber);
+
+      verifyNever(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          ));
+    });
+    test(
+        "Should call updateSaleRequestTemp when confirmedCartProducts return false",
+        () async {
+      confirmedCartProducts.mockIsConfirmed(false);
+      await sut.saveProducts(commandNumber);
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          )).called(1);
     });
   });
 }

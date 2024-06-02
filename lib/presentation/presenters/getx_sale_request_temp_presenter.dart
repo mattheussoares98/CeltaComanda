@@ -52,11 +52,9 @@ class GetxSaleRequestTempPresenter
         commandNumber: commandNumber,
       );
 
-      if (saleRequestTemp != null) {
-        _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
-        _saleRequestTemp!.Products
-            .sort((a, b) => a.Product.Name.compareTo(b.Product.Name));
-      }
+      _saleRequestTemp = SaleRequestTempViewModel.fromEntity(saleRequestTemp);
+      _saleRequestTemp!.Products
+          .sort((a, b) => a.Product.Name.compareTo(b.Product.Name));
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:
@@ -444,75 +442,77 @@ class GetxSaleRequestTempPresenter
     clear();
 
     try {
-      // bool cartProductsAlreadyConfirmed =
-      await confirmedCartProducts.isConfirmed();
-
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber,
       );
 
-      SaleRequestTempEntity? saleRequestTempResult =
+      SaleRequestTempEntity saleRequestTempResult =
           await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 
-      if (saleRequestTempResult != null) {
-        _saleRequestTemp =
-            SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
+      _saleRequestTemp =
+          SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
 
-        final products = _cartProducts
-            .map((element) => UpdateSaleRequestTempProductEntity(
-                  ProductInternalCodeOnErp:
-                      element.toEntity().Product.InternalCodeOnERP!.toInt(),
-                  ProductPriceLookUpCode:
-                      element.toEntity().ProductPriceLookUpCode,
-                  Quantity: element.Quantity.toDouble(),
-                  SaleRequestTempId:
-                      _saleRequestTemp!.SaleRequestTempId.toInt(),
-                  TotalLiquid: element.TotalLiquid.toDouble(),
-                  Value: element.Value.toDouble(),
-                  Comments: element.Comments,
-                ))
-            .toList();
+      final products = _cartProducts
+          .map((element) => UpdateSaleRequestTempProductEntity(
+                ProductInternalCodeOnErp:
+                    element.toEntity().Product.InternalCodeOnERP!.toInt(),
+                ProductPriceLookUpCode:
+                    element.toEntity().ProductPriceLookUpCode,
+                Quantity: element.Quantity.toDouble(),
+                SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+                TotalLiquid: element.TotalLiquid.toDouble(),
+                Value: element.Value.toDouble(),
+                Comments: element.Comments,
+              ))
+          .toList();
 
-        final entity = UpdateSaleRequestTempEntity(
-          DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
-          EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
-          PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
-          SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-          TotalLiquid: products.fold(0.0,
-              (previousValue, element) => element.TotalLiquid + previousValue),
-          Products: products,
-        );
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
+        EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
+        PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
+        SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+        TotalLiquid: products.fold(0.0,
+            (previousValue, element) => element.TotalLiquid + previousValue),
+        Products: products,
+      );
 
+      bool cartProductsAlreadyConfirmed =
+          await confirmedCartProducts.isConfirmed();
+
+      if (!cartProductsAlreadyConfirmed) {
         await updateSaleRequestTemp.update(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           entity: entity,
         );
-
-        saleRequestTempResult = await loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
-        );
-
-        await finishSaleRequestTemp.finish(
-          saleRequestTempEntity: SaleRequestTempEntity(
-            Products: saleRequestTempResult!.Products,
-            SaleRequestTempId: saleRequestTempResult.SaleRequestTempId,
-            PersonalizedCode: saleRequestTempResult.PersonalizedCode,
-            EnterpriseId: saleRequestTempResult.EnterpriseId,
-            TotalLiquid: saleRequestTempResult.TotalLiquid,
-            DeliveryControl: saleRequestTempResult.DeliveryControl,
-            Comments: saleRequestTempResult.Comments,
-          ),
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        );
       }
+
+      await confirmedCartProducts.updateValue(true);
+
+      saleRequestTempResult = await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
+
+      await finishSaleRequestTemp.finish(
+        saleRequestTempEntity: SaleRequestTempEntity(
+          Products: saleRequestTempResult.Products,
+          SaleRequestTempId: saleRequestTempResult.SaleRequestTempId,
+          PersonalizedCode: saleRequestTempResult.PersonalizedCode,
+          EnterpriseId: saleRequestTempResult.EnterpriseId,
+          TotalLiquid: saleRequestTempResult.TotalLiquid,
+          DeliveryControl: saleRequestTempResult.DeliveryControl,
+          Comments: saleRequestTempResult.Comments,
+        ),
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      );
+
+      await confirmedCartProducts.updateValue(false);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:

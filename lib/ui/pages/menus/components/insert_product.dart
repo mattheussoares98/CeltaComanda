@@ -18,44 +18,45 @@ class InsertProduct extends StatefulWidget {
 }
 
 class _InsertProductState extends State<InsertProduct> {
+  void addProductInCart({
+    required MenuPresenter menuPresenter,
+    required HomePresenter homePresenter,
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required String? comment,
+  }) async {
+    try {
+      saleRequestTempPresenter.addProductInCart(
+        product: CartProductEntity(
+          Product: widget.selectedProduct!.toEntity(),
+          Comments: comment,
+          TotalLiquid: widget.selectedProduct!.productQuantity *
+              widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+          Quantity: widget.selectedProduct!.productQuantity,
+          Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+          ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
+        ),
+        menuPresenter: menuPresenter,
+      );
+      setState(() {});
+    } catch (e) {
+      e;
+    }
+  }
+
+  void addProductQuantity(MenuPresenter menuPresenter) {
+    setState(() {
+      widget.selectedProduct?.productQuantity++;
+    });
+  }
+
+  void subtractProductQuantity(MenuPresenter menuPresenter) {
+    setState(() {
+      widget.selectedProduct?.productQuantity--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future<void> addProductInCart({
-      required MenuPresenter menuPresenter,
-      required HomePresenter homePresenter,
-      required SaleRequestTempPresenter saleRequestTempPresenter,
-    }) async {
-      try {
-        saleRequestTempPresenter.addProductInCart(
-          product: CartProductEntity(
-            Product: widget.selectedProduct!.toEntity(),
-            Comments: "implementar a parte de comentário quando está adicionando o produto pelo menu",
-            TotalLiquid: widget.selectedProduct!.productQuantity *
-                widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-            Quantity: widget.selectedProduct!.productQuantity,
-            Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-            ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
-          ),
-          menuPresenter: menuPresenter,
-        );
-        setState(() {});
-      } catch (e) {
-        e;
-      }
-    }
-
-    void addProductQuantity(MenuPresenter menuPresenter) {
-      setState(() {
-        widget.selectedProduct?.productQuantity++;
-      });
-    }
-
-    void subtractProductQuantity(MenuPresenter menuPresenter) {
-      setState(() {
-        widget.selectedProduct?.productQuantity--;
-      });
-    }
-
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     SaleRequestTempPresenter saleRequestTempPresenter =
@@ -68,56 +69,127 @@ class _InsertProductState extends State<InsertProduct> {
               onPressed: null,
               child: Text("Selecione um produto"),
             )
-          : Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add_comment,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                UpdateQuantity(
-                  showDeleteIcon: false,
-                  productQuantity: widget.selectedProduct!.productQuantity,
-                  onPressedReduceQuantity: widget.selectedProduct != null &&
-                          widget.selectedProduct!.productQuantity <= 1
-                      ? null
-                      : () {
-                          subtractProductQuantity(menuPresenter);
-                        },
-                  onPressedAddQuantity: () {
-                    addProductQuantity(menuPresenter);
-                  },
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(),
-                    onPressed: () async {
-                      await addProductInCart(
-                        menuPresenter: menuPresenter,
-                        homePresenter: homePresenter,
-                        saleRequestTempPresenter: saleRequestTempPresenter,
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Inserir"),
-                        Text((widget.selectedProduct!.SaleRetailPraticed
-                                    .toDouble() *
-                                widget.selectedProduct!.productQuantity
-                                    .toDouble())
-                            .toString()
-                            .toBrazilianNumber()
-                            .addBrazilianCoin()),
-                      ],
+          : StreamBuilder<String?>(
+              stream: menuPresenter.productCommentStream,
+              builder: (context, snapshot) {
+                return Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        final commentsController = TextEditingController();
+
+                        if (snapshot.hasData) {
+                          commentsController.text = snapshot.data!;
+                        } else {
+                          //quando o usuário digita mas não confirma o comentário, ainda alterou o controller. Por isso precisa limpar se não houver dados no comentário da stream
+                          commentsController.clear();
+                        }
+
+                        notificationDialog(
+                          context: context,
+                          titleMessage: snapshot.hasData
+                              ? "Alterar comentário"
+                              : "Inserir comentário",
+                          content: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 15),
+                                ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxHeight: 100,
+                                  ),
+                                  child: TextFormField(
+                                    autofocus: true,
+                                    controller: commentsController,
+                                    maxLines: null,
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(3, 10, 3, 3),
+                                      label: Text("Inserir comentário"),
+                                      hintText: "Comentário",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          onPress: () async {
+                            if (commentsController.text.isNotEmpty) {
+                              menuPresenter.updateProductComment(
+                                commentsController.text,
+                              );
+                            }
+                          },
+                        );
+                      },
+                      icon: Stack(
+                        children: [
+                          Icon(
+                            Icons.add_comment_rounded,
+                            color: Theme.of(context).primaryColor,
+                            size: 33,
+                          ),
+                          if (snapshot.hasData)
+                            const Positioned(
+                              top: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red,
+                                maxRadius: 7,
+                                child: FittedBox(
+                                  child: Text(
+                                    "1",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
+                    UpdateQuantity(
+                      showDeleteIcon: false,
+                      productQuantity: widget.selectedProduct!.productQuantity,
+                      onPressedReduceQuantity: widget.selectedProduct != null &&
+                              widget.selectedProduct!.productQuantity <= 1
+                          ? null
+                          : () {
+                              subtractProductQuantity(menuPresenter);
+                            },
+                      onPressedAddQuantity: () {
+                        addProductQuantity(menuPresenter);
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(),
+                        onPressed: () {
+                          addProductInCart(
+                            menuPresenter: menuPresenter,
+                            homePresenter: homePresenter,
+                            saleRequestTempPresenter: saleRequestTempPresenter,
+                            comment: snapshot.data,
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Inserir"),
+                            Text((widget.selectedProduct!.SaleRetailPraticed
+                                        .toDouble() *
+                                    widget.selectedProduct!.productQuantity
+                                        .toDouble())
+                                .toString()
+                                .toBrazilianNumber()
+                                .addBrazilianCoin()),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
     );
   }
 }

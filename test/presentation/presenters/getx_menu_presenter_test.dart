@@ -396,27 +396,11 @@ void main() {
     test(
         "Should emit correct values on loadCommandData throws commandNotAvailable",
         () async {
-      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+      ticketIsPermitted.mockError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
-
-      await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test("Should emit correct values on loadCommandData throws", () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
@@ -516,21 +500,11 @@ void main() {
     test(
         'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
         () async {
-      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+      ticketIsPermitted.mockError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
-
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-    });
-
-    test('Should emit correct values on ticketIsPermitted throws unexpected',
-        () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });

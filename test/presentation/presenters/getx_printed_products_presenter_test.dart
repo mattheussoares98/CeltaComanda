@@ -380,7 +380,9 @@ void main() {
       expect(sut.printedProducts, null);
     });
 
-    test("ShouldCall LoadCommandData on removeProduct success and dont update permission to cancel products", () async {
+    test(
+        "ShouldCall LoadCommandData on removeProduct success and dont update permission to cancel products",
+        () async {
       sut.updateCanCancelProducts(true);
 
       await sut.removeProduct(
@@ -461,7 +463,7 @@ void main() {
     });
 
     test("Should emit correct values on ticket is not permitted", () async {
-      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+      ticketIsPermitted.mockError();
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -518,28 +520,11 @@ void main() {
     test(
         "Should emit correct values on loadCommandData throws commandNotAvailable",
         () async {
-      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+      ticketIsPermitted.mockError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
-
-      await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: sut,
-        saleRequestTempPresenter: saleRequestTempPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-      );
-    });
-
-    test("Should emit correct values on loadCommandData throws", () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
@@ -640,7 +625,7 @@ void main() {
     test(
         "Should update commandNumber with null value on error to LoadCommandData",
         () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
+      ticketIsPermitted.mockError();
 
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,

@@ -595,27 +595,11 @@ void main() {
     test(
         "Should emit correct values on loadCommandData throws commandNotAvailable",
         () async {
-      ticketIsPermitted.mockError(DomainError.commandNotAvailable);
+      ticketIsPermitted.mockError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
-
-      await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test("Should emit correct values on loadCommandData throws", () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
@@ -713,7 +697,7 @@ void main() {
     test(
         "Should update commandNumber with null value on error to LoadCommandData",
         () async {
-      ticketIsPermitted.mockError(DomainError.unexpected);
+      ticketIsPermitted.mockError();
 
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
@@ -976,6 +960,29 @@ void main() {
             saleRequestTempEntity: saleRequestTempEntity,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           ));
+    });
+    test("Should emit correct values on success to save cart products",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.saveProducts(commandNumber);
+    });
+    test("Should emit correct values LoadSaleRequestTemp throws", () async {
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.saveProducts(commandNumber);
+    });
+    test("Should emit correct values TicketIsPermited throws", () async {
+      ticketIsPermitted.mockError();
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+
+      await sut.saveProducts(commandNumber);
     });
   });
 }

@@ -90,6 +90,8 @@ class _InsertProductState extends State<InsertProduct> {
                           titleMessage: snapshot.hasData
                               ? "Alterar comentário"
                               : "Inserir comentário",
+                              cancelMessage: "Cancelar",
+                              confirmMessage: "Confirmar",
                           content: SingleChildScrollView(
                             child: Column(
                               children: [

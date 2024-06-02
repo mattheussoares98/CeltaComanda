@@ -27,6 +27,7 @@ void main() {
   late AddPrintRequestSpy addPrintRequest;
   late LocalPrintRequestSpy localPrintRequest;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
+  late ConfirmedCartProductsSpy confirmedCartProducts;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -44,6 +45,7 @@ void main() {
     addPrintRequest = AddPrintRequestSpy();
     localPrintRequest = LocalPrintRequestSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+    confirmedCartProducts = ConfirmedCartProductsSpy();
   }
 
   void initPresenters() {
@@ -60,6 +62,7 @@ void main() {
       addPrintRequest: addPrintRequest,
       localPrintRequest: localPrintRequest,
       updateSaleRequestTemp: updateSaleRequestTemp,
+      confirmedCartProducts: confirmedCartProducts,
     );
   }
 

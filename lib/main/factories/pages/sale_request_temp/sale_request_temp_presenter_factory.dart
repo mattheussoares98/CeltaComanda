@@ -12,4 +12,5 @@ SaleRequestTempPresenter makeGetxSaleRequestTempPresenter() =>
       addPrintRequest: makeRemoteAddPrintRequest(),
       localPrintRequest: makeLocalPrintRequest(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
+      confirmedCartProducts: makeLocalConfirmedCartProducts(),
     );

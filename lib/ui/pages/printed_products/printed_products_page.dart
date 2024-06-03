@@ -36,8 +36,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     SaleRequestTempPresenter saleRequestTempPresenter =
         Provider.of(context, listen: false);
-    MenuPresenter menuPresenter =
-        Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Scaffold(
@@ -48,43 +47,51 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         saleRequestTempPresenter: saleRequestTempPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        actions: [
-          SearchCommandIcon(
-            loadCommandData: () async {
-              await printedProductsPresenter.loadCommandData(
-                commandNumber: homePresenter.commandNumber!,
-                printedProductsPresenter: printedProductsPresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                clearPermissionToCancelProducts: true,
-              );
-              printedProductsPresenter.updateCanCancelProducts(false);
-            },
-          )
-        ],
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FittedBox(
-              child: Text(
-                "Produtos solicitados",
-                style: TextStyle(fontSize: 20),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(40),
+        child: AppBar(
+          backgroundColor: const Color(0xFFF1F5F8),
+          leading: Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Theme.of(context).primaryColor,
               ),
-            ),
-            if (homePresenter.commandNumber != null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Comanda ${homePresenter.commandNumber!}",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          }),
+          actions: [
+            SearchCommandIcon(
+              loadCommandData: () async {
+                await printedProductsPresenter.loadCommandData(
+                  commandNumber: homePresenter.commandNumber!,
+                  printedProductsPresenter: printedProductsPresenter,
+                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  menuPresenter: menuPresenter,
+                  homePresenter: homePresenter,
+                  clearPermissionToCancelProducts: true,
+                );
+                printedProductsPresenter.updateCanCancelProducts(false);
+              },
+            )
           ],
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (homePresenter.commandNumber != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Comanda ${homePresenter.commandNumber!}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
       body: Column(

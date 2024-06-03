@@ -47,39 +47,47 @@ class _PaymentPageState extends State<PaymentPage>
         saleRequestTempPresenter: saleRequestTempPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        actions: [
-          SearchCommandIcon(loadCommandData: () async {
-            await menuPresenter.loadCommandData(
-              commandNumber: homePresenter.commandNumber!,
-              printedProductsPresenter: printedProductsPresenter,
-              saleRequestTempPresenter: saleRequestTempPresenter,
-              menuPresenter: menuPresenter,
-              homePresenter: homePresenter,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(40),
+        child: AppBar(
+          backgroundColor: const Color(0xFFF1F5F8),
+          leading: Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
             );
-          })
-        ],
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FittedBox(
-              child: Text(
-                "Produtos",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            if (homePresenter.commandNumber != null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Comanda ${homePresenter.commandNumber!}",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
+          }),
+          actions: [
+            SearchCommandIcon(loadCommandData: () async {
+              await menuPresenter.loadCommandData(
+                commandNumber: homePresenter.commandNumber!,
+                printedProductsPresenter: printedProductsPresenter,
+                saleRequestTempPresenter: saleRequestTempPresenter,
+                menuPresenter: menuPresenter,
+                homePresenter: homePresenter,
+              );
+            })
           ],
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (homePresenter.commandNumber != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Comanda ${homePresenter.commandNumber!}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -91,10 +99,10 @@ class _PaymentPageState extends State<PaymentPage>
                   loadingSubscription?.cancel();
                   mainErrorSubscription?.cancel();
 
-                  loadingSubscription = handleLoading(
-                      context, menuPresenter.isLoadingStream);
-                  mainErrorSubscription = handleMainError(
-                      context, menuPresenter.mainErrorStream);
+                  loadingSubscription =
+                      handleLoading(context, menuPresenter.isLoadingStream);
+                  mainErrorSubscription =
+                      handleMainError(context, menuPresenter.mainErrorStream);
 
                   if (printedProductsPresenter
                           .printedProducts?.Products.isEmpty ==

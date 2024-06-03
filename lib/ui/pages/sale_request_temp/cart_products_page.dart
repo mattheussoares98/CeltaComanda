@@ -45,11 +45,21 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
         saleRequestTempPresenter: saleRequestTempPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        title: Text(
-          "Carrinho",
-          style: Theme.of(context).textTheme.titleLarge,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(40),
+        child: AppBar(
+          backgroundColor: const Color(0xFFF1F5F8),
+          leading: Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          }),
         ),
       ),
       body: Column(

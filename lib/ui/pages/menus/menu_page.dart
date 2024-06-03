@@ -64,26 +64,34 @@ class _MenuPageState extends State<MenuPage>
         saleRequestTempPresenter: saleRequestTempPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F8),
-        title: const FittedBox(
-          child: Text(
-            "Menu",
-            style: TextStyle(fontSize: 20),
-          ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(40),
+        child: AppBar(
+          leading: Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          }),
+          backgroundColor: const Color(0xFFF1F5F8),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await _loadGroupsAndProducts(menuPresenter);
+              },
+              icon: Icon(
+                Icons.refresh_outlined,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              tooltip: "Atualizar menu",
+            )
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await _loadGroupsAndProducts(menuPresenter);
-            },
-            icon: Icon(
-              Icons.refresh_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            tooltip: "Atualizar menu",
-          )
-        ],
       ),
       body: Builder(
         builder: (context) {

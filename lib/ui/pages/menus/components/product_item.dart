@@ -48,7 +48,20 @@ class _ProductItemState extends State<ProductItem> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(3.0),
-        child: NameImageAndPrice(productsViewModel: widget.productsViewModel),
+        child: Column(
+          children: [
+            NameImageAndPrice(productsViewModel: widget.productsViewModel),
+            if (widget.productsViewModel.IsPromoCombox == "true")
+              Text(
+                "COMBO",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

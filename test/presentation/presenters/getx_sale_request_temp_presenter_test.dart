@@ -1221,5 +1221,17 @@ void main() {
 
       expect(sut.cartProducts, []);
     });
+    test("Should return true on saveProducts succeeds", () async {
+      final isUpdated = await sut.saveProducts(commandNumber);
+
+      expect(isUpdated, true);
+    });
+    test("Should return false on saveProducts throws", () async {
+      ticketIsPermitted.mockError();
+
+      final isUpdated = await sut.saveProducts(commandNumber);
+
+      expect(isUpdated, false);
+    });
   });
 }

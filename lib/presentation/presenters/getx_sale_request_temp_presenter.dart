@@ -436,7 +436,7 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  Future<void> saveProducts(String commandNumber) async {
+  Future<bool> saveProducts(String commandNumber) async {
     isLoading = true;
     mainError = null;
     clear();
@@ -513,6 +513,7 @@ class GetxSaleRequestTempPresenter
 
       await confirmedCartProducts.updateValue(false);
       _cartProducts.clear();
+      return true;
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:
@@ -520,6 +521,7 @@ class GetxSaleRequestTempPresenter
         default:
           mainError = UIError.unexpected;
       }
+      return false;
     } finally {
       isLoading = false;
       notifyListeners();

@@ -59,23 +59,17 @@ class SaveSaleRequestButton extends StatelessWidget {
               ),
             ),
             onPress: () async {
-              // if (commandNumberController.text.isNotEmpty) {
-              //   saleRequestTempPresenter.updateLocalSaleRequestComment(
-              //     commandNumberController.text,
-              //   );
-              // }
+              bool isUpdated = await saleRequestTempPresenter
+                  .saveProducts(commandNumberController.text);
 
-              // await saleRequestTempPresenter.loadSaleRequest(commandNumberController.text);
-              await saleRequestTempPresenter.saveProducts(commandNumberController.text);
-
-              // await saleRequestTempPresenter.finishSaleRequest(
-              //   saleRequestTempEntity:
-              //       saleRequestTempPresenter.saleRequestTemp!.toEntity(),
-              //   menuPresenter: menuPresenter,
-              //   printedProductsPresenter: printedProductsPresenter,
-              //   saleRequestTempPresenter: saleRequestTempPresenter,
-              //   homePresenter: homePresenter,
-              // );
+              if (isUpdated) {
+                Future.delayed(Duration.zero, () {
+                  showAlertMessage(
+                    context,
+                    "Os produtos foram inseridos na comanda com sucesso",
+                  );
+                });
+              }
             },
           );
         },

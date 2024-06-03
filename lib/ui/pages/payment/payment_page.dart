@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -104,48 +105,105 @@ class _PaymentPageState extends State<PaymentPage>
                   mainErrorSubscription =
                       handleMainError(context, menuPresenter.mainErrorStream);
 
-                  if (printedProductsPresenter
-                          .printedProducts?.Products.isEmpty ==
-                      true) {
+                  if (printedProductsPresenter.printedProducts == null) {
                     return SearchDataByCommandNumber(
                       menuPresenter: menuPresenter,
                       printedProductsPresenter: printedProductsPresenter,
                       saleRequestTempPresenter: saleRequestTempPresenter,
                       homePresenter: homePresenter,
                       emptyMessage: homePresenter.commandNumber == null
-                          ? "Consulte alguma comanda para conseguir visualizar os produtos/combos e adicionar na comanda"
-                          : "O pagamento fica disponível somente quando há produtos confirmados na comanda selecionada",
+                          ? "Consulte alguma comanda para efetuar o pagamento dela"
+                          : "Não há produtos solicitados nessa comanda",
                       loadCommandData: () async {
-                        await menuPresenter.loadCommandData(
+                        await printedProductsPresenter.loadCommandData(
                           commandNumber: homePresenter.commandNumber!,
                           printedProductsPresenter: printedProductsPresenter,
                           saleRequestTempPresenter: saleRequestTempPresenter,
                           menuPresenter: menuPresenter,
                           homePresenter: homePresenter,
+                          clearPermissionToCancelProducts: true,
                         );
                       },
                     );
                   }
 
-                  return Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("creditoavista"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("creditoparcelado"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("debito"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("pix"),
-                      ),
-                    ],
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height -
+                        AppBar().preferredSize.height -
+                        kBottomNavigationBarHeight,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid}"
+                              .addBrazilianCoin(),
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 20,
+                          ),
+                          child: Text(
+                            "Selecione uma opção de pagamento abaixo",
+                            style: TextStyle(
+                              // color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithCredit(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                            );
+                          },
+                          child: const Text("Crédito a vista"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithCreditPortion(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 2,
+                            );
+                          },
+                          child: const Text("Crédito parcelado 2x"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithDebit(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                            );
+                          },
+                          child: const Text("Débito"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithPix(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                            );
+                          },
+                          child: const Text("PIX"),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

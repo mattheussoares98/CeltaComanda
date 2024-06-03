@@ -10,7 +10,7 @@ extension StringModifier on String {
   }
 
   String addBrazilianCoin() {
-    return "$this R\$";
+    return "R\$ $this";
   }
 
   String removeWhiteSpaces() {

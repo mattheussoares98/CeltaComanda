@@ -481,10 +481,10 @@ class GetxSaleRequestTempPresenter
         Products: products,
       );
 
-      bool cartProductsAlreadyConfirmed =
+      bool? cartProductsAlreadyConfirmed =
           await confirmedCartProducts.isConfirmed();
 
-      if (!cartProductsAlreadyConfirmed) {
+      if (cartProductsAlreadyConfirmed == false) {
         await updateSaleRequestTemp.update(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           entity: entity,

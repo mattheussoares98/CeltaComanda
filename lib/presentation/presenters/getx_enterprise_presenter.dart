@@ -49,8 +49,11 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   Future<void> loadRemoteData() async {
     try {
-      EnterpriseDataBuilder.enterpriseDataEntity =
-          await loadEnterpriseData.load();
+      final remoteData = await loadEnterpriseData.load();
+
+      if (remoteData != null) {
+        EnterpriseDataBuilder.enterpriseDataEntity = remoteData;
+      }
 
       if (EnterpriseDataBuilder
               .enterpriseDataEntity?.enterpriseName.isNotEmpty ==
@@ -123,10 +126,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
     if (updateEnterpriseNameController == true) {
       isUpdatedEnterpriseName = true;
     }
-
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName: enterpriseNameController.text,
-    );
   }
 
   UIError? _validateField(String field) {

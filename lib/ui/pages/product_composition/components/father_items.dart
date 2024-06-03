@@ -122,17 +122,18 @@ class _FatherItemsState extends State<FatherItems> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            ImageWidget(
+                              ean: null,
+                              plu: father!.PluChild!,
+                              showLargeImageInShowDialog: true,
+                            ),
+                            const SizedBox(width: 10),
                             if (father!.ChildName != null)
                               Expanded(
                                 child: Text(
                                   father!.ChildName!,
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
-                              ),
-                            if (father!.PluChild != null)
-                              Text(
-                                "PLU ${father!.PluChild!}",
-                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                           ],
                         ),
@@ -145,9 +146,11 @@ class _FatherItemsState extends State<FatherItems> {
                               ),
                             Text(father!.OfferPrice != null &&
                                     father!.OfferPrice! == "0.0"
-                                ? "Preço ${father!.SalePrice!.toBrazilianNumber()}"
+                                ? father!.SalePrice!
+                                    .toBrazilianNumber()
                                     .addBrazilianCoin()
-                                : "Preço ${father!.OfferPrice!.toBrazilianNumber()}"
+                                : father!.OfferPrice!
+                                    .toBrazilianNumber()
                                     .addBrazilianCoin()),
                           ],
                         ),
@@ -291,14 +294,11 @@ class _FatherItemsState extends State<FatherItems> {
                               .totalPriceComboxStream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              return Row(
+                              return const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    "TOTAL: ${snapshot.data != null ? snapshot.data.toString().toBrazilianNumber().addBrazilianCoin() : 0.toString().toBrazilianNumber().addBrazilianCoin()}",
-                                  ),
-                                  const Text("Salvar combo"),
+                                  Text("Salvar"),
                                 ],
                               );
                             }

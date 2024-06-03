@@ -18,7 +18,7 @@ class ImageWidget extends StatelessWidget {
     super.key,
   });
 
-  static showLarge({
+  static showLargeImage({
     required BuildContext context,
     required String? ean,
     required String plu,
@@ -55,7 +55,7 @@ class ImageWidget extends StatelessWidget {
         onTap: !showLargeImageInShowDialog
             ? null
             : () {
-                showLarge(
+                showLargeImage(
                   context: context,
                   ean: ean,
                   plu: plu,

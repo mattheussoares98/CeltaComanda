@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,34 +72,46 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                     productCompositionPresenter.updateTotalLiquidCombox(
                         widget.productsCompositionsViewModel);
                   },
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  subtitle: Row(
                     children: [
-                      if (child?.ChildName != null)
-                        Text(
-                          child!.ChildName!,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      if (child?.PluChild != null)
-                        Text("PLU ${child!.PluChild!}"),
-                      if (child?.Quantity != null)
-                        Text(
-                            "Quantidade ${child!.Quantity!.toBrazilianNumber()}"),
-                      if (widget.isFixedItemInCombox)
-                        if (widget.father.IncrementValue.toString().toDouble() >
-                            0)
-                          Column(
-                            children: [
-                              const Text(
-                                "+",
-                                style: TextStyle(color: Colors.red),
-                              ),
+                      ImageWidget(
+                        ean: null,
+                        plu: child!.PluChild!,
+                        showLargeImageInShowDialog: true,
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (child.ChildName != null)
                               Text(
-                                "Acréscimo: ${widget.father.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                                style: const TextStyle(color: Colors.red),
+                                child.ChildName!,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
-                            ],
-                          ),
+                            if (child.Quantity != null)
+                              Text(
+                                  "Quantidade ${child.Quantity!.toBrazilianNumber()}"),
+                            if (widget.isFixedItemInCombox)
+                              if (widget.father.IncrementValue
+                                      .toString()
+                                      .toDouble() >
+                                  0)
+                                Column(
+                                  children: [
+                                    const Text(
+                                      "+",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    Text(
+                                      "Acréscimo: ${widget.father.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                  ],
+                                ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -110,7 +123,7 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            child?.IsOptionalItem == "true"
+                            child.IsOptionalItem == "true"
                                 ? "Item opcional"
                                 : "Item obrigatório",
                             style: const TextStyle(

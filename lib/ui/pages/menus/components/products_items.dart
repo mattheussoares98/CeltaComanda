@@ -34,14 +34,18 @@ class _ProductsItemsState extends State<ProductsItems> {
   }) =>
       GestureDetector(
         onLongPress: () {
-          ImageWidget.showLarge(
+          ImageWidget.showLargeImage(
             context: context,
             ean: widget.products[index].EanCode,
             plu: widget.products[index].PriceLookupCode,
           );
         },
         onTap: () {
-          menuPresenter.updateSelectedProduct(widget.products[index]);
+          if (widget.products[index].IsPromoCombox == "true") {
+            menuPresenter.goToComboxPage(widget.products[index]);
+          } else {
+            menuPresenter.updateSelectedProduct(widget.products[index]);
+          }
         },
         child: Padding(
           padding: const EdgeInsets.only(left: 5),

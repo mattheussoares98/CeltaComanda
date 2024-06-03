@@ -18,6 +18,35 @@ class ImageWidget extends StatelessWidget {
     super.key,
   });
 
+  static showLarge({
+    required BuildContext context,
+    required String? ean,
+    required String plu,
+  }) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 8),
+              content: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: _getImageNetwork(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  ean: ean,
+                  plu: plu,
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -26,29 +55,11 @@ class ImageWidget extends StatelessWidget {
         onTap: !showLargeImageInShowDialog
             ? null
             : () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: AlertDialog(
-                          insetPadding:
-                              const EdgeInsets.symmetric(horizontal: 8),
-                          content: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: _getImageNetwork(
-                              height: MediaQuery.of(context).size.height * 0.5,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              ean: ean,
-                              plu: plu,
-                            ),
-                          ),
-                        ),
-                      );
-                    });
+                showLarge(
+                  context: context,
+                  ean: ean,
+                  plu: plu,
+                );
               },
         child: _getImageNetwork(
           width: width,

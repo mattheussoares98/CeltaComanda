@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../components/components.dart';
 import '../../pages.dart';
 
 class ProductsItems extends StatefulWidget {
@@ -32,6 +33,13 @@ class _ProductsItemsState extends State<ProductsItems> {
     required SaleRequestTempPresenter saleRequestTempPresenter,
   }) =>
       GestureDetector(
+        onLongPress: () {
+          ImageWidget.showLarge(
+            context: context,
+            ean: widget.products[index].EanCode,
+            plu: widget.products[index].PriceLookupCode,
+          );
+        },
         onTap: () {
           menuPresenter.updateSelectedProduct(widget.products[index]);
         },

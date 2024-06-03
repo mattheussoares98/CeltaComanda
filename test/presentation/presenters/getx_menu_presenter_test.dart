@@ -551,8 +551,9 @@ void main() {
     });
 
     test('Should update indexOfSelectedProduct correctly', () async {
-      expectLater(sut.selectedProductStream, emits(productsViewModel));
+      expectLater(sut.selectedProductStream, emitsInOrder([productsViewModel, null]));
 
+      sut.updateSelectedProduct(productsViewModel);
       sut.updateSelectedProduct(productsViewModel);
     });
 

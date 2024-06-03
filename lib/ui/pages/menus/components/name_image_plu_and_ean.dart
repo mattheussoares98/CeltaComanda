@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 import '../../../components/components.dart';
 
-class NameImagePluAndEan extends StatelessWidget {
+class NameImageAndPrice extends StatelessWidget {
   final ProductsViewModel productsViewModel;
-  const NameImagePluAndEan({
+  const NameImageAndPrice({
     required this.productsViewModel,
     super.key,
   });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../main/builders/builders.dart';
 import '../../pages.dart';
 
 class ProductItem extends StatefulWidget {
@@ -19,22 +18,6 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
-  FocusNode commentFocusNode = FocusNode();
-  String confirmedComment = "";
-
-  Future<void> changeFocusToCommentFocusNode() async {
-    if (commentFocusNode.hasFocus &&
-        MediaQuery.of(NavigatorKey.navigatorKey.currentState!.context)
-                .viewInsets
-                .bottom ==
-            0) {
-      await Future.delayed(Duration.zero);
-      commentFocusNode.unfocus();
-    }
-    await Future.delayed(Duration.zero);
-    commentFocusNode.requestFocus();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,21 +48,7 @@ class _ProductItemState extends State<ProductItem> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(3.0),
-        child: NameImagePluAndEan(productsViewModel: widget.productsViewModel),
-        // if (widget.productsViewModel.IsPromoCombox == "true")
-        //   GestureDetector(
-        //     onTap: widget.goToComboxPage,
-        //     child: const Padding(
-        //       padding: EdgeInsets.only(bottom: 5.0),
-        //       child: Text(
-        //         "Montar\ncombo",
-        //         style: TextStyle(
-        //           color: Colors.blue,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
+        child: NameImageAndPrice(productsViewModel: widget.productsViewModel),
       ),
     );
   }

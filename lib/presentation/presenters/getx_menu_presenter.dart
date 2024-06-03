@@ -241,7 +241,11 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateSelectedProduct(ProductsViewModel? selectedProduct) {
     _selectedProduct.value?.productQuantity = 1;
-    _selectedProduct.value = selectedProduct;
+    if (_selectedProduct.value == selectedProduct) {
+      _selectedProduct.value = null;
+    } else {
+      _selectedProduct.value = selectedProduct;
+    }
     _productComment.value = null;
   }
 
@@ -252,7 +256,7 @@ class GetxMenuPresenter extends GetxController
   final _productComment = Rx<String?>(null);
   @override
   Stream<String?> get productCommentStream => _productComment.stream;
-  
+
   @override
   void updateProductComment(String? newComment) {
     _productComment.value = newComment;

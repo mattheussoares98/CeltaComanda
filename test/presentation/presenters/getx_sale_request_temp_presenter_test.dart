@@ -1211,5 +1211,15 @@ void main() {
             entity: updateSaleRequestTempEntity,
           )).called(1);
     });
+    test("Should clear cartProducts on saveProducts succeeds", () async {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      await sut.saveProducts(commandNumber);
+
+      expect(sut.cartProducts, []);
+    });
   });
 }

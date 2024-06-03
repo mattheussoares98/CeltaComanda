@@ -512,6 +512,7 @@ class GetxSaleRequestTempPresenter
       );
 
       await confirmedCartProducts.updateValue(false);
+      _cartProducts.clear();
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:

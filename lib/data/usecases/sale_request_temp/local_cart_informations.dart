@@ -27,4 +27,18 @@ class LocalCartInformations implements CartInformations {
       throw DomainError.unexpected;
     }
   }
+
+  @override
+  Future<void> clear({int retryCountInErrorCase = 0}) async {
+    try {
+      await hiveStorage.delete(CacheKeys.cartProducts.name);
+    } catch (e) {
+      if (retryCountInErrorCase < 3) {
+        //se der erro pra executar a primeira vez, vai tentar executar mais 3 vezes
+        await clear(retryCountInErrorCase: retryCountInErrorCase + 1);
+      } else {
+        throw DomainError.unexpected;
+      }
+    }
+  }
 }

@@ -568,6 +568,7 @@ class GetxSaleRequestTempPresenter
 
       await confirmedCartProducts.updateValue(false);
       _cartProducts.clear();
+      await cartInformations.clear();
       return true;
     } on DomainError catch (e) {
       switch (e) {

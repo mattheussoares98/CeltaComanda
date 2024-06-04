@@ -154,7 +154,7 @@ void main() {
 
     test("Should not add product in cart if cartInformations.update throws",
         () async {
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
 
       await sut.addProductInCart(
         product: cartProductEntity,
@@ -173,7 +173,7 @@ void main() {
       );
     });
     test("Should emit correct events on addProductInCart throws", () async {
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -204,7 +204,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       await sut.removeProductFromCart(0);
 
       expect(sut.cartProducts, [cartProductViewModel]);
@@ -223,7 +223,7 @@ void main() {
     });
     test("Should emit correct events on removeProductFromCart throws",
         () async {
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -241,7 +241,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
 
       expect(sut.cartProducts.length, 1);
@@ -254,7 +254,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
 
       expect(
@@ -290,7 +290,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
     });
     test(
@@ -301,7 +301,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       await sut.addCartProductQuantity(0);
 
       expect(
@@ -337,8 +337,15 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      cartInformations.mockError();
+      cartInformations.mockSaveError();
       await sut.addCartProductQuantity(0);
+    });
+
+    test("Should call cartInformations.clear when saveProducts succeeds",
+        () async {
+      await sut.saveProducts(commandNumber);
+
+      verify(() => cartInformations.clear()).called(1);
     });
   });
   group("AddProductQuantity group", () {
@@ -1051,7 +1058,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      sut.addCartProductQuantity(0);
+      await sut.addCartProductQuantity(0);
 
       expect(sut.cartProducts[0].Quantity,
           (cartProductEntity.Quantity + 1).toString());
@@ -1065,7 +1072,7 @@ void main() {
       expect(sut.cartProducts[0].TotalLiquid,
           cartProductEntity.TotalLiquid.toString());
 
-      sut.addCartProductQuantity(0);
+      await sut.addCartProductQuantity(0);
       expect(
         sut.cartProducts[0].TotalLiquid,
         (cartProductEntity.Value * (cartProductEntity.Quantity + 1)).toString(),

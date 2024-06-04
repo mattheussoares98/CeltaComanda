@@ -12,7 +12,6 @@ class CartInformationsSpy extends Mock implements CartInformations {
   }
 
   When mockSaveCartCall() => when(() => this.update(any()));
-
   void mockSaveCart(List<CartProductsViewModel> cartProducts) {
     this.mockSaveCartCall().thenAnswer((_) async => cartProducts);
   }
@@ -22,12 +21,20 @@ class CartInformationsSpy extends Mock implements CartInformations {
   }
 
   When mockClearCartCall() => when(() => this.clear());
-
   void mockClearCart() {
     this.mockClearCartCall().thenAnswer((_) async => _);
   }
 
   void mockClearError() {
     this.mockClearCartCall().thenThrow(DomainError.unexpected);
+  }
+
+  When mockGetCartCall() => when(() => this.get());
+  void mockGetCart(List<CartProductsViewModel>? cartProducts) {
+    this.mockGetCartCall().thenAnswer((_) async => cartProducts);
+  }
+
+  void mockGetError() {
+    this.mockGetCartCall().thenThrow(DomainError.unexpected);
   }
 }

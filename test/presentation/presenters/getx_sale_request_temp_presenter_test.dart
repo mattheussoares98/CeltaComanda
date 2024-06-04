@@ -121,6 +121,7 @@ void main() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModel]);
+    cartInformations.mockGetCart([cartProductViewModel]);
   }
 
   setUp(() {
@@ -346,6 +347,15 @@ void main() {
       await sut.saveProducts(commandNumber);
 
       verify(() => cartInformations.clear()).called(1);
+    });
+
+    test("Should call cartInformations.get on sut.getLocalCartProductsData",
+        () async {
+      await sut.getLocalCartProductsData();
+
+      verify(
+        () => cartInformations.get(),
+      ).called(1);
     });
   });
   group("AddProductQuantity group", () {

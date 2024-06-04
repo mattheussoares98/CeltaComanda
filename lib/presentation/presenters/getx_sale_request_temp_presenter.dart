@@ -450,7 +450,7 @@ class GetxSaleRequestTempPresenter
         _cartProducts = newCartList;
       }
     } catch (e) {
-      e;
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }

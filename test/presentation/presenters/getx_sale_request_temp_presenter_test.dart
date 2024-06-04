@@ -284,6 +284,15 @@ void main() {
 
       await sut.reduceCartProductQuantity(0);
     });
+    test("Should emit correct values on reduceCartProductQuantity throws",
+        () async {
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      cartInformations.mockError();
+      await sut.reduceCartProductQuantity(0);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

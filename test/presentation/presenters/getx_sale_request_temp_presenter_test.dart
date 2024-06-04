@@ -371,6 +371,22 @@ void main() {
 
       expect(sut.cartProducts, []);
     });
+
+    test("Should emit correct values on getLocalCartProductsData", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getLocalCartProductsData();
+    });
+
+    test("Should emit correct values on getLocalCartProductsData", () async {
+      cartInformations.mockGetError();
+
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getLocalCartProductsData();
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

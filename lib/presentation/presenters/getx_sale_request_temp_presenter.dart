@@ -597,6 +597,8 @@ class GetxSaleRequestTempPresenter
       }
     } catch (e) {
       mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
   }
 }

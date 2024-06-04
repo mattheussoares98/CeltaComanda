@@ -262,6 +262,21 @@ void main() {
         cartProductEntity.Quantity,
       );
     });
+
+    test("Should reduce productQuantity when cartInformations.update succeeds",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      await sut.reduceCartProductQuantity(0);
+
+      expect(
+        sut.cartProducts.first.Quantity.toDouble(),
+        cartProductEntity.Quantity - 1,
+      );
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

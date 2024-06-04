@@ -975,11 +975,11 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      sut.reduceCartProductQuantity(0);
+      await sut.reduceCartProductQuantity(0);
       expect(sut.cartProducts[0].Quantity,
           (cartProductEntity.Quantity - 1).toString());
 
-      sut.reduceCartProductQuantity(1);
+      await sut.reduceCartProductQuantity(1);
       expect(sut.cartProducts.length, 1);
     });
 
@@ -991,7 +991,7 @@ void main() {
       expect(sut.cartProducts[0].TotalLiquid,
           cartProductEntity.TotalLiquid.toString());
 
-      sut.reduceCartProductQuantity(0);
+      await sut.reduceCartProductQuantity(0);
       expect(
         sut.cartProducts[0].TotalLiquid,
         (cartProductEntity.Value * (cartProductEntity.Quantity - 1)).toString(),

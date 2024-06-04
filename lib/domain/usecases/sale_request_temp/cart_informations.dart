@@ -1,6 +1,6 @@
-import '../../entities/entities.dart';
+import '../../../ui/pages/pages.dart';
 
 abstract class CartInformations {
-  Future<void> update(List<CartProductEntity>? cartProducts);
-  Future<List<CartProductEntity>?> get();
+  Future<void> update(List<CartProductsViewModel> cartProducts);
+  Future<List<CartProductsViewModel>?> get();
 }

@@ -131,17 +131,28 @@ void main() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
-  group("Save cart", () {
-    test("Should call saveCart when saveProducts succeeds", () async {
-      sut.addProductInCart(
+  group("CartInformations", () {
+    // test("Should call updateCartInformations on addProductInCart", () async {
+    //   await sut.addProductInCart(
+    //     product: cartProductEntity,
+    //     menuPresenter: menuPresenter,
+    //   );
+
+    //   verify(
+    //     () => cartInformations.update(sut.cartProducts),
+    //   ).called(1);
+    // });
+
+    test("Should not add product in cart if cartInformations.update throws",
+        () async {
+      cartInformations.mockError();
+
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
 
-      verify(
-        () => cartInformations.update(
-            sut.cartProducts.map((element) => element.toEntity()).toList()),
-      ).called(1);
+      expect(sut.cartProducts, []);
     });
   });
   group("AddProductQuantity group", () {

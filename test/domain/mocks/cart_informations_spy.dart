@@ -6,6 +6,10 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 class CartInformationsSpy extends Mock implements CartInformations {
+  CartInformationsSpy() {
+    this.mockSaveCart();
+  }
+
   When mockSaveCartCall() => when(() => this.update(any()));
 
   void mockSaveCart() {

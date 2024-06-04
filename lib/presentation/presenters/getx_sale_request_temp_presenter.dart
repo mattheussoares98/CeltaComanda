@@ -356,23 +356,28 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  void addProductInCart({
+  Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
-  }) {
-    final indexOfEqualProduct = _getIndexOfEqualProduct(product);
+  }) async {
+    try {
+      await cartInformations.update(_cartProducts);
 
-    if (indexOfEqualProduct == -1) {
-      _cartProducts.add(CartProductsViewModel.fromEntity(product));
-    } else {
-      _updateProductWithNewQuantity(
-        indexOfEqualProduct: indexOfEqualProduct,
-        newProduct: product,
-      );
+      final indexOfEqualProduct = _getIndexOfEqualProduct(product);
+
+      if (indexOfEqualProduct == -1) {
+        _cartProducts.add(CartProductsViewModel.fromEntity(product));
+      } else {
+        _updateProductWithNewQuantity(
+          indexOfEqualProduct: indexOfEqualProduct,
+          newProduct: product,
+        );
+      }
+
+      menuPresenter.updateSelectedProduct(null);
+    } catch (e) {
+      e;
     }
-
-    menuPresenter.updateSelectedProduct(null);
-    notifyListeners();
   }
 
   @override

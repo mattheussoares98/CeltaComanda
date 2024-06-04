@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class ProductEntity {
+import 'package:equatable/equatable.dart';
+
+class ProductEntity extends Equatable {
   final int ProductsId;
   final int? InternalCodeOnERP;
   final int? InternalCodeOfProductOnERP;
@@ -69,7 +71,7 @@ class ProductEntity {
   final String? NameReduced;
   final String PackingAbbreviation;
 
-  ProductEntity({
+  const ProductEntity({
     required this.PackingAbbreviation,
     required this.SaleRetailPraticed,
     required this.Name,
@@ -135,4 +137,72 @@ class ProductEntity {
     required this.StockQuantity,
     required this.SaleRetailPraticedString,
   });
+
+  @override
+  List<Object?> get props => [
+        PackingAbbreviation,
+        SaleRetailPraticed,
+        Name,
+        PriceLookupCode,
+        ProductsId,
+        IsPromoCombox,
+        InternalCodeOnERP,
+        InternalCodeOfProductOnERP,
+        EenterpriseId,
+        PersonalizedCode,
+        EanCode,
+        NameComplete,
+        NameReduced,
+        PackingQuantity,
+        SaleRetailPrice,
+        OfferRetailPrice,
+        WholeSalePrice,
+        WholeOfferPrice,
+        OfferECommercePrice,
+        SaleECommercePrice,
+        LiquidCost,
+        LiquidCostMiddle,
+        LiquidCostReal,
+        RepositionCost,
+        RepositionCostMiddle,
+        RepositionCostReal,
+        CFOP,
+        FiscalClassificationNCM,
+        TributarySituationCode,
+        IcmsAliquot,
+        IcmsIVAMargin,
+        IcmsReductionMargin,
+        IcmsStave,
+        PercImpNBPTNational,
+        PercImpNBPTState,
+        PercImpNBPTMunicipal,
+        CofinsPercentage,
+        PisPercentage,
+        CofinsType,
+        PisType,
+        CSTPisCofins,
+        ProductIsFatherComposition,
+        QuantityMinimumWholeSale,
+        QuantityMinimumWholeSaleByClass,
+        AllowFractionate,
+        IsBalance,
+        CanBeWeightyInPdv,
+        QuantityInBalance,
+        AllowQuantityInPdv,
+        GoesForFastTable,
+        IsAlcoholicProduct,
+        BalanceTare,
+        CodeClass,
+        FamilyCode,
+        DepartmentCode,
+        DepartmentName,
+        SectionCode,
+        SectionName,
+        GroupCode,
+        GroupName,
+        SubGroupCode,
+        DateOfLastChanged,
+        StockQuantity,
+        SaleRetailPraticedString,
+      ];
 }

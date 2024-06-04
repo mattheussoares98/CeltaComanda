@@ -397,7 +397,7 @@ class GetxSaleRequestTempPresenter
       newCartList.removeAt(index);
       await cartInformations.update(newCartList);
 
-      _cartProducts.removeAt(index);
+      _cartProducts = newCartList;
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -432,8 +432,9 @@ class GetxSaleRequestTempPresenter
     final newCartList = [..._cartProducts];
     try {
       if (newCartList[index].Quantity.toDouble() <= 1) {
+        newCartList.removeAt(index);
         await cartInformations.update(newCartList);
-        _cartProducts.removeAt(index);
+        _cartProducts = newCartList;
       } else {
         final newQuantity = newCartList[index].Quantity.toDouble() - 1;
         final productWithNewQuantity = CartProductsViewModel(
@@ -465,19 +466,20 @@ class GetxSaleRequestTempPresenter
     mainError = null;
 
     try {
-      final newQuantity = _cartProducts[index].Quantity.toDouble() + 1;
+      final newCartList = [..._cartProducts];
+
+      final newQuantity = newCartList[index].Quantity.toDouble() + 1;
 
       final productWithNewQuantity = CartProductsViewModel(
-        Comments: _cartProducts[index].Comments,
-        Product: _cartProducts[index].Product,
+        Comments: newCartList[index].Comments,
+        Product: newCartList[index].Product,
         TotalLiquid:
-            (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
+            (newCartList[index].Value.toDouble() * newQuantity).toString(),
         Quantity: newQuantity.toString(),
-        Value: _cartProducts[index].Value,
-        ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
+        Value: newCartList[index].Value,
+        ProductPriceLookUpCode: newCartList[index].ProductPriceLookUpCode,
       );
 
-      final newCartList = [..._cartProducts];
       newCartList[index] = productWithNewQuantity;
 
       await cartInformations.update(newCartList);
@@ -591,7 +593,7 @@ class GetxSaleRequestTempPresenter
     mainError = null;
     try {
       final localCartProducts = await cartInformations.get();
-      if(localCartProducts != null){
+      if (localCartProducts != null) {
         _cartProducts = localCartProducts;
         notifyListeners();
       }

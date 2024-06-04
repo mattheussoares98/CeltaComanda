@@ -13,7 +13,8 @@ class SaleRequestProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    SaleRequestTempPresenter saleRequestTempPresenter =
+        Provider.of(context, listen: false);
 
     return Column(
       children: [

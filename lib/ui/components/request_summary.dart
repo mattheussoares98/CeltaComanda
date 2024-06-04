@@ -19,12 +19,6 @@ class RequestSummary extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 10),
-          if (comments != null)
-            CommentRichText(
-              comment: comments!,
-            ),
-          const SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,6 +37,12 @@ class RequestSummary extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 10),
+          if (comments != null)
+            CommentRichText(
+              comment: comments!,
+            ),
+          const SizedBox(height: 10),
         ],
       ),
     );

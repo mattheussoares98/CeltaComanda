@@ -8,6 +8,23 @@ import '../../pages.dart';
 class SaveSaleRequestButton extends StatelessWidget {
   const SaveSaleRequestButton({super.key});
 
+  static _addProducts({
+    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required String commandNumber,
+    required BuildContext context,
+  }) async {
+    bool isUpdated = await saleRequestTempPresenter.saveProducts(commandNumber);
+
+    if (isUpdated) {
+      Future.delayed(Duration.zero, () {
+        showAlertMessage(
+          context,
+          "Os produtos foram inseridos na comanda com sucesso",
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SaleRequestTempPresenter saleRequestTempPresenter =
@@ -44,32 +61,46 @@ class SaveSaleRequestButton extends StatelessWidget {
                       maxHeight: 100,
                     ),
                     child: TextFormField(
+                      autofocus: true,
                       focusNode: commentsFocusNode,
                       controller: commandNumberController,
                       maxLines: null,
+                      maxLength: 3,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(3, 10, 3, 3),
                         label: Text("Insira o número da comanda"),
                         hintText: "Número da comanda",
                       ),
+                      onFieldSubmitted: (value) async {
+                        await _addProducts(
+                          saleRequestTempPresenter: saleRequestTempPresenter,
+                          commandNumber: commandNumberController.text,
+                          context: context,
+                        );
+                      },
+                      validator: (value) {
+                        if (value?.isEmpty == true) {
+                          return "Digite 3 números";
+                        } else if (value!.length < 3) {
+                          return "Digite 3 números";
+                        } else if (int.tryParse(value) == null) {
+                          return "Número inválido";
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
               ),
             ),
             onPress: () async {
-              bool isUpdated = await saleRequestTempPresenter
-                  .saveProducts(commandNumberController.text);
-
-              if (isUpdated) {
-                Future.delayed(Duration.zero, () {
-                  showAlertMessage(
-                    context,
-                    "Os produtos foram inseridos na comanda com sucesso",
-                  );
-                });
-              }
+              await _addProducts(
+                saleRequestTempPresenter: saleRequestTempPresenter,
+                commandNumber: commandNumberController.text,
+                context: context,
+              );
             },
           );
         },

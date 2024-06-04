@@ -378,30 +378,56 @@ void main() {
         newComment: newComment,
       );
 
-      verify(() => cartInformations.update([
-            CartProductsViewModel(
-              Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
-              Comments: newComment,
-              TotalLiquid: cartProductEntity.TotalLiquid.toString(),
-              Quantity: cartProductEntity.Quantity.toString(),
-              Value: cartProductEntity.Value.toString(),
-              ProductPriceLookUpCode:
-                  cartProductEntity.ProductPriceLookUpCode.toString(),
-            )
-          ])).called(1);
+      final updatedProduct = [
+        CartProductsViewModel(
+          Product: cartProductViewModel.Product,
+          Comments: newComment,
+          TotalLiquid: cartProductViewModel.TotalLiquid,
+          Quantity: cartProductViewModel.Quantity,
+          Value: cartProductViewModel.Value,
+          ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+        )
+      ];
+
+      verify(() => cartInformations.update(updatedProduct)).called(1);
+      expect(sut.cartProducts, updatedProduct);
     });
     test("Should not update comment on cartInformations.update throws",
         () async {
       cartInformations.mockSaveError();
       sut.cartProducts.add(cartProductViewModel);
 
-      final newComment = faker.randomGenerator.string(10);
       await sut.updateCommentOfProductCart(
         index: 0,
-        newComment: newComment,
+        newComment: comments,
       );
 
       expect(sut.cartProducts, [cartProductViewModel]);
+    });
+    test("Should emit correct events on updateCartProductComment success",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      sut.cartProducts.add(cartProductViewModel);
+      await sut.updateCommentOfProductCart(
+        index: 0,
+        newComment: comments,
+      );
+    });
+    test("Should emit correct events on updateCartProductComment throws",
+        () async {
+      cartInformations.mockSaveError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      sut.cartProducts.add(cartProductViewModel);
+      await sut.updateCommentOfProductCart(
+        index: 0,
+        newComment: comments,
+      );
     });
   });
   group("AddProductQuantity group", () {

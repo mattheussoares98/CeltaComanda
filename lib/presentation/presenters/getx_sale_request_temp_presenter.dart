@@ -410,6 +410,10 @@ class GetxSaleRequestTempPresenter
     required int index,
     required String newComment,
   }) async {
+    mainError = null;
+    isLoading = true;
+    final newCartList = [..._cartProducts];
+
     final productWithNewComment = CartProductsViewModel(
       Comments: newComment,
       Product: _cartProducts[index].Product,
@@ -418,16 +422,17 @@ class GetxSaleRequestTempPresenter
       Value: _cartProducts[index].Value,
       ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
     );
+    newCartList[index] = productWithNewComment;
 
     try {
-      final newCartList = [..._cartProducts];
-      newCartList[index] = productWithNewComment;
-      await cartInformations.update(cartProducts);
+      await cartInformations.update(newCartList);
 
       _cartProducts = newCartList;
       _indexOfSelectedProduct = null;
     } catch (e) {
-      e;
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
 
     notifyListeners();

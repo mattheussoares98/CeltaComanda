@@ -68,6 +68,6 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required String newComment,
   });
   Future<void> reduceCartProductQuantity(int index);
-  void addCartProductQuantity(int index);
+  Future<void> addCartProductQuantity(int index);
   Future<bool> saveProducts(String commandNumber);
 }

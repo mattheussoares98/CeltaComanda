@@ -459,19 +459,33 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  void addCartProductQuantity(int index) {
-    final newQuantity = _cartProducts[index].Quantity.toDouble() + 1;
+  Future<void> addCartProductQuantity(int index) async {
+    isLoading = true;
+    mainError = null;
 
-    final productWithNewQuantity = CartProductsViewModel(
-      Comments: _cartProducts[index].Comments,
-      Product: _cartProducts[index].Product,
-      TotalLiquid:
-          (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
-      Quantity: newQuantity.toString(),
-      Value: _cartProducts[index].Value,
-      ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
-    );
-    _cartProducts[index] = productWithNewQuantity;
+    try {
+      final newQuantity = _cartProducts[index].Quantity.toDouble() + 1;
+
+      final productWithNewQuantity = CartProductsViewModel(
+        Comments: _cartProducts[index].Comments,
+        Product: _cartProducts[index].Product,
+        TotalLiquid:
+            (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
+        Quantity: newQuantity.toString(),
+        Value: _cartProducts[index].Value,
+        ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
+      );
+
+      final newCartList = [..._cartProducts];
+      newCartList[index] = productWithNewQuantity;
+
+      await cartInformations.update(newCartList);
+      _cartProducts = newCartList;
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
 
     notifyListeners();
   }

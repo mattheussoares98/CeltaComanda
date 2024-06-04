@@ -293,6 +293,53 @@ void main() {
       cartInformations.mockError();
       await sut.reduceCartProductQuantity(0);
     });
+    test(
+        "Should not addCartProductQuantity when cartInformations.update throws",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      cartInformations.mockError();
+      await sut.addCartProductQuantity(0);
+
+      expect(
+        sut.cartProducts.first.Quantity.toDouble(),
+        cartProductEntity.Quantity,
+      );
+    });
+
+    test("Should addCartProductQuantity when cartInformations.update succeeds",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      await sut.addCartProductQuantity(0);
+
+      expect(
+        sut.cartProducts.first.Quantity.toDouble(),
+        cartProductEntity.Quantity + 1,
+      );
+    });
+    test("Should emit correct values on addCartProductQuantity succeeds",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addCartProductQuantity(0);
+    });
+    test("Should emit correct values on addCartProductQuantity throws",
+        () async {
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      cartInformations.mockError();
+      await sut.addCartProductQuantity(0);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

@@ -425,6 +425,9 @@ class GetxSaleRequestTempPresenter
 
   @override
   Future<void> reduceCartProductQuantity(int index) async {
+    isLoading = true;
+    mainError = null;
+
     final newCartList = [..._cartProducts];
     try {
       if (newCartList[index].Quantity.toDouble() <= 1) {
@@ -442,12 +445,14 @@ class GetxSaleRequestTempPresenter
           ProductPriceLookUpCode: newCartList[index].ProductPriceLookUpCode,
         );
         newCartList[index] = productWithNewQuantity;
-        
+
         await cartInformations.update(newCartList);
         _cartProducts = newCartList;
       }
     } catch (e) {
       e;
+    } finally {
+      isLoading = false;
     }
 
     notifyListeners();

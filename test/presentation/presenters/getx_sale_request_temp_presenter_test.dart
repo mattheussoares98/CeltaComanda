@@ -277,6 +277,13 @@ void main() {
         cartProductEntity.Quantity - 1,
       );
     });
+    test("Should emit correct values on reduceCartProductQuantity succeeds",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.reduceCartProductQuantity(0);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

@@ -18,6 +18,7 @@ class SaleRequestTempPresenterSpy extends Mock
   SaleRequestTempPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
+    when(() => this.getLocalCartProductsData()).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

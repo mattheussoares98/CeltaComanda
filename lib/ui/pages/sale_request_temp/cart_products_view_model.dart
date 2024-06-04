@@ -61,8 +61,8 @@ class CartProductsViewModel extends Equatable {
         "ProductPriceLookUpCode": ProductPriceLookUpCode,
       };
 
-  CartProductsViewModel fromJson(Map json) => CartProductsViewModel(
-        Product: json["Product"],
+  static CartProductsViewModel fromJson(Map json) => CartProductsViewModel(
+        Product: ProductsViewModel.fromJson(json["Product"]),
         Comments: json["Comments"],
         TotalLiquid: json["TotalLiquid"],
         Quantity: json["Quantity"],

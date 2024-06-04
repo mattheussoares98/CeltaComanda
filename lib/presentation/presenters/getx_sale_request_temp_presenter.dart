@@ -380,6 +380,7 @@ class GetxSaleRequestTempPresenter
       _cartProducts = newCartList;
 
       menuPresenter.updateSelectedProduct(null);
+      notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -581,6 +582,21 @@ class GetxSaleRequestTempPresenter
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  @override
+  Future<void> getLocalCartProductsData() async {
+    isLoading = true;
+    mainError = null;
+    try {
+      final localCartProducts = await cartInformations.get();
+      if(localCartProducts != null){
+        _cartProducts = localCartProducts;
+        notifyListeners();
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
     }
   }
 }

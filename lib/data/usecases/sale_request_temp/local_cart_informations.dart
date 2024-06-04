@@ -28,7 +28,16 @@ class LocalCartInformations implements CartInformations {
   @override
   Future<List<CartProductsViewModel>?> get() async {
     try {
-      return await hiveStorage.get(CacheKeys.cartProducts.name);
+      final value = await hiveStorage.get(CacheKeys.cartProducts.name);
+      if (value == null) {
+        return null;
+      } else {
+        final List decoded = jsonDecode(value);
+        final cartProducts = decoded
+            .map((element) => CartProductsViewModel.fromJson(element))
+            .toList();
+        return cartProducts;
+      }
     } catch (e) {
       throw DomainError.unexpected;
     }

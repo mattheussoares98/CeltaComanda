@@ -38,11 +38,13 @@ class _MenuPageState extends State<MenuPage>
   void didChangeDependencies() async {
     super.didChangeDependencies();
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context, listen: false);
 
     if (!_isLoaded && menuPresenter.loadedMenu.isEmpty) {
       _isLoaded = true;
       Future.delayed(Duration.zero, () async {
         await _loadGroupsAndProducts(menuPresenter);
+        await saleRequestTempPresenter.getLocalCartProductsData();
       });
     }
   }

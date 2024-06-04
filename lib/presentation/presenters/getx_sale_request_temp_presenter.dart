@@ -360,6 +360,9 @@ class GetxSaleRequestTempPresenter
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
   }) async {
+    isLoading = true;
+    mainError = null;
+
     try {
       final indexOfEqualProduct = _getIndexOfEqualProduct(product);
       final newCartList = [..._cartProducts];
@@ -378,7 +381,9 @@ class GetxSaleRequestTempPresenter
 
       menuPresenter.updateSelectedProduct(null);
     } catch (e) {
-      e;
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
   }
 

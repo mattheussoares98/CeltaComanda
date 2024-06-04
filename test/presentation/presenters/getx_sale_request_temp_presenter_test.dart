@@ -382,10 +382,34 @@ void main() {
     test("Should emit correct values on getLocalCartProductsData", () async {
       cartInformations.mockGetError();
 
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.getLocalCartProductsData();
+    });
+
+    test("Should call cartInformations.update on update cart comment",
+        () async {
+      sut.cartProducts.add(cartProductViewModel);
+
+      final newComment = faker.randomGenerator.string(10);
+      await sut.updateCommentOfProductCart(
+        index: 0,
+        newComment: newComment,
+      );
+
+      verify(() => cartInformations.update([
+            CartProductsViewModel(
+              Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
+              Comments: newComment,
+              TotalLiquid: cartProductEntity.TotalLiquid.toString(),
+              Quantity: cartProductEntity.Quantity.toString(),
+              Value: cartProductEntity.Value.toString(),
+              ProductPriceLookUpCode:
+                  cartProductEntity.ProductPriceLookUpCode.toString(),
+            )
+          ])).called(1);
     });
   });
   group("AddProductQuantity group", () {

@@ -63,7 +63,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required MenuPresenter menuPresenter,
   });
   Future<void> removeProductFromCart(int index);
-  void updateCommentOfProductCart({
+  Future<void> updateCommentOfProductCart({
     required int index,
     required String newComment,
   });

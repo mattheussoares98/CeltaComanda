@@ -406,10 +406,10 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  void updateCommentOfProductCart({
+  Future<void> updateCommentOfProductCart({
     required int index,
     required String newComment,
-  }) {
+  }) async {
     final productWithNewComment = CartProductsViewModel(
       Comments: newComment,
       Product: _cartProducts[index].Product,
@@ -419,8 +419,14 @@ class GetxSaleRequestTempPresenter
       ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
     );
 
-    _cartProducts[index] = productWithNewComment;
-    _indexOfSelectedProduct = null;
+    try {
+      await cartInformations.update(cartProducts);
+      _cartProducts[index] = productWithNewComment;
+      _indexOfSelectedProduct = null;
+    } catch (e) {
+      e;
+    }
+
     notifyListeners();
   }
 

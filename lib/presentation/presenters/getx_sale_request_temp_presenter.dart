@@ -420,8 +420,11 @@ class GetxSaleRequestTempPresenter
     );
 
     try {
+      final newCartList = [..._cartProducts];
+      newCartList[index] = productWithNewComment;
       await cartInformations.update(cartProducts);
-      _cartProducts[index] = productWithNewComment;
+
+      _cartProducts = newCartList;
       _indexOfSelectedProduct = null;
     } catch (e) {
       e;

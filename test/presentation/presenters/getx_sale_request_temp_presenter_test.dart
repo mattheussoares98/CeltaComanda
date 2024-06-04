@@ -390,6 +390,19 @@ void main() {
             )
           ])).called(1);
     });
+    test("Should not update comment on cartInformations.update throws",
+        () async {
+      cartInformations.mockSaveError();
+      sut.cartProducts.add(cartProductViewModel);
+
+      final newComment = faker.randomGenerator.string(10);
+      await sut.updateCommentOfProductCart(
+        index: 0,
+        newComment: newComment,
+      );
+
+      expect(sut.cartProducts, [cartProductViewModel]);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

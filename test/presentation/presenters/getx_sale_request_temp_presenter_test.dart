@@ -112,6 +112,8 @@ void main() {
   void initMockSuccess() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     localPrintRequest.mockGetMergedPrinted(null);
+    cartInformations
+        .mockSaveCart([CartProductsViewModel.fromEntity(cartProductEntity)]);
   }
 
   setUp(() {
@@ -133,22 +135,20 @@ void main() {
 
   group("CartInformations", () {
     test("Should call updateCartInformations on addProductInCart", () async {
-      final list = [CartProductsViewModel.fromEntity(cartProductEntity)];
-      cartInformations.mockSaveCart(list);
-
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
 
       verify(
-        () => cartInformations.update(list),
+        () => cartInformations
+            .update([CartProductsViewModel.fromEntity(cartProductEntity)]),
       ).called(1);
     });
 
     test("Should not add product in cart if cartInformations.update throws",
         () async {
-      cartInformations.mockError(null);
+      cartInformations.mockError();
 
       await sut.addProductInCart(
         product: cartProductEntity,
@@ -769,10 +769,10 @@ void main() {
   });
 
   group("Cart products", () {
-    test("Should add correctly CartProduct", () {
+    test("Should add correctly CartProduct", () async {
       expect(sut.cartProducts, []);
 
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -780,18 +780,18 @@ void main() {
       expect(sut.cartProducts,
           [CartProductsViewModel.fromEntity(cartProductEntity)]);
     });
-    test("Should remove correct product from cart", () {
+    test("Should remove correct product from cart", () async {
       expect(sut.cartProducts, []);
       final cartProduct1 = EntityFactory.makeCartProductEntity(
         maximumProductQuantity: 100, //tanto faz pra esse teste
         minimumProductQuantity: 1, //tanto faz pra esse teste
       );
 
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: cartProduct1,
         menuPresenter: menuPresenter,
       );
@@ -809,8 +809,8 @@ void main() {
       expect(sut.cartProducts, []);
     });
 
-    test("Should update comment correctly", () {
-      sut.addProductInCart(
+    test("Should update comment correctly", () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -830,12 +830,12 @@ void main() {
       ]);
     });
 
-    test("Should reduce quantity correctly", () {
-      sut.addProductInCart(
+    test("Should reduce quantity correctly", () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: EntityFactory.makeCartProductEntity(
           maximumProductQuantity: 1,
           minimumProductQuantity: 1,
@@ -851,8 +851,8 @@ void main() {
       expect(sut.cartProducts.length, 1);
     });
 
-    test("Should update totalLiquid correctly when reduce quantity", () {
-      sut.addProductInCart(
+    test("Should update totalLiquid correctly when reduce quantity", () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -866,8 +866,8 @@ void main() {
       );
     });
 
-    test("Should add quantity correctly", () {
-      sut.addProductInCart(
+    test("Should add quantity correctly", () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -878,8 +878,8 @@ void main() {
           (cartProductEntity.Quantity + 1).toString());
     });
 
-    test("Should update totalLiquid correctly when add quantity", () {
-      sut.addProductInCart(
+    test("Should update totalLiquid correctly when add quantity", () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -893,8 +893,8 @@ void main() {
       );
     });
 
-    test("Should clear indexOfSelectedProduct when add a product", () {
-      sut.addProductInCart(
+    test("Should clear indexOfSelectedProduct when add a product", () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -904,12 +904,12 @@ void main() {
 
     test(
         "Should update product quantity when add equal product in cart instead of add other product",
-        () {
-      sut.addProductInCart(
+        () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -919,8 +919,8 @@ void main() {
 
     test(
         "Should add new product in cart if already contains equal PLU in cart but the comment is differente",
-        () {
-      sut.addProductInCart(
+        () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -933,7 +933,7 @@ void main() {
         Value: cartProductEntity.Value,
         ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
       );
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: productWithNewComment,
         menuPresenter: menuPresenter,
       );
@@ -943,8 +943,8 @@ void main() {
 
     test(
         "Should add new product in cart if already contains equal PLU in cart but the value is differente",
-        () {
-      sut.addProductInCart(
+        () async {
+      await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
@@ -957,7 +957,7 @@ void main() {
         Value: 726871278512785348193219.0,
         ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
       );
-      sut.addProductInCart(
+      await sut.addProductInCart(
         product: productWithNewComment,
         menuPresenter: menuPresenter,
       );

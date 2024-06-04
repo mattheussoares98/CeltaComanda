@@ -7,14 +7,13 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 class CartInformationsSpy extends Mock implements CartInformations {
-  When mockSaveCartCall(List<CartProductsViewModel>? cartProducts) =>
-      when(() => this.update(cartProducts));
+  When mockSaveCartCall() => when(() => this.update(any()));
 
   void mockSaveCart(List<CartProductsViewModel> cartProducts) {
-    this.mockSaveCartCall(cartProducts).thenAnswer((_) async => _);
+    this.mockSaveCartCall().thenAnswer((_) async => cartProducts);
   }
 
-  void mockError(List<CartProductsViewModel>? cartProducts) {
-    this.mockSaveCartCall(cartProducts).thenThrow(DomainError.unexpected);
+  void mockError() {
+    this.mockSaveCartCall().thenThrow(DomainError.unexpected);
   }
 }

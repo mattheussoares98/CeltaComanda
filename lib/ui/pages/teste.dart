@@ -72,6 +72,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
 
     // Obtém o grupo correspondente ao produto que está no meio da lista da direita
     final group = allGroups[groupIndex];
+    // ignore: avoid_print
     print(group);
   }
 

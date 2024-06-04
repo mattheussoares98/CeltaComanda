@@ -1,5 +1,6 @@
 export './add_print_request_spy.dart';
 export './barcode_scanner_spy.dart';
+export 'cart_informations_spy.dart';
 export './clear_sale_request_temp_spy.dart';
 export './confirmed_cart_products_spy.dart';
 export './entity_factory.dart';

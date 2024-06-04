@@ -1,5 +1,6 @@
 enum CacheKeys {
   apiSaleRequest,
+  cartProducts,
   crossId,
   enterprise,
   hiveBoxName,

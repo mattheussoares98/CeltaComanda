@@ -28,6 +28,7 @@ void main() {
   late LocalPrintRequestSpy localPrintRequest;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late ConfirmedCartProductsSpy confirmedCartProducts;
+  late CartInformationsSpy saveCart;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -49,6 +50,7 @@ void main() {
     localPrintRequest = LocalPrintRequestSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     confirmedCartProducts = ConfirmedCartProductsSpy();
+    saveCart = CartInformationsSpy();
   }
 
   void initPresenters() {
@@ -128,6 +130,19 @@ void main() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
+  group("Save cart", () {
+    test("Should call saveCart when saveProducts succeeds", () async {
+      sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      verify(
+        () => saveCart.update(
+            sut.cartProducts.map((element) => element.toEntity()).toList()),
+      ).called(1);
+    });
+  });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {
       await sut.addProductQuantity(

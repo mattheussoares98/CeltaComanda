@@ -247,16 +247,20 @@ void main() {
       expect(sut.cartProducts.length, 1);
     });
     test(
-        "Should remove product from cart when quantity is 1 and cartInformations.update succeeds",
+        "Should not reduce productQuantity when cartInformations.update throws",
         () async {
       await sut.addProductInCart(
-        product: cartProductWithOneQuantity,
+        product: cartProductEntity,
         menuPresenter: menuPresenter,
       );
 
+      cartInformations.mockError();
       await sut.reduceCartProductQuantity(0);
 
-      expect(sut.cartProducts.length, 0);
+      expect(
+        sut.cartProducts.first.Quantity.toDouble(),
+        cartProductEntity.Quantity,
+      );
     });
   });
   group("AddProductQuantity group", () {

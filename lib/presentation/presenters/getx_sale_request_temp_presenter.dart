@@ -442,6 +442,9 @@ class GetxSaleRequestTempPresenter
           ProductPriceLookUpCode: newCartList[index].ProductPriceLookUpCode,
         );
         newCartList[index] = productWithNewQuantity;
+        
+        await cartInformations.update(newCartList);
+        _cartProducts = newCartList;
       }
     } catch (e) {
       e;

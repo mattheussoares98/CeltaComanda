@@ -51,4 +51,22 @@ class CartProductsViewModel extends Equatable {
         Value: Value.toDouble(),
         ProductPriceLookUpCode: ProductPriceLookUpCode,
       );
+
+  Map<String, dynamic> toJson() => {
+        "Product": Product,
+        "Comments": Comments,
+        "TotalLiquid": TotalLiquid,
+        "Quantity": Quantity,
+        "Value": Value,
+        "ProductPriceLookUpCode": ProductPriceLookUpCode,
+      };
+
+  CartProductsViewModel fromJson(Map json) => CartProductsViewModel(
+        Product: json["Product"],
+        Comments: json["Comments"],
+        TotalLiquid: json["TotalLiquid"],
+        Quantity: json["Quantity"],
+        Value: json["Value"],
+        ProductPriceLookUpCode: json["ProductPriceLookUpCode"],
+      );
 }

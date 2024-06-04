@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
@@ -10,10 +12,14 @@ class LocalCartInformations implements CartInformations {
   LocalCartInformations({required this.hiveStorage});
 
   @override
-  Future<void> update(List<CartProductsViewModel>? cartProducts) async {
+  Future<void> update(List<CartProductsViewModel> cartProducts) async {
     try {
       await hiveStorage.delete(CacheKeys.cartProducts.name);
-      await hiveStorage.put(CacheKeys.cartProducts.name, cartProducts);
+
+      final cartProductsEncoded =
+          jsonEncode(cartProducts.map((element) => element.toJson()).toList());
+
+      await hiveStorage.put(CacheKeys.cartProducts.name, cartProductsEncoded);
     } catch (e) {
       throw DomainError.unexpected;
     }

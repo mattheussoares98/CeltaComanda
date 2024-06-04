@@ -28,7 +28,7 @@ void main() {
   late LocalPrintRequestSpy localPrintRequest;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late ConfirmedCartProductsSpy confirmedCartProducts;
-  late CartInformationsSpy saveCart;
+  late CartInformationsSpy cartInformations;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -50,7 +50,7 @@ void main() {
     localPrintRequest = LocalPrintRequestSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     confirmedCartProducts = ConfirmedCartProductsSpy();
-    saveCart = CartInformationsSpy();
+    cartInformations = CartInformationsSpy();
   }
 
   void initPresenters() {
@@ -68,6 +68,7 @@ void main() {
       localPrintRequest: localPrintRequest,
       updateSaleRequestTemp: updateSaleRequestTemp,
       confirmedCartProducts: confirmedCartProducts,
+      cartInformations: cartInformations,
     );
   }
 
@@ -138,7 +139,7 @@ void main() {
       );
 
       verify(
-        () => saveCart.update(
+        () => cartInformations.update(
             sut.cartProducts.map((element) => element.toEntity()).toList()),
       ).called(1);
     });

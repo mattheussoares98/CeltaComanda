@@ -22,6 +22,7 @@ class GetxSaleRequestTempPresenter
   final LocalPrintRequest localPrintRequest;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final ConfirmedCartProducts confirmedCartProducts;
+  final CartInformations cartInformations;
 
   GetxSaleRequestTempPresenter({
     required this.loadSaleRequestTemp,
@@ -33,6 +34,7 @@ class GetxSaleRequestTempPresenter
     required this.localPrintRequest,
     required this.updateSaleRequestTemp,
     required this.confirmedCartProducts,
+    required this.cartInformations,
   });
 
   @override

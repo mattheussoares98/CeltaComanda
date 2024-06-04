@@ -200,10 +200,7 @@ void main() {
     test(
         "Should NOT remove product from cart when cartInformations.update throws",
         () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       cartInformations.mockSaveError();
       await sut.removeProductFromCart(0);
@@ -216,10 +213,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
+
       await sut.removeProductFromCart(0);
     });
     test("Should emit correct events on removeProductFromCart throws",
@@ -229,18 +224,14 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
+
+      await sut.removeProductFromCart(0);
     });
     test(
         "Should not remove product from cart when quantity is 1 and cartInformations.update throws",
         () async {
-      await sut.addProductInCart(
-        product: cartProductWithOneQuantity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
@@ -250,10 +241,7 @@ void main() {
     test(
         "Should not reduce productQuantity when cartInformations.update throws",
         () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
@@ -266,10 +254,7 @@ void main() {
 
     test("Should reduce productQuantity when cartInformations.update succeeds",
         () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       await sut.reduceCartProductQuantity(0);
 
@@ -297,10 +282,7 @@ void main() {
     test(
         "Should not addCartProductQuantity when cartInformations.update throws",
         () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       cartInformations.mockSaveError();
       await sut.addCartProductQuantity(0);
@@ -313,10 +295,7 @@ void main() {
 
     test("Should addCartProductQuantity when cartInformations.update succeeds",
         () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       await sut.addCartProductQuantity(0);
 
@@ -1063,13 +1042,10 @@ void main() {
     });
 
     test("Should update comment correctly", () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-      );
+      sut.cartProducts.add(cartProductViewModel);
 
       final newComment = faker.randomGenerator.string(20);
-      sut.updateCommentOfProductCart(index: 0, newComment: newComment);
+      await sut.updateCommentOfProductCart(index: 0, newComment: newComment);
 
       expect(sut.cartProducts, [
         CartProductsViewModel(

@@ -424,22 +424,29 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  void reduceCartProductQuantity(int index) {
-    if (_cartProducts[index].Quantity.toDouble() <= 1) {
-      _cartProducts.removeAt(index);
-    } else {
-      final newQuantity = _cartProducts[index].Quantity.toDouble() - 1;
-      final productWithNewQuantity = CartProductsViewModel(
-        Comments: _cartProducts[index].Comments,
-        Product: _cartProducts[index].Product,
-        TotalLiquid:
-            (_cartProducts[index].Value.toDouble() * newQuantity).toString(),
-        Quantity: newQuantity.toString(),
-        Value: _cartProducts[index].Value,
-        ProductPriceLookUpCode: _cartProducts[index].ProductPriceLookUpCode,
-      );
-      _cartProducts[index] = productWithNewQuantity;
+  Future<void> reduceCartProductQuantity(int index) async {
+    final newCartList = [..._cartProducts];
+    try {
+      if (newCartList[index].Quantity.toDouble() <= 1) {
+        await cartInformations.update(newCartList);
+        newCartList.removeAt(index);
+      } else {
+        final newQuantity = newCartList[index].Quantity.toDouble() - 1;
+        final productWithNewQuantity = CartProductsViewModel(
+          Comments: newCartList[index].Comments,
+          Product: newCartList[index].Product,
+          TotalLiquid:
+              (newCartList[index].Value.toDouble() * newQuantity).toString(),
+          Quantity: newQuantity.toString(),
+          Value: newCartList[index].Value,
+          ProductPriceLookUpCode: newCartList[index].ProductPriceLookUpCode,
+        );
+        newCartList[index] = productWithNewQuantity;
+      }
+    } catch (e) {
+      e;
     }
+
     notifyListeners();
   }
 

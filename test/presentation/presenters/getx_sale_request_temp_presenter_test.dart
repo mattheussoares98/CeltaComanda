@@ -260,6 +260,24 @@ void main() {
       );
     });
 
+    test(
+        "Should not remove product from cart when quantity is 1 and cartInformations.update throws",
+        () async {
+      final cartProduct = EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 1,
+        minimumProductQuantity: 1,
+      );
+      await sut.addProductInCart(
+        product: cartProduct,
+        menuPresenter: menuPresenter,
+      );
+
+      cartInformations.mockError();
+      await sut.reduceCartProductQuantity(0);
+
+      expect(sut.cartProducts.length, 1);
+    });
+
     test("Should emits correct events on AddtractProductQuantity", () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

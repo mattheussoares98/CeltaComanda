@@ -321,7 +321,7 @@ class GetxSaleRequestTempPresenter
     }
   }
 
-  final List<CartProductsViewModel> _cartProducts = [];
+  List<CartProductsViewModel> _cartProducts = [];
   @override
   List<CartProductsViewModel> get cartProducts => _cartProducts;
 
@@ -335,7 +335,7 @@ class GetxSaleRequestTempPresenter
     );
   }
 
-  void _updateProductWithNewQuantity({
+  CartProductsViewModel _getProductWithNewQuantity({
     required int indexOfEqualProduct,
     required CartProductEntity newProduct,
   }) {
@@ -352,7 +352,7 @@ class GetxSaleRequestTempPresenter
       ProductPriceLookUpCode: newProduct.ProductPriceLookUpCode,
     );
 
-    _cartProducts[indexOfEqualProduct] = productWithNewQuantity;
+    return productWithNewQuantity;
   }
 
   @override
@@ -361,18 +361,20 @@ class GetxSaleRequestTempPresenter
     required MenuPresenter menuPresenter,
   }) async {
     try {
-      await cartInformations.update(_cartProducts);
-
       final indexOfEqualProduct = _getIndexOfEqualProduct(product);
+      final newCartList = [..._cartProducts];
 
       if (indexOfEqualProduct == -1) {
-        _cartProducts.add(CartProductsViewModel.fromEntity(product));
+        newCartList.add(CartProductsViewModel.fromEntity(product));
       } else {
-        _updateProductWithNewQuantity(
+        newCartList[indexOfEqualProduct] = _getProductWithNewQuantity(
           indexOfEqualProduct: indexOfEqualProduct,
           newProduct: product,
         );
       }
+
+      await cartInformations.update(newCartList);
+      _cartProducts = newCartList;
 
       menuPresenter.updateSelectedProduct(null);
     } catch (e) {

@@ -132,20 +132,23 @@ void main() {
   });
 
   group("CartInformations", () {
-    // test("Should call updateCartInformations on addProductInCart", () async {
-    //   await sut.addProductInCart(
-    //     product: cartProductEntity,
-    //     menuPresenter: menuPresenter,
-    //   );
+    test("Should call updateCartInformations on addProductInCart", () async {
+      final list = [CartProductsViewModel.fromEntity(cartProductEntity)];
+      cartInformations.mockSaveCart(list);
 
-    //   verify(
-    //     () => cartInformations.update(sut.cartProducts),
-    //   ).called(1);
-    // });
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      verify(
+        () => cartInformations.update(list),
+      ).called(1);
+    });
 
     test("Should not add product in cart if cartInformations.update throws",
         () async {
-      cartInformations.mockError();
+      cartInformations.mockError(null);
 
       await sut.addProductInCart(
         product: cartProductEntity,
@@ -168,7 +171,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           saleRequestProductTempId: saleRequestProductTempId,
         ),
-      );
+      ).called(1);
     });
 
     test("Should emits correct events on error to AddProductQuantity",

@@ -40,6 +40,7 @@ void main() {
   late List<UpdateSaleRequestTempProductEntity>
       updateSaleRequestTempProductsEntity;
   late CartProductsViewModel cartProductViewModel;
+  late CartProductEntity cartProductWithOneQuantity;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -85,6 +86,10 @@ void main() {
     cartProductEntity = EntityFactory.makeCartProductEntity(
       maximumProductQuantity: 200,
       minimumProductQuantity: 2,
+    );
+    cartProductWithOneQuantity = EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 1,
+      minimumProductQuantity: 1,
     );
     commandNumber = faker.randomGenerator.integer(100).toString();
 
@@ -228,6 +233,31 @@ void main() {
         menuPresenter: menuPresenter,
       );
     });
+    test(
+        "Should not remove product from cart when quantity is 1 and cartInformations.update throws",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductWithOneQuantity,
+        menuPresenter: menuPresenter,
+      );
+
+      cartInformations.mockError();
+      await sut.reduceCartProductQuantity(0);
+
+      expect(sut.cartProducts.length, 1);
+    });
+    test(
+        "Should remove product from cart when quantity is 1 and cartInformations.update succeeds",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductWithOneQuantity,
+        menuPresenter: menuPresenter,
+      );
+
+      await sut.reduceCartProductQuantity(0);
+
+      expect(sut.cartProducts.length, 0);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {
@@ -258,41 +288,6 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         commandNumber: homePresenter.commandNumberMock!,
       );
-    });
-
-    test(
-        "Should not remove product from cart when quantity is 1 and cartInformations.update throws",
-        () async {
-      final cartProduct = EntityFactory.makeCartProductEntity(
-        maximumProductQuantity: 1,
-        minimumProductQuantity: 1,
-      );
-      await sut.addProductInCart(
-        product: cartProduct,
-        menuPresenter: menuPresenter,
-      );
-
-      cartInformations.mockError();
-      await sut.reduceCartProductQuantity(0);
-
-      expect(sut.cartProducts.length, 1);
-    });
-    test(
-        "Should remove product from cart when quantity is 1 and cartInformations.update succeeds",
-        () async {
-      final cartProduct = EntityFactory.makeCartProductEntity(
-        maximumProductQuantity: 1,
-        minimumProductQuantity: 1,
-      );
-      
-      await sut.addProductInCart(
-        product: cartProduct,
-        menuPresenter: menuPresenter,
-      );
-
-      await sut.reduceCartProductQuantity(0);
-
-      expect(sut.cartProducts.length, 0);
     });
 
     test("Should emits correct events on AddtractProductQuantity", () async {
@@ -941,10 +936,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
       await sut.addProductInCart(
-        product: EntityFactory.makeCartProductEntity(
-          maximumProductQuantity: 1,
-          minimumProductQuantity: 1,
-        ),
+        product: cartProductWithOneQuantity,
         menuPresenter: menuPresenter,
       );
 

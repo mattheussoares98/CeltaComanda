@@ -357,6 +357,13 @@ void main() {
         () => cartInformations.get(),
       ).called(1);
     });
+
+    test("Should update cartProducts if contains data in local storage",
+        () async {
+      await sut.getLocalCartProductsData();
+
+      expect(sut.cartProducts, [cartProductViewModel]);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

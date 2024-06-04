@@ -388,8 +388,20 @@ class GetxSaleRequestTempPresenter
   }
 
   @override
-  void removeProductFromCart(int index) {
-    _cartProducts.removeAt(index);
+  Future<void> removeProductFromCart(int index) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      final newCartList = [..._cartProducts];
+      newCartList.removeAt(index);
+      await cartInformations.update(newCartList);
+
+      _cartProducts.removeAt(index);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override

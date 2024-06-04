@@ -62,7 +62,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
   });
-  void removeProductFromCart(int index);
+  Future<void> removeProductFromCart(int index);
   void updateCommentOfProductCart({
     required int index,
     required String newComment,

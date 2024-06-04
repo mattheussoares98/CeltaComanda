@@ -39,6 +39,7 @@ void main() {
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late List<UpdateSaleRequestTempProductEntity>
       updateSaleRequestTempProductsEntity;
+  late CartProductsViewModel cartProductViewModel;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -107,13 +108,14 @@ void main() {
           0.0, (previousValue, element) => element.TotalLiquid + previousValue),
       Products: updateSaleRequestTempProductsEntity,
     );
+
+    cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
   }
 
   void initMockSuccess() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     localPrintRequest.mockGetMergedPrinted(null);
-    cartInformations
-        .mockSaveCart([CartProductsViewModel.fromEntity(cartProductEntity)]);
+    cartInformations.mockSaveCart([cartProductViewModel]);
   }
 
   setUp(() {
@@ -141,8 +143,7 @@ void main() {
       );
 
       verify(
-        () => cartInformations
-            .update([CartProductsViewModel.fromEntity(cartProductEntity)]),
+        () => cartInformations.update([cartProductViewModel]),
       ).called(1);
     });
 
@@ -168,7 +169,58 @@ void main() {
     });
     test("Should emit correct events on addProductInCart throws", () async {
       cartInformations.mockError();
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+    });
+
+    test(
+        "Should call cartInformations.update when removeProductFromCart succeeds",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      verify(
+        () => cartInformations.update([cartProductViewModel]),
+      ).called(1);
+    });
+    test(
+        "Should NOT remove product from cart when cartInformations.update throws",
+        () async {
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+
+      cartInformations.mockError();
+      await sut.removeProductFromCart(0);
+
+      expect(sut.cartProducts, [cartProductViewModel]);
+    });
+
+    test("Should emit correct events on removeProductFromCart success",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+      );
+      await sut.removeProductFromCart(0);
+    });
+    test("Should emit correct events on removeProductFromCart throws",
+        () async {
+      cartInformations.mockError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductInCart(
@@ -796,8 +848,7 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      expect(sut.cartProducts,
-          [CartProductsViewModel.fromEntity(cartProductEntity)]);
+      expect(sut.cartProducts, [cartProductViewModel]);
     });
     test("Should remove correct product from cart", () async {
       expect(sut.cartProducts, []);
@@ -816,15 +867,15 @@ void main() {
       );
 
       expect(sut.cartProducts, [
-        CartProductsViewModel.fromEntity(cartProductEntity), //0
+        cartProductViewModel, //0
         CartProductsViewModel.fromEntity(cartProduct1), //1
       ]);
 
-      sut.removeProductFromCart(0);
+      await sut.removeProductFromCart(0);
       expect(
           sut.cartProducts, [CartProductsViewModel.fromEntity(cartProduct1)]);
 
-      sut.removeProductFromCart(0);
+      await sut.removeProductFromCart(0);
       expect(sut.cartProducts, []);
     });
 

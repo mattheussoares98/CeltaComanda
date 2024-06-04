@@ -429,7 +429,7 @@ class GetxSaleRequestTempPresenter
     try {
       if (newCartList[index].Quantity.toDouble() <= 1) {
         await cartInformations.update(newCartList);
-        newCartList.removeAt(index);
+        _cartProducts.removeAt(index);
       } else {
         final newQuantity = newCartList[index].Quantity.toDouble() - 1;
         final productWithNewQuantity = CartProductsViewModel(

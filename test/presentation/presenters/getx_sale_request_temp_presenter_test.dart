@@ -364,6 +364,13 @@ void main() {
 
       expect(sut.cartProducts, [cartProductViewModel]);
     });
+
+    test("Should not update cartProducts if localData returns null", () async {
+      cartInformations.mockGetCart(null);
+      await sut.getLocalCartProductsData();
+
+      expect(sut.cartProducts, []);
+    });
   });
   group("AddProductQuantity group", () {
     test("Should call AddProductQuantity with correct values", () async {

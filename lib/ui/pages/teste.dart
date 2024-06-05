@@ -1,282 +1,255 @@
-import 'dart:async';
+// import 'package:flutter/material.dart';
 
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
+// void main() {
+//   runApp(MyApp());
+// }
 
-import '../mixins/mixins.dart';
+// class ExpansibleGroupsViewModel {
+//   final String groupName;
+//   ExpansibleGroupsViewModel(this.groupName);
+// }
 
-import 'package:flutter/material.dart';
+// class ProductsViewModel {
+//   final String productName;
+//   final String groupName;
+//   double? itemHeight;
+//   ProductsViewModel(this.productName, this.groupName);
+// }
 
-class EnterpriseValidationPage extends StatefulWidget {
-  final EnterpriseValidationPresenter presenter;
+// class MyApp extends StatefulWidget {
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
 
-  const EnterpriseValidationPage(this.presenter, {super.key});
+// class _MyAppState extends State<MyApp> {
+//   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> data = [
+//     {
+//       ExpansibleGroupsViewModel('Group 1'): [
+//         ProductsViewModel('Product 1.1', 'Group 1'),
+//         ProductsViewModel('Product 1.2', 'Group 1'),
+//         ProductsViewModel('Product 1.3', 'Group 1'),
+//         ProductsViewModel('Product 1.4', 'Group 1'),
+//         ProductsViewModel('Product 1.5', 'Group 1'),
+//         ProductsViewModel('Product 1.6', 'Group 1'),
+//         ProductsViewModel('Product 1.7', 'Group 1'),
+//         ProductsViewModel('Product 1.8', 'Group 1'),
+//         ProductsViewModel('Product 1.9', 'Group 1'),
+//         ProductsViewModel('Product 1.11', 'Group 1'),
+//         ProductsViewModel('Product 1.12', 'Group 1'),
+//         ProductsViewModel('Product 1.13', 'Group 1'),
+//         ProductsViewModel('Product 1.14', 'Group 1'),
+//         ProductsViewModel('Product 1.15', 'Group 1'),
+//         ProductsViewModel('Product 1.16', 'Group 1'),
+//         ProductsViewModel('Product 1.17', 'Group 1'),
+//         ProductsViewModel('Product 1.18', 'Group 1'),
+//         ProductsViewModel('Product 1.19', 'Group 1'),
+//         ProductsViewModel('Product 1.20', 'Group 1'),
+//         ProductsViewModel('Product 1.21', 'Group 1'),
+//       ],
+//     },
+//     {
+//       ExpansibleGroupsViewModel('Group 2'): [
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.2', 'Group 2'),
+//         ProductsViewModel('Product 2.3', 'Group 2'),
+//         ProductsViewModel('Product 2.4', 'Group 2'),
+//         ProductsViewModel('Product 2.5', 'Group 2'),
+//         ProductsViewModel('Product 2.6', 'Group 2'),
+//         ProductsViewModel('Product 2.7', 'Group 2'),
+//         ProductsViewModel('Product 2.8', 'Group 2'),
+//         ProductsViewModel('Product 2.9', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.1', 'Group 2'),
+//         ProductsViewModel('Product 2.2', 'Group 2'),
+//         ProductsViewModel('Product 2.2', 'Group 2'),
+//       ],
+//     },
+//     {
+//       ExpansibleGroupsViewModel('Group 3'): [
+//         ProductsViewModel('Product 3.1', 'Group 3'),
+//         ProductsViewModel('Product 3.2', 'Group 3'),
+//         ProductsViewModel('Product 3.3', 'Group 3'),
+//         ProductsViewModel('Product 3.4', 'Group 3'),
+//         ProductsViewModel('Product 3.5', 'Group 3'),
+//         ProductsViewModel('Product 3.6', 'Group 3'),
+//         ProductsViewModel('Product 3.7', 'Group 3'),
+//         ProductsViewModel('Product 3.8', 'Group 3'),
+//         ProductsViewModel('Product 3.9', 'Group 3'),
+//         ProductsViewModel('Product 3.11', 'Group 3'),
+//         ProductsViewModel('Product 3.12', 'Group 3'),
+//         ProductsViewModel('Product 3.13', 'Group 3'),
+//         ProductsViewModel('Product 3.14', 'Group 3'),
+//         ProductsViewModel('Product 3.15', 'Group 3'),
+//         ProductsViewModel('Product 3.16', 'Group 3'),
+//         ProductsViewModel('Product 3.17', 'Group 3'),
+//         ProductsViewModel('Product 3.18', 'Group 3'),
+//         ProductsViewModel('Product 3.19', 'Group 3'),
+//         ProductsViewModel('Product 3.2', 'Group 3'),
+//         ProductsViewModel('Product 3.21', 'Group 3'),
+//       ],
+//     },
+//   ];
 
-  @override
-  State<EnterpriseValidationPage> createState() =>
-      _EnterpriseValidationPageState();
-}
+//   // Crie um mapa para associar produtos aos grupos
+//   final Map<ProductsViewModel, ExpansibleGroupsViewModel> productToGroup = {};
 
-class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
-    with KeyboardManager, LoadingManager, UIErrorManager {
-  bool _isLoaded = false;
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    if (!_isLoaded) {
-      _isLoaded = true;
-      await widget.presenter.loadLocalData();
+//   // Crie um ScrollController para controlar a posição da lista de produtos
+//   final ScrollController _scrollController = ScrollController();
 
-      if (widget.presenter.enterpriseNameController.text.isNotEmpty) {
-        widget.presenter.validateEnterpriseInput(
-            widget.presenter.enterpriseNameController.text);
-      }
-    }
-  }
+//   void scrollToGroup(ExpansibleGroupsViewModel group, List allProducts) {
+//     // Encontre o primeiro produto desse grupo
+//     final firstProduct = data
+//         .firstWhere(
+//             (groupData) => groupData.keys.first.groupName == group.groupName)
+//         .values
+//         .first
+//         .first;
 
-  StreamSubscription? loadingSubscription;
-  StreamSubscription? mainErrorSubscription;
+//     // Role até a posição do primeiro produto desse grupo
+//     _scrollController.animateTo(
+//       allProducts.indexOf(firstProduct) *
+//           (firstProduct.itemHeight ??
+//               50), // Substitua itemHeight pelo tamanho real do item
+//       duration: const Duration(milliseconds: 500),
+//       curve: Curves.easeInOut,
+//     );
+//   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    loadingSubscription?.cancel();
-    mainErrorSubscription?.cancel();
-    _rightListController.dispose();
-  }
+//   final Map<int, double> _itemHeights = {};
+//   final List<ProductsViewModel> allProducts = [];
 
-  final ScrollController _rightListController = ScrollController();
+//   @override
+//   void initState() {
+//     super.initState();
+//     for (var x in data) {
+//       for (var product in x.values) {
+//         allProducts.addAll(product);
+//       }
+//     }
+//    getItemsHeight();
+//   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+//   Future<void> getItemsHeight() async {
+//     await Future.delayed(const Duration(milliseconds: 300), () {});
+//     _scrollController.animateTo(
+//       _scrollController.position
+//           .maxScrollExtent, // Substitua itemHeight pelo tamanho real do item
+//       duration: const Duration(milliseconds: 300),
+//       curve: Curves.easeInOut,
+//     );
+//     await Future.delayed(const Duration(milliseconds: 300), () {
+//       _scrollController.animateTo(
+//         0, // Substitua itemHeight pelo tamanho real do item
+//         duration: const Duration(milliseconds: 300),
+//         curve: Curves.easeInOut,
+//       );
+//     });
+//   }
 
-  void _scrollListener(List<ExpansibleGroupsViewModel> allGroups,
-      List<List<ProductsViewModel>> productsInGroups) {
-    // Calcula o índice do produto que está no meio da lista da direita
-    final middleIndex = ((_rightListController.offset +
-                _rightListController.position.viewportDimension / 2) /
-            80)
-        .floor();
+//   @override
+//   void didChangeDependencies() async {
+//     super.didChangeDependencies();
+//   }
 
-    // Encontra o grupo correspondente ao produto que está no meio da lista da direita
-    int groupIndex = 0;
-    int totalItems = 0;
-    for (int i = 0; i < productsInGroups.length; i++) {
-      totalItems += productsInGroups[i].length;
-      if (middleIndex < totalItems) {
-        groupIndex = i;
-        break;
-      }
-    }
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(title: const Text('Groups and Products')),
+//         body: Row(
+//           children: [
+//             Expanded(
+//               flex: 1,
+//               child: ListView(
+//                 children: data.map((groupData) {
+//                   final group = groupData.keys.first;
+//                   return GestureDetector(
+//                     onTap: () {
+//                       // Quando o usuário clicar no grupo, role até os produtos correspondentes
+//                       scrollToGroup(group, allProducts);
+//                     },
+//                     child: Container(
+//                       padding: EdgeInsets.all(10),
+//                       child: Text(group.groupName),
+//                     ),
+//                   );
+//                 }).toList(),
+//               ),
+//             ),
+//             Expanded(
+//               flex: 3,
+//               child: ListView.builder(
+//                 controller: _scrollController,
+//                 itemCount: allProducts.length,
+//                 itemBuilder: (context, index) {
+//                   final product = allProducts[index];
+//                   return KeyedSubtree(
+//                     key: ValueKey(index),
+//                     child: Builder(
+//                       builder: (BuildContext context) {
+//                         WidgetsBinding.instance.addPostFrameCallback((_) {
+//                           final RenderBox itemBox =
+//                               context.findRenderObject() as RenderBox;
+//                           _itemHeights[index] = itemBox.size.height;
+//                           product.itemHeight = itemBox.size.height;
+//                         });
+//                         return ListTile(
+//                           title: Text(product.productName),
+//                           subtitle: Text(product.itemHeight.toString()),
+//                         );
+//                       },
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-    // Obtém o grupo correspondente ao produto que está no meio da lista da direita
-    final group = allGroups[groupIndex];
-    // ignore: avoid_print
-    print(group);
-  }
+// class GroupHeaderDelegate extends SliverPersistentHeaderDelegate {
+//   final String groupName;
+//   final VoidCallback onTap;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) {
-          loadingSubscription =
-              handleLoading(context, widget.presenter.isLoadingStream);
-          mainErrorSubscription =
-              handleMainError(context, widget.presenter.mainErrorStream);
+//   GroupHeaderDelegate(this.groupName, this.onTap);
 
-          product(String number) => ProductsViewModel(
-                IsPromoCombox: "IsPromoCombox",
-                ProductsId: "ProductsId",
-                SaleRetailPraticed: "SaleRetailPraticed",
-                PriceLookupCode: "PriceLookupCode",
-                Name: "Product $number",
-                PackingAbbreviation: "PackingAbbreviation",
-                InternalCodeOnERP: "InternalCodeOnERP",
-                InternalCodeOfProductOnERP: "InternalCodeOfProductOnERP",
-                EenterpriseId: "EenterpriseId",
-                PackingQuantity: "PackingQuantity",
-                OfferRetailPrice: "OfferRetailPrice",
-                WholeSalePrice: "WholeSalePrice",
-                WholeOfferPrice: "WholeOfferPrice",
-                OfferECommercePrice: "OfferECommercePrice",
-                SaleECommercePrice: "SaleECommercePrice",
-                LiquidCost: "LiquidCost",
-                LiquidCostMiddle: "LiquidCostMiddle",
-                LiquidCostReal: "LiquidCostReal",
-                RepositionCost: "RepositionCost",
-                RepositionCostMiddle: "RepositionCostMiddle",
-                RepositionCostReal: "RepositionCostReal",
-                IcmsAliquot: "IcmsAliquot",
-                IcmsIVAMargin: "IcmsIVAMargin",
-                IcmsReductionMargin: "IcmsReductionMargin",
-                IcmsStave: "IcmsStave",
-                PercImpNBPTState: "PercImpNBPTState",
-                PercImpNBPTMunicipal: "PercImpNBPTMunicipal",
-                CofinsType: "CofinsType",
-                PisType: "PisType",
-                ProductIsFatherComposition: "ProductIsFatherComposition",
-                QuantityMinimumWholeSale: "QuantityMinimumWholeSale",
-                QuantityMinimumWholeSaleByClass:
-                    "QuantityMinimumWholeSaleByClass",
-                BalanceTare: "BalanceTare",
-                FamilyCode: "FamilyCode",
-                DepartmentCode: "DepartmentCode",
-                SectionCode: "SectionCode",
-                GroupCode: "GroupCode",
-                SubGroupCode: "SubGroupCode",
-                StockQuantity: "StockQuantity",
-                AllowFractionate: "AllowFractionate",
-                IsBalance: "IsBalance",
-                CanBeWeightyInPdv: "CanBeWeightyInPdv",
-                QuantityInBalance: "QuantityInBalance",
-                AllowQuantityInPdv: "AllowQuantityInPdv",
-                GoesForFastTable: "GoesForFastTable",
-                IsAlcoholicProduct: "IsAlcoholicProduct",
-                SaleRetailPrice: "SaleRetailPrice",
-                PercImpNBPTNational: "PercImpNBPTNational",
-                CofinsPercentage: "CofinsPercentage",
-                PisPercentage: "PisPercentage",
-                CFOP: "CFOP",
-                FiscalClassificationNCM: "FiscalClassificationNCM",
-                TributarySituationCode: "TributarySituationCode",
-                CSTPisCofins: "CSTPisCofins",
-                CodeClass: "CodeClass",
-                DepartmentName: "DepartmentName",
-                SectionName: "SectionName",
-                DateOfLastChanged: "DateOfLastChanged",
-                GroupName: "GroupName",
-                SaleRetailPraticedString: "SaleRetailPraticedString",
-                PersonalizedCode: "PersonalizedCode",
-                EanCode: "EanCode",
-                NameComplete: "NameComplete",
-                NameReduced: "NameReduced",
-              );
+//   @override
+//   Widget build(
+//       BuildContext context, double shrinkOffset, bool overlapsContent) {
+//     // Construir o cabeçalho persistente
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Container(
+//         // Configurações do cabeçalho
+//         // ...
+//         child: Text(groupName),
+//       ),
+//     );
+//   }
 
-          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-              loadedMenu = [
-            {
-              const ExpansibleGroupsViewModel(
-                  Name: "Name 1",
-                  ExpansibleGroupId: "ExpansibleGroupId 1",
-                  ExpansibleGroupType: "ExpansibleGroupType 1",
-                  OrderClassification: "OrderClassification 1"): [
-                product("1.1"),
-                product("1.2"),
-                product("1.3"),
-                product("1.4"),
-                product("1.5"),
-                product("1.6"),
-                product("1.7"),
-                product("1.8"),
-                product("1.9"),
-                product("1.11"),
-                product("1.12"),
-                product("1.13"),
-                product("1.14"),
-                product("1.15"),
-              ],
-            },
-            {
-              const ExpansibleGroupsViewModel(
-                  Name: "Name 2",
-                  ExpansibleGroupId: "ExpansibleGroupId 2",
-                  ExpansibleGroupType: "ExpansibleGroupType 2",
-                  OrderClassification: "OrderClassification 2"): [
-                product("2.1"),
-                product("2.2"),
-                product("2.3"),
-                product("2.4"),
-                product("2.5"),
-                product("2.6"),
-                product("2.7"),
-                product("2.8"),
-                product("2.9"),
-                product("2.11"),
-                product("2.12"),
-                product("2.13"),
-                product("2.14"),
-                product("2.15"),
-              ],
-            },
-            {
-              const ExpansibleGroupsViewModel(
-                  Name: "Name 3",
-                  ExpansibleGroupId: "ExpansibleGroupId 3",
-                  ExpansibleGroupType: "ExpansibleGroupType 3",
-                  OrderClassification: "OrderClassification 3"): [
-                product("3.1"),
-                product("3.2"),
-                product("3.3"),
-                product("3.4"),
-                product("3.5"),
-                product("3.6"),
-                product("3.7"),
-                product("3.8"),
-                product("3.9"),
-                product("3.11"),
-                product("3.12"),
-                product("3.13"),
-                product("3.14"),
-                product("3.15"),
-              ],
-            },
-          ];
+//   @override
+//   // TODO: implement maxExtent
+//   double get maxExtent => 100;
 
-          List<ProductsViewModel> allProducts = loadedMenu
-              .expand((group) => group.values.expand((products) => products))
-              .toList();
-          List<ExpansibleGroupsViewModel> allGroups =
-              loadedMenu.map((group) => group.keys.first).toList();
+//   @override
+//   // TODO: implement minExtent
+//   double get minExtent => 30;
 
-          List<List<ProductsViewModel>> productsInGroups = [];
+//   @override
+//   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+//     // TODO: implement shouldRebuild
+//     throw UnimplementedError();
+//   }
 
-// Itera sobre loadedMenu para extrair os produtos de cada grupo
-          for (var groupData in loadedMenu) {
-            // Obtém a lista de produtos para o grupo atual
-            List<ProductsViewModel> products = groupData.values.first;
-
-            // Adiciona a lista de produtos à lista de grupos
-            productsInGroups.add(products);
-          }
-
-          _rightListController
-              .addListener(() => _scrollListener(allGroups, productsInGroups));
-
-          return Row(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: allGroups.length,
-                  itemBuilder: (context, index) {
-                    final group = allGroups[index];
-                    return ListTile(
-                      title: Text(group.Name),
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  controller: _rightListController,
-                  itemCount: allProducts.length,
-                  itemBuilder: (context, index) {
-                    final product = allProducts[index];
-                    return Container(
-                      height: 80,
-                      color: Colors.blue,
-                      child: ListTile(
-                        title: Text(product.Name),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
+//   // Restante do código do GroupHeaderDelegate...
+// }

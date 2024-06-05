@@ -47,21 +47,8 @@ class _ProductItemState extends State<ProductItem> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Column(
-          children: [
-            NameImageAndPrice(productsViewModel: widget.productsViewModel),
-            if (widget.productsViewModel.IsPromoCombox == "true")
-              Text(
-                "COMBO",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-          ],
-        ),
+        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+        child: NameImagePriceAndCombox(productsViewModel: widget.productsViewModel),
       ),
     );
   }

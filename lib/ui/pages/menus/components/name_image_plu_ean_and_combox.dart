@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 import '../../../components/components.dart';
 
-class NameImageAndPrice extends StatelessWidget {
+class NameImagePriceAndCombox extends StatelessWidget {
   final ProductsViewModel productsViewModel;
-  const NameImageAndPrice({
+  const NameImagePriceAndCombox({
     required this.productsViewModel,
     super.key,
   });
@@ -41,6 +41,15 @@ class NameImageAndPrice extends StatelessWidget {
             fontSize: 17,
           ),
         ),
+        if (productsViewModel.IsPromoCombox == "true")
+          Text(
+            "COMBO",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
       ],
     );
   }

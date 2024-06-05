@@ -3,6 +3,7 @@ enum CacheKeys {
   cartProducts,
   crossId,
   enterprise,
+  images,
   hiveBoxName,
   printRequest,
   updatedSaleRequestTemp,

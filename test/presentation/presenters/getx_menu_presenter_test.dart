@@ -196,6 +196,13 @@ void main() {
       sut.clear();
       expect(sut.loadedMenu, []);
     });
+
+    test('Should update index of selectedGroup when search groups again',
+        () async {
+      expectLater(sut.indexOfSelectedGroupStream, emits(0));
+          
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
   });
 
   group("SearchProductByCode", () {
@@ -551,7 +558,8 @@ void main() {
     });
 
     test('Should update indexOfSelectedProduct correctly', () async {
-      expectLater(sut.selectedProductStream, emitsInOrder([productsViewModel, null]));
+      expectLater(
+          sut.selectedProductStream, emitsInOrder([productsViewModel, null]));
 
       sut.updateSelectedProduct(productsViewModel);
       sut.updateSelectedProduct(productsViewModel);

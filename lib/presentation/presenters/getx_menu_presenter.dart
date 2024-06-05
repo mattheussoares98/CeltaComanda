@@ -194,6 +194,7 @@ class GetxMenuPresenter extends GetxController
   Future<void> getGroupsAndProducts(String commandNumber) async {
     isLoading = true;
     mainError = null;
+    _inexOfSelectedGroup.value = 0;
     clear();
 
     try {

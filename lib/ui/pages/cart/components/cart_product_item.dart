@@ -23,9 +23,6 @@ class SaleRequestTempProductItem extends StatefulWidget {
 
 class _SaleRequestTempProductItemState
     extends State<SaleRequestTempProductItem> {
-  TextEditingController commentsController = TextEditingController();
-  FocusNode commentsFocusNode = FocusNode();
-
   void onPressedAddQuantity({
     required CartPresenter cartPresenter,
   }) {
@@ -46,22 +43,6 @@ class _SaleRequestTempProductItemState
       );
     } else {
       cartPresenter.reduceCartProductQuantity(widget.index);
-    }
-  }
-
-  void onTapCommentIcon(CartPresenter cartPresenter) {
-    cartPresenter.updateIndexOfSelectedProduct(widget.index);
-    //criar teste pra essa alteração do índice do produto que foi selecionado
-    if (widget.cartProduct.Comments != null) {
-      setState(() {
-        commentsController.text = widget.cartProduct.Comments!;
-      });
-    }
-
-    if (cartPresenter.indexOfSelectedProduct == widget.index) {
-      Future.delayed(const Duration(milliseconds: 300), () {
-        FocusScope.of(context).requestFocus(commentsFocusNode);
-      });
     }
   }
 
@@ -111,99 +92,10 @@ class _SaleRequestTempProductItemState
           ],
         ),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            if (widget.cartProduct.Comments == null)
-              const Expanded(
-                child: Text(
-                  "Não há comentário",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ),
-            if (widget.cartProduct.Comments != null)
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CommentRichText(
-                        comment: widget.cartProduct.Comments!,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        notificationDialog(
-                          context: context,
-                          titleMessage: "Excluir comentário?",
-                          content: null,
-                          onPress: () async {
-                            await cartPresenter.updateCommentOfProductCart(
-                              index: widget.index,
-                              newComment: null,
-                            );
-                          },
-                        );
-                      },
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                        size: 25,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: () {
-                onTapCommentIcon(cartPresenter);
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    color: Theme.of(context).colorScheme.primary,
-                    Icons.add_comment,
-                    size: 25,
-                  ),
-                ],
-              ),
-            ),
-          ],
+        Comment(
+          index: widget.index,
+          comments: widget.cartProduct.Comments,
         ),
-        if (cartPresenter.indexOfSelectedProduct == widget.index)
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  focusNode: commentsFocusNode,
-                  controller: commentsController,
-                  maxLines: 8,
-                  minLines: 1,
-                  decoration: const InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await cartPresenter.updateCommentOfProductCart(
-                    index: widget.index,
-                    newComment: commentsController.text,
-                  );
-
-                  commentsFocusNode.unfocus();
-                },
-                child: const Text(
-                  "Confirmar",
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
         const Divider(
           thickness: 0.2,
         )

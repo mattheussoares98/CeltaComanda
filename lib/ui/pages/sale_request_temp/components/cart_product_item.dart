@@ -61,8 +61,6 @@ class _SaleRequestTempProductItemState
     if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index) {
       Future.delayed(const Duration(milliseconds: 300), () {
         FocusScope.of(context).requestFocus(commentsFocusNode);
-        commentsController.selection = TextSelection(
-            baseOffset: 0, extentOffset: commentsController.text.length);
       });
     }
   }
@@ -113,20 +111,48 @@ class _SaleRequestTempProductItemState
             ),
           ],
         ),
-        GestureDetector(
-          onTap: () {
-            onTapCommentIcon(saleRequestTempPresenter);
-          },
-          child: Icon(
-            color: Theme.of(context).colorScheme.primary,
-            widget.cartProduct.Comments == null
-                ? Icons.add_comment
-                : Icons.edit,
-            size: 25,
-          ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (widget.cartProduct.Comments != null)
+              Expanded(
+                child: CommentRichText(
+                  comment: widget.cartProduct.Comments!,
+                ),
+              ),
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    onTapCommentIcon(saleRequestTempPresenter);
+                  },
+                  child: Icon(
+                    color: Theme.of(context).colorScheme.primary,
+                    widget.cartProduct.Comments == null
+                        ? Icons.add_comment
+                        : Icons.edit,
+                    size: 25,
+                  ),
+                ),
+                if (widget.cartProduct.Comments != null)
+                  Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        onTap: () {},
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ],
         ),
-        if (widget.cartProduct.Comments != null)
-          CommentRichText(comment: widget.cartProduct.Comments!),
         if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index)
           Row(
             children: [
@@ -134,7 +160,8 @@ class _SaleRequestTempProductItemState
                 child: TextField(
                   focusNode: commentsFocusNode,
                   controller: commentsController,
-                  maxLines: null,
+                  maxLines: 8,
+                  minLines: 1,
                   decoration: const InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -143,24 +170,15 @@ class _SaleRequestTempProductItemState
               ),
               TextButton(
                 onPressed: () async {
-                  saleRequestTempPresenter.updateCommentOfProductCart(
+                  await saleRequestTempPresenter.updateCommentOfProductCart(
                     index: widget.index,
                     newComment: commentsController.text,
                   );
 
                   commentsFocusNode.unfocus();
-                  // await saleRequestTempPresenter.updateComment(
-                  //   comments: commentsController.text,
-                  //   saleRequestProductTempId: int.parse(
-                  //       widget.cartProduct.SaleRequestProductTempId),
-                  //   menuPresenter: menuPresenter,
-                  //   printedProductsPresenter: printedProductsPresenter,
-                  //   saleRequestTempPresenter: saleRequestTempPresenter,
-                  //   homePresenter: homePresenter,
-                  // );
                 },
                 child: const Text(
-                  "Alterar\ncomentário",
+                  "Confirmar",
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -48,8 +48,7 @@ class SaleRequestProductsItems extends StatelessWidget {
                 RequestSummary(
                   totalLiquid:
                       saleRequestTempPresenter.totalSaleRequestTempPrice,
-                  comments:
-                      "Agora eu posso adicionar um comentário qualquer aqui, por exemplo o número da mesa pra ficar mais fácil pro cliente. Aí eu deixo ele adicionar somente comentário no produto",
+                  comments: saleRequestTempPresenter.saleRequestTemp?.Comments,
                 ),
               ],
             ),

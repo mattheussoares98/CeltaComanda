@@ -411,13 +411,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     if (newComment == _cartProducts[index].Comments) {
       return;
     }
-    
+
     mainError = null;
     isLoading = true;
     final newCartList = [..._cartProducts];
 
     final productWithNewComment = CartProductsViewModel(
-      Comments: newComment,
+      Comments: newComment?.isEmpty == true ? null : newComment,
       Product: _cartProducts[index].Product,
       TotalLiquid: _cartProducts[index].TotalLiquid,
       Quantity: _cartProducts[index].Quantity,

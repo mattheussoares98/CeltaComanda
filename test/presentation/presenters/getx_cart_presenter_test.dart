@@ -1107,6 +1107,28 @@ void main() {
 
       verifyNever(() => cartInformations.update([cartProductViewModel]));
     });
+    test("Should update comment with null value if comment is empty", () async {
+      sut.cartProducts.add(cartProductViewModel);
+
+      await sut.updateCommentOfProductCart(
+        index: 0,
+        newComment: "",
+      );
+
+      verify(() => cartInformations.update(
+            [
+              CartProductsViewModel(
+                Product: cartProductViewModel.Product,
+                Comments: null,
+                TotalLiquid: cartProductViewModel.TotalLiquid,
+                Quantity: cartProductViewModel.Quantity,
+                Value: cartProductViewModel.Value,
+                ProductPriceLookUpCode:
+                    cartProductViewModel.ProductPriceLookUpCode,
+              ),
+            ],
+          )).called(1);
+    });
 
     test("Should reduce quantity correctly", () async {
       await sut.addProductInCart(

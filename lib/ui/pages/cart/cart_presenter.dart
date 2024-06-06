@@ -4,7 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
-abstract class SaleRequestTempPresenter implements ChangeNotifier {
+abstract class CartPresenter implements ChangeNotifier {
   SaleRequestTempViewModel? get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
@@ -27,7 +27,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   });
@@ -39,7 +39,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required int saleRequestProductTempId,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
   });
 
@@ -49,7 +49,7 @@ abstract class SaleRequestTempPresenter implements ChangeNotifier {
     required SaleRequestTempEntity saleRequestTempEntity,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
   });
 

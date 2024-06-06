@@ -82,8 +82,8 @@ Widget makePage(
       ListenableProvider<MenuPresenter>(
         create: (_) => MenuPresenterSpy(),
       ),
-      ChangeNotifierProvider<SaleRequestTempPresenter>(
-        create: (_) => SaleRequestTempPresenterSpy(),
+      ChangeNotifierProvider<CartPresenter>(
+        create: (_) => CartPresenterSpy(),
       ),
       ChangeNotifierProvider<PrintedProductsPresenter>(
         create: (_) => PrintedProductsPresenterSpy(),

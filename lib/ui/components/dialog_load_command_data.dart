@@ -23,7 +23,7 @@ void dialogLoadCommandData({
   required BuildContext context,
   required MenuPresenter menuPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
-  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required CartPresenter cartPresenter,
   required HomePresenter homePresenter,
   required Future Function() loadCommandData,
 }) {

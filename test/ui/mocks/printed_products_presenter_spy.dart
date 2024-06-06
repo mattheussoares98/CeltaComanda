@@ -41,7 +41,7 @@ class PrintedProductsPresenterSpy extends Mock
           saleRequestProductId: any(named: "saleRequestProductId"),
           menuPresenter: any(named: "menuPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
-          saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
+          cartPresenter: any(named: "cartPresenter"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((_) async => _);
   }
@@ -50,7 +50,7 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.loadCommandData(
           commandNumber: any(named: "commandNumber"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
-          saleRequestTempPresenter: any(named: "saleRequestTempPresenter"),
+          cartPresenter: any(named: "cartPresenter"),
           menuPresenter: any(named: "menuPresenter"),
           homePresenter: any(named: "homePresenter"),
           clearPermissionToCancelProducts:

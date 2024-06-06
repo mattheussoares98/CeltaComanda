@@ -27,7 +27,7 @@ class GetxPrintedProductsPresenter
   Future<void> removeProduct({
     required String saleRequestProductId,
     required MenuPresenter menuPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   }) async {
@@ -43,7 +43,7 @@ class GetxPrintedProductsPresenter
       await loadCommandData(
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
@@ -156,7 +156,7 @@ class GetxPrintedProductsPresenter
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
@@ -168,11 +168,11 @@ class GetxPrintedProductsPresenter
       updateCanCancelProducts(false);
     }
     menuPresenter.clear();
-    saleRequestTempPresenter.clear();
+    cartPresenter.clear();
 
     try {
       await menuPresenter.getGroupsAndProducts(commandNumber);
-      await saleRequestTempPresenter.loadSaleRequest(commandNumber);
+      await cartPresenter.loadSaleRequest(commandNumber);
       clear();
       await loadPrinted(commandNumber);
     } on DomainError catch (error) {

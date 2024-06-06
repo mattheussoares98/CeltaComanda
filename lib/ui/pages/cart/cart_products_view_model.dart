@@ -3,8 +3,8 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../ui/helpers/helpers.dart';
-import '../../../ui/pages/pages.dart';
+import '../../helpers/helpers.dart';
+import '../pages.dart';
 
 class CartProductsViewModel extends Equatable {
   final ProductsViewModel Product;

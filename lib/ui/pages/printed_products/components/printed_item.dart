@@ -16,7 +16,7 @@ class PrintedItem extends StatelessWidget {
   Future<void> _removeProduct({
     required PrintedProductsPresenter printedProductsPresenter,
     required MenuPresenter menuPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
     required String saleRequestProductId,
   }) async {
@@ -24,7 +24,7 @@ class PrintedItem extends StatelessWidget {
       saleRequestProductId: saleRequestProductId,
       menuPresenter: menuPresenter,
       printedProductsPresenter: printedProductsPresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
+      cartPresenter: cartPresenter,
       homePresenter: homePresenter,
     );
   }
@@ -35,7 +35,7 @@ class PrintedItem extends StatelessWidget {
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter =
         Provider.of(context, listen: false);
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -87,8 +87,8 @@ class PrintedItem extends StatelessWidget {
                                       printedProductsPresenter,
                                   menuPresenter:
                                       menuPresenter,
-                                  saleRequestTempPresenter:
-                                      saleRequestTempPresenter,
+                                  cartPresenter:
+                                      cartPresenter,
                                   homePresenter: homePresenter,
                                   saleRequestProductId:
                                       product.SaleRequestProductId,

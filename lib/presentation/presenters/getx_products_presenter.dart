@@ -47,7 +47,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
   Future<void> updateSaleRequest({
     required HomePresenter homePresenter,
     required ProductsViewModel productsViewModel,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required List<UpdateSaleRequestTempProductEntity> products,
   }) async {
     isLoading = true;
@@ -55,13 +55,13 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
     try {
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl:
-            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
+            cartPresenter.saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId:
-            saleRequestTempPresenter.saleRequestTemp!.EnterpriseId.toInt(),
+            cartPresenter.saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode:
-            saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
+            cartPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
-            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
+            cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
         TotalLiquid: products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: products,
@@ -72,7 +72,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
         entity: entity,
       );
 
-      await saleRequestTempPresenter
+      await cartPresenter
           .loadSaleRequest(homePresenter.commandNumber!);
     } on DomainError catch (e) {
       switch (e) {

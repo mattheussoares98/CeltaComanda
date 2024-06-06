@@ -31,7 +31,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    CartPresenter cartPresenter = Provider.of(context);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
@@ -42,7 +42,7 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
         context: context,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
       appBar: PreferredSize(
@@ -72,14 +72,14 @@ class _SaleRequestTempPageState extends State<SaleRequestTempPage>
                   mainErrorSubscription?.cancel();
 
                   loadingSubscription = handleLoading(
-                      context, saleRequestTempPresenter.isLoadingStream);
+                      context, cartPresenter.isLoadingStream);
                   mainErrorSubscription = handleMainError(
-                      context, saleRequestTempPresenter.mainErrorStream);
+                      context, cartPresenter.mainErrorStream);
 
-                  if (saleRequestTempPresenter.cartProducts.isNotEmpty ==
+                  if (cartPresenter.cartProducts.isNotEmpty ==
                       true) {
                     return SaleRequestProductsItems(
-                        cartProducts: saleRequestTempPresenter.cartProducts);
+                        cartProducts: cartPresenter.cartProducts);
                   }
                   return SizedBox(
                     height: MediaQuery.of(context).size.height -

@@ -10,16 +10,16 @@ import '../mocks/mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late SaleRequestTempPresenterSpy presenter;
+  late CartPresenterSpy presenter;
 
   setUp(() {
-    presenter = SaleRequestTempPresenterSpy();
+    presenter = CartPresenterSpy();
   });
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
   });
 

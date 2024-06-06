@@ -57,7 +57,7 @@ class ProductDetailItem extends StatelessWidget {
         // AddProductInCart(
         //   onPressed: () async => await presenter.addProductInCart(
         //     product: product,
-        //     saleRequestTempPresenter: cartPresenter,
+        //     cartPresenter: cartPresenter,
         //   ),
         //   price: product.PackingAbbreviation,
         // ),

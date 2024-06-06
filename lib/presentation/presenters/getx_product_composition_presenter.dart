@@ -170,7 +170,7 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required List<ProductCompositionViewModel> productsCompositions,
   }) async {
     isLoading = true;
@@ -181,17 +181,17 @@ class GetxProductCompositionPresenter extends GetxController
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl:
-            saleRequestTempPresenter.saleRequestTemp!.DeliveryControl.toInt(),
+            cartPresenter.saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId:
-            saleRequestTempPresenter.saleRequestTemp!.EnterpriseId.toInt(),
+            cartPresenter.saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode:
-            saleRequestTempPresenter.saleRequestTemp!.PersonalizedCode,
+            cartPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
-            saleRequestTempPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
+            cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
         TotalLiquid:
             _getTotalLiquidCombox(productsCompositions) * totalComboxQuantity,
         Products: _productsCompositionToUpdateSaleRequestTempProductEntity(
-          saleRequestTempId: saleRequestTempPresenter
+          saleRequestTempId: cartPresenter
               .saleRequestTemp!.SaleRequestTempId
               .toInt(),
           productsCompositions: productsCompositions,
@@ -203,7 +203,7 @@ class GetxProductCompositionPresenter extends GetxController
         entity: entity,
       );
 
-      await saleRequestTempPresenter
+      await cartPresenter
           .loadSaleRequest(homePresenter.commandNumber!);
       return true;
     } on DomainError catch (e) {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../pages/pages.dart';
 
 class PendingProductQuantity extends StatelessWidget {
-  final SaleRequestTempPresenter saleRequestTempPresenter;
+  final CartPresenter cartPresenter;
   final ProductsViewModel productsViewModel;
   const PendingProductQuantity({
-    required this.saleRequestTempPresenter,
+    required this.cartPresenter,
     required this.productsViewModel,
     super.key,
   });
@@ -14,7 +14,7 @@ class PendingProductQuantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_productQuantityInSaleRequestTemp(
-            saleRequestTempPresenter: saleRequestTempPresenter,
+            cartPresenter: cartPresenter,
             product: productsViewModel) >
         0) {
       return RichText(
@@ -22,7 +22,7 @@ class PendingProductQuantity extends StatelessWidget {
           children: <TextSpan>[
             TextSpan(
                 text: _productQuantityInSaleRequestTemp(
-                        saleRequestTempPresenter: saleRequestTempPresenter,
+                        cartPresenter: cartPresenter,
                         product: productsViewModel)
                     .toString(),
                 style: const TextStyle(
@@ -43,10 +43,10 @@ class PendingProductQuantity extends StatelessWidget {
 }
 
 int _productQuantityInSaleRequestTemp({
-  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required CartPresenter cartPresenter,
   required ProductsViewModel product,
 }) {
-  return saleRequestTempPresenter.saleRequestTemp?.Products
+  return cartPresenter.saleRequestTemp?.Products
           .where((element) =>
               element.Product.PriceLookupCode == product.PriceLookupCode)
           .length ??

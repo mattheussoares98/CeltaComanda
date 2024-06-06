@@ -5,7 +5,7 @@ import '../pages/pages.dart';
 Widget drawer({
   required BuildContext context,
   required MenuPresenter menuPresenter,
-  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required CartPresenter cartPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required HomePresenter homePresenter,
 }) {
@@ -27,7 +27,7 @@ Widget drawer({
             onTap: () async {
               homePresenter.goToSplashPage(
                 printedProductsPresenter: printedProductsPresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
+                cartPresenter: cartPresenter,
                 menuPresenter: menuPresenter,
               );
               await homePresenter.clearEnterpriseData();

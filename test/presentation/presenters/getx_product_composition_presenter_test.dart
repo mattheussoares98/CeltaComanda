@@ -21,7 +21,7 @@ import '../../ui/mocks/mocks.dart';
 void main() {
   late GetxProductCompositionPresenter sut;
   late HomePresenterSpy homePresenter;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late CartPresenterSpy cartPresenter;
 
   late GetProductCompositionSpy getProductComposition;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -38,14 +38,14 @@ void main() {
     required double productValue,
   }) {
     final updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
-        DeliveryControl: saleRequestTempPresenter
+        DeliveryControl: cartPresenter
             .saleRequestTempMock!.DeliveryControl
             .toInt(),
         EnterpriseId:
-            saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId.toInt(),
+            cartPresenter.saleRequestTempMock!.EnterpriseId.toInt(),
         PersonalizedCode:
-            saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
-        SaleRequestTempId: saleRequestTempPresenter
+            cartPresenter.saleRequestTempMock!.PersonalizedCode,
+        SaleRequestTempId: cartPresenter
             .saleRequestTempMock!.SaleRequestTempId
             .toInt(),
         TotalLiquid: totalLiquid,
@@ -55,7 +55,7 @@ void main() {
             ProductPriceLookUpCode: "PluChild",
             Quantity:
                 productCompositionViewModel.Quantity.toString().toDouble(),
-            SaleRequestTempId: saleRequestTempPresenter
+            SaleRequestTempId: cartPresenter
                 .saleRequestTempMock!.SaleRequestTempId
                 .toInt(),
             TotalLiquid: totalLiquid,
@@ -77,7 +77,7 @@ void main() {
       validateCombox: validateCombox,
     );
     homePresenter = HomePresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    cartPresenter = CartPresenterSpy();
   }
 
   void initUsecases() {
@@ -104,7 +104,7 @@ void main() {
     internalCodeOnErp = faker.randomGenerator.integer(99);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
 
-    saleRequestTempPresenter.saleRequestTempMock =
+    cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
 
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -125,7 +125,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
   });
 
@@ -249,7 +249,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case1],
       );
 
@@ -272,7 +272,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case2],
       );
 
@@ -295,7 +295,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case3],
       );
 
@@ -318,7 +318,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case4],
       );
 
@@ -341,7 +341,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case5],
       );
 
@@ -364,7 +364,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case6],
       );
 
@@ -387,7 +387,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case7],
       );
 
@@ -407,7 +407,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -416,7 +416,7 @@ void main() {
     test("Should return true on updateSaleRequest success", () async {
       final updated = await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -429,7 +429,7 @@ void main() {
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
       final updated = await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -440,7 +440,7 @@ void main() {
     test("Should call validateCombox on updateSaleRequest", () async {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -459,7 +459,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -479,7 +479,7 @@ void main() {
 
       await sut.updateSaleRequest(
           homePresenter: homePresenter,
-          saleRequestTempPresenter: saleRequestTempPresenter,
+          cartPresenter: cartPresenter,
           productsCompositions: [case1]);
 
       verifyNever(() => updateSaleRequestTemp.update(
@@ -491,7 +491,7 @@ void main() {
             ),
           ));
 
-      verifyNever(() => saleRequestTempPresenter
+      verifyNever(() => cartPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!));
     });
     test("Should call updateSaleRequestTemp on updateSaleRequest", () async {
@@ -505,7 +505,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: [case1],
       );
 
@@ -529,7 +529,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -546,30 +546,30 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
     test(
-        "Should call saleRequestTempPresenter.loadSaleRequest with correct values",
+        "Should call cartPresenter.loadSaleRequest with correct values",
         () async {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
 
-      verify(() => saleRequestTempPresenter
+      verify(() => cartPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
     test(
-        "Should emit correct values on saleRequestTempPresenter.load throws unexpected",
+        "Should emit correct values on cartPresenter.load throws unexpected",
         () async {
-      saleRequestTempPresenter
+      cartPresenter
           .mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -578,16 +578,16 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
     test(
-        "Should emit correct values on saleRequestTempPresenter.load throws commandNotAvailable",
+        "Should emit correct values on cartPresenter.load throws commandNotAvailable",
         () async {
-      saleRequestTempPresenter
+      cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -596,7 +596,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -615,9 +615,9 @@ void main() {
     });
 
     test(
-        "Should emit CommandNotAvailable on saleRequestTempPresenter.loadSaleRequest throws CommandNotAvailable",
+        "Should emit CommandNotAvailable on cartPresenter.loadSaleRequest throws CommandNotAvailable",
         () async {
-      saleRequestTempPresenter
+      cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -626,16 +626,16 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
     test(
-        "Should emit unexpected on saleRequestTempPresenter.loadSaleRequest throws unexpected",
+        "Should emit unexpected on cartPresenter.loadSaleRequest throws unexpected",
         () async {
-      saleRequestTempPresenter
+      cartPresenter
           .mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -644,7 +644,7 @@ void main() {
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),

@@ -13,7 +13,7 @@ class SaleRequestProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
 
     return Column(
@@ -47,14 +47,14 @@ class SaleRequestProductsItems extends StatelessWidget {
                 ),
                 RequestSummary(
                   totalLiquid:
-                      saleRequestTempPresenter.totalSaleRequestTempPrice,
-                  comments: saleRequestTempPresenter.saleRequestTemp?.Comments,
+                      cartPresenter.totalSaleRequestTempPrice,
+                  comments: cartPresenter.saleRequestTemp?.Comments,
                 ),
               ],
             ),
           ),
         ),
-        if (saleRequestTempPresenter.cartProducts.isNotEmpty)
+        if (cartPresenter.cartProducts.isNotEmpty)
           const SaveSaleRequestButton(),
       ],
     );

@@ -34,7 +34,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
@@ -44,7 +44,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         context: context,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
       appBar: PreferredSize(
@@ -68,7 +68,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                 await printedProductsPresenter.loadCommandData(
                   commandNumber: homePresenter.commandNumber!,
                   printedProductsPresenter: printedProductsPresenter,
-                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  cartPresenter: cartPresenter,
                   menuPresenter: menuPresenter,
                   homePresenter: homePresenter,
                   clearPermissionToCancelProducts: true,
@@ -119,7 +119,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   return SearchDataByCommandNumber(
                     menuPresenter: menuPresenter,
                     printedProductsPresenter: printedProductsPresenter,
-                    saleRequestTempPresenter: saleRequestTempPresenter,
+                    cartPresenter: cartPresenter,
                     homePresenter: homePresenter,
                     emptyMessage: homePresenter.commandNumber == null
                         ? "Consulte alguma comanda para visualizar os produtos solicitados"
@@ -128,7 +128,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       await printedProductsPresenter.loadCommandData(
                         commandNumber: homePresenter.commandNumber!,
                         printedProductsPresenter: printedProductsPresenter,
-                        saleRequestTempPresenter: saleRequestTempPresenter,
+                        cartPresenter: cartPresenter,
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,
                         clearPermissionToCancelProducts: true,

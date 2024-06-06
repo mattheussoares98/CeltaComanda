@@ -24,7 +24,7 @@ abstract class ProductCompositionPresenter implements Listenable {
 
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required List<ProductCompositionViewModel> productsCompositions,
   });
 

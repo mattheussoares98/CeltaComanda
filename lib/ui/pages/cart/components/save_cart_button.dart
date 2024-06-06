@@ -2,18 +2,18 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/components/components.dart';
+import '../../../components/components.dart';
 import '../../pages.dart';
 
 class SaveSaleRequestButton extends StatelessWidget {
   const SaveSaleRequestButton({super.key});
 
   static _addProducts({
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required String commandNumber,
     required BuildContext context,
   }) async {
-    bool isUpdated = await saleRequestTempPresenter.saveProducts(commandNumber);
+    bool isUpdated = await cartPresenter.saveProducts(commandNumber);
 
     if (isUpdated) {
       Future.delayed(Duration.zero, () {
@@ -27,7 +27,7 @@ class SaveSaleRequestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
@@ -75,7 +75,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                       ),
                       onFieldSubmitted: (value) async {
                         await _addProducts(
-                          saleRequestTempPresenter: saleRequestTempPresenter,
+                          cartPresenter: cartPresenter,
                           commandNumber: commandNumberController.text,
                           context: context,
                         );
@@ -97,7 +97,7 @@ class SaveSaleRequestButton extends StatelessWidget {
             ),
             onPress: () async {
               await _addProducts(
-                saleRequestTempPresenter: saleRequestTempPresenter,
+                cartPresenter: cartPresenter,
                 commandNumber: commandNumberController.text,
                 context: context,
               );

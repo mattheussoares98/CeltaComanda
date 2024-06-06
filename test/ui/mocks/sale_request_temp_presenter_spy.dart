@@ -8,14 +8,14 @@ import 'dart:async';
 
 import 'package:mocktail/mocktail.dart';
 
-class SaleRequestTempPresenterSpy extends Mock
-    implements SaleRequestTempPresenter {
+class CartPresenterSpy extends Mock
+    implements CartPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   SaleRequestTempViewModel? saleRequestTempMock;
   List<CartProductsViewModel> cartProductsController = [];
 
-  SaleRequestTempPresenterSpy() {
+  CartPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
     when(() => this.getLocalCartProductsData()).thenAnswer((_) async => _);

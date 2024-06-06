@@ -19,7 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late GetxMenuPresenter sut;
   late HomePresenterSpy homePresenter;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late MenuPresenterSpy menuPresenter;
 
@@ -58,7 +58,7 @@ void main() {
 
   void initPresenters() {
     homePresenter = HomePresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     menuPresenter = MenuPresenterSpy();
 
@@ -91,7 +91,7 @@ void main() {
     productEntity = EntityFactory.makeProductsEntitys()[0];
     productsViewModel = ProductsViewModel.fromEntity(productEntity);
 
-    saleRequestTempPresenter.saleRequestTempMock =
+    cartPresenter.saleRequestTempMock =
         EntityFactory.makeSaleRequestTempViewModel(
             EntityFactory.makeProductModel());
 
@@ -126,7 +126,7 @@ void main() {
     registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
@@ -394,7 +394,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -412,7 +412,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -424,7 +424,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -436,7 +436,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -449,14 +449,14 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
 
       expect(sut.loadedMenu, []);
       verify(() => printedProductsPresenter.clear()).called(2);
-      verify(() => saleRequestTempPresenter.clear()).called(2);
+      verify(() => cartPresenter.clear()).called(2);
       //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
       //certeza que vai colocar dados no expansibleGroups e outro teste com
       //erro, pra ter certeza que vai chamar a função para limpar a lista de
@@ -467,7 +467,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -483,7 +483,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -491,7 +491,7 @@ void main() {
       verify(() => loadExpansibleGroups.load()).called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
-      verify(() => saleRequestTempPresenter
+      verify(() => cartPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
 

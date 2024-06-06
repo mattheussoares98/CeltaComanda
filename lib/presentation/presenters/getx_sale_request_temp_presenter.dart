@@ -10,9 +10,9 @@ import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxSaleRequestTempPresenter
+class GetxCartPresenter
     with ChangeNotifier
-    implements SaleRequestTempPresenter {
+    implements CartPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateProductQuantity updateProductQuantity;
   final UpdateProductComment updateProductComment;
@@ -24,7 +24,7 @@ class GetxSaleRequestTempPresenter
   final ConfirmedCartProducts confirmedCartProducts;
   final CartInformations cartInformations;
 
-  GetxSaleRequestTempPresenter({
+  GetxCartPresenter({
     required this.loadSaleRequestTemp,
     required this.updateProductQuantity,
     required this.updateProductComment,
@@ -132,7 +132,7 @@ class GetxSaleRequestTempPresenter
     required int saleRequestProductTempId,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
@@ -148,7 +148,7 @@ class GetxSaleRequestTempPresenter
       await loadCommandData(
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -182,7 +182,7 @@ class GetxSaleRequestTempPresenter
     required SaleRequestTempEntity saleRequestTempEntity,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
@@ -197,7 +197,7 @@ class GetxSaleRequestTempPresenter
       await loadCommandData(
         commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -229,7 +229,7 @@ class GetxSaleRequestTempPresenter
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   }) async {

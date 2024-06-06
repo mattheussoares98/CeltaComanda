@@ -25,7 +25,7 @@ abstract class MenuPresenter implements Listenable {
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   });

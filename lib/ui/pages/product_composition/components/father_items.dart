@@ -56,7 +56,7 @@ class _FatherItemsState extends State<FatherItems> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -267,8 +267,8 @@ class _FatherItemsState extends State<FatherItems> {
                             bool updated = await productCompositionPresenter
                                 .updateSaleRequest(
                               homePresenter: homePresenter,
-                              saleRequestTempPresenter:
-                                  saleRequestTempPresenter,
+                              cartPresenter:
+                                  cartPresenter,
                               productsCompositions: widget.productsCompositions,
                             );
 

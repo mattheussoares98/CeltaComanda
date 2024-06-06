@@ -58,8 +58,9 @@ class _HomePageState extends State<HomePage>
       )),
     ];
 
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    CartPresenter cartPresenter = Provider.of(context, listen: true);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage>
                     ? Theme.of(context).colorScheme.primary
                     : Colors.grey,
                 iconData: Icons.shopping_cart_outlined,
-                productsQuantity: saleRequestTempPresenter.cartProducts.length,
+                productsQuantity: cartPresenter.cartProducts.length,
               ),
               label: 'Carrinho',
             ),

@@ -17,7 +17,7 @@ void main() {
   late BoxSpy mockHiveBox;
   // late HomePresenterSpy sut;
   late PrintedProductsPresenter printedProductsPresenter;
-  // late SaleRequestTempPresenter saleRequestTempPresenter;
+  // late CartPresenter cartPresenter;
   // late MenuPresenter MenuPresenter;
 
   setUp(() {
@@ -25,14 +25,14 @@ void main() {
     hive = HiveSpy();
     hive.mockOpenBox(mockHiveBox);
     printedProductsPresenter = PrintedProductsPresenterSpy();
-    // saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    // cartPresenter = CartPresenterSpy();
     // MenuPresenter = MenuPresenterSpy();
     // sut = HomePresenterSpy();
   });
 
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
   });

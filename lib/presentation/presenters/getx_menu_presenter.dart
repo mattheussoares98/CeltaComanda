@@ -129,7 +129,7 @@ class GetxMenuPresenter extends GetxController
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
   }) async {
@@ -138,11 +138,11 @@ class GetxMenuPresenter extends GetxController
     homePresenter.updateCommandNumber(commandNumber);
     clear();
     printedProductsPresenter.clear();
-    saleRequestTempPresenter.clear();
+    cartPresenter.clear();
 
     try {
       await getGroupsAndProducts(commandNumber);
-      await saleRequestTempPresenter.loadSaleRequest(commandNumber);
+      await cartPresenter.loadSaleRequest(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);

@@ -20,7 +20,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
   });

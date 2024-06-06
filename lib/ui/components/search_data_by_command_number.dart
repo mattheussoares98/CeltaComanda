@@ -5,14 +5,14 @@ import '../pages/pages.dart';
 class SearchDataByCommandNumber extends StatelessWidget {
   final MenuPresenter menuPresenter;
   final PrintedProductsPresenter printedProductsPresenter;
-  final SaleRequestTempPresenter saleRequestTempPresenter;
+  final CartPresenter cartPresenter;
   final HomePresenter homePresenter;
   final Future Function() loadCommandData;
   final String emptyMessage;
   const SearchDataByCommandNumber({
     required this.menuPresenter,
     required this.printedProductsPresenter,
-    required this.saleRequestTempPresenter,
+    required this.cartPresenter,
     required this.homePresenter,
     required this.loadCommandData,
     required this.emptyMessage,
@@ -42,7 +42,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
                 context: context,
                 menuPresenter: menuPresenter,
                 printedProductsPresenter: printedProductsPresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
+                cartPresenter: cartPresenter,
                 homePresenter: homePresenter,
                 loadCommandData: () async {
                   await loadCommandData();
@@ -85,7 +85,7 @@ void _showDialogLoadCommandData({
   required BuildContext context,
   required MenuPresenter menuPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
-  required SaleRequestTempPresenter saleRequestTempPresenter,
+  required CartPresenter cartPresenter,
   required HomePresenter homePresenter,
   required Future Function() loadCommandData,
 }) {

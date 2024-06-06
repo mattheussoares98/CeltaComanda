@@ -2,8 +2,8 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/components/components.dart';
-import '../../../../ui/helpers/helpers.dart';
+import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class SaleRequestTempProductItem extends StatefulWidget {
@@ -27,13 +27,13 @@ class _SaleRequestTempProductItemState
   FocusNode commentsFocusNode = FocusNode();
 
   void onPressedAddQuantity({
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
   }) {
-    saleRequestTempPresenter.addCartProductQuantity(widget.index);
+    cartPresenter.addCartProductQuantity(widget.index);
   }
 
   void onPressedReduceQuantity({
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
   }) {
     if (widget.cartProduct.Quantity.toDouble() <= 1) {
       notificationDialog(
@@ -41,16 +41,16 @@ class _SaleRequestTempProductItemState
         titleMessage: "Remover produto do carrinho?",
         content: null,
         onPress: () async {
-          saleRequestTempPresenter.reduceCartProductQuantity(widget.index);
+          cartPresenter.reduceCartProductQuantity(widget.index);
         },
       );
     } else {
-      saleRequestTempPresenter.reduceCartProductQuantity(widget.index);
+      cartPresenter.reduceCartProductQuantity(widget.index);
     }
   }
 
-  void onTapCommentIcon(SaleRequestTempPresenter saleRequestTempPresenter) {
-    saleRequestTempPresenter.updateIndexOfSelectedProduct(widget.index);
+  void onTapCommentIcon(CartPresenter cartPresenter) {
+    cartPresenter.updateIndexOfSelectedProduct(widget.index);
     //criar teste pra essa alteração do índice do produto que foi selecionado
     if (widget.cartProduct.Comments != null) {
       setState(() {
@@ -58,7 +58,7 @@ class _SaleRequestTempProductItemState
       });
     }
 
-    if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index) {
+    if (cartPresenter.indexOfSelectedProduct == widget.index) {
       Future.delayed(const Duration(milliseconds: 300), () {
         FocusScope.of(context).requestFocus(commentsFocusNode);
       });
@@ -67,8 +67,7 @@ class _SaleRequestTempProductItemState
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
-        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,12 +98,12 @@ class _SaleRequestTempProductItemState
                   widget.cartProduct.Value.toDouble(),
               onPressedReduceQuantity: () {
                 onPressedReduceQuantity(
-                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  cartPresenter: cartPresenter,
                 );
               },
               onPressedAddQuantity: () {
                 onPressedAddQuantity(
-                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  cartPresenter: cartPresenter,
                 );
               },
               productQuantity: widget.cartProduct.Quantity.toDouble(),
@@ -141,8 +140,7 @@ class _SaleRequestTempProductItemState
                           titleMessage: "Excluir comentário?",
                           content: null,
                           onPress: () async {
-                            await saleRequestTempPresenter
-                                .updateCommentOfProductCart(
+                            await cartPresenter.updateCommentOfProductCart(
                               index: widget.index,
                               newComment: null,
                             );
@@ -161,7 +159,7 @@ class _SaleRequestTempProductItemState
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                onTapCommentIcon(saleRequestTempPresenter);
+                onTapCommentIcon(cartPresenter);
               },
               child: Row(
                 children: [
@@ -175,7 +173,7 @@ class _SaleRequestTempProductItemState
             ),
           ],
         ),
-        if (saleRequestTempPresenter.indexOfSelectedProduct == widget.index)
+        if (cartPresenter.indexOfSelectedProduct == widget.index)
           Row(
             children: [
               Expanded(
@@ -192,7 +190,7 @@ class _SaleRequestTempProductItemState
               ),
               TextButton(
                 onPressed: () async {
-                  await saleRequestTempPresenter.updateCommentOfProductCart(
+                  await cartPresenter.updateCommentOfProductCart(
                     index: widget.index,
                     newComment: commentsController.text,
                   );

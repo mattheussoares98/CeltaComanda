@@ -30,7 +30,7 @@ class _ProductsItemsState extends State<ProductsItems> {
     required int index,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
   }) =>
       GestureDetector(
         onLongPress: () {
@@ -58,7 +58,7 @@ class _ProductsItemsState extends State<ProductsItems> {
 
   @override
   Widget build(BuildContext context) {
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -81,7 +81,7 @@ class _ProductsItemsState extends State<ProductsItems> {
                         index: i,
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,
-                        saleRequestTempPresenter: saleRequestTempPresenter,
+                        cartPresenter: cartPresenter,
                       ),
                     ),
               ],

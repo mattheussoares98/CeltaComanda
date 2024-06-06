@@ -20,7 +20,7 @@ abstract class PrintedProductsPresenter
   Future<void> removeProduct({
     required String saleRequestProductId,
     required MenuPresenter menuPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   });
@@ -28,7 +28,7 @@ abstract class PrintedProductsPresenter
   Future<void> loadCommandData({
     required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,

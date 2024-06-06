@@ -14,7 +14,7 @@ import '../../domain/mocks/mocks.dart';
 import '../../ui/mocks/mocks.dart';
 
 void main() {
-  late GetxSaleRequestTempPresenter sut;
+  late GetxCartPresenter sut;
   late MenuPresenterSpy menuPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late HomePresenterSpy homePresenter;
@@ -60,7 +60,7 @@ void main() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
     homePresenter = HomePresenterSpy();
 
-    sut = GetxSaleRequestTempPresenter(
+    sut = GetxCartPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateProductQuantity: updateProductQuantity,
       updateProductComment: updateProductComment,
@@ -133,7 +133,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
@@ -592,7 +592,7 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -612,7 +612,7 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -630,7 +630,7 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -649,7 +649,7 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -664,7 +664,7 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
       expect(sut.indexOfSelectedProduct, null);
@@ -676,7 +676,7 @@ void main() {
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -707,7 +707,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -728,7 +728,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -744,7 +744,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -755,7 +755,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -786,7 +786,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -804,7 +804,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -834,7 +834,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -856,7 +856,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -879,7 +879,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -897,7 +897,7 @@ void main() {
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -915,7 +915,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -933,7 +933,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -945,7 +945,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -957,7 +957,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -972,7 +972,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -990,7 +990,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -1006,7 +1006,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
@@ -1031,7 +1031,7 @@ void main() {
       await sut.loadCommandData(
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: sut,
+        cartPresenter: sut,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );

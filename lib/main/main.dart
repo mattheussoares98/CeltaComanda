@@ -36,7 +36,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => makeGetxSaleRequestTempPresenter(),
+          create: (_) => makeGetxCartPresenter(),
         ),
         ChangeNotifierProvider(
           create: (_) => makeGetxHomePresenter(),

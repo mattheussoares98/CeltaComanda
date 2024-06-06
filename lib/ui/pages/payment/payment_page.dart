@@ -34,7 +34,7 @@ class _PaymentPageState extends State<PaymentPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
@@ -45,7 +45,7 @@ class _PaymentPageState extends State<PaymentPage>
         context: context,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
       appBar: PreferredSize(
@@ -68,7 +68,7 @@ class _PaymentPageState extends State<PaymentPage>
               await menuPresenter.loadCommandData(
                 commandNumber: homePresenter.commandNumber!,
                 printedProductsPresenter: printedProductsPresenter,
-                saleRequestTempPresenter: saleRequestTempPresenter,
+                cartPresenter: cartPresenter,
                 menuPresenter: menuPresenter,
                 homePresenter: homePresenter,
               );
@@ -109,7 +109,7 @@ class _PaymentPageState extends State<PaymentPage>
                     return SearchDataByCommandNumber(
                       menuPresenter: menuPresenter,
                       printedProductsPresenter: printedProductsPresenter,
-                      saleRequestTempPresenter: saleRequestTempPresenter,
+                      cartPresenter: cartPresenter,
                       homePresenter: homePresenter,
                       emptyMessage: homePresenter.commandNumber == null
                           ? "Consulte alguma comanda para efetuar o pagamento dela"
@@ -118,7 +118,7 @@ class _PaymentPageState extends State<PaymentPage>
                         await printedProductsPresenter.loadCommandData(
                           commandNumber: homePresenter.commandNumber!,
                           printedProductsPresenter: printedProductsPresenter,
-                          saleRequestTempPresenter: saleRequestTempPresenter,
+                          cartPresenter: cartPresenter,
                           menuPresenter: menuPresenter,
                           homePresenter: homePresenter,
                           clearPermissionToCancelProducts: true,

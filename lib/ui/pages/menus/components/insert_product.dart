@@ -21,11 +21,11 @@ class _InsertProductState extends State<InsertProduct> {
   void addProductInCart({
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required String? comment,
   }) async {
     try {
-      saleRequestTempPresenter.addProductInCart(
+      cartPresenter.addProductInCart(
         product: CartProductEntity(
           Product: widget.selectedProduct!.toEntity(),
           Comments: comment,
@@ -59,7 +59,7 @@ class _InsertProductState extends State<InsertProduct> {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    SaleRequestTempPresenter saleRequestTempPresenter =
+    CartPresenter cartPresenter =
         Provider.of(context, listen: false);
 
     return Padding(
@@ -170,7 +170,7 @@ class _InsertProductState extends State<InsertProduct> {
                           addProductInCart(
                             menuPresenter: menuPresenter,
                             homePresenter: homePresenter,
-                            saleRequestTempPresenter: saleRequestTempPresenter,
+                            cartPresenter: cartPresenter,
                             comment: snapshot.data,
                           );
                         },

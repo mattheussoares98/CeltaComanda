@@ -16,7 +16,7 @@ import 'package:flutter/widgets.dart';
 void main() {
   late GetxHomePresenter sut;
   late PrintedProductsPresenterSpy printedProductsPresenter;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
 
   late NavigateToSpy navigateTo;
@@ -31,7 +31,7 @@ void main() {
 
   void initPresenters() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
@@ -82,7 +82,7 @@ void main() {
     test('Should go to SplashPage', () async {
       await sut.goToSplashPage(
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
       );
 
@@ -110,7 +110,7 @@ void main() {
       await sut.goToSplashPage(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
       );
 
       expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName,

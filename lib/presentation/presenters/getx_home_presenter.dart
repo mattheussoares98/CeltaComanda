@@ -31,7 +31,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Future<void> goToSplashPage({
     required PrintedProductsPresenter printedProductsPresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
@@ -39,7 +39,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _commandNumber = null;
     menuPresenter.clear();
     printedProductsPresenter.clear();
-    saleRequestTempPresenter.clear();
+    cartPresenter.clear();
     await clearEnterpriseData();
   }
 

@@ -20,7 +20,7 @@ void main() {
   Get.testMode = true;
   WidgetsFlutterBinding.ensureInitialized();
   late GetxProductsPresenter sut;
-  late SaleRequestTempPresenterSpy saleRequestTempPresenter;
+  late CartPresenterSpy cartPresenter;
   late HomePresenterSpy homePresenter;
 
   late List<ProductEntity> products;
@@ -35,7 +35,7 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
 
   void initPresenters() {
-    saleRequestTempPresenter = SaleRequestTempPresenterSpy();
+    cartPresenter = CartPresenterSpy();
     homePresenter = HomePresenterSpy();
     sut = GetxProductsPresenter(
       navigateTo: navigateTo,
@@ -61,7 +61,7 @@ void main() {
         faker.randomGenerator.integer(3).toString();
     productsViewModel =
         ProductsViewModel.fromEntity(saleRequestTempEntity.Products[0].Product);
-    saleRequestTempPresenter.saleRequestTempMock =
+    cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
     updateSaleRequestTempEntity =
         EntityFactory.makeUpdateSaleRequestTempEntity();
@@ -84,7 +84,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(SaleRequestTempPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
   });
 
@@ -105,18 +105,18 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
 
-      verify(() => saleRequestTempPresenter
+      verify(() => cartPresenter
           .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
     });
 
     test(
-        "Should emit CommandNotAvailable commandNotAvailable on saleRequestTempPresenter.loadSaleRequest throws CommandNotAvailable",
+        "Should emit CommandNotAvailable commandNotAvailable on cartPresenter.loadSaleRequest throws CommandNotAvailable",
         () async {
-      saleRequestTempPresenter
+      cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -126,14 +126,14 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
     });
 
     test('Should emit UnexpectedError on error to loadSaleRequestTemp',
         () async {
-      saleRequestTempPresenter
+      cartPresenter
           .mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -143,7 +143,7 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
     });
@@ -155,7 +155,7 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
     });
@@ -186,7 +186,7 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
     });
@@ -203,7 +203,7 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
     });
@@ -221,7 +221,7 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
     });
@@ -230,19 +230,19 @@ void main() {
       await sut.updateSaleRequest(
         productsViewModel: productsViewModel,
         homePresenter: homePresenter,
-        saleRequestTempPresenter: saleRequestTempPresenter,
+        cartPresenter: cartPresenter,
         products: updateSaleRequestTempEntity.Products,
       );
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: int.parse(
-            saleRequestTempPresenter.saleRequestTempMock!.DeliveryControl),
+            cartPresenter.saleRequestTempMock!.DeliveryControl),
         EnterpriseId: int.parse(
-            saleRequestTempPresenter.saleRequestTempMock!.EnterpriseId),
+            cartPresenter.saleRequestTempMock!.EnterpriseId),
         PersonalizedCode:
-            saleRequestTempPresenter.saleRequestTempMock!.PersonalizedCode,
+            cartPresenter.saleRequestTempMock!.PersonalizedCode,
         SaleRequestTempId: int.parse(
-            saleRequestTempPresenter.saleRequestTempMock!.SaleRequestTempId),
+            cartPresenter.saleRequestTempMock!.SaleRequestTempId),
         TotalLiquid: updateSaleRequestTempEntity.Products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: updateSaleRequestTempEntity.Products,
@@ -255,15 +255,15 @@ void main() {
     });
   });
 
-  test('Should call SaleRequestTempPresenter.load', () async {
+  test('Should call CartPresenter.load', () async {
     await sut.updateSaleRequest(
       productsViewModel: productsViewModel,
       homePresenter: homePresenter,
-      saleRequestTempPresenter: saleRequestTempPresenter,
+      cartPresenter: cartPresenter,
       products: updateSaleRequestTempEntity.Products,
     );
 
-    verify(() => saleRequestTempPresenter
+    verify(() => cartPresenter
         .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
   });
 

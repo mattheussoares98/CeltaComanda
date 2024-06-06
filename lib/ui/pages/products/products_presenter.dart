@@ -14,7 +14,7 @@ abstract class ProductsPresenter with ChangeNotifier implements Listenable {
   Future<void> updateSaleRequest({
     required ProductsViewModel productsViewModel,
     required HomePresenter homePresenter,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
     required List<UpdateSaleRequestTempProductEntity> products,
   });
 

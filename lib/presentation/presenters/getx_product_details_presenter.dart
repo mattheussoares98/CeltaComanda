@@ -22,8 +22,8 @@ class GetxProductDetailsPresenter extends GetxController
   @override
   Future<void> addProductInCart({
     required SaleRequestTempProductsViewModel product,
-    required SaleRequestTempPresenter saleRequestTempPresenter,
+    required CartPresenter cartPresenter,
   }) async {
-    // await saleRequestTempPresenter.addProductInCart(product);
+    // await cartPresenter.addProductInCart(product);
   }
 }

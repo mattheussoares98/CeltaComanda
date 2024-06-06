@@ -3,7 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../ui/helpers/helpers.dart';
+import '../../helpers/helpers.dart';
 import '../pages.dart';
 
 class SaleRequestTempViewModel extends Equatable {

@@ -20,7 +20,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    SaleRequestTempPresenter saleRequestTempPresenter = Provider.of(context);
+    CartPresenter cartPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context);
 
@@ -31,7 +31,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
             context: context,
             menuPresenter: menuPresenter,
             printedProductsPresenter: printedProductsPresenter,
-            saleRequestTempPresenter: saleRequestTempPresenter,
+            cartPresenter: cartPresenter,
             homePresenter: homePresenter,
             loadCommandData: () async {
               await widget.loadCommandData();
@@ -51,7 +51,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
                   context: context,
                   menuPresenter: menuPresenter,
                   printedProductsPresenter: printedProductsPresenter,
-                  saleRequestTempPresenter: saleRequestTempPresenter,
+                  cartPresenter: cartPresenter,
                   homePresenter: homePresenter,
                   loadCommandData: () async {
                     await widget.loadCommandData();

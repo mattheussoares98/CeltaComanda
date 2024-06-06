@@ -1097,6 +1097,16 @@ void main() {
         )
       ]);
     });
+    test("Should NOT update comment when new comment is equal", () async {
+      sut.cartProducts.add(cartProductViewModel);
+
+      await sut.updateCommentOfProductCart(
+        index: 0,
+        newComment: cartProductViewModel.Comments,
+      );
+
+      verifyNever(() => cartInformations.update([cartProductViewModel]));
+    });
 
     test("Should reduce quantity correctly", () async {
       await sut.addProductInCart(

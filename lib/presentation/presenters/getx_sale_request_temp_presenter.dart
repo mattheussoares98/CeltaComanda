@@ -10,9 +10,7 @@ import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxCartPresenter
-    with ChangeNotifier
-    implements CartPresenter {
+class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateProductQuantity updateProductQuantity;
   final UpdateProductComment updateProductComment;
@@ -410,6 +408,10 @@ class GetxCartPresenter
     required int index,
     required String? newComment,
   }) async {
+    if (newComment == _cartProducts[index].Comments) {
+      return;
+    }
+    
     mainError = null;
     isLoading = true;
     final newCartList = [..._cartProducts];

@@ -174,18 +174,22 @@ class _InsertProductState extends State<InsertProduct> {
                             comment: snapshot.data,
                           );
                         },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Inserir"),
-                            Text((widget.selectedProduct!.SaleRetailPraticed
-                                        .toDouble() *
-                                    widget.selectedProduct!.productQuantity
-                                        .toDouble())
-                                .toString()
-                                .toBrazilianNumber()
-                                .addBrazilianCoin()),
-                          ],
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Expanded(child: Text("Inserir")),
+                              Text((widget.selectedProduct!.SaleRetailPraticed
+                                          .toDouble() *
+                                      widget.selectedProduct!.productQuantity
+                                          .toDouble())
+                                  .toString()
+                                  .toBrazilianNumber()
+                                  .addBrazilianCoin()),
+                            ],
+                          ),
                         ),
                       ),
                     ),

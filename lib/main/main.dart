@@ -83,8 +83,8 @@ class App extends StatelessWidget {
             transition: Transition.fadeIn,
           ),
           GetPage(
-            name: PageRoutes.saleRequestTemp,
-            page: makeSaleRequestTempPage,
+            name: PageRoutes.cart,
+            page: makeCartPage,
             transition: Transition.fadeIn,
           ),
           GetPage(

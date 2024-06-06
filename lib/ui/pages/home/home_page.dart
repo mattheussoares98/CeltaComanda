@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       const MenuPage(),
-      const SaleRequestTempPage(),
+      const CartPage(),
       const PrintedProductsPage(),
       PaymentPage(GetxPaymentPresenter(
         pay: RedePay(),

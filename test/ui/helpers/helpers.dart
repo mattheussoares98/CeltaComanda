@@ -35,8 +35,8 @@ Widget makePage(
       page: () => const MenuPage(),
     ),
     GetPage(
-      name: PageRoutes.saleRequestTemp,
-      page: () => const SaleRequestTempPage(),
+      name: PageRoutes.cart,
+      page: () => const CartPage(),
     ),
     GetPage(
       name: PageRoutes.splash,

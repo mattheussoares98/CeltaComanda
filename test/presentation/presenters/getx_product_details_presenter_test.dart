@@ -36,7 +36,7 @@ void main() {
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.saleRequestTemp,
+        pageRoute: PageRoutes.cart,
       ),
     ).called(1);
   });

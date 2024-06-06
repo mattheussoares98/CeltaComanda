@@ -8,14 +8,14 @@ import '../../mixins/mixins.dart';
 
 import 'package:flutter/material.dart';
 
-class SaleRequestTempPage extends StatefulWidget {
-  const SaleRequestTempPage({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<SaleRequestTempPage> createState() => _SaleRequestTempPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _SaleRequestTempPageState extends State<SaleRequestTempPage>
+class _CartPageState extends State<CartPage>
     with UIErrorManager, LoadingManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;

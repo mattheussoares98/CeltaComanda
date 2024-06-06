@@ -1,3 +1,3 @@
 import '../../../../ui/pages/pages.dart';
 
-SaleRequestTempPage makeSaleRequestTempPage() => const SaleRequestTempPage();
+CartPage makeCartPage() => const CartPage();

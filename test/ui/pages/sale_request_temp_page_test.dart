@@ -26,8 +26,8 @@ void main() {
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
       makePage(
-        path: PageRoutes.saleRequestTemp,
-        page: () => const SaleRequestTempPage(),
+        path: PageRoutes.cart,
+        page: () => const CartPage(),
       ),
     );
   }

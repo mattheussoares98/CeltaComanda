@@ -408,7 +408,7 @@ class GetxSaleRequestTempPresenter
   @override
   Future<void> updateCommentOfProductCart({
     required int index,
-    required String newComment,
+    required String? newComment,
   }) async {
     mainError = null;
     isLoading = true;

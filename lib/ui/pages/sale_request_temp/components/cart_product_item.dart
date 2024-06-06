@@ -115,41 +115,63 @@ class _SaleRequestTempProductItemState
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            if (widget.cartProduct.Comments != null)
-              Expanded(
-                child: CommentRichText(
-                  comment: widget.cartProduct.Comments!,
+            if (widget.cartProduct.Comments == null)
+              const Expanded(
+                child: Text(
+                  "Não há comentário",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    onTapCommentIcon(saleRequestTempPresenter);
-                  },
-                  child: Icon(
+            if (widget.cartProduct.Comments != null)
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CommentRichText(
+                        comment: widget.cartProduct.Comments!,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        notificationDialog(
+                          context: context,
+                          titleMessage: "Excluir comentário?",
+                          content: null,
+                          onPress: () async {
+                            await saleRequestTempPresenter
+                                .updateCommentOfProductCart(
+                              index: widget.index,
+                              newComment: null,
+                            );
+                          },
+                        );
+                      },
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                        size: 25,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: () {
+                onTapCommentIcon(saleRequestTempPresenter);
+              },
+              child: Row(
+                children: [
+                  Icon(
                     color: Theme.of(context).colorScheme.primary,
-                    widget.cartProduct.Comments == null
-                        ? Icons.add_comment
-                        : Icons.edit,
+                    Icons.add_comment,
                     size: 25,
                   ),
-                ),
-                if (widget.cartProduct.Comments != null)
-                  Column(
-                    children: [
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                          size: 25,
-                        ),
-                      ),
-                    ],
-                  ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

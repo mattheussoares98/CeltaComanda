@@ -17,7 +17,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithCredit({
-    required double longAmountValue,
+    required int longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -40,7 +40,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithCreditPortion({
-    required double longAmountValue,
+    required int longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -62,7 +62,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithDebit({
-    required double longAmountValue,
+    required int longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -84,7 +84,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithPix({
-    required double longAmountValue,
+    required int longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;

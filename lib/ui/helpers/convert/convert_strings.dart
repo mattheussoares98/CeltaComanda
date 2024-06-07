@@ -37,9 +37,14 @@ extension StringModifier on String {
     }
   }
 
-  int toInt() {
+  int toInt([bool removePoints = false]) {
     try {
-      return int.parse(this);
+      if (removePoints) {
+        return int.parse(
+            replaceAll(RegExp(r','), '').replaceAll(RegExp(r'\.'), ''));
+      } else {
+        return int.parse(this);
+      }
     } catch (e) {
       return -1;
     }

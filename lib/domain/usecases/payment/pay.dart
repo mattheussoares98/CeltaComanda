@@ -10,7 +10,7 @@ abstract class Pay {
 }
 
 class PayParams extends Equatable {
-  final double longAmountValue;
+  final int longAmountValue;
   final int portionQuantity;
 
   @override

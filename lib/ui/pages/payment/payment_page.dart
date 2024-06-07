@@ -124,7 +124,8 @@ class _PaymentPageState extends State<PaymentPage>
             }
 
             return SizedBox(
-              height: MediaQuery.of(context).size.height - AppBar().preferredSize.height,
+              height: MediaQuery.of(context).size.height -
+                  AppBar().preferredSize.height,
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -156,7 +157,7 @@ class _PaymentPageState extends State<PaymentPage>
                       await widget.paymentPresenter.payWithCredit(
                         longAmountValue: printedProductsPresenter
                             .printedProducts!.TotalLiquid
-                            .toDouble(),
+                            .toInt(true),
                         portionQuantity: 1,
                       );
                     },
@@ -167,7 +168,7 @@ class _PaymentPageState extends State<PaymentPage>
                       await widget.paymentPresenter.payWithCreditPortion(
                         longAmountValue: printedProductsPresenter
                             .printedProducts!.TotalLiquid
-                            .toDouble(),
+                            .toInt(true),
                         portionQuantity: 2,
                       );
                     },
@@ -178,7 +179,7 @@ class _PaymentPageState extends State<PaymentPage>
                       await widget.paymentPresenter.payWithDebit(
                         longAmountValue: printedProductsPresenter
                             .printedProducts!.TotalLiquid
-                            .toDouble(),
+                            .toInt(true),
                         portionQuantity: 1,
                       );
                     },
@@ -189,7 +190,7 @@ class _PaymentPageState extends State<PaymentPage>
                       await widget.paymentPresenter.payWithPix(
                         longAmountValue: printedProductsPresenter
                             .printedProducts!.TotalLiquid
-                            .toDouble(),
+                            .toInt(true),
                         portionQuantity: 1,
                       );
                     },

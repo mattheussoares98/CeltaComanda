@@ -21,7 +21,7 @@ void main() {
 
   late PaySpy pay;
 
-  late double longAmountValue;
+  late int longAmountValue;
   late int portionQuantity;
 
   initUseCases() {
@@ -35,7 +35,7 @@ void main() {
   initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    longAmountValue = faker.randomGenerator.decimal();
+    longAmountValue = faker.randomGenerator.integer(999);
     portionQuantity = faker.randomGenerator.integer(99);
   }
 

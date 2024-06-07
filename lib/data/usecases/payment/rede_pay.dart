@@ -23,7 +23,7 @@ class RedePay implements Pay {
 }
 
 class RedePayParams {
-  final double longAmountValue;
+  final int longAmountValue;
   final int portionQuantity;
 
   RedePayParams({

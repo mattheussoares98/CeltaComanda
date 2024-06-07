@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/payment/payment.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -24,6 +25,8 @@ void main() {
 
   late double longAmountValue;
   late int portionQuantity;
+  late int commandNumber;
+  late PrintedEntity printedEntity;
 
   initUseCases() {
     pay = PaySpy();
@@ -42,10 +45,13 @@ void main() {
         EntityFactory.makeEnterpriseData();
     longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
+    commandNumber = faker.randomGenerator.integer(999);
+    printedEntity = EntityFactory.makePrintedProductsEntity();
   }
 
   mockSuccess() {
     pay.mockPay();
+    loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
   }
 
   setUp(() {
@@ -268,6 +274,46 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
       );
+    });
+  });
+
+  group("Get total value", () {
+    test("Should call loadPrintedProducts with correct commandNumber",
+        () async {
+      await sut.getTotalValue(commandNumber);
+
+      verify(
+        () => loadPrintedProducts.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      );
+    });
+    test("Should emit correct values on loadPrintedProducts success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.totalAmountValueStream, emits(printedEntity.TotalLiquid));
+
+      await sut.getTotalValue(commandNumber);
+    });
+
+    test("Should emit correct values on loadPrintedProducts throws", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.getTotalValue(commandNumber);
+    });
+
+    test("Should emit correct values on loadPrintedProducts returns null",
+        () async {
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.getTotalValue(commandNumber);
     });
   });
 }

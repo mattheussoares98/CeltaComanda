@@ -20,16 +20,21 @@ void main() {
   late GetxPaymentPresenter sut;
 
   late PaySpy pay;
+  late LoadPrintedProductsSpy loadPrintedProducts;
 
   late double longAmountValue;
   late int portionQuantity;
 
   initUseCases() {
     pay = PaySpy();
+    loadPrintedProducts = LoadPrintedProductsSpy();
   }
 
   initPresenters() {
-    sut = GetxPaymentPresenter(pay: pay);
+    sut = GetxPaymentPresenter(
+      pay: pay,
+      loadPrintedProducts: loadPrintedProducts,
+    );
   }
 
   initEntitys() {

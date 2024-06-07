@@ -4,8 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../data/usecases/usecases.dart';
-import '../../../presentation/presenters/presenters.dart';
+import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
@@ -50,12 +49,10 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      const MenuPage(),
-      const CartPage(),
-      const PrintedProductsPage(),
-      PaymentPage(GetxPaymentPresenter(
-        pay: RedePay(),
-      )),
+      makeMenusPage(),
+      makeCartPage(),
+      makePrintedProductsPage(),
+      makePaymentPage(),
     ];
 
     CartPresenter cartPresenter = Provider.of(context);

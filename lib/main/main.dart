@@ -73,36 +73,6 @@ class App extends StatelessWidget {
             transition: Transition.fadeIn,
           ),
           GetPage(
-            name: PageRoutes.menus,
-            page: makeMenusPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.products,
-            page: makeProductsPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.cart,
-            page: makeCartPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.productDetails,
-            page: makeProductDetailsPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.printedProducts,
-            page: makePrintedProductsPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.printedProducts,
-            page: makePrintedProductsPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
             name: PageRoutes.home,
             page: makeHomePage,
             transition: Transition.fadeIn,
@@ -110,11 +80,6 @@ class App extends StatelessWidget {
           GetPage(
             name: PageRoutes.productComposition,
             page: makeProductCompositionPage,
-            transition: Transition.fadeIn,
-          ),
-          GetPage(
-            name: PageRoutes.payment,
-            page: makeProductPaymentPage,
             transition: Transition.fadeIn,
           ),
         ],

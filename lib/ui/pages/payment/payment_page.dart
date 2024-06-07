@@ -62,17 +62,6 @@ class _PaymentPageState extends State<PaymentPage>
               },
             );
           }),
-          actions: [
-            SearchCommandIcon(loadCommandData: () async {
-              await menuPresenter.loadCommandData(
-                commandNumber: homePresenter.commandNumber!,
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-              );
-            })
-          ],
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -97,103 +86,105 @@ class _PaymentPageState extends State<PaymentPage>
             mainErrorSubscription?.cancel();
 
             loadingSubscription =
-                handleLoading(context, menuPresenter.isLoadingStream);
-            mainErrorSubscription =
-                handleMainError(context, menuPresenter.mainErrorStream);
+                handleLoading(context, widget.paymentPresenter.isLoadingStream);
+            mainErrorSubscription = handleMainError(
+                context, widget.paymentPresenter.mainErrorStream);
 
-            if (printedProductsPresenter.printedProducts == null) {
-              return SearchDataByCommandNumber(
-                menuPresenter: menuPresenter,
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                homePresenter: homePresenter,
-                emptyMessage: homePresenter.commandNumber == null
-                    ? "Consulte alguma comanda para efetuar o pagamento dela"
-                    : "Não há produtos solicitados nessa comanda",
-                loadCommandData: () async {
-                  await printedProductsPresenter.loadCommandData(
-                    commandNumber: homePresenter.commandNumber!,
+            return StreamBuilder<double?>(
+              stream: widget.paymentPresenter.totalAmountValueStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return SearchDataByCommandNumber(
+                    menuPresenter: menuPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     cartPresenter: cartPresenter,
-                    menuPresenter: menuPresenter,
                     homePresenter: homePresenter,
-                    clearPermissionToCancelProducts: true,
+                    emptyMessage: homePresenter.commandNumber == null
+                        ? "Consulte alguma comanda para efetuar o pagamento dela"
+                        : "Não há produtos solicitados nessa comanda",
+                    loadCommandData: () async {
+                      await widget.paymentPresenter.getTotalValue(001);
+                    },
                   );
-                },
-              );
-            }
-
-            return SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  AppBar().preferredSize.height,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid}"
-                        .addBrazilianCoin(),
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                } else {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height -
+                        AppBar().preferredSize.height,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid}"
+                              .addBrazilianCoin(),
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 20,
+                          ),
+                          child: Text(
+                            "Selecione uma opção de pagamento abaixo",
+                            style: TextStyle(
+                              // color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithCredit(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                            );
+                          },
+                          child: const Text("Crédito a vista"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithCreditPortion(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 2,
+                            );
+                          },
+                          child: const Text("Crédito parcelado 2x"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithDebit(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                            );
+                          },
+                          child: const Text("Débito"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await widget.paymentPresenter.payWithPix(
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                            );
+                          },
+                          child: const Text("PIX"),
+                        ),
+                      ],
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 20,
-                    ),
-                    child: Text(
-                      "Selecione uma opção de pagamento abaixo",
-                      style: TextStyle(
-                        // color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await widget.paymentPresenter.payWithCredit(
-                        longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid.toDouble(),
-                        portionQuantity: 1,
-                      );
-                    },
-                    child: const Text("Crédito a vista"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await widget.paymentPresenter.payWithCreditPortion(
-                        longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid.toDouble(),
-                        portionQuantity: 2,
-                      );
-                    },
-                    child: const Text("Crédito parcelado 2x"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await widget.paymentPresenter.payWithDebit(
-                        longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid.toDouble(),
-                        portionQuantity: 1,
-                      );
-                    },
-                    child: const Text("Débito"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await widget.paymentPresenter.payWithPix(
-                        longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid.toDouble(),
-                        portionQuantity: 1,
-                      );
-                    },
-                    child: const Text("PIX"),
-                  ),
-                ],
-              ),
+                  );
+                }
+              },
             );
           },
         ),

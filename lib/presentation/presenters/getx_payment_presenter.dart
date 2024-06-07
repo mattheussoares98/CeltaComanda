@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/domain/usecases/printed_products/load_printed_products.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -10,9 +12,11 @@ class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements PaymentPresenter {
   final Pay pay;
+  final LoadPrintedProducts loadPrintedProducts;
 
   GetxPaymentPresenter({
     required this.pay,
+    required this.loadPrintedProducts,
   });
 
   @override
@@ -103,4 +107,31 @@ class GetxPaymentPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> getTotalValue(int commandNumber) async {
+    mainError = null;
+    isLoading = true;
+    try {
+      final printed = await loadPrintedProducts.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
+
+      if (printed == null) {
+        throw DomainError.unexpected;
+      }
+
+      _totalAmountValue.value = printed.TotalLiquid;
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  final _totalAmountValue = Rx<double?>(null);
+  @override
+  Stream<double?> get totalAmountValueStream => _totalAmountValue.stream;
 }

@@ -5,6 +5,7 @@ import '../../helpers/helpers.dart';
 abstract class PaymentPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<double?> get totalAmountValueStream;
 
   Future<void> payWithCredit({
     required double longAmountValue,
@@ -22,4 +23,6 @@ abstract class PaymentPresenter implements Listenable {
     required double longAmountValue,
     required int portionQuantity,
   });
+
+  Future<void> getTotalValue(int commandNumber);
 }

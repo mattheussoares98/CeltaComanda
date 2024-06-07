@@ -69,6 +69,9 @@ abstract class CartPresenter implements ChangeNotifier {
   });
   Future<void> reduceCartProductQuantity(int index);
   Future<void> addCartProductQuantity(int index);
-  Future<bool> saveProducts(String commandNumber);
+  Future<bool> saveProducts({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+  });
   Future<void> getLocalCartProductsData();
 }

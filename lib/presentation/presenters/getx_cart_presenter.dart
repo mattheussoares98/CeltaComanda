@@ -510,7 +510,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<bool> saveProducts(String commandNumber) async {
+  Future<bool> saveProducts({
+    required String commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
+  }) async {
     isLoading = true;
     mainError = null;
     clear();
@@ -588,6 +591,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await confirmedCartProducts.updateValue(false);
       _cartProducts.clear();
       await cartInformations.clear();
+
+      await printedProductsPresenter.loadPrinted(commandNumber);
       return true;
     } on DomainError catch (e) {
       switch (e) {

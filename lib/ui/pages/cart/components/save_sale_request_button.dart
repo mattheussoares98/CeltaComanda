@@ -10,10 +10,14 @@ class SaveSaleRequestButton extends StatelessWidget {
 
   static _addProducts({
     required CartPresenter cartPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
     required String commandNumber,
     required BuildContext context,
   }) async {
-    bool isUpdated = await cartPresenter.saveProducts(commandNumber);
+    bool isUpdated = await cartPresenter.saveProducts(
+      commandNumber: commandNumber,
+      printedProductsPresenter: printedProductsPresenter,
+    );
 
     if (isUpdated) {
       Future.delayed(Duration.zero, () {
@@ -28,6 +32,8 @@ class SaveSaleRequestButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
     TextEditingController commandNumberController = TextEditingController();
     FocusNode commentsFocusNode = FocusNode();
@@ -69,6 +75,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                             cartPresenter: cartPresenter,
                             commandNumber: commandNumberController.text,
                             context: context,
+                            printedProductsPresenter: printedProductsPresenter,
                           );
                         },
                         validator: (value) {
@@ -91,6 +98,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                   cartPresenter: cartPresenter,
                   commandNumber: commandNumberController.text,
                   context: context,
+                  printedProductsPresenter: printedProductsPresenter,
                 );
               },
             );

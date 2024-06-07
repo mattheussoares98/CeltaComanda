@@ -156,8 +156,7 @@ class _PaymentPageState extends State<PaymentPage>
                     onPressed: () async {
                       await widget.paymentPresenter.payWithCredit(
                         longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid
-                            .toInt(true),
+                            .printedProducts!.TotalLiquid.toDouble(),
                         portionQuantity: 1,
                       );
                     },
@@ -167,8 +166,7 @@ class _PaymentPageState extends State<PaymentPage>
                     onPressed: () async {
                       await widget.paymentPresenter.payWithCreditPortion(
                         longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid
-                            .toInt(true),
+                            .printedProducts!.TotalLiquid.toDouble(),
                         portionQuantity: 2,
                       );
                     },
@@ -178,8 +176,7 @@ class _PaymentPageState extends State<PaymentPage>
                     onPressed: () async {
                       await widget.paymentPresenter.payWithDebit(
                         longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid
-                            .toInt(true),
+                            .printedProducts!.TotalLiquid.toDouble(),
                         portionQuantity: 1,
                       );
                     },
@@ -189,8 +186,7 @@ class _PaymentPageState extends State<PaymentPage>
                     onPressed: () async {
                       await widget.paymentPresenter.payWithPix(
                         longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid
-                            .toInt(true),
+                            .printedProducts!.TotalLiquid.toDouble(),
                         portionQuantity: 1,
                       );
                     },

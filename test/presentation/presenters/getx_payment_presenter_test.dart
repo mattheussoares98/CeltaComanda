@@ -21,7 +21,7 @@ void main() {
 
   late PaySpy pay;
 
-  late int longAmountValue;
+  late double longAmountValue;
   late int portionQuantity;
 
   initUseCases() {
@@ -35,7 +35,7 @@ void main() {
   initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    longAmountValue = faker.randomGenerator.integer(999);
+    longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
   }
 
@@ -68,7 +68,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.credit,
             params: PayParams(
-              longAmountValue: longAmountValue,
+              longAmountValue: longAmountValue.toString().toInt(true),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should convert amountValue correctly', () async {
+      await sut.payWithCredit(
+        longAmountValue: 280.25,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.credit,
+            params: PayParams(
+              longAmountValue: 28025,
               portionQuantity: portionQuantity,
             ),
           )).called(1);
@@ -106,7 +120,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.creditPortion,
             params: PayParams(
-              longAmountValue: longAmountValue,
+              longAmountValue: longAmountValue.toString().toInt(true),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should convert amountValue correctly', () async {
+      await sut.payWithCreditPortion(
+        longAmountValue: 280.25,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.creditPortion,
+            params: PayParams(
+              longAmountValue: 28025,
               portionQuantity: portionQuantity,
             ),
           )).called(1);
@@ -144,7 +172,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.debit,
             params: PayParams(
-              longAmountValue: longAmountValue,
+              longAmountValue: longAmountValue.toString().toInt(true),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should convert amountValue correctly', () async {
+      await sut.payWithDebit(
+        longAmountValue: 280.25,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.debit,
+            params: PayParams(
+              longAmountValue: 28025,
               portionQuantity: portionQuantity,
             ),
           )).called(1);
@@ -182,7 +224,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.pix,
             params: PayParams(
-              longAmountValue: longAmountValue,
+              longAmountValue: longAmountValue.toString().toInt(true),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should convert amountValue correctly', () async {
+      await sut.payWithPix(
+        longAmountValue: 280.25,
+        portionQuantity: portionQuantity,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.pix,
+            params: PayParams(
+              longAmountValue: 28025,
               portionQuantity: portionQuantity,
             ),
           )).called(1);

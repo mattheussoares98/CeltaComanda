@@ -17,7 +17,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithCredit({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -27,7 +27,7 @@ class GetxPaymentPresenter extends GetxController
         paymentMode: PaymentMode
             .credit, //no MainActivity faz o tratamento para se for o PaymentMode.credit não acionar a opção de credito parcelado, senão gera uma exceção
         params: PayParams(
-          longAmountValue: longAmountValue,
+          longAmountValue: longAmountValue.toString().toInt(true),
           portionQuantity: portionQuantity,
         ),
       );
@@ -40,7 +40,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithCreditPortion({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -49,7 +49,7 @@ class GetxPaymentPresenter extends GetxController
       await pay.pay(
         paymentMode: PaymentMode.creditPortion,
         params: PayParams(
-          longAmountValue: longAmountValue,
+          longAmountValue: longAmountValue.toString().toInt(true),
           portionQuantity: portionQuantity,
         ),
       );
@@ -62,7 +62,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithDebit({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -71,7 +71,7 @@ class GetxPaymentPresenter extends GetxController
       await pay.pay(
         paymentMode: PaymentMode.debit,
         params: PayParams(
-          longAmountValue: longAmountValue,
+          longAmountValue: longAmountValue.toString().toInt(true),
           portionQuantity: portionQuantity,
         ),
       );
@@ -84,7 +84,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   Future<void> payWithPix({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   }) async {
     mainError = null;
@@ -93,7 +93,7 @@ class GetxPaymentPresenter extends GetxController
       await pay.pay(
         paymentMode: PaymentMode.pix,
         params: PayParams(
-          longAmountValue: longAmountValue,
+          longAmountValue: longAmountValue.toString().toInt(true),
           portionQuantity: portionQuantity,
         ),
       );

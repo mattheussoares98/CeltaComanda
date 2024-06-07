@@ -7,19 +7,19 @@ abstract class PaymentPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
 
   Future<void> payWithCredit({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   });
   Future<void> payWithCreditPortion({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   });
   Future<void> payWithDebit({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   });
   Future<void> payWithPix({
-    required int longAmountValue,
+    required double longAmountValue,
     required int portionQuantity,
   });
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../components/components.dart';
 import '../../pages.dart';
 
 class SaleRequestProductsItems extends StatelessWidget {
@@ -13,9 +11,6 @@ class SaleRequestProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter =
-        Provider.of(context, listen: false);
-
     return Column(
       children: [
         Container(
@@ -45,17 +40,10 @@ class SaleRequestProductsItems extends StatelessWidget {
                     );
                   },
                 ),
-                RequestSummary(
-                  totalLiquid:
-                      cartPresenter.totalSaleRequestTempPrice,
-                  comments: cartPresenter.saleRequestTemp?.Comments,
-                ),
               ],
             ),
           ),
         ),
-        if (cartPresenter.cartProducts.isNotEmpty)
-          const SaveSaleRequestButton(),
       ],
     );
   }

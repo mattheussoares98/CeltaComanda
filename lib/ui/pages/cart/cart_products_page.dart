@@ -62,55 +62,68 @@ class _CartPageState extends State<CartPage>
           }),
         ),
       ),
-      body: Column(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Builder(
-                builder: (context) {
-                  loadingSubscription?.cancel();
-                  mainErrorSubscription?.cancel();
-
-                  loadingSubscription = handleLoading(
-                      context, cartPresenter.isLoadingStream);
-                  mainErrorSubscription = handleMainError(
-                      context, cartPresenter.mainErrorStream);
-
-                  if (cartPresenter.cartProducts.isNotEmpty ==
-                      true) {
-                    return SaleRequestProductsItems(
-                        cartProducts: cartPresenter.cartProducts);
-                  }
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height -
-                        kBottomNavigationBarHeight,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: FittedBox(
-                              child: Text(
-                            "O carrinho está vazio",
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          )),
-                        ),
-                        Image.asset(
-                          key: const Key("emptyCartKey"),
-                          "lib/ui/assets/images/empty_cart.jpg",
-                          width: double.infinity,
-                        ),
-                      ],
-                    ),
-                  );
-                },
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 45.0),
+              child: SingleChildScrollView(
+                child: Builder(
+                  builder: (context) {
+                    loadingSubscription?.cancel();
+                    mainErrorSubscription?.cancel();
+                  
+                    loadingSubscription =
+                        handleLoading(context, cartPresenter.isLoadingStream);
+                    mainErrorSubscription =
+                        handleMainError(context, cartPresenter.mainErrorStream);
+                  
+                    if (cartPresenter.cartProducts.isNotEmpty == true) {
+                      return SaleRequestProductsItems(
+                          cartProducts: cartPresenter.cartProducts);
+                    }
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height -
+                          AppBar().preferredSize.height -
+                          kBottomNavigationBarHeight,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: FittedBox(
+                                child: Text(
+                              "O carrinho está vazio",
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            )),
+                          ),
+                          Image.asset(
+                            key: const Key("emptyCartKey"),
+                            "lib/ui/assets/images/empty_cart.jpg",
+                            width: double.infinity,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
+            ),
+          ),
+          Visibility(
+            visible: cartPresenter.cartProducts.isNotEmpty,
+            child: const Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: SaveSaleRequestButton(),
             ),
           ),
         ],

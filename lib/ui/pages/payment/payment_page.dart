@@ -95,9 +95,6 @@ class _PaymentPageState extends State<PaymentPage>
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return SearchDataByCommandNumber(
-                    menuPresenter: menuPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    cartPresenter: cartPresenter,
                     homePresenter: homePresenter,
                     emptyMessage: homePresenter.commandNumber == null
                         ? "Consulte alguma comanda para efetuar o pagamento dela"

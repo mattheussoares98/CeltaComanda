@@ -34,8 +34,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    CartPresenter cartPresenter =
-        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -117,9 +116,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     );
                   }
                   return SearchDataByCommandNumber(
-                    menuPresenter: menuPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    cartPresenter: cartPresenter,
                     homePresenter: homePresenter,
                     emptyMessage: homePresenter.commandNumber == null
                         ? "Consulte alguma comanda para visualizar os produtos solicitados"

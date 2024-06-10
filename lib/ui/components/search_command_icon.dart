@@ -41,9 +41,9 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
         child: Stack(
           children: [
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.find_replace_rounded,
-                color: Colors.grey,
+                color: Theme.of(context).primaryColor,
                 size: 28,
               ),
               onPressed: () async {

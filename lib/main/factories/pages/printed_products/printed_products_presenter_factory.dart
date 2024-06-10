@@ -8,4 +8,5 @@ PrintedProductsPresenter makeGetxPrintedProductsPresenter() =>
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
       removePrintedProduct: makeRemoteRemovePrintedProduct(),
       ticketIsPermitted: makeRemoteticketIsPermitted(),
+      barcodeScanner: makeCameraBarcodeScanner(),
     );

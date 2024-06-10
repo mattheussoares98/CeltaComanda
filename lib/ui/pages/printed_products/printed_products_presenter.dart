@@ -26,7 +26,6 @@ abstract class PrintedProductsPresenter
   });
 
   Future<void> loadCommandData({
-    required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,

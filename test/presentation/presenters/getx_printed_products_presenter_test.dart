@@ -24,6 +24,7 @@ void main() {
   late RemovePrintedProductSpy removePrintedProduct;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
   late TicketIsPermittedSpy ticketIsPermitted;
+  late BarcodeScannerSpy barcodeScanner;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -42,6 +43,7 @@ void main() {
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
       ticketIsPermitted: ticketIsPermitted,
+      barcodeScanner: barcodeScanner,
     );
   }
 
@@ -51,6 +53,7 @@ void main() {
     removePrintedProduct = RemovePrintedProductSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
+    barcodeScanner = BarcodeScannerSpy();
   }
 
   void initEntitys() {
@@ -75,6 +78,7 @@ void main() {
     userValidations.mockIsValidPassword(true);
     userValidations.mockCanCancel(true);
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    barcodeScanner.mockBarcodeScanner(homePresenter.commandNumberMock!);
   }
 
   setUp(() {
@@ -399,8 +403,9 @@ void main() {
       verify(() => cartPresenter.clear()).called(1);
       verify(() => menuPresenter
           .getGroupsAndProducts(homePresenter.commandNumberMock!)).called(1);
-      verify(() => cartPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+      verify(() =>
+              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+          .called(1);
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
       expect(sut.canCancelProducts, true);
     });
@@ -508,7 +513,6 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -527,7 +531,39 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
+        printedProductsPresenter: sut,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
+      );
+    });
+
+    test("Should emit correct values on loadCommandData throws barcodeNotRead",
+        () async {
+      barcodeScanner.mockError(DomainError.barcodeNotRead);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
+
+      await sut.loadCommandData(
+        printedProductsPresenter: sut,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: true,
+      );
+    });
+    test("Should emit correct values on loadCommandData throws unexpected",
+        () async {
+      barcodeScanner.mockError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.loadCommandData(
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -540,7 +576,6 @@ void main() {
       homePresenter.commandNumberMock = "9999";
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -553,7 +588,6 @@ void main() {
 
     test("Should call clearData on LoadCommandData call", () async {
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -566,7 +600,6 @@ void main() {
       loadPrintedProducts.mockError(DomainError.unexpected);
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -585,7 +618,6 @@ void main() {
 
     test("Should call ticketIsPermitted only one time", () async {
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -594,15 +626,14 @@ void main() {
       );
 
       verify(() => ticketIsPermitted.verify(
+        commandNumber: homePresenter.commandNumberMock!,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: homePresenter.commandNumberMock!,
           )).called(1);
     });
 
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -618,8 +649,9 @@ void main() {
           )).called(1);
       verify(() => menuPresenter
           .getGroupsAndProducts(homePresenter.commandNumberMock!)).called(1);
-      verify(() => cartPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+      verify(() =>
+              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+          .called(1);
     });
 
     test(
@@ -628,7 +660,6 @@ void main() {
       ticketIsPermitted.mockError();
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -644,7 +675,6 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -660,7 +690,6 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.loadCommandData(
-        commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,

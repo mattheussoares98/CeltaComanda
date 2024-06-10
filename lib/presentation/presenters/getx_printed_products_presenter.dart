@@ -15,12 +15,14 @@ class GetxPrintedProductsPresenter
   final LoadPrintedProducts loadPrintedProducts;
   final RemovePrintedProduct removePrintedProduct;
   final TicketIsPermitted ticketIsPermitted;
+  final BarcodeScanner barcodeScanner;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
     required this.removePrintedProduct,
     required this.ticketIsPermitted,
+    required this.barcodeScanner,
   });
 
   @override
@@ -41,7 +43,6 @@ class GetxPrintedProductsPresenter
       );
 
       await loadCommandData(
-        commandNumber: homePresenter.commandNumber!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -154,7 +155,6 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> loadCommandData({
-    required String commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
@@ -163,14 +163,17 @@ class GetxPrintedProductsPresenter
   }) async {
     isLoading = true;
     mainError = null;
-    homePresenter.updateCommandNumber(commandNumber);
-    if (clearPermissionToCancelProducts) {
-      updateCanCancelProducts(false);
-    }
-    menuPresenter.clear();
-    cartPresenter.clear();
 
     try {
+      final commandNumber = await barcodeScanner.read();
+
+      homePresenter.updateCommandNumber(commandNumber);
+      if (clearPermissionToCancelProducts) {
+        updateCanCancelProducts(false);
+      }
+      menuPresenter.clear();
+      cartPresenter.clear();
+
       await menuPresenter.getGroupsAndProducts(commandNumber);
       await cartPresenter.loadSaleRequest(commandNumber);
       clear();
@@ -178,6 +181,8 @@ class GetxPrintedProductsPresenter
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);
       switch (error) {
+        case DomainError.barcodeNotRead:
+          mainError = UIError.barcodeNotRead;
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
           break;

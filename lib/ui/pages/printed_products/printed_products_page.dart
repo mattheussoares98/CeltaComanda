@@ -65,7 +65,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             SearchCommandIcon(
               loadCommandData: () async {
                 await printedProductsPresenter.loadCommandData(
-                  commandNumber: homePresenter.commandNumber!,
                   printedProductsPresenter: printedProductsPresenter,
                   cartPresenter: cartPresenter,
                   menuPresenter: menuPresenter,
@@ -122,7 +121,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         : "Não há produtos solicitados nessa comanda",
                     loadCommandData: () async {
                       await printedProductsPresenter.loadCommandData(
-                        commandNumber: homePresenter.commandNumber!,
                         printedProductsPresenter: printedProductsPresenter,
                         cartPresenter: cartPresenter,
                         menuPresenter: menuPresenter,

@@ -48,7 +48,6 @@ class PrintedProductsPresenterSpy extends Mock
 
   void mockLoadCommandData() {
     when(() => this.loadCommandData(
-          commandNumber: any(named: "commandNumber"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           cartPresenter: any(named: "cartPresenter"),
           menuPresenter: any(named: "menuPresenter"),

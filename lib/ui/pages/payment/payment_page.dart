@@ -100,7 +100,8 @@ class _PaymentPageState extends State<PaymentPage>
                         ? "Consulte alguma comanda para efetuar o pagamento dela"
                         : "Não há produtos solicitados nessa comanda",
                     loadCommandData: () async {
-                      await widget.paymentPresenter.getTotalValue(001);
+                      await widget.paymentPresenter
+                          .getTotalValue(homePresenter.commandNumber!.toInt());
                     },
                   );
                 } else {
@@ -112,7 +113,7 @@ class _PaymentPageState extends State<PaymentPage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid}"
+                          "Total: ${snapshot.data!.toString().toBrazilianNumber()}"
                               .addBrazilianCoin(),
                           style: const TextStyle(
                             fontSize: 25,

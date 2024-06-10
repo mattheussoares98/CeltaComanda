@@ -512,15 +512,20 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<bool> saveProducts({
-    required String commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-  }) async {
+  Future<bool> saveProducts(
+    PrintedProductsPresenter printedProductsPresenter,
+  ) async {
     isLoading = true;
     mainError = null;
     clear();
 
     try {
+      final commandNumber = await barcodeScanner.read();
+
+      if(commandNumber.isEmpty) {
+        throw DomainError.unexpected;
+      }
+
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber,

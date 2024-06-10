@@ -15,8 +15,7 @@ class SaveSaleRequestButton extends StatelessWidget {
     required BuildContext context,
   }) async {
     bool isUpdated = await cartPresenter.saveProducts(
-      commandNumber: commandNumber,
-      printedProductsPresenter: printedProductsPresenter,
+      printedProductsPresenter,
     );
 
     if (isUpdated) {
@@ -36,71 +35,17 @@ class SaveSaleRequestButton extends StatelessWidget {
         Provider.of(context, listen: false);
 
     TextEditingController commandNumberController = TextEditingController();
-    FocusNode commentsFocusNode = FocusNode();
 
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: ElevatedButton(
           onPressed: () async {
-            notificationDialog(
+            await _addProducts(
+              cartPresenter: cartPresenter,
+              commandNumber: commandNumberController.text,
               context: context,
-              titleMessage: "Número da comanda",
-              content: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    const Text(
-                        "Consulte a comanda para verificar se ela está disponível"),
-                    const SizedBox(height: 15),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxHeight: 100,
-                      ),
-                      child: TextFormField(
-                        autofocus: true,
-                        focusNode: commentsFocusNode,
-                        controller: commandNumberController,
-                        maxLines: null,
-                        maxLength: 3,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(3, 10, 3, 3),
-                          label: Text("Insira o número da comanda"),
-                          hintText: "Número da comanda",
-                        ),
-                        onFieldSubmitted: (value) async {
-                          await _addProducts(
-                            cartPresenter: cartPresenter,
-                            commandNumber: commandNumberController.text,
-                            context: context,
-                            printedProductsPresenter: printedProductsPresenter,
-                          );
-                        },
-                        validator: (value) {
-                          if (value?.isEmpty == true) {
-                            return "Digite 3 números";
-                          } else if (value!.length < 3) {
-                            return "Digite 3 números";
-                          } else if (int.tryParse(value) == null) {
-                            return "Número inválido";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              onPress: () async {
-                await _addProducts(
-                  cartPresenter: cartPresenter,
-                  commandNumber: commandNumberController.text,
-                  context: context,
-                  printedProductsPresenter: printedProductsPresenter,
-                );
-              },
+              printedProductsPresenter: printedProductsPresenter,
             );
           },
           child: Row(

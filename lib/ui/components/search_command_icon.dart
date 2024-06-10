@@ -1,9 +1,4 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
-
-import '../../ui/pages/pages.dart';
-import 'components.dart';
 
 class SearchCommandIcon extends StatefulWidget {
   final Future Function() loadCommandData;
@@ -19,23 +14,10 @@ class SearchCommandIcon extends StatefulWidget {
 class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
-    CartPresenter cartPresenter = Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    HomePresenter homePresenter = Provider.of(context);
-
     return GestureDetector(
       key: const Key("SearchCommandIcon"),
       onTap: () async {
-        dialogLoadCommandData(
-            context: context,
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            cartPresenter: cartPresenter,
-            homePresenter: homePresenter,
-            loadCommandData: () async {
-              await widget.loadCommandData();
-            });
+        await widget.loadCommandData();
       },
       child: FittedBox(
         child: Stack(
@@ -47,16 +29,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
                 size: 28,
               ),
               onPressed: () async {
-                dialogLoadCommandData(
-                  context: context,
-                  menuPresenter: menuPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  cartPresenter: cartPresenter,
-                  homePresenter: homePresenter,
-                  loadCommandData: () async {
-                    await widget.loadCommandData();
-                  },
-                );
+                await widget.loadCommandData();
               },
             ),
           ],

@@ -1,12 +1,12 @@
-import 'package:clean_celta_mobile/domain/usecases/printed_products/load_printed_products.dart';
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/payment/payment.dart';
+import '../../domain/usecases/printed_products/load_printed_products.dart';
 import '../../presentation/mixins/mixins.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
-import '../../ui/pages/payment/payment_presenter.dart';
+import '../../ui/pages/pages.dart';
 
 class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
@@ -109,14 +109,14 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> getTotalValue(int commandNumber) async {
+  Future<void> getTotalValue(HomePresenter homePresenter) async {
     mainError = null;
     isLoading = true;
     try {
       final printed = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber,
+        commandNumber: homePresenter.commandNumber!.toInt(),
       );
 
       if (printed == null) {

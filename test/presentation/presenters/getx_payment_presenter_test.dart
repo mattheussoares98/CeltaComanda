@@ -13,19 +13,20 @@ import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 
 import '../../domain/mocks/mocks.dart';
+import '../../ui/mocks/mocks.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
   late GetxPaymentPresenter sut;
+  late HomePresenterSpy homePresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
 
   late double longAmountValue;
   late int portionQuantity;
-  late int commandNumber;
   late PrintedEntity printedEntity;
 
   initUseCases() {
@@ -38,6 +39,7 @@ void main() {
       pay: pay,
       loadPrintedProducts: loadPrintedProducts,
     );
+    homePresenter = HomePresenterSpy();
   }
 
   initEntitys() {
@@ -45,8 +47,8 @@ void main() {
         EntityFactory.makeEnterpriseData();
     longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
-    commandNumber = faker.randomGenerator.integer(999);
     printedEntity = EntityFactory.makePrintedProductsEntity();
+    homePresenter.commandNumberMock = faker.randomGenerator.integer(999).toString();
   }
 
   mockSuccess() {
@@ -67,6 +69,9 @@ void main() {
     );
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
   });
 
   group("Credit payment", () {
@@ -280,14 +285,14 @@ void main() {
   group("Get total value", () {
     test("Should call loadPrintedProducts with correct commandNumber",
         () async {
-      await sut.getTotalValue(commandNumber);
+      await sut.getTotalValue(homePresenter);
 
       verify(
         () => loadPrintedProducts.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumber!.toInt(),
         ),
       );
     });
@@ -296,14 +301,14 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.totalAmountValueStream, emits(printedEntity.TotalLiquid));
 
-      await sut.getTotalValue(commandNumber);
+      await sut.getTotalValue(homePresenter);
     });
 
     test("Should emit correct values on loadPrintedProducts throws", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.getTotalValue(commandNumber);
+      await sut.getTotalValue(homePresenter);
     });
 
     test("Should emit correct values on loadPrintedProducts returns null",
@@ -313,7 +318,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.getTotalValue(commandNumber);
+      await sut.getTotalValue(homePresenter);
     });
   });
 }

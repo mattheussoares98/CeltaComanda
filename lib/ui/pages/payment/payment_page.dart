@@ -101,7 +101,7 @@ class _PaymentPageState extends State<PaymentPage>
                         : "Não há produtos solicitados nessa comanda",
                     loadCommandData: () async {
                       await widget.paymentPresenter
-                          .getTotalValue(homePresenter.commandNumber!.toInt());
+                          .getTotalValue(homePresenter);
                     },
                   );
                 } else {

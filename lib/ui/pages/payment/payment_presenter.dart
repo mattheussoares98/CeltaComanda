@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/pages/home/home.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
@@ -24,5 +25,5 @@ abstract class PaymentPresenter implements Listenable {
     required int portionQuantity,
   });
 
-  Future<void> getTotalValue(int commandNumber);
+  Future<void> getTotalValue(HomePresenter homePresenter);
 }

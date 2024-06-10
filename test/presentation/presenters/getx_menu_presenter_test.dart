@@ -348,10 +348,20 @@ void main() {
     });
 
     test("Should emit correct events if barcodeScanner throws", () async {
-      barcodeScanner.mockBarcodeScannerError();
+      barcodeScanner.mockError(DomainError.unexpected);
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.readBarcodeAndSearchProduct();
+    });
+
+    test("Should emit correct events if barcodeScanner return empty value", () async {
+      barcodeScanner.mockError(DomainError.barcodeNotRead);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.readBarcodeAndSearchProduct();

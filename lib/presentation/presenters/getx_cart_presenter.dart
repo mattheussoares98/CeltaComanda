@@ -522,10 +522,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     try {
       final commandNumber = await barcodeScanner.read();
 
-      if(commandNumber.isEmpty) {
-        throw DomainError.unexpected;
-      }
-
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber,
@@ -605,6 +601,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       switch (e) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
+        case DomainError.barcodeNotRead:
+          mainError = UIError.barcodeNotRead;
         default:
           mainError = UIError.unexpected;
       }

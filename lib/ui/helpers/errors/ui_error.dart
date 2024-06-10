@@ -3,6 +3,7 @@ import '../helpers.dart';
 enum UIError {
   accessDenied,
   addComment,
+  barcodeNotRead,
   commandNotAvailable,
   emailInUse,
   enterpriseOrUrlNotFound,
@@ -23,6 +24,8 @@ extension UIErrorExtension on UIError {
         return R.string.accessDenied;
       case UIError.addComment:
         return R.string.addCommentError;
+      case UIError.barcodeNotRead:
+        return R.string.msgBarcodeNotRead;
       case UIError.commandNotAvailable:
         return R.string.commandNotAvailable;
       case UIError.emailInUse:

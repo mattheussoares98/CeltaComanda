@@ -1312,11 +1312,20 @@ void main() {
 
       await sut.saveProducts(printedProductsPresenter);
     });
-    test("Should emit correct values BarcodeScanner throws", () async {
-      barcodeScanner.mockBarcodeScannerError();
+    test("Should emit correct values on BarcodeScanner throws unexpected", () async {
+      barcodeScanner.mockError(DomainError.unexpected);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.saveProducts(printedProductsPresenter);
+    });
+    test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
+        () async {
+      barcodeScanner.mockError(DomainError.barcodeNotRead);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
       await sut.saveProducts(printedProductsPresenter);
     });

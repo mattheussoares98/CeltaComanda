@@ -117,6 +117,8 @@ class GetxMenuPresenter extends GetxController
       switch (error) {
         case DomainError.productNotFound:
           mainError = UIError.productNotFound;
+        case DomainError.barcodeNotRead:
+          mainError = UIError.barcodeNotRead;
         default:
           mainError = UIError.unexpected;
       }

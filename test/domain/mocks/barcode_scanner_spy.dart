@@ -15,7 +15,7 @@ class BarcodeScannerSpy extends Mock implements BarcodeScanner {
     this.mockBarcodeScannerCall().thenAnswer((_) async => barcode);
   }
 
-  void mockBarcodeScannerError() {
-    this.mockBarcodeScannerCall().thenThrow(DomainError.unexpected);
+  void mockError(DomainError error) {
+    this.mockBarcodeScannerCall().thenThrow(error);
   }
 }

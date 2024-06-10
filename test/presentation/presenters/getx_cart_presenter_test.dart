@@ -29,6 +29,7 @@ void main() {
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late ConfirmedCartProductsSpy confirmedCartProducts;
   late CartInformationsSpy cartInformations;
+  late BarcodeScannerSpy barcodeScanner;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late int saleRequestProductTempId;
@@ -53,6 +54,7 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     confirmedCartProducts = ConfirmedCartProductsSpy();
     cartInformations = CartInformationsSpy();
+    barcodeScanner = BarcodeScannerSpy();
   }
 
   void initPresenters() {
@@ -71,6 +73,7 @@ void main() {
       updateSaleRequestTemp: updateSaleRequestTemp,
       confirmedCartProducts: confirmedCartProducts,
       cartInformations: cartInformations,
+      barcodeScanner: barcodeScanner,
     );
   }
 

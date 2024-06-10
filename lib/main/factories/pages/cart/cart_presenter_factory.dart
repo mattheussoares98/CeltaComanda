@@ -14,4 +14,5 @@ CartPresenter makeGetxCartPresenter() =>
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
       confirmedCartProducts: makeLocalConfirmedCartProducts(),
       cartInformations: makeLocalCartInformations(),
+      barcodeScanner: makeCameraBarcodeScanner(),
     );

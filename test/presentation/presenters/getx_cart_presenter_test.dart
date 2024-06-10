@@ -125,6 +125,7 @@ void main() {
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModel]);
     cartInformations.mockGetCart([cartProductViewModel]);
+    barcodeScanner.mockBarcodeScanner(commandNumber);
   }
 
   setUp(() {
@@ -1272,6 +1273,8 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(printedProductsPresenter);
 
+      verify(() => barcodeScanner.read()).called(1);
+
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             commandNumber: commandNumber,
@@ -1306,6 +1309,14 @@ void main() {
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.saveProducts(printedProductsPresenter);
+    });
+    test("Should emit correct values BarcodeScanner throws", () async {
+      barcodeScanner.mockBarcodeScannerError();
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(printedProductsPresenter);
     });

@@ -1,6 +1,7 @@
 enum DomainError {
   accessDenied,
   addComment,
+  barcodeNotRead,
   commandNotAvailable,
   enterpriseOrUrlNotFound,
   invalidCombox,

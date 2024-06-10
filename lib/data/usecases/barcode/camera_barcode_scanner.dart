@@ -10,14 +10,17 @@ class CameraBarcodeScanner implements BarcodeScanner {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancelar', true, ScanMode.BARCODE);
-    } catch (e) {
-      throw DomainError.unexpected;
-    }
-
-    if (barcodeScanRes != '-1') {
-      return barcodeScanRes;
-    } else {
-      return "";
+      if (barcodeScanRes != '-1') {
+        return barcodeScanRes;
+      } else {
+        throw DomainError.barcodeNotRead;
+      }
+    } on DomainError catch (e) {
+      if (e == DomainError.unexpected) {
+        throw DomainError.unexpected;
+      } else {
+        throw DomainError.barcodeNotRead;
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/usecases/barcode/barcode.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -13,10 +14,12 @@ class GetxPaymentPresenter extends GetxController
     implements PaymentPresenter {
   final Pay pay;
   final LoadPrintedProducts loadPrintedProducts;
+  final BarcodeScanner barcodeScanner;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.loadPrintedProducts,
+    required this.barcodeScanner,
   });
 
   @override

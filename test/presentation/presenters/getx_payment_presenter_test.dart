@@ -24,6 +24,7 @@ void main() {
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
+  late BarcodeScannerSpy barcodeScanner;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -32,12 +33,14 @@ void main() {
   initUseCases() {
     pay = PaySpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
+    barcodeScanner = BarcodeScannerSpy();
   }
 
   initPresenters() {
     sut = GetxPaymentPresenter(
       pay: pay,
       loadPrintedProducts: loadPrintedProducts,
+      barcodeScanner: barcodeScanner,
     );
     homePresenter = HomePresenterSpy();
   }

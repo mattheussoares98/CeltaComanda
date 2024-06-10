@@ -6,4 +6,5 @@ import '../../factories.dart';
 PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       pay: makeRedePay(),
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
+      barcodeScanner: makeCameraBarcodeScanner(),
     );

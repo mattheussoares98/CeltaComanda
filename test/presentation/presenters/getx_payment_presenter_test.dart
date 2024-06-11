@@ -29,6 +29,7 @@ void main() {
   late double longAmountValue;
   late int portionQuantity;
   late PrintedEntity printedEntity;
+  late String commandNumber;
 
   initUseCases() {
     pay = PaySpy();
@@ -51,12 +52,15 @@ void main() {
     longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
     printedEntity = EntityFactory.makePrintedProductsEntity();
-    homePresenter.commandNumberMock = faker.randomGenerator.integer(999).toString();
+    homePresenter.commandNumberMock =
+        faker.randomGenerator.integer(999).toString();
+    commandNumber = faker.randomGenerator.integer(999).toString();
   }
 
   mockSuccess() {
     pay.mockPay();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    barcodeScanner.mockBarcodeScanner(commandNumber);
   }
 
   setUp(() {
@@ -295,9 +299,32 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumber!.toInt(),
+          commandNumber: commandNumber.toInt(),
         ),
-      );
+      ).called(1);
+    });
+    test("Should call barcodeScanner on getTotalValue", () async {
+      await sut.getTotalValue(homePresenter);
+
+      verify(
+        () => barcodeScanner.read(),
+      ).called(1);
+    });
+    test("Should emit correct values on barcodeScanner throws unexpected",
+        () async {
+      barcodeScanner.mockError(DomainError.unexpected);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.getTotalValue(homePresenter);
+    });
+    test("Should emit correct values on barcodeScanner throws barcodeNotRead",
+        () async {
+      barcodeScanner.mockError(DomainError.barcodeNotRead);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
+
+      await sut.getTotalValue(homePresenter);
     });
     test("Should emit correct values on loadPrintedProducts success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

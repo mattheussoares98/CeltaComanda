@@ -116,10 +116,12 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      final commandNumber = await barcodeScanner.read();
+
       final printed = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!.toInt(),
+        commandNumber: commandNumber.toInt(),
       );
 
       if (printed == null) {
@@ -127,8 +129,14 @@ class GetxPaymentPresenter extends GetxController
       }
 
       _totalAmountValue.value = printed.TotalLiquid;
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.barcodeNotRead:
+          mainError = UIError.barcodeNotRead;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

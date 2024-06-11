@@ -137,9 +137,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ElevatedButton(
                           onPressed: () async {
                             await widget.paymentPresenter.payWithCredit(
-                              longAmountValue: printedProductsPresenter
-                                  .printedProducts!.TotalLiquid
-                                  .toDouble(),
+                              longAmountValue: snapshot.data!,
                               portionQuantity: 1,
                             );
                           },
@@ -148,9 +146,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ElevatedButton(
                           onPressed: () async {
                             await widget.paymentPresenter.payWithCreditPortion(
-                              longAmountValue: printedProductsPresenter
-                                  .printedProducts!.TotalLiquid
-                                  .toDouble(),
+                              longAmountValue: snapshot.data!,
                               portionQuantity: 2,
                             );
                           },
@@ -159,9 +155,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ElevatedButton(
                           onPressed: () async {
                             await widget.paymentPresenter.payWithDebit(
-                              longAmountValue: printedProductsPresenter
-                                  .printedProducts!.TotalLiquid
-                                  .toDouble(),
+                              longAmountValue: snapshot.data!,
                               portionQuantity: 1,
                             );
                           },
@@ -170,9 +164,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ElevatedButton(
                           onPressed: () async {
                             await widget.paymentPresenter.payWithPix(
-                              longAmountValue: printedProductsPresenter
-                                  .printedProducts!.TotalLiquid
-                                  .toDouble(),
+                              longAmountValue: snapshot.data!,
                               portionQuantity: 1,
                             );
                           },

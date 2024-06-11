@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/pages/home/home.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
+import '../pages.dart';
 
 abstract class PaymentPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;

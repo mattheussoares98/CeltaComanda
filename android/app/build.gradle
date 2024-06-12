@@ -55,7 +55,7 @@ android {
         multiDexEnabled true
         minSdkVersion 22
         targetSdk 34
-        versionCode 12
+        versionCode 13
         versionName flutterVersionName
         ndkVersion "26.2.11394342"
     }
@@ -82,8 +82,9 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.1.0')
     implementation 'com.google.firebase:firebase-analytics'
+    
+    //abaixo são as dependências do sdk da rede. Precisa comentar ele e o MainActivity quando for gerar o appbundle pra play store
     implementation(name: 'smartrede-sdk-l400-4.0.6.release', ext: 'aar')
-
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.23'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.9.20'

@@ -12,7 +12,7 @@ import '../infra/helpers/helperts.dart';
 import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
 import '../firebase_options.dart';
-import './factories/factories.dart';
+import 'factories/factories.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

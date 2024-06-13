@@ -3,17 +3,13 @@ package br.com.celtaware.comanda
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.app.Activity
+import android.os.Bundle
 import android.widget.Toast
 import android.util.Log
-import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 import rede.smartrede.sdk.RedePaymentValidationError
 import rede.smartrede.sdk.RedePayments
 import rede.smartrede.sdk.FlexTipoPagamento
@@ -21,26 +17,26 @@ import rede.smartrede.sdk.api.IRedeSdk
 import rede.smartrede.sdk.PaymentStatus
 
 class MainActivity : FlutterActivity() {
+    private val redeSdk: IRedeSdk by inject()
+    private val redePayments: RedePayments by inject()
+
     private val channel = "rede_channel"
-    private lateinit var redeSdk: IRedeSdk
-    private lateinit var redePayments: RedePayments
-    var sdkInitialized = false
     companion object {
         // Definindo um valor específico para PAYMENT_REQUEST_CODE
         private var PAYMENT_REQUEST_CODE: Int = 1
     }
-
-    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).setMethodCallHandler { call, result ->
             // Verificando se os argumentos são do tipo esperado
-            val argumentsWithFlutter = call.arguments as? Map<String, Any>
+            val argumentsWithFlutter = call.arguments as? Map<*, *>
             argumentsWithFlutter?.let {
                 val longAmountValue = (it["longAmountValue"] as? Int)?.toLong() ?: 0L
                 val portionQuantity = it["portionQuantity"] as? Int ?: 0
                 when (call.method) {
                     "startRedeSdk" -> {
-                        initializeRedeSdk(result)
+                        // A inicialização do SDK agora é feita na classe App
+
                     }
                     "credit" -> {
                         collectPayment(result, FlexTipoPagamento.CREDITO_A_VISTA, longAmountValue)
@@ -60,51 +56,28 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+
     private fun collectPayment(
         result: MethodChannel.Result,
         tipoPagamento: FlexTipoPagamento,
         longAmountValue: Long,
         setInstallments: Boolean = false,
-        portionQuantity: Int = 0
+        portionQuantity: Int = 1
     ) {
         try {
-            if (!sdkInitialized) {
-                initializeRedeSdk(result)
+            val collectPaymentIntent = redePayments
+                .intentForPaymentBuilder(tipoPagamento, longAmountValue)
+            if (setInstallments) {
+                collectPaymentIntent.setInstallments(portionQuantity)
             }
-            if (sdkInitialized) {
-                val collectPaymentIntent = redePayments
-                    .intentForPaymentBuilder(tipoPagamento, longAmountValue)
-                if (setInstallments) {
-                    collectPaymentIntent.setInstallments(portionQuantity)
-                }
-                startActivityForResult(collectPaymentIntent.build(), PAYMENT_REQUEST_CODE)
-                result.success("Método chamado com sucesso")
-            }
+            startActivityForResult(collectPaymentIntent.build(), PAYMENT_REQUEST_CODE)
+            result.success("Método chamado com sucesso")
         } catch (ex: ActivityNotFoundException) {
             Log.e("Pagamentos", "Aplicativo Pagamentos não encontrado", ex)
             result.error("ActivityNotFoundException", "Aplicativo Pagamentos não encontrado", null)
         } catch (ex: RedePaymentValidationError) {
             Log.e("Pagamentos", "Erro de validação do intent", ex)
             result.error("RedePaymentValidationError", "Erro de validação do intent", null)
-        }
-    }
-
-    private fun initializeRedeSdk(result: MethodChannel.Result) {
-        CoroutineScope(Dispatchers.Main.immediate).launch {
-            try {
-                redeSdk = IRedeSdk.newInstance(applicationContext)
-                redePayments = withContext(Dispatchers.IO) {
-                    redeSdk.getRedePayments(this@MainActivity)
-                }
-                showToast("SDK INICIALIZADO")
-                sdkInitialized = true
-                result.success("SDK inicializado com sucesso")
-            } catch(e: Exception){
-                showToast("ERRO NA INICIALIZAÇÃO DO SDK")
-                Log.e("SDK", "Erro ao inicializar o SDK", e)
-                sdkInitialized = false
-                result.error("SDK_INITIALIZATION_FAILED", "Erro ao inicializar o SDK", null)
-            }
         }
     }
 

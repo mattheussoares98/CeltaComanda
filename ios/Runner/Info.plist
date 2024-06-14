@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Precisamos de acesso à câmera para conseguir ler os códigos de barras.</string>
 </dict>
 </plist>

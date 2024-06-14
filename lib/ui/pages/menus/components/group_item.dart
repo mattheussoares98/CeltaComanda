@@ -28,9 +28,7 @@ class GroupItem extends StatelessWidget {
               expansibleGroupsViewModel.Name,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: groupIsSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.grey,
+                color: groupIsSelected ? Colors.white : Colors.grey,
                 fontSize: 50,
                 fontWeight: FontWeight.bold,
               ),

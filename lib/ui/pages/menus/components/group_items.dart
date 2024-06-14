@@ -44,7 +44,9 @@ class _GroupItemsState extends State<GroupItems> {
             },
             child: Container(
               height: 70,
-              color: Colors.white,
+              color: widget.selectedIndex == index
+                  ? Theme.of(context).primaryColor
+                  : Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

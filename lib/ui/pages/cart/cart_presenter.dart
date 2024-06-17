@@ -78,4 +78,5 @@ abstract class CartPresenter implements ChangeNotifier {
     required double totalPrice,
     required ProductsViewModel father,
   });
+  Future<void> getLocalConfirmedsCombox();
 }

@@ -1618,7 +1618,7 @@ void main() {
   });
 
   group("Confirmed combox products", () {
-    test("Should emit correct values on success", () async {
+    test("Should emit correct values on addConfirmedCombox success", () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
@@ -1648,6 +1648,25 @@ void main() {
 
       verify(() => cartInformations.updateConfirmedCombox([confirmedCombox]))
           .called(1);
+    });
+    test(
+        "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox",
+        () async {
+      await sut.addConfirmedCombox(
+        selectedChilds: [selectedChilds],
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
+
+      verify(() => cartInformations.updateConfirmedCombox([confirmedCombox]))
+          .called(1);
+    });
+
+    test("Should emit correct values on getLocalConfirmedsCombox success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getLocalConfirmedsCombox();
     });
   });
 }

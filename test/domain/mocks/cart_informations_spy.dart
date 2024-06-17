@@ -9,6 +9,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 class CartInformationsSpy extends Mock implements CartInformations {
   CartInformationsSpy() {
     this.mockClearCart();
+    this.mockClearConfirmedsCombox();
   }
 
   When mockSaveCartCall() => when(() => this.updateCartProducts(any()));
@@ -36,5 +37,37 @@ class CartInformationsSpy extends Mock implements CartInformations {
 
   void mockGetError() {
     this.mockGetCartCall().thenThrow(DomainError.unexpected);
+  }
+
+  When mockUpdateConfirmedComboxCall() =>
+      when(() => this.updateConfirmedCombox(any()));
+  void mockUpdateConfirmedCombox(
+      List<ConfirmedComboxViewModel> confirmedsCombox) {
+    this
+        .mockUpdateConfirmedComboxCall()
+        .thenAnswer((_) async => confirmedsCombox);
+  }
+
+  void mockUpdateConfirmedComboxError() {
+    this.mockUpdateConfirmedComboxCall().thenThrow(DomainError.unexpected);
+  }
+
+  When mockClearConfirmedsComboxCall() =>
+      when(() => this.clearConfirmedCombox());
+  void mockClearConfirmedsCombox() {
+    this.mockClearConfirmedsComboxCall().thenAnswer((_) async => _);
+  }
+
+  void mockClearConfirmedComboxError() {
+    this.mockClearConfirmedsComboxCall().thenThrow(DomainError.unexpected);
+  }
+
+  When mockGetConfirmedsComboxCall() => when(() => this.getConfirmedCombox());
+  void mockGetConfirmedsCombox(List<ConfirmedComboxViewModel>? confirmedsCombox) {
+    this.mockGetConfirmedsComboxCall().thenAnswer((_) async => confirmedsCombox);
+  }
+
+  void mockGetConfirmedsComboxError() {
+    this.mockGetConfirmedsComboxCall().thenThrow(DomainError.unexpected);
   }
 }

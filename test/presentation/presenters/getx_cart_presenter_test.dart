@@ -44,6 +44,7 @@ void main() {
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
   late ProductCompositionViewModel selectedChilds;
+  late ConfirmedComboxViewModel confirmedCombox;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -129,6 +130,11 @@ void main() {
       incrementValue: 0,
       isOptionalItem: false,
     );
+    confirmedCombox = ConfirmedComboxViewModel(
+      products: [selectedChilds],
+      father: fatherOfCombox,
+      totalPrice: 10,
+    );
   }
 
   void initMockSuccess() {
@@ -136,6 +142,8 @@ void main() {
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModel]);
     cartInformations.mockGetCart([cartProductViewModel]);
+    cartInformations.mockUpdateConfirmedCombox([confirmedCombox]);
+    cartInformations.mockGetConfirmedsCombox([confirmedCombox]);
     barcodeScanner.mockBarcodeScanner(commandNumber);
   }
 
@@ -404,7 +412,8 @@ void main() {
         )
       ];
 
-      verify(() => cartInformations.updateCartProducts(updatedProduct)).called(1);
+      verify(() => cartInformations.updateCartProducts(updatedProduct))
+          .called(1);
       expect(sut.cartProducts, updatedProduct);
     });
     test("Should not update comment on cartInformations.update throws",
@@ -1120,7 +1129,8 @@ void main() {
         newComment: cartProductViewModel.Comments,
       );
 
-      verifyNever(() => cartInformations.updateCartProducts([cartProductViewModel]));
+      verifyNever(
+          () => cartInformations.updateCartProducts([cartProductViewModel]));
     });
     test("Should update comment with null value if comment is empty", () async {
       sut.cartProducts.add(cartProductViewModel);
@@ -1625,13 +1635,19 @@ void main() {
         father: fatherOfCombox,
       );
 
-      expect(sut.confirmedCombox, [
-        ConfirmedComboxViewModel(
-          products: [selectedChilds],
-          father: fatherOfCombox,
-          totalPrice: 10,
-        )
-      ]);
+      expect(sut.confirmedCombox, [confirmedCombox]);
+    });
+    test(
+        "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox",
+        () async {
+      await sut.addConfirmedCombox(
+        selectedChilds: [selectedChilds],
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
+
+      verify(() => cartInformations.updateConfirmedCombox([confirmedCombox]))
+          .called(1);
     });
   });
 }

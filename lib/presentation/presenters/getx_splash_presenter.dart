@@ -24,7 +24,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
       EnterpriseDataBuilder.enterpriseDataEntity =
           await loadEnterpriseData.load();
 
-      if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId == null) {
+      if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
@@ -32,7 +32,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
       }
 
       SaleRequestTempEntity? apiSaleRequestEntity;
-      if (EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId != null) {
+      if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId != null) {
         apiSaleRequestEntity = await loadSaleRequestTemp.load(
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,

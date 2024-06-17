@@ -1681,5 +1681,24 @@ void main() {
 
       await sut.getLocalConfirmedsCombox();
     });
+
+    test("Should emit correct values on getLocalConfirmedsCombox throws",
+        () async {
+      cartInformations.mockGetConfirmedsComboxError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getLocalConfirmedsCombox();
+    });
+
+    test("Should update confirmedCombox with correct local values", () async {
+      expect(sut.confirmedCombox, []);
+
+      await sut.getLocalConfirmedsCombox();
+
+      expect(sut.confirmedCombox, [confirmedCombox]);
+    });
   });
 }

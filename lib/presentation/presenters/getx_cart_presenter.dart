@@ -630,7 +630,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     }
   }
 
-  final List<ConfirmedComboxViewModel> _confirmedCombox = [];
+  List<ConfirmedComboxViewModel> _confirmedCombox = [];
   @override
   List<ConfirmedComboxViewModel> get confirmedCombox => _confirmedCombox;
 
@@ -663,7 +663,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   Future<void> getLocalConfirmedsCombox() async {
     isLoading = true;
     mainError = null;
-    try {} catch (e) {
+    try {
+      final localConfirmedCombox = await cartInformations.getConfirmedCombox();
+      if (localConfirmedCombox != null) {
+        _confirmedCombox = localConfirmedCombox;
+        notifyListeners();
+      }
+    } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;

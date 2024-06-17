@@ -18,6 +18,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

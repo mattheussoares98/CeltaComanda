@@ -37,16 +37,15 @@ void main() {
     registerFallbackValue(EntityFactory.makeExpansibleGroupsEntity()[0]);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(EntityFactory.makeProductViewModel());
   });
 
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
-      makePage(
-          path: PageRoutes.menus, page: () => const MenuPage()),
+      makePage(path: PageRoutes.menus, page: () => const MenuPage()),
     );
   }
 

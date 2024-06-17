@@ -155,13 +155,14 @@ void main() {
   });
 
   setUpAll(() {
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makePrintRequestEntity());
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
-    registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(UpdateSaleRequestTempEntity);
-    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
   });
 
   group("CartInformations", () {

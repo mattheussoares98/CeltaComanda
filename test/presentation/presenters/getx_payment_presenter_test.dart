@@ -74,6 +74,7 @@ void main() {
     registerFallbackValue(
       const PayParams(longAmountValue: 0, portionQuantity: 0),
     );
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
     registerFallbackValue(PrintedProductsPresenterSpy());

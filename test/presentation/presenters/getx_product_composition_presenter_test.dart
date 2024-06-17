@@ -124,6 +124,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

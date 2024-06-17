@@ -89,10 +89,11 @@ void main() {
   });
 
   setUpAll(() {
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
   });
 
   group("Validate password", () {

@@ -8,15 +8,17 @@ import 'dart:async';
 
 import 'package:mocktail/mocktail.dart';
 
-class CartPresenterSpy extends Mock
-    implements CartPresenter {
+class CartPresenterSpy extends Mock implements CartPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   SaleRequestTempViewModel? saleRequestTempMock;
   List<CartProductsViewModel> cartProductsController = [];
+  List<ConfirmedComboxViewModel> confirmedComboxController = [];
 
   CartPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
+    when(() => this.confirmedCombox)
+        .thenAnswer((_) => confirmedComboxController);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
     when(() => this.getLocalCartProductsData()).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
@@ -25,6 +27,12 @@ class CartPresenterSpy extends Mock
         .thenAnswer((_) => isLoadingController.stream);
 
     when(() => this.loadSaleRequest(any())).thenAnswer((_) async => _);
+    when(() => this.getLocalConfirmedsCombox()).thenAnswer((_) async => _);
+    when(() => this.addConfirmedCombox(
+          selectedChilds: any(named: "selectedChilds"),
+          totalPrice: any(named: "totalPrice"),
+          father: any(named: "father"),
+        )).thenAnswer((_) async => true);
     mockAddProductQuantityCall().thenAnswer((_) async => _);
 
     mockSubtractProductQuantityCall().thenAnswer((_) async => _);

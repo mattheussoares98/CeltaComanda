@@ -68,6 +68,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
   });
 
   group("Navigation", () {

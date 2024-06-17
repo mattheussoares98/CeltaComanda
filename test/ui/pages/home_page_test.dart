@@ -31,10 +31,11 @@ void main() {
   });
 
   setUpAll(() {
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
   });
 
   Future<void> loadPage(WidgetTester tester) async {

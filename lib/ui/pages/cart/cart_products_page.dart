@@ -89,10 +89,8 @@ class _CartPageState extends State<CartPage>
                               cartProducts: cartPresenter.cartProducts,
                             ),
                           if (cartPresenter.confirmedCombox.isNotEmpty)
-                            const Column(
-                              children: [
-                                Text("Combos confirmados"),
-                              ],
+                            ConfirmedProductItems(
+                              confirmedsCombox: cartPresenter.confirmedCombox,
                             ),
                         ],
                       );

@@ -1,7 +1,7 @@
 import '../../../ui/pages/pages.dart';
 
 abstract class CartInformations {
-  Future<void> update(List<CartProductsViewModel> cartProducts);
-  Future<List<CartProductsViewModel>?> get();
-  Future<void> clear();
+  Future<void> updateCartProducts(List<CartProductsViewModel> cartProducts);
+  Future<List<CartProductsViewModel>?> getCartProducts();
+  Future<void> clearCartProducts();
 }

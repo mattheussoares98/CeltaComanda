@@ -164,7 +164,7 @@ void main() {
       );
 
       verify(
-        () => cartInformations.update([cartProductViewModel]),
+        () => cartInformations.updateCartProducts([cartProductViewModel]),
       ).called(1);
     });
 
@@ -209,7 +209,7 @@ void main() {
       );
 
       verify(
-        () => cartInformations.update([cartProductViewModel]),
+        () => cartInformations.updateCartProducts([cartProductViewModel]),
       ).called(1);
     });
     test(
@@ -340,7 +340,7 @@ void main() {
         () async {
       await sut.saveProducts(printedProductsPresenter);
 
-      verify(() => cartInformations.clear()).called(1);
+      verify(() => cartInformations.clearCartProducts()).called(1);
     });
 
     test("Should call cartInformations.get on sut.getLocalCartProductsData",
@@ -348,7 +348,7 @@ void main() {
       await sut.getLocalCartProductsData();
 
       verify(
-        () => cartInformations.get(),
+        () => cartInformations.getCartProducts(),
       ).called(1);
     });
 
@@ -404,7 +404,7 @@ void main() {
         )
       ];
 
-      verify(() => cartInformations.update(updatedProduct)).called(1);
+      verify(() => cartInformations.updateCartProducts(updatedProduct)).called(1);
       expect(sut.cartProducts, updatedProduct);
     });
     test("Should not update comment on cartInformations.update throws",
@@ -1120,7 +1120,7 @@ void main() {
         newComment: cartProductViewModel.Comments,
       );
 
-      verifyNever(() => cartInformations.update([cartProductViewModel]));
+      verifyNever(() => cartInformations.updateCartProducts([cartProductViewModel]));
     });
     test("Should update comment with null value if comment is empty", () async {
       sut.cartProducts.add(cartProductViewModel);
@@ -1130,7 +1130,7 @@ void main() {
         newComment: "",
       );
 
-      verify(() => cartInformations.update(
+      verify(() => cartInformations.updateCartProducts(
             [
               CartProductsViewModel(
                 Product: cartProductViewModel.Product,

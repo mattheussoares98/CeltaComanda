@@ -12,7 +12,7 @@ class LocalCartInformations implements CartInformations {
   LocalCartInformations({required this.hiveStorage});
 
   @override
-  Future<void> update(List<CartProductsViewModel> cartProducts) async {
+  Future<void> updateCartProducts(List<CartProductsViewModel> cartProducts) async {
     try {
       await hiveStorage.delete(CacheKeys.cartProducts.name);
 
@@ -26,7 +26,7 @@ class LocalCartInformations implements CartInformations {
   }
 
   @override
-  Future<List<CartProductsViewModel>?> get() async {
+  Future<List<CartProductsViewModel>?> getCartProducts() async {
     try {
       final value = await hiveStorage.get(CacheKeys.cartProducts.name);
       if (value == null) {
@@ -44,13 +44,13 @@ class LocalCartInformations implements CartInformations {
   }
 
   @override
-  Future<void> clear({int retryCountInErrorCase = 0}) async {
+  Future<void> clearCartProducts({int retryCountInErrorCase = 0}) async {
     try {
       await hiveStorage.delete(CacheKeys.cartProducts.name);
     } catch (e) {
       if (retryCountInErrorCase < 3) {
         //se der erro pra executar a primeira vez, vai tentar executar mais 3 vezes
-        await clear(retryCountInErrorCase: retryCountInErrorCase + 1);
+        await clearCartProducts(retryCountInErrorCase: retryCountInErrorCase + 1);
       } else {
         throw DomainError.unexpected;
       }

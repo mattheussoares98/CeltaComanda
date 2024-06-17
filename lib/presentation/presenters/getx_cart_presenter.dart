@@ -376,7 +376,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         );
       }
 
-      await cartInformations.update(newCartList);
+      await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;
 
       menuPresenter.updateSelectedProduct(null);
@@ -395,7 +395,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     try {
       final newCartList = [..._cartProducts];
       newCartList.removeAt(index);
-      await cartInformations.update(newCartList);
+      await cartInformations.updateCartProducts(newCartList);
 
       _cartProducts = newCartList;
     } catch (e) {
@@ -429,7 +429,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     newCartList[index] = productWithNewComment;
 
     try {
-      await cartInformations.update(newCartList);
+      await cartInformations.updateCartProducts(newCartList);
 
       _cartProducts = newCartList;
       _indexOfSelectedProduct = null;
@@ -451,7 +451,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     try {
       if (newCartList[index].Quantity.toDouble() <= 1) {
         newCartList.removeAt(index);
-        await cartInformations.update(newCartList);
+        await cartInformations.updateCartProducts(newCartList);
         _cartProducts = newCartList;
       } else {
         final newQuantity = newCartList[index].Quantity.toDouble() - 1;
@@ -466,7 +466,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         );
         newCartList[index] = productWithNewQuantity;
 
-        await cartInformations.update(newCartList);
+        await cartInformations.updateCartProducts(newCartList);
         _cartProducts = newCartList;
       }
     } catch (e) {
@@ -500,7 +500,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       newCartList[index] = productWithNewQuantity;
 
-      await cartInformations.update(newCartList);
+      await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;
     } catch (e) {
       mainError = UIError.unexpected;
@@ -593,7 +593,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await confirmedCartProducts.updateValue(false);
       _cartProducts.clear();
-      await cartInformations.clear();
+      await cartInformations.clearCartProducts();
 
       await printedProductsPresenter.loadPrinted(commandNumber);
       return true;
@@ -618,7 +618,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     isLoading = true;
     mainError = null;
     try {
-      final localCartProducts = await cartInformations.get();
+      final localCartProducts = await cartInformations.getCartProducts();
       if (localCartProducts != null) {
         _cartProducts = localCartProducts;
         notifyListeners();

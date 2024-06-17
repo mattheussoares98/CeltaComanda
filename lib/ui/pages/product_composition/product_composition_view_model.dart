@@ -130,4 +130,20 @@ class ProductCompositionViewModel extends Equatable {
         "ProductOptions": ProductOptions,
         "childs": childs,
       };
+
+  factory ProductCompositionViewModel.fromJson(Map json) =>
+      ProductCompositionViewModel(
+        ProductCompositionId: json["ProductCompositionId"],
+        EnterpriseId: json["EnterpriseId"],
+        InternalCodeOnERPCodeFather: json["InternalCodeOnERPCodeFather"],
+        InternalCodeOnERPCodeChild: json["InternalCodeOnERPCodeChild"],
+        PluChild: json["PluChild"],
+        ChildName: json["ChildName"],
+        Quantity: json["Quantity"],
+        SalePrice: json["SalePrice"],
+        OfferPrice: json["OfferPrice"],
+        IncrementValue: json["IncrementValue"],
+        IsOptionalItem: json["IsOptionalItem"],
+        ProductOptions: json["ProductOptions"],
+      );
 }

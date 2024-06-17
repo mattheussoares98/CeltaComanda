@@ -45,6 +45,7 @@ class _MenuPageState extends State<MenuPage>
       Future.delayed(Duration.zero, () async {
         await _loadGroupsAndProducts(menuPresenter);
         await cartPresenter.getLocalCartProductsData();
+        await cartPresenter.getLocalConfirmedsCombox();
       });
     }
   }

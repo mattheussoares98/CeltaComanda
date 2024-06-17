@@ -56,9 +56,7 @@ class _FatherItemsState extends State<FatherItems> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
-    CartPresenter cartPresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(3, 12, 3, 0),
@@ -264,15 +262,14 @@ class _FatherItemsState extends State<FatherItems> {
                             totalPrice: snapshot.data!,
                           ),
                           onPress: () async {
-                            bool updated = await productCompositionPresenter
-                                .updateSaleRequest(
-                              homePresenter: homePresenter,
-                              cartPresenter:
-                                  cartPresenter,
-                              productsCompositions: widget.productsCompositions,
+                            bool updatedCombox =
+                                await cartPresenter.addConfirmedCombox(
+                              selectedChilds: widget.productsCompositions,
+                              totalPrice: snapshot.data!,
+                              father: widget.product,
                             );
 
-                            if (updated) {
+                            if (updatedCombox) {
                               Navigator.of(context).pop();
                               showAlertMessage(
                                   context, "Combo adicionado com sucesso");

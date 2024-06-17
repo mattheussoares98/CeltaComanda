@@ -58,7 +58,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> addNewPrintRequestInFirebase();
 
   List<CartProductsViewModel> get cartProducts;
-  List<ProductCompositionViewModel> get confirmedCombox;
+  List<ConfirmedComboxViewModel> get confirmedCombox;
   Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,

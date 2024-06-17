@@ -114,4 +114,20 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
       );
+
+  Map toJson() => {
+        "ProductCompositionId": ProductCompositionId,
+        "EnterpriseId": EnterpriseId,
+        "InternalCodeOnERPCodeFather": InternalCodeOnERPCodeFather,
+        "InternalCodeOnERPCodeChild": InternalCodeOnERPCodeChild,
+        "PluChild": PluChild,
+        "ChildName": ChildName,
+        "Quantity": Quantity,
+        "SalePrice": SalePrice,
+        "OfferPrice": OfferPrice,
+        "IncrementValue": IncrementValue,
+        "IsOptionalItem": IsOptionalItem,
+        "ProductOptions": ProductOptions,
+        "childs": childs,
+      };
 }

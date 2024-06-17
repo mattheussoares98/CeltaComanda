@@ -74,15 +74,28 @@ class _CartPageState extends State<CartPage>
                   builder: (context) {
                     loadingSubscription?.cancel();
                     mainErrorSubscription?.cancel();
-                  
+
                     loadingSubscription =
                         handleLoading(context, cartPresenter.isLoadingStream);
                     mainErrorSubscription =
                         handleMainError(context, cartPresenter.mainErrorStream);
-                  
-                    if (cartPresenter.cartProducts.isNotEmpty == true) {
-                      return SaleRequestProductsItems(
-                          cartProducts: cartPresenter.cartProducts);
+
+                    if (cartPresenter.cartProducts.isNotEmpty == true ||
+                        cartPresenter.confirmedCombox.isNotEmpty == true) {
+                      return Column(
+                        children: [
+                          if (cartPresenter.cartProducts.isNotEmpty)
+                            SaleRequestProductsItems(
+                              cartProducts: cartPresenter.cartProducts,
+                            ),
+                          if (cartPresenter.confirmedCombox.isNotEmpty)
+                            const Column(
+                              children: [
+                                Text("Combos confirmados"),
+                              ],
+                            ),
+                        ],
+                      );
                     }
                     return SizedBox(
                       height: MediaQuery.of(context).size.height -

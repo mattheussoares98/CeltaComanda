@@ -85,7 +85,7 @@ class _CartPageState extends State<CartPage>
                       return Column(
                         children: [
                           if (cartPresenter.cartProducts.isNotEmpty)
-                            SaleRequestProductsItems(
+                            CartProductsItems(
                               cartProducts: cartPresenter.cartProducts,
                             ),
                           if (cartPresenter.confirmedCombox.isNotEmpty)

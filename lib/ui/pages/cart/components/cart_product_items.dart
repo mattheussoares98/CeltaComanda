@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class SaleRequestProductsItems extends StatelessWidget {
+class CartProductsItems extends StatelessWidget {
   final List<CartProductsViewModel> cartProducts;
-  const SaleRequestProductsItems({
+  const CartProductsItems({
     required this.cartProducts,
     super.key,
   });
@@ -34,7 +34,7 @@ class SaleRequestProductsItems extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final cartProduct = cartProducts[index];
 
-                    return SaleRequestTempProductItem(
+                    return CartProductItem(
                       cartProduct: cartProduct,
                       index: index,
                     );

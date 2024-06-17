@@ -6,23 +6,23 @@ import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class SaleRequestTempProductItem extends StatefulWidget {
+class CartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
   final int index;
 
-  const SaleRequestTempProductItem({
+  const CartProductItem({
     required this.cartProduct,
     required this.index,
     super.key,
   });
 
   @override
-  State<SaleRequestTempProductItem> createState() =>
-      _SaleRequestTempProductItemState();
+  State<CartProductItem> createState() =>
+      _CartProductItemState();
 }
 
-class _SaleRequestTempProductItemState
-    extends State<SaleRequestTempProductItem> {
+class _CartProductItemState
+    extends State<CartProductItem> {
   void onPressedAddQuantity({
     required CartPresenter cartPresenter,
   }) {

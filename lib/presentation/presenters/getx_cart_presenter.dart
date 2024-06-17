@@ -629,4 +629,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       isLoading = false;
     }
   }
+
+  final List<ProductCompositionViewModel> _confirmedCombox = [];
+  @override
+  List<ProductCompositionViewModel> get confirmedCombox => _confirmedCombox;
 }

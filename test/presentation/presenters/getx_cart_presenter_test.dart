@@ -1613,10 +1613,25 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addConfirmedCombox(
-        selectedChilds: selectedChilds,
+        selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
       );
+    });
+    test("Should add new ConfirmedComboxViewModel correctly", () async {
+      await sut.addConfirmedCombox(
+        selectedChilds: [selectedChilds],
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
+
+      expect(sut.confirmedCombox, [
+        ConfirmedComboxViewModel(
+          products: [selectedChilds],
+          father: fatherOfCombox,
+          totalPrice: 10,
+        )
+      ]);
     });
   });
 }

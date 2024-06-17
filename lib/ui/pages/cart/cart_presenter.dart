@@ -73,7 +73,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<bool> saveProducts(PrintedProductsPresenter printedProductsPresenter);
   Future<void> getLocalCartProductsData();
   Future<void> addConfirmedCombox({
-    required ProductCompositionViewModel selectedChilds,
+    required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
     required ProductsViewModel father,
   });

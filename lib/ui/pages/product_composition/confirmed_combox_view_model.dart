@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../pages.dart';
 
 class ConfirmedComboxViewModel extends Equatable {
-  final List<ProductCompositionViewModel>? products;
+  final List<ProductCompositionViewModel> products;
   final ProductsViewModel father;
   final double totalPrice;
 

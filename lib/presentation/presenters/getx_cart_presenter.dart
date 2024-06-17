@@ -633,4 +633,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final List<ConfirmedComboxViewModel> _confirmedCombox = [];
   @override
   List<ConfirmedComboxViewModel> get confirmedCombox => _confirmedCombox;
+
+  @override
+  Future<void> addConfirmedCombox({
+    required ProductCompositionViewModel selectedChilds,
+    required double totalPrice,
+    required ProductsViewModel father,
+  }) async {}
 }

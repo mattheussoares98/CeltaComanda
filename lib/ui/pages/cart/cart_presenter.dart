@@ -76,6 +76,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<bool> addConfirmedCombox({
     required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
+    required double quantity,
     required ProductsViewModel father,
   });
   Future<void> getLocalConfirmedsCombox();

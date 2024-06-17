@@ -638,6 +638,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   Future<bool> addConfirmedCombox({
     required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
+    required double quantity,
     required ProductsViewModel father,
   }) async {
     isLoading = true;
@@ -649,6 +650,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           products: selectedChilds,
           father: father,
           totalPrice: totalPrice,
+          quantity: quantity,
         ),
       );
       await cartInformations.updateConfirmedCombox(confirmedCombox);

@@ -134,6 +134,7 @@ void main() {
       products: [selectedChilds],
       father: fatherOfCombox,
       totalPrice: 10,
+      quantity: 1,
     );
   }
 
@@ -1627,6 +1628,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
     });
     test("Should emit correct values on addConfirmedCombox throws", () async {
@@ -1639,6 +1641,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
     });
     test("Should add new ConfirmedComboxViewModel correctly", () async {
@@ -1646,6 +1649,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
 
       expect(sut.confirmedCombox, [confirmedCombox]);
@@ -1656,6 +1660,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
 
       expect(isConfirmed, true);
@@ -1667,6 +1672,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
 
       expect(isConfirmed, false);
@@ -1679,6 +1685,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
 
       verify(() => cartInformations.updateConfirmedCombox([confirmedCombox]))
@@ -1691,6 +1698,7 @@ void main() {
         selectedChilds: [selectedChilds],
         totalPrice: 10,
         father: fatherOfCombox,
+        quantity: 1,
       );
 
       verify(() => cartInformations.updateConfirmedCombox([confirmedCombox]))

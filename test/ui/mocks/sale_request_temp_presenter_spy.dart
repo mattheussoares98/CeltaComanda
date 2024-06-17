@@ -32,6 +32,7 @@ class CartPresenterSpy extends Mock implements CartPresenter {
           selectedChilds: any(named: "selectedChilds"),
           totalPrice: any(named: "totalPrice"),
           father: any(named: "father"),
+          quantity: any(named: "quantity"),
         )).thenAnswer((_) async => true);
     mockAddProductQuantityCall().thenAnswer((_) async => _);
 

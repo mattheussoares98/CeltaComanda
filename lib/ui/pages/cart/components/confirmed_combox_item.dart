@@ -22,10 +22,12 @@ class ConfirmedComboxItem extends StatelessWidget {
       if (product.OfferPrice?.isNotEmpty == true &&
           product.OfferPrice!.toDouble() > 0) {
         return product.Quantity!.toDouble() *
-            (product.OfferPrice!.toDouble() + product.IncrementValue!.toDouble());
+            (product.OfferPrice!.toDouble() +
+                product.IncrementValue!.toDouble());
       } else {
         return product.Quantity!.toDouble() *
-            (product.SalePrice!.toDouble() + product.IncrementValue!.toDouble());
+            (product.SalePrice!.toDouble() +
+                product.IncrementValue!.toDouble());
       }
     }
 
@@ -38,7 +40,7 @@ class ConfirmedComboxItem extends StatelessWidget {
     void onPressedReduceQuantity({
       required CartPresenter cartPresenter,
     }) {
-      if (1 <= 1) {
+      if (confirmedCombox.quantity <= 1) {
         notificationDialog(
           context: context,
           titleMessage: "Remover produto do carrinho?",
@@ -74,10 +76,11 @@ class ConfirmedComboxItem extends StatelessWidget {
               ),
             ),
             PriceAndUpdateProductQuantity(
-              showDeleteIcon: 1 <= 1,
+              showDeleteIcon: confirmedCombox.quantity <= 1,
               showUpdateProductQuantity: true,
               price: confirmedCombox.totalPrice,
-              totalLiquid: 1 * confirmedCombox.totalPrice,
+              totalLiquid:
+                  confirmedCombox.quantity * confirmedCombox.totalPrice,
               onPressedReduceQuantity: () {
                 onPressedReduceQuantity(
                   cartPresenter: cartPresenter,
@@ -88,7 +91,7 @@ class ConfirmedComboxItem extends StatelessWidget {
                   cartPresenter: cartPresenter,
                 );
               },
-              productQuantity: 1,
+              productQuantity: confirmedCombox.quantity,
             ),
           ],
         ),
@@ -110,6 +113,7 @@ class ConfirmedComboxItem extends StatelessWidget {
               children: [
                 Text(product.ChildName!),
                 Text(getTotalPrice(combox).toString()),
+                Text(product.Quantity.toString())
               ],
             );
           },

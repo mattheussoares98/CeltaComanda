@@ -267,6 +267,7 @@ class _FatherItemsState extends State<FatherItems> {
                               selectedChilds: widget.productsCompositions,
                               totalPrice: snapshot.data!,
                               father: widget.product,
+                              quantity: productCompositionPresenter.totalComboxQuantity,
                             );
 
                             if (updatedCombox) {

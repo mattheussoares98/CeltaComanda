@@ -8,11 +8,13 @@ class ConfirmedComboxViewModel extends Equatable {
   final List<ProductCompositionViewModel> products;
   final ProductsViewModel father;
   final double totalPrice;
+  final double quantity;
 
   const ConfirmedComboxViewModel({
     required this.products,
     required this.father,
     required this.totalPrice,
+    required this.quantity,
   });
 
   @override
@@ -26,6 +28,7 @@ class ConfirmedComboxViewModel extends Equatable {
           .toList(),
       father: ProductsViewModel.fromJson(json["father"]),
       totalPrice: json["totalPrice"],
+      quantity: json["quantity"],
     );
   }
 
@@ -33,5 +36,6 @@ class ConfirmedComboxViewModel extends Equatable {
         "products": products,
         "father": father,
         "totalPrice": totalPrice,
+        "quantity": quantity,
       };
 }

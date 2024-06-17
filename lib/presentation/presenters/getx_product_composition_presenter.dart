@@ -109,19 +109,13 @@ class GetxProductCompositionPresenter extends GetxController
     required ProductCompositionViewModel product,
     required double itemPrice,
   }) {
-    if (product.IncrementValue != null &&
-        product.IncrementValue!.toDouble() > 0) {
-      return ((itemPrice + product.IncrementValue!.toDouble()) *
-          product.Quantity.toString().toDouble());
-    } else {
-      return itemPrice * product.Quantity.toString().toDouble();
-    }
+    return itemPrice * product.Quantity.toString().toDouble();
   }
 
   @override
   double calculateProductPrice(ProductCompositionViewModel product) {
     if (product.IsOptionalItem == "true") {
-      return 0;
+      return calculateIncrementValue(product);
     } else if (product.OfferPrice.toString().toDouble() > 0) {
       return product.OfferPrice.toString().toDouble() +
           calculateIncrementValue(product);

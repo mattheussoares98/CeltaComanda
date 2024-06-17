@@ -1,6 +1,7 @@
 enum CacheKeys {
   apiSaleRequest,
   cartProducts,
+  confirmedCombox,
   crossId,
   enterprise,
   images,

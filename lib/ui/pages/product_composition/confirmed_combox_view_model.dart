@@ -17,4 +17,17 @@ class ConfirmedComboxViewModel extends Equatable {
 
   @override
   List<Object?> get props => [products, father, totalPrice];
+
+  factory ConfirmedComboxViewModel.fromJson(Map json) =>
+      ConfirmedComboxViewModel(
+        products: json["products"],
+        father: json["father"],
+        totalPrice: json["totalPrice"],
+      );
+
+  toJson() => {
+        "products": products,
+        "father": father,
+        "totalPrice": totalPrice,
+      };
 }

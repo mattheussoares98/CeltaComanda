@@ -12,7 +12,8 @@ class LocalCartInformations implements CartInformations {
   LocalCartInformations({required this.hiveStorage});
 
   @override
-  Future<void> updateCartProducts(List<CartProductsViewModel> cartProducts) async {
+  Future<void> updateCartProducts(
+      List<CartProductsViewModel> cartProducts) async {
     try {
       await hiveStorage.delete(CacheKeys.cartProducts.name);
 
@@ -50,10 +51,58 @@ class LocalCartInformations implements CartInformations {
     } catch (e) {
       if (retryCountInErrorCase < 3) {
         //se der erro pra executar a primeira vez, vai tentar executar mais 3 vezes
-        await clearCartProducts(retryCountInErrorCase: retryCountInErrorCase + 1);
+        await clearCartProducts(
+            retryCountInErrorCase: retryCountInErrorCase + 1);
       } else {
         throw DomainError.unexpected;
       }
+    }
+  }
+
+  @override
+  Future<void> clearConfirmedCombox() async {
+    try {
+      await hiveStorage.delete(CacheKeys.confirmedCombox.name);
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  @override
+  Future<List<ConfirmedComboxViewModel>?> getConfirmedCombox() async {
+    try {
+      final value = await hiveStorage.get(
+        CacheKeys.confirmedCombox.name,
+      );
+
+      if (value == null) {
+        return null;
+      } else {
+        final List decoded = jsonDecode(value);
+        final confirmedCombox = decoded
+            .map((element) => ConfirmedComboxViewModel.fromJson(element))
+            .toList();
+        return confirmedCombox;
+      }
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  @override
+  Future<void> updateConfirmedCombox(
+    List<ConfirmedComboxViewModel> confirmedCombox,
+  ) async {
+    try {
+      await hiveStorage.delete(CacheKeys.confirmedCombox.name);
+
+      final confirmedComboxEncoded =
+          jsonEncode(confirmedCombox.map((element) => element.toJson()).toList());
+
+      await hiveStorage.put(
+          CacheKeys.confirmedCombox.name, confirmedComboxEncoded);
+    } catch (e) {
+      throw DomainError.unexpected;
     }
   }
 }

@@ -1628,6 +1628,18 @@ void main() {
         father: fatherOfCombox,
       );
     });
+    test("Should emit correct values on addConfirmedCombox throws", () async {
+      cartInformations.mockUpdateConfirmedComboxError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addConfirmedCombox(
+        selectedChilds: [selectedChilds],
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
+    });
     test("Should add new ConfirmedComboxViewModel correctly", () async {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChilds],
@@ -1662,7 +1674,8 @@ void main() {
           .called(1);
     });
 
-    test("Should emit correct values on getLocalConfirmedsCombox success", () async {
+    test("Should emit correct values on getLocalConfirmedsCombox success",
+        () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 

@@ -644,7 +644,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     mainError = null;
 
     try {
-      await cartInformations.updateConfirmedCombox(confirmedCombox);
       _confirmedCombox.add(
         ConfirmedComboxViewModel(
           products: selectedChilds,
@@ -652,6 +651,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           totalPrice: totalPrice,
         ),
       );
+      await cartInformations.updateConfirmedCombox(confirmedCombox);
       notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;

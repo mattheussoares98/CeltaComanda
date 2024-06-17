@@ -1649,6 +1649,28 @@ void main() {
 
       expect(sut.confirmedCombox, [confirmedCombox]);
     });
+
+    test("Should return true on addConfirmedCombox success", () async {
+      bool isConfirmed = await sut.addConfirmedCombox(
+        selectedChilds: [selectedChilds],
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
+
+      expect(isConfirmed, true);
+    });
+    test("Should return false on addConfirmedCombox throws", () async {
+      cartInformations.mockUpdateConfirmedComboxError();
+
+      bool isConfirmed = await sut.addConfirmedCombox(
+        selectedChilds: [selectedChilds],
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
+
+      expect(isConfirmed, false);
+    });
+
     test(
         "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox",
         () async {

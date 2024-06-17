@@ -635,7 +635,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   List<ConfirmedComboxViewModel> get confirmedCombox => _confirmedCombox;
 
   @override
-  Future<void> addConfirmedCombox({
+  Future<bool> addConfirmedCombox({
     required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
     required ProductsViewModel father,
@@ -653,10 +653,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       );
       await cartInformations.updateConfirmedCombox(confirmedCombox);
       notifyListeners();
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
+    } finally {
+      isLoading = false;
     }
-    isLoading = false;
   }
 
   @override

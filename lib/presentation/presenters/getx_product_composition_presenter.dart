@@ -77,8 +77,8 @@ class GetxProductCompositionPresenter extends GetxController
         continue;
       }
 
-      totalLiquid += _calculateTotalLiquid(
-        itemPrice: _calculatePrice(product),
+      totalLiquid += calculateTotalLiquid(
+        itemPrice: calculateProductPrice(product),
         product: product,
       );
     }
@@ -95,7 +95,8 @@ class GetxProductCompositionPresenter extends GetxController
     _totalPriceComboxStream.subject.add(totalLiquid);
   }
 
-  double _calculateIncrementValue(ProductCompositionViewModel product) {
+  @override
+  double calculateIncrementValue(ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       return product.IncrementValue.toString().toDouble();
     } else {
@@ -103,22 +104,30 @@ class GetxProductCompositionPresenter extends GetxController
     }
   }
 
-  double _calculateTotalLiquid({
+  @override
+  double calculateTotalLiquid({
     required ProductCompositionViewModel product,
     required double itemPrice,
   }) {
-    return (itemPrice * product.Quantity.toString().toDouble());
+    if (product.IncrementValue != null &&
+        product.IncrementValue!.toDouble() > 0) {
+      return ((itemPrice + product.IncrementValue!.toDouble()) *
+          product.Quantity.toString().toDouble());
+    } else {
+      return itemPrice * product.Quantity.toString().toDouble();
+    }
   }
 
-  double _calculatePrice(ProductCompositionViewModel product) {
+  @override
+  double calculateProductPrice(ProductCompositionViewModel product) {
     if (product.IsOptionalItem == "true") {
-      return _calculateIncrementValue(product);
+      return 0;
     } else if (product.OfferPrice.toString().toDouble() > 0) {
       return product.OfferPrice.toString().toDouble() +
-          _calculateIncrementValue(product);
+          calculateIncrementValue(product);
     } else {
       return product.SalePrice.toString().toDouble() +
-          _calculateIncrementValue(product);
+          calculateIncrementValue(product);
     }
   }
 
@@ -149,12 +158,12 @@ class GetxProductCompositionPresenter extends GetxController
           ProductPriceLookUpCode: selectedChild.PluChild!,
           Quantity: selectedChild.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: saleRequestTempId,
-          TotalLiquid: _calculateTotalLiquid(
-                itemPrice: _calculatePrice(product),
+          TotalLiquid: calculateTotalLiquid(
+                itemPrice: calculateProductPrice(product),
                 product: product,
               ) *
               totalComboxQuantity,
-          Value: _calculatePrice(product),
+          Value: calculateProductPrice(product),
           Comments: product.commentFather,
         );
 
@@ -180,20 +189,16 @@ class GetxProductCompositionPresenter extends GetxController
       validateCombox.comboxIsValid(productsCompositions);
 
       final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl:
-            cartPresenter.saleRequestTemp!.DeliveryControl.toInt(),
-        EnterpriseId:
-            cartPresenter.saleRequestTemp!.EnterpriseId.toInt(),
-        PersonalizedCode:
-            cartPresenter.saleRequestTemp!.PersonalizedCode,
+        DeliveryControl: cartPresenter.saleRequestTemp!.DeliveryControl.toInt(),
+        EnterpriseId: cartPresenter.saleRequestTemp!.EnterpriseId.toInt(),
+        PersonalizedCode: cartPresenter.saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId:
             cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
         TotalLiquid:
             _getTotalLiquidCombox(productsCompositions) * totalComboxQuantity,
         Products: _productsCompositionToUpdateSaleRequestTempProductEntity(
-          saleRequestTempId: cartPresenter
-              .saleRequestTemp!.SaleRequestTempId
-              .toInt(),
+          saleRequestTempId:
+              cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
           productsCompositions: productsCompositions,
         ),
       );
@@ -203,8 +208,7 @@ class GetxProductCompositionPresenter extends GetxController
         entity: entity,
       );
 
-      await cartPresenter
-          .loadSaleRequest(homePresenter.commandNumber!);
+      await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
       return true;
     } on DomainError catch (e) {
       switch (e) {

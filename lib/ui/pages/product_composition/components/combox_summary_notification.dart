@@ -96,7 +96,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               _titleAndValue(
                 flex: 4,
                 title: "Preço",
-                value: (element.SalePrice.toString().toDouble())
+                value: productCompositionPresenter
+                    .calculateProductPrice(element)
                     .toString()
                     .toBrazilianNumber()
                     .addBrazilianCoin(),
@@ -105,7 +106,9 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               _titleAndValue(
                 flex: 5,
                 title: "Acréscimo",
-                value: element.IncrementValue.toString()
+                value: productCompositionPresenter
+                    .calculateIncrementValue(element)
+                    .toString()
                     .toBrazilianNumber()
                     .addBrazilianCoin(),
               ),
@@ -113,9 +116,11 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               _titleAndValue(
                   flex: 5,
                   title: "Total",
-                  value: ((element.SalePrice.toString().toDouble() *
-                              productCompositionPresenter.totalComboxQuantity) +
-                          element.IncrementValue.toString().toDouble())
+                  value: productCompositionPresenter
+                      .calculateTotalLiquid(
+                          product: element,
+                          itemPrice: productCompositionPresenter
+                              .calculateProductPrice(element))
                       .toString()
                       .toBrazilianNumber()
                       .addBrazilianCoin(),

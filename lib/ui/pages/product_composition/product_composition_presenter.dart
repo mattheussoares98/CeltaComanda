@@ -20,7 +20,8 @@ abstract class ProductCompositionPresenter implements Listenable {
     required int internalCodeOnErp,
   });
 
-  void certifyComboxIsValid(List<ProductCompositionViewModel> productsCompositions);
+  void certifyComboxIsValid(
+      List<ProductCompositionViewModel> productsCompositions);
 
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
@@ -29,4 +30,11 @@ abstract class ProductCompositionPresenter implements Listenable {
   });
 
   void updateComboxQuantity(bool isAddingQuantity);
+
+  double calculateTotalLiquid({
+    required ProductCompositionViewModel product,
+    required double itemPrice,
+  });
+  double calculateIncrementValue(ProductCompositionViewModel product);
+  double calculateProductPrice(ProductCompositionViewModel product);
 }

@@ -1,19 +1,97 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../components/components.dart';
 
 class ConfirmedComboxItem extends StatelessWidget {
   final ConfirmedComboxViewModel confirmedCombox;
+  final int index;
   const ConfirmedComboxItem({
     required this.confirmedCombox,
+    required this.index,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
+
+    double getTotalPrice(ProductCompositionViewModel product) {
+      if (product.OfferPrice?.isNotEmpty == true &&
+          product.OfferPrice!.toDouble() > 0) {
+        return product.Quantity!.toDouble() *
+            (product.OfferPrice!.toDouble() + product.IncrementValue!.toDouble());
+      } else {
+        return product.Quantity!.toDouble() *
+            (product.SalePrice!.toDouble() + product.IncrementValue!.toDouble());
+      }
+    }
+
+    void onPressedAddQuantity({
+      required CartPresenter cartPresenter,
+    }) {
+      cartPresenter.addCartProductQuantity(index);
+    }
+
+    void onPressedReduceQuantity({
+      required CartPresenter cartPresenter,
+    }) {
+      if (1 <= 1) {
+        notificationDialog(
+          context: context,
+          titleMessage: "Remover produto do carrinho?",
+          content: null,
+          onPress: () async {
+            cartPresenter.reduceCartProductQuantity(index);
+          },
+        );
+      } else {
+        cartPresenter.reduceCartProductQuantity(index);
+      }
+    }
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(confirmedCombox.father.Name),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ImageWidget(
+              ean: confirmedCombox.father.EanCode,
+              plu: confirmedCombox.father.PriceLookupCode,
+              showLargeImageInShowDialog: true,
+            ),
+            const SizedBox(width: 3),
+            Expanded(
+              child: Text(
+                confirmedCombox.father.Name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            PriceAndUpdateProductQuantity(
+              showDeleteIcon: 1 <= 1,
+              showUpdateProductQuantity: true,
+              price: confirmedCombox.totalPrice,
+              totalLiquid: 1 * confirmedCombox.totalPrice,
+              onPressedReduceQuantity: () {
+                onPressedReduceQuantity(
+                  cartPresenter: cartPresenter,
+                );
+              },
+              onPressedAddQuantity: () {
+                onPressedAddQuantity(
+                  cartPresenter: cartPresenter,
+                );
+              },
+              productQuantity: 1,
+            ),
+          ],
+        ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -31,11 +109,15 @@ class ConfirmedComboxItem extends StatelessWidget {
             return Column(
               children: [
                 Text(product.ChildName!),
+                Text(getTotalPrice(combox).toString()),
               ],
             );
           },
         ),
-        Text(confirmedCombox.totalPrice.toString()),
+        const SizedBox(height: 8),
+        const Divider(
+          thickness: 0.2,
+        )
       ],
     );
   }

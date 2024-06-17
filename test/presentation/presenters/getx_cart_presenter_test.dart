@@ -42,6 +42,8 @@ void main() {
       updateSaleRequestTempProductsEntity;
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
+  late ProductsViewModel fatherOfCombox;
+  late ProductCompositionViewModel selectedChilds;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -118,6 +120,15 @@ void main() {
     );
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
+
+    fatherOfCombox = EntityFactory.makeProductViewModel();
+    selectedChilds = EntityFactory.makeProductCompositionViewModel(
+      quantity: 1,
+      salePrice: 10,
+      offerPrice: 10,
+      incrementValue: 0,
+      isOptionalItem: false,
+    );
   }
 
   void initMockSuccess() {
@@ -1312,7 +1323,8 @@ void main() {
 
       await sut.saveProducts(printedProductsPresenter);
     });
-    test("Should emit correct values on BarcodeScanner throws unexpected", () async {
+    test("Should emit correct values on BarcodeScanner throws unexpected",
+        () async {
       barcodeScanner.mockError(DomainError.unexpected);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -1592,6 +1604,19 @@ void main() {
       final isUpdated = await sut.saveProducts(printedProductsPresenter);
 
       expect(isUpdated, false);
+    });
+  });
+
+  group("Confirmed combox products", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addConfirmedCombox(
+        selectedChilds: selectedChilds,
+        totalPrice: 10,
+        father: fatherOfCombox,
+      );
     });
   });
 }

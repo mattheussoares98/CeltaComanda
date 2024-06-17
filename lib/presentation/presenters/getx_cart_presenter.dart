@@ -639,5 +639,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required ProductCompositionViewModel selectedChilds,
     required double totalPrice,
     required ProductsViewModel father,
-  }) async {}
+  }) async {
+    isLoading = true;
+    mainError = null;
+    isLoading = false;
+  }
 }

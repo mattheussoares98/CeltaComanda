@@ -19,6 +19,7 @@ class ConfirmedComboxItem extends StatelessWidget {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    TextEditingController commentsController = TextEditingController();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,8 +131,25 @@ class ConfirmedComboxItem extends StatelessWidget {
                     ],
                   ),
                   // Comment(
-                  //   index: index,
+                  //   indexOfProduct: index,
+                  //   indexOfSelectedProduct: cartPresenter.indexOfSelectedCombox,
                   //   comments: product.commentFather,
+                  //   updateSelectedIndex: updateSelectedIndex,
+                  //   commentsController: commentsController,
+                  //   clearComment: () async {
+                  //     await cartPresenter.updateCommentOfCombox(
+                  //       indexOfCombox: index,
+                  //       indexOfProduct: cartPresenter.indexOfSelectedCombox,
+                  //       newComment: null,
+                  //     );
+                  //   },
+                  //   updateComment: () async {
+                  //     await cartPresenter.updateCommentOfCombox(
+                  //       indexOfCombox: index,
+                  //       indexOfProduct: cartPresenter.indexOfSelectedCombox,
+                  //       newComment: commentsController.text,
+                  //     );
+                  //   },
                   // ),
                 ],
               ),

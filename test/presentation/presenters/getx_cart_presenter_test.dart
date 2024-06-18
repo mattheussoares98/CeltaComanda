@@ -2125,5 +2125,15 @@ void main() {
         null,
       );
     });
+
+    test("Should update indexOfSelectedCombox correctly", () async {
+      expect(sut.indexOfSelectedCombox, null);
+
+      sut.updateIndexOfSelectedCombox(1);
+      expect(sut.indexOfSelectedCombox, 1);
+      
+      sut.updateIndexOfSelectedCombox(1);
+      expect(sut.indexOfSelectedCombox, null);
+    });
   });
 }

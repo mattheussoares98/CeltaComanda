@@ -1803,5 +1803,25 @@ void main() {
             [confirmedComboxWithOneQuantity],
           )).called(1);
     });
+
+    test("Should add new combox quantity correctly", () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+
+      await sut.addComboxQuantity(0);
+
+      expect(sut.confirmedCombox[0].totalPrice, 20);
+      expect(sut.confirmedCombox[0].quantity, 2);
+      expect(sut.confirmedCombox[0].products.first.Quantity, "2.0");
+    });
+
+    test("Should add new combox quantity correctly ²", () async {
+      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
+
+      await sut.addComboxQuantity(0);
+
+      expect(sut.confirmedCombox[0].totalPrice, 30);
+      expect(sut.confirmedCombox[0].quantity, 3);
+      expect(sut.confirmedCombox[0].products.first.Quantity, "3.0");
+    });
   });
 }

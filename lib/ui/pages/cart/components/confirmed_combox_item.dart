@@ -20,12 +20,6 @@ class ConfirmedComboxItem extends StatelessWidget {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
-    void onPressedAddQuantity({
-      required CartPresenter cartPresenter,
-    }) {
-      cartPresenter.addCartProductQuantity(index);
-    }
-
     void onPressedReduceQuantity({
       required CartPresenter cartPresenter,
     }) {
@@ -75,10 +69,8 @@ class ConfirmedComboxItem extends StatelessWidget {
                   cartPresenter: cartPresenter,
                 );
               },
-              onPressedAddQuantity: () {
-                onPressedAddQuantity(
-                  cartPresenter: cartPresenter,
-                );
+              onPressedAddQuantity: () async {
+                await cartPresenter.addComboxQuantity(index);
               },
               productQuantity: confirmedCombox.quantity,
             ),
@@ -92,7 +84,8 @@ class ConfirmedComboxItem extends StatelessWidget {
             final combox = confirmedCombox.products[index];
 
             ProductCompositionViewModel product;
-            if (combox.childs?.isNotEmpty == true) {
+            if (combox.childs?.isNotEmpty == true &&
+                combox.indexOfSelectedChild != null) {
               product = combox.childs![combox.indexOfSelectedChild!];
             } else {
               product = combox;

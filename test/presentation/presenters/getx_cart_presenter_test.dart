@@ -48,6 +48,7 @@ void main() {
   late ProductCompositionViewModel notSelectedChild;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithtwoQuantities;
+  late String? newComment;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -167,6 +168,7 @@ void main() {
       totalPrice: 20,
       quantity: 2,
     );
+    newComment = faker.randomGenerator.string(10);
   }
 
   void initMockSuccess() {
@@ -714,7 +716,7 @@ void main() {
 
     test("Should clear selectedProductIndex on success to UpdateComment",
         () async {
-      sut.updateIndexOfSelectedProduct(1);
+      sut.updateIndexOfSelectedCartProduct(1);
 
       expect(sut.indexOfSelectedProduct, 1);
       await sut.updateComment(
@@ -2028,6 +2030,25 @@ void main() {
           quantity: 1.0,
         ),
       ]);
+    });
+
+    test("Should emit correct values on update combox comment succeeds",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateCommentOfCombox(index: 0, newComment: newComment);
+    });
+
+    test("Should emit correct values on update combox comment throws",
+        () async {
+      cartInformations.mockUpdateConfirmedComboxError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateCommentOfCombox(index: 0, newComment: newComment);
     });
   });
 }

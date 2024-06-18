@@ -153,7 +153,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         homePresenter: homePresenter,
       );
 
-      updateIndexOfSelectedProduct(null);
+      updateIndexOfSelectedCartProduct(null);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.addComment:
@@ -168,7 +168,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  void updateIndexOfSelectedProduct(int? index) {
+  void updateIndexOfSelectedCartProduct(int? index) {
     if (_indexOfSelectedProduct == index) {
       _indexOfSelectedProduct = null;
     } else {
@@ -792,6 +792,25 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       }
       await cartInformations.updateConfirmedCombox(confirmedCombox);
       notifyListeners();
+    } catch (e) {
+      mainError = UIError.unexpected;
+    }
+    isLoading = false;
+  }
+
+  int? _indexOfSelectedCombox;
+  @override
+  int? get indexOfSelectedCombox => _indexOfSelectedCombox;
+
+  @override
+  Future<void> updateCommentOfCombox({
+    required int index,
+    required String? newComment,
+  }) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      await cartInformations.updateConfirmedCombox(confirmedCombox);
     } catch (e) {
       mainError = UIError.unexpected;
     }

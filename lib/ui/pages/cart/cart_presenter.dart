@@ -53,7 +53,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required HomePresenter homePresenter,
   });
 
-  void updateIndexOfSelectedProduct(int? index);
+  void updateIndexOfSelectedCartProduct(int? index);
 
   Future<void> addNewPrintRequestInFirebase();
 
@@ -73,6 +73,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> getLocalCartProductsData();
 
   List<ConfirmedComboxViewModel> get confirmedCombox;
+  int? get indexOfSelectedCombox;
   Future<bool> addConfirmedCombox({
     required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
@@ -82,4 +83,8 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> getLocalConfirmedsCombox();
   Future<void> addComboxQuantity(int index);
   Future<void> reduceComboxQuantity(int index);
+  Future<void> updateCommentOfCombox({
+    required int index,
+    required String? newComment,
+  });
 }

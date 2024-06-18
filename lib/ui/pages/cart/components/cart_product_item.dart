@@ -108,7 +108,7 @@ class _CartProductItemState extends State<CartProductItem> {
             );
           },
           updateSelectedIndex: () {
-            cartPresenter.updateIndexOfSelectedProduct(widget.index);
+            cartPresenter.updateIndexOfSelectedCartProduct(widget.index);
           },
           indexOfSelectedProduct: cartPresenter.indexOfSelectedProduct,
           commentsController: commentsController,

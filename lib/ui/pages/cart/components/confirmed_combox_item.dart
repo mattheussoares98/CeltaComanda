@@ -98,17 +98,58 @@ class ConfirmedComboxItem extends StatelessWidget {
               product = combox;
             }
 
-            return Column(
-              children: [
-                Text(product.ChildName!),
-                Text((productCompositionPresenter.calculateTotalLiquid(
-                            product: combox,
-                            itemPrice: productCompositionPresenter
-                                .calculateProductPrice(combox)) *
-                        combox.Quantity.toString().toDouble())
-                    .toString()),
-                Text(combox.Quantity.toString())
-              ],
+            return Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 65,
+                        child: Text(
+                          product.ChildName!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        flex: 15,
+                        child: Text(
+                          combox.Quantity.toString().toBrazilianNumber(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        flex: 30,
+                        child: Text(
+                          (productCompositionPresenter.calculateTotalLiquid(
+                                      product: combox,
+                                      itemPrice: productCompositionPresenter
+                                          .calculateProductPrice(combox)) *
+                                  combox.Quantity.toString().toDouble())
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (combox.commentFather != null)
+                    CommentRichText(comment: combox.commentFather!),
+                ],
+              ),
             );
           },
         ),

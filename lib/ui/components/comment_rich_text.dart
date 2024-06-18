@@ -14,7 +14,11 @@ class CommentRichText extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text: "Comentário: ",
-            style: Theme.of(context).textTheme.titleMedium,
+            style: TextStyle(
+              color: Colors.grey[700],
+              fontStyle: FontStyle.italic,
+              fontSize: 17,
+            ),
           ),
           TextSpan(
             text: comment,

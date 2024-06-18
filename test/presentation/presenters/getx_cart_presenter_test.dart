@@ -1654,7 +1654,8 @@ void main() {
         quantity: 1,
       );
     });
-    test("Should add new ConfirmedComboxViewModel with one quantity correctly", () async {
+    test("Should add new ConfirmedComboxViewModel with one quantity correctly",
+        () async {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChilds],
         totalPrice: 10,
@@ -1664,7 +1665,9 @@ void main() {
 
       expect(sut.confirmedCombox, [confirmedComboxWithOneQuantity]);
     });
-    test("Should add new ConfirmedComboxViewModel with two quantities correctly", () async {
+    test(
+        "Should add new ConfirmedComboxViewModel with two quantities correctly",
+        () async {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChilds],
         totalPrice: 20,
@@ -1770,6 +1773,35 @@ void main() {
       await sut.getLocalConfirmedsCombox();
 
       expect(sut.confirmedCombox, [confirmedComboxWithOneQuantity]);
+    });
+
+    test("Should emit correct values on addComboxQuantity succeeds", () async {
+      cartInformations.mockUpdateConfirmedComboxError();
+
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addComboxQuantity(confirmedComboxWithOneQuantity);
+    });
+
+    test("Should emit correct values on addComboxQuantity throws", () async {
+      cartInformations.mockUpdateConfirmedComboxError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.addComboxQuantity(confirmedComboxWithOneQuantity);
+    });
+
+    test("Should call updateConfirmedCombox on addComboxQuantity", () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+      
+      await sut.addComboxQuantity(confirmedComboxWithOneQuantity);
+
+      verify(() => cartInformations.updateConfirmedCombox(
+            [confirmedComboxWithOneQuantity],
+          )).called(1);
     });
   });
 }

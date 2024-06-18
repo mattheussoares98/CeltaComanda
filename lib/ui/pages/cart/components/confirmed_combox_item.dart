@@ -20,23 +20,6 @@ class ConfirmedComboxItem extends StatelessWidget {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
-    void onPressedReduceQuantity({
-      required CartPresenter cartPresenter,
-    }) {
-      if (confirmedCombox.quantity <= 1) {
-        notificationDialog(
-          context: context,
-          titleMessage: "Remover produto do carrinho?",
-          content: null,
-          onPress: () async {
-            cartPresenter.reduceCartProductQuantity(index);
-          },
-        );
-      } else {
-        cartPresenter.reduceCartProductQuantity(index);
-      }
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -64,10 +47,19 @@ class ConfirmedComboxItem extends StatelessWidget {
               price: confirmedCombox.totalPrice,
               totalLiquid:
                   confirmedCombox.quantity * confirmedCombox.totalPrice,
-              onPressedReduceQuantity: () {
-                onPressedReduceQuantity(
-                  cartPresenter: cartPresenter,
-                );
+              onPressedReduceQuantity: () async {
+                if (cartPresenter.confirmedCombox[index].quantity <= 1) {
+                  notificationDialog(
+                    context: context,
+                    titleMessage: "Remover combo do carrinho?",
+                    content: null,
+                    onPress: () async {
+                      await cartPresenter.reduceComboxQuantity(index);
+                    },
+                  );
+                } else {
+                  await cartPresenter.reduceComboxQuantity(index);
+                }
               },
               onPressedAddQuantity: () async {
                 await cartPresenter.addComboxQuantity(index);

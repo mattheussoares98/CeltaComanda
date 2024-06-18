@@ -873,4 +873,32 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     return productsEntitys;
   }
+
+  @override
+  double calculateIncrementValue(ProductCompositionViewModel product) {
+    if (product.IncrementValue.toString().toDouble() > 0) {
+      return product.IncrementValue.toString().toDouble();
+    } else {
+      return 0;
+    }
+  }
+
+  @override
+  double calculateProductTotalLiquid(ProductCompositionViewModel product) {
+    return calculateProductPrice(product) *
+        product.Quantity.toString().toDouble();
+  }
+
+  @override
+  double calculateProductPrice(ProductCompositionViewModel product) {
+    if (product.IsOptionalItem == "true") {
+      return calculateIncrementValue(product);
+    } else if (product.OfferPrice.toString().toDouble() > 0) {
+      return product.OfferPrice.toString().toDouble() +
+          calculateIncrementValue(product);
+    } else {
+      return product.SalePrice.toString().toDouble() +
+          calculateIncrementValue(product);
+    }
+  }
 }

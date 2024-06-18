@@ -142,14 +142,15 @@ class _FatherItemsState extends State<FatherItems> {
                               Text(
                                 "Quantidade ${father!.Quantity!.toBrazilianNumber()}",
                               ),
-                            Text(father!.OfferPrice != null &&
-                                    father!.OfferPrice! == "0.0"
-                                ? father!.SalePrice!
-                                    .toBrazilianNumber()
-                                    .addBrazilianCoin()
-                                : father!.OfferPrice!
-                                    .toBrazilianNumber()
-                                    .addBrazilianCoin()),
+                            if (father!.IsOptionalItem == "false")
+                              Text(father!.OfferPrice != null &&
+                                      father!.OfferPrice! == "0.0"
+                                  ? father!.SalePrice!
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin()
+                                  : father!.OfferPrice!
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin()),
                           ],
                         ),
                         if (father!.IncrementValue.toString().toDouble() > 0)
@@ -267,7 +268,8 @@ class _FatherItemsState extends State<FatherItems> {
                               selectedChilds: widget.productsCompositions,
                               totalPrice: snapshot.data!,
                               father: widget.product,
-                              quantity: productCompositionPresenter.totalComboxQuantity,
+                              quantity: productCompositionPresenter
+                                  .totalComboxQuantity,
                             );
 
                             if (updatedCombox) {

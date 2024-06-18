@@ -96,11 +96,13 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               _titleAndValue(
                 flex: 4,
                 title: "Preço",
-                value: productCompositionPresenter
-                    .calculateProductPrice(element)
-                    .toString()
-                    .toBrazilianNumber()
-                    .addBrazilianCoin(),
+                value: element.IsOptionalItem == "true"
+                    ? "0".toBrazilianNumber().addBrazilianCoin()
+                    : productCompositionPresenter
+                        .calculateProductPrice(element)
+                        .toString()
+                        .toBrazilianNumber()
+                        .addBrazilianCoin(),
               ),
               const Expanded(child: Text("+", textAlign: TextAlign.center)),
               _titleAndValue(
@@ -117,9 +119,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
                   flex: 5,
                   title: "Total",
                   value: (productCompositionPresenter.calculateTotalLiquid(
-                              product: element,
-                              itemPrice: productCompositionPresenter
-                                  .calculateProductPrice(element)) *
+                            product: element,
+                          ) *
                           productCompositionPresenter.totalComboxQuantity)
                       .toString()
                       .toBrazilianNumber()

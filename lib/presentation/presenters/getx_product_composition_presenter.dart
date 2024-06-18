@@ -77,10 +77,7 @@ class GetxProductCompositionPresenter extends GetxController
         continue;
       }
 
-      totalLiquid += calculateTotalLiquid(
-        itemPrice: calculateProductPrice(product),
-        product: product,
-      );
+      totalLiquid += calculateTotalLiquid(product: product);
     }
 
     return totalLiquid;
@@ -107,10 +104,9 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   double calculateTotalLiquid({
     required ProductCompositionViewModel product,
-    required double itemPrice,
   }) {
-    //adicionar pra aqui já calcular o preço do produto pra não precisar passa o preço dele como parâmetro
-    return itemPrice * product.Quantity.toString().toDouble();
+    return calculateProductPrice(product) *
+        product.Quantity.toString().toDouble();
   }
 
   @override
@@ -154,7 +150,6 @@ class GetxProductCompositionPresenter extends GetxController
           Quantity: selectedChild.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: calculateTotalLiquid(
-                itemPrice: calculateProductPrice(product),
                 product: product,
               ) *
               totalComboxQuantity,

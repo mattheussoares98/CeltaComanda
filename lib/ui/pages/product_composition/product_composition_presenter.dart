@@ -31,10 +31,7 @@ abstract class ProductCompositionPresenter implements Listenable {
 
   void updateComboxQuantity(bool isAddingQuantity);
 
-  double calculateTotalLiquid({
-    required ProductCompositionViewModel product,
-    required double itemPrice,
-  });
+  double calculateTotalLiquid({required ProductCompositionViewModel product});
   double calculateIncrementValue(ProductCompositionViewModel product);
   double calculateProductPrice(ProductCompositionViewModel product);
 }

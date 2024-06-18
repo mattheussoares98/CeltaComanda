@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../components/components.dart';
 
-class ConfirmedComboxItem extends StatelessWidget {
+class ConfirmedComboxItem extends StatefulWidget {
   final ConfirmedComboxViewModel confirmedCombox;
   final int index;
   const ConfirmedComboxItem({
@@ -15,11 +15,23 @@ class ConfirmedComboxItem extends StatelessWidget {
   });
 
   @override
+  State<ConfirmedComboxItem> createState() => _ConfirmedComboxItemState();
+}
+
+class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
+  TextEditingController commentsController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    commentsController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
-    TextEditingController commentsController = TextEditingController();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,14 +40,14 @@ class ConfirmedComboxItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageWidget(
-              ean: confirmedCombox.father.EanCode,
-              plu: confirmedCombox.father.PriceLookupCode,
+              ean: widget.confirmedCombox.father.EanCode,
+              plu: widget.confirmedCombox.father.PriceLookupCode,
               showLargeImageInShowDialog: true,
             ),
             const SizedBox(width: 3),
             Expanded(
               child: Text(
-                confirmedCombox.father.Name,
+                widget.confirmedCombox.father.Name,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -43,38 +55,38 @@ class ConfirmedComboxItem extends StatelessWidget {
               ),
             ),
             PriceAndUpdateProductQuantity(
-              showDeleteIcon: confirmedCombox.quantity <= 1,
+              showDeleteIcon: widget.confirmedCombox.quantity <= 1,
               showUpdateProductQuantity: true,
-              price: confirmedCombox.totalPrice,
-              totalLiquid:
-                  confirmedCombox.quantity * confirmedCombox.totalPrice,
+              price: widget.confirmedCombox.totalPrice,
+              totalLiquid: widget.confirmedCombox.quantity *
+                  widget.confirmedCombox.totalPrice,
               onPressedReduceQuantity: () async {
-                if (cartPresenter.confirmedCombox[index].quantity <= 1) {
+                if (cartPresenter.confirmedCombox[widget.index].quantity <= 1) {
                   notificationDialog(
                     context: context,
                     titleMessage: "Remover combo do carrinho?",
                     content: null,
                     onPress: () async {
-                      await cartPresenter.reduceComboxQuantity(index);
+                      await cartPresenter.reduceComboxQuantity(widget.index);
                     },
                   );
                 } else {
-                  await cartPresenter.reduceComboxQuantity(index);
+                  await cartPresenter.reduceComboxQuantity(widget.index);
                 }
               },
               onPressedAddQuantity: () async {
-                await cartPresenter.addComboxQuantity(index);
+                await cartPresenter.addComboxQuantity(widget.index);
               },
-              productQuantity: confirmedCombox.quantity,
+              productQuantity: widget.confirmedCombox.quantity,
             ),
           ],
         ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: confirmedCombox.products.length,
+          itemCount: widget.confirmedCombox.products.length,
           itemBuilder: (context, index) {
-            final combox = confirmedCombox.products[index];
+            final combox = widget.confirmedCombox.products[index];
 
             ProductCompositionViewModel product;
             if (combox.childs?.isNotEmpty == true &&
@@ -130,27 +142,29 @@ class ConfirmedComboxItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Comment(
-                  //   indexOfProduct: index,
-                  //   indexOfSelectedProduct: cartPresenter.indexOfSelectedCombox,
-                  //   comments: product.commentFather,
-                  //   updateSelectedIndex: updateSelectedIndex,
-                  //   commentsController: commentsController,
-                  //   clearComment: () async {
-                  //     await cartPresenter.updateCommentOfCombox(
-                  //       indexOfCombox: index,
-                  //       indexOfProduct: cartPresenter.indexOfSelectedCombox,
-                  //       newComment: null,
-                  //     );
-                  //   },
-                  //   updateComment: () async {
-                  //     await cartPresenter.updateCommentOfCombox(
-                  //       indexOfCombox: index,
-                  //       indexOfProduct: cartPresenter.indexOfSelectedCombox,
-                  //       newComment: commentsController.text,
-                  //     );
-                  //   },
-                  // ),
+                  Comment(
+                    indexOfProduct: index,
+                    indexOfSelectedProduct: cartPresenter.indexOfSelectedCombox,
+                    comments: combox.commentFather,
+                    updateSelectedIndex: () {
+                      cartPresenter.updateIndexOfSelectedCombox(index);
+                    },
+                    commentsController: commentsController,
+                    clearComment: () async {
+                      await cartPresenter.updateCommentOfCombox(
+                        indexOfCombox: index,
+                        indexOfProduct: cartPresenter.indexOfSelectedCombox,
+                        newComment: null,
+                      );
+                    },
+                    updateComment: () async {
+                      await cartPresenter.updateCommentOfCombox(
+                        indexOfCombox: index,
+                        indexOfProduct: cartPresenter.indexOfSelectedCombox,
+                        newComment: commentsController.text,
+                      );
+                    },
+                  ),
                 ],
               ),
             );

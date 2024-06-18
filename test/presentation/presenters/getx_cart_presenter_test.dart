@@ -2131,8 +2131,22 @@ void main() {
 
       sut.updateIndexOfSelectedCombox(1);
       expect(sut.indexOfSelectedCombox, 1);
-      
+
       sut.updateIndexOfSelectedCombox(1);
+      expect(sut.indexOfSelectedCombox, null);
+    });
+
+    test("Should remove indexOfSelectedCombox when update comment succeeds",
+        () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+      sut.updateIndexOfSelectedCombox(0);
+
+      await sut.updateCommentOfCombox(
+        indexOfCombox: 0,
+        indexOfProduct: 0,
+        newComment: newComment,
+      );
+
       expect(sut.indexOfSelectedCombox, null);
     });
   });

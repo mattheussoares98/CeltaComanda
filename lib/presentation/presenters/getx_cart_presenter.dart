@@ -812,8 +812,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     mainError = null;
     try {
       if (indexOfProduct != null) {
-        _confirmedCombox[indexOfCombox].products[indexOfProduct].commentFather =
-            newComment;
+        _confirmedCombox[indexOfCombox]
+            .products[_indexOfSelectedCombox!]
+            .commentFather = newComment;
+
+        _indexOfSelectedCombox = null;
       }
       await cartInformations.updateConfirmedCombox(confirmedCombox);
       notifyListeners();

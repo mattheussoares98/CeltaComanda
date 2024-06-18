@@ -114,7 +114,8 @@ class _HomePageState extends State<HomePage>
                     ? Theme.of(context).colorScheme.primary
                     : Colors.grey,
                 iconData: Icons.shopping_cart_outlined,
-                productsQuantity: cartPresenter.cartProducts.length,
+                productsQuantity: cartPresenter.cartProducts.length +
+                    cartPresenter.confirmedCombox.length,
               ),
               label: 'Carrinho',
             ),

@@ -144,23 +144,23 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                   ),
                   Comment(
                     indexOfProduct: index,
-                    indexOfSelectedProduct: cartPresenter.indexOfSelectedCombox,
+                    indexOfSelectedProduct: cartPresenter.indexOfSelectedProductCombox,
                     comments: combox.commentFather,
                     updateSelectedIndex: () {
-                      cartPresenter.updateIndexOfSelectedCombox(index);
+                      cartPresenter.updateIndexOfSelectedProductCombox(index);
                     },
                     commentsController: commentsController,
                     clearComment: () async {
                       await cartPresenter.updateCommentOfCombox(
-                        indexOfCombox: index,
-                        indexOfProduct: cartPresenter.indexOfSelectedCombox,
+                        indexOfCombox: widget.index,
+                        indexOfProduct: index,
                         newComment: null,
                       );
                     },
                     updateComment: () async {
                       await cartPresenter.updateCommentOfCombox(
-                        indexOfCombox: index,
-                        indexOfProduct: cartPresenter.indexOfSelectedCombox,
+                        indexOfCombox: widget.index,
+                        indexOfProduct: index,
                         newComment: commentsController.text,
                       );
                     },

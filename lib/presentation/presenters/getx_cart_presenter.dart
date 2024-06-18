@@ -798,9 +798,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     isLoading = false;
   }
 
-  int? _indexOfSelectedCombox;
+  int? _indexOfSelectedProductCombox;
   @override
-  int? get indexOfSelectedCombox => _indexOfSelectedCombox;
+  int? get indexOfSelectedProductCombox => _indexOfSelectedProductCombox;
 
   @override
   Future<void> updateCommentOfCombox({
@@ -812,11 +812,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     mainError = null;
     try {
       if (indexOfProduct != null) {
-        _confirmedCombox[indexOfCombox]
-            .products[_indexOfSelectedCombox!]
-            .commentFather = newComment;
+        _confirmedCombox[indexOfCombox].products[indexOfProduct].commentFather =
+            newComment;
 
-        _indexOfSelectedCombox = null;
+        _indexOfSelectedProductCombox = null;
       }
       await cartInformations.updateConfirmedCombox(confirmedCombox);
       notifyListeners();
@@ -828,11 +827,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  void updateIndexOfSelectedCombox(int? index) {
-    if (_indexOfSelectedCombox == index) {
-      _indexOfSelectedCombox = null;
+  void updateIndexOfSelectedProductCombox(int? index) {
+    if (_indexOfSelectedProductCombox == index) {
+      _indexOfSelectedProductCombox = null;
     } else {
-      _indexOfSelectedCombox = index;
+      _indexOfSelectedProductCombox = index;
     }
     notifyListeners();
   }

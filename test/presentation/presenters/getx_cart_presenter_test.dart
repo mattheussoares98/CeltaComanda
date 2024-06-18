@@ -2127,19 +2127,19 @@ void main() {
     });
 
     test("Should update indexOfSelectedCombox correctly", () async {
-      expect(sut.indexOfSelectedCombox, null);
+      expect(sut.indexOfSelectedProductCombox, null);
 
-      sut.updateIndexOfSelectedCombox(1);
-      expect(sut.indexOfSelectedCombox, 1);
+      sut.updateIndexOfSelectedProductCombox(1);
+      expect(sut.indexOfSelectedProductCombox, 1);
 
-      sut.updateIndexOfSelectedCombox(1);
-      expect(sut.indexOfSelectedCombox, null);
+      sut.updateIndexOfSelectedProductCombox(1);
+      expect(sut.indexOfSelectedProductCombox, null);
     });
 
     test("Should remove indexOfSelectedCombox when update comment succeeds",
         () async {
       sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-      sut.updateIndexOfSelectedCombox(0);
+      sut.updateIndexOfSelectedProductCombox(0);
 
       await sut.updateCommentOfCombox(
         indexOfCombox: 0,
@@ -2147,7 +2147,7 @@ void main() {
         newComment: newComment,
       );
 
-      expect(sut.indexOfSelectedCombox, null);
+      expect(sut.indexOfSelectedProductCombox, null);
     });
   });
 }

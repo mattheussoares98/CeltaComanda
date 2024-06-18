@@ -73,7 +73,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> getLocalCartProductsData();
 
   List<ConfirmedComboxViewModel> get confirmedCombox;
-  int? get indexOfSelectedCombox;
+  int? get indexOfSelectedProductCombox;
   Future<bool> addConfirmedCombox({
     required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
@@ -88,5 +88,5 @@ abstract class CartPresenter implements ChangeNotifier {
     required int? indexOfProduct,
     required String? newComment,
   });
-  void updateIndexOfSelectedCombox(int index);
+  void updateIndexOfSelectedProductCombox(int index);
 }

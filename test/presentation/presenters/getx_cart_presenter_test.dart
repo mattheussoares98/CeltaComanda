@@ -43,7 +43,8 @@ void main() {
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
-  late ProductCompositionViewModel selectedChild;
+  late ProductCompositionViewModel selectedChildWithOneQuantity;
+  late ProductCompositionViewModel selectedChildWithTwoQuantities;
   late ProductCompositionViewModel notSelectedChild;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithtwoQuantities;
@@ -125,7 +126,8 @@ void main() {
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
     fatherOfCombox = EntityFactory.makeProductViewModel();
-    selectedChild = EntityFactory.makeProductCompositionViewModel(
+    selectedChildWithOneQuantity =
+        EntityFactory.makeProductCompositionViewModel(
       quantity: 1,
       salePrice: 10,
       offerPrice: 10,
@@ -133,6 +135,16 @@ void main() {
       isOptionalItem: false,
       indexOfSelectedChild: 0,
     );
+    selectedChildWithTwoQuantities =
+        EntityFactory.makeProductCompositionViewModel(
+      quantity: 2,
+      salePrice: 10,
+      offerPrice: 10,
+      incrementValue: 0,
+      isOptionalItem: false,
+      indexOfSelectedChild: 0,
+    );
+
     notSelectedChild = EntityFactory.makeProductCompositionViewModel(
       quantity: 1,
       salePrice: 10,
@@ -143,14 +155,14 @@ void main() {
     );
 
     confirmedComboxWithOneQuantity = EntityFactory.makeConfirmedComboxViewModel(
-      products: [selectedChild],
+      products: [selectedChildWithOneQuantity],
       father: fatherOfCombox,
       totalPrice: 10,
       quantity: 1,
     );
     confirmedComboxWithtwoQuantities =
         EntityFactory.makeConfirmedComboxViewModel(
-      products: [selectedChild],
+      products: [selectedChildWithTwoQuantities],
       father: fatherOfCombox,
       totalPrice: 20,
       quantity: 2,
@@ -1645,7 +1657,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1658,7 +1670,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1667,7 +1679,7 @@ void main() {
     test("Should add new ConfirmedComboxViewModel with one quantity correctly",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1678,7 +1690,7 @@ void main() {
 
     test("Should not add ConfirmedComboxViewModel if not selected", () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [notSelectedChild, selectedChild],
+        selectedChilds: [notSelectedChild, selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1690,7 +1702,7 @@ void main() {
         "Should add new ConfirmedComboxViewModel with two quantities correctly",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 20,
         father: fatherOfCombox,
         quantity: 2,
@@ -1701,7 +1713,7 @@ void main() {
 
     test("Should return true on addConfirmedCombox success", () async {
       bool isConfirmed = await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1713,7 +1725,7 @@ void main() {
       cartInformations.mockUpdateConfirmedComboxError();
 
       bool isConfirmed = await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1726,7 +1738,7 @@ void main() {
         "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox with one quantity",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild]
+        selectedChilds: [selectedChildWithOneQuantity]
             .map((element) => ProductCompositionViewModel(
                   Quantity: 1.0.toString(),
                   ProductCompositionId: element.ProductCompositionId,
@@ -1759,7 +1771,7 @@ void main() {
         "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox with 2 quantities",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChild],
+        selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1815,13 +1827,81 @@ void main() {
       await sut.addComboxQuantity(0);
     });
 
-    test("Should call updateConfirmedCombox on addComboxQuantity", () async {
+    test(
+        "Should call updateConfirmedCombox correctly on addComboxQuantity with one quantity",
+        () async {
       sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
 
       await sut.addComboxQuantity(0);
 
       verify(() => cartInformations.updateConfirmedCombox(
-            [confirmedComboxWithOneQuantity],
+            [
+              ConfirmedComboxViewModel(
+                products: [selectedChildWithOneQuantity]
+                    .map((element) => ProductCompositionViewModel(
+                          Quantity: (element.Quantity.toString().toDouble() + 1)
+                              .toString(),
+                          ProductCompositionId: element.ProductCompositionId,
+                          EnterpriseId: element.EnterpriseId,
+                          InternalCodeOnERPCodeFather:
+                              element.InternalCodeOnERPCodeFather,
+                          InternalCodeOnERPCodeChild:
+                              element.InternalCodeOnERPCodeChild,
+                          PluChild: element.PluChild,
+                          ChildName: element.ChildName,
+                          SalePrice: element.SalePrice,
+                          OfferPrice: element.OfferPrice,
+                          IncrementValue: element.IncrementValue,
+                          IsOptionalItem: element.IsOptionalItem,
+                          ProductOptions: element.ProductOptions,
+                          childs: element.childs,
+                          commentFather: element.commentFather,
+                          indexOfSelectedChild: element.indexOfSelectedChild,
+                        ))
+                    .toList(),
+                father: confirmedComboxWithOneQuantity.father,
+                totalPrice: confirmedComboxWithOneQuantity.totalPrice,
+                quantity: confirmedComboxWithOneQuantity.quantity + 1,
+              )
+            ],
+          )).called(1);
+    });
+    test(
+        "Should call updateConfirmedCombox correctly on addComboxQuantity with 2 quantities",
+        () async {
+      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
+
+      await sut.addComboxQuantity(0);
+
+      verify(() => cartInformations.updateConfirmedCombox(
+            [
+              ConfirmedComboxViewModel(
+                products: [selectedChildWithTwoQuantities]
+                    .map((element) => ProductCompositionViewModel(
+                          Quantity: 6.0.toString(),
+                          ProductCompositionId: element.ProductCompositionId,
+                          EnterpriseId: element.EnterpriseId,
+                          InternalCodeOnERPCodeFather:
+                              element.InternalCodeOnERPCodeFather,
+                          InternalCodeOnERPCodeChild:
+                              element.InternalCodeOnERPCodeChild,
+                          PluChild: element.PluChild,
+                          ChildName: element.ChildName,
+                          SalePrice: element.SalePrice,
+                          OfferPrice: element.OfferPrice,
+                          IncrementValue: element.IncrementValue,
+                          IsOptionalItem: element.IsOptionalItem,
+                          ProductOptions: element.ProductOptions,
+                          childs: element.childs,
+                          commentFather: element.commentFather,
+                          indexOfSelectedChild: element.indexOfSelectedChild,
+                        ))
+                    .toList(),
+                father: confirmedComboxWithtwoQuantities.father,
+                totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
+                quantity: 3.0,
+              )
+            ],
           )).called(1);
     });
 

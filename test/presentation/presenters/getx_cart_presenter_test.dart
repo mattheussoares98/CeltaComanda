@@ -131,7 +131,23 @@ void main() {
       isOptionalItem: false,
     );
     confirmedCombox = ConfirmedComboxViewModel(
-      products: [selectedChilds],
+      products: [selectedChilds]
+          .map((element) => ProductCompositionViewModel(
+                Quantity: (element.Quantity!.toDouble() * 1).toString(),
+                ProductCompositionId: element.ProductCompositionId,
+                EnterpriseId: element.EnterpriseId,
+                InternalCodeOnERPCodeFather:
+                    element.InternalCodeOnERPCodeFather,
+                InternalCodeOnERPCodeChild: element.InternalCodeOnERPCodeChild,
+                PluChild: element.PluChild,
+                ChildName: element.ChildName,
+                SalePrice: element.SalePrice,
+                OfferPrice: element.OfferPrice,
+                IncrementValue: element.IncrementValue,
+                IsOptionalItem: element.IsOptionalItem,
+                ProductOptions: element.ProductOptions,
+              ))
+          .toList(),
       father: fatherOfCombox,
       totalPrice: 10,
       quantity: 1,
@@ -1646,7 +1662,24 @@ void main() {
     });
     test("Should add new ConfirmedComboxViewModel correctly", () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChilds]
+            .map((element) => ProductCompositionViewModel(
+                  Quantity: (element.Quantity!.toDouble() * 1).toString(),
+                  ProductCompositionId: element.ProductCompositionId,
+                  EnterpriseId: element.EnterpriseId,
+                  InternalCodeOnERPCodeFather:
+                      element.InternalCodeOnERPCodeFather,
+                  InternalCodeOnERPCodeChild:
+                      element.InternalCodeOnERPCodeChild,
+                  PluChild: element.PluChild,
+                  ChildName: element.ChildName,
+                  SalePrice: element.SalePrice,
+                  OfferPrice: element.OfferPrice,
+                  IncrementValue: element.IncrementValue,
+                  IsOptionalItem: element.IsOptionalItem,
+                  ProductOptions: element.ProductOptions,
+                ))
+            .toList(),
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,

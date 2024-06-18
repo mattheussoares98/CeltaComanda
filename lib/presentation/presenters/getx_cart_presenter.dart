@@ -647,7 +647,26 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     try {
       _confirmedCombox.add(
         ConfirmedComboxViewModel(
-          products: selectedChilds,
+          products: selectedChilds
+              .map((element) => ProductCompositionViewModel(
+                    Quantity:
+                        (element.Quantity.toString().toDouble() * quantity)
+                            .toString(),
+                    ProductCompositionId: element.ProductCompositionId,
+                    EnterpriseId: element.EnterpriseId,
+                    InternalCodeOnERPCodeFather:
+                        element.InternalCodeOnERPCodeFather,
+                    InternalCodeOnERPCodeChild:
+                        element.InternalCodeOnERPCodeChild,
+                    PluChild: element.PluChild,
+                    ChildName: element.ChildName,
+                    SalePrice: element.SalePrice,
+                    OfferPrice: element.OfferPrice,
+                    IncrementValue: element.IncrementValue,
+                    IsOptionalItem: element.IsOptionalItem,
+                    ProductOptions: element.ProductOptions,
+                  ))
+              .toList(),
           father: father,
           totalPrice: totalPrice,
           quantity: quantity,

@@ -17,19 +17,8 @@ class ConfirmedComboxItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
-
-    double getTotalPrice(ProductCompositionViewModel product) {
-      if (product.OfferPrice?.isNotEmpty == true &&
-          product.OfferPrice!.toDouble() > 0) {
-        return product.Quantity!.toDouble() *
-            (product.OfferPrice!.toDouble() +
-                product.IncrementValue!.toDouble());
-      } else {
-        return product.Quantity!.toDouble() *
-            (product.SalePrice!.toDouble() +
-                product.IncrementValue!.toDouble());
-      }
-    }
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
 
     void onPressedAddQuantity({
       required CartPresenter cartPresenter,
@@ -112,7 +101,12 @@ class ConfirmedComboxItem extends StatelessWidget {
             return Column(
               children: [
                 Text(product.ChildName!),
-                Text(getTotalPrice(combox).toString()),
+                Text((productCompositionPresenter.calculateTotalLiquid(
+                            product: combox,
+                            itemPrice: productCompositionPresenter
+                                .calculateProductPrice(combox)) *
+                        combox.Quantity.toString().toDouble())
+                    .toString()),
                 Text(combox.Quantity.toString())
               ],
             );

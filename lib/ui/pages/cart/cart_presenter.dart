@@ -81,4 +81,5 @@ abstract class CartPresenter implements ChangeNotifier {
   });
   Future<void> getLocalConfirmedsCombox();
   Future<void> addComboxQuantity(int index);
+  Future<void> reduceComboxQuantity(int index);
 }

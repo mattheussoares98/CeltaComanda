@@ -1924,5 +1924,24 @@ void main() {
       expect(sut.confirmedCombox[0].quantity, 3);
       expect(sut.confirmedCombox[0].products.first.Quantity, "3.0");
     });
+
+    test("Should emit correct values on subtract combox quantity succeeds",
+        () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.reduceComboxQuantity(0);
+    });
+
+    test("Should emit correct values on subtract combox quantity throws",
+        () async {
+      cartInformations.mockUpdateConfirmedComboxError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.reduceComboxQuantity(0);
+    });
   });
 }

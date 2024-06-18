@@ -113,7 +113,7 @@ class ConfirmedComboxItem extends StatelessWidget {
               children: [
                 Text(product.ChildName!),
                 Text(getTotalPrice(combox).toString()),
-                Text(product.Quantity.toString())
+                Text(combox.Quantity.toString())
               ],
             );
           },

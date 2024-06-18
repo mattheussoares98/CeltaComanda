@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'package:faker/faker.dart';
@@ -671,5 +672,39 @@ class EntityFactory {
             .toDouble(),
         Value: faker.randomGenerator.decimal(),
         ProductPriceLookUpCode: faker.randomGenerator.string(20),
+      );
+
+  static ConfirmedComboxViewModel makeConfirmedComboxViewModel({
+    required List<ProductCompositionViewModel> products,
+    required ProductsViewModel father,
+    required double totalPrice,
+    required double quantity,
+  }) =>
+      ConfirmedComboxViewModel(
+        products: products
+            .map((element) => ProductCompositionViewModel(
+                  Quantity:
+                      (element.Quantity!.toDouble() * quantity).toString(),
+                  ProductCompositionId: element.ProductCompositionId,
+                  EnterpriseId: element.EnterpriseId,
+                  InternalCodeOnERPCodeFather:
+                      element.InternalCodeOnERPCodeFather,
+                  InternalCodeOnERPCodeChild:
+                      element.InternalCodeOnERPCodeChild,
+                  PluChild: element.PluChild,
+                  ChildName: element.ChildName,
+                  SalePrice: element.SalePrice,
+                  OfferPrice: element.OfferPrice,
+                  IncrementValue: element.IncrementValue,
+                  IsOptionalItem: element.IsOptionalItem,
+                  ProductOptions: element.ProductOptions,
+                  childs: element.childs,
+                  commentFather: element.commentFather,
+                  indexOfSelectedChild: element.indexOfSelectedChild,
+                ))
+            .toList(),
+        father: father,
+        totalPrice: totalPrice,
+        quantity: quantity,
       );
 }

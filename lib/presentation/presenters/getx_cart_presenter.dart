@@ -665,6 +665,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
                     IncrementValue: element.IncrementValue,
                     IsOptionalItem: element.IsOptionalItem,
                     ProductOptions: element.ProductOptions,
+                    childs: element.childs,
+                    commentFather: element.commentFather,
+                    indexOfSelectedChild: element.indexOfSelectedChild,
                   ))
               .toList(),
           father: father,

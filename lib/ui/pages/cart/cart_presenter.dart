@@ -89,4 +89,8 @@ abstract class CartPresenter implements ChangeNotifier {
     required String? newComment,
   });
   void updateIndexOfSelectedProductCombox(int index);
+  List<UpdateSaleRequestTempProductEntity>
+      convertProductsCompositionToUpdateSaleRequestTempProductEntity({
+    required int saleRequestTempId,
+  });
 }

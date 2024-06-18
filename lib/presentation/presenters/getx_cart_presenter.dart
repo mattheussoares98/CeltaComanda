@@ -835,4 +835,42 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     }
     notifyListeners();
   }
+
+  @override
+  List<UpdateSaleRequestTempProductEntity>
+      convertProductsCompositionToUpdateSaleRequestTempProductEntity({
+    required int saleRequestTempId,
+  }) {
+    List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
+    for (var combox in _confirmedCombox) {
+      for (var product in combox.products) {
+        if (product.indexOfSelectedChild == null) {
+          continue;
+        }
+
+        ProductCompositionViewModel selectedChild;
+        if (product.childs?.isEmpty == true) {
+          selectedChild = product;
+        } else {
+          selectedChild = product.childs![product.indexOfSelectedChild!];
+        }
+
+        final updateSaleRequestTempProductEntity =
+            UpdateSaleRequestTempProductEntity(
+          ProductInternalCodeOnErp:
+              selectedChild.InternalCodeOnERPCodeChild.toString().toInt(),
+          ProductPriceLookUpCode: selectedChild.PluChild!,
+          Quantity: selectedChild.Quantity!.toDouble(),
+          SaleRequestTempId: saleRequestTempId,
+          TotalLiquid: 10,
+          Value: 10,
+          Comments: product.commentFather,
+        );
+
+        productsEntitys.add(updateSaleRequestTempProductEntity);
+      }
+    }
+
+    return productsEntitys;
+  }
 }

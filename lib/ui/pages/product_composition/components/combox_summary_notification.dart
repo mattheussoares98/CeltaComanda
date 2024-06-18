@@ -116,11 +116,11 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               _titleAndValue(
                   flex: 5,
                   title: "Total",
-                  value: productCompositionPresenter
-                      .calculateTotalLiquid(
-                          product: element,
-                          itemPrice: productCompositionPresenter
-                              .calculateProductPrice(element))
+                  value: (productCompositionPresenter.calculateTotalLiquid(
+                              product: element,
+                              itemPrice: productCompositionPresenter
+                                  .calculateProductPrice(element)) *
+                          productCompositionPresenter.totalComboxQuantity)
                       .toString()
                       .toBrazilianNumber()
                       .addBrazilianCoin(),

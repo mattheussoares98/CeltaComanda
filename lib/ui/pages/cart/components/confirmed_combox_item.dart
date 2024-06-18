@@ -129,8 +129,10 @@ class ConfirmedComboxItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (combox.commentFather != null)
-                    CommentRichText(comment: combox.commentFather!),
+                  // Comment(
+                  //   index: index,
+                  //   comments: product.commentFather,
+                  // ),
                 ],
               ),
             );

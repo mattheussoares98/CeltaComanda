@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
-import '../../pages.dart';
 
 class Comment extends StatefulWidget {
-  final int index;
+  final int indexOfProduct;
+  final int? indexOfSelectedProduct;
   final String? comments;
+  final void Function() updateSelectedIndex;
+  final TextEditingController commentsController;
+  final Future<void> Function() clearComment;
+  final Future<void> Function() updateComment;
+
   const Comment({
-    required this.index,
+    required this.indexOfProduct,
     required this.comments,
+    required this.updateSelectedIndex,
+    required this.indexOfSelectedProduct,
+    required this.commentsController,
+    required this.clearComment,
+    required this.updateComment,
     super.key,
   });
 
@@ -18,20 +27,19 @@ class Comment extends StatefulWidget {
 }
 
 class _CommentState extends State<Comment> {
-  TextEditingController commentsController = TextEditingController();
   FocusNode commentsFocusNode = FocusNode();
 
-  void onTapCommentIcon(CartPresenter cartPresenter) {
-    cartPresenter.updateIndexOfSelectedProduct(widget.index);
+  void onTapCommentIcon() {
+    widget.commentsController.clear();
+    widget.updateSelectedIndex();
     //criar teste pra essa alteração do índice do produto que foi selecionado
     if (widget.comments != null) {
       setState(() {
-        commentsController.text =
-            cartPresenter.cartProducts[widget.index].Comments!;
+        widget.commentsController.text = widget.comments!;
       });
     }
 
-    if (cartPresenter.indexOfSelectedProduct == widget.index) {
+    if (widget.indexOfSelectedProduct != widget.indexOfProduct) {
       Future.delayed(const Duration(milliseconds: 300), () {
         FocusScope.of(context).requestFocus(commentsFocusNode);
       });
@@ -41,14 +49,11 @@ class _CommentState extends State<Comment> {
   @override
   void dispose() {
     super.dispose();
-    commentsController.dispose();
     commentsFocusNode.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-
     return Column(
       children: [
         Row(
@@ -79,12 +84,7 @@ class _CommentState extends State<Comment> {
                           context: context,
                           titleMessage: "Excluir comentário?",
                           content: null,
-                          onPress: () async {
-                            await cartPresenter.updateCommentOfProductCart(
-                              index: widget.index,
-                              newComment: null,
-                            );
-                          },
+                          onPress: widget.clearComment,
                         );
                       },
                       child: const Icon(
@@ -98,9 +98,7 @@ class _CommentState extends State<Comment> {
               ),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: () {
-                onTapCommentIcon(cartPresenter);
-              },
+              onTap: onTapCommentIcon,
               child: Row(
                 children: [
                   Icon(
@@ -113,13 +111,13 @@ class _CommentState extends State<Comment> {
             ),
           ],
         ),
-        if (cartPresenter.indexOfSelectedProduct == widget.index)
+        if (widget.indexOfSelectedProduct == widget.indexOfProduct)
           Row(
             children: [
               Expanded(
                 child: TextField(
                   focusNode: commentsFocusNode,
-                  controller: commentsController,
+                  controller: widget.commentsController,
                   maxLines: 8,
                   minLines: 1,
                   decoration: const InputDecoration(
@@ -130,10 +128,7 @@ class _CommentState extends State<Comment> {
               ),
               TextButton(
                 onPressed: () async {
-                  await cartPresenter.updateCommentOfProductCart(
-                    index: widget.index,
-                    newComment: commentsController.text,
-                  );
+                  await widget.updateComment();
 
                   commentsFocusNode.unfocus();
                 },

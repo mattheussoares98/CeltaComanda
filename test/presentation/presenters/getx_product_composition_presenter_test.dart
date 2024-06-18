@@ -38,16 +38,12 @@ void main() {
     required double productValue,
   }) {
     final updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
-        DeliveryControl: cartPresenter
-            .saleRequestTempMock!.DeliveryControl
-            .toInt(),
-        EnterpriseId:
-            cartPresenter.saleRequestTempMock!.EnterpriseId.toInt(),
-        PersonalizedCode:
-            cartPresenter.saleRequestTempMock!.PersonalizedCode,
-        SaleRequestTempId: cartPresenter
-            .saleRequestTempMock!.SaleRequestTempId
-            .toInt(),
+        DeliveryControl:
+            cartPresenter.saleRequestTempMock!.DeliveryControl.toInt(),
+        EnterpriseId: cartPresenter.saleRequestTempMock!.EnterpriseId.toInt(),
+        PersonalizedCode: cartPresenter.saleRequestTempMock!.PersonalizedCode,
+        SaleRequestTempId:
+            cartPresenter.saleRequestTempMock!.SaleRequestTempId.toInt(),
         TotalLiquid: totalLiquid,
         Products: [
           UpdateSaleRequestTempProductEntity(
@@ -55,9 +51,8 @@ void main() {
             ProductPriceLookUpCode: "PluChild",
             Quantity:
                 productCompositionViewModel.Quantity.toString().toDouble(),
-            SaleRequestTempId: cartPresenter
-                .saleRequestTempMock!.SaleRequestTempId
-                .toInt(),
+            SaleRequestTempId:
+                cartPresenter.saleRequestTempMock!.SaleRequestTempId.toInt(),
             TotalLiquid: totalLiquid,
             Value: productValue,
             Comments: "",
@@ -246,6 +241,7 @@ void main() {
         offerPrice: 0,
         incrementValue: 0,
         isOptionalItem: false,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -269,6 +265,7 @@ void main() {
         offerPrice: 8,
         incrementValue: 0,
         isOptionalItem: false,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -292,6 +289,7 @@ void main() {
         offerPrice: 8,
         incrementValue: 0,
         isOptionalItem: true,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -315,6 +313,7 @@ void main() {
         offerPrice: 8,
         incrementValue: 5,
         isOptionalItem: true,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -338,6 +337,7 @@ void main() {
         offerPrice: 8,
         incrementValue: 5,
         isOptionalItem: false,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -361,6 +361,7 @@ void main() {
         offerPrice: 8,
         incrementValue: 5,
         isOptionalItem: false,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -384,6 +385,7 @@ void main() {
         offerPrice: 8,
         incrementValue: 5,
         isOptionalItem: true,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -476,6 +478,7 @@ void main() {
         offerPrice: 0,
         incrementValue: 0,
         isOptionalItem: false,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -492,8 +495,8 @@ void main() {
             ),
           ));
 
-      verifyNever(() => cartPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!));
+      verifyNever(() =>
+          cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!));
     });
     test("Should call updateSaleRequestTemp on updateSaleRequest", () async {
       final case1 = EntityFactory.makeProductCompositionViewModel(
@@ -502,6 +505,7 @@ void main() {
         offerPrice: 0,
         incrementValue: 0,
         isOptionalItem: false,
+        indexOfSelectedChild: 0,
       );
 
       await sut.updateSaleRequest(
@@ -553,8 +557,7 @@ void main() {
             .toList(),
       );
     });
-    test(
-        "Should call cartPresenter.loadSaleRequest with correct values",
+    test("Should call cartPresenter.loadSaleRequest with correct values",
         () async {
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
@@ -564,14 +567,13 @@ void main() {
             .toList(),
       );
 
-      verify(() => cartPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+      verify(() =>
+              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+          .called(1);
     });
-    test(
-        "Should emit correct values on cartPresenter.load throws unexpected",
+    test("Should emit correct values on cartPresenter.load throws unexpected",
         () async {
-      cartPresenter
-          .mockLoadSaleRequestTempError(DomainError.unexpected);
+      cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -592,8 +594,8 @@ void main() {
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
@@ -636,8 +638,7 @@ void main() {
     test(
         "Should emit unexpected on cartPresenter.loadSaleRequest throws unexpected",
         () async {
-      cartPresenter
-          .mockLoadSaleRequestTempError(DomainError.unexpected);
+      cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(

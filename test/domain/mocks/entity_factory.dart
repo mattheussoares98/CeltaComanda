@@ -633,6 +633,7 @@ class EntityFactory {
     required double offerPrice,
     required double incrementValue,
     required bool isOptionalItem,
+    required int? indexOfSelectedChild,
   }) =>
       ProductCompositionViewModel(
         ProductCompositionId: "1",
@@ -647,7 +648,7 @@ class EntityFactory {
         IncrementValue: incrementValue.toString(),
         IsOptionalItem: isOptionalItem.toString(),
         ProductOptions: "",
-        indexOfSelectedChild: 0,
+        indexOfSelectedChild: indexOfSelectedChild,
         childs: const [],
         commentFather: "",
       );

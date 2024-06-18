@@ -43,7 +43,8 @@ void main() {
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
-  late ProductCompositionViewModel selectedChilds;
+  late ProductCompositionViewModel selectedChild;
+  late ProductCompositionViewModel notSelectedChild;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithtwoQuantities;
 
@@ -124,23 +125,32 @@ void main() {
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
     fatherOfCombox = EntityFactory.makeProductViewModel();
-    selectedChilds = EntityFactory.makeProductCompositionViewModel(
+    selectedChild = EntityFactory.makeProductCompositionViewModel(
       quantity: 1,
       salePrice: 10,
       offerPrice: 10,
       incrementValue: 0,
       isOptionalItem: false,
+      indexOfSelectedChild: 0,
+    );
+    notSelectedChild = EntityFactory.makeProductCompositionViewModel(
+      quantity: 1,
+      salePrice: 10,
+      offerPrice: 10,
+      incrementValue: 0,
+      isOptionalItem: false,
+      indexOfSelectedChild: null,
     );
 
     confirmedComboxWithOneQuantity = EntityFactory.makeConfirmedComboxViewModel(
-      products: [selectedChilds],
+      products: [selectedChild],
       father: fatherOfCombox,
       totalPrice: 10,
       quantity: 1,
     );
     confirmedComboxWithtwoQuantities =
         EntityFactory.makeConfirmedComboxViewModel(
-      products: [selectedChilds],
+      products: [selectedChild],
       father: fatherOfCombox,
       totalPrice: 20,
       quantity: 2,
@@ -1635,7 +1645,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1648,7 +1658,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1657,7 +1667,18 @@ void main() {
     test("Should add new ConfirmedComboxViewModel with one quantity correctly",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
+        totalPrice: 10,
+        father: fatherOfCombox,
+        quantity: 1,
+      );
+
+      expect(sut.confirmedCombox, [confirmedComboxWithOneQuantity]);
+    });
+
+    test("Should not add ConfirmedComboxViewModel if not selected", () async {
+      await sut.addConfirmedCombox(
+        selectedChilds: [notSelectedChild, selectedChild],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1669,7 +1690,7 @@ void main() {
         "Should add new ConfirmedComboxViewModel with two quantities correctly",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
         totalPrice: 20,
         father: fatherOfCombox,
         quantity: 2,
@@ -1680,7 +1701,7 @@ void main() {
 
     test("Should return true on addConfirmedCombox success", () async {
       bool isConfirmed = await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1692,7 +1713,7 @@ void main() {
       cartInformations.mockUpdateConfirmedComboxError();
 
       bool isConfirmed = await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1705,7 +1726,7 @@ void main() {
         "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox with one quantity",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds]
+        selectedChilds: [selectedChild]
             .map((element) => ProductCompositionViewModel(
                   Quantity: 1.0.toString(),
                   ProductCompositionId: element.ProductCompositionId,
@@ -1738,7 +1759,7 @@ void main() {
         "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox with 2 quantities",
         () async {
       await sut.addConfirmedCombox(
-        selectedChilds: [selectedChilds],
+        selectedChilds: [selectedChild],
         totalPrice: 10,
         father: fatherOfCombox,
         quantity: 1,
@@ -1809,7 +1830,7 @@ void main() {
 
       await sut.addComboxQuantity(0);
 
-      expect(sut.confirmedCombox[0].totalPrice, 20);
+      expect(sut.confirmedCombox[0].totalPrice, 10);
       expect(sut.confirmedCombox[0].quantity, 2);
       expect(sut.confirmedCombox[0].products.first.Quantity, "2.0");
     });
@@ -1819,7 +1840,7 @@ void main() {
 
       await sut.addComboxQuantity(0);
 
-      expect(sut.confirmedCombox[0].totalPrice, 30);
+      expect(sut.confirmedCombox[0].totalPrice, 20);
       expect(sut.confirmedCombox[0].quantity, 3);
       expect(sut.confirmedCombox[0].products.first.Quantity, "3.0");
     });

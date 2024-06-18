@@ -648,6 +648,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       _confirmedCombox.add(
         ConfirmedComboxViewModel(
           products: selectedChilds
+              .where((selected) => selected.indexOfSelectedChild != null)
               .map((element) => ProductCompositionViewModel(
                     Quantity:
                         (element.Quantity.toString().toDouble() * quantity)

@@ -122,10 +122,8 @@ class ConfirmedComboxItem extends StatelessWidget {
                       Expanded(
                         flex: 30,
                         child: Text(
-                          (productCompositionPresenter.calculateTotalLiquid(
-                                      product: combox,
-                                      itemPrice: productCompositionPresenter
-                                          .calculateProductPrice(combox)) *
+                          (productCompositionPresenter
+                                      .calculateProductPrice(combox) *
                                   combox.Quantity.toString().toDouble())
                               .toString()
                               .toBrazilianNumber()

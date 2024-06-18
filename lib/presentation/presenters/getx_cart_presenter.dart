@@ -714,31 +714,30 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         father: _confirmedCombox[index].father,
         quantity: _confirmedCombox[index].quantity + 1,
         totalPrice: _confirmedCombox[index].totalPrice,
-        products: _confirmedCombox[index]
-            .products
-            .map((element) => ProductCompositionViewModel(
-                  Quantity: (element.Quantity.toString().toDouble() +
-                          (element.Quantity.toString().toDouble() /
-                              _confirmedCombox[index].quantity))
-                      .toString(),
-                  ProductCompositionId: element.ProductCompositionId,
-                  EnterpriseId: element.EnterpriseId,
-                  InternalCodeOnERPCodeFather:
-                      element.InternalCodeOnERPCodeFather,
-                  InternalCodeOnERPCodeChild:
-                      element.InternalCodeOnERPCodeChild,
-                  PluChild: element.PluChild,
-                  ChildName: element.ChildName,
-                  SalePrice: element.SalePrice,
-                  OfferPrice: element.OfferPrice,
-                  IncrementValue: element.IncrementValue,
-                  IsOptionalItem: element.IsOptionalItem,
-                  ProductOptions: element.ProductOptions,
-                  childs: element.childs,
-                  commentFather: element.commentFather,
-                  indexOfSelectedChild: element.indexOfSelectedChild,
-                ))
-            .toList(),
+        products: _confirmedCombox[index].products.map((element) {
+          final productQuantity = (element.Quantity.toString().toDouble() /
+              _confirmedCombox[index].quantity);
+          final newQuantity =
+              (element.Quantity.toString().toDouble() + productQuantity);
+
+          return ProductCompositionViewModel(
+            Quantity: newQuantity.toString(),
+            ProductCompositionId: element.ProductCompositionId,
+            EnterpriseId: element.EnterpriseId,
+            InternalCodeOnERPCodeFather: element.InternalCodeOnERPCodeFather,
+            InternalCodeOnERPCodeChild: element.InternalCodeOnERPCodeChild,
+            PluChild: element.PluChild,
+            ChildName: element.ChildName,
+            SalePrice: element.SalePrice,
+            OfferPrice: element.OfferPrice,
+            IncrementValue: element.IncrementValue,
+            IsOptionalItem: element.IsOptionalItem,
+            ProductOptions: element.ProductOptions,
+            childs: element.childs,
+            commentFather: element.commentFather,
+            indexOfSelectedChild: element.indexOfSelectedChild,
+          );
+        }).toList(),
       );
 
       _confirmedCombox[index] = comboxWithNewQuantities;

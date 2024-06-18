@@ -109,6 +109,7 @@ class GetxProductCompositionPresenter extends GetxController
     required ProductCompositionViewModel product,
     required double itemPrice,
   }) {
+    //adicionar pra aqui já calcular o preço do produto pra não precisar passa o preço dele como parâmetro
     return itemPrice * product.Quantity.toString().toDouble();
   }
 

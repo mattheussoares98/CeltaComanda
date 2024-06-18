@@ -1953,5 +1953,42 @@ void main() {
 
       expect(sut.confirmedCombox, []);
     });
+
+    test(
+        "Should reduce combox quantity correctly when have more than 1 combox quantity",
+        () async {
+      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
+
+      await sut.reduceComboxQuantity(0);
+
+      expect(sut.confirmedCombox, [
+        ConfirmedComboxViewModel(
+          products: [selectedChildWithTwoQuantities]
+              .map((element) => ProductCompositionViewModel(
+                    Quantity: 2.0.toString(),
+                    ProductCompositionId: element.ProductCompositionId,
+                    EnterpriseId: element.EnterpriseId,
+                    InternalCodeOnERPCodeFather:
+                        element.InternalCodeOnERPCodeFather,
+                    InternalCodeOnERPCodeChild:
+                        element.InternalCodeOnERPCodeChild,
+                    PluChild: element.PluChild,
+                    ChildName: element.ChildName,
+                    SalePrice: element.SalePrice,
+                    OfferPrice: element.OfferPrice,
+                    IncrementValue: element.IncrementValue,
+                    IsOptionalItem: element.IsOptionalItem,
+                    ProductOptions: element.ProductOptions,
+                    childs: element.childs,
+                    commentFather: element.commentFather,
+                    indexOfSelectedChild: element.indexOfSelectedChild,
+                  ))
+              .toList(),
+          father: confirmedComboxWithtwoQuantities.father,
+          totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
+          quantity: 1.0,
+        ),
+      ]);
+    });
   });
 }

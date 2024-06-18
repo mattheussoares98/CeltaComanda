@@ -2149,5 +2149,51 @@ void main() {
 
       expect(sut.indexOfSelectedProductCombox, null);
     });
+
+    test("Should return incrementValue when is optionalItem", () async {
+      double price = sut
+          .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 10,
+        offerPrice: 15,
+        incrementValue: 0,
+        isOptionalItem: true,
+        indexOfSelectedChild: null,
+      ));
+
+      expect(price, 0);
+    });
+
+    test(
+        "Should offerPrice + incrementValue when offer is more than 0 and is not optional item",
+        () async {
+      double price = sut
+          .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 10,
+        offerPrice: 15,
+        incrementValue: 10,
+        isOptionalItem: false,
+        indexOfSelectedChild: null,
+      ));
+
+      expect(price, 25);
+    });
+
+    test(
+        "Should SalePrice + incrementValue when offer is less than 0 and is not optional item",
+        () async {
+      double price = sut
+          .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 10,
+        offerPrice: 0,
+        incrementValue: 10,
+        isOptionalItem: false,
+        indexOfSelectedChild: null,
+      ));
+
+      expect(price, 20);
+    });
   });
 }

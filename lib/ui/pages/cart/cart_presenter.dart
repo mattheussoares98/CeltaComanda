@@ -84,7 +84,8 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> addComboxQuantity(int index);
   Future<void> reduceComboxQuantity(int index);
   Future<void> updateCommentOfCombox({
-    required int index,
+    required int indexOfCombox,
+    required int indexOfProduct,
     required String? newComment,
   });
 }

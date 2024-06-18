@@ -804,16 +804,21 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   Future<void> updateCommentOfCombox({
-    required int index,
+    required int indexOfCombox,
+    required int indexOfProduct,
     required String? newComment,
   }) async {
     isLoading = true;
     mainError = null;
     try {
+      _confirmedCombox[indexOfCombox].products[indexOfProduct].commentFather =
+          newComment;
       await cartInformations.updateConfirmedCombox(confirmedCombox);
+      notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
-    isLoading = false;
   }
 }

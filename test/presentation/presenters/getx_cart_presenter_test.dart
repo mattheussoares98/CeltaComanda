@@ -2037,7 +2037,11 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.updateCommentOfCombox(index: 0, newComment: newComment);
+      await sut.updateCommentOfCombox(
+        indexOfCombox: 0,
+        indexOfProduct: 0,
+        newComment: newComment,
+      );
     });
 
     test("Should emit correct values on update combox comment throws",
@@ -2048,7 +2052,78 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.updateCommentOfCombox(index: 0, newComment: newComment);
+      await sut.updateCommentOfCombox(
+        indexOfCombox: 0,
+        indexOfProduct: 0,
+        newComment: newComment,
+      );
+    });
+
+    test(
+        "Should call cartInformations.updateConfirmedCombox when update comment",
+        () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+
+      await sut.updateCommentOfCombox(
+          indexOfCombox: 0, indexOfProduct: 0, newComment: newComment);
+
+      verify(() => cartInformations.updateConfirmedCombox([
+            ConfirmedComboxViewModel(
+              products: confirmedComboxWithOneQuantity.products
+                  .map((element) => ProductCompositionViewModel(
+                        commentFather: newComment,
+                        ProductCompositionId: element.ProductCompositionId,
+                        EnterpriseId: element.EnterpriseId,
+                        InternalCodeOnERPCodeFather:
+                            element.InternalCodeOnERPCodeFather,
+                        InternalCodeOnERPCodeChild:
+                            element.InternalCodeOnERPCodeChild,
+                        PluChild: element.PluChild,
+                        ChildName: element.ChildName,
+                        Quantity: element.Quantity,
+                        SalePrice: element.SalePrice,
+                        OfferPrice: element.OfferPrice,
+                        IncrementValue: element.IncrementValue,
+                        IsOptionalItem: element.IsOptionalItem,
+                        ProductOptions: element.ProductOptions,
+                        childs: element.childs,
+                        indexOfSelectedChild: element.indexOfSelectedChild,
+                      ))
+                  .toList(),
+              father: confirmedComboxWithOneQuantity.father,
+              totalPrice: confirmedComboxWithOneQuantity.totalPrice,
+              quantity: confirmedComboxWithOneQuantity.quantity,
+            )
+          ])).called(1);
+    });
+
+    test("Should update comment correctly", () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+
+      await sut.updateCommentOfCombox(
+        indexOfCombox: 0,
+        indexOfProduct: 0,
+        newComment: newComment,
+      );
+
+      expect(
+        sut.confirmedCombox.first.products.first.commentFather,
+        newComment,
+      );
+    });
+    test("Should clear comment correctly", () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+
+      await sut.updateCommentOfCombox(
+        indexOfCombox: 0,
+        indexOfProduct: 0,
+        newComment: null,
+      );
+
+      expect(
+        sut.confirmedCombox.first.products.first.commentFather,
+        null,
+      );
     });
   });
 }

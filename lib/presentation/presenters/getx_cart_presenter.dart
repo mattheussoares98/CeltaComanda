@@ -755,7 +755,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     isLoading = true;
     mainError = null;
     try {
+      if(_confirmedCombox[index].quantity <= 1){
+        _confirmedCombox.removeAt(index);
+      }
       await cartInformations.updateConfirmedCombox(confirmedCombox);
+      notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
     }

@@ -1943,5 +1943,15 @@ void main() {
 
       await sut.reduceComboxQuantity(0);
     });
+
+    test(
+        "Should remove combox when subtract and have only one quantity or less",
+        () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+
+      await sut.reduceComboxQuantity(0);
+
+      expect(sut.confirmedCombox, []);
+    });
   });
 }

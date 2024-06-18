@@ -2165,7 +2165,7 @@ void main() {
     });
 
     test(
-        "Should offerPrice + incrementValue when offer is more than 0 and is not optional item",
+        "Should return offerPrice + incrementValue when offer is more than 0 and is not optional item",
         () async {
       double price = sut
           .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
@@ -2181,7 +2181,7 @@ void main() {
     });
 
     test(
-        "Should SalePrice + incrementValue when offer is less than 0 and is not optional item",
+        "Should return SalePrice + incrementValue when offer is less than 0 and is not optional item",
         () async {
       double price = sut
           .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
@@ -2194,6 +2194,90 @@ void main() {
       ));
 
       expect(price, 20);
+    });
+
+    test("Should calculate correctly ProductTotalLiquid 1", () async {
+      double totalLiquid = sut.calculateProductTotalLiquid(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 10,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ));
+
+      expect(totalLiquid, 30);
+    });
+
+    test("Should calculate correctly ProductTotalLiquid 2", () async {
+      double totalLiquid = sut.calculateProductTotalLiquid(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 10,
+        incrementValue: 5,
+        isOptionalItem: true,
+        indexOfSelectedChild: 0,
+      ));
+
+      expect(totalLiquid, 10);
+    });
+
+    test("Should calculate correctly ProductTotalLiquid 3", () async {
+      double totalLiquid = sut.calculateProductTotalLiquid(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 0,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ));
+
+      expect(totalLiquid, 50);
+    });
+
+    test("Should calculate correctly ProductTotalLiquid 3", () async {
+      double totalLiquid = sut.calculateProductTotalLiquid(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 0,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ));
+
+      expect(totalLiquid, 50);
+    });
+
+    test("Should calculate correctly increment value 1", () async {
+      double totalLiquid = sut.calculateIncrementValue(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 0,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ));
+
+      expect(totalLiquid, 5);
+    });
+
+    test("Should calculate correctly increment value 2", () async {
+      double totalLiquid = sut.calculateIncrementValue(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 0,
+        incrementValue: 0,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ));
+
+      expect(totalLiquid, 0);
     });
   });
 }

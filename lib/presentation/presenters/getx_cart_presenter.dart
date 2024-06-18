@@ -704,7 +704,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<void> addComboxQuantity(ConfirmedComboxViewModel combox) async {
+  Future<void> addComboxQuantity(int index) async {
     mainError = null;
     isLoading = true;
 

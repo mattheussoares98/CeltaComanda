@@ -1781,7 +1781,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.addComboxQuantity(confirmedComboxWithOneQuantity);
+      await sut.addComboxQuantity(0);
     });
 
     test("Should emit correct values on addComboxQuantity throws", () async {
@@ -1791,13 +1791,13 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.addComboxQuantity(confirmedComboxWithOneQuantity);
+      await sut.addComboxQuantity(0);
     });
 
     test("Should call updateConfirmedCombox on addComboxQuantity", () async {
       sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-      
-      await sut.addComboxQuantity(confirmedComboxWithOneQuantity);
+
+      await sut.addComboxQuantity(0);
 
       verify(() => cartInformations.updateConfirmedCombox(
             [confirmedComboxWithOneQuantity],

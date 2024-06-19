@@ -601,7 +601,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           PersonalizedCode: saleRequestTempResult.PersonalizedCode,
           EnterpriseId: saleRequestTempResult.EnterpriseId,
           TotalLiquid: saleRequestTempResult.TotalLiquid,
-          DeliveryControl: saleRequestTempResult.DeliveryControl,
+          DeliveryControl: tableNumber ?? 0,
           Comments: saleRequestTempResult.Comments,
         ),
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,

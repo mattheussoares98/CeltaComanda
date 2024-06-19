@@ -129,7 +129,9 @@ class _CartPageState extends State<CartPage>
             ),
           ),
           Visibility(
-            visible: cartPresenter.cartProducts.isNotEmpty,
+            visible: cartPresenter.cartProducts.length +
+                    cartPresenter.confirmedCombox.length >
+                0,
             child: const Positioned(
               bottom: 0,
               left: 0,

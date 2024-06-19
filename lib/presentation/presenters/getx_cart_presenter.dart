@@ -551,6 +551,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
               ))
           .toList();
 
+      final selectedComboxProducts =
+          convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+        saleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+      );
+
+      products.addAll(selectedComboxProducts);
+
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),

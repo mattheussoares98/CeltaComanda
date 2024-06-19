@@ -39,7 +39,7 @@ void main() {
   late String commandNumber;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late List<UpdateSaleRequestTempProductEntity>
-      updateSaleRequestTempProductsEntity;
+      cartSaleRequestTempProductsEntity;
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
@@ -49,6 +49,8 @@ void main() {
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithtwoQuantities;
   late String? newComment;
+  late List<ProductCompositionViewModel> productsSelectedsInCombox;
+  late ConfirmedComboxViewModel comboxWithSelectedProducts;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -103,7 +105,7 @@ void main() {
     );
     commandNumber = faker.randomGenerator.integer(100).toString();
 
-    updateSaleRequestTempProductsEntity = sut.cartProducts
+    cartSaleRequestTempProductsEntity = sut.cartProducts
         .map((element) => UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp:
                 element.toEntity().Product.InternalCodeOnERP!.toInt(),
@@ -114,19 +116,56 @@ void main() {
             Value: element.Value.toDouble(),
             Comments: element.Comments))
         .toList();
+
+    productsSelectedsInCombox = [
+      EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 20,
+        offerPrice: 10,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ),
+      EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 10,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+      ),
+      EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 10,
+        incrementValue: 5,
+        isOptionalItem: false,
+        indexOfSelectedChild:
+            null, //não selecionado, por isso não considera nos produtos pra serem inseridos na comanda
+      ),
+    ];
+    fatherOfCombox = EntityFactory.makeProductViewModel();
+    comboxWithSelectedProducts = EntityFactory.makeConfirmedComboxViewModel(
+      father: fatherOfCombox,
+      products: productsSelectedsInCombox,
+      totalPrice:
+          sut.calculateProductTotalLiquid(productsSelectedsInCombox[0]) +
+              sut.calculateProductTotalLiquid(productsSelectedsInCombox[1]),
+      quantity: 2,
+    );
+
     updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
-      DeliveryControl: saleRequestTempEntity.DeliveryControl.toInt(),
-      EnterpriseId: saleRequestTempEntity.EnterpriseId.toInt(),
+      DeliveryControl: saleRequestTempEntity.DeliveryControl,
+      EnterpriseId: saleRequestTempEntity.EnterpriseId,
       PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
-      SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId.toInt(),
-      TotalLiquid: updateSaleRequestTempProductsEntity.fold(
+      SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
+      TotalLiquid: cartSaleRequestTempProductsEntity.fold(
           0.0, (previousValue, element) => element.TotalLiquid + previousValue),
-      Products: updateSaleRequestTempProductsEntity,
+      Products: cartSaleRequestTempProductsEntity,
     );
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
-    fatherOfCombox = EntityFactory.makeProductViewModel();
     selectedChildWithOneQuantity =
         EntityFactory.makeProductCompositionViewModel(
       quantity: 1,
@@ -1327,6 +1366,8 @@ void main() {
   group("Save cart products in saleRequesTemp", () {
     test("Should call correct functions on save products in SaleRequestTemp",
         () async {
+      sut.cartProducts.add(cartProductViewModel);
+      sut.confirmedCombox.add(comboxWithSelectedProducts);
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(printedProductsPresenter);
 
@@ -1350,9 +1391,33 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
+      final newUpdateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
+        DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
+        EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
+        PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        TotalLiquid: 90 + cartProductViewModel.TotalLiquid.toDouble(),
+        Products: [
+          ...[cartProductViewModel]
+              .map((element) => UpdateSaleRequestTempProductEntity(
+                    ProductInternalCodeOnErp:
+                        element.Product.InternalCodeOnERP!.toInt(),
+                    ProductPriceLookUpCode: element.ProductPriceLookUpCode,
+                    Quantity: element.Quantity.toDouble(),
+                    SaleRequestTempId:
+                        updateSaleRequestTempEntity.SaleRequestTempId,
+                    TotalLiquid: element.TotalLiquid.toDouble(),
+                    Value: element.Value.toDouble(),
+                    Comments: element.Comments,
+                  )),
+          ...sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+            saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+          ),
+        ],
+      );
       verify(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            entity: updateSaleRequestTempEntity,
+            entity: newUpdateSaleRequestTempEntity,
           )).called(1);
 
       verify(() => finishSaleRequestTemp.finish(
@@ -2285,50 +2350,16 @@ void main() {
         () async {
       //esse teste é um pouco mais complexo, por isso vou explicar o que faço em cada parte
 
-      final products = [
-        EntityFactory.makeProductCompositionViewModel(
-          quantity: 1,
-          salePrice: 20,
-          offerPrice: 10,
-          incrementValue: 5,
-          isOptionalItem: false,
-          indexOfSelectedChild: 0,
-        ),
-        EntityFactory.makeProductCompositionViewModel(
-          quantity: 2,
-          salePrice: 20,
-          offerPrice: 10,
-          incrementValue: 5,
-          isOptionalItem: false,
-          indexOfSelectedChild: 0,
-        ),
-        EntityFactory.makeProductCompositionViewModel(
-          quantity: 2,
-          salePrice: 20,
-          offerPrice: 10,
-          incrementValue: 5,
-          isOptionalItem: false,
-          indexOfSelectedChild: null, //não selecionado
-        ),
-      ];
       //crio uma lista com 3 produtos. Sendo um opcional e sem índice de filho
       //selecionado. Por isso ele precisa ser ignorado e leva em consideração
       //somente os dois primeiros
       const double totalComboxQuantity = 2;
       //o preço total do produto precisa ser multiplicado pela quantidade de
       //combos, por isso essa variável
-      final firstProduct = products[0];
-      final secondProduct = products[1];
+      final firstProduct = productsSelectedsInCombox[0];
+      final secondProduct = productsSelectedsInCombox[1];
 
-      final combox = EntityFactory.makeConfirmedComboxViewModel(
-        father: fatherOfCombox,
-        products: products,
-        totalPrice: sut.calculateProductTotalLiquid(firstProduct) +
-            sut.calculateProductTotalLiquid(secondProduct),
-        //somo o preço dos dois produtos que foram selecionados e crio um combo com eles
-        quantity: totalComboxQuantity,
-      );
-      sut.confirmedCombox.add(combox);
+      sut.confirmedCombox.add(comboxWithSelectedProducts);
       //adiciono esse combo pra conseguir testar
 
       final fakeSaleRequestTempId = faker.randomGenerator.integer(10);

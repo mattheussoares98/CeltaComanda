@@ -2406,5 +2406,12 @@ void main() {
 
       expect(sut.confirmedCombox, []);
     });
+    test(
+        "Should call sut.updateConfirmedCombox with empty list on saveProducts",
+        () async {
+      await sut.saveProducts(printedProductsPresenter);
+
+      verify(() => cartInformations.updateConfirmedCombox([])).called(1);
+    });
   });
 }

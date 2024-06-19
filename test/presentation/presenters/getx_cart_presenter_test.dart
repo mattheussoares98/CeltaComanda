@@ -209,7 +209,7 @@ void main() {
       quantity: 2,
     );
     newComment = faker.randomGenerator.string(10);
-    tableNumber = faker.randomGenerator.integer(1000);
+    tableNumber = faker.randomGenerator.integer(1000, min: 1);
   }
 
   void initMockSuccess() {
@@ -1818,7 +1818,6 @@ void main() {
     test("Should save DeliveryControl with 0 when tableNumber is null",
         () async {
       sut.cartProducts.add(cartProductViewModel);
-      confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
@@ -1828,6 +1827,30 @@ void main() {
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: SaleRequestTempEntity(
               DeliveryControl: 0,
+              Products: saleRequestTempEntity.Products,
+              SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
+              PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+              EnterpriseId: saleRequestTempEntity.EnterpriseId,
+              TotalLiquid: saleRequestTempEntity.TotalLiquid,
+              Comments: saleRequestTempEntity.Comments,
+            ),
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          )).called(1);
+    });
+    test(
+        "Should save DeliveryControl with correct tableNumber when is differente than 0",
+        () async {
+      sut.cartProducts.add(cartProductViewModel);
+      confirmedCartProducts.mockIsConfirmed(false);
+
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
+
+      verify(() => finishSaleRequestTemp.finish(
+            saleRequestTempEntity: SaleRequestTempEntity(
+              DeliveryControl: tableNumber,
               Products: saleRequestTempEntity.Products,
               SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
               PersonalizedCode: saleRequestTempEntity.PersonalizedCode,

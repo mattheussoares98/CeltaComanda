@@ -1367,7 +1367,6 @@ void main() {
     test("Should call correct functions on save products in SaleRequestTemp",
         () async {
       sut.cartProducts.add(cartProductViewModel);
-      sut.confirmedCombox.add(comboxWithSelectedProducts);
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(printedProductsPresenter);
 
@@ -1391,37 +1390,29 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
-      final firstProduct = UpdateSaleRequestTempProductEntity(
-        ProductInternalCodeOnErp:
-            cartProductViewModel.Product.InternalCodeOnERP!.toInt(),
-        ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
-        Quantity: cartProductViewModel.Quantity.toDouble(),
-        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-        TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
-        Value: cartProductViewModel.Value.toDouble(),
-        Comments: cartProductViewModel.Comments,
-      );
-
-      final secondAndThirdProducts =
-          sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
-        saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-      );
-
-      final teste = UpdateSaleRequestTempEntity(
-        DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
-        EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
-        PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
-        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-        TotalLiquid: 90 + cartProductViewModel.TotalLiquid.toDouble(),
-        Products: [
-          firstProduct,
-          ...secondAndThirdProducts,
-        ],
-      );
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            entity: teste,
-          )).called(1);
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          entity: UpdateSaleRequestTempEntity(
+            DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
+            EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
+            PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+            SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+            TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
+            Products: [
+              UpdateSaleRequestTempProductEntity(
+                ProductInternalCodeOnErp:
+                    cartProductViewModel.Product.InternalCodeOnERP!.toInt(),
+                ProductPriceLookUpCode:
+                    cartProductViewModel.ProductPriceLookUpCode,
+                Quantity: cartProductViewModel.Quantity.toDouble(),
+                SaleRequestTempId:
+                    updateSaleRequestTempEntity.SaleRequestTempId,
+                TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
+                Value: cartProductViewModel.Value.toDouble(),
+                Comments: cartProductViewModel.Comments,
+              )
+            ],
+          ))).called(1);
 
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: saleRequestTempEntity,
@@ -1429,6 +1420,34 @@ void main() {
           )).called(1);
       verify(() => printedProductsPresenter.loadPrinted(commandNumber))
           .called(1);
+    });
+    test(
+        "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
+        () async {
+      sut.confirmedCombox.add(comboxWithSelectedProducts);
+      final products =
+          sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+        saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+      );
+
+      await sut.saveProducts(printedProductsPresenter);
+
+      final entity = UpdateSaleRequestTempEntity(
+        DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
+        EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
+        PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        TotalLiquid: (sut
+                    .calculateProductTotalLiquid(productsSelectedsInCombox[0]) +
+                sut.calculateProductTotalLiquid(productsSelectedsInCombox[1])) *
+            comboxWithSelectedProducts.quantity,
+        Products: [...products],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: entity,
+          )).called(1);
     });
     test("Should emit correct values on success to save cart products",
         () async {
@@ -2399,19 +2418,6 @@ void main() {
           Comments: secondProduct.commentFather,
         ),
       ]);
-    });
-    test("Should clear confirmedCombox on saveProducts", () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-      await sut.saveProducts(printedProductsPresenter);
-
-      expect(sut.confirmedCombox, []);
-    });
-    test(
-        "Should call sut.updateConfirmedCombox with empty list on saveProducts",
-        () async {
-      await sut.saveProducts(printedProductsPresenter);
-
-      verify(() => cartInformations.updateConfirmedCombox([])).called(1);
     });
   });
 }

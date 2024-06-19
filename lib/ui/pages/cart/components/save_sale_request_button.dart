@@ -13,9 +13,11 @@ class SaveSaleRequestButton extends StatelessWidget {
     required PrintedProductsPresenter printedProductsPresenter,
     required String commandNumber,
     required BuildContext context,
+    required int? tableNumber,
   }) async {
     bool isUpdated = await cartPresenter.saveProducts(
-      printedProductsPresenter,
+      printedProductsPresenter: printedProductsPresenter,
+      tableNumber: tableNumber,
     );
 
     if (isUpdated) {
@@ -46,6 +48,7 @@ class SaveSaleRequestButton extends StatelessWidget {
               commandNumber: commandNumberController.text,
               context: context,
               printedProductsPresenter: printedProductsPresenter,
+              tableNumber: null,
             );
           },
           child: Row(

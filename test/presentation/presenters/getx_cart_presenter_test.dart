@@ -51,6 +51,7 @@ void main() {
   late String? newComment;
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late ConfirmedComboxViewModel comboxWithSelectedProducts;
+  late int tableNumber;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -208,6 +209,7 @@ void main() {
       quantity: 2,
     );
     newComment = faker.randomGenerator.string(10);
+    tableNumber = faker.randomGenerator.integer(1000);
   }
 
   void initMockSuccess() {
@@ -421,7 +423,9 @@ void main() {
 
     test("Should call cartInformations.clear when saveProducts succeeds",
         () async {
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+          printedProductsPresenter: printedProductsPresenter,
+          tableNumber: tableNumber);
 
       verify(() => cartInformations.clearCartProducts()).called(1);
     });
@@ -1368,7 +1372,10 @@ void main() {
         () async {
       sut.cartProducts.add(cartProductViewModel);
       confirmedCartProducts.mockIsConfirmed(false);
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => barcodeScanner.read()).called(1);
 
@@ -1430,7 +1437,10 @@ void main() {
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
       );
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
@@ -1454,7 +1464,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should emit correct values on BarcodeScanner throws unexpected",
         () async {
@@ -1463,7 +1476,10 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
         () async {
@@ -1472,7 +1488,10 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
@@ -1480,12 +1499,18 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should call correct functions LoadSaleRequestTemp throws", () async {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1521,13 +1546,19 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should call correct functions when TicketIsPermited throws",
         () async {
       ticketIsPermitted.mockError();
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1565,7 +1596,10 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       confirmedCartProducts.mockIsConfirmed(false);
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should call correct functions updateSaleRequestTemp throws",
         () async {
@@ -1573,7 +1607,10 @@ void main() {
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
       confirmedCartProducts.mockIsConfirmed(false);
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1609,13 +1646,19 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
     });
     test("Should call correct functions when finishSaleRequestTemp throws",
         () async {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1649,14 +1692,20 @@ void main() {
     test(
         "Should call verify is confirmed cart products when call saveCartProducts",
         () async {
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => confirmedCartProducts.isConfirmed()).called(1);
     });
     test(
         "Should call udpate confirmedCartProducts with true value when saveCartProducts succeeds",
         () async {
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
     });
@@ -1666,14 +1715,20 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
       updateSaleRequestTemp
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verifyNever(() => confirmedCartProducts.updateValue(true));
     });
     test(
         "Should call udpate confirmedCartProducts with false value when finishSaleRequestTemp succeeds",
         () async {
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
     });
@@ -1682,7 +1737,10 @@ void main() {
         () async {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verifyNever(() => confirmedCartProducts.updateValue(false));
     });
@@ -1690,7 +1748,10 @@ void main() {
         "Should not call updateSaleRequestTemp when confirmedCartProducts return true",
         () async {
       confirmedCartProducts.mockIsConfirmed(true);
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verifyNever(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1701,7 +1762,10 @@ void main() {
         "Should call updateSaleRequestTemp when confirmedCartProducts return false",
         () async {
       confirmedCartProducts.mockIsConfirmed(false);
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       verify(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1714,19 +1778,28 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      await sut.saveProducts(printedProductsPresenter);
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       expect(sut.cartProducts, []);
     });
     test("Should return true on saveProducts succeeds", () async {
-      final isUpdated = await sut.saveProducts(printedProductsPresenter);
+      final isUpdated = await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       expect(isUpdated, true);
     });
     test("Should return false on saveProducts throws", () async {
       ticketIsPermitted.mockError();
 
-      final isUpdated = await sut.saveProducts(printedProductsPresenter);
+      final isUpdated = await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       expect(isUpdated, false);
     });
@@ -1734,7 +1807,10 @@ void main() {
     test("Should return false on saveProducts throws", () async {
       ticketIsPermitted.mockError();
 
-      final isUpdated = await sut.saveProducts(printedProductsPresenter);
+      final isUpdated = await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+      );
 
       expect(isUpdated, false);
     });

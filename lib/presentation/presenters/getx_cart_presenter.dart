@@ -520,9 +520,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<bool> saveProducts(
-    PrintedProductsPresenter printedProductsPresenter,
-  ) async {
+  Future<bool> saveProducts({
+    required PrintedProductsPresenter printedProductsPresenter,
+    required int? tableNumber,
+  }) async {
     isLoading = true;
     mainError = null;
     clear();

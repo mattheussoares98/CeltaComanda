@@ -2400,5 +2400,11 @@ void main() {
         ),
       ]);
     });
+    test("Should clear confirmedCombox on saveProducts", () async {
+      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
+      await sut.saveProducts(printedProductsPresenter);
+
+      expect(sut.confirmedCombox, []);
+    });
   });
 }

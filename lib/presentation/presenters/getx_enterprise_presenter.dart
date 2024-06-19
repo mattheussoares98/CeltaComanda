@@ -53,6 +53,8 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       if (remoteData != null) {
         EnterpriseDataBuilder.enterpriseDataEntity = remoteData;
+      } else {
+        throw DomainError.enterpriseOrUrlNotFound;
       }
 
       if (EnterpriseDataBuilder

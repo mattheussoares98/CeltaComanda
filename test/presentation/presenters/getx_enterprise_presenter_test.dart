@@ -37,7 +37,7 @@ void main() {
 
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    
+
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,
@@ -118,6 +118,15 @@ void main() {
     remoteLoadEnterpriseData.mockRemoteLoadError();
     // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
     //     updateEnterpriseNameController: true);
+
+    final error = sut.loadRemoteData();
+
+    expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
+  });
+
+  test('Should throw enterpriseNotFound when remoteEnterpriseData returns null',
+      () {
+    remoteLoadEnterpriseData.mockRemoteLoad(null);
 
     final error = sut.loadRemoteData();
 

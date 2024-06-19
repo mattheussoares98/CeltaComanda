@@ -30,43 +30,57 @@ class _GroupItemsState extends State<GroupItems> {
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: ListView.separated(
+      child: ListView.builder(
         shrinkWrap: true,
         itemCount: widget.expansibleGroupsViewModel.length,
         itemBuilder: (context, index) {
           final groupViewModel = widget.expansibleGroupsViewModel[index];
 
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                presenter.updateIndexOfSelectedGroup(index);
-              });
-            },
-            child: Container(
-              height: 70,
-              color: widget.selectedIndex == index
-                  ? Theme.of(context).primaryColor
-                  : Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                    child: GroupItem(
-                      expansibleGroupsViewModel: groupViewModel,
-                      groupIsSelected: widget.selectedIndex == index,
-                    ),
+          return Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    presenter.updateIndexOfSelectedGroup(index);
+                  });
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(1),
+                  height: 70,
+                  decoration: BoxDecoration(
+                    gradient: widget.selectedIndex == index
+                        ? LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              Theme.of(context).primaryColorLight,
+                              Theme.of(context).primaryColor,
+                              Theme.of(context).primaryColorDark,
+                            ],
+                          )
+                        : null,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                        child: GroupItem(
+                          expansibleGroupsViewModel: groupViewModel,
+                          groupIsSelected: widget.selectedIndex == index,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider(
-            color: Colors.grey,
-            thickness: 0.4,
-            height: 0,
+              const Divider(
+                color: Colors.grey,
+                thickness: 0.4,
+                height: 0,
+              ),
+            ],
           );
         },
       ),

@@ -283,11 +283,19 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   String get totalSaleRequestTempPrice {
-    return _cartProducts
-        .fold(
-            0.0,
-            (previousValue, element) =>
-                element.TotalLiquid.toDouble() + previousValue)
+    final totalCartProductsPrice = _cartProducts.fold(
+        0.0,
+        (previousValue, element) =>
+            element.TotalLiquid.toDouble() + previousValue);
+
+    double totalComboxPrice = 0;
+
+    for (var combox in _confirmedCombox) {
+      for (var product in combox.products) {
+        totalComboxPrice += calculateProductTotalLiquid(product);
+      }
+    }
+    return (totalCartProductsPrice + totalComboxPrice)
         .toString()
         .toBrazilianNumber()
         .addBrazilianCoin();

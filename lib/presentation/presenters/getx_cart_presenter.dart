@@ -862,8 +862,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           ProductPriceLookUpCode: selectedChild.PluChild!,
           Quantity: selectedChild.Quantity!.toDouble(),
           SaleRequestTempId: saleRequestTempId,
-          TotalLiquid: 10,
-          Value: 10,
+          TotalLiquid: calculateProductTotalLiquid(selectedChild),
+          Value: calculateProductPrice(selectedChild),
           Comments: product.commentFather,
         );
 

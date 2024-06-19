@@ -2279,5 +2279,92 @@ void main() {
 
       expect(totalLiquid, 0);
     });
+
+    test(
+        "Should convert correctly convertProductsCompositionToUpdateSaleRequestTempProductEntity",
+        () async {
+      //esse teste é um pouco mais complexo, por isso vou explicar o que faço em cada parte
+
+      final products = [
+        EntityFactory.makeProductCompositionViewModel(
+          quantity: 1,
+          salePrice: 20,
+          offerPrice: 10,
+          incrementValue: 5,
+          isOptionalItem: false,
+          indexOfSelectedChild: 0,
+        ),
+        EntityFactory.makeProductCompositionViewModel(
+          quantity: 2,
+          salePrice: 20,
+          offerPrice: 10,
+          incrementValue: 5,
+          isOptionalItem: false,
+          indexOfSelectedChild: 0,
+        ),
+        EntityFactory.makeProductCompositionViewModel(
+          quantity: 2,
+          salePrice: 20,
+          offerPrice: 10,
+          incrementValue: 5,
+          isOptionalItem: false,
+          indexOfSelectedChild: null, //não selecionado
+        ),
+      ];
+      //crio uma lista com 3 produtos. Sendo um opcional e sem índice de filho
+      //selecionado. Por isso ele precisa ser ignorado e leva em consideração
+      //somente os dois primeiros
+      const double totalComboxQuantity = 2;
+      //o preço total do produto precisa ser multiplicado pela quantidade de
+      //combos, por isso essa variável
+      final firstProduct = products[0];
+      final secondProduct = products[1];
+
+      final combox = EntityFactory.makeConfirmedComboxViewModel(
+        father: fatherOfCombox,
+        products: products,
+        totalPrice: sut.calculateProductTotalLiquid(firstProduct) +
+            sut.calculateProductTotalLiquid(secondProduct),
+        //somo o preço dos dois produtos que foram selecionados e crio um combo com eles
+        quantity: totalComboxQuantity,
+      );
+      sut.confirmedCombox.add(combox);
+      //adiciono esse combo pra conseguir testar
+
+      final fakeSaleRequestTempId = faker.randomGenerator.integer(10);
+      //deixo o id randômico pra ter certeza que vai funcionar
+
+      final entity =
+          sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+        saleRequestTempId: fakeSaleRequestTempId,
+      ); //converto o combo pra uma lista de produtos da forma que usa pra adicionar na comanda
+
+      expect(entity, [
+        UpdateSaleRequestTempProductEntity(
+          ProductInternalCodeOnErp:
+              firstProduct.InternalCodeOnERPCodeFather!.toInt(),
+          ProductPriceLookUpCode: firstProduct.PluChild!,
+          Quantity: firstProduct.Quantity!.toDouble() * totalComboxQuantity,
+          SaleRequestTempId: fakeSaleRequestTempId,
+          TotalLiquid: sut.calculateProductPrice(firstProduct) *
+              firstProduct.Quantity!.toDouble() *
+              totalComboxQuantity,
+          Value: sut.calculateProductPrice(firstProduct),
+          Comments: firstProduct.commentFather,
+        ),
+        UpdateSaleRequestTempProductEntity(
+          ProductInternalCodeOnErp:
+              secondProduct.InternalCodeOnERPCodeFather!.toInt(),
+          ProductPriceLookUpCode: secondProduct.PluChild!,
+          Quantity: secondProduct.Quantity!.toDouble() * totalComboxQuantity,
+          SaleRequestTempId: fakeSaleRequestTempId,
+          TotalLiquid: sut.calculateProductPrice(secondProduct) *
+              secondProduct.Quantity!.toDouble() *
+              totalComboxQuantity,
+          Value: sut.calculateProductPrice(secondProduct),
+          Comments: secondProduct.commentFather,
+        ),
+      ]);
+    });
   });
 }

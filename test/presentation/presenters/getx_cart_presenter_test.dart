@@ -1391,33 +1391,36 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
-      final newUpdateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
+      final firstProduct = UpdateSaleRequestTempProductEntity(
+        ProductInternalCodeOnErp:
+            cartProductViewModel.Product.InternalCodeOnERP!.toInt(),
+        ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+        Quantity: cartProductViewModel.Quantity.toDouble(),
+        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
+        Value: cartProductViewModel.Value.toDouble(),
+        Comments: cartProductViewModel.Comments,
+      );
+
+      final secondAndThirdProducts =
+          sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+        saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+      );
+
+      final teste = UpdateSaleRequestTempEntity(
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         TotalLiquid: 90 + cartProductViewModel.TotalLiquid.toDouble(),
         Products: [
-          ...[cartProductViewModel]
-              .map((element) => UpdateSaleRequestTempProductEntity(
-                    ProductInternalCodeOnErp:
-                        element.Product.InternalCodeOnERP!.toInt(),
-                    ProductPriceLookUpCode: element.ProductPriceLookUpCode,
-                    Quantity: element.Quantity.toDouble(),
-                    SaleRequestTempId:
-                        updateSaleRequestTempEntity.SaleRequestTempId,
-                    TotalLiquid: element.TotalLiquid.toDouble(),
-                    Value: element.Value.toDouble(),
-                    Comments: element.Comments,
-                  )),
-          ...sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
-            saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-          ),
+          firstProduct,
+          ...secondAndThirdProducts,
         ],
       );
       verify(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            entity: newUpdateSaleRequestTempEntity,
+            entity: teste,
           )).called(1);
 
       verify(() => finishSaleRequestTemp.finish(

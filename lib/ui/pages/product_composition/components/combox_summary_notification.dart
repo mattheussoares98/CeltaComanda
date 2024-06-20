@@ -24,13 +24,11 @@ class ComboxSummaryNotification extends StatefulWidget {
 
 class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
   Widget _titleAndValue({
-    required int flex,
     required String title,
     required String value,
     Color? valueColor = Colors.black,
   }) {
     return Expanded(
-      flex: flex,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -81,39 +79,23 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
           Row(
             children: [
               _titleAndValue(
-                flex: 2,
                 title: "Qtd",
                 value: (element.Quantity.toString().toDouble() *
                         productCompositionPresenter.totalComboxQuantity)
                     .toString()
                     .toBrazilianNumber(0),
               ),
-              const Expanded(
-                  flex: 1, child: Text("X", textAlign: TextAlign.center)),
+              const Expanded(child: Text("X", textAlign: TextAlign.center)),
               _titleAndValue(
-                flex: 4,
                 title: "Preço",
-                value: element.IsOptionalItem == "true"
-                    ? "0".toBrazilianNumber().addBrazilianCoin()
-                    : productCompositionPresenter
-                        .calculateProductPrice(element)
-                        .toString()
-                        .toBrazilianNumber()
-                        .addBrazilianCoin(),
-              ),
-              const Expanded(child: Text("+", textAlign: TextAlign.center)),
-              _titleAndValue(
-                flex: 5,
-                title: "Acréscimo",
                 value: productCompositionPresenter
-                    .calculateIncrementValue(element)
+                    .calculateTotalLiquid(product: element)
                     .toString()
                     .toBrazilianNumber()
                     .addBrazilianCoin(),
               ),
               const Expanded(child: Text("=", textAlign: TextAlign.center)),
               _titleAndValue(
-                  flex: 5,
                   title: "Total",
                   value: (productCompositionPresenter.calculateTotalLiquid(
                             product: element,

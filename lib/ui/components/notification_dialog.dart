@@ -33,7 +33,9 @@ void notificationDialog({
                 Expanded(
                   child: TextButton(
                     onPressed: () async {
-                      await onCancelPress!();
+                      if (onCancelPress != null) {
+                        await onCancelPress();
+                      }
 
                       Future.delayed(Duration.zero, () {
                         Navigator.of(context).pop();

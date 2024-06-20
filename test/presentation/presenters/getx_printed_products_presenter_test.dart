@@ -398,8 +398,8 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => homePresenter
-          .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
+      verifyNever(() =>
+          homePresenter.updateCommandNumber(homePresenter.commandNumberMock!));
       verify(() => menuPresenter.clear()).called(1);
       verify(() => cartPresenter.clear()).called(1);
       verify(() => menuPresenter
@@ -519,6 +519,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
     });
 
@@ -537,6 +538,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
     });
 
@@ -554,6 +556,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
     });
     test("Should emit correct values on loadCommandData throws unexpected",
@@ -570,6 +573,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
     });
 
@@ -582,6 +586,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       expect(homePresenter.commandNumberMock, "9999");
@@ -594,6 +599,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
@@ -606,6 +612,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       expect(sut.printedProducts, null);
@@ -624,10 +631,11 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       verify(() => ticketIsPermitted.verify(
-        commandNumber: homePresenter.commandNumberMock!,
+            commandNumber: homePresenter.commandNumberMock!,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
     });
@@ -640,6 +648,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       verify(() => loadPrintedProducts.load(
@@ -666,6 +675,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
@@ -681,6 +691,7 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
+        isRemovingProduct: false,
       );
 
       expect(sut.canCancelProducts, false);
@@ -696,9 +707,29 @@ void main() {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
+        isRemovingProduct: false,
       );
 
       expect(sut.canCancelProducts, true);
+    });
+    test(
+        "Should emit unexpectedError if isRemovingProduct and commandNumber is null",
+        () async {
+      sut.updateCanCancelProducts(true);
+      homePresenter.commandNumberMock = null;
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.loadCommandData(
+        printedProductsPresenter: sut,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: false,
+        isRemovingProduct: true,
+      );
     });
   });
 }

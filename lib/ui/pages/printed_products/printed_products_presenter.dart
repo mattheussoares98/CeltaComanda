@@ -31,6 +31,7 @@ abstract class PrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
+    required bool isRemovingProduct,
   });
 
   Future<void> validateUserAndPermissionToCancelProducts({

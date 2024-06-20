@@ -54,6 +54,7 @@ class PrintedProductsPresenterSpy extends Mock
           homePresenter: any(named: "homePresenter"),
           clearPermissionToCancelProducts:
               any(named: "clearPermissionToCancelProducts"),
+          isRemovingProduct: any(named: "isRemovingProduct"),
         )).thenAnswer((_) async => _);
   }
 

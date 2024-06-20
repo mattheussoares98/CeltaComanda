@@ -48,6 +48,7 @@ class GetxPrintedProductsPresenter
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
+        isRemovingProduct: true,
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -160,24 +161,29 @@ class GetxPrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
+    required bool isRemovingProduct,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      final commandNumber = await barcodeScanner.read();
+      if (isRemovingProduct && homePresenter.commandNumber == null) {
+        throw DomainError.unexpected;
+      }
 
-      homePresenter.updateCommandNumber(commandNumber);
+      if (!isRemovingProduct) {
+        homePresenter.updateCommandNumber(await barcodeScanner.read());
+      }
       if (clearPermissionToCancelProducts) {
         updateCanCancelProducts(false);
       }
       menuPresenter.clear();
       cartPresenter.clear();
 
-      await menuPresenter.getGroupsAndProducts(commandNumber);
-      await cartPresenter.loadSaleRequest(commandNumber);
+      await menuPresenter.getGroupsAndProducts(homePresenter.commandNumber!);
+      await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
       clear();
-      await loadPrinted(commandNumber);
+      await loadPrinted(homePresenter.commandNumber!);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);
       switch (error) {

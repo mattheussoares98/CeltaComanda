@@ -70,6 +70,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   menuPresenter: menuPresenter,
                   homePresenter: homePresenter,
                   clearPermissionToCancelProducts: true,
+                  isRemovingProduct: false,
                 );
                 printedProductsPresenter.updateCanCancelProducts(false);
               },
@@ -126,6 +127,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,
                         clearPermissionToCancelProducts: true,
+                        isRemovingProduct: false,
                       );
                     },
                   );

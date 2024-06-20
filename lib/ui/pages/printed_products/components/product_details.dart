@@ -56,13 +56,13 @@ class ProductDetails extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
-                  Text(
-                    Product.PriceLookupCode,
-                  ),
-                  if (Product.EanCode != null)
-                    Text(
-                      Product.EanCode!,
-                    ),
+                  // Text(
+                  //   Product.PriceLookupCode,
+                  // ),
+                  // if (Product.EanCode != null)
+                  //   Text(
+                  //     Product.EanCode!,
+                  //   ),
                 ],
               ),
             ),

@@ -631,9 +631,11 @@ class EntityFactory {
     required double quantity,
     required double salePrice,
     required double offerPrice,
-    required double incrementValue,
+    required double fatherIncrement,
+    required double childIncrement,
     required bool isOptionalItem,
     required int? indexOfSelectedChild,
+    required bool insertChilds,
   }) =>
       ProductCompositionViewModel(
         ProductCompositionId: "1",
@@ -645,11 +647,31 @@ class EntityFactory {
         Quantity: quantity.toString(),
         SalePrice: salePrice.toString(),
         OfferPrice: offerPrice.toString(),
-        IncrementValue: incrementValue.toString(),
+        IncrementValue: fatherIncrement.toString(),
         IsOptionalItem: isOptionalItem.toString(),
         ProductOptions: "",
         indexOfSelectedChild: indexOfSelectedChild,
-        childs: const [],
+        childs: !insertChilds
+            ? []
+            : [
+                ProductCompositionViewModel(
+                  ProductCompositionId: "1",
+                  EnterpriseId: "1",
+                  InternalCodeOnERPCodeFather: "1",
+                  InternalCodeOnERPCodeChild: "1",
+                  PluChild: "PluChild",
+                  ChildName: "ChildName",
+                  Quantity: quantity.toString(),
+                  SalePrice: salePrice.toString(),
+                  OfferPrice: offerPrice.toString(),
+                  IncrementValue: childIncrement.toString(),
+                  IsOptionalItem: isOptionalItem.toString(),
+                  ProductOptions: "",
+                  indexOfSelectedChild: indexOfSelectedChild,
+                  childs: const [],
+                  commentFather: "",
+                )
+              ],
         commentFather: "",
       );
 

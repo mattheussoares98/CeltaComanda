@@ -126,26 +126,32 @@ void main() {
         quantity: 1,
         salePrice: 20,
         offerPrice: 10,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ),
       EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
         offerPrice: 10,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ),
       EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
         offerPrice: 10,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild:
             null, //não selecionado, por isso não considera nos produtos pra serem inseridos na comanda
+        insertChilds: false,
+        childIncrement: 0,
       ),
     ];
     fatherOfCombox = EntityFactory.makeProductViewModel();
@@ -175,27 +181,33 @@ void main() {
       quantity: 1,
       salePrice: 10,
       offerPrice: 10,
-      incrementValue: 0,
+      fatherIncrement: 0,
       isOptionalItem: false,
       indexOfSelectedChild: 0,
+      insertChilds: false,
+      childIncrement: 0,
     );
     selectedChildWithTwoQuantities =
         EntityFactory.makeProductCompositionViewModel(
       quantity: 2,
       salePrice: 10,
       offerPrice: 10,
-      incrementValue: 0,
+      fatherIncrement: 0,
       isOptionalItem: false,
       indexOfSelectedChild: 0,
+      insertChilds: false,
+      childIncrement: 0,
     );
 
     notSelectedChild = EntityFactory.makeProductCompositionViewModel(
       quantity: 1,
       salePrice: 10,
       offerPrice: 10,
-      incrementValue: 0,
+      fatherIncrement: 0,
       isOptionalItem: false,
       indexOfSelectedChild: null,
+      insertChilds: false,
+      childIncrement: 0,
     );
 
     confirmedComboxWithOneQuantity = EntityFactory.makeConfirmedComboxViewModel(
@@ -2368,9 +2380,11 @@ void main() {
         quantity: 1,
         salePrice: 10,
         offerPrice: 15,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: true,
         indexOfSelectedChild: null,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(price, 0);
@@ -2384,9 +2398,11 @@ void main() {
         quantity: 1,
         salePrice: 10,
         offerPrice: 15,
-        incrementValue: 10,
+        fatherIncrement: 10,
         isOptionalItem: false,
         indexOfSelectedChild: null,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(price, 25);
@@ -2400,9 +2416,11 @@ void main() {
         quantity: 1,
         salePrice: 10,
         offerPrice: 0,
-        incrementValue: 10,
+        fatherIncrement: 10,
         isOptionalItem: false,
         indexOfSelectedChild: null,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(price, 20);
@@ -2414,9 +2432,11 @@ void main() {
         quantity: 2,
         salePrice: 20,
         offerPrice: 10,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(totalLiquid, 30);
@@ -2428,9 +2448,11 @@ void main() {
         quantity: 2,
         salePrice: 20,
         offerPrice: 10,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: true,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(totalLiquid, 10);
@@ -2442,9 +2464,11 @@ void main() {
         quantity: 2,
         salePrice: 20,
         offerPrice: 0,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(totalLiquid, 50);
@@ -2456,40 +2480,62 @@ void main() {
         quantity: 2,
         salePrice: 20,
         offerPrice: 0,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
       expect(totalLiquid, 50);
     });
 
     test("Should calculate correctly increment value 1", () async {
-      double totalLiquid = sut.calculateIncrementValue(
+      double totalIncrement = sut.calculateIncrementValue(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
         offerPrice: 0,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
-      expect(totalLiquid, 5);
+      expect(totalIncrement, 5);
     });
 
     test("Should calculate correctly increment value 2", () async {
-      double totalLiquid = sut.calculateIncrementValue(
+      double totalIncrement = sut.calculateIncrementValue(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
         offerPrice: 0,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       ));
 
-      expect(totalLiquid, 0);
+      expect(totalIncrement, 0);
+    });
+    test("Should calculate correctly increment value 3", () async {
+      //se o produto pai não tiver acréscimo mas o produto filho tiver, deve somar o acréscimo do filho
+      double totalIncrement = sut.calculateIncrementValue(
+          EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 20,
+        offerPrice: 10,
+        fatherIncrement: 0,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+        insertChilds: true,
+        childIncrement: 10,
+      ));
+
+      expect(totalIncrement, 10);
     });
 
     test(

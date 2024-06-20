@@ -895,7 +895,17 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   @override
   double calculateIncrementValue(ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
+      //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
+    } else if (product.childs?.isEmpty == false &&
+        product.indexOfSelectedChild != null) {
+      //se houver filho selecionado e o filho tiver acréscimo, retorna o acréscimo do filho
+      final selectedChild = product.childs![product.indexOfSelectedChild!];
+
+      if (selectedChild.IncrementValue.toString().toDouble() > 0) {
+        return selectedChild.IncrementValue.toString().toDouble();
+      }
+      return 0;
     } else {
       return 0;
     }

@@ -233,15 +233,17 @@ void main() {
 
   group("sut.UpdateSaleRequestTemp", () {
     test(
-        "Should call sut.updateSaleRequest with correct values of price and totalLiquid",
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 1",
         () async {
       final case1 = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 0,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -258,14 +260,19 @@ void main() {
               productValue: 10,
             ),
           )).called(1);
-
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 2",
+        () async {
       final case2 = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 8,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -282,14 +289,19 @@ void main() {
               productValue: 8,
             ),
           )).called(1);
-
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 3",
+        () async {
       final case3 = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 8,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: true,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -306,14 +318,19 @@ void main() {
               productValue: 0,
             ),
           )).called(1);
-
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 4",
+        () async {
       final case4 = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 8,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: true,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -330,14 +347,19 @@ void main() {
               productValue: 5,
             ),
           )).called(1);
-
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 5",
+        () async {
       final case5 = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 8,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -354,14 +376,19 @@ void main() {
               productValue: 13,
             ),
           )).called(1);
-
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 6",
+        () async {
       final case6 = EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 10,
         offerPrice: 8,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -378,14 +405,19 @@ void main() {
               productValue: 13,
             ),
           )).called(1);
-
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 7",
+        () async {
       final case7 = EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 10,
         offerPrice: 8,
-        incrementValue: 5,
+        fatherIncrement: 5,
         isOptionalItem: true,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -400,6 +432,35 @@ void main() {
               productCompositionViewModel: case7,
               totalLiquid: 10,
               productValue: 5,
+            ),
+          )).called(1);
+    });
+    test(
+        "Should call sut.updateSaleRequest with correct values of price and totalLiquid 8",
+        () async {
+      final case8 = EntityFactory.makeProductCompositionViewModel(
+        quantity: 2,
+        salePrice: 10,
+        offerPrice: 8,
+        fatherIncrement: 0,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+        insertChilds: true,
+        childIncrement: 20,
+      );
+
+      await sut.updateSaleRequest(
+        homePresenter: homePresenter,
+        cartPresenter: cartPresenter,
+        productsCompositions: [case8],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: makeUpdateSaleRequestTempEntity(
+              productCompositionViewModel: case8,
+              totalLiquid: 56,
+              productValue: 28,
             ),
           )).called(1);
     });
@@ -476,9 +537,11 @@ void main() {
         quantity: 1,
         salePrice: 10,
         offerPrice: 0,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(
@@ -503,9 +566,11 @@ void main() {
         quantity: 1,
         salePrice: 10,
         offerPrice: 0,
-        incrementValue: 0,
+        fatherIncrement: 0,
         isOptionalItem: false,
         indexOfSelectedChild: 0,
+        insertChilds: false,
+        childIncrement: 0,
       );
 
       await sut.updateSaleRequest(

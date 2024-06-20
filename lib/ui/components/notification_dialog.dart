@@ -15,6 +15,8 @@ void notificationDialog({
       builder: (BuildContext context) {
         return AlertDialog(
           insetPadding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           title: Text(
             titleMessage,
             style: const TextStyle(
@@ -32,7 +34,7 @@ void notificationDialog({
                   child: TextButton(
                     onPressed: () async {
                       await onCancelPress!();
-                  
+
                       Future.delayed(Duration.zero, () {
                         Navigator.of(context).pop();
                       });

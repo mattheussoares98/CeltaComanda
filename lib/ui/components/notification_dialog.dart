@@ -28,42 +28,48 @@ void notificationDialog({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextButton(
-                  onPressed: () async {
-                    await onCancelPress!();
-
-                    Future.delayed(Duration.zero, () {
-                      Navigator.of(context).pop();
-                    });
-                  },
-                  child: Text(
-                    cancelMessage!,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                Expanded(
+                  child: TextButton(
+                    onPressed: () async {
+                      await onCancelPress!();
+                  
+                      Future.delayed(Duration.zero, () {
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Text(
+                      cancelMessage!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    onPressed: () async {
+                      if (closeDialogOnConfirmPress == true) {
+                        Navigator.of(context).pop();
+                      }
+                      await onPress();
+                    },
+                    child: FittedBox(
+                      child: Text(confirmMessage!,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ),
                   ),
-                  onPressed: () async {
-                    if (closeDialogOnConfirmPress == true) {
-                      Navigator.of(context).pop();
-                    }
-                    await onPress();
-                  },
-                  child: Text(confirmMessage!,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      )),
                 ),
               ],
             )

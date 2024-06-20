@@ -45,7 +45,7 @@ class SaveSaleRequestButton extends StatelessWidget {
           onPressed: () async {
             notificationDialog(
               context: context,
-              titleMessage: "Adicionar número da mesa",
+              titleMessage: "Adicionar número da bandeira/mesa",
               onCancelPress: () async {
                 await _addProducts(
                   cartPresenter: cartPresenter,
@@ -55,7 +55,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                 );
               },
               cancelMessage: "Pular",
-              confirmMessage: "Confirmar mesa",
+              confirmMessage: "Confirmar bandeira",
               closeDialogOnConfirmPress: false,
               content: Form(
                 key: formKey,

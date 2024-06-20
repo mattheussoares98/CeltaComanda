@@ -400,10 +400,11 @@ void main() {
 
       verifyNever(() =>
           homePresenter.updateCommandNumber(homePresenter.commandNumberMock!));
-      verify(() => menuPresenter.clear()).called(1);
+      verifyNever(() => menuPresenter.clear());
+      verifyNever(() =>
+          menuPresenter.getGroupsAndProducts(homePresenter.commandNumberMock!));
+
       verify(() => cartPresenter.clear()).called(1);
-      verify(() => menuPresenter
-          .getGroupsAndProducts(homePresenter.commandNumberMock!)).called(1);
       verify(() =>
               cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
           .called(1);

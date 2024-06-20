@@ -177,11 +177,13 @@ class GetxPrintedProductsPresenter
       if (clearPermissionToCancelProducts) {
         updateCanCancelProducts(false);
       }
-      menuPresenter.clear();
       cartPresenter.clear();
-
-      await menuPresenter.getGroupsAndProducts(homePresenter.commandNumber!);
       await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
+
+      if (!isRemovingProduct) {
+        menuPresenter.clear();
+        await menuPresenter.getGroupsAndProducts(homePresenter.commandNumber!);
+      }
       clear();
       await loadPrinted(homePresenter.commandNumber!);
     } on DomainError catch (error) {

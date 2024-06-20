@@ -97,7 +97,7 @@ void main() {
     optionalFathers =
         EntityFactory.makeProductsCompositionsEntity(isOptionalItem: true);
     internalCodeOnErp = faker.randomGenerator.integer(99);
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
 
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);

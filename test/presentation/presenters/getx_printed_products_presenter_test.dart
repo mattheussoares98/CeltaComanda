@@ -68,7 +68,7 @@ void main() {
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
   }
@@ -89,7 +89,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());

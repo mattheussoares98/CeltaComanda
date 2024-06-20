@@ -54,7 +54,7 @@ void main() {
   void initEntitys() {
     expansibleGroupId = faker.randomGenerator.integer(3);
     products = EntityFactory.makeProductsEntitys();
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     homePresenter.commandNumberMock =

@@ -560,12 +560,12 @@ class EntityFactory {
     );
   }
 
-  static SaleRequestTempEntity makeSaleRequestTempEntity() =>
+  static SaleRequestTempEntity makeSaleRequestTempEntity(int? tableNumber) =>
       SaleRequestTempEntity(
         Products: [makeSaleRequestTempProductEntity()],
         SaleRequestTempId: faker.randomGenerator.integer(3),
         EnterpriseId: faker.randomGenerator.integer(3),
-        DeliveryControl: faker.randomGenerator.integer(3),
+        DeliveryControl: tableNumber ?? 0,
         PersonalizedCode: faker.randomGenerator.integer(3).toString(),
         TotalLiquid: faker.randomGenerator.decimal(),
         Comments: faker.randomGenerator.string(10),

@@ -35,7 +35,7 @@ void main() {
     remoteLoadEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
 
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
 
     sut = GetxEnterpriseValidationPresenter(

@@ -94,7 +94,10 @@ void main() {
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity();
+    tableNumber = faker.randomGenerator.integer(1000, min: 1);
+
+    saleRequestTempEntity =
+        EntityFactory.makeSaleRequestTempEntity(tableNumber);
     printRequestEntity = EntityFactory.makePrintRequestEntity();
     cartProductEntity = EntityFactory.makeCartProductEntity(
       maximumProductQuantity: 200,
@@ -209,7 +212,6 @@ void main() {
       quantity: 2,
     );
     newComment = faker.randomGenerator.string(10);
-    tableNumber = faker.randomGenerator.integer(1000, min: 1);
   }
 
   void initMockSuccess() {
@@ -231,7 +233,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(null));
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());

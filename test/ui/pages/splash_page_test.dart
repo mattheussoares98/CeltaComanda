@@ -15,7 +15,7 @@ void main() {
   late SplashPresenterSpy presenter;
 
   setUpAll(() {
-    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());

@@ -142,35 +142,20 @@ class _FatherItemsState extends State<FatherItems> {
                               Text(
                                 "Quantidade ${father!.Quantity!.toBrazilianNumber()}",
                               ),
-                            if (father!.IsOptionalItem == "false")
-                              Text(father!.OfferPrice != null &&
-                                      father!.OfferPrice! == "0.0"
-                                  ? father!.SalePrice!
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin()
-                                  : father!.OfferPrice!
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin()),
+                            Text(
+                              cartPresenter
+                                  .calculateProductTotalLiquid(father!)
+                                  .toString()
+                                  .toBrazilianNumber()
+                                  .addBrazilianCoin(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 15,
+                              ),
+                            ),
                           ],
                         ),
-                        if (father!.IncrementValue.toString().toDouble() > 0)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Column(
-                                children: [
-                                  const Text(
-                                    "+",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                  Text(
-                                    "Acréscimo: ${father!.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                                    style: const TextStyle(color: Colors.red),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
                         if (father!.IsOptionalItem != null)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

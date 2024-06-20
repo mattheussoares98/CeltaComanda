@@ -1,8 +1,8 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/helpers/helpers.dart';
+import '../../../../ui/components/components.dart';
 import '../../../../ui/pages/pages.dart';
 
 class ItemsRadioListTile extends StatefulWidget {
@@ -89,26 +89,27 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                                 child.ChildName!,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
-                            if (child.Quantity != null)
-                              Text(
-                                  "Quantidade ${child.Quantity!.toBrazilianNumber()}"),
                             if (widget.isFixedItemInCombox)
-                              if (widget.father.IncrementValue
-                                      .toString()
-                                      .toDouble() >
-                                  0)
-                                Column(
-                                  children: [
-                                    const Text(
-                                      "+",
-                                      style: TextStyle(color: Colors.red),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Quantidade ${child.Quantity.toString().toBrazilianNumber()}",
+                                  ),
+                                  Text(
+                                    productCompositionPresenter
+                                        .calculateTotalLiquid(product: child)
+                                        .toString()
+                                        .toBrazilianNumber()
+                                        .addBrazilianCoin(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 15,
                                     ),
-                                    Text(
-                                      "Acréscimo: ${widget.father.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                                      style: const TextStyle(color: Colors.red),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                       ),

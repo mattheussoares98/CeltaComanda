@@ -76,9 +76,6 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
             selectedChild!.ChildName.toString(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          Text(
-            selectedChild!.PluChild.toString(),
-          ),
           if (element.commentFather != null)
             CommentRichText(comment: element.commentFather!),
           Row(

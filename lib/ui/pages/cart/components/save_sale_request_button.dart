@@ -31,7 +31,7 @@ class SaveSaleRequestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: true);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -46,6 +46,9 @@ class SaveSaleRequestButton extends StatelessWidget {
             notificationDialog(
               context: context,
               titleMessage: "Adicionar número da bandeira/mesa",
+              cancelMessage: "Pular",
+              confirmMessage: "Confirmar bandeira",
+              closeDialogOnConfirmPress: false,
               onCancelPress: () async {
                 await _addProducts(
                   cartPresenter: cartPresenter,
@@ -54,30 +57,6 @@ class SaveSaleRequestButton extends StatelessWidget {
                   tableNumber: null,
                 );
               },
-              cancelMessage: "Pular",
-              confirmMessage: "Confirmar bandeira",
-              closeDialogOnConfirmPress: false,
-              content: Form(
-                key: formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: TextFormField(
-                  autofocus: true,
-                  controller: tableNumberController,
-                  keyboardType: TextInputType.number,
-                  maxLength: 4,
-                  decoration: const InputDecoration(
-                    counterText: "",
-                  ),
-                  validator: (value) {
-                    if (value?.isEmpty == true) {
-                      return "Número inválido";
-                    } else if (int.tryParse(value!) == null) {
-                      return "Número inválido";
-                    }
-                    return null;
-                  },
-                ),
-              ),
               onPress: () async {
                 bool? isValid = formKey.currentState?.validate();
 
@@ -91,6 +70,34 @@ class SaveSaleRequestButton extends StatelessWidget {
                   );
                 }
               },
+              content: Row(
+                children: [
+                  const Expanded(child: SizedBox()),
+                  Expanded(
+                    child: Form(
+                      key: formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: TextFormField(
+                        autofocus: true,
+                        controller: tableNumberController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 4,
+                        textAlign: TextAlign.center,
+                        decoration: const InputDecoration(
+                          counterText: "",
+                        ),
+                        validator: (value) {
+                          if (int.tryParse(value!) == null) {
+                            return "Número inválido";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                ],
+              ),
             );
           },
           child: Row(

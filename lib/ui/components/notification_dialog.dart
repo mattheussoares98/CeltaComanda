@@ -5,6 +5,8 @@ void notificationDialog({
   required String titleMessage,
   required Widget? content,
   required Future Function() onPress,
+  Future Function()? onCancelPress,
+  bool? closeDialogOnConfirmPress = true,
   String? cancelMessage = "NÃO",
   String? confirmMessage = "SIM",
 }) {
@@ -27,8 +29,12 @@ void notificationDialog({
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
+                  onPressed: () async {
+                    await onCancelPress!();
+
+                    Future.delayed(Duration.zero, () {
+                      Navigator.of(context).pop();
+                    });
                   },
                   child: Text(
                     cancelMessage!,
@@ -48,7 +54,9 @@ void notificationDialog({
                     ),
                   ),
                   onPressed: () async {
-                    Navigator.of(context).pop();
+                    if (closeDialogOnConfirmPress == true) {
+                      Navigator.of(context).pop();
+                    }
                     await onPress();
                   },
                   child: Text(confirmMessage!,

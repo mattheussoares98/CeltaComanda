@@ -46,11 +46,28 @@ class SaveSaleRequestButton extends StatelessWidget {
             notificationDialog(
               context: context,
               titleMessage: "Adicionar número da mesa",
+              onCancelPress: () async {
+                await _addProducts(
+                  cartPresenter: cartPresenter,
+                  context: context,
+                  printedProductsPresenter: printedProductsPresenter,
+                  tableNumber: null,
+                );
+              },
+              cancelMessage: "Pular",
+              confirmMessage: "Confirmar mesa",
+              closeDialogOnConfirmPress: false,
               content: Form(
                 key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: TextFormField(
+                  autofocus: true,
                   controller: tableNumberController,
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
+                  decoration: const InputDecoration(
+                    counterText: "",
+                  ),
                   validator: (value) {
                     if (value?.isEmpty == true) {
                       return "Número inválido";
@@ -62,15 +79,18 @@ class SaveSaleRequestButton extends StatelessWidget {
                 ),
               ),
               onPress: () async {
-                await _addProducts(
-                  cartPresenter: cartPresenter,
-                  context: context,
-                  printedProductsPresenter: printedProductsPresenter,
-                  tableNumber: int.tryParse(tableNumberController.text),
-                );
+                bool? isValid = formKey.currentState?.validate();
+
+                if (isValid == true) {
+                  Navigator.of(context).pop();
+                  await _addProducts(
+                    cartPresenter: cartPresenter,
+                    context: context,
+                    printedProductsPresenter: printedProductsPresenter,
+                    tableNumber: int.tryParse(tableNumberController.text),
+                  );
+                }
               },
-              cancelMessage: "Pular",
-              confirmMessage: "Confirmar mesa",
             );
           },
           child: Row(

@@ -64,10 +64,24 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             SearchCommandIcon(
               loadCommandData: () async {
-                writeCommandNumber(
-                  context: context,
-                  isInsertingProductsInCommand: false,
-                );
+                if (cartPresenter.isGeneratingVersionToRede) {
+                  writeCommandNumber(
+                    context: context,
+                    isInsertingProductsInCommand: false,
+                  );
+                } else {
+                  await printedProductsPresenter.loadCommandData(
+                    printedProductsPresenter: printedProductsPresenter,
+                    cartPresenter: cartPresenter,
+                    menuPresenter: menuPresenter,
+                    homePresenter: homePresenter,
+                    clearPermissionToCancelProducts: true,
+                    isRemovingProduct: false,
+                    isGeneratingVersionToRede:
+                        cartPresenter.isGeneratingVersionToRede,
+                    commandNumber: "",
+                  );
+                }
                 printedProductsPresenter.updateCanCancelProducts(false);
               },
             )
@@ -117,10 +131,24 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         ? "Consulte alguma comanda para visualizar os produtos solicitados"
                         : "Não há produtos solicitados nessa comanda",
                     loadCommandData: () async {
-                      writeCommandNumber(
-                        context: context,
-                        isInsertingProductsInCommand: false,
-                      );
+                      if (cartPresenter.isGeneratingVersionToRede) {
+                        writeCommandNumber(
+                          context: context,
+                          isInsertingProductsInCommand: false,
+                        );
+                      } else {
+                        await printedProductsPresenter.loadCommandData(
+                          printedProductsPresenter: printedProductsPresenter,
+                          cartPresenter: cartPresenter,
+                          menuPresenter: menuPresenter,
+                          homePresenter: homePresenter,
+                          clearPermissionToCancelProducts: true,
+                          isRemovingProduct: false,
+                          isGeneratingVersionToRede:
+                              cartPresenter.isGeneratingVersionToRede,
+                          commandNumber: "",
+                        );
+                      }
                     },
                   );
                 },

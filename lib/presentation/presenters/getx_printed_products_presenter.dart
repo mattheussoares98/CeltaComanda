@@ -50,7 +50,7 @@ class GetxPrintedProductsPresenter
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
         isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
-        commandNumber: "",
+        commandNumber: homePresenter.commandNumber.toString(),
       );
     } on DomainError catch (error) {
       switch (error) {

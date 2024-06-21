@@ -142,15 +142,8 @@ class GetxPaymentPresenter extends GetxController
         isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumber!,
       );
-
-      if (printedProductsPresenter.printedProducts == null) {
-        throw DomainError.paymentEmpty;
-      }
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.paymentEmpty:
-          mainError = UIError.paymentEmpty;
-          break;
         case DomainError.barcodeNotRead:
           mainError = UIError.barcodeNotRead;
           break;

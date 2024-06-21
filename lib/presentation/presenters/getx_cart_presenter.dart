@@ -519,9 +519,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     notifyListeners();
   }
 
-  final bool _isGeneratingVersionToRede = true;
+  bool _isGeneratingVersionToRede = false;
   @override
   bool get isGeneratingVersionToRede => _isGeneratingVersionToRede;
+  set isGeneratingVersionToRede(bool value) =>
+      _isGeneratingVersionToRede = value;
 
   @override
   Future<bool> saveProducts({

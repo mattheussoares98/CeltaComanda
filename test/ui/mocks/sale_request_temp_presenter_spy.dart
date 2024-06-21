@@ -14,9 +14,12 @@ class CartPresenterSpy extends Mock implements CartPresenter {
   SaleRequestTempViewModel? saleRequestTempMock;
   List<CartProductsViewModel> cartProductsController = [];
   List<ConfirmedComboxViewModel> confirmedComboxController = [];
+  bool isGeneratingVersionToRedeController = true;
 
   CartPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
+    when(() => this.isGeneratingVersionToRede)
+        .thenAnswer((_) => isGeneratingVersionToRedeController);
     when(() => this.confirmedCombox)
         .thenAnswer((_) => confirmedComboxController);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);

@@ -521,6 +521,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     });
 
@@ -540,6 +541,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     });
 
@@ -558,6 +560,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     });
     test("Should emit correct values on loadCommandData throws unexpected",
@@ -575,6 +578,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     });
 
@@ -588,6 +592,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       expect(homePresenter.commandNumberMock, "9999");
@@ -601,6 +606,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
@@ -614,6 +620,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       expect(sut.printedProducts, null);
@@ -633,6 +640,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -650,6 +658,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       verify(() => loadPrintedProducts.load(
@@ -677,6 +686,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
@@ -693,6 +703,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       expect(sut.canCancelProducts, false);
@@ -709,6 +720,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
 
       expect(sut.canCancelProducts, true);
@@ -730,6 +742,7 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     });
   });

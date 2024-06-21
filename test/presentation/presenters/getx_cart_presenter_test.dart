@@ -441,6 +441,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
       );
 
       verify(() => cartInformations.clearCartProducts()).called(1);
@@ -1392,6 +1393,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
       );
 
       verify(() => barcodeScanner.read()).called(1);
@@ -1458,6 +1460,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
       );
 
       final entity = UpdateSaleRequestTempEntity(
@@ -1478,6 +1481,7 @@ void main() {
           )).called(1);
     });
     test("Should not read barcode when is generatingVersionToRede", () async {
+      sut.isGeneratingVersionToRede = true;
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
@@ -1491,6 +1495,7 @@ void main() {
     test(
         "Should update homePresenter.commandNumber if user write command number",
         () async {
+      sut.isGeneratingVersionToRede = true;
       String commandNumber = faker.randomGenerator.integer(999).toString();
 
       await sut.saveProducts(
@@ -1511,6 +1516,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
       );
     });
     test("Should emit correct values on BarcodeScanner throws unexpected",
@@ -1524,6 +1530,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
       );
     });
     test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
@@ -1537,6 +1544,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
       );
     });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {

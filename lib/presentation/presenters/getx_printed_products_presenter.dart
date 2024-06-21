@@ -49,6 +49,7 @@ class GetxPrintedProductsPresenter
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -162,6 +163,7 @@ class GetxPrintedProductsPresenter
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
+    required bool isGeneratingVersionToRede,
   }) async {
     isLoading = true;
     mainError = null;

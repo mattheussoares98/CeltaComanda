@@ -55,6 +55,7 @@ class PrintedProductsPresenterSpy extends Mock
           clearPermissionToCancelProducts:
               any(named: "clearPermissionToCancelProducts"),
           isRemovingProduct: any(named: "isRemovingProduct"),
+          isGeneratingVersionToRede: any(named: "isGeneratingVersionToRede"),
         )).thenAnswer((_) async => _);
   }
 

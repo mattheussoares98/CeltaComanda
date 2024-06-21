@@ -71,6 +71,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   homePresenter: homePresenter,
                   clearPermissionToCancelProducts: true,
                   isRemovingProduct: false,
+                  isGeneratingVersionToRede:
+                      cartPresenter.isGeneratingVersionToRede,
                 );
                 printedProductsPresenter.updateCanCancelProducts(false);
               },
@@ -128,6 +130,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         homePresenter: homePresenter,
                         clearPermissionToCancelProducts: true,
                         isRemovingProduct: false,
+                        isGeneratingVersionToRede:
+                            cartPresenter.isGeneratingVersionToRede,
                       );
                     },
                   );

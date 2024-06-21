@@ -144,14 +144,9 @@ class GetxPaymentPresenter extends GetxController
       );
 
       if (printedProductsPresenter.printedProducts == null) {
-        _totalAmountValue.value = null;
         throw DomainError.paymentEmpty;
-      } else {
-        _totalAmountValue.value =
-            printedProductsPresenter.printedProducts!.TotalLiquid.toDouble();
       }
     } on DomainError catch (e) {
-      _totalAmountValue.value = null;
       switch (e) {
         case DomainError.paymentEmpty:
           mainError = UIError.paymentEmpty;
@@ -166,8 +161,4 @@ class GetxPaymentPresenter extends GetxController
       isLoading = false;
     }
   }
-
-  final _totalAmountValue = Rx<double?>(null);
-  @override
-  Stream<double?> get totalAmountValueStream => _totalAmountValue.stream;
 }

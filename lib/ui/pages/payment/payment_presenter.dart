@@ -6,7 +6,6 @@ import '../pages.dart';
 abstract class PaymentPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<double?> get totalAmountValueStream;
 
   Future<void> payWithCredit({
     required double longAmountValue,

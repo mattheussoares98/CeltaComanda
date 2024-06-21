@@ -299,25 +299,6 @@ void main() {
   });
 
   group("Get total value", () {
-    test("Should call loadPrintedProducts with correct commandNumber",
-        () async {
-      await sut.getTotalValue(
-        homePresenter: homePresenter,
-        writedCommandNumber: commandNumber,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-
-      verify(
-        () => loadPrintedProducts.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber.toInt(),
-        ),
-      ).called(1);
-    });
     test("Should call barcodeScanner on getTotalValue", () async {
       await sut.getTotalValue(
         homePresenter: homePresenter,
@@ -352,19 +333,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
-
-      await sut.getTotalValue(
-        homePresenter: homePresenter,
-        writedCommandNumber: commandNumber,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-    });
-    test("Should emit correct values on loadPrintedProducts success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.totalAmountValueStream, emits(printedEntity.TotalLiquid));
 
       await sut.getTotalValue(
         homePresenter: homePresenter,
@@ -446,24 +414,6 @@ void main() {
       );
 
       verifyNever(() => barcodeScanner.read());
-    });
-
-    test("Should emit correct values if loadPrintedProducts return null",
-        () async {
-      loadPrintedProducts.mockLoadPrintedProducts(null);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.totalAmountValueStream, emits(null));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.paymentEmpty]));
-
-      await sut.getTotalValue(
-        homePresenter: homePresenter,
-        writedCommandNumber: null,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
     });
 
     test("Should load printed products on getTotalValue", () async {

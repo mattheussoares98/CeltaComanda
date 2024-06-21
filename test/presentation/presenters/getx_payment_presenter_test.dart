@@ -421,5 +421,21 @@ void main() {
 
       verifyNever(() => barcodeScanner.read());
     });
+
+    test("Should clear totalAmount if loadPrintedProducts return null",
+        () async {
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.totalAmountValueStream, emits(null));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: null,
+        cartPresenter: cartPresenter,
+      );
+    });
   });
 }

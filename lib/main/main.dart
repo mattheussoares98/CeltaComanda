@@ -52,7 +52,10 @@ class App extends StatelessWidget {
         ),
         ListenableProvider(
           create: (_) => makeGetxProductCompositionPresenter(),
-        )
+        ),
+        ListenableProvider(
+          create: (_) => makeGetxPaymentPresenter(),
+        ),
       ],
       child: GetMaterialApp(
         navigatorKey: NavigatorKey.navigatorKey,
@@ -80,6 +83,11 @@ class App extends StatelessWidget {
           GetPage(
             name: PageRoutes.productComposition,
             page: makeProductCompositionPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.payment,
+            page: makePaymentPage,
             transition: Transition.fadeIn,
           ),
         ],

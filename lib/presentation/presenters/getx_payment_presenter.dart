@@ -138,11 +138,12 @@ class GetxPaymentPresenter extends GetxController
       );
 
       if (printed == null) {
-        throw DomainError.unexpected;
+        _totalAmountValue.value = null;
+      } else {
+        _totalAmountValue.value = printed.TotalLiquid;
       }
-
-      _totalAmountValue.value = printed.TotalLiquid;
     } on DomainError catch (e) {
+      _totalAmountValue.value = null;
       switch (e) {
         case DomainError.barcodeNotRead:
           mainError = UIError.barcodeNotRead;

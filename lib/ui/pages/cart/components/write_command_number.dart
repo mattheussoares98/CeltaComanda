@@ -20,9 +20,10 @@ void writeCommandNumber({
   MenuPresenter menuPresenter = Provider.of(context, listen: false);
   CartPresenter cartPresenter = Provider.of(context, listen: false);
   HomePresenter homePresenter = Provider.of(context, listen: false);
-  PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
   PrintedProductsPresenter printedProductsPresenter =
       Provider.of(context, listen: false);
+  PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+  FocusNode focusNode = FocusNode();
 
   notificationDialog(
     context: context,
@@ -42,6 +43,7 @@ void writeCommandNumber({
               controller: commandNumberController,
               keyboardType: TextInputType.number,
               maxLength: 3,
+              focusNode: focusNode,
               decoration: const InputDecoration(
                 label: Text("Comanda"),
                 hintText: "Exp: 001",
@@ -57,18 +59,23 @@ void writeCommandNumber({
                 return null;
               },
               onFieldSubmitted: (value) async {
-                Navigator.of(context).pop();
-                await _onPress(
-                  context: context,
-                  cartPresenter: cartPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  homePresenter: homePresenter,
-                  menuPresenter: menuPresenter,
-                  commandNumber: commandNumberController.text,
-                  commandKey: commandKey,
-                  onWriteCommand: action,
-                  paymentPresenter: paymentPresenter,
-                );
+                bool? isValid = commandKey.currentState?.validate();
+                if (isValid == true) {
+                  await _onPress(
+                    context: context,
+                    cartPresenter: cartPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    homePresenter: homePresenter,
+                    menuPresenter: menuPresenter,
+                    commandNumber: commandNumberController.text,
+                    commandKey: commandKey,
+                    onWriteCommand: action,
+                    focusNode: focusNode,
+                    paymentPresenter: paymentPresenter,
+                  );
+                } else {
+                  focusNode.requestFocus();
+                }
               },
             ),
           ),
@@ -76,6 +83,7 @@ void writeCommandNumber({
         const Expanded(child: SizedBox()),
       ],
     ),
+    closeDialogOnConfirmPress: false,
     onPress: () async {
       await _onPress(
         context: context,
@@ -86,6 +94,7 @@ void writeCommandNumber({
         commandNumber: commandNumberController.text,
         commandKey: commandKey,
         onWriteCommand: action,
+        focusNode: focusNode,
         paymentPresenter: paymentPresenter,
       );
     },
@@ -98,16 +107,19 @@ Future<void> _onPress({
   required PrintedProductsPresenter printedProductsPresenter,
   required HomePresenter homePresenter,
   required MenuPresenter menuPresenter,
-  required PaymentPresenter paymentPresenter,
   required String commandNumber,
   required GlobalKey<FormState> commandKey,
   required OnWriteCommand onWriteCommand,
+  required FocusNode focusNode,
+  required PaymentPresenter paymentPresenter,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 
   if (isValid == false || isValid == null) {
+    focusNode.requestFocus();
     return;
   }
+  Navigator.of(context).pop();
 
   if (onWriteCommand == OnWriteCommand.saveProducts) {
     bool isUpdated = await cartPresenter.saveProducts(

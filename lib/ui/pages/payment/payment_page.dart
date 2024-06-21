@@ -9,11 +9,7 @@ import '../../components/components.dart';
 import '../pages.dart';
 
 class PaymentPage extends StatefulWidget {
-  final PaymentPresenter paymentPresenter;
-  const PaymentPage(
-    this.paymentPresenter, {
-    super.key,
-  });
+  const PaymentPage({super.key});
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -37,7 +33,8 @@ class _PaymentPageState extends State<PaymentPage>
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: true);
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       drawer: drawer(
@@ -71,7 +68,7 @@ class _PaymentPageState extends State<PaymentPage>
                     action: OnWriteCommand.getPaymentAmmount,
                   );
                 } else {
-                  await widget.paymentPresenter.getTotalValue(
+                  await paymentPresenter.getTotalValue(
                     homePresenter: homePresenter,
                     writedCommandNumber: null,
                     cartPresenter: cartPresenter,
@@ -90,14 +87,14 @@ class _PaymentPageState extends State<PaymentPage>
             mainErrorSubscription?.cancel();
 
             loadingSubscription =
-                handleLoading(context, widget.paymentPresenter.isLoadingStream);
-            mainErrorSubscription = handleMainError(
-                context, widget.paymentPresenter.mainErrorStream);
+                handleLoading(context, paymentPresenter.isLoadingStream);
+            mainErrorSubscription =
+                handleMainError(context, paymentPresenter.mainErrorStream);
 
             return StreamBuilder<double?>(
-              stream: widget.paymentPresenter.totalAmountValueStream,
+              stream: paymentPresenter.totalAmountValueStream,
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.data == null) {
                   return SearchDataByCommandNumber(
                     homePresenter: homePresenter,
                     emptyMessage:
@@ -109,7 +106,7 @@ class _PaymentPageState extends State<PaymentPage>
                           action: OnWriteCommand.getPaymentAmmount,
                         );
                       } else {
-                        await widget.paymentPresenter.getTotalValue(
+                        await paymentPresenter.getTotalValue(
                           homePresenter: homePresenter,
                           writedCommandNumber: null,
                           cartPresenter: cartPresenter,
@@ -161,7 +158,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            await widget.paymentPresenter.payWithCredit(
+                            await paymentPresenter.payWithCredit(
                               longAmountValue: snapshot.data!,
                               portionQuantity: 1,
                             );
@@ -170,7 +167,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            await widget.paymentPresenter.payWithCreditPortion(
+                            await paymentPresenter.payWithCreditPortion(
                               longAmountValue: snapshot.data!,
                               portionQuantity: 2,
                             );
@@ -179,7 +176,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            await widget.paymentPresenter.payWithDebit(
+                            await paymentPresenter.payWithDebit(
                               longAmountValue: snapshot.data!,
                               portionQuantity: 1,
                             );
@@ -188,7 +185,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            await widget.paymentPresenter.payWithPix(
+                            await paymentPresenter.payWithPix(
                               longAmountValue: snapshot.data!,
                               portionQuantity: 1,
                             );

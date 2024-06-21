@@ -112,16 +112,29 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> getTotalValue(HomePresenter homePresenter) async {
+  Future<void> getTotalValue({
+    required HomePresenter homePresenter,
+    required String? writedCommandNumber,
+    required CartPresenter cartPresenter,
+  }) async {
     mainError = null;
     isLoading = true;
     try {
-      final commandNumber = await barcodeScanner.read();
+      if (!cartPresenter.isGeneratingVersionToRede) {
+        writedCommandNumber = await barcodeScanner.read();
+      }
+
+      if (cartPresenter.isGeneratingVersionToRede &&
+          writedCommandNumber == null) {
+        throw DomainError.unexpected;
+      }
+
+      homePresenter.updateCommandNumber(writedCommandNumber);
 
       final printed = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber.toInt(),
+        commandNumber: writedCommandNumber!.toInt(),
       );
 
       if (printed == null) {

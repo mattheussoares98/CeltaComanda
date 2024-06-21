@@ -137,6 +137,10 @@ Future<void> _onPress({
       commandNumber: commandNumber,
     );
   } else {
-    await paymentPresenter.getTotalValue(homePresenter);
+    await paymentPresenter.getTotalValue(
+      homePresenter: homePresenter,
+      writedCommandNumber: commandNumber,
+      cartPresenter: cartPresenter,
+    );
   }
 }

@@ -21,6 +21,7 @@ void main() {
 
   late GetxPaymentPresenter sut;
   late HomePresenterSpy homePresenter;
+  late CartPresenterSpy cartPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -44,6 +45,7 @@ void main() {
       barcodeScanner: barcodeScanner,
     );
     homePresenter = HomePresenterSpy();
+    cartPresenter = CartPresenterSpy();
   }
 
   initEntitys() {
@@ -293,7 +295,11 @@ void main() {
   group("Get total value", () {
     test("Should call loadPrintedProducts with correct commandNumber",
         () async {
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
 
       verify(
         () => loadPrintedProducts.load(
@@ -305,7 +311,11 @@ void main() {
       ).called(1);
     });
     test("Should call barcodeScanner on getTotalValue", () async {
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
 
       verify(
         () => barcodeScanner.read(),
@@ -315,31 +325,49 @@ void main() {
         () async {
       barcodeScanner.mockError(DomainError.unexpected);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
     });
     test("Should emit correct values on barcodeScanner throws barcodeNotRead",
         () async {
       barcodeScanner.mockError(DomainError.barcodeNotRead);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
     });
     test("Should emit correct values on loadPrintedProducts success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.totalAmountValueStream, emits(printedEntity.TotalLiquid));
 
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
     });
 
     test("Should emit correct values on loadPrintedProducts throws", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
     });
 
     test("Should emit correct values on loadPrintedProducts returns null",
@@ -349,7 +377,49 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.getTotalValue(homePresenter);
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
+    });
+
+    test("Should update command number on GetTotalValue", () async {
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: commandNumber,
+        cartPresenter: cartPresenter,
+      );
+
+      verify(() => homePresenter.updateCommandNumber(commandNumber)).called(1);
+    });
+
+    test(
+        "Should emit correct values on isGeneratingVersionToRede and writedCommandNumber is null or empty",
+        () async {
+      cartPresenter.isGeneratingVersionToRedeController = true;
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: null,
+        cartPresenter: cartPresenter,
+      );
+    });
+
+    test("Should not readBarcode when isGeneratingVersionToRede", () async {
+      cartPresenter.isGeneratingVersionToRedeController = true;
+
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: null,
+        cartPresenter: cartPresenter,
+      );
+
+      verifyNever(() => barcodeScanner.read());
     });
   });
 }

@@ -71,7 +71,11 @@ class _PaymentPageState extends State<PaymentPage>
                     action: OnWriteCommand.getPaymentAmmount,
                   );
                 } else {
-                  await widget.paymentPresenter.getTotalValue(homePresenter);
+                  await widget.paymentPresenter.getTotalValue(
+                    homePresenter: homePresenter,
+                    writedCommandNumber: null,
+                    cartPresenter: cartPresenter,
+                  );
                 }
                 printedProductsPresenter.updateCanCancelProducts(false);
               },
@@ -105,8 +109,11 @@ class _PaymentPageState extends State<PaymentPage>
                           action: OnWriteCommand.getPaymentAmmount,
                         );
                       } else {
-                        await widget.paymentPresenter
-                            .getTotalValue(homePresenter);
+                        await widget.paymentPresenter.getTotalValue(
+                          homePresenter: homePresenter,
+                          writedCommandNumber: null,
+                          cartPresenter: cartPresenter,
+                        );
                       }
                     },
                   );

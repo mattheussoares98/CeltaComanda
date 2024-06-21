@@ -41,9 +41,7 @@ class SaveSaleRequestButton extends StatelessWidget {
         Provider.of(context, listen: false);
 
     TextEditingController tableNumberController = TextEditingController();
-    TextEditingController commandNumberController = TextEditingController();
     GlobalKey<FormState> tableKey = GlobalKey<FormState>();
-    GlobalKey<FormState> commandKey = GlobalKey<FormState>();
 
     return SizedBox(
       child: Padding(
@@ -51,54 +49,11 @@ class SaveSaleRequestButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             if (cartPresenter.isGeneratingVersionToRede) {
-              notificationDialog(
+              writeCommandNumber(
+                cartPresenter: cartPresenter,
+                printedProductsPresenter: printedProductsPresenter,
                 context: context,
-                titleMessage: "Insira o número da comanda",
-                confirmMessage: "Confirmar",
-                cancelMessage: "Cancelar",
-                content: Row(
-                  children: [
-                    const Expanded(child: SizedBox()),
-                    Expanded(
-                      flex: 4,
-                      child: Form(
-                        key: commandKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        child: TextFormField(
-                          autofocus: true,
-                          controller: commandNumberController,
-                          keyboardType: TextInputType.number,
-                          maxLength: 3,
-                          decoration: const InputDecoration(
-                            label: Text("Comanda"),
-                            hintText: "Exp: 001",
-                          ),
-                          validator: (value) {
-                            if (value?.isEmpty == true) {
-                              return "Digite o número da comanda";
-                            } else if (value!.length < 3) {
-                              return "Digite 3 números";
-                            } else if (int.tryParse(value) == null) {
-                              return "Número inválido";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    const Expanded(child: SizedBox()),
-                  ],
-                ),
-                onPress: () async {
-                  await _addProducts(
-                    cartPresenter: cartPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    context: context,
-                    tableNumber: 0,
-                    commandNumber: commandNumberController.text,
-                    homePresenter: homePresenter,
-                  );
-                },
+                homePresenter: homePresenter,
               );
             } else {
               notificationDialog(

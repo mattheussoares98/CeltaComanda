@@ -33,6 +33,7 @@ abstract class PrintedProductsPresenter
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
     required bool isGeneratingVersionToRede,
+    required String commandNumber,
   });
 
   Future<void> validateUserAndPermissionToCancelProducts({

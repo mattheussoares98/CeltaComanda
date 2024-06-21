@@ -50,6 +50,7 @@ class GetxPrintedProductsPresenter
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
         isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
+        commandNumber: "",
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -164,6 +165,7 @@ class GetxPrintedProductsPresenter
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
     required bool isGeneratingVersionToRede,
+    required String commandNumber,
   }) async {
     isLoading = true;
     mainError = null;
@@ -178,6 +180,10 @@ class GetxPrintedProductsPresenter
       }
       if (clearPermissionToCancelProducts) {
         updateCanCancelProducts(false);
+      }
+
+      if (isGeneratingVersionToRede) {
+        homePresenter.updateCommandNumber(commandNumber);
       }
       cartPresenter.clear();
       await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);

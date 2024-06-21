@@ -224,6 +224,8 @@ void main() {
       quantity: 2,
     );
     newComment = faker.randomGenerator.string(10);
+
+    sut.isGeneratingVersionToRede = false;
   }
 
   void initMockSuccess() {
@@ -1389,6 +1391,7 @@ void main() {
         () async {
       sut.cartProducts.add(cartProductViewModel);
       confirmedCartProducts.mockIsConfirmed(false);
+
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
@@ -1491,6 +1494,21 @@ void main() {
 
       verifyNever(() => barcodeScanner.read());
     });
+    test(
+        "Should emit correct values on isGeneratingVersionToRede and commandNumber is null",
+        () async {
+      sut.isGeneratingVersionToRede = true;
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: null,
+      );
+    });
 
     test(
         "Should update homePresenter.commandNumber if user write command number",
@@ -1522,6 +1540,7 @@ void main() {
     test("Should emit correct values on BarcodeScanner throws unexpected",
         () async {
       barcodeScanner.mockError(DomainError.unexpected);
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -1536,6 +1555,7 @@ void main() {
     test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
         () async {
       barcodeScanner.mockError(DomainError.barcodeNotRead);
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
@@ -1549,6 +1569,7 @@ void main() {
     });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -1598,6 +1619,7 @@ void main() {
     });
     test("Should emit correct values TicketIsPermited throws", () async {
       ticketIsPermitted.mockError();
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
@@ -1649,6 +1671,7 @@ void main() {
     test("Should emit correct values updateSaleRequestTemp throws", () async {
       updateSaleRequestTemp
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -1702,6 +1725,7 @@ void main() {
     });
     test("Should emit correct values finishSaleRequestTemp throws", () async {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));

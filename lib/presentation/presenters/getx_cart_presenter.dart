@@ -540,7 +540,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       String informedCommandNumber;
 
       if (isGeneratingVersionToRede) {
-        informedCommandNumber = commandNumber!;
+        if (commandNumber == null) {
+          throw DomainError.unexpected;
+        }
+        informedCommandNumber = commandNumber;
       } else {
         informedCommandNumber = await barcodeScanner.read();
       }

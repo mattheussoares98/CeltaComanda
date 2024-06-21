@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../pages.dart';
 
 void writeCommandNumber({
-  required CartPresenter cartPresenter,
-  required PrintedProductsPresenter printedProductsPresenter,
   required BuildContext context,
-  required HomePresenter homePresenter,
+  required bool isInsertingProductsInCommand,
 }) {
   GlobalKey<FormState> commandKey = GlobalKey<FormState>();
   TextEditingController commandNumberController = TextEditingController();
+  MenuPresenter menuPresenter = Provider.of(context, listen: false);
+  CartPresenter cartPresenter = Provider.of(context, listen: false);
+  HomePresenter homePresenter = Provider.of(context, listen: false);
+  PrintedProductsPresenter printedProductsPresenter =
+      Provider.of(context, listen: false);
 
   notificationDialog(
     context: context,
@@ -44,6 +48,19 @@ void writeCommandNumber({
                 }
                 return null;
               },
+              onFieldSubmitted: (value) async {
+                Navigator.of(context).pop();
+                await _onPress(
+                  context: context,
+                  cartPresenter: cartPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  homePresenter: homePresenter,
+                  menuPresenter: menuPresenter,
+                  commandNumber: commandNumberController.text,
+                  commandKey: commandKey,
+                  isInsertingProductsInCommand: isInsertingProductsInCommand,
+                );
+              },
             ),
           ),
         ),
@@ -51,39 +68,62 @@ void writeCommandNumber({
       ],
     ),
     onPress: () async {
-      await _addProducts(
+      await _onPress(
+        context: context,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
-        context: context,
-        tableNumber: 0,
-        commandNumber: commandNumberController.text,
         homePresenter: homePresenter,
+        menuPresenter: menuPresenter,
+        commandNumber: commandNumberController.text,
+        commandKey: commandKey,
+        isInsertingProductsInCommand: isInsertingProductsInCommand,
       );
     },
   );
 }
 
-_addProducts({
+Future<void> _onPress({
+  required BuildContext context,
   required CartPresenter cartPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
-  required BuildContext context,
   required HomePresenter homePresenter,
-  required int? tableNumber,
-  String? commandNumber,
+  required MenuPresenter menuPresenter,
+  required String commandNumber,
+  required GlobalKey<FormState> commandKey,
+  required bool isInsertingProductsInCommand,
 }) async {
-  bool isUpdated = await cartPresenter.saveProducts(
-    printedProductsPresenter: printedProductsPresenter,
-    tableNumber: tableNumber,
-    commandNumber: commandNumber,
-    homePresenter: homePresenter,
-  );
+  bool? isValid = commandKey.currentState?.validate();
 
-  if (isUpdated) {
-    Future.delayed(Duration.zero, () {
-      showAlertMessage(
-        context,
-        "Os produtos foram inseridos na comanda com sucesso",
-      );
-    });
+  if (isValid == false || isValid == null) {
+    return;
+  }
+
+  if (isInsertingProductsInCommand) {
+    bool isUpdated = await cartPresenter.saveProducts(
+      printedProductsPresenter: printedProductsPresenter,
+      tableNumber: 0,
+      commandNumber: commandNumber,
+      homePresenter: homePresenter,
+    );
+
+    if (isUpdated) {
+      Future.delayed(Duration.zero, () {
+        showAlertMessage(
+          context,
+          "Os produtos foram inseridos na comanda com sucesso",
+        );
+      });
+    }
+  } else {
+    await printedProductsPresenter.loadCommandData(
+      printedProductsPresenter: printedProductsPresenter,
+      cartPresenter: cartPresenter,
+      menuPresenter: menuPresenter,
+      homePresenter: homePresenter,
+      clearPermissionToCancelProducts: true,
+      isRemovingProduct: false,
+      isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
+      commandNumber: commandNumber,
+    );
   }
 }

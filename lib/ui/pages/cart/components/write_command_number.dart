@@ -1,18 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
 import '../../pages.dart';
 
+enum OnWriteCommand {
+  saveProducts,
+  loadCommandData,
+  getPaymentAmmount,
+}
+
 void writeCommandNumber({
   required BuildContext context,
-  required bool isInsertingProductsInCommand,
+  required OnWriteCommand action,
 }) {
   GlobalKey<FormState> commandKey = GlobalKey<FormState>();
   TextEditingController commandNumberController = TextEditingController();
   MenuPresenter menuPresenter = Provider.of(context, listen: false);
   CartPresenter cartPresenter = Provider.of(context, listen: false);
   HomePresenter homePresenter = Provider.of(context, listen: false);
+  PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
   PrintedProductsPresenter printedProductsPresenter =
       Provider.of(context, listen: false);
 
@@ -58,7 +66,8 @@ void writeCommandNumber({
                   menuPresenter: menuPresenter,
                   commandNumber: commandNumberController.text,
                   commandKey: commandKey,
-                  isInsertingProductsInCommand: isInsertingProductsInCommand,
+                  onWriteCommand: action,
+                  paymentPresenter: paymentPresenter,
                 );
               },
             ),
@@ -76,7 +85,8 @@ void writeCommandNumber({
         menuPresenter: menuPresenter,
         commandNumber: commandNumberController.text,
         commandKey: commandKey,
-        isInsertingProductsInCommand: isInsertingProductsInCommand,
+        onWriteCommand: action,
+        paymentPresenter: paymentPresenter,
       );
     },
   );
@@ -88,9 +98,10 @@ Future<void> _onPress({
   required PrintedProductsPresenter printedProductsPresenter,
   required HomePresenter homePresenter,
   required MenuPresenter menuPresenter,
+  required PaymentPresenter paymentPresenter,
   required String commandNumber,
   required GlobalKey<FormState> commandKey,
-  required bool isInsertingProductsInCommand,
+  required OnWriteCommand onWriteCommand,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 
@@ -98,7 +109,7 @@ Future<void> _onPress({
     return;
   }
 
-  if (isInsertingProductsInCommand) {
+  if (onWriteCommand == OnWriteCommand.saveProducts) {
     bool isUpdated = await cartPresenter.saveProducts(
       printedProductsPresenter: printedProductsPresenter,
       tableNumber: 0,
@@ -114,7 +125,7 @@ Future<void> _onPress({
         );
       });
     }
-  } else {
+  } else if (onWriteCommand == OnWriteCommand.loadCommandData) {
     await printedProductsPresenter.loadCommandData(
       printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
@@ -125,5 +136,7 @@ Future<void> _onPress({
       isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       commandNumber: commandNumber,
     );
+  } else {
+    await paymentPresenter.getTotalValue(homePresenter);
   }
 }

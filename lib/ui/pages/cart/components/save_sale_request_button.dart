@@ -51,7 +51,7 @@ class SaveSaleRequestButton extends StatelessWidget {
             if (cartPresenter.isGeneratingVersionToRede) {
               writeCommandNumber(
                 context: context,
-                isInsertingProductsInCommand: true,
+               action: OnWriteCommand.saveProducts,
               );
             } else {
               notificationDialog(

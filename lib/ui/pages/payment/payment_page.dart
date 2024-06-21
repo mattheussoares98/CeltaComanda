@@ -62,21 +62,21 @@ class _PaymentPageState extends State<PaymentPage>
               },
             );
           }),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (homePresenter.commandNumber != null)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Comanda ${homePresenter.commandNumber!}",
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-            ],
-          ),
+          actions: [
+            SearchCommandIcon(
+              loadCommandData: () async {
+                if (cartPresenter.isGeneratingVersionToRede) {
+                  writeCommandNumber(
+                    context: context,
+                    action: OnWriteCommand.getPaymentAmmount,
+                  );
+                } else {
+                  await widget.paymentPresenter.getTotalValue(homePresenter);
+                }
+                printedProductsPresenter.updateCanCancelProducts(false);
+              },
+            )
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -96,12 +96,18 @@ class _PaymentPageState extends State<PaymentPage>
                 if (!snapshot.hasData) {
                   return SearchDataByCommandNumber(
                     homePresenter: homePresenter,
-                    emptyMessage: homePresenter.commandNumber == null
-                        ? "Consulte alguma comanda para efetuar o pagamento dela"
-                        : "Não há produtos solicitados nessa comanda",
+                    emptyMessage:
+                        "Consulte alguma comanda para efetuar o pagamento dela",
                     loadCommandData: () async {
-                      await widget.paymentPresenter
-                          .getTotalValue(homePresenter);
+                      if (cartPresenter.isGeneratingVersionToRede) {
+                        writeCommandNumber(
+                          context: context,
+                          action: OnWriteCommand.getPaymentAmmount,
+                        );
+                      } else {
+                        await widget.paymentPresenter
+                            .getTotalValue(homePresenter);
+                      }
                     },
                   );
                 } else {
@@ -112,6 +118,18 @@ class _PaymentPageState extends State<PaymentPage>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        if (homePresenter.commandNumber != null)
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              "Comanda ${homePresenter.commandNumber}",
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         Text(
                           "Total: ${snapshot.data!.toString().toBrazilianNumber()}"
                               .addBrazilianCoin(),

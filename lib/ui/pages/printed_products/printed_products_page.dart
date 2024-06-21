@@ -67,7 +67,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                 if (cartPresenter.isGeneratingVersionToRede) {
                   writeCommandNumber(
                     context: context,
-                    isInsertingProductsInCommand: false,
+                    action: OnWriteCommand.loadCommandData,
                   );
                 } else {
                   await printedProductsPresenter.loadCommandData(
@@ -134,7 +134,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       if (cartPresenter.isGeneratingVersionToRede) {
                         writeCommandNumber(
                           context: context,
-                          isInsertingProductsInCommand: false,
+                          action: OnWriteCommand.loadCommandData,
                         );
                       } else {
                         await printedProductsPresenter.loadCommandData(

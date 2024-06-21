@@ -31,8 +31,6 @@ class SaveSaleRequestButton extends StatelessWidget {
     }
   }
 
-  static bool isGeneratingVersionToRede = true;
-
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: true);
@@ -41,35 +39,52 @@ class SaveSaleRequestButton extends StatelessWidget {
 
     TextEditingController tableNumberController = TextEditingController();
     TextEditingController commandNumberController = TextEditingController();
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    GlobalKey<FormState> tableKey = GlobalKey<FormState>();
+    GlobalKey<FormState> commandKey = GlobalKey<FormState>();
 
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: ElevatedButton(
           onPressed: () async {
-            if (isGeneratingVersionToRede) {
+            if (cartPresenter.isGeneratingVersionToRede) {
               notificationDialog(
                 context: context,
                 titleMessage: "Insira o número da comanda",
-                content: TextFormField(
-                  controller: commandNumberController,
-                  keyboardType: TextInputType.number,
-                  maxLength: 3,
-                  decoration: const InputDecoration(
-                    label: Text("Comanda"),
-                    hintText: "Exp: 001",
-                  ),
-                  validator: (value) {
-                    if (value?.isEmpty == true) {
-                      return "Digite o número da comanda";
-                    } else if (int.tryParse(value!) == null) {
-                      return "Número inválido";
-                    } else if (value.length < 3) {
-                      value = value.padLeft(3, "0");
-                    }
-                    return null;
-                  },
+                confirmMessage: "Confirmar",
+                cancelMessage: "Cancelar",
+                content: Row(
+                  children: [
+                    const Expanded(child: SizedBox()),
+                    Expanded(
+                      flex: 4,
+                      child: Form(
+                        key: commandKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: TextFormField(
+                          autofocus: true,
+                          controller: commandNumberController,
+                          keyboardType: TextInputType.number,
+                          maxLength: 3,
+                          decoration: const InputDecoration(
+                            label: Text("Comanda"),
+                            hintText: "Exp: 001",
+                          ),
+                          validator: (value) {
+                            if (value?.isEmpty == true) {
+                              return "Digite o número da comanda";
+                            } else if (value!.length < 3) {
+                              return "Digite 3 números";
+                            } else if (int.tryParse(value) == null) {
+                              return "Número inválido";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    const Expanded(child: SizedBox()),
+                  ],
                 ),
                 onPress: () async {
                   await _addProducts(
@@ -97,7 +112,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                   );
                 },
                 onPress: () async {
-                  bool? isValid = formKey.currentState?.validate();
+                  bool? isValid = tableKey.currentState?.validate();
 
                   if (isValid == true) {
                     Navigator.of(context).pop();
@@ -114,7 +129,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                     const Expanded(child: SizedBox()),
                     Expanded(
                       child: Form(
-                        key: formKey,
+                        key: tableKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: TextFormField(
                           autofocus: true,

@@ -56,60 +56,63 @@ class _CommentState extends State<Comment> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            if (widget.comments == null)
-              const Expanded(
-                child: Text(
-                  "Não há comentário",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic,
+        GestureDetector(
+          onTap: onTapCommentIcon,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (widget.comments == null)
+                const Expanded(
+                  child: Text(
+                    "Não há comentário",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
-              ),
-            if (widget.comments != null)
-              Expanded(
+              if (widget.comments != null)
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CommentRichText(
+                          comment: widget.comments!,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          notificationDialog(
+                            context: context,
+                            titleMessage: "Excluir comentário?",
+                            content: null,
+                            onPress: widget.clearComment,
+                          );
+                        },
+                        child: const Icon(
+                          Icons.highlight_remove_outlined,
+                          color: Colors.red,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              const SizedBox(width: 10),
+              GestureDetector(
+                onTap: onTapCommentIcon,
                 child: Row(
                   children: [
-                    Expanded(
-                      child: CommentRichText(
-                        comment: widget.comments!,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        notificationDialog(
-                          context: context,
-                          titleMessage: "Excluir comentário?",
-                          content: null,
-                          onPress: widget.clearComment,
-                        );
-                      },
-                      child: const Icon(
-                        Icons.highlight_remove_outlined,
-                        color: Colors.red,
-                        size: 25,
-                      ),
+                    Icon(
+                      color: Theme.of(context).colorScheme.primary,
+                      Icons.add_comment,
+                      size: 25,
                     ),
                   ],
                 ),
               ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: onTapCommentIcon,
-              child: Row(
-                children: [
-                  Icon(
-                    color: Theme.of(context).colorScheme.primary,
-                    Icons.add_comment,
-                    size: 25,
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         if (widget.indexOfSelectedProduct == widget.indexOfProduct)
           Row(

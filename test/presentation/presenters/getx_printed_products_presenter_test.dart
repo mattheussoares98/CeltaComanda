@@ -745,5 +745,18 @@ void main() {
         isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       );
     });
+    test("Should not read barcode when isGeneratingVersionToRede", () async {
+      await sut.loadCommandData(
+        printedProductsPresenter: sut,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: false,
+        isRemovingProduct: false,
+        isGeneratingVersionToRede: true,
+      );
+
+      verifyNever(() => barcodeScanner.read());
+    });
   });
 }

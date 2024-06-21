@@ -173,7 +173,7 @@ class GetxPrintedProductsPresenter
         throw DomainError.unexpected;
       }
 
-      if (!isRemovingProduct) {
+      if (!isRemovingProduct && !isGeneratingVersionToRede) {
         homePresenter.updateCommandNumber(await barcodeScanner.read());
       }
       if (clearPermissionToCancelProducts) {

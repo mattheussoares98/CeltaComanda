@@ -11,6 +11,7 @@ enum UIError {
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   invalidField,
+  paymentEmpty,
   productNotFound,
   requiredField,
   shortField,
@@ -38,6 +39,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgInvalidCredentials;
       case UIError.invalidCredentialsOrAccessDenied:
         return R.string.msgInvalidCredentialsOrAccessDenied;
+      case UIError.paymentEmpty:
+        return R.string.msgPaymentEmpty;
       case UIError.productNotFound:
         return R.string.msgProductNotFound;
       case UIError.requiredField:

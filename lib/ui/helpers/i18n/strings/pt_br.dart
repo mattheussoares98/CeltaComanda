@@ -5,11 +5,13 @@ import './translation.dart';
 class PtBr implements Translation {
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgEmailInUse => 'O email já está em uso.';
-  String get msgInvalidCombox => 'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
+  String get msgInvalidCombox =>
+      'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
   String get msgInvalidCredentials => 'Credenciais inválidas.';
   String get msgInvalidCredentialsOrAccessDenied =>
       'Credenciais inválidas ou usuário sem permissão';
   String get msgInvalidField => 'Campo inválido';
+  String get msgPaymentEmpty => 'A comanda não possui valores em aberto';
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequiredField => 'Campo obrigatório';
   String get msgSuccessToCancelProducts => 'Cancelamento de produtos liberado';

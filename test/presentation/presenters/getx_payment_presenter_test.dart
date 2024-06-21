@@ -422,14 +422,14 @@ void main() {
       verifyNever(() => barcodeScanner.read());
     });
 
-    test("Should clear totalAmount if loadPrintedProducts return null",
+    test("Should emit correct values if loadPrintedProducts return null",
         () async {
       loadPrintedProducts.mockLoadPrintedProducts(null);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.totalAmountValueStream, emits(null));
       expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+          sut.mainErrorStream, emitsInOrder([null, UIError.paymentEmpty]));
 
       await sut.getTotalValue(
         homePresenter: homePresenter,

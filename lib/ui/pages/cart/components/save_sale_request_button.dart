@@ -12,6 +12,7 @@ class SaveSaleRequestButton extends StatelessWidget {
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
+    required HomePresenter homePresenter,
     required int? tableNumber,
     String? commandNumber,
   }) async {
@@ -19,6 +20,7 @@ class SaveSaleRequestButton extends StatelessWidget {
       printedProductsPresenter: printedProductsPresenter,
       tableNumber: tableNumber,
       commandNumber: commandNumber,
+      homePresenter: homePresenter,
     );
 
     if (isUpdated) {
@@ -34,6 +36,7 @@ class SaveSaleRequestButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: true);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -93,6 +96,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                     context: context,
                     tableNumber: 0,
                     commandNumber: commandNumberController.text,
+                    homePresenter: homePresenter,
                   );
                 },
               );
@@ -109,6 +113,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                     context: context,
                     printedProductsPresenter: printedProductsPresenter,
                     tableNumber: null,
+                    homePresenter: homePresenter,
                   );
                 },
                 onPress: () async {
@@ -121,6 +126,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                       context: context,
                       printedProductsPresenter: printedProductsPresenter,
                       tableNumber: int.tryParse(tableNumberController.text),
+                      homePresenter: homePresenter,
                     );
                   }
                 },

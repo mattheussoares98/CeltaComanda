@@ -438,8 +438,10 @@ void main() {
     test("Should call cartInformations.clear when saveProducts succeeds",
         () async {
       await sut.saveProducts(
-          printedProductsPresenter: printedProductsPresenter,
-          tableNumber: tableNumber);
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
 
       verify(() => cartInformations.clearCartProducts()).called(1);
     });
@@ -1389,6 +1391,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => barcodeScanner.read()).called(1);
@@ -1454,6 +1457,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       final entity = UpdateSaleRequestTempEntity(
@@ -1477,10 +1481,26 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
         commandNumber: faker.randomGenerator.integer(999).toString(),
       );
 
       verifyNever(() => barcodeScanner.read());
+    });
+
+    test(
+        "Should update homePresenter.commandNumber if user write command number",
+        () async {
+      String commandNumber = faker.randomGenerator.integer(999).toString();
+
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: commandNumber,
+      );
+
+      verify(() => homePresenter.updateCommandNumber(commandNumber)).called(1);
     });
     test("Should emit correct values on success to save cart products",
         () async {
@@ -1490,6 +1510,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should emit correct values on BarcodeScanner throws unexpected",
@@ -1502,6 +1523,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
@@ -1514,6 +1536,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {
@@ -1525,6 +1548,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should call correct functions LoadSaleRequestTemp throws", () async {
@@ -1533,6 +1557,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -1572,6 +1597,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should call correct functions when TicketIsPermited throws",
@@ -1581,6 +1607,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -1622,6 +1649,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should call correct functions updateSaleRequestTemp throws",
@@ -1633,6 +1661,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -1672,6 +1701,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
     });
     test("Should call correct functions when finishSaleRequestTemp throws",
@@ -1681,6 +1711,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -1718,6 +1749,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => confirmedCartProducts.isConfirmed()).called(1);
@@ -1728,6 +1760,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
@@ -1741,6 +1774,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verifyNever(() => confirmedCartProducts.updateValue(true));
@@ -1751,6 +1785,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
@@ -1763,6 +1798,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verifyNever(() => confirmedCartProducts.updateValue(false));
@@ -1774,6 +1810,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verifyNever(() => updateSaleRequestTemp.update(
@@ -1788,6 +1825,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => updateSaleRequestTemp.update(
@@ -1804,6 +1842,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       expect(sut.cartProducts, []);
@@ -1812,6 +1851,7 @@ void main() {
       final isUpdated = await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       expect(isUpdated, true);
@@ -1822,6 +1862,7 @@ void main() {
       final isUpdated = await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       expect(isUpdated, false);
@@ -1833,6 +1874,7 @@ void main() {
       final isUpdated = await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       expect(isUpdated, false);
@@ -1845,6 +1887,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: null,
+        homePresenter: homePresenter,
       );
 
       verify(() => finishSaleRequestTemp.finish(
@@ -1869,6 +1912,7 @@ void main() {
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
+        homePresenter: homePresenter,
       );
 
       verify(() => finishSaleRequestTemp.finish(

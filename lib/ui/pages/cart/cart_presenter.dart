@@ -73,6 +73,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<bool> saveProducts({
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
+    required HomePresenter homePresenter,
     String? commandNumber,
   });
   Future<void> getLocalCartProductsData();

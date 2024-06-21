@@ -522,11 +522,12 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final bool _isGeneratingVersionToRede = true;
   @override
   bool get isGeneratingVersionToRede => _isGeneratingVersionToRede;
-  
+
   @override
   Future<bool> saveProducts({
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
+    required HomePresenter homePresenter,
     String? commandNumber,
   }) async {
     isLoading = true;
@@ -541,6 +542,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       } else {
         informedCommandNumber = await barcodeScanner.read();
       }
+
+      homePresenter.updateCommandNumber(informedCommandNumber);
 
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,

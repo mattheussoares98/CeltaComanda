@@ -5,7 +5,6 @@ import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/payment/payment.dart';
 import '../../domain/usecases/printed_products/load_printed_products.dart';
 import '../../presentation/mixins/mixins.dart';
-import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
@@ -116,6 +115,8 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required String? writedCommandNumber,
     required CartPresenter cartPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required MenuPresenter menuPresenter,
   }) async {
     mainError = null;
     isLoading = true;
@@ -131,17 +132,23 @@ class GetxPaymentPresenter extends GetxController
 
       homePresenter.updateCommandNumber(writedCommandNumber);
 
-      final printed = await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: writedCommandNumber!.toInt(),
+      await printedProductsPresenter.loadCommandData(
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: false,
+        isRemovingProduct: false,
+        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
+        commandNumber: homePresenter.commandNumber!,
       );
 
-      if (printed == null) {
+      if (printedProductsPresenter.printedProducts == null) {
         _totalAmountValue.value = null;
         throw DomainError.paymentEmpty;
       } else {
-        _totalAmountValue.value = printed.TotalLiquid;
+        _totalAmountValue.value =
+            printedProductsPresenter.printedProducts!.TotalLiquid.toDouble();
       }
     } on DomainError catch (e) {
       _totalAmountValue.value = null;

@@ -29,5 +29,7 @@ abstract class PaymentPresenter implements Listenable {
     required HomePresenter homePresenter,
     required String? writedCommandNumber,
     required CartPresenter cartPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required MenuPresenter menuPresenter,
   });
 }

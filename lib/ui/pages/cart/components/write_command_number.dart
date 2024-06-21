@@ -153,6 +153,8 @@ Future<void> _onPress({
       homePresenter: homePresenter,
       writedCommandNumber: commandNumber,
       cartPresenter: cartPresenter,
+      menuPresenter: menuPresenter,
+      printedProductsPresenter: printedProductsPresenter,
     );
   }
 }

@@ -22,6 +22,8 @@ void main() {
   late GetxPaymentPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
+  late MenuPresenterSpy menuPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -46,6 +48,8 @@ void main() {
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
+    menuPresenter = MenuPresenterSpy();
   }
 
   initEntitys() {
@@ -63,6 +67,7 @@ void main() {
     pay.mockPay();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     barcodeScanner.mockBarcodeScanner(commandNumber);
+    printedProductsPresenter.mockLoadCommandData();
   }
 
   setUp(() {
@@ -82,6 +87,7 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
   });
 
   group("Credit payment", () {
@@ -299,6 +305,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
 
       verify(
@@ -315,6 +323,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
 
       verify(
@@ -332,6 +342,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
     });
     test("Should emit correct values on barcodeScanner throws barcodeNotRead",
@@ -345,6 +357,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
     });
     test("Should emit correct values on loadPrintedProducts success", () async {
@@ -356,6 +370,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
     });
 
@@ -367,6 +383,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
     });
 
@@ -381,6 +399,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
     });
 
@@ -389,6 +409,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
 
       verify(() => homePresenter.updateCommandNumber(commandNumber)).called(1);
@@ -407,6 +429,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: null,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
     });
 
@@ -417,6 +441,8 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: null,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
 
       verifyNever(() => barcodeScanner.read());
@@ -435,7 +461,28 @@ void main() {
         homePresenter: homePresenter,
         writedCommandNumber: null,
         cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
       );
+    });
+
+    test("Should load printed products on getTotalValue", () async {
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+
+      await sut.getTotalValue(
+        homePresenter: homePresenter,
+        writedCommandNumber: null,
+        cartPresenter: cartPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        menuPresenter: menuPresenter,
+      );
+
+      verify(() => loadPrintedProducts.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            commandNumber: homePresenter.commandNumber!.toInt(),
+          )).called(1);
     });
   });
 }

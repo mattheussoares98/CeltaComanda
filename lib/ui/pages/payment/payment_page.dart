@@ -72,6 +72,8 @@ class _PaymentPageState extends State<PaymentPage>
                     homePresenter: homePresenter,
                     writedCommandNumber: null,
                     cartPresenter: cartPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    menuPresenter: menuPresenter,
                   );
                 }
                 printedProductsPresenter.updateCanCancelProducts(false);
@@ -110,6 +112,8 @@ class _PaymentPageState extends State<PaymentPage>
                           homePresenter: homePresenter,
                           writedCommandNumber: null,
                           cartPresenter: cartPresenter,
+                          printedProductsPresenter: printedProductsPresenter,
+                          menuPresenter: menuPresenter,
                         );
                       }
                     },

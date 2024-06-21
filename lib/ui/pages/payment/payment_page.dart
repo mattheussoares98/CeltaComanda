@@ -80,6 +80,21 @@ class _PaymentPageState extends State<PaymentPage>
               },
             )
           ],
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (homePresenter.commandNumber != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Comanda ${homePresenter.commandNumber!}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(

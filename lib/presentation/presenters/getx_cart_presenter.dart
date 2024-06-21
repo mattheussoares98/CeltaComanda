@@ -519,28 +519,39 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     notifyListeners();
   }
 
+  final bool _isGeneratingVersionToRede = true;
+  @override
+  bool get isGeneratingVersionToRede => _isGeneratingVersionToRede;
+  
   @override
   Future<bool> saveProducts({
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
+    String? commandNumber,
   }) async {
     isLoading = true;
     mainError = null;
     clear();
 
     try {
-      final commandNumber = await barcodeScanner.read();
+      String informedCommandNumber;
+
+      if (isGeneratingVersionToRede) {
+        informedCommandNumber = commandNumber!;
+      } else {
+        informedCommandNumber = await barcodeScanner.read();
+      }
 
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
+        commandNumber: informedCommandNumber,
       );
 
       SaleRequestTempEntity saleRequestTempResult =
           await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber,
+        commandNumber: informedCommandNumber,
       );
 
       _saleRequestTemp =
@@ -591,7 +602,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       saleRequestTempResult = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber,
+        commandNumber: informedCommandNumber,
       );
 
       await finishSaleRequestTemp.finish(
@@ -613,7 +624,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.clearCartProducts();
       await cartInformations.updateConfirmedCombox([]);
 
-      await printedProductsPresenter.loadPrinted(commandNumber);
+      await printedProductsPresenter.loadPrinted(informedCommandNumber);
       return true;
     } on DomainError catch (e) {
       switch (e) {

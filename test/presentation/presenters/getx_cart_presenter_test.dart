@@ -1473,6 +1473,15 @@ void main() {
             entity: entity,
           )).called(1);
     });
+    test("Should not read barcode when is generatingVersionToRede", () async {
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+      );
+
+      verifyNever(() => barcodeScanner.read());
+    });
     test("Should emit correct values on success to save cart products",
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

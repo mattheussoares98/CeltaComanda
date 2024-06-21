@@ -10,6 +10,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Stream<bool> get isLoadingStream;
   int? get indexOfSelectedProduct;
   String get totalSaleRequestTempPrice;
+  bool get isGeneratingVersionToRede;
 
   Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({
@@ -72,6 +73,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<bool> saveProducts({
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
+    String? commandNumber,
   });
   Future<void> getLocalCartProductsData();
 

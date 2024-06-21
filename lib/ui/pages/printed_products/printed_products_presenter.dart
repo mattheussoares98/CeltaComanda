@@ -32,7 +32,6 @@ abstract class PrintedProductsPresenter
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
-    required bool isGeneratingVersionToRede,
     required String commandNumber,
   });
 

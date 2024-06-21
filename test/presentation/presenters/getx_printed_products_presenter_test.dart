@@ -521,7 +521,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
@@ -542,7 +541,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
@@ -562,7 +560,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
@@ -581,7 +578,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
@@ -596,7 +592,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -611,7 +606,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -626,7 +620,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -647,7 +640,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -666,7 +658,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -695,7 +686,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -713,7 +703,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -731,7 +720,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -754,11 +742,12 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: "999",
       );
     });
     test("Should not read barcode when isGeneratingVersionToRede", () async {
+      cartPresenter.isGeneratingVersionToRedeController = true;
+
       await sut.loadCommandData(
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
@@ -766,7 +755,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: true,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -776,6 +764,8 @@ void main() {
     test(
         "Should update homePresenter.commandNumber if isGeneratingVersionToRede",
         () async {
+      cartPresenter.isGeneratingVersionToRedeController = true;
+
       await sut.loadCommandData(
         printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
@@ -783,7 +773,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: true,
         commandNumber: "999",
       );
 

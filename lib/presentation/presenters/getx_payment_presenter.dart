@@ -121,16 +121,12 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      if (!cartPresenter.isGeneratingVersionToRede) {
-        writedCommandNumber = await barcodeScanner.read();
-      }
-
       if (cartPresenter.isGeneratingVersionToRede &&
           writedCommandNumber == null) {
         throw DomainError.unexpected;
+      } else if (cartPresenter.isGeneratingVersionToRede) {
+        homePresenter.updateCommandNumber(writedCommandNumber);
       }
-
-      homePresenter.updateCommandNumber(writedCommandNumber);
 
       await printedProductsPresenter.loadCommandData(
         printedProductsPresenter: printedProductsPresenter,
@@ -139,8 +135,7 @@ class GetxPaymentPresenter extends GetxController
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandNumber ?? "",
       );
     } on DomainError catch (e) {
       switch (e) {

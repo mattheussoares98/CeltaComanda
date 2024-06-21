@@ -61,6 +61,7 @@ void main() {
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(999).toString();
     commandNumber = faker.randomGenerator.integer(999).toString();
+    cartPresenter.isGeneratingVersionToRedeController = false;
   }
 
   mockSuccess() {

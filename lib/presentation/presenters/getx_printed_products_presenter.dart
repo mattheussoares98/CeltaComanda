@@ -49,7 +49,6 @@ class GetxPrintedProductsPresenter
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
-        isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
         commandNumber: homePresenter.commandNumber.toString(),
       );
     } on DomainError catch (error) {
@@ -164,7 +163,6 @@ class GetxPrintedProductsPresenter
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
-    required bool isGeneratingVersionToRede,
     required String commandNumber,
   }) async {
     isLoading = true;
@@ -175,14 +173,14 @@ class GetxPrintedProductsPresenter
         throw DomainError.unexpected;
       }
 
-      if (!isRemovingProduct && !isGeneratingVersionToRede) {
+      if (!isRemovingProduct && !cartPresenter.isGeneratingVersionToRede) {
         homePresenter.updateCommandNumber(await barcodeScanner.read());
       }
       if (clearPermissionToCancelProducts) {
         updateCanCancelProducts(false);
       }
 
-      if (isGeneratingVersionToRede) {
+      if (cartPresenter.isGeneratingVersionToRede) {
         homePresenter.updateCommandNumber(commandNumber);
       }
       cartPresenter.clear();

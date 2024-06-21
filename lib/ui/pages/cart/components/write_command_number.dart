@@ -145,7 +145,6 @@ Future<void> _onPress({
       homePresenter: homePresenter,
       clearPermissionToCancelProducts: true,
       isRemovingProduct: false,
-      isGeneratingVersionToRede: cartPresenter.isGeneratingVersionToRede,
       commandNumber: commandNumber,
     );
   } else {

@@ -99,8 +99,9 @@ class _PaymentPageState extends State<PaymentPage>
                 if (snapshot.data == null) {
                   return SearchDataByCommandNumber(
                     homePresenter: homePresenter,
-                    emptyMessage:
-                        "Consulte alguma comanda para efetuar o pagamento dela",
+                    emptyMessage: homePresenter.commandNumber != null
+                        ? "Essa comanda não possui valores em aberto"
+                        : "Consulte alguma comanda para efetuar o pagamento dela",
                     loadCommandData: () async {
                       if (cartPresenter.isGeneratingVersionToRede) {
                         writeCommandNumber(

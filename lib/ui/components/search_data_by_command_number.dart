@@ -26,6 +26,16 @@ class SearchDataByCommandNumber extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (homePresenter.commandNumber != null)
+            Text(
+              "Comanda ${homePresenter.commandNumber}",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           Text(
             emptyMessage,
             textAlign: TextAlign.center,

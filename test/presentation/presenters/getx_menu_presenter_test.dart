@@ -42,7 +42,6 @@ void main() {
   late ProductsViewModel productsViewModel;
   late List<ProductEntity> products;
   late String newComment;
-  late List<String> localComments;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -73,7 +72,6 @@ void main() {
       barcodeScanner: barcodeScanner,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadProducts: loadProducts,
-      comments: comments,
     );
   }
 
@@ -109,10 +107,6 @@ void main() {
             })
         .toList();
     newComment = faker.randomGenerator.string(20);
-    localComments = [
-      faker.randomGenerator.string(10),
-      faker.randomGenerator.string(10),
-    ];
   }
 
   void mockSuccess() {
@@ -609,79 +603,6 @@ void main() {
       expectLater(sut.productCommentStream, emits(null));
 
       sut.updateSelectedProduct(productsViewModel);
-    });
-
-    test("Should emit correct values on add new local comment succeeds",
-        () async {
-      expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.addComment(newComment);
-    });
-
-    test("Should emit correct values on add new local comment throws",
-        () async {
-      comments.mockAddCommentsError();
-
-      expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
-
-      await sut.addComment(newComment);
-    });
-
-    test("Should call addNewComment with correct comments", () async {
-      await sut.addComment(newComment);
-
-      verify(() => comments.add(sut.usedComments));
-    });
-
-    test("Should add newComment correctly in usedComments", () async {
-      await sut.addComment(newComment);
-
-      expect(sut.usedComments, [newComment]);
-    });
-
-    test("Should not add newComment if already exists", () async {
-      await sut.addComment(newComment);
-      await sut.addComment(newComment);
-
-      expect(sut.usedComments, [newComment]);
-    });
-
-    test("Should emit correct values on loadLocalComments succeeds", () async {
-      expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.loadComments();
-    });
-
-    test("Should emit correct values on loadLocalComments throws", () async {
-      comments.mockLoadCommentsError();
-
-      expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
-
-      await sut.loadComments();
-    });
-
-    test("Should udpate usedComments correctly on LoadComments succeeds",
-        () async {
-      comments.mockLoadComments(localComments);
-
-      await sut.loadComments();
-
-      expect(sut.usedComments, localComments);
-    });
-
-    test("Should udpate usedComments correctly on LoadComments throws",
-        () async {
-      comments.mockLoadCommentsError();
-
-      await sut.loadComments();
-
-      expect(sut.usedComments, []);
     });
   });
 }

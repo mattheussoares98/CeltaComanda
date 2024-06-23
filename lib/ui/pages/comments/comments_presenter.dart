@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 abstract class CommentsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
-  Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
+  List<String> get usedComments;
 
   Future<void> addComment(String newComment);
   Future<void> loadComments();

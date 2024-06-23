@@ -1,4 +1,5 @@
 export './getx_cart_presenter.dart';
+export './getx_comments_presenter.dart';
 export './getx_enterprise_presenter.dart';
 export './getx_home_presenter.dart';
 export './getx_menu_presenter.dart';

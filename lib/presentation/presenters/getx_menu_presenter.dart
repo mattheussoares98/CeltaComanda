@@ -20,7 +20,6 @@ class GetxMenuPresenter extends GetxController
   final BarcodeScanner barcodeScanner;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadProducts loadProducts;
-  final Comments comments;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -30,7 +29,6 @@ class GetxMenuPresenter extends GetxController
     required this.barcodeScanner,
     required this.updateSaleRequestTemp,
     required this.loadProducts,
-    required this.comments,
   });
 
   @override
@@ -265,45 +263,5 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateProductComment(String? newComment) {
     _productComment.value = newComment;
-  }
-
-  @override
-  Future<void> addComment(String newComment) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      if (_usedComments.contains(newComment)) {
-        return;
-      }
-
-      _usedComments.add(newComment);
-      await comments.add(_usedComments);
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  List<String> _usedComments = [];
-  @override
-  List<String> get usedComments => _usedComments;
-
-  @override
-  Future<void> loadComments() async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      final localComments = await comments.load();
-      if (localComments != null) {
-        _usedComments = localComments;
-      }
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
   }
 }

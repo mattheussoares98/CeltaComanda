@@ -10,17 +10,11 @@ class AddLocalCommentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final presenter = Provider.of<CommentsPresenter>(context);
-    return StreamBuilder<bool>(
-        stream: presenter.isFormValidStream,
-        builder: (context, snapshot) {
-          return ElevatedButton(
-            onPressed: snapshot.data == true
-                ? () async {
-                    presenter.addComment("passar o comentario correto aqui");
-                  }
-                : null,
-            child: Text(R.string.validateEnterprise.toUpperCase()),
-          );
-        });
+    return ElevatedButton(
+      onPressed: () async {
+        presenter.addComment("passar o comentario correto aqui");
+      },
+      child: Text(R.string.validateEnterprise.toUpperCase()),
+    );
   }
 }

@@ -20,6 +20,7 @@ class GetxMenuPresenter extends GetxController
   final BarcodeScanner barcodeScanner;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadProducts loadProducts;
+  final Comments comments;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -29,6 +30,7 @@ class GetxMenuPresenter extends GetxController
     required this.barcodeScanner,
     required this.updateSaleRequestTemp,
     required this.loadProducts,
+    required this.comments,
   });
 
   @override

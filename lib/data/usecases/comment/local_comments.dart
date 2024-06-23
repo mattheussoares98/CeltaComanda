@@ -5,7 +5,7 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalComments implements AddComment, LoadComment {
+class LocalComments implements Comments {
   final HiveStorage hiveStorage;
 
   LocalComments({required this.hiveStorage});

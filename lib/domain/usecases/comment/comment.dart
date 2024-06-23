@@ -1,2 +1,4 @@
-export './add_comment.dart';
-export './load_comment.dart';
+abstract class Comments {
+  Future<void> add(List<String> comments);
+  Future<List<String>?> load();
+}

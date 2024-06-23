@@ -282,7 +282,24 @@ class GetxMenuPresenter extends GetxController
     isLoading = false;
   }
 
-  final List<String> _usedComments = [];
+  List<String> _usedComments = [];
   @override
   List<String> get usedComments => _usedComments;
+
+  @override
+  Future<void> loadComments() async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      final localComments = await comments.load();
+      if (localComments != null) {
+        _usedComments = localComments;
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

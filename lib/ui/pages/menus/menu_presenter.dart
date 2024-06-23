@@ -39,4 +39,5 @@ abstract class MenuPresenter implements Listenable {
   void updateSelectedProduct(ProductsViewModel? selectedProduct);
   void updateProductComment(String? newComment);
   Future<void> addComment(String newComment);
+  Future<void> loadComments();
 }

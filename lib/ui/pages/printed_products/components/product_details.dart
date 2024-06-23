@@ -99,9 +99,6 @@ class ProductDetails extends StatelessWidget {
           ],
         ),
         if (comments != null) CommentRichText(comment: comments!),
-        const Divider(
-          thickness: 0.2,
-        )
       ],
     );
   }

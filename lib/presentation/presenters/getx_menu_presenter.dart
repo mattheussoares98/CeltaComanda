@@ -273,13 +273,17 @@ class GetxMenuPresenter extends GetxController
     mainError = null;
 
     try {
+      if (_usedComments.contains(newComment)) {
+        return;
+      }
+
       _usedComments.add(newComment);
       await comments.add(_usedComments);
     } catch (e) {
       mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
-
-    isLoading = false;
   }
 
   List<String> _usedComments = [];

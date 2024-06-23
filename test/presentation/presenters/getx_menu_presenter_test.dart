@@ -642,6 +642,13 @@ void main() {
       expect(sut.usedComments, [newComment]);
     });
 
+    test("Should not add newComment if already exists", () async {
+      await sut.addComment(newComment);
+      await sut.addComment(newComment);
+
+      expect(sut.usedComments, [newComment]);
+    });
+
     test("Should emit correct values on loadLocalComments succeeds", () async {
       expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));

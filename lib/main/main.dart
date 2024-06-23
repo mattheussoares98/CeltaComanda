@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/pages/comments/comments_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -88,6 +89,11 @@ class App extends StatelessWidget {
           GetPage(
             name: PageRoutes.payment,
             page: makePaymentPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.comments,
+            page: makeCommentsPage,
             transition: Transition.fadeIn,
           ),
         ],

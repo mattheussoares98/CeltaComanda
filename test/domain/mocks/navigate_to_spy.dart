@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 
 class NavigateToSpy extends Mock implements NavigateTo {
   NavigateToSpy() {
-    mockNavigate();
+    mockNavigate(null);
   }
   When mockNavigateCall() => when(() => this.navigate(
         pageRoute: any(named: "pageRoute"),
@@ -13,7 +13,7 @@ class NavigateToSpy extends Mock implements NavigateTo {
         clear: any(named: "clear"),
       ));
 
-  void mockNavigate() {
-    mockNavigateCall().thenAnswer((_) async => _);
+  void mockNavigate(dynamic value) {
+    mockNavigateCall().thenAnswer((_) async => value);
   }
 }

@@ -26,7 +26,6 @@ void main() {
         EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
-    navigateTo.mockNavigate();
     apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(apiSaleRequestEntity);
     loadEnterpriseData = LocalEnterpriseDataSpy();

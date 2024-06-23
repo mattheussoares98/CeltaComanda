@@ -112,7 +112,6 @@ void main() {
   void mockSuccess() {
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
-    navigateTo.mockNavigate();
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
     comments.mockAddComments();
@@ -553,6 +552,15 @@ void main() {
         () => navigateTo.navigate(
           pageRoute: PageRoutes.productComposition,
           arguments: ProductsViewModel.fromEntity(productEntity),
+        ),
+      ).called(1);
+    });
+    test('Should go to CommentsPage', () async {
+      await sut.goToCommentsPage();
+
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.comments,
         ),
       ).called(1);
     });

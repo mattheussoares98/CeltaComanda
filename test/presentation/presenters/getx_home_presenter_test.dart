@@ -49,7 +49,6 @@ void main() {
   }
 
   void initMocks() {
-    navigateTo.mockNavigate();
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
   }
 

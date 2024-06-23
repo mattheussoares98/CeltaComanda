@@ -68,7 +68,6 @@ void main() {
   }
 
   void mockSuccess() {
-    navigateTo.mockNavigate();
     loadProducts.mockLoadProducts(products);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);

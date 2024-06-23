@@ -25,7 +25,6 @@ void main() {
 
   setUp(() {
     navigateTo = NavigateToSpy();
-    navigateTo.mockNavigate();
     sut = GetxProductDetailsPresenter(
       navigateTo: navigateTo,
     );

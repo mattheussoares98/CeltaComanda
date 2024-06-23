@@ -1,4 +1,6 @@
 export './barcode/barcode.dart';
+export './cart/cart.dart';
+export './comment/comment.dart';
 export './enterprise/enterprise.dart';
 export './expansible_groups/expansible_groups.dart';
 export './navigation/navigation.dart';
@@ -6,4 +8,3 @@ export './payment/payment.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';
 export './products/products.dart';
-export 'cart/sale_request_temp.dart';

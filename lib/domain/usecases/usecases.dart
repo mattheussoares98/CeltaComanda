@@ -1,4 +1,5 @@
 export './barcode/barcode.dart';
+export './comment/comment.dart';
 export 'expansible_groups/expansible_groups.dart';
 export 'enterprise_data/enterprise_data.dart';
 export './navigation/navigation.dart';

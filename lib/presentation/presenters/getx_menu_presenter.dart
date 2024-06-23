@@ -264,4 +264,11 @@ class GetxMenuPresenter extends GetxController
   void updateProductComment(String? newComment) {
     _productComment.value = newComment;
   }
+
+  @override
+  Future<String?> goToCommentsPage() async {
+    return navigateTo.navigate(
+      pageRoute: PageRoutes.comments,
+    );
+  }
 }

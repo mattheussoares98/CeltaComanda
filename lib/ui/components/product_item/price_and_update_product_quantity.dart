@@ -34,7 +34,12 @@ class _PriceAndUpdateProductQuantityState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("${widget.price.toString().toBrazilianNumber()} R\$"),
+        Text(
+          "${widget.price.toString().toBrazilianNumber()} R\$",
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         if (widget.showUpdateProductQuantity)
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,10 +57,16 @@ class _PriceAndUpdateProductQuantityState
                   onPressedAddQuantity: widget.onPressedAddQuantity,
                 ),
               ),
-              Text(widget.totalLiquid
-                  .toString()
-                  .toBrazilianNumber()
-                  .addBrazilianCoin()),
+              Text(
+                widget.totalLiquid
+                    .toString()
+                    .toBrazilianNumber()
+                    .addBrazilianCoin(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ],
           ),
       ],

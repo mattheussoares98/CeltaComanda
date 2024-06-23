@@ -19,27 +19,28 @@ class UpdateQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          key: const Key("IconButtonSubtractQuantity"),
-          icon: Icon(
+        const SizedBox(width: 1),
+        GestureDetector(
+          onTap: onPressedReduceQuantity,
+          child: Icon(
             showDeleteIcon ? Icons.delete : Icons.remove,
             color: showDeleteIcon ? Colors.red : Theme.of(context).primaryColor,
           ),
-          iconSize: 20,
-          visualDensity: VisualDensity.compact,
-          onPressed: onPressedReduceQuantity,
-          color: Theme.of(context).colorScheme.primary,
         ),
-        Text(productQuantity.toString().toBrazilianNumber()),
-        IconButton(
-          icon: const Icon(
-            Icons.add,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 3),
+          child: Text(
+            productQuantity.toString().toBrazilianNumber(),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          iconSize: 20,
-          visualDensity: VisualDensity.compact,
-          onPressed: onPressedAddQuantity,
-          color: Theme.of(context).colorScheme.primary,
         ),
+        GestureDetector(
+          onTap: onPressedAddQuantity,
+          child: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
+        ),
+        const SizedBox(width: 1),
       ],
     );
   }

@@ -71,9 +71,10 @@ class _CartProductItemState extends State<CartProductItem> {
             Expanded(
               child: Text(
                 widget.cartProduct.Product.Name,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

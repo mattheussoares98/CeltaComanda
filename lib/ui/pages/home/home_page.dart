@@ -48,18 +48,17 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = [
-      makeMenusPage(),
-      makeCartPage(),
-      makePrintedProductsPage(),
-      makePaymentPage(),
-    ];
-
     CartPresenter cartPresenter = Provider.of(context);
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
+    final List<Widget> screens = [
+      makeMenusPage(),
+      makeCartPage(),
+      makePrintedProductsPage(),
+      if (cartPresenter.isGeneratingVersionToRede) makePaymentPage(),
+    ];
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
@@ -135,10 +134,11 @@ class _HomePageState extends State<HomePage>
               ),
               label: 'Solicitados',
             ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.paypal),
-              label: 'Pagar',
-            ),
+            if (cartPresenter.isGeneratingVersionToRede)
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.paypal),
+                label: 'Pagar',
+              ),
           ],
         ),
       ),

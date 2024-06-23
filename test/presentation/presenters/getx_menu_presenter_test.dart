@@ -612,5 +612,13 @@ void main() {
 
       sut.updateSelectedProduct(productsViewModel);
     });
+
+    test("Should update product comment correctly", () async {
+      navigateTo.mockNavigate("novo comentário");
+
+      expectLater(sut.productCommentStream, emits("novo comentário"));
+
+      await sut.goToCommentsPage();
+    });
   });
 }

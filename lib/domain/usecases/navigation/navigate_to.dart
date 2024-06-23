@@ -1,5 +1,5 @@
 abstract class NavigateTo {
-  dynamic navigate({
+  Future<dynamic> navigate({
     required String pageRoute,
     bool? clear = false,
     dynamic arguments,

@@ -4,15 +4,15 @@ import '../../../domain/usecases/navigation/navigation.dart';
 
 class GetxNavigateTo implements NavigateTo {
   @override
-  dynamic navigate({
+  Future<dynamic> navigate({
     required String pageRoute,
     bool? clear = false,
     arguments,
-  }) {
+  }) async {
     if (clear == true) {
-      return Get.offAllNamed(pageRoute, arguments: arguments);
+      return await Get.offAllNamed(pageRoute, arguments: arguments);
     } else {
-      return Get.toNamed(pageRoute, arguments: arguments);
+      return await Get.toNamed(pageRoute, arguments: arguments);
     }
   }
 }

@@ -266,11 +266,11 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<String?> goToCommentsPage() async {
-    return navigateTo
-        .navigate(
-          pageRoute: PageRoutes.comments,
-        )
-        .toString();
+  Future<void> goToCommentsPage() async {
+    final newComments = await navigateTo.navigate(
+      pageRoute: PageRoutes.comments,
+    );
+
+    _productComment.value = newComments.toString();
   }
 }

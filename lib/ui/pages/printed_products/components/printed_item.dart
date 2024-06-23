@@ -8,8 +8,15 @@ import '../../pages.dart';
 
 class PrintedItem extends StatelessWidget {
   final PrintedViewModel printed;
+
+  final GlobalKey<FormState> formKey;
+  final TextEditingController personalizedCodeController;
+  final TextEditingController passwordController;
   const PrintedItem({
     required this.printed,
+    required this.formKey,
+    required this.personalizedCodeController,
+    required this.passwordController,
     super.key,
   });
 
@@ -36,11 +43,6 @@ class PrintedItem extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final TextEditingController personalizedCodeController =
-        TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
 
     return Column(
       children: [
@@ -131,13 +133,7 @@ class PrintedItem extends StatelessWidget {
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: RequestSummary(
-                totalLiquid: printed.TotalLiquid,
-                comments: printed.Comments,
-              ),
-            ),
+            
             // Text("Comanda: ${printed.PersonalizedCode}"),
             // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
             // Text("DateOfCreation: ${printed.DateOfCreation}"),
@@ -151,26 +147,6 @@ class PrintedItem extends StatelessWidget {
             // Text("RequestType: ${printed.RequestType}"),
             // Text("SaleRequestId: ${printed.SaleRequestId}"),
           ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 40),
-            ),
-            onPressed: printedProductsPresenter.canCancelProducts
-                ? null
-                : () async {
-                    validateUserAndCancelProductDialog(
-                      context: context,
-                      formKey: formKey,
-                      personalizedCodeController: personalizedCodeController,
-                      passwordController: passwordController,
-                      printedProductsPresenter: printedProductsPresenter,
-                    );
-                  },
-            child: const Text("Liberar cancelamento de itens"),
-          ),
         ),
       ],
     );

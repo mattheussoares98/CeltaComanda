@@ -23,16 +23,25 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   StreamSubscription? mainErrorSubscription;
   StreamSubscription? alertMessageSubscription;
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController personalizedCodeController =
+      TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     alertMessageSubscription?.cancel();
+    personalizedCodeController.dispose();
+    passwordController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    const totalPriceContainerHeight = 50.0;
+
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -101,9 +110,11 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.only(bottom: totalPriceContainerHeight),
             child: SingleChildScrollView(
               child: Builder(
                 builder: (context) {
@@ -121,6 +132,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   if (printedProductsPresenter.printedProducts != null) {
                     return PrintedItem(
                       printed: printedProductsPresenter.printedProducts!,
+                      formKey: formKey,
+                      passwordController: passwordController,
+                      personalizedCodeController: personalizedCodeController,
                     );
                   }
                   return SearchDataByCommandNumber(
@@ -151,6 +165,31 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               ),
             ),
           ),
+          if (printedProductsPresenter.printedProducts != null)
+            Container(
+              height: totalPriceContainerHeight,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              margin: const EdgeInsets.only(bottom: 3),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                    color: const Color.fromARGB(255, 220, 218, 218)),
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 10,
+                    color: Color(0x33000000),
+                    offset: Offset(-3, -1),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: RequestSummary(
+                totalLiquid:
+                    printedProductsPresenter.printedProducts!.TotalLiquid,
+                comments:
+                    printedProductsPresenter.printedProducts!.Comments,
+              ),
+            ),
         ],
       ),
     );

@@ -266,4 +266,23 @@ class GetxMenuPresenter extends GetxController
   void updateProductComment(String? newComment) {
     _productComment.value = newComment;
   }
+
+  @override
+  Future<void> addComment(String newComment) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      _usedComments.add(newComment);
+      await comments.add(_usedComments);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    }
+
+    isLoading = false;
+  }
+
+  final List<String> _usedComments = [];
+  @override
+  List<String> get usedComments => _usedComments;
 }

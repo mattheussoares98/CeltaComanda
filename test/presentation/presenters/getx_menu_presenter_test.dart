@@ -116,6 +116,7 @@ void main() {
     navigateTo.mockNavigate();
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
+    comments.mockAddComments();
   }
 
   setUp(() {
@@ -204,7 +205,7 @@ void main() {
     test('Should update index of selectedGroup when search groups again',
         () async {
       expectLater(sut.indexOfSelectedGroupStream, emits(0));
-          
+
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
   });
@@ -361,7 +362,8 @@ void main() {
       await sut.readBarcodeAndSearchProduct();
     });
 
-    test("Should emit correct events if barcodeScanner return empty value", () async {
+    test("Should emit correct events if barcodeScanner return empty value",
+        () async {
       barcodeScanner.mockError(DomainError.barcodeNotRead);
 
       expectLater(
@@ -505,8 +507,9 @@ void main() {
       verify(() => loadExpansibleGroups.load()).called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
-      verify(() => cartPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+      verify(() =>
+              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+          .called(1);
     });
 
     test('Should call ticketIsPermitted on load data', () async {
@@ -601,6 +604,37 @@ void main() {
       expectLater(sut.productCommentStream, emits(null));
 
       sut.updateSelectedProduct(productsViewModel);
+    });
+
+    test("Should emit correct values on add new local comment succeeds",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.addComment(newComment);
+    });
+
+    test("Should emit correct values on add new local comment throws",
+        () async {
+      comments.mockAddCommentsError();
+
+      expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
+
+      await sut.addComment(newComment);
+    });
+
+    test("Should call addNewComment with correct comments", () async {
+      await sut.addComment(newComment);
+
+      verify(() => comments.add(sut.usedComments));
+    });
+
+    test("Should add newComment correctly in usedComments", () async {
+      await sut.addComment(newComment);
+
+      expect(sut.usedComments, [newComment]);
     });
   });
 }

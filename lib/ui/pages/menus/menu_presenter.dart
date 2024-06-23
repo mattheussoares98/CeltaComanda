@@ -18,6 +18,8 @@ abstract class MenuPresenter implements Listenable {
 
   TextEditingController get searchProductController;
 
+  List<String> get usedComments;
+
   Future<void> getGroupsAndProducts(String commandNumber);
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
@@ -36,4 +38,5 @@ abstract class MenuPresenter implements Listenable {
   void updateIndexOfSelectedGroup(int index);
   void updateSelectedProduct(ProductsViewModel? selectedProduct);
   void updateProductComment(String? newComment);
+  Future<void> addComment(String newComment);
 }

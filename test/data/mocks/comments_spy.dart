@@ -9,12 +9,12 @@ class CommentsSpy extends Mock implements Comments {
   When mockAddCommentsCall() => when(() => this.add(any()));
   void mockAddComments() =>
       this.mockAddCommentsCall().thenAnswer((_) async => _);
-  void mockAddCommentsError(DomainError error) =>
-      this.mockAddCommentsCall().thenThrow(error);
+  void mockAddCommentsError() =>
+      this.mockAddCommentsCall().thenThrow(DomainError.unexpected);
 
   When mockLoadCommentsCall() => when(() => this.load());
   void mockLoadComments(List<String> comments) =>
       this.mockLoadCommentsCall().thenAnswer((_) async => comments);
-  void mockLoadCommentsError(DomainError error) =>
-      this.mockLoadCommentsCall().thenThrow(error);
+  void mockLoadCommentsError() =>
+      this.mockLoadCommentsCall().thenThrow(DomainError.unexpected);
 }

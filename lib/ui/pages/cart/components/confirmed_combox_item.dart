@@ -48,9 +48,10 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
             Expanded(
               child: Text(
                 widget.confirmedCombox.father.Name,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -102,8 +103,17 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      ImageWidget(
+                        ean: null,
+                        plu: product.PluChild.toString(),
+                        showLargeImageInShowDialog: true,
+                        height: 30,
+                        width: 30,
+                      ),
+                      const SizedBox(width: 8),
                       Expanded(
                         flex: 65,
                         child: Text(
@@ -116,35 +126,37 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Expanded(
-                        flex: 15,
-                        child: Text(
-                          combox.Quantity.toString().toBrazilianNumber(),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        flex: 30,
-                        child: Text(
-                          (productCompositionPresenter
-                                      .calculateProductPrice(combox) *
-                                  combox.Quantity.toString().toDouble())
-                              .toString()
-                              .toBrazilianNumber()
-                              .addBrazilianCoin(),
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      FittedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              (productCompositionPresenter
+                                          .calculateProductPrice(combox) *
+                                      combox.Quantity.toString().toDouble())
+                                  .toString()
+                                  .toBrazilianNumber()
+                                  .addBrazilianCoin(),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                   Comment(
                     indexOfProduct: index,
-                    indexOfSelectedProduct: cartPresenter.indexOfSelectedProductCombox,
+                    indexOfSelectedProduct:
+                        cartPresenter.indexOfSelectedProductCombox,
                     comments: combox.commentFather,
                     updateSelectedIndex: () {
                       cartPresenter.updateIndexOfSelectedProductCombox(index);

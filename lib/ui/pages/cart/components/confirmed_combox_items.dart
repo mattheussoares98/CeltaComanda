@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class ConfirmedProductItems extends StatelessWidget {
+class ConfirmedComboxItems extends StatelessWidget {
   final List<ConfirmedComboxViewModel> confirmedsCombox;
-  const ConfirmedProductItems({
+  const ConfirmedComboxItems({
     required this.confirmedsCombox,
     super.key,
   });

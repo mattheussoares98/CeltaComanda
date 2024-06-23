@@ -64,7 +64,7 @@ class _CommentState extends State<Comment> {
               if (widget.comments == null)
                 const Expanded(
                   child: Text(
-                    "Não há comentário",
+                    "Adicionar comentário",
                     style: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,

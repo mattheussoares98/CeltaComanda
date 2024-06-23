@@ -59,8 +59,7 @@ class _InsertProductState extends State<InsertProduct> {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter =
-        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -75,54 +74,8 @@ class _InsertProductState extends State<InsertProduct> {
                 return Row(
                   children: [
                     IconButton(
-                      onPressed: () {
-                        final commentsController = TextEditingController();
-
-                        if (snapshot.hasData) {
-                          commentsController.text = snapshot.data!;
-                        } else {
-                          //quando o usuário digita mas não confirma o comentário, ainda alterou o controller. Por isso precisa limpar se não houver dados no comentário da stream
-                          commentsController.clear();
-                        }
-
-                        notificationDialog(
-                          context: context,
-                          titleMessage: snapshot.hasData
-                              ? "Alterar comentário"
-                              : "Inserir comentário",
-                              cancelMessage: "Cancelar",
-                              confirmMessage: "Confirmar",
-                          content: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 15),
-                                ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxHeight: 100,
-                                  ),
-                                  child: TextFormField(
-                                    autofocus: true,
-                                    controller: commentsController,
-                                    maxLines: null,
-                                    decoration: const InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.fromLTRB(3, 10, 3, 3),
-                                      label: Text("Inserir comentário"),
-                                      hintText: "Comentário",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onPress: () async {
-                            if (commentsController.text.isNotEmpty) {
-                              menuPresenter.updateProductComment(
-                                commentsController.text,
-                              );
-                            }
-                          },
-                        );
+                      onPressed: () async {
+                        await menuPresenter.goToCommentsPage();
                       },
                       icon: Stack(
                         children: [

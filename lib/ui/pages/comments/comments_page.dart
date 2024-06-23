@@ -3,10 +3,8 @@ import 'dart:async';
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
-import 'components/components.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'comments_presenter.dart';
 
@@ -16,8 +14,7 @@ class CommentsPage extends StatefulWidget {
   const CommentsPage(this.presenter, {super.key});
 
   @override
-  State<CommentsPage> createState() =>
-      _CommentsPageState();
+  State<CommentsPage> createState() => _CommentsPageState();
 }
 
 class _CommentsPageState extends State<CommentsPage>
@@ -28,7 +25,9 @@ class _CommentsPageState extends State<CommentsPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      await widget.presenter.loadComments();
+      Future.delayed(Duration.zero, () async {
+        await widget.presenter.loadComments();
+      });
     }
   }
 
@@ -60,21 +59,21 @@ class _CommentsPageState extends State<CommentsPage>
                 children: <Widget>[
                   const LoginHeader(),
                   Headline1(text: R.string.validateEnterprise),
-                  Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: ListenableProvider(
-                      create: (_) => widget.presenter,
-                      child: const Form(
-                        child: Column(
-                          children: [
-                            CommentInput(),
-                            SizedBox(height: 10),
-                            AddLocalCommentButton(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.all(25),
+                  //   child: ListenableProvider(
+                  //     create: (_) => widget.presenter,
+                  //     child: const Form(
+                  //       child: Column(
+                  //         children: [
+                  //           CommentInput(),
+                  //           SizedBox(height: 10),
+                  //           AddLocalCommentButton(),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),

@@ -71,4 +71,11 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   @override
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
+  
+  @override
+  void unselectAllComments() {
+    for(var comment in loadedComments){
+      comment.selected = false;
+    }
+  }
 }

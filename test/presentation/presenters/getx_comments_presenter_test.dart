@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -125,5 +126,21 @@ void main() {
 
     sut.changeCommentIsSelected(0);
     expect(sut.loadedComments[0].selected, false);
+  });
+
+  test("Should unselect all comments correctly", () async {
+    await sut.addComment(CommentViewModel(
+      comment: faker.randomGenerator.string(10),
+      selected: true,
+    ));
+    await sut.addComment(CommentViewModel(
+      comment: faker.randomGenerator.string(10),
+      selected: true,
+    ));
+    
+    sut.unselectAllComments();
+
+    expect(sut.loadedComments[0].selected, false);
+    expect(sut.loadedComments[1].selected, false);
   });
 }

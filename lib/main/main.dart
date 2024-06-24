@@ -93,11 +93,6 @@ class App extends StatelessWidget {
             page: makePaymentPage,
             transition: Transition.fadeIn,
           ),
-          GetPage(
-            name: PageRoutes.comments,
-            page: makeCommentsPage,
-            transition: Transition.fadeIn,
-          ),
         ],
       ),
     );

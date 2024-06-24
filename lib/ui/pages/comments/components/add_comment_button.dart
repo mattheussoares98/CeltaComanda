@@ -12,7 +12,10 @@ class AddLocalCommentButton extends StatelessWidget {
     final presenter = Provider.of<CommentsPresenter>(context);
     return ElevatedButton(
       onPressed: () async {
-        presenter.addComment("passar o comentario correto aqui");
+        await presenter.addComment(CommentViewModel(
+          comment: "novo",
+          selected: false,
+        ));
       },
       child: Text(R.string.validateEnterprise.toUpperCase()),
     );

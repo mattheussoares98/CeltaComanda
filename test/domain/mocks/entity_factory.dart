@@ -730,4 +730,9 @@ class EntityFactory {
         totalPrice: totalPrice,
         quantity: quantity,
       );
+
+  static CommentViewModel makeCommentViewModel() => CommentViewModel(
+        comment: faker.randomGenerator.string(10),
+        selected: false,
+      );
 }

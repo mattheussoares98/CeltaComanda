@@ -1,4 +1,6 @@
+import '../../../ui/pages/pages.dart';
+
 abstract class Comments {
-  Future<void> add(List<String> comments);
-  Future<List<String>?> load();
+  Future<void> add(List<CommentViewModel> comments);
+  Future<List<CommentViewModel>?> load();
 }

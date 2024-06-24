@@ -3,6 +3,7 @@ import 'dart:convert';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
+import '../../../ui/pages/pages.dart';
 import '../../cache/cache.dart';
 
 class LocalComments implements Comments {
@@ -11,7 +12,7 @@ class LocalComments implements Comments {
   LocalComments({required this.hiveStorage});
 
   @override
-  Future<void> add(List<String> comments) async {
+  Future<void> add(List<CommentViewModel> comments) async {
     try {
       await hiveStorage.delete(CacheKeys.comments.name);
 
@@ -24,7 +25,7 @@ class LocalComments implements Comments {
   }
 
   @override
-  Future<List<String>?> load() async {
+  Future<List<CommentViewModel>?> load() async {
     try {
       final value = await hiveStorage.get(
         CacheKeys.comments.name,
@@ -36,7 +37,12 @@ class LocalComments implements Comments {
         final decoded = jsonDecode(value) as List<dynamic>;
         final localComments = decoded.cast<String>();
 
-        return localComments;
+        return localComments
+            .map((element) => CommentViewModel(
+                  comment: element,
+                  selected: false,
+                ))
+            .toList();
       }
     } catch (e) {
       throw DomainError.unexpected;

@@ -23,7 +23,7 @@ class CommentInput extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             // controller: presenter.enterpriseNameController,
             onFieldSubmitted: (_) async {
-              presenter.addComment("Alterar o comentário aqui");
+              await presenter.addComment(CommentViewModel(comment: "comentando", selected: false));
             },
             // onChanged: (value) => presenter.validateEnterpriseInput(value,
             //     updateEnterpriseNameController: true),

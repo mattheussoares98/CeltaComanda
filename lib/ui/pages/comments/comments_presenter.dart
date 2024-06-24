@@ -1,12 +1,14 @@
-import '../../helpers/helpers.dart';
-
 import 'package:flutter/material.dart';
+
+import '../../../ui/pages/pages.dart';
+import '../../helpers/helpers.dart';
 
 abstract class CommentsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  List<String> get localComments;
+  Stream<List<CommentViewModel>> get localCommentsStream;
 
-  Future<void> addComment(String newComment);
+  Future<void> addComment(CommentViewModel newComment);
   Future<void> loadComments();
+  void changeCommentIsSelected(int index);
 }

@@ -1,7 +1,6 @@
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -11,12 +10,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late CommentsPresenter sut;
+  late GetxCommentsPresenter sut;
 
   late CommentsSpy comments;
 
-  late String newComment;
-  late List<String> localComments;
+  late CommentViewModel newComment;
+  late List<CommentViewModel> localComments;
 
   void initUseCases() {
     comments = CommentsSpy();
@@ -27,11 +26,8 @@ void main() {
   }
 
   void initEntitys() {
-    newComment = faker.randomGenerator.string(10);
-    localComments = [
-      faker.randomGenerator.string(10),
-      faker.randomGenerator.string(10),
-    ];
+    newComment = EntityFactory.makeCommentViewModel();
+    localComments = [newComment];
   }
 
   void mockSuccess() {}
@@ -68,20 +64,20 @@ void main() {
   test("Should call addNewComment with correct comments", () async {
     await sut.addComment(newComment);
 
-    verify(() => comments.add(sut.localComments));
+    verify(() => comments.add(localComments)).called(1);
   });
 
   test("Should add newComment correctly in usedComments", () async {
-    await sut.addComment(newComment);
+    expectLater(sut.localCommentsStream, emits([newComment]));
 
-    expect(sut.localComments, [newComment]);
+    await sut.addComment(newComment);
   });
 
   test("Should not add newComment if already exists", () async {
-    await sut.addComment(newComment);
-    await sut.addComment(newComment);
+    expectLater(sut.localCommentsStream, emits([newComment]));
 
-    expect(sut.localComments, [newComment]);
+    await sut.addComment(newComment);
+    await sut.addComment(newComment);
   });
 
   test("Should emit correct values on loadLocalComments succeeds", () async {
@@ -104,17 +100,15 @@ void main() {
   test("Should udpate usedComments correctly on LoadComments succeeds",
       () async {
     comments.mockLoadComments(localComments);
+    expectLater(sut.localCommentsStream, emits(localComments));
 
     await sut.loadComments();
-
-    expect(sut.localComments, localComments);
   });
 
   test("Should udpate usedComments correctly on LoadComments throws", () async {
     comments.mockLoadCommentsError();
+    expectLater(sut.localCommentsStream, emits([]));
 
     await sut.loadComments();
-
-    expect(sut.localComments, []);
   });
 }

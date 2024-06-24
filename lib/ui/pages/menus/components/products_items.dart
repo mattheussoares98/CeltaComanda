@@ -31,6 +31,7 @@ class _ProductsItemsState extends State<ProductsItems> {
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
+    required CommentsPresenter commentsPresenter,
   }) =>
       GestureDetector(
         onLongPress: () {
@@ -46,6 +47,7 @@ class _ProductsItemsState extends State<ProductsItems> {
           } else {
             menuPresenter.updateSelectedProduct(widget.products[index]);
           }
+          commentsPresenter.unselectAllComments();
         },
         child: Padding(
           padding: const EdgeInsets.only(left: 5),
@@ -58,10 +60,10 @@ class _ProductsItemsState extends State<ProductsItems> {
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter =
-        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return ListView.builder(
       itemCount: (widget.products.length / widget.itensPerLine).ceil(),
@@ -82,6 +84,7 @@ class _ProductsItemsState extends State<ProductsItems> {
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,
                         cartPresenter: cartPresenter,
+                        commentsPresenter: commentsPresenter,
                       ),
                     ),
               ],

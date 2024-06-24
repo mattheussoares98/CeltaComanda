@@ -10,5 +10,5 @@ abstract class CommentsPresenter implements Listenable {
 
   Future<void> addComment(CommentViewModel newComment);
   Future<void> loadComments();
-  void changeCommentIsSelected(int index);
+  Future<void> changeCommentIsSelected(int index);
 }

@@ -123,7 +123,8 @@ class _CommentsPageState extends State<CommentsPage>
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      comment.selected = !comment.selected;
+                                      commentsPresenter
+                                          .changeCommentIsSelected(index);
                                     });
                                   },
                                   child: Padding(
@@ -144,7 +145,9 @@ class _CommentsPageState extends State<CommentsPage>
                                           value: comment.selected,
                                           onChanged: (value) {
                                             setState(() {
-                                              comment.selected = value!;
+                                              commentsPresenter
+                                                  .changeCommentIsSelected(
+                                                      index);
                                             });
                                           },
                                         ),

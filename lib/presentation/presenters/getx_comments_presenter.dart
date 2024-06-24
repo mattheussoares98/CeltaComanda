@@ -58,7 +58,10 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   }
 
   @override
-  void changeCommentIsSelected(int index) {}
+  Future<void> changeCommentIsSelected(int index) async {
+    _loadedComments[index].selected = !_loadedComments[index].selected;
+    await comments.add(_loadedComments);
+  }
 
   final _isLoading = false.obs;
   @override

@@ -82,7 +82,7 @@ class _CommentsPageState extends State<CommentsPage>
                             await commentsPresenter.addComment(
                               CommentViewModel(
                                 comment: commentsController.text,
-                                selected: false,
+                                selected: true,
                               ),
                             );
 

@@ -23,6 +23,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       }
 
       _loadedComments.add(newComment);
+      _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
       await comments.add(_loadedComments);
     } catch (e) {
       mainError = UIError.unexpected;
@@ -45,6 +46,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       final localComments = await comments.load();
       if (localComments != null) {
         _loadedComments = localComments;
+        _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
       }
     } catch (e) {
       mainError = UIError.unexpected;

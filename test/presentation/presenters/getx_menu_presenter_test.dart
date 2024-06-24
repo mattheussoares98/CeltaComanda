@@ -41,7 +41,6 @@ void main() {
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
   late List<ProductEntity> products;
-  late String newComment;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -106,7 +105,6 @@ void main() {
                   .toList(),
             })
         .toList();
-    newComment = faker.randomGenerator.string(20);
   }
 
   void mockSuccess() {
@@ -591,17 +589,5 @@ void main() {
     });
   });
 
-  group("Product comment", () {
-    test("Should emit correct values on update product comment", () {
-      expectLater(sut.productCommentStream, emits(newComment));
-
-      sut.updateProductComment(newComment);
-    });
-
-    test("Should emit correct values on update selected product", () {
-      expectLater(sut.productCommentStream, emits(null));
-
-      sut.updateSelectedProduct(productsViewModel);
-    });
-  });
+  group("Product comment", () {});
 }

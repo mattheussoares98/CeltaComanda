@@ -126,10 +126,5 @@ void main() {
 
       verify(() => menuPresenter.updateSelectedProduct(null)).called(1);
     });
-    test("Should clear product comment when changePage", () {
-      sut.onChangePage(menuPresenter: menuPresenter);
-
-      verify(() => menuPresenter.updateProductComment(null)).called(1);
-    });
   });
 }

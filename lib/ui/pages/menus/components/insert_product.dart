@@ -60,6 +60,7 @@ class _InsertProductState extends State<InsertProduct> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    // CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -68,105 +69,100 @@ class _InsertProductState extends State<InsertProduct> {
               onPressed: null,
               child: Text("Selecione um produto"),
             )
-          : StreamBuilder<String?>(
-              stream: menuPresenter.productCommentStream,
-              builder: (context, snapshot) {
-                return Row(
-                  children: [
-                    IconButton(
-                      onPressed: () async {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30),
-                                ),
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.9,
-                                  child: CommentsPage(
-                                    selectedProductName:
-                                        widget.selectedProduct!.Name,
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                      icon: Stack(
-                        children: [
-                          Icon(
-                            Icons.add_comment_rounded,
-                            color: Theme.of(context).primaryColor,
-                            size: 33,
-                          ),
-                          if (snapshot.hasData)
-                            const Positioned(
-                              top: 0,
-                              right: 0,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.red,
-                                maxRadius: 7,
-                                child: FittedBox(
-                                  child: Text(
-                                    "1",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+          : Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.9,
+                              child: CommentsPage(
+                                selectedProductName:
+                                    widget.selectedProduct!.Name,
                               ),
                             ),
+                          );
+                        });
+                  },
+                  icon: Stack(
+                    children: [
+                      Icon(
+                        Icons.add_comment_rounded,
+                        color: Theme.of(context).primaryColor,
+                        size: 33,
+                      ),
+                      if (true /* alterar aqui pra exibir somente se tiver algum comentario selecionado */)
+                        const Positioned(
+                          top: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.red,
+                            maxRadius: 7,
+                            child: FittedBox(
+                              child: Text(
+                                "1",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                UpdateQuantity(
+                  showDeleteIcon: false,
+                  productQuantity: widget.selectedProduct!.productQuantity,
+                  onPressedReduceQuantity: widget.selectedProduct != null &&
+                          widget.selectedProduct!.productQuantity <= 1
+                      ? null
+                      : () {
+                          subtractProductQuantity(menuPresenter);
+                        },
+                  onPressedAddQuantity: () {
+                    addProductQuantity(menuPresenter);
+                  },
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(),
+                    onPressed: () {
+                      addProductInCart(
+                        menuPresenter: menuPresenter,
+                        homePresenter: homePresenter,
+                        cartPresenter: cartPresenter,
+                        comment: "só adicionar os comentários aqui e já era",
+                      );
+                    },
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 20,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(child: Text("Inserir")),
+                          Text((widget.selectedProduct!.SaleRetailPraticed
+                                      .toDouble() *
+                                  widget.selectedProduct!.productQuantity
+                                      .toDouble())
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin()),
                         ],
                       ),
                     ),
-                    UpdateQuantity(
-                      showDeleteIcon: false,
-                      productQuantity: widget.selectedProduct!.productQuantity,
-                      onPressedReduceQuantity: widget.selectedProduct != null &&
-                              widget.selectedProduct!.productQuantity <= 1
-                          ? null
-                          : () {
-                              subtractProductQuantity(menuPresenter);
-                            },
-                      onPressedAddQuantity: () {
-                        addProductQuantity(menuPresenter);
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(),
-                        onPressed: () {
-                          addProductInCart(
-                            menuPresenter: menuPresenter,
-                            homePresenter: homePresenter,
-                            cartPresenter: cartPresenter,
-                            comment: snapshot.data,
-                          );
-                        },
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 20,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Expanded(child: Text("Inserir")),
-                              Text((widget.selectedProduct!.SaleRetailPraticed
-                                          .toDouble() *
-                                      widget.selectedProduct!.productQuantity
-                                          .toDouble())
-                                  .toString()
-                                  .toBrazilianNumber()
-                                  .addBrazilianCoin()),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

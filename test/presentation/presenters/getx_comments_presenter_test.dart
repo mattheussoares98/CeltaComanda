@@ -31,7 +31,9 @@ void main() {
     localComments = [newComment];
   }
 
-  void mockSuccess() {}
+  void mockSuccess() {
+    comments.mockAddComments();
+  }
 
   setUp(() {
     initUseCases();
@@ -200,5 +202,14 @@ void main() {
 
     sut.changeCommentIsSelected(1);
     expect(sut.hasSelectedComments, false);
+  });
+
+  test("Should update correctly hasSelectedComments add new comment", () async {
+    await sut.addComment(CommentViewModel(
+      comment: faker.randomGenerator.string(10),
+      selected: true,
+    ));
+
+    expect(sut.hasSelectedComments, true);
   });
 }

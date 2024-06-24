@@ -25,6 +25,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       _loadedComments.add(newComment);
       _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
       await comments.add(_loadedComments);
+      updateHasSelectedComments();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

@@ -555,15 +555,6 @@ void main() {
         ),
       ).called(1);
     });
-    test('Should go to CommentsPage', () async {
-      await sut.goToCommentsPage();
-
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.comments,
-        ),
-      ).called(1);
-    });
   });
 
   group("selected product", () {
@@ -611,14 +602,6 @@ void main() {
       expectLater(sut.productCommentStream, emits(null));
 
       sut.updateSelectedProduct(productsViewModel);
-    });
-
-    test("Should update product comment correctly", () async {
-      navigateTo.mockNavigate("novo comentário");
-
-      expectLater(sut.productCommentStream, emits("novo comentário"));
-
-      await sut.goToCommentsPage();
     });
   });
 }

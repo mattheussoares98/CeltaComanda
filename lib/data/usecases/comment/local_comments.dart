@@ -35,14 +35,11 @@ class LocalComments implements Comments {
         return null;
       } else {
         final decoded = jsonDecode(value) as List<dynamic>;
-        final localComments = decoded.cast<String>();
-
-        return localComments
-            .map((element) => CommentViewModel(
-                  comment: element,
-                  selected: false,
-                ))
+        final localComments = decoded
+            .map((element) => CommentViewModel.fromJson(element))
             .toList();
+
+        return localComments;
       }
     } catch (e) {
       throw DomainError.unexpected;

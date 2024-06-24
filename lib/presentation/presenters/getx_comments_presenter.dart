@@ -34,9 +34,13 @@ class GetxCommentsPresenter extends GetxController
     }
   }
 
+  final List<CommentViewModel> _loadedComments = [];
+  @override
+  List<CommentViewModel> get loadedComments => _loadedComments;
   final _localComments = Rx<List<CommentViewModel>>([]);
   @override
-  Stream<List<CommentViewModel>> get localCommentsStream => _localComments.stream;
+  Stream<List<CommentViewModel>> get localCommentsStream =>
+      _localComments.stream;
 
   @override
   Future<void> loadComments() async {

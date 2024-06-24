@@ -107,7 +107,12 @@ class _CommentsPageState extends State<CommentsPage>
                                         });
                                       },
                                       selected: selected,
-                                      leading: Text(comment.comment),
+                                      leading: Text(
+                                        comment.comment,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
                                       trailing: Checkbox(
                                         semanticLabel: comment.comment,
                                         value: comment.selected,

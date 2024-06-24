@@ -7,6 +7,7 @@ abstract class CommentsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<List<CommentViewModel>> get localCommentsStream;
+  List<CommentViewModel> get loadedComments;
 
   Future<void> addComment(CommentViewModel newComment);
   Future<void> loadComments();

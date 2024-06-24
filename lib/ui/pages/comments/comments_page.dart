@@ -66,7 +66,7 @@ class _CommentsPageState extends State<CommentsPage>
                     handleMainError(context, widget.presenter.mainErrorStream);
 
                 return StreamBuilder<List<CommentViewModel>>(
-                    stream: widget.presenter.localCommentsStream,
+                    stream: null,
                     builder: (context, snapshot) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),

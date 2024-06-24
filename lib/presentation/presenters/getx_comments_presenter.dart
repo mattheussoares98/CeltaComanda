@@ -20,13 +20,12 @@ class GetxCommentsPresenter extends GetxController
     mainError = null;
 
     try {
-      if (_localComments.value.contains(newComment)) {
+      if (_loadedComments.contains(newComment)) {
         return;
       }
 
-      _localComments.subject.add([newComment]);
-      _localComments.value = [newComment];
-      await comments.add(_localComments.value);
+      _loadedComments.add(newComment);
+      await comments.add(_loadedComments);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -34,13 +33,9 @@ class GetxCommentsPresenter extends GetxController
     }
   }
 
-  final List<CommentViewModel> _loadedComments = [];
+  List<CommentViewModel> _loadedComments = [];
   @override
   List<CommentViewModel> get loadedComments => _loadedComments;
-  final _localComments = Rx<List<CommentViewModel>>([]);
-  @override
-  Stream<List<CommentViewModel>> get localCommentsStream =>
-      _localComments.stream;
 
   @override
   Future<void> loadComments() async {
@@ -50,11 +45,11 @@ class GetxCommentsPresenter extends GetxController
     try {
       final localComments = await comments.load();
       if (localComments != null) {
-        _localComments.value = localComments;
+        _loadedComments = localComments;
       }
     } catch (e) {
       mainError = UIError.unexpected;
-      _localComments.value = [];
+      _loadedComments = [];
     } finally {
       isLoading = false;
     }

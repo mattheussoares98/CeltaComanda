@@ -68,16 +68,16 @@ void main() {
   });
 
   test("Should add newComment correctly in usedComments", () async {
-    expectLater(sut.localCommentsStream, emits([newComment]));
-
     await sut.addComment(newComment);
+
+    expect(sut.loadedComments, [newComment]);
   });
 
   test("Should not add newComment if already exists", () async {
-    expectLater(sut.localCommentsStream, emits([newComment]));
+    await sut.addComment(newComment);
+    await sut.addComment(newComment);
 
-    await sut.addComment(newComment);
-    await sut.addComment(newComment);
+    expect(sut.loadedComments, [newComment]);
   });
 
   test("Should emit correct values on loadLocalComments succeeds", () async {
@@ -100,15 +100,18 @@ void main() {
   test("Should udpate usedComments correctly on LoadComments succeeds",
       () async {
     comments.mockLoadComments(localComments);
-    expectLater(sut.localCommentsStream, emits(localComments));
 
     await sut.loadComments();
+
+    expect(sut.loadedComments, localComments);
   });
 
   test("Should udpate usedComments correctly on LoadComments throws", () async {
     comments.mockLoadCommentsError();
-    expectLater(sut.localCommentsStream, emits([]));
+    await sut.addComment(newComment);
 
     await sut.loadComments();
+
+    expect(sut.loadedComments, []);
   });
 }

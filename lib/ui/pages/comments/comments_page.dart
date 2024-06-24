@@ -69,15 +69,15 @@ class _CommentsPageState extends State<CommentsPage>
                     handleMainError(context, commentsPresenter.mainErrorStream);
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.fromLTRB(8, 15, 8, 0),
                   child: Column(
                     children: [
                       Form(
                         child: TextFormField(
                           controller: commentsController,
                           decoration: const InputDecoration(
-                            hintText: "Comentário",
-                          ),
+                              hintText: "Adicionar comentário",
+                              labelText: "Adicionar comentário"),
                           onFieldSubmitted: (value) async {
                             await commentsPresenter.addComment(
                               CommentViewModel(
@@ -99,33 +99,57 @@ class _CommentsPageState extends State<CommentsPage>
                           itemBuilder: (context, index) {
                             final comment =
                                 commentsPresenter.loadedComments[index];
-                            bool selected = false;
 
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 8),
-                              child: Material(
-                                elevation: 5,
-                                child: ListTile(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(2, 2),
+                                      color: Color.fromARGB(255, 209, 208, 208),
+                                      blurRadius: 8,
+                                    ),
+                                    BoxShadow(
+                                      offset: Offset(-2, -2),
+                                      color: Color.fromARGB(255, 209, 208, 208),
+                                      blurRadius: 8,
+                                    ),
+                                  ],
+                                ),
+                                child: InkWell(
                                   onTap: () {
                                     setState(() {
                                       comment.selected = !comment.selected;
                                     });
                                   },
-                                  selected: selected,
-                                  leading: Text(
-                                    comment.comment,
-                                    style: const TextStyle(
-                                      fontSize: 20,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            comment.comment,
+                                            style: const TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Checkbox(
+                                          semanticLabel: comment.comment,
+                                          value: comment.selected,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              comment.selected = value!;
+                                            });
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  trailing: Checkbox(
-                                    semanticLabel: comment.comment,
-                                    value: comment.selected,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        comment.selected = value!;
-                                      });
-                                    },
                                   ),
                                 ),
                               ),

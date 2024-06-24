@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import '../../components/components.dart';
-import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 
 import 'package:flutter/material.dart';
@@ -19,6 +17,8 @@ class CommentsPage extends StatefulWidget {
 
 class _CommentsPageState extends State<CommentsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
+  final commentsController = TextEditingController();
+
   bool _isLoaded = false;
   @override
   void didChangeDependencies() async {
@@ -44,6 +44,9 @@ class _CommentsPageState extends State<CommentsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const FittedBox(child: Text("Comentários do produto")),
+      ),
       body: Builder(
         builder: (context) {
           loadingSubscription =
@@ -51,31 +54,62 @@ class _CommentsPageState extends State<CommentsPage>
           mainErrorSubscription =
               handleMainError(context, widget.presenter.mainErrorStream);
 
-          return GestureDetector(
-            onTap: () => hideKeyboard(context),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const LoginHeader(),
-                  Headline1(text: R.string.validateEnterprise),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(25),
-                  //   child: ListenableProvider(
-                  //     create: (_) => widget.presenter,
-                  //     child: const Form(
-                  //       child: Column(
-                  //         children: [
-                  //           CommentInput(),
-                  //           SizedBox(height: 10),
-                  //           AddLocalCommentButton(),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // )
-                ],
-              ),
+          return SingleChildScrollView(
+            child: Builder(
+              builder: (context) {
+                loadingSubscription?.cancel();
+                mainErrorSubscription?.cancel();
+
+                loadingSubscription =
+                    handleLoading(context, widget.presenter.isLoadingStream);
+                mainErrorSubscription =
+                    handleMainError(context, widget.presenter.mainErrorStream);
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    children: [
+                      Form(
+                        child: TextFormField(
+                          controller: commentsController,
+                          decoration: const InputDecoration(
+                            hintText: "Comentário",
+                          ),
+                          onFieldSubmitted: (value) async {
+                            await widget.presenter.addComment(
+                              commentsController.text,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: widget.presenter.usedComments.length,
+                        itemBuilder: (context, index) {
+                          final comment = widget.presenter.usedComments[index];
+
+                          return Material(
+                            elevation: 5,
+                            child: ListTile(
+                              selected: true,
+                              leading: Text(comment),
+                              trailing: Checkbox(
+                                semanticLabel: comment,
+                                value: true,
+                                onChanged: (value) {
+                                  // widget.presenter.
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           );
         },

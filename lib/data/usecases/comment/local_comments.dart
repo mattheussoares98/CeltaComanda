@@ -33,11 +33,10 @@ class LocalComments implements Comments {
       if (value == null) {
         return null;
       } else {
-        final List<String> decoded = jsonDecode(value);
-        // final confirmedCombox = decoded
-        //     .map((element) => ConfirmedComboxViewModel.fromJson(element))
-        //     .toList();
-        return decoded;
+        final decoded = jsonDecode(value) as List<dynamic>;
+        final localComments = decoded.cast<String>();
+
+        return localComments;
       }
     } catch (e) {
       throw DomainError.unexpected;

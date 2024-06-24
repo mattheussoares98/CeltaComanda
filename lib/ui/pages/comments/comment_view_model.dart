@@ -14,12 +14,12 @@ class CommentViewModel implements Equatable {
   });
 
   factory CommentViewModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll(['comment', 'selected'])) {
+    if (!json.keys.toSet().containsAll(['comment'])) {
       throw Exception();
     }
     return CommentViewModel(
       comment: json['comment'],
-      selected: json['selected'],
+      selected: false,
     );
   }
 
@@ -32,7 +32,7 @@ class CommentViewModel implements Equatable {
         comment: comment,
       );
 
-  Map<String, dynamic> toJson() => {"comment": comment, "selected": selected};
+  Map<String, dynamic> toJson() => {"comment": comment};
 
   @override
   List<Object?> get props => [comment, selected];

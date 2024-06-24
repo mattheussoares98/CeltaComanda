@@ -126,15 +126,4 @@ void main() {
     sut.changeCommentIsSelected(0);
     expect(sut.loadedComments[0].selected, false);
   });
-
-  test("Should update comments in database when changeCommentIsSelected",
-      () async {
-    comments.mockAddComments();
-    await sut.addComment(newComment);
-
-    await sut.changeCommentIsSelected(0);
-    localComments[0].selected = true;
-
-    verify(() => comments.add(localComments)).called(2);
-  });
 }

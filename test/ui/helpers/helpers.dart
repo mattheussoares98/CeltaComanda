@@ -97,6 +97,9 @@ Widget makePage(
       ListenableProvider<ProductCompositionPresenter>(
         create: (_) => ProductCompositionPresenterSpy(),
       ),
+      ListenableProvider<CommentsPresenter>(
+        create: (_) => CommentsPresenterSpy(),
+      ),
     ],
     child: GetMaterialApp(
       initialRoute: path,

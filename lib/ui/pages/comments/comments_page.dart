@@ -22,20 +22,6 @@ class _CommentsPageState extends State<CommentsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   final commentsController = TextEditingController();
 
-  bool _isLoaded = false;
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    if (!_isLoaded) {
-      _isLoaded = true;
-      Future.delayed(Duration.zero, () async {
-        CommentsPresenter commentsPresenter =
-            Provider.of(context, listen: false);
-        await commentsPresenter.loadComments();
-      });
-    }
-  }
-
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 

@@ -46,6 +46,20 @@ class _HomePageState extends State<HomePage>
     homePresenter.onChangePage(menuPresenter: menuPresenter);
   }
 
+  bool _isLoaded = false;
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    if (!_isLoaded) {
+      _isLoaded = true;
+      Future.delayed(Duration.zero, () async {
+        CommentsPresenter commentsPresenter =
+            Provider.of(context, listen: false);
+        await commentsPresenter.loadComments();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context);

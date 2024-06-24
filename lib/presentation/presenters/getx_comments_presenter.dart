@@ -78,4 +78,8 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       comment.selected = false;
     }
   }
+
+  final bool _hasSelectedComments = false;
+  @override
+  bool get hasSelectedComments => _hasSelectedComments;
 }

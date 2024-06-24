@@ -60,7 +60,7 @@ class _InsertProductState extends State<InsertProduct> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
-    // CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -99,7 +99,7 @@ class _InsertProductState extends State<InsertProduct> {
                         color: Theme.of(context).primaryColor,
                         size: 33,
                       ),
-                      if (true /* alterar aqui pra exibir somente se tiver algum comentario selecionado */)
+                      if (commentsPresenter.hasSelectedComments)
                         const Positioned(
                           top: 0,
                           right: 0,

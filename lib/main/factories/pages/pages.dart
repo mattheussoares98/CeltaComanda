@@ -1,4 +1,5 @@
 export './cart/cart.dart';
+export './comments/comments.dart';
 export './enterprise_validation/enterprise_validation.dart';
 export './menus/menus.dart';
 export './home/home.dart';

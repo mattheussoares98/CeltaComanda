@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/factories/pages/comments/comments_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -56,6 +55,9 @@ class App extends StatelessWidget {
         ),
         ListenableProvider(
           create: (_) => makeGetxPaymentPresenter(),
+        ),
+        ListenableProvider(
+          create: (_) => makeGetxCommentsPresenter(),
         ),
       ],
       child: GetMaterialApp(

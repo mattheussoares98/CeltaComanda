@@ -1,13 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../ui/helpers/errors/errors.dart';
 import '../../ui/pages/pages.dart';
-import '../mixins/mixins.dart';
 import '../../domain/usecases/usecases.dart';
 
-class GetxCommentsPresenter extends GetxController
-    with LoadingManager, UIErrorManager
-    implements CommentsPresenter {
+class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   final Comments comments;
 
   GetxCommentsPresenter({
@@ -30,6 +28,7 @@ class GetxCommentsPresenter extends GetxController
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -52,9 +51,20 @@ class GetxCommentsPresenter extends GetxController
       _loadedComments = [];
     } finally {
       isLoading = false;
+      notifyListeners();
     }
   }
 
   @override
   void changeCommentIsSelected(int index) {}
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) => _isLoading.value = value;
+  final _mainError = Rx<UIError?>(null);
+
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
 }

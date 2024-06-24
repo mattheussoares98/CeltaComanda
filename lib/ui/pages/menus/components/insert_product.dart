@@ -87,7 +87,10 @@ class _InsertProductState extends State<InsertProduct> {
                                 child: SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.9,
-                                  child: const CommentsPage(),
+                                  child: CommentsPage(
+                                    selectedProductName:
+                                        widget.selectedProduct!.Name,
+                                  ),
                                 ),
                               );
                             });

@@ -8,7 +8,11 @@ import '../../mixins/mixins.dart';
 import 'package:flutter/material.dart';
 
 class CommentsPage extends StatefulWidget {
-  const CommentsPage({super.key});
+  final String selectedProductName;
+  const CommentsPage({
+    super.key,
+    required this.selectedProductName,
+  });
 
   @override
   State<CommentsPage> createState() => _CommentsPageState();
@@ -47,9 +51,6 @@ class _CommentsPageState extends State<CommentsPage>
     CommentsPresenter commentsPresenter = Provider.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const FittedBox(child: Text("Comentários do produto")),
-      ),
       body: Builder(
         builder: (context) {
           loadingSubscription =
@@ -72,6 +73,42 @@ class _CommentsPageState extends State<CommentsPage>
                   padding: const EdgeInsets.fromLTRB(8, 15, 8, 0),
                   child: Column(
                     children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: const Icon(Icons.arrow_back),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const FittedBox(
+                                  child: Text(
+                                    "Comentários do produto",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                FittedBox(
+                                    child: Text(
+                                  widget.selectedProductName,
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                )),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
                       Form(
                         child: TextFormField(
                           controller: commentsController,

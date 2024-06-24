@@ -75,7 +75,22 @@ class _InsertProductState extends State<InsertProduct> {
                   children: [
                     IconButton(
                       onPressed: () async {
-                        await menuPresenter.goToCommentsPage();
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) {
+                              return ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.9,
+                                  child: const CommentsPage(),
+                                ),
+                              );
+                            });
                       },
                       icon: Stack(
                         children: [

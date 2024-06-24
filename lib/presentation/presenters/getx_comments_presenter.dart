@@ -35,7 +35,7 @@ class GetxCommentsPresenter extends GetxController
 
   List<String> _usedComments = [];
   @override
-  List<String> get usedComments => _usedComments;
+  List<String> get localComments => _usedComments;
 
   @override
   Future<void> loadComments() async {

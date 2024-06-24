@@ -86,20 +86,28 @@ class _CommentsPageState extends State<CommentsPage>
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: widget.presenter.usedComments.length,
+                        itemCount: widget.presenter.localComments.length,
                         itemBuilder: (context, index) {
-                          final comment = widget.presenter.usedComments[index];
+                          final comment = widget.presenter.localComments[index];
+                          bool selected = false;
 
                           return Material(
                             elevation: 5,
                             child: ListTile(
-                              selected: true,
+                              onTap: () {
+                                setState(() {
+                                  selected = !selected;
+                                });
+                              },
+                              selected: selected,
                               leading: Text(comment),
                               trailing: Checkbox(
                                 semanticLabel: comment,
-                                value: true,
+                                value: selected,
                                 onChanged: (value) {
-                                  // widget.presenter.
+                                  setState(() {
+                                    selected = value!;
+                                  });
                                 },
                               ),
                             ),

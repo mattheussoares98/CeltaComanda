@@ -68,20 +68,20 @@ void main() {
   test("Should call addNewComment with correct comments", () async {
     await sut.addComment(newComment);
 
-    verify(() => comments.add(sut.usedComments));
+    verify(() => comments.add(sut.localComments));
   });
 
   test("Should add newComment correctly in usedComments", () async {
     await sut.addComment(newComment);
 
-    expect(sut.usedComments, [newComment]);
+    expect(sut.localComments, [newComment]);
   });
 
   test("Should not add newComment if already exists", () async {
     await sut.addComment(newComment);
     await sut.addComment(newComment);
 
-    expect(sut.usedComments, [newComment]);
+    expect(sut.localComments, [newComment]);
   });
 
   test("Should emit correct values on loadLocalComments succeeds", () async {
@@ -107,7 +107,7 @@ void main() {
 
     await sut.loadComments();
 
-    expect(sut.usedComments, localComments);
+    expect(sut.localComments, localComments);
   });
 
   test("Should udpate usedComments correctly on LoadComments throws", () async {
@@ -115,6 +115,6 @@ void main() {
 
     await sut.loadComments();
 
-    expect(sut.usedComments, []);
+    expect(sut.localComments, []);
   });
 }

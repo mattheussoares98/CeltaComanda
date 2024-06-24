@@ -65,71 +65,73 @@ class _CommentsPageState extends State<CommentsPage>
                 mainErrorSubscription =
                     handleMainError(context, widget.presenter.mainErrorStream);
 
-                return StreamBuilder<List<CommentViewModel>>(
-                    stream: null,
-                    builder: (context, snapshot) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
-                          children: [
-                            Form(
-                              child: TextFormField(
-                                controller: commentsController,
-                                decoration: const InputDecoration(
-                                  hintText: "Comentário",
-                                ),
-                                onFieldSubmitted: (value) async {
-                                  await widget.presenter.addComment(
-                                    CommentViewModel(
-                                      comment: commentsController.text,
-                                      selected: false,
-                                    ),
-                                  );
-                                },
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    children: [
+                      Form(
+                        child: TextFormField(
+                          controller: commentsController,
+                          decoration: const InputDecoration(
+                            hintText: "Comentário",
+                          ),
+                          onFieldSubmitted: (value) async {
+                            await widget.presenter.addComment(
+                              CommentViewModel(
+                                comment: commentsController.text,
+                                selected: false,
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            if (snapshot.hasData && snapshot.data != null)
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  final comment = snapshot.data![index];
-                                  bool selected = false;
+                            );
 
-                                  return Material(
-                                    elevation: 5,
-                                    child: ListTile(
-                                      onTap: () {
-                                        setState(() {
-                                          comment.selected = !comment.selected;
-                                        });
-                                      },
-                                      selected: selected,
-                                      leading: Text(
-                                        comment.comment,
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      trailing: Checkbox(
-                                        semanticLabel: comment.comment,
-                                        value: comment.selected,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            comment.selected = value!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                          ],
+                            commentsController.clear();
+                          },
                         ),
-                      );
-                    });
+                      ),
+                      const SizedBox(height: 8),
+                      if (widget.presenter.loadedComments.isNotEmpty)
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.presenter.loadedComments.length,
+                          itemBuilder: (context, index) {
+                            final comment =
+                                widget.presenter.loadedComments[index];
+                            bool selected = false;
+
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Material(
+                                elevation: 5,
+                                child: ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      comment.selected = !comment.selected;
+                                    });
+                                  },
+                                  selected: selected,
+                                  leading: Text(
+                                    comment.comment,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  trailing: Checkbox(
+                                    semanticLabel: comment.comment,
+                                    value: comment.selected,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        comment.selected = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                );
               },
             ),
           );

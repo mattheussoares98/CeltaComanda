@@ -60,6 +60,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   @override
   Future<void> changeCommentIsSelected(int index) async {
     _loadedComments[index].selected = !_loadedComments[index].selected;
+    updateHasSelectedComments();
   }
 
   final _isLoading = false.obs;
@@ -77,6 +78,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     for (var comment in loadedComments) {
       comment.selected = false;
     }
+    updateHasSelectedComments();
   }
 
   bool _hasSelectedComments = false;

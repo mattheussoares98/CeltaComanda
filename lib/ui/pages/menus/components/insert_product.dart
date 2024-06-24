@@ -60,7 +60,7 @@ class _InsertProductState extends State<InsertProduct> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: true);
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),

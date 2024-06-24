@@ -95,5 +95,6 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
         break;
       }
     }
+    notifyListeners();
   }
 }

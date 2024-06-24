@@ -137,10 +137,34 @@ void main() {
       comment: faker.randomGenerator.string(10),
       selected: true,
     ));
-    
+
     sut.unselectAllComments();
 
     expect(sut.loadedComments[0].selected, false);
     expect(sut.loadedComments[1].selected, false);
+  });
+
+  test(
+      "Should update correctly hasSelectedComments when call updateHasSelectedComment",
+      () async {
+    await sut.addComment(CommentViewModel(
+      comment: faker.randomGenerator.string(10),
+      selected: true,
+    ));
+    await sut.addComment(CommentViewModel(
+      comment: faker.randomGenerator.string(10),
+      selected: true,
+    ));
+
+    sut.updateHasSelectedComments();
+    expect(sut.hasSelectedComments, true);
+
+    sut.loadedComments[0].selected = false;
+    sut.updateHasSelectedComments();
+    expect(sut.hasSelectedComments, true);
+
+    sut.loadedComments[1].selected = false;
+    sut.updateHasSelectedComments();
+    expect(sut.hasSelectedComments, false);
   });
 }

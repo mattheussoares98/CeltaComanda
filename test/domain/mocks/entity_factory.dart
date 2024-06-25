@@ -15,10 +15,11 @@ class EntityFactory {
     );
   }
 
-  static List<ProductEntity> makeProductsEntitys() {
+  static List<ProductEntity> makeProductsEntitys({bool? isPromoCombox}) {
     return [
       ProductEntity(
-        IsPromoCombox: faker.randomGenerator.boolean(),
+        IsPromoCombox:
+            isPromoCombox == true ? true : faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(10),
         InternalCodeOnERP: faker.randomGenerator.integer(10),
         InternalCodeOfProductOnERP: faker.randomGenerator.integer(10),

@@ -587,7 +587,15 @@ void main() {
       sut.updateSelectedProduct(productsViewModel);
       expect(productsViewModel.productQuantity, 1);
     });
-  });
 
-  group("Product comment", () {});
+    test('Should clear selected product if click in combox product', () async {
+      expectLater(sut.selectedProductStream, emits(null));
+
+      sut.updateSelectedProduct(
+        ProductsViewModel.fromEntity(
+          EntityFactory.makeProductsEntitys(isPromoCombox: true)[0],
+        ),
+      );
+    });
+  });
 }

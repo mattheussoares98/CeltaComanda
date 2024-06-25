@@ -246,6 +246,8 @@ class GetxMenuPresenter extends GetxController
     _selectedProduct.value?.productQuantity = 1;
     if (_selectedProduct.value == selectedProduct) {
       _selectedProduct.value = null;
+    } else if (selectedProduct?.IsPromoCombox == "true") {
+      _selectedProduct.value = null;
     } else {
       _selectedProduct.value = selectedProduct;
     }

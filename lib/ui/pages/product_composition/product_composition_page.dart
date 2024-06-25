@@ -86,7 +86,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                   );
                 }
                 if (snapshot.hasData) {
-                  return FatherItems(
+                  return Composition(
                     product: product!,
                     productsCompositions: snapshot.data!,
                   );

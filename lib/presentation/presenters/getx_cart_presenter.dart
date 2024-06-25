@@ -152,8 +152,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
       );
-
-      updateIndexOfSelectedCartProduct(null);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.addComment:
@@ -165,16 +163,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     } finally {
       isLoading = false;
     }
-  }
-
-  @override
-  void updateIndexOfSelectedCartProduct(int? index) {
-    if (_indexOfSelectedProduct == index) {
-      _indexOfSelectedProduct = null;
-    } else {
-      _indexOfSelectedProduct = index;
-    }
-    notifyListeners();
   }
 
   @override

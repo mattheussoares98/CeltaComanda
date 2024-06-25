@@ -796,22 +796,6 @@ void main() {
       );
     });
 
-    test("Should clear selectedProductIndex on success to UpdateComment",
-        () async {
-      sut.updateIndexOfSelectedCartProduct(1);
-
-      expect(sut.indexOfSelectedProduct, 1);
-      await sut.updateComment(
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-      expect(sut.indexOfSelectedProduct, null);
-    });
-
     test("Should call expansibleGroups.load when UpdateComment", () async {
       await sut.updateComment(
         comments: comments,

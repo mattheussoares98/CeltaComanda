@@ -54,8 +54,6 @@ abstract class CartPresenter implements ChangeNotifier {
     required HomePresenter homePresenter,
   });
 
-  void updateIndexOfSelectedCartProduct(int? index);
-
   Future<void> addNewPrintRequestInFirebase();
 
   List<CartProductsViewModel> get cartProducts;
@@ -104,7 +102,7 @@ abstract class CartPresenter implements ChangeNotifier {
   double calculateProductTotalLiquid(ProductCompositionViewModel product);
   double calculateIncrementValue(ProductCompositionViewModel product);
   double calculateProductPrice(ProductCompositionViewModel product);
-  
+
   CartProductEntity productWithSelectedsComments({
     required CommentsPresenter commentsPresenter,
     required CartProductEntity product,

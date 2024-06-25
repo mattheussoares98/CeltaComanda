@@ -111,4 +111,12 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       return concatenateSelectedComments;
     }
   }
+
+  @override
+  void updateSelectedComments(String comments) {
+    for (var loadedComment in loadedComments) {
+      loadedComment.selected = comments.contains(loadedComment.comment);
+    }
+    notifyListeners();
+  }
 }

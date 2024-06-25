@@ -233,4 +233,19 @@ void main() {
 
     expect(concatenate, selectedComment.comment);
   });
+
+  test(
+      "Should update correctly selected comments in sut.updateSelectedComments",
+      () async {
+    final firstComment = EntityFactory.makeCommentViewModel(selected: false);
+    final secondComment = EntityFactory.makeCommentViewModel(selected: false);
+
+    await sut.addComment(firstComment);
+    await sut.addComment(secondComment);
+
+    sut.updateSelectedComments("${firstComment.comment}\n${secondComment.comment}");
+
+    expect(sut.loadedComments[0].selected, true);
+    expect(sut.loadedComments[1].selected, true);
+  });
 }

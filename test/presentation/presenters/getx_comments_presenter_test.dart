@@ -243,9 +243,20 @@ void main() {
     await sut.addComment(firstComment);
     await sut.addComment(secondComment);
 
-    sut.updateSelectedComments("${firstComment.comment}\n${secondComment.comment}");
+    sut.updateSelectedComments(
+        "${firstComment.comment}\n${secondComment.comment}");
 
     expect(sut.loadedComments[0].selected, true);
     expect(sut.loadedComments[1].selected, true);
+  });
+
+  test(
+      "Should update correctly selected comments in sut.updateSelectedComments if pass null parameter",
+      () async {
+    await sut.addComment(EntityFactory.makeCommentViewModel(selected: true));
+
+    sut.updateSelectedComments(null);
+
+    expect(sut.loadedComments[0].selected, false);
   });
 }

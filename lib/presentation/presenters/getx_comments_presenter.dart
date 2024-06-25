@@ -113,9 +113,10 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   }
 
   @override
-  void updateSelectedComments(String comments) {
+  void updateSelectedComments(String? comments) {
     for (var loadedComment in loadedComments) {
-      loadedComment.selected = comments.contains(loadedComment.comment);
+      loadedComment.selected =
+          comments != null && comments.contains(loadedComment.comment);
     }
     notifyListeners();
   }

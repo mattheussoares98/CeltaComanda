@@ -22,6 +22,7 @@ class AddCommentButton extends StatelessWidget {
     return Flexible(
       child: TextButton.icon(
         onPressed: () async {
+          commentsPresenter.updateSelectedComments(father.commentFather);
           await showModalBottomSheet(
               isScrollControlled: true,
               context: context,

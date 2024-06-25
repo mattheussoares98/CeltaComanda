@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../pages.dart';
+import '../../../pages.dart';
 
 class CartProductsItems extends StatelessWidget {
   final List<CartProductsViewModel> cartProducts;

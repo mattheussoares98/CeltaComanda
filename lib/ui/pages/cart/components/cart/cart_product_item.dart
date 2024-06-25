@@ -2,9 +2,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import '../../../../components/components.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
 class CartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;

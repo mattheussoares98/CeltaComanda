@@ -14,4 +14,5 @@ abstract class CommentsPresenter implements Listenable {
   Future<void> changeCommentIsSelected(int index);
   void unselectAllComments();
   void updateHasSelectedComments();
+  String? getConcatenateSelectedComments();
 }

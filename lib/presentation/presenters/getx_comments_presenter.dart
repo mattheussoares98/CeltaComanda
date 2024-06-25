@@ -97,4 +97,18 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     }
     notifyListeners();
   }
+
+  @override
+  String? getConcatenateSelectedComments() {
+    final concatenateSelectedComments = _loadedComments
+        .where((comment) => comment.selected)
+        .map((element) => element.comment)
+        .join("\n");
+
+    if (concatenateSelectedComments.isEmpty) {
+      return null;
+    } else {
+      return concatenateSelectedComments;
+    }
+  }
 }

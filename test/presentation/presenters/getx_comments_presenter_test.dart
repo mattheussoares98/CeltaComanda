@@ -212,4 +212,25 @@ void main() {
 
     expect(sut.hasSelectedComments, true);
   });
+
+  test(
+      "Should return null in getConcatenateSelectedComments if dont have selected comments",
+      () async {
+    sut.addComment(newComment);
+
+    final concatenate = sut.getConcatenateSelectedComments();
+
+    expect(concatenate, null);
+  });
+
+  test(
+      "Should return concatenateComments in getConcatenateSelectedComments if has selected comments",
+      () async {
+    final selectedComment = EntityFactory.makeCommentViewModel(selected: true);
+    sut.addComment(selectedComment);
+
+    final concatenate = sut.getConcatenateSelectedComments();
+
+    expect(concatenate, selectedComment.comment);
+  });
 }

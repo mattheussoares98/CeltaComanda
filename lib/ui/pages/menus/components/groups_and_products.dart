@@ -36,7 +36,6 @@ class GroupsAndProducts extends StatelessWidget {
               itensPerLine: 2,
               products: menuPresenter
                   .loadedMenu[selectedIndex ?? 0].entries.first.value,
-              updateSelectedProductWhenClick: true,
               selectedProduct: selectedProduct,
             ),
           ),

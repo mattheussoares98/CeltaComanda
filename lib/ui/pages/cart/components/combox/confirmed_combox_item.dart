@@ -105,15 +105,7 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                 ],
               ),
               Comment(
-                indexOfProduct: productIndex,
-                indexOfSelectedProduct:
-                    cartPresenter.indexOfSelectedProductCombox,
                 comments: combox.commentFather,
-                updateSelectedIndex: () {
-                  cartPresenter
-                      .updateIndexOfSelectedProductCombox(productIndex);
-                },
-                commentsController: commentsController,
                 clearComment: () async {
                   await cartPresenter.updateCommentOfCombox(
                     indexOfCombox: widget.indexOfConfirmedCombox,

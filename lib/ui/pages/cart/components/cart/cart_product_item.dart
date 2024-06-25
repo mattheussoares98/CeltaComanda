@@ -21,8 +21,6 @@ class CartProductItem extends StatefulWidget {
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-  TextEditingController commentsController = TextEditingController();
-
   void onPressedAddQuantity({
     required CartPresenter cartPresenter,
   }) {
@@ -44,12 +42,6 @@ class _CartProductItemState extends State<CartProductItem> {
     } else {
       cartPresenter.reduceCartProductQuantity(widget.index);
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    commentsController.dispose();
   }
 
   @override
@@ -114,7 +106,6 @@ class _CartProductItemState extends State<CartProductItem> {
           ),
           const SizedBox(height: 8),
           Comment(
-            indexOfProduct: widget.index,
             comments: widget.cartProduct.Comments,
             clearComment: () async {
               await cartPresenter.updateCommentOfProductCart(
@@ -122,15 +113,10 @@ class _CartProductItemState extends State<CartProductItem> {
                 newComment: null,
               );
             },
-            updateSelectedIndex: () {
-              cartPresenter.updateIndexOfSelectedCartProduct(widget.index);
-            },
-            indexOfSelectedProduct: cartPresenter.indexOfSelectedProduct,
-            commentsController: commentsController,
             updateComment: () async {
               await cartPresenter.updateCommentOfProductCart(
                 index: widget.index,
-                newComment: commentsController.text,
+                newComment: "commentsController.text",
               );
             },
           ),

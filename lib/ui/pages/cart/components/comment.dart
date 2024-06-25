@@ -3,20 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../components/components.dart';
 
 class Comment extends StatefulWidget {
-  final int indexOfProduct;
-  final int? indexOfSelectedProduct;
   final String? comments;
-  final void Function() updateSelectedIndex;
-  final TextEditingController commentsController;
   final Future<void> Function() clearComment;
   final Future<void> Function() updateComment;
 
   const Comment({
-    required this.indexOfProduct,
     required this.comments,
-    required this.updateSelectedIndex,
-    required this.indexOfSelectedProduct,
-    required this.commentsController,
     required this.clearComment,
     required this.updateComment,
     super.key,
@@ -29,22 +21,7 @@ class Comment extends StatefulWidget {
 class _CommentState extends State<Comment> {
   FocusNode commentsFocusNode = FocusNode();
 
-  void onTapCommentIcon() {
-    widget.commentsController.clear();
-    widget.updateSelectedIndex();
-    //criar teste pra essa alteração do índice do produto que foi selecionado
-    if (widget.comments != null) {
-      setState(() {
-        widget.commentsController.text = widget.comments!;
-      });
-    }
-
-    if (widget.indexOfSelectedProduct != widget.indexOfProduct) {
-      Future.delayed(const Duration(milliseconds: 300), () {
-        FocusScope.of(context).requestFocus(commentsFocusNode);
-      });
-    }
-  }
+  void onTapCommentIcon() {}
 
   @override
   void dispose() {
@@ -114,34 +91,6 @@ class _CommentState extends State<Comment> {
             ],
           ),
         ),
-        if (widget.indexOfSelectedProduct == widget.indexOfProduct)
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  focusNode: commentsFocusNode,
-                  controller: widget.commentsController,
-                  maxLines: 8,
-                  minLines: 1,
-                  decoration: const InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await widget.updateComment();
-
-                  commentsFocusNode.unfocus();
-                },
-                child: const Text(
-                  "Confirmar",
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          )
       ],
     );
   }

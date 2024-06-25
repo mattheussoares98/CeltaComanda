@@ -22,13 +22,15 @@ class _InsertProductState extends State<InsertProduct> {
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required String? comment,
+    required CommentsPresenter commentsPresenter,
   }) async {
     try {
       cartPresenter.addProductInCart(
+        commentsPresenter: commentsPresenter,
         product: CartProductEntity(
           Product: widget.selectedProduct!.toEntity(),
-          Comments: comment,
+          Comments:
+              "no cartPresenter.addProductInCart atualiza os comentários adicionando o que foi selecionado pelo usuário",
           TotalLiquid: widget.selectedProduct!.productQuantity *
               widget.selectedProduct!.SaleRetailPraticed.toDouble(),
           Quantity: widget.selectedProduct!.productQuantity,
@@ -139,7 +141,7 @@ class _InsertProductState extends State<InsertProduct> {
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,
                         cartPresenter: cartPresenter,
-                        comment: "só adicionar os comentários aqui e já era",
+                        commentsPresenter: commentsPresenter,
                       );
                     },
                     child: SizedBox(

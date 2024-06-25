@@ -18,6 +18,7 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late HomePresenterSpy homePresenter;
+  late CommentsPresenterSpy commentsPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
@@ -52,6 +53,7 @@ void main() {
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late ConfirmedComboxViewModel comboxWithSelectedProducts;
   late int tableNumber;
+  late CommentViewModel commentViewModel;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -85,6 +87,7 @@ void main() {
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
     );
+    commentsPresenter = CommentsPresenterSpy();
   }
 
   void initEntitys() {
@@ -226,6 +229,7 @@ void main() {
     newComment = faker.randomGenerator.string(10);
 
     sut.isGeneratingVersionToRede = false;
+    commentViewModel = EntityFactory.makeCommentViewModel(selected: true);
   }
 
   void initMockSuccess() {
@@ -255,6 +259,7 @@ void main() {
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(UpdateSaleRequestTempEntity);
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
   });
 
   group("CartInformations", () {
@@ -262,6 +267,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       verify(
@@ -276,6 +282,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.cartProducts, []);
@@ -287,6 +294,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
     });
     test("Should emit correct events on addProductInCart throws", () async {
@@ -298,6 +306,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
     });
 
@@ -307,10 +316,21 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
+      await sut.removeProductFromCart(0);
 
       verify(
-        () => cartInformations.updateCartProducts([cartProductViewModel]),
+        () => cartInformations.updateCartProducts([
+          CartProductsViewModel(
+            Comments: null,
+            Product: cartProductViewModel.Product,
+            TotalLiquid: cartProductViewModel.TotalLiquid,
+            Quantity: cartProductViewModel.Quantity,
+            Value: cartProductViewModel.Value,
+            ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+          )
+        ]),
       ).called(1);
     });
     test(
@@ -1169,6 +1189,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.cartProducts, [cartProductViewModel]);
@@ -1183,10 +1204,12 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
       await sut.addProductInCart(
         product: cartProduct1,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.cartProducts, [
@@ -1257,10 +1280,12 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
       await sut.addProductInCart(
         product: cartProductWithOneQuantity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       await sut.reduceCartProductQuantity(0);
@@ -1275,6 +1300,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
       expect(sut.cartProducts[0].TotalLiquid,
           cartProductEntity.TotalLiquid.toString());
@@ -1290,6 +1316,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       await sut.addCartProductQuantity(0);
@@ -1302,6 +1329,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
       expect(sut.cartProducts[0].TotalLiquid,
           cartProductEntity.TotalLiquid.toString());
@@ -1317,6 +1345,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.indexOfSelectedProduct, null);
@@ -1328,10 +1357,12 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.cartProducts.length, 1);
@@ -1340,22 +1371,27 @@ void main() {
     test(
         "Should add new product in cart if already contains equal PLU in cart but the comment is differente",
         () async {
+      commentsPresenter.loadedCommentsController.add(
+        EntityFactory.makeCommentViewModel(
+          selected: true,
+        ),
+      );
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
-      final productWithNewComment = CartProductEntity(
-        Product: cartProductEntity.Product,
-        Comments: "comentário diferente",
-        TotalLiquid: cartProductEntity.TotalLiquid,
-        Quantity: cartProductEntity.Quantity,
-        Value: cartProductEntity.Value,
-        ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+      commentsPresenter.loadedCommentsController.add(
+        EntityFactory.makeCommentViewModel(
+          selected: true,
+        ),
       );
+
       await sut.addProductInCart(
-        product: productWithNewComment,
+        product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.cartProducts.length, 2);
@@ -1367,6 +1403,7 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       final productWithNewComment = CartProductEntity(
@@ -1380,9 +1417,32 @@ void main() {
       await sut.addProductInCart(
         product: productWithNewComment,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       expect(sut.cartProducts.length, 2);
+    });
+
+    test("Should update comment correctly", () async {
+      commentsPresenter.loadedCommentsController
+          .addAll([commentViewModel, commentViewModel]);
+
+      await sut.addProductInCart(
+        product: cartProductEntity,
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+
+      expect(sut.cartProducts, [
+        CartProductsViewModel(
+          Comments: "${commentViewModel.comment}\n${commentViewModel.comment}",
+          Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
+          TotalLiquid: cartProductEntity.TotalLiquid.toString(),
+          Quantity: cartProductEntity.Quantity.toString(),
+          Value: cartProductEntity.Value.toString(),
+          ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+        ),
+      ]);
     });
   });
 
@@ -1500,7 +1560,8 @@ void main() {
       sut.isGeneratingVersionToRede = true;
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
@@ -1869,6 +1930,7 @@ void main() {
       sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       await sut.saveProducts(

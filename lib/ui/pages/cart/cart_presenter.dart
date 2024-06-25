@@ -62,6 +62,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
+    required CommentsPresenter commentsPresenter,
   });
   Future<void> removeProductFromCart(int index);
   Future<void> updateCommentOfProductCart({
@@ -103,4 +104,9 @@ abstract class CartPresenter implements ChangeNotifier {
   double calculateProductTotalLiquid(ProductCompositionViewModel product);
   double calculateIncrementValue(ProductCompositionViewModel product);
   double calculateProductPrice(ProductCompositionViewModel product);
+  
+  CartProductEntity productWithSelectedsComments({
+    required CommentsPresenter commentsPresenter,
+    required CartProductEntity product,
+  });
 }

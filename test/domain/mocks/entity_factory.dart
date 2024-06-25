@@ -688,7 +688,7 @@ class EntityFactory {
   }) =>
       CartProductEntity(
         Product: makeProductsEntitys()[0],
-        Comments: faker.randomGenerator.string(20),
+        Comments: null,
         TotalLiquid: faker.randomGenerator.decimal(),
         Quantity: faker.randomGenerator
             .integer(maximumProductQuantity, min: minimumProductQuantity)
@@ -731,8 +731,9 @@ class EntityFactory {
         quantity: quantity,
       );
 
-  static CommentViewModel makeCommentViewModel() => CommentViewModel(
+  static CommentViewModel makeCommentViewModel({bool? selected = false}) =>
+      CommentViewModel(
         comment: faker.randomGenerator.string(10),
-        selected: false,
+        selected: selected!,
       );
 }

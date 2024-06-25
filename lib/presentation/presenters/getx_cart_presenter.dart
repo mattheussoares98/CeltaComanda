@@ -364,19 +364,46 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
+  CartProductEntity productWithSelectedsComments({
+    required CommentsPresenter commentsPresenter,
+    required CartProductEntity product,
+  }) {
+    String comment = commentsPresenter.loadedComments
+        .where((comment) => comment.selected)
+        .map((element) => element.comment)
+        .join("\n");
+    return CartProductEntity(
+      Comments: comment.isEmpty ? null : comment,
+      Product: product.Product,
+      TotalLiquid: product.TotalLiquid,
+      Quantity: product.Quantity,
+      Value: product.Value,
+      ProductPriceLookUpCode: product.ProductPriceLookUpCode,
+    );
+  }
+
+  @override
   Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      final indexOfEqualProduct = _getIndexOfEqualProduct(product);
+      final productWithNewComment = productWithSelectedsComments(
+        commentsPresenter: commentsPresenter,
+        product: product,
+      );
+
+      final indexOfEqualProduct =
+          _getIndexOfEqualProduct(productWithNewComment);
       final newCartList = [..._cartProducts];
 
       if (indexOfEqualProduct == -1) {
-        newCartList.add(CartProductsViewModel.fromEntity(product));
+        newCartList
+            .add(CartProductsViewModel.fromEntity(productWithNewComment));
       } else {
         newCartList[indexOfEqualProduct] = _getProductWithNewQuantity(
           indexOfEqualProduct: indexOfEqualProduct,

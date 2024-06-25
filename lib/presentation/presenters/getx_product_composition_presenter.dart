@@ -260,6 +260,8 @@ class GetxProductCompositionPresenter extends GetxController
         .map((element) => element.comment)
         .join("\n");
 
-    father.commentFather = newComment;
+    father.commentFather = newComment.isEmpty
+        ? null
+        : newComment; //criar o teste pra salvar como nulo caso seja empty
   }
 }

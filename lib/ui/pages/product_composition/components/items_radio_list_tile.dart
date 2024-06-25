@@ -8,22 +8,16 @@ import '../../../../ui/pages/pages.dart';
 class ItemsRadioListTile extends StatefulWidget {
   final ProductCompositionViewModel father;
   final bool isFixedItemInCombox;
-  final FocusNode commentFocusNode;
-  final Function() changeFocusToCommentFocusNode;
   final Function() updateSelectedIndex;
-  final Function() updateShowCommentFormField;
   final int index;
   final int selectedIndex;
   final List<ProductCompositionViewModel> productsCompositionsViewModel;
   const ItemsRadioListTile({
     required this.father,
     required this.isFixedItemInCombox,
-    required this.commentFocusNode,
-    required this.changeFocusToCommentFocusNode,
     required this.updateSelectedIndex,
     required this.index,
     required this.selectedIndex,
-    required this.updateShowCommentFormField,
     required this.productsCompositionsViewModel,
     super.key,
   });
@@ -135,21 +129,12 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                             ),
                           ),
                           AddCommentButton(
-                            updateShowCommentFormField:
-                                widget.updateShowCommentFormField,
-                            changeFocusToCommentFocusNode:
-                                widget.changeFocusToCommentFocusNode,
+                            father: child,
+                            callSetState: () {
+                              setState(() {});
+                            },
                           ),
                         ],
-                      ),
-                      CommentFormField(
-                        father: widget.father,
-                        commentFocusNode: widget.commentFocusNode,
-                        changeFocusToCommentFocusNode:
-                            widget.changeFocusToCommentFocusNode,
-                        updateSelectedIndex: widget.updateSelectedIndex,
-                        index: widget.index,
-                        selectedIndex: widget.selectedIndex,
                       ),
                     ],
                   ),

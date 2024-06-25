@@ -84,12 +84,6 @@ class _FatherItemsState extends State<FatherItems> {
                                 widget.productsCompositions,
                             isFixedItemInCombox: true,
                             father: father!,
-                            commentFocusNode: commentFocusNode,
-                            changeFocusToCommentFocusNode:
-                                changeFocusToCommentFocusNode,
-                            updateShowCommentFormField: () {
-                              updateShowCommentFormField(index);
-                            },
                             updateSelectedIndex: () {
                               if (selectedIndex == index) {
                                 setState(() {
@@ -172,37 +166,20 @@ class _FatherItemsState extends State<FatherItems> {
                                 ),
                               ),
                               AddCommentButton(
-                                updateShowCommentFormField: () {
-                                  updateShowCommentFormField(index);
-                                },
-                                changeFocusToCommentFocusNode: () async {
-                                  changeFocusToCommentFocusNode();
+                                father: father!,
+                                callSetState: () {
+                                  setState(() {});
                                 },
                               ),
                             ],
                           ),
-                        CommentFormField(
-                          father: father!,
-                          commentFocusNode: commentFocusNode,
-                          changeFocusToCommentFocusNode:
-                              changeFocusToCommentFocusNode,
-                          updateSelectedIndex: () {
-                            updateShowCommentFormField(index);
-                          },
-                          index: index,
-                          selectedIndex: selectedIndex,
-                        ),
+                        if (father!.commentFather != null)
+                          CommentRichText(comment: father!.commentFather!),
                         ItemsRadioListTile(
                           productsCompositionsViewModel:
                               widget.productsCompositions,
                           isFixedItemInCombox: father!.childs?.isEmpty == true,
                           father: father!,
-                          commentFocusNode: commentFocusNode,
-                          changeFocusToCommentFocusNode:
-                              changeFocusToCommentFocusNode,
-                          updateShowCommentFormField: () {
-                            updateShowCommentFormField(index);
-                          },
                           updateSelectedIndex: () {
                             if (selectedIndex == index) {
                               setState(() {

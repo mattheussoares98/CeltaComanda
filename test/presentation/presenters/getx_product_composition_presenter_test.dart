@@ -22,6 +22,7 @@ void main() {
   late GetxProductCompositionPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
+  late CommentsPresenterSpy commentsPresenter;
 
   late GetProductCompositionSpy getProductComposition;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -73,6 +74,7 @@ void main() {
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
+    commentsPresenter = CommentsPresenterSpy();
   }
 
   void initUsecases() {
@@ -120,6 +122,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -716,6 +719,30 @@ void main() {
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
+    });
+  });
+
+  group("Product comment", () {
+    test("Should update correctly the comment", () async {
+      final father = EntityFactory.makeProductCompositionViewModel(
+        quantity: 1,
+        salePrice: 0,
+        offerPrice: 0,
+        fatherIncrement: 0,
+        childIncrement: 0,
+        isOptionalItem: false,
+        indexOfSelectedChild: 0,
+        insertChilds: true,
+      );
+      final comment = EntityFactory.makeCommentViewModel(selected: true);
+      commentsPresenter.loadedCommentsController.addAll([comment, comment]);
+
+      sut.updateComment(
+        commentsPresenter: commentsPresenter,
+        father: father,
+      );
+
+      expect(father.commentFather, "${comment.comment}\n${comment.comment}");
     });
   });
 }

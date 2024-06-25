@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../../ui/components/components.dart';
@@ -31,6 +33,10 @@ class _CommentWidgetState extends State<CommentFormField> {
 
   @override
   Widget build(BuildContext context) {
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+
     return Padding(
       padding: widget.index == widget.selectedIndex ||
               widget.father.commentFather != ""
@@ -62,9 +68,10 @@ class _CommentWidgetState extends State<CommentFormField> {
                           await widget.changeFocusToCommentFocusNode();
                         } else {
                           widget.updateSelectedIndex();
-                          widget.father.commentFather =
-                              commentTextController.text;
-                          commentTextController.clear();
+                          productCompositionPresenter.updateComment(
+                            commentsPresenter: commentsPresenter,
+                            father: widget.father,
+                          );
                         }
                       },
                       child: const Text(

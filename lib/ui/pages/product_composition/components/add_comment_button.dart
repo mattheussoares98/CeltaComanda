@@ -47,8 +47,10 @@ class AddCommentButton extends StatelessWidget {
           );
           callSetState();
         },
-        label: const Text("Comentário"),
-        icon: const Icon(Icons.add_comment_rounded),
+        label: const Text("Comentários"),
+        icon: Icon(father.commentFather == null
+            ? Icons.add_comment_rounded
+            : Icons.edit),
       ),
     );
   }

@@ -57,7 +57,7 @@ class _CommentState extends State<Comment> {
                   children: [
                     Icon(
                       color: Theme.of(context).colorScheme.primary,
-                      Icons.add_comment,
+                      widget.comments == null ? Icons.add_comment : Icons.edit,
                       size: 25,
                     ),
                   ],

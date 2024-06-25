@@ -123,6 +123,8 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                         ),
                       ],
                     ),
+                    if (widget.father.commentFather != null)
+                      CommentRichText(comment: widget.father.commentFather!)
                   ],
                 ),
               ],

@@ -107,18 +107,6 @@ class _CartProductItemState extends State<CartProductItem> {
           const SizedBox(height: 8),
           Comment(
             comments: widget.cartProduct.Comments,
-            clearComment: () async {
-              await cartPresenter.updateCommentOfProductCart(
-                index: widget.index,
-                newComment: null,
-              );
-            },
-            updateComment: () async {
-              await cartPresenter.updateCommentOfProductCart(
-                index: widget.index,
-                newComment: "commentsController.text",
-              );
-            },
           ),
         ],
       ),

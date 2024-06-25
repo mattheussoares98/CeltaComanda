@@ -4,13 +4,9 @@ import '../../../components/components.dart';
 
 class Comment extends StatefulWidget {
   final String? comments;
-  final Future<void> Function() clearComment;
-  final Future<void> Function() updateComment;
 
   const Comment({
     required this.comments,
-    required this.clearComment,
-    required this.updateComment,
     super.key,
   });
 
@@ -50,29 +46,8 @@ class _CommentState extends State<Comment> {
                 ),
               if (widget.comments != null)
                 Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CommentRichText(
-                          comment: widget.comments!,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          notificationDialog(
-                            context: context,
-                            titleMessage: "Excluir comentário?",
-                            content: null,
-                            onPress: widget.clearComment,
-                          );
-                        },
-                        child: const Icon(
-                          Icons.highlight_remove_outlined,
-                          color: Colors.red,
-                          size: 25,
-                        ),
-                      ),
-                    ],
+                  child: CommentRichText(
+                    comment: widget.comments!,
                   ),
                 ),
               const SizedBox(width: 10),

@@ -29,7 +29,6 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
@@ -106,20 +105,6 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
               ),
               Comment(
                 comments: combox.commentFather,
-                clearComment: () async {
-                  await cartPresenter.updateCommentOfCombox(
-                    indexOfCombox: widget.indexOfConfirmedCombox,
-                    indexOfProduct: productIndex,
-                    newComment: null,
-                  );
-                },
-                updateComment: () async {
-                  await cartPresenter.updateCommentOfCombox(
-                    indexOfCombox: widget.indexOfConfirmedCombox,
-                    indexOfProduct: productIndex,
-                    newComment: commentsController.text,
-                  );
-                },
               ),
             ],
           ),

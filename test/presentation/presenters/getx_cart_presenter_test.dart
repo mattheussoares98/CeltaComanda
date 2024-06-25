@@ -1371,23 +1371,18 @@ void main() {
     test(
         "Should add new product in cart if already contains equal PLU in cart but the comment is differente",
         () async {
-      commentsPresenter.loadedCommentsController.add(
-        EntityFactory.makeCommentViewModel(
-          selected: true,
-        ),
-      );
+      commentsPresenter
+          .mockGetConcatenateSelectedComments(faker.randomGenerator.string(10));
+//o comentário que é adicionado, é o que retorna nessa função do
+//commentsPresenter, por isso precisa mockar o retorno da função
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
         commentsPresenter: commentsPresenter,
       );
 
-      commentsPresenter.loadedCommentsController.add(
-        EntityFactory.makeCommentViewModel(
-          selected: true,
-        ),
-      );
-
+      commentsPresenter
+          .mockGetConcatenateSelectedComments(faker.randomGenerator.string(10));
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
@@ -1424,8 +1419,8 @@ void main() {
     });
 
     test("Should update comment correctly", () async {
-      commentsPresenter.loadedCommentsController
-          .addAll([commentViewModel, commentViewModel]);
+      commentsPresenter.mockGetConcatenateSelectedComments(
+          "${commentViewModel.comment}\n${commentViewModel.comment}");
 
       await sut.addProductInCart(
         product: cartProductEntity,

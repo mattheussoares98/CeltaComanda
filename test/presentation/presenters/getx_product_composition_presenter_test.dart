@@ -723,7 +723,9 @@ void main() {
   });
 
   group("Product comment", () {
-    test("Should update correctly the comment", () async {
+    test(
+        "Should update correctly the comment according to what returned in commentsPresenter",
+        () async {
       final father = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 0,
@@ -734,15 +736,15 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: true,
       );
-      final comment = EntityFactory.makeCommentViewModel(selected: true);
-      commentsPresenter.loadedCommentsController.addAll([comment, comment]);
+
+      commentsPresenter.mockGetConcatenateSelectedComments("any");
 
       sut.updateComment(
         commentsPresenter: commentsPresenter,
         father: father,
       );
 
-      expect(father.commentFather, "${comment.comment}\n${comment.comment}");
+      expect(father.commentFather, "any");
     });
   });
 }

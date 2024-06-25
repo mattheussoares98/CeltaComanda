@@ -255,13 +255,6 @@ class GetxProductCompositionPresenter extends GetxController
     required CommentsPresenter commentsPresenter,
     required ProductCompositionViewModel father,
   }) {
-    final newComment = commentsPresenter.loadedComments
-        .where((comment) => comment.selected)
-        .map((element) => element.comment)
-        .join("\n");
-
-    father.commentFather = newComment.isEmpty
-        ? null
-        : newComment; //criar o teste pra salvar como nulo caso seja empty
+    father.commentFather = commentsPresenter.getConcatenateSelectedComments();
   }
 }

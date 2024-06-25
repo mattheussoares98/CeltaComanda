@@ -21,4 +21,9 @@ class CommentsPresenterSpy extends Mock implements CommentsPresenter {
     when(() => this.changeCommentIsSelected(any())).thenAnswer((_) async => _);
     when(() => this.loadComments()).thenAnswer((_) async => _);
   }
+
+  void mockGetConcatenateSelectedComments(String? comment) {
+    when(() => this.getConcatenateSelectedComments())
+        .thenAnswer((_) => comment);
+  }
 }

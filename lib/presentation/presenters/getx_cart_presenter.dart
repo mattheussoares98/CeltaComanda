@@ -368,12 +368,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required CommentsPresenter commentsPresenter,
     required CartProductEntity product,
   }) {
-    String comment = commentsPresenter.loadedComments
-        .where((comment) => comment.selected)
-        .map((element) => element.comment)
-        .join("\n");
     return CartProductEntity(
-      Comments: comment.isEmpty ? null : comment,
+      Comments: commentsPresenter.getConcatenateSelectedComments(),
       Product: product.Product,
       TotalLiquid: product.TotalLiquid,
       Quantity: product.Quantity,

@@ -49,7 +49,7 @@ class GetxPrintedProductsPresenter
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
-        commandNumber: homePresenter.commandNumber.toString(),
+        writedCommandNumberForRedeVersion: homePresenter.commandNumber.toString(),
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -163,7 +163,7 @@ class GetxPrintedProductsPresenter
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
-    required String commandNumber,
+    required String writedCommandNumberForRedeVersion,
   }) async {
     isLoading = true;
     mainError = null;
@@ -181,7 +181,7 @@ class GetxPrintedProductsPresenter
       }
 
       if (cartPresenter.isGeneratingVersionToRede) {
-        homePresenter.updateCommandNumber(commandNumber);
+        homePresenter.updateCommandNumber(writedCommandNumberForRedeVersion);
       }
       cartPresenter.clear();
       await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);

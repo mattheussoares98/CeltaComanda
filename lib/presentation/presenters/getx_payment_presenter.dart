@@ -135,7 +135,7 @@ class GetxPaymentPresenter extends GetxController
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        commandNumber: homePresenter.commandNumber ?? "",
+        writedCommandNumberForRedeVersion: homePresenter.commandNumber ?? "",
       );
     } on DomainError catch (e) {
       switch (e) {

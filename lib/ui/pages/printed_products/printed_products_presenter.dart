@@ -32,7 +32,7 @@ abstract class PrintedProductsPresenter
     required HomePresenter homePresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
-    required String commandNumber,
+    required String writedCommandNumberForRedeVersion,
   });
 
   Future<void> validateUserAndPermissionToCancelProducts({

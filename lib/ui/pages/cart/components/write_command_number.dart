@@ -145,7 +145,7 @@ Future<void> _onPress({
       homePresenter: homePresenter,
       clearPermissionToCancelProducts: true,
       isRemovingProduct: false,
-      commandNumber: commandNumber,
+      writedCommandNumberForRedeVersion: commandNumber,
     );
   } else {
     await paymentPresenter.getTotalValue(

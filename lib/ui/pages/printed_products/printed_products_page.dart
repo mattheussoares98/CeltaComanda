@@ -95,7 +95,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     homePresenter: homePresenter,
                     clearPermissionToCancelProducts: true,
                     isRemovingProduct: false,
-                    commandNumber: "",
+                    writedCommandNumberForRedeVersion: "",
                   );
                 }
                 printedProductsPresenter.updateCanCancelProducts(false);
@@ -151,7 +151,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                             homePresenter: homePresenter,
                             clearPermissionToCancelProducts: true,
                             isRemovingProduct: false,
-                            commandNumber: "",
+                            writedCommandNumberForRedeVersion: "",
                           );
                         }
                       },

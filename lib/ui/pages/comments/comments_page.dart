@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:provider/provider.dart';
 
@@ -60,147 +59,14 @@ class _CommentsPageState extends State<CommentsPage>
                   padding: const EdgeInsets.fromLTRB(8, 15, 8, 0),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: const Icon(Icons.arrow_back),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const FittedBox(
-                                  child: Text(
-                                    "Comentários do produto",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                FittedBox(
-                                    child: Text(
-                                  widget.selectedProductName,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                )),
-                              ],
-                            ),
-                          ),
-                        ],
+                      TitlePage(
+                        selectedProductName: widget.selectedProductName,
                       ),
                       const SizedBox(height: 15),
-                      Form(
-                        child: TextFormField(
-                          controller: commentsController,
-                          decoration: const InputDecoration(
-                              hintText: "Adicionar comentário",
-                              labelText: "Adicionar comentário"),
-                          onFieldSubmitted: (value) async {
-                            await commentsPresenter.addComment(
-                              CommentViewModel(
-                                comment: commentsController.text,
-                                selected: true,
-                              ),
-                            );
-
-                            commentsController.clear();
-                          },
-                        ),
-                      ),
+                      const AddCommentFormField(),
                       const SizedBox(height: 8),
                       if (commentsPresenter.loadedComments.isNotEmpty)
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: commentsPresenter.loadedComments.length,
-                          itemBuilder: (context, index) {
-                            final comment =
-                                commentsPresenter.loadedComments[index];
-
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(2, 2),
-                                      color: Color.fromARGB(255, 209, 208, 208),
-                                      blurRadius: 8,
-                                    ),
-                                    BoxShadow(
-                                      offset: Offset(-2, -2),
-                                      color: Color.fromARGB(255, 209, 208, 208),
-                                      blurRadius: 8,
-                                    ),
-                                  ],
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      commentsPresenter
-                                          .changeCommentIsSelected(index);
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            comment.comment,
-                                            style: const TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Checkbox(
-                                          semanticLabel: comment.comment,
-                                          value: comment.selected,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              commentsPresenter
-                                                  .changeCommentIsSelected(
-                                                      index);
-                                            });
-                                          },
-                                        ),
-                                        IconButton(
-                                          onPressed: () async {
-                                            notificationDialog(
-                                                context: context,
-                                                titleMessage:
-                                                    "Excluir comentário?",
-                                                content: null,
-                                                onPress: () async {
-                                                  await commentsPresenter
-                                                      .deleteComment(index);
-                                                  setState(() {});
-                                                });
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        const CommentsList(),
                     ],
                   ),
                 );

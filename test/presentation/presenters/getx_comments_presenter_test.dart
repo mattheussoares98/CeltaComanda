@@ -259,4 +259,45 @@ void main() {
 
     expect(sut.loadedComments[0].selected, false);
   });
+
+  group("Delete comment", () {
+    test("Should delete commentViewModel correctly", () async {
+      await sut.addComment(EntityFactory.makeCommentViewModel());
+
+      expect(sut.loadedComments.length, 1);
+
+      await sut.deleteComment(0);
+      expect(sut.loadedComments.length, 0);
+    });
+
+    test("Should call comments.add when delete comment", () async {
+      await sut.addComment(EntityFactory.makeCommentViewModel());
+
+      await sut.deleteComment(0);
+
+      verify(() => comments.add([])).called(
+          2); //2 só porque chama uma vez quando adiciona e preciso adicionar um pra conseguir remover depois
+    });
+
+    test("Should emit correct values on delete comment success", () async {
+      expectLater(
+          sut.isLoadingStream, emitsInAnyOrder([true, false, true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.addComment(newComment);
+      await sut.deleteComment(0);
+    });
+
+    test("Should emit correct values on delete comment throws", () async {
+      comments.mockAddCommentsError();
+
+      expectLater(
+          sut.isLoadingStream, emitsInAnyOrder([true, false, true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
+
+      await sut.addComment(newComment);
+      await sut.deleteComment(0);
+    });
+  });
 }

@@ -120,4 +120,19 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     }
     notifyListeners();
   }
+
+  @override
+  Future<void> deleteComment(int index) async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      _loadedComments.removeAt(index);
+      await comments.add(_loadedComments);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally{
+      isLoading = false;
+    }
+  }
 }

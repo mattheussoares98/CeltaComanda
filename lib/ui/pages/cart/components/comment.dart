@@ -7,7 +7,7 @@ import '../../pages.dart';
 class Comment extends StatefulWidget {
   final String? comments;
   final String productName;
-  final Function() updateComment;
+  final Future Function() updateComment;
 
   const Comment({
     required this.comments,

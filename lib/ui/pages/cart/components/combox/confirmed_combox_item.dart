@@ -31,6 +31,8 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -106,7 +108,14 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
               Comment(
                 comments: combox.commentFather,
                 productName: combox.ChildName!,
-                updateComment: () {},
+                updateComment: () async {
+                  await cartPresenter.updateCommentOfCombox(
+                    indexOfCombox: widget.indexOfConfirmedCombox,
+                    indexOfProduct: productIndex,
+                    newComment:
+                        commentsPresenter.getConcatenateSelectedComments(),
+                  );
+                },
               ),
             ],
           ),

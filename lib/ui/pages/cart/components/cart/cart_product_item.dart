@@ -109,8 +109,8 @@ class _CartProductItemState extends State<CartProductItem> {
           Comment(
             comments: widget.cartProduct.Comments,
             productName: widget.cartProduct.Product.Name,
-            updateComment: () {
-              cartPresenter.updateCommentOfProductCart(
+            updateComment: () async {
+              await cartPresenter.updateCommentOfProductCart(
                 index: widget.index,
                 newComment: commentsPresenter.getConcatenateSelectedComments(),
               );

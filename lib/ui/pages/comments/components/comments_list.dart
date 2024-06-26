@@ -13,6 +13,8 @@ class CommentsList extends StatefulWidget {
 }
 
 class _CommentsState extends State<CommentsList> {
+  final iconButtonFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
@@ -72,13 +74,18 @@ class _CommentsState extends State<CommentsList> {
                       },
                     ),
                     IconButton(
+                      focusNode: iconButtonFocusNode,
                       onPressed: () async {
                         notificationDialog(
                             context: context,
                             titleMessage: "Excluir comentário?",
                             content: null,
+                            onCancelPress: () async {
+                              iconButtonFocusNode.requestFocus();
+                            },
                             onPress: () async {
                               await commentsPresenter.deleteComment(index);
+                              iconButtonFocusNode.requestFocus();
                               setState(() {});
                             });
                       },

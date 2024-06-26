@@ -85,7 +85,8 @@ class EntityFactory {
         PackingAbbreviation: faker.randomGenerator.string(10),
       ),
       ProductEntity(
-        IsPromoCombox: faker.randomGenerator.boolean(),
+        IsPromoCombox:
+            isPromoCombox == true ? true : faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(10),
         InternalCodeOnERP: faker.randomGenerator.integer(10),
         InternalCodeOfProductOnERP: faker.randomGenerator.integer(10),

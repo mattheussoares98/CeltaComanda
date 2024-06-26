@@ -89,7 +89,7 @@ void main() {
             ))
         .toList();
     productEan = faker.randomGenerator.integer(13).toString();
-    productEntity = EntityFactory.makeProductsEntitys()[0];
+    productEntity = EntityFactory.makeProductsEntitys(isPromoCombox: false)[0];
     productsViewModel = ProductsViewModel.fromEntity(productEntity);
 
     cartPresenter.saleRequestTempMock =
@@ -580,12 +580,12 @@ void main() {
 
     test('Should clear product quantity when click in other product', () async {
       sut.updateSelectedProduct(productsViewModel);
-      productsViewModel.productQuantity = 2;
-      expect(productsViewModel.productQuantity, 2);
+      productsViewModel.productQuantity = 2.0;
+      expect(productsViewModel.productQuantity, 2.0);
 
       sut.updateSelectedProduct(null);
       sut.updateSelectedProduct(productsViewModel);
-      expect(productsViewModel.productQuantity, 1);
+      expect(productsViewModel.productQuantity, 1.0);
     });
 
     test('Should clear selected product if click in combox product', () async {

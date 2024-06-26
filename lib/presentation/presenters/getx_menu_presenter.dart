@@ -243,7 +243,8 @@ class GetxMenuPresenter extends GetxController
 
   @override
   void updateSelectedProduct(ProductsViewModel? selectedProduct) {
-    _selectedProduct.value?.productQuantity = 1;
+    selectedProduct?.productQuantity = 1;
+
     if (_selectedProduct.value == selectedProduct) {
       _selectedProduct.value = null;
     } else if (selectedProduct?.IsPromoCombox == "true") {

@@ -123,9 +123,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              Builder(builder: (context) {
-                return Text(cartPresenter.totalSaleRequestTempPrice);
-              }),
+              Text(cartPresenter.totalSaleRequestTempPrice),
             ],
           ),
         ),

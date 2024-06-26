@@ -36,6 +36,14 @@ class _PaymentPageState extends State<PaymentPage>
     HomePresenter homePresenter = Provider.of(context, listen: true);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription =
+        handleLoading(context, paymentPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, paymentPresenter.mainErrorStream);
+
     return Scaffold(
       drawer: drawer(
         context: context,
@@ -48,17 +56,15 @@ class _PaymentPageState extends State<PaymentPage>
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
           backgroundColor: const Color(0xFFF1F5F8),
-          leading: Builder(builder: (context) {
-            return IconButton(
-              icon: Icon(
-                Icons.exit_to_app,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          }),
+          leading: IconButton(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
           actions: [
             SearchCommandIcon(
               loadCommandData: () async {
@@ -98,21 +104,11 @@ class _PaymentPageState extends State<PaymentPage>
         ),
       ),
       body: SingleChildScrollView(
-        child: Builder(
-          builder: (context) {
-            loadingSubscription?.cancel();
-            mainErrorSubscription?.cancel();
-
-            loadingSubscription =
-                handleLoading(context, paymentPresenter.isLoadingStream);
-            mainErrorSubscription =
-                handleMainError(context, paymentPresenter.mainErrorStream);
-
-            if (printedProductsPresenter.printedProducts == null ||
+        child: printedProductsPresenter.printedProducts == null ||
                 printedProductsPresenter.printedProducts!.TotalLiquid
                         .toDouble() ==
-                    0) {
-              return SearchDataByCommandNumber(
+                    0
+            ? SearchDataByCommandNumber(
                 homePresenter: homePresenter,
                 emptyMessage: homePresenter.commandNumber != null
                     ? "Essa comanda não possui valores em aberto"
@@ -133,12 +129,8 @@ class _PaymentPageState extends State<PaymentPage>
                     );
                   }
                 },
-              );
-            } else {
-              double totalAmmount = printedProductsPresenter
-                  .printedProducts!.TotalLiquid
-                  .toDouble();
-              return SizedBox(
+              )
+            : SizedBox(
                 height: MediaQuery.of(context).size.height -
                     AppBar().preferredSize.height,
                 width: double.infinity,
@@ -158,7 +150,7 @@ class _PaymentPageState extends State<PaymentPage>
                         ),
                       ),
                     Text(
-                      "Total: ${totalAmmount.toString().toBrazilianNumber()}"
+                      "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
                           .addBrazilianCoin(),
                       style: const TextStyle(
                         fontSize: 25,
@@ -182,7 +174,9 @@ class _PaymentPageState extends State<PaymentPage>
                     ElevatedButton(
                       onPressed: () async {
                         await paymentPresenter.payWithCredit(
-                          longAmountValue: totalAmmount,
+                          longAmountValue: printedProductsPresenter
+                              .printedProducts!.TotalLiquid
+                              .toDouble(),
                           portionQuantity: 1,
                         );
                       },
@@ -191,7 +185,9 @@ class _PaymentPageState extends State<PaymentPage>
                     ElevatedButton(
                       onPressed: () async {
                         await paymentPresenter.payWithCreditPortion(
-                          longAmountValue: totalAmmount,
+                          longAmountValue: printedProductsPresenter
+                              .printedProducts!.TotalLiquid
+                              .toDouble(),
                           portionQuantity: 2,
                         );
                       },
@@ -200,7 +196,9 @@ class _PaymentPageState extends State<PaymentPage>
                     ElevatedButton(
                       onPressed: () async {
                         await paymentPresenter.payWithDebit(
-                          longAmountValue: totalAmmount,
+                          longAmountValue: printedProductsPresenter
+                              .printedProducts!.TotalLiquid
+                              .toDouble(),
                           portionQuantity: 1,
                         );
                       },
@@ -209,7 +207,9 @@ class _PaymentPageState extends State<PaymentPage>
                     ElevatedButton(
                       onPressed: () async {
                         await paymentPresenter.payWithPix(
-                          longAmountValue: totalAmmount,
+                          longAmountValue: printedProductsPresenter
+                              .printedProducts!.TotalLiquid
+                              .toDouble(),
                           portionQuantity: 1,
                         );
                       },
@@ -217,10 +217,7 @@ class _PaymentPageState extends State<PaymentPage>
                     ),
                   ],
                 ),
-              );
-            }
-          },
-        ),
+              ),
       ),
     );
   }

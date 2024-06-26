@@ -49,42 +49,41 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) {
-          loadingSubscription =
-              handleLoading(context, widget.presenter.isLoadingStream);
-          mainErrorSubscription =
-              handleMainError(context, widget.presenter.mainErrorStream);
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
 
-          return GestureDetector(
-            onTap: () => hideKeyboard(context),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const LoginHeader(),
-                  Headline1(text: R.string.validateEnterprise),
-                  Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: ListenableProvider(
-                      create: (_) => widget.presenter,
-                      child: const Form(
-                        child: Column(
-                          children: [
-                            EnterpriseInput(),
-                            SizedBox(height: 10),
-                            EnterpriseValidateButton(),
-                          ],
-                        ),
-                      ),
+    loadingSubscription =
+        handleLoading(context, widget.presenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, widget.presenter.mainErrorStream);
+
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => hideKeyboard(context),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const LoginHeader(),
+              Headline1(text: R.string.validateEnterprise),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: ListenableProvider(
+                  create: (_) => widget.presenter,
+                  child: const Form(
+                    child: Column(
+                      children: [
+                        EnterpriseInput(),
+                        SizedBox(height: 10),
+                        EnterpriseValidateButton(),
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -37,6 +37,13 @@ class _CartPageState extends State<CartPage>
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription = handleLoading(context, cartPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, cartPresenter.mainErrorStream);
+
     return Scaffold(
       drawer: drawer(
         context: context,
@@ -49,17 +56,15 @@ class _CartPageState extends State<CartPage>
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
           backgroundColor: const Color(0xFFF1F5F8),
-          leading: Builder(builder: (context) {
-            return IconButton(
-              icon: Icon(
-                Icons.exit_to_app,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          }),
+          leading: IconButton(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
         ),
       ),
       body: Stack(
@@ -70,19 +75,9 @@ class _CartPageState extends State<CartPage>
             child: Padding(
               padding: const EdgeInsets.only(bottom: 45.0),
               child: SingleChildScrollView(
-                child: Builder(
-                  builder: (context) {
-                    loadingSubscription?.cancel();
-                    mainErrorSubscription?.cancel();
-
-                    loadingSubscription =
-                        handleLoading(context, cartPresenter.isLoadingStream);
-                    mainErrorSubscription =
-                        handleMainError(context, cartPresenter.mainErrorStream);
-
-                    if (cartPresenter.cartProducts.isNotEmpty == true ||
-                        cartPresenter.confirmedCombox.isNotEmpty == true) {
-                      return Column(
+                child: cartPresenter.cartProducts.isNotEmpty == true ||
+                        cartPresenter.confirmedCombox.isNotEmpty == true
+                    ? Column(
                         children: [
                           if (cartPresenter.cartProducts.isNotEmpty)
                             CartProductsItems(
@@ -93,38 +88,35 @@ class _CartPageState extends State<CartPage>
                               confirmedsCombox: cartPresenter.confirmedCombox,
                             ),
                         ],
-                      );
-                    }
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height -
-                          AppBar().preferredSize.height -
-                          kBottomNavigationBarHeight,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: FittedBox(
-                                child: Text(
-                              "O carrinho está vazio",
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            )),
-                          ),
-                          Image.asset(
-                            key: const Key("emptyCartKey"),
-                            "lib/ui/assets/images/empty_cart.jpg",
-                            width: double.infinity,
-                          ),
-                        ],
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            AppBar().preferredSize.height -
+                            kBottomNavigationBarHeight,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: FittedBox(
+                                  child: Text(
+                                "O carrinho está vazio",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              )),
+                            ),
+                            Image.asset(
+                              key: const Key("emptyCartKey"),
+                              "lib/ui/assets/images/empty_cart.jpg",
+                              width: double.infinity,
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                ),
               ),
             ),
           ),

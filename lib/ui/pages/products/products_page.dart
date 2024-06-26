@@ -55,6 +55,14 @@ class _ProductsPageState extends State<ProductsPage>
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ProductsPresenter productsPresenter = Provider.of(context);
 
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription =
+        handleLoading(context, productsPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, productsPresenter.mainErrorStream);
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -75,35 +83,26 @@ class _ProductsPageState extends State<ProductsPage>
       ),
       body: SingleChildScrollView(
         primary: false,
-        child: Builder(
-          builder: (context) {
-            loadingSubscription =
-                handleLoading(context, productsPresenter.isLoadingStream);
-            mainErrorSubscription =
-                handleMainError(context, productsPresenter.mainErrorStream);
-
-            return StreamBuilder<List<ProductsViewModel>>(
-                stream: productsPresenter.productsStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return ReloadScreen(
-                      error: '${snapshot.error}',
-                      reload: () async => await productsPresenter
-                          .load(expansibleGroupEntity!.ExpansibleGroupId),
-                    );
-                  }
-                  // if (snapshot.hasData) {
-                  //   return ProductsItems(
-                  //     products: snapshot.data!,
-                  //     itensPerLine: 1,
-                  //     updateSelectedProductWhenClick: false,
-                  //     selectedProduct: null,
-                  //   );
-                  // }
-                  return const SizedBox(height: 0);
-                });
-          },
-        ),
+        child: StreamBuilder<List<ProductsViewModel>>(
+            stream: productsPresenter.productsStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return ReloadScreen(
+                  error: '${snapshot.error}',
+                  reload: () async => await productsPresenter
+                      .load(expansibleGroupEntity!.ExpansibleGroupId),
+                );
+              }
+              // if (snapshot.hasData) {
+              //   return ProductsItems(
+              //     products: snapshot.data!,
+              //     itensPerLine: 1,
+              //     updateSelectedProductWhenClick: false,
+              //     selectedProduct: null,
+              //   );
+              // }
+              return const SizedBox(height: 0);
+            }),
       ),
     );
   }

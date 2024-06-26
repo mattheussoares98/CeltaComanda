@@ -50,6 +50,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
   @override
   void dispose() {
     super.dispose();
+
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
   }
@@ -59,42 +60,41 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription =
+        handleLoading(context, productCompositionPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, productCompositionPresenter.mainErrorStream);
+
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(child: Text(product?.Name ?? "")),
       ),
-      body: Builder(
-        builder: (context) {
-          loadingSubscription = handleLoading(
-              context, productCompositionPresenter.isLoadingStream);
-          mainErrorSubscription = handleMainError(
-              context, productCompositionPresenter.mainErrorStream);
-
-          return StreamBuilder<List<ProductCompositionViewModel>>(
-              stream: productCompositionPresenter.productsCompositionStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return ReloadScreen(
-                    error: '${snapshot.error}',
-                    reload: () async => await productCompositionPresenter
-                        .loadProductComposition(
-                      url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-                      enterpriseId: EnterpriseDataBuilder
-                          .enterpriseDataEntity!.enterpriseId!,
-                      internalCodeOnErp: int.parse(product!.InternalCodeOnERP!),
-                    ),
-                  );
-                }
-                if (snapshot.hasData) {
-                  return Composition(
-                    product: product!,
-                    productsCompositions: snapshot.data!,
-                  );
-                }
-                return const SizedBox(height: 0);
-              });
-        },
-      ),
+      body: StreamBuilder<List<ProductCompositionViewModel>>(
+          stream: productCompositionPresenter.productsCompositionStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return ReloadScreen(
+                error: '${snapshot.error}',
+                reload: () async =>
+                    await productCompositionPresenter.loadProductComposition(
+                  url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+                  enterpriseId:
+                      EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                  internalCodeOnErp: int.parse(product!.InternalCodeOnERP!),
+                ),
+              );
+            }
+            if (snapshot.hasData) {
+              return Composition(
+                product: product!,
+                productsCompositions: snapshot.data!,
+              );
+            }
+            return const SizedBox(height: 0);
+          }),
     );
   }
 }

@@ -53,11 +53,17 @@ class _MenuPageState extends State<MenuPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter =
-        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
       drawer: drawer(
@@ -70,17 +76,15 @@ class _MenuPageState extends State<MenuPage>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
-          leading: Builder(builder: (context) {
-            return IconButton(
-              icon: Icon(
-                Icons.exit_to_app,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          }),
+          leading: IconButton(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
           backgroundColor: const Color(0xFFF1F5F8),
           actions: [
             IconButton(
@@ -96,61 +100,49 @@ class _MenuPageState extends State<MenuPage>
           ],
         ),
       ),
-      body: Builder(
-        builder: (context) {
-          loadingSubscription?.cancel();
-          mainErrorSubscription?.cancel();
-
-          loadingSubscription =
-              handleLoading(context, menuPresenter.isLoadingStream);
-          mainErrorSubscription =
-              handleMainError(context, menuPresenter.mainErrorStream);
-
-          return StreamBuilder<
-              List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
-            stream: menuPresenter.menuStream,
-            builder: (context, snapshot) {
-              if (menuPresenter.loadedMenu.isEmpty) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height -
-                      AppBar().preferredSize.height,
-                  child: Center(
-                    child: TextButton(
-                      onPressed: () async {
-                        _loadGroupsAndProducts(menuPresenter);
-                      },
-                      child: const Text("Carregar menu"),
-                    ),
-                  ),
-                );
-              } else {
-                return StreamBuilder<int>(
-                    stream: menuPresenter.indexOfSelectedGroupStream,
-                    builder: (context, selectedGroupIndex) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height -
-                            AppBar().preferredSize.height -
-                            kBottomNavigationBarHeight,
-                        child: StreamBuilder<ProductsViewModel?>(
-                            stream: menuPresenter.selectedProductStream,
-                            builder: (context, selectedProduct) {
-                              return Column(
-                                children: [
-                                  GroupsAndProducts(
-                                    selectedIndex: selectedGroupIndex.data,
-                                    selectedProduct: selectedProduct.data,
-                                  ),
-                                  InsertProduct(
-                                    selectedProduct: selectedProduct.data,
-                                  ),
-                                ],
-                              );
-                            }),
-                      );
-                    });
-              }
-            },
-          );
+      body: StreamBuilder<
+          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
+        stream: menuPresenter.menuStream,
+        builder: (context, snapshot) {
+          if (menuPresenter.loadedMenu.isEmpty) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height -
+                  AppBar().preferredSize.height,
+              child: Center(
+                child: TextButton(
+                  onPressed: () async {
+                    _loadGroupsAndProducts(menuPresenter);
+                  },
+                  child: const Text("Carregar menu"),
+                ),
+              ),
+            );
+          } else {
+            return StreamBuilder<int>(
+                stream: menuPresenter.indexOfSelectedGroupStream,
+                builder: (context, selectedGroupIndex) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height -
+                        AppBar().preferredSize.height -
+                        kBottomNavigationBarHeight,
+                    child: StreamBuilder<ProductsViewModel?>(
+                        stream: menuPresenter.selectedProductStream,
+                        builder: (context, selectedProduct) {
+                          return Column(
+                            children: [
+                              GroupsAndProducts(
+                                selectedIndex: selectedGroupIndex.data,
+                                selectedProduct: selectedProduct.data,
+                              ),
+                              InsertProduct(
+                                selectedProduct: selectedProduct.data,
+                              ),
+                            ],
+                          );
+                        }),
+                  );
+                });
+          }
         },
       ),
     );

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/mixins/mixins.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,15 +20,16 @@ class InsertProduct extends StatefulWidget {
   State<InsertProduct> createState() => _InsertProductState();
 }
 
-class _InsertProductState extends State<InsertProduct> {
-  void addProductInCart({
+class _InsertProductState extends State<InsertProduct>
+    with LoadingManager, UIErrorManager {
+  Future<void> addProductInCart({
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
     try {
-      cartPresenter.addProductInCart(
+      await cartPresenter.addProductInCart(
         commentsPresenter: commentsPresenter,
         product: CartProductEntity(
           Product: widget.selectedProduct!.toEntity(),
@@ -57,12 +61,30 @@ class _InsertProductState extends State<InsertProduct> {
     });
   }
 
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: true);
+
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription = handleLoading(context, cartPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, cartPresenter.mainErrorStream);
 
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -136,8 +158,8 @@ class _InsertProductState extends State<InsertProduct> {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(),
-                    onPressed: () {
-                      addProductInCart(
+                    onPressed: () async {
+                      await addProductInCart(
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,
                         cartPresenter: cartPresenter,

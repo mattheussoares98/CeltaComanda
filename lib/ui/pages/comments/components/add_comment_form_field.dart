@@ -12,35 +12,78 @@ class AddCommentFormField extends StatefulWidget {
 
 class _AddCommentFormFieldState extends State<AddCommentFormField> {
   final commentsController = TextEditingController();
+  final key = GlobalKey<FormState>();
+  final focusNode = FocusNode();
 
   @override
   void dispose() {
     super.dispose();
 
     commentsController.dispose();
+    focusNode.dispose();
+  }
+
+  Future<void> _addComment(CommentsPresenter commentsPresenter) async {
+    bool? isValid = key.currentState?.validate();
+
+    if (isValid != true) {
+      await Future.delayed(Duration.zero);
+      if (!focusNode.hasFocus) {
+        focusNode.requestFocus();
+      }
+      return;
+    }
+
+    await commentsPresenter.addComment(
+      CommentViewModel(
+        comment: commentsController.text,
+        selected: true,
+      ),
+    );
+
+    commentsController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
-    return Form(
-      child: TextFormField(
-        controller: commentsController,
-        decoration: const InputDecoration(
-            hintText: "Adicionar comentário",
-            labelText: "Adicionar comentário"),
-        onFieldSubmitted: (value) async {
-          await commentsPresenter.addComment(
-            CommentViewModel(
-              comment: commentsController.text,
-              selected: true,
+    return Row(
+      children: [
+        Expanded(
+          child: Form(
+            key: key,
+            child: TextFormField(
+              focusNode: focusNode,
+              controller: commentsController,
+              validator: (value) {
+                if (value?.isEmpty == true) {
+                  return "Digite algo";
+                } else if (value!.length < 3) {
+                  return "Comentário muito curto";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                hintText: "Novo comentário",
+                labelText: "Novo comentário",
+              ),
+              onFieldSubmitted: (value) async {
+                await _addComment(commentsPresenter);
+              },
             ),
-          );
-
-          commentsController.clear();
-        },
-      ),
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            await _addComment(commentsPresenter);
+          },
+          child: const Text(
+            "Adicionar",
+            style: TextStyle(),
+          ),
+        )
+      ],
     );
   }
 }

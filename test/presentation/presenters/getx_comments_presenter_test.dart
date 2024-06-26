@@ -15,7 +15,7 @@ void main() {
 
   late CommentsSpy comments;
 
-  late CommentViewModel newComment;
+  late CommentViewModel newUnselectedComment;
   late List<CommentViewModel> localComments;
 
   void initUseCases() {
@@ -27,8 +27,8 @@ void main() {
   }
 
   void initEntitys() {
-    newComment = EntityFactory.makeCommentViewModel();
-    localComments = [newComment];
+    newUnselectedComment = EntityFactory.makeCommentViewModel();
+    localComments = [newUnselectedComment];
   }
 
   void mockSuccess() {
@@ -51,7 +51,7 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
     expectLater(sut.mainErrorStream, emits(null));
 
-    await sut.addComment(newComment);
+    await sut.addComment(newUnselectedComment);
   });
 
   test("Should emit correct values on add new local comment throws", () async {
@@ -61,19 +61,19 @@ void main() {
     expectLater(
         sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
 
-    await sut.addComment(newComment);
+    await sut.addComment(newUnselectedComment);
   });
 
   test("Should call addNewComment with correct comments", () async {
-    await sut.addComment(newComment);
+    await sut.addComment(newUnselectedComment);
 
     verify(() => comments.add(localComments)).called(1);
   });
 
   test("Should add newComment correctly in usedComments", () async {
-    await sut.addComment(newComment);
+    await sut.addComment(newUnselectedComment);
 
-    expect(sut.loadedComments, [newComment]);
+    expect(sut.loadedComments, [newUnselectedComment]);
   });
 
   test("Should not add newComment if already exists", () async {
@@ -83,6 +83,13 @@ void main() {
     await sut.addComment(second);
 
     expect(sut.loadedComments.length, 1);
+  });
+
+  test("Should enable selected comment if try add equal comment", () async {
+    await sut.addComment(newUnselectedComment);
+    await sut.addComment(newUnselectedComment);
+
+    expect(sut.loadedComments[0].selected, true);
   });
 
   test("Should emit correct values on loadLocalComments succeeds", () async {
@@ -113,7 +120,7 @@ void main() {
 
   test("Should update usedComments correctly on LoadComments throws", () async {
     comments.mockLoadCommentsError();
-    await sut.addComment(newComment);
+    await sut.addComment(newUnselectedComment);
 
     await sut.loadComments();
 
@@ -121,7 +128,7 @@ void main() {
   });
 
   test("Should update comment isSelected correctly", () async {
-    await sut.addComment(newComment);
+    await sut.addComment(newUnselectedComment);
     expect(sut.loadedComments[0].selected, false);
 
     sut.changeCommentIsSelected(0);
@@ -175,9 +182,9 @@ void main() {
   test(
       "Should update correctly hasSelectedComments when call unselectAllComments",
       () async {
-    newComment.selected = true;
-    await sut.addComment(newComment);
-    await sut.addComment(newComment);
+    newUnselectedComment.selected = true;
+    await sut.addComment(newUnselectedComment);
+    await sut.addComment(newUnselectedComment);
 
     sut.updateHasSelectedComments();
     expect(sut.hasSelectedComments, true);
@@ -218,7 +225,7 @@ void main() {
   test(
       "Should return null in getConcatenateSelectedComments if dont have selected comments",
       () async {
-    sut.addComment(newComment);
+    sut.addComment(newUnselectedComment);
 
     final concatenate = sut.getConcatenateSelectedComments();
 
@@ -286,7 +293,7 @@ void main() {
           sut.isLoadingStream, emitsInAnyOrder([true, false, true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.addComment(newComment);
+      await sut.addComment(newUnselectedComment);
       await sut.deleteComment(0);
     });
 
@@ -298,7 +305,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
 
-      await sut.addComment(newComment);
+      await sut.addComment(newUnselectedComment);
       await sut.deleteComment(0);
     });
   });

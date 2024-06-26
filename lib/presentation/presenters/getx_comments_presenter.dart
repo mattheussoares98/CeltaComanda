@@ -18,9 +18,12 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     mainError = null;
 
     try {
-      if (_loadedComments
-          .where((comment) => comment.comment == newComment.comment)
-          .isNotEmpty) {
+      int indexOfEqualComment = _loadedComments
+          .indexWhere((element) => element.comment == newComment.comment);
+
+      if (indexOfEqualComment != -1) {
+        _loadedComments[indexOfEqualComment].selected = true;
+        notifyListeners();
         return;
       }
 

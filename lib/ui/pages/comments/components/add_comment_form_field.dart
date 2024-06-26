@@ -43,7 +43,9 @@ class _AddCommentFormFieldState extends State<AddCommentFormField> {
 
     commentsController.clear();
     Future.delayed(Duration.zero, () {
-      FocusScope.of(context).unfocus();
+      if (focusNode.hasFocus) {
+        focusNode.unfocus();
+      }
     });
   }
 

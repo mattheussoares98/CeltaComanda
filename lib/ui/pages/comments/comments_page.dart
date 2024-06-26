@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:provider/provider.dart';
 
@@ -173,6 +174,24 @@ class _CommentsPageState extends State<CommentsPage>
                                                       index);
                                             });
                                           },
+                                        ),
+                                        IconButton(
+                                          onPressed: () async {
+                                            notificationDialog(
+                                                context: context,
+                                                titleMessage:
+                                                    "Excluir comentário?",
+                                                content: null,
+                                                onPress: () async {
+                                                  await commentsPresenter
+                                                      .deleteComment(index);
+                                                  setState(() {});
+                                                });
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
                                         ),
                                       ],
                                     ),

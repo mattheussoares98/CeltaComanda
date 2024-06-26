@@ -17,7 +17,7 @@ class _CommentsState extends State<CommentsList> {
 
   @override
   Widget build(BuildContext context) {
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context);
 
     return ListView.builder(
       shrinkWrap: true,

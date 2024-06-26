@@ -77,10 +77,12 @@ void main() {
   });
 
   test("Should not add newComment if already exists", () async {
-    await sut.addComment(newComment);
-    await sut.addComment(newComment);
+    final first = CommentViewModel(comment: "comment", selected: false);
+    final second = CommentViewModel(comment: "comment", selected: true);
+    await sut.addComment(first);
+    await sut.addComment(second);
 
-    expect(sut.loadedComments, [newComment]);
+    expect(sut.loadedComments.length, 1);
   });
 
   test("Should emit correct values on loadLocalComments succeeds", () async {

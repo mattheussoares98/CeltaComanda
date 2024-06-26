@@ -18,7 +18,9 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     mainError = null;
 
     try {
-      if (_loadedComments.contains(newComment)) {
+      if (_loadedComments
+          .where((comment) => comment.comment == newComment.comment)
+          .isNotEmpty) {
         return;
       }
 
@@ -131,7 +133,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       await comments.add(_loadedComments);
     } catch (e) {
       mainError = UIError.unexpected;
-    } finally{
+    } finally {
       isLoading = false;
     }
   }

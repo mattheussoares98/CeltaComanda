@@ -36,44 +36,30 @@ class _CommentsPageState extends State<CommentsPage>
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context);
 
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+    loadingSubscription =
+        handleLoading(context, commentsPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, commentsPresenter.mainErrorStream);
+
     return Scaffold(
-      body: Builder(
-        builder: (context) {
-          loadingSubscription =
-              handleLoading(context, commentsPresenter.isLoadingStream);
-          mainErrorSubscription =
-              handleMainError(context, commentsPresenter.mainErrorStream);
-
-          return SingleChildScrollView(
-            child: Builder(
-              builder: (context) {
-                loadingSubscription?.cancel();
-                mainErrorSubscription?.cancel();
-
-                loadingSubscription =
-                    handleLoading(context, commentsPresenter.isLoadingStream);
-                mainErrorSubscription =
-                    handleMainError(context, commentsPresenter.mainErrorStream);
-
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 15, 8, 0),
-                  child: Column(
-                    children: [
-                      TitlePage(
-                        selectedProductName: widget.selectedProductName,
-                      ),
-                      const SizedBox(height: 15),
-                      const AddCommentFormField(),
-                      const SizedBox(height: 8),
-                      if (commentsPresenter.loadedComments.isNotEmpty)
-                        const CommentsList(),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 15, 8, 0),
+          child: Column(
+            children: [
+              TitlePage(
+                selectedProductName: widget.selectedProductName,
+              ),
+              const SizedBox(height: 15),
+              const AddCommentFormField(),
+              const SizedBox(height: 8),
+              if (commentsPresenter.loadedComments.isNotEmpty)
+                const CommentsList(),
+            ],
+          ),
+        ),
       ),
     );
   }

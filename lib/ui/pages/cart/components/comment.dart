@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
+import '../../pages.dart';
 
 class Comment extends StatefulWidget {
   final String? comments;
+  final String productName;
+  final Function() updateComment;
 
   const Comment({
     required this.comments,
+    required this.productName,
+    required this.updateComment,
     super.key,
   });
 
@@ -15,22 +21,40 @@ class Comment extends StatefulWidget {
 }
 
 class _CommentState extends State<Comment> {
-  FocusNode commentsFocusNode = FocusNode();
+  Future<void> onTapCommentIcon(CommentsPresenter commentsPresenter) async {
+    commentsPresenter.updateSelectedComments(widget.comments);
 
-  void onTapCommentIcon() {}
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.9,
+              child: CommentsPage(
+                selectedProductName: widget.productName,
+              ),
+            ),
+          );
+        });
 
-  @override
-  void dispose() {
-    super.dispose();
-    commentsFocusNode.dispose();
+    widget.updateComment();
   }
 
   @override
   Widget build(BuildContext context) {
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+
     return Column(
       children: [
         GestureDetector(
-          onTap: onTapCommentIcon,
+          onTap: () async {
+            await onTapCommentIcon(commentsPresenter);
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -51,17 +75,14 @@ class _CommentState extends State<Comment> {
                   ),
                 ),
               const SizedBox(width: 10),
-              GestureDetector(
-                onTap: onTapCommentIcon,
-                child: Row(
-                  children: [
-                    Icon(
-                      color: Theme.of(context).colorScheme.primary,
-                      widget.comments == null ? Icons.add_comment : Icons.edit,
-                      size: 25,
-                    ),
-                  ],
-                ),
+              Row(
+                children: [
+                  Icon(
+                    color: Theme.of(context).colorScheme.primary,
+                    widget.comments == null ? Icons.add_comment : Icons.edit,
+                    size: 25,
+                  ),
+                ],
               ),
             ],
           ),

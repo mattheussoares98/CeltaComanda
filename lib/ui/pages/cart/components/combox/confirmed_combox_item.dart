@@ -105,6 +105,8 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
               ),
               Comment(
                 comments: combox.commentFather,
+                productName: combox.ChildName!,
+                updateComment: () {},
               ),
             ],
           ),

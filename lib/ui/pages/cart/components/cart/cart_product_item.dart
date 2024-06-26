@@ -47,6 +47,7 @@ class _CartProductItemState extends State<CartProductItem> {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
@@ -107,6 +108,13 @@ class _CartProductItemState extends State<CartProductItem> {
           const SizedBox(height: 8),
           Comment(
             comments: widget.cartProduct.Comments,
+            productName: widget.cartProduct.Product.Name,
+            updateComment: () {
+              cartPresenter.updateCommentOfProductCart(
+                index: widget.index,
+                newComment: commentsPresenter.getConcatenateSelectedComments(),
+              );
+            },
           ),
         ],
       ),

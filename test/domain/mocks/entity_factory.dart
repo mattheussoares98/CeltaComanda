@@ -18,8 +18,7 @@ class EntityFactory {
   static List<ProductEntity> makeProductsEntitys({bool? isPromoCombox}) {
     return [
       ProductEntity(
-        IsPromoCombox:
-            isPromoCombox == true ? true : faker.randomGenerator.boolean(),
+        IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(10),
         InternalCodeOnERP: faker.randomGenerator.integer(10),
         InternalCodeOfProductOnERP: faker.randomGenerator.integer(10),
@@ -85,8 +84,7 @@ class EntityFactory {
         PackingAbbreviation: faker.randomGenerator.string(10),
       ),
       ProductEntity(
-        IsPromoCombox:
-            isPromoCombox == true ? true : faker.randomGenerator.boolean(),
+        IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(10),
         InternalCodeOnERP: faker.randomGenerator.integer(10),
         InternalCodeOfProductOnERP: faker.randomGenerator.integer(10),

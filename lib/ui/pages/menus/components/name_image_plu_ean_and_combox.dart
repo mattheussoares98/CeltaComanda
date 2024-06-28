@@ -43,7 +43,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
         ),
         if (productsViewModel.IsPromoCombox == "true")
           Text(
-            "COMBO",
+            "MONTAR COMBO",
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,

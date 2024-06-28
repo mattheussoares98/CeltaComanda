@@ -52,6 +52,7 @@ class _MenuPageState extends State<MenuPage>
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
@@ -66,6 +67,7 @@ class _MenuPageState extends State<MenuPage>
         handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
+      key: scaffoldKey,
       drawer: drawer(
         context: context,
         menuPresenter: menuPresenter,
@@ -82,7 +84,7 @@ class _MenuPageState extends State<MenuPage>
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              scaffoldKey.currentState?.openDrawer();
             },
           ),
           backgroundColor: const Color(0xFFF1F5F8),

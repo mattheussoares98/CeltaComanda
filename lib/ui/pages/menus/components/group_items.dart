@@ -36,30 +36,30 @@ class _GroupItemsState extends State<GroupItems> {
         itemBuilder: (context, index) {
           final groupViewModel = widget.expansibleGroupsViewModel[index];
 
-          return Container(
-            margin: const EdgeInsets.all(1),
-            height: 70,
-            decoration: BoxDecoration(
-              gradient: widget.selectedIndex == index
-                  ? LinearGradient(
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight,
-                      colors: [
-                        Theme.of(context).primaryColorLight,
-                        Theme.of(context).primaryColor,
-                        Theme.of(context).primaryColorDark,
-                      ],
-                    )
-                  : null,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: FittedBox(
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    presenter.updateIndexOfSelectedGroup(index);
-                  });
-                },
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                presenter.updateIndexOfSelectedGroup(index);
+              });
+            },
+            child: Container(
+              margin: const EdgeInsets.all(1),
+              height: 70,
+              decoration: BoxDecoration(
+                gradient: widget.selectedIndex == index
+                    ? LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          Theme.of(context).primaryColorLight,
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColorDark,
+                        ],
+                      )
+                    : null,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: FittedBox(
                 child: Column(
                   children: [
                     Padding(

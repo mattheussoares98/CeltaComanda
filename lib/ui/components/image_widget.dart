@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../infra/helpers/helperts.dart';
 import '../../main/builders/builders.dart';
 
-class ImageWidget extends StatelessWidget {
+class ImageWidget extends StatefulWidget {
   final String?
       ean; //precisa o ean ou plu pra carregar a imagem do concentrador
   final String plu; //precisa o ean ou plu pra carregar a imagem do concentrador
@@ -60,25 +60,58 @@ class ImageWidget extends StatelessWidget {
   );
 
   @override
+  State<ImageWidget> createState() => _ImageWidgetState();
+}
+
+class _ImageWidgetState extends State<ImageWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 4),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: -0.4, end: 0.4).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: GestureDetector(
-        onTap: !showLargeImageInShowDialog
+        onTap: !widget.showLargeImageInShowDialog
             ? null
             : () {
-                showLargeImage(
+                ImageWidget.showLargeImage(
                   context: context,
-                  ean: ean,
-                  plu: plu,
+                  ean: widget.ean,
+                  plu: widget.plu,
                 );
               },
-        child: _cachedImage(
-          width: width,
-          height: height,
-          ean: ean,
-          plu: plu,
-          customCacheManager: _customCacheManager,
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return FractionalTranslation(
+              translation: Offset(_animation.value, 0),
+              child: _cachedImage(
+                width: widget.width * 1.2, // Aumenta a largura da imagem
+                height: widget.height,
+                ean: widget.ean,
+                plu: widget.plu,
+                customCacheManager: ImageWidget._customCacheManager,
+              ),
+            );
+          },
         ),
       ),
     );

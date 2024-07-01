@@ -42,6 +42,8 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
                   ean: null,
                   plu: widget.father.PluChild!,
                   showLargeImageInShowDialog: true,
+                  height: 150,
+                  width: 150,
                 ),
                 const SizedBox(width: 10),
                 if (widget.father.ChildName != null)

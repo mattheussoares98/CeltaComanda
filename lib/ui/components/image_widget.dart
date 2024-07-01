@@ -138,7 +138,7 @@ Widget _cachedImage({
       return _imageNotExists(height: height, width: width);
     },
     placeholder: (context, url) {
-      return _loadingImage();
+      return _imageNotExists(height: height, width: width);
     },
   );
 }
@@ -147,36 +147,9 @@ Widget _imageNotExists({
   required double height,
   required double width,
 }) {
-  return SizedBox(
+  return Image.asset(
+    "lib/ui/assets/images/imageNotFound.png",
     height: height,
     width: width,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.image_not_supported_outlined,
-          color: Colors.grey[350],
-        ),
-        const FittedBox(
-            child: Padding(
-          padding: EdgeInsets.all(3.0),
-          child: Text(
-            "SEM IMAGEM",
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-        )),
-      ],
-    ),
-  );
-}
-
-Widget _loadingImage() {
-  return const Padding(
-    padding: EdgeInsets.all(8.0),
-    child: CircularProgressIndicator(
-      strokeWidth: 2,
-    ),
   );
 }

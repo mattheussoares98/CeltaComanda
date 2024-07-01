@@ -72,6 +72,8 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
                         ean: null,
                         plu: child!.PluChild!,
                         showLargeImageInShowDialog: true,
+                        height: 150,
+                        width: 150,
                       ),
                       const SizedBox(width: 5),
                       Expanded(

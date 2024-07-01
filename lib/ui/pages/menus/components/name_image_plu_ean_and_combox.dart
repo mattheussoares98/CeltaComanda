@@ -13,43 +13,49 @@ class NameImagePriceAndCombox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Row(
       children: [
-        Text(
-          productsViewModel.Name,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
         ImageWidget(
           ean: productsViewModel.EanCode,
           plu: productsViewModel.PriceLookupCode,
-          height: 40,
-          width: 40,
-          showLargeImageInShowDialog: false,
+          height: 150,
+          width: 150,
+          showLargeImageInShowDialog: true,
         ),
-        Text(
-          productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                productsViewModel.Name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              Text(
+                productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              if (productsViewModel.IsPromoCombox == "true")
+                Text(
+                  "MONTAR COMBO",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+            ],
           ),
         ),
-        if (productsViewModel.IsPromoCombox == "true")
-          Text(
-            "MONTAR COMBO",
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
       ],
     );
   }

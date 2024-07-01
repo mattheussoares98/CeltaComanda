@@ -16,6 +16,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
     return Row(
       children: [
         Expanded(
+          flex: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 2,
           child: ImageWidget(
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
@@ -25,6 +26,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
           ),
         ),
         Expanded(
+          flex: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,

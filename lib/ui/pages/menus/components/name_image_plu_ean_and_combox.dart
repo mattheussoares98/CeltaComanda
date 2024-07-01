@@ -21,7 +21,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
             plu: productsViewModel.PriceLookupCode,
             height: 150,
             width: 150,
-            showLargeImageInShowDialog: true,
+            showLargeImageInShowDialog: false,
           ),
         ),
         Expanded(

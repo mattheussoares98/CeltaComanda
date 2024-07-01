@@ -16,9 +16,23 @@ class GroupItems extends StatefulWidget {
 }
 
 class _GroupItemsState extends State<GroupItems> {
+  bool isLoaded = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!isLoaded) {
+      isLoaded = true;
+      MenuPresenter menuPresenter = Provider.of(context, listen: false);
+      Future.delayed(Duration.zero, () {
+        menuPresenter.updateIndexOfSelectedGroup(0);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    MenuPresenter presenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context);
     return Container(
       width: MediaQuery.of(context).size.width * 0.27,
       height: double.infinity,
@@ -39,7 +53,7 @@ class _GroupItemsState extends State<GroupItems> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                presenter.updateIndexOfSelectedGroup(index);
+                menuPresenter.updateIndexOfSelectedGroup(index);
               });
             },
             child: Container(

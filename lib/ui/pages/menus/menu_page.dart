@@ -46,7 +46,7 @@ class _MenuPageState extends State<MenuPage>
         await _loadGroupsAndProducts(menuPresenter);
         await cartPresenter.getLocalCartProductsData();
         await cartPresenter.getLocalConfirmedsCombox();
-      });
+      },);
     }
   }
 

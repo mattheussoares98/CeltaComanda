@@ -31,120 +31,135 @@ class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
-    return Column(
-      children: [
-        ListView.builder(
-          padding: EdgeInsets.zero,
-          primary: false,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount:
-              widget.isFixedItemInCombox ? 1 : widget.father.childs?.length,
-          itemBuilder: (context, childIndex) {
-            final child = widget.isFixedItemInCombox
-                ? widget.father
-                : widget.father.childs?[childIndex];
 
-            if (widget.isFixedItemInCombox &&
-                widget.father.IsOptionalItem == "false") {
-              //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
-              widget.father.indexOfSelectedChild = childIndex;
-            }
+    final size = MediaQuery.of(context).size;
+    final crossAxisCount =
+        MediaQuery.of(context).orientation == Orientation.landscape &&
+                MediaQuery.of(context).size.width > 900
+            ? 2
+            : 1;
+    final itemWidth = size.width / crossAxisCount;
+    // Define a altura desejada para cada item
+    double itemHeight = 180; // Você pode ajustar esse valor conforme necessário
+    // Calcula o childAspectRatio
+    final childAspectRatio = itemWidth / itemHeight;
 
-            return Column(
-              children: [
-                RadioListTile<int>(
-                  value: childIndex,
-                  groupValue: widget.father.indexOfSelectedChild,
-                  dense: true,
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  toggleable: widget.father.IsOptionalItem == "true",
-                  onChanged: (int? value) {
-                    setState(() {
-                      widget.father.indexOfSelectedChild = value;
-                    });
-                    productCompositionPresenter.updateTotalLiquidCombox(
-                        widget.productsCompositionsViewModel);
-                  },
-                  subtitle: Row(
-                    children: [
-                      ImageWidget(
-                        ean: null,
-                        plu: child!.PluChild!,
-                        showLargeImageInShowDialog: true,
-                        height: 150,
-                        width: 150,
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (child.ChildName != null)
-                              Text(
-                                child.ChildName!,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            if (widget.isFixedItemInCombox)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Quantidade ${child.Quantity.toString().toBrazilianNumber()}",
-                                  ),
-                                  Text(
-                                    productCompositionPresenter
-                                        .calculateTotalLiquid(product: child)
-                                        .toString()
-                                        .toBrazilianNumber()
-                                        .addBrazilianCoin(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (widget.isFixedItemInCombox)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: childAspectRatio,
+      ),
+      padding: EdgeInsets.zero,
+      primary: false,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemCount: widget.isFixedItemInCombox ? 1 : widget.father.childs?.length,
+      itemBuilder: (context, childIndex) {
+        final child = widget.isFixedItemInCombox
+            ? widget.father
+            : widget.father.childs?[childIndex];
+
+        if (widget.isFixedItemInCombox &&
+            widget.father.IsOptionalItem == "false") {
+          //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
+          widget.father.indexOfSelectedChild = childIndex;
+        }
+
+        return SizedBox(
+          height: itemHeight,
+          child: Column(
+            children: [
+              RadioListTile<int>(
+                value: childIndex,
+                groupValue: widget.father.indexOfSelectedChild,
+                dense: true,
+                controlAffinity: ListTileControlAffinity.trailing,
+                toggleable: widget.father.IsOptionalItem == "true",
+                onChanged: (int? value) {
+                  setState(() {
+                    widget.father.indexOfSelectedChild = value;
+                  });
+                  productCompositionPresenter.updateTotalLiquidCombox(
+                      widget.productsCompositionsViewModel);
+                },
+                subtitle: Row(
+                  children: [
+                    ImageWidget(
+                      ean: null,
+                      plu: child!.PluChild!,
+                      showLargeImageInShowDialog: true,
+                      height: 100,
+                      width: 70,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            child.IsOptionalItem == "true"
-                                ? "Item opcional"
-                                : "Item obrigatório",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.green,
-                              fontSize: 17,
+                          if (child.ChildName != null)
+                            Text(
+                              child.ChildName!,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
-                          ),
-                          AddCommentButton(
-                            father: child,
-                            callSetState: () {
-                              setState(() {});
-                            },
-                          ),
+                          if (widget.isFixedItemInCombox)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Quantidade ${child.Quantity.toString().toBrazilianNumber()}",
+                                ),
+                                Text(
+                                  productCompositionPresenter
+                                      .calculateTotalLiquid(product: child)
+                                      .toString()
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
                         ],
                       ),
-                    ],
-                  ),
-              ],
-            );
-          },
-        ),
-      ],
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.isFixedItemInCombox)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          child.IsOptionalItem == "true"
+                              ? "Item opcional"
+                              : "Item obrigatório",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.green,
+                            fontSize: 17,
+                          ),
+                        ),
+                        AddCommentButton(
+                          father: child,
+                          callSetState: () {
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

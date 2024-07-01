@@ -15,12 +15,14 @@ class NameImagePriceAndCombox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ImageWidget(
-          ean: productsViewModel.EanCode,
-          plu: productsViewModel.PriceLookupCode,
-          height: 150,
-          width: 150,
-          showLargeImageInShowDialog: true,
+        Expanded(
+          child: ImageWidget(
+            ean: productsViewModel.EanCode,
+            plu: productsViewModel.PriceLookupCode,
+            height: 150,
+            width: 150,
+            showLargeImageInShowDialog: true,
+          ),
         ),
         Expanded(
           child: Column(

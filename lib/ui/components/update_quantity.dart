@@ -19,7 +19,7 @@ class UpdateQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 1),
+        SizedBox(width: MediaQuery.of(context).size.width > 400 ? 30 : 2),
         GestureDetector(
           onTap: onPressedReduceQuantity,
           child: Icon(

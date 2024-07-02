@@ -26,6 +26,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
                 ean: productsViewModel.EanCode,
                 plu: productsViewModel.PriceLookupCode,
                 productComplement: productsViewModel.ProductComplement,
+                showInsertButton: true,
                 selectedProduct: productsViewModel.IsPromoCombox == "true"
                     ? null
                     : productsViewModel,

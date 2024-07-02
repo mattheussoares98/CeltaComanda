@@ -95,7 +95,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
         handleMainError(context, cartPresenter.mainErrorStream);
 
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
+      padding: const EdgeInsets.only(right: 3.0),
       child: widget.selectedProduct?.productQuantity == null
           ? const TextButton(
               onPressed: null,
@@ -162,7 +162,8 @@ class _InsertProductButtonState extends State<InsertProductButton>
                     addProductQuantity(menuPresenter);
                   },
                 ),
-                const SizedBox(width: 8),
+                SizedBox(
+                    width: MediaQuery.of(context).size.width > 400 ? 30 : 8),
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(),
@@ -174,22 +175,30 @@ class _InsertProductButtonState extends State<InsertProductButton>
                         commentsPresenter: commentsPresenter,
                       );
                     },
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 20,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(child: Text("Inserir")),
-                          Text((widget.selectedProduct!.SaleRetailPraticed
-                                      .toDouble() *
-                                  widget.selectedProduct!.productQuantity
-                                      .toDouble())
-                              .toString()
-                              .toBrazilianNumber()
-                              .addBrazilianCoin()),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              const Icon(Icons.shopping_cart),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width > 400
+                                    ? 30
+                                    : 8,
+                              ),
+                              const Expanded(child: Text("Inserir")),
+                            ],
+                          ),
+                        ),
+                        Text((widget.selectedProduct!.SaleRetailPraticed
+                                    .toDouble() *
+                                widget.selectedProduct!.productQuantity
+                                    .toDouble())
+                            .toString()
+                            .toBrazilianNumber()
+                            .addBrazilianCoin()),
+                      ],
                     ),
                   ),
                 ),

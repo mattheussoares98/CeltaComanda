@@ -136,7 +136,7 @@ class _MenuPageState extends State<MenuPage>
                                 selectedIndex: selectedGroupIndex.data,
                                 selectedProduct: selectedProduct.data,
                               ),
-                              InsertProduct(
+                              InsertProductButton(
                                 selectedProduct: selectedProduct.data,
                                 popScreen: false,
                               ),

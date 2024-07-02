@@ -9,20 +9,20 @@ import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 
-class InsertProduct extends StatefulWidget {
+class InsertProductButton extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
   final bool popScreen;
-  const InsertProduct({
+  const InsertProductButton({
     required this.selectedProduct,
     required this.popScreen,
     super.key,
   });
 
   @override
-  State<InsertProduct> createState() => _InsertProductState();
+  State<InsertProductButton> createState() => _InsertProductButtonState();
 }
 
-class _InsertProductState extends State<InsertProduct>
+class _InsertProductButtonState extends State<InsertProductButton>
     with LoadingManager, UIErrorManager {
   Future<void> addProductInCart({
     required MenuPresenter menuPresenter,

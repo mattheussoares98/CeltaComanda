@@ -79,7 +79,7 @@ class ImageWidget extends StatefulWidget {
                         ),
                       ),
                       if (selectedProduct != null && showInsertButton == true)
-                        InsertProduct(
+                        InsertProductButton(
                           selectedProduct: selectedProduct,
                           popScreen: true,
                         ),

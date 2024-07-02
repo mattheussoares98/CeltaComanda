@@ -181,23 +181,22 @@ class _InsertProductButtonState extends State<InsertProductButton>
                         Expanded(
                           child: Row(
                             children: [
-                              const Icon(Icons.shopping_cart),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width > 400
                                     ? 30
                                     : 8,
                               ),
                               const Expanded(child: Text("Inserir")),
+                              Text((widget.selectedProduct!.SaleRetailPraticed
+                                          .toDouble() *
+                                      widget.selectedProduct!.productQuantity
+                                          .toDouble())
+                                  .toString()
+                                  .toBrazilianNumber()
+                                  .addBrazilianCoin()),
                             ],
                           ),
                         ),
-                        Text((widget.selectedProduct!.SaleRetailPraticed
-                                    .toDouble() *
-                                widget.selectedProduct!.productQuantity
-                                    .toDouble())
-                            .toString()
-                            .toBrazilianNumber()
-                            .addBrazilianCoin()),
                       ],
                     ),
                   ),

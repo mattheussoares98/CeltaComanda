@@ -33,6 +33,9 @@ class App extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     final routeObserver = Get.put<RouteObserver>(RouteObserver<PageRoute>());
 
+    debugPrint("largura: ${MediaQuery.of(context).size.width}");
+    debugPrint("altura: ${MediaQuery.of(context).size.height}");
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

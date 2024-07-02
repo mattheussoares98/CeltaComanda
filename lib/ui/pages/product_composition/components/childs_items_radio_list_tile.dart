@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../ui/components/components.dart';
 import '../../../../ui/pages/pages.dart';
 
-class ItemsRadioListTile extends StatefulWidget {
+class ChildsItemsRadioListTile extends StatefulWidget {
   final ProductCompositionViewModel father;
   final bool isFixedItemInCombox;
   final Function() updateSelectedIndex;
@@ -13,7 +13,7 @@ class ItemsRadioListTile extends StatefulWidget {
   final int selectedIndex;
   final List<ProductCompositionViewModel> productsCompositionsViewModel;
   final int itensPerLine;
-  const ItemsRadioListTile({
+  const ChildsItemsRadioListTile({
     required this.father,
     required this.isFixedItemInCombox,
     required this.updateSelectedIndex,
@@ -25,10 +25,10 @@ class ItemsRadioListTile extends StatefulWidget {
   });
 
   @override
-  State<ItemsRadioListTile> createState() => _ItemsRadioListTileState();
+  State<ChildsItemsRadioListTile> createState() => _ChildsItemsRadioListTileState();
 }
 
-class _ItemsRadioListTileState extends State<ItemsRadioListTile> {
+class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
   @override
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =

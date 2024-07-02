@@ -35,8 +35,6 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -61,74 +59,15 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ImageWidget(
-                    ean: null,
-                    plu: widget.father.PluChild!,
-                    productComplement: null,
-                    showLargeImageInShowDialog: true,
-                    height: 150,
-                    width: 150,
-                  ),
-                  const SizedBox(width: 10),
-                  if (widget.father.ChildName != null)
-                    Expanded(
-                      child: Text(
-                        widget.father.ChildName!,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                ],
+              _FatherDetails(
+                father: widget.father,
+                callSetState: () {
+                  setState(() {});
+                },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (widget.father.Quantity != null)
-                    Text(
-                      "Quantidade ${widget.father.Quantity!.toBrazilianNumber()}",
-                    ),
-                  Text(
-                    cartPresenter
-                        .calculateProductTotalLiquid(widget.father)
-                        .toString()
-                        .toBrazilianNumber()
-                        .addBrazilianCoin(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-              if (widget.father.IsOptionalItem != null)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.father.IsOptionalItem == "true"
-                          ? "Item opcional"
-                          : "Item obrigatório",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.green,
-                        fontSize: 17,
-                      ),
-                    ),
-                    AddCommentButton(
-                      father: widget.father,
-                      callSetState: () {
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                ),
               if (widget.father.commentFather != null)
                 CommentRichText(comment: widget.father.commentFather!),
-              ItemsRadioListTile(
+              ChildsItemsRadioListTile(
                 itensPerLine: _getItensPerLine(),
                 productsCompositionsViewModel: widget.productsCompositions,
                 isFixedItemInCombox: widget.father.childs?.isEmpty == true,
@@ -151,6 +90,96 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _FatherDetails extends StatefulWidget {
+  final ProductCompositionViewModel father;
+  final Function() callSetState;
+
+  const _FatherDetails({
+    required this.father,
+    required this.callSetState,
+  });
+
+  @override
+  State<_FatherDetails> createState() => __FatherDetailsState();
+}
+
+class __FatherDetailsState extends State<_FatherDetails> {
+  @override
+  Widget build(BuildContext context) {
+    CartPresenter cartPresenter = Provider.of(context);
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ImageWidget(
+              ean: null,
+              plu: widget.father.PluChild!,
+              productComplement: null,
+              showLargeImageInShowDialog: true,
+              height: 150,
+              width: 150,
+            ),
+            const SizedBox(width: 10),
+            if (widget.father.ChildName != null)
+              Expanded(
+                child: Text(
+                  widget.father.ChildName!,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (widget.father.Quantity != null)
+              Text(
+                "Quantidade ${widget.father.Quantity!.toBrazilianNumber()}",
+              ),
+            Text(
+              cartPresenter
+                  .calculateProductTotalLiquid(widget.father)
+                  .toString()
+                  .toBrazilianNumber()
+                  .addBrazilianCoin(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+        if (widget.father.IsOptionalItem != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.father.IsOptionalItem == "true"
+                    ? "Item opcional"
+                    : "Item obrigatório",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.green,
+                  fontSize: 17,
+                ),
+              ),
+              AddCommentButton(
+                father: widget.father,
+                callSetState: () {
+                  widget.callSetState();
+                },
+              ),
+            ],
+          ),
+      ],
     );
   }
 }

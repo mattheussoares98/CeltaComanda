@@ -168,7 +168,7 @@ Widget _cachedImage({
 
   return CachedNetworkImage(
     cacheManager: customCacheManager,
-    key: UniqueKey(),
+    key: ValueKey<String>(url),
     imageUrl: url,
     height: height,
     width: width,
@@ -176,7 +176,7 @@ Widget _cachedImage({
       return _imageNotExists(height: height, width: width);
     },
     placeholder: (context, url) {
-      return _imageNotExists(height: height, width: width);
+      return _loadingImage();
     },
   );
 }
@@ -189,5 +189,14 @@ Widget _imageNotExists({
     "lib/ui/assets/images/imageNotFound.png",
     height: height,
     width: width,
+  );
+}
+
+Widget _loadingImage() {
+  return const Padding(
+    padding: EdgeInsets.all(8.0),
+    child: CircularProgressIndicator(
+      strokeWidth: 2,
+    ),
   );
 }

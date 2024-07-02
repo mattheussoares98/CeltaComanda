@@ -68,12 +68,14 @@ class ProductsViewModel extends Equatable {
   final String Name;
   final String? NameComplete;
   final String? NameReduced;
+  final String? ProductComplement;
   final String PackingAbbreviation;
   final String IsPromoCombox;
   double productQuantity;
 
   ProductsViewModel({
     required this.IsPromoCombox,
+    required this.ProductComplement,
     required this.ProductsId,
     required this.SaleRetailPraticed,
     required this.PriceLookupCode,
@@ -211,6 +213,7 @@ class ProductsViewModel extends Equatable {
       ProductsViewModel(
         IsPromoCombox: entity.IsPromoCombox.toString(),
         PriceLookupCode: entity.PriceLookupCode,
+        ProductComplement: entity.ProductComplement,
         Name: entity.Name,
         PackingAbbreviation: entity.PackingAbbreviation,
         CFOP: entity.CFOP,
@@ -291,6 +294,7 @@ class ProductsViewModel extends Equatable {
       );
 
   ProductEntity toEntity() => ProductEntity(
+        ProductComplement: ProductComplement,
         IsPromoCombox: bool.parse(IsPromoCombox),
         Name: Name,
         CFOP: CFOP,
@@ -430,6 +434,7 @@ class ProductsViewModel extends Equatable {
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
         IsPromoCombox: json["IsPromoCombox"],
+        ProductComplement: json["ProductComplement"],
         ProductsId: json["ProductsId"],
         SaleRetailPraticed: json["SaleRetailPraticed"],
         PriceLookupCode: json["PriceLookupCode"],

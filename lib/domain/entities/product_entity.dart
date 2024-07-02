@@ -69,6 +69,7 @@ class ProductEntity extends Equatable {
   final String Name;
   final String? NameComplete;
   final String? NameReduced;
+  final String? ProductComplement;
   final String PackingAbbreviation;
 
   const ProductEntity({
@@ -135,6 +136,7 @@ class ProductEntity extends Equatable {
     required this.SubGroupCode,
     required this.DateOfLastChanged,
     required this.StockQuantity,
+    required this.ProductComplement,
     required this.SaleRetailPraticedString,
   });
 
@@ -204,5 +206,6 @@ class ProductEntity extends Equatable {
         DateOfLastChanged,
         StockQuantity,
         SaleRetailPraticedString,
+        ProductComplement,
       ];
 }

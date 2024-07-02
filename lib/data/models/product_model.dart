@@ -58,6 +58,7 @@ class ProductModel {
   final String Name;
   final String? NameComplete;
   final String? NameReduced;
+  final String? ProductComplement;
   final String PackingAbbreviation;
   final bool? AllowFractionate;
   final bool? IsBalance;
@@ -124,6 +125,7 @@ class ProductModel {
     required this.Name,
     required this.NameComplete,
     required this.NameReduced,
+    required this.ProductComplement,
     required this.PackingAbbreviation,
     required this.AllowFractionate,
     required this.IsBalance,
@@ -212,7 +214,8 @@ class ProductModel {
       PersonalizedCode: json["PersonalizedCode"],
       EanCode: json["EanCode"],
       NameComplete: json["NameComplete"],
-      NameReduced: json["PameReduced"],
+      NameReduced: json["NameReduced"],
+      ProductComplement: json["ProductComplement"],
     );
   }
 
@@ -282,6 +285,7 @@ class ProductModel {
       EanCode: entity.EanCode,
       NameComplete: entity.NameComplete,
       NameReduced: entity.NameReduced,
+      ProductComplement: entity.ProductComplement,
     );
   }
 
@@ -350,6 +354,7 @@ class ProductModel {
     data['StockQuantity'] = StockQuantity;
     data['SaleRetailPraticed'] = SaleRetailPraticed;
     data['SaleRetailPraticedString'] = SaleRetailPraticedString;
+    data['ProductComplement'] = ProductComplement;
     return data;
   }
 
@@ -418,5 +423,6 @@ class ProductModel {
         StockQuantity: StockQuantity,
         SaleRetailPraticed: SaleRetailPraticed,
         SaleRetailPraticedString: SaleRetailPraticedString,
+        ProductComplement: ProductComplement,
       );
 }

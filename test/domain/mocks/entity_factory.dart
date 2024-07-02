@@ -18,6 +18,7 @@ class EntityFactory {
   static List<ProductEntity> makeProductsEntitys({bool? isPromoCombox}) {
     return [
       ProductEntity(
+        ProductComplement: faker.randomGenerator.string(10),
         IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(10),
         InternalCodeOnERP: faker.randomGenerator.integer(10),
@@ -84,6 +85,7 @@ class EntityFactory {
         PackingAbbreviation: faker.randomGenerator.string(10),
       ),
       ProductEntity(
+        ProductComplement: faker.randomGenerator.string(10),
         IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(10),
         InternalCodeOnERP: faker.randomGenerator.integer(10),
@@ -199,6 +201,7 @@ class EntityFactory {
 
   static ProductsViewModel makeProductViewModel() {
     return ProductsViewModel(
+      ProductComplement: faker.randomGenerator.string(10),
       IsPromoCombox: faker.randomGenerator.boolean().toString(),
       SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01).toString(),
       PackingAbbreviation: faker.randomGenerator.string(10),
@@ -269,6 +272,7 @@ class EntityFactory {
   static List<ProductModel> makeProductModel() {
     return [
       ProductModel(
+        ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
         InternalCodeOnERP: faker.randomGenerator.integer(20),
         InternalCodeOfProductOnERP: faker.randomGenerator.integer(20),
@@ -335,6 +339,7 @@ class EntityFactory {
         IsAlcoholicProduct: faker.randomGenerator.boolean(),
       ),
       ProductModel(
+        ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
         InternalCodeOnERP: faker.randomGenerator.integer(20),
         InternalCodeOfProductOnERP: faker.randomGenerator.integer(20),

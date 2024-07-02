@@ -90,7 +90,7 @@ Widget _portraitLargeImage({
                   plu: plu,
                   productComplement: productComplement,
                   showLargeImageInShowDialog: false,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
                 ),
               ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../components/components.dart';
 import '../../pages.dart';
 
 class ProductItem extends StatefulWidget {
@@ -26,14 +25,6 @@ class _ProductItemState extends State<ProductItem> {
 
     return Expanded(
       child: GestureDetector(
-        onLongPress: () {
-          ImageWidget.showLargeImage(
-            context: context,
-            ean: widget.productsViewModel.EanCode,
-            plu: widget.productsViewModel.PriceLookupCode,
-            productComplement: widget.productsViewModel.ProductComplement,
-          );
-        },
         onTap: () {
           menuPresenter.updateSelectedProduct(widget.productsViewModel);
           commentsPresenter.unselectAllComments();

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class ImageWidget extends StatefulWidget {
     required BuildContext context,
     required String? ean,
     required String? productComplement,
+    ProductsViewModel? selectedProduct,
+    bool? showInsertButton,
     required String plu,
   }) {
     showDialog(
@@ -44,29 +47,41 @@ class ImageWidget extends StatefulWidget {
                     horizontal: 10,
                     vertical: 5,
                   ),
-                  content: Row(
+                  content: Column(
                     children: [
                       Expanded(
-                        flex: 2,
-                        child: ImageWidget(
-                          ean: ean,
-                          plu: plu,
-                          productComplement: productComplement,
-                          showLargeImageInShowDialog: false,
-                          height: MediaQuery.of(context).size.height * 0.9,
-                          width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: ImageWidget(
+                                ean: ean,
+                                plu: plu,
+                                productComplement: productComplement,
+                                showLargeImageInShowDialog: false,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.9,
+                                width: MediaQuery.of(context).size.width,
+                              ),
+                            ),
+                            if (productComplement != null)
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(productComplement),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                      if (productComplement != null)
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(productComplement),
-                              ],
-                            ),
-                          ),
+                      if (selectedProduct != null && showInsertButton == true)
+                        InsertProduct(
+                          selectedProduct: selectedProduct,
+                          popScreen: true,
                         ),
                     ],
                   ),

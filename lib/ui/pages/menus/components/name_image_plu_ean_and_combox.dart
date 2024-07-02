@@ -19,13 +19,26 @@ class NameImagePriceAndCombox extends StatelessWidget {
           flex: MediaQuery.of(context).orientation == Orientation.portrait
               ? 1
               : 2,
-          child: ImageWidget(
-            ean: productsViewModel.EanCode,
-            plu: productsViewModel.PriceLookupCode,
-            productComplement: productsViewModel.ProductComplement,
-            height: 150,
-            width: 150,
-            showLargeImageInShowDialog: true,
+          child: GestureDetector(
+            onTap: () {
+              ImageWidget.showLargeImage(
+                context: context,
+                ean: productsViewModel.EanCode,
+                plu: productsViewModel.PriceLookupCode,
+                productComplement: productsViewModel.ProductComplement,
+                selectedProduct: productsViewModel.IsPromoCombox == "true"
+                    ? null
+                    : productsViewModel,
+              );
+            },
+            child: ImageWidget(
+              ean: productsViewModel.EanCode,
+              plu: productsViewModel.PriceLookupCode,
+              productComplement: productsViewModel.ProductComplement,
+              height: 150,
+              width: 150,
+              showLargeImageInShowDialog: false,
+            ),
           ),
         ),
         Expanded(

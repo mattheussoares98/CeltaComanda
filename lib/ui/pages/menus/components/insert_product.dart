@@ -11,8 +11,10 @@ import '../../../components/components.dart';
 
 class InsertProduct extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
+  final bool popScreen;
   const InsertProduct({
     required this.selectedProduct,
+    required this.popScreen,
     super.key,
   });
 
@@ -43,6 +45,12 @@ class _InsertProductState extends State<InsertProduct>
         ),
         menuPresenter: menuPresenter,
       );
+
+      Future.delayed(Duration.zero, () {
+        if (widget.popScreen && Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+      });
       setState(() {});
     } catch (e) {
       e;

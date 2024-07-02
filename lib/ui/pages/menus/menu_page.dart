@@ -138,6 +138,7 @@ class _MenuPageState extends State<MenuPage>
                               ),
                               InsertProduct(
                                 selectedProduct: selectedProduct.data,
+                                popScreen: false,
                               ),
                             ],
                           );

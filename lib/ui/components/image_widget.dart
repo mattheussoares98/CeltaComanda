@@ -29,25 +29,63 @@ class ImageWidget extends StatefulWidget {
   }) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 8),
-              content: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: MediaQuery.of(context).size.width * 0.7,
-                child: _cachedImage(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  ean: ean,
-                  plu: plu,
-                  customCacheManager: _customCacheManager,
+          return Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: AlertDialog(
+                  insetPadding: const EdgeInsets.all(20),
+                  content: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: ImageWidget(
+                          ean: ean,
+                          plu: plu,
+                          showLargeImageInShowDialog: false,
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const CircleAvatar(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      child: Icon(
+                        Icons.close,
+                        size: 40,
+                      ),
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 5,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          // Text(
+                          //     "Aqui a gente pode ir adicionar qualquer coisa que desejar de informação. Estou colocando um exemplo de uma mensagem, mas poderia ser qualquer coisa aqui.\n\nO aplicativo vai renderizar pra aparecer a mensagem da forma ideal"),
+                          // Text(
+                          //     "Aqui a gente pode ir adicionar qualquer coisa que desejar de informação. Estou colocando um exemplo de uma mensagem, mas poderia ser qualquer coisa aqui.\n\nO aplicativo vai renderizar pra aparecer a mensagem da forma ideal"),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           );
         });
   }

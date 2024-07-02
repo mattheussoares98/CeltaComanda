@@ -16,10 +16,13 @@ class NameImagePriceAndCombox extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 2,
+          flex: MediaQuery.of(context).orientation == Orientation.portrait
+              ? 1
+              : 2,
           child: ImageWidget(
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
+            productComplement: productsViewModel.ProductComplement,
             height: 150,
             width: 150,
             showLargeImageInShowDialog: true,

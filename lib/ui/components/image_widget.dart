@@ -13,18 +13,21 @@ class ImageWidget extends StatefulWidget {
   final double height;
   final double width;
   final bool showLargeImageInShowDialog;
+  final String? productComplement;
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
     required this.showLargeImageInShowDialog,
+    required this.productComplement,
     super.key,
   });
 
   static showLargeImage({
     required BuildContext context,
     required String? ean,
+    required String? productComplement,
     required String plu,
   }) {
     showDialog(
@@ -32,11 +35,15 @@ class ImageWidget extends StatefulWidget {
         barrierDismissible: false,
         builder: (context) {
           return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 flex: 5,
                 child: AlertDialog(
-                  insetPadding: const EdgeInsets.all(20),
+                  insetPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
                   content: Row(
                     children: [
                       Expanded(
@@ -44,46 +51,39 @@ class ImageWidget extends StatefulWidget {
                         child: ImageWidget(
                           ean: ean,
                           plu: plu,
+                          productComplement: productComplement,
                           showLargeImageInShowDialog: false,
                           height: MediaQuery.of(context).size.height * 0.9,
                           width: MediaQuery.of(context).size.width,
                         ),
                       ),
+                      if (productComplement != null)
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(productComplement),
+                              ],
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const CircleAvatar(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      child: Icon(
-                        Icons.close,
-                        size: 40,
-                      ),
-                    ),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const CircleAvatar(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  child: Icon(
+                    Icons.close,
+                    size: 40,
                   ),
-                  const Expanded(
-                    flex: 5,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          // Text(
-                          //     "Aqui a gente pode ir adicionar qualquer coisa que desejar de informação. Estou colocando um exemplo de uma mensagem, mas poderia ser qualquer coisa aqui.\n\nO aplicativo vai renderizar pra aparecer a mensagem da forma ideal"),
-                          // Text(
-                          //     "Aqui a gente pode ir adicionar qualquer coisa que desejar de informação. Estou colocando um exemplo de uma mensagem, mas poderia ser qualquer coisa aqui.\n\nO aplicativo vai renderizar pra aparecer a mensagem da forma ideal"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           );
@@ -123,6 +123,7 @@ class _ImageWidgetState extends State<ImageWidget>
                   context: context,
                   ean: widget.ean,
                   plu: widget.plu,
+                  productComplement: widget.productComplement,
                 );
               },
         child: AnimatedBuilder(

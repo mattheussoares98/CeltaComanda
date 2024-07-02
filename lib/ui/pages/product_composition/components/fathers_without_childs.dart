@@ -77,6 +77,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                         ImageWidget(
                           ean: null,
                           plu: widget.father.PluChild!,
+                          productComplement: null,
                           showLargeImageInShowDialog: true,
                         ),
                         const SizedBox(width: 5),

@@ -73,6 +73,7 @@ class _CartProductItemState extends State<CartProductItem> {
               ImageWidget(
                 ean: widget.cartProduct.Product.EanCode,
                 plu: widget.cartProduct.Product.PriceLookupCode,
+                productComplement: widget.cartProduct.Product.ProductComplement,
                 showLargeImageInShowDialog: true,
               ),
               const SizedBox(width: 3),

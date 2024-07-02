@@ -26,6 +26,7 @@ class ProductDetailItem extends StatelessWidget {
                     ImageWidget(
                       ean: product.EanCode,
                       plu: product.PriceLookupCode,
+                      productComplement: product.ProductComplement,
                       height: 250,
                       width: double.infinity,
                       showLargeImageInShowDialog: true,

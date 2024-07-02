@@ -31,6 +31,7 @@ class _ProductItemState extends State<ProductItem> {
             context: context,
             ean: widget.productsViewModel.EanCode,
             plu: widget.productsViewModel.PriceLookupCode,
+            productComplement: widget.productsViewModel.ProductComplement,
           );
         },
         onTap: () {

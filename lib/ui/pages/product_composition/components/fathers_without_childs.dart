@@ -23,113 +23,133 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          primary: false,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: 1,
-          itemBuilder: (context, childIndex) {
-            if (widget.father.IsOptionalItem == "false") {
-              //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
-              widget.father.indexOfSelectedChild = childIndex;
-            }
 
-            return Column(
-              children: [
-                RadioListTile<int>(
-                  value: childIndex,
-                  groupValue: widget.father.indexOfSelectedChild,
-                  dense: true,
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  toggleable: widget.father.IsOptionalItem == "true",
-                  onChanged: (int? value) {
-                    setState(() {
-                      widget.father.indexOfSelectedChild = value;
-                    });
-                    productCompositionPresenter.updateTotalLiquidCombox(
-                        widget.productsCompositionsViewModel);
-                  },
-                  subtitle: Row(
-                    children: [
-                      ImageWidget(
-                        ean: null,
-                        plu: widget.father.PluChild!,
-                        showLargeImageInShowDialog: true,
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (widget.father.ChildName != null)
-                              Text(
-                                widget.father.ChildName!,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Quantidade ${widget.father.Quantity.toString().toBrazilianNumber()}",
-                                ),
-                                Text(
-                                  productCompositionPresenter
-                                      .calculateTotalLiquid(
-                                          product: widget.father)
-                                      .toString()
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(2, 2),
+              color: Color.fromARGB(255, 209, 208, 208),
+              blurRadius: 8,
+            ),
+            BoxShadow(
+              offset: Offset(-2, -2),
+              color: Color.fromARGB(255, 209, 208, 208),
+              blurRadius: 8,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            primary: false,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: 1,
+            itemBuilder: (context, childIndex) {
+              if (widget.father.IsOptionalItem == "false") {
+                //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
+                widget.father.indexOfSelectedChild = childIndex;
+              }
+
+              return Column(
+                children: [
+                  RadioListTile<int>(
+                    value: childIndex,
+                    groupValue: widget.father.indexOfSelectedChild,
+                    dense: true,
+                    controlAffinity: ListTileControlAffinity.trailing,
+                    toggleable: widget.father.IsOptionalItem == "true",
+                    onChanged: (int? value) {
+                      setState(() {
+                        widget.father.indexOfSelectedChild = value;
+                      });
+                      productCompositionPresenter.updateTotalLiquidCombox(
+                          widget.productsCompositionsViewModel);
+                    },
+                    subtitle: Row(
                       children: [
-                        Text(
-                          widget.father.IsOptionalItem == "true"
-                              ? "Item opcional"
-                              : "Item obrigatório",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            color: Colors.green,
-                            fontSize: 17,
-                          ),
+                        ImageWidget(
+                          ean: null,
+                          plu: widget.father.PluChild!,
+                          showLargeImageInShowDialog: true,
                         ),
-                        AddCommentButton(
-                          father: widget.father,
-                          callSetState: () {
-                            setState(() {});
-                          },
+                        const SizedBox(width: 5),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (widget.father.ChildName != null)
+                                Text(
+                                  widget.father.ChildName!,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Quantidade ${widget.father.Quantity.toString().toBrazilianNumber()}",
+                                  ),
+                                  Text(
+                                    productCompositionPresenter
+                                        .calculateTotalLiquid(
+                                            product: widget.father)
+                                        .toString()
+                                        .toBrazilianNumber()
+                                        .addBrazilianCoin(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    if (widget.father.commentFather != null)
-                      CommentRichText(comment: widget.father.commentFather!)
-                  ],
-                ),
-              ],
-            );
-          },
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.father.IsOptionalItem == "true"
+                                ? "Item opcional"
+                                : "Item obrigatório",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.green,
+                              fontSize: 17,
+                            ),
+                          ),
+                          AddCommentButton(
+                            father: widget.father,
+                            callSetState: () {
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                      if (widget.father.commentFather != null)
+                        CommentRichText(comment: widget.father.commentFather!)
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

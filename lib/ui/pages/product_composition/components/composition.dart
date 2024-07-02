@@ -22,41 +22,38 @@ class _CompositionState extends State<Composition> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(3, 12, 3, 0),
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              primary: false,
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: widget.productsCompositions.length,
-              itemBuilder: (context, index) {
-                father = widget.productsCompositions[index];
-
-                if (father!.childs?.isEmpty == true) {
-                  return FathersWithoutChilds(
-                    father: father!,
-                    productsCompositionsViewModel: widget.productsCompositions,
-                  );
-                }
-
-                return FathersWithChilds(
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            primary: false,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: widget.productsCompositions.length,
+            itemBuilder: (context, index) {
+              father = widget.productsCompositions[index];
+    
+              if (father!.childs?.isEmpty == true) {
+                return FathersWithoutChilds(
                   father: father!,
-                  productsCompositions: widget.productsCompositions,
-                  index: index,
+                  productsCompositionsViewModel: widget.productsCompositions,
                 );
-              },
-            ),
+              }
+    
+              return FathersWithChilds(
+                father: father!,
+                productsCompositions: widget.productsCompositions,
+                index: index,
+              );
+            },
           ),
-          SaveComboxButton(
-            productsCompositions: widget.productsCompositions,
-            product: widget.product,
-          ),
-        ],
-      ),
+        ),
+        SaveComboxButton(
+          productsCompositions: widget.productsCompositions,
+          product: widget.product,
+        ),
+      ],
     );
   }
 }

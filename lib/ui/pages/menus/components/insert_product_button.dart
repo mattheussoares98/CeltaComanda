@@ -181,8 +181,10 @@ class _InsertProductButtonState extends State<InsertProductButton>
                         Expanded(
                           child: Row(
                             children: [
+                              if (MediaQuery.of(context).size.width > 500)
+                                const Icon(Icons.shopping_cart),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width > 400
+                                width: MediaQuery.of(context).size.width > 500
                                     ? 30
                                     : 8,
                               ),

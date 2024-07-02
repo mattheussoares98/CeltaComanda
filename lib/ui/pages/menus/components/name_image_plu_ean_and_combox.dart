@@ -21,7 +21,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
               : 2,
           child: GestureDetector(
             onTap: () {
-              ImageWidget.showLargeImage(
+              showLargeImage(
                 context: context,
                 ean: productsViewModel.EanCode,
                 plu: productsViewModel.PriceLookupCode,

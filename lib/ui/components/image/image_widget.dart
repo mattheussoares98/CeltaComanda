@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../infra/helpers/helperts.dart';
-import '../../main/builders/builders.dart';
+import '../../../infra/helpers/helperts.dart';
+import '../../../main/builders/builders.dart';
+import '../../../ui/components/components.dart';
 
 class ImageWidget extends StatefulWidget {
   final String?
@@ -24,86 +24,6 @@ class ImageWidget extends StatefulWidget {
     required this.productComplement,
     super.key,
   });
-
-  static showLargeImage({
-    required BuildContext context,
-    required String? ean,
-    required String? productComplement,
-    ProductsViewModel? selectedProduct,
-    bool? showInsertButton,
-    required String plu,
-  }) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 5,
-                child: AlertDialog(
-                  insetPadding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  content: Column(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: ImageWidget(
-                                ean: ean,
-                                plu: plu,
-                                productComplement: productComplement,
-                                showLargeImageInShowDialog: false,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.9,
-                                width: MediaQuery.of(context).size.width,
-                              ),
-                            ),
-                            if (productComplement != null)
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(productComplement),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      if (selectedProduct != null && showInsertButton == true)
-                        InsertProductButton(
-                          selectedProduct: selectedProduct,
-                          popScreen: true,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const CircleAvatar(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  child: Icon(
-                    Icons.close,
-                    size: 40,
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
-  }
 
   static final _customCacheManager = CacheManager(
     Config(
@@ -134,7 +54,7 @@ class _ImageWidgetState extends State<ImageWidget>
         onTap: !widget.showLargeImageInShowDialog
             ? null
             : () {
-                ImageWidget.showLargeImage(
+                showLargeImage(
                   context: context,
                   ean: widget.ean,
                   plu: widget.plu,

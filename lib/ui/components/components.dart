@@ -5,7 +5,7 @@ export './comment_rich_text.dart';
 export './drawer.dart';
 export './error_message.dart';
 export './headline1.dart';
-export './image_widget.dart';
+export 'image/image.dart';
 export './login_header.dart';
 export './loading_image.dart';
 export './loading_dialog.dart';

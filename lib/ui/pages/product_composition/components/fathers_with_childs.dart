@@ -24,7 +24,7 @@ class FathersWithChilds extends StatefulWidget {
 class _FathersWithChildsState extends State<FathersWithChilds> {
   int selectedIndex = -1;
   int _getItensPerLine() {
-    if (MediaQuery.of(context).size.width > 800) {
+    if (MediaQuery.of(context).size.width > 1000) {
       return 3;
     } else if (MediaQuery.of(context).size.width > 500) {
       return 2;

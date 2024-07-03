@@ -40,14 +40,6 @@ class ImageWidget extends StatefulWidget {
 
 class _ImageWidgetState extends State<ImageWidget>
     with SingleTickerProviderStateMixin {
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animation = AnimationManager.animation;
-  }
-
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
@@ -66,10 +58,10 @@ class _ImageWidgetState extends State<ImageWidget>
                 );
               },
         child: AnimatedBuilder(
-          animation: _animation,
+          animation: AnimationManager.animation,
           builder: (context, child) {
             return Transform.scale(
-              scale: _animation.value,
+              scale: AnimationManager.animation.value,
               child: _cachedImage(
                 width: widget.width,
                 height: widget.height,

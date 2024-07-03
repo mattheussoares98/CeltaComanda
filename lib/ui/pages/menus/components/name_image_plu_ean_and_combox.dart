@@ -169,7 +169,7 @@ Widget _mountCombox(BuildContext context) {
   return Text(
     "MONTAR COMBO",
     style: TextStyle(
-      color: Theme.of(context).primaryColor,
+      color: Theme.of(context).highlightColor,
       fontWeight: FontWeight.bold,
       fontStyle: FontStyle.italic,
     ),

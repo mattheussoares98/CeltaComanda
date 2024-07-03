@@ -68,10 +68,10 @@ class _ImageWidgetState extends State<ImageWidget>
         child: AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
-            return FractionalTranslation(
-              translation: Offset(_animation.value, 0),
+            return Transform.scale(
+              scale: _animation.value,
               child: _cachedImage(
-                width: widget.width * 1.2, // Aumenta a largura da imagem
+                width: widget.width,
                 height: widget.height,
                 ean: widget.ean,
                 plu: widget.plu,

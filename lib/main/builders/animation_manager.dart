@@ -9,11 +9,16 @@ class AnimationManager {
 
   static void initializeAnimation() {
     _controller = AnimationController(
-      duration: const Duration(seconds: 4),
-      vsync: _MyTickerProvider(), // Substitua pelo seu TickerProvider adequado
+      vsync: _MyTickerProvider(),
+      duration: const Duration(seconds: 12),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: -0.4, end: 0.4).animate(_controller);
+    final CurvedAnimation curvedAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut, // Escolha a curva desejada aqui
+    );
+
+    _animation = Tween<double>(begin: 1, end: 0.7).animate(curvedAnimation);
   }
 
   static bool _loaded = false;

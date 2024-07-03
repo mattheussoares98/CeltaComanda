@@ -19,12 +19,14 @@ void showLargeImage({
         if (MediaQuery.of(context).orientation == Orientation.landscape &&
             MediaQuery.of(context).size.width > 600) {
           return _landScapeLargeImage(
-              context: context,
-              ean: ean,
-              productComplement: productComplement,
-              plu: plu,
-              selectedProduct: selectedProduct,
-              showInsertButton: selectedProduct?.IsPromoCombox == "false");
+            context: context,
+            ean: ean,
+            productComplement: productComplement,
+            plu: plu,
+            selectedProduct: selectedProduct,
+            menuPresenter: menuPresenter,
+            showInsertButton: showInsertButton,
+          );
         } else {
           return _portraitLargeImage(
             menuPresenter: menuPresenter,
@@ -105,20 +107,11 @@ Widget _portraitLargeImage({
                   selectedProduct: selectedProduct,
                   popScreen: true,
                 ),
-              if (showInsertButton == true &&
-                  selectedProduct != null &&
-                  selectedProduct.IsPromoCombox == "true")
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 60),
-                    maximumSize: const Size(double.infinity, 60),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    menuPresenter.goToComboxPage(selectedProduct);
-                  },
-                  child: const Text("Escolher produtos do combo"),
-                ),
+              _addComboxButton(
+                selectedProduct: selectedProduct,
+                context: context,
+                menuPresenter: menuPresenter,
+              ),
             ],
           ),
         ),
@@ -132,8 +125,9 @@ Widget _landScapeLargeImage({
   required String? ean,
   required String? productComplement,
   required ProductsViewModel? selectedProduct,
-  required bool? showInsertButton,
   required String plu,
+  required MenuPresenter menuPresenter,
+  required bool? showInsertButton,
 }) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,11 +169,18 @@ Widget _landScapeLargeImage({
                   ],
                 ),
               ),
-              if (selectedProduct != null && showInsertButton == true)
+              if (selectedProduct != null &&
+                  showInsertButton == true &&
+                  selectedProduct.IsPromoCombox == "false")
                 InsertProductButton(
                   selectedProduct: selectedProduct,
                   popScreen: true,
                 ),
+              _addComboxButton(
+                selectedProduct: selectedProduct,
+                context: context,
+                menuPresenter: menuPresenter,
+              ),
             ],
           ),
         ),
@@ -199,4 +200,26 @@ Widget _landScapeLargeImage({
       ),
     ],
   );
+}
+
+Widget _addComboxButton({
+  required ProductsViewModel? selectedProduct,
+  required BuildContext context,
+  required MenuPresenter menuPresenter,
+}) {
+  if (selectedProduct != null && selectedProduct.IsPromoCombox == "true") {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(double.infinity, 60),
+        maximumSize: const Size(double.infinity, 60),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        menuPresenter.goToComboxPage(selectedProduct);
+      },
+      child: const Text("Escolher produtos do combo"),
+    );
+  } else {
+    return const SizedBox();
+  }
 }

@@ -10,6 +10,7 @@ void showLargeImage({
   ProductsViewModel? selectedProduct,
   bool? showInsertButton,
   required String plu,
+  required MenuPresenter menuPresenter,
 }) {
   showDialog(
       context: context,
@@ -26,6 +27,7 @@ void showLargeImage({
               showInsertButton: selectedProduct?.IsPromoCombox == "false");
         } else {
           return _portraitLargeImage(
+            menuPresenter: menuPresenter,
             context: context,
             ean: ean,
             productComplement: productComplement,
@@ -44,6 +46,7 @@ Widget _portraitLargeImage({
   required ProductsViewModel? selectedProduct,
   required bool? showInsertButton,
   required String plu,
+  required MenuPresenter menuPresenter,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.end,
@@ -95,10 +98,25 @@ Widget _portraitLargeImage({
                 ),
               ),
               const SizedBox(height: 10),
-              if (selectedProduct != null && showInsertButton == true)
+              if (selectedProduct != null &&
+                  showInsertButton == true &&
+                  selectedProduct.IsPromoCombox == "false")
                 InsertProductButton(
                   selectedProduct: selectedProduct,
                   popScreen: true,
+                ),
+              if (showInsertButton == true &&
+                  selectedProduct != null &&
+                  selectedProduct.IsPromoCombox == "true")
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 60),
+                    maximumSize: const Size(double.infinity, 60),
+                  ),
+                  onPressed: () {
+                    menuPresenter.goToComboxPage(selectedProduct);
+                  },
+                  child: const Text("Escolher produtos do combo"),
                 ),
             ],
           ),

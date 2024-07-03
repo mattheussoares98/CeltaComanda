@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 import '../../../components/components.dart';
@@ -13,90 +14,32 @@ class NameImagePriceAndCombox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MenuPresenter menuPresenter = Provider.of(context);
+    CommentsPresenter commentsPresenter = Provider.of(context);
+
     if (MediaQuery.of(context).size.width > 600) {
       return _landScapeNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
     } else {
       return _portraitNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
       );
     }
   }
 }
 
-Widget _portraitNameImagePluAndCombox({
-  required BuildContext context,
-  required ProductsViewModel productsViewModel,
-}) {
-  return Column(
-    children: [
-      Expanded(
-        flex: 3,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () {
-                showLargeImage(
-                  context: context,
-                  ean: productsViewModel.EanCode,
-                  plu: productsViewModel.PriceLookupCode,
-                  productComplement: productsViewModel.ProductComplement,
-                  showInsertButton: true,
-                  selectedProduct: productsViewModel.IsPromoCombox == "true"
-                      ? null
-                      : productsViewModel,
-                );
-              },
-              child: ImageWidget(
-                ean: productsViewModel.EanCode,
-                plu: productsViewModel.PriceLookupCode,
-                productComplement: productsViewModel.ProductComplement,
-                height: MediaQuery.of(context).size.width / 3 - 20,
-                width: MediaQuery.of(context).size.width / 3,
-                showLargeImageInShowDialog: false,
-              ),
-            ),
-            Text(
-              productsViewModel.Name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
-            ),
-            if (productsViewModel.IsPromoCombox == "true")
-              Text(
-                "MONTAR COMBO",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
 Widget _landScapeNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
+  required MenuPresenter menuPresenter,
+  required CommentsPresenter commentsPresenter,
 }) {
   return Row(
     children: [
@@ -104,15 +47,11 @@ Widget _landScapeNameImagePluAndCombox({
         flex: 2,
         child: GestureDetector(
           onTap: () {
-            showLargeImage(
+            _onTapImage(
               context: context,
-              ean: productsViewModel.EanCode,
-              plu: productsViewModel.PriceLookupCode,
-              productComplement: productsViewModel.ProductComplement,
-              showInsertButton: true,
-              selectedProduct: productsViewModel.IsPromoCombox == "true"
-                  ? null
-                  : productsViewModel,
+              productsViewModel: productsViewModel,
+              menuPresenter: menuPresenter,
+              commentsPresenter: commentsPresenter,
             );
           },
           child: ImageWidget(
@@ -131,35 +70,108 @@ Widget _landScapeNameImagePluAndCombox({
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              productsViewModel.Name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
-            ),
+            _productNameAndPrice(productsViewModel),
             if (productsViewModel.IsPromoCombox == "true")
-              Text(
-                "MONTAR COMBO",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
+              _mountCombox(context),
           ],
         ),
       ),
     ],
+  );
+}
+
+Widget _portraitNameImagePluAndCombox({
+  required BuildContext context,
+  required ProductsViewModel productsViewModel,
+  required MenuPresenter menuPresenter,
+  required CommentsPresenter commentsPresenter,
+}) {
+  return Column(
+    children: [
+      Expanded(
+        flex: 3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+              onTap: () {
+                _onTapImage(
+                  context: context,
+                  productsViewModel: productsViewModel,
+                  menuPresenter: menuPresenter,
+                  commentsPresenter: commentsPresenter,
+                );
+              },
+              child: ImageWidget(
+                ean: productsViewModel.EanCode,
+                plu: productsViewModel.PriceLookupCode,
+                productComplement: productsViewModel.ProductComplement,
+                height: MediaQuery.of(context).size.width / 3 - 20,
+                width: MediaQuery.of(context).size.width / 3,
+                showLargeImageInShowDialog: false,
+              ),
+            ),
+            _productNameAndPrice(productsViewModel),
+            if (productsViewModel.IsPromoCombox == "true")
+              _mountCombox(context),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+void _onTapImage({
+  required BuildContext context,
+  required ProductsViewModel productsViewModel,
+  required MenuPresenter menuPresenter,
+  required CommentsPresenter commentsPresenter,
+}) {
+  showLargeImage(
+    context: context,
+    ean: productsViewModel.EanCode,
+    plu: productsViewModel.PriceLookupCode,
+    productComplement: productsViewModel.ProductComplement,
+    showInsertButton: true,
+    selectedProduct: productsViewModel,
+    menuPresenter: menuPresenter,
+  );
+  menuPresenter.updateSelectedProduct(productsViewModel);
+  commentsPresenter.unselectAllComments();
+}
+
+Widget _productNameAndPrice(ProductsViewModel productsViewModel) {
+  return Column(
+    children: [
+      Text(
+        productsViewModel.Name,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      ),
+      Text(
+        productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 17,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _mountCombox(BuildContext context) {
+  return Text(
+    "MONTAR COMBO",
+    style: TextStyle(
+      color: Theme.of(context).primaryColor,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+    ),
   );
 }

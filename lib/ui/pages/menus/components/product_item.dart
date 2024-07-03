@@ -39,7 +39,7 @@ class _ProductItemState extends State<ProductItem> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: widget.productIsSelected
-                    ? Theme.of(context).primaryColorLight
+                    ? Theme.of(context).secondaryHeaderColor
                     : Colors.white,
                 boxShadow: const [
                   BoxShadow(

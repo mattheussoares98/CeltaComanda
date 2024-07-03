@@ -35,8 +35,6 @@ class NameImagePriceAndCombox extends StatelessWidget {
   }
 }
 
-double _fontSize = 20;
-
 Widget _landScapeNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
@@ -152,9 +150,9 @@ Widget _productNameAndPrice(
         Text(
           productsViewModel.Name,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: _fontSize,
+            fontSize: 20,
           ),
         ),
         Text(
@@ -163,7 +161,7 @@ Widget _productNameAndPrice(
           style: TextStyle(
             color: Theme.of(context).primaryColorLight,
             fontWeight: FontWeight.bold,
-            fontSize: _fontSize,
+            fontSize: 20,
           ),
         ),
       ],
@@ -178,7 +176,7 @@ Widget _mountCombox(BuildContext context) {
       color: Theme.of(context).secondaryHeaderColor,
       fontWeight: FontWeight.bold,
       fontStyle: FontStyle.italic,
-      fontSize: _fontSize,
+      fontSize: 20,
     ),
   );
 }

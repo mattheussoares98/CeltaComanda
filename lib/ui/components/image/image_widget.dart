@@ -2,12 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../infra/helpers/helperts.dart';
 import '../../../main/builders/builders.dart';
-import '../../../ui/components/components.dart';
-import '../../pages/pages.dart';
 
 class ImageWidget extends StatefulWidget {
   final String?
@@ -42,36 +39,22 @@ class _ImageWidgetState extends State<ImageWidget>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
-      child: GestureDetector(
-        onTap: !widget.showLargeImageInShowDialog
-            ? null
-            : () {
-                showLargeImage(
-                  context: context,
-                  ean: widget.ean,
-                  plu: widget.plu,
-                  productComplement: widget.productComplement,
-                  menuPresenter: menuPresenter,
-                );
-              },
-        child: AnimatedBuilder(
-          animation: AnimationManager.animation,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: AnimationManager.animation.value,
-              child: _cachedImage(
-                width: widget.width,
-                height: widget.height,
-                ean: widget.ean,
-                plu: widget.plu,
-                customCacheManager: ImageWidget._customCacheManager,
-              ),
-            );
-          },
-        ),
+      child: AnimatedBuilder(
+        animation: AnimationManager.animation,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: AnimationManager.animation.value,
+            child: _cachedImage(
+              width: widget.width,
+              height: widget.height,
+              ean: widget.ean,
+              plu: widget.plu,
+              customCacheManager: ImageWidget._customCacheManager,
+            ),
+          );
+        },
       ),
     );
   }

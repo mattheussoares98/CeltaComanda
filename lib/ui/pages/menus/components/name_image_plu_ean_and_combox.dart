@@ -17,7 +17,7 @@ class NameImagePriceAndCombox extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context);
     CommentsPresenter commentsPresenter = Provider.of(context);
 
-    if (MediaQuery.of(context).size.width > 600) {
+    if (hasMinWidth(context)) {
       return _landScapeNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,

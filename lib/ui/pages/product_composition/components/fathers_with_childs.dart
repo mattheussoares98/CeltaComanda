@@ -99,7 +99,7 @@ class __FatherDetailsState extends State<_FatherDetails> {
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return Column(
       children: [

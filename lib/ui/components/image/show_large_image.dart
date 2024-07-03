@@ -236,7 +236,14 @@ Widget _addComboxButton({
         Navigator.of(context).pop();
         menuPresenter.goToComboxPage(selectedProduct);
       },
-      child: const Text("Escolher produtos do combo"),
+      child: const FittedBox(
+        child: Text(
+          "Escolher produtos do combo",
+          style: TextStyle(
+            fontSize: 60,
+          )
+        ),
+      ),
     );
   } else {
     return const SizedBox();

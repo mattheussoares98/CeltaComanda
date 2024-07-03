@@ -23,6 +23,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -74,11 +75,25 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                     },
                     subtitle: Row(
                       children: [
-                        ImageWidget(
-                          ean: null,
-                          plu: widget.father.PluChild!,
-                          productComplement: null,
-                          showLargeImageInShowDialog: true,
+                        InkWell(
+                          onTap: () {
+                            showLargeImage(
+                              context: context,
+                              ean: null,
+                              plu: widget.father.PluChild!,
+                              productComplement: null,
+                              showInsertButton: true,
+                              selectedProduct: null,
+                              menuPresenter: menuPresenter,
+                              productName: widget.father.ChildName,
+                            );
+                          },
+                          child: ImageWidget(
+                            ean: null,
+                            plu: widget.father.PluChild!,
+                            productComplement: null,
+                            showLargeImageInShowDialog: true,
+                          ),
                         ),
                         const SizedBox(width: 5),
                         Expanded(

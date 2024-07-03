@@ -12,6 +12,7 @@ void showLargeImage({
   bool? showInsertButton,
   required String plu,
   required MenuPresenter menuPresenter,
+  String? productName,
 }) {
   showDialog(
       context: context,
@@ -27,6 +28,7 @@ void showLargeImage({
             selectedProduct: selectedProduct,
             menuPresenter: menuPresenter,
             showInsertButton: showInsertButton,
+            productName: productName,
           );
         } else {
           return _portraitLargeImage(
@@ -37,6 +39,7 @@ void showLargeImage({
             selectedProduct: selectedProduct,
             showInsertButton: showInsertButton,
             plu: plu,
+            productName: productName,
           );
         }
       });
@@ -50,6 +53,7 @@ Widget _portraitLargeImage({
   required bool? showInsertButton,
   required String plu,
   required MenuPresenter menuPresenter,
+  required String? productName,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.end,
@@ -78,9 +82,9 @@ Widget _portraitLargeImage({
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (selectedProduct != null)
+              if (productName != null)
                 Text(
-                  selectedProduct.Name,
+                  productName,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: hasMinWidth(context) ? 40 : 20,
@@ -138,6 +142,7 @@ Widget _landScapeLargeImage({
   required String plu,
   required MenuPresenter menuPresenter,
   required bool? showInsertButton,
+  required String? productName,
 }) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,9 +156,9 @@ Widget _landScapeLargeImage({
           ),
           content: Column(
             children: [
-              if (selectedProduct != null)
+              if (productName != null)
                 Text(
-                  selectedProduct.Name,
+                  productName,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: hasMinWidth(context) ? 40 : 20,
@@ -237,12 +242,10 @@ Widget _addComboxButton({
         menuPresenter.goToComboxPage(selectedProduct);
       },
       child: const FittedBox(
-        child: Text(
-          "Escolher produtos do combo",
-          style: TextStyle(
-            fontSize: 60,
-          )
-        ),
+        child: Text("Escolher produtos do combo",
+            style: TextStyle(
+              fontSize: 60,
+            )),
       ),
     );
   } else {

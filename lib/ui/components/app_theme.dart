@@ -4,7 +4,6 @@ ThemeData makeAppTheme() {
   const primaryColor = Colors.black54;
   const primaryColorDark = Colors.black87;
   const primaryColorLight = Colors.black38;
-  const secondaryColor = Color.fromARGB(255, 76, 175, 80);
   const secondaryColorDark = Color.fromRGBO(0, 77, 64, 1);
   final disabledColor = Colors.grey[400];
   const dividerColor = Colors.grey;
@@ -81,7 +80,7 @@ ThemeData makeAppTheme() {
     primaryColor: primaryColor,
     primaryColorDark: primaryColorDark,
     primaryColorLight: primaryColorLight,
-    highlightColor: secondaryColor,
+    highlightColor: primaryColorDark,
     secondaryHeaderColor: secondaryColorDark,
     disabledColor: disabledColor,
     dividerColor: dividerColor,

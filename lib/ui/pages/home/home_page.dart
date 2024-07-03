@@ -99,10 +99,10 @@ class _HomePageState extends State<HomePage>
           children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          selectedIconTheme:
-              IconThemeData(color: Theme.of(context).colorScheme.primary),
+          unselectedItemColor: Theme.of(context).primaryColorLight,
+          selectedItemColor: Theme.of(context).primaryColorDark,
+          // selectedIconTheme:
+          //     IconThemeData(color: Theme.of(context).secondaryHeaderColor),
           showUnselectedLabels: true,
           currentIndex: _currentIndex,
           onTap: (index) {
@@ -123,10 +123,7 @@ class _HomePageState extends State<HomePage>
             BottomNavigationBarItem(
               key: const Key("BottomNavigationExpansibleGroups"),
               icon: IconWithNumberQuantity(
-                iconColor: _currentIndex == 1
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.grey,
-                iconData: Icons.shopping_cart_outlined,
+                iconData: Icons.shopping_cart,
                 productsQuantity: cartPresenter.cartProducts.length +
                     cartPresenter.confirmedCombox.length,
               ),
@@ -134,9 +131,6 @@ class _HomePageState extends State<HomePage>
             ),
             BottomNavigationBarItem(
               icon: IconWithNumberQuantity(
-                iconColor: _currentIndex == 2
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.grey,
                 iconData: Icons.list_outlined,
                 productsQuantity: printedProductsPresenter.printedProducts ==
                             null ||

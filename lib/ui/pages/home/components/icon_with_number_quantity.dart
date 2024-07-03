@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 class IconWithNumberQuantity extends StatelessWidget {
   final int productsQuantity;
   final IconData iconData;
-  final Color iconColor;
   const IconWithNumberQuantity({
     required this.iconData,
     required this.productsQuantity,
-    required this.iconColor,
     super.key,
   });
 
@@ -19,7 +17,6 @@ class IconWithNumberQuantity extends StatelessWidget {
         children: [
           Icon(
             iconData,
-            color: iconColor,
             size: 28,
           ),
           Positioned(

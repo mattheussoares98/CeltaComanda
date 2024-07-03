@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
@@ -30,7 +30,8 @@ class SaveComboxButton extends StatelessWidget {
 
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 40),
+              minimumSize: const Size(double.infinity, 45),
+              maximumSize: const Size(double.infinity, 45),
             ),
             onPressed: () async {
               try {
@@ -71,13 +72,25 @@ class SaveComboxButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Conferir"),
+                const FittedBox(
+                  child: Text(
+                    "Conferir produtos selecionados",
+                    style: TextStyle(
+                      fontSize: 50,
+                    ),
+                  ),
+                ),
                 if (snapshot.hasData)
-                  Text(
-                    snapshot.data
-                        .toString()
-                        .toBrazilianNumber()
-                        .addBrazilianCoin(),
+                  FittedBox(
+                    child: Text(
+                      snapshot.data
+                          .toString()
+                          .toBrazilianNumber()
+                          .addBrazilianCoin(),
+                      style: const TextStyle(
+                        fontSize: 50,
+                      ),
+                    ),
                   ),
               ],
             ),

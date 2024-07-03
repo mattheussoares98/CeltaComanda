@@ -19,6 +19,8 @@ class FathersWithoutChilds extends StatefulWidget {
 }
 
 class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
+  final GlobalKey _tooltipKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
@@ -93,6 +95,8 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             plu: widget.father.PluChild!,
                             productComplement: null,
                             showLargeImageInShowDialog: true,
+                            height: 140,
+                            width: 140,
                           ),
                         ),
                         const SizedBox(width: 5),
@@ -100,17 +104,25 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (widget.father.ChildName != null)
-                                Text(
-                                  widget.father.ChildName!,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                              Text(
+                                widget.father.ChildName!,
+                                style: TextStyle(
+                                  fontSize: hasMinWidth(context) ? 40 : 20,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).primaryColorDark,
                                 ),
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Quantidade ${widget.father.Quantity.toString().toBrazilianNumber()}",
+                                    "Quantidade: ${widget.father.Quantity!.toBrazilianNumber()}",
+                                    style: TextStyle(
+                                      fontSize: hasMinWidth(context) ? 23 : 12,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
                                   Text(
                                     productCompositionPresenter
@@ -122,7 +134,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Theme.of(context).primaryColor,
-                                      fontSize: 15,
+                                      fontSize: hasMinWidth(context) ? 23 : 15,
                                     ),
                                   ),
                                 ],
@@ -139,15 +151,37 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            widget.father.IsOptionalItem == "true"
-                                ? "Item opcional"
-                                : "Item obrigatório",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: 17,
+                          GestureDetector(
+                            onTap: () {
+                              final dynamic tooltip = _tooltipKey.currentState;
+                              tooltip.ensureTooltipVisible();
+                            },
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Tooltip(
+                                    key: _tooltipKey,
+                                    message: 'Esse produto é obrigatório',
+                                    child: Icon(
+                                      Icons.info,
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "Item obrigatório",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: hasMinWidth(context) ? 23 : 15,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           AddCommentButton(

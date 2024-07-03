@@ -35,6 +35,8 @@ class NameImagePriceAndCombox extends StatelessWidget {
   }
 }
 
+double _fontSize = 20;
+
 Widget _landScapeNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
@@ -70,7 +72,7 @@ Widget _landScapeNameImagePluAndCombox({
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _productNameAndPrice(productsViewModel),
+            _productNameAndPrice(productsViewModel, context),
             if (productsViewModel.IsPromoCombox == "true")
               _mountCombox(context),
           ],
@@ -112,7 +114,7 @@ Widget _portraitNameImagePluAndCombox({
                 showLargeImageInShowDialog: false,
               ),
             ),
-            _productNameAndPrice(productsViewModel),
+            _productNameAndPrice(productsViewModel, context),
             if (productsViewModel.IsPromoCombox == "true")
               _mountCombox(context),
           ],
@@ -141,27 +143,31 @@ void _onTapImage({
   commentsPresenter.unselectAllComments();
 }
 
-Widget _productNameAndPrice(ProductsViewModel productsViewModel) {
-  return Column(
-    children: [
-      Text(
-        productsViewModel.Name,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
+Widget _productNameAndPrice(
+    ProductsViewModel productsViewModel, BuildContext context) {
+  return Expanded(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          productsViewModel.Name,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: _fontSize,
+          ),
         ),
-      ),
-      Text(
-        productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 17,
+        Text(
+          productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Theme.of(context).primaryColorLight,
+            fontWeight: FontWeight.bold,
+            fontSize: _fontSize,
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
 
@@ -169,9 +175,10 @@ Widget _mountCombox(BuildContext context) {
   return Text(
     "MONTAR COMBO",
     style: TextStyle(
-      color: Theme.of(context).highlightColor,
+      color: Theme.of(context).secondaryHeaderColor,
       fontWeight: FontWeight.bold,
       fontStyle: FontStyle.italic,
+      fontSize: _fontSize,
     ),
   );
 }

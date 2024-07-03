@@ -38,9 +38,8 @@ class _ProductItemState extends State<ProductItem> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: widget.productIsSelected
-                    ? Theme.of(context).secondaryHeaderColor
-                    : Colors.white,
+                color:
+                    widget.productIsSelected ? Colors.grey[400] : Colors.white,
                 boxShadow: const [
                   BoxShadow(
                     blurRadius: 3,
@@ -62,7 +61,8 @@ class _ProductItemState extends State<ProductItem> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: NameImagePriceAndCombox(
-                  productsViewModel: widget.productsViewModel),
+                productsViewModel: widget.productsViewModel,
+              ),
             )),
       ),
     );

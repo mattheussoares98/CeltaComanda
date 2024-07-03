@@ -195,7 +195,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                       ? "Inserir no carrinho"
                                       : "Inserir",
                                   style: TextStyle(
-                                    fontSize: hasMinWidth(context) ? 30 : 17,
+                                    fontSize: hasMinWidth(context) ? 22 : 17,
                                   ),
                                 ),
                               ),
@@ -208,7 +208,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                     .toBrazilianNumber()
                                     .addBrazilianCoin(),
                                 style: TextStyle(
-                                  fontSize: hasMinWidth(context) ? 30 : 17,
+                                  fontSize: hasMinWidth(context) ? 22 : 17,
                                 ),
                               ),
                             ],

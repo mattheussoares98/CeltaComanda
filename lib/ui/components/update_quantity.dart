@@ -19,26 +19,31 @@ class UpdateQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(width: MediaQuery.of(context).size.width > 400 ? 30 : 2),
-        GestureDetector(
+        SizedBox(width: MediaQuery.of(context).size.width > 500 ? 30 : 2),
+        InkWell(
           onTap: onPressedReduceQuantity,
           child: Icon(
             showDeleteIcon ? Icons.delete : Icons.remove,
             color: showDeleteIcon ? Colors.red : Theme.of(context).primaryColor,
+            size: MediaQuery.of(context).size.width > 500 ? 40 : 30,
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: Text(
             productQuantity.toString().toBrazilianNumber(),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.width > 500 ? 30 : 17),
           ),
         ),
-        GestureDetector(
+        InkWell(
           onTap: onPressedAddQuantity,
-          child: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.primary,
+            size: MediaQuery.of(context).size.width > 500 ? 40 : 30,
+          ),
         ),
         const SizedBox(width: 1),
       ],

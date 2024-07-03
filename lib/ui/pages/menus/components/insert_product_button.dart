@@ -129,7 +129,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                       Icon(
                         Icons.add_comment_rounded,
                         color: Theme.of(context).primaryColor,
-                        size: 33,
+                        size: MediaQuery.of(context).size.width > 500 ? 40 : 30,
                       ),
                       if (commentsPresenter.hasSelectedComments)
                         const Positioned(
@@ -182,20 +182,45 @@ class _InsertProductButtonState extends State<InsertProductButton>
                           child: Row(
                             children: [
                               if (MediaQuery.of(context).size.width > 500)
-                                const Icon(Icons.shopping_cart),
+                                Icon(
+                                  Icons.shopping_cart,
+                                  size: MediaQuery.of(context).size.width > 500
+                                      ? 40
+                                      : 30,
+                                ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width > 500
                                     ? 30
                                     : 8,
                               ),
-                              const Expanded(child: Text("Inserir")),
-                              Text((widget.selectedProduct!.SaleRetailPraticed
-                                          .toDouble() *
-                                      widget.selectedProduct!.productQuantity
-                                          .toDouble())
-                                  .toString()
-                                  .toBrazilianNumber()
-                                  .addBrazilianCoin()),
+                              Expanded(
+                                child: Text(
+                                  MediaQuery.of(context).size.width > 500
+                                      ? "Inserir no carrinho"
+                                      : "Inserir",
+                                  style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width > 500
+                                            ? 30
+                                            : 17,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                (widget.selectedProduct!.SaleRetailPraticed
+                                            .toDouble() *
+                                        widget.selectedProduct!.productQuantity
+                                            .toDouble())
+                                    .toString()
+                                    .toBrazilianNumber()
+                                    .addBrazilianCoin(),
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 500
+                                          ? 30
+                                          : 17,
+                                ),
+                              ),
                             ],
                           ),
                         ),

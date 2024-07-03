@@ -62,14 +62,14 @@ class _CommentAndAddProductButtonsState
               children: [
                 Icon(
                   widget.isConfirmedComment ? Icons.edit : Icons.add_comment,
-                  color: Colors.green,
+                  color: Theme.of(context).secondaryHeaderColor,
                   size: 20,
                 ),
                 const SizedBox(width: 4),
                 Text(
                   "Comentário",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

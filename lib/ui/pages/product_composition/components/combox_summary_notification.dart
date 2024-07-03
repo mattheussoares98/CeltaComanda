@@ -104,7 +104,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
                       .toString()
                       .toBrazilianNumber()
                       .addBrazilianCoin(),
-                  valueColor: Colors.green),
+                  valueColor: Theme.of(context).secondaryHeaderColor),
             ],
           ),
           const Divider(thickness: 0.2),

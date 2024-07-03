@@ -23,8 +23,8 @@ class RequestSummary extends StatelessWidget {
           ),
           Text(
             "$totalLiquid R\$",
-            style: const TextStyle(
-              color: Colors.green,
+            style: TextStyle(
+              color: Theme.of(context).secondaryHeaderColor,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),

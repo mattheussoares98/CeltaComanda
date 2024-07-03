@@ -128,10 +128,10 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             widget.father.IsOptionalItem == "true"
                                 ? "Item opcional"
                                 : "Item obrigatório",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
-                              color: Colors.green,
+                              color: Theme.of(context).secondaryHeaderColor,
                               fontSize: 17,
                             ),
                           ),

@@ -43,6 +43,7 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return ListView.builder(
       padding: EdgeInsets.zero,
@@ -95,13 +96,25 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
                             ),
                             child: Row(
                               children: [
-                                ImageWidget(
-                                  ean: null,
-                                  plu: child!.PluChild!,
-                                  productComplement: null,
-                                  showLargeImageInShowDialog: true,
-                                  height: 140,
-                                  width: 140,
+                                GestureDetector(
+                                  onTap: () {
+                                    showLargeImage(
+                                      context: context,
+                                      ean: null,
+                                      productComplement: null,
+                                      plu: child!.PluChild!,
+                                      menuPresenter: menuPresenter,
+                                      productName: child!.ChildName!,
+                                    );
+                                  },
+                                  child: ImageWidget(
+                                    ean: null,
+                                    plu: child!.PluChild!,
+                                    productComplement: null,
+                                    showLargeImageInShowDialog: true,
+                                    height: 140,
+                                    width: 140,
+                                  ),
                                 ),
                                 if (child!.ChildName != null)
                                   Expanded(

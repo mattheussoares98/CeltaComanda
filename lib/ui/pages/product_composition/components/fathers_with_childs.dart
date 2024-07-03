@@ -129,6 +129,8 @@ class __FatherDetailsState extends State<_FatherDetails> {
                 "Quantidade: ${widget.father.Quantity!.toBrazilianNumber()}",
                 style: TextStyle(
                   fontSize: hasMinWidth(context) ? 23 : 12,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
             Text(

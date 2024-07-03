@@ -95,6 +95,8 @@ class _FatherDetails extends StatefulWidget {
 }
 
 class __FatherDetailsState extends State<_FatherDetails> {
+  final GlobalKey _tooltipKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context);
@@ -104,20 +106,17 @@ class __FatherDetailsState extends State<_FatherDetails> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ImageWidget(
-              ean: null,
-              plu: widget.father.PluChild!,
-              productComplement: null,
-              showLargeImageInShowDialog: true,
-              height: 150,
-              width: 150,
-            ),
-            const SizedBox(width: 10),
             if (widget.father.ChildName != null)
               Expanded(
                 child: Text(
                   widget.father.ChildName!,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 40 : 20,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
                 ),
               ),
           ],
@@ -127,7 +126,10 @@ class __FatherDetailsState extends State<_FatherDetails> {
           children: [
             if (widget.father.Quantity != null)
               Text(
-                "Quantidade ${widget.father.Quantity!.toBrazilianNumber()}",
+                "Quantidade: ${widget.father.Quantity!.toBrazilianNumber()}",
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 12,
+                ),
               ),
             Text(
               cartPresenter
@@ -138,7 +140,7 @@ class __FatherDetailsState extends State<_FatherDetails> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
-                fontSize: 15,
+                fontSize: hasMinWidth(context) ? 23 : 15,
               ),
             ),
           ],
@@ -147,15 +149,38 @@ class __FatherDetailsState extends State<_FatherDetails> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                widget.father.IsOptionalItem == "true"
-                    ? "Item opcional"
-                    : "Item obrigatório",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).secondaryHeaderColor,
-                  fontSize: 17,
+              GestureDetector(
+                onTap: () {
+                  final dynamic tooltip = _tooltipKey.currentState;
+                  tooltip.ensureTooltipVisible();
+                },
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Tooltip(
+                        key: _tooltipKey,
+                        message: widget.father.IsOptionalItem == "true"
+                            ? "Se desejar, selecione um produto. O preço sele será somado no combo"
+                            : 'Selecione pelo menos um produto',
+                        child: Icon(
+                          Icons.info,
+                          color: Theme.of(context).secondaryHeaderColor,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      widget.father.IsOptionalItem == "true"
+                          ? "Item opcional"
+                          : "Item obrigatório",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        color: Theme.of(context).secondaryHeaderColor,
+                        fontSize: hasMinWidth(context) ? 23 : 15,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               AddCommentButton(

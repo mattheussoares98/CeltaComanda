@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class AddCommentButton extends StatelessWidget {
@@ -47,7 +48,12 @@ class AddCommentButton extends StatelessWidget {
           );
           callSetState();
         },
-        label: const Text("Comentários"),
+        label: Text(
+          "Comentários",
+          style: TextStyle(
+            fontSize: hasMinWidth(context) ? 23 : 15,
+          ),
+        ),
         icon: Icon(father.commentFather == null
             ? Icons.add_comment_rounded
             : Icons.edit),

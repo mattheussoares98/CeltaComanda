@@ -72,19 +72,6 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
                 productsCompositionsViewModel: widget.productsCompositions,
                 isFixedItemInCombox: widget.father.childs?.isEmpty == true,
                 father: widget.father,
-                updateSelectedIndex: () {
-                  if (selectedIndex == widget.index) {
-                    setState(() {
-                      selectedIndex = -1;
-                    });
-                  } else {
-                    setState(() {
-                      selectedIndex = widget.index;
-                    });
-                  }
-                },
-                index: widget.index,
-                selectedIndex: selectedIndex,
               ),
             ],
           ),

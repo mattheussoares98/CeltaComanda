@@ -129,7 +129,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                       Icon(
                         Icons.add_comment_rounded,
                         color: Theme.of(context).primaryColor,
-                        size: MediaQuery.of(context).size.width > 500 ? 40 : 30,
+                        size: getIconSize(context),
                       ),
                       if (commentsPresenter.hasSelectedComments)
                         const Positioned(
@@ -181,28 +181,21 @@ class _InsertProductButtonState extends State<InsertProductButton>
                         Expanded(
                           child: Row(
                             children: [
-                              if (MediaQuery.of(context).size.width > 500)
+                              if (hasMinWidth(context))
                                 Icon(
                                   Icons.shopping_cart,
-                                  size: MediaQuery.of(context).size.width > 500
-                                      ? 40
-                                      : 30,
+                                  size: getIconSize(context),
                                 ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width > 500
-                                    ? 30
-                                    : 8,
+                                width: hasMinWidth(context) ? 30 : 8,
                               ),
                               Expanded(
                                 child: Text(
-                                  MediaQuery.of(context).size.width > 500
+                                  hasMinWidth(context)
                                       ? "Inserir no carrinho"
                                       : "Inserir",
                                   style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width > 500
-                                            ? 30
-                                            : 17,
+                                    fontSize: hasMinWidth(context) ? 30 : 17,
                                   ),
                                 ),
                               ),
@@ -215,10 +208,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                     .toBrazilianNumber()
                                     .addBrazilianCoin(),
                                 style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width > 500
-                                          ? 30
-                                          : 17,
+                                  fontSize: hasMinWidth(context) ? 30 : 17,
                                 ),
                               ),
                             ],

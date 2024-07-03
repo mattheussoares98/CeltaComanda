@@ -26,7 +26,7 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
   int _getItensPerLine() {
     if (MediaQuery.of(context).size.width > 1000) {
       return 3;
-    } else if (MediaQuery.of(context).size.width > 500) {
+    } else if (hasMinWidth(context)) {
       return 2;
     } else {
       return 1;

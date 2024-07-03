@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages/pages.dart';
@@ -77,6 +78,15 @@ Widget _portraitLargeImage({
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              if (selectedProduct != null)
+                Text(
+                  selectedProduct.Name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 40 : 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               if (productComplement != null)
                 Expanded(
                   child: SingleChildScrollView(
@@ -141,6 +151,15 @@ Widget _landScapeLargeImage({
           ),
           content: Column(
             children: [
+              if (selectedProduct != null)
+                Text(
+                  selectedProduct.Name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 40 : 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               Expanded(
                 child: Row(
                   children: [

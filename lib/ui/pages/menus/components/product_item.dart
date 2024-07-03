@@ -26,7 +26,10 @@ class _ProductItemState extends State<ProductItem> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          menuPresenter.updateSelectedProduct(widget.productsViewModel);
+          menuPresenter.updateSelectedProduct(
+            selectedProduct: widget.productsViewModel,
+            commentsPresenter: commentsPresenter,
+          );
           commentsPresenter.unselectAllComments();
 
           if (widget.productsViewModel.IsPromoCombox == "true") {

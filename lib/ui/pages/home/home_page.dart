@@ -37,13 +37,17 @@ class _HomePageState extends State<HomePage>
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
     required MenuPresenter menuPresenter,
+    required CommentsPresenter commentsPresenter,
   }) {
     setState(() {
       _pageController.jumpToPage(index);
       _currentIndex = index;
     });
     printedProductsPresenter.updateCanCancelProducts(false);
-    homePresenter.onChangePage(menuPresenter: menuPresenter);
+    homePresenter.onChangePage(
+      menuPresenter: menuPresenter,
+      commentsPresenter: commentsPresenter,
+    );
   }
 
   bool _isLoaded = false;
@@ -66,6 +70,7 @@ class _HomePageState extends State<HomePage>
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     final List<Widget> screens = [
       makeMenusPage(),
@@ -94,6 +99,7 @@ class _HomePageState extends State<HomePage>
               printedProductsPresenter: printedProductsPresenter,
               menuPresenter: menuPresenter,
               homePresenter: homePresenter,
+              commentsPresenter: commentsPresenter,
             );
           },
           children: screens,
@@ -111,6 +117,7 @@ class _HomePageState extends State<HomePage>
               printedProductsPresenter: printedProductsPresenter,
               menuPresenter: menuPresenter,
               homePresenter: homePresenter,
+              commentsPresenter: commentsPresenter,
             );
           },
           items: [

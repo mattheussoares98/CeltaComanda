@@ -22,6 +22,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late MenuPresenterSpy menuPresenter;
+  late CommentsPresenterSpy commentsPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
@@ -62,6 +63,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     menuPresenter = MenuPresenterSpy();
+    commentsPresenter = CommentsPresenterSpy();
 
     sut = GetxMenuPresenter(
       navigateTo: navigateTo,
@@ -131,6 +133,7 @@ void main() {
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
   });
 
   group("Get groups and products", () {
@@ -573,17 +576,32 @@ void main() {
     test('Should update indexOfSelectedProduct correctly', () async {
       expectLater(sut.selectedProductStream, emits(productsViewModel));
 
-      sut.updateSelectedProduct(productsViewModel);
-      sut.updateSelectedProduct(productsViewModel);
+      sut.updateSelectedProduct(
+        selectedProduct: productsViewModel,
+        commentsPresenter: commentsPresenter,
+      );
+      sut.updateSelectedProduct(
+        selectedProduct: productsViewModel,
+        commentsPresenter: commentsPresenter,
+      );
     });
 
     test('Should clear product quantity when click in other product', () async {
-      sut.updateSelectedProduct(productsViewModel);
+      sut.updateSelectedProduct(
+        selectedProduct: productsViewModel,
+        commentsPresenter: commentsPresenter,
+      );
       productsViewModel.productQuantity = 2.0;
       expect(productsViewModel.productQuantity, 2.0);
 
-      sut.updateSelectedProduct(null);
-      sut.updateSelectedProduct(productsViewModel);
+      sut.updateSelectedProduct(
+        selectedProduct: null,
+        commentsPresenter: commentsPresenter,
+      );
+      sut.updateSelectedProduct(
+        selectedProduct: productsViewModel,
+        commentsPresenter: commentsPresenter,
+      );
       expect(productsViewModel.productQuantity, 1.0);
     });
 
@@ -591,9 +609,10 @@ void main() {
       expectLater(sut.selectedProductStream, emits(null));
 
       sut.updateSelectedProduct(
-        ProductsViewModel.fromEntity(
+        selectedProduct: ProductsViewModel.fromEntity(
           EntityFactory.makeProductsEntitys(isPromoCombox: true)[0],
         ),
+        commentsPresenter: commentsPresenter,
       );
     });
   });

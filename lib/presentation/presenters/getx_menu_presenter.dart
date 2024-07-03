@@ -242,7 +242,10 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  void updateSelectedProduct(ProductsViewModel? selectedProduct) {
+  void updateSelectedProduct({
+    required ProductsViewModel? selectedProduct,
+    required CommentsPresenter commentsPresenter,
+  }) {
     selectedProduct?.productQuantity = 1;
 
     if (_selectedProduct.value == selectedProduct) {

@@ -18,6 +18,7 @@ void main() {
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
+  late CommentsPresenterSpy commentsPresenter;
 
   late NavigateToSpy navigateTo;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
@@ -33,6 +34,7 @@ void main() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
+    commentsPresenter = CommentsPresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
       navigateTo: navigateTo,
@@ -68,6 +70,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
   });
 
   group("Navigation", () {
@@ -122,9 +125,13 @@ void main() {
 
   group("On page change", () {
     test("Should clear selectedProduct when changePage", () {
-      sut.onChangePage(menuPresenter: menuPresenter);
+      sut.onChangePage(
+          menuPresenter: menuPresenter, commentsPresenter: commentsPresenter);
 
-      verify(() => menuPresenter.updateSelectedProduct(null)).called(1);
+      verify(() => menuPresenter.updateSelectedProduct(
+            selectedProduct: null,
+            commentsPresenter: commentsPresenter,
+          )).called(1);
     });
   });
 }

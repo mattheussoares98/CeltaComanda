@@ -137,7 +137,10 @@ void _onTapImage({
     selectedProduct: productsViewModel,
     menuPresenter: menuPresenter,
   );
-  menuPresenter.updateSelectedProduct(productsViewModel);
+  menuPresenter.updateSelectedProduct(
+    selectedProduct: productsViewModel,
+    commentsPresenter: commentsPresenter,
+  );
   commentsPresenter.unselectAllComments();
 }
 

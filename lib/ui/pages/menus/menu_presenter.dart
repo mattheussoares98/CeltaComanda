@@ -33,5 +33,8 @@ abstract class MenuPresenter implements Listenable {
   void goToComboxPage(ProductsViewModel product);
   void clear();
   void updateIndexOfSelectedGroup(int index);
-  void updateSelectedProduct(ProductsViewModel? selectedProduct);
+  void updateSelectedProduct({
+    required ProductsViewModel? selectedProduct,
+    required CommentsPresenter commentsPresenter,
+  });
 }

@@ -114,6 +114,7 @@ Widget _portraitLargeImage({
                     maximumSize: const Size(double.infinity, 60),
                   ),
                   onPressed: () {
+                    Navigator.of(context).pop();
                     menuPresenter.goToComboxPage(selectedProduct);
                   },
                   child: const Text("Escolher produtos do combo"),

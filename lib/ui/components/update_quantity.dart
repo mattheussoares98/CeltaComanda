@@ -28,7 +28,7 @@ class UpdateQuantity extends StatelessWidget {
               showDeleteIcon ? Icons.delete : Icons.remove,
               color:
                   showDeleteIcon ? Colors.red : Theme.of(context).primaryColor,
-              size: hasMinWidth(context) ? 30 : 20,
+              size: hasMinWidth(context) ? 50 : 20,
             ),
           ),
           Padding(
@@ -37,7 +37,7 @@ class UpdateQuantity extends StatelessWidget {
               productQuantity.toString().toBrazilianNumber(),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: hasMinWidth(context) ? 20 : 15,
+                fontSize: hasMinWidth(context) ? 25 : 15,
               ),
             ),
           ),
@@ -46,10 +46,9 @@ class UpdateQuantity extends StatelessWidget {
             child: Icon(
               Icons.add,
               color: Theme.of(context).colorScheme.primary,
-              size: hasMinWidth(context) ? 30 : 20,
+              size: hasMinWidth(context) ? 50 : 20,
             ),
           ),
-          const SizedBox(width: 1),
         ],
       ),
     );

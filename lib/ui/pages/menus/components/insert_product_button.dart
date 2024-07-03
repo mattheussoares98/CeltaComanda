@@ -149,6 +149,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                     ],
                   ),
                 ),
+                SizedBox(width: hasMinWidth(context) ? 30 : 8),
                 UpdateQuantity(
                   showDeleteIcon: false,
                   productQuantity: widget.selectedProduct!.productQuantity,
@@ -162,8 +163,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                     addProductQuantity(menuPresenter);
                   },
                 ),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width > 400 ? 30 : 8),
+                SizedBox(width: hasMinWidth(context) ? 30 : 8),
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(),

@@ -104,38 +104,17 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                widget.father.ChildName!,
-                                style: TextStyle(
-                                  fontSize: hasMinWidth(context) ? 40 : 20,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).primaryColorDark,
-                                ),
-                              ),
+                              FatherNameText(name: widget.father.ChildName!),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Quantidade: ${widget.father.Quantity!.toBrazilianNumber()}",
-                                    style: TextStyle(
-                                      fontSize: hasMinWidth(context) ? 23 : 12,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                                  QuantityText(
+                                    quantity: widget.father.Quantity!,
                                   ),
-                                  Text(
-                                    productCompositionPresenter
+                                  PriceText(
+                                    quantity: productCompositionPresenter
                                         .calculateTotalLiquid(
-                                            product: widget.father)
-                                        .toString()
-                                        .toBrazilianNumber()
-                                        .addBrazilianCoin(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: hasMinWidth(context) ? 23 : 15,
-                                    ),
+                                            product: widget.father),
                                   ),
                                 ],
                               ),

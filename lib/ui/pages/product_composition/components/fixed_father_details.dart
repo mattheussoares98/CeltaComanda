@@ -32,16 +32,7 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
           children: [
             if (widget.father.ChildName != null)
               Expanded(
-                child: Text(
-                  widget.father.ChildName!,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 40 : 20,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColorDark,
-                  ),
-                ),
+                child: FatherNameText(name: widget.father.ChildName!),
               ),
           ],
         ),
@@ -49,25 +40,12 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             if (widget.father.Quantity != null)
-              Text(
-                "Quantidade: ${widget.father.Quantity!.toBrazilianNumber()}",
-                style: TextStyle(
-                  fontSize: hasMinWidth(context) ? 23 : 12,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w300,
-                ),
+              QuantityText(
+                quantity: widget.father.Quantity!,
               ),
-            Text(
-              cartPresenter
-                  .calculateProductTotalLiquid(widget.father)
-                  .toString()
-                  .toBrazilianNumber()
-                  .addBrazilianCoin(),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontSize: hasMinWidth(context) ? 23 : 15,
-              ),
+            PriceText(
+              quantity:
+                  cartPresenter.calculateProductTotalLiquid(widget.father),
             ),
           ],
         ),

@@ -1,8 +1,11 @@
 export './add_comment_button.dart';
 export './combox_summary_notification.dart';
 export 'composition.dart';
+export './father_name_text.dart';
 export './fathers_with_childs.dart';
 export './fathers_without_childs.dart';
 export './fixed_father_details.dart';
 export 'childs_items_radio_list_tile.dart';
+export 'price_text.dart';
+export 'quantity_text.dart';
 export './save_combox_button.dart';

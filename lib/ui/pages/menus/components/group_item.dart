@@ -29,7 +29,7 @@ class GroupItem extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: groupIsSelected ? Colors.white : Colors.grey,
-                fontSize: 50,
+                fontSize: 5,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -40,10 +40,10 @@ class _ImageWidgetState extends State<ImageWidget>
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(
-        animation: AnimationManager.animation,
+        animation: AnimationManager.getAnimation(),
         builder: (context, child) {
           return Transform.scale(
-            scale: AnimationManager.animation.value,
+            scale: AnimationManager.getAnimation().value,
             child: _cachedImage(
               width: widget.width,
               height: widget.height,

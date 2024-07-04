@@ -12,21 +12,22 @@ class AnimationManager {
       vsync: _MyTickerProvider(),
       duration: const Duration(seconds: 12),
     )..repeat(reverse: true);
+  }
+
+  static bool _loaded = false;
+
+  static Animation getAnimation([begin = 1.0, end = 0.7]) {
+    if (!_loaded) {
+      _loaded = true;
+      initializeAnimation();
+    }
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut, // Escolha a curva desejada aqui
     );
 
-    _animation = Tween<double>(begin: 1, end: 0.7).animate(curvedAnimation);
-  }
-
-  static bool _loaded = false;
-  static Animation<double> get animation {
-    if (!_loaded) {
-      _loaded = true;
-      initializeAnimation();
-    }
+    _animation = Tween<double>(begin: begin, end: end).animate(curvedAnimation);
     return _animation;
   }
 

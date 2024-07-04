@@ -1,9 +1,29 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 void showErrorMessage(BuildContext context, String error) {
   ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor: Colors.red[900],
-    content: Text(error, textAlign: TextAlign.center),
-  ));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: Colors.red[900],
+      content: Text(
+        error,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: hasMinWidth(context) ? 25 : 17,
+        ),
+      ),
+      dismissDirection: DismissDirection.down,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: Theme.of(context).primaryColorLight,
+        ),
+      ),
+      showCloseIcon: true,
+      closeIconColor: Colors.black,
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+      behavior: SnackBarBehavior.floating,
+    ),
+  );
 }

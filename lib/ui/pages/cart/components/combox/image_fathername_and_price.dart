@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class ImageFathernameAndPrice extends StatelessWidget {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ImageWidget(
           ean: confirmedCombox.father.EanCode,
@@ -33,9 +34,10 @@ class ImageFathernameAndPrice extends StatelessWidget {
         Expanded(
           child: Text(
             confirmedCombox.father.Name,
-            style: const TextStyle(
+            textAlign: TextAlign.center,
+            style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: hasMinWidth(context) ? 30 : 18,
             ),
           ),
         ),

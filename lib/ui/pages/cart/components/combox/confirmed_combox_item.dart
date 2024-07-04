@@ -50,10 +50,13 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
         }
 
         return Padding(
-          padding: const EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 0.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Divider(
+                thickness: 0.1,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,8 +65,8 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                     ean: null,
                     plu: product.PluChild.toString(),
                     showLargeImageInShowDialog: true,
-                    height: 30,
-                    width: 30,
+                    height: 70,
+                    width: 70,
                     beginAnimation: 1,
                     endAnimation: 0.7,
                   ),

@@ -190,7 +190,10 @@ class GetxProductCompositionPresenter extends GetxController
     mainError = null;
 
     try {
-      validateCombox.comboxIsValid(productsCompositions);
+      bool isValid = validateCombox.comboxIsValid(productsCompositions);
+      if (!isValid) {
+        throw DomainError.invalidCombox;
+      }
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: cartPresenter.saleRequestTemp!.DeliveryControl.toInt(),

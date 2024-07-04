@@ -12,8 +12,8 @@ class ValidateComboxSpy extends Mock implements ValidateCombox {
         () => this.comboxIsValid(any()),
       );
 
-  void mockValidateCombox() {
-    this.mockValidateComboxCall().thenAnswer((_) async => _);
+  void mockValidateCombox([bool isValid = true]) {
+    this.mockValidateComboxCall().thenAnswer((_) => isValid);
   }
 
   void mockError() {

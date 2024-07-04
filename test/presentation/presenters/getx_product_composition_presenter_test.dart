@@ -30,6 +30,7 @@ void main() {
   late ValidateComboxSpy validateCombox;
 
   late List<ProductCompositionEntity> optionalFathers;
+  late ProductCompositionViewModel obligatoryFather;
   late int internalCodeOnErp;
   late SaleRequestTempEntity saleRequestTempEntity;
 
@@ -109,6 +110,17 @@ void main() {
 
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(300).toString();
+
+    obligatoryFather = EntityFactory.makeProductCompositionViewModel(
+      quantity: faker.randomGenerator.decimal(),
+      salePrice: faker.randomGenerator.decimal(),
+      offerPrice: faker.randomGenerator.decimal(),
+      fatherIncrement: faker.randomGenerator.decimal(),
+      childIncrement: faker.randomGenerator.decimal(),
+      isOptionalItem: false,
+      indexOfSelectedChild: null,
+      insertChilds: false,
+    );
   }
 
   setUp(() {
@@ -795,6 +807,52 @@ void main() {
       expectLater(sut.comboxIsValidStream, emits(false));
 
       sut.updateComboxIsValid([]);
+    });
+  });
+
+  group("update selected child", () {
+    test(
+        "Should update selected index of child if click in product that have child",
+        () {
+      final optionalFather =
+          ProductCompositionViewModel.fromEntity(optionalFathers[0]);
+
+      expect(optionalFather.indexOfSelectedChild, null);
+      sut.updateSelectedIndex(
+        father: optionalFather,
+        index: 0,
+      );
+      expect(optionalFather.indexOfSelectedChild, 0);
+    });
+    test(
+        "Should not update index if click in the same product and father is not optional",
+        () {
+      sut.updateSelectedIndex(
+        father: obligatoryFather,
+        index: 0,
+      );
+      sut.updateSelectedIndex(
+        father: obligatoryFather,
+        index: 0,
+      );
+
+      expect(obligatoryFather.indexOfSelectedChild, 0);
+    });
+    test("Should update index if click in the same product and is optional",
+        () {
+      final optionalFather =
+          ProductCompositionViewModel.fromEntity(optionalFathers[0]);
+
+      sut.updateSelectedIndex(
+        father: optionalFather,
+        index: 0,
+      );
+      sut.updateSelectedIndex(
+        father: optionalFather,
+        index: 0,
+      );
+
+      expect(optionalFather.indexOfSelectedChild, null);
     });
   });
 }

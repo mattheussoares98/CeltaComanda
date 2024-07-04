@@ -46,7 +46,8 @@ class GetxProductCompositionPresenter extends GetxController
   }) async {
     isLoading = true;
     mainError = null;
-    _productsComposition.value = [];
+    List<ProductCompositionViewModel> productComposition = [];
+
     try {
       updateComboxQuantity(false, true);
       final fathers = await getProductComposition.getFathers(
@@ -64,10 +65,10 @@ class GetxProductCompositionPresenter extends GetxController
       );
 
       _productsComposition.subject.add(childs);
-      _productsComposition.value.addAll(childs);
+      productComposition.addAll(childs);
 
       await Future.delayed(const Duration(milliseconds: 500), () {
-        updateComboxIsValid(_productsComposition.value);
+        updateComboxIsValid(productComposition);
       });
     } catch (e) {
       mainError = UIError.unexpected;
@@ -293,5 +294,12 @@ class GetxProductCompositionPresenter extends GetxController
   void updateSelectedIndex({
     required ProductCompositionViewModel father,
     required int? index,
-  }) {}
+  }) {
+    if (father.IsOptionalItem == "true" &&
+        father.indexOfSelectedChild == index) {
+      father.indexOfSelectedChild = null;
+    } else {
+      father.indexOfSelectedChild = index;
+    }
+  }
 }

@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
-
-import '../../helpers/helpers.dart';
 import 'package:flutter/material.dart';
+
+import '../../../ui/components/components.dart';
+import '../../helpers/helpers.dart';
 
 class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
@@ -35,9 +35,9 @@ class _PriceAndUpdateProductQuantityState
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          "${widget.price.toString().toBrazilianNumber()} R\$",
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+          widget.price.toString().toBrazilianNumber().addBrazilianCoin(),
+          style: TextStyle(
+            fontSize: hasMinWidth(context) ? 23 : 15,
           ),
         ),
         if (widget.showUpdateProductQuantity)
@@ -54,6 +54,7 @@ class _PriceAndUpdateProductQuantityState
                   productQuantity: widget.productQuantity,
                   onPressedReduceQuantity: widget.onPressedReduceQuantity,
                   onPressedAddQuantity: widget.onPressedAddQuantity,
+                  iconSize: hasMinWidth(context) ? 30 : 20,
                 ),
               ),
               Text(
@@ -64,6 +65,7 @@ class _PriceAndUpdateProductQuantityState
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
+                  fontSize: hasMinWidth(context) ? 25 : 17,
                 ),
               ),
             ],

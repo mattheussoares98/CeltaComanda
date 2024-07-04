@@ -26,6 +26,8 @@ class ImageFathernameAndPrice extends StatelessWidget {
           showLargeImageInShowDialog: true,
           beginAnimation: 1,
           endAnimation: 0.7,
+          height: 150,
+          width: 150,
         ),
         const SizedBox(width: 3),
         Expanded(

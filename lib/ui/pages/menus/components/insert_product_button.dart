@@ -151,6 +151,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                 ),
                 SizedBox(width: hasMinWidth(context) ? 30 : 8),
                 UpdateQuantity(
+                  iconSize: hasMinWidth(context) ? 50 : 20,
                   showDeleteIcon: false,
                   productQuantity: widget.selectedProduct!.productQuantity,
                   onPressedReduceQuantity: widget.selectedProduct != null &&

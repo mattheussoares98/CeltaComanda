@@ -750,4 +750,43 @@ void main() {
       expect(father.commentFather, "any");
     });
   });
+
+  group("certifyComboxIsValid", () {
+    test("Should emit correct envets on certifyComboxIsValid return true", () {
+      final productComposition = EntityFactory.makeProductCompositionViewModel(
+        quantity: faker.randomGenerator.decimal(),
+        salePrice: faker.randomGenerator.decimal(),
+        offerPrice: faker.randomGenerator.decimal(),
+        fatherIncrement: faker.randomGenerator.decimal(),
+        childIncrement: faker.randomGenerator.decimal(),
+        isOptionalItem: faker.randomGenerator.boolean(),
+        indexOfSelectedChild: 0,
+        insertChilds: true,
+      );
+
+      expectLater(sut.comboxIsValidStream, emits(true));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      sut.certifyComboxIsValid([productComposition]);
+    });
+    test("Should emit correct envets on certifyComboxIsValid return false", () {
+      validateCombox.mockValidateCombox(false);
+      final productComposition = EntityFactory.makeProductCompositionViewModel(
+        quantity: faker.randomGenerator.decimal(),
+        salePrice: faker.randomGenerator.decimal(),
+        offerPrice: faker.randomGenerator.decimal(),
+        fatherIncrement: faker.randomGenerator.decimal(),
+        childIncrement: faker.randomGenerator.decimal(),
+        isOptionalItem: faker.randomGenerator.boolean(),
+        indexOfSelectedChild: 0,
+        insertChilds: true,
+      );
+
+      expectLater(sut.comboxIsValidStream, emits(false));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
+
+      sut.certifyComboxIsValid([productComposition]);
+    });
+  });
 }

@@ -240,10 +240,14 @@ class GetxProductCompositionPresenter extends GetxController
   ) {
     mainError = null;
     try {
-      validateCombox.comboxIsValid(productsCompositions);
+      if (validateCombox.comboxIsValid(productsCompositions)) {
+        _comboxIsValidStream.value = true;
+      } else {
+        _comboxIsValidStream.value = false;
+        throw DomainError.invalidCombox;
+      }
     } catch (e) {
       mainError = UIError.invalidCombox;
-      throw DomainError.invalidCombox;
     }
   }
 

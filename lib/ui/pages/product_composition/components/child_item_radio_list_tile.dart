@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../components/components.dart';
+import '../../pages.dart';
+
+class ChildItemRadioListTile extends StatelessWidget {
+  final Function() updateSelectedIndex;
+  final int index;
+  final ProductCompositionViewModel father;
+  final ProductCompositionViewModel? child;
+  const ChildItemRadioListTile({
+    required this.updateSelectedIndex,
+    required this.index,
+    required this.father,
+    required this.child,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          updateSelectedIndex();
+        },
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 2, right: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: const Color.fromARGB(255, 240, 240, 240),
+            ),
+          ),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  showLargeImage(
+                    context: context,
+                    ean: null,
+                    productComplement: null,
+                    plu: child!.PluChild!,
+                    menuPresenter: menuPresenter,
+                    productName: child!.ChildName!,
+                  );
+                },
+                child: ImageWidget(
+                  ean: null,
+                  plu: child!.PluChild!,
+                  showLargeImageInShowDialog: true,
+                  height: 140,
+                  width: 140,
+                  beginAnimation: 1,
+                  endAnimation: 0.7,
+                ),
+              ),
+              if (child!.ChildName != null)
+                Expanded(
+                  child: Text(
+                    child!.ChildName!,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              Radio<int>(
+                value: index,
+                groupValue: father.indexOfSelectedChild,
+                visualDensity: VisualDensity.compact,
+                toggleable: father.IsOptionalItem == "true",
+                onChanged: (int? value) {
+                  updateSelectedIndex();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

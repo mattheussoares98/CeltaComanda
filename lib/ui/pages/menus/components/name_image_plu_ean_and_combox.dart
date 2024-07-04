@@ -141,7 +141,6 @@ void _onTapImage({
     selectedProduct: productsViewModel,
     commentsPresenter: commentsPresenter,
   );
-  commentsPresenter.unselectAllComments();
 }
 
 Widget _productNameAndPrice(

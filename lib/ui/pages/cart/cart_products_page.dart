@@ -117,19 +117,19 @@ class _CartPageState extends State<CartPage>
                                 "lib/ui/assets/images/empty_cart.jpg",
                               ),
                             ),
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              label: Text(
-                                "Adicionar itens",
-                                style: TextStyle(
-                                  fontSize: hasMinWidth(context) ? 25 : 20,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.shopping_cart,
-                                size: hasMinWidth(context) ? 30 : 20,
-                              ),
-                            )
+                            // ElevatedButton.icon(
+                            //   onPressed: () {},
+                            //   label: Text(
+                            //     "Adicionar itens",
+                            //     style: TextStyle(
+                            //       fontSize: hasMinWidth(context) ? 25 : 20,
+                            //     ),
+                            //   ),
+                            //   icon: Icon(
+                            //     Icons.shopping_cart,
+                            //     size: hasMinWidth(context) ? 30 : 20,
+                            //   ),
+                            // )
                           ],
                         ),
                       ),

@@ -232,6 +232,20 @@ void main() {
 
       expect(sut.totalComboxQuantity, 1);
     });
+    test(
+        'Should call validateCombox on loadProductComposition to change button confirmation style',
+        () async {
+      getProductComposition.mockGetFathers([]);
+      getProductComposition.mockGetChildsOfFather([]);
+
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+
+      verify(() => validateCombox.comboxIsValid([])).called(1);
+    });
   });
 
   group("sut.UpdateSaleRequestTemp", () {
@@ -774,7 +788,8 @@ void main() {
 
       sut.updateComboxIsValid([]);
     });
-    test("Should update comboxIsValidStream correctly on combox is invalid", () {
+    test("Should update comboxIsValidStream correctly on combox is invalid",
+        () {
       validateCombox.mockValidateCombox(false);
 
       expectLater(sut.comboxIsValidStream, emits(false));

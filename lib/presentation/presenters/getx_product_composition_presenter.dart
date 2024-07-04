@@ -63,6 +63,7 @@ class GetxProductCompositionPresenter extends GetxController
       );
 
       _productsComposition.subject.add(childs);
+      validateCombox.comboxIsValid(childs);
     } catch (e) {
       mainError = UIError.unexpected;
       _productsComposition.subject.add([]);

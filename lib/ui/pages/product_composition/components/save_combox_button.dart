@@ -40,10 +40,10 @@ class SaveComboxButton extends StatelessWidget {
                         : Theme.of(context).primaryColorLight.withAlpha(1),
                   ),
                   onPressed: () async {
-                    try {
-                      productCompositionPresenter
-                          .certifyComboxIsValid(productsCompositions);
+                    bool comboxIsValid = productCompositionPresenter
+                        .certifyComboxIsValid(productsCompositions);
 
+                    if (comboxIsValid) {
                       notificationDialog(
                         context: context,
                         titleMessage: "Salvar combo?",
@@ -73,8 +73,6 @@ class SaveComboxButton extends StatelessWidget {
                           }
                         },
                       );
-                    } catch (e) {
-                      e;
                     }
                   },
                   child: Row(

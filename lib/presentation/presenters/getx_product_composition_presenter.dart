@@ -235,20 +235,21 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void certifyComboxIsValid(
+  bool certifyComboxIsValid(
     List<ProductCompositionViewModel> productsCompositions,
   ) {
     mainError = null;
     try {
       if (validateCombox.comboxIsValid(productsCompositions)) {
         _comboxIsValidStream.value = true;
+        return _comboxIsValidStream.value;
       } else {
         _comboxIsValidStream.value = false;
-        throw DomainError.invalidCombox;
+        throw Exception();
       }
     } catch (e) {
       mainError = UIError.invalidCombox;
-      throw DomainError.invalidCombox;
+      return _comboxIsValidStream.value;
     }
   }
 

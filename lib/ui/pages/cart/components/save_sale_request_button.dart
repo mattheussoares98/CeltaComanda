@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class SaveSaleRequestButton extends StatelessWidget {
             if (cartPresenter.isGeneratingVersionToRede) {
               writeCommandNumber(
                 context: context,
-               action: OnWriteCommand.saveProducts,
+                action: OnWriteCommand.saveProducts,
               );
             } else {
               notificationDialog(
@@ -117,13 +118,19 @@ class SaveSaleRequestButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text(
-                'Confirmar',
+              Text(
+                'Solicitar produtos',
                 style: TextStyle(
                   color: Colors.white,
+                  fontSize: hasMinWidth(context) ? 23 : 16,
                 ),
               ),
-              Text(cartPresenter.totalSaleRequestTempPrice),
+              Text(
+                cartPresenter.totalSaleRequestTempPrice,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 16,
+                ),
+              ),
             ],
           ),
         ),

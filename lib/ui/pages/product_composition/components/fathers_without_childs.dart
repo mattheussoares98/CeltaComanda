@@ -98,8 +98,8 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             ean: null,
                             plu: widget.father.PluChild!,
                             showLargeImageInShowDialog: true,
-                            height: 140,
-                            width: 140,
+                            height: 100,
+                            width: 100,
                             beginAnimation: 1,
                             endAnimation: 0.7,
                           ),
@@ -108,21 +108,17 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               FatherNameText(name: widget.father.ChildName!),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  QuantityText(
-                                    quantity: widget.father.Quantity!,
-                                  ),
-                                  PriceText(
-                                    quantity: productCompositionPresenter
-                                        .calculateTotalLiquid(
-                                            product: widget.father),
-                                  ),
-                                ],
+                              QuantityText(
+                                quantity: widget.father.Quantity!,
                               ),
+                              // PriceText(
+                              //   quantity: productCompositionPresenter
+                              //       .calculateTotalLiquid(
+                              //           product: widget.father),
+                              // ),
                             ],
                           ),
                         ),

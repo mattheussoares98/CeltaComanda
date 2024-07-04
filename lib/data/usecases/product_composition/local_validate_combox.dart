@@ -8,8 +8,7 @@ class LocalValidateCombox implements ValidateCombox {
     for (var element in productsComposition) {
       if (element.IsOptionalItem == "false" &&
           element.indexOfSelectedChild == null) {
-        isValid = false;
-        break;
+        return false;
       }
     }
     return isValid;

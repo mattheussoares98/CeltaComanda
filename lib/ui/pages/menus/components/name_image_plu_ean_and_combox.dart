@@ -136,6 +136,7 @@ void _onTapImage({
     showInsertButton: true,
     selectedProduct: productsViewModel,
     menuPresenter: menuPresenter,
+    productName: productsViewModel.Name,
   );
   menuPresenter.updateSelectedProduct(
     selectedProduct: productsViewModel,

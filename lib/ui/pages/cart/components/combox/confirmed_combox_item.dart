@@ -29,8 +29,6 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
 
@@ -58,7 +56,7 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                 thickness: 0.1,
               ),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ImageWidget(
@@ -87,6 +85,7 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                   FittedBox(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
@@ -95,20 +94,20 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                             fontSize: hasMinWidth(context) ? 20 : 15,
                           ),
                         ),
-                        Text(
-                          (productCompositionPresenter
-                                      .calculateProductPrice(combox) *
-                                  combox.Quantity.toString().toDouble())
-                              .toString()
-                              .toBrazilianNumber()
-                              .addBrazilianCoin(),
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: hasMinWidth(context) ? 20 : 15,
-                          ),
-                        ),
+                        // Text(
+                        //   (productCompositionPresenter
+                        //               .calculateProductPrice(combox) *
+                        //           combox.Quantity.toString().toDouble())
+                        //       .toString()
+                        //       .toBrazilianNumber()
+                        //       .addBrazilianCoin(),
+                        //   textAlign: TextAlign.end,
+                        //   style: TextStyle(
+                        //     color: Theme.of(context).colorScheme.primary,
+                        //     fontWeight: FontWeight.bold,
+                        //     fontSize: hasMinWidth(context) ? 20 : 15,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

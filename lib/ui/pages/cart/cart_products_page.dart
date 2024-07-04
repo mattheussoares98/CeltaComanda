@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
@@ -93,27 +94,42 @@ class _CartPageState extends State<CartPage>
                         height: MediaQuery.of(context).size.height -
                             AppBar().preferredSize.height -
                             kBottomNavigationBarHeight,
+                        width: double.infinity,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: FittedBox(
-                                  child: Text(
+                            FittedBox(
+                              child: Text(
                                 "O carrinho está vazio",
                                 style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: hasMinWidth(context) ? 30 : 20,
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FontStyle.italic,
                                 ),
-                              )),
+                              ),
                             ),
-                            Image.asset(
-                              key: const Key("emptyCartKey"),
-                              "lib/ui/assets/images/empty_cart.jpg",
-                              width: double.infinity,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 20.0),
+                              child: Image.asset(
+                                key: const Key("emptyCartKey"),
+                                "lib/ui/assets/images/empty_cart.jpg",
+                              ),
                             ),
+                            ElevatedButton.icon(
+                              onPressed: () {},
+                              label: Text(
+                                "Adicionar itens",
+                                style: TextStyle(
+                                  fontSize: hasMinWidth(context) ? 25 : 20,
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.shopping_cart,
+                                size: hasMinWidth(context) ? 30 : 20,
+                              ),
+                            )
                           ],
                         ),
                       ),

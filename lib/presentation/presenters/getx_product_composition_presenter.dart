@@ -63,7 +63,7 @@ class GetxProductCompositionPresenter extends GetxController
       );
 
       _productsComposition.subject.add(childs);
-      Future.delayed(const Duration(milliseconds: 500), () {
+      await Future.delayed(const Duration(milliseconds: 500), () {
         updateComboxIsValid(_productsComposition.value);
       });
     } catch (e) {

@@ -92,16 +92,7 @@ Widget _portraitLargeImage({
                   ),
                 ),
               if (productComplement != null)
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(productComplement),
-                      ],
-                    ),
-                  ),
-                ),
+                _productComplement(context, productComplement),
               Expanded(
                 flex: 2,
                 child: ImageWidget(
@@ -173,21 +164,12 @@ Widget _landScapeLargeImage({
                         ean: ean,
                         plu: plu,
                         showLargeImageInShowDialog: false,
-                        height: MediaQuery.of(context).size.height * 0.9,
+                        height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                       ),
                     ),
                     if (productComplement != null)
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(productComplement),
-                            ],
-                          ),
-                        ),
-                      ),
+                      _productComplement(context, productComplement),
                   ],
                 ),
               ),
@@ -221,6 +203,26 @@ Widget _landScapeLargeImage({
         ),
       ),
     ],
+  );
+}
+
+Widget _productComplement(BuildContext context, String productComplement) {
+  return Expanded(
+    child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            productComplement,
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 20 : 12,
+              color: Theme.of(context).primaryColorLight,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ],
+      ),
+    ),
   );
 }
 

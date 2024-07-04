@@ -248,6 +248,7 @@ class GetxProductCompositionPresenter extends GetxController
       }
     } catch (e) {
       mainError = UIError.invalidCombox;
+      throw DomainError.invalidCombox;
     }
   }
 

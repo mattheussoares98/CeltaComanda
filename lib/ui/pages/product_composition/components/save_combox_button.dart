@@ -22,79 +22,90 @@ class SaveComboxButton extends StatelessWidget {
 
     return StreamBuilder<double>(
         stream: productCompositionPresenter.totalPriceComboxStream,
-        builder: (context, snapshot) {
+        builder: (context, priceSnapshot) {
           Future.delayed(Duration.zero, () {
             productCompositionPresenter
                 .updateTotalLiquidCombox(productsCompositions);
           });
 
-          return ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 45),
-              maximumSize: const Size(double.infinity, 45),
-            ),
-            onPressed: () async {
-              try {
-                productCompositionPresenter
-                    .certifyComboxIsValid(productsCompositions);
-
-                notificationDialog(
-                  context: context,
-                  titleMessage: "Salvar combo?",
-                  cancelMessage: "Cancelar",
-                  confirmMessage: "Confirmar",
-                  content: ComboxSummaryNotification(
-                    fatherName: product.Name,
-                    productsCompositions: productsCompositions,
-                    totalPrice: snapshot.data!,
+          return StreamBuilder<bool>(
+              stream: productCompositionPresenter.comboxIsValidStream,
+              builder: (context, isValidComboxSnapshot) {
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 45),
+                    maximumSize: const Size(double.infinity, 45),
+                    backgroundColor: isValidComboxSnapshot.data == true
+                        ? Theme.of(context).primaryColorDark
+                        : Theme.of(context).primaryColorLight.withAlpha(1),
                   ),
-                  onPress: () async {
-                    bool updatedCombox = await cartPresenter.addConfirmedCombox(
-                      selectedChilds: productsCompositions,
-                      totalPrice: snapshot.data!,
-                      father: product,
-                      quantity: productCompositionPresenter.totalComboxQuantity,
-                    );
+                  onPressed: () async {
+                    try {
+                      productCompositionPresenter
+                          .certifyComboxIsValid(productsCompositions);
 
-                    if (updatedCombox) {
-                      Future.delayed(Duration.zero, () {
-                        Navigator.of(context).pop();
-                        showAlertMessage(
-                            context, "Combo adicionado com sucesso");
-                      });
+                      notificationDialog(
+                        context: context,
+                        titleMessage: "Salvar combo?",
+                        cancelMessage: "Cancelar",
+                        confirmMessage: "Confirmar",
+                        content: ComboxSummaryNotification(
+                          fatherName: product.Name,
+                          productsCompositions: productsCompositions,
+                          totalPrice: priceSnapshot.data!,
+                        ),
+                        onPress: () async {
+                          bool updatedCombox =
+                              await cartPresenter.addConfirmedCombox(
+                            selectedChilds: productsCompositions,
+                            totalPrice: priceSnapshot.data!,
+                            father: product,
+                            quantity:
+                                productCompositionPresenter.totalComboxQuantity,
+                          );
+
+                          if (updatedCombox) {
+                            Future.delayed(Duration.zero, () {
+                              Navigator.of(context).pop();
+                              showAlertMessage(
+                                  context, "Combo adicionado com sucesso");
+                            });
+                          }
+                        },
+                      );
+                    } catch (e) {
+                      e;
                     }
                   },
-                );
-              } catch (e) {
-                e;
-              }
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const FittedBox(
-                  child: Text(
-                    "Conferir produtos selecionados",
-                    style: TextStyle(
-                      fontSize: 50,
-                    ),
-                  ),
-                ),
-                if (snapshot.hasData)
-                  FittedBox(
-                    child: Text(
-                      snapshot.data
-                          .toString()
-                          .toBrazilianNumber()
-                          .addBrazilianCoin(),
-                      style: const TextStyle(
-                        fontSize: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FittedBox(
+                        child: Text(
+                          isValidComboxSnapshot.data == true
+                              ? "Conferir produtos selecionados"
+                              : "Selecione todos produtos obrigatórios",
+                          style: const TextStyle(
+                            fontSize: 50,
+                          ),
+                        ),
                       ),
-                    ),
+                      if (priceSnapshot.hasData)
+                        FittedBox(
+                          child: Text(
+                            priceSnapshot.data
+                                .toString()
+                                .toBrazilianNumber()
+                                .addBrazilianCoin(),
+                            style: const TextStyle(
+                              fontSize: 50,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-              ],
-            ),
-          );
+                );
+              });
         });
   }
 }

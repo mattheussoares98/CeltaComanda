@@ -190,8 +190,10 @@ class GetxProductCompositionPresenter extends GetxController
     mainError = null;
 
     try {
-      bool isValid = validateCombox.comboxIsValid(productsCompositions);
-      if (!isValid) {
+      if (validateCombox.comboxIsValid(productsCompositions)) {
+        _comboxIsValidStream.value = true;
+      } else {
+        _comboxIsValidStream.value = false;
         throw DomainError.invalidCombox;
       }
 

@@ -471,6 +471,7 @@ void main() {
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.comboxIsValidStream, emits(true));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
@@ -518,11 +519,13 @@ void main() {
           .toList())).called(1);
     });
 
-    test("Should emit correct values when validateCombox throws", () async {
-      validateCombox.mockError();
+    test("Should emit correct values when validateCombox return false",
+        () async {
+      validateCombox.mockValidateCombox(false);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
+      expectLater(sut.comboxIsValidStream, emits(false));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
@@ -535,7 +538,7 @@ void main() {
     test(
         "Should not call updateSaleRequest and loadSaleRequest when combox is invalid",
         () async {
-      validateCombox.mockError();
+      validateCombox.mockValidateCombox(false);
       final case1 = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,

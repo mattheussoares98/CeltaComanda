@@ -751,42 +751,35 @@ void main() {
     });
   });
 
-  group("certifyComboxIsValid", () {
+  group("validate combox", () {
     test("Should emit correct envets on certifyComboxIsValid return true", () {
-      final productComposition = EntityFactory.makeProductCompositionViewModel(
-        quantity: faker.randomGenerator.decimal(),
-        salePrice: faker.randomGenerator.decimal(),
-        offerPrice: faker.randomGenerator.decimal(),
-        fatherIncrement: faker.randomGenerator.decimal(),
-        childIncrement: faker.randomGenerator.decimal(),
-        isOptionalItem: faker.randomGenerator.boolean(),
-        indexOfSelectedChild: 0,
-        insertChilds: true,
-      );
-
       expectLater(sut.comboxIsValidStream, emits(true));
       expectLater(sut.mainErrorStream, emits(null));
 
-      sut.certifyComboxIsValid([productComposition]);
+      sut.certifyComboxIsValid([]);
     });
     test("Should emit correct envets on certifyComboxIsValid return false", () {
       validateCombox.mockValidateCombox(false);
-      final productComposition = EntityFactory.makeProductCompositionViewModel(
-        quantity: faker.randomGenerator.decimal(),
-        salePrice: faker.randomGenerator.decimal(),
-        offerPrice: faker.randomGenerator.decimal(),
-        fatherIncrement: faker.randomGenerator.decimal(),
-        childIncrement: faker.randomGenerator.decimal(),
-        isOptionalItem: faker.randomGenerator.boolean(),
-        indexOfSelectedChild: 0,
-        insertChilds: true,
-      );
 
       expectLater(sut.comboxIsValidStream, emits(false));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
 
-      sut.certifyComboxIsValid([productComposition]);
+      sut.certifyComboxIsValid([]);
+    });
+    test("Should update comboxIsValidStream correctly on combox is valid", () {
+      validateCombox.mockValidateCombox(true);
+
+      expectLater(sut.comboxIsValidStream, emits(true));
+
+      sut.updateComboxIsValid([]);
+    });
+    test("Should update comboxIsValidStream correctly on combox is invalid", () {
+      validateCombox.mockValidateCombox(false);
+
+      expectLater(sut.comboxIsValidStream, emits(false));
+
+      sut.updateComboxIsValid([]);
     });
   });
 }

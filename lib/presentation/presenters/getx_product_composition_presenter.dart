@@ -235,6 +235,14 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
+  void updateComboxIsValid(
+    List<ProductCompositionViewModel> productsCompositions,
+  ) {
+    _comboxIsValidStream.value =
+        validateCombox.comboxIsValid(productsCompositions);
+  }
+
+  @override
   bool certifyComboxIsValid(
     List<ProductCompositionViewModel> productsCompositions,
   ) {

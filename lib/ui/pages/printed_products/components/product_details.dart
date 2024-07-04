@@ -42,6 +42,8 @@ class ProductDetails extends StatelessWidget {
               ean: Product.EanCode,
               plu: Product.PriceLookupCode,
               showLargeImageInShowDialog: true,
+              beginAnimation: 1,
+              endAnimation: 0.7,
             ),
             const SizedBox(width: 3),
             Expanded(

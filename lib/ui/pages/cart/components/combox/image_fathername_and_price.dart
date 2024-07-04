@@ -24,6 +24,8 @@ class ImageFathernameAndPrice extends StatelessWidget {
           ean: confirmedCombox.father.EanCode,
           plu: confirmedCombox.father.PriceLookupCode,
           showLargeImageInShowDialog: true,
+          beginAnimation: 1,
+          endAnimation: 0.7,
         ),
         const SizedBox(width: 3),
         Expanded(

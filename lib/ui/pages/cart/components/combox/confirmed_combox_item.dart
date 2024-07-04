@@ -64,6 +64,8 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                     showLargeImageInShowDialog: true,
                     height: 30,
                     width: 30,
+                    beginAnimation: 1,
+                    endAnimation: 0.7,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

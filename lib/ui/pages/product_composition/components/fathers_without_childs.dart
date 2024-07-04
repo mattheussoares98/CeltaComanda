@@ -96,6 +96,8 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             showLargeImageInShowDialog: true,
                             height: 140,
                             width: 140,
+                            beginAnimation: 1,
+                            endAnimation: 0.7,
                           ),
                         ),
                         const SizedBox(width: 5),

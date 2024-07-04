@@ -13,12 +13,16 @@ class ImageWidget extends StatefulWidget {
   final double height;
   final double width;
   final bool showLargeImageInShowDialog;
+  final double beginAnimation;
+  final double endAnimation;
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
     required this.showLargeImageInShowDialog,
+    required this.beginAnimation,
+    required this.endAnimation,
     super.key,
   });
 
@@ -40,10 +44,16 @@ class _ImageWidgetState extends State<ImageWidget>
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(
-        animation: AnimationManager.getAnimation(),
+        animation: AnimationManager.getAnimation(
+          begin: widget.beginAnimation,
+          end: widget.endAnimation,
+        ),
         builder: (context, child) {
           return Transform.scale(
-            scale: AnimationManager.getAnimation().value,
+            scale: AnimationManager.getAnimation(
+              begin: widget.beginAnimation,
+              end: widget.endAnimation,
+            ).value,
             child: _cachedImage(
               width: widget.width,
               height: widget.height,

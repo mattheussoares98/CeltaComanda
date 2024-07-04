@@ -29,6 +29,8 @@ class ProductDetailItem extends StatelessWidget {
                       height: 250,
                       width: double.infinity,
                       showLargeImageInShowDialog: true,
+                      beginAnimation: 1,
+                      endAnimation: 0.7,
                     ),
                     const Padding(
                       padding: EdgeInsetsDirectional.only(

@@ -74,6 +74,8 @@ class _CartProductItemState extends State<CartProductItem> {
                 ean: widget.cartProduct.Product.EanCode,
                 plu: widget.cartProduct.Product.PriceLookupCode,
                 showLargeImageInShowDialog: true,
+                beginAnimation: 1,
+                endAnimation: 0.7,
               ),
               const SizedBox(width: 3),
               Expanded(

@@ -16,7 +16,10 @@ class AnimationManager {
 
   static bool _loaded = false;
 
-  static Animation getAnimation([begin = 1.0, end = 0.7]) {
+  static Animation getAnimation({
+    required double begin,
+    required double end,
+  }) {
     if (!_loaded) {
       _loaded = true;
       initializeAnimation();

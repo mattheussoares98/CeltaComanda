@@ -63,7 +63,9 @@ class GetxProductCompositionPresenter extends GetxController
       );
 
       _productsComposition.subject.add(childs);
-      validateCombox.comboxIsValid(childs);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        updateComboxIsValid(_productsComposition.value);
+      });
     } catch (e) {
       mainError = UIError.unexpected;
       _productsComposition.subject.add([]);

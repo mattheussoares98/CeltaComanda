@@ -34,6 +34,10 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   double get totalComboxQuantity => _totalComboxQuantity;
 
+  final _comboxIsValidStream = RxBool(false);
+  @override
+  Stream<bool> get comboxIsValidStream => _comboxIsValidStream.stream;
+
   @override
   Future<void> loadProductComposition({
     required String url,

@@ -110,7 +110,6 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
                                   child: ImageWidget(
                                     ean: null,
                                     plu: child!.PluChild!,
-                                    productComplement: null,
                                     showLargeImageInShowDialog: true,
                                     height: 140,
                                     width: 140,

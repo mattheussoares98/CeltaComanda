@@ -13,14 +13,12 @@ class ImageWidget extends StatefulWidget {
   final double height;
   final double width;
   final bool showLargeImageInShowDialog;
-  final String? productComplement;
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
     required this.showLargeImageInShowDialog,
-    required this.productComplement,
     super.key,
   });
 

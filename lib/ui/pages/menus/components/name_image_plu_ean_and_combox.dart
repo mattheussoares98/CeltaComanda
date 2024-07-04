@@ -57,7 +57,6 @@ Widget _landScapeNameImagePluAndCombox({
           child: ImageWidget(
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
-            productComplement: productsViewModel.ProductComplement,
             height: 150,
             width: 150,
             showLargeImageInShowDialog: false,
@@ -106,7 +105,6 @@ Widget _portraitNameImagePluAndCombox({
               child: ImageWidget(
                 ean: productsViewModel.EanCode,
                 plu: productsViewModel.PriceLookupCode,
-                productComplement: productsViewModel.ProductComplement,
                 height: MediaQuery.of(context).size.width / 3 - 20,
                 width: MediaQuery.of(context).size.width / 3,
                 showLargeImageInShowDialog: false,

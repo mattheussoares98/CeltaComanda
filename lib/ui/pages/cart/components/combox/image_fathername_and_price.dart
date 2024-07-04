@@ -23,7 +23,6 @@ class ImageFathernameAndPrice extends StatelessWidget {
         ImageWidget(
           ean: confirmedCombox.father.EanCode,
           plu: confirmedCombox.father.PriceLookupCode,
-          productComplement: null,
           showLargeImageInShowDialog: true,
         ),
         const SizedBox(width: 3),

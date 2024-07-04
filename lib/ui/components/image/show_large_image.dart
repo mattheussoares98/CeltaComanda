@@ -107,7 +107,6 @@ Widget _portraitLargeImage({
                 child: ImageWidget(
                   ean: ean,
                   plu: plu,
-                  productComplement: productComplement,
                   showLargeImageInShowDialog: false,
                   height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
@@ -173,7 +172,6 @@ Widget _landScapeLargeImage({
                       child: ImageWidget(
                         ean: ean,
                         plu: plu,
-                        productComplement: productComplement,
                         showLargeImageInShowDialog: false,
                         height: MediaQuery.of(context).size.height * 0.9,
                         width: MediaQuery.of(context).size.width,

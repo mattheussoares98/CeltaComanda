@@ -27,7 +27,7 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
     required int? value,
   }) {
     setState(() {
-      productCompositionPresenter.updateSelectedIndex(
+      productCompositionPresenter.updateSelectedIndexOfProduct(
         father: widget.father,
         index: value,
       );

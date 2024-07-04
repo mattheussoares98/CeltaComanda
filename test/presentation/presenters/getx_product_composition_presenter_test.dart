@@ -818,7 +818,7 @@ void main() {
           ProductCompositionViewModel.fromEntity(optionalFathers[0]);
 
       expect(optionalFather.indexOfSelectedChild, null);
-      sut.updateSelectedIndex(
+      sut.updateSelectedIndexOfProduct(
         father: optionalFather,
         index: 0,
       );
@@ -827,11 +827,11 @@ void main() {
     test(
         "Should not update index if click in the same product and father is not optional",
         () {
-      sut.updateSelectedIndex(
+      sut.updateSelectedIndexOfProduct(
         father: obligatoryFather,
         index: 0,
       );
-      sut.updateSelectedIndex(
+      sut.updateSelectedIndexOfProduct(
         father: obligatoryFather,
         index: 0,
       );
@@ -843,11 +843,11 @@ void main() {
       final optionalFather =
           ProductCompositionViewModel.fromEntity(optionalFathers[0]);
 
-      sut.updateSelectedIndex(
+      sut.updateSelectedIndexOfProduct(
         father: optionalFather,
         index: 0,
       );
-      sut.updateSelectedIndex(
+      sut.updateSelectedIndexOfProduct(
         father: optionalFather,
         index: 0,
       );

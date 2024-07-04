@@ -291,7 +291,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateSelectedIndex({
+  void updateSelectedIndexOfProduct({
     required ProductCompositionViewModel father,
     required int? index,
   }) {

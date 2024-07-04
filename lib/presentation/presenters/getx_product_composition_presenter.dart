@@ -288,4 +288,10 @@ class GetxProductCompositionPresenter extends GetxController
   }) {
     father.commentFather = commentsPresenter.getConcatenateSelectedComments();
   }
+
+  @override
+  void updateSelectedIndex({
+    required ProductCompositionViewModel father,
+    required int? index,
+  }) {}
 }

@@ -41,4 +41,9 @@ abstract class ProductCompositionPresenter implements Listenable {
     required CommentsPresenter commentsPresenter,
     required ProductCompositionViewModel father,
   });
+
+  void updateSelectedIndex({
+    required ProductCompositionViewModel father,
+    required int? index,
+  });
 }

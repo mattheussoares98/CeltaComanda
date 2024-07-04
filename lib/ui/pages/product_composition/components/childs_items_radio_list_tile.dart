@@ -27,15 +27,15 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
     required int? value,
   }) {
     setState(() {
-      if (widget.father.indexOfSelectedChild == value) {
-        widget.father.indexOfSelectedChild = null;
-      } else {
-        widget.father.indexOfSelectedChild = value;
-      }
+      productCompositionPresenter.updateSelectedIndex(
+        father: widget.father,
+        index: value,
+      );
 
       productCompositionPresenter.updateTotalLiquidCombox(
         widget.productsCompositionsViewModel,
       );
+
       productCompositionPresenter
           .updateComboxIsValid(widget.productsCompositionsViewModel);
     });

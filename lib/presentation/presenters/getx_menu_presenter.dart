@@ -246,14 +246,14 @@ class GetxMenuPresenter extends GetxController
     required ProductsViewModel? selectedProduct,
     required CommentsPresenter commentsPresenter,
   }) {
-    selectedProduct?.productQuantity = 1;
-
     if (_selectedProduct.value == selectedProduct) {
       return;
     } else if (selectedProduct?.IsPromoCombox == "true") {
       _selectedProduct.value = null;
     } else {
       _selectedProduct.value = selectedProduct;
+      selectedProduct?.productQuantity = 1;
+      commentsPresenter.unselectAllComments();
     }
   }
 

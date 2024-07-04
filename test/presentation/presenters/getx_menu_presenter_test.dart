@@ -586,6 +586,20 @@ void main() {
       );
     });
 
+    test('Should unselectAllComments only when click in another product',
+        () async {
+      sut.updateSelectedProduct(
+        selectedProduct: productsViewModel,
+        commentsPresenter: commentsPresenter,
+      );
+      sut.updateSelectedProduct(
+        selectedProduct: productsViewModel,
+        commentsPresenter: commentsPresenter,
+      );
+
+      verify(() => commentsPresenter.unselectAllComments()).called(1);
+    });
+
     test('Should clear product quantity when click in other product', () async {
       sut.updateSelectedProduct(
         selectedProduct: productsViewModel,

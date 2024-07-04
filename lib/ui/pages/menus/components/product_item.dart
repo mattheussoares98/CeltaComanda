@@ -30,7 +30,6 @@ class _ProductItemState extends State<ProductItem> {
             selectedProduct: widget.productsViewModel,
             commentsPresenter: commentsPresenter,
           );
-          commentsPresenter.unselectAllComments();
 
           if (widget.productsViewModel.IsPromoCombox == "true") {
             menuPresenter.goToComboxPage(widget.productsViewModel);

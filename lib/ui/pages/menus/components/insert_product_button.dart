@@ -97,9 +97,14 @@ class _InsertProductButtonState extends State<InsertProductButton>
     return Padding(
       padding: const EdgeInsets.only(right: 3.0),
       child: widget.selectedProduct?.productQuantity == null
-          ? const TextButton(
+          ? TextButton(
               onPressed: null,
-              child: Text("Selecione um produto"),
+              child: Text(
+                "Selecione um produto",
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 15,
+                )
+              ),
             )
           : Row(
               children: [

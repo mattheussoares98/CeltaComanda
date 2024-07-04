@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class Comment extends StatefulWidget {
@@ -59,12 +60,13 @@ class _CommentState extends State<Comment> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               if (widget.comments == null)
-                const Expanded(
+                Expanded(
                   child: Text(
                     "Adicionar comentário",
                     style: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
+                      fontSize: hasMinWidth(context) ? 20 : 15,
                     ),
                   ),
                 ),
@@ -80,7 +82,7 @@ class _CommentState extends State<Comment> {
                   Icon(
                     color: Theme.of(context).colorScheme.primary,
                     widget.comments == null ? Icons.add_comment : Icons.edit,
-                    size: 25,
+                    size: hasMinWidth(context) ? 35 : 25,
                   ),
                 ],
               ),

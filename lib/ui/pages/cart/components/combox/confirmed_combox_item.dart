@@ -1,9 +1,9 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../pages.dart';
+import '../../../../../ui/helpers/helpers.dart';
 import '../../../../components/components.dart';
+import '../../../pages.dart';
 
 class ConfirmedComboxItem extends StatefulWidget {
   final ConfirmedComboxViewModel confirmedCombox;
@@ -75,10 +75,10 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                     flex: 65,
                     child: Text(
                       product.ChildName!,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
-                        fontSize: 16,
+                        fontSize: hasMinWidth(context) ? 23 : 16,
                         color: Colors.black54,
                       ),
                     ),
@@ -90,7 +90,10 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                       children: [
                         Text(
                           "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: hasMinWidth(context) ? 20 : 15,
+                          ),
                         ),
                         Text(
                           (productCompositionPresenter
@@ -103,6 +106,7 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
+                            fontSize: hasMinWidth(context) ? 20 : 15,
                           ),
                         ),
                       ],

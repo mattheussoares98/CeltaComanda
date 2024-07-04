@@ -46,6 +46,7 @@ class GetxProductCompositionPresenter extends GetxController
   }) async {
     isLoading = true;
     mainError = null;
+    _productsComposition.value = [];
     try {
       updateComboxQuantity(false, true);
       final fathers = await getProductComposition.getFathers(
@@ -63,6 +64,8 @@ class GetxProductCompositionPresenter extends GetxController
       );
 
       _productsComposition.subject.add(childs);
+      _productsComposition.value.addAll(childs);
+
       await Future.delayed(const Duration(milliseconds: 500), () {
         updateComboxIsValid(_productsComposition.value);
       });

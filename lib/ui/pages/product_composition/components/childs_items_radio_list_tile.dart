@@ -37,6 +37,8 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
     productCompositionPresenter.updateTotalLiquidCombox(
       widget.productsCompositionsViewModel,
     );
+    productCompositionPresenter
+        .updateComboxIsValid(widget.productsCompositionsViewModel);
   }
 
   @override

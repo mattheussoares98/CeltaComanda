@@ -238,8 +238,9 @@ class GetxProductCompositionPresenter extends GetxController
   void updateComboxIsValid(
     List<ProductCompositionViewModel> productsCompositions,
   ) {
-    _comboxIsValidStream.value =
-        validateCombox.comboxIsValid(productsCompositions);
+    _comboxIsValidStream.subject.add(
+      validateCombox.comboxIsValid(productsCompositions),
+    );
   }
 
   @override

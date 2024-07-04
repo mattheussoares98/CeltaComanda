@@ -73,7 +73,11 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                         widget.father.indexOfSelectedChild = value;
                       });
                       productCompositionPresenter.updateTotalLiquidCombox(
-                          widget.productsCompositionsViewModel);
+                        widget.productsCompositionsViewModel,
+                      );
+                      productCompositionPresenter.updateComboxIsValid(
+                        widget.productsCompositionsViewModel,
+                      );
                     },
                     subtitle: Row(
                       children: [

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
@@ -37,7 +38,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            internalCodeOnErp: int.parse(selectedComboxProduct!.InternalCodeOnERP!),
+            internalCodeOnErp:
+                int.parse(selectedComboxProduct!.InternalCodeOnERP!),
           );
         });
       }
@@ -70,7 +72,17 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: FittedBox(child: Text(selectedComboxProduct?.Name ?? "")),
+        title: FittedBox(
+          child: Text(
+            textAlign: TextAlign.center,
+            selectedComboxProduct?.Name ?? "",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: hasMinWidth(context) ? 30 : 20,
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+        ),
       ),
       body: StreamBuilder<List<ProductCompositionViewModel>>(
           stream: productCompositionPresenter.productsCompositionStream,
@@ -83,7 +95,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
                   enterpriseId:
                       EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-                  internalCodeOnErp: int.parse(selectedComboxProduct!.InternalCodeOnERP!),
+                  internalCodeOnErp:
+                      int.parse(selectedComboxProduct!.InternalCodeOnERP!),
                 ),
               );
             }

@@ -34,6 +34,10 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
 
+  final _useFixedCommandNumber = Rx<bool>(false);
+  @override
+  Stream<bool> get useFixedCommandNumber => _useFixedCommandNumber.stream;
+
   @override
   Future<void> loadLocalData() async {
     EnterpriseDataBuilder.enterpriseDataEntity =

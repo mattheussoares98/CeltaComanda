@@ -1,4 +1,4 @@
-import '../../data/usecases/enterprise/enterprise.dart';
+import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -18,6 +18,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
+  final UseFixedCommandNumber localUseFixedCommandNumber;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -25,6 +26,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.loadEnterpriseData,
     required this.navigateTo,
     required this.ticketIsPermitted,
+    required this.localUseFixedCommandNumber,
   });
 
   @override
@@ -81,8 +83,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  Future<void> validateApiSaleRequest(
-      {required bool useFixedCommandNumber}) async {
+  Future<void> validateApiSaleRequest({
+    required bool isFixedCommandNumber,
+  }) async {
     try {
       mainError = null;
       isLoading = true;
@@ -98,6 +101,8 @@ class GetxEnterpriseValidationPresenter extends GetxController
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: "001",
       );
+
+      localUseFixedCommandNumber.update(isFixedCommandNumber);
 
       isLoading = false;
       goToHomePage();

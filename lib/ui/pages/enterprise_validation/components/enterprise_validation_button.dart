@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 
 class EnterpriseValidateButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final bool useFixedCommandNumber;
+  final bool isFixedCommandNumber;
   const EnterpriseValidateButton({
     required this.formKey,
-    required this.useFixedCommandNumber,
+    required this.isFixedCommandNumber,
     super.key,
   });
 
@@ -23,9 +23,9 @@ class EnterpriseValidateButton extends StatelessWidget {
             onPressed: snapshot.data == false
                 ? null
                 : () async {
-                    if (!useFixedCommandNumber) {
+                    if (!isFixedCommandNumber) {
                       await presenter.validateApiSaleRequest(
-                        useFixedCommandNumber: useFixedCommandNumber,
+                        isFixedCommandNumber: isFixedCommandNumber,
                       );
                     }
 
@@ -35,7 +35,7 @@ class EnterpriseValidateButton extends StatelessWidget {
                     }
 
                     await presenter.validateApiSaleRequest(
-                      useFixedCommandNumber: useFixedCommandNumber,
+                      isFixedCommandNumber: isFixedCommandNumber,
                     );
                   },
             child: Text(R.string.validateEnterprise.toUpperCase()),

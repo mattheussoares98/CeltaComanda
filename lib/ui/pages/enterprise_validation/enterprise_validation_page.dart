@@ -76,7 +76,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                         return Column(
                           children: [
                             EnterpriseInput(
-                              useFixedCommandNumber:
+                              isFixedCommandNumber:
                                   snapshotUseFixedCommand.data ?? false,
                             ),
                             Padding(
@@ -95,7 +95,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                             const SizedBox(height: 10),
                             EnterpriseValidateButton(
                               formKey: _formKey,
-                              useFixedCommandNumber:
+                              isFixedCommandNumber:
                                   snapshotUseFixedCommand.data ?? false,
                             ),
                           ],

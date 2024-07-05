@@ -1,4 +1,5 @@
 export './barcode/barcode.dart';
+export './command_number/command_number.dart';
 export './comments/comments.dart';
 export './enterprise_data/enterprise_data.dart';
 export './expansible_groups/expansible_groups.dart';

@@ -6,9 +6,9 @@ import '../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
 class EnterpriseInput extends StatelessWidget {
-  final bool useFixedCommandNumber;
+  final bool isFixedCommandNumber;
   const EnterpriseInput({
-    required this.useFixedCommandNumber,
+    required this.isFixedCommandNumber,
     super.key,
   });
 
@@ -29,7 +29,7 @@ class EnterpriseInput extends StatelessWidget {
             onFieldSubmitted: (_) async {
               if (presenter.enterpriseNameController.text.isNotEmpty) {
                 await presenter.validateApiSaleRequest(
-                  useFixedCommandNumber: useFixedCommandNumber,
+                  isFixedCommandNumber: isFixedCommandNumber,
                 );
               }
             },

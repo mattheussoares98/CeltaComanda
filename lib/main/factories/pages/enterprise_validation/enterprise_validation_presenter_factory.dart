@@ -9,4 +9,5 @@ EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
       loadEnterpriseData: makeRemoteLoadEnterpriseData(),
       navigateTo: makeNavigateTo(),
       ticketIsPermitted: makeRemoteticketIsPermitted(),
+      localUseFixedCommandNumber: makeLocalUseFixedCommandNumber(),
     );

@@ -84,30 +84,32 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
           ),
         ),
       ),
-      body: StreamBuilder<List<ProductCompositionViewModel>>(
-          stream: productCompositionPresenter.productsCompositionStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return ReloadScreen(
-                error: '${snapshot.error}',
-                reload: () async =>
-                    await productCompositionPresenter.loadProductComposition(
-                  url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-                  enterpriseId:
-                      EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-                  internalCodeOnErp:
-                      int.parse(selectedComboxProduct!.InternalCodeOnERP!),
-                ),
-              );
-            }
-            if (snapshot.hasData) {
-              return Composition(
-                selectedComboxProduct: selectedComboxProduct!,
-                productsCompositions: snapshot.data!,
-              );
-            }
-            return const SizedBox(height: 0);
-          }),
+      body: SafeArea(
+        child: StreamBuilder<List<ProductCompositionViewModel>>(
+            stream: productCompositionPresenter.productsCompositionStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return ReloadScreen(
+                  error: '${snapshot.error}',
+                  reload: () async =>
+                      await productCompositionPresenter.loadProductComposition(
+                    url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+                    enterpriseId:
+                        EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                    internalCodeOnErp:
+                        int.parse(selectedComboxProduct!.InternalCodeOnERP!),
+                  ),
+                );
+              }
+              if (snapshot.hasData) {
+                return Composition(
+                  selectedComboxProduct: selectedComboxProduct!,
+                  productsCompositions: snapshot.data!,
+                );
+              }
+              return const SizedBox(height: 0);
+            }),
+      ),
     );
   }
 }

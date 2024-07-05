@@ -8,7 +8,7 @@ export './load_sale_request_printed_products_spy.dart';
 export 'load_sale_request_temp_spy.dart';
 export 'local_enterprise_data_spy.dart';
 export './local_print_request_spy.dart';
-export './local_use_fixed_command_number.dart';
+export 'use_fixed_command_number.dart';
 export './navigate_to_spy.dart';
 export './pay_spy.dart';
 export './remote_enterprise_data_spy.dart';

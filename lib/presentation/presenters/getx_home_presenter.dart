@@ -12,12 +12,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LocalEnterpriseData localEnterpriseData;
   final TicketIsPermitted ticketIsPermitted;
   final LoadExpansibleGroups loadExpansibleGroups;
+  final UseFixedCommandNumber useFixedCommandNumber;
 
   GetxHomePresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
     required this.ticketIsPermitted,
+    required this.useFixedCommandNumber,
   });
 
   @override
@@ -78,4 +80,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
     printedProductsPresenter.updateCanCancelProducts(false);
   }
+
+  @override
+  Future<void> loadUseFixedCommandNumber() async {}
 }

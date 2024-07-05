@@ -20,13 +20,13 @@ void main() {
   late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
   late TicketIsPermittedSpy ticketIsPermitted;
-  late LocalUseFixedCommandNumberSpy localUseFixedCommandNumber;
+  late UseFixedCommandNumberSpy localUseFixedCommandNumber;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
 
   setUp(() {
     validation = ValidationSpy();
-    localUseFixedCommandNumber = LocalUseFixedCommandNumberSpy();
+    localUseFixedCommandNumber = UseFixedCommandNumberSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
     navigateTo = NavigateToSpy();

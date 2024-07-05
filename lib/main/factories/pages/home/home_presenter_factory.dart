@@ -7,4 +7,5 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       localEnterpriseData: makeLocalEnterpriseData(),
       navigateTo: makeNavigateTo(),
       ticketIsPermitted: makeRemoteticketIsPermitted(),
+      useFixedCommandNumber: makeLocalUseFixedCommandNumber(),
     );

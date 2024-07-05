@@ -59,7 +59,10 @@ class _HomePageState extends State<HomePage>
       Future.delayed(Duration.zero, () async {
         CommentsPresenter commentsPresenter =
             Provider.of(context, listen: false);
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+
         await commentsPresenter.loadComments();
+        await homePresenter.loadUseFixedCommandNumber();
       });
     }
   }
@@ -91,18 +94,21 @@ class _HomePageState extends State<HomePage>
         );
       },
       child: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            onPageChanged(
-              index: index,
-              printedProductsPresenter: printedProductsPresenter,
-              menuPresenter: menuPresenter,
-              homePresenter: homePresenter,
-              commentsPresenter: commentsPresenter,
-            );
-          },
-          children: screens,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              onPageChanged(
+                index: index,
+                printedProductsPresenter: printedProductsPresenter,
+                menuPresenter: menuPresenter,
+                homePresenter: homePresenter,
+                commentsPresenter: commentsPresenter,
+              );
+            },
+            children: screens,
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: Theme.of(context).primaryColorLight,

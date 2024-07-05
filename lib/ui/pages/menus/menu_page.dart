@@ -79,33 +79,35 @@ class _MenuPageState extends State<MenuPage>
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              scaffoldKey.currentState?.openDrawer();
-            },
-          ),
-          backgroundColor: const Color(0xFFF1F5F8),
-          actions: [
-            IconButton(
-              onPressed: () async {
-                await _loadGroupsAndProducts(menuPresenter);
-              },
-              icon: Icon(
-                Icons.refresh_outlined,
-                color: Theme.of(context).colorScheme.primary,
+      appBar: homePresenter.isFixedCommandNumber
+          ? null
+          : PreferredSize(
+              preferredSize: const Size.fromHeight(40),
+              child: AppBar(
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: () {
+                    scaffoldKey.currentState?.openDrawer();
+                  },
+                ),
+                backgroundColor: const Color(0xFFF1F5F8),
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      await _loadGroupsAndProducts(menuPresenter);
+                    },
+                    icon: Icon(
+                      Icons.refresh_outlined,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    tooltip: "Atualizar menu",
+                  )
+                ],
               ),
-              tooltip: "Atualizar menu",
-            )
-          ],
-        ),
-      ),
+            ),
       body: StreamBuilder<
           List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
         stream: menuPresenter.menuStream,

@@ -31,6 +31,7 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -59,13 +60,25 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ImageWidget(
-                    ean: null,
-                    plu: product.PluChild.toString(),
-                    height: 70,
-                    width: 70,
-                    beginAnimation: 1,
-                    endAnimation: 0.7,
+                  GestureDetector(
+                    onTap: () {
+                      showLargeImage(
+                        context: context,
+                        ean: null,
+                        plu: product.PluChild!,
+                        productComplement: null,
+                        menuPresenter: menuPresenter,
+                        productName: product.ChildName,
+                      );
+                    },
+                    child: ImageWidget(
+                      ean: null,
+                      plu: product.PluChild!,
+                      height: 70,
+                      width: 70,
+                      beginAnimation: 1,
+                      endAnimation: 0.7,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -93,20 +106,6 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                             fontSize: hasMinWidth(context) ? 20 : 15,
                           ),
                         ),
-                        // Text(
-                        //   (productCompositionPresenter
-                        //               .calculateProductPrice(combox) *
-                        //           combox.Quantity.toString().toDouble())
-                        //       .toString()
-                        //       .toBrazilianNumber()
-                        //       .addBrazilianCoin(),
-                        //   textAlign: TextAlign.end,
-                        //   style: TextStyle(
-                        //     color: Theme.of(context).colorScheme.primary,
-                        //     fontWeight: FontWeight.bold,
-                        //     fontSize: hasMinWidth(context) ? 20 : 15,
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

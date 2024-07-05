@@ -690,7 +690,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required List<ProductCompositionViewModel> selectedChilds,
     required double totalPrice,
     required double quantity,
-    required ProductsViewModel father,
+    required ProductsViewModel selectedCombox,
   }) async {
     isLoading = true;
     mainError = null;
@@ -722,7 +722,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
                     indexOfSelectedChild: element.indexOfSelectedChild,
                   ))
               .toList(),
-          father: father,
+          father: selectedCombox,
           totalPrice: totalPrice,
           quantity: quantity,
         ),

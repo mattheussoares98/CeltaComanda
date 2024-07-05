@@ -34,7 +34,7 @@ class CartPresenterSpy extends Mock implements CartPresenter {
     when(() => this.addConfirmedCombox(
           selectedChilds: any(named: "selectedChilds"),
           totalPrice: any(named: "totalPrice"),
-          father: any(named: "father"),
+          selectedCombox: any(named: "father"),
           quantity: any(named: "quantity"),
         )).thenAnswer((_) async => true);
     mockAddProductQuantityCall().thenAnswer((_) async => _);

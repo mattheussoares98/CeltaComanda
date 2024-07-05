@@ -6,10 +6,10 @@ import '../../pages.dart';
 
 class Composition extends StatefulWidget {
   final List<ProductCompositionViewModel> productsCompositions;
-  final ProductsViewModel product;
+  final ProductsViewModel selectedComboxProduct;
   const Composition({
     required this.productsCompositions,
-    required this.product,
+    required this.selectedComboxProduct,
     super.key,
   });
 
@@ -51,7 +51,7 @@ class _CompositionState extends State<Composition> {
         ),
         SaveComboxButton(
           productsCompositions: widget.productsCompositions,
-          product: widget.product,
+          selectedComboxProduct: widget.selectedComboxProduct,
         ),
       ],
     );

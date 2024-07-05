@@ -7,10 +7,10 @@ import '../../pages.dart';
 
 class SaveComboxButton extends StatelessWidget {
   final List<ProductCompositionViewModel> productsCompositions;
-  final ProductsViewModel product;
+  final ProductsViewModel selectedComboxProduct;
   const SaveComboxButton({
     required this.productsCompositions,
-    required this.product,
+    required this.selectedComboxProduct,
     super.key,
   });
 
@@ -50,7 +50,7 @@ class SaveComboxButton extends StatelessWidget {
                         cancelMessage: "Cancelar",
                         confirmMessage: "Confirmar",
                         content: ComboxSummaryNotification(
-                          fatherName: product.Name,
+                          selectedComboxProduct: selectedComboxProduct.Name,
                           productsCompositions: productsCompositions,
                           totalPrice: priceSnapshot.data!,
                         ),
@@ -59,7 +59,7 @@ class SaveComboxButton extends StatelessWidget {
                               await cartPresenter.addConfirmedCombox(
                             selectedChilds: productsCompositions,
                             totalPrice: priceSnapshot.data!,
-                            father: product,
+                            selectedCombox: selectedComboxProduct,
                             quantity:
                                 productCompositionPresenter.totalComboxQuantity,
                           );

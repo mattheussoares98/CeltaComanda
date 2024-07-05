@@ -2011,7 +2011,7 @@ void main() {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
     });
@@ -2024,7 +2024,7 @@ void main() {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
     });
@@ -2033,7 +2033,7 @@ void main() {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
 
@@ -2044,7 +2044,7 @@ void main() {
       await sut.addConfirmedCombox(
         selectedChilds: [notSelectedChild, selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
 
@@ -2056,7 +2056,7 @@ void main() {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithTwoQuantities],
         totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-        father: confirmedComboxWithtwoQuantities.father,
+        selectedCombox: confirmedComboxWithtwoQuantities.father,
         quantity: confirmedComboxWithtwoQuantities.quantity,
       );
 
@@ -2067,7 +2067,7 @@ void main() {
       bool isConfirmed = await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
 
@@ -2079,7 +2079,7 @@ void main() {
       bool isConfirmed = await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
 
@@ -2112,7 +2112,7 @@ void main() {
                 ))
             .toList(),
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
 
@@ -2125,7 +2125,7 @@ void main() {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity],
         totalPrice: 10,
-        father: fatherOfCombox,
+        selectedCombox: fatherOfCombox,
         quantity: 1,
       );
 

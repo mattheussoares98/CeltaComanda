@@ -7,11 +7,11 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class ComboxSummaryNotification extends StatefulWidget {
-  final String fatherName;
+  final String selectedComboxProduct;
   final List<ProductCompositionViewModel> productsCompositions;
   final double totalPrice;
   const ComboxSummaryNotification({
-    required this.fatherName,
+    required this.selectedComboxProduct,
     required this.productsCompositions,
     required this.totalPrice,
     super.key,
@@ -116,7 +116,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
       child: Column(
         children: [
           Text(
-            widget.fatherName,
+            widget.selectedComboxProduct,
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),

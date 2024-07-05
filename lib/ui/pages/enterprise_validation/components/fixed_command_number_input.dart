@@ -23,6 +23,8 @@ class FixedCommandNumberInput extends StatelessWidget {
               return "Digite o número da mesa";
             } else if (int.tryParse(value) == null) {
               return "Número inválido";
+            } else if (int.parse(value) == 0) {
+              return "Número inválido";
             } else {
               return null;
             }

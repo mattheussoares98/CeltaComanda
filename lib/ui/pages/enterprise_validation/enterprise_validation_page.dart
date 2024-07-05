@@ -1,14 +1,13 @@
+import 'package:provider/provider.dart';
+
+import 'package:flutter/material.dart';
 import 'dart:async';
 
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
-import 'components/components.dart';
-
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'enterprise_validation_presenter.dart';
+import './components/components.dart';
+import './enterprise_validation_presenter.dart';
 
 class EnterpriseValidationPage extends StatefulWidget {
   final EnterpriseValidationPresenter presenter;
@@ -39,7 +38,6 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
 
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  final GlobalKey _tooltipKey = GlobalKey();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -82,47 +80,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                               padding: const EdgeInsets.only(top: 20),
                               child: Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Switch(
-                                        value: snapshotUseFixedCommand.data ??
-                                            false,
-                                        onChanged: (_) {
-                                          widget.presenter
-                                              .updateUseFixedCommandNumber();
-                                        },
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Flexible(
-                                        child: Text(
-                                          "Usar sempre a mesma mesa",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: hasMinWidth(context)
-                                                  ? 23
-                                                  : 15),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 20),
-                                      GestureDetector(
-                                        onTap: () {
-                                          final dynamic tooltip =
-                                              _tooltipKey.currentState;
-                                          tooltip.ensureTooltipVisible();
-                                        },
-                                        child: Tooltip(
-                                          key: _tooltipKey,
-                                          message:
-                                              'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa',
-                                          child: Icon(
-                                            Icons.info,
-                                            size:
-                                                hasMinWidth(context) ? 40 : 30,
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                  FixedNumberCommandSwitch(
+                                    useFixedCommand:
+                                        snapshotUseFixedCommand.data ?? false,
                                   ),
                                   if (snapshotUseFixedCommand.data == true)
                                     Padding(

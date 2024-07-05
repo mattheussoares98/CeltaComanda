@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../helpers/helpers.dart';
 import '../comments.dart';
 
 class AddCommentFormField extends StatefulWidget {
@@ -83,9 +84,11 @@ class _AddCommentFormFieldState extends State<AddCommentFormField> {
           onPressed: () async {
             await _addComment(commentsPresenter);
           },
-          child: const Text(
+          child: Text(
             "Adicionar",
-            style: TextStyle(),
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 23 : 17,
+            ),
           ),
         )
       ],

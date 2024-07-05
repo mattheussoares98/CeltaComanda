@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
+
 class TitlePage extends StatelessWidget {
   final String selectedProductName;
   const TitlePage({
@@ -35,7 +37,7 @@ class TitlePage extends StatelessWidget {
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: hasMinWidth(context) ? 30 : 20,
                   fontStyle: FontStyle.italic,
                 ),
               )),

@@ -92,7 +92,7 @@ class _CartPageState extends State<CartPage>
                                 cartProducts: cartPresenter.cartProducts,
                               ),
                             if (cartPresenter.confirmedCombox.isNotEmpty)
-                              ConfirmedComboxItems(
+                              ConfirmedChildAndFatherItems(
                                 confirmedsCombox: cartPresenter.confirmedCombox,
                               ),
                           ],

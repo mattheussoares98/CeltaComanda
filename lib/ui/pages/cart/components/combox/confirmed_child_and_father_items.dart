@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../pages.dart';
 
-class ConfirmedComboxItems extends StatelessWidget {
+class ConfirmedChildAndFatherItems extends StatelessWidget {
   final List<ConfirmedComboxViewModel> confirmedsCombox;
-  const ConfirmedComboxItems({
+  const ConfirmedChildAndFatherItems({
     required this.confirmedsCombox,
     super.key,
   });
@@ -39,7 +39,7 @@ class ConfirmedComboxItems extends StatelessWidget {
                 confirmedCombox: combox,
                 confirmedComboxIndex: index,
               ),
-              ConfirmedComboxItem(
+              ConfirmedChildComboxItem(
                 confirmedCombox: combox,
                 indexOfConfirmedCombox: index,
               ),

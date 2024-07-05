@@ -5,20 +5,20 @@ import '../../../../../ui/helpers/helpers.dart';
 import '../../../../components/components.dart';
 import '../../../pages.dart';
 
-class ConfirmedComboxItem extends StatefulWidget {
+class ConfirmedChildComboxItem extends StatefulWidget {
   final ConfirmedComboxViewModel confirmedCombox;
   final int indexOfConfirmedCombox;
-  const ConfirmedComboxItem({
+  const ConfirmedChildComboxItem({
     required this.confirmedCombox,
     required this.indexOfConfirmedCombox,
     super.key,
   });
 
   @override
-  State<ConfirmedComboxItem> createState() => _ConfirmedComboxItemState();
+  State<ConfirmedChildComboxItem> createState() => _ConfirmedChildComboxItemState();
 }
 
-class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
+class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
   TextEditingController commentsController = TextEditingController();
 
   @override

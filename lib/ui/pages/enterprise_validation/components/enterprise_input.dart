@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
-
 class EnterpriseInput extends StatelessWidget {
-  const EnterpriseInput({super.key});
+  final bool useFixedCommandNumber;
+  const EnterpriseInput({
+    required this.useFixedCommandNumber,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,9 @@ class EnterpriseInput extends StatelessWidget {
             controller: presenter.enterpriseNameController,
             onFieldSubmitted: (_) async {
               if (presenter.enterpriseNameController.text.isNotEmpty) {
-                presenter.validateApiSaleRequest();
+                await presenter.validateApiSaleRequest(
+                  useFixedCommandNumber: useFixedCommandNumber,
+                );
               }
             },
             onChanged: (value) => presenter.validateEnterpriseInput(value,

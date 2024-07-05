@@ -22,9 +22,11 @@ class EnterpriseValidateButton extends StatelessWidget {
           return ElevatedButton(
             onPressed: snapshot.data == false
                 ? null
-                : () {
+                : () async {
                     if (!useFixedCommandNumber) {
-                      presenter.validateApiSaleRequest();
+                      await presenter.validateApiSaleRequest(
+                        useFixedCommandNumber: useFixedCommandNumber,
+                      );
                     }
 
                     if (formKey.currentState == null ||
@@ -32,7 +34,9 @@ class EnterpriseValidateButton extends StatelessWidget {
                       return;
                     }
 
-                    presenter.validateApiSaleRequest();
+                    await presenter.validateApiSaleRequest(
+                      useFixedCommandNumber: useFixedCommandNumber,
+                    );
                   },
             child: Text(R.string.validateEnterprise.toUpperCase()),
           );

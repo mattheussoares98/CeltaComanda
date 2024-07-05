@@ -116,6 +116,7 @@ class _MenuPageState extends State<MenuPage>
                   AppBar().preferredSize.height,
               child: Center(
                 child: TextButton.icon(
+                  key: const Key("loadMenu"),
                   onPressed: () async {
                     _loadGroupsAndProducts(menuPresenter);
                   },

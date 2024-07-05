@@ -86,7 +86,7 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    await sut.validateApiSaleRequest();
+    await sut.validateApiSaleRequest(useFixedCommandNumber: false);
 
     verify(() => localEnterpriseData
         .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
@@ -100,7 +100,7 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    await sut.validateApiSaleRequest();
+    await sut.validateApiSaleRequest(useFixedCommandNumber: false);
   });
 
   test('Should emit correct events on validateApiSaleRequest success',
@@ -111,7 +111,7 @@ void main() {
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
 
-    await sut.validateApiSaleRequest();
+    await sut.validateApiSaleRequest(useFixedCommandNumber: false);
   });
 
   test('Should error if enterprise not exists in firebase', () {
@@ -137,7 +137,7 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
 
-    await sut.validateApiSaleRequest();
+    await sut.validateApiSaleRequest(useFixedCommandNumber: false);
 
     verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
         .called(1);
@@ -166,7 +166,7 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
     sut.isUpdatedEnterpriseName = true;
 
-    await sut.validateApiSaleRequest();
+    await sut.validateApiSaleRequest(useFixedCommandNumber: false);
 
     verify(() => remoteLoadEnterpriseData.load()).called(1);
   });

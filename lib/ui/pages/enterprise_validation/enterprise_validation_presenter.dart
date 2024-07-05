@@ -17,7 +17,7 @@ abstract class EnterpriseValidationPresenter implements Listenable {
       {bool? updateEnterpriseNameController = false});
   void updateEnterpriseController(String value);
 
-  Future<void> validateApiSaleRequest();
+  Future<void> validateApiSaleRequest({required bool useFixedCommandNumber});
   Future<void> loadRemoteData();
   Future<void> loadLocalData();
 

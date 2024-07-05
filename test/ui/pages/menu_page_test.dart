@@ -70,7 +70,7 @@ void main() {
     presenter.clear();
     await tester.pumpAndSettle();
 
-    expect(find.byType(TextButton), findsOneWidget);
+    expect(find.byKey(const Key("loadMenu")), findsOneWidget);
   });
 
   testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
@@ -101,7 +101,7 @@ void main() {
     presenter.mockLoadDataError(DomainError.unexpected);
     await tester.pumpAndSettle();
 
-    expect(find.byType(TextButton), findsOneWidget);
+    expect(find.byKey(const Key("loadMenu")), findsOneWidget);
   });
 
   testWidgets('Should present InsertCommandNumber command is not available',
@@ -111,6 +111,6 @@ void main() {
     presenter.mockLoadDataError(DomainError.commandNotAvailable);
     await tester.pumpAndSettle();
 
-    expect(find.byType(TextButton), findsOneWidget);
+    expect(find.byKey(const Key("loadMenu")), findsOneWidget);
   });
 }

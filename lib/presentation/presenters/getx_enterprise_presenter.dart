@@ -81,7 +81,8 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  Future<void> validateApiSaleRequest() async {
+  Future<void> validateApiSaleRequest(
+      {required bool useFixedCommandNumber}) async {
     try {
       mainError = null;
       isLoading = true;

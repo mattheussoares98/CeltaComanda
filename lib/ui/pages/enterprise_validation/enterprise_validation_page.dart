@@ -75,7 +75,10 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                       builder: (context, snapshotUseFixedCommand) {
                         return Column(
                           children: [
-                            const EnterpriseInput(),
+                            EnterpriseInput(
+                              useFixedCommandNumber:
+                                  snapshotUseFixedCommand.data ?? false,
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 20),
                               child: Column(

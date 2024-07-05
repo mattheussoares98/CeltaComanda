@@ -48,6 +48,7 @@ class _CartProductItemState extends State<CartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
@@ -70,13 +71,25 @@ class _CartProductItemState extends State<CartProductItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ImageWidget(
-                ean: widget.cartProduct.Product.EanCode,
-                plu: widget.cartProduct.Product.PriceLookupCode,
-                beginAnimation: 1,
-                endAnimation: 0.7,
-                height: 150,
-                width: 150,
+              GestureDetector(
+                onTap: () {
+                  showLargeImage(
+                    context: context,
+                    ean: widget.cartProduct.Product.EanCode,
+                    plu: widget.cartProduct.Product.PriceLookupCode,
+                    productComplement: widget.cartProduct.Product.ProductComplement,
+                    menuPresenter: menuPresenter,
+                    productName: widget.cartProduct.Product.Name,
+                  );
+                },
+                child: ImageWidget(
+                  ean: widget.cartProduct.Product.EanCode,
+                  plu: widget.cartProduct.Product.PriceLookupCode,
+                  beginAnimation: 1,
+                  endAnimation: 0.7,
+                  height: 150,
+                  width: 150,
+                ),
               ),
               const SizedBox(width: 3),
               Expanded(

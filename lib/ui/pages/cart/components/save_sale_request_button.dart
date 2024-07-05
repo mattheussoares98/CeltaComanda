@@ -112,27 +112,30 @@ class SaveSaleRequestButton extends StatelessWidget {
           );
         }
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          FittedBox(
-            child: Text(
-              'Solicitar produtos',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: hasMinWidth(context) ? 23 : 16,
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            FittedBox(
+              child: Text(
+                'Solicitar produtos',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: hasMinWidth(context) ? 23 : 16,
+                ),
               ),
             ),
-          ),
-          FittedBox(
-            child: Text(
-              cartPresenter.totalSaleRequestTempPrice,
-              style: TextStyle(
-                fontSize: hasMinWidth(context) ? 23 : 16,
+            const SizedBox(width: 5),
+            FittedBox(
+              child: Text(
+                cartPresenter.totalSaleRequestTempPrice,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 16,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

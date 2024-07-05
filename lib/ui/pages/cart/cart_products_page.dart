@@ -162,13 +162,17 @@ class _CartPageState extends State<CartPage>
                     children: [
                       if (widget.pageController != null)
                         Expanded(
+                          flex: 4,
                           child: AddMoreCartItensButton(
                             pageController: widget.pageController!,
                           ),
                         ),
                       if (widget.pageController != null)
                         SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                      const Expanded(child: SaveSaleRequestButton()),
+                      const Expanded(
+                        flex: 6,
+                        child: SaveSaleRequestButton(),
+                      ),
                     ],
                   ),
                 ),

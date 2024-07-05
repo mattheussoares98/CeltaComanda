@@ -71,7 +71,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                 child: ListenableProvider(
                   create: (_) => widget.presenter,
                   child: StreamBuilder<bool>(
-                      stream: widget.presenter.useFixedCommandNumber,
+                      stream: widget.presenter.useFixedCommandNumberStream,
                       builder: (context, snapshotUseFixedCommand) {
                         return Column(
                           children: [

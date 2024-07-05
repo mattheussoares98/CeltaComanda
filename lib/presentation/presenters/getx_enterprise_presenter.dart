@@ -18,7 +18,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
-  final UseFixedCommandNumber localUseFixedCommandNumber;
+  final UseFixedCommandNumber useFixedCommandNumber;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -26,7 +26,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.loadEnterpriseData,
     required this.navigateTo,
     required this.ticketIsPermitted,
-    required this.localUseFixedCommandNumber,
+    required this.useFixedCommandNumber,
   });
 
   @override
@@ -38,7 +38,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   final _useFixedCommandNumber = Rx<bool>(false);
   @override
-  Stream<bool> get useFixedCommandNumber => _useFixedCommandNumber.stream;
+  Stream<bool> get useFixedCommandNumberStream => _useFixedCommandNumber.stream;
 
   @override
   Future<void> loadLocalData() async {
@@ -102,7 +102,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         commandNumber: "001",
       );
 
-      localUseFixedCommandNumber.update(isFixedCommandNumber);
+      useFixedCommandNumber.update(isFixedCommandNumber);
 
       isLoading = false;
       goToHomePage();
@@ -164,7 +164,17 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  void updateUseFixedCommandNumber() {
+  void updateUseFixedCommandNumber() async {
+    isLoading = true;
+    mainError = null;
     _useFixedCommandNumber.value = !_useFixedCommandNumber.value;
+
+    try {
+      await useFixedCommandNumber.update(_useFixedCommandNumber.value);
+    } catch (e) {
+      UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 }

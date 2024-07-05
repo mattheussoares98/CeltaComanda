@@ -52,7 +52,7 @@ class EnterpriseValidationPresenterSpy extends Mock
         .thenAnswer((_) => isFormValidController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.useFixedCommandNumber)
+    when(() => this.useFixedCommandNumberStream)
         .thenAnswer((_) => useFixedCommandNumberController.stream);
   }
 

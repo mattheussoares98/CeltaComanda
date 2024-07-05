@@ -50,7 +50,7 @@ void main() {
       loadEnterpriseData: remoteLoadEnterpriseData,
       navigateTo: navigateTo,
       ticketIsPermitted: ticketIsPermitted,
-      localUseFixedCommandNumber: localUseFixedCommandNumber,
+      useFixedCommandNumber: localUseFixedCommandNumber,
     );
 
     sut.enterpriseNameController.text =
@@ -228,7 +228,7 @@ void main() {
 
   group("Fixed command number", () {
     test("Should emit correct values on change useFixedCommandNumber", () {
-      expectLater(sut.useFixedCommandNumber, emitsInOrder([true, false]));
+      expectLater(sut.useFixedCommandNumberStream, emitsInOrder([true, false]));
 
       sut.updateUseFixedCommandNumber();
       sut.updateUseFixedCommandNumber();

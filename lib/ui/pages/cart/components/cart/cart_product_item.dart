@@ -68,7 +68,7 @@ class _CartProductItemState extends State<CartProductItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ImageWidget(
                 ean: widget.cartProduct.Product.EanCode,
@@ -76,14 +76,17 @@ class _CartProductItemState extends State<CartProductItem> {
                 showLargeImageInShowDialog: true,
                 beginAnimation: 1,
                 endAnimation: 0.7,
+                height: 150,
+                width: 150,
               ),
               const SizedBox(width: 3),
               Expanded(
                 child: Text(
                   widget.cartProduct.Product.Name,
-                  style: const TextStyle(
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: hasMinWidth(context) ? 30 : 18,
                   ),
                 ),
               ),

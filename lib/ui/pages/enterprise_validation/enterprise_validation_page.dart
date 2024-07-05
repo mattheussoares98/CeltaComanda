@@ -85,34 +85,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                         snapshotUseFixedCommand.data ?? false,
                                   ),
                                   if (snapshotUseFixedCommand.data == true)
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15.0),
-                                      child: Form(
-                                        key: _formKey,
-                                        child: TextFormField(
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          autofocus: true,
-                                          keyboardType: TextInputType.number,
-                                          maxLength: 3,
-                                          validator: (value) {
-                                            if (value == null) {
-                                              return "Digite o número da mesa";
-                                            } else if (int.tryParse(value) ==
-                                                null) {
-                                              return "Número inválido";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: const InputDecoration(
-                                            label: Text("Número da mesa"),
-                                            hintText: "Número da mesa",
-                                            counterText: "",
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    FixedCommandNumberInput(formKey: _formKey),
                                 ],
                               ),
                             ),

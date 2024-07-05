@@ -41,8 +41,6 @@ class ProductDetails extends StatelessWidget {
             ImageWidget(
               ean: Product.EanCode,
               plu: Product.PriceLookupCode,
-              beginAnimation: 1,
-              endAnimation: 0.7,
             ),
             const SizedBox(width: 3),
             Expanded(

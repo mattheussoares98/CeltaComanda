@@ -94,8 +94,6 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             plu: widget.father.PluChild!,
                             height: 100,
                             width: 100,
-                            beginAnimation: 1,
-                            endAnimation: 0.7,
                           ),
                         ),
                         const SizedBox(width: 5),

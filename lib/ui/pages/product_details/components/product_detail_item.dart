@@ -28,8 +28,6 @@ class ProductDetailItem extends StatelessWidget {
                       plu: product.PriceLookupCode,
                       height: 250,
                       width: double.infinity,
-                      beginAnimation: 1,
-                      endAnimation: 0.7,
                     ),
                     const Padding(
                       padding: EdgeInsetsDirectional.only(

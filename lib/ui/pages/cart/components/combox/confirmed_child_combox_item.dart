@@ -76,8 +76,6 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                       plu: product.PluChild!,
                       height: 70,
                       width: 70,
-                      beginAnimation: 1,
-                      endAnimation: 0.7,
                     ),
                   ),
                   const SizedBox(width: 8),

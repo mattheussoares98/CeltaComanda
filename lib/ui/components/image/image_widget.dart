@@ -12,15 +12,15 @@ class ImageWidget extends StatefulWidget {
   final String plu; //precisa o ean ou plu pra carregar a imagem do concentrador
   final double height;
   final double width;
-  final double beginAnimation;
-  final double endAnimation;
+  final double? beginAnimation;
+  final double? endAnimation;
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
-    required this.beginAnimation,
-    required this.endAnimation,
+    this.beginAnimation = 1,
+    this.endAnimation = 0.7,
     super.key,
   });
 
@@ -43,14 +43,14 @@ class _ImageWidgetState extends State<ImageWidget>
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(
         animation: AnimationManager.getAnimation(
-          begin: widget.beginAnimation,
-          end: widget.endAnimation,
+          begin: widget.beginAnimation!,
+          end: widget.endAnimation!,
         ),
         builder: (context, child) {
           return Transform.scale(
             scale: AnimationManager.getAnimation(
-              begin: widget.beginAnimation,
-              end: widget.endAnimation,
+              begin: widget.beginAnimation!,
+              end: widget.endAnimation!,
             ).value,
             child: _cachedImage(
               width: widget.width,

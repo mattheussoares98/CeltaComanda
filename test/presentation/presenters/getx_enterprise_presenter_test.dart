@@ -78,7 +78,7 @@ void main() {
         sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
   });
 
   test("Should not change page if validation throws", () async {
@@ -115,7 +115,7 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
 
     verify(() => localEnterpriseData
         .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
@@ -129,7 +129,7 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
   });
 
   test('Should emit correct events on validateApiSaleRequest success',
@@ -140,7 +140,7 @@ void main() {
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
 
-    await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
   });
 
   test('Should error if enterprise not exists in firebase', () {
@@ -166,7 +166,7 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
 
-    await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
 
     verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
         .called(1);
@@ -195,7 +195,7 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
     sut.isUpdatedEnterpriseName = true;
 
-    await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
 
     verify(() => remoteLoadEnterpriseData.load()).called(1);
   });
@@ -237,10 +237,10 @@ void main() {
     test(
         "Should update correctly locally useFixedCommandNumber on validateApiSaleRequest",
         () async {
-      await sut.validateApiSaleRequest(isFixedCommandNumber: true);
+      await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: true);
       verify(() => localUseFixedCommandNumber.update(true)).called(1);
 
-      await sut.validateApiSaleRequest(isFixedCommandNumber: false);
+      await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
       verify(() => localUseFixedCommandNumber.update(false)).called(1);
     });
   });

@@ -24,7 +24,7 @@ class EnterpriseValidateButton extends StatelessWidget {
                 ? null
                 : () async {
                     if (!isFixedCommandNumber) {
-                      await presenter.validateApiSaleRequest(
+                      await presenter.getEnterpriseAndValidateApiIsAvailable(
                         isFixedCommandNumber: isFixedCommandNumber,
                       );
                     }
@@ -34,7 +34,7 @@ class EnterpriseValidateButton extends StatelessWidget {
                       return;
                     }
 
-                    await presenter.validateApiSaleRequest(
+                    await presenter.getEnterpriseAndValidateApiIsAvailable(
                       isFixedCommandNumber: isFixedCommandNumber,
                     );
                   },

@@ -58,7 +58,7 @@ void main() {
     await loadPage(tester);
     presenter.mockLoadRemoteDataError();
 
-    await presenter.validateApiSaleRequest(isFixedCommandNumber: false);
+    await presenter.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.enterpriseValidation);

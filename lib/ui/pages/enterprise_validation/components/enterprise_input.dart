@@ -28,7 +28,7 @@ class EnterpriseInput extends StatelessWidget {
             controller: presenter.enterpriseNameController,
             onFieldSubmitted: (_) async {
               if (presenter.enterpriseNameController.text.isNotEmpty) {
-                await presenter.validateApiSaleRequest(
+                await presenter.getEnterpriseAndValidateApiIsAvailable(
                   isFixedCommandNumber: isFixedCommandNumber,
                 );
               }

@@ -30,7 +30,7 @@ class EnterpriseValidationPresenterSpy extends Mock
 
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
     when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => _);
-    when(() => this.validateApiSaleRequest(
+    when(() => this.getEnterpriseAndValidateApiIsAvailable(
             isFixedCommandNumber: any(named: "isFixedCommandNumber")))
         .thenAnswer((_) async => _);
     when(() => this.goToHomePage()).thenAnswer((_) => Get.offNamed(

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
@@ -85,4 +86,19 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> loadUseFixedCommandNumber() async {
     await useFixedCommandNumber.load();
   }
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+  }
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
+
+  @override
+  Stream<bool> get isFixedCommandNumberStream => throw UnimplementedError();
 }

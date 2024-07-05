@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
+import '../../helpers/helpers.dart';
 
 abstract class HomePresenter with ChangeNotifier implements Listenable {
+  Stream<bool> get isFixedCommandNumberStream;
+  Stream<UIError?> get mainErrorStream;
+  Stream<bool> get isLoadingStream;
+
   String? get commandNumber;
   void updateCommandNumber(String? value);
 

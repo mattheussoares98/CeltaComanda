@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 abstract class EnterpriseValidationPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<UIError?> get enterpriseErrorStream;
-  Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
+  Stream<bool> get isFormValidStream;
   Stream<bool> get useFixedCommandNumberStream;
 
   bool isUpdatedEnterpriseName = false;

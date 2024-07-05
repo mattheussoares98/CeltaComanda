@@ -7,4 +7,5 @@ enum CacheKeys {
   hiveBoxName,
   printRequest,
   updatedSaleRequestTemp,
+  useFixedCommandNumber,
 }

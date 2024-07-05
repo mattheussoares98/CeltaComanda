@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
@@ -29,27 +28,9 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
-      }
-
-      SaleRequestTempEntity? apiSaleRequestEntity;
-      if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId != null) {
-        apiSaleRequestEntity = await loadSaleRequestTemp.load(
-          enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber:
-              "001", //aqui é só pra testar se a API está disponível, por isso um valor fixo
-        );
-      }
-
-      if (apiSaleRequestEntity != null) {
-        navigateTo.navigate(
-          pageRoute: PageRoutes.home,
-          clear: true,
-        );
       } else {
         navigateTo.navigate(
-          pageRoute: PageRoutes.enterpriseValidation,
+          pageRoute: PageRoutes.home,
           clear: true,
         );
       }

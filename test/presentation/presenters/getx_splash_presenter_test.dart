@@ -1,8 +1,8 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:faker/faker.dart';
 
 import '../../domain/mocks/mocks.dart';
 
@@ -37,32 +37,36 @@ void main() {
     );
   });
 
-  test('Should call LoadCommandsAvailableEntity', () async {
-    await sut.checkApiSaleRequest(durationInSeconds: 0);
-
-    verify(() => loadSaleRequestTemp.load(
-          enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: "001",
-        )).called(1);
-  });
-
-  test('Should go to EnterpriseValidationPage if loadSaleRequestTemp throws',
-      () async {
-    loadSaleRequestTemp.mockError(DomainError.unexpected);
-
+  test('Should go to home page on success to load data of API', () async {
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(
       () => navigateTo.navigate(
-        pageRoute: PageRoutes.enterpriseValidation,
+        pageRoute: PageRoutes.home,
         clear: true,
       ),
     ).called(1);
   });
 
-  test('Should go to home page on success to load data of API', () async {
+  test('Should go to home page if EnterpriseId is null', () async {
+    EnterpriseDataBuilder.enterpriseDataEntity = null;
+
+    await sut.checkApiSaleRequest(durationInSeconds: 0);
+
+    verify(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.home,
+        clear: true,
+      ),
+    ).called(1);
+  });
+
+  test('Should go to menu page if EnterpriseId is not null', () async {
+    loadEnterpriseData.mockLoad(EnterpriseEntity(
+      enterpriseName: "enterpriseName",
+      enterpriseId: faker.randomGenerator.integer(100),
+    ));
+
     await sut.checkApiSaleRequest(durationInSeconds: 0);
 
     verify(

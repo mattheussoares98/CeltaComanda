@@ -177,11 +177,12 @@ Widget _productNameAndPrice(
 Widget _mountCombox(BuildContext context) {
   return Text(
     "MONTAR COMBO",
+    textAlign: TextAlign.center,
     style: TextStyle(
       color: Theme.of(context).secondaryHeaderColor,
       fontWeight: FontWeight.bold,
       fontStyle: FontStyle.italic,
-      fontSize: 20,
+      fontSize: hasMinWidth(context) ? 20 : 17,
     ),
   );
 }

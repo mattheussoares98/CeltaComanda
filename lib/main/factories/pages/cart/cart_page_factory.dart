@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+
 import '../../../../ui/pages/pages.dart';
 
-CartPage makeCartPage() => const CartPage();
+CartPage makeCartPage(PageController? pageController) =>
+    CartPage(pageController: pageController);

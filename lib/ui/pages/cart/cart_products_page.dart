@@ -10,7 +10,11 @@ import '../../mixins/mixins.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+  final PageController? pageController;
+  const CartPage({
+    this.pageController,
+    super.key,
+  });
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -117,19 +121,23 @@ class _CartPageState extends State<CartPage>
                                 "lib/ui/assets/images/empty_cart.jpg",
                               ),
                             ),
-                            // ElevatedButton.icon(
-                            //   onPressed: () {},
-                            //   label: Text(
-                            //     "Adicionar itens",
-                            //     style: TextStyle(
-                            //       fontSize: hasMinWidth(context) ? 25 : 20,
-                            //     ),
-                            //   ),
-                            //   icon: Icon(
-                            //     Icons.shopping_cart,
-                            //     size: hasMinWidth(context) ? 30 : 20,
-                            //   ),
-                            // )
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                if (widget.pageController != null) {
+                                  widget.pageController!.jumpToPage(0);
+                                }
+                              },
+                              label: Text(
+                                "Adicionar itens",
+                                style: TextStyle(
+                                  fontSize: hasMinWidth(context) ? 25 : 20,
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.shopping_cart,
+                                size: hasMinWidth(context) ? 30 : 20,
+                              ),
+                            )
                           ],
                         ),
                       ),

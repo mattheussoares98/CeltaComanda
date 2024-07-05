@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage>
 
     final List<Widget> screens = [
       makeMenusPage(),
-      makeCartPage(),
+      makeCartPage(_pageController),
       makePrintedProductsPage(),
       if (cartPresenter.isGeneratingVersionToRede) makePaymentPage(),
     ];

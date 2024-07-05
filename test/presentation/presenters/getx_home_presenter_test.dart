@@ -158,5 +158,21 @@ void main() {
 
       verify(() => useFixedCommandNumber.load()).called(1);
     });
+
+    test("Should emit correct values on loadUseFixedCommandNumber", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadUseFixedCommandNumber();
+    });
+    test("Should update sut.isFixedCommandNumber correctly", () async {
+      useFixedCommandNumber.mockLoad(true);
+      await sut.loadUseFixedCommandNumber();
+      expect(sut.isFixedCommandNumber, true);
+
+      useFixedCommandNumber.mockLoad(false);
+      await sut.loadUseFixedCommandNumber();
+      expect(sut.isFixedCommandNumber, false);
+    });
   });
 }

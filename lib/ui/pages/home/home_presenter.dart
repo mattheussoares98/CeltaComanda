@@ -5,10 +5,10 @@ import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
 abstract class HomePresenter with ChangeNotifier implements Listenable {
-  Stream<bool> get isFixedCommandNumberStream;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
+  bool get isFixedCommandNumber;
   String? get commandNumber;
   void updateCommandNumber(String? value);
 

@@ -84,7 +84,16 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> loadUseFixedCommandNumber() async {
-    await useFixedCommandNumber.load();
+    try {
+      isLoading = true;
+      mainError = null;
+
+      _isFixedCommandNumber = await useFixedCommandNumber.load();
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 
   final _isLoading = false.obs;
@@ -99,6 +108,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
 
+  bool _isFixedCommandNumber = false;
   @override
-  Stream<bool> get isFixedCommandNumberStream => throw UnimplementedError();
+  bool get isFixedCommandNumber => _isFixedCommandNumber;
 }

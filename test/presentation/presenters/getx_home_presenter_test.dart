@@ -136,5 +136,16 @@ void main() {
             commentsPresenter: commentsPresenter,
           )).called(1);
     });
+    test("Should updateCanCancelProducts to false when change page", () {
+      printedProductsPresenter.updateCanCancelProducts(true);
+
+      sut.onChangePage(
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      expect(printedProductsPresenter.canCancelProducts, false);
+    });
   });
 }

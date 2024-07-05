@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage>
       _pageController.jumpToPage(index);
       _currentIndex = index;
     });
-    printedProductsPresenter.updateCanCancelProducts(false);
     homePresenter.onChangePage(
       menuPresenter: menuPresenter,
       commentsPresenter: commentsPresenter,

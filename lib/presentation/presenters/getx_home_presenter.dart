@@ -75,5 +75,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       selectedProduct: null,
       commentsPresenter: commentsPresenter,
     );
+
+    printedProductsPresenter.updateCanCancelProducts(false);
   }
 }

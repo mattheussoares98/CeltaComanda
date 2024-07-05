@@ -18,8 +18,8 @@ void main() {
   late LocalEnterpriseDataSpy localEnterpriseData;
   late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
-  late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late SaleRequestTempEntity saleRequestTempEntity;
+  late TicketIsPermittedEntity ticketIsPermittedEntity;
+  late TicketIsPermittedSpy ticketIsPermitted;
 
   setUp(() {
     validation = ValidationSpy();
@@ -28,22 +28,22 @@ void main() {
     navigateTo = NavigateToSpy();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    loadSaleRequestTemp = LoadSaleRequestTempSpy();
+    ticketIsPermitted = TicketIsPermittedSpy();
 
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     remoteLoadEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
 
-    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
-    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
+    ticketIsPermitted.mockTicketIsPermitted(ticketIsPermittedEntity);
 
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,
       loadEnterpriseData: remoteLoadEnterpriseData,
       navigateTo: navigateTo,
-      loadSaleRequestTemp: loadSaleRequestTemp,
+      ticketIsPermitted: ticketIsPermitted,
     );
 
     sut.enterpriseNameController.text =
@@ -63,6 +63,28 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
   });
+
+  test("Should emit correct events on validation throws", () async {
+    ticketIsPermitted.mockError();
+
+    expectLater(
+        sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+    await sut.validateApiSaleRequest(useFixedCommandNumber: false);
+  });
+
+  test("Should not change page if validation throws", () async {
+    ticketIsPermitted.mockError();
+
+    verifyNever(
+      () => navigateTo.navigate(
+        pageRoute: PageRoutes.home,
+        clear: true,
+      ),
+    );
+  });
+
   test('Should disable form button if enterpriseName field is invalid', () {
     validation.mockValidationError(
         field: "enterpriseName", value: ValidationError.invalidField);
@@ -194,7 +216,7 @@ void main() {
         pageRoute: PageRoutes.home,
         clear: true,
       ),
-    );
+    ).called(1);
   });
 
   group("Fixed command number", () {

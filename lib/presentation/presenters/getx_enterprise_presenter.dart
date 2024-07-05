@@ -17,14 +17,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
-  final LoadSaleRequestTemp loadSaleRequestTemp;
+  final TicketIsPermitted ticketIsPermitted;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
     required this.localEntepriseData,
     required this.loadEnterpriseData,
     required this.navigateTo,
-    required this.loadSaleRequestTemp,
+    required this.ticketIsPermitted,
   });
 
   @override
@@ -94,11 +94,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
         await loadRemoteEnterpriseData();
       }
 
-      await loadSaleRequestTemp.load(
+      await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber:
-            "001", //aqui é só pra testar se a API está disponível, por isso um valor fixo
+        commandNumber: "001",
       );
 
       isLoading = false;

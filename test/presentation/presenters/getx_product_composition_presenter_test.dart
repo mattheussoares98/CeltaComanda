@@ -258,6 +258,48 @@ void main() {
 
       verify(() => validateCombox.comboxIsValid([])).called(1);
     });
+
+    test(
+        'Should update indexOfSelctedChild if father is obligatory and childs is empty',
+        () async {
+      //quando o produto é obrigatório e não tem filhos, precisa ter um índice
+      //selecionado pra na tela da composição, aparecer que ele já foi
+      //selecionado. Por isso faz essa alteração
+      getProductComposition.mockGetFathers([]);
+      getProductComposition.mockGetChildsOfFather([
+        EntityFactory.makeProductCompositionViewModel(
+          quantity: 10,
+          salePrice: 10,
+          offerPrice: 10,
+          fatherIncrement: 10,
+          childIncrement: 10,
+          isOptionalItem: false,
+          indexOfSelectedChild: null,
+          insertChilds: false,
+        )
+      ]);
+
+      expectLater(
+          sut.productsCompositionStream,
+          emits([
+            EntityFactory.makeProductCompositionViewModel(
+              quantity: 10,
+              salePrice: 10,
+              offerPrice: 10,
+              fatherIncrement: 10,
+              childIncrement: 10,
+              isOptionalItem: false,
+              indexOfSelectedChild: 0,
+              insertChilds: false,
+            )
+          ]));
+
+      await sut.loadProductComposition(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        internalCodeOnErp: internalCodeOnErp,
+      );
+    });
   });
 
   group("sut.UpdateSaleRequestTemp", () {

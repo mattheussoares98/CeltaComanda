@@ -38,6 +38,16 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<bool> get comboxIsValidStream => _comboxIsValidStream.stream;
 
+  void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
+    List<ProductCompositionViewModel> productsComposition,
+  ) {
+    for (var product in productsComposition) {
+      if (product.IsOptionalItem == "false" && product.childs?.isEmpty == true) {
+        product.indexOfSelectedChild = 0;
+      }
+    }
+  }
+
   @override
   Future<void> loadProductComposition({
     required String url,
@@ -63,6 +73,8 @@ class GetxProductCompositionPresenter extends GetxController
         internalCodeOnErp: internalCodeOnErp,
         fathers: fathers,
       );
+
+      _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(childs);
 
       _productsComposition.subject.add(childs);
       productComposition.addAll(childs);

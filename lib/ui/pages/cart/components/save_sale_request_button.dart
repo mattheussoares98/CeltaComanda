@@ -44,94 +44,95 @@ class SaveSaleRequestButton extends StatelessWidget {
     TextEditingController tableNumberController = TextEditingController();
     GlobalKey<FormState> tableKey = GlobalKey<FormState>();
 
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      child: ElevatedButton(
-        onPressed: () async {
-          if (cartPresenter.isGeneratingVersionToRede) {
-            writeCommandNumber(
-              context: context,
-              action: OnWriteCommand.saveProducts,
-            );
-          } else {
-            notificationDialog(
-              context: context,
-              titleMessage: "Adicionar número da bandeira/mesa",
-              cancelMessage: "Pular",
-              confirmMessage: "Confirmar bandeira",
-              closeDialogOnConfirmPress: false,
-              onCancelPress: () async {
+    return ElevatedButton(
+      onPressed: () async {
+        if (cartPresenter.isGeneratingVersionToRede) {
+          writeCommandNumber(
+            context: context,
+            action: OnWriteCommand.saveProducts,
+          );
+        } else {
+          notificationDialog(
+            context: context,
+            titleMessage: "Adicionar número da bandeira/mesa",
+            cancelMessage: "Pular",
+            confirmMessage: "Confirmar bandeira",
+            closeDialogOnConfirmPress: false,
+            onCancelPress: () async {
+              await _addProducts(
+                cartPresenter: cartPresenter,
+                context: context,
+                printedProductsPresenter: printedProductsPresenter,
+                tableNumber: null,
+                homePresenter: homePresenter,
+              );
+            },
+            onPress: () async {
+              bool? isValid = tableKey.currentState?.validate();
+        
+              if (isValid == true) {
+                Navigator.of(context).pop();
                 await _addProducts(
                   cartPresenter: cartPresenter,
                   context: context,
                   printedProductsPresenter: printedProductsPresenter,
-                  tableNumber: null,
+                  tableNumber: int.tryParse(tableNumberController.text),
                   homePresenter: homePresenter,
                 );
-              },
-              onPress: () async {
-                bool? isValid = tableKey.currentState?.validate();
-    
-                if (isValid == true) {
-                  Navigator.of(context).pop();
-                  await _addProducts(
-                    cartPresenter: cartPresenter,
-                    context: context,
-                    printedProductsPresenter: printedProductsPresenter,
-                    tableNumber: int.tryParse(tableNumberController.text),
-                    homePresenter: homePresenter,
-                  );
-                }
-              },
-              content: Row(
-                children: [
-                  const Expanded(child: SizedBox()),
-                  Expanded(
-                    child: Form(
-                      key: tableKey,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      child: TextFormField(
-                        autofocus: true,
-                        controller: tableNumberController,
-                        keyboardType: TextInputType.number,
-                        maxLength: 4,
-                        textAlign: TextAlign.center,
-                        decoration: const InputDecoration(
-                          counterText: "",
-                        ),
-                        validator: (value) {
-                          if (int.tryParse(value!) == null) {
-                            return "Número inválido";
-                          }
-                          return null;
-                        },
+              }
+            },
+            content: Row(
+              children: [
+                const Expanded(child: SizedBox()),
+                Expanded(
+                  child: Form(
+                    key: tableKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: TextFormField(
+                      autofocus: true,
+                      controller: tableNumberController,
+                      keyboardType: TextInputType.number,
+                      maxLength: 4,
+                      textAlign: TextAlign.center,
+                      decoration: const InputDecoration(
+                        counterText: "",
                       ),
+                      validator: (value) {
+                        if (int.tryParse(value!) == null) {
+                          return "Número inválido";
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
-                ],
-              ),
-            );
-          }
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
+                ),
+                const Expanded(child: SizedBox()),
+              ],
+            ),
+          );
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FittedBox(
+            child: Text(
               'Solicitar produtos',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: hasMinWidth(context) ? 23 : 16,
               ),
             ),
-            Text(
+          ),
+          FittedBox(
+            child: Text(
               cartPresenter.totalSaleRequestTempPrice,
               style: TextStyle(
                 fontSize: hasMinWidth(context) ? 23 : 16,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

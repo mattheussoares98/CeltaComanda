@@ -18,11 +18,13 @@ class AddMoreCartItensButton extends StatelessWidget {
       onPressed: () {
         pageController.jumpToPage(0);
       },
-      child: Text(
-        "Adicionar mais itens",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: hasMinWidth(context) ? 23 : 16,
+      child: FittedBox(
+        child: Text(
+          "Adicionar mais itens",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: hasMinWidth(context) ? 23 : 16,
+          ),
         ),
       ),
     );

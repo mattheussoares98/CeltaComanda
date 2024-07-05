@@ -34,6 +34,8 @@ class _CartPageState extends State<CartPage>
     homeLoadingSubscription?.cancel();
   }
 
+  final double _buttonsHeight = 50;
+
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context);
@@ -78,7 +80,7 @@ class _CartPageState extends State<CartPage>
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 45.0),
+              padding: EdgeInsets.only(bottom: _buttonsHeight),
               child: SingleChildScrollView(
                 child: cartPresenter.cartProducts.isNotEmpty == true ||
                         cartPresenter.confirmedCombox.isNotEmpty == true
@@ -152,18 +154,24 @@ class _CartPageState extends State<CartPage>
               bottom: 0,
               left: 0,
               right: 0,
-              child: Row(
-                children: [
-                  if (widget.pageController != null)
-                    Expanded(
-                      child: AddMoreCartItensButton(
-                        pageController: widget.pageController!,
-                      ),
-                    ),
-                  if (widget.pageController != null)
-                    SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                  const Expanded(child: SaveSaleRequestButton()),
-                ],
+              child: SizedBox(
+                height: _buttonsHeight,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      if (widget.pageController != null)
+                        Expanded(
+                          child: AddMoreCartItensButton(
+                            pageController: widget.pageController!,
+                          ),
+                        ),
+                      if (widget.pageController != null)
+                        SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                      const Expanded(child: SaveSaleRequestButton()),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

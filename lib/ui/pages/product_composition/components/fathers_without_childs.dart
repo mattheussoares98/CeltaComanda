@@ -55,11 +55,6 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
             scrollDirection: Axis.vertical,
             itemCount: 1,
             itemBuilder: (context, childIndex) {
-              if (widget.father.IsOptionalItem == "false") {
-                //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
-                widget.father.indexOfSelectedChild = childIndex;
-              }
-
               return Column(
                 children: [
                   RadioListTile<int>(

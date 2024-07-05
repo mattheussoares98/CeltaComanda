@@ -126,7 +126,10 @@ void main() {
   group("On page change", () {
     test("Should clear selectedProduct when changePage", () {
       sut.onChangePage(
-          menuPresenter: menuPresenter, commentsPresenter: commentsPresenter);
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
 
       verify(() => menuPresenter.updateSelectedProduct(
             selectedProduct: null,

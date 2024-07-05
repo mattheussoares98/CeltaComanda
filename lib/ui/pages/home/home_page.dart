@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage>
     homePresenter.onChangePage(
       menuPresenter: menuPresenter,
       commentsPresenter: commentsPresenter,
+      printedProductsPresenter: printedProductsPresenter,
     );
   }
 

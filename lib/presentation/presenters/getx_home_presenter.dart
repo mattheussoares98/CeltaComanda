@@ -69,6 +69,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   void onChangePage({
     required MenuPresenter menuPresenter,
     required CommentsPresenter commentsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   }) {
     menuPresenter.updateSelectedProduct(
       selectedProduct: null,

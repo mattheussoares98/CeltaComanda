@@ -20,5 +20,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   void onChangePage({
     required MenuPresenter menuPresenter,
     required CommentsPresenter commentsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   });
 }

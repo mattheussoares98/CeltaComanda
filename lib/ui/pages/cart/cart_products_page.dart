@@ -74,112 +74,114 @@ class _CartPageState extends State<CartPage>
           ),
         ),
       ),
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: _buttonsHeight),
-              child: SingleChildScrollView(
-                child: cartPresenter.cartProducts.isNotEmpty == true ||
-                        cartPresenter.confirmedCombox.isNotEmpty == true
-                    ? Column(
-                        children: [
-                          if (cartPresenter.cartProducts.isNotEmpty)
-                            CartProductsItems(
-                              cartProducts: cartPresenter.cartProducts,
-                            ),
-                          if (cartPresenter.confirmedCombox.isNotEmpty)
-                            ConfirmedComboxItems(
-                              confirmedsCombox: cartPresenter.confirmedCombox,
-                            ),
-                        ],
-                      )
-                    : SizedBox(
-                        height: MediaQuery.of(context).size.height -
-                            AppBar().preferredSize.height -
-                            kBottomNavigationBarHeight,
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: _buttonsHeight),
+                child: SingleChildScrollView(
+                  child: cartPresenter.cartProducts.isNotEmpty == true ||
+                          cartPresenter.confirmedCombox.isNotEmpty == true
+                      ? Column(
                           children: [
-                            FittedBox(
-                              child: Text(
-                                "O carrinho está vazio",
-                                style: TextStyle(
-                                  fontSize: hasMinWidth(context) ? 30 : 20,
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                ),
+                            if (cartPresenter.cartProducts.isNotEmpty)
+                              CartProductsItems(
+                                cartProducts: cartPresenter.cartProducts,
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 20.0),
-                              child: Image.asset(
-                                key: const Key("emptyCartKey"),
-                                "lib/ui/assets/images/empty_cart.jpg",
+                            if (cartPresenter.confirmedCombox.isNotEmpty)
+                              ConfirmedComboxItems(
+                                confirmedsCombox: cartPresenter.confirmedCombox,
                               ),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                if (widget.pageController != null) {
-                                  widget.pageController!.jumpToPage(0);
-                                }
-                              },
-                              label: Text(
-                                "Adicionar itens",
-                                style: TextStyle(
-                                  fontSize: hasMinWidth(context) ? 25 : 20,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.shopping_cart,
-                                size: hasMinWidth(context) ? 30 : 20,
-                              ),
-                            )
                           ],
-                        ),
-                      ),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: cartPresenter.cartProducts.length +
-                    cartPresenter.confirmedCombox.length >
-                0,
-            child: Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: SizedBox(
-                height: _buttonsHeight,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    children: [
-                      if (widget.pageController != null)
-                        Expanded(
-                          flex: 4,
-                          child: AddMoreCartItensButton(
-                            pageController: widget.pageController!,
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height -
+                              AppBar().preferredSize.height -
+                              kBottomNavigationBarHeight,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FittedBox(
+                                child: Text(
+                                  "O carrinho está vazio",
+                                  style: TextStyle(
+                                    fontSize: hasMinWidth(context) ? 30 : 20,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20.0),
+                                child: Image.asset(
+                                  key: const Key("emptyCartKey"),
+                                  "lib/ui/assets/images/empty_cart.jpg",
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  if (widget.pageController != null) {
+                                    widget.pageController!.jumpToPage(0);
+                                  }
+                                },
+                                label: Text(
+                                  "Adicionar itens",
+                                  style: TextStyle(
+                                    fontSize: hasMinWidth(context) ? 25 : 20,
+                                  ),
+                                ),
+                                icon: Icon(
+                                  Icons.shopping_cart,
+                                  size: hasMinWidth(context) ? 30 : 20,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      if (widget.pageController != null)
-                        SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                      const Expanded(
-                        flex: 6,
-                        child: SaveSaleRequestButton(),
-                      ),
-                    ],
+                ),
+              ),
+            ),
+            Visibility(
+              visible: cartPresenter.cartProducts.length +
+                      cartPresenter.confirmedCombox.length >
+                  0,
+              child: Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: SizedBox(
+                  height: _buttonsHeight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        if (widget.pageController != null)
+                          Expanded(
+                            flex: 4,
+                            child: AddMoreCartItensButton(
+                              pageController: widget.pageController!,
+                            ),
+                          ),
+                        if (widget.pageController != null)
+                          SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                        const Expanded(
+                          flex: 6,
+                          child: SaveSaleRequestButton(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

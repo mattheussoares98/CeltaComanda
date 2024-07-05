@@ -82,5 +82,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> loadUseFixedCommandNumber() async {}
+  Future<void> loadUseFixedCommandNumber() async {
+    await useFixedCommandNumber.load();
+  }
 }

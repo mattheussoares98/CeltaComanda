@@ -55,6 +55,7 @@ void main() {
 
   void initMocks() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
+    useFixedCommandNumber.mockLoad(true);
   }
 
   void initEntitys() {
@@ -149,6 +150,13 @@ void main() {
       );
 
       expect(printedProductsPresenter.canCancelProducts, false);
+    });
+
+    test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
+        () async {
+      await sut.loadUseFixedCommandNumber();
+
+      verify(() => useFixedCommandNumber.load()).called(1);
     });
   });
 }

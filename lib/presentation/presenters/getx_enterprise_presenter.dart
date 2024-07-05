@@ -158,4 +158,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   void goToHomePage() {
     navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
   }
+
+  @override
+  void updateUseFixedCommandNumber() {}
 }

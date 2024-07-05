@@ -148,11 +148,23 @@ class _CartPageState extends State<CartPage>
             visible: cartPresenter.cartProducts.length +
                     cartPresenter.confirmedCombox.length >
                 0,
-            child: const Positioned(
+            child: Positioned(
               bottom: 0,
               left: 0,
               right: 0,
-              child: SaveSaleRequestButton(),
+              child: Row(
+                children: [
+                  if (widget.pageController != null)
+                    Expanded(
+                      child: AddMoreCartItensButton(
+                        pageController: widget.pageController!,
+                      ),
+                    ),
+                  if (widget.pageController != null)
+                    SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                  const Expanded(child: SaveSaleRequestButton()),
+                ],
+              ),
             ),
           ),
         ],

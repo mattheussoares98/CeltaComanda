@@ -75,32 +75,39 @@ class SaveComboxButton extends StatelessWidget {
                       );
                     }
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FittedBox(
-                        child: Text(
-                          isValidComboxSnapshot.data == true
-                              ? "Conferir produtos selecionados"
-                              : "Selecione todos produtos obrigatórios",
-                          style: const TextStyle(
-                            fontSize: 50,
-                          ),
-                        ),
-                      ),
-                      if (priceSnapshot.hasData)
+                  child: FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
                         FittedBox(
                           child: Text(
-                            priceSnapshot.data
-                                .toString()
-                                .toBrazilianNumber()
-                                .addBrazilianCoin(),
+                            isValidComboxSnapshot.data == true
+                                ? "Conferir produtos selecionados"
+                                : "Selecione todos produtos obrigatórios",
                             style: const TextStyle(
                               fontSize: 50,
                             ),
                           ),
                         ),
-                    ],
+                        if (priceSnapshot.hasData)
+                          Row(
+                            children: [
+                              const SizedBox(width: 20),
+                              FittedBox(
+                                child: Text(
+                                  priceSnapshot.data
+                                      .toString()
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin(),
+                                  style: const TextStyle(
+                                    fontSize: 50,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 );
               });

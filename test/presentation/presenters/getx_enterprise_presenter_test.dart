@@ -196,4 +196,13 @@ void main() {
       ),
     );
   });
+
+  group("Fixed command number", () {
+    test("Should emit correct values on change useFixedCommandNumber", () {
+      expectLater(sut.useFixedCommandNumber, emitsInOrder([true, false]));
+
+      sut.updateUseFixedCommandNumber();
+      sut.updateUseFixedCommandNumber();
+    });
+  });
 }

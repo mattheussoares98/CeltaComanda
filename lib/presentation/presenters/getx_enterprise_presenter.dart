@@ -160,5 +160,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  void updateUseFixedCommandNumber() {}
+  void updateUseFixedCommandNumber() {
+    _useFixedCommandNumber.value = !_useFixedCommandNumber.value;
+  }
 }

@@ -50,7 +50,6 @@ class ChildItemRadioListTile extends StatelessWidget {
                 child: ImageWidget(
                   ean: null,
                   plu: child!.PluChild!,
-                  showLargeImageInShowDialog: true,
                   height: 140,
                   width: 140,
                   beginAnimation: 1,

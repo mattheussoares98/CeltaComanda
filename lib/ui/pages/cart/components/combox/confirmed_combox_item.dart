@@ -62,7 +62,6 @@ class _ConfirmedComboxItemState extends State<ConfirmedComboxItem> {
                   ImageWidget(
                     ean: null,
                     plu: product.PluChild.toString(),
-                    showLargeImageInShowDialog: true,
                     height: 70,
                     width: 70,
                     beginAnimation: 1,

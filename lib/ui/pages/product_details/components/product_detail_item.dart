@@ -28,7 +28,6 @@ class ProductDetailItem extends StatelessWidget {
                       plu: product.PriceLookupCode,
                       height: 250,
                       width: double.infinity,
-                      showLargeImageInShowDialog: true,
                       beginAnimation: 1,
                       endAnimation: 0.7,
                     ),

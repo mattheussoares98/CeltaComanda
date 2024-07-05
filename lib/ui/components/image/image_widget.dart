@@ -12,7 +12,6 @@ class ImageWidget extends StatefulWidget {
   final String plu; //precisa o ean ou plu pra carregar a imagem do concentrador
   final double height;
   final double width;
-  final bool showLargeImageInShowDialog;
   final double beginAnimation;
   final double endAnimation;
   const ImageWidget({
@@ -20,7 +19,6 @@ class ImageWidget extends StatefulWidget {
     this.width = 65,
     required this.ean,
     required this.plu,
-    required this.showLargeImageInShowDialog,
     required this.beginAnimation,
     required this.endAnimation,
     super.key,

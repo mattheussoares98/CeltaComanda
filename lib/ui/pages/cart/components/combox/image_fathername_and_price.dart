@@ -24,7 +24,6 @@ class ImageFathernameAndPrice extends StatelessWidget {
         ImageWidget(
           ean: confirmedCombox.father.EanCode,
           plu: confirmedCombox.father.PriceLookupCode,
-          showLargeImageInShowDialog: true,
           beginAnimation: 1,
           endAnimation: 0.7,
           height: 150,

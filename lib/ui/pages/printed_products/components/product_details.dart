@@ -41,7 +41,6 @@ class ProductDetails extends StatelessWidget {
             ImageWidget(
               ean: Product.EanCode,
               plu: Product.PriceLookupCode,
-              showLargeImageInShowDialog: true,
               beginAnimation: 1,
               endAnimation: 0.7,
             ),

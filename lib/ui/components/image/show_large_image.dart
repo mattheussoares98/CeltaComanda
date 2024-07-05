@@ -98,7 +98,6 @@ Widget _portraitLargeImage({
                 child: ImageWidget(
                   ean: ean,
                   plu: plu,
-                  showLargeImageInShowDialog: false,
                   height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
                   beginAnimation: 1,
@@ -165,7 +164,6 @@ Widget _landScapeLargeImage({
                       child: ImageWidget(
                         ean: ean,
                         plu: plu,
-                        showLargeImageInShowDialog: false,
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         beginAnimation: 1.5,

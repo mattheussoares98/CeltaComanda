@@ -92,7 +92,6 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                           child: ImageWidget(
                             ean: null,
                             plu: widget.father.PluChild!,
-                            showLargeImageInShowDialog: true,
                             height: 100,
                             width: 100,
                             beginAnimation: 1,

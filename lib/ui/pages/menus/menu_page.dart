@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -42,11 +43,14 @@ class _MenuPageState extends State<MenuPage>
 
     if (!_isLoaded && menuPresenter.loadedMenu.isEmpty) {
       _isLoaded = true;
-      Future.delayed(Duration.zero, () async {
-        await _loadGroupsAndProducts(menuPresenter);
-        await cartPresenter.getLocalCartProductsData();
-        await cartPresenter.getLocalConfirmedsCombox();
-      },);
+      Future.delayed(
+        Duration.zero,
+        () async {
+          await _loadGroupsAndProducts(menuPresenter);
+          await cartPresenter.getLocalCartProductsData();
+          await cartPresenter.getLocalConfirmedsCombox();
+        },
+      );
     }
   }
 
@@ -111,11 +115,22 @@ class _MenuPageState extends State<MenuPage>
               height: MediaQuery.of(context).size.height -
                   AppBar().preferredSize.height,
               child: Center(
-                child: TextButton(
+                child: TextButton.icon(
                   onPressed: () async {
                     _loadGroupsAndProducts(menuPresenter);
                   },
-                  child: const Text("Carregar menu"),
+                  icon: Icon(
+                    Icons.menu_book,
+                    size: hasMinWidth(context) ? 50 : 30,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+                  label: Text(
+                    "Carregar menu",
+                    style: TextStyle(
+                      fontSize: hasMinWidth(context) ? 40 : 30,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                  ),
                 ),
               ),
             );

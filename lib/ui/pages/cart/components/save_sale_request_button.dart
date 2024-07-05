@@ -69,7 +69,7 @@ class SaveSaleRequestButton extends StatelessWidget {
             },
             onPress: () async {
               bool? isValid = tableKey.currentState?.validate();
-        
+
               if (isValid == true) {
                 Navigator.of(context).pop();
                 await _addProducts(
@@ -125,7 +125,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 5),
+            SizedBox(width: hasMinWidth(context) ? 100 : 5),
             FittedBox(
               child: Text(
                 cartPresenter.totalSaleRequestTempPrice,

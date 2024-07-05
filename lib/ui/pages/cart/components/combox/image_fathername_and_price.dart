@@ -17,17 +17,30 @@ class ImageFathernameAndPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ImageWidget(
-          ean: confirmedCombox.father.EanCode,
-          plu: confirmedCombox.father.PriceLookupCode,
-          beginAnimation: 1,
-          endAnimation: 0.7,
-          height: 150,
-          width: 150,
+        GestureDetector(
+          onTap: () {
+            showLargeImage(
+              context: context,
+              ean: confirmedCombox.father.EanCode,
+              plu: confirmedCombox.father.PriceLookupCode,
+              productComplement: confirmedCombox.father.ProductComplement,
+              menuPresenter: menuPresenter,
+              productName: confirmedCombox.father.Name,
+            );
+          },
+          child: ImageWidget(
+            ean: confirmedCombox.father.EanCode,
+            plu: confirmedCombox.father.PriceLookupCode,
+            beginAnimation: 1,
+            endAnimation: 0.7,
+            height: 150,
+            width: 150,
+          ),
         ),
         const SizedBox(width: 3),
         Expanded(

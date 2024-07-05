@@ -51,7 +51,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  Future<void> loadRemoteData() async {
+  Future<void> loadRemoteEnterpriseData() async {
     try {
       final remoteData = await loadEnterpriseData.load();
 
@@ -91,7 +91,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       if (isUpdatedEnterpriseName ||
           EnterpriseDataBuilder.enterpriseDataEntity!.url == null) {
-        await loadRemoteData();
+        await loadRemoteEnterpriseData();
       }
 
       await loadSaleRequestTemp.load(

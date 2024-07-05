@@ -29,7 +29,7 @@ class EnterpriseValidationPresenterSpy extends Mock
         .thenReturn(enterpriseNameTextEditingController);
 
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
-    when(() => this.loadRemoteData()).thenAnswer((_) async => _);
+    when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => _);
     when(() => this.validateApiSaleRequest(
             useFixedCommandNumber: any(named: "useFixedCommandNumber")))
         .thenAnswer((_) async => _);
@@ -61,11 +61,11 @@ class EnterpriseValidationPresenterSpy extends Mock
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
   void mockLoadRemoteData(EnterpriseEntity? enterpriseEntity) {
-    when(() => this.loadRemoteData()).thenAnswer((_) async => enterpriseEntity);
+    when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => enterpriseEntity);
   }
 
   void mockLoadRemoteDataError() {
-    when(() => this.loadRemoteData())
+    when(() => this.loadRemoteEnterpriseData())
         .thenThrow((_) async => DomainError.enterpriseOrUrlNotFound);
   }
 

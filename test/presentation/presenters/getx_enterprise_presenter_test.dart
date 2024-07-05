@@ -119,7 +119,7 @@ void main() {
     // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
     //     updateEnterpriseNameController: true);
 
-    final error = sut.loadRemoteData();
+    final error = sut.loadRemoteEnterpriseData();
 
     expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
   });
@@ -128,7 +128,7 @@ void main() {
       () {
     remoteLoadEnterpriseData.mockRemoteLoad(null);
 
-    final error = sut.loadRemoteData();
+    final error = sut.loadRemoteEnterpriseData();
 
     expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
   });
@@ -144,12 +144,12 @@ void main() {
   });
 
   test("Should call LoadRemoteData on loadData", () async {
-    await sut.loadRemoteData();
+    await sut.loadRemoteEnterpriseData();
 
     verify(() => remoteLoadEnterpriseData.load()).called(1);
   });
   test("Should change controllers with remoteEnterpriseData", () async {
-    await sut.loadRemoteData();
+    await sut.loadRemoteEnterpriseData();
 
     expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
         sut.enterpriseNameController.text);

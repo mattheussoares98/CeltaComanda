@@ -281,7 +281,7 @@ void main() {
 
       homePresenter.commandNumberMock = commandEntity.commandNumber;
       homePresenter.isFixedCommandNumberMock =
-          commandEntity.isFixedCommandNumber;
+          !commandEntity.isFixedCommandNumber;
 
       sut.updateUseFixedCommandNumber(homePresenter);
     });

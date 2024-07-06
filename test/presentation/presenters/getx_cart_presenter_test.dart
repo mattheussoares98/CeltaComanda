@@ -2001,6 +2001,20 @@ void main() {
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
     });
+    test(
+        "Should not call barcodeScanner.read if homePresenter.isFixedCommandNumber",
+        () async {
+      homePresenter.isFixedCommandNumberMock = true;
+      expect(homePresenter.isFixedCommandNumber, true);
+
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+
+      verifyNever(() => barcodeScanner.read());
+    });
   });
 
   group("Confirmed combox products", () {

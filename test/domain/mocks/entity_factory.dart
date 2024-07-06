@@ -741,4 +741,9 @@ class EntityFactory {
         comment: faker.randomGenerator.string(10),
         selected: selected!,
       );
+
+  static CommandEntity makeCommandEntity() => CommandEntity(
+        commandNumber: faker.randomGenerator.integer(100).toString(),
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+      );
 }

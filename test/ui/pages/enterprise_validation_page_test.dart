@@ -58,7 +58,9 @@ void main() {
     await loadPage(tester);
     presenter.mockLoadRemoteDataError();
 
-    await presenter.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await presenter.getEnterpriseAndValidateApiIsAvailable(
+      commandEntity: EntityFactory.makeCommandEntity(),
+    );
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.enterpriseValidation);
@@ -69,7 +71,7 @@ void main() {
     await loadPage(tester);
 
     // Verificando se a função foi chamada quando didChangeDependencies é chamado
-    verify(() => presenter.validateEnterpriseInput(
-        presenter.enterpriseNameController.text));
+    verify(() => presenter
+        .validateEnterpriseInput(presenter.enterpriseNameController.text));
   });
 }

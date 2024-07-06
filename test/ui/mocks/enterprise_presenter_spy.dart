@@ -18,7 +18,7 @@ class EnterpriseValidationPresenterSpy extends Mock
   final enterpriseErrorController = StreamController<UIError?>();
   final isFormValidController = StreamController<bool>();
   final isLoadingController = StreamController<bool>();
-  final useFixedCommandNumberController = StreamController<bool>();
+  final useFixedCommandNumberController = StreamController<CommandEntity>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
 
@@ -31,8 +31,7 @@ class EnterpriseValidationPresenterSpy extends Mock
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
     when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => _);
     when(() => this.getEnterpriseAndValidateApiIsAvailable(
-            isFixedCommandNumber: any(named: "isFixedCommandNumber")))
-        .thenAnswer((_) async => _);
+        commandEntity: any(named: "commandEntity"))).thenAnswer((_) async => _);
     when(() => this.goToHomePage()).thenAnswer((_) => Get.offNamed(
           PageRoutes.menus,
         ));
@@ -52,7 +51,7 @@ class EnterpriseValidationPresenterSpy extends Mock
         .thenAnswer((_) => isFormValidController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.useFixedCommandNumberStream)
+    when(() => this.commandDataStream)
         .thenAnswer((_) => useFixedCommandNumberController.stream);
   }
 
@@ -61,7 +60,8 @@ class EnterpriseValidationPresenterSpy extends Mock
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
   void mockLoadRemoteData(EnterpriseEntity? enterpriseEntity) {
-    when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => enterpriseEntity);
+    when(() => this.loadRemoteEnterpriseData())
+        .thenAnswer((_) async => enterpriseEntity);
   }
 
   void mockLoadRemoteDataError() {

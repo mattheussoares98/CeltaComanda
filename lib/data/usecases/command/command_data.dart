@@ -1,24 +1,26 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocaFixedCommandNumberData implements FixedCommandNumberData {
+class LocalLoadCommandData implements LoadCommandData {
   final HiveStorage hiveStorage;
 
-  LocaFixedCommandNumberData({required this.hiveStorage});
+  LocalLoadCommandData({required this.hiveStorage});
 
   @override
-  Future<bool> load() async {
+  Future<CommandEntity> load() async {
     try {
       final json = await hiveStorage.get(
-        CacheKeys.useFixedCommandNumber.name,
+        CacheKeys.commandData.name,
       );
       if (json != null) {
         return json["useFixedCommandNumber"];
       } else {
-        return false;
+        return CommandModel.fromJson(json).toEntity();
       }
     } catch (error) {
       throw DomainError.unexpected;
@@ -26,11 +28,11 @@ class LocaFixedCommandNumberData implements FixedCommandNumberData {
   }
 
   @override
-  Future<void> update(bool use) async {
+  Future<void> update(CommandEntity entity) async {
     try {
       await hiveStorage.put(
-        CacheKeys.useFixedCommandNumber.name,
-        {"useFixedCommandNumber": use},
+        CacheKeys.commandData.name,
+        CommandModel.fromEntity(entity).toJson(),
       );
     } catch (error) {
       throw DomainError.unexpected;

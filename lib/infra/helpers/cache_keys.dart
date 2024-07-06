@@ -1,11 +1,11 @@
 enum CacheKeys {
   cartProducts,
-  confirmedCombox,
+  commandData,
   comments,
+  confirmedCombox,
   enterprise,
   images,
   hiveBoxName,
   printRequest,
   updatedSaleRequestTemp,
-  useFixedCommandNumber,
 }

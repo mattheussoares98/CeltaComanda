@@ -1,13 +1,15 @@
-import '../../helpers/helpers.dart';
-
 import 'package:flutter/material.dart';
+
+import '../../../domain/entities/entities.dart';
+import '../../helpers/helpers.dart';
+import '../pages.dart';
 
 abstract class EnterpriseValidationPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<UIError?> get enterpriseErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<bool> get isFormValidStream;
-  Stream<bool> get useFixedCommandNumberStream;
+  Stream<CommandEntity?> get commandDataStream;
 
   bool isUpdatedEnterpriseName = false;
 
@@ -17,11 +19,13 @@ abstract class EnterpriseValidationPresenter implements Listenable {
       {bool? updateEnterpriseNameController = false});
   void updateEnterpriseController(String value);
 
-  Future<void> getEnterpriseAndValidateApiIsAvailable({required bool isFixedCommandNumber});
+  Future<void> getEnterpriseAndValidateApiIsAvailable({
+    required CommandEntity commandEntity,
+  });
   Future<void> loadRemoteEnterpriseData();
   Future<void> loadLocalData();
 
   void goToHomePage();
 
-  void updateUseFixedCommandNumber();
+  void updateUseFixedCommandNumber(HomePresenter homePresenter);
 }

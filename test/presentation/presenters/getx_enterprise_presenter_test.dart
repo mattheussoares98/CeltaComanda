@@ -10,10 +10,12 @@ import '../../domain/mocks/mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mocktail/mocktail.dart';
+import '../../ui/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
   late GetxEnterpriseValidationPresenter sut;
+  late HomePresenterSpy homePresenter;
 
   late ValidationSpy validation;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -23,27 +25,29 @@ void main() {
   late UseFixedCommandNumberSpy localUseFixedCommandNumber;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
+  late CommandEntity commandEntity;
 
   setUp(() {
     validation = ValidationSpy();
     localUseFixedCommandNumber = UseFixedCommandNumberSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
+    ticketIsPermitted = TicketIsPermittedSpy();
     navigateTo = NavigateToSpy();
+
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    ticketIsPermitted = TicketIsPermittedSpy();
+    ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
+    commandEntity = EntityFactory.makeCommandEntity();
 
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     remoteLoadEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
-
-    ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
     ticketIsPermitted.mockTicketIsPermitted(ticketIsPermittedEntity);
-
     localUseFixedCommandNumber.mockUpdate();
 
+    homePresenter = HomePresenterSpy();
     sut = GetxEnterpriseValidationPresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,
@@ -78,7 +82,8 @@ void main() {
         sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity);
   });
 
   test("Should not change page if validation throws", () async {
@@ -115,7 +120,8 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity);
 
     verify(() => localEnterpriseData
         .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
@@ -129,7 +135,8 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity);
   });
 
   test('Should emit correct events on validateApiSaleRequest success',
@@ -140,7 +147,8 @@ void main() {
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity);
   });
 
   test('Should error if enterprise not exists in firebase', () {
@@ -166,7 +174,8 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity);
 
     verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
         .called(1);
@@ -195,7 +204,8 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
     sut.isUpdatedEnterpriseName = true;
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
+    await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity);
 
     verify(() => remoteLoadEnterpriseData.load()).called(1);
   });
@@ -228,20 +238,23 @@ void main() {
 
   group("Fixed command number", () {
     test("Should emit correct values on change useFixedCommandNumber", () {
-      expectLater(sut.useFixedCommandNumberStream, emitsInOrder([true, false]));
+      expectLater(sut.commandDataStream, emitsInOrder([true, false]));
 
-      sut.updateUseFixedCommandNumber();
-      sut.updateUseFixedCommandNumber();
+      sut.updateUseFixedCommandNumber(homePresenter);
+      sut.updateUseFixedCommandNumber(homePresenter);
     });
 
     test(
         "Should update correctly locally useFixedCommandNumber on validateApiSaleRequest",
         () async {
-      await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: true);
-      verify(() => localUseFixedCommandNumber.update(true)).called(1);
+      await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity,
+      );
+      verify(() => localUseFixedCommandNumber.update(commandEntity)).called(1);
 
-      await sut.getEnterpriseAndValidateApiIsAvailable(isFixedCommandNumber: false);
-      verify(() => localUseFixedCommandNumber.update(false)).called(1);
+      await sut.getEnterpriseAndValidateApiIsAvailable(
+          commandEntity: commandEntity);
+      verify(() => localUseFixedCommandNumber.update(commandEntity)).called(1);
     });
   });
 }

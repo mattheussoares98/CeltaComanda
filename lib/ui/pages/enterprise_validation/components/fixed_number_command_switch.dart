@@ -2,12 +2,13 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
 class FixedNumberCommandSwitch extends StatelessWidget {
-  final bool useFixedCommand;
+  final CommandEntity commandEntity;
   const FixedNumberCommandSwitch({
-    required this.useFixedCommand,
+    required this.commandEntity,
     super.key,
   });
 
@@ -16,14 +17,16 @@ class FixedNumberCommandSwitch extends StatelessWidget {
     final GlobalKey tooltipKey = GlobalKey();
     EnterpriseValidationPresenter enterpriseValidationPresenter =
         Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Switch(
-          value: useFixedCommand,
+          value: commandEntity.isFixedCommandNumber,
           onChanged: (_) {
-            enterpriseValidationPresenter.updateUseFixedCommandNumber();
+            enterpriseValidationPresenter
+                .updateUseFixedCommandNumber(homePresenter);
           },
         ),
         const SizedBox(width: 10),

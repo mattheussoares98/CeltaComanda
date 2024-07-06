@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class UseFixedCommandNumberSpy extends Mock implements FixedCommandNumberData {
+class UseFixedCommandNumberSpy extends Mock implements LoadCommandData {
   When mockUpdateAll() => when(() => this.update(any()));
   void mockUpdate() => this.mockUpdateAll().thenAnswer((_) async => _);
   void mockUpdateError() =>

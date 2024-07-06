@@ -18,7 +18,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
-  final FixedCommandNumberData useFixedCommandNumber;
+  final LoadCommandData useFixedCommandNumber;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -36,9 +36,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
 
-  final _useFixedCommandNumber = Rx<bool>(false);
+  final _commandData = Rx<CommandEntity?>(null);
   @override
-  Stream<bool> get useFixedCommandNumberStream => _useFixedCommandNumber.stream;
+  Stream<CommandEntity?> get commandDataStream => _commandData.stream;
 
   @override
   Future<void> loadLocalData() async {
@@ -84,7 +84,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   Future<void> getEnterpriseAndValidateApiIsAvailable({
-    required bool isFixedCommandNumber,
+    required CommandEntity commandEntity,
   }) async {
     try {
       mainError = null;
@@ -102,7 +102,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         commandNumber: "001",
       );
 
-      useFixedCommandNumber.update(isFixedCommandNumber);
+      useFixedCommandNumber.update(commandEntity);
 
       isLoading = false;
       goToHomePage();
@@ -164,13 +164,15 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  void updateUseFixedCommandNumber() async {
+  void updateUseFixedCommandNumber(HomePresenter homePresenter) async {
     isLoading = true;
     mainError = null;
-    _useFixedCommandNumber.value = !_useFixedCommandNumber.value;
 
     try {
-      await useFixedCommandNumber.update(_useFixedCommandNumber.value);
+      await useFixedCommandNumber.update(CommandEntity(
+        commandNumber: homePresenter.commandNumber,
+        isFixedCommandNumber: homePresenter.isFixedCommandNumber,
+      ));
     } catch (e) {
       UIError.unexpected;
     } finally {

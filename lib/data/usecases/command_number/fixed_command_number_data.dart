@@ -4,10 +4,10 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalUseFixedCommandNumber implements UseFixedCommandNumber {
+class LocaFixedCommandNumberData implements FixedCommandNumberData {
   final HiveStorage hiveStorage;
 
-  LocalUseFixedCommandNumber({required this.hiveStorage});
+  LocaFixedCommandNumberData({required this.hiveStorage});
 
   @override
   Future<bool> load() async {

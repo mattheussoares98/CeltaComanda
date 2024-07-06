@@ -13,7 +13,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LocalEnterpriseData localEnterpriseData;
   final TicketIsPermitted ticketIsPermitted;
   final LoadExpansibleGroups loadExpansibleGroups;
-  final UseFixedCommandNumber useFixedCommandNumber;
+  final FixedCommandNumberData useFixedCommandNumber;
 
   GetxHomePresenter({
     required this.loadExpansibleGroups,

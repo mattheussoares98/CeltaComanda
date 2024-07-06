@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage>
     final List<Widget> screens = [
       makeMenusPage(homePresenter.isFixedCommandNumber),
       makeCartPage(_pageController, homePresenter.isFixedCommandNumber),
-      makePrintedProductsPage(),
+      makePrintedProductsPage(homePresenter.isFixedCommandNumber),
       if (cartPresenter.isGeneratingVersionToRede) makePaymentPage(),
     ];
     return PopScope(

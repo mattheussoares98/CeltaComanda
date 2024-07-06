@@ -1,3 +1,4 @@
 import '../../../../ui/pages/pages.dart';
 
-PrintedProductsPage makePrintedProductsPage() => const PrintedProductsPage();
+PrintedProductsPage makePrintedProductsPage(bool isFixedCommandNumber) =>
+    PrintedProductsPage(isFixedCommandNumber);

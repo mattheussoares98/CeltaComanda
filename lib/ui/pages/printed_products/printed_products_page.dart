@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/pages/home/components/title_appbar.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,9 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class PrintedProductsPage extends StatefulWidget {
-  const PrintedProductsPage({
+  final bool? isFixedCommandNumber;
+  const PrintedProductsPage(
+    this.isFixedCommandNumber, {
     super.key,
   });
 
@@ -59,64 +62,56 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         context, printedProductsPresenter.alertMessageStream);
 
     return Scaffold(
-      drawer: drawer(
-        context: context,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      ),
+      drawer: widget.isFixedCommandNumber == true
+          ? null
+          : drawer(
+              context: context,
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              homePresenter: homePresenter,
+            ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
           backgroundColor: const Color(0xFFF1F5F8),
-          leading: IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-          actions: [
-            SearchCommandIcon(
-              loadCommandData: () async {
-                if (cartPresenter.isGeneratingVersionToRede) {
-                  writeCommandNumber(
-                    context: context,
-                    action: OnWriteCommand.loadCommandData,
-                  );
-                } else {
-                  await printedProductsPresenter.loadCommandData(
-                    printedProductsPresenter: printedProductsPresenter,
-                    cartPresenter: cartPresenter,
-                    menuPresenter: menuPresenter,
-                    homePresenter: homePresenter,
-                    clearPermissionToCancelProducts: true,
-                    isRemovingProduct: false,
-                    writedCommandNumberForRedeVersion: "",
-                  );
-                }
-                printedProductsPresenter.updateCanCancelProducts(false);
-              },
-            )
-          ],
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (homePresenter.commandNumber != null)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Comanda ${homePresenter.commandNumber!}",
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
+          leading: widget.isFixedCommandNumber == true
+              ? null
+              : IconButton(
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
                 ),
-            ],
-          ),
+          actions: widget.isFixedCommandNumber == true
+              ? null
+              : [
+                  SearchCommandIcon(
+                    loadCommandData: () async {
+                      if (cartPresenter.isGeneratingVersionToRede) {
+                        writeCommandNumber(
+                          context: context,
+                          action: OnWriteCommand.loadCommandData,
+                        );
+                      } else {
+                        await printedProductsPresenter.loadCommandData(
+                          printedProductsPresenter: printedProductsPresenter,
+                          cartPresenter: cartPresenter,
+                          menuPresenter: menuPresenter,
+                          homePresenter: homePresenter,
+                          clearPermissionToCancelProducts: true,
+                          isRemovingProduct: false,
+                          writedCommandNumberForRedeVersion: "",
+                        );
+                      }
+                      printedProductsPresenter.updateCanCancelProducts(false);
+                    },
+                  )
+                ],
+          title: const TitleAppbar(),
         ),
       ),
       body: Stack(

@@ -48,7 +48,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.printedProducts,
-      page: () => const PrintedProductsPage(),
+      page: () => const PrintedProductsPage(null),
     ),
     GetPage(
       name: PageRoutes.home,

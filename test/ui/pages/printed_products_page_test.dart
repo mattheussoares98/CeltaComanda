@@ -30,7 +30,7 @@ void main() {
     await tester.pumpWidget(
         makePage(
           path: PageRoutes.printedProducts,
-          page: () => const PrintedProductsPage(),
+          page: () => const PrintedProductsPage(null),
         ),
         duration: const Duration(seconds: 1));
   }

@@ -24,7 +24,7 @@ void main() {
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late TicketIsPermittedSpy ticketIsPermitted;
-  late UseFixedCommandNumberSpy useFixedCommandNumber;
+  late LoadCommandDataSpy useFixedCommandNumber;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
   late CommandEntity commandEntity;
@@ -51,7 +51,7 @@ void main() {
     localEnterpriseData = LocalEnterpriseDataSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
     navigateTo = NavigateToSpy();
-    useFixedCommandNumber = UseFixedCommandNumberSpy();
+    useFixedCommandNumber = LoadCommandDataSpy();
   }
 
   void initMocks() {

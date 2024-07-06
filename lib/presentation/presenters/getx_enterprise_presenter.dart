@@ -50,6 +50,23 @@ class GetxEnterpriseValidationPresenter extends GetxController
       updateEnterpriseController(
           EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
     }
+
+    isLoading = true;
+    mainError = null;
+    try {
+      final commandEntity = await loadCommandData.load();
+
+      if (commandEntity == null) {
+        throw Exception();
+      }
+
+      _commandData.value = CommandViewModel.fromEntity(commandEntity);
+    } catch (e) {
+      _commandData.value =
+          CommandViewModel(commandNumber: "", isFixedCommandNumber: "");
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override

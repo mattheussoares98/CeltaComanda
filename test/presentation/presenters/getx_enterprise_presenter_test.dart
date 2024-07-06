@@ -22,14 +22,14 @@ void main() {
   late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
   late TicketIsPermittedSpy ticketIsPermitted;
-  late UseFixedCommandNumberSpy localUseFixedCommandNumber;
+  late LoadCommandDataSpy loadCommandData;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
 
   setUp(() {
     validation = ValidationSpy();
-    localUseFixedCommandNumber = UseFixedCommandNumberSpy();
+    loadCommandData = LoadCommandDataSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
@@ -45,7 +45,7 @@ void main() {
     remoteLoadEnterpriseData
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     ticketIsPermitted.mockTicketIsPermitted(ticketIsPermittedEntity);
-    localUseFixedCommandNumber.mockUpdate();
+    loadCommandData.mockUpdate();
 
     homePresenter = HomePresenterSpy();
     sut = GetxEnterpriseValidationPresenter(
@@ -54,7 +54,7 @@ void main() {
       loadEnterpriseData: remoteLoadEnterpriseData,
       navigateTo: navigateTo,
       ticketIsPermitted: ticketIsPermitted,
-      loadCommandData: localUseFixedCommandNumber,
+      loadCommandData: loadCommandData,
     );
 
     sut.enterpriseNameController.text =
@@ -241,6 +241,12 @@ void main() {
     ).called(1);
   });
 
+  test("Should call loadCommandData on loadLocalData", () async {
+    await sut.loadLocalData();
+
+    verify(() => loadCommandData.load()).called(1);
+  });
+
   group("Fixed command number", () {
     test("Should emit correct values on change useFixedCommandNumber",
         () async {
@@ -259,11 +265,11 @@ void main() {
       await sut.getEnterpriseAndValidateApiIsAvailable(
         commandEntity: commandEntity,
       );
-      verify(() => localUseFixedCommandNumber.update(commandEntity)).called(1);
+      verify(() => loadCommandData.update(commandEntity)).called(1);
 
       await sut.getEnterpriseAndValidateApiIsAvailable(
           commandEntity: commandEntity);
-      verify(() => localUseFixedCommandNumber.update(commandEntity)).called(1);
+      verify(() => loadCommandData.update(commandEntity)).called(1);
     });
   });
 }

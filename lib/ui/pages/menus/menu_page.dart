@@ -100,10 +100,22 @@ class _MenuPageState extends State<MenuPage>
                   },
                 ),
           backgroundColor: const Color(0xFFF1F5F8),
-          actions: [
-            if (homePresenter.commandNumber != null)
-              Text("Comanda ${homePresenter.commandNumber}"),
-            if (widget.isFixedCommandNumber != true)
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Logo"),
+              if (homePresenter.commandNumber != null)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    "Comanda ${homePresenter.commandNumber}",
+                    style: TextStyle(
+                      fontSize: hasMinWidth(context) ? 23 : 15,
+                      fontWeight: FontWeight.w300,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
               IconButton(
                 onPressed: () async {
                   await _loadGroupsAndProducts(menuPresenter);
@@ -113,8 +125,9 @@ class _MenuPageState extends State<MenuPage>
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 tooltip: "Atualizar menu",
-              )
-          ],
+              ),
+            ],
+          ),
         ),
       ),
       body: StreamBuilder<

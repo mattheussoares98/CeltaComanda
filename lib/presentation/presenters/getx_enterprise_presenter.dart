@@ -119,7 +119,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         commandNumber: "001",
       );
 
-      loadCommandData.update(commandEntity);
+      await loadCommandData.update(commandEntity);
 
       isLoading = false;
       goToHomePage();

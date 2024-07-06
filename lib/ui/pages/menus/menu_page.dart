@@ -9,7 +9,11 @@ import '../pages.dart';
 import '../../components/components.dart';
 
 class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+  final bool? isFixedCommandNumber;
+  const MenuPage(
+    this.isFixedCommandNumber, {
+    super.key,
+  });
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -79,7 +83,7 @@ class _MenuPageState extends State<MenuPage>
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: homePresenter.isFixedCommandNumber
+      appBar: widget.isFixedCommandNumber == true
           ? null
           : PreferredSize(
               preferredSize: const Size.fromHeight(40),

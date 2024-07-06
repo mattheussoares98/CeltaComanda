@@ -45,7 +45,7 @@ void main() {
 
   Future<void> loadPage(WidgetTester tester) async {
     await tester.pumpWidget(
-      makePage(path: PageRoutes.menus, page: () => const MenuPage()),
+      makePage(path: PageRoutes.menus, page: () => const MenuPage(null)),
     );
   }
 

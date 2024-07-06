@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage>
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     final List<Widget> screens = [
-      makeMenusPage(),
+      makeMenusPage(homePresenter.isFixedCommandNumber),
       makeCartPage(_pageController),
       makePrintedProductsPage(),
       if (cartPresenter.isGeneratingVersionToRede) makePaymentPage(),

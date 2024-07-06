@@ -32,7 +32,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.menus,
-      page: () => const MenuPage(),
+      page: () => const MenuPage(null),
     ),
     GetPage(
       name: PageRoutes.cart,

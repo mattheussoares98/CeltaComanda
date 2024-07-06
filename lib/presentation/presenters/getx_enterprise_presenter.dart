@@ -18,7 +18,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
-  final LoadCommandData loadCommandData;
+  final LocalCommandData loadCommandData;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,

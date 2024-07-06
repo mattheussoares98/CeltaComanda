@@ -6,7 +6,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class LoadCommandDataSpy extends Mock implements LoadCommandData {
+class LoadCommandDataSpy extends Mock implements LocalCommandData {
   When mockUpdateAll() => when(() => this.update(any()));
   void mockUpdate() => this.mockUpdateAll().thenAnswer((_) async => _);
   void mockUpdateError() =>

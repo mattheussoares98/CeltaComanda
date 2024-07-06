@@ -11,6 +11,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   bool get isFixedCommandNumber;
   String? get commandNumber;
   void updateCommandNumber(String? value);
+  Future<void> updateIsFixedCommandNumber();
 
   Future<void> clearEnterpriseData();
 

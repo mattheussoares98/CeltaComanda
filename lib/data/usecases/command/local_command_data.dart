@@ -6,7 +6,7 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../cache/cache.dart';
 
-class LocalLoadCommandData implements LoadCommandData {
+class LocalLoadCommandData implements LocalCommandData {
   final HiveStorage hiveStorage;
 
   LocalLoadCommandData({required this.hiveStorage});

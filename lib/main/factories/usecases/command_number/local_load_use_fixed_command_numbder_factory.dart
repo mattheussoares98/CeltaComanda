@@ -2,7 +2,7 @@ import '../../../../data/usecases/usecases.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../../../main/factories/factories.dart';
 
-LoadCommandData makeLocalUseFixedCommandNumber() =>
+LocalCommandData makeLocalUseFixedCommandNumber() =>
     LocalLoadCommandData(
       hiveStorage: makeHiveAdapter(),
     );

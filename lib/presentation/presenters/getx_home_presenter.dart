@@ -13,14 +13,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LocalEnterpriseData localEnterpriseData;
   final TicketIsPermitted ticketIsPermitted;
   final LoadExpansibleGroups loadExpansibleGroups;
-  final LoadCommandData useFixedCommandNumber;
+  final LocalCommandData localCommandData;
 
   GetxHomePresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
     required this.ticketIsPermitted,
-    required this.useFixedCommandNumber,
+    required this.localCommandData,
   });
 
   @override
@@ -88,7 +88,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = true;
       mainError = null;
 
-      CommandEntity? loadedCommand = await useFixedCommandNumber.load();
+      CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand == null) {
         throw Exception();
@@ -117,4 +117,24 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   bool _isFixedCommandNumber = false;
   @override
   bool get isFixedCommandNumber => _isFixedCommandNumber;
+
+  @override
+  Future<void> updateIsFixedCommandNumber() async {
+    _isFixedCommandNumber = !_isFixedCommandNumber;
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await localCommandData.update(
+        CommandEntity(
+          commandNumber: _commandNumber,
+          isFixedCommandNumber: _isFixedCommandNumber,
+        ),
+      );
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

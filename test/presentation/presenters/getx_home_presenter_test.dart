@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -24,7 +25,7 @@ void main() {
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late TicketIsPermittedSpy ticketIsPermitted;
-  late LoadCommandDataSpy useFixedCommandNumber;
+  late LoadCommandDataSpy localCommandData;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
   late CommandEntity commandEntity;
@@ -42,7 +43,7 @@ void main() {
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
       ticketIsPermitted: ticketIsPermitted,
-      useFixedCommandNumber: useFixedCommandNumber,
+      localCommandData: localCommandData,
     );
   }
 
@@ -51,12 +52,12 @@ void main() {
     localEnterpriseData = LocalEnterpriseDataSpy();
     ticketIsPermitted = TicketIsPermittedSpy();
     navigateTo = NavigateToSpy();
-    useFixedCommandNumber = LoadCommandDataSpy();
+    localCommandData = LoadCommandDataSpy();
   }
 
   void initMocks() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
-    useFixedCommandNumber.mockLoad(commandEntity);
+    localCommandData.mockLoad(commandEntity);
   }
 
   void initEntitys() {
@@ -158,7 +159,7 @@ void main() {
         () async {
       await sut.loadUseFixedCommandNumber();
 
-      verify(() => useFixedCommandNumber.load()).called(1);
+      verify(() => localCommandData.load()).called(1);
     });
 
     test("Should emit correct values on loadUseFixedCommandNumber", () async {
@@ -177,13 +178,40 @@ void main() {
         isFixedCommandNumber: false,
       );
 
-      useFixedCommandNumber.mockLoad(fixed);
+      localCommandData.mockLoad(fixed);
       await sut.loadUseFixedCommandNumber();
       expect(sut.isFixedCommandNumber, true);
 
-      useFixedCommandNumber.mockLoad(notFixed);
+      localCommandData.mockLoad(notFixed);
       await sut.loadUseFixedCommandNumber();
       expect(sut.isFixedCommandNumber, false);
+    });
+  });
+
+  group("updateIsFixedCommandNumber", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateIsFixedCommandNumber();
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateIsFixedCommandNumber();
+    });
+    test("Should call localCommandData.udpate", () async {
+      final commandNumber = faker.randomGenerator.integer(100).toString();
+      sut.updateCommandNumber(commandNumber);
+
+      await sut.updateIsFixedCommandNumber();
+
+      verify(() => localCommandData.update(CommandEntity(
+            commandNumber: commandNumber,
+            isFixedCommandNumber: true,
+          ))).called(1);
     });
   });
 }

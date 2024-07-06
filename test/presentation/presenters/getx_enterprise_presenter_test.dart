@@ -275,7 +275,8 @@ void main() {
   group("Fixed command number", () {
     test("Should emit correct values on change useFixedCommandNumber",
         () async {
-      expectLater(sut.commandDataStream, emits(commandEntity));
+      expectLater(sut.commandDataStream,
+          emits(CommandViewModel.fromEntity(commandEntity)));
 
       homePresenter.commandNumberMock = commandEntity.commandNumber;
       homePresenter.isFixedCommandNumberMock =

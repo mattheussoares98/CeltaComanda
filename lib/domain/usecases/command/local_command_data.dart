@@ -1,6 +1,6 @@
 import '../../../domain/entities/entities.dart';
 
-abstract class LoadCommandData {
+abstract class LocalCommandData {
   Future<CommandEntity?> load();
   Future<void> update(CommandEntity commandEntity);
 }

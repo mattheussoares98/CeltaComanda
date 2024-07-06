@@ -1,4 +1,5 @@
 export './cart_product_model.dart';
+export './command_model.dart';
 export './enterprise_model.dart';
 export './expansible_groups_model.dart';
 export './print_request_model.dart';

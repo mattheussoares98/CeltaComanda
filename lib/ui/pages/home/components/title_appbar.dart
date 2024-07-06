@@ -22,29 +22,30 @@ class TitleAppbar extends StatelessWidget {
           padding: EdgeInsets.only(right: 8.0),
           child: Text("Logo"),
         ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Text(
-                "Comanda ${homePresenter.commandNumber}",
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: hasMinWidth(context) ? 23 : 15,
-                  fontWeight: FontWeight.w300,
-                  fontStyle: FontStyle.italic,
-                ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Text(
+              "Comanda ${homePresenter.commandNumber}",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 23 : 15,
+                fontWeight: FontWeight.w300,
+                fontStyle: FontStyle.italic,
               ),
             ),
           ),
-        IconButton(
-          onPressed: loadMenuAgain,
-          icon: Icon(
-            Icons.refresh_outlined,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          tooltip: "Atualizar menu",
         ),
+        if (loadMenuAgain != null)
+          IconButton(
+            onPressed: loadMenuAgain,
+            icon: Icon(
+              Icons.refresh_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            tooltip: "Atualizar menu",
+          ),
       ],
     );
   }

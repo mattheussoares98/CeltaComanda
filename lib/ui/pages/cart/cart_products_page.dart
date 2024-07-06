@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/home/components/title_appbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
@@ -78,6 +79,8 @@ class _CartPageState extends State<CartPage>
                     Scaffold.of(context).openDrawer();
                   },
                 ),
+          title:
+              widget.isFixedCommandNumber == true ? const TitleAppbar() : null,
         ),
       ),
       body: SafeArea(

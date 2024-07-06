@@ -18,7 +18,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
-  final LoadCommandData useFixedCommandNumber;
+  final LoadCommandData loadCommandData;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -26,7 +26,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.loadEnterpriseData,
     required this.navigateTo,
     required this.ticketIsPermitted,
-    required this.useFixedCommandNumber,
+    required this.loadCommandData,
   });
 
   @override
@@ -102,7 +102,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         commandNumber: "001",
       );
 
-      useFixedCommandNumber.update(commandEntity);
+      loadCommandData.update(commandEntity);
 
       isLoading = false;
       goToHomePage();
@@ -174,7 +174,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         isFixedCommandNumber: homePresenter.isFixedCommandNumber,
       );
 
-      await useFixedCommandNumber.update(entity);
+      await loadCommandData.update(entity);
 
       _commandData.value = entity;
     } catch (e) {

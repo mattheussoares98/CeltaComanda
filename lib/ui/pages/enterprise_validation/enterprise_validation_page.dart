@@ -73,14 +73,14 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                   create: (_) => widget.presenter,
                   child: StreamBuilder<CommandEntity?>(
                       stream: widget.presenter.commandDataStream,
-                      builder: (context, snapshotUseFixedCommand) {
-                        if (snapshotUseFixedCommand.data == null) {
+                      builder: (context, snapshotCommandData) {
+                        if (snapshotCommandData.data == null) {
                           return const SizedBox();
                         }
                         return Column(
                           children: [
                             EnterpriseInput(
-                              commandEntity: snapshotUseFixedCommand.data!,
+                              commandEntity: snapshotCommandData.data!,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 20),
@@ -88,9 +88,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                 children: [
                                   FixedNumberCommandSwitch(
                                     commandEntity:
-                                        snapshotUseFixedCommand.data!,
+                                        snapshotCommandData.data!,
                                   ),
-                                  if (snapshotUseFixedCommand
+                                  if (snapshotCommandData
                                           .data?.isFixedCommandNumber ==
                                       true)
                                     FixedCommandNumberInput(formKey: _formKey),
@@ -100,7 +100,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                             const SizedBox(height: 10),
                             EnterpriseValidateButton(
                               formKey: _formKey,
-                              commandEntity: snapshotUseFixedCommand.data!,
+                              commandEntity: snapshotCommandData.data!,
                             ),
                           ],
                         );

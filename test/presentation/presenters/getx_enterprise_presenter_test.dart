@@ -54,7 +54,7 @@ void main() {
       loadEnterpriseData: remoteLoadEnterpriseData,
       navigateTo: navigateTo,
       ticketIsPermitted: ticketIsPermitted,
-      useFixedCommandNumber: localUseFixedCommandNumber,
+      loadCommandData: localUseFixedCommandNumber,
     );
 
     sut.enterpriseNameController.text =

@@ -76,19 +76,21 @@ class _MenuPageState extends State<MenuPage>
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: drawer(
-        context: context,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      ),
-      appBar: widget.isFixedCommandNumber == true
+      drawer: widget.isFixedCommandNumber == true
           ? null
-          : PreferredSize(
-              preferredSize: const Size.fromHeight(40),
-              child: AppBar(
-                leading: IconButton(
+          : drawer(
+              context: context,
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              homePresenter: homePresenter,
+            ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(40),
+        child: AppBar(
+          leading: widget.isFixedCommandNumber == true
+              ? null
+              : IconButton(
                   icon: Icon(
                     Icons.exit_to_app,
                     color: Theme.of(context).primaryColor,
@@ -97,21 +99,21 @@ class _MenuPageState extends State<MenuPage>
                     scaffoldKey.currentState?.openDrawer();
                   },
                 ),
-                backgroundColor: const Color(0xFFF1F5F8),
-                actions: [
-                  IconButton(
-                    onPressed: () async {
-                      await _loadGroupsAndProducts(menuPresenter);
-                    },
-                    icon: Icon(
-                      Icons.refresh_outlined,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    tooltip: "Atualizar menu",
-                  )
-                ],
+          backgroundColor: const Color(0xFFF1F5F8),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await _loadGroupsAndProducts(menuPresenter);
+              },
+              icon: Icon(
+                Icons.refresh_outlined,
+                color: Theme.of(context).colorScheme.primary,
               ),
-            ),
+              tooltip: "Atualizar menu",
+            )
+          ],
+        ),
+      ),
       body: StreamBuilder<
           List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
         stream: menuPresenter.menuStream,

@@ -2015,6 +2015,28 @@ void main() {
 
       verifyNever(() => barcodeScanner.read());
     });
+    test(
+        "Should use homePresenter.commandNumber to saveProducts when isFixedCommandNumber",
+        () async {
+      homePresenter.isFixedCommandNumberMock = true;
+
+      final fixedCommandNumber = faker.randomGenerator.integer(999).toString();
+      homePresenter.commandNumberMock = fixedCommandNumber;
+      expect(homePresenter.commandNumber, fixedCommandNumber);
+
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: fixedCommandNumber,
+        ),
+      ).called(1);
+    });
   });
 
   group("Confirmed combox products", () {

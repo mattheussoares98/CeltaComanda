@@ -22,22 +22,22 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
     try {
       EnterpriseDataBuilder.enterpriseDataEntity =
           await loadEnterpriseData.load();
-      navigateTo.navigate(
-        pageRoute: PageRoutes.enterpriseValidation,
-        clear: true,
-      );
-      return;
-      // if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null) {
-      //   navigateTo.navigate(
-      //     pageRoute: PageRoutes.enterpriseValidation,
-      //     clear: true,
-      //   );
-      // } else {
-      //   navigateTo.navigate(
-      //     pageRoute: PageRoutes.home,
-      //     clear: true,
-      //   );
-      // }
+      // navigateTo.navigate(
+      //   pageRoute: PageRoutes.enterpriseValidation,
+      //   clear: true,
+      // );
+      // return;
+      if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null) {
+        navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation,
+          clear: true,
+        );
+      } else {
+        navigateTo.navigate(
+          pageRoute: PageRoutes.home,
+          clear: true,
+        );
+      }
     } catch (error) {
       navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation, clear: true);

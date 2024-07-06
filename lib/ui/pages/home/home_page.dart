@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage>
         HomePresenter homePresenter = Provider.of(context, listen: false);
 
         await commentsPresenter.loadComments();
-        await homePresenter.loadUseFixedCommandNumber();
+        await homePresenter.getLocalCommandData();
       });
     }
   }

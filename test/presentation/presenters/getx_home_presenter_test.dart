@@ -157,7 +157,7 @@ void main() {
 
     test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
         () async {
-      await sut.loadUseFixedCommandNumber();
+      await sut.getLocalCommandData();
 
       verify(() => localCommandData.load()).called(1);
     });
@@ -166,7 +166,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.loadUseFixedCommandNumber();
+      await sut.getLocalCommandData();
     });
     test("Should update sut.isFixedCommandNumber correctly", () async {
       const fixed = CommandEntity(
@@ -179,11 +179,11 @@ void main() {
       );
 
       localCommandData.mockLoad(fixed);
-      await sut.loadUseFixedCommandNumber();
+      await sut.getLocalCommandData();
       expect(sut.isFixedCommandNumber, true);
 
       localCommandData.mockLoad(notFixed);
-      await sut.loadUseFixedCommandNumber();
+      await sut.getLocalCommandData();
       expect(sut.isFixedCommandNumber, false);
     });
   });

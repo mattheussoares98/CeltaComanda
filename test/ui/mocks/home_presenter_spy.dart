@@ -26,7 +26,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
           PageRoutes.splash,
         ));
     when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
-    when(() => this.loadUseFixedCommandNumber()).thenAnswer((_) async => _);
+    when(() => this.getLocalCommandData()).thenAnswer((_) async => _);
   }
 
   void mockGoToProductsPage(ExpansibleGroupEntity entity) {

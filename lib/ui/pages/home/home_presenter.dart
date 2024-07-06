@@ -29,5 +29,5 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
   });
 
-  Future<void> loadUseFixedCommandNumber();
+  Future<void> getLocalCommandData();
 }

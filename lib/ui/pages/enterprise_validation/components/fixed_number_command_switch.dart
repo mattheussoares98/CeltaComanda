@@ -2,13 +2,12 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
 class FixedNumberCommandSwitch extends StatelessWidget {
-  final CommandEntity commandEntity;
+  final CommandViewModel commandViewModel;
   const FixedNumberCommandSwitch({
-    required this.commandEntity,
+    required this.commandViewModel,
     super.key,
   });
 
@@ -23,7 +22,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Switch(
-          value: commandEntity.isFixedCommandNumber,
+          value: commandViewModel.isFixedCommandNumber == "true",
           onChanged: (_) {
             enterpriseValidationPresenter
                 .updateUseFixedCommandNumber(homePresenter);

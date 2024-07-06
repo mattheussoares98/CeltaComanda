@@ -1,4 +1,3 @@
-import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 import '../enterprise_validation.dart';
 
@@ -7,10 +6,10 @@ import 'package:provider/provider.dart';
 
 class EnterpriseValidateButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final CommandEntity commandEntity;
+  final CommandViewModel commandViewModel;
   const EnterpriseValidateButton({
     required this.formKey,
-    required this.commandEntity,
+    required this.commandViewModel,
     super.key,
   });
 
@@ -24,9 +23,9 @@ class EnterpriseValidateButton extends StatelessWidget {
             onPressed: snapshot.data == false
                 ? null
                 : () async {
-                    if (!commandEntity.isFixedCommandNumber) {
+                    if (commandViewModel.isFixedCommandNumber != "true") {
                       await presenter.getEnterpriseAndValidateApiIsAvailable(
-                        commandEntity: commandEntity,
+                        commandEntity: commandViewModel.toEntity(),
                       );
                     }
 
@@ -36,7 +35,7 @@ class EnterpriseValidateButton extends StatelessWidget {
                     }
 
                     await presenter.getEnterpriseAndValidateApiIsAvailable(
-                      commandEntity: commandEntity,
+                      commandEntity: commandViewModel.toEntity(),
                     );
                   },
             child: Text(R.string.validateEnterprise.toUpperCase()),

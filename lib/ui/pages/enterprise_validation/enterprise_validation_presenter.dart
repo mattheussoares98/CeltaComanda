@@ -9,7 +9,7 @@ abstract class EnterpriseValidationPresenter implements Listenable {
   Stream<UIError?> get enterpriseErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<bool> get isFormValidStream;
-  Stream<CommandEntity?> get commandDataStream;
+  Stream<CommandViewModel?> get commandDataStream;
 
   bool isUpdatedEnterpriseName = false;
 

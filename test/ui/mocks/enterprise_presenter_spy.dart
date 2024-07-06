@@ -18,7 +18,7 @@ class EnterpriseValidationPresenterSpy extends Mock
   final enterpriseErrorController = StreamController<UIError?>();
   final isFormValidController = StreamController<bool>();
   final isLoadingController = StreamController<bool>();
-  final useFixedCommandNumberController = StreamController<CommandEntity>();
+  final useFixedCommandNumberController = StreamController<CommandViewModel>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
 

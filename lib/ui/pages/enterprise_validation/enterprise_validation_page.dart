@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -7,8 +6,7 @@ import 'dart:async';
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
-import './components/components.dart';
-import './enterprise_validation_presenter.dart';
+import '../pages.dart';
 
 class EnterpriseValidationPage extends StatefulWidget {
   final EnterpriseValidationPresenter presenter;
@@ -71,7 +69,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                 padding: const EdgeInsets.all(25),
                 child: ListenableProvider(
                   create: (_) => widget.presenter,
-                  child: StreamBuilder<CommandEntity?>(
+                  child: StreamBuilder<CommandViewModel?>(
                       stream: widget.presenter.commandDataStream,
                       builder: (context, snapshotCommandData) {
                         if (snapshotCommandData.data == null) {
@@ -80,19 +78,18 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                         return Column(
                           children: [
                             EnterpriseInput(
-                              commandEntity: snapshotCommandData.data!,
+                              commandVideModel: snapshotCommandData.data!,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 20),
                               child: Column(
                                 children: [
                                   FixedNumberCommandSwitch(
-                                    commandEntity:
-                                        snapshotCommandData.data!,
+                                    commandViewModel: snapshotCommandData.data!,
                                   ),
                                   if (snapshotCommandData
                                           .data?.isFixedCommandNumber ==
-                                      true)
+                                      "true")
                                     FixedCommandNumberInput(formKey: _formKey),
                                 ],
                               ),
@@ -100,7 +97,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                             const SizedBox(height: 10),
                             EnterpriseValidateButton(
                               formKey: _formKey,
-                              commandEntity: snapshotCommandData.data!,
+                              commandViewModel: snapshotCommandData.data!,
                             ),
                           ],
                         );

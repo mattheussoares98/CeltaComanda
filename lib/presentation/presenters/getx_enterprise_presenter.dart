@@ -36,9 +36,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
 
-  final _commandData = Rx<CommandEntity?>(null);
+  final _commandData = Rx<CommandViewModel?>(null);
   @override
-  Stream<CommandEntity?> get commandDataStream => _commandData.stream;
+  Stream<CommandViewModel?> get commandDataStream => _commandData.stream;
 
   @override
   Future<void> loadLocalData() async {
@@ -169,14 +169,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
     mainError = null;
 
     try {
-      final entity = CommandEntity(
-        commandNumber: homePresenter.commandNumber,
-        isFixedCommandNumber: homePresenter.isFixedCommandNumber,
+      final commandViewModel = CommandViewModel(
+        commandNumber: homePresenter.commandNumber.toString(),
+        isFixedCommandNumber: homePresenter.isFixedCommandNumber.toString(),
       );
 
-      await loadCommandData.update(entity);
+      await loadCommandData.update(commandViewModel.toEntity());
 
-      _commandData.value = entity;
+      _commandData.value = commandViewModel;
     } catch (e) {
       UIError.unexpected;
     } finally {

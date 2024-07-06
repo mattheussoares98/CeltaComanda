@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -7,9 +6,9 @@ import '../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
 class EnterpriseInput extends StatelessWidget {
-  final CommandEntity commandEntity;
+  final CommandViewModel commandVideModel;
   const EnterpriseInput({
-    required this.commandEntity,
+    required this.commandVideModel,
     super.key,
   });
 
@@ -30,7 +29,7 @@ class EnterpriseInput extends StatelessWidget {
             onFieldSubmitted: (_) async {
               if (presenter.enterpriseNameController.text.isNotEmpty) {
                 await presenter.getEnterpriseAndValidateApiIsAvailable(
-                  commandEntity: commandEntity,
+                  commandEntity: commandVideModel.toEntity(),
                 );
               }
             },

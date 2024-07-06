@@ -4,11 +4,11 @@ import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
 
-class CommandViewModel implements Equatable {
+class CommandViewModel extends Equatable {
   final String commandNumber;
   final String isFixedCommandNumber;
 
-  CommandViewModel({
+  const CommandViewModel({
     required this.commandNumber,
     required this.isFixedCommandNumber,
   });
@@ -43,7 +43,4 @@ class CommandViewModel implements Equatable {
 
   @override
   List<Object?> get props => [commandNumber, isFixedCommandNumber];
-
-  @override
-  bool? get stringify => throw UnimplementedError();
 }

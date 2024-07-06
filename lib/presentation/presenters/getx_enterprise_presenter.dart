@@ -63,7 +63,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       _commandData.value = CommandViewModel.fromEntity(commandEntity);
     } catch (e) {
       _commandData.value =
-          CommandViewModel(commandNumber: "", isFixedCommandNumber: "");
+          const CommandViewModel(commandNumber: "", isFixedCommandNumber: "");
     } finally {
       isLoading = false;
     }

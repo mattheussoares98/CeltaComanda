@@ -4,6 +4,7 @@ import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import '../../domain/mocks/mocks.dart';
 
@@ -46,6 +47,7 @@ void main() {
         .mockRemoteLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     ticketIsPermitted.mockTicketIsPermitted(ticketIsPermittedEntity);
     loadCommandData.mockUpdate();
+    loadCommandData.mockLoad(commandEntity);
 
     homePresenter = HomePresenterSpy();
     sut = GetxEnterpriseValidationPresenter(
@@ -245,6 +247,29 @@ void main() {
     await sut.loadLocalData();
 
     verify(() => loadCommandData.load()).called(1);
+  });
+
+  test("Should emit correct events on loadLocalData success", () async {
+    expectLater(sut.mainErrorStream, emits(null));
+    expectLater(sut.commandDataStream,
+        emits(CommandViewModel.fromEntity(commandEntity)));
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+    await sut.loadLocalData();
+  });
+
+  test("Should emit correct events on loadCommandData throws", () async {
+    loadCommandData.mockLoadError();
+
+    expectLater(sut.mainErrorStream, emits(null));
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(
+        sut.commandDataStream,
+        emits(
+          const CommandViewModel(commandNumber: "", isFixedCommandNumber: ""),
+        ));
+
+    await sut.loadLocalData();
   });
 
   group("Fixed command number", () {

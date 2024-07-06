@@ -21,7 +21,11 @@ class GroupsAndProducts extends StatelessWidget {
           Expanded(
             flex: 20,
             child: Padding(
-              padding: const EdgeInsets.only(top: 5.0),
+              padding: EdgeInsets.only(
+                  top:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? AppBar().preferredSize.height + 5
+                          : 0),
               child: GroupItems(
                 expansibleGroupsViewModel: menuPresenter.loadedMenu
                     .map((element) => element.keys.first)

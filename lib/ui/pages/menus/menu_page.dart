@@ -147,7 +147,6 @@ class _MenuPageState extends State<MenuPage>
                 builder: (context, selectedGroupIndex) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height -
                         kBottomNavigationBarHeight,
                     child: StreamBuilder<ProductsViewModel?>(
                         stream: menuPresenter.selectedProductStream,

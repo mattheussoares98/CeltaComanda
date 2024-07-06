@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
   final PageController? pageController;
+  final bool? isFixedCommandNumber;
   const CartPage({
     this.pageController,
+    this.isFixedCommandNumber,
     super.key,
   });
 
@@ -52,26 +54,30 @@ class _CartPageState extends State<CartPage>
         handleMainError(context, cartPresenter.mainErrorStream);
 
     return Scaffold(
-      drawer: drawer(
-        context: context,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      ),
+      drawer: widget.isFixedCommandNumber == true
+          ? null
+          : drawer(
+              context: context,
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              homePresenter: homePresenter,
+            ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
           backgroundColor: const Color(0xFFF1F5F8),
-          leading: IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
+          leading: widget.isFixedCommandNumber == true
+              ? null
+              : IconButton(
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
         ),
       ),
       body: SafeArea(

@@ -101,16 +101,17 @@ class _MenuPageState extends State<MenuPage>
                 ),
           backgroundColor: const Color(0xFFF1F5F8),
           actions: [
-            IconButton(
-              onPressed: () async {
-                await _loadGroupsAndProducts(menuPresenter);
-              },
-              icon: Icon(
-                Icons.refresh_outlined,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              tooltip: "Atualizar menu",
-            )
+            if (widget.isFixedCommandNumber != true)
+              IconButton(
+                onPressed: () async {
+                  await _loadGroupsAndProducts(menuPresenter);
+                },
+                icon: Icon(
+                  Icons.refresh_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                tooltip: "Atualizar menu",
+              )
           ],
         ),
       ),

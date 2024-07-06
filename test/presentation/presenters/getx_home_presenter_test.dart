@@ -210,7 +210,7 @@ void main() {
 
       verify(() => localCommandData.update(CommandEntity(
             commandNumber: commandNumber,
-            isFixedCommandNumber: true,
+            isFixedCommandNumber: false,
           ))).called(1);
     });
   });

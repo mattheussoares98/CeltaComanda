@@ -188,7 +188,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     try {
       final commandViewModel = CommandViewModel(
         commandNumber: homePresenter.commandNumber.toString(),
-        isFixedCommandNumber: homePresenter.isFixedCommandNumber.toString(),
+        isFixedCommandNumber: (!homePresenter.isFixedCommandNumber).toString(),
       );
 
       await loadCommandData.update(commandViewModel.toEntity());

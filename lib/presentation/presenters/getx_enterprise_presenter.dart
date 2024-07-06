@@ -201,4 +201,15 @@ class GetxEnterpriseValidationPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  void updateCommandNumber({
+    required String newCommandValue,
+    required HomePresenter homePresenter,
+  }) {
+    // _commandData.value = CommandViewModel(
+    //   commandNumber: newCommandValue,
+    //   isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
+    // );
+  }
 }

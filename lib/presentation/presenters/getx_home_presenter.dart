@@ -95,6 +95,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       _isFixedCommandNumber = loadedCommand.isFixedCommandNumber;
+      _commandNumber = loadedCommand.commandNumber;
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

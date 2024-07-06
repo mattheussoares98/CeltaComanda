@@ -154,7 +154,36 @@ void main() {
 
       expect(printedProductsPresenter.canCancelProducts, false);
     });
+  });
 
+  group("updateIsFixedCommandNumber", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateIsFixedCommandNumber();
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateIsFixedCommandNumber();
+    });
+    test("Should call localCommandData.udpate", () async {
+      final commandNumber = faker.randomGenerator.integer(100).toString();
+      sut.updateCommandNumber(commandNumber);
+
+      await sut.updateIsFixedCommandNumber();
+
+      verify(() => localCommandData.update(CommandEntity(
+            commandNumber: commandNumber,
+            isFixedCommandNumber: sut.isFixedCommandNumber,
+          ))).called(1);
+    });
+  });
+
+  group("getLocalCommandData", () {
     test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
         () async {
       await sut.getLocalCommandData();
@@ -186,32 +215,24 @@ void main() {
       await sut.getLocalCommandData();
       expect(sut.isFixedCommandNumber, false);
     });
-  });
+    test("Should update sut.commandNumber correctly", () async {
+      final entity1 = CommandEntity(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+      );
 
-  group("updateIsFixedCommandNumber", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      final entity2 = CommandEntity(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+      );
 
-      await sut.updateIsFixedCommandNumber();
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      localCommandData.mockLoad(entity1);
+      await sut.getLocalCommandData();
+      expect(sut.commandNumber, entity1.commandNumber.toString());
 
-      await sut.updateIsFixedCommandNumber();
-    });
-    test("Should call localCommandData.udpate", () async {
-      final commandNumber = faker.randomGenerator.integer(100).toString();
-      sut.updateCommandNumber(commandNumber);
-
-      await sut.updateIsFixedCommandNumber();
-
-      verify(() => localCommandData.update(CommandEntity(
-            commandNumber: commandNumber,
-            isFixedCommandNumber: sut.isFixedCommandNumber,
-          ))).called(1);
+      localCommandData.mockLoad(entity2);
+      await sut.getLocalCommandData();
+      expect(sut.commandNumber, entity2.commandNumber.toString());
     });
   });
 }

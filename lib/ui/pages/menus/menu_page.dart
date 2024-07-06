@@ -1,12 +1,13 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../mixins/mixins.dart';
-import '../pages.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../components/components.dart';
+import '../../mixins/mixins.dart';
+import '../home/components/components.dart';
+import '../pages.dart';
 
 class MenuPage extends StatefulWidget {
   final bool? isFixedCommandNumber;
@@ -100,40 +101,10 @@ class _MenuPageState extends State<MenuPage>
                   },
                 ),
           backgroundColor: const Color(0xFFF1F5F8),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: Text("Logo"),
-              ),
-              if (homePresenter.commandNumber != null)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      "Comanda ${homePresenter.commandNumber}",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: hasMinWidth(context) ? 23 : 15,
-                        fontWeight: FontWeight.w300,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
-                ),
-              IconButton(
-                onPressed: () async {
-                  await _loadGroupsAndProducts(menuPresenter);
-                },
-                icon: Icon(
-                  Icons.refresh_outlined,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                tooltip: "Atualizar menu",
-              ),
-            ],
+          title: TitleAppbar(
+            loadMenuAgain: () async {
+              await _loadGroupsAndProducts(menuPresenter);
+            },
           ),
         ),
       ),

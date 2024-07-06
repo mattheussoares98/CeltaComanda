@@ -103,16 +103,23 @@ class _MenuPageState extends State<MenuPage>
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Logo"),
+              const Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Text("Logo"),
+              ),
               if (homePresenter.commandNumber != null)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    "Comanda ${homePresenter.commandNumber}",
-                    style: TextStyle(
-                      fontSize: hasMinWidth(context) ? 23 : 15,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Text(
+                      "Comanda ${homePresenter.commandNumber}",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: hasMinWidth(context) ? 23 : 15,
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FixedCommandNumberInput extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -12,6 +13,10 @@ class FixedCommandNumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EnterpriseValidationPresenter enterpriseValidationPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Form(
@@ -23,7 +28,10 @@ class FixedCommandNumberInput extends StatelessWidget {
           maxLength: 3,
           onFieldSubmitted: null, //implementar
           onChanged: (String? newValue) {
-            //criar update command number
+            enterpriseValidationPresenter.updateCommandNumber(
+              newCommandValue: newValue ?? "",
+              homePresenter: homePresenter,
+            );
           },
           validator: (value) {
             if (value == null) {

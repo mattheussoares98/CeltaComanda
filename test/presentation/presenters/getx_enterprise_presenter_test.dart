@@ -317,5 +317,23 @@ void main() {
       verify(() => homePresenter.updateCommandNumber(newCommandNumber))
           .called(1);
     });
+
+    test(
+        "Should update commandViewModel.commandNumber when call sut.updateCommandNumber",
+        () async {
+      final newCommandNumber = faker.randomGenerator.integer(999).toString();
+
+      expectLater(
+          sut.commandDataStream,
+          emits(
+            CommandViewModel(
+                commandNumber: newCommandNumber, isFixedCommandNumber: "false"),
+          ));
+
+      sut.updateCommandNumber(
+        homePresenter: homePresenter,
+        newCommandValue: newCommandNumber,
+      );
+    });
   });
 }

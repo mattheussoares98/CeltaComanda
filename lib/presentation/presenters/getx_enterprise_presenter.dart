@@ -208,9 +208,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required HomePresenter homePresenter,
   }) {
     homePresenter.updateCommandNumber(newCommandValue);
-    // _commandData.value = CommandViewModel(
-    //   commandNumber: newCommandValue,
-    //   isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
-    // );
+    _commandData.value = CommandViewModel(
+      commandNumber: newCommandValue,
+      isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
+    );
   }
 }

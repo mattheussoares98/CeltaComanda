@@ -101,6 +101,8 @@ class _MenuPageState extends State<MenuPage>
                 ),
           backgroundColor: const Color(0xFFF1F5F8),
           actions: [
+            if (homePresenter.commandNumber != null)
+              Text("Comanda ${homePresenter.commandNumber}"),
             if (widget.isFixedCommandNumber != true)
               IconButton(
                 onPressed: () async {

@@ -38,12 +38,14 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final commandNumberController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    commandNumberController.dispose();
   }
 
   @override
@@ -90,7 +92,11 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                   if (snapshotCommandData
                                           .data?.isFixedCommandNumber ==
                                       "true")
-                                    FixedCommandNumberInput(formKey: _formKey),
+                                    FixedCommandNumberInput(
+                                      formKey: _formKey,
+                                      commandViewModel:
+                                          snapshotCommandData.data!,
+                                    ),
                                 ],
                               ),
                             ),
@@ -98,6 +104,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                             EnterpriseValidateButton(
                               formKey: _formKey,
                               commandViewModel: snapshotCommandData.data!,
+                              commandNumberController: commandNumberController,
                             ),
                           ],
                         );

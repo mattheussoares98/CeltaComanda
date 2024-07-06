@@ -1,9 +1,12 @@
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class FixedCommandNumberInput extends StatelessWidget {
   final GlobalKey<FormState> formKey;
+  final CommandViewModel commandViewModel;
   const FixedCommandNumberInput({
     required this.formKey,
+    required this.commandViewModel,
     super.key,
   });
 
@@ -18,6 +21,10 @@ class FixedCommandNumberInput extends StatelessWidget {
           autofocus: true,
           keyboardType: TextInputType.number,
           maxLength: 3,
+          onFieldSubmitted: null, //implementar
+          onChanged: (String? newValue) {
+            //criar update command number
+          },
           validator: (value) {
             if (value == null) {
               return "Digite o número da mesa";

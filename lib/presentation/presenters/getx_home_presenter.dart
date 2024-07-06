@@ -124,6 +124,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
+      _isFixedCommandNumber = !_isFixedCommandNumber;
+
       await localCommandData.update(
         CommandEntity(
           commandNumber: _commandNumber,

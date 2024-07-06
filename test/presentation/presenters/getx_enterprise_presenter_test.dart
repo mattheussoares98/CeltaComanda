@@ -297,5 +297,11 @@ void main() {
           commandEntity: commandEntity);
       verify(() => loadCommandData.update(commandEntity)).called(1);
     });
+
+    test("Should call homePresenter.updateIsFixedCommandNumber", () async {
+      await sut.updateUseFixedCommandNumber(homePresenter);
+
+      verify(() => homePresenter.updateIsFixedCommandNumber()).called(1);
+    });
   });
 }

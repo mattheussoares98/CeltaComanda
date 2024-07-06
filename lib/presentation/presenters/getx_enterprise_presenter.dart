@@ -181,7 +181,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  void updateUseFixedCommandNumber(HomePresenter homePresenter) async {
+  Future<void> updateUseFixedCommandNumber(HomePresenter homePresenter) async {
     isLoading = true;
     mainError = null;
 
@@ -194,6 +194,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       await loadCommandData.update(commandViewModel.toEntity());
 
       _commandData.value = commandViewModel;
+      await homePresenter.updateIsFixedCommandNumber();
     } catch (e) {
       UIError.unexpected;
     } finally {

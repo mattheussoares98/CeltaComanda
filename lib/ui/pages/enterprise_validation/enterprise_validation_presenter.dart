@@ -27,5 +27,5 @@ abstract class EnterpriseValidationPresenter implements Listenable {
 
   void goToHomePage();
 
-  void updateUseFixedCommandNumber(HomePresenter homePresenter);
+  Future<void> updateUseFixedCommandNumber(HomePresenter homePresenter);
 }

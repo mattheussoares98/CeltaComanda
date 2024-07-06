@@ -5,6 +5,7 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 
 import '../../domain/mocks/mocks.dart';
 
@@ -302,6 +303,19 @@ void main() {
       await sut.updateUseFixedCommandNumber(homePresenter);
 
       verify(() => homePresenter.updateIsFixedCommandNumber()).called(1);
+    });
+
+    test(
+        "Should call homePresenter.updateCommandNumber when call sut.updateCommandNumber",
+        () async {
+      final newCommandNumber = faker.randomGenerator.integer(999).toString();
+      sut.updateCommandNumber(
+        homePresenter: homePresenter,
+        newCommandValue: newCommandNumber,
+      );
+
+      verify(() => homePresenter.updateCommandNumber(newCommandNumber))
+          .called(1);
     });
   });
 }

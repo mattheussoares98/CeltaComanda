@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage>
 
         await commentsPresenter.loadComments();
         await homePresenter.getLocalCommandData();
+        setState(() {});
       });
     }
   }

@@ -1,1 +1,1 @@
-export 'command_data.dart';
+export 'local_command_data.dart';

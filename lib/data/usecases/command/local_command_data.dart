@@ -18,9 +18,9 @@ class LocalLoadCommandData implements LoadCommandData {
         CacheKeys.commandData.name,
       );
       if (json != null) {
-        return json["useFixedCommandNumber"];
-      } else {
         return CommandModel.fromJson(json).toEntity();
+      } else {
+        throw Exception();
       }
     } catch (error) {
       throw DomainError.unexpected;

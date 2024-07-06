@@ -28,6 +28,10 @@ void main() {
     );
   }
 
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeCommandEntity());
+  });
+
   tearDown(() {
     presenter.dispose();
   });

@@ -13,9 +13,11 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   String? commandNumberMock;
+  bool isFixedCommandNumberMock = false;
 
   HomePresenterSpy() {
     when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
+    when(() => this.isFixedCommandNumber).thenAnswer((_) => isFixedCommandNumberMock);
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           cartPresenter: any(named: "cartPresenter"),
@@ -24,6 +26,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
           PageRoutes.splash,
         ));
     when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
+    when(() => this.loadUseFixedCommandNumber()).thenAnswer((_) async => _);
   }
 
   void mockGoToProductsPage(ExpansibleGroupEntity entity) {

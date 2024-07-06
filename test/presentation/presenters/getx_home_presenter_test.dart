@@ -27,6 +27,7 @@ void main() {
   late UseFixedCommandNumberSpy useFixedCommandNumber;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
+  late CommandEntity commandEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -55,13 +56,14 @@ void main() {
 
   void initMocks() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
-    useFixedCommandNumber.mockLoad(true);
+    useFixedCommandNumber.mockLoad(commandEntity);
   }
 
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
+    commandEntity = EntityFactory.makeCommandEntity();
   }
 
   setUp(() {
@@ -166,11 +168,20 @@ void main() {
       await sut.loadUseFixedCommandNumber();
     });
     test("Should update sut.isFixedCommandNumber correctly", () async {
-      useFixedCommandNumber.mockLoad(true);
+      const fixed = CommandEntity(
+        commandNumber: "commandNumber",
+        isFixedCommandNumber: true,
+      );
+      const notFixed = CommandEntity(
+        commandNumber: "commandNumber",
+        isFixedCommandNumber: false,
+      );
+
+      useFixedCommandNumber.mockLoad(fixed);
       await sut.loadUseFixedCommandNumber();
       expect(sut.isFixedCommandNumber, true);
 
-      useFixedCommandNumber.mockLoad(false);
+      useFixedCommandNumber.mockLoad(notFixed);
       await sut.loadUseFixedCommandNumber();
       expect(sut.isFixedCommandNumber, false);
     });

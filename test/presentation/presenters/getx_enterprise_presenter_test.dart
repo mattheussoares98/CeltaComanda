@@ -63,6 +63,11 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
+    registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
   });
 
   test('Should emit null if enterpriseName validation succeeds', () {
@@ -237,10 +242,14 @@ void main() {
   });
 
   group("Fixed command number", () {
-    test("Should emit correct values on change useFixedCommandNumber", () {
-      expectLater(sut.commandDataStream, emitsInOrder([true, false]));
+    test("Should emit correct values on change useFixedCommandNumber",
+        () async {
+      expectLater(sut.commandDataStream, emits(commandEntity));
 
-      sut.updateUseFixedCommandNumber(homePresenter);
+      homePresenter.commandNumberMock = commandEntity.commandNumber;
+      homePresenter.isFixedCommandNumberMock =
+          commandEntity.isFixedCommandNumber;
+
       sut.updateUseFixedCommandNumber(homePresenter);
     });
 

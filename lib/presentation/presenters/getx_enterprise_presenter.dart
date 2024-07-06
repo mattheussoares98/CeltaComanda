@@ -169,10 +169,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
     mainError = null;
 
     try {
-      await useFixedCommandNumber.update(CommandEntity(
+      final entity = CommandEntity(
         commandNumber: homePresenter.commandNumber,
         isFixedCommandNumber: homePresenter.isFixedCommandNumber,
-      ));
+      );
+
+      await useFixedCommandNumber.update(entity);
+
+      _commandData.value = entity;
     } catch (e) {
       UIError.unexpected;
     } finally {

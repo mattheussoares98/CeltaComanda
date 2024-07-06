@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
@@ -12,6 +13,6 @@ class UseFixedCommandNumberSpy extends Mock implements LoadCommandData {
       this.mockUpdateAll().thenThrow(DomainError.unexpected);
 
   When mockLoadCall() => when(() => this.load());
-  void mockLoad(bool use) => this.mockLoadCall().thenAnswer((_) async => use);
+  void mockLoad(CommandEntity? entity) => this.mockLoadCall().thenAnswer((_) async => entity);
   void mockLoadError() => this.mockLoadCall().thenThrow(Exception());
 }

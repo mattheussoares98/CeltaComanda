@@ -55,12 +55,8 @@ class PrintedProductsPresenterSpy extends Mock
           clearPermissionToCancelProducts:
               any(named: "clearPermissionToCancelProducts"),
           isRemovingProduct: any(named: "isRemovingProduct"),
-          writedCommandNumberForRedeVersion: any(named: "writedCommandNumberForRedeVersion"),
+          writedCommandNumberForRedeVersion:
+              any(named: "writedCommandNumberForRedeVersion"),
         )).thenAnswer((_) async => _);
-  }
-
-  @override
-  void dispose() {
-    mainErrorController.close();
   }
 }

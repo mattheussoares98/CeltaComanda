@@ -71,6 +71,19 @@ class ProductDetails extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                IconButton(
+                  onPressed: printedProductsPresenter.canCancelProducts
+                      ? onPressedRemoveProduct
+                      : validateUserAndCancelProducts,
+                  icon: Icon(
+                    Icons.delete,
+                    color: printedProductsPresenter.canCancelProducts
+                        ? Colors.red
+                        : Colors.grey,
+                    size: hasMinWidth(context) ? 30 : 25,
+                  ),
+                  visualDensity: VisualDensity.compact,
+                ),
                 Text(
                   value.addBrazilianCoin(),
                   style: TextStyle(
@@ -78,29 +91,12 @@ class ProductDetails extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "Qtd $quantity",
-                      style: TextStyle(
-                        fontSize: hasMinWidth(context) ? 23 : 15,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: printedProductsPresenter.canCancelProducts
-                          ? onPressedRemoveProduct
-                          : validateUserAndCancelProducts,
-                      icon: Icon(
-                        Icons.delete,
-                        color: printedProductsPresenter.canCancelProducts
-                            ? Colors.red
-                            : Colors.grey,
-                            size: hasMinWidth(context) ? 30 : 25,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ],
+                Text(
+                  "$quantity qtd",
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 23 : 15,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
                 Text(
                   totalLiquid.addBrazilianCoin(),

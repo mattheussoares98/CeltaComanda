@@ -193,7 +193,9 @@ class GetxPrintedProductsPresenter
       clear();
       await loadPrinted(homePresenter.commandNumber!);
     } on DomainError catch (error) {
-      homePresenter.updateCommandNumber(null);
+      if (!homePresenter.isFixedCommandNumber) {
+        homePresenter.updateCommandNumber(null);
+      }
       switch (error) {
         case DomainError.barcodeNotRead:
           mainError = UIError.barcodeNotRead;

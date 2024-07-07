@@ -29,7 +29,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (homePresenter.commandNumber != null)
+          if (homePresenter.commandNumber.toString() != "null")
             Text(
               "Comanda ${homePresenter.commandNumber}",
               textAlign: TextAlign.center,

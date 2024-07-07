@@ -116,7 +116,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandEntity.commandNumber ?? "001",
+        commandNumber: commandEntity.commandNumber.toString() == "null"
+            ? "001"
+            : commandEntity.commandNumber!,
       );
 
       await loadCommandData.update(commandEntity);

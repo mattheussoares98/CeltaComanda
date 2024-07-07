@@ -35,6 +35,27 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     }
   }
 
+  Future<void> _validateEnterprise({
+    required CommandViewModel commandViewModel,
+    required EnterpriseValidationPresenter enterpriseValidationPresenter,
+  }) async {
+    if (commandViewModel.isFixedCommandNumber == "true") {
+      if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
+        return;
+      }
+
+      await enterpriseValidationPresenter
+          .getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandViewModel.toEntity(),
+      );
+    } else {
+      await enterpriseValidationPresenter
+          .getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandViewModel.toEntity(),
+      );
+    }
+  }
+
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -96,15 +117,27 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                       formKey: _formKey,
                                       commandViewModel:
                                           snapshotCommandData.data!,
+                                      validateEnterprise: () async {
+                                        await _validateEnterprise(
+                                          commandViewModel:
+                                              snapshotCommandData.data!,
+                                          enterpriseValidationPresenter:
+                                              widget.presenter,
+                                        );
+                                      },
                                     ),
                                 ],
                               ),
                             ),
                             const SizedBox(height: 10),
                             EnterpriseValidateButton(
-                              formKey: _formKey,
-                              commandViewModel: snapshotCommandData.data!,
-                              commandNumberController: commandNumberController,
+                              validateEnterprise: () async {
+                                await _validateEnterprise(
+                                  commandViewModel: snapshotCommandData.data!,
+                                  enterpriseValidationPresenter:
+                                      widget.presenter,
+                                );
+                              },
                             ),
                           ],
                         );

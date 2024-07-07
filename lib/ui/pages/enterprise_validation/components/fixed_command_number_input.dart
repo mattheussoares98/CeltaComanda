@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 class FixedCommandNumberInput extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final CommandViewModel commandViewModel;
+  final void Function() validateEnterprise;
   const FixedCommandNumberInput({
     required this.formKey,
     required this.commandViewModel,
+    required this.validateEnterprise,
     super.key,
   });
 
@@ -26,7 +28,9 @@ class FixedCommandNumberInput extends StatelessWidget {
           autofocus: true,
           keyboardType: TextInputType.number,
           maxLength: 3,
-          onFieldSubmitted: null, //implementar
+          onFieldSubmitted: (_) async {
+            validateEnterprise();
+          }, //implementar
           onChanged: (String? newValue) {
             enterpriseValidationPresenter.updateCommandNumber(
               newCommandValue: newValue ?? "",

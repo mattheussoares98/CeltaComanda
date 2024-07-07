@@ -14,26 +14,17 @@ class GroupsAndProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
     return Expanded(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 20,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).orientation ==
-                              Orientation.portrait &&
-                          !homePresenter.isFixedCommandNumber
-                      ? AppBar().preferredSize.height + 5
-                      : 0),
-              child: GroupItems(
-                expansibleGroupsViewModel: menuPresenter.loadedMenu
-                    .map((element) => element.keys.first)
-                    .toList(),
-                selectedIndex: selectedIndex ?? 0,
-              ),
+            child: GroupItems(
+              expansibleGroupsViewModel: menuPresenter.loadedMenu
+                  .map((element) => element.keys.first)
+                  .toList(),
+              selectedIndex: selectedIndex ?? 0,
             ),
           ),
           Expanded(

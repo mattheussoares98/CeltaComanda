@@ -46,6 +46,8 @@ class ProductDetails extends StatelessWidget {
                   productComplement: product.ProductComplement,
                   plu: product.PriceLookupCode,
                   menuPresenter: menuPresenter,
+                  productName: product.Name,
+                  selectedProduct: product,
                 );
               },
               child: ImageWidget(

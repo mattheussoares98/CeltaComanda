@@ -20,26 +20,21 @@ class TitleAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(right: 8.0),
-          child: Text("Logo"),
-        ),
-        if (homePresenter.isFixedCommandNumber)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Text(
-                "Comanda ${homePresenter.commandNumber}",
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: hasMinWidth(context) ? 23 : 15,
-                  fontWeight: FontWeight.w300,
-                  fontStyle: FontStyle.italic,
-                ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Text(
+              "Comanda ${homePresenter.commandNumber}",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 23 : 15,
+                fontWeight: FontWeight.w300,
+                fontStyle: FontStyle.italic,
               ),
             ),
           ),
+        ),
         if (showLoadMenuAgain)
           IconButton(
             onPressed: loadMenuAgain,

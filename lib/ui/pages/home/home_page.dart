@@ -109,19 +109,35 @@ class _HomePageState extends State<HomePage>
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: AppBar(
-            leading: Row(
-              children: [
-                if (homePresenter.isFixedCommandNumber != true)
-                  IconButton(
-                    icon: Icon(
-                      Icons.exit_to_app,
-                      color: Theme.of(context).primaryColor,
+            leading: FittedBox(
+              child: Row(
+                children: [
+                  FittedBox(
+                    child: Image.asset(
+                      "/Users/soares/development/projects/clean_celta_mobile/lib/ui/assets/images/logo_eat_asia.png",
+                      height: 200,
+                      width: 200,
                     ),
-                    onPressed: () {
-                      scaffoldKey.currentState?.openDrawer();
-                    },
                   ),
-              ],
+                  FittedBox(
+                    child: Image.asset(
+                      "/Users/soares/development/projects/clean_celta_mobile/lib/ui/assets/images/hello_kitty.jpeg",
+                      height: 200,
+                      width: 200,
+                    ),
+                  ),
+                  if (homePresenter.isFixedCommandNumber != true)
+                    IconButton(
+                      icon: Icon(
+                        Icons.exit_to_app,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () {
+                        scaffoldKey.currentState?.openDrawer();
+                      },
+                    ),
+                ],
+              ),
             ),
             actions: [
               if (_currentIndex == 2)

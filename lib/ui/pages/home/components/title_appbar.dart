@@ -22,19 +22,69 @@ class TitleAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Image.asset(
-              "lib/ui/assets/images/logo_eat_asia.png",
-              height: AppBar().preferredSize.height - 20,
-              width: AppBar().preferredSize.height - 20,
-            ),
-            Image.asset(
-              "lib/ui/assets/images/hello_kitty.jpeg",
-              height: AppBar().preferredSize.height,
-              width: AppBar().preferredSize.height,
-            ),
-          ],
+        GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: AlertDialog(
+                          insetPadding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          content: Row(
+                            children: [
+                              Expanded(
+                                child: Image.asset(
+                                  "lib/ui/assets/images/logo_eat_asia.png",
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Image.asset(
+                                  "lib/ui/assets/images/hello_kitty.jpeg",
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const CircleAvatar(
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                          child: Icon(
+                            Icons.close,
+                            size: 40,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          },
+          child: Row(
+            children: [
+              Image.asset(
+                "lib/ui/assets/images/logo_eat_asia.png",
+                height: AppBar().preferredSize.height - 20,
+                width: AppBar().preferredSize.height - 20,
+              ),
+              Image.asset(
+                "lib/ui/assets/images/hello_kitty.jpeg",
+                height: AppBar().preferredSize.height,
+                width: AppBar().preferredSize.height,
+              ),
+            ],
+          ),
         ),
         if (homePresenter.commandNumber.toString() != "null")
           Expanded(

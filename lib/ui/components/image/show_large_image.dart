@@ -214,12 +214,15 @@ Widget _productComplement(BuildContext context, String productComplement) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            productComplement,
-            style: TextStyle(
-              fontSize: hasMinWidth(context) ? 20 : 12,
-              color: Theme.of(context).primaryColorLight,
-              fontStyle: FontStyle.italic,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              productComplement,
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 20 : 12,
+                color: Theme.of(context).primaryColorLight,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
         ],

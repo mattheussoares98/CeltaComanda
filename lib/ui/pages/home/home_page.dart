@@ -61,12 +61,40 @@ class _HomePageState extends State<HomePage>
         CommentsPresenter commentsPresenter =
             Provider.of(context, listen: false);
         HomePresenter homePresenter = Provider.of(context, listen: false);
+        PrintedProductsPresenter printedProductsPresenter =
+            Provider.of(context, listen: false);
+        CartPresenter cartPresenter = Provider.of(context, listen: false);
+        MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
         await commentsPresenter.loadComments();
         await homePresenter.getLocalCommandData();
+        if (homePresenter.isFixedCommandNumber) {
+          await loadCommandData(
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: cartPresenter,
+            menuPresenter: menuPresenter,
+            homePresenter: homePresenter,
+          );
+        }
         setState(() {});
       });
     }
+  }
+
+  Future<void> loadCommandData({
+    required PrintedProductsPresenter printedProductsPresenter,
+    required CartPresenter cartPresenter,
+    required MenuPresenter menuPresenter,
+    required HomePresenter homePresenter,
+  }) async {
+    await printedProductsPresenter.loadCommandData(
+      cartPresenter: cartPresenter,
+      menuPresenter: menuPresenter,
+      homePresenter: homePresenter,
+      clearPermissionToCancelProducts: true,
+      isRemovingProduct: false,
+      writedCommandNumberForRedeVersion: "",
+    );
   }
 
   @override

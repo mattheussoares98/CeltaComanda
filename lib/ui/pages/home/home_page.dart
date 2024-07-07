@@ -68,6 +68,7 @@ class _HomePageState extends State<HomePage>
 
         await commentsPresenter.loadComments();
         await homePresenter.getLocalCommandData();
+
         if (homePresenter.isFixedCommandNumber) {
           await loadCommandData(
             printedProductsPresenter: printedProductsPresenter,
@@ -75,7 +76,10 @@ class _HomePageState extends State<HomePage>
             menuPresenter: menuPresenter,
             homePresenter: homePresenter,
           );
+        } else {
+          await menuPresenter.getGroupsAndProducts("001");
         }
+        
         setState(() {});
       });
     }

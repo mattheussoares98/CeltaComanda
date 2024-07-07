@@ -33,10 +33,6 @@ class _MenuPageState extends State<MenuPage>
   int indexOfSelectedProductCommentIcon = -1;
   final commentTextController = TextEditingController();
 
-  Future<void> _loadGroupsAndProducts(MenuPresenter menuPresenter) async {
-    await menuPresenter.getGroupsAndProducts("001");
-  }
-
   bool _isLoaded = false;
   @override
   void didChangeDependencies() async {
@@ -49,7 +45,6 @@ class _MenuPageState extends State<MenuPage>
       Future.delayed(
         Duration.zero,
         () async {
-          await _loadGroupsAndProducts(menuPresenter);
           await cartPresenter.getLocalCartProductsData();
           await cartPresenter.getLocalConfirmedsCombox();
         },
@@ -81,7 +76,7 @@ class _MenuPageState extends State<MenuPage>
                 child: TextButton.icon(
                   key: const Key("loadMenu"),
                   onPressed: () async {
-                    _loadGroupsAndProducts(menuPresenter);
+                    await menuPresenter.getGroupsAndProducts("001");
                   },
                   icon: Icon(
                     Icons.menu_book,

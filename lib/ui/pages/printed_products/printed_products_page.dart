@@ -70,69 +70,79 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               cartPresenter: cartPresenter,
               homePresenter: homePresenter,
             ),
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: totalPriceContainerHeight),
-            child: SingleChildScrollView(
-              child: printedProductsPresenter.printedProducts != null
-                  ? PrintedItem(
-                      printed: printedProductsPresenter.printedProducts!,
-                      formKey: formKey,
-                      passwordController: passwordController,
-                      personalizedCodeController: personalizedCodeController,
-                    )
-                  : SearchDataByCommandNumber(
-                      homePresenter: homePresenter,
-                      emptyMessage: homePresenter.commandNumber == null
-                          ? "Consulte alguma comanda para visualizar os produtos solicitados"
-                          : "Não há produtos solicitados nessa comanda",
-                      loadCommandData: () async {
-                        if (cartPresenter.isGeneratingVersionToRede) {
-                          writeCommandNumber(
-                            context: context,
-                            action: OnWriteCommand.loadCommandData,
-                          );
-                        } else {
-                          await printedProductsPresenter.loadCommandData(
-                            cartPresenter: cartPresenter,
-                            menuPresenter: menuPresenter,
-                            homePresenter: homePresenter,
-                            clearPermissionToCancelProducts: true,
-                            isRemovingProduct: false,
-                            writedCommandNumberForRedeVersion: "",
-                          );
-                        }
-                      },
+      body: SizedBox(
+        height: double.infinity,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: totalPriceContainerHeight),
+              child: SingleChildScrollView(
+                child: printedProductsPresenter.printedProducts != null
+                    ? PrintedItem(
+                        printed: printedProductsPresenter.printedProducts!,
+                        formKey: formKey,
+                        passwordController: passwordController,
+                        personalizedCodeController: personalizedCodeController,
+                      )
+                    : SearchDataByCommandNumber(
+                        homePresenter: homePresenter,
+                        emptyMessage: homePresenter.commandNumber == null
+                            ? "Consulte alguma comanda para visualizar os produtos solicitados"
+                            : "Não há produtos solicitados nessa comanda",
+                        loadCommandData: () async {
+                          if (cartPresenter.isGeneratingVersionToRede) {
+                            writeCommandNumber(
+                              context: context,
+                              action: OnWriteCommand.loadCommandData,
+                            );
+                          } else {
+                            await printedProductsPresenter.loadCommandData(
+                              cartPresenter: cartPresenter,
+                              menuPresenter: menuPresenter,
+                              homePresenter: homePresenter,
+                              clearPermissionToCancelProducts: true,
+                              isRemovingProduct: false,
+                              writedCommandNumberForRedeVersion: "",
+                            );
+                          }
+                        },
+                      ),
+              ),
+            ),
+            if (printedProductsPresenter.printedProducts != null)
+              Positioned(
+                bottom: 0,
+                child: Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: totalPriceContainerHeight,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    margin: const EdgeInsets.only(bottom: 3),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 220, 218, 218)),
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 10,
+                          color: Color(0x33000000),
+                          offset: Offset(-3, -1),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(12),
                     ),
-            ),
-          ),
-          if (printedProductsPresenter.printedProducts != null)
-            Container(
-              height: totalPriceContainerHeight,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              margin: const EdgeInsets.only(bottom: 3),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border:
-                    Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Color(0x33000000),
-                    offset: Offset(-3, -1),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(12),
+                    child: RequestSummary(
+                      totalLiquid:
+                          printedProductsPresenter.printedProducts!.TotalLiquid,
+                      comments:
+                          printedProductsPresenter.printedProducts!.Comments,
+                    ),
+                  ),
+                ),
               ),
-              child: RequestSummary(
-                totalLiquid:
-                    printedProductsPresenter.printedProducts!.TotalLiquid,
-                comments: printedProductsPresenter.printedProducts!.Comments,
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

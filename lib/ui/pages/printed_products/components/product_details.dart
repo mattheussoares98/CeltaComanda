@@ -56,10 +56,22 @@ class ProductDetails extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(value.addBrazilianCoin()),
+                Text(
+                  value.addBrazilianCoin(),
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 23 : 15,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
                 Row(
                   children: [
-                    Text("Qtd $quantity"),
+                    Text(
+                      "Qtd $quantity",
+                      style: TextStyle(
+                        fontSize: hasMinWidth(context) ? 23 : 15,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
                     SizedBox(
                       height: 35,
                       width: 35,
@@ -80,7 +92,13 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(totalLiquid.addBrazilianCoin()),
+                Text(
+                  totalLiquid.addBrazilianCoin(),
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 23 : 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ],

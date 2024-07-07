@@ -75,7 +75,7 @@ class PrintedItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       ProductDetails(
-                        Product: product.Products,
+                        product: product.Products,
                         onPressedRemoveProduct: () async {
                           notificationDialog(
                             context: context,
@@ -132,7 +132,7 @@ class PrintedItem extends StatelessWidget {
                 );
               },
             ),
-            
+
             // Text("Comanda: ${printed.PersonalizedCode}"),
             // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
             // Text("DateOfCreation: ${printed.DateOfCreation}"),

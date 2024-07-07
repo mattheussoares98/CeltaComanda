@@ -1,15 +1,13 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../../../ui/components/components.dart';
-import '../../../../ui/helpers/convert/convert.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
-  final ProductsViewModel Product;
+  final ProductsViewModel product;
   final void Function()? onPressedRemoveProduct;
   final void Function()? validateUserAndCancelProducts;
   final String quantity;
@@ -18,7 +16,7 @@ class ProductDetails extends StatelessWidget {
   final String? comments;
 
   const ProductDetails({
-    required this.Product,
+    required this.product,
     required this.onPressedRemoveProduct,
     required this.quantity,
     required this.value,
@@ -36,34 +34,23 @@ class ProductDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ImageWidget(
-              ean: Product.EanCode,
-              plu: Product.PriceLookupCode,
+              ean: product.EanCode,
+              plu: product.PriceLookupCode,
+              height: 150,
+              width: 150,
             ),
             const SizedBox(width: 3),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Product.NameComplete != null
-                        ? Product.NameComplete!
-                        : Product.Name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  // Text(
-                  //   Product.PriceLookupCode,
-                  // ),
-                  // if (Product.EanCode != null)
-                  //   Text(
-                  //     Product.EanCode!,
-                  //   ),
-                ],
+              child: Text(
+                product.Name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: hasMinWidth(context) ? 30 : 18,
+                ),
               ),
             ),
             Column(

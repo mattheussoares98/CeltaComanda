@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 void notificationDialog({
@@ -19,8 +20,8 @@ void notificationDialog({
               const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           title: Text(
             titleMessage,
-            style: const TextStyle(
-              fontSize: 17,
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 30 : 23,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,

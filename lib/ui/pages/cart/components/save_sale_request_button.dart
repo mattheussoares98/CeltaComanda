@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/helpers/sizes/has_min_width.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -50,6 +51,28 @@ class SaveSaleRequestButton extends StatelessWidget {
           writeCommandNumber(
             context: context,
             action: OnWriteCommand.saveProducts,
+          );
+        } else if (homePresenter.isFixedCommandNumber) {
+          notificationDialog(
+            context: context,
+            titleMessage: "Solicitar produtos",
+            content: Text(
+              "Ao confirmar, os produtos serão solicitados e em breve serão servidos",
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 23 : 17,
+              ),
+            ),
+            cancelMessage: "Voltar",
+            confirmMessage: "Solicitar",
+            onPress: () async {
+              await _addProducts(
+                cartPresenter: cartPresenter,
+                context: context,
+                printedProductsPresenter: printedProductsPresenter,
+                tableNumber: null,
+                homePresenter: homePresenter,
+              );
+            },
           );
         } else {
           notificationDialog(

@@ -19,7 +19,7 @@ void showLargeImage({
       barrierDismissible: false,
       builder: (context) {
         if (MediaQuery.of(context).orientation == Orientation.landscape &&
-            MediaQuery.of(context).size.width > 600) {
+            hasMinWidth(context)) {
           return _landScapeLargeImage(
             context: context,
             ean: ean,

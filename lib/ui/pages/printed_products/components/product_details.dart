@@ -30,17 +30,30 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ImageWidget(
-              ean: product.EanCode,
-              plu: product.PriceLookupCode,
-              height: 150,
-              width: 150,
+            GestureDetector(
+              onTap: () {
+                showLargeImage(
+                  context: context,
+                  ean: product.EanCode,
+                  productComplement: product.ProductComplement,
+                  plu: product.PriceLookupCode,
+                  menuPresenter: menuPresenter,
+                );
+              },
+              child: ImageWidget(
+                ean: product.EanCode,
+                plu: product.PriceLookupCode,
+                height: 150,
+                width: 150,
+              ),
             ),
             const SizedBox(width: 3),
             Expanded(

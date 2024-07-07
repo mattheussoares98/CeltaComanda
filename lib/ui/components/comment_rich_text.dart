@@ -14,7 +14,7 @@ class CommentRichText extends StatelessWidget {
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: "Comentários: \n",
+            text: "Comentários: ",
             style: TextStyle(
               color: Colors.grey[700],
               fontStyle: FontStyle.italic,

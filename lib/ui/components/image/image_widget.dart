@@ -74,7 +74,7 @@ Widget _cachedImage({
   required CacheManager customCacheManager,
 }) {
   String url =
-      "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/Images/${ean ?? plu}.PNG";
+      "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${ean ?? plu}.PNG";
 
   return CachedNetworkImage(
     cacheManager: customCacheManager,

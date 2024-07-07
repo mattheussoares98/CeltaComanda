@@ -139,7 +139,6 @@ Future<void> _onPress({
     }
   } else if (onWriteCommand == OnWriteCommand.loadCommandData) {
     await printedProductsPresenter.loadCommandData(
-      printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
       menuPresenter: menuPresenter,
       homePresenter: homePresenter,

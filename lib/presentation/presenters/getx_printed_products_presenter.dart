@@ -30,7 +30,6 @@ class GetxPrintedProductsPresenter
     required String saleRequestProductId,
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   }) async {
     isLoading = true;
@@ -43,13 +42,13 @@ class GetxPrintedProductsPresenter
       );
 
       await loadCommandData(
-        printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumber.toString(),
+        writedCommandNumberForRedeVersion:
+            homePresenter.commandNumber.toString(),
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -157,7 +156,6 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> loadCommandData({
-    required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
@@ -173,7 +171,9 @@ class GetxPrintedProductsPresenter
         throw DomainError.unexpected;
       }
 
-      if (!isRemovingProduct && !cartPresenter.isGeneratingVersionToRede) {
+      if (!isRemovingProduct &&
+          !cartPresenter.isGeneratingVersionToRede &&
+          homePresenter.isFixedCommandNumber != true) {
         homePresenter.updateCommandNumber(await barcodeScanner.read());
       }
       if (clearPermissionToCancelProducts) {

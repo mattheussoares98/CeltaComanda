@@ -21,12 +21,10 @@ abstract class PrintedProductsPresenter
     required String saleRequestProductId,
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   });
 
   Future<void> loadCommandData({
-    required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,

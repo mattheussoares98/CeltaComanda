@@ -394,7 +394,6 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        printedProductsPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -416,7 +415,6 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        printedProductsPresenter: sut,
         homePresenter: homePresenter,
       );
 
@@ -434,7 +432,6 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        printedProductsPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -449,7 +446,6 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        printedProductsPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -464,7 +460,6 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        printedProductsPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -479,7 +474,6 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        printedProductsPresenter: sut,
         homePresenter: homePresenter,
       );
     });
@@ -515,7 +509,6 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -535,7 +528,6 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -554,7 +546,6 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -572,7 +563,6 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -586,7 +576,6 @@ void main() {
       homePresenter.commandNumberMock = "9999";
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -600,7 +589,6 @@ void main() {
 
     test("Should call clearData on LoadCommandData call", () async {
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -614,7 +602,6 @@ void main() {
       loadPrintedProducts.mockError(DomainError.unexpected);
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -634,7 +621,6 @@ void main() {
 
     test("Should call ticketIsPermitted only one time", () async {
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -652,7 +638,6 @@ void main() {
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -680,7 +665,6 @@ void main() {
       ticketIsPermitted.mockError();
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -697,7 +681,6 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -714,7 +697,6 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -736,7 +718,6 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -749,7 +730,6 @@ void main() {
       cartPresenter.isGeneratingVersionToRedeController = true;
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -767,7 +747,6 @@ void main() {
       cartPresenter.isGeneratingVersionToRedeController = true;
 
       await sut.loadCommandData(
-        printedProductsPresenter: sut,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -777,6 +756,20 @@ void main() {
       );
 
       verify(() => homePresenter.updateCommandNumber("999")).called(1);
+    });
+    test("Should not call barcodeScanner when isFixedCommandNumber", () async {
+      homePresenter.isFixedCommandNumberMock = true;
+
+      await sut.loadCommandData(
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        homePresenter: homePresenter,
+        clearPermissionToCancelProducts: false,
+        isRemovingProduct: false,
+        writedCommandNumberForRedeVersion: "001",
+      );
+
+      verifyNever(() => barcodeScanner.read());
     });
   });
 }

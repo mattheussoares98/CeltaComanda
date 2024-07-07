@@ -96,7 +96,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                           );
                         } else {
                           await printedProductsPresenter.loadCommandData(
-                            printedProductsPresenter: printedProductsPresenter,
                             cartPresenter: cartPresenter,
                             menuPresenter: menuPresenter,
                             homePresenter: homePresenter,

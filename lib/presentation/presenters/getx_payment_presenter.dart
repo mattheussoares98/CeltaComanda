@@ -129,7 +129,6 @@ class GetxPaymentPresenter extends GetxController
       }
 
       await printedProductsPresenter.loadCommandData(
-        printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,

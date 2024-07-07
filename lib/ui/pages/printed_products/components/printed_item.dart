@@ -30,7 +30,6 @@ class PrintedItem extends StatelessWidget {
     await printedProductsPresenter.removeProduct(
       saleRequestProductId: saleRequestProductId,
       menuPresenter: menuPresenter,
-      printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
       homePresenter: homePresenter,
     );

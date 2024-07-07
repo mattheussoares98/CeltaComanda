@@ -40,7 +40,6 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.removeProduct(
           saleRequestProductId: any(named: "saleRequestProductId"),
           menuPresenter: any(named: "menuPresenter"),
-          printedProductsPresenter: any(named: "printedProductsPresenter"),
           cartPresenter: any(named: "cartPresenter"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((_) async => _);
@@ -48,7 +47,6 @@ class PrintedProductsPresenterSpy extends Mock
 
   void mockLoadCommandData() {
     when(() => this.loadCommandData(
-          printedProductsPresenter: any(named: "printedProductsPresenter"),
           cartPresenter: any(named: "cartPresenter"),
           menuPresenter: any(named: "menuPresenter"),
           homePresenter: any(named: "homePresenter"),

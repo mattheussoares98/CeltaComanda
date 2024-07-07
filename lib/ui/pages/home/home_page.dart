@@ -134,7 +134,6 @@ class _HomePageState extends State<HomePage>
                       );
                     } else {
                       await printedProductsPresenter.loadCommandData(
-                        printedProductsPresenter: printedProductsPresenter,
                         cartPresenter: cartPresenter,
                         menuPresenter: menuPresenter,
                         homePresenter: homePresenter,

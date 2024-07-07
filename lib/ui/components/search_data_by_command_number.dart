@@ -1,3 +1,6 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/helpers/sizes/has_min_width.dart';
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/pages.dart';
@@ -32,23 +35,35 @@ class SearchDataByCommandNumber extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
-                fontSize: 30,
+                fontSize: hasMinWidth(context) ? 40 : 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
           Text(
             emptyMessage,
             textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 30 : 23,
+              color: Theme.of(context).primaryColorLight,
+            ),
           ),
           TextButton.icon(
             onPressed: () async {
               await loadCommandData();
             },
-            icon: const Icon(Icons.search),
-            label: const Text(
+            icon: Icon(
+              Icons.search,
+              size: hasMinWidth(context) ? 40 : 25,
+              color: Theme.of(context).primaryColorDark,
+            ),
+            label: Text(
               "Consultar dados da comanda",
               textAlign: TextAlign.center,
-              style: TextStyle(),
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 30 : 23,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColorDark,
+              ),
             ),
           ),
         ],

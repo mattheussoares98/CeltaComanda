@@ -190,7 +190,6 @@ class GetxPrintedProductsPresenter
         menuPresenter.clear();
         await menuPresenter.getGroupsAndProducts(homePresenter.commandNumber!);
       }
-      clear();
       await loadPrinted(homePresenter.commandNumber!);
     } on DomainError catch (error) {
       if (!homePresenter.isFixedCommandNumber) {

@@ -23,33 +23,33 @@ class ComboxSummaryNotification extends StatefulWidget {
 }
 
 class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
-  Widget _titleAndValue({
-    required String title,
-    required String value,
-    Color? valueColor = Colors.black,
-  }) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              color: valueColor,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _titleAndValue({
+  //   required String title,
+  //   required String value,
+  //   Color? valueColor = Colors.black,
+  // }) {
+  //   return Expanded(
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: [
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontWeight: FontWeight.w600,
+  //             fontSize: 12,
+  //           ),
+  //         ),
+  //         Text(
+  //           value,
+  //           style: TextStyle(
+  //             color: valueColor,
+  //             fontSize: 12,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,44 +70,66 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            selectedChild!.ChildName.toString(),
-            style: Theme.of(context).textTheme.titleMedium,
+          Row(
+            children: [
+              ImageWidget(
+                ean: null,
+                plu: element.PluChild!,
+                height: 70,
+                width: 70,
+              ),
+              Expanded(
+                child: Text(
+                  selectedChild!.ChildName.toString(),
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "${(element.Quantity.toString().toDouble() * productCompositionPresenter.totalComboxQuantity).toString().toBrazilianNumber(0)} qtd",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+            ],
           ),
           if (element.commentFather != null)
             CommentRichText(comment: element.commentFather!),
-          Row(
-            children: [
-              _titleAndValue(
-                title: "Qtd",
-                value: (element.Quantity.toString().toDouble() *
-                        productCompositionPresenter.totalComboxQuantity)
-                    .toString()
-                    .toBrazilianNumber(0),
-              ),
-              const Expanded(child: Text("X", textAlign: TextAlign.center)),
-              _titleAndValue(
-                title: "Preço",
-                value: productCompositionPresenter
-                    .calculateTotalLiquid(product: element)
-                    .toString()
-                    .toBrazilianNumber()
-                    .addBrazilianCoin(),
-              ),
-              const Expanded(child: Text("=", textAlign: TextAlign.center)),
-              _titleAndValue(
-                  title: "Total",
-                  value: (productCompositionPresenter.calculateTotalLiquid(
-                            product: element,
-                          ) *
-                          productCompositionPresenter.totalComboxQuantity)
-                      .toString()
-                      .toBrazilianNumber()
-                      .addBrazilianCoin(),
-                  valueColor: Theme.of(context).secondaryHeaderColor),
-            ],
-          ),
-          const Divider(thickness: 0.2),
+          // Row(
+          //   children: [
+          //     _titleAndValue(
+          //       title: "Qtd",
+          //       value: (element.Quantity.toString().toDouble() *
+          //               productCompositionPresenter.totalComboxQuantity)
+          //           .toString()
+          //           .toBrazilianNumber(0),
+          //     ),
+          //     const Expanded(child: Text("X", textAlign: TextAlign.center)),
+          //     _titleAndValue(
+          //       title: "Preço",
+          //       value: productCompositionPresenter
+          //           .calculateTotalLiquid(product: element)
+          //           .toString()
+          //           .toBrazilianNumber()
+          //           .addBrazilianCoin(),
+          //     ),
+          //     const Expanded(child: Text("=", textAlign: TextAlign.center)),
+          //     _titleAndValue(
+          //         title: "Total",
+          //         value: (productCompositionPresenter.calculateTotalLiquid(
+          //                   product: element,
+          //                 ) *
+          //                 productCompositionPresenter.totalComboxQuantity)
+          //             .toString()
+          //             .toBrazilianNumber()
+          //             .addBrazilianCoin(),
+          //         valueColor: Theme.of(context).secondaryHeaderColor),
+          //   ],
+          // ),
+          const Divider(thickness: 0.2, height: 3),
         ],
       );
     }).toList();

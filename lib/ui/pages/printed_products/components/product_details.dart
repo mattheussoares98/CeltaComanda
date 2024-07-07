@@ -85,23 +85,18 @@ class ProductDetails extends StatelessWidget {
                         fontWeight: FontWeight.w300,
                       ),
                     ),
-                    SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: FittedBox(
-                        child: IconButton(
-                          onPressed: printedProductsPresenter.canCancelProducts
-                              ? onPressedRemoveProduct
-                              : validateUserAndCancelProducts,
-                          icon: Icon(
-                            Icons.delete,
-                            color: printedProductsPresenter.canCancelProducts
-                                ? Colors.red
-                                : Colors.grey,
-                          ),
-                          visualDensity: VisualDensity.compact,
-                        ),
+                    IconButton(
+                      onPressed: printedProductsPresenter.canCancelProducts
+                          ? onPressedRemoveProduct
+                          : validateUserAndCancelProducts,
+                      icon: Icon(
+                        Icons.delete,
+                        color: printedProductsPresenter.canCancelProducts
+                            ? Colors.red
+                            : Colors.grey,
+                            size: hasMinWidth(context) ? 30 : 25,
                       ),
+                      visualDensity: VisualDensity.compact,
                     ),
                   ],
                 ),

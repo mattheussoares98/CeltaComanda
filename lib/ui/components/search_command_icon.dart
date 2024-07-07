@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../pages/home/home.dart';
 
 class SearchCommandIcon extends StatefulWidget {
   final Future Function() loadCommandData;
@@ -14,6 +17,8 @@ class SearchCommandIcon extends StatefulWidget {
 class _SearchCommandIconState extends State<SearchCommandIcon> {
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return GestureDetector(
       key: const Key("SearchCommandIcon"),
       onTap: () async {
@@ -24,7 +29,9 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
           children: [
             IconButton(
               icon: Icon(
-                Icons.find_replace_rounded,
+                homePresenter.isFixedCommandNumber
+                    ? Icons.refresh
+                    : Icons.find_replace_rounded,
                 color: Theme.of(context).primaryColor,
                 size: 28,
               ),

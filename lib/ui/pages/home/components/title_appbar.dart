@@ -7,9 +7,11 @@ import '../../../helpers/helpers.dart';
 class TitleAppbar extends StatelessWidget {
   final void Function() loadMenuAgain;
   final bool showLoadMenuAgain;
+  final void Function() openDrawer;
   const TitleAppbar({
     required this.loadMenuAgain,
     required this.showLoadMenuAgain,
+    required this.openDrawer,
     super.key,
   });
 
@@ -23,14 +25,19 @@ class TitleAppbar extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Text(
-              "Comanda ${homePresenter.commandNumber}",
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: hasMinWidth(context) ? 23 : 15,
-                fontWeight: FontWeight.w300,
-                fontStyle: FontStyle.italic,
+            child: GestureDetector(
+              onDoubleTap: () {
+                openDrawer();
+              },
+              child: Text(
+                "Comanda ${homePresenter.commandNumber}",
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 15,
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
           ),

@@ -97,15 +97,13 @@ class _HomePageState extends State<HomePage>
       },
       child: Scaffold(
         key: scaffoldKey,
-        drawer: homePresenter.isFixedCommandNumber == true
-            ? null
-            : drawer(
-                context: context,
-                menuPresenter: menuPresenter,
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                homePresenter: homePresenter,
-              ),
+        drawer: drawer(
+          context: context,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          homePresenter: homePresenter,
+        ),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: AppBar(
@@ -164,11 +162,13 @@ class _HomePageState extends State<HomePage>
             ],
             backgroundColor: const Color(0xFFF1F5F8),
             title: TitleAppbar(
-              showLoadMenuAgain: _currentIndex == 0,
-              loadMenuAgain: () async {
-                await menuPresenter.getGroupsAndProducts("001");
-              },
-            ),
+                showLoadMenuAgain: _currentIndex == 0,
+                loadMenuAgain: () async {
+                  await menuPresenter.getGroupsAndProducts("001");
+                },
+                openDrawer: () {
+                  scaffoldKey.currentState?.openDrawer();
+                }),
           ),
         ),
         body: SizedBox(

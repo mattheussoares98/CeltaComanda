@@ -29,7 +29,7 @@ class SaveSaleRequestButton extends StatelessWidget {
       Future.delayed(Duration.zero, () {
         showAlertMessage(
           context,
-          "Os produtos foram inseridos na comanda com sucesso",
+          "Os produtos foram solicitados com sucesso",
         );
       });
     }

@@ -77,9 +77,11 @@ class _CartProductItemState extends State<CartProductItem> {
                     context: context,
                     ean: widget.cartProduct.Product.EanCode,
                     plu: widget.cartProduct.Product.PriceLookupCode,
-                    productComplement: widget.cartProduct.Product.ProductComplement,
+                    productComplement:
+                        widget.cartProduct.Product.ProductComplement,
                     menuPresenter: menuPresenter,
                     productName: widget.cartProduct.Product.Name,
+                    selectedProduct: widget.cartProduct.Product,
                   );
                 },
                 child: ImageWidget(

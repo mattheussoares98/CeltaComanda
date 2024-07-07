@@ -64,8 +64,6 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> loadPrinted(String commandNumber) async {
-    clear();
-
     try {
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -84,6 +82,7 @@ class GetxPrintedProductsPresenter
             .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
       }
     } catch (error) {
+      clear();
       switch (error) {
         case DomainError.commandNotAvailable:
           throw DomainError.commandNotAvailable;

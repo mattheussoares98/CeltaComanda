@@ -4,9 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../ui/helpers/helpers.dart';
-import '../../components/components.dart';
 import '../../mixins/mixins.dart';
-import '../home/components/components.dart';
 import '../pages.dart';
 
 class MenuPage extends StatefulWidget {
@@ -61,12 +59,7 @@ class _MenuPageState extends State<MenuPage>
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -76,38 +69,6 @@ class _MenuPageState extends State<MenuPage>
         handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
-      key: scaffoldKey,
-      drawer: widget.isFixedCommandNumber == true
-          ? null
-          : drawer(
-              context: context,
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              homePresenter: homePresenter,
-            ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(
-          leading: widget.isFixedCommandNumber == true
-              ? null
-              : IconButton(
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {
-                    scaffoldKey.currentState?.openDrawer();
-                  },
-                ),
-          backgroundColor: const Color(0xFFF1F5F8),
-          title: TitleAppbar(
-            loadMenuAgain: () async {
-              await _loadGroupsAndProducts(menuPresenter);
-            },
-          ),
-        ),
-      ),
       body: StreamBuilder<
           List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
         stream: menuPresenter.menuStream,

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/pages/home/components/title_appbar.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -71,49 +70,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               cartPresenter: cartPresenter,
               homePresenter: homePresenter,
             ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(
-          backgroundColor: const Color(0xFFF1F5F8),
-          leading: widget.isFixedCommandNumber == true
-              ? null
-              : IconButton(
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-          actions: widget.isFixedCommandNumber == true
-              ? null
-              : [
-                  SearchCommandIcon(
-                    loadCommandData: () async {
-                      if (cartPresenter.isGeneratingVersionToRede) {
-                        writeCommandNumber(
-                          context: context,
-                          action: OnWriteCommand.loadCommandData,
-                        );
-                      } else {
-                        await printedProductsPresenter.loadCommandData(
-                          printedProductsPresenter: printedProductsPresenter,
-                          cartPresenter: cartPresenter,
-                          menuPresenter: menuPresenter,
-                          homePresenter: homePresenter,
-                          clearPermissionToCancelProducts: true,
-                          isRemovingProduct: false,
-                          writedCommandNumberForRedeVersion: "",
-                        );
-                      }
-                      printedProductsPresenter.updateCanCancelProducts(false);
-                    },
-                  )
-                ],
-          title: const TitleAppbar(),
-        ),
-      ),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [

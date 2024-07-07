@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:clean_celta_mobile/ui/pages/home/components/title_appbar.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/components.dart';
-import '../pages.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../mixins/mixins.dart';
+import '../pages.dart';
 
 import 'package:flutter/material.dart';
 
@@ -42,10 +40,6 @@ class _CartPageState extends State<CartPage>
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -55,34 +49,6 @@ class _CartPageState extends State<CartPage>
         handleMainError(context, cartPresenter.mainErrorStream);
 
     return Scaffold(
-      drawer: widget.isFixedCommandNumber == true
-          ? null
-          : drawer(
-              context: context,
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              homePresenter: homePresenter,
-            ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(
-          backgroundColor: const Color(0xFFF1F5F8),
-          leading: widget.isFixedCommandNumber == true
-              ? null
-              : IconButton(
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-          title:
-              widget.isFixedCommandNumber == true ? const TitleAppbar() : null,
-        ),
-      ),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.bottomCenter,

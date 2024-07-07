@@ -5,9 +5,11 @@ import '../home.dart';
 import '../../../helpers/helpers.dart';
 
 class TitleAppbar extends StatelessWidget {
-  final void Function()? loadMenuAgain;
+  final void Function() loadMenuAgain;
+  final bool showLoadMenuAgain;
   const TitleAppbar({
-    this.loadMenuAgain,
+    required this.loadMenuAgain,
+    required this.showLoadMenuAgain,
     super.key,
   });
 
@@ -22,22 +24,23 @@ class TitleAppbar extends StatelessWidget {
           padding: EdgeInsets.only(right: 8.0),
           child: Text("Logo"),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Text(
-              "Comanda ${homePresenter.commandNumber}",
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: hasMinWidth(context) ? 23 : 15,
-                fontWeight: FontWeight.w300,
-                fontStyle: FontStyle.italic,
+        if (homePresenter.isFixedCommandNumber)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Text(
+                "Comanda ${homePresenter.commandNumber}",
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 15,
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
           ),
-        ),
-        if (loadMenuAgain != null)
+        if (showLoadMenuAgain)
           IconButton(
             onPressed: loadMenuAgain,
             icon: Icon(

@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage>
     with LoadingManager, UIErrorManager {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -95,6 +96,66 @@ class _HomePageState extends State<HomePage>
         );
       },
       child: Scaffold(
+        key: scaffoldKey,
+        drawer: homePresenter.isFixedCommandNumber == true
+            ? null
+            : drawer(
+                context: context,
+                menuPresenter: menuPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                cartPresenter: cartPresenter,
+                homePresenter: homePresenter,
+              ),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(40),
+          child: AppBar(
+            leading: Row(
+              children: [
+                if (homePresenter.isFixedCommandNumber != true)
+                  IconButton(
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    onPressed: () {
+                      scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+              ],
+            ),
+            actions: [
+              if (_currentIndex == 2)
+                SearchCommandIcon(
+                  loadCommandData: () async {
+                    if (cartPresenter.isGeneratingVersionToRede) {
+                      writeCommandNumber(
+                        context: context,
+                        action: OnWriteCommand.loadCommandData,
+                      );
+                    } else {
+                      await printedProductsPresenter.loadCommandData(
+                        printedProductsPresenter: printedProductsPresenter,
+                        cartPresenter: cartPresenter,
+                        menuPresenter: menuPresenter,
+                        homePresenter: homePresenter,
+                        clearPermissionToCancelProducts: true,
+                        isRemovingProduct: false,
+                        writedCommandNumberForRedeVersion: "",
+                      );
+                    }
+                    printedProductsPresenter.updateCanCancelProducts(false);
+                  },
+                )
+            ],
+            backgroundColor: const Color(0xFFF1F5F8),
+            title: TitleAppbar(
+              showLoadMenuAgain: _currentIndex == 0,
+              loadMenuAgain: () async {
+                await menuPresenter.getGroupsAndProducts("001");
+              },
+            ),
+          ),
+        ),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: PageView(

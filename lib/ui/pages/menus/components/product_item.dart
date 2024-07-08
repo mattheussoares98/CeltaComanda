@@ -62,7 +62,7 @@ class _ProductItemState extends State<ProductItem> {
                 ],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: NameImagePriceAndCombox(
+              child: NameImagePriceComboxAndComplement(
                 productsViewModel: widget.productsViewModel,
               ),
             )),

@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import '../../pages.dart';
 import '../../../components/components.dart';
 
-class NameImagePriceAndCombox extends StatelessWidget {
+class NameImagePriceComboxAndComplement extends StatelessWidget {
   final ProductsViewModel productsViewModel;
-  const NameImagePriceAndCombox({
+  const NameImagePriceComboxAndComplement({
     required this.productsViewModel,
     super.key,
   });
@@ -68,7 +68,7 @@ Widget _landScapeNameImagePluAndCombox({
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _productNameAndPrice(productsViewModel, context),
+            _productNamePriceAndComplement(productsViewModel, context),
             if (productsViewModel.IsPromoCombox == "true")
               _mountCombox(context),
           ],
@@ -108,7 +108,7 @@ Widget _portraitNameImagePluAndCombox({
                 width: MediaQuery.of(context).size.width / 3,
               ),
             ),
-            _productNameAndPrice(productsViewModel, context),
+            _productNamePriceAndComplement(productsViewModel, context),
             if (productsViewModel.IsPromoCombox == "true")
               _mountCombox(context),
           ],
@@ -140,7 +140,7 @@ void _onTapImage({
   );
 }
 
-Widget _productNameAndPrice(
+Widget _productNamePriceAndComplement(
     ProductsViewModel productsViewModel, BuildContext context) {
   return Expanded(
     child: Column(
@@ -163,6 +163,19 @@ Widget _productNameAndPrice(
             fontSize: 20,
           ),
         ),
+        if (productsViewModel.ProductComplement != null)
+          Padding(
+            padding: const EdgeInsets.all(2),
+            child: Text(
+              productsViewModel.ProductComplement!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 20 : 14,
+                color: Theme.of(context).primaryColorDark,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          )
       ],
     ),
   );

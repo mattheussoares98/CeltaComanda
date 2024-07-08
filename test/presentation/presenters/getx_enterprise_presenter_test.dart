@@ -264,7 +264,12 @@ void main() {
 
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.commandDataStream, emits(null));
+    expectLater(
+        sut.commandDataStream,
+        emits(
+          const CommandViewModel(
+              commandNumber: null, isFixedCommandNumber: null),
+        ));
 
     await sut.loadLocalData();
   });

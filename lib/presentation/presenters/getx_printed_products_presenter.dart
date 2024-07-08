@@ -47,8 +47,7 @@ class GetxPrintedProductsPresenter
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
-        writedCommandNumberForRedeVersion:
-            homePresenter.commandNumber ?? "",
+        writedCommandNumberForRedeVersion: homePresenter.commandNumber ?? "",
       );
     } on DomainError catch (error) {
       switch (error) {
@@ -70,6 +69,7 @@ class GetxPrintedProductsPresenter
         commandNumber: commandNumber,
       );
 
+      clear();
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
@@ -82,7 +82,6 @@ class GetxPrintedProductsPresenter
             .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
       }
     } catch (error) {
-      clear();
       switch (error) {
         case DomainError.commandNotAvailable:
           throw DomainError.commandNotAvailable;

@@ -18,7 +18,7 @@ class CommandModel {
       throw Exception();
     }
     return CommandModel(
-      commandNumber: json['commandNumber'],
+      commandNumber: json['commandNumber'] == "" ? null : json['commandNumber'],
       isFixedCommandNumber: json['isFixedCommandNumber'],
     );
   }

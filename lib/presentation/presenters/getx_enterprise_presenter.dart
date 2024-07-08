@@ -18,7 +18,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final TicketIsPermitted ticketIsPermitted;
-  final LocalCommandData loadCommandData;
+  final LocalCommandData localCommandData;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -26,7 +26,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.loadEnterpriseData,
     required this.navigateTo,
     required this.ticketIsPermitted,
-    required this.loadCommandData,
+    required this.localCommandData,
   });
 
   @override
@@ -54,7 +54,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      final commandEntity = await loadCommandData.load();
+      final commandEntity = await localCommandData.load();
 
       if (commandEntity == null) {
         throw Exception();
@@ -62,8 +62,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       _commandData.value = CommandViewModel.fromEntity(commandEntity);
     } catch (e) {
-      _commandData.value =
-          const CommandViewModel(commandNumber: "", isFixedCommandNumber: "");
+      _commandData.value = null;
     } finally {
       isLoading = false;
     }
@@ -122,7 +121,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
             : commandEntity.commandNumber!,
       );
 
-      await loadCommandData.update(commandEntity);
+      await localCommandData.update(commandEntity);
 
       isLoading = false;
       goToHomePage();
@@ -194,7 +193,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         isFixedCommandNumber: (!homePresenter.isFixedCommandNumber).toString(),
       );
 
-      await loadCommandData.update(commandViewModel.toEntity());
+      await localCommandData.update(commandViewModel.toEntity());
 
       _commandData.value = commandViewModel;
       await homePresenter.updateIsFixedCommandNumber();

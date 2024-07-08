@@ -86,7 +86,7 @@ class TitleAppbar extends StatelessWidget {
             ],
           ),
         ),
-        if (homePresenter.commandNumber.toString() != "null")
+        if (homePresenter.commandNumber != null)
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),

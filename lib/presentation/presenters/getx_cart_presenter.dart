@@ -559,7 +559,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         }
         informedCommandNumber = commandNumber;
       } else if (homePresenter.isFixedCommandNumber) {
-        informedCommandNumber = homePresenter.commandNumber.toString();
+        informedCommandNumber = homePresenter.commandNumber ?? "";
       } else {
         informedCommandNumber = await barcodeScanner.read();
       }

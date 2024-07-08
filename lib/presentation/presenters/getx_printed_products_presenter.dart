@@ -48,7 +48,7 @@ class GetxPrintedProductsPresenter
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
         writedCommandNumberForRedeVersion:
-            homePresenter.commandNumber.toString(),
+            homePresenter.commandNumber ?? "",
       );
     } on DomainError catch (error) {
       switch (error) {

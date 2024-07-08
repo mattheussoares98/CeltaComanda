@@ -116,7 +116,8 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandEntity.commandNumber.toString() == "null"
+        commandNumber: commandEntity.commandNumber == null ||
+                commandEntity.commandNumber?.isEmpty == true
             ? "001"
             : commandEntity.commandNumber!,
       );
@@ -189,7 +190,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
     try {
       final commandViewModel = CommandViewModel(
-        commandNumber: homePresenter.commandNumber.toString(),
+        commandNumber: homePresenter.commandNumber,
         isFixedCommandNumber: (!homePresenter.isFixedCommandNumber).toString(),
       );
 
@@ -206,7 +207,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
   @override
   void updateCommandNumber({
-    required String newCommandValue,
+    required String? newCommandValue,
     required HomePresenter homePresenter,
   }) {
     homePresenter.updateCommandNumber(newCommandValue);

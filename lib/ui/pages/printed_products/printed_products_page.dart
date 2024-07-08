@@ -87,7 +87,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       )
                     : SearchDataByCommandNumber(
                         homePresenter: homePresenter,
-                        emptyMessage: homePresenter.commandNumber.toString() == "null"
+                        emptyMessage: homePresenter.commandNumber == null
                             ? "Consulte alguma comanda para visualizar os produtos solicitados"
                             : "Não há produtos solicitados nessa comanda",
                         loadCommandData: () async {

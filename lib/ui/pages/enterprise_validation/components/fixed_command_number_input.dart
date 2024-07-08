@@ -33,7 +33,7 @@ class FixedCommandNumberInput extends StatelessWidget {
           }, //implementar
           onChanged: (String? newValue) {
             enterpriseValidationPresenter.updateCommandNumber(
-              newCommandValue: newValue ?? "",
+              newCommandValue: newValue?.isEmpty == true ? null : newValue,
               homePresenter: homePresenter,
             );
           },

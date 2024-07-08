@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/entities.dart';
 
 class CommandViewModel extends Equatable {
-  final String commandNumber;
-  final String isFixedCommandNumber;
+  final String? commandNumber;
+  final String? isFixedCommandNumber;
 
   const CommandViewModel({
     required this.commandNumber,
@@ -27,7 +27,7 @@ class CommandViewModel extends Equatable {
   }
 
   factory CommandViewModel.fromEntity(CommandEntity entity) => CommandViewModel(
-        commandNumber: entity.commandNumber.toString(),
+        commandNumber: entity.commandNumber,
         isFixedCommandNumber: entity.isFixedCommandNumber.toString(),
       );
 

@@ -29,7 +29,7 @@ abstract class EnterpriseValidationPresenter implements Listenable {
 
   Future<void> updateUseFixedCommandNumber(HomePresenter homePresenter);
   void updateCommandNumber({
-    required String newCommandValue,
+    required String? newCommandValue,
     required HomePresenter homePresenter,
   });
 }

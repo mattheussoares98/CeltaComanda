@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -84,6 +85,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         formKey: formKey,
                         passwordController: passwordController,
                         personalizedCodeController: personalizedCodeController,
+                        itensPerLine: hasMinWidth(context) ? 3 : 2,
                       )
                     : SearchDataByCommandNumber(
                         homePresenter: homePresenter,

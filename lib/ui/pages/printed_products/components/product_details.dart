@@ -35,39 +35,39 @@ class ProductDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          product.Name,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: hasMinWidth(context) ? 30 : 18,
+          ),
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                showLargeImage(
-                  context: context,
-                  ean: product.EanCode,
-                  productComplement: product.ProductComplement,
-                  plu: product.PriceLookupCode,
-                  menuPresenter: menuPresenter,
-                  productName: product.Name,
-                  selectedProduct: product,
-                );
-              },
-              child: ImageWidget(
-                ean: product.EanCode,
-                plu: product.PriceLookupCode,
-                height: 150,
-                width: 150,
-              ),
-            ),
-            const SizedBox(width: 3),
             Expanded(
-              child: Text(
-                product.Name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: hasMinWidth(context) ? 30 : 18,
+              child: GestureDetector(
+                onTap: () {
+                  showLargeImage(
+                    context: context,
+                    ean: product.EanCode,
+                    productComplement: product.ProductComplement,
+                    plu: product.PriceLookupCode,
+                    menuPresenter: menuPresenter,
+                    productName: product.Name,
+                    selectedProduct: product,
+                  );
+                },
+                child: ImageWidget(
+                  ean: product.EanCode,
+                  plu: product.PriceLookupCode,
+                  height: 100,
+                  width: 100,
                 ),
               ),
             ),
+            const SizedBox(width: 3),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -84,13 +84,13 @@ class ProductDetails extends StatelessWidget {
                   ),
                   visualDensity: VisualDensity.compact,
                 ),
-                Text(
-                  value.addBrazilianCoin(),
-                  style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 23 : 15,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
+                // Text(
+                //   value.addBrazilianCoin(),
+                //   style: TextStyle(
+                //     fontSize: hasMinWidth(context) ? 23 : 15,
+                //     fontWeight: FontWeight.w300,
+                //   ),
+                // ),
                 Text(
                   "$quantity qtd",
                   style: TextStyle(

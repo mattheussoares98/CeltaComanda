@@ -10,7 +10,7 @@ class AnimationManager {
   static void initializeAnimation() {
     _controller = AnimationController(
       vsync: _MyTickerProvider(),
-      duration: const Duration(seconds: 12),
+      duration: const Duration(seconds: 6),
     )..repeat(reverse: true);
   }
 

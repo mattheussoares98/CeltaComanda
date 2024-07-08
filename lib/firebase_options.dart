@@ -30,10 +30,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -48,17 +45,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBG1gHeUxTNhdAzyeSI4O7e0Hdbb5EaVm8',
-    appId: '1:619247462622:web:ff59bed24dfc5fc8813a4f',
+    appId: '1:619247462622:web:10f0c248eafdcb55813a4f',
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
     authDomain: 'celta-restaurant.firebaseapp.com',
     storageBucket: 'celta-restaurant.appspot.com',
-    measurementId: 'G-H2R7PGPF0R',
+    measurementId: 'G-LQQ3N30761',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyByrP2KRW_EdOrfyQeVS5UO_GJiHNNdsfU',
-    appId: '1:619247462622:android:64c86f98e68cc6e4813a4f',
+    appId: '1:619247462622:android:e79de7b35a35ec76813a4f',
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
     storageBucket: 'celta-restaurant.appspot.com',
@@ -66,10 +63,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBeMjDEPBuPCAWU22EJUtu2WWSO6BmiMOY',
-    appId: '1:619247462622:ios:7700ff31d1498887813a4f',
+    appId: '1:619247462622:ios:8415e54123b435ba813a4f',
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
     storageBucket: 'celta-restaurant.appspot.com',
-    iosBundleId: 'com.example.cleanCeltaMobile',
+    iosBundleId: 'br.com.celtaware.comanda',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBG1gHeUxTNhdAzyeSI4O7e0Hdbb5EaVm8',
+    appId: '1:619247462622:web:ed3071c4cabb67f9813a4f',
+    messagingSenderId: '619247462622',
+    projectId: 'celta-restaurant',
+    authDomain: 'celta-restaurant.firebaseapp.com',
+    storageBucket: 'celta-restaurant.appspot.com',
+    measurementId: 'G-VFMT0F8VEK',
+  );
+
 }

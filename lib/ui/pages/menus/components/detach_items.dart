@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../../../ui/components/components.dart';
 import '../../pages.dart';
 
-class DetachItems extends StatefulWidget {
+class DetachItems extends StatelessWidget {
   final List<ProductsViewModel> products;
   const DetachItems({
     required this.products,
@@ -11,31 +14,41 @@ class DetachItems extends StatefulWidget {
   });
 
   @override
-  State<DetachItems> createState() => _DetachItemsState();
-}
-
-class _DetachItemsState extends State<DetachItems> {
-  @override
   Widget build(BuildContext context) {
+    MenuPresenter menuPresenter = Provider.of(context);
+
     return CarouselSlider(
       options: CarouselOptions(
-        height: 400.0,
-        autoPlay: true,
+        height: double.infinity,
+        autoPlay: false,
+        viewportFraction: 1,
+        enableInfiniteScroll: true,
         autoPlayInterval: const Duration(seconds: 3),
+        autoPlayAnimationDuration: const Duration(milliseconds: 2000),
+        autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
       ),
-      items: widget.products.map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: const BoxDecoration(color: Colors.amber),
-              child: ProductItem(
-                productsViewModel: i,
-                productIsSelected: false,
-              ),
+      items: products.map((product) {
+        return InkWell(
+          onTap: () {
+            showLargeImage(
+              context: context,
+              ean: product.EanCode,
+              productComplement: product.ProductComplement,
+              plu: product.PriceLookupCode,
+              menuPresenter: menuPresenter,
+              productName: product.Name,
+              selectedProduct: product,
+              showInsertButton: true,
             );
           },
+          child: ImageWidget(
+            ean: product.EanCode,
+            plu: product.PriceLookupCode,
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            beginAnimation: 0.8,
+            endAnimation: 1,
+          ),
         );
       }).toList(),
     );

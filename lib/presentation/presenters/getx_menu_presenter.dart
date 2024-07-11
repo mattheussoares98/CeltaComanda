@@ -192,6 +192,20 @@ class GetxMenuPresenter extends GetxController
               value) =>
       _menu.value = value;
 
+  List<ExpansibleGroupEntity> _putDetachGroupInFirstGroupList(
+    List<ExpansibleGroupEntity> expansibleGroups,
+  ) {
+    ExpansibleGroupEntity? detachGroup = expansibleGroups.firstWhereOrNull(
+        (e) => e.Name.toLowerCase() == "DESTAQUES".toLowerCase());
+
+    if (detachGroup == null) {
+      return expansibleGroups;
+    } else {
+      expansibleGroups.remove(detachGroup);
+      return [detachGroup, ...expansibleGroups];
+    }
+  }
+
   @override
   Future<void> getGroupsAndProducts(String commandNumber) async {
     isLoading = true;
@@ -205,9 +219,11 @@ class GetxMenuPresenter extends GetxController
         commandNumber: commandNumber,
       );
 
-      final expansibleGroups = await loadExpansibleGroups.load();
+      var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
+        expansibleGroups = _putDetachGroupInFirstGroupList(expansibleGroups);
+
         for (var expansibleGroup in expansibleGroups) {
           final products =
               await loadProducts.load(expansibleGroup.ExpansibleGroupId);

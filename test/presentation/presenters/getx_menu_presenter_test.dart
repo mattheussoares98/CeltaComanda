@@ -207,6 +207,42 @@ void main() {
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
     });
+
+    test('Should put "destaques" in first group list', () async {
+      final anyGroup = ExpansibleGroupsViewModel(
+        Name: "a",
+        ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+        ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
+        OrderClassification: faker.randomGenerator.integer(10).toString(),
+      );
+      final detachGroup = ExpansibleGroupsViewModel(
+        Name: "Destaques",
+        ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+        ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
+        OrderClassification: faker.randomGenerator.integer(10).toString(),
+      );
+      final groups = [
+        anyGroup,
+        detachGroup,
+      ];
+
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        groups.map((element) => element.toEntity()).toList(),
+      );
+      loadProducts.mockLoadProducts([]);
+
+      expectLater(
+          sut.menuStream,
+          emitsInOrder([
+            [],
+            [
+              {detachGroup: []},
+              {anyGroup: []},
+            ]
+          ]));
+
+      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+    });
   });
 
   group("SearchProductByCode", () {

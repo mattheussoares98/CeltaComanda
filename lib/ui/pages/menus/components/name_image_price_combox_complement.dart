@@ -168,11 +168,11 @@ Widget _productNamePriceAndComplement(
             padding: const EdgeInsets.all(2),
             child: Text(
               productsViewModel.ProductComplement!,
-              maxLines: 6,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: hasMinWidth(context) ? 20 : 14,
+                fontSize: hasMinWidth(context) ? 14 : 12,
                 color: Theme.of(context).primaryColorDark,
                 fontStyle: FontStyle.italic,
               ),

@@ -76,6 +76,7 @@ abstract class CartPresenter implements ChangeNotifier {
     String? commandNumber,
   });
   Future<void> getLocalCartProductsData();
+  Future<void> clearCart();
 
   List<ConfirmedComboxViewModel> get confirmedCombox;
   int? get indexOfSelectedProductCombox;

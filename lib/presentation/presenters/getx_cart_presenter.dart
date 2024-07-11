@@ -964,4 +964,19 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           calculateIncrementValue(product);
     }
   }
+
+  @override
+  Future<void> clearCart() async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      _cartProducts.clear();
+      await cartInformations.clearCartProducts();
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

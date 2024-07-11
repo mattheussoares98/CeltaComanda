@@ -1423,6 +1423,33 @@ void main() {
         ),
       ]);
     });
+
+    test("Should clear cartProducts on call sut.clearCart", () async {
+      await sut.clearCart();
+
+      expect(sut.cartProducts, []);
+    });
+    test("Should call cartInformations.clearCartProduct on sut.clearCart",
+        () async {
+      await sut.clearCart();
+
+      verify(() => cartInformations.clearCartProducts()).called(1);
+    });
+    test("Should emit correct values on sut.clearCart success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.clearCart();
+    });
+    test("Should emit correct values on sut.clearCart throws", () async {
+      cartInformations.mockClearError();
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      await sut.clearCart();
+    });
   });
 
   group("Save cart products in saleRequesTemp", () {

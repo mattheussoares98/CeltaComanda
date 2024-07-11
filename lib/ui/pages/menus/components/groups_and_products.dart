@@ -12,9 +12,22 @@ class GroupsAndProducts extends StatelessWidget {
     super.key,
   });
 
+  bool isDetachSelected(MenuPresenter menuPresenter) {
+    for (var menu in menuPresenter.loadedMenu) {
+      for (var group in menu.keys) {
+        if (group.Name.toLowerCase() == "destaques" &&
+            (selectedIndex == 0 || selectedIndex == null)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
     return Expanded(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,15 +41,23 @@ class GroupsAndProducts extends StatelessWidget {
               selectedIndex: selectedIndex ?? 0,
             ),
           ),
-          Expanded(
-            flex: 80,
-            child: ProductsItems(
-              itensPerLine: 2,
-              products: menuPresenter
-                  .loadedMenu[selectedIndex ?? 0].entries.first.value,
-              selectedProduct: selectedProduct,
+          if (isDetachSelected(menuPresenter))
+            const Expanded(
+              flex: 80,
+              child: Text(
+                "Aqui é um destaque viu",
+              ),
             ),
-          ),
+          if (!isDetachSelected(menuPresenter))
+            Expanded(
+              flex: 80,
+              child: ProductsItems(
+                itensPerLine: 2,
+                products: menuPresenter
+                    .loadedMenu[selectedIndex ?? 0].entries.first.value,
+                selectedProduct: selectedProduct,
+              ),
+            ),
         ],
       ),
     );

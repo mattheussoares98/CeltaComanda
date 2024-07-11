@@ -169,8 +169,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      sut.productsCompositionStream.listen(
-          expectAsync1((productComposition) => expect(productComposition, [])));
+      expectLater(sut.productsCompositionStream, emits([]));
 
       await sut.loadProductComposition(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -185,8 +184,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      sut.productsCompositionStream.listen(
-          expectAsync1((productComposition) => expect(productComposition, [])));
+      expectLater(sut.productsCompositionStream, emits([]));
 
       await sut.loadProductComposition(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,

@@ -1,6 +1,22 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/pages.dart';
+
+Future<void> _logout({
+  required HomePresenter homePresenter,
+  required PrintedProductsPresenter printedProductsPresenter,
+  required CartPresenter cartPresenter,
+  required MenuPresenter menuPresenter,
+}) async {
+  homePresenter.goToSplashPage(
+    printedProductsPresenter: printedProductsPresenter,
+    cartPresenter: cartPresenter,
+    menuPresenter: menuPresenter,
+  );
+  await homePresenter.clearEnterpriseData();
+  await cartPresenter.clearCart();
+}
 
 Widget drawer({
   required BuildContext context,
@@ -25,12 +41,28 @@ Widget drawer({
             key: const Key("logout"),
             context: context,
             onTap: () async {
-              homePresenter.goToSplashPage(
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                menuPresenter: menuPresenter,
-              );
-              await homePresenter.clearEnterpriseData();
+              if (cartPresenter.cartProducts.isNotEmpty) {
+                notificationDialog(
+                    context: context,
+                    titleMessage: "Fazer logout?",
+                    content: const Text(
+                        "Há produtos no carrinho que não foram solicitados. Ao fazer o logout, todos produtos serão excluídos. Deseja realmente fazer o logou?"),
+                    onPress: () async {
+                      await _logout(
+                        homePresenter: homePresenter,
+                        printedProductsPresenter: printedProductsPresenter,
+                        cartPresenter: cartPresenter,
+                        menuPresenter: menuPresenter,
+                      );
+                    });
+              } else {
+                await _logout(
+                  homePresenter: homePresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  cartPresenter: cartPresenter,
+                  menuPresenter: menuPresenter,
+                );
+              }
             },
             text: "Sair",
             leading: Icon(

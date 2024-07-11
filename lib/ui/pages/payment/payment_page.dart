@@ -1,9 +1,9 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../ui/helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../../components/components.dart';
 import '../pages.dart';

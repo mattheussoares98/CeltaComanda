@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/presentation/mixins/mixins.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
+import '../../presentation/mixins/mixins.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 

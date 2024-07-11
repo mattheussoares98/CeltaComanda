@@ -1,8 +1,7 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:clean_celta_mobile/ui/helpers/sizes/has_min_width.dart';
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
+import '../../ui/helpers/helpers.dart';
+import '../../ui/helpers/sizes/sizes.dart';
 import '../pages/pages.dart';
 
 class SearchDataByCommandNumber extends StatelessWidget {

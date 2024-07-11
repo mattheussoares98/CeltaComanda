@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:clean_celta_mobile/ui/mixins/mixins.dart';
-import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/entities/entities.dart';
+import '../../../../ui/helpers/helpers.dart';
+import '../../../../ui/mixins/mixins.dart';
+import '../../../../ui/pages/pages.dart';
 import '../../../components/components.dart';
 
 class InsertProductButton extends StatefulWidget {
@@ -99,12 +99,10 @@ class _InsertProductButtonState extends State<InsertProductButton>
       child: widget.selectedProduct?.productQuantity == null
           ? TextButton(
               onPressed: null,
-              child: Text(
-                "Selecione um produto",
-                style: TextStyle(
-                  fontSize: hasMinWidth(context) ? 23 : 15,
-                )
-              ),
+              child: Text("Selecione um produto",
+                  style: TextStyle(
+                    fontSize: hasMinWidth(context) ? 23 : 15,
+                  )),
             )
           : Row(
               children: [

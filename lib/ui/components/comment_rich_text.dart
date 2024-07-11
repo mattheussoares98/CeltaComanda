@@ -1,5 +1,6 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+
+import '../../ui/helpers/helpers.dart';
 
 class CommentRichText extends StatelessWidget {
   final String comment;

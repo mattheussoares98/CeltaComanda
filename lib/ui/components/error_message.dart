@@ -1,5 +1,6 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+
+import '../../ui/helpers/helpers.dart';
 
 void showErrorMessage(BuildContext context, String error) {
   ScaffoldMessenger.of(context).clearSnackBars();

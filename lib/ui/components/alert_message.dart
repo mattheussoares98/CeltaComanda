@@ -1,6 +1,6 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/material.dart';
 
+import '../../main/builders/builders.dart';
 import '../helpers/helpers.dart';
 
 void showAlertMessage(BuildContext context, String message) {

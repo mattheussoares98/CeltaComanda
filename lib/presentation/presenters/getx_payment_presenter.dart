@@ -1,9 +1,7 @@
-import 'package:clean_celta_mobile/domain/usecases/barcode/barcode.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
-import '../../domain/usecases/payment/payment.dart';
-import '../../domain/usecases/printed_products/load_printed_products.dart';
+import '../../domain/usecases/usecases.dart';
 import '../../presentation/mixins/mixins.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';

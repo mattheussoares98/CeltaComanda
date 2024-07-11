@@ -1,6 +1,6 @@
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:flutter/services.dart';
 
+import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class RedePay implements Pay {

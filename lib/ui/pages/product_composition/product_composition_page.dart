@@ -1,11 +1,11 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../main/builders/builders.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
@@ -94,8 +94,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                   reload: () async =>
                       await productCompositionPresenter.loadProductComposition(
                     url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-                    enterpriseId:
-                        EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                    enterpriseId: EnterpriseDataBuilder
+                        .enterpriseDataEntity!.enterpriseId!,
                     internalCodeOnErp:
                         int.parse(selectedComboxProduct!.InternalCodeOnERP!),
                   ),

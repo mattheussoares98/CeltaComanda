@@ -46,7 +46,6 @@ class GroupsAndProducts extends StatelessWidget {
               flex: 80,
               child: DetachItems(
                 products: menuPresenter.loadedMenu[0].entries.first.value,
-                selectedProduct: selectedProduct,
               ),
             ),
           if (!isDetachSelected(menuPresenter))

@@ -65,6 +65,7 @@ class _CartPageState extends State<CartPage>
                             if (cartPresenter.cartProducts.isNotEmpty)
                               CartProductsItems(
                                 cartProducts: cartPresenter.cartProducts,
+                                itensPerLine: 2,
                               ),
                             if (cartPresenter.confirmedCombox.isNotEmpty)
                               ConfirmedChildAndFatherItems(

@@ -100,8 +100,6 @@ Widget _portraitLargeImage({
                   plu: plu,
                   height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
-                  beginAnimation: 1.6,
-                  endAnimation: 1.2,
                 ),
               ),
               const SizedBox(height: 10),
@@ -166,8 +164,6 @@ Widget _landScapeLargeImage({
                         plu: plu,
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
-                        beginAnimation: 1.5,
-                        endAnimation: 1.3,
                       ),
                     ),
                     if (productComplement != null)

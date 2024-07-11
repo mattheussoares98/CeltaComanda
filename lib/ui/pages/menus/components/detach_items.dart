@@ -20,10 +20,10 @@ class DetachItems extends StatelessWidget {
     return CarouselSlider(
       options: CarouselOptions(
         height: double.infinity,
-        autoPlay: false,
+        autoPlay: true,
         viewportFraction: 1,
         enableInfiniteScroll: true,
-        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayInterval: const Duration(seconds: 5),
         autoPlayAnimationDuration: const Duration(milliseconds: 2000),
         autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
       ),
@@ -41,13 +41,54 @@ class DetachItems extends StatelessWidget {
               showInsertButton: true,
             );
           },
-          child: ImageWidget(
-            ean: product.EanCode,
-            plu: product.PriceLookupCode,
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height,
-            beginAnimation: 0.8,
-            endAnimation: 1,
+          child: Stack(
+            children: [
+              ImageWidget(
+                ean: product.EanCode,
+                plu: product.PriceLookupCode,
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                beginAnimation: 1,
+                endAnimation: 1,
+              ),
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.black26,
+                  // gradient: LinearGradient(
+                  //   colors: [
+                  //     // Color.fromARGB(255, 255, 255, 255),
+                  //     Colors.black12,
+                  //   ],
+                  //   begin: Alignment.topCenter,
+                  //   end: Alignment.bottomCenter,
+                  // ),
+                ),
+              ),
+              Positioned(
+                bottom: 30,
+                left: 30,
+                child: Container(
+                  decoration: BoxDecoration(
+                    // color: Colors.black12,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    child: Text(
+                      product.Name.toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 60,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       }).toList(),

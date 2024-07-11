@@ -77,7 +77,7 @@ Widget _cachedImage({
       "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${ean ?? plu}.PNG";
 
   return CachedNetworkImage(
-    fit: BoxFit.fill,
+    fit: BoxFit.contain,
     cacheManager: customCacheManager,
     key: ValueKey<String>(url),
     imageUrl: url,

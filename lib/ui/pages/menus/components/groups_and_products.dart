@@ -42,10 +42,11 @@ class GroupsAndProducts extends StatelessWidget {
             ),
           ),
           if (isDetachSelected(menuPresenter))
-            const Expanded(
+            Expanded(
               flex: 80,
-              child: Text(
-                "Aqui é um destaque viu",
+              child: DetachItems(
+                products: menuPresenter.loadedMenu[0].entries.first.value,
+                selectedProduct: selectedProduct,
               ),
             ),
           if (!isDetachSelected(menuPresenter))

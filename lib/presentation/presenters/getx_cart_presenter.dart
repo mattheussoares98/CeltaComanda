@@ -406,7 +406,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       isLoading = false;
       animateProductGoingMenuToCart = true;
       await Future.delayed(
-          const Duration(seconds: 3 /*3 == tempo de duração da animação*/), () {
+          const Duration(milliseconds: 1500 /*1500 == tempo de duração da animação*/), () {
         animateProductGoingMenuToCart = false;
       });
       notifyListeners();

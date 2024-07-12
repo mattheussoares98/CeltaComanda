@@ -28,13 +28,13 @@ class _HomePageState extends State<HomePage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
-  final int animationDuration = 3;
+  final int animationDurationMilliseconds = 1500;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: animationDuration),
+      duration: Duration(milliseconds: animationDurationMilliseconds),
       vsync: this,
     );
 
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage>
       _animationController?.reset();
       _animationController?.forward();
 
-      Future.delayed(Duration(seconds: animationDuration), () {
+      Future.delayed(Duration(milliseconds: animationDurationMilliseconds), () {
         _isAnimatig = false;
       });
     }
@@ -231,9 +231,11 @@ class _HomePageState extends State<HomePage>
                               5,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
-                            width: 10,
-                            height: 5,
-                            color: Colors.blue,
+                            height: kBottomNavigationBarHeight / 2 - 5,
+                            width: kBottomNavigationBarHeight / 2 - 5,
+                            child: Image.asset(
+                              "lib/ui/assets/images/product_animation.png",
+                            ),
                           ),
                         );
                       },

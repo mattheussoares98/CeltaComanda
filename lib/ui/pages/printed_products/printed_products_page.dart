@@ -92,21 +92,13 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                             ? "Consulte alguma comanda para visualizar os produtos solicitados"
                             : "Não há produtos solicitados nessa comanda",
                         loadCommandData: () async {
-                          if (cartPresenter.isGeneratingVersionToRede) {
-                            writeCommandNumber(
-                              context: context,
-                              action: OnWriteCommand.loadCommandData,
-                            );
-                          } else {
-                            await printedProductsPresenter.loadCommandData(
-                              cartPresenter: cartPresenter,
-                              menuPresenter: menuPresenter,
-                              homePresenter: homePresenter,
-                              clearPermissionToCancelProducts: true,
-                              isRemovingProduct: false,
-                              writedCommandNumberForRedeVersion: "",
-                            );
-                          }
+                          await printedProductsPresenter.loadCommandData(
+                            cartPresenter: cartPresenter,
+                            menuPresenter: menuPresenter,
+                            homePresenter: homePresenter,
+                            clearPermissionToCancelProducts: true,
+                            isRemovingProduct: false,
+                          );
                         },
                       ),
               ),

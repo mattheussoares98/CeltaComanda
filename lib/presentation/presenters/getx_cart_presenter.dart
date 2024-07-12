@@ -537,12 +537,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     notifyListeners();
   }
 
-  bool _isGeneratingVersionToRede = false;
-  @override
-  bool get isGeneratingVersionToRede => _isGeneratingVersionToRede;
-  set isGeneratingVersionToRede(bool value) =>
-      _isGeneratingVersionToRede = value;
-
   @override
   Future<bool> saveProducts({
     required PrintedProductsPresenter printedProductsPresenter,
@@ -557,12 +551,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     try {
       String informedCommandNumber;
 
-      if (isGeneratingVersionToRede) {
-        if (commandNumber == null) {
-          throw DomainError.unexpected;
-        }
-        informedCommandNumber = commandNumber;
-      } else if (homePresenter.isFixedCommandNumber) {
+      if (homePresenter.isFixedCommandNumber) {
         informedCommandNumber = homePresenter.commandNumber ?? "";
       } else {
         informedCommandNumber = await barcodeScanner.read();

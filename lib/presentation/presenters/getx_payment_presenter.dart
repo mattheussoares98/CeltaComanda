@@ -111,7 +111,6 @@ class GetxPaymentPresenter extends GetxController
   @override
   Future<void> getTotalValue({
     required HomePresenter homePresenter,
-    required String? writedCommandNumber,
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required MenuPresenter menuPresenter,
@@ -119,20 +118,12 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      if (cartPresenter.isGeneratingVersionToRede &&
-          writedCommandNumber == null) {
-        throw DomainError.unexpected;
-      } else if (cartPresenter.isGeneratingVersionToRede) {
-        homePresenter.updateCommandNumber(writedCommandNumber);
-      }
-
       await printedProductsPresenter.loadCommandData(
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumber ?? "",
       );
     } on DomainError catch (e) {
       switch (e) {

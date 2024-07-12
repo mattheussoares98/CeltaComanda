@@ -36,21 +36,13 @@ PreferredSize homeAppBar({
         if (currentIndex == 2)
           SearchCommandIcon(
             loadCommandData: () async {
-              if (cartPresenter.isGeneratingVersionToRede) {
-                writeCommandNumber(
-                  context: context,
-                  action: OnWriteCommand.loadCommandData,
-                );
-              } else {
-                await printedProductsPresenter.loadCommandData(
-                  cartPresenter: cartPresenter,
-                  menuPresenter: menuPresenter,
-                  homePresenter: homePresenter,
-                  clearPermissionToCancelProducts: true,
-                  isRemovingProduct: false,
-                  writedCommandNumberForRedeVersion: "",
-                );
-              }
+              await printedProductsPresenter.loadCommandData(
+                cartPresenter: cartPresenter,
+                menuPresenter: menuPresenter,
+                homePresenter: homePresenter,
+                clearPermissionToCancelProducts: true,
+                isRemovingProduct: false,
+              );
               printedProductsPresenter.updateCanCancelProducts(false);
             },
           )

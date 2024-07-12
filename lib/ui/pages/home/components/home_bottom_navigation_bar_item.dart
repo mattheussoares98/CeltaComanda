@@ -56,7 +56,7 @@ class HomeBottomNavigationBarItem extends StatelessWidget {
           ),
           label: 'Solicitados',
         ),
-        if (cartPresenter.isGeneratingVersionToRede)
+        if (true)
           const BottomNavigationBarItem(
             icon: Icon(Icons.paypal),
             label: 'Pagar',

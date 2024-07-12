@@ -135,7 +135,6 @@ class _HomePageState extends State<HomePage>
       homePresenter: homePresenter,
       clearPermissionToCancelProducts: true,
       isRemovingProduct: false,
-      writedCommandNumberForRedeVersion: "",
     );
   }
 
@@ -151,7 +150,7 @@ class _HomePageState extends State<HomePage>
       makeMenusPage(homePresenter.isFixedCommandNumber),
       makeCartPage(_pageController, homePresenter.isFixedCommandNumber),
       makePrintedProductsPage(homePresenter.isFixedCommandNumber),
-      if (cartPresenter.isGeneratingVersionToRede) makePaymentPage(),
+      if (true) makePaymentPage(),
     ];
     return PopScope(
       canPop: false,

@@ -11,7 +11,6 @@ abstract class CartPresenter implements ChangeNotifier {
   Stream<bool> get animateProductGoingMenuToCartStream;
   int? get indexOfSelectedProduct;
   String get totalSaleRequestTempPrice;
-  bool get isGeneratingVersionToRede;
 
   Future<void> loadSaleRequest(String commandNumber);
   Future<void> addProductQuantity({

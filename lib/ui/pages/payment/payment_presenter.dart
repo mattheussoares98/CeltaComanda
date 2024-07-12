@@ -26,7 +26,6 @@ abstract class PaymentPresenter implements Listenable {
 
   Future<void> getTotalValue({
     required HomePresenter homePresenter,
-    required String? writedCommandNumber,
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required MenuPresenter menuPresenter,

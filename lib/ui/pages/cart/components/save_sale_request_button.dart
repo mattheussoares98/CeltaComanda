@@ -46,12 +46,7 @@ class SaveSaleRequestButton extends StatelessWidget {
 
     return ElevatedButton(
       onPressed: () async {
-        if (cartPresenter.isGeneratingVersionToRede) {
-          writeCommandNumber(
-            context: context,
-            action: OnWriteCommand.saveProducts,
-          );
-        } else if (homePresenter.isFixedCommandNumber) {
+        if (homePresenter.isFixedCommandNumber) {
           notificationDialog(
             context: context,
             titleMessage: "Enviar pedido",

@@ -68,20 +68,12 @@ class _PaymentPageState extends State<PaymentPage>
           actions: [
             SearchCommandIcon(
               loadCommandData: () async {
-                if (cartPresenter.isGeneratingVersionToRede) {
-                  writeCommandNumber(
-                    context: context,
-                    action: OnWriteCommand.getPaymentAmmount,
-                  );
-                } else {
-                  await paymentPresenter.getTotalValue(
-                    homePresenter: homePresenter,
-                    writedCommandNumber: null,
-                    cartPresenter: cartPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    menuPresenter: menuPresenter,
-                  );
-                }
+                await paymentPresenter.getTotalValue(
+                  homePresenter: homePresenter,
+                  cartPresenter: cartPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  menuPresenter: menuPresenter,
+                );
                 printedProductsPresenter.updateCanCancelProducts(false);
               },
             )
@@ -114,20 +106,12 @@ class _PaymentPageState extends State<PaymentPage>
                     ? "Essa comanda não possui valores em aberto"
                     : "Consulte alguma comanda para efetuar o pagamento dela",
                 loadCommandData: () async {
-                  if (cartPresenter.isGeneratingVersionToRede) {
-                    writeCommandNumber(
-                      context: context,
-                      action: OnWriteCommand.getPaymentAmmount,
-                    );
-                  } else {
-                    await paymentPresenter.getTotalValue(
-                      homePresenter: homePresenter,
-                      writedCommandNumber: null,
-                      cartPresenter: cartPresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      menuPresenter: menuPresenter,
-                    );
-                  }
+                  await paymentPresenter.getTotalValue(
+                    homePresenter: homePresenter,
+                    cartPresenter: cartPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    menuPresenter: menuPresenter,
+                  );
                 },
               )
             : SizedBox(

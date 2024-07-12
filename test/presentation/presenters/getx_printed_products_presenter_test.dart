@@ -514,7 +514,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
     });
 
@@ -533,7 +532,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
     });
 
@@ -551,7 +549,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
     });
     test("Should emit correct values on loadCommandData throws unexpected",
@@ -568,7 +565,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
     });
 
@@ -581,7 +577,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       expect(homePresenter.commandNumberMock, "9999");
@@ -594,7 +589,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
@@ -607,7 +601,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       expect(sut.printedProducts, null);
@@ -626,7 +619,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       verify(() => ticketIsPermitted.verify(
@@ -643,7 +635,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       verify(() => loadPrintedProducts.load(
@@ -670,7 +661,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
@@ -686,7 +676,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: true,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       expect(sut.canCancelProducts, false);
@@ -702,7 +691,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
       );
 
       expect(sut.canCancelProducts, true);
@@ -723,40 +711,9 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
-        writedCommandNumberForRedeVersion: "999",
       );
     });
-    test("Should not read barcode when isGeneratingVersionToRede", () async {
-      cartPresenter.isGeneratingVersionToRedeController = true;
 
-      await sut.loadCommandData(
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: homePresenter.commandNumberMock!,
-      );
-
-      verifyNever(() => barcodeScanner.read());
-    });
-
-    test(
-        "Should update homePresenter.commandNumber if isGeneratingVersionToRede",
-        () async {
-      cartPresenter.isGeneratingVersionToRedeController = true;
-
-      await sut.loadCommandData(
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: "999",
-      );
-
-      verify(() => homePresenter.updateCommandNumber("999")).called(1);
-    });
     test("Should not call barcodeScanner when isFixedCommandNumber", () async {
       homePresenter.isFixedCommandNumberMock = true;
 
@@ -766,7 +723,6 @@ void main() {
         homePresenter: homePresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
-        writedCommandNumberForRedeVersion: "001",
       );
 
       verifyNever(() => barcodeScanner.read());

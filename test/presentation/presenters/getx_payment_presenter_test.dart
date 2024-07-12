@@ -61,7 +61,6 @@ void main() {
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(999).toString();
     commandNumber = faker.randomGenerator.integer(999).toString();
-    cartPresenter.isGeneratingVersionToRedeController = false;
   }
 
   mockSuccess() {
@@ -304,7 +303,6 @@ void main() {
     // test("Should call barcodeScanner on getTotalValue", () async {
     //   await sut.getTotalValue(
     //     homePresenter: homePresenter,
-    //     writedCommandNumber: commandNumber,
     //     cartPresenter: cartPresenter,
     //     printedProductsPresenter: printedProductsPresenter,
     //     menuPresenter: menuPresenter,
@@ -323,7 +321,6 @@ void main() {
 
     //   await sut.getTotalValue(
     //     homePresenter: homePresenter,
-    //     writedCommandNumber: commandNumber,
     //     cartPresenter: cartPresenter,
     //     printedProductsPresenter: printedProductsPresenter,
     //     menuPresenter: menuPresenter,
@@ -338,7 +335,6 @@ void main() {
 
     //   await sut.getTotalValue(
     //     homePresenter: homePresenter,
-    //     writedCommandNumber: commandNumber,
     //     cartPresenter: cartPresenter,
     //     printedProductsPresenter: printedProductsPresenter,
     //     menuPresenter: menuPresenter,
@@ -351,7 +347,6 @@ void main() {
 
       await sut.getTotalValue(
         homePresenter: homePresenter,
-        writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
         menuPresenter: menuPresenter,
@@ -367,7 +362,6 @@ void main() {
 
       await sut.getTotalValue(
         homePresenter: homePresenter,
-        writedCommandNumber: commandNumber,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
         menuPresenter: menuPresenter,
@@ -377,7 +371,6 @@ void main() {
     // test("Should update command number on GetTotalValue", () async {
     //   await sut.getTotalValue(
     //     homePresenter: homePresenter,
-    //     writedCommandNumber: commandNumber,
     //     cartPresenter: cartPresenter,
     //     printedProductsPresenter: printedProductsPresenter,
     //     menuPresenter: menuPresenter,
@@ -386,54 +379,23 @@ void main() {
     //   verify(() => homePresenter.updateCommandNumber(commandNumber)).called(1);
     // });
 
-    test(
-        "Should emit correct values on isGeneratingVersionToRede and writedCommandNumber is null or empty",
-        () async {
-      cartPresenter.isGeneratingVersionToRedeController = true;
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.getTotalValue(
-        homePresenter: homePresenter,
-        writedCommandNumber: null,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-    });
-
-    test("Should not readBarcode when isGeneratingVersionToRede", () async {
-      cartPresenter.isGeneratingVersionToRedeController = true;
-
-      await sut.getTotalValue(
-        homePresenter: homePresenter,
-        writedCommandNumber: null,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-
-      verifyNever(() => barcodeScanner.read());
-    });
-
     test("Should load printed products on getTotalValue", () async {
       loadPrintedProducts.mockLoadPrintedProducts(null);
+      homePresenter.commandNumberMock = "001";
 
       await sut.getTotalValue(
         homePresenter: homePresenter,
-        writedCommandNumber: null,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
         menuPresenter: menuPresenter,
       );
 
-      verify(() => loadPrintedProducts.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: homePresenter.commandNumber!.toInt(),
+      verify(() => printedProductsPresenter.loadCommandData(
+            cartPresenter: cartPresenter,
+            menuPresenter: menuPresenter,
+            homePresenter: homePresenter,
+            clearPermissionToCancelProducts: false,
+            isRemovingProduct: false,
           )).called(1);
     });
   });

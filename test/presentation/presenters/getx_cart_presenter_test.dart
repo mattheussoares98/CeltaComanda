@@ -228,7 +228,6 @@ void main() {
     );
     newComment = faker.randomGenerator.string(10);
 
-    sut.isGeneratingVersionToRede = false;
     commentViewModel = EntityFactory.makeCommentViewModel(selected: true);
   }
 
@@ -1561,49 +1560,7 @@ void main() {
             entity: entity,
           )).called(1);
     });
-    test("Should not read barcode when is generatingVersionToRede", () async {
-      sut.isGeneratingVersionToRede = true;
-      await sut.saveProducts(
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: faker.randomGenerator.integer(999).toString(),
-      );
 
-      verifyNever(() => barcodeScanner.read());
-    });
-    test(
-        "Should emit correct values on isGeneratingVersionToRede and commandNumber is null",
-        () async {
-      sut.isGeneratingVersionToRede = true;
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.saveProducts(
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: null,
-      );
-    });
-
-    test(
-        "Should update homePresenter.commandNumber if user write command number",
-        () async {
-      sut.isGeneratingVersionToRede = true;
-      String commandNumber = faker.randomGenerator.integer(999).toString();
-
-      await sut.saveProducts(
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: commandNumber,
-      );
-
-      verify(() => homePresenter.updateCommandNumber(commandNumber)).called(1);
-    });
     test("Should emit correct values on success to save cart products",
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

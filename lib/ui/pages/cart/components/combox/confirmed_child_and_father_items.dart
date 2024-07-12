@@ -51,10 +51,10 @@ class ConfirmedChildAndFatherItems extends StatelessWidget {
                             confirmedCombox: confirmedsCombox[index],
                             confirmedComboxIndex: index,
                           ),
-                          // ConfirmedChildComboxItem(
-                          //   confirmedCombox: confirmedsCombox[index],
-                          //   indexOfConfirmedCombox: index,
-                          // ),
+                          ConfirmedChildComboxItem(
+                            confirmedCombox: confirmedsCombox[index],
+                            indexOfConfirmedCombox: index,
+                          ),
                         ],
                       ),
                     ),

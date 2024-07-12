@@ -54,7 +54,7 @@ class SaveSaleRequestButton extends StatelessWidget {
         } else if (homePresenter.isFixedCommandNumber) {
           notificationDialog(
             context: context,
-            titleMessage: "Solicitar produtos",
+            titleMessage: "Enviar pedido",
             content: Text(
               "Ao confirmar, os produtos serão solicitados e em breve serão servidos",
               style: TextStyle(
@@ -62,7 +62,7 @@ class SaveSaleRequestButton extends StatelessWidget {
               ),
             ),
             cancelMessage: "Voltar",
-            confirmMessage: "Solicitar",
+            confirmMessage: "Enviar",
             onPress: () async {
               await _addProducts(
                 cartPresenter: cartPresenter,
@@ -140,7 +140,7 @@ class SaveSaleRequestButton extends StatelessWidget {
           children: [
             FittedBox(
               child: Text(
-                'Solicitar produtos',
+                'Enviar pedido',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: hasMinWidth(context) ? 23 : 16,

@@ -29,7 +29,7 @@ class ConfirmedChildAndFatherItems extends StatelessWidget {
                 if (i < confirmedsCombox.length)
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(bottom: 5, right: 2),
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.white,

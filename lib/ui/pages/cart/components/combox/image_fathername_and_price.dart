@@ -46,12 +46,27 @@ class ImageFathernameAndPrice extends StatelessWidget {
         const SizedBox(width: 3),
         Expanded(
           flex: 2,
-          child: Text(
-            confirmedCombox.father.Name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: getStringSize(context),
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: "(COMBO) ",
+                  style: TextStyle(
+                    color: Theme.of(context).secondaryHeaderColor,
+                    fontStyle: FontStyle.italic,
+                    fontSize: getStringSize(context),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: confirmedCombox.father.Name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -64,7 +79,8 @@ class ImageFathernameAndPrice extends StatelessWidget {
             price: confirmedCombox.totalPrice,
             totalLiquid: confirmedCombox.quantity * confirmedCombox.totalPrice,
             onPressedReduceQuantity: () async {
-              if (cartPresenter.confirmedCombox[confirmedComboxIndex].quantity <=
+              if (cartPresenter
+                      .confirmedCombox[confirmedComboxIndex].quantity <=
                   1) {
                 notificationDialog(
                   context: context,

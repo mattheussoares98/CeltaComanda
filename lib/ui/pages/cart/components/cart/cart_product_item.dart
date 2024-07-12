@@ -88,8 +88,8 @@ class _CartProductItemState extends State<CartProductItem> {
                   child: ImageWidget(
                     ean: widget.cartProduct.Product.EanCode,
                     plu: widget.cartProduct.Product.PriceLookupCode,
-                    height: 150,
-                    width: 150,
+                    height: 70,
+                    width: 70,
                   ),
                 ),
                 const SizedBox(width: 3),
@@ -99,7 +99,7 @@ class _CartProductItemState extends State<CartProductItem> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: hasMinWidth(context) ? 30 : 18,
+                      fontSize: hasMinWidth(context) ? 23 : 15,
                     ),
                   ),
                 ),
@@ -124,7 +124,6 @@ class _CartProductItemState extends State<CartProductItem> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
             Comment(
               comments: widget.cartProduct.Comments,
               productName: widget.cartProduct.Product.Name,

@@ -35,23 +35,5 @@ class CartProductsItems extends StatelessWidget {
         );
       },
     );
-
-    // return Column(
-    //   children: [
-    //     ListView.builder(
-    //       shrinkWrap: true,
-    //       physics: const NeverScrollableScrollPhysics(),
-    //       itemCount: cartProducts.length,
-    //       itemBuilder: (context, index) {
-    //         final cartProduct = cartProducts[index];
-
-    //         return CartProductItem(
-    //           cartProduct: cartProduct,
-    //           index: index,
-    //         );
-    //       },
-    //     ),
-    //   ],
-    // );
   }
 }

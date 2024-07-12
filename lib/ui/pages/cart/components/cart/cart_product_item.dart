@@ -52,8 +52,8 @@ class _CartProductItemState extends State<CartProductItem> {
 
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.only(bottom: 5),
-        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.only(bottom: 2, right: 2),
+        padding: const EdgeInsets.fromLTRB(2, 2, 3, 0),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
@@ -99,7 +99,7 @@ class _CartProductItemState extends State<CartProductItem> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: hasMinWidth(context) ? 23 : 15,
+                      fontSize: hasMinWidth(context) ? 20 : 15,
                     ),
                   ),
                 ),

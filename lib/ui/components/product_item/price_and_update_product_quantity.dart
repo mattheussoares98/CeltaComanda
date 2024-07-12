@@ -57,7 +57,7 @@ class _PriceAndUpdateProductQuantityState
                   productQuantity: widget.productQuantity,
                   onPressedReduceQuantity: widget.onPressedReduceQuantity,
                   onPressedAddQuantity: widget.onPressedAddQuantity,
-                  iconSize: hasMinWidth(context) ? 30 : 20,
+                  iconSize: hasMinWidth(context) ? 20 : 15,
                 ),
               ),
               Text(
@@ -68,7 +68,7 @@ class _PriceAndUpdateProductQuantityState
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
-                  fontSize: hasMinWidth(context) ? 25 : 17,
+                  fontSize: hasMinWidth(context) ? 20 : 17,
                 ),
               ),
             ],

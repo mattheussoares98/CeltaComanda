@@ -39,7 +39,7 @@ class UpdateQuantity extends StatelessWidget {
               productQuantity.toString().toBrazilianNumber(),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: hasMinWidth(context) ? 25 : 15,
+                fontSize: hasMinWidth(context) ? 20 : 15,
               ),
             ),
           ),

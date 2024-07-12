@@ -55,28 +55,23 @@ class DetachItems extends StatelessWidget {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Colors.black26,
-                  // gradient: LinearGradient(
-                  //   colors: [
-                  //     // Color.fromARGB(255, 255, 255, 255),
-                  //     Colors.black12,
-                  //   ],
-                  //   begin: Alignment.topCenter,
-                  //   end: Alignment.bottomCenter,
-                  // ),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.transparent,
+                      Colors.transparent,
+                      Colors.black12,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
               ),
               Positioned(
                 bottom: 30,
                 left: 30,
-                child: Container(
-                  decoration: BoxDecoration(
-                    // color: Colors.black12,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.66,
+                  child: FittedBox(
                     child: Text(
                       product.Name.toUpperCase(),
                       style: const TextStyle(

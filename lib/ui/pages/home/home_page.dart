@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
@@ -28,13 +29,14 @@ class _HomePageState extends State<HomePage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
-  final int animationDurationMilliseconds = 1500;
-
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: animationDurationMilliseconds),
+      duration: Duration(
+        milliseconds:
+            AnimationManager.animateProductGoingMenuToCartDurationMilliseconds,
+      ),
       vsync: this,
     );
 
@@ -48,7 +50,11 @@ class _HomePageState extends State<HomePage>
       _animationController?.reset();
       _animationController?.forward();
 
-      Future.delayed(Duration(milliseconds: animationDurationMilliseconds), () {
+      Future.delayed(
+          Duration(
+            milliseconds: AnimationManager
+                .animateProductGoingMenuToCartDurationMilliseconds,
+          ), () {
         _isAnimatig = false;
       });
     }

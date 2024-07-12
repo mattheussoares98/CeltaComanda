@@ -524,6 +524,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;
+
+      animateProductGoingMenuToCart = true;
+      await Future.delayed(const Duration(seconds: 3), () {
+        animateProductGoingMenuToCart = false;
+      });
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

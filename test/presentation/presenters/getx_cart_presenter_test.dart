@@ -1450,6 +1450,17 @@ void main() {
 
       await sut.clearCart();
     });
+
+    test(
+        "Should emit correct values on productAnimationStream when add product in cart",
+        () async {
+      sut.cartProducts.add(cartProductViewModel);
+
+      expectLater(
+          sut.animateProductGoingMenuToCartStream, emitsInOrder([true, false]));
+
+      await sut.addCartProductQuantity(0);
+    });
   });
 
   group("Save cart products in saleRequesTemp", () {

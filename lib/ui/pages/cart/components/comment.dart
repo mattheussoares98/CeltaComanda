@@ -50,46 +50,49 @@ class _CommentState extends State<Comment> {
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () async {
-            await onTapCommentIcon(commentsPresenter);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (widget.comments == null)
-                Expanded(
-                  child: Text(
-                    "Adicionar comentário",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                      fontSize: getStringSize(context),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              await onTapCommentIcon(commentsPresenter);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (widget.comments == null)
+                  Expanded(
+                    child: Text(
+                      "Adicionar comentário",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic,
+                        fontSize: getStringSize(context),
+                      ),
                     ),
                   ),
-                ),
-              if (widget.comments != null)
-                Expanded(
-                  child: CommentRichText(
-                    comment: widget.comments!,
+                if (widget.comments != null)
+                  Expanded(
+                    child: CommentRichText(
+                      comment: widget.comments!,
+                    ),
                   ),
+                const SizedBox(width: 10),
+                Row(
+                  children: [
+                    Icon(
+                      color: Theme.of(context).colorScheme.primary,
+                      widget.comments == null ? Icons.add_comment : Icons.edit,
+                      size: hasMinWidth(context) ? 25 : 17,
+                    ),
+                  ],
                 ),
-              const SizedBox(width: 10),
-              Row(
-                children: [
-                  Icon(
-                    color: Theme.of(context).colorScheme.primary,
-                    widget.comments == null ? Icons.add_comment : Icons.edit,
-                    size: hasMinWidth(context) ? 35 : 25,
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

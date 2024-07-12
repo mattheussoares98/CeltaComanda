@@ -45,7 +45,7 @@ class ImageFathernameAndPrice extends StatelessWidget {
         ),
         const SizedBox(width: 3),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Text(
             confirmedCombox.father.Name,
             textAlign: TextAlign.center,

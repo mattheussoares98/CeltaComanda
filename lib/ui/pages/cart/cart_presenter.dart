@@ -8,6 +8,7 @@ abstract class CartPresenter implements ChangeNotifier {
   SaleRequestTempViewModel? get saleRequestTemp;
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<bool> get animateProductGoingMenuToCartStream;
   int? get indexOfSelectedProduct;
   String get totalSaleRequestTempPrice;
   bool get isGeneratingVersionToRede;

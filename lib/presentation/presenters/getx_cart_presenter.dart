@@ -979,4 +979,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       isLoading = false;
     }
   }
+
+  final _animateProductGoingMenuToCart = false.obs;
+  set animateProductGoingMenuToCart(bool value) {
+    _animateProductGoingMenuToCart.value = value;
+  }
+
+  @override
+  Stream<bool> get animateProductGoingMenuToCartStream =>
+      _animateProductGoingMenuToCart.stream;
 }

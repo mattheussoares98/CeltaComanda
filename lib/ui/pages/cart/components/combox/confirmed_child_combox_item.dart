@@ -52,81 +52,79 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
               }
 
               return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 0.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Divider(
-                        thickness: 0.1,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              showLargeImage(
-                                context: context,
-                                ean: null,
-                                plu: product.PluChild!,
-                                productComplement: null,
-                                menuPresenter: menuPresenter,
-                                productName: product.ChildName,
-                              );
-                            },
-                            child: ImageWidget(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Divider(
+                      height: 1,
+                      thickness: 0.1,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            showLargeImage(
+                              context: context,
                               ean: null,
                               plu: product.PluChild!,
-                              height: 70,
-                              width: 70,
+                              productComplement: null,
+                              menuPresenter: menuPresenter,
+                              productName: product.ChildName,
+                            );
+                          },
+                          child: ImageWidget(
+                            ean: null,
+                            plu: product.PluChild!,
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          flex: 65,
+                          child: Text(
+                            product.ChildName!,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              fontSize: hasMinWidth(context) ? 23 : 16,
+                              color: Colors.black54,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            flex: 65,
-                            child: Text(
-                              product.ChildName!,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                fontSize: hasMinWidth(context) ? 23 : 16,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          FittedBox(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: hasMinWidth(context) ? 20 : 15,
-                                  ),
+                        ),
+                        const SizedBox(width: 8),
+                        FittedBox(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: hasMinWidth(context) ? 20 : 15,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      Comment(
-                        comments: combox.commentFather,
-                        productName: combox.ChildName!,
-                        updateComment: () async {
-                          await cartPresenter.updateCommentOfCombox(
-                            indexOfCombox: widget.indexOfConfirmedCombox,
-                            indexOfProduct: index,
-                            newComment: commentsPresenter
-                                .getConcatenateSelectedComments(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    Comment(
+                      comments: combox.commentFather,
+                      productName: combox.ChildName!,
+                      updateComment: () async {
+                        await cartPresenter.updateCommentOfCombox(
+                          indexOfCombox: widget.indexOfConfirmedCombox,
+                          indexOfProduct: index,
+                          newComment: commentsPresenter
+                              .getConcatenateSelectedComments(),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               );
             })

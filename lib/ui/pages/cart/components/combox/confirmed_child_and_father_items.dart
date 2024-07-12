@@ -48,12 +48,12 @@ class ConfirmedChildAndFatherItems extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ImageFathernameAndPrice(
-                            confirmedCombox: confirmedsCombox[index],
-                            confirmedComboxIndex: index,
+                            confirmedCombox: confirmedsCombox[i],
+                            confirmedComboxIndex: i,
                           ),
                           ConfirmedChildComboxItem(
-                            confirmedCombox: confirmedsCombox[index],
-                            indexOfConfirmedCombox: index,
+                            confirmedCombox: confirmedsCombox[i],
+                            indexOfConfirmedCombox: i,
                           ),
                         ],
                       ),

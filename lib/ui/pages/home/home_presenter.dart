@@ -9,6 +9,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<bool> get isLoadingStream;
 
   bool get isFixedCommandNumber;
+  bool get isGeneratingVersionToRede;
   String? get commandNumber;
   void updateCommandNumber(String? value);
   Future<void> updateIsFixedCommandNumber();

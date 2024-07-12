@@ -139,4 +139,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = false;
     }
   }
+
+  @override
+  bool get isGeneratingVersionToRede => true;
 }

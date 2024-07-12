@@ -23,34 +23,6 @@ class ComboxSummaryNotification extends StatefulWidget {
 }
 
 class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
-  // Widget _titleAndValue({
-  //   required String title,
-  //   required String value,
-  //   Color? valueColor = Colors.black,
-  // }) {
-  //   return Expanded(
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       children: [
-  //         Text(
-  //           title,
-  //           style: const TextStyle(
-  //             fontWeight: FontWeight.w600,
-  //             fontSize: 12,
-  //           ),
-  //         ),
-  //         Text(
-  //           value,
-  //           style: TextStyle(
-  //             color: valueColor,
-  //             fontSize: 12,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
@@ -60,11 +32,11 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
         .where((element) => element.indexOfSelectedChild != null);
 
     ProductCompositionViewModel? selectedChild;
-    final textWidgets = selectedProducts.map((element) {
-      if (element.childs?.isEmpty == true) {
-        selectedChild = element;
+    final widgets = selectedProducts.map((selectedProduct) {
+      if (selectedProduct.childs?.isEmpty == true) {
+        selectedChild = selectedProduct;
       } else {
-        selectedChild = element.childs![element.indexOfSelectedChild!];
+        selectedChild = selectedProduct.childs![selectedProduct.indexOfSelectedChild!];
       }
 
       return Column(
@@ -74,7 +46,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
             children: [
               ImageWidget(
                 ean: null,
-                plu: element.PluChild!,
+                plu: selectedChild!.PluChild!,
                 height: 70,
                 width: 70,
               ),
@@ -87,7 +59,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  "${(element.Quantity.toString().toDouble() * productCompositionPresenter.totalComboxQuantity).toString().toBrazilianNumber(0)} qtd",
+                  "${(selectedProduct.Quantity.toString().toDouble() * productCompositionPresenter.totalComboxQuantity).toString().toBrazilianNumber(0)} qtd",
                   style: const TextStyle(
                     fontWeight: FontWeight.w300,
                     fontStyle: FontStyle.italic,
@@ -96,39 +68,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
               ),
             ],
           ),
-          if (element.commentFather != null)
-            CommentRichText(comment: element.commentFather!),
-          // Row(
-          //   children: [
-          //     _titleAndValue(
-          //       title: "Qtd",
-          //       value: (element.Quantity.toString().toDouble() *
-          //               productCompositionPresenter.totalComboxQuantity)
-          //           .toString()
-          //           .toBrazilianNumber(0),
-          //     ),
-          //     const Expanded(child: Text("X", textAlign: TextAlign.center)),
-          //     _titleAndValue(
-          //       title: "Preço",
-          //       value: productCompositionPresenter
-          //           .calculateTotalLiquid(product: element)
-          //           .toString()
-          //           .toBrazilianNumber()
-          //           .addBrazilianCoin(),
-          //     ),
-          //     const Expanded(child: Text("=", textAlign: TextAlign.center)),
-          //     _titleAndValue(
-          //         title: "Total",
-          //         value: (productCompositionPresenter.calculateTotalLiquid(
-          //                   product: element,
-          //                 ) *
-          //                 productCompositionPresenter.totalComboxQuantity)
-          //             .toString()
-          //             .toBrazilianNumber()
-          //             .addBrazilianCoin(),
-          //         valueColor: Theme.of(context).secondaryHeaderColor),
-          //   ],
-          // ),
+          if (selectedProduct.commentFather != null)
+            CommentRichText(comment: selectedProduct.commentFather!),
           const Divider(thickness: 0.2, height: 3),
         ],
       );
@@ -144,13 +85,14 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
           ),
           const Divider(thickness: 0.2),
           Column(
-            children: textWidgets,
+            children: widgets,
           ),
+          const SizedBox(height: 3),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               PriceAndUpdateProductQuantity(
-                showItemPrice: true,
+                showItemPrice: false,
                 showDeleteIcon: false,
                 onPressedReduceQuantity:
                     productCompositionPresenter.totalComboxQuantity <= 1

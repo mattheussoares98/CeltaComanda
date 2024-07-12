@@ -99,7 +99,7 @@ class _CartProductItemState extends State<CartProductItem> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: hasMinWidth(context) ? 20 : 15,
+                      fontSize: getStringSize(context),
                     ),
                   ),
                 ),

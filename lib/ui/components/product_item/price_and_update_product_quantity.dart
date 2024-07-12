@@ -40,7 +40,7 @@ class _PriceAndUpdateProductQuantityState
           Text(
             widget.price.toString().toBrazilianNumber().addBrazilianCoin(),
             style: TextStyle(
-              fontSize: hasMinWidth(context) ? 23 : 15,
+              fontSize: getStringSize(context),
             ),
           ),
         if (widget.showUpdateProductQuantity)
@@ -57,7 +57,7 @@ class _PriceAndUpdateProductQuantityState
                   productQuantity: widget.productQuantity,
                   onPressedReduceQuantity: widget.onPressedReduceQuantity,
                   onPressedAddQuantity: widget.onPressedAddQuantity,
-                  iconSize: hasMinWidth(context) ? 20 : 15,
+                  iconSize: getStringSize(context),
                 ),
               ),
               Text(
@@ -68,7 +68,7 @@ class _PriceAndUpdateProductQuantityState
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
-                  fontSize: hasMinWidth(context) ? 20 : 17,
+                  fontSize: getStringSize(context),
                 ),
               ),
             ],

@@ -66,7 +66,7 @@ class _CommentState extends State<Comment> {
                     style: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
-                      fontSize: hasMinWidth(context) ? 20 : 15,
+                      fontSize: getStringSize(context),
                     ),
                   ),
                 ),

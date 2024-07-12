@@ -19,7 +19,7 @@ class CommentRichText extends StatelessWidget {
             style: TextStyle(
               color: Colors.grey[700],
               fontStyle: FontStyle.italic,
-              fontSize: hasMinWidth(context) ? 25 : 17,
+              fontSize: getStringSize(context),
             ),
           ),
           TextSpan(
@@ -27,7 +27,7 @@ class CommentRichText extends StatelessWidget {
             style: TextStyle(
               color: Colors.red,
               fontStyle: FontStyle.italic,
-              fontSize: hasMinWidth(context) ? 25 : 17,
+              fontSize: getStringSize(context),
               fontWeight: FontWeight.bold,
             ),
           ),

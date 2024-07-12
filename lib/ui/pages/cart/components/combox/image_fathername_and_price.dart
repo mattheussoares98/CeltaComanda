@@ -51,7 +51,7 @@ class ImageFathernameAndPrice extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: hasMinWidth(context) ? 30 : 18,
+              fontSize: getStringSize(context),
             ),
           ),
         ),

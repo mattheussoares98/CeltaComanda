@@ -18,18 +18,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with LoadingManager, UIErrorManager {
+    with LoadingManager, UIErrorManager, SingleTickerProviderStateMixin {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  AnimationController? _animationController;
+  Animation<double>? _animation;
 
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!);
+  }
+
   @override
   void dispose() {
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     _pageController.dispose();
+    _animationController?.dispose();
     super.dispose();
   }
 
@@ -49,6 +64,8 @@ class _HomePageState extends State<HomePage>
       commentsPresenter: commentsPresenter,
       printedProductsPresenter: printedProductsPresenter,
     );
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   bool _isLoaded = false;
@@ -79,7 +96,7 @@ class _HomePageState extends State<HomePage>
         } else {
           await menuPresenter.getGroupsAndProducts("001");
         }
-        
+
         setState(() {});
       });
     }
@@ -189,72 +206,99 @@ class _HomePageState extends State<HomePage>
                 }),
           ),
         ),
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              onPageChanged(
-                index: index,
-                printedProductsPresenter: printedProductsPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                commentsPresenter: commentsPresenter,
-              );
-            },
-            children: screens,
-          ),
+        body: Stack(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  onPageChanged(
+                    index: index,
+                    printedProductsPresenter: printedProductsPresenter,
+                    menuPresenter: menuPresenter,
+                    homePresenter: homePresenter,
+                    commentsPresenter: commentsPresenter,
+                  );
+                },
+                children: screens,
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Theme.of(context).primaryColorLight,
-          selectedItemColor: Theme.of(context).primaryColorDark,
-          // selectedIconTheme:
-          //     IconThemeData(color: Theme.of(context).secondaryHeaderColor),
-          showUnselectedLabels: true,
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            onPageChanged(
-              index: index,
-              printedProductsPresenter: printedProductsPresenter,
-              menuPresenter: menuPresenter,
-              homePresenter: homePresenter,
-              commentsPresenter: commentsPresenter,
-            );
-          },
-          items: [
-            const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.menu_book_rounded,
-              ),
-              label: 'Menu',
+        bottomNavigationBar: Stack(
+          children: [
+            BottomNavigationBar(
+              unselectedItemColor: Theme.of(context).primaryColorLight,
+              selectedItemColor: Theme.of(context).primaryColorDark,
+              // selectedIconTheme:
+              //     IconThemeData(color: Theme.of(context).secondaryHeaderColor),
+              showUnselectedLabels: true,
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                onPageChanged(
+                  index: index,
+                  printedProductsPresenter: printedProductsPresenter,
+                  menuPresenter: menuPresenter,
+                  homePresenter: homePresenter,
+                  commentsPresenter: commentsPresenter,
+                );
+              },
+              items: [
+                const BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.menu_book_rounded,
+                  ),
+                  label: 'Menu',
+                ),
+                BottomNavigationBarItem(
+                  key: const Key("BottomNavigationExpansibleGroups"),
+                  icon: IconWithNumberQuantity(
+                    iconData: Icons.shopping_cart,
+                    productsQuantity: cartPresenter.cartProducts.length +
+                        cartPresenter.confirmedCombox.length,
+                  ),
+                  label: 'Carrinho',
+                ),
+                BottomNavigationBarItem(
+                  icon: IconWithNumberQuantity(
+                    iconData: Icons.list_outlined,
+                    productsQuantity:
+                        printedProductsPresenter.printedProducts == null ||
+                                printedProductsPresenter
+                                        .printedProducts?.Products.isEmpty ==
+                                    true
+                            ? 0
+                            : printedProductsPresenter
+                                .printedProducts!.Products.length,
+                  ),
+                  label: 'Solicitados',
+                ),
+                if (cartPresenter.isGeneratingVersionToRede)
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.paypal),
+                    label: 'Pagar',
+                  ),
+              ],
             ),
-            BottomNavigationBarItem(
-              key: const Key("BottomNavigationExpansibleGroups"),
-              icon: IconWithNumberQuantity(
-                iconData: Icons.shopping_cart,
-                productsQuantity: cartPresenter.cartProducts.length +
-                    cartPresenter.confirmedCombox.length,
-              ),
-              label: 'Carrinho',
+            AnimatedBuilder(
+              animation: _animation!,
+              builder: (context, child) {
+                return Positioned(
+                  bottom: kBottomNavigationBarHeight / 2 + 10,
+                  left: (MediaQuery.of(context).size.width / 6) +
+                      (_animation!.value *
+                          ((MediaQuery.of(context).size.width / 6) * 2)) -
+                      5,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    width: 10,
+                    height: 5,
+                    color: Colors.blue,
+                  ),
+                );
+              },
             ),
-            BottomNavigationBarItem(
-              icon: IconWithNumberQuantity(
-                iconData: Icons.list_outlined,
-                productsQuantity: printedProductsPresenter.printedProducts ==
-                            null ||
-                        printedProductsPresenter
-                                .printedProducts?.Products.isEmpty ==
-                            true
-                    ? 0
-                    : printedProductsPresenter.printedProducts!.Products.length,
-              ),
-              label: 'Solicitados',
-            ),
-            if (cartPresenter.isGeneratingVersionToRede)
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.paypal),
-                label: 'Pagar',
-              ),
           ],
         ),
       ),

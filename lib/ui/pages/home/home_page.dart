@@ -153,58 +153,14 @@ class _HomePageState extends State<HomePage>
           cartPresenter: cartPresenter,
           homePresenter: homePresenter,
         ),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: AppBar(
-            leading: FittedBox(
-              child: Row(
-                children: [
-                  if (homePresenter.isFixedCommandNumber != true)
-                    IconButton(
-                      icon: Icon(
-                        Icons.exit_to_app,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () {
-                        scaffoldKey.currentState?.openDrawer();
-                      },
-                    ),
-                ],
-              ),
-            ),
-            actions: [
-              if (_currentIndex == 2)
-                SearchCommandIcon(
-                  loadCommandData: () async {
-                    if (cartPresenter.isGeneratingVersionToRede) {
-                      writeCommandNumber(
-                        context: context,
-                        action: OnWriteCommand.loadCommandData,
-                      );
-                    } else {
-                      await printedProductsPresenter.loadCommandData(
-                        cartPresenter: cartPresenter,
-                        menuPresenter: menuPresenter,
-                        homePresenter: homePresenter,
-                        clearPermissionToCancelProducts: true,
-                        isRemovingProduct: false,
-                        writedCommandNumberForRedeVersion: "",
-                      );
-                    }
-                    printedProductsPresenter.updateCanCancelProducts(false);
-                  },
-                )
-            ],
-            backgroundColor: const Color(0xFFF1F5F8),
-            title: TitleAppbar(
-                showLoadMenuAgain: _currentIndex == 0,
-                loadMenuAgain: () async {
-                  await menuPresenter.getGroupsAndProducts("001");
-                },
-                openDrawer: () {
-                  scaffoldKey.currentState?.openDrawer();
-                }),
-          ),
+        appBar: homeAppBar(
+          homePresenter: homePresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          context: context,
+          scaffoldKey: scaffoldKey,
+          currentIndex: _currentIndex,
         ),
         body: Stack(
           children: [
@@ -228,58 +184,17 @@ class _HomePageState extends State<HomePage>
         ),
         bottomNavigationBar: Stack(
           children: [
-            BottomNavigationBar(
-              unselectedItemColor: Theme.of(context).primaryColorLight,
-              selectedItemColor: Theme.of(context).primaryColorDark,
-              // selectedIconTheme:
-              //     IconThemeData(color: Theme.of(context).secondaryHeaderColor),
-              showUnselectedLabels: true,
-              currentIndex: _currentIndex,
-              onTap: (index) {
+            HomeBottomNavigationBarItem(
+              onPageChanged: (value) {
                 onPageChanged(
-                  index: index,
+                  index: value,
                   printedProductsPresenter: printedProductsPresenter,
-                  menuPresenter: menuPresenter,
                   homePresenter: homePresenter,
+                  menuPresenter: menuPresenter,
                   commentsPresenter: commentsPresenter,
                 );
               },
-              items: [
-                const BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.menu_book_rounded,
-                  ),
-                  label: 'Menu',
-                ),
-                BottomNavigationBarItem(
-                  key: const Key("BottomNavigationExpansibleGroups"),
-                  icon: IconWithNumberQuantity(
-                    iconData: Icons.shopping_cart,
-                    productsQuantity: cartPresenter.cartProducts.length +
-                        cartPresenter.confirmedCombox.length,
-                  ),
-                  label: 'Carrinho',
-                ),
-                BottomNavigationBarItem(
-                  icon: IconWithNumberQuantity(
-                    iconData: Icons.list_outlined,
-                    productsQuantity:
-                        printedProductsPresenter.printedProducts == null ||
-                                printedProductsPresenter
-                                        .printedProducts?.Products.isEmpty ==
-                                    true
-                            ? 0
-                            : printedProductsPresenter
-                                .printedProducts!.Products.length,
-                  ),
-                  label: 'Solicitados',
-                ),
-                if (cartPresenter.isGeneratingVersionToRede)
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.paypal),
-                    label: 'Pagar',
-                  ),
-              ],
+              currentIndex: _currentIndex,
             ),
             AnimatedBuilder(
               animation: _animation!,

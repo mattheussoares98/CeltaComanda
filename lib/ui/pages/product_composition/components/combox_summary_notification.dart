@@ -150,6 +150,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               PriceAndUpdateProductQuantity(
+                showItemPrice: true,
                 showDeleteIcon: false,
                 onPressedReduceQuantity:
                     productCompositionPresenter.totalComboxQuantity <= 1

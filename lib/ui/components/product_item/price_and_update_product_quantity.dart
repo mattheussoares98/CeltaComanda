@@ -11,6 +11,7 @@ class PriceAndUpdateProductQuantity extends StatefulWidget {
   final double totalLiquid;
   final bool showUpdateProductQuantity;
   final bool showDeleteIcon;
+  final bool showItemPrice;
   const PriceAndUpdateProductQuantity({
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
@@ -19,6 +20,7 @@ class PriceAndUpdateProductQuantity extends StatefulWidget {
     required this.totalLiquid,
     required this.showUpdateProductQuantity,
     required this.showDeleteIcon,
+    required this.showItemPrice,
     super.key,
   });
 
@@ -34,12 +36,13 @@ class _PriceAndUpdateProductQuantityState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          widget.price.toString().toBrazilianNumber().addBrazilianCoin(),
-          style: TextStyle(
-            fontSize: hasMinWidth(context) ? 23 : 15,
+        if (widget.showItemPrice)
+          Text(
+            widget.price.toString().toBrazilianNumber().addBrazilianCoin(),
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 23 : 15,
+            ),
           ),
-        ),
         if (widget.showUpdateProductQuantity)
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,

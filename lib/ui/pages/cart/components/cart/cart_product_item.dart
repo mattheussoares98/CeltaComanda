@@ -69,63 +69,60 @@ class _CartProductItemState extends State<CartProductItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        showLargeImage(
-                          context: context,
-                          ean: widget.cartProduct.Product.EanCode,
-                          plu: widget.cartProduct.Product.PriceLookupCode,
-                          productComplement:
-                              widget.cartProduct.Product.ProductComplement,
-                          menuPresenter: menuPresenter,
-                          productName: widget.cartProduct.Product.Name,
-                          selectedProduct: widget.cartProduct.Product,
-                        );
-                      },
-                      child: ImageWidget(
-                        ean: widget.cartProduct.Product.EanCode,
-                        plu: widget.cartProduct.Product.PriceLookupCode,
-                        height: 150,
-                        width: 150,
-                      ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showLargeImage(
+                      context: context,
+                      ean: widget.cartProduct.Product.EanCode,
+                      plu: widget.cartProduct.Product.PriceLookupCode,
+                      productComplement:
+                          widget.cartProduct.Product.ProductComplement,
+                      menuPresenter: menuPresenter,
+                      productName: widget.cartProduct.Product.Name,
+                      selectedProduct: widget.cartProduct.Product,
+                    );
+                  },
+                  child: ImageWidget(
+                    ean: widget.cartProduct.Product.EanCode,
+                    plu: widget.cartProduct.Product.PriceLookupCode,
+                    height: 150,
+                    width: 150,
+                  ),
+                ),
+                const SizedBox(width: 3),
+                Expanded(
+                  child: Text(
+                    widget.cartProduct.Product.Name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: hasMinWidth(context) ? 30 : 18,
                     ),
                   ),
-                  const SizedBox(width: 3),
-                  Expanded(
-                    child: Text(
-                      widget.cartProduct.Product.Name,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: hasMinWidth(context) ? 30 : 18,
-                      ),
-                    ),
-                  ),
-                  PriceAndUpdateProductQuantity(
-                    showDeleteIcon: widget.cartProduct.Quantity.toDouble() <= 1,
-                    showUpdateProductQuantity: true,
-                    price: widget.cartProduct.Value.toDouble(),
-                    totalLiquid: widget.cartProduct.Quantity.toDouble() *
-                        widget.cartProduct.Value.toDouble(),
-                    onPressedReduceQuantity: () {
-                      onPressedReduceQuantity(
-                        cartPresenter: cartPresenter,
-                      );
-                    },
-                    onPressedAddQuantity: () {
-                      onPressedAddQuantity(
-                        cartPresenter: cartPresenter,
-                      );
-                    },
-                    productQuantity: widget.cartProduct.Quantity.toDouble(),
-                  ),
-                ],
-              ),
+                ),
+                PriceAndUpdateProductQuantity(
+                  showItemPrice: false,
+                  showDeleteIcon: widget.cartProduct.Quantity.toDouble() <= 1,
+                  showUpdateProductQuantity: true,
+                  price: widget.cartProduct.Value.toDouble(),
+                  totalLiquid: widget.cartProduct.Quantity.toDouble() *
+                      widget.cartProduct.Value.toDouble(),
+                  onPressedReduceQuantity: () {
+                    onPressedReduceQuantity(
+                      cartPresenter: cartPresenter,
+                    );
+                  },
+                  onPressedAddQuantity: () {
+                    onPressedAddQuantity(
+                      cartPresenter: cartPresenter,
+                    );
+                  },
+                  productQuantity: widget.cartProduct.Quantity.toDouble(),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             Comment(
@@ -134,7 +131,8 @@ class _CartProductItemState extends State<CartProductItem> {
               updateComment: () async {
                 await cartPresenter.updateCommentOfProductCart(
                   index: widget.index,
-                  newComment: commentsPresenter.getConcatenateSelectedComments(),
+                  newComment:
+                      commentsPresenter.getConcatenateSelectedComments(),
                 );
               },
             ),

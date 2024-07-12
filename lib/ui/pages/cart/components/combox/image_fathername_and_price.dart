@@ -23,26 +23,29 @@ class ImageFathernameAndPrice extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () {
-            showLargeImage(
-              context: context,
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              showLargeImage(
+                context: context,
+                ean: confirmedCombox.father.EanCode,
+                plu: confirmedCombox.father.PriceLookupCode,
+                productComplement: confirmedCombox.father.ProductComplement,
+                menuPresenter: menuPresenter,
+                productName: confirmedCombox.father.Name,
+              );
+            },
+            child: ImageWidget(
               ean: confirmedCombox.father.EanCode,
               plu: confirmedCombox.father.PriceLookupCode,
-              productComplement: confirmedCombox.father.ProductComplement,
-              menuPresenter: menuPresenter,
-              productName: confirmedCombox.father.Name,
-            );
-          },
-          child: ImageWidget(
-            ean: confirmedCombox.father.EanCode,
-            plu: confirmedCombox.father.PriceLookupCode,
-            height: 150,
-            width: 150,
+              height: 70,
+              width: 70,
+            ),
           ),
         ),
         const SizedBox(width: 3),
         Expanded(
+          flex: 3,
           child: Text(
             confirmedCombox.father.Name,
             textAlign: TextAlign.center,
@@ -52,32 +55,35 @@ class ImageFathernameAndPrice extends StatelessWidget {
             ),
           ),
         ),
-        PriceAndUpdateProductQuantity(
-          showItemPrice: false,
-          showDeleteIcon: confirmedCombox.quantity <= 1,
-          showUpdateProductQuantity: true,
-          price: confirmedCombox.totalPrice,
-          totalLiquid: confirmedCombox.quantity * confirmedCombox.totalPrice,
-          onPressedReduceQuantity: () async {
-            if (cartPresenter.confirmedCombox[confirmedComboxIndex].quantity <=
-                1) {
-              notificationDialog(
-                context: context,
-                titleMessage: "Remover combo do carrinho?",
-                content: null,
-                onPress: () async {
-                  await cartPresenter
-                      .reduceComboxQuantity(confirmedComboxIndex);
-                },
-              );
-            } else {
-              await cartPresenter.reduceComboxQuantity(confirmedComboxIndex);
-            }
-          },
-          onPressedAddQuantity: () async {
-            await cartPresenter.addComboxQuantity(confirmedComboxIndex);
-          },
-          productQuantity: confirmedCombox.quantity,
+        const SizedBox(width: 3),
+        Expanded(
+          child: PriceAndUpdateProductQuantity(
+            showItemPrice: false,
+            showDeleteIcon: confirmedCombox.quantity <= 1,
+            showUpdateProductQuantity: true,
+            price: confirmedCombox.totalPrice,
+            totalLiquid: confirmedCombox.quantity * confirmedCombox.totalPrice,
+            onPressedReduceQuantity: () async {
+              if (cartPresenter.confirmedCombox[confirmedComboxIndex].quantity <=
+                  1) {
+                notificationDialog(
+                  context: context,
+                  titleMessage: "Remover combo do carrinho?",
+                  content: null,
+                  onPress: () async {
+                    await cartPresenter
+                        .reduceComboxQuantity(confirmedComboxIndex);
+                  },
+                );
+              } else {
+                await cartPresenter.reduceComboxQuantity(confirmedComboxIndex);
+              }
+            },
+            onPressedAddQuantity: () async {
+              await cartPresenter.addComboxQuantity(confirmedComboxIndex);
+            },
+            productQuantity: confirmedCombox.quantity,
+          ),
         ),
       ],
     );

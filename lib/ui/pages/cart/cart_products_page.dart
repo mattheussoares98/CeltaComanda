@@ -70,6 +70,7 @@ class _CartPageState extends State<CartPage>
                             if (cartPresenter.confirmedCombox.isNotEmpty)
                               ConfirmedChildAndFatherItems(
                                 confirmedsCombox: cartPresenter.confirmedCombox,
+                                itensPerLine: 2,
                               ),
                           ],
                         )

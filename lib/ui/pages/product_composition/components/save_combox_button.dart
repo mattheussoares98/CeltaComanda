@@ -67,8 +67,10 @@ class SaveComboxButton extends StatelessWidget {
                           if (updatedCombox) {
                             Future.delayed(Duration.zero, () {
                               Navigator.of(context).pop();
-                              showAlertMessage(
-                                  context, "Combo adicionado com sucesso");
+                            });
+                            Future.delayed(const Duration(microseconds: 500),
+                                () async {
+                              await cartPresenter.doAnimation();
                             });
                           }
                         },

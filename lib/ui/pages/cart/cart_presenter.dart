@@ -109,4 +109,6 @@ abstract class CartPresenter implements ChangeNotifier {
     required CommentsPresenter commentsPresenter,
     required CartProductEntity product,
   });
+
+  Future<void> doAnimation();
 }

@@ -1454,12 +1454,13 @@ void main() {
     test(
         "Should emit correct values on productAnimationStream when add product in cart",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
-
       expectLater(
           sut.animateProductGoingMenuToCartStream, emitsInOrder([true, false]));
 
-      await sut.addCartProductQuantity(0);
+      await sut.addProductInCart(
+          product: cartProductViewModel.toEntity(),
+          menuPresenter: menuPresenter,
+          commentsPresenter: commentsPresenter);
     });
   });
 

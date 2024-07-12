@@ -402,6 +402,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         selectedProduct: null,
         commentsPresenter: commentsPresenter,
       );
+
+      isLoading = false;
+      animateProductGoingMenuToCart = true;
+      await Future.delayed(
+          const Duration(seconds: 3 /*3 == tempo de duração da animação*/), () {
+        animateProductGoingMenuToCart = false;
+      });
       notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
@@ -524,11 +531,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;
-
-      animateProductGoingMenuToCart = true;
-      await Future.delayed(const Duration(seconds: 3), () {
-        animateProductGoingMenuToCart = false;
-      });
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

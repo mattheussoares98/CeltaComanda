@@ -28,15 +28,30 @@ class _HomePageState extends State<HomePage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
+  final int animationDuration = 3;
+
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: animationDuration),
       vsync: this,
     );
 
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!);
+  }
+
+  bool _isAnimatig = false;
+  void doAnimation() {
+    if (!_isAnimatig) {
+      _isAnimatig = true;
+      _animationController?.reset();
+      _animationController?.forward();
+
+      Future.delayed(Duration(seconds: animationDuration), () {
+        _isAnimatig = false;
+      });
+    }
   }
 
   @override
@@ -196,24 +211,35 @@ class _HomePageState extends State<HomePage>
               },
               currentIndex: _currentIndex,
             ),
-            AnimatedBuilder(
-              animation: _animation!,
-              builder: (context, child) {
-                return Positioned(
-                  bottom: kBottomNavigationBarHeight / 2 + 10,
-                  left: (MediaQuery.of(context).size.width / 6) +
-                      (_animation!.value *
-                          ((MediaQuery.of(context).size.width / 6) * 2)) -
-                      5,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: 10,
-                    height: 5,
-                    color: Colors.blue,
-                  ),
-                );
-              },
-            ),
+            StreamBuilder<bool>(
+                stream: cartPresenter.animateProductGoingMenuToCartStream,
+                builder: (context, snapshot) {
+                  if (snapshot.data != true) {
+                    return const SizedBox();
+                  } else {
+                    return AnimatedBuilder(
+                      animation: _animation!,
+                      builder: (context, child) {
+                        doAnimation();
+
+                        return Positioned(
+                          bottom: kBottomNavigationBarHeight / 2 + 10,
+                          left: (MediaQuery.of(context).size.width / 6) +
+                              (_animation!.value *
+                                  ((MediaQuery.of(context).size.width / 6) *
+                                      2)) -
+                              5,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            width: 10,
+                            height: 5,
+                            color: Colors.blue,
+                          ),
+                        );
+                      },
+                    );
+                  }
+                }),
           ],
         ),
       ),

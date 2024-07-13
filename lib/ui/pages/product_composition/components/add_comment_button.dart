@@ -51,7 +51,7 @@ class AddCommentButton extends StatelessWidget {
         label: Text(
           "Comentários",
           style: TextStyle(
-            fontSize: hasMinWidth(context) ? 23 : 15,
+            fontSize: getStringSize(context),
           ),
         ),
         icon: Icon(father.commentFather == null

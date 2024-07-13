@@ -15,7 +15,7 @@ class FatherNameText extends StatelessWidget {
       name,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: hasMinWidth(context) ? 30 : 20,
+        fontSize: getStringSize(context),
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.bold,
         color: Theme.of(context).primaryColorDark,

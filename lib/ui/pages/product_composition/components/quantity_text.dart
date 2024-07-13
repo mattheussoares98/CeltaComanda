@@ -14,7 +14,7 @@ class QuantityText extends StatelessWidget {
     return Text(
       "Quantidade: ${quantity.toBrazilianNumber()}",
       style: TextStyle(
-        fontSize: hasMinWidth(context) ? 23 : 12,
+        fontSize: getStringSize(context) * 0.9,
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w300,
       ),

@@ -28,7 +28,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 5.0),
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -46,37 +46,36 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            primary: false,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: 1,
-            itemBuilder: (context, childIndex) {
-              return Column(
-                children: [
-                  RadioListTile<int>(
-                    value: childIndex,
-                    groupValue: widget.father.indexOfSelectedChild,
-                    dense: true,
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    toggleable: widget.father.IsOptionalItem == "true",
-                    onChanged: (int? value) {
-                      setState(() {
-                        widget.father.indexOfSelectedChild = value;
-                      });
-                      productCompositionPresenter.updateTotalLiquidCombox(
-                        widget.productsCompositionsViewModel,
-                      );
-                      productCompositionPresenter.updateComboxIsValid(
-                        widget.productsCompositionsViewModel,
-                      );
-                    },
-                    subtitle: Row(
-                      children: [
-                        InkWell(
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
+          primary: false,
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemCount: 1,
+          itemBuilder: (context, childIndex) {
+            return Column(
+              children: [
+                RadioListTile<int>(
+                  value: childIndex,
+                  groupValue: widget.father.indexOfSelectedChild,
+                  dense: true,
+                  controlAffinity: ListTileControlAffinity.trailing,
+                  toggleable: widget.father.IsOptionalItem == "true",
+                  onChanged: (int? value) {
+                    setState(() {
+                      widget.father.indexOfSelectedChild = value;
+                    });
+                    productCompositionPresenter.updateTotalLiquidCombox(
+                      widget.productsCompositionsViewModel,
+                    );
+                    productCompositionPresenter.updateComboxIsValid(
+                      widget.productsCompositionsViewModel,
+                    );
+                  },
+                  subtitle: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
                           onTap: () {
                             showLargeImage(
                               context: context,
@@ -92,87 +91,88 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                           child: ImageWidget(
                             ean: null,
                             plu: widget.father.PluChild!,
-                            height: 100,
-                            width: 100,
+                            height: hasMinWidth(context) ? 140 : 70,
+                            width: hasMinWidth(context) ? 140 : 70,
                             isAlcoholic: false,
                           ),
                         ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FatherNameText(name: widget.father.ChildName!),
+                            QuantityText(
+                              quantity: widget.father.Quantity!,
+                            ),
+                            // PriceText(
+                            //   quantity: productCompositionPresenter
+                            //       .calculateTotalLiquid(
+                            //           product: widget.father),
+                            // ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            final dynamic tooltip = _tooltipKey.currentState;
+                            tooltip.ensureTooltipVisible();
+                          },
+                          child: Row(
                             children: [
-                              FatherNameText(name: widget.father.ChildName!),
-                              QuantityText(
-                                quantity: widget.father.Quantity!,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 2.0),
+                                child: Tooltip(
+                                  key: _tooltipKey,
+                                  message: 'Esse produto é obrigatório',
+                                  child: Icon(
+                                    Icons.info,
+                                    color: Theme.of(context)
+                                        .secondaryHeaderColor,
+                                  ),
+                                ),
                               ),
-                              // PriceText(
-                              //   quantity: productCompositionPresenter
-                              //       .calculateTotalLiquid(
-                              //           product: widget.father),
-                              // ),
+                              Text(
+                                "Item obrigatório",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color:
+                                      Theme.of(context).secondaryHeaderColor,
+                                  fontSize: getStringSize(context),
+                                ),
+                              ),
                             ],
                           ),
                         ),
+                        AddCommentButton(
+                          father: widget.father,
+                          callSetState: () {
+                            setState(() {});
+                          },
+                        ),
                       ],
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              final dynamic tooltip = _tooltipKey.currentState;
-                              tooltip.ensureTooltipVisible();
-                            },
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Tooltip(
-                                    key: _tooltipKey,
-                                    message: 'Esse produto é obrigatório',
-                                    child: Icon(
-                                      Icons.info,
-                                      color: Theme.of(context)
-                                          .secondaryHeaderColor,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Item obrigatório",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontSize: hasMinWidth(context) ? 23 : 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          AddCommentButton(
-                            father: widget.father,
-                            callSetState: () {
-                              setState(() {});
-                            },
-                          ),
-                        ],
-                      ),
-                      if (widget.father.commentFather != null)
-                        CommentRichText(comment: widget.father.commentFather!)
-                    ],
-                  ),
-                ],
-              );
-            },
-          ),
+                    if (widget.father.commentFather != null)
+                      CommentRichText(comment: widget.father.commentFather!)
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

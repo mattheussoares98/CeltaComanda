@@ -49,8 +49,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
                 child: ImageWidget(
                   ean: null,
                   plu: selectedChild!.PluChild!,
-                  height: 70,
-                  width: 70,
+                  height: 50,
+                  width: 50,
                   isAlcoholic: false,
                 ),
               ),

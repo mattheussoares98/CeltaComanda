@@ -7,6 +7,7 @@ enum DomainError {
   invalidCombox,
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
+  obligatoryFixedCommandNumber,
   productNotFound,
   unexpected,
 }

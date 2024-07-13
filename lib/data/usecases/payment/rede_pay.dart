@@ -12,10 +12,12 @@ class RedePay implements Pay {
     const platform = MethodChannel('rede_channel');
 
     try {
-      await platform.invokeMethod(
+      final result = await platform.invokeMethod(
         paymentMode.name,
         RedePayParams.fromDomain(params).toJson(),
       );
+
+      print((result));
     } catch (e) {
       throw DomainError.unexpected;
     }

@@ -45,26 +45,32 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
         children: [
           Row(
             children: [
-              ImageWidget(
-                ean: null,
-                plu: selectedChild!.PluChild!,
-                height: 70,
-                width: 70,
-                isAlcoholic: false,
-              ),
               Expanded(
+                child: ImageWidget(
+                  ean: null,
+                  plu: selectedChild!.PluChild!,
+                  height: 70,
+                  width: 70,
+                  isAlcoholic: false,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                flex: 3,
                 child: Text(
                   selectedChild!.ChildName.toString(),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "${(selectedProduct.Quantity.toString().toDouble() * productCompositionPresenter.totalComboxQuantity).toString().toBrazilianNumber(0)} qtd",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "${(selectedProduct.Quantity.toString().toDouble() * productCompositionPresenter.totalComboxQuantity).toString().toBrazilianNumber(0)} qtd",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ),

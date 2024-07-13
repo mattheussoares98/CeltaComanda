@@ -52,49 +52,6 @@ class _PaymentPageState extends State<PaymentPage>
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(
-          backgroundColor: const Color(0xFFF1F5F8),
-          leading: IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-          actions: [
-            SearchCommandIcon(
-              loadCommandData: () async {
-                await paymentPresenter.getTotalValue(
-                  homePresenter: homePresenter,
-                  cartPresenter: cartPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  menuPresenter: menuPresenter,
-                );
-                printedProductsPresenter.updateCanCancelProducts(false);
-              },
-            )
-          ],
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (homePresenter.commandNumber != null)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Comanda ${homePresenter.commandNumber!}",
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-            ],
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: printedProductsPresenter.printedProducts == null ||
                 printedProductsPresenter.printedProducts!.TotalLiquid

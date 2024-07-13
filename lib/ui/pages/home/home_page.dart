@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage>
       makeMenusPage(homePresenter.isFixedCommandNumber),
       makeCartPage(_pageController, homePresenter.isFixedCommandNumber),
       makePrintedProductsPage(homePresenter.isFixedCommandNumber),
-      if (true) makePaymentPage(),
+      if (homePresenter.isGeneratingVersionToRede) makePaymentPage(),
     ];
     return PopScope(
       canPop: false,
@@ -182,25 +182,18 @@ class _HomePageState extends State<HomePage>
           scaffoldKey: scaffoldKey,
           currentIndex: _currentIndex,
         ),
-        body: Stack(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  onPageChanged(
-                    index: index,
-                    printedProductsPresenter: printedProductsPresenter,
-                    menuPresenter: menuPresenter,
-                    homePresenter: homePresenter,
-                    commentsPresenter: commentsPresenter,
-                  );
-                },
-                children: screens,
-              ),
-            ),
-          ],
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            onPageChanged(
+              index: index,
+              printedProductsPresenter: printedProductsPresenter,
+              menuPresenter: menuPresenter,
+              homePresenter: homePresenter,
+              commentsPresenter: commentsPresenter,
+            );
+          },
+          children: screens,
         ),
         bottomNavigationBar: Stack(
           children: [

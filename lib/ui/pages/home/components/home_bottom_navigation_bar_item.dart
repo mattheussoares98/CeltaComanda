@@ -16,6 +16,7 @@ class HomeBottomNavigationBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -56,7 +57,7 @@ class HomeBottomNavigationBarItem extends StatelessWidget {
           ),
           label: 'Solicitados',
         ),
-        if (true)
+        if (homePresenter.isGeneratingVersionToRede)
           const BottomNavigationBarItem(
             icon: Icon(Icons.paypal),
             label: 'Pagar',

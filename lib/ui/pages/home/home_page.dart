@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage>
   }
 
   bool _isAnimatig = false;
+
   void doAnimation() {
     if (!_isAnimatig) {
       _isAnimatig = true;
@@ -90,6 +91,7 @@ class _HomePageState extends State<HomePage>
   }
 
   bool _isLoaded = false;
+
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
@@ -118,7 +120,11 @@ class _HomePageState extends State<HomePage>
           await menuPresenter.getGroupsAndProducts("001");
         }
 
-        setState(() {});
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            setState(() {});
+          }
+        });
       });
     }
   }

@@ -14,10 +14,12 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   final isLoadingController = StreamController<bool>();
   String? commandNumberMock;
   bool isFixedCommandNumberMock = false;
+  bool isGeneratingVersionToRedeMock = false;
 
   HomePresenterSpy() {
     when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
     when(() => this.isFixedCommandNumber).thenAnswer((_) => isFixedCommandNumberMock);
+    when(() => this.isGeneratingVersionToRede).thenAnswer((_) => isGeneratingVersionToRedeMock);
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           cartPresenter: any(named: "cartPresenter"),

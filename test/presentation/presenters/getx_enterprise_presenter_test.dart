@@ -351,5 +351,21 @@ void main() {
         newCommandValue: newCommandNumber,
       );
     });
+
+    test(
+        "Should throw DomainError.obligatoryFixedCommandNumber on generatingVersionToRede and command is not fixed",
+        () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.obligatoryFixedCommandNumber]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      homePresenter.isGeneratingVersionToRedeMock = true;
+      homePresenter.isFixedCommandNumberMock = false;
+
+      await sut.getEnterpriseAndValidateApiIsAvailable(
+        commandEntity: commandEntity,
+        homePresenter: homePresenter,
+      );
+    });
   });
 }

@@ -11,10 +11,10 @@ import '../../../components/components.dart';
 
 class InsertProductButton extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
-  final bool popScreen;
+  // final bool popScreen;
   const InsertProductButton({
     required this.selectedProduct,
-    required this.popScreen,
+    // required this.popScreen,
     super.key,
   });
 
@@ -30,6 +30,12 @@ class _InsertProductButtonState extends State<InsertProductButton>
     required CartPresenter cartPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
+    Future.delayed(Duration.zero, () {
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
+    });
+    setState(() {});
     try {
       await cartPresenter.addProductInCart(
         commentsPresenter: commentsPresenter,
@@ -45,13 +51,6 @@ class _InsertProductButtonState extends State<InsertProductButton>
         ),
         menuPresenter: menuPresenter,
       );
-
-      Future.delayed(Duration.zero, () {
-        if (widget.popScreen && Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-      });
-      setState(() {});
     } catch (e) {
       e;
     }
@@ -84,7 +83,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: true);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: true);
 
     loadingSubscription?.cancel();
@@ -199,7 +198,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                       ? "Inserir no carrinho"
                                       : "Inserir",
                                   style: TextStyle(
-                                    fontSize: hasMinWidth(context) ? 22 : 17,
+                                    fontSize: getStringSize(context),
                                   ),
                                 ),
                               ),
@@ -212,7 +211,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                     .toBrazilianNumber()
                                     .addBrazilianCoin(),
                                 style: TextStyle(
-                                  fontSize: hasMinWidth(context) ? 22 : 17,
+                                  fontSize: getStringSize(context),
                                 ),
                               ),
                             ],

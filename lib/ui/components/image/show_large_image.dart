@@ -110,7 +110,6 @@ Widget _portraitLargeImage({
                   selectedProduct.IsPromoCombox == "false")
                 InsertProductButton(
                   selectedProduct: selectedProduct,
-                  popScreen: true,
                 ),
               _addComboxButton(
                 selectedProduct: selectedProduct,
@@ -181,7 +180,6 @@ Widget _landScapeLargeImage({
                   selectedProduct.IsPromoCombox == "false")
                 InsertProductButton(
                   selectedProduct: selectedProduct,
-                  popScreen: true,
                 ),
               _addComboxButton(
                 selectedProduct: selectedProduct,

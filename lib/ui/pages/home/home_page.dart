@@ -222,9 +222,16 @@ class _HomePageState extends State<HomePage>
 
                         return Positioned(
                           bottom: kBottomNavigationBarHeight / 2 + 10,
-                          left: (MediaQuery.of(context).size.width / 6) +
+                          left: (MediaQuery.of(context).size.width /
+                                  (homePresenter.isGeneratingVersionToRede
+                                      ? 7
+                                      : 6)) +
                               (_animation!.value *
-                                  ((MediaQuery.of(context).size.width / 6) *
+                                  ((MediaQuery.of(context).size.width /
+                                          (homePresenter
+                                                  .isGeneratingVersionToRede
+                                              ? 7
+                                              : 6)) *
                                       2)) -
                               5,
                           child: AnimatedContainer(

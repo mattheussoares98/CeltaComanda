@@ -7,9 +7,13 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class SaveSaleRequestButton extends StatelessWidget {
-  const SaveSaleRequestButton({super.key});
+  final PageController pageController;
+  const SaveSaleRequestButton({
+    required this.pageController,
+    super.key,
+  });
 
-  static _addProducts({
+  _addProducts({
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
@@ -31,6 +35,7 @@ class SaveSaleRequestButton extends StatelessWidget {
           "Os produtos foram solicitados com sucesso",
         );
       });
+      pageController.jumpToPage(0);
     }
   }
 

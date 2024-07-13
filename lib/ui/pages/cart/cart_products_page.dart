@@ -147,9 +147,11 @@ class _CartPageState extends State<CartPage>
                           ),
                         if (widget.pageController != null)
                           SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                        const Expanded(
+                        Expanded(
                           flex: 6,
-                          child: SaveSaleRequestButton(),
+                          child: SaveSaleRequestButton(
+                            pageController: widget.pageController!,
+                          ),
                         ),
                       ],
                     ),

@@ -53,21 +53,23 @@ class PrintedItem extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: (printed.Products.length / 3).ceil(),
+              itemCount: (printed.Products.length / itensPerLine).ceil(),
               itemBuilder: (context, index) {
                 return IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-                      for (int i = index * 3; i < (index + 1) * 3; i++)
+                      for (int i = index * itensPerLine;
+                          i < (index + 1) * itensPerLine;
+                          i++)
                         if (i < printed.Products.length)
                           Expanded(
                             child: Builder(builder: (context) {
                               final product = printed.Products[i];
                               return Container(
-                                margin: const EdgeInsets.all(2),
-                                padding: const EdgeInsets.all(8),
+                                margin: const EdgeInsets.all(1),
+                                padding: const EdgeInsets.only(right: 2),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border.all(

@@ -35,9 +35,10 @@ class ProductDetails extends StatelessWidget {
     return Column(
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
+            SizedBox(
+              height: 50,
+              width: 50,
               child: GestureDetector(
                 onTap: () {
                   showLargeImage(
@@ -53,14 +54,12 @@ class ProductDetails extends StatelessWidget {
                 child: ImageWidget(
                   ean: product.EanCode,
                   plu: product.PriceLookupCode,
-                  height: 70,
-                  width: 70,
                   isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
                 ),
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Text(
                 product.Name,
                 textAlign: TextAlign.center,
@@ -70,37 +69,45 @@ class ProductDetails extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: printedProductsPresenter.canCancelProducts
-                      ? onPressedRemoveProduct
-                      : validateUserAndCancelProducts,
-                  icon: Icon(
-                    Icons.delete,
-                    color: printedProductsPresenter.canCancelProducts
-                        ? Colors.red
-                        : Colors.grey,
-                    size: hasMinWidth(context) ? 25 : 17,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "$quantity ",
+                        style: TextStyle(
+                          fontSize: getStringSize(context) * 0.8,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: printedProductsPresenter.canCancelProducts
+                            ? onPressedRemoveProduct
+                            : validateUserAndCancelProducts,
+                        child: Icon(
+                          Icons.delete,
+                          color: printedProductsPresenter.canCancelProducts
+                              ? Colors.red
+                              : Colors.grey,
+                          size: 30,
+                        ),
+                      ),
+                    ],
                   ),
-                  visualDensity: VisualDensity.compact,
-                ),
-                Text(
-                  "$quantity qtd",
-                  style: TextStyle(
-                    fontSize: getStringSize(context),
-                    fontWeight: FontWeight.w300,
+                  FittedBox(
+                    child: Text(
+                      totalLiquid.addBrazilianCoin(),
+                      style: TextStyle(
+                        fontSize: getStringSize(context) * 0.9,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                Text(
-                  totalLiquid.addBrazilianCoin(),
-                  style: TextStyle(
-                    fontSize: getStringSize(context),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

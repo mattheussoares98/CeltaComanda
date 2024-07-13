@@ -84,7 +84,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         formKey: formKey,
                         passwordController: passwordController,
                         personalizedCodeController: personalizedCodeController,
-                        itensPerLine: hasMinWidth(context) ? 3 : 2,
+                        itensPerLine: hasMinWidth(context) ? 3 : 1,
                       )
                     : SearchDataByCommandNumber(
                         homePresenter: homePresenter,

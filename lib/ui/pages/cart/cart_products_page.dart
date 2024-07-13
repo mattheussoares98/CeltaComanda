@@ -58,70 +58,24 @@ class _CartPageState extends State<CartPage>
               child: Padding(
                 padding: EdgeInsets.only(bottom: _buttonsHeight),
                 child: SingleChildScrollView(
-                  child: cartPresenter.cartProducts.isNotEmpty == true ||
-                          cartPresenter.confirmedCombox.isNotEmpty == true
-                      ? Column(
-                          children: [
-                            if (cartPresenter.cartProducts.isNotEmpty)
-                              CartProductsItems(
-                                cartProducts: cartPresenter.cartProducts,
-                                itensPerLine: hasMinWidth(context) ? 3 : 2,
-                              ),
-                            if (cartPresenter.confirmedCombox.isNotEmpty)
-                              ConfirmedChildAndFatherItems(
-                                confirmedsCombox: cartPresenter.confirmedCombox,
-                                itensPerLine: hasMinWidth(context) ? 3 : 2,
-                              ),
-                          ],
-                        )
-                      : SizedBox(
-                          height: MediaQuery.of(context).size.height -
-                              AppBar().preferredSize.height -
-                              kBottomNavigationBarHeight,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                    child: cartPresenter.cartProducts.isNotEmpty == true ||
+                            cartPresenter.confirmedCombox.isNotEmpty == true
+                        ? Column(
                             children: [
-                              FittedBox(
-                                child: Text(
-                                  "O carrinho está vazio",
-                                  style: TextStyle(
-                                    fontSize: hasMinWidth(context) ? 30 : 20,
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                  ),
+                              if (cartPresenter.cartProducts.isNotEmpty)
+                                CartProductsItems(
+                                  cartProducts: cartPresenter.cartProducts,
+                                  itensPerLine: hasMinWidth(context) ? 3 : 2,
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20.0),
-                                child: Image.asset(
-                                  key: const Key("emptyCartKey"),
-                                  "lib/ui/assets/images/empty_cart.jpg",
+                              if (cartPresenter.confirmedCombox.isNotEmpty)
+                                ConfirmedChildAndFatherItems(
+                                  confirmedsCombox:
+                                      cartPresenter.confirmedCombox,
+                                  itensPerLine: hasMinWidth(context) ? 3 : 2,
                                 ),
-                              ),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  if (widget.pageController != null) {
-                                    widget.pageController!.jumpToPage(0);
-                                  }
-                                },
-                                label: Text(
-                                  "Adicionar itens",
-                                  style: TextStyle(
-                                    fontSize: hasMinWidth(context) ? 25 : 20,
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.shopping_cart,
-                                  size: hasMinWidth(context) ? 30 : 20,
-                                ),
-                              )
                             ],
-                          ),
-                        ),
-                ),
+                          )
+                        : EmptyCart(pageController: widget.pageController!)),
               ),
             ),
             Visibility(

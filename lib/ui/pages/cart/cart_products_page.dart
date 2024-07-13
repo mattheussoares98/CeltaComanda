@@ -71,7 +71,7 @@ class _CartPageState extends State<CartPage>
                                 ConfirmedChildAndFatherItems(
                                   confirmedsCombox:
                                       cartPresenter.confirmedCombox,
-                                  itensPerLine: hasMinWidth(context) ? 3 : 2,
+                                  itensPerLine: hasMinWidth(context) ? 3 : 1,
                                 ),
                             ],
                           )

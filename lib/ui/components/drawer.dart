@@ -15,7 +15,7 @@ Future<void> _logout({
     menuPresenter: menuPresenter,
   );
   await homePresenter.clearEnterpriseData();
-  await cartPresenter.clearCart();
+  await cartPresenter.clearCartAndConfirmedCombox();
 }
 
 Widget drawer({

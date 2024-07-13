@@ -150,7 +150,8 @@ class _CartPageState extends State<CartPage>
                         Expanded(
                           flex: 6,
                           child: SaveSaleRequestButton(
-                            pageController: widget.pageController!,
+                            pageController:
+                                widget.pageController ?? PageController(),
                           ),
                         ),
                       ],

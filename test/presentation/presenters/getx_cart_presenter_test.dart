@@ -1423,31 +1423,64 @@ void main() {
       ]);
     });
 
-    test("Should clear cartProducts on call sut.clearCart", () async {
-      await sut.clearCart();
+    test("Should clear cartProducts on call clearCartAndConfirmedCombox",
+        () async {
+      sut.cartProducts.add(cartProductViewModel);
+      await sut.clearCartAndConfirmedCombox();
 
       expect(sut.cartProducts, []);
     });
-    test("Should call cartInformations.clearCartProduct on sut.clearCart",
+
+    test("Should clear confirmedCombox on call clearCartAndConfirmedCombox",
         () async {
-      await sut.clearCart();
+      await sut.addConfirmedCombox(
+        selectedChilds: [selectedChildWithOneQuantity],
+        totalPrice: 10,
+        selectedCombox: fatherOfCombox,
+        quantity: 1,
+      );
+      await sut.clearCartAndConfirmedCombox();
+
+      expect(sut.confirmedCombox, []);
+    });
+
+    test(
+        "Should call cartInformations.clearCartProducts() on clearCartAndConfirmedCombox",
+        () async {
+      await sut.clearCartAndConfirmedCombox();
 
       verify(() => cartInformations.clearCartProducts()).called(1);
     });
-    test("Should emit correct values on sut.clearCart success", () async {
+    test(
+        "Should call cartInformations.clearConfirmedCombox() on clearCartAndConfirmedCombox",
+        () async {
+      await sut.clearCartAndConfirmedCombox();
+
+      verify(() => cartInformations.clearConfirmedCombox()).called(1);
+    });
+    test(
+        "Should call cartInformations.clearCartProduct on clearCartAndConfirmedCombox",
+        () async {
+      await sut.clearCartAndConfirmedCombox();
+
+      verify(() => cartInformations.clearCartProducts()).called(1);
+    });
+    test("Should emit correct values on clearCartAndConfirmedCombox success",
+        () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.clearCart();
+      await sut.clearCartAndConfirmedCombox();
     });
-    test("Should emit correct values on sut.clearCart throws", () async {
+    test("Should emit correct values on clearCartAndConfirmedCombox throws",
+        () async {
       cartInformations.mockClearError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.clearCart();
+      await sut.clearCartAndConfirmedCombox();
     });
 
     test(

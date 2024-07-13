@@ -959,13 +959,16 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<void> clearCart() async {
+  Future<void> clearCartAndConfirmedCombox() async {
     isLoading = true;
     mainError = null;
 
     try {
       _cartProducts.clear();
+      _confirmedCombox.clear();
       await cartInformations.clearCartProducts();
+      await cartInformations.clearConfirmedCombox();
+      notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

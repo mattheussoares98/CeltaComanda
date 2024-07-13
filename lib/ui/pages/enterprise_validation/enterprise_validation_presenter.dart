@@ -21,6 +21,7 @@ abstract class EnterpriseValidationPresenter implements Listenable {
 
   Future<void> getEnterpriseAndValidateApiIsAvailable({
     required CommandEntity commandEntity,
+    required HomePresenter homePresenter,
   });
   Future<void> loadRemoteEnterpriseData();
   Future<void> loadLocalData();

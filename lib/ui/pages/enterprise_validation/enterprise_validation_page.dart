@@ -38,6 +38,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
   Future<void> _validateEnterprise({
     required CommandViewModel commandViewModel,
     required EnterpriseValidationPresenter enterpriseValidationPresenter,
+    required HomePresenter homePresenter,
   }) async {
     if (commandViewModel.isFixedCommandNumber == "true") {
       if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
@@ -47,11 +48,13 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
       await enterpriseValidationPresenter
           .getEnterpriseAndValidateApiIsAvailable(
         commandEntity: commandViewModel.toEntity(),
+        homePresenter: homePresenter,
       );
     } else {
       await enterpriseValidationPresenter
           .getEnterpriseAndValidateApiIsAvailable(
         commandEntity: commandViewModel.toEntity(),
+        homePresenter: homePresenter,
       );
     }
   }
@@ -71,6 +74,8 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
@@ -119,6 +124,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                           snapshotCommandData.data!,
                                       validateEnterprise: () async {
                                         await _validateEnterprise(
+                                          homePresenter: homePresenter,
                                           commandViewModel:
                                               snapshotCommandData.data!,
                                           enterpriseValidationPresenter:
@@ -133,6 +139,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                             EnterpriseValidateButton(
                               validateEnterprise: () async {
                                 await _validateEnterprise(
+                                  homePresenter: homePresenter,
                                   commandViewModel: snapshotCommandData.data!,
                                   enterpriseValidationPresenter:
                                       widget.presenter,

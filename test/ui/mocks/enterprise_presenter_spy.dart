@@ -31,7 +31,9 @@ class EnterpriseValidationPresenterSpy extends Mock
     when(() => this.loadLocalData()).thenAnswer((_) async => _);
     when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => _);
     when(() => this.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: any(named: "commandEntity"))).thenAnswer((_) async => _);
+          commandEntity: any(named: "commandEntity"),
+          homePresenter: any(named: "homePresenter"),
+        )).thenAnswer((_) async => _);
     when(() => this.goToHomePage()).thenAnswer((_) => Get.offNamed(
           PageRoutes.menus,
         ));

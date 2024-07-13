@@ -15,6 +15,8 @@ class EnterpriseInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final presenter = Provider.of<EnterpriseValidationPresenter>(context);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return StreamBuilder<UIError?>(
         stream: presenter.enterpriseErrorStream,
         builder: (context, snapshot) {
@@ -30,6 +32,7 @@ class EnterpriseInput extends StatelessWidget {
               if (presenter.enterpriseNameController.text.isNotEmpty) {
                 await presenter.getEnterpriseAndValidateApiIsAvailable(
                   commandEntity: commandVideModel.toEntity(),
+                  homePresenter: homePresenter,
                 );
               }
             },

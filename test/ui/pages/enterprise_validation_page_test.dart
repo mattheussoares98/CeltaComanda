@@ -12,10 +12,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late EnterpriseValidationPresenterSpy presenter;
+  late HomePresenterSpy homePresenter;
   EnterpriseDataBuilder.enterpriseDataEntity =
       EntityFactory.makeEnterpriseData();
 
   setUp(() {
+    homePresenter = HomePresenterSpy();
     presenter = EnterpriseValidationPresenterSpy();
     presenter.mockLoadRemoteData(EnterpriseDataBuilder.enterpriseDataEntity);
   });
@@ -30,6 +32,11 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
   });
 
   tearDown(() {
@@ -64,6 +71,7 @@ void main() {
 
     await presenter.getEnterpriseAndValidateApiIsAvailable(
       commandEntity: EntityFactory.makeCommandEntity(),
+      homePresenter: homePresenter,
     );
     await tester.pumpAndSettle();
 

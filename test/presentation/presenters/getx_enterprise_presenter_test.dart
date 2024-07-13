@@ -91,7 +91,9 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
     await sut.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: commandEntity);
+      commandEntity: commandEntity,
+      homePresenter: homePresenter,
+    );
   });
 
   test("Should not change page if validation throws", () async {
@@ -129,7 +131,9 @@ void main() {
     );
 
     await sut.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: commandEntity);
+      commandEntity: commandEntity,
+      homePresenter: homePresenter,
+    );
 
     verify(() => localEnterpriseData
         .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
@@ -144,7 +148,9 @@ void main() {
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: commandEntity);
+      commandEntity: commandEntity,
+      homePresenter: homePresenter,
+    );
   });
 
   test('Should emit correct events on validateApiSaleRequest success',
@@ -156,7 +162,9 @@ void main() {
     expectLater(sut.isLoadingStream, emits(true));
 
     await sut.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: commandEntity);
+      commandEntity: commandEntity,
+      homePresenter: homePresenter,
+    );
   });
 
   test('Should error if enterprise not exists in firebase', () {
@@ -183,7 +191,9 @@ void main() {
         updateEnterpriseNameController: true);
 
     await sut.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: commandEntity);
+      commandEntity: commandEntity,
+      homePresenter: homePresenter,
+    );
 
     verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
         .called(1);
@@ -213,7 +223,9 @@ void main() {
     sut.isUpdatedEnterpriseName = true;
 
     await sut.getEnterpriseAndValidateApiIsAvailable(
-        commandEntity: commandEntity);
+      commandEntity: commandEntity,
+      homePresenter: homePresenter,
+    );
 
     verify(() => remoteLoadEnterpriseData.load()).called(1);
   });
@@ -292,11 +304,14 @@ void main() {
         () async {
       await sut.getEnterpriseAndValidateApiIsAvailable(
         commandEntity: commandEntity,
+        homePresenter: homePresenter,
       );
       verify(() => loadCommandData.update(commandEntity)).called(1);
 
       await sut.getEnterpriseAndValidateApiIsAvailable(
-          commandEntity: commandEntity);
+        commandEntity: commandEntity,
+        homePresenter: homePresenter,
+      );
       verify(() => loadCommandData.update(commandEntity)).called(1);
     });
 

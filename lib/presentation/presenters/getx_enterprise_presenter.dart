@@ -104,6 +104,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   Future<void> getEnterpriseAndValidateApiIsAvailable({
     required CommandEntity commandEntity,
+    required HomePresenter homePresenter,
   }) async {
     try {
       mainError = null;

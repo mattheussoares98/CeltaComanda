@@ -17,6 +17,7 @@ class RedePay implements Pay {
         RedePayParams.fromDomain(params).toJson(),
       );
 
+      // ignore: avoid_print
       print((result));
     } catch (e) {
       throw DomainError.unexpected;

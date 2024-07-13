@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,40 +37,46 @@ class ChildItemRadioListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  showLargeImage(
-                    context: context,
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    showLargeImage(
+                      context: context,
+                      ean: null,
+                      productComplement: null,
+                      plu: child!.PluChild!,
+                      menuPresenter: menuPresenter,
+                      productName: child!.ChildName!,
+                    );
+                  },
+                  child: ImageWidget(
                     ean: null,
-                    productComplement: null,
                     plu: child!.PluChild!,
-                    menuPresenter: menuPresenter,
-                    productName: child!.ChildName!,
-                  );
-                },
-                child: ImageWidget(
-                  ean: null,
-                  plu: child!.PluChild!,
-                  height: 140,
-                  width: 140,
-                  isAlcoholic: false,
+                    height: hasMinWidth(context) ? 100 : 70,
+                    width: hasMinWidth(context) ? 100 : 70,
+                    isAlcoholic: false,
+                  ),
                 ),
               ),
+              const SizedBox(width: 5),
               if (child!.ChildName != null)
                 Expanded(
+                  flex: 3,
                   child: Text(
                     child!.ChildName!,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-              Radio<int>(
-                value: index,
-                groupValue: father.indexOfSelectedChild,
-                visualDensity: VisualDensity.compact,
-                toggleable: father.IsOptionalItem == "true",
-                onChanged: (int? value) {
-                  updateSelectedIndex();
-                },
+              Expanded(
+                child: Radio<int>(
+                  value: index,
+                  groupValue: father.indexOfSelectedChild,
+                  visualDensity: VisualDensity.compact,
+                  toggleable: father.IsOptionalItem == "true",
+                  onChanged: (int? value) {
+                    updateSelectedIndex();
+                  },
+                ),
               ),
             ],
           ),

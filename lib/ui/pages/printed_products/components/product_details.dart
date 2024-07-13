@@ -33,18 +33,9 @@ class ProductDetails extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          product.Name,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: hasMinWidth(context) ? 30 : 18,
-          ),
-        ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: GestureDetector(
@@ -62,12 +53,22 @@ class ProductDetails extends StatelessWidget {
                 child: ImageWidget(
                   ean: product.EanCode,
                   plu: product.PriceLookupCode,
-                  height: 100,
-                  width: 100,
+                  height: 70,
+                  width: 70,
                 ),
               ),
             ),
-            const SizedBox(width: 3),
+            Expanded(
+              flex: 2,
+              child: Text(
+                product.Name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: getStringSize(context),
+                ),
+              ),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -80,28 +81,21 @@ class ProductDetails extends StatelessWidget {
                     color: printedProductsPresenter.canCancelProducts
                         ? Colors.red
                         : Colors.grey,
-                    size: hasMinWidth(context) ? 30 : 25,
+                    size: hasMinWidth(context) ? 25 : 17,
                   ),
                   visualDensity: VisualDensity.compact,
                 ),
-                // Text(
-                //   value.addBrazilianCoin(),
-                //   style: TextStyle(
-                //     fontSize: hasMinWidth(context) ? 23 : 15,
-                //     fontWeight: FontWeight.w300,
-                //   ),
-                // ),
                 Text(
                   "$quantity qtd",
                   style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 23 : 15,
+                    fontSize: getStringSize(context),
                     fontWeight: FontWeight.w300,
                   ),
                 ),
                 Text(
                   totalLiquid.addBrazilianCoin(),
                   style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 23 : 15,
+                    fontSize: getStringSize(context),
                     fontWeight: FontWeight.bold,
                   ),
                 ),

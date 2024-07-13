@@ -45,6 +45,7 @@ class _ImageWidgetState extends State<ImageWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
+          flex: 7,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: AnimatedBuilder(
@@ -71,13 +72,13 @@ class _ImageWidgetState extends State<ImageWidget>
           ),
         ),
         if (widget.isAlcoholic)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Image.asset(
-              "lib/ui/assets/images/prohibed_for_minors.png",
-              fit: BoxFit.cover,
-              width: widget.width / 5,
-              height: widget.height / 5,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Image.asset(
+                "lib/ui/assets/images/prohibed_for_minors.png",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
       ],

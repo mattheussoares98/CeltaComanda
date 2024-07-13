@@ -119,56 +119,58 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            final dynamic tooltip = _tooltipKey.currentState;
-                            tooltip.ensureTooltipVisible();
-                          },
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 2.0),
-                                child: Tooltip(
-                                  key: _tooltipKey,
-                                  message: 'Esse produto é obrigatório',
-                                  child: Icon(
-                                    Icons.info,
-                                    color: Theme.of(context)
-                                        .secondaryHeaderColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              final dynamic tooltip = _tooltipKey.currentState;
+                              tooltip.ensureTooltipVisible();
+                            },
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0),
+                                  child: Tooltip(
+                                    key: _tooltipKey,
+                                    message: 'Esse produto é obrigatório',
+                                    child: Icon(
+                                      Icons.info,
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                "Item obrigatório",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  fontSize: getStringSize(context),
+                                Text(
+                                  "Item obrigatório",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: getStringSize(context),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        AddCommentButton(
-                          father: widget.father,
-                          callSetState: () {
-                            setState(() {});
-                          },
-                        ),
-                      ],
-                    ),
-                    if (widget.father.commentFather != null)
-                      CommentRichText(comment: widget.father.commentFather!)
-                  ],
+                          AddCommentButton(
+                            father: widget.father,
+                            callSetState: () {
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                      if (widget.father.commentFather != null)
+                        CommentRichText(comment: widget.father.commentFather!)
+                    ],
+                  ),
                 ),
               ],
             );

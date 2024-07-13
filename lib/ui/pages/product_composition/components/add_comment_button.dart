@@ -21,8 +21,8 @@ class AddCommentButton extends StatelessWidget {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Flexible(
-      child: TextButton.icon(
-        onPressed: () async {
+      child: GestureDetector(
+        onTap: () async {
           commentsPresenter.updateSelectedComments(father.commentFather);
           await showModalBottomSheet(
               isScrollControlled: true,
@@ -48,15 +48,26 @@ class AddCommentButton extends StatelessWidget {
           );
           callSetState();
         },
-        label: Text(
-          "Comentários",
-          style: TextStyle(
-            fontSize: getStringSize(context),
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              father.commentFather == null
+                  ? Icons.add_comment_rounded
+                  : Icons.edit,
+              color: Colors.grey,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              "Comentários",
+              style: TextStyle(
+                fontSize: getStringSize(context),
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
-        icon: Icon(father.commentFather == null
-            ? Icons.add_comment_rounded
-            : Icons.edit),
       ),
     );
   }

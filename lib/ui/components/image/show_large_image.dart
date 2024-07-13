@@ -100,6 +100,8 @@ Widget _portraitLargeImage({
                   plu: plu,
                   height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
+                  isAlcoholic: selectedProduct != null &&
+                      selectedProduct.IsAlcoholicProduct.toString() == "true",
                 ),
               ),
               const SizedBox(height: 10),
@@ -164,6 +166,9 @@ Widget _landScapeLargeImage({
                         plu: plu,
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
+                        isAlcoholic: selectedProduct != null &&
+                            selectedProduct.IsAlcoholicProduct.toString() ==
+                                "true",
                       ),
                     ),
                     if (productComplement != null)

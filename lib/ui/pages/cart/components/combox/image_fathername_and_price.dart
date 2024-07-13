@@ -35,11 +35,16 @@ class ImageFathernameAndPrice extends StatelessWidget {
                 productName: confirmedCombox.father.Name,
               );
             },
-            child: ImageWidget(
-              ean: confirmedCombox.father.EanCode,
-              plu: confirmedCombox.father.PriceLookupCode,
+            child: SizedBox(
               height: 70,
               width: 70,
+              child: ImageWidget(
+                ean: confirmedCombox.father.EanCode,
+                plu: confirmedCombox.father.PriceLookupCode,
+                height: 70,
+                width: 70,
+                isAlcoholic: false,
+              ),
             ),
           ),
         ),

@@ -28,6 +28,8 @@ class ProductDetailItem extends StatelessWidget {
                       plu: product.PriceLookupCode,
                       height: 250,
                       width: double.infinity,
+                      isAlcoholic:
+                          product.IsAlcoholicProduct.toString() == "true",
                     ),
                     const Padding(
                       padding: EdgeInsetsDirectional.only(

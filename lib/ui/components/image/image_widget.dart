@@ -14,11 +14,13 @@ class ImageWidget extends StatefulWidget {
   final double width;
   final double? beginAnimation;
   final double? endAnimation;
+  final bool isAlcoholic;
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
+    required this.isAlcoholic,
     this.beginAnimation = 1,
     this.endAnimation = 0.7,
     super.key,
@@ -39,29 +41,46 @@ class _ImageWidgetState extends State<ImageWidget>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: AnimatedBuilder(
-        animation: AnimationManager.getAnimation(
-          begin: widget.beginAnimation!,
-          end: widget.endAnimation!,
-        ),
-        builder: (context, child) {
-          return Transform.scale(
-            scale: AnimationManager.getAnimation(
-              begin: widget.beginAnimation!,
-              end: widget.endAnimation!,
-            ).value,
-            child: _cachedImage(
-              width: widget.width,
-              height: widget.height,
-              ean: widget.ean,
-              plu: widget.plu,
-              customCacheManager: ImageWidget._customCacheManager,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: AnimatedBuilder(
+              animation: AnimationManager.getAnimation(
+                begin: widget.beginAnimation!,
+                end: widget.endAnimation!,
+              ),
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: AnimationManager.getAnimation(
+                    begin: widget.beginAnimation!,
+                    end: widget.endAnimation!,
+                  ).value,
+                  child: _cachedImage(
+                    width: widget.width,
+                    height: widget.height,
+                    ean: widget.ean,
+                    plu: widget.plu,
+                    customCacheManager: ImageWidget._customCacheManager,
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+        ),
+        if (widget.isAlcoholic)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Image.asset(
+              "lib/ui/assets/images/prohibed_for_minors.png",
+              fit: BoxFit.cover,
+              width: widget.width / 5,
+              height: widget.height / 5,
+            ),
+          ),
+      ],
     );
   }
 }

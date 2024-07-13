@@ -52,6 +52,7 @@ class ChildItemRadioListTile extends StatelessWidget {
                   plu: child!.PluChild!,
                   height: 140,
                   width: 140,
+                  isAlcoholic: false,
                 ),
               ),
               if (child!.ChildName != null)

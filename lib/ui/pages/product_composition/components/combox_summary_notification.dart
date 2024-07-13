@@ -36,7 +36,8 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
       if (selectedProduct.childs?.isEmpty == true) {
         selectedChild = selectedProduct;
       } else {
-        selectedChild = selectedProduct.childs![selectedProduct.indexOfSelectedChild!];
+        selectedChild =
+            selectedProduct.childs![selectedProduct.indexOfSelectedChild!];
       }
 
       return Column(
@@ -49,6 +50,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
                 plu: selectedChild!.PluChild!,
                 height: 70,
                 width: 70,
+                isAlcoholic: false,
               ),
               Expanded(
                 child: Text(

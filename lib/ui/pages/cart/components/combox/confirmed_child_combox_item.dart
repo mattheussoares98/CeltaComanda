@@ -41,7 +41,7 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
             index++)
           Builder(builder: (context) {
             final combox = widget.confirmedCombox.products[index];
-    
+
             ProductCompositionViewModel product;
             if (combox.childs?.isNotEmpty == true &&
                 combox.indexOfSelectedChild != null) {
@@ -49,7 +49,7 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
             } else {
               product = combox;
             }
-    
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,22 +61,27 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        showLargeImage(
-                          context: context,
+                    SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: GestureDetector(
+                        onTap: () {
+                          showLargeImage(
+                            context: context,
+                            ean: null,
+                            plu: product.PluChild!,
+                            productComplement: null,
+                            menuPresenter: menuPresenter,
+                            productName: product.ChildName,
+                          );
+                        },
+                        child: ImageWidget(
                           ean: null,
                           plu: product.PluChild!,
-                          productComplement: null,
-                          menuPresenter: menuPresenter,
-                          productName: product.ChildName,
-                        );
-                      },
-                      child: ImageWidget(
-                        ean: null,
-                        plu: product.PluChild!,
-                        height: 50,
-                        width: 50,
+                          height: 50,
+                          width: 50,
+                          isAlcoholic: false,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -117,8 +122,8 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                     await cartPresenter.updateCommentOfCombox(
                       indexOfCombox: widget.indexOfConfirmedCombox,
                       indexOfProduct: index,
-                      newComment: commentsPresenter
-                          .getConcatenateSelectedComments(),
+                      newComment:
+                          commentsPresenter.getConcatenateSelectedComments(),
                     );
                   },
                 ),

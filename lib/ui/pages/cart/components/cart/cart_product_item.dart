@@ -72,24 +72,31 @@ class _CartProductItemState extends State<CartProductItem> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    showLargeImage(
-                      context: context,
+                SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: GestureDetector(
+                    onTap: () {
+                      showLargeImage(
+                        context: context,
+                        ean: widget.cartProduct.Product.EanCode,
+                        plu: widget.cartProduct.Product.PriceLookupCode,
+                        productComplement:
+                            widget.cartProduct.Product.ProductComplement,
+                        menuPresenter: menuPresenter,
+                        productName: widget.cartProduct.Product.Name,
+                        selectedProduct: widget.cartProduct.Product,
+                      );
+                    },
+                    child: ImageWidget(
                       ean: widget.cartProduct.Product.EanCode,
                       plu: widget.cartProduct.Product.PriceLookupCode,
-                      productComplement:
-                          widget.cartProduct.Product.ProductComplement,
-                      menuPresenter: menuPresenter,
-                      productName: widget.cartProduct.Product.Name,
-                      selectedProduct: widget.cartProduct.Product,
-                    );
-                  },
-                  child: ImageWidget(
-                    ean: widget.cartProduct.Product.EanCode,
-                    plu: widget.cartProduct.Product.PriceLookupCode,
-                    height: 70,
-                    width: 70,
+                      height: 70,
+                      width: 70,
+                      isAlcoholic: widget.cartProduct.Product.IsAlcoholicProduct
+                              .toString() ==
+                          "true",
+                    ),
                   ),
                 ),
                 const SizedBox(width: 3),

@@ -55,6 +55,7 @@ class ProductDetails extends StatelessWidget {
                   plu: product.PriceLookupCode,
                   height: 70,
                   width: 70,
+                  isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
                 ),
               ),
             ),

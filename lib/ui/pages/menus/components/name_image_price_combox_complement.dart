@@ -59,6 +59,8 @@ Widget _landScapeNameImagePluAndCombox({
             plu: productsViewModel.PriceLookupCode,
             height: 150,
             width: 150,
+            isAlcoholic:
+                productsViewModel.IsAlcoholicProduct.toString() == "true",
           ),
         ),
       ),
@@ -106,6 +108,8 @@ Widget _portraitNameImagePluAndCombox({
                 plu: productsViewModel.PriceLookupCode,
                 height: MediaQuery.of(context).size.width / 3 - 20,
                 width: MediaQuery.of(context).size.width / 3,
+                isAlcoholic:
+                    productsViewModel.IsAlcoholicProduct.toString() == "true",
               ),
             ),
             _productNamePriceAndComplement(productsViewModel, context),

@@ -46,10 +46,11 @@ class DetachItems extends StatelessWidget {
               ImageWidget(
                 ean: product.EanCode,
                 plu: product.PriceLookupCode,
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width * 0.66,
                 height: MediaQuery.of(context).size.height,
                 beginAnimation: 1,
                 endAnimation: 1,
+                isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
               ),
               Container(
                 width: double.infinity,
@@ -69,16 +70,13 @@ class DetachItems extends StatelessWidget {
               Positioned(
                 bottom: 30,
                 left: 30,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.66,
-                  child: FittedBox(
-                    child: Text(
-                      product.Name.toUpperCase(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 60,
-                        color: Colors.white,
-                      ),
+                child: FittedBox(
+                  child: Text(
+                    product.Name.toUpperCase(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                      color: Colors.white,
                     ),
                   ),
                 ),

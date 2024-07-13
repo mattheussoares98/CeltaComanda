@@ -114,7 +114,7 @@ class MainActivity : FlutterActivity() {
             Log.e("Pagamentos", "Erro de validação do intent", ex)
             result.error("RedePaymentValidationError", "Erro de validação do intent", null)
         } catch (e: Exception) {
-            Log.e("Pagamentos", "failed to collect payment because ${e.message}", ex)
+            Log.e("Pagamentos", "failed to collect payment because ${e.message}")
             result.error("Unknown error", "failed to collect payment because ${e.message}", null)
         }
     }

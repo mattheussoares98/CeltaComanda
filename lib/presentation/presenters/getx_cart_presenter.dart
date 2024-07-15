@@ -642,6 +642,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.updateConfirmedCombox([]);
 
       await printedProductsPresenter.loadPrinted(informedCommandNumber);
+
+      await doCartToPrintedAnimation();
       return true;
     } on DomainError catch (e) {
       switch (e) {

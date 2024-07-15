@@ -2066,6 +2066,19 @@ void main() {
         ),
       ).called(1);
     });
+
+    test(
+        "Should emit correct values on cartAnimationStream when request products",
+        () async {
+      expectLater(sut.animateCartGoingToPrintedProductsStream,
+          emitsInOrder([true, false]));
+
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+    });
   });
 
   group("Confirmed combox products", () {

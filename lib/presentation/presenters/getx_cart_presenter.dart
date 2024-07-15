@@ -546,6 +546,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }) async {
     isLoading = true;
     mainError = null;
+    animateCartGoingToPrintedProducts = true;
     clear();
 
     try {
@@ -636,12 +637,15 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       );
 
       await confirmedCartProducts.updateValue(false);
-      _cartProducts.clear();
-      _confirmedCombox.clear();
+
       await cartInformations.clearCartProducts();
       await cartInformations.updateConfirmedCombox([]);
 
       await printedProductsPresenter.loadPrinted(informedCommandNumber);
+
+      _cartProducts.clear();
+      _confirmedCombox.clear();
+
       return true;
     } on DomainError catch (e) {
       switch (e) {
@@ -655,6 +659,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       return false;
     } finally {
       isLoading = false;
+      animateCartGoingToPrintedProducts = false;
       notifyListeners();
     }
   }
@@ -1008,13 +1013,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   Future<void> doCartToPrintedAnimation() async {
-    animateCartGoingToPrintedProducts = true;
-    await Future.delayed(
-        Duration(
-          milliseconds:
-              AnimationManager.animateNavigationBarItemDurationMilliseconds,
-        ), () {
-      animateCartGoingToPrintedProducts = false;
-    });
+    // animateCartGoingToPrintedProducts = true;
+    // await Future.delayed(
+    //     Duration(
+    //       milliseconds:
+    //           AnimationManager.animateNavigationBarItemDurationMilliseconds,
+    //     ), () {
+    //   // animateCartGoingToPrintedProducts = false;
+    // });
   }
 }

@@ -15,9 +15,8 @@ class CartGoingToPrintedAnimation extends StatefulWidget {
 class _CartGoingToPrintedAnimationState
     extends State<CartGoingToPrintedAnimation>
     with SingleTickerProviderStateMixin {
-  bool _isAnimatig = false;
-  AnimationController? _animationController;
-  Animation<double>? _animation;
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
 
   @override
   void initState() {
@@ -28,30 +27,14 @@ class _CartGoingToPrintedAnimationState
             AnimationManager.animateNavigationBarItemDurationMilliseconds,
       ),
       vsync: this,
-    );
+    )..repeat(); // Configura a animação para repetir indefinidamente e com reversão
 
-    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!);
-  }
-
-  void doAnimation() {
-    if (!_isAnimatig) {
-      _isAnimatig = true;
-      _animationController?.reset();
-      _animationController?.forward();
-
-      Future.delayed(
-          Duration(
-            milliseconds:
-                AnimationManager.animateNavigationBarItemDurationMilliseconds,
-          ), () {
-        _isAnimatig = false;
-      });
-    }
+    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController);
   }
 
   @override
   void dispose() {
-    _animationController?.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -61,38 +44,37 @@ class _CartGoingToPrintedAnimationState
     CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return StreamBuilder<bool>(
-        stream: cartPresenter.animateCartGoingToPrintedProductsStream,
-        builder: (context, snapshot) {
-          if (snapshot.data != true) {
-            return const SizedBox();
-          } else {
-            return AnimatedBuilder(
-              animation: _animation!,
-              builder: (context, child) {
-                doAnimation();
-
-                return Positioned(
-                  bottom: kBottomNavigationBarHeight / 2 + 10,
-                  left: (MediaQuery.of(context).size.width /
-                          (homePresenter.isGeneratingVersionToRede ? 9 : 8)) +
-                      (_animation!.value *
-                          ((MediaQuery.of(context).size.width /
-                                  (homePresenter.isGeneratingVersionToRede
-                                      ? 9
-                                      : 8)) *
-                              2)) -
-                      5,
-                  child: SizedBox(
-                    height: kBottomNavigationBarHeight / 2 - 5,
-                    width: kBottomNavigationBarHeight / 2 - 5,
-                    child: Image.asset(
-                      "lib/ui/assets/images/empty_cart.jpg",
-                    ),
+      stream: cartPresenter.animateCartGoingToPrintedProductsStream,
+      builder: (context, snapshot) {
+        if (snapshot.data != true) {
+          return const SizedBox(); // Retorna um SizedBox vazio se não há animação
+        } else {
+          return AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Positioned(
+                bottom: kBottomNavigationBarHeight / 2 + 10,
+                left: (MediaQuery.of(context).size.width /
+                        (homePresenter.isGeneratingVersionToRede ? 2.5 : 8)) +
+                    (_animation.value *
+                        ((MediaQuery.of(context).size.width /
+                                (homePresenter.isGeneratingVersionToRede
+                                    ? 2.5
+                                    : 8)) *
+                            0.7)) -
+                    5,
+                child: SizedBox(
+                  height: kBottomNavigationBarHeight / 2 - 5,
+                  width: kBottomNavigationBarHeight / 2 - 5,
+                  child: Image.asset(
+                    "lib/ui/assets/images/empty_cart.jpg",
                   ),
-                );
-              },
-            );
-          }
-        });
+                ),
+              );
+            },
+          );
+        }
+      },
+    );
   }
 }

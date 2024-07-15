@@ -25,7 +25,7 @@ class GroupItem extends StatelessWidget {
         return Center(
           child: FittedBox(
             child: Text(
-              expansibleGroupsViewModel.Name,
+              expansibleGroupsViewModel.Name.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: groupIsSelected ? Colors.white : Colors.grey,

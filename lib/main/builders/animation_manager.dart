@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 class AnimationManager {
   AnimationManager._();
 
-  static int animateProductGoingMenuToCartDurationMilliseconds = 1000;
+  static int animateNavigationBarItemDurationMilliseconds = 1000;
 
   static late AnimationController _controller;
   static late Animation<double> _animation;

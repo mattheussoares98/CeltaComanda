@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../main/builders/builders.dart';
 import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
@@ -19,52 +18,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with LoadingManager, UIErrorManager, SingleTickerProviderStateMixin {
+    with LoadingManager, UIErrorManager {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  AnimationController? _animationController;
-  Animation<double>? _animation;
 
   StreamSubscription? loadingSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: Duration(
-        milliseconds:
-            AnimationManager.animateProductGoingMenuToCartDurationMilliseconds,
-      ),
-      vsync: this,
-    );
-
-    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!);
-  }
-
-  bool _isAnimatig = false;
-
-  void doAnimation() {
-    if (!_isAnimatig) {
-      _isAnimatig = true;
-      _animationController?.reset();
-      _animationController?.forward();
-
-      Future.delayed(
-          Duration(
-            milliseconds: AnimationManager
-                .animateProductGoingMenuToCartDurationMilliseconds,
-          ), () {
-        _isAnimatig = false;
-      });
-    }
-  }
 
   @override
   void dispose() {
     loadingSubscription?.cancel();
     _pageController.dispose();
-    _animationController?.dispose();
     super.dispose();
   }
 
@@ -200,43 +164,7 @@ class _HomePageState extends State<HomePage>
               },
               currentIndex: _currentIndex,
             ),
-            StreamBuilder<bool>(
-                stream: cartPresenter.animateProductGoingMenuToCartStream,
-                builder: (context, snapshot) {
-                  if (snapshot.data != true) {
-                    return const SizedBox();
-                  } else {
-                    return AnimatedBuilder(
-                      animation: _animation!,
-                      builder: (context, child) {
-                        doAnimation();
-
-                        return Positioned(
-                          bottom: kBottomNavigationBarHeight / 2 + 10,
-                          left: (MediaQuery.of(context).size.width /
-                                  (homePresenter.isGeneratingVersionToRede
-                                      ? 7
-                                      : 6)) +
-                              (_animation!.value *
-                                  ((MediaQuery.of(context).size.width /
-                                          (homePresenter
-                                                  .isGeneratingVersionToRede
-                                              ? 7
-                                              : 6)) *
-                                      2)) -
-                              5,
-                          child: SizedBox(
-                            height: kBottomNavigationBarHeight / 2 - 5,
-                            width: kBottomNavigationBarHeight / 2 - 5,
-                            child: Image.asset(
-                              "lib/ui/assets/images/product_animation.png",
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                }),
+            const ProductGoingToMenuAnimation(),
           ],
         ),
       ),

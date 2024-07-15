@@ -991,7 +991,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     await Future.delayed(
         Duration(
           milliseconds: AnimationManager
-              .animateProductGoingMenuToCartDurationMilliseconds,
+              .animateNavigationBarItemDurationMilliseconds,
         ), () {
       animateProductGoingMenuToCart = false;
     });

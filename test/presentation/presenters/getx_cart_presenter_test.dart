@@ -2068,16 +2068,12 @@ void main() {
     });
 
     test(
-        "Should emit correct values on cartAnimationStream when request products",
+        "Should emit correct values on cartAnimationStream when doCartToPrintedAnimation",
         () async {
       expectLater(sut.animateCartGoingToPrintedProductsStream,
           emitsInOrder([true, false]));
 
-      await sut.saveProducts(
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-      );
+      await sut.doCartToPrintedAnimation();
     });
   });
 

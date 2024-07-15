@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage>
   Animation<double>? _animation;
 
   StreamSubscription? loadingSubscription;
-  StreamSubscription? mainErrorSubscription;
 
   @override
   void initState() {
@@ -64,7 +63,6 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     loadingSubscription?.cancel();
-    mainErrorSubscription?.cancel();
     _pageController.dispose();
     _animationController?.dispose();
     super.dispose();
@@ -106,19 +104,19 @@ class _HomePageState extends State<HomePage>
         CartPresenter cartPresenter = Provider.of(context, listen: false);
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-        await commentsPresenter.loadComments();
         await homePresenter.getLocalCommandData();
-
         if (homePresenter.isFixedCommandNumber) {
-          await loadCommandData(
-            printedProductsPresenter: printedProductsPresenter,
+          await printedProductsPresenter.loadCommandData(
             cartPresenter: cartPresenter,
             menuPresenter: menuPresenter,
             homePresenter: homePresenter,
+            clearPermissionToCancelProducts: true,
+            isRemovingProduct: false,
           );
         } else {
           await menuPresenter.getGroupsAndProducts("001");
         }
+        await commentsPresenter.loadComments();
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
@@ -129,21 +127,6 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  Future<void> loadCommandData({
-    required PrintedProductsPresenter printedProductsPresenter,
-    required CartPresenter cartPresenter,
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-  }) async {
-    await printedProductsPresenter.loadCommandData(
-      cartPresenter: cartPresenter,
-      menuPresenter: menuPresenter,
-      homePresenter: homePresenter,
-      clearPermissionToCancelProducts: true,
-      isRemovingProduct: false,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context);
@@ -151,6 +134,8 @@ class _HomePageState extends State<HomePage>
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+
+    loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
 
     final List<Widget> screens = [
       makeMenusPage(homePresenter.isFixedCommandNumber),

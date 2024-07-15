@@ -70,7 +70,7 @@ class SaveComboxButton extends StatelessWidget {
                             });
                             Future.delayed(const Duration(microseconds: 500),
                                 () async {
-                              await cartPresenter.doAnimation();
+                              await cartPresenter.doProductToCartAnimation();
                             });
                           }
                         },

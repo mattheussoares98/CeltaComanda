@@ -9,6 +9,7 @@ abstract class CartPresenter implements ChangeNotifier {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<bool> get animateProductGoingMenuToCartStream;
+  Stream<bool> get animateCartGoingToPrintedProductsStream;
   int? get indexOfSelectedProduct;
   String get totalSaleRequestTempPrice;
 
@@ -109,5 +110,5 @@ abstract class CartPresenter implements ChangeNotifier {
     required CartProductEntity product,
   });
 
-  Future<void> doAnimation();
+  Future<void> doProductToCartAnimation();
 }

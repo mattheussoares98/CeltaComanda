@@ -116,9 +116,28 @@ Widget _defaultImage({
   required double height,
   required double width,
 }) {
-  return Image.asset(
-    "lib/ui/assets/images/logo_eat_asia.png",
+  final url =
+      "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo.png";
+  return CachedNetworkImage(
+    fit: BoxFit.contain,
+    cacheManager: ImageWidget._customCacheManager,
+    key: ValueKey<String>(url),
+    imageUrl: url,
     height: height,
     width: width,
+    errorWidget: (context, url, error) {
+      return Image.asset(
+        "lib/ui/assets/images/imageNotFound.png",
+        height: height,
+        width: width,
+      );
+    },
+    placeholder: (context, url) {
+      return Image.asset(
+        "lib/ui/assets/images/imageNotFound.png",
+        height: height,
+        width: width,
+      );
+    },
   );
 }

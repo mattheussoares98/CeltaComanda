@@ -165,6 +165,7 @@ class _HomePageState extends State<HomePage>
               currentIndex: _currentIndex,
             ),
             const ProductGoingToMenuAnimation(),
+            const CartGoingToPrintedAnimation(),
           ],
         ),
       ),

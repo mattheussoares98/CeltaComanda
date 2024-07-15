@@ -45,7 +45,7 @@ class _ImageWidgetState extends State<ImageWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
-          flex: 7,
+          flex: 2,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: AnimatedBuilder(

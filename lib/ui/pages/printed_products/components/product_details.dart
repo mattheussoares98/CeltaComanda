@@ -32,87 +32,91 @@ class ProductDetails extends StatelessWidget {
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Column(
-      children: [
-        Row(
-          children: [
-            SizedBox(
-              height: 50,
-              width: 50,
-              child: GestureDetector(
-                onTap: () {
-                  showLargeImage(
-                    context: context,
+    return Expanded(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: GestureDetector(
+                  onTap: () {
+                    showLargeImage(
+                      context: context,
+                      ean: product.EanCode,
+                      productComplement: product.ProductComplement,
+                      plu: product.PriceLookupCode,
+                      menuPresenter: menuPresenter,
+                      productName: product.Name,
+                      selectedProduct: product,
+                    );
+                  },
+                  child: ImageWidget(
                     ean: product.EanCode,
-                    productComplement: product.ProductComplement,
                     plu: product.PriceLookupCode,
-                    menuPresenter: menuPresenter,
-                    productName: product.Name,
-                    selectedProduct: product,
-                  );
-                },
-                child: ImageWidget(
-                  ean: product.EanCode,
-                  plu: product.PriceLookupCode,
-                  isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                product.Name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "$quantity ",
-                        style: TextStyle(
-                          fontSize: getStringSize(context) * 0.8,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: printedProductsPresenter.canCancelProducts
-                            ? onPressedRemoveProduct
-                            : validateUserAndCancelProducts,
-                        child: Icon(
-                          Icons.delete,
-                          color: printedProductsPresenter.canCancelProducts
-                              ? Colors.red
-                              : Colors.grey,
-                          size: 30,
-                        ),
-                      ),
-                    ],
+                    isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
                   ),
-                  FittedBox(
-                    child: Text(
-                      totalLiquid.addBrazilianCoin(),
-                      style: TextStyle(
-                        fontSize: getStringSize(context) * 0.9,
-                        fontWeight: FontWeight.bold,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Text(
+                  product.Name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "$quantity ",
+                            style: TextStyle(
+                              fontSize: getStringSize(context) * 0.8,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: printedProductsPresenter.canCancelProducts
+                                ? onPressedRemoveProduct
+                                : validateUserAndCancelProducts,
+                            child: Icon(
+                              Icons.delete,
+                              color: printedProductsPresenter.canCancelProducts
+                                  ? Colors.red
+                                  : Colors.grey,
+                              size: 30,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                    FittedBox(
+                      child: Text(
+                        totalLiquid.addBrazilianCoin(),
+                        style: TextStyle(
+                          fontSize: getStringSize(context) * 0.9,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-        if (comments != null) CommentRichText(comment: comments!),
-      ],
+            ],
+          ),
+          if (comments != null) CommentRichText(comment: comments!),
+        ],
+      ),
     );
   }
 }

@@ -99,18 +99,12 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                     ),
                     const SizedBox(width: 8),
                     FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: getStringSize(context) * 0.8,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        "Qtd: ${combox.Quantity.toString().toBrazilianNumber()}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: getStringSize(context) * 0.8,
+                        ),
                       ),
                     ),
                   ],

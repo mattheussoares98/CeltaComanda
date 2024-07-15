@@ -47,28 +47,32 @@ class _PriceAndUpdateProductQuantityState
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[300],
-                ),
-                child: UpdateQuantity(
-                  showDeleteIcon: widget.showDeleteIcon,
-                  productQuantity: widget.productQuantity,
-                  onPressedReduceQuantity: widget.onPressedReduceQuantity,
-                  onPressedAddQuantity: widget.onPressedAddQuantity,
-                  iconSize: getStringSize(context),
+              FittedBox(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[300],
+                  ),
+                  child: UpdateQuantity(
+                    showDeleteIcon: widget.showDeleteIcon,
+                    productQuantity: widget.productQuantity,
+                    onPressedReduceQuantity: widget.onPressedReduceQuantity,
+                    onPressedAddQuantity: widget.onPressedAddQuantity,
+                    iconSize: getStringSize(context),
+                  ),
                 ),
               ),
-              Text(
-                widget.totalLiquid
-                    .toString()
-                    .toBrazilianNumber()
-                    .addBrazilianCoin(),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                  fontSize: getStringSize(context),
+              FittedBox(
+                child: Text(
+                  widget.totalLiquid
+                      .toString()
+                      .toBrazilianNumber()
+                      .addBrazilianCoin(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                    fontSize: getStringSize(context),
+                  ),
                 ),
               ),
             ],

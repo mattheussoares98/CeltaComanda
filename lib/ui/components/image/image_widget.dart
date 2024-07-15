@@ -104,30 +104,21 @@ Widget _cachedImage({
     height: height,
     width: width,
     errorWidget: (context, url, error) {
-      return _imageNotExists(height: height, width: width);
+      return _defaultImage(height: height, width: width);
     },
     placeholder: (context, url) {
-      return _loadingImage();
+      return _defaultImage(height: height, width: width);
     },
   );
 }
 
-Widget _imageNotExists({
+Widget _defaultImage({
   required double height,
   required double width,
 }) {
   return Image.asset(
-    "lib/ui/assets/images/imageNotFound.png",
+    "lib/ui/assets/images/logo_eat_asia.png",
     height: height,
     width: width,
-  );
-}
-
-Widget _loadingImage() {
-  return const Padding(
-    padding: EdgeInsets.all(8.0),
-    child: CircularProgressIndicator(
-      strokeWidth: 2,
-    ),
   );
 }

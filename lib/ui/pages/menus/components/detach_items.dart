@@ -70,13 +70,16 @@ class DetachItems extends StatelessWidget {
               Positioned(
                 bottom: 30,
                 left: 30,
-                child: FittedBox(
-                  child: Text(
-                    product.Name.toUpperCase(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40,
-                      color: Colors.white,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: FittedBox(
+                    child: Text(
+                      product.Name.toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

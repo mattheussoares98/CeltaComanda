@@ -20,15 +20,16 @@ class _ProductsItemsState extends State<ProductsItems> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: (widget.products.length / getItensPerLine(context)).ceil(),
+      itemCount:
+          (widget.products.length / (hasMinWidth(context) ? 3 : 2)).ceil(),
       itemBuilder: (context, rowIndex) {
         return IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = rowIndex * getItensPerLine(context);
-                  i < (rowIndex + 1) * getItensPerLine(context);
+              for (int i = rowIndex * (hasMinWidth(context) ? 3 : 2);
+                  i < (rowIndex + 1) * (hasMinWidth(context) ? 3 : 2);
                   i++)
                 if (i < widget.products.length)
                   ProductItem(

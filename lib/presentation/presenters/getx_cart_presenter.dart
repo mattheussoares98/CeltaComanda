@@ -1005,4 +1005,16 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   @override
   Stream<bool> get animateCartGoingToPrintedProductsStream =>
       _animateCartGoingToPrintedProducts.stream;
+
+  @override
+  Future<void> doCartToPrintedAnimation() async {
+    animateCartGoingToPrintedProducts = true;
+    await Future.delayed(
+        Duration(
+          milliseconds:
+              AnimationManager.animateNavigationBarItemDurationMilliseconds,
+        ), () {
+      animateCartGoingToPrintedProducts = false;
+    });
+  }
 }

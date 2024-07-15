@@ -111,4 +111,5 @@ abstract class CartPresenter implements ChangeNotifier {
   });
 
   Future<void> doProductToCartAnimation();
+  Future<void> doCartToPrintedAnimation();
 }

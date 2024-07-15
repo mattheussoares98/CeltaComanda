@@ -11,14 +11,12 @@ class PrintedItem extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController personalizedCodeController;
   final TextEditingController passwordController;
-  final int itensPerLine;
 
   const PrintedItem({
     required this.printed,
     required this.formKey,
     required this.personalizedCodeController,
     required this.passwordController,
-    required this.itensPerLine,
     super.key,
   });
 
@@ -53,15 +51,15 @@ class PrintedItem extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: (printed.Products.length / itensPerLine).ceil(),
+              itemCount: (printed.Products.length / getItensPerLine(context)).ceil(),
               itemBuilder: (context, index) {
                 return IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-                      for (int i = index * itensPerLine;
-                          i < (index + 1) * itensPerLine;
+                      for (int i = index * getItensPerLine(context);
+                          i < (index + 1) * getItensPerLine(context);
                           i++)
                         if (i < printed.Products.length)
                           Expanded(

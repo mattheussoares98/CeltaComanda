@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class ConfirmedChildAndFatherItems extends StatelessWidget {
   final List<ConfirmedComboxViewModel> confirmedsCombox;
-  final int itensPerLine;
   const ConfirmedChildAndFatherItems({
     required this.confirmedsCombox,
-    required this.itensPerLine,
     super.key,
   });
 
@@ -16,15 +15,15 @@ class ConfirmedChildAndFatherItems extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: (confirmedsCombox.length / itensPerLine).ceil(),
+      itemCount: (confirmedsCombox.length / getItensPerLine(context)).ceil(),
       itemBuilder: (context, index) {
         return IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = index * itensPerLine;
-                  i < (index + 1) * itensPerLine;
+              for (int i = index * getItensPerLine(context);
+                  i < (index + 1) * getItensPerLine(context);
                   i++)
                 if (i < confirmedsCombox.length)
                   Expanded(

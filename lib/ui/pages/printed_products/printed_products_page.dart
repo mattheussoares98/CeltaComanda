@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../../ui/helpers/helpers.dart';
 import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -84,7 +83,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         formKey: formKey,
                         passwordController: passwordController,
                         personalizedCodeController: personalizedCodeController,
-                        itensPerLine: hasMinWidth(context) ? 3 : 1,
                       )
                     : SearchDataByCommandNumber(
                         homePresenter: homePresenter,

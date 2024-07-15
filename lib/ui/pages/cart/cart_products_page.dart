@@ -65,13 +65,11 @@ class _CartPageState extends State<CartPage>
                               if (cartPresenter.cartProducts.isNotEmpty)
                                 CartProductsItems(
                                   cartProducts: cartPresenter.cartProducts,
-                                  itensPerLine: hasMinWidth(context) ? 3 : 1,
                                 ),
                               if (cartPresenter.confirmedCombox.isNotEmpty)
                                 ConfirmedChildAndFatherItems(
                                   confirmedsCombox:
                                       cartPresenter.confirmedCombox,
-                                  itensPerLine: hasMinWidth(context) ? 3 : 1,
                                 ),
                             ],
                           )

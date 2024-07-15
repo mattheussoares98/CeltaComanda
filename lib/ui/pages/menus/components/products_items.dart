@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class ProductsItems extends StatefulWidget {
   final List<ProductsViewModel> products;
-  final int itensPerLine;
   final ProductsViewModel? selectedProduct;
   const ProductsItems({
     required this.products,
-    required this.itensPerLine,
     required this.selectedProduct,
     super.key,
   });
@@ -21,15 +20,15 @@ class _ProductsItemsState extends State<ProductsItems> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: (widget.products.length / widget.itensPerLine).ceil(),
+      itemCount: (widget.products.length / getItensPerLine(context)).ceil(),
       itemBuilder: (context, rowIndex) {
         return IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = rowIndex * widget.itensPerLine;
-                  i < (rowIndex + 1) * widget.itensPerLine;
+              for (int i = rowIndex * getItensPerLine(context);
+                  i < (rowIndex + 1) * getItensPerLine(context);
                   i++)
                 if (i < widget.products.length)
                   ProductItem(

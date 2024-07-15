@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../helpers/helpers.dart';
 
 class ChildsItemsRadioListTile extends StatefulWidget {
   final ProductCompositionViewModel father;
   final bool isFixedItemInCombox;
   final List<ProductCompositionViewModel> productsCompositionsViewModel;
-  final int itensPerLine;
   const ChildsItemsRadioListTile({
     required this.father,
     required this.isFixedItemInCombox,
     required this.productsCompositionsViewModel,
-    required this.itensPerLine,
     super.key,
   });
 
@@ -53,7 +52,7 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
       scrollDirection: Axis.vertical,
       itemCount: widget.isFixedItemInCombox
           ? 1
-          : (widget.father.childs!.length / widget.itensPerLine).ceil(),
+          : (widget.father.childs!.length / getItensPerLine(context)).ceil(),
       itemBuilder: (context, childIndex) {
         if (widget.isFixedItemInCombox &&
             widget.father.IsOptionalItem == "false") {
@@ -66,8 +65,8 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = childIndex * widget.itensPerLine;
-                  i < (childIndex + 1) * widget.itensPerLine;
+              for (int i = childIndex * getItensPerLine(context);
+                  i < (childIndex + 1) * getItensPerLine(context);
                   i++)
                 if (i < widget.father.childs!.length)
                   ChildItemRadioListTile(

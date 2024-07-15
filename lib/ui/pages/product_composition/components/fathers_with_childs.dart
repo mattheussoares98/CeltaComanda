@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
@@ -21,15 +20,6 @@ class FathersWithChilds extends StatefulWidget {
 
 class _FathersWithChildsState extends State<FathersWithChilds> {
   int selectedIndex = -1;
-  int _getItensPerLine() {
-    if (MediaQuery.of(context).size.width > 1000) {
-      return 3;
-    } else if (hasMinWidth(context)) {
-      return 2;
-    } else {
-      return 1;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +56,6 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
               if (widget.father.commentFather != null)
                 CommentRichText(comment: widget.father.commentFather!),
               ChildsItemsRadioListTile(
-                itensPerLine: _getItensPerLine(),
                 productsCompositionsViewModel: widget.productsCompositions,
                 isFixedItemInCombox: widget.father.childs?.isEmpty == true,
                 father: widget.father,

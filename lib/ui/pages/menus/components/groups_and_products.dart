@@ -52,7 +52,6 @@ class GroupsAndProducts extends StatelessWidget {
             Expanded(
               flex: 80,
               child: ProductsItems(
-                itensPerLine: 2,
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,
                 selectedProduct: selectedProduct,

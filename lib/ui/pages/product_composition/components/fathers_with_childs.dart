@@ -23,45 +23,43 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(2, 2),
-              color: Color.fromARGB(255, 209, 208, 208),
-              blurRadius: 8,
+    return Container(
+      margin: const EdgeInsets.only(top: 5),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(2, 2),
+            color: Color.fromARGB(255, 209, 208, 208),
+            blurRadius: 8,
+          ),
+          BoxShadow(
+            offset: Offset(-2, -2),
+            color: Color.fromARGB(255, 209, 208, 208),
+            blurRadius: 8,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FixedFatherDetails(
+              father: widget.father,
+              callSetState: () {
+                setState(() {});
+              },
             ),
-            BoxShadow(
-              offset: Offset(-2, -2),
-              color: Color.fromARGB(255, 209, 208, 208),
-              blurRadius: 8,
+            if (widget.father.commentFather != null)
+              CommentRichText(comment: widget.father.commentFather!),
+            ChildsItemsRadioListTile(
+              productsCompositionsViewModel: widget.productsCompositions,
+              isFixedItemInCombox: widget.father.childs?.isEmpty == true,
+              father: widget.father,
             ),
           ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FixedFatherDetails(
-                father: widget.father,
-                callSetState: () {
-                  setState(() {});
-                },
-              ),
-              if (widget.father.commentFather != null)
-                CommentRichText(comment: widget.father.commentFather!),
-              ChildsItemsRadioListTile(
-                productsCompositionsViewModel: widget.productsCompositions,
-                isFixedItemInCombox: widget.father.childs?.isEmpty == true,
-                father: widget.father,
-              ),
-            ],
-          ),
         ),
       ),
     );

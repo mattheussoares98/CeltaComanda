@@ -64,7 +64,10 @@ class ChildItemRadioListTile extends StatelessWidget {
                   flex: 3,
                   child: Text(
                     child!.ChildName!,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: getStringSize(context),
+                    ),
                   ),
                 ),
               Expanded(

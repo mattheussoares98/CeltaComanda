@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,27 +31,17 @@ class TitleAppbar extends StatelessWidget {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 5,
                         child: AlertDialog(
-                          insetPadding: const EdgeInsets.symmetric(
+                          insetPadding: EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 5,
                           ),
-                          content: Row(
-                            children: [
-                              Expanded(
-                                child: Image.asset(
-                                  "lib/ui/assets/images/logo_eat_asia.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Image.asset(
-                                  "lib/ui/assets/images/hello_kitty.jpeg",
-                                ),
-                              ),
-                            ],
+                          content: ImageWidget(
+                            ean: null,
+                            plu: "null",
+                            isAlcoholic: false,
                           ),
                         ),
                       ),
@@ -71,19 +62,17 @@ class TitleAppbar extends StatelessWidget {
                   );
                 });
           },
-          child: Row(
-            children: [
-              Image.asset(
-                "lib/ui/assets/images/logo_eat_asia.png",
-                height: AppBar().preferredSize.height - 20,
-                width: AppBar().preferredSize.height - 20,
+          child: SizedBox(
+            height: AppBar().preferredSize.height,
+            width: AppBar().preferredSize.height,
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ImageWidget(
+                ean: null,
+                plu: "null",
+                isAlcoholic: false,
               ),
-              Image.asset(
-                "lib/ui/assets/images/hello_kitty.jpeg",
-                height: AppBar().preferredSize.height,
-                width: AppBar().preferredSize.height,
-              ),
-            ],
+            ),
           ),
         ),
         if (homePresenter.commandNumber != null)

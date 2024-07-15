@@ -225,8 +225,7 @@ class _HomePageState extends State<HomePage>
                                               : 6)) *
                                       2)) -
                               5,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
+                          child: SizedBox(
                             height: kBottomNavigationBarHeight / 2 - 5,
                             width: kBottomNavigationBarHeight / 2 - 5,
                             child: Image.asset(

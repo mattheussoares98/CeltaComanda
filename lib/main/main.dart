@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../main/builders/builders.dart';
 import '../infra/helpers/helperts.dart';
@@ -16,13 +17,19 @@ import 'factories/factories.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   await Hive.openBox(CacheKeys.hiveBoxName.name);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  WakelockPlus.enable();
+
   runApp(const App());
 }
 

@@ -21,7 +21,7 @@ class _CartGoingToPrintedAnimationState
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 10000),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     )..repeat(); // Configura a animação para repetir indefinidamente e com reversão
 

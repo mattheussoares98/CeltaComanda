@@ -13,7 +13,7 @@ class CartNotEmptyInteraction {
     listen: false,
   );
 
-  static const _duration = Duration(seconds: 10);
+  static const _duration = Duration(seconds: 60);
   static Timer _timer =
       Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
 

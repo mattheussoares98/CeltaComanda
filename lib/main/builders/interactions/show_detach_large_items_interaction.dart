@@ -11,7 +11,7 @@ class ShowDetachLargeItemsInteraction {
     NavigatorKey.navigatorKey.currentState!.context,
     listen: false,
   );
-  static const _duration = Duration(seconds: 20);
+  static const _duration = Duration(seconds: 300);
   static Timer _timer =
       Timer.periodic(_duration, (_) => _showLargeDetachItems());
 

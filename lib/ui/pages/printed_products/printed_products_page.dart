@@ -102,33 +102,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               ),
             ),
             if (printedProductsPresenter.printedProducts != null)
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: totalPriceContainerHeight,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  margin: const EdgeInsets.only(bottom: 3),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                        color: const Color.fromARGB(255, 220, 218, 218)),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 10,
-                        color: Color(0x33000000),
-                        offset: Offset(-3, -1),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: RequestSummary(
-                    totalLiquid:
-                        printedProductsPresenter.printedProducts!.TotalLiquid,
-                    comments:
-                        printedProductsPresenter.printedProducts!.Comments,
-                  ),
-                ),
+              const RequestSummary(
+                totalPriceContainerHeight: totalPriceContainerHeight,
               ),
           ],
         ),

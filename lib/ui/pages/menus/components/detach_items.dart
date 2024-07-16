@@ -8,10 +8,10 @@ import '../../pages.dart';
 
 class DetachItems extends StatelessWidget {
   final List<ProductsViewModel> products;
-  final bool? showLargeImageOnTap;
+  final bool? popOnImageClick;
   const DetachItems({
     required this.products,
-    this.showLargeImageOnTap = true,
+    this.popOnImageClick = false,
     super.key,
   });
 
@@ -31,20 +31,21 @@ class DetachItems extends StatelessWidget {
       ),
       items: products.map((product) {
         return InkWell(
-          onTap: showLargeImageOnTap != true
-              ? null
-              : () {
-                  showLargeImage(
-                    context: context,
-                    ean: product.EanCode,
-                    productComplement: product.ProductComplement,
-                    plu: product.PriceLookupCode,
-                    menuPresenter: menuPresenter,
-                    productName: product.Name,
-                    selectedProduct: product,
-                    showInsertButton: true,
-                  );
-                },
+          onTap: () {
+            if (popOnImageClick == true) {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            }
+            showLargeImage(
+              context: context,
+              ean: product.EanCode,
+              productComplement: product.ProductComplement,
+              plu: product.PriceLookupCode,
+              menuPresenter: menuPresenter,
+              productName: product.Name,
+              selectedProduct: product,
+              showInsertButton: true,
+            );
+          },
           child: Stack(
             children: [
               ImageWidget(

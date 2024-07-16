@@ -35,28 +35,44 @@ class ShowDetachLargeItemsInteraction {
     showDialog(
       context: NavigatorKey.navigatorKey.currentState!.context,
       builder: (context) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: AlertDialog(
-            contentPadding: const EdgeInsets.all(0),
-            insetPadding: const EdgeInsets.all(0),
-            content: SizedBox(
-              height:
-                  MediaQuery.of(NavigatorKey.navigatorKey.currentState!.context)
-                      .size
-                      .height,
-              width:
-                  MediaQuery.of(NavigatorKey.navigatorKey.currentState!.context)
-                      .size
-                      .width,
-              child: DetachItems(
-                showLargeImageOnTap: false,
-                products: menuPresenter.loadedMenu[0].entries.first.value,
+        return Stack(
+          children: [
+            AlertDialog(
+              contentPadding: const EdgeInsets.all(0),
+              insetPadding: const EdgeInsets.all(0),
+              content: SizedBox(
+                height: MediaQuery.of(
+                        NavigatorKey.navigatorKey.currentState!.context)
+                    .size
+                    .height,
+                width: MediaQuery.of(
+                        NavigatorKey.navigatorKey.currentState!.context)
+                    .size
+                    .width,
+                child: DetachItems(
+                  popOnImageClick: true,
+                  products: menuPresenter.loadedMenu[0].entries.first.value,
+                ),
               ),
             ),
-          ),
+            Positioned(
+              top: 30,
+              right: 30,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const CircleAvatar(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  child: Icon(
+                    Icons.close,
+                    size: 40,
+                  ),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );

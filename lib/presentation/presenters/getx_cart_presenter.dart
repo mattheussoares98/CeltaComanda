@@ -641,6 +641,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.clearCartProducts();
       await cartInformations.updateConfirmedCombox([]);
 
+      await Future.delayed(const Duration(seconds: 3));
       await printedProductsPresenter.loadPrinted(informedCommandNumber);
 
       _cartProducts.clear();
@@ -659,7 +660,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       return false;
     } finally {
       isLoading = false;
-      await Future.delayed(const Duration(seconds: 5));
       animateCartGoingToPrintedProducts = false;
       notifyListeners();
     }

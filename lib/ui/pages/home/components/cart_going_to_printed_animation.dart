@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../main/builders/builders.dart';
 import '../../pages.dart';
 
 class CartGoingToPrintedAnimation extends StatefulWidget {
@@ -22,10 +21,7 @@ class _CartGoingToPrintedAnimationState
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(
-        milliseconds:
-            AnimationManager.animateNavigationBarItemDurationMilliseconds,
-      ),
+      duration: const Duration(milliseconds: 10000),
       vsync: this,
     )..repeat(); // Configura a animação para repetir indefinidamente e com reversão
 
@@ -55,19 +51,19 @@ class _CartGoingToPrintedAnimationState
               return Positioned(
                 bottom: kBottomNavigationBarHeight / 2 + 10,
                 left: (MediaQuery.of(context).size.width /
-                        (homePresenter.isGeneratingVersionToRede ? 2.5 : 2)) +
+                        (homePresenter.isGeneratingVersionToRede ? 2.5 : 2.1)) +
                     (_animation.value *
                         ((MediaQuery.of(context).size.width /
                                 (homePresenter.isGeneratingVersionToRede
                                     ? 2.5
-                                    : 2)) *
+                                    : 2.1)) *
                             0.7)) -
                     5,
                 child: SizedBox(
                   height: kBottomNavigationBarHeight / 2 - 5,
                   width: kBottomNavigationBarHeight / 2 - 5,
                   child: Image.asset(
-                    "lib/ui/assets/images/empty_cart.jpg",
+                    "lib/ui/assets/images/cart_animation.png",
                   ),
                 ),
               );

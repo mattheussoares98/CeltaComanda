@@ -133,7 +133,7 @@ Future<void> _onPress({
       Future.delayed(Duration.zero, () {
         showAlertMessage(
           context,
-          "Os produtos foram solicitados com sucesso",
+          "O pedido foi enviado com sucesso",
         );
       });
     }

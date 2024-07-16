@@ -36,7 +36,7 @@ class MainActivity : FlutterActivity() {
             // Verificando se os argumentos são do tipo esperado
             val argumentsWithFlutter = call.arguments as? Map<*, *>
             argumentsWithFlutter?.let {
-                val longAmountValue = ((it["longAmountValue"] as? Int)?.toLong() ?: 0L) * 10
+                val longAmountValue = (it["longAmountValue"] as? Int)?.toLong() ?: 0L
                 val portionQuantity = it["portionQuantity"] as? Int ?: 0
                 when (call.method) {
                     "startRedeSdk" -> {

@@ -57,6 +57,7 @@ Widget _portraitLargeImage({
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.end,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       IconButton(
         onPressed: () {

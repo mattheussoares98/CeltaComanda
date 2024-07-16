@@ -1,9 +1,9 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../home.dart';
+import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
+import '../../pages.dart';
 
 class TitleAppbar extends StatelessWidget {
   final void Function() loadMenuAgain;
@@ -27,24 +27,12 @@ class TitleAppbar extends StatelessWidget {
           onTap: () {
             showDialog(
                 context: context,
+                barrierDismissible: false,
                 builder: (context) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Expanded(
-                        flex: 5,
-                        child: AlertDialog(
-                          insetPadding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-                          content: ImageWidget(
-                            ean: null,
-                            plu: "null",
-                            isAlcoholic: false,
-                          ),
-                        ),
-                      ),
                       IconButton(
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -55,6 +43,34 @@ class TitleAppbar extends StatelessWidget {
                           child: Icon(
                             Icons.close,
                             size: 40,
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        child: AlertDialog(
+                          alignment: Alignment.topCenter,
+                          insetPadding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          content: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: ImageWidget(
+                                    ean: null,
+                                    plu: "",
+                                    height: MediaQuery.of(context).size.height,
+                                    width: MediaQuery.of(context).size.width,
+                                    isAlcoholic: false,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

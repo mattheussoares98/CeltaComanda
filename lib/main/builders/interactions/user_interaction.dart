@@ -9,7 +9,6 @@ import '../../../ui/pages/pages.dart';
 class UserInteraction {
   UserInteraction._();
 
-  static const timerJumpToMenuPage = Duration(seconds: 20);
   static const timerShowLargeDetachItems = Duration(seconds: 30);
 
   static CartPresenter cartPresenter = Provider.of(
@@ -23,34 +22,18 @@ class UserInteraction {
 
   static void cancelTimes() {
     CartNotEmptyInteraction.cancelTime();
-    _timerToNavigateToMenuPage.cancel();
+    JumpToManuPageInteraction.cancelTime();
     _timerToShowLargeDetachItems.cancel();
-  }
-
-  static void _goToFirstPage() {
-    Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
-        .popUntil((route) => route.isFirst);
   }
 
   static void handleHomeInteraction([PageController? pageController]) {
     cancelTimes();
 
     CartNotEmptyInteraction.restartTime(pageController);
-
-    _timerToNavigateToMenuPage = Timer.periodic(
-        timerJumpToMenuPage, (_) => _jumpToMenuPage(pageController));
+    JumpToManuPageInteraction.restartTime(pageController);
 
     _timerToShowLargeDetachItems = Timer.periodic(
         timerShowLargeDetachItems, (_) => _showLargeDetachItems());
-  }
-
-  static void _jumpToMenuPage(PageController? pageController) {
-    _goToFirstPage();
-
-    if (pageController != null) {
-      pageController.jumpToPage(0);
-      _timerToNavigateToMenuPage.cancel();
-    }
   }
 
   static bool _hasDetachGroup(MenuPresenter menuPresenter) {
@@ -100,9 +83,6 @@ class UserInteraction {
 
     _timerToShowLargeDetachItems.cancel();
   }
-
-  static Timer _timerToNavigateToMenuPage =
-      Timer.periodic(timerJumpToMenuPage, (_) => _jumpToMenuPage(null));
 
   static Timer _timerToShowLargeDetachItems =
       Timer.periodic(timerShowLargeDetachItems, (_) => _showLargeDetachItems());

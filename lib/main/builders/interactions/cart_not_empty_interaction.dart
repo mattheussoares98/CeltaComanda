@@ -31,6 +31,11 @@ class CartNotEmptyInteraction {
   static void _showCartNotEmptyMessage() {
     _timer.cancel();
 
+    if (cartPresenter.confirmedCombox.isEmpty &&
+        cartPresenter.cartProducts.isEmpty) {
+      return;
+    }
+
     Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
         .popUntil((route) => route.isFirst);
 
@@ -38,13 +43,10 @@ class CartNotEmptyInteraction {
       pageControllerOfMenuPage!.jumpToPage(1);
     }
 
-    if (cartPresenter.confirmedCombox.isNotEmpty ||
-        cartPresenter.cartProducts.isNotEmpty) {
-      showErrorMessage(
-        NavigatorKey.navigatorKey.currentState!.context,
-        "Há produtos no carrinho que não foram enviados ainda. Pode ser que você tenha esquecido de enviar",
-        duration: const Duration(seconds: 6),
-      );
-    }
+    showErrorMessage(
+      NavigatorKey.navigatorKey.currentState!.context,
+      "Há produtos no carrinho que não foram enviados ainda. Pode ser que você tenha esquecido de enviar",
+      duration: const Duration(seconds: 6),
+    );
   }
 }

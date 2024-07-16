@@ -1598,6 +1598,8 @@ void main() {
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.animateCartGoingToPrintedProductsStream,
+          emitsInOrder([true, false]));
 
       await sut.saveProducts(
         printedProductsPresenter: printedProductsPresenter,
@@ -2065,15 +2067,6 @@ void main() {
           commandNumber: fixedCommandNumber,
         ),
       ).called(1);
-    });
-
-    test(
-        "Should emit correct values on cartAnimationStream when doCartToPrintedAnimation",
-        () async {
-      expectLater(sut.animateCartGoingToPrintedProductsStream,
-          emitsInOrder([true, false]));
-
-      await sut.doCartToPrintedAnimation();
     });
   });
 

@@ -73,7 +73,9 @@ class _CartPageState extends State<CartPage>
                                 ),
                             ],
                           )
-                        : EmptyCart(pageController: widget.pageController!)),
+                        : EmptyCart(
+                            pageController:
+                                widget.pageController ?? PageController())),
               ),
             ),
             Visibility(

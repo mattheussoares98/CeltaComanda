@@ -659,6 +659,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       return false;
     } finally {
       isLoading = false;
+      await Future.delayed(const Duration(seconds: 5));
       animateCartGoingToPrintedProducts = false;
       notifyListeners();
     }

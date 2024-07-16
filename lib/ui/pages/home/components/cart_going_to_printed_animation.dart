@@ -55,12 +55,12 @@ class _CartGoingToPrintedAnimationState
               return Positioned(
                 bottom: kBottomNavigationBarHeight / 2 + 10,
                 left: (MediaQuery.of(context).size.width /
-                        (homePresenter.isGeneratingVersionToRede ? 2.5 : 8)) +
+                        (homePresenter.isGeneratingVersionToRede ? 2.5 : 2)) +
                     (_animation.value *
                         ((MediaQuery.of(context).size.width /
                                 (homePresenter.isGeneratingVersionToRede
                                     ? 2.5
-                                    : 8)) *
+                                    : 2)) *
                             0.7)) -
                     5,
                 child: SizedBox(

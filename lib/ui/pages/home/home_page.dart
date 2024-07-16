@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
@@ -107,66 +108,75 @@ class _HomePageState extends State<HomePage>
       makePrintedProductsPage(homePresenter.isFixedCommandNumber),
       if (homePresenter.isGeneratingVersionToRede) makePaymentPage(),
     ];
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        notificationDialog(
-          context: context,
-          titleMessage: "Fechar aplicativo",
-          content: const Text("Deseja realmente fechar o aplicativo?"),
-          onPress: () async {
-            SystemNavigator.pop();
-          },
-        );
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        UserInteraction.handleUserInteraction(_pageController);
       },
-      child: Scaffold(
-        key: scaffoldKey,
-        drawer: drawer(
-          context: context,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          homePresenter: homePresenter,
-        ),
-        appBar: homeAppBar(
-          homePresenter: homePresenter,
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          context: context,
-          scaffoldKey: scaffoldKey,
-          currentIndex: _currentIndex,
-        ),
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            onPageChanged(
-              index: index,
-              printedProductsPresenter: printedProductsPresenter,
-              menuPresenter: menuPresenter,
-              homePresenter: homePresenter,
-              commentsPresenter: commentsPresenter,
-            );
-          },
-          children: screens,
-        ),
-        bottomNavigationBar: Stack(
-          children: [
-            HomeBottomNavigationBarItem(
-              onPageChanged: (value) {
-                onPageChanged(
-                  index: value,
-                  printedProductsPresenter: printedProductsPresenter,
-                  homePresenter: homePresenter,
-                  menuPresenter: menuPresenter,
-                  commentsPresenter: commentsPresenter,
-                );
-              },
-              currentIndex: _currentIndex,
-            ),
-            const ProductGoingToMenuAnimation(),
-            const CartGoingToPrintedAnimation(),
-          ],
+      onPanDown: (_) {
+        UserInteraction.handleUserInteraction(_pageController);
+      },
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          notificationDialog(
+            context: context,
+            titleMessage: "Fechar aplicativo",
+            content: const Text("Deseja realmente fechar o aplicativo?"),
+            onPress: () async {
+              SystemNavigator.pop();
+            },
+          );
+        },
+        child: Scaffold(
+          key: scaffoldKey,
+          drawer: drawer(
+            context: context,
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: cartPresenter,
+            homePresenter: homePresenter,
+          ),
+          appBar: homeAppBar(
+            homePresenter: homePresenter,
+            cartPresenter: cartPresenter,
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            context: context,
+            scaffoldKey: scaffoldKey,
+            currentIndex: _currentIndex,
+          ),
+          body: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              onPageChanged(
+                index: index,
+                printedProductsPresenter: printedProductsPresenter,
+                menuPresenter: menuPresenter,
+                homePresenter: homePresenter,
+                commentsPresenter: commentsPresenter,
+              );
+            },
+            children: screens,
+          ),
+          bottomNavigationBar: Stack(
+            children: [
+              HomeBottomNavigationBarItem(
+                onPageChanged: (value) {
+                  onPageChanged(
+                    index: value,
+                    printedProductsPresenter: printedProductsPresenter,
+                    homePresenter: homePresenter,
+                    menuPresenter: menuPresenter,
+                    commentsPresenter: commentsPresenter,
+                  );
+                },
+                currentIndex: _currentIndex,
+              ),
+              const ProductGoingToMenuAnimation(),
+              const CartGoingToPrintedAnimation(),
+            ],
+          ),
         ),
       ),
     );

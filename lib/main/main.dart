@@ -64,45 +64,40 @@ class App extends StatelessWidget {
           create: (_) => makeGetxCommentsPresenter(),
         ),
       ],
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: UserInteraction.handleUserInteraction,
-        onPanDown: UserInteraction.handleUserInteraction,
-        child: GetMaterialApp(
-          navigatorKey: NavigatorKey.navigatorKey,
-          title: 'Celta restaurante',
-          debugShowCheckedModeBanner: false,
-          theme: makeAppTheme(),
-          navigatorObservers: [routeObserver],
-          initialRoute: PageRoutes.splash,
-          getPages: [
-            GetPage(
-              name: PageRoutes.splash,
-              page: makeSplashPage,
-              transition: Transition.fade,
-            ),
-            GetPage(
-              name: PageRoutes.enterpriseValidation,
-              page: makeEnterpriseValidationPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.home,
-              page: makeHomePage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.productComposition,
-              page: makeProductCompositionPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.payment,
-              page: makePaymentPage,
-              transition: Transition.fadeIn,
-            ),
-          ],
-        ),
+      child: GetMaterialApp(
+        navigatorKey: NavigatorKey.navigatorKey,
+        title: 'Celta restaurante',
+        debugShowCheckedModeBanner: false,
+        theme: makeAppTheme(),
+        navigatorObservers: [routeObserver],
+        initialRoute: PageRoutes.splash,
+        getPages: [
+          GetPage(
+            name: PageRoutes.splash,
+            page: makeSplashPage,
+            transition: Transition.fade,
+          ),
+          GetPage(
+            name: PageRoutes.enterpriseValidation,
+            page: makeEnterpriseValidationPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.home,
+            page: makeHomePage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.productComposition,
+            page: makeProductCompositionPage,
+            transition: Transition.fadeIn,
+          ),
+          GetPage(
+            name: PageRoutes.payment,
+            page: makePaymentPage,
+            transition: Transition.fadeIn,
+          ),
+        ],
       ),
     );
   }

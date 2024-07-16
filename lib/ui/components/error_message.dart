@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../ui/helpers/helpers.dart';
 
-void showErrorMessage(BuildContext context, String error) {
+void showErrorMessage(BuildContext context, String error,
+    {Duration? duration = const Duration(seconds: 4)}) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      duration: duration!,
       backgroundColor: Colors.red[900],
       content: Text(
         error,

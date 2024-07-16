@@ -1,26 +1,61 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../main/builders/builders.dart';
+import '../../ui/components/components.dart';
+import '../../ui/pages/pages.dart';
 
 class UserInteraction {
   UserInteraction._();
 
-  static void handleUserInteraction([_]) {
-    _timer.cancel();
-    _initializeTimer();
+  static const timerShowMessageCartNotEmpty = Duration(seconds: 60);
+  static const timerJumpToMenuPage = Duration(seconds: 120);
+
+  static CartPresenter cartPresenter = Provider.of(
+    NavigatorKey.navigatorKey.currentState!.context,
+    listen: false,
+  );
+
+  static void handleUserInteraction([PageController? pageController]) {
+    _timerToShowMessageCartNotEmpty.cancel();
+    _timerToNavigateToMenuPage.cancel();
+
+    _timerToShowMessageCartNotEmpty = Timer.periodic(
+        timerShowMessageCartNotEmpty,
+        (_) => _showCartNotEmptyMessage(pageController));
+
+    _timerToNavigateToMenuPage = Timer.periodic(
+        timerJumpToMenuPage, (_) => _jumpToMenuPage(pageController));
   }
 
-  static void _executeFunctions() {
-    // Execute suas funções aqui
-    debugPrint('Usuário inativo por 5 segundos');
-    _timer.cancel();
+  static void _jumpToMenuPage(PageController? pageController) {
+    if (pageController != null) {
+      pageController.jumpToPage(0);
+      _timerToNavigateToMenuPage.cancel();
+    }
   }
 
-  static Timer _timer =
-      Timer.periodic(const Duration(seconds: 5), (_) => _executeFunctions());
+  static void _showCartNotEmptyMessage(PageController? pageController) {
+    if (pageController != null) {
+      pageController.jumpToPage(1);
+    }
 
-  static void _initializeTimer() {
-    _timer =
-        Timer.periodic(const Duration(seconds: 5), (_) => _executeFunctions());
+    if (cartPresenter.confirmedCombox.isNotEmpty ||
+        cartPresenter.cartProducts.isNotEmpty) {
+      showErrorMessage(
+        NavigatorKey.navigatorKey.currentState!.context,
+        "Há produtos no carrinho que não foram enviados ainda",
+        duration: const Duration(seconds: 6),
+      );
+    }
+    _timerToShowMessageCartNotEmpty.cancel();
   }
+
+  static Timer _timerToShowMessageCartNotEmpty = Timer.periodic(
+      timerShowMessageCartNotEmpty, (_) => _showCartNotEmptyMessage(null));
+
+  static Timer _timerToNavigateToMenuPage =
+      Timer.periodic(timerJumpToMenuPage, (_) => _jumpToMenuPage(null));
 }

@@ -37,9 +37,7 @@ class ProductDetails extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
-                height: 50,
-                width: 50,
+              Expanded(
                 child: GestureDetector(
                   onTap: () {
                     showLargeImage(
@@ -55,12 +53,13 @@ class ProductDetails extends StatelessWidget {
                   child: ImageWidget(
                     ean: product.EanCode,
                     plu: product.PriceLookupCode,
-                    isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
+                    isAlcoholic:
+                        product.IsAlcoholicProduct.toString() == "true",
                   ),
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Text(
                   product.Name,
                   textAlign: TextAlign.center,
@@ -104,7 +103,7 @@ class ProductDetails extends StatelessWidget {
                       child: Text(
                         totalLiquid.addBrazilianCoin(),
                         style: TextStyle(
-                          fontSize: getStringSize(context) * 0.9,
+                          fontSize: getStringSize(context) * 0.8,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

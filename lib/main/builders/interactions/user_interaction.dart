@@ -18,7 +18,6 @@ class UserInteraction {
 
   static void cancelTimes() {
     CartNotEmptyInteraction.cancelTime();
-    JumpToManuPageInteraction.cancelTime();
     ShowDetachLargeItemsInteraction.cancelTime();
   }
 
@@ -26,7 +25,6 @@ class UserInteraction {
     cancelTimes();
 
     CartNotEmptyInteraction.restartTime(pageController);
-    JumpToManuPageInteraction.restartTime(pageController);
     ShowDetachLargeItemsInteraction.restartTime();
   }
 }

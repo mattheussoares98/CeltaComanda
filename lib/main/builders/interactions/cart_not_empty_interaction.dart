@@ -8,15 +8,13 @@ import '../../../ui/pages/pages.dart';
 import '../builders.dart';
 
 class CartNotEmptyInteraction {
-  static const timerShowMessageCartNotEmpty = Duration(seconds: 10);
-
-  static Timer _timerToShowMessageCartNotEmpty = Timer.periodic(
-      timerShowMessageCartNotEmpty, (_) => showCartNotEmptyMessage(null));
+  static const _duration = Duration(seconds: 10);
+  static Timer _timer =
+      Timer.periodic(_duration, (_) => showCartNotEmptyMessage(null));
 
   static void restartTime(PageController? pageController) {
-    _timerToShowMessageCartNotEmpty = Timer.periodic(
-        timerShowMessageCartNotEmpty,
-        (_) => showCartNotEmptyMessage(pageController));
+    _timer = Timer.periodic(
+        _duration, (_) => showCartNotEmptyMessage(pageController));
   }
 
   static void showCartNotEmptyMessage(PageController? pageController) {
@@ -37,13 +35,13 @@ class CartNotEmptyInteraction {
         duration: const Duration(seconds: 6),
       );
     }
-    _timerToShowMessageCartNotEmpty.cancel();
+    _timer.cancel();
 
     Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
         .popUntil((route) => route.isFirst);
   }
 
   static void cancelTime() {
-    _timerToShowMessageCartNotEmpty.cancel();
+    _timer.cancel();
   }
 }

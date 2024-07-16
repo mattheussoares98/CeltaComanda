@@ -8,23 +8,34 @@ import '../../../ui/pages/pages.dart';
 import '../builders.dart';
 
 class CartNotEmptyInteraction {
+  static CartPresenter cartPresenter = Provider.of(
+    NavigatorKey.navigatorKey.currentState!.context,
+    listen: false,
+  );
+
   static const _duration = Duration(seconds: 10);
   static Timer _timer =
-      Timer.periodic(_duration, (_) => showCartNotEmptyMessage(null));
+      Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
+
+  static PageController? pageControllerOfMenuPage;
 
   static void restartTime(PageController? pageController) {
-    _timer = Timer.periodic(
-        _duration, (_) => showCartNotEmptyMessage(pageController));
+    if (pageController != null) {
+      pageControllerOfMenuPage = pageController;
+    }
+
+    _timer.cancel();
+    _timer = Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
   }
 
-  static void showCartNotEmptyMessage(PageController? pageController) {
-    CartPresenter cartPresenter = Provider.of(
-      NavigatorKey.navigatorKey.currentState!.context,
-      listen: false,
-    );
+  static void _showCartNotEmptyMessage() {
+    _timer.cancel();
 
-    if (pageController != null) {
-      pageController.jumpToPage(1);
+    Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
+        .popUntil((route) => route.isFirst);
+
+    if (pageControllerOfMenuPage != null) {
+      pageControllerOfMenuPage!.jumpToPage(1);
     }
 
     if (cartPresenter.confirmedCombox.isNotEmpty ||
@@ -35,13 +46,5 @@ class CartNotEmptyInteraction {
         duration: const Duration(seconds: 6),
       );
     }
-    _timer.cancel();
-
-    Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
-        .popUntil((route) => route.isFirst);
-  }
-
-  static void cancelTime() {
-    _timer.cancel();
   }
 }

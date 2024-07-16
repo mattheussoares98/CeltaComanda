@@ -16,14 +16,7 @@ class UserInteraction {
     listen: false,
   );
 
-  static void cancelTimes() {
-    CartNotEmptyInteraction.cancelTime();
-    ShowDetachLargeItemsInteraction.cancelTime();
-  }
-
   static void handleHomeInteraction([PageController? pageController]) {
-    cancelTimes();
-
     CartNotEmptyInteraction.restartTime(pageController);
     ShowDetachLargeItemsInteraction.restartTime();
   }

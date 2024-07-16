@@ -27,6 +27,7 @@ class ShowDetachLargeItemsInteraction {
   }
 
   static void _showLargeDetachItems() {
+    _timer.cancel();
     if (!_hasDetachGroup(menuPresenter)) {
       return;
     }
@@ -64,10 +65,7 @@ class ShowDetachLargeItemsInteraction {
   }
 
   static void restartTime() {
-    _timer = Timer.periodic(_duration, (_) => _showLargeDetachItems());
-  }
-
-  static void cancelTime() {
     _timer.cancel();
+    _timer = Timer.periodic(_duration, (_) => _showLargeDetachItems());
   }
 }

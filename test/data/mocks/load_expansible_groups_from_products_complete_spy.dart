@@ -12,10 +12,10 @@ class LoadExpansibleGroupsFromProductsCompleteSpy extends Mock
       when(() => this.load(any()));
 
   void mockLoadExpansibleGroupsFromProductsComplete(
-          List<ExpansibleGroupFromProductCompleteEntity> expansibleGroups) =>
+          List<ExpansibleGroupFromProductCompleteEntity> expansibleGroupFromProductComplete) =>
       this
           .mockLoadExpansibleGroupsFromProductsCompleteCall()
-          .thenAnswer((_) async => expansibleGroups);
+          .thenAnswer((_) async => expansibleGroupFromProductComplete);
 
   void mockLoadExpansibleGroupsFromProductsCompleteError(DomainError error) =>
       this.mockLoadExpansibleGroupsFromProductsCompleteCall().thenThrow(error);

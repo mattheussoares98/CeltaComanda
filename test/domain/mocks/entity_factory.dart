@@ -746,4 +746,14 @@ class EntityFactory {
         commandNumber: faker.randomGenerator.integer(100).toString(),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
       );
+
+  static List<ExpansibleGroupFromProductCompleteEntity>
+      makeProductsPackingInternalCodesOnErp() => [
+            ExpansibleGroupFromProductCompleteEntity(
+              ExpansibleGroupId: faker.randomGenerator.integer(100),
+              ProductInternalCodeOnErp: faker.randomGenerator.integer(100),
+              GroupName: faker.randomGenerator.string(10),
+              ProductName: faker.randomGenerator.string(10),
+            ),
+          ];
 }

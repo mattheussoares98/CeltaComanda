@@ -29,6 +29,8 @@ void main() {
   late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuList;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
+  late LoadExpansibleGroupsFromProductsCompleteSpy
+      loadExpansibleGroupsFromProductsCompleteSpy;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late NavigateToSpy navigateTo;
   late TicketIsPermittedSpy ticketIsPermitted;
@@ -56,6 +58,8 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadProducts = LoadProductsSpy();
     comments = CommentsSpy();
+    loadExpansibleGroupsFromProductsCompleteSpy =
+        LoadExpansibleGroupsFromProductsCompleteSpy();
   }
 
   void initPresenters() {
@@ -73,6 +77,8 @@ void main() {
       barcodeScanner: barcodeScanner,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadProducts: loadProducts,
+      loadExpansibleGroupsFromProductsComplete:
+          loadExpansibleGroupsFromProductsCompleteSpy,
     );
   }
 

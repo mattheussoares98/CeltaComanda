@@ -48,6 +48,7 @@ class GetxPrintedProductsPresenter
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
       );
+      notifyListeners();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

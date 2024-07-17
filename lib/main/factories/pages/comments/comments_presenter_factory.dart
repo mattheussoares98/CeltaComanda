@@ -4,4 +4,5 @@ import '../../../../ui/pages/pages.dart';
 
 CommentsPresenter makeGetxCommentsPresenter() => GetxCommentsPresenter(
       comments: makeLocalComments(),
+      loadExpansibleGroupsFromProductsComplete: makeRemoteLoadExpansibleGroupsFromProductsComplete(),
     );

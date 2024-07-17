@@ -7,9 +7,12 @@ import '../../domain/usecases/usecases.dart';
 
 class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   final Comments comments;
+  final LoadExpansibleGroupsFromProductsComplete
+      loadExpansibleGroupsFromProductsComplete;
 
   GetxCommentsPresenter({
     required this.comments,
+    required this.loadExpansibleGroupsFromProductsComplete,
   });
 
   @override

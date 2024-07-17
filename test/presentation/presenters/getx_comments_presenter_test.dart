@@ -14,16 +14,24 @@ void main() {
   late GetxCommentsPresenter sut;
 
   late CommentsSpy comments;
+  late LoadExpansibleGroupsFromProductsCompleteSpy
+      loadExpansibleGroupsFromProductsComplete;
 
   late CommentViewModel newUnselectedComment;
   late List<CommentViewModel> localComments;
 
   void initUseCases() {
     comments = CommentsSpy();
+    loadExpansibleGroupsFromProductsComplete =
+        LoadExpansibleGroupsFromProductsCompleteSpy();
   }
 
   void initPresenters() {
-    sut = GetxCommentsPresenter(comments: comments);
+    sut = GetxCommentsPresenter(
+      comments: comments,
+      loadExpansibleGroupsFromProductsComplete:
+          loadExpansibleGroupsFromProductsComplete,
+    );
   }
 
   void initEntitys() {

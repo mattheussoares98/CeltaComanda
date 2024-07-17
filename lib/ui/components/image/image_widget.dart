@@ -1,11 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-
 import 'package:flutter/material.dart';
 
-import '../../../infra/helpers/helperts.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
+import '../components.dart';
 
 class ImageWidget extends StatefulWidget {
   final String?
@@ -26,13 +23,6 @@ class ImageWidget extends StatefulWidget {
     this.endAnimation = 0.7,
     super.key,
   });
-
-  static final _customCacheManager = CacheManager(
-    Config(
-      CacheKeys.images.name,
-      stalePeriod: const Duration(days: 1),
-    ),
-  );
 
   @override
   State<ImageWidget> createState() => _ImageWidgetState();
@@ -60,12 +50,11 @@ class _ImageWidgetState extends State<ImageWidget>
                     begin: widget.beginAnimation!,
                     end: widget.endAnimation!,
                   ).value,
-                  child: _cachedImage(
-                    width: widget.width,
-                    height: widget.height,
+                  child: CachedImage(
                     ean: widget.ean,
                     plu: widget.plu,
-                    customCacheManager: ImageWidget._customCacheManager,
+                    height: widget.height,
+                    width: widget.width,
                   ),
                 );
               },
@@ -85,60 +74,4 @@ class _ImageWidgetState extends State<ImageWidget>
       ],
     );
   }
-}
-
-Widget _cachedImage({
-  required double width,
-  required double height,
-  required String? ean,
-  required String plu,
-  required CacheManager customCacheManager,
-}) {
-  String url =
-      "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${ean ?? plu}.PNG";
-
-  return CachedNetworkImage(
-    fit: BoxFit.contain,
-    cacheManager: customCacheManager,
-    key: ValueKey<String>(url),
-    imageUrl: url,
-    height: height,
-    width: width,
-    errorWidget: (context, url, error) {
-      return _defaultImage(height: height, width: width);
-    },
-    placeholder: (context, url) {
-      return _defaultImage(height: height, width: width);
-    },
-  );
-}
-
-Widget _defaultImage({
-  required double height,
-  required double width,
-}) {
-  final url =
-      "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo.png";
-  return CachedNetworkImage(
-    fit: BoxFit.contain,
-    cacheManager: ImageWidget._customCacheManager,
-    key: ValueKey<String>(url),
-    imageUrl: url,
-    height: height,
-    width: width,
-    errorWidget: (context, url, error) {
-      return Image.asset(
-        "lib/ui/assets/images/imageNotFound.png",
-        height: height,
-        width: width,
-      );
-    },
-    placeholder: (context, url) {
-      return Image.asset(
-        "lib/ui/assets/images/imageNotFound.png",
-        height: height,
-        width: width,
-      );
-    },
-  );
 }

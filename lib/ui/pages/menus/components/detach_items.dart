@@ -25,7 +25,7 @@ class DetachItems extends StatelessWidget {
         autoPlay: true,
         viewportFraction: 1,
         enableInfiniteScroll: true,
-        autoPlayInterval: const Duration(seconds: 15),
+        autoPlayInterval: const Duration(seconds: 7),
         autoPlayAnimationDuration: const Duration(milliseconds: 1500),
         autoPlayCurve: Curves.fastOutSlowIn,
       ),

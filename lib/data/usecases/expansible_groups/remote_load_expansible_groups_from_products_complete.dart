@@ -11,14 +11,19 @@ class RemoteLoadExpansibleGroupsFromProductsComplete
   RemoteLoadExpansibleGroupsFromProductsComplete({required this.httpAdapter});
 
   @override
-  Future<List<ExpansibleGroupFromProductCompleteEntity>> load() async {
+  Future<List<ExpansibleGroupFromProductCompleteEntity>> load(
+    List<int> productPackingInternalCodesOnErp,
+  ) async {
     try {
       final response = await httpAdapter.request(
-        url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIGroups/FindFromProductsComplete",
-        method: "get",
-        // body:
-      );
+          url:
+              "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIGroups/FindFromProductsComplete",
+          method: "get",
+          body: {
+            "ExpansibleGroupType": 22, //tipo do grupo expansível (opcional)
+            "ProductPackingInternalCodesOnErp":
+                productPackingInternalCodesOnErp,
+          });
       if (response == null) {
         throw Error();
       }

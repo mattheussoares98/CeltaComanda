@@ -93,136 +93,139 @@ class _InsertProductButtonState extends State<InsertProductButton>
     mainErrorSubscription =
         handleMainError(context, cartPresenter.mainErrorStream);
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 3.0),
-      child: widget.selectedProduct?.productQuantity == null
-          ? TextButton(
-              onPressed: null,
-              child: Text("Selecione um produto",
-                  style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 23 : 15,
-                  )),
-            )
-          : Row(
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) {
-                          return ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.9,
-                              child: CommentsPage(
-                                selectedProductName:
-                                    widget.selectedProduct!.Name,
+    return SizedBox(
+      height: 50,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 3.0),
+        child: widget.selectedProduct?.productQuantity == null
+            ? TextButton(
+                onPressed: null,
+                child: Text("Selecione um produto",
+                    style: TextStyle(
+                      fontSize: hasMinWidth(context) ? 23 : 15,
+                    )),
+              )
+            : Row(
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
                               ),
-                            ),
-                          );
-                        });
-                  },
-                  icon: Stack(
-                    children: [
-                      Icon(
-                        Icons.add_comment_rounded,
-                        color: Theme.of(context).primaryColor,
-                        size: getIconSize(context),
-                      ),
-                      if (commentsPresenter.hasSelectedComments)
-                        const Positioned(
-                          top: 0,
-                          right: 0,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                            maxRadius: 7,
-                            child: FittedBox(
-                              child: Text(
-                                "1",
-                                style: TextStyle(color: Colors.white),
+                              child: SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.9,
+                                child: CommentsPage(
+                                  selectedProductName:
+                                      widget.selectedProduct!.Name,
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    icon: Stack(
+                      children: [
+                        Icon(
+                          Icons.add_comment_rounded,
+                          color: Theme.of(context).primaryColor,
+                          size: getIconSize(context),
+                        ),
+                        if (commentsPresenter.hasSelectedComments)
+                          const Positioned(
+                            top: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.red,
+                              maxRadius: 7,
+                              child: FittedBox(
+                                child: Text(
+                                  "1",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(width: hasMinWidth(context) ? 30 : 8),
-                UpdateQuantity(
-                  iconSize: hasMinWidth(context) ? 50 : 20,
-                  showDeleteIcon: false,
-                  productQuantity: widget.selectedProduct!.productQuantity,
-                  onPressedReduceQuantity: widget.selectedProduct != null &&
-                          widget.selectedProduct!.productQuantity <= 1
-                      ? null
-                      : () {
-                          subtractProductQuantity(menuPresenter);
-                        },
-                  onPressedAddQuantity: () {
-                    addProductQuantity(menuPresenter);
-                  },
-                ),
-                SizedBox(width: hasMinWidth(context) ? 30 : 8),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(),
-                    onPressed: () async {
-                      await addProductInCart(
-                        menuPresenter: menuPresenter,
-                        homePresenter: homePresenter,
-                        cartPresenter: cartPresenter,
-                        commentsPresenter: commentsPresenter,
-                      );
+                  SizedBox(width: hasMinWidth(context) ? 30 : 8),
+                  UpdateQuantity(
+                    iconSize: hasMinWidth(context) ? 50 : 20,
+                    showDeleteIcon: false,
+                    productQuantity: widget.selectedProduct!.productQuantity,
+                    onPressedReduceQuantity: widget.selectedProduct != null &&
+                            widget.selectedProduct!.productQuantity <= 1
+                        ? null
+                        : () {
+                            subtractProductQuantity(menuPresenter);
+                          },
+                    onPressedAddQuantity: () {
+                      addProductQuantity(menuPresenter);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              if (hasMinWidth(context))
-                                Icon(
-                                  Icons.shopping_cart,
-                                  size: getIconSize(context),
+                  ),
+                  SizedBox(width: hasMinWidth(context) ? 30 : 8),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(),
+                      onPressed: () async {
+                        await addProductInCart(
+                          menuPresenter: menuPresenter,
+                          homePresenter: homePresenter,
+                          cartPresenter: cartPresenter,
+                          commentsPresenter: commentsPresenter,
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                if (hasMinWidth(context))
+                                  Icon(
+                                    Icons.shopping_cart,
+                                    size: getIconSize(context),
+                                  ),
+                                SizedBox(
+                                  width: hasMinWidth(context) ? 30 : 8,
                                 ),
-                              SizedBox(
-                                width: hasMinWidth(context) ? 30 : 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  hasMinWidth(context)
-                                      ? "Inserir no carrinho"
-                                      : "Inserir",
+                                Expanded(
+                                  child: Text(
+                                    hasMinWidth(context)
+                                        ? "Inserir no carrinho"
+                                        : "Inserir",
+                                    style: TextStyle(
+                                      fontSize: getStringSize(context),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  (widget.selectedProduct!.SaleRetailPraticed
+                                              .toDouble() *
+                                          widget.selectedProduct!.productQuantity
+                                              .toDouble())
+                                      .toString()
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin(),
                                   style: TextStyle(
                                     fontSize: getStringSize(context),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                (widget.selectedProduct!.SaleRetailPraticed
-                                            .toDouble() *
-                                        widget.selectedProduct!.productQuantity
-                                            .toDouble())
-                                    .toString()
-                                    .toBrazilianNumber()
-                                    .addBrazilianCoin(),
-                                style: TextStyle(
-                                  fontSize: getStringSize(context),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 }

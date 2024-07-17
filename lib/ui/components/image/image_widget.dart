@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _ImageWidgetState extends State<ImageWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
-          flex: 2,
+          flex: hasMinWidth(context) ? 4 : 2,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: AnimatedBuilder(

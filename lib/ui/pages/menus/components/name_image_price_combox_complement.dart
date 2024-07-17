@@ -57,8 +57,8 @@ Widget _landScapeNameImagePluAndCombox({
           child: ImageWidget(
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
-            height: 150,
-            width: 150,
+            height: 400,
+            width: 400,
             isAlcoholic:
                 productsViewModel.IsAlcoholicProduct.toString() == "true",
           ),
@@ -70,9 +70,14 @@ Widget _landScapeNameImagePluAndCombox({
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _productNamePriceAndComplement(productsViewModel, context),
+            Expanded(
+                child:
+                    _productNamePriceAndComplement(productsViewModel, context)),
             if (productsViewModel.IsPromoCombox == "true")
-              _mountCombox(context),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: _mountCombox(context),
+              ),
           ],
         ),
       ),
@@ -87,37 +92,35 @@ Widget _portraitNameImagePluAndCombox({
   required CommentsPresenter commentsPresenter,
 }) {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
       Expanded(
-        flex: 3,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () {
-                _onTapImage(
-                  context: context,
-                  productsViewModel: productsViewModel,
-                  menuPresenter: menuPresenter,
-                  commentsPresenter: commentsPresenter,
-                );
-              },
-              child: ImageWidget(
-                ean: productsViewModel.EanCode,
-                plu: productsViewModel.PriceLookupCode,
-                height: MediaQuery.of(context).size.width / 3 - 20,
-                width: MediaQuery.of(context).size.width / 3,
-                isAlcoholic:
-                    productsViewModel.IsAlcoholicProduct.toString() == "true",
-              ),
-            ),
-            _productNamePriceAndComplement(productsViewModel, context),
-            if (productsViewModel.IsPromoCombox == "true")
-              _mountCombox(context),
-          ],
+        flex: 2,
+        child: GestureDetector(
+          onTap: () {
+            _onTapImage(
+              context: context,
+              productsViewModel: productsViewModel,
+              menuPresenter: menuPresenter,
+              commentsPresenter: commentsPresenter,
+            );
+          },
+          child: ImageWidget(
+            ean: productsViewModel.EanCode,
+            plu: productsViewModel.PriceLookupCode,
+            height: double.infinity,
+            width: double.infinity,
+            isAlcoholic:
+                productsViewModel.IsAlcoholicProduct.toString() == "true",
+          ),
         ),
       ),
+      Expanded(
+        flex: 3,
+        child: _productNamePriceAndComplement(productsViewModel, context),
+      ),
+      if (productsViewModel.IsPromoCombox == "true") _mountCombox(context),
     ],
   );
 }
@@ -146,56 +149,59 @@ void _onTapImage({
 
 Widget _productNamePriceAndComplement(
     ProductsViewModel productsViewModel, BuildContext context) {
-  return Expanded(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Text(
-          productsViewModel.Name,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Text(
+        productsViewModel.Name,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: getStringSize(context) * (hasMinWidth(context) ? 2 : 1),
         ),
-        Text(
-          productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Theme.of(context).primaryColorLight,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+      ),
+      Text(
+        productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Theme.of(context).primaryColorLight,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
         ),
-        if (productsViewModel.ProductComplement != null)
-          Padding(
-            padding: const EdgeInsets.all(2),
-            child: Text(
-              productsViewModel.ProductComplement!,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: hasMinWidth(context) ? 14 : 12,
-                color: Theme.of(context).primaryColorDark,
-                fontStyle: FontStyle.italic,
-              ),
+      ),
+      if (productsViewModel.ProductComplement != null)
+        Padding(
+          padding: const EdgeInsets.all(2),
+          child: Text(
+            productsViewModel.ProductComplement!,
+            maxLines: hasMinWidth(context) ? 4 : 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 14 : 12,
+              color: Theme.of(context).primaryColorDark,
+              fontStyle: FontStyle.italic,
             ),
-          )
-      ],
-    ),
+          ),
+        )
+    ],
   );
 }
 
 Widget _mountCombox(BuildContext context) {
-  return Text(
-    "MONTAR COMBO",
-    textAlign: TextAlign.center,
-    style: TextStyle(
-      color: Theme.of(context).secondaryHeaderColor,
-      fontWeight: FontWeight.bold,
-      fontStyle: FontStyle.italic,
-      fontSize: hasMinWidth(context) ? 20 : 17,
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    child: FittedBox(
+      child: Text(
+        "MONTAR COMBO",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Theme.of(context).secondaryHeaderColor,
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.italic,
+          fontSize: hasMinWidth(context) ? 20 : 17,
+        ),
+      ),
     ),
   );
 }

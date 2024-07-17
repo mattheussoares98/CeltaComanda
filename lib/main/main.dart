@@ -70,11 +70,14 @@ class App extends StatelessWidget {
         ListenableProvider(
           create: (_) => makeGetxCommentsPresenter(),
         ),
+        ListenableProvider(
+          create: (_) => makeGetxPreLoadImagePresenter(),
+        ),
       ],
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-         UserInteraction.restartTimes(null);
+          UserInteraction.restartTimes(null);
         },
         onPanDown: (_) {
           UserInteraction.restartTimes(null);

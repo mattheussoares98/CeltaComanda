@@ -1,10 +1,10 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../ui/pages/pages.dart';
 
-class GetxPreLoadImagePresenter extends GetxController
+class GetxPreLoadImagePresenter with ChangeNotifier
     implements PreLoadImagePresenter {
   GetxPreLoadImagePresenter();
 

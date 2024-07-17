@@ -29,8 +29,6 @@ void main() {
   late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuList;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
-  late LoadExpansibleGroupsFromProductsCompleteSpy
-      loadExpansibleGroupsFromProductsComplete;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late NavigateToSpy navigateTo;
   late TicketIsPermittedSpy ticketIsPermitted;
@@ -44,8 +42,6 @@ void main() {
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
   late List<ProductEntity> products;
-  late List<ExpansibleGroupFromProductCompleteEntity>
-      expansibleGroupsFromProductCompleteEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -60,8 +56,6 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadProducts = LoadProductsSpy();
     comments = CommentsSpy();
-    loadExpansibleGroupsFromProductsComplete =
-        LoadExpansibleGroupsFromProductsCompleteSpy();
   }
 
   void initPresenters() {
@@ -79,8 +73,6 @@ void main() {
       barcodeScanner: barcodeScanner,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadProducts: loadProducts,
-      loadExpansibleGroupsFromProductsComplete:
-          loadExpansibleGroupsFromProductsComplete,
     );
   }
 
@@ -115,8 +107,6 @@ void main() {
                   .toList(),
             })
         .toList();
-    expansibleGroupsFromProductCompleteEntity =
-        EntityFactory.makeProductsPackingInternalCodesOnErp();
   }
 
   void mockSuccess() {
@@ -125,9 +115,6 @@ void main() {
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
     comments.mockAddComments();
-    loadExpansibleGroupsFromProductsComplete
-        .mockLoadExpansibleGroupsFromProductsComplete(
-            expansibleGroupsFromProductCompleteEntity);
   }
 
   setUp(() {
@@ -255,20 +242,6 @@ void main() {
           ]));
 
       await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-    });
-
-    test(
-        "Should call loadExpansibleGroupsFromProductsComplete on getGroupsAndProducts",
-        () async {
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
-
-      verify(
-        () => loadExpansibleGroupsFromProductsComplete.load([
-          ...products.map((e) => e.InternalCodeOfProductOnERP!),
-          ...products.map((e) => e.InternalCodeOfProductOnERP!),
-          //retorn 2 grupos e 2 produtos no mock. Pra cada retorno do grupo, consulta os produtos e retorna os 2. Então ao todo retornam 4 produtos
-        ]),
-      ).called(1);
     });
   });
 

@@ -20,8 +20,6 @@ class GetxMenuPresenter extends GetxController
   final BarcodeScanner barcodeScanner;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadProducts loadProducts;
-  final LoadExpansibleGroupsFromProductsComplete
-      loadExpansibleGroupsFromProductsComplete;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -31,7 +29,6 @@ class GetxMenuPresenter extends GetxController
     required this.barcodeScanner,
     required this.updateSaleRequestTemp,
     required this.loadProducts,
-    required this.loadExpansibleGroupsFromProductsComplete,
   });
 
   @override
@@ -224,7 +221,6 @@ class GetxMenuPresenter extends GetxController
 
       var expansibleGroups = await loadExpansibleGroups.load();
 
-      final List<ProductEntity> loadedProducts = [];
       if (expansibleGroups != null) {
         expansibleGroups = _putDetachGroupInFirstGroupList(expansibleGroups);
 
@@ -233,8 +229,6 @@ class GetxMenuPresenter extends GetxController
               await loadProducts.load(expansibleGroup.ExpansibleGroupId);
 
           if (products != null) {
-            loadedProducts.addAll(products);
-
             _loadedMenu.add({
               ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
                   products.map((e) => ProductsViewModel.fromEntity(e)).toList()
@@ -244,11 +238,6 @@ class GetxMenuPresenter extends GetxController
           }
         }
       }
-
-      await loadExpansibleGroupsFromProductsComplete.load(
-        loadedProducts.map((e) => e.InternalCodeOfProductOnERP!).toList(),
-      );
-      
       _menu.subject.add(_loadedMenu);
     } on DomainError catch (error) {
       switch (error) {

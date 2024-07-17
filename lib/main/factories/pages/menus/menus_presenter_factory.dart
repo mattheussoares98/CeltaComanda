@@ -5,7 +5,6 @@ import '../../../../ui/pages/pages.dart';
 MenuPresenter makeGetxMenuPresenter() =>
     GetxMenuPresenter(
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
-      loadExpansibleGroupsFromProductsComplete: makeRemoteLoadExpansibleGroupsFromProductsComplete(),
       navigateTo: makeNavigateTo(),
       ticketIsPermitted: makeRemoteticketIsPermitted(),
       searchProductByCode: makeRemoteSearchProductByCode(),

@@ -1,5 +1,4 @@
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
@@ -13,22 +12,18 @@ import 'package:mocktail/mocktail.dart';
 void main() {
   late GetxCommentsPresenter sut;
 
-  late CommentsSpy comments;
   late LoadExpansibleGroupsFromProductsCompleteSpy
       loadExpansibleGroupsFromProductsComplete;
 
   late CommentViewModel newUnselectedComment;
-  late List<CommentViewModel> localComments;
 
   void initUseCases() {
-    comments = CommentsSpy();
     loadExpansibleGroupsFromProductsComplete =
         LoadExpansibleGroupsFromProductsCompleteSpy();
   }
 
   void initPresenters() {
     sut = GetxCommentsPresenter(
-      comments: comments,
       loadExpansibleGroupsFromProductsComplete:
           loadExpansibleGroupsFromProductsComplete,
     );
@@ -36,12 +31,9 @@ void main() {
 
   void initEntitys() {
     newUnselectedComment = EntityFactory.makeCommentViewModel();
-    localComments = [newUnselectedComment];
   }
 
-  void mockSuccess() {
-    comments.mockAddComments();
-  }
+  void mockSuccess() {}
 
   setUp(() {
     initUseCases();
@@ -60,22 +52,6 @@ void main() {
     expectLater(sut.mainErrorStream, emits(null));
 
     await sut.addComment(newUnselectedComment);
-  });
-
-  test("Should emit correct values on add new local comment throws", () async {
-    comments.mockAddCommentsError();
-
-    expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
-    expectLater(
-        sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
-
-    await sut.addComment(newUnselectedComment);
-  });
-
-  test("Should call addNewComment with correct comments", () async {
-    await sut.addComment(newUnselectedComment);
-
-    verify(() => comments.add(localComments)).called(1);
   });
 
   test("Should add newComment correctly in usedComments", () async {
@@ -105,34 +81,6 @@ void main() {
     expectLater(sut.mainErrorStream, emits(null));
 
     await sut.loadComments();
-  });
-
-  test("Should emit correct values on loadLocalComments throws", () async {
-    comments.mockLoadCommentsError();
-
-    expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
-    expectLater(
-        sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
-
-    await sut.loadComments();
-  });
-
-  test("Should udpate usedComments correctly on LoadComments succeeds",
-      () async {
-    comments.mockLoadComments(localComments);
-
-    await sut.loadComments();
-
-    expect(sut.loadedComments, localComments);
-  });
-
-  test("Should update usedComments correctly on LoadComments throws", () async {
-    comments.mockLoadCommentsError();
-    await sut.addComment(newUnselectedComment);
-
-    await sut.loadComments();
-
-    expect(sut.loadedComments, []);
   });
 
   test("Should update comment isSelected correctly", () async {
@@ -287,31 +235,10 @@ void main() {
       expect(sut.loadedComments.length, 0);
     });
 
-    test("Should call comments.add when delete comment", () async {
-      await sut.addComment(EntityFactory.makeCommentViewModel());
-
-      await sut.deleteComment(0);
-
-      verify(() => comments.add([])).called(
-          2); //2 só porque chama uma vez quando adiciona e preciso adicionar um pra conseguir remover depois
-    });
-
     test("Should emit correct values on delete comment success", () async {
       expectLater(
           sut.isLoadingStream, emitsInAnyOrder([true, false, true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.addComment(newUnselectedComment);
-      await sut.deleteComment(0);
-    });
-
-    test("Should emit correct values on delete comment throws", () async {
-      comments.mockAddCommentsError();
-
-      expectLater(
-          sut.isLoadingStream, emitsInAnyOrder([true, false, true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInAnyOrder([null, UIError.unexpected]));
 
       await sut.addComment(newUnselectedComment);
       await sut.deleteComment(0);

@@ -6,12 +6,10 @@ import '../../ui/pages/pages.dart';
 import '../../domain/usecases/usecases.dart';
 
 class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
-  final Comments comments;
   final LoadExpansibleGroupsFromProductsComplete
       loadExpansibleGroupsFromProductsComplete;
 
   GetxCommentsPresenter({
-    required this.comments,
     required this.loadExpansibleGroupsFromProductsComplete,
   });
 
@@ -32,7 +30,6 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
 
       _loadedComments.add(newComment);
       _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
-      await comments.add(_loadedComments);
       updateHasSelectedComments();
     } catch (e) {
       mainError = UIError.unexpected;
@@ -52,11 +49,11 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     mainError = null;
 
     try {
-      final localComments = await comments.load();
-      if (localComments != null) {
-        _loadedComments = localComments;
-        _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
-      }
+      // final localComments = await comments.load();
+      // if (localComments != null) {
+      //   _loadedComments = localComments;
+      //   _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
+      // }
     } catch (e) {
       mainError = UIError.unexpected;
       _loadedComments = [];
@@ -136,7 +133,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       mainError = null;
 
       _loadedComments.removeAt(index);
-      await comments.add(_loadedComments);
+      // await comments.add(_loadedComments);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

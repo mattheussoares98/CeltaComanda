@@ -2,6 +2,7 @@ export './cart_product_model.dart';
 export './command_model.dart';
 export './enterprise_model.dart';
 export './expansible_groups_model.dart';
+export './pre_load_image_model.dart';
 export './print_request_model.dart';
 export './printed_products_model.dart';
 export './product_composition_model.dart';

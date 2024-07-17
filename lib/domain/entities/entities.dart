@@ -3,6 +3,7 @@ export './command_entity.dart';
 export './comment_entity.dart';
 export './enterprise_entity.dart';
 export './expansible_group_entity.dart';
+export './pre_load_image_entity.dart';
 export './print_request_entity.dart';
 export './printed_entity.dart';
 export './printed_products_entity.dart';

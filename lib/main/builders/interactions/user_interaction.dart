@@ -16,7 +16,7 @@ class UserInteraction {
     listen: false,
   );
 
-  static void handleHomeInteraction([PageController? pageController]) {
+  static void restartTimes([PageController? pageController]) {
     CartNotEmptyInteraction.restartTime(pageController);
     ShowDetachLargeItemsInteraction.restartTime();
   }

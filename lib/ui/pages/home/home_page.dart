@@ -111,10 +111,10 @@ class _HomePageState extends State<HomePage>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        UserInteraction.handleHomeInteraction(_pageController);
+        UserInteraction.restartTimes(_pageController);
       },
       onPanDown: (_) {
-        UserInteraction.handleHomeInteraction(_pageController);
+        UserInteraction.restartTimes(_pageController);
       },
       child: PopScope(
         canPop: false,

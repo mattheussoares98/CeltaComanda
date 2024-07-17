@@ -17,7 +17,6 @@ class CommentsPresenterSpy extends Mock implements CommentsPresenter {
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.loadedComments).thenAnswer((_) => loadedCommentsController);
-    when(() => this.addComment(any())).thenAnswer((_) async => _);
     when(() => this.changeCommentIsSelected(any())).thenAnswer((_) async => _);
     when(() => this.loadComments()).thenAnswer((_) async => _);
   }

@@ -13,32 +13,6 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     required this.loadExpansibleGroupsFromProductsComplete,
   });
 
-  @override
-  Future<void> addComment(CommentViewModel newComment) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      int indexOfEqualComment = _loadedComments
-          .indexWhere((element) => element.comment == newComment.comment);
-
-      if (indexOfEqualComment != -1) {
-        _loadedComments[indexOfEqualComment].selected = true;
-        notifyListeners();
-        return;
-      }
-
-      _loadedComments.add(newComment);
-      _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
-      updateHasSelectedComments();
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-      notifyListeners();
-    }
-  }
-
   List<CommentViewModel> _loadedComments = [];
   @override
   List<CommentViewModel> get loadedComments => _loadedComments;
@@ -124,20 +98,5 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
           comments != null && comments.contains(loadedComment.comment);
     }
     notifyListeners();
-  }
-
-  @override
-  Future<void> deleteComment(int index) async {
-    try {
-      isLoading = true;
-      mainError = null;
-
-      _loadedComments.removeAt(index);
-      // await comments.add(_loadedComments);
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
   }
 }

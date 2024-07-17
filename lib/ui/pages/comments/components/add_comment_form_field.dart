@@ -35,13 +35,6 @@ class _AddCommentFormFieldState extends State<AddCommentFormField> {
       return;
     }
 
-    await commentsPresenter.addComment(
-      CommentViewModel(
-        comment: commentsController.text,
-        selected: true,
-      ),
-    );
-
     commentsController.clear();
     Future.delayed(Duration.zero, () {
       if (focusNode.hasFocus) {

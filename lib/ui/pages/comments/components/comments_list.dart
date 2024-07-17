@@ -84,7 +84,6 @@ class _CommentsState extends State<CommentsList> {
                               iconButtonFocusNode.requestFocus();
                             },
                             onPress: () async {
-                              await commentsPresenter.deleteComment(index);
                               iconButtonFocusNode.requestFocus();
                               setState(() {});
                             });

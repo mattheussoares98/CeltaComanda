@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
+
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -28,13 +30,12 @@ class RemoteLoadExpansibleGroupsFromProductsComplete
         throw Error();
       }
 
-      // return response.map<ExpansibleGroupEntity>((element) {
-      //   return ExpansibleGroupsModel.fromJson(element).toEntity();
-      // }).toList();
+      return response.map<ExpansibleGroupFromProductCompleteEntity>((element) {
+        return ExpansibleGroupFromProductsCompleteModel.fromJson(element)
+            .toEntity();
+      }).toList();
     } catch (error) {
       throw DomainError.unexpected;
     }
-
-    throw UnimplementedError();
   }
 }

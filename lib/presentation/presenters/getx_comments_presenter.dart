@@ -25,7 +25,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     try {
       final allInternalCodes = loadedProducts
           .map(
-            (e) => e.InternalCodeOfProductOnERP!.toInt(),
+            (e) => e.InternalCodeOnERP!.toInt(),
           )
           .toList();
 

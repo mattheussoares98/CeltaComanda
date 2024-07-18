@@ -13,12 +13,6 @@ class TitlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

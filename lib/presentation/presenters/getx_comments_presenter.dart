@@ -23,12 +23,14 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     mainError = null;
 
     try {
+      final allInternalCodes = loadedProducts
+          .map(
+            (e) => e.InternalCodeOnERP!.toInt(),
+          )
+          .toList();
+
       final optionalGroups =
-          await loadExpansibleGroupsFromProductsComplete.load(loadedProducts
-              .map(
-                (e) => e.InternalCodeOfProductOnERP!.toInt(),
-              )
-              .toList());
+          await loadExpansibleGroupsFromProductsComplete.load(allInternalCodes);
 
       _loadedComments = optionalGroups
           .map((e) =>

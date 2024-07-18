@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
@@ -35,6 +36,7 @@ class HttpAdapter implements HttpClient {
         response = await futureResponse.timeout(const Duration(seconds: 15));
       }
     } catch (error) {
+      debugPrint(error.toString());
       throw HttpError.serverError;
     }
     return _handleResponse(response);

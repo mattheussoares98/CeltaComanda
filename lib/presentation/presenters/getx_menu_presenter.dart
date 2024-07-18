@@ -247,12 +247,14 @@ class GetxMenuPresenter extends GetxController
         }
       }
 
-      await commentsPresenter.loadComments(_loadedMenu
+      final allProducts = _loadedMenu
           .expand((map) =>
               map.values) // Expande todas as listas de produtos em um Iterable
           .expand((lista) =>
               lista) // Expande cada lista individual de produtos em um Iterable
-          .toList());
+          .toList();
+
+      await commentsPresenter.loadComments(allProducts);
       _menu.subject.add(_loadedMenu);
     } on DomainError catch (error) {
       switch (error) {

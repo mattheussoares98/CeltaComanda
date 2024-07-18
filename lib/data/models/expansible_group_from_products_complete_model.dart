@@ -17,13 +17,13 @@ class ExpansibleGroupFromProductsCompleteModel {
 
   factory ExpansibleGroupFromProductsCompleteModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll(
-      ["Name", "ExpansibleGroupId", "ProductInternalCodeOnErp", "GroupName"],
+      ["ProductName", "ExpansibleGroupId", "ProductInternalCodeOnErp", "GroupName"],
     )) {
       throw Exception();
     }
 
     return ExpansibleGroupFromProductsCompleteModel(
-      ProductName: json["Name"],
+      ProductName: json["ProductName"],
       ExpansibleGroupId: json["ExpansibleGroupId"],
       ProductInternalCodeOnErp: json["ProductInternalCodeOnErp"],
       GroupName: json["GroupName"],
@@ -48,7 +48,7 @@ class ExpansibleGroupFromProductsCompleteModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "Name": ProductName,
+        "ProductName": ProductName,
         "ExpansibleGroupId": ExpansibleGroupId,
         "ProductInternalCodeOnErp": ProductInternalCodeOnErp,
         "GroupName": GroupName,

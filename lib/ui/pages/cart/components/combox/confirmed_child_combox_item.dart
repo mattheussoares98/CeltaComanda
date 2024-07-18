@@ -112,6 +112,8 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                 Comment(
                   comments: combox.commentFather,
                   productName: combox.ChildName!,
+                  productInternalCodeOnERP:
+                      combox.InternalCodeOnERPCodeFather!.toInt(),
                   updateComment: () async {
                     await cartPresenter.updateCommentOfCombox(
                       indexOfCombox: widget.indexOfConfirmedCombox,

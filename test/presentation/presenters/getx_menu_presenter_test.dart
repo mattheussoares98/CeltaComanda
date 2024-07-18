@@ -34,6 +34,7 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadProductsSpy loadProducts;
+  late GetProductCompositionSpy getProductComposition;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -52,6 +53,7 @@ void main() {
     barcodeScanner = BarcodeScannerSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadProducts = LoadProductsSpy();
+    getProductComposition = GetProductCompositionSpy();
   }
 
   void initPresenters() {
@@ -67,6 +69,7 @@ void main() {
       barcodeScanner: barcodeScanner,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadProducts: loadProducts,
+      getProductComposition: getProductComposition,
     );
   }
 

@@ -61,8 +61,6 @@ class _HomePageState extends State<HomePage>
     if (!_isLoaded) {
       _isLoaded = true;
       Future.delayed(Duration.zero, () async {
-        CommentsPresenter commentsPresenter =
-            Provider.of(context, listen: false);
         HomePresenter homePresenter = Provider.of(context, listen: false);
         PrintedProductsPresenter printedProductsPresenter =
             Provider.of(context, listen: false);
@@ -81,7 +79,6 @@ class _HomePageState extends State<HomePage>
         } else {
           await menuPresenter.getGroupsAndProducts("001");
         }
-        await commentsPresenter.loadComments();
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {

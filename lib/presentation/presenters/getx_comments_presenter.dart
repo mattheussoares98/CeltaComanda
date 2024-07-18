@@ -18,7 +18,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   List<CommentViewModel> get loadedComments => _loadedComments;
 
   @override
-  Future<void> loadComments() async {
+  Future<void> loadComments(List<ProductsViewModel> loadedProducts) async {
     isLoading = true;
     mainError = null;
 

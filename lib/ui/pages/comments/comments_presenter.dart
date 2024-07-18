@@ -9,7 +9,7 @@ abstract class CommentsPresenter implements Listenable {
   List<CommentViewModel> get loadedComments;
   bool get hasSelectedComments;
 
-  Future<void> loadComments();
+  Future<void> loadComments(List<ProductsViewModel> loadedProducts);
   Future<void> changeCommentIsSelected(int index);
   void unselectAllComments();
   void updateHasSelectedComments();

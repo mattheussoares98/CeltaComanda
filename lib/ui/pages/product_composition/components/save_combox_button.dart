@@ -66,7 +66,8 @@ class SaveComboxButton extends StatelessWidget {
 
                           if (updatedCombox) {
                             Future.delayed(Duration.zero, () {
-                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
                             });
                             Future.delayed(const Duration(microseconds: 500),
                                 () async {

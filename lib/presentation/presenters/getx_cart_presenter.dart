@@ -733,7 +733,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         ),
       );
       await cartInformations.updateConfirmedCombox(confirmedCombox);
-      notifyListeners();
+      // notifyListeners();
       return true;
     } catch (e) {
       mainError = UIError.unexpected;
@@ -1005,6 +1005,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         ), () {
       animateProductGoingMenuToCart = false;
     });
+    notifyListeners();
   }
 
   final _animateCartGoingToPrintedProducts = false.obs;

@@ -7,10 +7,12 @@ class FathersWithChilds extends StatefulWidget {
   final ProductCompositionViewModel father;
   final List<ProductCompositionViewModel> productsCompositions;
   final int index;
+  final ProductsViewModel selectedComboxProduct;
   const FathersWithChilds({
     required this.father,
     required this.productsCompositions,
     required this.index,
+    required this.selectedComboxProduct,
     super.key,
   });
 
@@ -47,6 +49,7 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FixedFatherDetails(
+              selectedComboxProduct: widget.selectedComboxProduct,
               father: widget.father,
               callSetState: () {
                 setState(() {});

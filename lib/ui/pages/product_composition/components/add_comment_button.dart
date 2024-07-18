@@ -7,10 +7,12 @@ import '../../pages.dart';
 class AddCommentButton extends StatelessWidget {
   final ProductCompositionViewModel father;
   final void Function() callSetState;
+  final ProductsViewModel selectedComboxProduct;
 
   const AddCommentButton({
     required this.father,
     required this.callSetState,
+    required this.selectedComboxProduct,
     super.key,
   });
 

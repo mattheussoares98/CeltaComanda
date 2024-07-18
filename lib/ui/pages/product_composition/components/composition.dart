@@ -33,15 +33,17 @@ class _CompositionState extends State<Composition> {
             itemCount: widget.productsCompositions.length,
             itemBuilder: (context, index) {
               father = widget.productsCompositions[index];
-    
+
               if (father!.childs?.isEmpty == true) {
                 return FathersWithoutChilds(
+                  selectedComboxProduct: widget.selectedComboxProduct,
                   father: father!,
                   productsCompositionsViewModel: widget.productsCompositions,
                 );
               }
-    
+
               return FathersWithChilds(
+                selectedComboxProduct: widget.selectedComboxProduct,
                 father: father!,
                 productsCompositions: widget.productsCompositions,
                 index: index,

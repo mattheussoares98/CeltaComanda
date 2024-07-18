@@ -8,9 +8,11 @@ import '../../../../ui/pages/pages.dart';
 class FathersWithoutChilds extends StatefulWidget {
   final ProductCompositionViewModel father;
   final List<ProductCompositionViewModel> productsCompositionsViewModel;
+  final ProductsViewModel selectedComboxProduct;
   const FathersWithoutChilds({
     required this.father,
     required this.productsCompositionsViewModel,
+    required this.selectedComboxProduct,
     super.key,
   });
 
@@ -160,6 +162,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             ),
                           ),
                           AddCommentButton(
+                            selectedComboxProduct: widget.selectedComboxProduct,
                             father: widget.father,
                             callSetState: () {
                               setState(() {});

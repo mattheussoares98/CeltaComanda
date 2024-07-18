@@ -7,11 +7,13 @@ import '../../pages.dart';
 class FixedFatherDetails extends StatefulWidget {
   final ProductCompositionViewModel father;
   final Function() callSetState;
+    final ProductsViewModel selectedComboxProduct;
 
   const FixedFatherDetails({
     super.key,
     required this.father,
     required this.callSetState,
+    required this.selectedComboxProduct,
   });
 
   @override
@@ -88,6 +90,7 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
                 ),
               ),
               AddCommentButton(
+                selectedComboxProduct: widget.selectedComboxProduct,
                 father: widget.father,
                 callSetState: () {
                   widget.callSetState();

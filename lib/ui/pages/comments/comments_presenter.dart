@@ -10,7 +10,7 @@ abstract class CommentsPresenter implements Listenable {
   bool get hasSelectedComments;
 
   Future<void> loadComments(List<ProductsViewModel> loadedProducts);
-  Future<void> changeCommentIsSelected(int index);
+  Future<void> changeCommentIsSelected(CommentViewModel comment);
   void unselectAllComments();
   void updateHasSelectedComments();
   String? getConcatenateSelectedComments();

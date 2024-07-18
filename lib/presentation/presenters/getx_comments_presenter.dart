@@ -48,7 +48,8 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   }
 
   @override
-  Future<void> changeCommentIsSelected(int index) async {
+  Future<void> changeCommentIsSelected(CommentViewModel comment) async {
+    int index = _loadedComments.indexOf(comment);
     _loadedComments[index].selected = !_loadedComments[index].selected;
     updateHasSelectedComments();
   }

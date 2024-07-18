@@ -64,7 +64,7 @@ class _CommentsState extends State<CommentsList> {
             child: InkWell(
               onTap: () {
                 setState(() {
-                  commentsPresenter.changeCommentIsSelected(index);
+                  commentsPresenter.changeCommentIsSelected(comment);
                 });
               },
               child: Padding(
@@ -85,7 +85,7 @@ class _CommentsState extends State<CommentsList> {
                       value: comment.selected,
                       onChanged: (value) {
                         setState(() {
-                          commentsPresenter.changeCommentIsSelected(index);
+                          commentsPresenter.changeCommentIsSelected(comment);
                         });
                       },
                     ),

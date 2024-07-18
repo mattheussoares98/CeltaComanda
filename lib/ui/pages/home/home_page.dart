@@ -88,15 +88,16 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(
+        context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no BottomNavigationBarItem
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(
+        context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no BottomNavigationBarItem
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
-    // loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
+    loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
 
     final List<Widget> screens = [
       makeMenusPage(homePresenter.isFixedCommandNumber),

@@ -64,7 +64,7 @@ class _MenuPageState extends State<MenuPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
-    loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
+    // loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, menuPresenter.mainErrorStream);
 

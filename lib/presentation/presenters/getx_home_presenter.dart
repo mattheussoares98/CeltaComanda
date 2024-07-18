@@ -150,29 +150,23 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
-    // isLoading = true;
+    isLoading = true;
     mainError = null;
 
     try {
-      if (isFixedCommandNumber) {
-        await printedProductsPresenter.loadCommandData(
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          homePresenter: this,
-          commentsPresenter: commentsPresenter,
-          clearPermissionToCancelProducts: true,
-          isRemovingProduct: false,
-        );
-      } else {
-        await menuPresenter.getGroupsAndProducts(
-          commandNumber: commandNumber ?? "001",
-          commentsPresenter: commentsPresenter,
-        );
+      await menuPresenter.getGroupsAndProducts(
+        commandNumber: commandNumber ?? "001",
+        commentsPresenter: commentsPresenter,
+      );
+
+      if (isFixedCommandNumber && commandNumber != null) {
+        cartPresenter.loadSaleRequest(commandNumber!);
+        await printedProductsPresenter.loadPrinted(commandNumber!);
       }
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
-      // isLoading = false;
+      isLoading = false;
     }
   }
 }

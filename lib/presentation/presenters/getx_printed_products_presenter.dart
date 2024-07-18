@@ -181,13 +181,13 @@ class GetxPrintedProductsPresenter
       cartPresenter.clear();
       await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
 
-      if (!isRemovingProduct) {
-        menuPresenter.clear();
-        await menuPresenter.getGroupsAndProducts(
-          commandNumber: homePresenter.commandNumber!,
-          commentsPresenter: commentsPresenter,
-        );
-      }
+      // if (!isRemovingProduct) {
+      //   menuPresenter.clear();
+      //   await menuPresenter.getGroupsAndProducts(
+      //     commandNumber: homePresenter.commandNumber!,
+      //     commentsPresenter: commentsPresenter,
+      //   );
+      // }
       await loadPrinted(homePresenter.commandNumber!);
     } on DomainError catch (error) {
       if (!homePresenter.isFixedCommandNumber) {

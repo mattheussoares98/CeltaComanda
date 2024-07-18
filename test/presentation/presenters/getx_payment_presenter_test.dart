@@ -83,6 +83,7 @@ void main() {
       const PayParams(longAmountValue: 0, portionQuantity: 0),
     );
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
     registerFallbackValue(CommentsPresenterSpy());

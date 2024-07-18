@@ -33,6 +33,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());

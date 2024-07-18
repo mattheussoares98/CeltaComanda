@@ -43,7 +43,7 @@ void main() {
         EntityFactory.makeExpansibleGroupFromProductCompleteEntity();
 
     productsInternalCodeOfProductOnERP = loadedProducts
-        .map((e) => e.InternalCodeOfProductOnERP!.toInt())
+        .map((e) => e.InternalCodeOnERP!.toInt())
         .toList();
   }
 

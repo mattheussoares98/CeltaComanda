@@ -18,6 +18,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

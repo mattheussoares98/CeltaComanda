@@ -19,6 +19,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

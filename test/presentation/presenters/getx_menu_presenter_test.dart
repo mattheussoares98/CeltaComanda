@@ -121,13 +121,13 @@ void main() {
     registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(const EnterpriseEntity(enterpriseName: ""));
-    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
   });
 
   group("Get groups and products", () {

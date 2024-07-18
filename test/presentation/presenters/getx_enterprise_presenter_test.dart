@@ -68,6 +68,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());

@@ -54,7 +54,10 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     mockLoadCall().thenThrow(error);
   }
 
-  When mockLoadCall() => when(() => this.getGroupsAndProducts(any()));
+  When mockLoadCall() => when(() => this.getGroupsAndProducts(
+        commandNumber: any(named: "commandNumber"),
+        commentsPresenter: any(named: "commentsPresenter"),
+      ));
 
   void mockExpansibleGroupStreamError(DomainError error) {
     mainErrorController.add(UIError.unexpected);

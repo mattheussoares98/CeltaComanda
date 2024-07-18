@@ -134,6 +134,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -151,6 +152,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
       );
     } on DomainError catch (e) {
       switch (e) {
@@ -172,6 +174,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -188,6 +191,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
       );
 
       await addNewPrintRequestInFirebase();
@@ -220,6 +224,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -230,7 +235,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     try {
       await loadSaleRequest(commandNumber);
-      await menuPresenter.getGroupsAndProducts(commandNumber);
+      await menuPresenter.getGroupsAndProducts(
+        commandNumber: commandNumber,
+        commentsPresenter: commentsPresenter,
+      );
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
       homePresenter.updateCommandNumber(null);

@@ -18,6 +18,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
   late HomePresenterSpy homePresenter;
+  late CommentsPresenterSpy commentsPresenter;
 
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -37,6 +38,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
     homePresenter = HomePresenterSpy();
+    commentsPresenter = CommentsPresenterSpy();
 
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
@@ -91,6 +93,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -391,6 +394,7 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.removeProduct(
+        commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -400,8 +404,10 @@ void main() {
       verifyNever(() =>
           homePresenter.updateCommandNumber(homePresenter.commandNumberMock!));
       verifyNever(() => menuPresenter.clear());
-      verifyNever(() =>
-          menuPresenter.getGroupsAndProducts(homePresenter.commandNumberMock!));
+      verifyNever(() => menuPresenter.getGroupsAndProducts(
+            commandNumber: homePresenter.commandNumberMock!,
+            commentsPresenter: commentsPresenter,
+          ));
 
       verify(() => cartPresenter.clear()).called(1);
       verify(() =>
@@ -412,6 +418,7 @@ void main() {
     });
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
+        commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -429,6 +436,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -443,6 +451,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -457,6 +466,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -471,6 +481,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -509,6 +520,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -527,6 +539,7 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -544,6 +557,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -560,6 +574,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -572,6 +587,7 @@ void main() {
       homePresenter.commandNumberMock = "9999";
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -584,6 +600,7 @@ void main() {
 
     test("Should call clearData on LoadCommandData call", () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -596,6 +613,7 @@ void main() {
       loadPrintedProducts.mockError(DomainError.unexpected);
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -614,6 +632,7 @@ void main() {
 
     test("Should call ticketIsPermitted only one time", () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -630,6 +649,7 @@ void main() {
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -643,8 +663,10 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: int.parse(homePresenter.commandNumberMock!),
           )).called(1);
-      verify(() => menuPresenter
-          .getGroupsAndProducts(homePresenter.commandNumberMock!)).called(1);
+      verify(() => menuPresenter.getGroupsAndProducts(
+            commandNumber: homePresenter.commandNumberMock!,
+            commentsPresenter: commentsPresenter,
+          )).called(1);
       verify(() =>
               cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
           .called(1);
@@ -656,6 +678,7 @@ void main() {
       ticketIsPermitted.mockError();
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -671,6 +694,7 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -686,6 +710,7 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -706,6 +731,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
@@ -718,6 +744,7 @@ void main() {
       homePresenter.isFixedCommandNumberMock = true;
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,

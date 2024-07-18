@@ -22,12 +22,14 @@ abstract class PrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   });
 
   Future<void> loadCommandData({
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
   });

@@ -83,6 +83,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -109,8 +110,9 @@ void main() {
         products: updateSaleRequestTempEntity.Products,
       );
 
-      verify(() => cartPresenter
-          .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+      verify(() =>
+              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+          .called(1);
     });
 
     test(
@@ -133,8 +135,7 @@ void main() {
 
     test('Should emit UnexpectedError on error to loadSaleRequestTemp',
         () async {
-      cartPresenter
-          .mockLoadSaleRequestTempError(DomainError.unexpected);
+      cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -235,14 +236,13 @@ void main() {
       );
 
       final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: int.parse(
-            cartPresenter.saleRequestTempMock!.DeliveryControl),
-        EnterpriseId: int.parse(
-            cartPresenter.saleRequestTempMock!.EnterpriseId),
-        PersonalizedCode:
-            cartPresenter.saleRequestTempMock!.PersonalizedCode,
-        SaleRequestTempId: int.parse(
-            cartPresenter.saleRequestTempMock!.SaleRequestTempId),
+        DeliveryControl:
+            int.parse(cartPresenter.saleRequestTempMock!.DeliveryControl),
+        EnterpriseId:
+            int.parse(cartPresenter.saleRequestTempMock!.EnterpriseId),
+        PersonalizedCode: cartPresenter.saleRequestTempMock!.PersonalizedCode,
+        SaleRequestTempId:
+            int.parse(cartPresenter.saleRequestTempMock!.SaleRequestTempId),
         TotalLiquid: updateSaleRequestTempEntity.Products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: updateSaleRequestTempEntity.Products,
@@ -263,8 +263,9 @@ void main() {
       products: updateSaleRequestTempEntity.Products,
     );
 
-    verify(() => cartPresenter
-        .loadSaleRequest(homePresenter.commandNumberMock!)).called(1);
+    verify(() =>
+            cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+        .called(1);
   });
 
   test('Should go to ComboxPage', () async {

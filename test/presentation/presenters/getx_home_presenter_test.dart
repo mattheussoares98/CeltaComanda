@@ -78,6 +78,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(CommentsPresenterSpy());
   });
 
   group("Navigation", () {

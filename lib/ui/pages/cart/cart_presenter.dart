@@ -32,6 +32,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   });
 
   void clear();
@@ -43,6 +44,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   });
 
   void updateLocalSaleRequestComment(String newComment);
@@ -53,6 +55,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   });
 
   Future<void> addNewPrintRequestInFirebase();

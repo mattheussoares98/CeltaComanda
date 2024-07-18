@@ -35,6 +35,7 @@ class _PaymentPageState extends State<PaymentPage>
         Provider.of(context, listen: true);
     HomePresenter homePresenter = Provider.of(context, listen: true);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -68,6 +69,7 @@ class _PaymentPageState extends State<PaymentPage>
                     cartPresenter: cartPresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     menuPresenter: menuPresenter,
+                    commentsPresenter: commentsPresenter,
                   );
                 },
               )

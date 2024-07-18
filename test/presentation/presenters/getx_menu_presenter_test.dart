@@ -125,6 +125,7 @@ void main() {
     registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -139,7 +140,10 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.menuStream, emitsInOrder([[], menuList]));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
     test('Should emit correct values on throws CommandNotAvailable', () async {
       loadExpansibleGroups
@@ -149,7 +153,10 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
     test('Should emit correct values on throws unexpected', () async {
       loadExpansibleGroups
@@ -159,10 +166,16 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
     test('Should call LoadExpansibleGroups and loadProducts', () async {
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
 
       verify(() => loadExpansibleGroups.load()).called(1);
       verify(() => loadProducts.load(expansibleGroups[0].ExpansibleGroupId))
@@ -181,17 +194,26 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
 
     test('Should return correct value on success to load', () async {
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
 
       expect(sut.loadedMenu, menuList);
     });
 
     test('Should clear expansibleGroups', () async {
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
       expect(sut.loadedMenu, menuList);
 
       sut.clear();
@@ -202,7 +224,10 @@ void main() {
         () async {
       expectLater(sut.indexOfSelectedGroupStream, emits(0));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
 
     test('Should put "destaques" in first group list', () async {
@@ -238,7 +263,10 @@ void main() {
             ]
           ]));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
   });
 
@@ -343,7 +371,10 @@ void main() {
       await sut.searchProduct(productEan);
       expect(sut.searchedProduct, productsViewModel);
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
       expect(sut.searchedProduct, null);
     });
 
@@ -440,6 +471,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -458,6 +490,7 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -470,6 +503,7 @@ void main() {
       homePresenter.commandNumberMock = "9999";
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -482,6 +516,7 @@ void main() {
 
     test("Should call clearData on LoadCommandData call", () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -495,6 +530,7 @@ void main() {
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -513,6 +549,7 @@ void main() {
 
     test("Should call ticketIsPermitted only one time", () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -529,6 +566,7 @@ void main() {
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -545,7 +583,10 @@ void main() {
     });
 
     test('Should call ticketIsPermitted on load data', () async {
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
 
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -562,7 +603,10 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
 
-      await sut.getGroupsAndProducts(homePresenter.commandNumberMock!);
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
     });
   });
 

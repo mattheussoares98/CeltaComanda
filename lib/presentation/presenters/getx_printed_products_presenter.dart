@@ -31,6 +31,7 @@ class GetxPrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -45,6 +46,7 @@ class GetxPrintedProductsPresenter
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: true,
       );
@@ -157,6 +159,7 @@ class GetxPrintedProductsPresenter
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
     required bool clearPermissionToCancelProducts,
     required bool isRemovingProduct,
   }) async {
@@ -180,7 +183,10 @@ class GetxPrintedProductsPresenter
 
       if (!isRemovingProduct) {
         menuPresenter.clear();
-        await menuPresenter.getGroupsAndProducts(homePresenter.commandNumber!);
+        await menuPresenter.getGroupsAndProducts(
+          commandNumber: homePresenter.commandNumber!,
+          commentsPresenter: commentsPresenter,
+        );
       }
       await loadPrinted(homePresenter.commandNumber!);
     } on DomainError catch (error) {

@@ -20,6 +20,7 @@ void writeCommandNumber({
   MenuPresenter menuPresenter = Provider.of(context, listen: false);
   CartPresenter cartPresenter = Provider.of(context, listen: false);
   HomePresenter homePresenter = Provider.of(context, listen: false);
+  CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
   PrintedProductsPresenter printedProductsPresenter =
       Provider.of(context, listen: false);
   PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
@@ -72,6 +73,7 @@ void writeCommandNumber({
                     onWriteCommand: action,
                     focusNode: focusNode,
                     paymentPresenter: paymentPresenter,
+                    commentsPresenter: commentsPresenter,
                   );
                 } else {
                   focusNode.requestFocus();
@@ -96,6 +98,7 @@ void writeCommandNumber({
         onWriteCommand: action,
         focusNode: focusNode,
         paymentPresenter: paymentPresenter,
+        commentsPresenter: commentsPresenter,
       );
     },
   );
@@ -112,6 +115,7 @@ Future<void> _onPress({
   required OnWriteCommand onWriteCommand,
   required FocusNode focusNode,
   required PaymentPresenter paymentPresenter,
+  required CommentsPresenter commentsPresenter,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 
@@ -144,6 +148,7 @@ Future<void> _onPress({
       homePresenter: homePresenter,
       clearPermissionToCancelProducts: true,
       isRemovingProduct: false,
+      commentsPresenter: commentsPresenter,
     );
   } else {
     await paymentPresenter.getTotalValue(
@@ -151,6 +156,7 @@ Future<void> _onPress({
       cartPresenter: cartPresenter,
       menuPresenter: menuPresenter,
       printedProductsPresenter: printedProductsPresenter,
+      commentsPresenter: commentsPresenter,
     );
   }
 }

@@ -17,7 +17,10 @@ abstract class MenuPresenter implements Listenable {
 
   TextEditingController get searchProductController;
 
-  Future<void> getGroupsAndProducts(String commandNumber);
+  Future<void> getGroupsAndProducts({
+    required String commandNumber,
+    required CommentsPresenter commentsPresenter,
+  });
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
 
@@ -27,6 +30,7 @@ abstract class MenuPresenter implements Listenable {
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   });
 
   void goToProductsPage(ExpansibleGroupEntity entity);

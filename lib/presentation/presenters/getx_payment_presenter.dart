@@ -113,6 +113,7 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
+    required CommentsPresenter commentsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     mainError = null;
@@ -122,6 +123,7 @@ class GetxPaymentPresenter extends GetxController
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
         homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
         clearPermissionToCancelProducts: false,
         isRemovingProduct: false,
       );

@@ -24,6 +24,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late MenuPresenterSpy menuPresenter;
+  late CommentsPresenterSpy commentsPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -50,6 +51,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     menuPresenter = MenuPresenterSpy();
+    commentsPresenter = CommentsPresenterSpy();
   }
 
   initEntitys() {
@@ -84,6 +86,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
+    registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -346,6 +349,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.getTotalValue(
+        commentsPresenter: commentsPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -361,6 +365,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.getTotalValue(
+        commentsPresenter: commentsPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -384,6 +389,7 @@ void main() {
       homePresenter.commandNumberMock = "001";
 
       await sut.getTotalValue(
+        commentsPresenter: commentsPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -391,6 +397,7 @@ void main() {
       );
 
       verify(() => printedProductsPresenter.loadCommandData(
+            commentsPresenter: commentsPresenter,
             cartPresenter: cartPresenter,
             menuPresenter: menuPresenter,
             homePresenter: homePresenter,

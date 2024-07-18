@@ -55,6 +55,7 @@ class _MenuPageState extends State<MenuPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -76,7 +77,10 @@ class _MenuPageState extends State<MenuPage>
                 child: TextButton.icon(
                   key: const Key("loadMenu"),
                   onPressed: () async {
-                    await menuPresenter.getGroupsAndProducts("001");
+                    await menuPresenter.getGroupsAndProducts(
+                      commandNumber: "001",
+                      commentsPresenter: commentsPresenter,
+                    );
                   },
                   icon: Icon(
                     Icons.menu_book,

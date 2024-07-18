@@ -9,6 +9,7 @@ PreferredSize homeAppBar({
   required CartPresenter cartPresenter,
   required MenuPresenter menuPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
+  required CommentsPresenter commentsPresenter,
   required BuildContext context,
   required GlobalKey<ScaffoldState> scaffoldKey,
   required int currentIndex,
@@ -42,6 +43,7 @@ PreferredSize homeAppBar({
                 homePresenter: homePresenter,
                 clearPermissionToCancelProducts: true,
                 isRemovingProduct: false,
+                commentsPresenter: commentsPresenter,
               );
               printedProductsPresenter.updateCanCancelProducts(false);
             },
@@ -51,7 +53,10 @@ PreferredSize homeAppBar({
       title: TitleAppbar(
           showLoadMenuAgain: currentIndex == 0,
           loadMenuAgain: () async {
-            await menuPresenter.getGroupsAndProducts("001");
+            await menuPresenter.getGroupsAndProducts(
+              commandNumber: "001",
+              commentsPresenter: commentsPresenter,
+            );
           },
           openDrawer: () {
             scaffoldKey.currentState?.openDrawer();

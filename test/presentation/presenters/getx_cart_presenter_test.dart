@@ -254,6 +254,7 @@ void main() {
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -729,6 +730,7 @@ void main() {
   group("UpdateProductComment", () {
     test("Should call UpdateComment with correct values", () async {
       await sut.updateComment(
+        commentsPresenter: commentsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
@@ -749,6 +751,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateComment(
+        commentsPresenter: commentsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
@@ -767,6 +770,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateComment(
+        commentsPresenter: commentsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
@@ -786,6 +790,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateComment(
+        commentsPresenter: commentsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
@@ -797,6 +802,7 @@ void main() {
 
     test("Should call expansibleGroups.load when UpdateComment", () async {
       await sut.updateComment(
+        commentsPresenter: commentsPresenter,
         comments: comments,
         saleRequestProductTempId: saleRequestProductTempId,
         menuPresenter: menuPresenter,
@@ -829,6 +835,7 @@ void main() {
   group("FinishSaleRequestTemp", () {
     test("Should call FinishSaleRequestTemp with correct values", () async {
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -850,6 +857,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -866,6 +874,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -877,6 +886,7 @@ void main() {
     test("Should call MenuPresenter.load on FinishSaleRequest success",
         () async {
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -908,6 +918,7 @@ void main() {
   group("Add PrintRequest", () {
     test("Should call addPrintRequest when finish success", () async {
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -926,6 +937,7 @@ void main() {
       localPrintRequest.mockGetMergedPrinted(printRequestEntity);
 
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -956,6 +968,7 @@ void main() {
         "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
         () async {
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -978,6 +991,7 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1001,6 +1015,7 @@ void main() {
       addPrintRequest.mockRemoteAddError();
 
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1019,6 +1034,7 @@ void main() {
       localPrintRequest.mockGetMergedPrintedError();
 
       await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
         saleRequestTempEntity: saleRequestTempEntity,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1038,6 +1054,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1056,6 +1073,7 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1068,6 +1086,7 @@ void main() {
       homePresenter.commandNumberMock = "9999";
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1080,6 +1099,7 @@ void main() {
 
     test("Should call clearData on LoadCommandData call", () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1095,6 +1115,7 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1113,6 +1134,7 @@ void main() {
 
     test("Should call ticketIsPermitted only one time", () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1129,6 +1151,7 @@ void main() {
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,
@@ -1142,8 +1165,10 @@ void main() {
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             commandNumber: homePresenter.commandNumberMock!,
           )).called(1);
-      verify(() => menuPresenter
-          .getGroupsAndProducts(homePresenter.commandNumberMock!)).called(1);
+      verify(() => menuPresenter.getGroupsAndProducts(
+            commandNumber: homePresenter.commandNumberMock!,
+            commentsPresenter: commentsPresenter,
+          )).called(1);
       verify(() => printedProductsPresenter
           .loadPrinted(homePresenter.commandNumberMock!)).called(1);
     });
@@ -1154,6 +1179,7 @@ void main() {
       ticketIsPermitted.mockError();
 
       await sut.loadCommandData(
+        commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: sut,

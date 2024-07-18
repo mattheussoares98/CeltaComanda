@@ -47,6 +47,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -96,6 +97,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                             homePresenter: homePresenter,
                             clearPermissionToCancelProducts: true,
                             isRemovingProduct: false,
+                            commentsPresenter: commentsPresenter,
                           );
                         },
                       ),

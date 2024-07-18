@@ -134,6 +134,7 @@ class GetxMenuPresenter extends GetxController
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -143,7 +144,11 @@ class GetxMenuPresenter extends GetxController
     cartPresenter.clear();
 
     try {
-      await getGroupsAndProducts(commandNumber);
+      await getGroupsAndProducts(
+        commandNumber: commandNumber,
+        commentsPresenter: commentsPresenter,
+      );
+
       await cartPresenter.loadSaleRequest(commandNumber);
       await printedProductsPresenter.loadPrinted(commandNumber);
     } on DomainError catch (error) {
@@ -207,7 +212,10 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> getGroupsAndProducts(String commandNumber) async {
+  Future<void> getGroupsAndProducts({
+    required String commandNumber,
+    required CommentsPresenter commentsPresenter,
+  }) async {
     isLoading = true;
     mainError = null;
     _inexOfSelectedGroup.value = 0;

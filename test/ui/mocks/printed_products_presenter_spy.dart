@@ -42,6 +42,7 @@ class PrintedProductsPresenterSpy extends Mock
           menuPresenter: any(named: "menuPresenter"),
           cartPresenter: any(named: "cartPresenter"),
           homePresenter: any(named: "homePresenter"),
+          commentsPresenter: any(named: "commentsPresenter"),
         )).thenAnswer((_) async => _);
   }
 
@@ -50,6 +51,7 @@ class PrintedProductsPresenterSpy extends Mock
           cartPresenter: any(named: "cartPresenter"),
           menuPresenter: any(named: "menuPresenter"),
           homePresenter: any(named: "homePresenter"),
+          commentsPresenter: any(named: "commentsPresenter"),
           clearPermissionToCancelProducts:
               any(named: "clearPermissionToCancelProducts"),
           isRemovingProduct: any(named: "isRemovingProduct"),

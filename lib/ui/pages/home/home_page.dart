@@ -66,6 +66,8 @@ class _HomePageState extends State<HomePage>
             Provider.of(context, listen: false);
         CartPresenter cartPresenter = Provider.of(context, listen: false);
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
+        CommentsPresenter commentsPresenter =
+            Provider.of(context, listen: false);
 
         await homePresenter.getLocalCommandData();
         if (homePresenter.isFixedCommandNumber) {
@@ -75,9 +77,13 @@ class _HomePageState extends State<HomePage>
             homePresenter: homePresenter,
             clearPermissionToCancelProducts: true,
             isRemovingProduct: false,
+            commentsPresenter: commentsPresenter,
           );
         } else {
-          await menuPresenter.getGroupsAndProducts("001");
+          await menuPresenter.getGroupsAndProducts(
+            commandNumber: "001",
+            commentsPresenter: commentsPresenter,
+          );
         }
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -139,6 +145,7 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             menuPresenter: menuPresenter,
             printedProductsPresenter: printedProductsPresenter,
+            commentsPresenter: commentsPresenter,
             context: context,
             scaffoldKey: scaffoldKey,
             currentIndex: _currentIndex,

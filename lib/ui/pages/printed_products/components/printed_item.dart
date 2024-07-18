@@ -25,6 +25,7 @@ class PrintedItem extends StatelessWidget {
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
     required String saleRequestProductId,
   }) async {
     await printedProductsPresenter.removeProduct(
@@ -32,6 +33,7 @@ class PrintedItem extends StatelessWidget {
       menuPresenter: menuPresenter,
       cartPresenter: cartPresenter,
       homePresenter: homePresenter,
+      commentsPresenter: commentsPresenter,
     );
   }
 
@@ -42,6 +44,7 @@ class PrintedItem extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -51,7 +54,8 @@ class PrintedItem extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: (printed.Products.length / getItensPerLine(context)).ceil(),
+              itemCount:
+                  (printed.Products.length / getItensPerLine(context)).ceil(),
               itemBuilder: (context, index) {
                 return IntrinsicHeight(
                   child: Row(
@@ -105,6 +109,8 @@ class PrintedItem extends StatelessWidget {
                                               homePresenter: homePresenter,
                                               saleRequestProductId:
                                                   product.SaleRequestProductId,
+                                              commentsPresenter:
+                                                  commentsPresenter,
                                             );
                                           },
                                         );

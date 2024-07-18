@@ -201,7 +201,6 @@ void main() {
       );
 
       verify(() => getProductComposition.getFathers(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             enterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             internalCodeOnErp: internalCodeOnErp,
@@ -217,7 +216,6 @@ void main() {
 
       verify(
         () => getProductComposition.getChildsOfFather(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           internalCodeOnErp: internalCodeOnErp,

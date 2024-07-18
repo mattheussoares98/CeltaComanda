@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+
 import '../../../../ui/pages/product_composition/product_composition_view_model.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -12,14 +14,13 @@ class RemoteGetProductComposition extends GetProductComposition {
 
   @override
   Future<List<ProductCompositionEntity>> getFathers({
-    required String url,
     required int enterpriseId,
     required int internalCodeOnErp,
   }) async {
     try {
       final response = await httpAdapter.request(
           url:
-              "$url/api/APIProduct/getproductcomposition?_enterpriseId=$enterpriseId&_internalCodeOnERPCodeFather=$internalCodeOnErp",
+              "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIProduct/getproductcomposition?_enterpriseId=$enterpriseId&_internalCodeOnERPCodeFather=$internalCodeOnErp",
           method: "get");
 
       if (response == null) {
@@ -41,7 +42,6 @@ class RemoteGetProductComposition extends GetProductComposition {
 
   @override
   Future<List<ProductCompositionViewModel>> getChildsOfFather({
-    required String url,
     required int enterpriseId,
     required int internalCodeOnErp,
     required List<ProductCompositionEntity> fathers,
@@ -51,7 +51,6 @@ class RemoteGetProductComposition extends GetProductComposition {
 
       for (var father in fathers) {
         final childrenOfFather = await getFathers(
-          url: url,
           enterpriseId: enterpriseId,
           internalCodeOnErp: father.InternalCodeOnERPCodeChild!,
         );

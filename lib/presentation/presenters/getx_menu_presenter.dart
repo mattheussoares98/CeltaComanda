@@ -127,44 +127,6 @@ class GetxMenuPresenter extends GetxController
     }
   }
 
-  // @override
-  // Future<void> loadCommandData({
-  //   required String commandNumber,
-  //   required PrintedProductsPresenter printedProductsPresenter,
-  //   required CartPresenter cartPresenter,
-  //   required MenuPresenter menuPresenter,
-  //   required HomePresenter homePresenter,
-  //   required CommentsPresenter commentsPresenter,
-  // }) async {
-  //   isLoading = true;
-  //   mainError = null;
-  //   homePresenter.updateCommandNumber(commandNumber);
-  //   clear();
-  //   printedProductsPresenter.clear();
-  //   cartPresenter.clear();
-
-  //   try {
-  //     await getGroupsAndProducts(
-  //       commandNumber: commandNumber,
-  //       commentsPresenter: commentsPresenter,
-  //     );
-
-  //     await cartPresenter.loadSaleRequest(commandNumber);
-  //     await printedProductsPresenter.loadPrinted(commandNumber);
-  //   } on DomainError catch (error) {
-  //     homePresenter.updateCommandNumber(null);
-  //     switch (error) {
-  //       case DomainError.commandNotAvailable:
-  //         mainError = UIError.commandNotAvailable;
-  //         break;
-  //       default:
-  //         mainError = UIError.unexpected;
-  //     }
-  //   } finally {
-  //     isLoading = false;
-  //   }
-  // }
-
   final _selectedProduct = Rx<ProductsViewModel?>(null);
   @override
   Stream<ProductsViewModel?> get selectedProductStream =>

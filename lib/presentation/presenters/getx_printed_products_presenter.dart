@@ -153,59 +153,6 @@ class GetxPrintedProductsPresenter
     }
   }
 
-  // @override
-  // Future<void> loadCommandData({
-  //   required CartPresenter cartPresenter,
-  //   required MenuPresenter menuPresenter,
-  //   required HomePresenter homePresenter,
-  //   required CommentsPresenter commentsPresenter,
-  //   required bool clearPermissionToCancelProducts,
-  //   required bool isRemovingProduct,
-  // }) async {
-  //   isLoading = true;
-  //   mainError = null;
-
-  //   try {
-  //     if (isRemovingProduct && homePresenter.commandNumber == null) {
-  //       throw DomainError.unexpected;
-  //     }
-
-  //     if (!isRemovingProduct && homePresenter.isFixedCommandNumber != true) {
-  //       homePresenter.updateCommandNumber(await barcodeScanner.read());
-  //     }
-  //     if (clearPermissionToCancelProducts) {
-  //       updateCanCancelProducts(false);
-  //     }
-
-  //     cartPresenter.clear();
-  //     await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
-
-  //     // if (!isRemovingProduct) {
-  //     //   menuPresenter.clear();
-  //     //   await menuPresenter.getGroupsAndProducts(
-  //     //     commandNumber: homePresenter.commandNumber!,
-  //     //     commentsPresenter: commentsPresenter,
-  //     //   );
-  //     // }
-  //     await loadPrinted(homePresenter.commandNumber!);
-  //   } on DomainError catch (error) {
-  //     if (!homePresenter.isFixedCommandNumber) {
-  //       homePresenter.updateCommandNumber(null);
-  //     }
-  //     switch (error) {
-  //       case DomainError.barcodeNotRead:
-  //         mainError = UIError.barcodeNotRead;
-  //       case DomainError.commandNotAvailable:
-  //         mainError = UIError.commandNotAvailable;
-  //         break;
-  //       default:
-  //         mainError = UIError.unexpected;
-  //     }
-  //   } finally {
-  //     isLoading = false;
-  //   }
-  // }
-
   PrintedViewModel? _printedProducts;
   @override
   PrintedViewModel? get printedProducts => _printedProducts;

@@ -20,8 +20,6 @@ void main() {
   late GetxMenuPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
-  late PrintedProductsPresenterSpy printedProductsPresenter;
-  // late MenuPresenterSpy menuPresenter;
   late CommentsPresenterSpy commentsPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
@@ -59,8 +57,6 @@ void main() {
   void initPresenters() {
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
-    printedProductsPresenter = PrintedProductsPresenterSpy();
-    // menuPresenter = MenuPresenterSpy();
     commentsPresenter = CommentsPresenterSpy();
 
     sut = GetxMenuPresenter(
@@ -476,151 +472,6 @@ void main() {
       await sut.readBarcodeAndSearchProduct();
 
       expect(sut.searchProductController.text, "1234567890123");
-    });
-  });
-
-  group("Load commandData", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-    });
-
-    test(
-        "Should emit correct values on loadCommandData throws commandNotAvailable",
-        () async {
-      ticketIsPermitted.mockError();
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-    });
-
-    test("Should update commandNumber", () async {
-      homePresenter.commandNumberMock = "9999";
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      expect(homePresenter.commandNumberMock, "9999");
-    });
-
-    test("Should call clearData on LoadCommandData call", () async {
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      expect(sut.loadedMenu, menuList);
-
-      loadExpansibleGroups
-          .mockLoadExpansibleGroupsError(DomainError.unexpected);
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      expect(sut.loadedMenu, []);
-      verify(() => printedProductsPresenter.clear()).called(2);
-      verify(() => cartPresenter.clear()).called(2);
-      //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
-      //certeza que vai colocar dados no expansibleGroups e outro teste com
-      //erro, pra ter certeza que vai chamar a função para limpar a lista de
-      //grupos expansíveis
-    });
-
-    test("Should call ticketIsPermitted only one time", () async {
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: homePresenter.commandNumberMock!,
-          )).called(1);
-    });
-
-    test("Should call loadGroups, saleRequestTemp and PrintedProducts",
-        () async {
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: cartPresenter,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      verify(() => loadExpansibleGroups.load()).called(1);
-      verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
-      verify(() =>
-              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
-          .called(1);
-    });
-
-    test('Should call ticketIsPermitted on load data', () async {
-      await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-      );
-
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: homePresenter.commandNumberMock!,
-          )).called(1);
-    });
-
-    test(
-        'Should emit correct values on ticketIsPermitted throws commandNotAvailable',
-        () async {
-      ticketIsPermitted.mockError();
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-
-      await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-      );
     });
   });
 

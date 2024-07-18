@@ -18,8 +18,10 @@ class HomePresenterSpy extends Mock implements HomePresenter {
 
   HomePresenterSpy() {
     when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
-    when(() => this.isFixedCommandNumber).thenAnswer((_) => isFixedCommandNumberMock);
-    when(() => this.isGeneratingVersionToRede).thenAnswer((_) => isGeneratingVersionToRedeMock);
+    when(() => this.isFixedCommandNumber)
+        .thenAnswer((_) => isFixedCommandNumberMock);
+    when(() => this.isGeneratingVersionToRede)
+        .thenAnswer((_) => isGeneratingVersionToRedeMock);
     when(() => this.goToSplashPage(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           cartPresenter: any(named: "cartPresenter"),
@@ -30,6 +32,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
     when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
     when(() => this.getLocalCommandData()).thenAnswer((_) async => _);
     when(() => this.updateIsFixedCommandNumber()).thenAnswer((_) async => _);
+    mockLoadCommandDataCall().thenAnswer((_) async => _);
   }
 
   void mockGoToProductsPage(ExpansibleGroupEntity entity) {
@@ -37,6 +40,17 @@ class HomePresenterSpy extends Mock implements HomePresenter {
           PageRoutes.products,
           arguments: entity,
         ));
+  }
+
+  When mockLoadCommandDataCall() => when(() => this.loadCommandData(
+        menuPresenter: any(named: "menuPresenter"),
+        printedProductsPresenter: any(named: "printedProductsPresenter"),
+        cartPresenter: any(named: "cartPresenter"),
+        commentsPresenter: any(named: "commentsPresenter"),
+      ));
+
+  void mockLoadCommandDataError() {
+    mockLoadCommandDataCall().thenThrow(DomainError.unexpected);
   }
 
   void mockExpansibleGroupStreamError(DomainError error) {

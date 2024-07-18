@@ -482,9 +482,9 @@ void main() {
     });
 
     test("Should emit correct values on ticket is not permitted", () async {
-      ticketIsPermitted.mockError();
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
+      homePresenter.mockLoadCommandDataError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(

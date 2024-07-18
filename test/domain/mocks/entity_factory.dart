@@ -751,7 +751,7 @@ class EntityFactory {
       );
 
   static List<ExpansibleGroupFromProductCompleteEntity>
-      makeProductsPackingInternalCodesOnErp() => [
+      makeExpansibleGroupFromProductCompleteEntity() => [
             ExpansibleGroupFromProductCompleteEntity(
               ExpansibleGroupId: faker.randomGenerator.integer(100),
               ProductInternalCodeOnErp: faker.randomGenerator.integer(100),

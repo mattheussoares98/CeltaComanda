@@ -8,15 +8,14 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadExpansibleGroupsFromProductsCompleteSpy extends Mock
     implements LoadExpansibleGroupsFromProductsComplete {
-  When mockLoadExpansibleGroupsFromProductsCompleteCall() =>
-      when(() => this.load(any()));
+  When mockCall() => when(() => this.load(any()));
 
-  void mockLoadExpansibleGroupsFromProductsComplete(
-          List<ExpansibleGroupFromProductCompleteEntity> expansibleGroupFromProductComplete) =>
+  void mockLoad(
+          List<ExpansibleGroupFromProductCompleteEntity>
+              expansibleGroupFromProductComplete) =>
       this
-          .mockLoadExpansibleGroupsFromProductsCompleteCall()
+          .mockCall()
           .thenAnswer((_) async => expansibleGroupFromProductComplete);
 
-  void mockLoadExpansibleGroupsFromProductsCompleteError(DomainError error) =>
-      this.mockLoadExpansibleGroupsFromProductsCompleteCall().thenThrow(error);
+  void mockError() => this.mockCall().thenThrow(DomainError.unexpected);
 }

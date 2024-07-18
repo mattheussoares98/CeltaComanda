@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../ui/helpers/errors/errors.dart';
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../../domain/usecases/usecases.dart';
 
@@ -23,11 +23,19 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     mainError = null;
 
     try {
-      // final localComments = await comments.load();
-      // if (localComments != null) {
-      //   _loadedComments = localComments;
-      //   _loadedComments.sort((a, b) => a.comment.compareTo(b.comment));
-      // }
+      final optionalGroups =
+          await loadExpansibleGroupsFromProductsComplete.load(loadedProducts
+              .map(
+                (e) => e.InternalCodeOfProductOnERP!.toInt(),
+              )
+              .toList());
+
+      _loadedComments = optionalGroups
+          .map((e) =>
+              CommentViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
+                e,
+              ))
+          .toList();
     } catch (e) {
       mainError = UIError.unexpected;
       _loadedComments = [];

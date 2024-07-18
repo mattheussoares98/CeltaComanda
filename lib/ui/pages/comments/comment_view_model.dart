@@ -19,7 +19,7 @@ class CommentViewModel extends Equatable {
     required this.ProductInternalCodeOnErp,
   });
 
-  factory CommentViewModel.fromEntity(
+  factory CommentViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
           ExpansibleGroupFromProductCompleteEntity entity) =>
       CommentViewModel(
         selected: false,

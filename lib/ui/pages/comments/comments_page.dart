@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -8,9 +9,11 @@ import '../../mixins/mixins.dart';
 
 class CommentsPage extends StatefulWidget {
   final String selectedProductName;
+  final int productInternalCodeOnERP;
   const CommentsPage({
     super.key,
     required this.selectedProductName,
+    required this.productInternalCodeOnERP,
   });
 
   @override
@@ -54,7 +57,11 @@ class _CommentsPageState extends State<CommentsPage>
               const SizedBox(height: 15),
               const AddCommentFormField(),
               const SizedBox(height: 8),
-              if (commentsPresenter.loadedComments.isNotEmpty)
+              if (commentsPresenter.loadedComments
+                  .where((e) =>
+                      e.ProductInternalCodeOnErp.toInt() ==
+                      widget.productInternalCodeOnERP)
+                  .isNotEmpty)
                 const CommentsList(),
             ],
           ),

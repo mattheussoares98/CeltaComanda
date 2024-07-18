@@ -119,10 +119,15 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                 topRight: Radius.circular(30),
                               ),
                               child: SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.9,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.9,
                                 child: CommentsPage(
                                   selectedProductName:
                                       widget.selectedProduct!.Name,
+                                  productInternalCodeOnERP: widget
+                                      .selectedProduct!
+                                      .InternalCodeOfProductOnERP!
+                                      .toInt(),
                                 ),
                               ),
                             );
@@ -207,7 +212,8 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                 Text(
                                   (widget.selectedProduct!.SaleRetailPraticed
                                               .toDouble() *
-                                          widget.selectedProduct!.productQuantity
+                                          widget
+                                              .selectedProduct!.productQuantity
                                               .toDouble())
                                       .toString()
                                       .toBrazilianNumber()

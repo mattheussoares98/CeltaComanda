@@ -40,6 +40,7 @@ class _CommentState extends State<Comment> {
               height: MediaQuery.of(context).size.height * 0.9,
               child: CommentsPage(
                 selectedProductName: widget.productName,
+                productInternalCodeOnERP: widget.productInternalCodeOnERP,
               ),
             ),
           );

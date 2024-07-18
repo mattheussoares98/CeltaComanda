@@ -268,6 +268,20 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
+
+    test("Should call commentsPresenter.loadComments", () async {
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      verify(() => commentsPresenter.loadComments(sut.loadedMenu
+          .expand((map) =>
+              map.values) // Expande todas as listas de produtos em um Iterable
+          .expand((lista) =>
+              lista) // Expande cada lista individual de produtos em um Iterable
+          .toList())).called(1);
+    });
   });
 
   group("SearchProductByCode", () {

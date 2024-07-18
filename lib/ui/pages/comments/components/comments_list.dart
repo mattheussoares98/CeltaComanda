@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
 import '../../pages.dart';
 
 class CommentsList extends StatefulWidget {
@@ -88,26 +87,6 @@ class _CommentsState extends State<CommentsList> {
                           commentsPresenter.changeCommentIsSelected(comment);
                         });
                       },
-                    ),
-                    IconButton(
-                      focusNode: iconButtonFocusNode,
-                      onPressed: () async {
-                        notificationDialog(
-                            context: context,
-                            titleMessage: "Excluir comentário?",
-                            content: null,
-                            onCancelPress: () async {
-                              iconButtonFocusNode.requestFocus();
-                            },
-                            onPress: () async {
-                              iconButtonFocusNode.requestFocus();
-                              setState(() {});
-                            });
-                      },
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
                     ),
                   ],
                 ),

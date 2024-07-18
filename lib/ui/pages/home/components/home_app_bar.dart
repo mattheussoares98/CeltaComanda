@@ -37,6 +37,29 @@ PreferredSize homeAppBar({
         if (currentIndex == 2)
           SearchCommandIcon(
             loadCommandData: () async {
+              if (homePresenter.isFixedCommandNumber) {
+                await printedProductsPresenter.loadCommandData(
+                  cartPresenter: cartPresenter,
+                  menuPresenter: menuPresenter,
+                  homePresenter: homePresenter,
+                  clearPermissionToCancelProducts: true,
+                  isRemovingProduct: false,
+                  commentsPresenter: commentsPresenter,
+                );
+              } else {
+                await menuPresenter.getGroupsAndProducts(
+                  commandNumber: "001",
+                  commentsPresenter: commentsPresenter,
+                );
+              }
+            },
+          )
+      ],
+      backgroundColor: const Color(0xFFF1F5F8),
+      title: TitleAppbar(
+          showLoadMenuAgain: currentIndex == 0,
+          loadMenuAgain: () async {
+            if (homePresenter.isFixedCommandNumber) {
               await printedProductsPresenter.loadCommandData(
                 cartPresenter: cartPresenter,
                 menuPresenter: menuPresenter,
@@ -45,18 +68,12 @@ PreferredSize homeAppBar({
                 isRemovingProduct: false,
                 commentsPresenter: commentsPresenter,
               );
-              printedProductsPresenter.updateCanCancelProducts(false);
-            },
-          )
-      ],
-      backgroundColor: const Color(0xFFF1F5F8),
-      title: TitleAppbar(
-          showLoadMenuAgain: currentIndex == 0,
-          loadMenuAgain: () async {
-            await menuPresenter.getGroupsAndProducts(
-              commandNumber: "001",
-              commentsPresenter: commentsPresenter,
-            );
+            } else {
+              await menuPresenter.getGroupsAndProducts(
+                commandNumber: "001",
+                commentsPresenter: commentsPresenter,
+              );
+            }
           },
           openDrawer: () {
             scaffoldKey.currentState?.openDrawer();

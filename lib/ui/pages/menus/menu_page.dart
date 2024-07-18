@@ -56,6 +56,10 @@ class _MenuPageState extends State<MenuPage>
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -77,10 +81,21 @@ class _MenuPageState extends State<MenuPage>
                 child: TextButton.icon(
                   key: const Key("loadMenu"),
                   onPressed: () async {
-                    await menuPresenter.getGroupsAndProducts(
-                      commandNumber: "001",
-                      commentsPresenter: commentsPresenter,
-                    );
+                    if (homePresenter.isFixedCommandNumber) {
+                      await printedProductsPresenter.loadCommandData(
+                        cartPresenter: cartPresenter,
+                        menuPresenter: menuPresenter,
+                        homePresenter: homePresenter,
+                        clearPermissionToCancelProducts: true,
+                        isRemovingProduct: false,
+                        commentsPresenter: commentsPresenter,
+                      );
+                    } else {
+                      await menuPresenter.getGroupsAndProducts(
+                        commandNumber: "001",
+                        commentsPresenter: commentsPresenter,
+                      );
+                    }
                   },
                   icon: Icon(
                     Icons.menu_book,

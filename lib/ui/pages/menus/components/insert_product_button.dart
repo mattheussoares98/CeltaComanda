@@ -190,6 +190,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                         children: [
                           Expanded(
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 if (hasMinWidth(context))
                                   Icon(
@@ -209,17 +210,19 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  (widget.selectedProduct!.SaleRetailPraticed
-                                              .toDouble() *
-                                          widget
-                                              .selectedProduct!.productQuantity
-                                              .toDouble())
-                                      .toString()
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin(),
-                                  style: TextStyle(
-                                    fontSize: getStringSize(context),
+                                Flexible(
+                                  child: Text(
+                                    (widget.selectedProduct!.SaleRetailPraticed
+                                                .toDouble() *
+                                            widget
+                                                .selectedProduct!.productQuantity
+                                                .toDouble())
+                                        .toString()
+                                        .toBrazilianNumber()
+                                        .addBrazilianCoin(),
+                                    style: TextStyle(
+                                      fontSize: getStringSize(context),
+                                    ),
                                   ),
                                 ),
                               ],

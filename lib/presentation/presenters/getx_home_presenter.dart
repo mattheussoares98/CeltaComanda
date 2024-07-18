@@ -160,7 +160,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (isFixedCommandNumber && commandNumber != null) {
-        cartPresenter.loadSaleRequest(commandNumber!);
+        await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(commandNumber!);
       }
     } catch (e) {

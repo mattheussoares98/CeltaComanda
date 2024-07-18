@@ -45,7 +45,7 @@ class GetxPrintedProductsPresenter
 
       await homePresenter.loadCommandData(
         menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
+        printedProductsPresenter: this,
         cartPresenter: cartPresenter,
         commentsPresenter: commentsPresenter,
       );

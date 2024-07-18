@@ -412,11 +412,13 @@ void main() {
             commentsPresenter: commentsPresenter,
           ));
 
-      verify(() => cartPresenter.clear()).called(1);
-      verify(() =>
-              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
-          .called(1);
-      expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
+      verify(() => homePresenter.loadCommandData(
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: sut,
+            cartPresenter: cartPresenter,
+            commentsPresenter: commentsPresenter,
+          )).called(1);
+
       expect(sut.canCancelProducts, true);
     });
     test("ShouldCall removeProduct on call sut.removeProduct", () async {

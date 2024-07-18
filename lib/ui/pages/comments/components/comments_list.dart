@@ -6,7 +6,13 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class CommentsList extends StatefulWidget {
-  const CommentsList({super.key});
+  final int productInternalCodeOnERP;
+  final String selectedProductName;
+  const CommentsList({
+    required this.productInternalCodeOnERP,
+    required this.selectedProductName,
+    super.key,
+  });
 
   @override
   State<CommentsList> createState() => _CommentsState();
@@ -22,9 +28,19 @@ class _CommentsState extends State<CommentsList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: commentsPresenter.loadedComments.length,
+      itemCount: commentsPresenter.loadedComments
+          .where((e) =>
+              int.parse(e.ProductInternalCodeOnErp) ==
+              widget.productInternalCodeOnERP)
+          .length,
       itemBuilder: (context, index) {
-        final comment = commentsPresenter.loadedComments[index];
+        final comments = commentsPresenter.loadedComments
+            .where((e) =>
+                int.parse(e.ProductInternalCodeOnErp) ==
+                widget.productInternalCodeOnERP)
+            .toList();
+
+        final comment = comments[index];
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),

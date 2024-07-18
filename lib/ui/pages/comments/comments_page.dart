@@ -60,9 +60,13 @@ class _CommentsPageState extends State<CommentsPage>
               if (commentsPresenter.loadedComments
                   .where((e) =>
                       e.ProductInternalCodeOnErp.toInt() ==
-                      widget.productInternalCodeOnERP)
+                          widget.productInternalCodeOnERP &&
+                      e.ProductName == widget.selectedProductName)
                   .isNotEmpty)
-                const CommentsList(),
+                CommentsList(
+                  productInternalCodeOnERP: widget.productInternalCodeOnERP,
+                  selectedProductName: widget.selectedProductName,
+                ),
             ],
           ),
         ),

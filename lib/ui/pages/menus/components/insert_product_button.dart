@@ -126,7 +126,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                       widget.selectedProduct!.Name,
                                   productInternalCodeOnERP: widget
                                       .selectedProduct!
-                                      .InternalCodeOfProductOnERP!
+                                      .InternalCodeOnERP!
                                       .toInt(),
                                 ),
                               ),

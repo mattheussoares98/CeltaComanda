@@ -24,7 +24,7 @@ void main() {
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
-  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuList;
+  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuListWithoutPromoCombox;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -100,13 +100,13 @@ void main() {
         EntityFactory.makeSaleRequestTempViewModel(
             EntityFactory.makeProductModel());
 
-    products = EntityFactory.makeProductsEntitys();
+    products = EntityFactory.makeProductsEntitys(isPromoCombox: false);
 
-    menuList = expansibleGroupsViewModel
+    menuListWithoutPromoCombox = expansibleGroupsViewModel
         .map((expansibleGroup) => {
-              expansibleGroup: products
-                  .map((product) => ProductsViewModel.fromEntity(product))
-                  .toList(),
+              expansibleGroup: products.map((product) {
+                return ProductsViewModel.fromEntity(product);
+              }).toList(),
             })
         .toList();
 
@@ -152,7 +152,7 @@ void main() {
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.menuStream, emitsInOrder([[], menuList]));
+      expectLater(sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
 
       await sut.getGroupsAndProducts(
         commentsPresenter: commentsPresenter,
@@ -220,7 +220,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
       );
 
-      expect(sut.loadedMenu, menuList);
+      expect(sut.loadedMenu, menuListWithoutPromoCombox);
     });
 
     test('Should clear expansibleGroups', () async {
@@ -228,7 +228,7 @@ void main() {
         commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
-      expect(sut.loadedMenu, menuList);
+      expect(sut.loadedMenu, menuListWithoutPromoCombox);
 
       sut.clear();
       expect(sut.loadedMenu, []);
@@ -296,6 +296,9 @@ void main() {
               lista) // Expande cada lista individual de produtos em um Iterable
           .toList())).called(1);
     });
+  });
+
+  group("Get expansible groups on get groups and products", () {
     test(
         "Should call getProductComposition.getFathers when productIsPromoCombox",
         () async {
@@ -309,6 +312,10 @@ void main() {
 
       verify(() => getProductComposition.getFathers(
           internalCodeOnErp: productsEntityThatIsPromoCombox[0]
+              .InternalCodeOnERP!
+              .toInt())).called(1);
+      verify(() => getProductComposition.getFathers(
+          internalCodeOnErp: productsEntityThatIsPromoCombox[1]
               .InternalCodeOnERP!
               .toInt())).called(1);
     });
@@ -326,6 +333,11 @@ void main() {
       verify(() => getProductComposition.getChildsOfFather(
           fathers: productsCompositionsEntitys,
           internalCodeOnErp: productsEntityThatIsPromoCombox[0]
+              .InternalCodeOnERP!
+              .toInt())).called(1);
+      verify(() => getProductComposition.getChildsOfFather(
+          fathers: productsCompositionsEntitys,
+          internalCodeOnErp: productsEntityThatIsPromoCombox[1]
               .InternalCodeOnERP!
               .toInt())).called(1);
     });

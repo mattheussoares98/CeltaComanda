@@ -24,33 +24,85 @@ class InsertProductButton extends StatefulWidget {
 
 class _InsertProductButtonState extends State<InsertProductButton>
     with LoadingManager, UIErrorManager {
+  Future<void> _showModalToSelectComments({
+    required CartPresenter cartPresenter,
+    required CommentsPresenter commentsPresenter,
+    required MenuPresenter menuPresenter,
+  }) async {
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.9,
+              child: CommentsPage(
+                addProductInCart: () async {
+                  await cartPresenter.addProductInCart(
+                    commentsPresenter: commentsPresenter,
+                    product: CartProductEntity(
+                      Product: widget.selectedProduct!.toEntity(),
+                      Comments:
+                          "no cartPresenter.addProductInCart atualiza os comentários adicionando o que foi selecionado pelo usuário",
+                      TotalLiquid: widget.selectedProduct!.productQuantity *
+                          widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+                      Quantity: widget.selectedProduct!.productQuantity,
+                      Value:
+                          widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+                      ProductPriceLookUpCode:
+                          widget.selectedProduct!.PriceLookupCode,
+                    ),
+                    menuPresenter: menuPresenter,
+                  );
+                },
+                selectedProductName: widget.selectedProduct!.Name,
+                productInternalCodeOnERP:
+                    widget.selectedProduct!.InternalCodeOnERP!.toInt(),
+              ),
+            ),
+          );
+        });
+  }
+
   Future<void> addProductInCart({
     required MenuPresenter menuPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
-    Future.delayed(Duration.zero, () {
-      if (Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
-      }
-    });
     setState(() {});
+
+    final comments = commentsPresenter.loadedComments.where((e) =>
+        int.parse(e.ProductInternalCodeOnErp) ==
+        widget.selectedProduct!.InternalCodeOnERP!.toInt());
+
     try {
-      await cartPresenter.addProductInCart(
-        commentsPresenter: commentsPresenter,
-        product: CartProductEntity(
-          Product: widget.selectedProduct!.toEntity(),
-          Comments:
-              "no cartPresenter.addProductInCart atualiza os comentários adicionando o que foi selecionado pelo usuário",
-          TotalLiquid: widget.selectedProduct!.productQuantity *
-              widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-          Quantity: widget.selectedProduct!.productQuantity,
-          Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-          ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
-        ),
-        menuPresenter: menuPresenter,
-      );
+      if (comments.isNotEmpty) {
+        await _showModalToSelectComments(
+          cartPresenter: cartPresenter,
+          commentsPresenter: commentsPresenter,
+          menuPresenter: menuPresenter,
+        );
+      } else {
+        await cartPresenter.addProductInCart(
+          commentsPresenter: commentsPresenter,
+          product: CartProductEntity(
+            Product: widget.selectedProduct!.toEntity(),
+            Comments:
+                "no cartPresenter.addProductInCart atualiza os comentários adicionando o que foi selecionado pelo usuário",
+            TotalLiquid: widget.selectedProduct!.productQuantity *
+                widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+            Quantity: widget.selectedProduct!.productQuantity,
+            Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
+            ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
+          ),
+          menuPresenter: menuPresenter,
+        );
+      }
     } catch (e) {
       e;
     }
@@ -107,57 +159,6 @@ class _InsertProductButtonState extends State<InsertProductButton>
               )
             : Row(
                 children: [
-                  IconButton(
-                    onPressed: () async {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) {
-                            return ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                              ),
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.9,
-                                child: CommentsPage(
-                                  selectedProductName:
-                                      widget.selectedProduct!.Name,
-                                  productInternalCodeOnERP: widget
-                                      .selectedProduct!
-                                      .InternalCodeOnERP!
-                                      .toInt(),
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                    icon: Stack(
-                      children: [
-                        Icon(
-                          Icons.add_comment_rounded,
-                          color: Theme.of(context).primaryColor,
-                          size: getIconSize(context),
-                        ),
-                        if (commentsPresenter.hasSelectedComments)
-                          const Positioned(
-                            top: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              maxRadius: 7,
-                              child: FittedBox(
-                                child: Text(
-                                  "1",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
                   SizedBox(width: hasMinWidth(context) ? 30 : 8),
                   UpdateQuantity(
                     iconSize: hasMinWidth(context) ? 50 : 20,
@@ -214,8 +215,8 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                   child: Text(
                                     (widget.selectedProduct!.SaleRetailPraticed
                                                 .toDouble() *
-                                            widget
-                                                .selectedProduct!.productQuantity
+                                            widget.selectedProduct!
+                                                .productQuantity
                                                 .toDouble())
                                         .toString()
                                         .toBrazilianNumber()

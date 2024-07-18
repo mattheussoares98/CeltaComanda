@@ -1,19 +1,21 @@
 import 'dart:async';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../mixins/mixins.dart';
 
 class CommentsPage extends StatefulWidget {
   final String selectedProductName;
   final int productInternalCodeOnERP;
+  final Future Function()? addProductInCart;
   const CommentsPage({
     super.key,
     required this.selectedProductName,
     required this.productInternalCodeOnERP,
+    this.addProductInCart,
   });
 
   @override
@@ -66,6 +68,37 @@ class _CommentsPageState extends State<CommentsPage>
                   productInternalCodeOnERP: widget.productInternalCodeOnERP,
                   selectedProductName: widget.selectedProductName,
                 ),
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Future.delayed(Duration.zero, () {
+                      Navigator.of(context)
+                          .popUntil((route) => route.isFirst);
+                    });
+    
+                    if (widget.addProductInCart != null) {
+                      await widget.addProductInCart!();
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.shopping_cart),
+                      const SizedBox(width: 20),
+                      FittedBox(
+                        child: Text(
+                          "Confirmar",
+                          style: TextStyle(
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

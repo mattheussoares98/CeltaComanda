@@ -7,7 +7,7 @@ import '../../pages.dart';
 class FixedFatherDetails extends StatefulWidget {
   final ProductCompositionViewModel father;
   final Function() callSetState;
-    final ProductsViewModel selectedComboxProduct;
+  final ProductsViewModel selectedComboxProduct;
 
   const FixedFatherDetails({
     super.key,

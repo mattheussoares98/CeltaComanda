@@ -1,7 +1,6 @@
 export './barcode/barcode.dart';
 export './cart/cart.dart';
 export 'command/command.dart';
-export './comment/comment.dart';
 export './enterprise/enterprise.dart';
 export './expansible_groups/expansible_groups.dart';
 export './navigation/navigation.dart';

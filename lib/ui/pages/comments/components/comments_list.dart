@@ -57,7 +57,7 @@ class _CommentsState extends State<CommentsList> {
                   children: [
                     Expanded(
                       child: Text(
-                        comment.comment,
+                        comment.GroupName,
                         style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class _CommentsState extends State<CommentsList> {
                       ),
                     ),
                     Checkbox(
-                      semanticLabel: comment.comment,
+                      semanticLabel: comment.GroupName,
                       value: comment.selected,
                       onChanged: (value) {
                         setState(() {

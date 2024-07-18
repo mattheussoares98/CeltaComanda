@@ -738,8 +738,11 @@ class EntityFactory {
 
   static CommentViewModel makeCommentViewModel({bool? selected = false}) =>
       CommentViewModel(
-        comment: faker.randomGenerator.string(10),
+        GroupName: faker.randomGenerator.string(10),
+        ProductName: faker.randomGenerator.string(10),
         selected: selected!,
+        ExpansibleGroupId: faker.randomGenerator.integer(100).toString(),
+        ProductInternalCodeOnErp: faker.randomGenerator.integer(100).toString(),
       );
 
   static CommandEntity makeCommandEntity() => CommandEntity(

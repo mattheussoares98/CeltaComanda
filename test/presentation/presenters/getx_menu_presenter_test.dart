@@ -36,7 +36,6 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadProductsSpy loadProducts;
-  late CommentsSpy comments;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -55,7 +54,6 @@ void main() {
     barcodeScanner = BarcodeScannerSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadProducts = LoadProductsSpy();
-    comments = CommentsSpy();
   }
 
   void initPresenters() {
@@ -114,7 +112,6 @@ void main() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
-    comments.mockAddComments();
   }
 
   setUp(() {

@@ -81,7 +81,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   String? getConcatenateSelectedComments() {
     final concatenateSelectedComments = _loadedComments
         .where((comment) => comment.selected)
-        .map((element) => element.comment)
+        .map((element) => element.GroupName)
         .join("\n");
 
     if (concatenateSelectedComments.isEmpty) {
@@ -95,7 +95,7 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   void updateSelectedComments(String? comments) {
     for (var loadedComment in loadedComments) {
       loadedComment.selected =
-          comments != null && comments.contains(loadedComment.comment);
+          comments != null && comments.contains(loadedComment.GroupName);
     }
     notifyListeners();
   }

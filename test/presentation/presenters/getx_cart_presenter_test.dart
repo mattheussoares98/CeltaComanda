@@ -1403,7 +1403,7 @@ void main() {
 
     test("Should update comment correctly", () async {
       commentsPresenter.mockGetConcatenateSelectedComments(
-          "${commentViewModel.comment}\n${commentViewModel.comment}");
+          "${commentViewModel.GroupName}\n${commentViewModel.GroupName}");
 
       await sut.addProductInCart(
         product: cartProductEntity,
@@ -1413,7 +1413,8 @@ void main() {
 
       expect(sut.cartProducts, [
         CartProductsViewModel(
-          Comments: "${commentViewModel.comment}\n${commentViewModel.comment}",
+          Comments:
+              "${commentViewModel.GroupName}\n${commentViewModel.GroupName}",
           Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
           TotalLiquid: cartProductEntity.TotalLiquid.toString(),
           Quantity: cartProductEntity.Quantity.toString(),

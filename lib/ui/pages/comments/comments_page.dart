@@ -10,12 +10,12 @@ import '../../mixins/mixins.dart';
 class CommentsPage extends StatefulWidget {
   final String selectedProductName;
   final int productInternalCodeOnERP;
-  final Future Function()? addProductInCart;
+  final Future Function()? doOnClickInConfirmButton;
   const CommentsPage({
     super.key,
     required this.selectedProductName,
     required this.productInternalCodeOnERP,
-    this.addProductInCart,
+    this.doOnClickInConfirmButton,
   });
 
   @override
@@ -78,8 +78,8 @@ class _CommentsPageState extends State<CommentsPage>
                           .popUntil((route) => route.isFirst);
                     });
     
-                    if (widget.addProductInCart != null) {
-                      await widget.addProductInCart!();
+                    if (widget.doOnClickInConfirmButton != null) {
+                      await widget.doOnClickInConfirmButton!();
                     }
                   },
                   child: Row(

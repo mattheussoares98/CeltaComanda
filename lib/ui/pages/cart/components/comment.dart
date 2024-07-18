@@ -42,14 +42,15 @@ class _CommentState extends State<Comment> {
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.9,
               child: CommentsPage(
+                doOnClickInConfirmButton: () async {
+                  widget.updateComment();
+                },
                 selectedProductName: widget.productName,
                 productInternalCodeOnERP: widget.productInternalCodeOnERP,
               ),
             ),
           );
         });
-
-    widget.updateComment();
   }
 
   @override

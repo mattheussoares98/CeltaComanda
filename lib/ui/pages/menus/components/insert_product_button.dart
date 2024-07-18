@@ -41,7 +41,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.9,
               child: CommentsPage(
-                addProductInCart: () async {
+                doOnClickInConfirmButton: () async {
                   await cartPresenter.addProductInCart(
                     commentsPresenter: commentsPresenter,
                     product: CartProductEntity(

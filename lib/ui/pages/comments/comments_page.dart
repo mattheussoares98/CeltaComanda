@@ -55,7 +55,6 @@ class _CommentsPageState extends State<CommentsPage>
                 selectedProductName: widget.selectedProductName,
               ),
               const SizedBox(height: 15),
-              const AddCommentFormField(),
               const SizedBox(height: 8),
               if (commentsPresenter.loadedComments
                   .where((e) =>

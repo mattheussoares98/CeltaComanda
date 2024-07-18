@@ -37,21 +37,12 @@ PreferredSize homeAppBar({
         if (currentIndex == 2)
           SearchCommandIcon(
             loadCommandData: () async {
-              if (homePresenter.isFixedCommandNumber) {
-                await printedProductsPresenter.loadCommandData(
-                  cartPresenter: cartPresenter,
-                  menuPresenter: menuPresenter,
-                  homePresenter: homePresenter,
-                  clearPermissionToCancelProducts: true,
-                  isRemovingProduct: false,
-                  commentsPresenter: commentsPresenter,
-                );
-              } else {
-                await menuPresenter.getGroupsAndProducts(
-                  commandNumber: "001",
-                  commentsPresenter: commentsPresenter,
-                );
-              }
+              await homePresenter.loadCommandData(
+                menuPresenter: menuPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                cartPresenter: cartPresenter,
+                commentsPresenter: commentsPresenter,
+              );
             },
           )
       ],
@@ -59,21 +50,12 @@ PreferredSize homeAppBar({
       title: TitleAppbar(
           showLoadMenuAgain: currentIndex == 0,
           loadMenuAgain: () async {
-            if (homePresenter.isFixedCommandNumber) {
-              await printedProductsPresenter.loadCommandData(
-                cartPresenter: cartPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                clearPermissionToCancelProducts: true,
-                isRemovingProduct: false,
-                commentsPresenter: commentsPresenter,
-              );
-            } else {
-              await menuPresenter.getGroupsAndProducts(
-                commandNumber: "001",
-                commentsPresenter: commentsPresenter,
-              );
-            }
+            await homePresenter.loadCommandData(
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              commentsPresenter: commentsPresenter,
+            );
           },
           openDrawer: () {
             scaffoldKey.currentState?.openDrawer();

@@ -70,21 +70,12 @@ class _HomePageState extends State<HomePage>
             Provider.of(context, listen: false);
 
         await homePresenter.getLocalCommandData();
-        if (homePresenter.isFixedCommandNumber) {
-          await printedProductsPresenter.loadCommandData(
-            cartPresenter: cartPresenter,
-            menuPresenter: menuPresenter,
-            homePresenter: homePresenter,
-            clearPermissionToCancelProducts: true,
-            isRemovingProduct: false,
-            commentsPresenter: commentsPresenter,
-          );
-        } else {
-          await menuPresenter.getGroupsAndProducts(
-            commandNumber: "001",
-            commentsPresenter: commentsPresenter,
-          );
-        }
+        await homePresenter.loadCommandData(
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          commentsPresenter: commentsPresenter,
+        );
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
@@ -97,13 +88,15 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context);
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
-    loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
+    loadingSubscription?.cancel();
+    // loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
 
     final List<Widget> screens = [
       makeMenusPage(homePresenter.isFixedCommandNumber),
@@ -140,15 +133,53 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             homePresenter: homePresenter,
           ),
-          appBar: homeAppBar(
-            homePresenter: homePresenter,
-            cartPresenter: cartPresenter,
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            commentsPresenter: commentsPresenter,
-            context: context,
-            scaffoldKey: scaffoldKey,
-            currentIndex: _currentIndex,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(40),
+            child: AppBar(
+              leading: FittedBox(
+                child: Row(
+                  children: [
+                    if (homePresenter.isFixedCommandNumber != true)
+                      IconButton(
+                        icon: Icon(
+                          Icons.exit_to_app,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: () {
+                          scaffoldKey.currentState?.openDrawer();
+                        },
+                      ),
+                  ],
+                ),
+              ),
+              actions: [
+                if (_currentIndex == 2)
+                  SearchCommandIcon(
+                    loadCommandData: () async {
+                      await homePresenter.loadCommandData(
+                        menuPresenter: menuPresenter,
+                        printedProductsPresenter: printedProductsPresenter,
+                        cartPresenter: cartPresenter,
+                        commentsPresenter: commentsPresenter,
+                      );
+                    },
+                  )
+              ],
+              backgroundColor: const Color(0xFFF1F5F8),
+              title: TitleAppbar(
+                  showLoadMenuAgain: _currentIndex == 0,
+                  loadMenuAgain: () async {
+                    await homePresenter.loadCommandData(
+                      menuPresenter: menuPresenter,
+                      printedProductsPresenter: printedProductsPresenter,
+                      cartPresenter: cartPresenter,
+                      commentsPresenter: commentsPresenter,
+                    );
+                  },
+                  openDrawer: () {
+                    scaffoldKey.currentState?.openDrawer();
+                  }),
+            ),
           ),
           body: PageView(
             controller: _pageController,

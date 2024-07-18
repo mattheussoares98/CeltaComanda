@@ -142,4 +142,37 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   bool get isGeneratingVersionToRede => true;
+
+  @override
+  Future<void> loadCommandData({
+    required MenuPresenter menuPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required CartPresenter cartPresenter,
+    required CommentsPresenter commentsPresenter,
+  }) async {
+    // isLoading = true;
+    mainError = null;
+
+    try {
+      if (isFixedCommandNumber) {
+        await printedProductsPresenter.loadCommandData(
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          homePresenter: this,
+          commentsPresenter: commentsPresenter,
+          clearPermissionToCancelProducts: true,
+          isRemovingProduct: false,
+        );
+      } else {
+        await menuPresenter.getGroupsAndProducts(
+          commandNumber: commandNumber ?? "001",
+          commentsPresenter: commentsPresenter,
+        );
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      // isLoading = false;
+    }
+  }
 }

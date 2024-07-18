@@ -254,6 +254,7 @@ void main() {
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
+    registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
@@ -1945,6 +1946,15 @@ void main() {
           commandNumber: fixedCommandNumber,
         ),
       ).called(1);
+    });
+    test("Should clear all selected comments", () async {
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => commentsPresenter.unselectAllComments()).called(1);
     });
   });
 

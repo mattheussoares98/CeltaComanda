@@ -14,13 +14,12 @@ class RemoteGetProductComposition extends GetProductComposition {
 
   @override
   Future<List<ProductCompositionEntity>> getFathers({
-    required int enterpriseId,
     required int internalCodeOnErp,
   }) async {
     try {
       final response = await httpAdapter.request(
           url:
-              "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIProduct/getproductcomposition?_enterpriseId=$enterpriseId&_internalCodeOnERPCodeFather=$internalCodeOnErp",
+              "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIProduct/getproductcomposition?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!}&_internalCodeOnERPCodeFather=$internalCodeOnErp",
           method: "get");
 
       if (response == null) {
@@ -42,7 +41,6 @@ class RemoteGetProductComposition extends GetProductComposition {
 
   @override
   Future<List<ProductCompositionViewModel>> getChildsOfFather({
-    required int enterpriseId,
     required int internalCodeOnErp,
     required List<ProductCompositionEntity> fathers,
   }) async {
@@ -51,7 +49,6 @@ class RemoteGetProductComposition extends GetProductComposition {
 
       for (var father in fathers) {
         final childrenOfFather = await getFathers(
-          enterpriseId: enterpriseId,
           internalCodeOnErp: father.InternalCodeOnERPCodeChild!,
         );
 

@@ -8,7 +8,6 @@ import 'package:mocktail/mocktail.dart';
 
 class GetProductCompositionSpy extends Mock implements GetProductComposition {
   When mockGetFathersCall() => when(() => this.getFathers(
-        enterpriseId: any(named: "enterpriseId"),
         internalCodeOnErp: any(named: "internalCodeOnErp"),
       ));
 
@@ -19,7 +18,6 @@ class GetProductCompositionSpy extends Mock implements GetProductComposition {
       this.mockGetFathersCall().thenThrow(Exception());
 
   When mockGetChildsOfFatherCall() => when(() => this.getChildsOfFather(
-        enterpriseId: any(named: "enterpriseId"),
         internalCodeOnErp: any(named: "internalCodeOnErp"),
         fathers: any(named: "fathers"),
       ));

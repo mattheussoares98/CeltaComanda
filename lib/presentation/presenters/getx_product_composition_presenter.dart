@@ -61,13 +61,11 @@ class GetxProductCompositionPresenter extends GetxController
     try {
       updateComboxQuantity(false, true);
       final fathers = await getProductComposition.getFathers(
-        enterpriseId: enterpriseId,
         internalCodeOnErp: internalCodeOnErp,
       );
 
       List<ProductCompositionViewModel> childs =
           await getProductComposition.getChildsOfFather(
-        enterpriseId: enterpriseId,
         internalCodeOnErp: internalCodeOnErp,
         fathers: fathers,
       );

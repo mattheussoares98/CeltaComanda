@@ -77,6 +77,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
     String? commandNumber,
   });
   Future<void> getLocalCartProductsData();

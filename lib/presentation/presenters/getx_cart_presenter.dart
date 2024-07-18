@@ -546,6 +546,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
     required HomePresenter homePresenter,
+    required CommentsPresenter commentsPresenter,
     String? commandNumber,
   }) async {
     isLoading = true;
@@ -650,6 +651,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       _cartProducts.clear();
       _confirmedCombox.clear();
+      commentsPresenter.unselectAllComments();
 
       return true;
     } on DomainError catch (e) {

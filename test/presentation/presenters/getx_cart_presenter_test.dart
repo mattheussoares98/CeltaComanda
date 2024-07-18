@@ -461,6 +461,7 @@ void main() {
     test("Should call cartInformations.clear when saveProducts succeeds",
         () async {
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1382,6 +1383,7 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1449,6 +1451,7 @@ void main() {
       );
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1481,6 +1484,7 @@ void main() {
           emitsInOrder([true, false]));
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1496,6 +1500,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1511,6 +1516,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1525,6 +1531,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1534,6 +1541,7 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1575,6 +1583,7 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1585,6 +1594,7 @@ void main() {
       ticketIsPermitted.mockError();
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1628,6 +1638,7 @@ void main() {
 
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1640,6 +1651,7 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1681,6 +1693,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1691,6 +1704,7 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1729,6 +1743,7 @@ void main() {
         "Should call verify is confirmed cart products when call saveCartProducts",
         () async {
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1740,6 +1755,7 @@ void main() {
         "Should call udpate confirmedCartProducts with true value when saveCartProducts succeeds",
         () async {
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1754,6 +1770,7 @@ void main() {
       updateSaleRequestTemp
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1765,6 +1782,7 @@ void main() {
         "Should call udpate confirmedCartProducts with false value when finishSaleRequestTemp succeeds",
         () async {
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1778,6 +1796,7 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1790,6 +1809,7 @@ void main() {
         () async {
       confirmedCartProducts.mockIsConfirmed(true);
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1805,6 +1825,7 @@ void main() {
         () async {
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1823,6 +1844,7 @@ void main() {
       );
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1832,6 +1854,7 @@ void main() {
     });
     test("Should return true on saveProducts succeeds", () async {
       final isUpdated = await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1843,6 +1866,7 @@ void main() {
       ticketIsPermitted.mockError();
 
       final isUpdated = await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1855,6 +1879,7 @@ void main() {
       ticketIsPermitted.mockError();
 
       final isUpdated = await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1868,6 +1893,7 @@ void main() {
       sut.cartProducts.add(cartProductViewModel);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: null,
         homePresenter: homePresenter,
@@ -1893,6 +1919,7 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1918,6 +1945,7 @@ void main() {
       expect(homePresenter.isFixedCommandNumber, true);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1935,6 +1963,7 @@ void main() {
       expect(homePresenter.commandNumber, fixedCommandNumber);
 
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1949,6 +1978,7 @@ void main() {
     });
     test("Should clear all selected comments", () async {
       await sut.saveProducts(
+        commentsPresenter: commentsPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,

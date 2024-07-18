@@ -131,6 +131,7 @@ Future<void> _onPress({
       tableNumber: 0,
       commandNumber: commandNumber,
       homePresenter: homePresenter,
+      commentsPresenter: commentsPresenter,
     );
 
     if (isUpdated) {

@@ -103,10 +103,16 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   }
 
   @override
-  void updateSelectedComments(String? comments) {
+  void updateSelectedComments({
+    required String? comments,
+    required int internalCodeOnERP,
+  }) {
     for (var loadedComment in loadedComments) {
-      loadedComment.selected =
-          comments != null && comments.contains(loadedComment.GroupName);
+      loadedComment.selected = false;
+
+      loadedComment.selected = comments != null &&
+          comments.contains(loadedComment.GroupName) &&
+          loadedComment.ProductInternalCodeOnErp.toInt() == internalCodeOnERP;
     }
     notifyListeners();
   }

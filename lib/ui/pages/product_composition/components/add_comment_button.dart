@@ -25,7 +25,10 @@ class AddCommentButton extends StatelessWidget {
     return Flexible(
       child: GestureDetector(
         onTap: () async {
-          commentsPresenter.updateSelectedComments(father.commentFather);
+          commentsPresenter.updateSelectedComments(
+            comments: father.commentFather,
+            internalCodeOnERP: selectedComboxProduct.InternalCodeOnERP!.toInt(),
+          );
           await showModalBottomSheet(
               isScrollControlled: true,
               context: context,

@@ -14,5 +14,8 @@ abstract class CommentsPresenter implements Listenable {
   void unselectAllComments();
   void updateHasSelectedComments();
   String? getConcatenateSelectedComments();
-  void updateSelectedComments(String? comments);
+  void updateSelectedComments({
+    required String? comments,
+    required int internalCodeOnERP,
+  });
 }

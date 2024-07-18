@@ -25,7 +25,10 @@ class Comment extends StatefulWidget {
 
 class _CommentState extends State<Comment> {
   Future<void> onTapCommentIcon(CommentsPresenter commentsPresenter) async {
-    commentsPresenter.updateSelectedComments(widget.comments);
+    commentsPresenter.updateSelectedComments(
+      comments: widget.comments,
+      internalCodeOnERP: widget.productInternalCodeOnERP,
+    );
 
     await showModalBottomSheet(
         isScrollControlled: true,

@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../ui/helpers/helpers.dart';
 import '../../../domain/entities/entities.dart';
+import '../pages.dart';
 
 class ProductsViewModel extends Equatable {
   final String ProductsId;
@@ -71,6 +72,7 @@ class ProductsViewModel extends Equatable {
   final String? ProductComplement;
   final String PackingAbbreviation;
   final String IsPromoCombox;
+  List<ProductCompositionViewModel>? childsComposition;
   double productQuantity;
 
   ProductsViewModel({
@@ -140,6 +142,7 @@ class ProductsViewModel extends Equatable {
     required this.NameComplete,
     required this.NameReduced,
     this.productQuantity = 1,
+    this.childsComposition,
   });
 
   @override

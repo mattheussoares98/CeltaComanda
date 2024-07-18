@@ -40,6 +40,9 @@ void main() {
   late ProductEntity productEntity;
   late ProductsViewModel productsViewModel;
   late List<ProductEntity> products;
+  late List<ProductEntity> productsEntityThatIsPromoCombox;
+  late List<ProductCompositionViewModel> productsCompositionsViewModel;
+  late List<ProductCompositionEntity> productsCompositionsEntitys;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -89,6 +92,8 @@ void main() {
         .toList();
     productEan = faker.randomGenerator.integer(13).toString();
     productEntity = EntityFactory.makeProductsEntitys(isPromoCombox: false)[0];
+    productsEntityThatIsPromoCombox =
+        EntityFactory.makeProductsEntitys(isPromoCombox: true);
     productsViewModel = ProductsViewModel.fromEntity(productEntity);
 
     cartPresenter.saleRequestTempMock =
@@ -104,6 +109,14 @@ void main() {
                   .toList(),
             })
         .toList();
+
+    productsCompositionsEntitys = EntityFactory.makeProductsCompositionsEntity(
+      isOptionalItem: true,
+    );
+
+    productsCompositionsViewModel = productsCompositionsEntitys
+        .map((e) => ProductCompositionViewModel.fromEntity(e))
+        .toList();
   }
 
   void mockSuccess() {
@@ -111,6 +124,8 @@ void main() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
+    getProductComposition.mockGetFathers(productsCompositionsEntitys);
+    getProductComposition.mockGetChildsOfFather(productsCompositionsViewModel);
   }
 
   setUp(() {
@@ -280,6 +295,39 @@ void main() {
           .expand((lista) =>
               lista) // Expande cada lista individual de produtos em um Iterable
           .toList())).called(1);
+    });
+    test(
+        "Should call getProductComposition.getFathers when productIsPromoCombox",
+        () async {
+      loadProducts.mockLoadProducts(productsEntityThatIsPromoCombox);
+      loadExpansibleGroups.mockLoadExpansibleGroups([expansibleGroups[0]]);
+
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      verify(() => getProductComposition.getFathers(
+          internalCodeOnErp: productsEntityThatIsPromoCombox[0]
+              .InternalCodeOnERP!
+              .toInt())).called(1);
+    });
+    test(
+        "Should call getProductComposition.getChildsOfFather when productIsPromoCombox",
+        () async {
+      loadProducts.mockLoadProducts(productsEntityThatIsPromoCombox);
+      loadExpansibleGroups.mockLoadExpansibleGroups([expansibleGroups[0]]);
+
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      verify(() => getProductComposition.getChildsOfFather(
+          fathers: productsCompositionsEntitys,
+          internalCodeOnErp: productsEntityThatIsPromoCombox[0]
+              .InternalCodeOnERP!
+              .toInt())).called(1);
     });
   });
 

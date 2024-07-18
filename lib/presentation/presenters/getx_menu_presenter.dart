@@ -218,6 +218,22 @@ class GetxMenuPresenter extends GetxController
               lista) // Expande cada lista individual de produtos em um Iterable
           .toList();
 
+      for (var product in allProducts) {
+        if (product.IsPromoCombox == "true") {
+          final fathers = await getProductComposition.getFathers(
+            internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
+          );
+
+          List<ProductCompositionViewModel> childs =
+              await getProductComposition.getChildsOfFather(
+            internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
+            fathers: fathers,
+          );
+
+          product.childsComposition = childs;
+        }
+      }
+
       await commentsPresenter.loadComments(allProducts);
       _menu.subject.add(_loadedMenu);
     } on DomainError catch (error) {

@@ -210,6 +210,8 @@ class ProductsViewModel extends Equatable {
         EanCode,
         NameComplete,
         NameReduced,
+        productQuantity,
+        childsComposition,
       ];
 
   factory ProductsViewModel.fromEntity(ProductEntity entity) =>

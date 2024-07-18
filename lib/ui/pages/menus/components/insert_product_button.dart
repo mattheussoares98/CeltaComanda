@@ -66,6 +66,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
             ),
           );
         });
+    commentsPresenter.unselectAllComments();
   }
 
   Future<void> addProductInCart({

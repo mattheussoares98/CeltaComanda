@@ -800,7 +800,8 @@ void main() {
       );
     });
 
-    test("Should call expansibleGroups.load when UpdateComment", () async {
+    test("Should call homePresenter.loadCommandData when UpdateComment",
+        () async {
       await sut.updateComment(
         commentsPresenter: commentsPresenter,
         comments: comments,
@@ -811,24 +812,12 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => homePresenter
-          .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
-      verify(() => printedProductsPresenter.clear()).called(1);
-      verify(() => menuPresenter.clear()).called(1);
-      verify(() => ticketIsPermitted.verify(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: homePresenter.commandNumberMock!)).called(1);
-      verify(() => loadSaleRequestTemp.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: homePresenter.commandNumberMock!,
+      verify(() => homePresenter.loadCommandData(
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: sut,
+            commentsPresenter: commentsPresenter,
           )).called(1);
-      expect(sut.indexOfSelectedProduct, null);
-      expect(
-        sut.saleRequestTemp,
-        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
-      );
     });
   });
 
@@ -882,8 +871,25 @@ void main() {
         homePresenter: homePresenter,
       );
     });
+    test("Should emit correct events on homePresenter.loadCommandData throws",
+        () async {
+      homePresenter.mockLoadCommandDataError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    test("Should call MenuPresenter.load on FinishSaleRequest success",
+      await sut.finishSaleRequest(
+        commentsPresenter: commentsPresenter,
+        saleRequestTempEntity: saleRequestTempEntity,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: sut,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test(
+        "Should call homePresenter.loadCommandData on FinishSaleRequest success",
         () async {
       await sut.finishSaleRequest(
         commentsPresenter: commentsPresenter,
@@ -894,24 +900,12 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => homePresenter
-          .updateCommandNumber(homePresenter.commandNumberMock!)).called(1);
-      verify(() => printedProductsPresenter.clear()).called(1);
-      verify(() => menuPresenter.clear()).called(1);
-      verify(() => ticketIsPermitted.verify(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: homePresenter.commandNumberMock!)).called(1);
-      verify(() => loadSaleRequestTemp.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: homePresenter.commandNumberMock!,
+      verify(() => homePresenter.loadCommandData(
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: sut,
+            commentsPresenter: commentsPresenter,
           )).called(1);
-      expect(sut.indexOfSelectedProduct, null);
-      expect(
-        sut.saleRequestTemp,
-        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
-      );
     });
   });
 
@@ -1045,149 +1039,6 @@ void main() {
       verify(
         () => localPrintRequest.add(printRequestEntity),
       ).called(1);
-    });
-  });
-
-  group("Load commandData", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-    });
-
-    test(
-        "Should emit correct values on loadCommandData throws commandNotAvailable",
-        () async {
-      ticketIsPermitted.mockError();
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-    });
-
-    test("Should update commandNumber", () async {
-      homePresenter.commandNumberMock = "9999";
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      expect(homePresenter.commandNumberMock, "9999");
-    });
-
-    test("Should call clearData on LoadCommandData call", () async {
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      expect(
-        sut.saleRequestTemp,
-        SaleRequestTempViewModel.fromEntity(saleRequestTempEntity),
-      );
-
-      loadSaleRequestTemp.mockError(DomainError.unexpected);
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      expect(sut.saleRequestTemp, null);
-      verify(() => printedProductsPresenter.clear()).called(2);
-      verify(() => menuPresenter.clear()).called(2);
-      //como o sut não é mockado, fiz um teste primeiro com sucesso pra ter
-      //certeza que vai colocar dados no expansibleGroups e outro teste com
-      //erro, pra ter certeza que vai chamar a função para limpar a lista de
-      //grupos expansíveis
-    });
-
-    test("Should call ticketIsPermitted only one time", () async {
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: homePresenter.commandNumberMock!,
-          )).called(1);
-    });
-
-    test("Should call loadGroups, saleRequestTemp and PrintedProducts",
-        () async {
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      verify(() => loadSaleRequestTemp.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: homePresenter.commandNumberMock!,
-          )).called(1);
-      verify(() => menuPresenter.getGroupsAndProducts(
-            commandNumber: homePresenter.commandNumberMock!,
-            commentsPresenter: commentsPresenter,
-          )).called(1);
-      verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
-    });
-
-    test(
-        "Should update commandNumber with null value on error to LoadCommandData",
-        () async {
-      ticketIsPermitted.mockError();
-
-      // await sut.loadCommandData(
-      //   commentsPresenter: commentsPresenter,
-      //   commandNumber: homePresenter.commandNumberMock!,
-      //   printedProductsPresenter: printedProductsPresenter,
-      //   cartPresenter: sut,
-      //   menuPresenter: menuPresenter,
-      //   homePresenter: homePresenter,
-      // );
-
-      verify(() => homePresenter.updateCommandNumber(null)).called(1);
     });
   });
 

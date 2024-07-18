@@ -142,12 +142,10 @@ Future<void> _onPress({
       });
     }
   } else if (onWriteCommand == OnWriteCommand.loadCommandData) {
-    await printedProductsPresenter.loadCommandData(
-      cartPresenter: cartPresenter,
+    await homePresenter.loadCommandData(
       menuPresenter: menuPresenter,
-      homePresenter: homePresenter,
-      clearPermissionToCancelProducts: true,
-      isRemovingProduct: false,
+      printedProductsPresenter: printedProductsPresenter,
+      cartPresenter: cartPresenter,
       commentsPresenter: commentsPresenter,
     );
   } else {

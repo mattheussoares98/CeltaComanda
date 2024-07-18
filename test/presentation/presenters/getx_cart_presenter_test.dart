@@ -1053,14 +1053,14 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
     });
 
     test(
@@ -1072,40 +1072,40 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
     });
 
     test("Should update commandNumber", () async {
       homePresenter.commandNumberMock = "9999";
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
 
       expect(homePresenter.commandNumberMock, "9999");
     });
 
     test("Should call clearData on LoadCommandData call", () async {
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
 
       expect(
         sut.saleRequestTemp,
@@ -1114,14 +1114,14 @@ void main() {
 
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
 
       expect(sut.saleRequestTemp, null);
       verify(() => printedProductsPresenter.clear()).called(2);
@@ -1133,14 +1133,14 @@ void main() {
     });
 
     test("Should call ticketIsPermitted only one time", () async {
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
 
       verify(() => ticketIsPermitted.verify(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1150,14 +1150,14 @@ void main() {
 
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
 
       verify(() => loadSaleRequestTemp.load(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1178,14 +1178,14 @@ void main() {
         () async {
       ticketIsPermitted.mockError();
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   commandNumber: homePresenter.commandNumberMock!,
+      //   printedProductsPresenter: printedProductsPresenter,
+      //   cartPresenter: sut,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      // );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
     });

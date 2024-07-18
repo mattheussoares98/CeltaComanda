@@ -24,14 +24,14 @@ abstract class MenuPresenter implements Listenable {
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
 
-  Future<void> loadCommandData({
-    required String commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required CartPresenter cartPresenter,
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-  });
+  // Future<void> loadCommandData({
+  //   required String commandNumber,
+  //   required PrintedProductsPresenter printedProductsPresenter,
+  //   required CartPresenter cartPresenter,
+  //   required MenuPresenter menuPresenter,
+  //   required HomePresenter homePresenter,
+  //   required CommentsPresenter commentsPresenter,
+  // });
 
   void goToProductsPage(ExpansibleGroupEntity entity);
   void goToComboxPage(ProductsViewModel product);

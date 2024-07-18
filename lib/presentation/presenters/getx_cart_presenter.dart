@@ -146,12 +146,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         comments: comments,
       );
 
-      await loadCommandData(
-        commandNumber: homePresenter.commandNumber!,
+      await homePresenter.loadCommandData(
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
         commentsPresenter: commentsPresenter,
       );
     } on DomainError catch (e) {
@@ -185,12 +183,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await loadCommandData(
-        commandNumber: homePresenter.commandNumber!,
+      await homePresenter.loadCommandData(
+        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
         commentsPresenter: commentsPresenter,
       );
 
@@ -217,42 +213,42 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     notifyListeners();
   }
 
-  @override
-  Future<void> loadCommandData({
-    required String commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required CartPresenter cartPresenter,
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-  }) async {
-    isLoading = true;
-    mainError = null;
-    homePresenter.updateCommandNumber(commandNumber);
-    clear();
-    printedProductsPresenter.clear();
-    menuPresenter.clear();
+  // @override
+  // Future<void> loadCommandData({
+  //   required String commandNumber,
+  //   required PrintedProductsPresenter printedProductsPresenter,
+  //   required CartPresenter cartPresenter,
+  //   required MenuPresenter menuPresenter,
+  //   required HomePresenter homePresenter,
+  //   required CommentsPresenter commentsPresenter,
+  // }) async {
+  //   isLoading = true;
+  //   mainError = null;
+  //   homePresenter.updateCommandNumber(commandNumber);
+  //   clear();
+  //   printedProductsPresenter.clear();
+  //   menuPresenter.clear();
 
-    try {
-      await loadSaleRequest(commandNumber);
-      await menuPresenter.getGroupsAndProducts(
-        commandNumber: commandNumber,
-        commentsPresenter: commentsPresenter,
-      );
-      await printedProductsPresenter.loadPrinted(commandNumber);
-    } on DomainError catch (error) {
-      homePresenter.updateCommandNumber(null);
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
-    } finally {
-      isLoading = false;
-    }
-  }
+  //   try {
+  //     await loadSaleRequest(commandNumber);
+  //     await menuPresenter.getGroupsAndProducts(
+  //       commandNumber: commandNumber,
+  //       commentsPresenter: commentsPresenter,
+  //     );
+  //     await printedProductsPresenter.loadPrinted(commandNumber);
+  //   } on DomainError catch (error) {
+  //     homePresenter.updateCommandNumber(null);
+  //     switch (error) {
+  //       case DomainError.commandNotAvailable:
+  //         mainError = UIError.commandNotAvailable;
+  //         break;
+  //       default:
+  //         mainError = UIError.unexpected;
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
 
   int? _indexOfSelectedProduct;
   @override

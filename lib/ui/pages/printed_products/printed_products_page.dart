@@ -91,12 +91,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                             ? "Consulte alguma comanda para visualizar os produtos solicitados"
                             : "Não há produtos solicitados nessa comanda",
                         loadCommandData: () async {
-                          await printedProductsPresenter.loadCommandData(
-                            cartPresenter: cartPresenter,
+                          await homePresenter.loadCommandData(
                             menuPresenter: menuPresenter,
-                            homePresenter: homePresenter,
-                            clearPermissionToCancelProducts: true,
-                            isRemovingProduct: false,
+                            printedProductsPresenter: printedProductsPresenter,
+                            cartPresenter: cartPresenter,
                             commentsPresenter: commentsPresenter,
                           );
                         },

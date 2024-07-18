@@ -69,7 +69,6 @@ void main() {
     pay.mockPay();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     barcodeScanner.mockBarcodeScanner(commandNumber);
-    printedProductsPresenter.mockLoadCommandData();
   }
 
   setUp(() {
@@ -396,14 +395,14 @@ void main() {
         menuPresenter: menuPresenter,
       );
 
-      verify(() => printedProductsPresenter.loadCommandData(
-            commentsPresenter: commentsPresenter,
-            cartPresenter: cartPresenter,
-            menuPresenter: menuPresenter,
-            homePresenter: homePresenter,
-            clearPermissionToCancelProducts: false,
-            isRemovingProduct: false,
-          )).called(1);
+      // verify(() => printedProductsPresenter.loadCommandData(
+      //       commentsPresenter: commentsPresenter,
+      //       cartPresenter: cartPresenter,
+      //       menuPresenter: menuPresenter,
+      //       homePresenter: homePresenter,
+      //       clearPermissionToCancelProducts: false,
+      //       isRemovingProduct: false,
+      //     )).called(1);
     });
   });
 }

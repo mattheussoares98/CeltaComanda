@@ -13,7 +13,6 @@ void main() {
 
   setUp(() {
     presenter = PrintedProductsPresenterSpy();
-    presenter.mockLoadCommandData();
     presenter.mockRemoveProduct();
   });
 

@@ -119,13 +119,11 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      await printedProductsPresenter.loadCommandData(
-        cartPresenter: cartPresenter,
+      await homePresenter.loadCommandData(
         menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
         commentsPresenter: commentsPresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: false,
       );
     } on DomainError catch (e) {
       switch (e) {

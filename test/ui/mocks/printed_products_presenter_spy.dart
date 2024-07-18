@@ -43,18 +43,7 @@ class PrintedProductsPresenterSpy extends Mock
           cartPresenter: any(named: "cartPresenter"),
           homePresenter: any(named: "homePresenter"),
           commentsPresenter: any(named: "commentsPresenter"),
-        )).thenAnswer((_) async => _);
-  }
-
-  void mockLoadCommandData() {
-    when(() => this.loadCommandData(
-          cartPresenter: any(named: "cartPresenter"),
-          menuPresenter: any(named: "menuPresenter"),
-          homePresenter: any(named: "homePresenter"),
-          commentsPresenter: any(named: "commentsPresenter"),
-          clearPermissionToCancelProducts:
-              any(named: "clearPermissionToCancelProducts"),
-          isRemovingProduct: any(named: "isRemovingProduct"),
+          printedProductsPresenter: any(named: "printedProductsPresenter"),
         )).thenAnswer((_) async => _);
   }
 }

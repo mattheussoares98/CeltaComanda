@@ -23,16 +23,17 @@ abstract class PrintedProductsPresenter
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
     required CommentsPresenter commentsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   });
 
-  Future<void> loadCommandData({
-    required CartPresenter cartPresenter,
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-    required bool clearPermissionToCancelProducts,
-    required bool isRemovingProduct,
-  });
+  // Future<void> loadCommandData({
+  //   required CartPresenter cartPresenter,
+  //   required MenuPresenter menuPresenter,
+  //   required HomePresenter homePresenter,
+  //   required CommentsPresenter commentsPresenter,
+  //   required bool clearPermissionToCancelProducts,
+  //   required bool isRemovingProduct,
+  // });
 
   Future<void> validateUserAndPermissionToCancelProducts({
     required int personalizedCode,

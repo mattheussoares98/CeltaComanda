@@ -26,14 +26,14 @@ abstract class CartPresenter implements ChangeNotifier {
     required String commandNumber,
   });
 
-  Future<void> loadCommandData({
-    required String commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required CartPresenter cartPresenter,
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-  });
+  // Future<void> loadCommandData({
+  //   required String commandNumber,
+  //   required PrintedProductsPresenter printedProductsPresenter,
+  //   required CartPresenter cartPresenter,
+  //   required MenuPresenter menuPresenter,
+  //   required HomePresenter homePresenter,
+  //   required CommentsPresenter commentsPresenter,
+  // });
 
   void clear();
 

@@ -32,6 +32,7 @@ class GetxPrintedProductsPresenter
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
     required CommentsPresenter commentsPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -42,13 +43,11 @@ class GetxPrintedProductsPresenter
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await loadCommandData(
-        cartPresenter: cartPresenter,
+      await homePresenter.loadCommandData(
         menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
         commentsPresenter: commentsPresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: true,
       );
       notifyListeners();
     } on DomainError catch (error) {
@@ -154,58 +153,58 @@ class GetxPrintedProductsPresenter
     }
   }
 
-  @override
-  Future<void> loadCommandData({
-    required CartPresenter cartPresenter,
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-    required bool clearPermissionToCancelProducts,
-    required bool isRemovingProduct,
-  }) async {
-    isLoading = true;
-    mainError = null;
+  // @override
+  // Future<void> loadCommandData({
+  //   required CartPresenter cartPresenter,
+  //   required MenuPresenter menuPresenter,
+  //   required HomePresenter homePresenter,
+  //   required CommentsPresenter commentsPresenter,
+  //   required bool clearPermissionToCancelProducts,
+  //   required bool isRemovingProduct,
+  // }) async {
+  //   isLoading = true;
+  //   mainError = null;
 
-    try {
-      if (isRemovingProduct && homePresenter.commandNumber == null) {
-        throw DomainError.unexpected;
-      }
+  //   try {
+  //     if (isRemovingProduct && homePresenter.commandNumber == null) {
+  //       throw DomainError.unexpected;
+  //     }
 
-      if (!isRemovingProduct && homePresenter.isFixedCommandNumber != true) {
-        homePresenter.updateCommandNumber(await barcodeScanner.read());
-      }
-      if (clearPermissionToCancelProducts) {
-        updateCanCancelProducts(false);
-      }
+  //     if (!isRemovingProduct && homePresenter.isFixedCommandNumber != true) {
+  //       homePresenter.updateCommandNumber(await barcodeScanner.read());
+  //     }
+  //     if (clearPermissionToCancelProducts) {
+  //       updateCanCancelProducts(false);
+  //     }
 
-      cartPresenter.clear();
-      await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
+  //     cartPresenter.clear();
+  //     await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
 
-      // if (!isRemovingProduct) {
-      //   menuPresenter.clear();
-      //   await menuPresenter.getGroupsAndProducts(
-      //     commandNumber: homePresenter.commandNumber!,
-      //     commentsPresenter: commentsPresenter,
-      //   );
-      // }
-      await loadPrinted(homePresenter.commandNumber!);
-    } on DomainError catch (error) {
-      if (!homePresenter.isFixedCommandNumber) {
-        homePresenter.updateCommandNumber(null);
-      }
-      switch (error) {
-        case DomainError.barcodeNotRead:
-          mainError = UIError.barcodeNotRead;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
-    } finally {
-      isLoading = false;
-    }
-  }
+  //     // if (!isRemovingProduct) {
+  //     //   menuPresenter.clear();
+  //     //   await menuPresenter.getGroupsAndProducts(
+  //     //     commandNumber: homePresenter.commandNumber!,
+  //     //     commentsPresenter: commentsPresenter,
+  //     //   );
+  //     // }
+  //     await loadPrinted(homePresenter.commandNumber!);
+  //   } on DomainError catch (error) {
+  //     if (!homePresenter.isFixedCommandNumber) {
+  //       homePresenter.updateCommandNumber(null);
+  //     }
+  //     switch (error) {
+  //       case DomainError.barcodeNotRead:
+  //         mainError = UIError.barcodeNotRead;
+  //       case DomainError.commandNotAvailable:
+  //         mainError = UIError.commandNotAvailable;
+  //         break;
+  //       default:
+  //         mainError = UIError.unexpected;
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
 
   PrintedViewModel? _printedProducts;
   @override

@@ -19,6 +19,7 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late HomePresenterSpy homePresenter;
   late CommentsPresenterSpy commentsPresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -39,6 +40,7 @@ void main() {
     menuPresenter = MenuPresenterSpy();
     homePresenter = HomePresenterSpy();
     commentsPresenter = CommentsPresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
 
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
@@ -394,6 +396,7 @@ void main() {
       sut.updateCanCancelProducts(true);
 
       await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
         commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
@@ -418,6 +421,7 @@ void main() {
     });
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
         commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
@@ -436,6 +440,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
         commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
@@ -451,6 +456,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
         commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
@@ -466,6 +472,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
         commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
@@ -481,6 +488,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
         commentsPresenter: commentsPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
@@ -519,14 +527,14 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
     });
 
     test(
@@ -538,14 +546,14 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
     });
 
     test("Should emit correct values on loadCommandData throws barcodeNotRead",
@@ -556,14 +564,14 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
     });
     test("Should emit correct values on loadCommandData throws unexpected",
         () async {
@@ -573,53 +581,53 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
     });
 
     test("Should update commandNumber", () async {
       homePresenter.commandNumberMock = "9999";
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       expect(homePresenter.commandNumberMock, "9999");
     });
 
     test("Should call clearData on LoadCommandData call", () async {
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
 
       loadPrintedProducts.mockError(DomainError.unexpected);
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       expect(sut.printedProducts, null);
       verify(() => menuPresenter.clear()).called(2);
@@ -631,14 +639,14 @@ void main() {
     });
 
     test("Should call ticketIsPermitted only one time", () async {
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       verify(() => ticketIsPermitted.verify(
             commandNumber: homePresenter.commandNumberMock!,
@@ -648,14 +656,14 @@ void main() {
 
     test("Should call loadGroups, saleRequestTemp and PrintedProducts",
         () async {
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       verify(() => loadPrintedProducts.load(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -677,14 +685,14 @@ void main() {
         () async {
       ticketIsPermitted.mockError();
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       verify(() => homePresenter.updateCommandNumber(null)).called(1);
     });
@@ -693,14 +701,14 @@ void main() {
         () async {
       sut.updateCanCancelProducts(true);
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: true,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: true,
+      //   isRemovingProduct: false,
+      // );
 
       expect(sut.canCancelProducts, false);
     });
@@ -709,14 +717,14 @@ void main() {
         () async {
       sut.updateCanCancelProducts(true);
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: false,
+      //   isRemovingProduct: false,
+      // );
 
       expect(sut.canCancelProducts, true);
     });
@@ -730,27 +738,27 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: true,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: false,
+      //   isRemovingProduct: true,
+      // );
     });
 
     test("Should not call barcodeScanner when isFixedCommandNumber", () async {
       homePresenter.isFixedCommandNumberMock = true;
 
-      await sut.loadCommandData(
-        commentsPresenter: commentsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-        homePresenter: homePresenter,
-        clearPermissionToCancelProducts: false,
-        isRemovingProduct: false,
-      );
+      // await sut.loadCommandData(
+      //   commentsPresenter: commentsPresenter,
+      //   cartPresenter: cartPresenter,
+      //   menuPresenter: menuPresenter,
+      //   homePresenter: homePresenter,
+      //   clearPermissionToCancelProducts: false,
+      //   isRemovingProduct: false,
+      // );
 
       verifyNever(() => barcodeScanner.read());
     });

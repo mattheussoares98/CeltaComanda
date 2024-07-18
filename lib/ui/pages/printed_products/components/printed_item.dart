@@ -34,6 +34,7 @@ class PrintedItem extends StatelessWidget {
       cartPresenter: cartPresenter,
       homePresenter: homePresenter,
       commentsPresenter: commentsPresenter,
+      printedProductsPresenter: printedProductsPresenter,
     );
   }
 

@@ -72,12 +72,7 @@ Widget _landScapeNameImagePluAndCombox({
           children: [
             Expanded(
                 child:
-                    _productNamePriceAndComplement(productsViewModel, context)),
-            if (productsViewModel.IsPromoCombox == "true")
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: _mountCombox(context),
-              ),
+                    _namePriceComboxAndComplement(productsViewModel, context)),
           ],
         ),
       ),
@@ -118,9 +113,8 @@ Widget _portraitNameImagePluAndCombox({
       ),
       Expanded(
         flex: 3,
-        child: _productNamePriceAndComplement(productsViewModel, context),
+        child: _namePriceComboxAndComplement(productsViewModel, context),
       ),
-      if (productsViewModel.IsPromoCombox == "true") _mountCombox(context),
     ],
   );
 }
@@ -147,7 +141,7 @@ void _onTapImage({
   );
 }
 
-Widget _productNamePriceAndComplement(
+Widget _namePriceComboxAndComplement(
     ProductsViewModel productsViewModel, BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -157,16 +151,25 @@ Widget _productNamePriceAndComplement(
         textAlign: TextAlign.center,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: getStringSize(context) * (hasMinWidth(context) ? 2 : 1),
+          fontSize: getStringSize(context) * (hasMinWidth(context) ? 2 : 1.2),
         ),
       ),
-      Text(
-        productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Theme.of(context).primaryColorLight,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
+      Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).primaryColorLight,
+                fontWeight: FontWeight.bold,
+                fontSize: getStringSize(context) * 1.2,
+              ),
+            ),
+            if (productsViewModel.IsPromoCombox == "true")
+              Flexible(child: _mountCombox(context)),
+          ],
         ),
       ),
       if (productsViewModel.ProductComplement != null)
@@ -174,13 +177,14 @@ Widget _productNamePriceAndComplement(
           padding: const EdgeInsets.all(2),
           child: Text(
             productsViewModel.ProductComplement!,
-            maxLines: hasMinWidth(context) ? 4 : 2,
+            maxLines: hasMinWidth(context) ? 4 : 4,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: hasMinWidth(context) ? 14 : 12,
+              fontSize: getStringSize(context) * 0.8,
               color: Theme.of(context).primaryColorDark,
               fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w300,
             ),
           ),
         )
@@ -193,13 +197,13 @@ Widget _mountCombox(BuildContext context) {
     padding: const EdgeInsets.symmetric(horizontal: 5),
     child: FittedBox(
       child: Text(
-        "MONTAR COMBO",
+        "(COMBO)",
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Theme.of(context).secondaryHeaderColor,
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.italic,
-          fontSize: hasMinWidth(context) ? 20 : 17,
+          fontSize: getStringSize(context) * 1.2,
         ),
       ),
     ),

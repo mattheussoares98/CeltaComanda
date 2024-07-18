@@ -88,5 +88,21 @@ void main() {
             productsInternalCodeOfProductOnERP,
           )).called(1);
     });
+
+    test("Should call loadExpansibleGroupsFromProductsComplete on loadComments",
+        () async {
+      expect(sut.loadedComments, []);
+
+      await sut.loadComments(loadedProducts);
+
+      expect(
+          sut.loadedComments,
+          expansibleGroupFromProductComplete
+              .map((e) => CommentViewModel
+                      .fromExpansibleGroupsFromProductsCompleteEntity(
+                    e,
+                  ))
+              .toList());
+    });
   });
 }

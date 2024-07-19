@@ -28,6 +28,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     mainErrorSubscription?.cancel();
   }
 
+  List<String> groupNames = [];
+
   @override
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
@@ -66,7 +68,47 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 20,
+                          child: ListView.builder(
+                              itemCount: productCompositionPresenter
+                                  .selectedComboxProduct!
+                                  .childsComposition!
+                                  .length,
+                              itemBuilder: (context, fatherIndex) {
+                                final father = productCompositionPresenter
+                                    .selectedComboxProduct!
+                                    .childsComposition![fatherIndex];
+                                return SizedBox(
+                                  height: 60,
+                                  child: FittedBox(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: SizedBox(
+                                            width:
+                                                MediaQuery.of(context).size.width * 0.2,
+                                            child: FittedBox(
+                                              child: Text(
+                                                father.ChildName!.toUpperCase(),
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      getStringSize(context) * 1.5,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const Divider(),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                        Expanded(
+                          flex: 5,
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: productCompositionPresenter
@@ -82,23 +124,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                 children: [
                                   Row(
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          child: FittedBox(
-                                            child: Text(
-                                              father.ChildName!,
-                                              style: TextStyle(
-                                                fontSize:
-                                                    getStringSize(context) * 1.5,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
                                       if (father.childs?.isEmpty == true)
                                         Expanded(
                                           child: Center(

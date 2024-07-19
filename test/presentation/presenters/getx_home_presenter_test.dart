@@ -324,6 +324,42 @@ void main() {
         commentsPresenter: commentsPresenter,
       );
     });
+    test(
+        "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.unexpected",
+        () async {
+      sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber("001");
+      printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+    });
+    test(
+        "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.commandNotAvailable",
+        () async {
+      sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber("001");
+      printedProductsPresenter.mockLoadPrintedError(DomainError.commandNotAvailable);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+    });
 
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",

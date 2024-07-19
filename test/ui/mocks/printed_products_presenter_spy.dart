@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
@@ -28,7 +29,7 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.alertMessageStream)
         .thenAnswer((_) => alertMessageController.stream);
 
-    when(() => this.loadPrinted(any())).thenAnswer((_) async => _);
+    mockLoadPrintedCall().thenAnswer((_) async => _);
     when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.validateUserAndPermissionToCancelProducts(
           personalizedCode: any(named: "personalizedCode"),
@@ -45,5 +46,11 @@ class PrintedProductsPresenterSpy extends Mock
           commentsPresenter: any(named: "commentsPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
         )).thenAnswer((_) async => _);
+  }
+
+  When mockLoadPrintedCall() => when(() => this.loadPrinted(any()));
+
+  void mockLoadPrintedError(DomainError error) {
+    mockLoadPrintedCall().thenThrow(error);
   }
 }

@@ -234,7 +234,7 @@ class GetxMenuPresenter extends GetxController
         }
       }
 
-      await commentsPresenter.loadComments(allProducts);
+      await commentsPresenter.loadComments(_getAllInternalCodes(allProducts));
       _menu.subject.add(_loadedMenu);
     } on DomainError catch (error) {
       switch (error) {
@@ -246,6 +246,21 @@ class GetxMenuPresenter extends GetxController
     } finally {
       isLoading = false;
     }
+  }
+
+  List<int> _getAllInternalCodes(List<ProductsViewModel> allProducts) {
+    List<int> allInternalCodes = [];
+    for (var product in allProducts) {
+      allInternalCodes.add(product.InternalCodeOnERP!.toInt());
+
+      if (product.childsComposition != null) {
+        for (var child in product.childsComposition!) {
+          allInternalCodes.add(child.InternalCodeOnERPCodeChild!.toInt());
+        }
+      }
+    }
+
+    return allInternalCodes;
   }
 
   @override

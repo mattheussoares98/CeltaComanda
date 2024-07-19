@@ -24,7 +24,8 @@ void main() {
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
-  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuListWithoutPromoCombox;
+  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      menuListWithoutPromoCombox;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -152,7 +153,8 @@ void main() {
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
+      expectLater(
+          sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
 
       await sut.getGroupsAndProducts(
         commentsPresenter: commentsPresenter,
@@ -294,6 +296,8 @@ void main() {
               map.values) // Expande todas as listas de produtos em um Iterable
           .expand((lista) =>
               lista) // Expande cada lista individual de produtos em um Iterable
+          .toList()
+          .map((e) => e.InternalCodeOnERP!.toInt())
           .toList())).called(1);
     });
   });

@@ -284,7 +284,26 @@ void main() {
       );
 
       verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!))
+          .called(1);
+    });
+    test(
+        "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
+        () async {
+      sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber("001");
+      cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
     });
 
     test(

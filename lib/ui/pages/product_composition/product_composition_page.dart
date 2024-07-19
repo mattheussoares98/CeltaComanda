@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -59,9 +60,147 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 productCompositionPresenter
                         .selectedComboxProduct?.childsComposition !=
                     null
-            ? Composition(
-                selectedComboxProduct:
-                    productCompositionPresenter.selectedComboxProduct!,
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 20,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: productCompositionPresenter
+                                .selectedComboxProduct!
+                                .childsComposition!
+                                .length,
+                            itemBuilder: (context, fathersIndex) {
+                              final father = productCompositionPresenter
+                                  .selectedComboxProduct!
+                                  .childsComposition![fathersIndex];
+
+                              return Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.2,
+                                          child: FittedBox(
+                                            child: Text(
+                                              father.ChildName!,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    getStringSize(context) * 1.5,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      if (father.childs?.isEmpty == true)
+                                        Expanded(
+                                          child: Center(
+                                            child: Text(
+                                              father.ChildName!,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      if (father.childs?.isNotEmpty == true)
+                                        Expanded(
+                                          child: ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: father.childs!.length,
+                                            itemBuilder:
+                                                (context, childsIndex) {
+                                              final child =
+                                                  father.childs![childsIndex];
+
+                                              return Container(
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 5, right: 2),
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              220,
+                                                              218,
+                                                              218)),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      blurRadius: 10,
+                                                      color: Color(0x33000000),
+                                                      offset: Offset(-3, -1),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 20,
+                                                      child: ImageWidget(
+                                                        ean: null,
+                                                        plu: child.PluChild!,
+                                                        isAlcoholic: false,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 80,
+                                                      child: Text(
+                                                        child.ChildName!,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Radio<int>(
+                                                        value: childsIndex,
+                                                        groupValue: father
+                                                            .indexOfSelectedChild,
+                                                        visualDensity:
+                                                            VisualDensity
+                                                                .compact,
+                                                        toggleable: father
+                                                                .IsOptionalItem ==
+                                                            "true",
+                                                        onChanged:
+                                                            (int? value) {
+                                                          // updateSelectedIndex();
+                                                        },
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Expanded(
+                  //   child: Composition(
+                  //     selectedComboxProduct:
+                  //         productCompositionPresenter.selectedComboxProduct!,
+                  //   ),
+                  // ),
+                ],
               )
             : const Center(child: Text("Deu algum erro")),
       ),

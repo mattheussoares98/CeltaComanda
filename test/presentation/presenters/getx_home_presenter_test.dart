@@ -305,6 +305,25 @@ void main() {
         commentsPresenter: commentsPresenter,
       );
     });
+    test(
+        "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.commandNotAvailable",
+        () async {
+      sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber("001");
+      cartPresenter
+          .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+    });
 
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",

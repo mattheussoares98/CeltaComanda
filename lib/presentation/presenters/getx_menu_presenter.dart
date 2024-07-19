@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
@@ -182,7 +184,6 @@ class GetxMenuPresenter extends GetxController
   }) async {
     isLoading = true;
     mainError = null;
-    showPreLoadImage = true;
     _inexOfSelectedGroup.value = 0;
     clear();
 
@@ -237,6 +238,8 @@ class GetxMenuPresenter extends GetxController
 
       await commentsPresenter.loadComments(allProducts);
       _menu.subject.add(_loadedMenu);
+      _showPreLoadImages.subject.add(true);
+      showPreLoadImage = true;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -245,8 +248,10 @@ class GetxMenuPresenter extends GetxController
           throw DomainError.unexpected;
       }
     } finally {
-      showPreLoadImage = false;
       isLoading = false;
+      Future.delayed(const Duration(seconds: 10), () {
+        showPreLoadImage = false;
+      });
     }
   }
 
@@ -279,5 +284,5 @@ class GetxMenuPresenter extends GetxController
   final _showPreLoadImages = false.obs;
   @override
   Stream<bool> get showPreLoadImagesStream => _showPreLoadImages.stream;
-  set showPreLoadImage(bool value) => _showPreLoadImages.value = value;
+  set showPreLoadImage(bool value) => _showPreLoadImages.subject.add(value);
 }

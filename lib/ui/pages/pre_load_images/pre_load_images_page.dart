@@ -69,54 +69,64 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Stack(
-      children: [
-        SizedBox(
-          height: 0,
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 1,
-                childAspectRatio: 1,
-                crossAxisSpacing: 0,
-                mainAxisSpacing: 0,
-              ),
-              itemCount: getAllPlus(menuPresenter).length,
-              itemBuilder: (context, index) {
-                final plu = getAllPlus(menuPresenter)[index];
-    
-                return ImageWidget(
-                  ean: null,
-                  plu: plu,
-                  isAlcoholic: false,
-                  height: 0,
-                  width: 0,
-                );
-              }),
-        ),
-        SizedBox(
-          height: 0,
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 1,
-                childAspectRatio: 1,
-                crossAxisSpacing: 0,
-                mainAxisSpacing: 0,
-              ),
-              itemCount: getAllEans(menuPresenter).length,
-              itemBuilder: (context, index) {
-                final ean = getAllEans(menuPresenter)[index];
-    
-                return ImageWidget(
-                  ean: ean,
-                  plu: "",
-                  isAlcoholic: false,
-                  height: 0,
-                  width: 0,
-                );
-              }),
-        ),
-        Container(color: Colors.white),
-      ],
-    );
+    return StreamBuilder<bool>(
+        stream: menuPresenter.showPreLoadImagesStream,
+        builder: (context, snapshot) {
+          if (snapshot.data != false) {
+            return Stack(
+              children: [
+                SizedBox(
+                  height: 1,
+                  child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 1,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 1,
+                        mainAxisSpacing: 1,
+                      ),
+                      itemCount: getAllPlus(menuPresenter).length,
+                      itemBuilder: (context, index) {
+                        final plu = getAllPlus(menuPresenter)[index];
+
+                        return ImageWidget(
+                          ean: null,
+                          plu: plu,
+                          isAlcoholic: false,
+                          height: 1,
+                          width: 1,
+                        );
+                      }),
+                ),
+                SizedBox(
+                  height: 1,
+                  child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 1,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 1,
+                        mainAxisSpacing: 1,
+                      ),
+                      itemCount: getAllEans(menuPresenter).length,
+                      itemBuilder: (context, index) {
+                        final ean = getAllEans(menuPresenter)[index];
+
+                        return ImageWidget(
+                          ean: ean,
+                          plu: "",
+                          isAlcoholic: false,
+                          height: 1,
+                          width: 1,
+                        );
+                      }),
+                ),
+                Container(color: Colors.white),
+              ],
+            );
+          } else{
+            return const SizedBox();
+          }
+        });
   }
 }

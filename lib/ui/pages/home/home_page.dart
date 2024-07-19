@@ -71,16 +71,15 @@ class _HomePageState extends State<HomePage>
         CommentsPresenter commentsPresenter =
             Provider.of(context, listen: false);
 
-        await homePresenter.getLocalCommandData();
-        await homePresenter.loadCommandData(
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          commentsPresenter: commentsPresenter,
-        );
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
           if (mounted) {
+            await homePresenter.getLocalCommandData();
+            await homePresenter.loadCommandData(
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              commentsPresenter: commentsPresenter,
+            );
             setState(() {});
           }
         });
@@ -101,7 +100,8 @@ class _HomePageState extends State<HomePage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
-    mainErrorSubscription = handleMainError(context, homePresenter.mainErrorStream);
+    mainErrorSubscription =
+        handleMainError(context, homePresenter.mainErrorStream);
 
     final List<Widget> screens = [
       makeMenusPage(homePresenter.isFixedCommandNumber),

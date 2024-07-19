@@ -32,6 +32,7 @@ void main() {
   late List<ProductCompositionEntity> optionalFathers;
   late ProductCompositionViewModel obligatoryFather;
   late SaleRequestTempEntity saleRequestTempEntity;
+  late ProductsViewModel selectedProduct;
 
   UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity({
     required ProductCompositionViewModel productCompositionViewModel,
@@ -119,6 +120,9 @@ void main() {
       indexOfSelectedChild: null,
       insertChilds: false,
     );
+
+    selectedProduct =
+        EntityFactory.makeProductViewModel(insertChildsComposition: true);
   }
 
   setUp(() {
@@ -139,84 +143,25 @@ void main() {
     registerFallbackValue(MenuPresenterSpy());
   });
 
+  group("updateSelectedProduct", () {
+    test(
+        'Should change totalComboxQuantity correctly when updateValue and to 1 when call LoadProductComposition',
+        () async {
+      sut.updateComboxQuantity(true);
+      expect(sut.totalComboxQuantity, 2);
+      sut.updateComboxQuantity(true);
+      expect(sut.totalComboxQuantity, 3);
+      sut.updateComboxQuantity(false);
+      expect(sut.totalComboxQuantity, 2);
+
+      await sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.totalComboxQuantity, 1);
+    });
+  });
+
   // group("GetProductComposition", () {
-  //   test('Should emit correct values on LoadProductComposition success',
-  //       () async {
-  //     expectLater(sut.mainErrorStream, emits(null));
-  //     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //     sut.productsCompositionStream.listen(
-  //         expectAsync1((productComposition) => expect(productComposition, [
-  //               ProductCompositionViewModel.fromEntityWithChilds(
-  //                 productComposition[0].toEntity(),
-  //                 optionalFathers,
-  //               ),
-  //               ProductCompositionViewModel.fromEntityWithChilds(
-  //                 productComposition[1].toEntity(),
-  //                 optionalFathers,
-  //               ),
-  //             ])));
 
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-  //   });
-  //   test('Should emit correct values on getFathers throw', () async {
-  //     getProductComposition.mockGetFathersError();
-
-  //     expectLater(
-  //         sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-  //     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //     expectLater(sut.productsCompositionStream, emits([]));
-
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-  //   });
-
-  //   test('Should emit correct values on getFathers throw', () async {
-  //     getProductComposition.mockGetChildsOfFatherError();
-
-  //     expectLater(
-  //         sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-  //     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-  //     expectLater(sut.productsCompositionStream, emits([]));
-
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-  //   });
-  //   test('Should call getFathers with correct values', () async {
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-
-  //     verify(() => getProductComposition.getFathers(
-  //           internalCodeOnErp: internalCodeOnErp,
-  //         )).called(1);
-  //   });
-
-  //   test('Should call getChildsOfFather with correct values', () async {
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-
-  //     verify(
-  //       () => getProductComposition.getChildsOfFather(
-  //         internalCodeOnErp: internalCodeOnErp,
-  //         fathers: optionalFathers,
-  //       ),
-  //     );
-  //   });
   //   test(
   //       'Should change totalComboxQuantity correctly when updateValue and to 1 when call LoadProductComposition',
   //       () async {

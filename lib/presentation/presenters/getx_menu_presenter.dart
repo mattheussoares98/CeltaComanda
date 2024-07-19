@@ -239,9 +239,9 @@ class GetxMenuPresenter extends GetxController
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
+          throw DomainError.commandNotAvailable;
         default:
-          mainError = UIError.unexpected;
+           throw DomainError.unexpected;
       }
     } finally {
       isLoading = false;

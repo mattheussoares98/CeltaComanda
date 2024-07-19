@@ -25,10 +25,12 @@ class _HomePageState extends State<HomePage>
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
 
   @override
   void dispose() {
     loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -97,7 +99,9 @@ class _HomePageState extends State<HomePage>
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
     loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
+    mainErrorSubscription = handleMainError(context, homePresenter.mainErrorStream);
 
     final List<Widget> screens = [
       makeMenusPage(homePresenter.isFixedCommandNumber),

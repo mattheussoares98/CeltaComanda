@@ -24,7 +24,8 @@ void main() {
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
-  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menuListWithoutPromoCombox;
+  late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+      menuListWithoutPromoCombox;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -152,38 +153,39 @@ void main() {
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
+      expectLater(
+          sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
 
       await sut.getGroupsAndProducts(
         commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
-    test('Should emit correct values on throws CommandNotAvailable', () async {
+    test(
+        'Should throw CommandNotAvailable on getGroupsAndProducts throws commandNotAvailable',
+        () async {
       loadExpansibleGroups
           .mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-
-      await sut.getGroupsAndProducts(
+      final future = sut.getGroupsAndProducts(
         commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
+
+      expect(future, throwsA(DomainError.commandNotAvailable));
     });
-    test('Should emit correct values on throws unexpected', () async {
+    test(
+        'Should throw CommandNotAvailable on getGroupsAndProducts throws commandNotAvailable unexpected',
+        () async {
       loadExpansibleGroups
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.getGroupsAndProducts(
+      final future = sut.getGroupsAndProducts(
         commentsPresenter: commentsPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
+
+      expect(future, throwsA(DomainError.unexpected));
     });
     test('Should call LoadExpansibleGroups and loadProducts', () async {
       await sut.getGroupsAndProducts(
@@ -196,22 +198,6 @@ void main() {
           .called(1);
       verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId))
           .called(1);
-    });
-
-    test(
-        'Should emit correct values on LoadExpansibleGroups throws unexpectedError',
-        () async {
-      loadExpansibleGroups
-          .mockLoadExpansibleGroupsError(DomainError.unexpected);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-      );
     });
 
     test('Should return correct value on success to load', () async {

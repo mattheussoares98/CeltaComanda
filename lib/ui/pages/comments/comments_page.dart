@@ -58,12 +58,10 @@ class _CommentsPageState extends State<CommentsPage>
               ),
               const SizedBox(height: 15),
               const SizedBox(height: 8),
-              if (commentsPresenter.loadedComments
-                  .where((e) =>
-                      e.ProductInternalCodeOnErp.toInt() ==
-                          widget.internalCodeOnErp &&
-                      e.ProductName == widget.selectedProductName)
-                  .isNotEmpty)
+              if (commentsPresenter.productHasComment(
+                internalCodeOnERP: widget.internalCodeOnErp,
+                productName: widget.selectedProductName,
+              ))
                 CommentsList(
                   internalCodeOnErp: widget.internalCodeOnErp,
                   selectedProductName: widget.selectedProductName,
@@ -74,10 +72,9 @@ class _CommentsPageState extends State<CommentsPage>
                 child: ElevatedButton(
                   onPressed: () async {
                     Future.delayed(Duration.zero, () {
-                      Navigator.of(context)
-                          .popUntil((route) => route.isFirst);
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     });
-    
+
                     if (widget.doOnClickInConfirmButton != null) {
                       await widget.doOnClickInConfirmButton!();
                     }

@@ -131,20 +131,24 @@ class _CartProductItemState extends State<CartProductItem> {
                 ),
               ],
             ),
-            Comment(
-              comments: widget.cartProduct.Comments,
+            if (commentsPresenter.productHasComment(
+              internalCodeOnERP:
+                  widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
               productName: widget.cartProduct.Product.Name,
-              internalCodeOnErp: widget
-                  .cartProduct.Product.InternalCodeOnERP!
-                  .toInt(),
-              updateComment: () async {
-                await cartPresenter.updateCommentOfProductCart(
-                  index: widget.index,
-                  newComment:
-                      commentsPresenter.getConcatenateSelectedComments(),
-                );
-              },
-            ),
+            ))
+              Comment(
+                comments: widget.cartProduct.Comments,
+                productName: widget.cartProduct.Product.Name,
+                internalCodeOnErp:
+                    widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
+                updateComment: () async {
+                  await cartPresenter.updateCommentOfProductCart(
+                    index: widget.index,
+                    newComment:
+                        commentsPresenter.getConcatenateSelectedComments(),
+                  );
+                },
+              ),
           ],
         ),
       ),

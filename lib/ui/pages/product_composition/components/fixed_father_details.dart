@@ -90,12 +90,11 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
                   ],
                 ),
               ),
-              if (commentsPresenter.loadedComments
-                  .where((e) =>
-                      e.ProductInternalCodeOnErp.toInt() ==
-                          widget.father.InternalCodeOnERPCodeChild!.toInt() &&
-                      e.ProductName == widget.father.ChildName)
-                  .isNotEmpty)
+              if (commentsPresenter.productHasComment(
+                internalCodeOnERP:
+                    widget.father.InternalCodeOnERPCodeChild!.toInt(),
+                productName: widget.father.ChildName!,
+              ))
                 AddCommentButton(
                   selectedComboxProduct: widget.selectedComboxProduct,
                   father: widget.father,

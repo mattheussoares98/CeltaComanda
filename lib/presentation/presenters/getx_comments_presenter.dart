@@ -131,6 +131,10 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     required int internalCodeOnERP,
     required String productName,
   }) {
-    return false;
+    return loadedComments
+        .where((e) =>
+            e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP &&
+            e.ProductName == productName)
+        .isNotEmpty;
   }
 }

@@ -109,20 +109,24 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                     ),
                   ],
                 ),
-                Comment(
-                  comments: combox.commentFather,
+                if (commentsPresenter.productHasComment(
+                  internalCodeOnERP: combox.InternalCodeOnERPCodeChild!.toInt(),
                   productName: combox.ChildName!,
-                  internalCodeOnErp:
-                      combox.InternalCodeOnERPCodeChild!.toInt(),
-                  updateComment: () async {
-                    await cartPresenter.updateCommentOfCombox(
-                      indexOfCombox: widget.indexOfConfirmedCombox,
-                      indexOfProduct: index,
-                      newComment:
-                          commentsPresenter.getConcatenateSelectedComments(),
-                    );
-                  },
-                ),
+                ))
+                  Comment(
+                    comments: combox.commentFather,
+                    productName: combox.ChildName!,
+                    internalCodeOnErp:
+                        combox.InternalCodeOnERPCodeChild!.toInt(),
+                    updateComment: () async {
+                      await cartPresenter.updateCommentOfCombox(
+                        indexOfCombox: widget.indexOfConfirmedCombox,
+                        indexOfProduct: index,
+                        newComment:
+                            commentsPresenter.getConcatenateSelectedComments(),
+                      );
+                    },
+                  ),
               ],
             );
           })

@@ -7,6 +7,7 @@ import '../../helpers/helpers.dart';
 abstract class MenuPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<bool> get showPreLoadImagesStream;
   Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
       get menuStream;
   Stream<ProductsViewModel?> get selectedProductStream;

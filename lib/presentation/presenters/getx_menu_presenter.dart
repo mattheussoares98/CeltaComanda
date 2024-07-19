@@ -241,7 +241,7 @@ class GetxMenuPresenter extends GetxController
         case DomainError.commandNotAvailable:
           throw DomainError.commandNotAvailable;
         default:
-           throw DomainError.unexpected;
+          throw DomainError.unexpected;
       }
     } finally {
       isLoading = false;
@@ -273,4 +273,9 @@ class GetxMenuPresenter extends GetxController
   ProductsViewModel? _searchedProduct;
   @override
   ProductsViewModel? get searchedProduct => _searchedProduct;
+
+  final _showPreLoadImages = false.obs;
+  @override
+  Stream<bool> get showPreLoadImagesStream => _showPreLoadImages.stream;
+  set showPreLoadImage(bool value) => _showPreLoadImages.value = value;
 }

@@ -270,6 +270,22 @@ void main() {
       verifyNever(() =>
           printedProductsPresenter.loadPrinted(sut.commandNumber ?? "001"));
     });
+    test(
+        "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
+        () async {
+      sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber("001");
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+
+      verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!)).called(1);
+    });
 
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",

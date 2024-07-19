@@ -319,4 +319,8 @@ class GetxProductCompositionPresenter extends GetxController
       father.indexOfSelectedChild = index;
     }
   }
+
+  ProductsViewModel? _selectedComboxProduct;
+  @override
+  ProductsViewModel? get selectedComboxProduct => _selectedComboxProduct;
 }

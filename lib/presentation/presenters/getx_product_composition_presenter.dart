@@ -38,53 +38,53 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<bool> get comboxIsValidStream => _comboxIsValidStream.stream;
 
-  void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-    List<ProductCompositionViewModel> productsComposition,
-  ) {
-    for (var product in productsComposition) {
-      if (product.IsOptionalItem == "false" && product.childs?.isEmpty == true) {
-        product.indexOfSelectedChild = 0;
-      }
-    }
-  }
+  // void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
+  //   List<ProductCompositionViewModel> productsComposition,
+  // ) {
+  //   for (var product in productsComposition) {
+  //     if (product.IsOptionalItem == "false" && product.childs?.isEmpty == true) {
+  //       product.indexOfSelectedChild = 0;
+  //     }
+  //   }
+  // }
 
-  @override
-  Future<void> loadProductComposition({
-    required String url,
-    required int enterpriseId,
-    required int internalCodeOnErp,
-  }) async {
-    isLoading = true;
-    mainError = null;
-    List<ProductCompositionViewModel> productComposition = [];
+  // @override
+  // Future<void> loadProductComposition({
+  //   required String url,
+  //   required int enterpriseId,
+  //   required int internalCodeOnErp,
+  // }) async {
+  //   isLoading = true;
+  //   mainError = null;
+  //   List<ProductCompositionViewModel> productComposition = [];
 
-    try {
-      updateComboxQuantity(false, true);
-      final fathers = await getProductComposition.getFathers(
-        internalCodeOnErp: internalCodeOnErp,
-      );
+  //   try {
+  //     updateComboxQuantity(false, true);
+  //     final fathers = await getProductComposition.getFathers(
+  //       internalCodeOnErp: internalCodeOnErp,
+  //     );
 
-      List<ProductCompositionViewModel> childs =
-          await getProductComposition.getChildsOfFather(
-        internalCodeOnErp: internalCodeOnErp,
-        fathers: fathers,
-      );
+  //     List<ProductCompositionViewModel> childs =
+  //         await getProductComposition.getChildsOfFather(
+  //       internalCodeOnErp: internalCodeOnErp,
+  //       fathers: fathers,
+  //     );
 
-      _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(childs);
+  //     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(childs);
 
-      _productsComposition.subject.add(childs);
-      productComposition.addAll(childs);
+  //     _productsComposition.subject.add(childs);
+  //     productComposition.addAll(childs);
 
-      await Future.delayed(const Duration(milliseconds: 500), () {
-        updateComboxIsValid(productComposition);
-      });
-    } catch (e) {
-      mainError = UIError.unexpected;
-      _productsComposition.subject.add([]);
-    } finally {
-      isLoading = false;
-    }
-  }
+  //     await Future.delayed(const Duration(milliseconds: 500), () {
+  //       updateComboxIsValid(productComposition);
+  //     });
+  //   } catch (e) {
+  //     mainError = UIError.unexpected;
+  //     _productsComposition.subject.add([]);
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
 
   double _getTotalLiquidCombox(
     List<ProductCompositionViewModel> productsCompositionsViewModel,

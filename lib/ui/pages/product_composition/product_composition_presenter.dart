@@ -15,12 +15,6 @@ abstract class ProductCompositionPresenter implements Listenable {
     List<ProductCompositionViewModel> productsCompositionsViewModel,
   );
 
-  Future<void> loadProductComposition({
-    required String url,
-    required int enterpriseId,
-    required int internalCodeOnErp,
-  });
-
   bool certifyComboxIsValid(
       List<ProductCompositionViewModel> productsCompositions);
   void updateComboxIsValid(

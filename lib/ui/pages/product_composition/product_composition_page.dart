@@ -1,13 +1,10 @@
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../main/builders/builders.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
-import '../../components/components.dart';
 import '../../mixins/mixins.dart';
 
 class ProductCompositionPage extends StatefulWidget {
@@ -20,31 +17,6 @@ class ProductCompositionPage extends StatefulWidget {
 class _ProductCompositionPageState extends State<ProductCompositionPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   ProductsViewModel? selectedComboxProduct;
-  bool _isLoaded = false;
-
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    if (!_isLoaded) {
-      _isLoaded = true;
-
-      if (Get.arguments != null) {
-        selectedComboxProduct = Get.arguments;
-        ProductCompositionPresenter productCompositionPresenter =
-            Provider.of(context, listen: false);
-
-        Future.delayed(Duration.zero, () async {
-          await productCompositionPresenter.loadProductComposition(
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            internalCodeOnErp:
-                int.parse(selectedComboxProduct!.InternalCodeOnERP!),
-          );
-        });
-      }
-    }
-  }
 
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -89,17 +61,17 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
             stream: productCompositionPresenter.productsCompositionStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return ReloadScreen(
-                  error: '${snapshot.error}',
-                  reload: () async =>
-                      await productCompositionPresenter.loadProductComposition(
-                    url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-                    enterpriseId: EnterpriseDataBuilder
-                        .enterpriseDataEntity!.enterpriseId!,
-                    internalCodeOnErp:
-                        int.parse(selectedComboxProduct!.InternalCodeOnERP!),
-                  ),
-                );
+                // return ReloadScreen(
+                //   error: '${snapshot.error}',
+                //   reload: () async =>
+                //       await productCompositionPresenter.loadProductComposition(
+                //     url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+                //     enterpriseId: EnterpriseDataBuilder
+                //         .enterpriseDataEntity!.enterpriseId!,
+                //     internalCodeOnErp:
+                //         int.parse(selectedComboxProduct!.InternalCodeOnERP!),
+                //   ),
+                // );
               }
               if (snapshot.hasData) {
                 return Composition(

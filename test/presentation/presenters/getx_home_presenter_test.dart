@@ -239,6 +239,20 @@ void main() {
   });
 
   group("load command data", () {
+    test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
+        () async {
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+
+      verify(() => menuPresenter.getGroupsAndProducts(
+          commandNumber: sut.commandNumber ?? "001",
+          commentsPresenter: commentsPresenter)).called(1);
+    });
+
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
         () async {
@@ -260,8 +274,8 @@ void main() {
         () async {
       menuPresenter.mockLoadDataError(DomainError.unexpected);
 
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.unexpected]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(

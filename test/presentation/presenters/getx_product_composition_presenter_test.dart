@@ -184,6 +184,14 @@ void main() {
 
       expect(sut.selectedComboxProduct, selectedProduct);
     });
+
+    test(
+        'Should update selectedComboxProduct when call sut.updateSelectedProduct',
+        () async {
+      await sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.selectedComboxProduct, selectedProduct);
+    });
   });
 
   group("sut.UpdateSaleRequestTemp", () {

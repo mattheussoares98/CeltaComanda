@@ -171,6 +171,19 @@ void main() {
               validateCombox.comboxIsValid(selectedProduct.childsComposition!))
           .called(1);
     });
+
+    test(
+        'Should update indexOfSelctedChild if father is obligatory and childs is empty',
+        () async {
+      selectedProduct.childsComposition!.first.indexOfSelectedChild = 0;
+      //quando o produto é obrigatório e não tem filhos, precisa ter um índice
+      //selecionado pra na tela da composição, aparecer que ele já foi
+      //selecionado. Por isso faz essa alteração
+
+      await sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.selectedComboxProduct, selectedProduct);
+    });
   });
 
   group("sut.UpdateSaleRequestTemp", () {

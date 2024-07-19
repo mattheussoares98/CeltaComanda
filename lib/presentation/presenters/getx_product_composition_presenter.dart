@@ -48,6 +48,8 @@ class GetxProductCompositionPresenter extends GetxController
   Future<void> updateSelectedProduct(ProductsViewModel product) async {
     updateComboxQuantity(false, true);
 
+    _selectedComboxProduct = product;
+
     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
       product.childsComposition!,
     );

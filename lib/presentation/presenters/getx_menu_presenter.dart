@@ -182,6 +182,7 @@ class GetxMenuPresenter extends GetxController
   }) async {
     isLoading = true;
     mainError = null;
+    showPreLoadImage = true;
     _inexOfSelectedGroup.value = 0;
     clear();
 
@@ -244,6 +245,7 @@ class GetxMenuPresenter extends GetxController
           throw DomainError.unexpected;
       }
     } finally {
+      showPreLoadImage = false;
       isLoading = false;
     }
   }

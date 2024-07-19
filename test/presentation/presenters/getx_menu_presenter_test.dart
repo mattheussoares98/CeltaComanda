@@ -153,6 +153,8 @@ void main() {
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.showPreLoadImagesStream, emitsInOrder([true, false]));
+
       expectLater(
           sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
 

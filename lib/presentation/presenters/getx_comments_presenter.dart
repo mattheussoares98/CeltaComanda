@@ -125,4 +125,12 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     }
     notifyListeners();
   }
+
+  @override
+  bool productHasComment({
+    required int internalCodeOnERP,
+    required String productName,
+  }) {
+    return false;
+  }
 }

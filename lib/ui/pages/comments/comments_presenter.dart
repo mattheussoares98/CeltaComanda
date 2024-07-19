@@ -18,4 +18,8 @@ abstract class CommentsPresenter implements Listenable {
     required String? comments,
     required int internalCodeOnERP,
   });
+  bool productHasComment({
+    required int internalCodeOnERP,
+    required String productName,
+  });
 }

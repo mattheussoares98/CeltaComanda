@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class Composition extends StatefulWidget {
-  final List<ProductCompositionViewModel> productsCompositions;
   final ProductsViewModel selectedComboxProduct;
   const Composition({
-    required this.productsCompositions,
     required this.selectedComboxProduct,
     super.key,
   });
@@ -30,29 +28,31 @@ class _CompositionState extends State<Composition> {
             primary: false,
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
-            itemCount: widget.productsCompositions.length,
+            itemCount: widget.selectedComboxProduct.childsComposition!.length,
             itemBuilder: (context, index) {
-              father = widget.productsCompositions[index];
+              father = widget.selectedComboxProduct.childsComposition![index];
 
               if (father!.childs?.isEmpty == true) {
                 return FathersWithoutChilds(
                   selectedComboxProduct: widget.selectedComboxProduct,
                   father: father!,
-                  productsCompositionsViewModel: widget.productsCompositions,
+                  productsCompositionsViewModel:
+                      widget.selectedComboxProduct.childsComposition!,
                 );
               }
 
               return FathersWithChilds(
                 selectedComboxProduct: widget.selectedComboxProduct,
                 father: father!,
-                productsCompositions: widget.productsCompositions,
+                productsCompositions:
+                    widget.selectedComboxProduct.childsComposition!,
                 index: index,
               );
             },
           ),
         ),
         SaveComboxButton(
-          productsCompositions: widget.productsCompositions,
+          productsCompositions: widget.selectedComboxProduct.childsComposition!,
           selectedComboxProduct: widget.selectedComboxProduct,
         ),
       ],

@@ -16,8 +16,6 @@ class ProductCompositionPage extends StatefulWidget {
 
 class _ProductCompositionPageState extends State<ProductCompositionPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
-  ProductsViewModel? selectedComboxProduct;
-
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
@@ -47,7 +45,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
         title: FittedBox(
           child: Text(
             textAlign: TextAlign.center,
-            selectedComboxProduct?.Name ?? "",
+            productCompositionPresenter.selectedComboxProduct?.Name ?? "",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: hasMinWidth(context) ? 30 : 20,
@@ -57,11 +55,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
         ),
       ),
       body: SafeArea(
-        child: selectedComboxProduct != null &&
-                selectedComboxProduct?.childsComposition != null
+        child: productCompositionPresenter.selectedComboxProduct != null &&
+                productCompositionPresenter
+                        .selectedComboxProduct?.childsComposition !=
+                    null
             ? Composition(
-                selectedComboxProduct: selectedComboxProduct!,
-                productsCompositions: selectedComboxProduct!.childsComposition!,
+                selectedComboxProduct:
+                    productCompositionPresenter.selectedComboxProduct!,
               )
             : const Center(child: Text("Deu algum erro")),
       ),

@@ -17,20 +17,29 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   @override
   List<CommentViewModel> get loadedComments => _loadedComments;
 
+  List<int> _getAllInternalCodes(List<ProductsViewModel> allProducts) {
+    List<int> allInternalCodes = [];
+    for (var product in allProducts) {
+      allInternalCodes.add(product.InternalCodeOnERP!.toInt());
+
+      if (product.childsComposition != null) {
+        for (var child in product.childsComposition!) {
+          allInternalCodes.add(child.InternalCodeOnERPCodeChild!.toInt());
+        }
+      }
+    }
+
+    return allInternalCodes;
+  }
+
   @override
   Future<void> loadComments(List<ProductsViewModel> loadedProducts) async {
     isLoading = true;
     mainError = null;
 
     try {
-      final allInternalCodes = loadedProducts
-          .map(
-            (e) => e.InternalCodeOnERP!.toInt(),
-          )
-          .toList();
-
-      final optionalGroups =
-          await loadExpansibleGroupsFromProductsComplete.load(allInternalCodes);
+      final optionalGroups = await loadExpansibleGroupsFromProductsComplete
+          .load(_getAllInternalCodes(loadedProducts));
 
       _loadedComments = optionalGroups
           .map((e) =>

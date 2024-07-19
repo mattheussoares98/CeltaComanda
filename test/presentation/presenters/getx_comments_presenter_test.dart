@@ -19,7 +19,7 @@ void main() {
   late List<ProductsViewModel> loadedProducts;
   late List<ExpansibleGroupFromProductCompleteEntity>
       expansibleGroupFromProductComplete;
-  late List<int> productsInternalCodeOfProductOnERP;
+  late List<int> allInternalCodes;
 
   void initUseCases() {
     loadExpansibleGroupsFromProductsComplete =
@@ -35,16 +35,21 @@ void main() {
 
   void initEntitys() {
     loadedProducts = [
-      EntityFactory.makeProductViewModel(),
-      EntityFactory.makeProductViewModel(),
+      EntityFactory.makeProductViewModel(insertChildsComposition: true),
+      EntityFactory.makeProductViewModel(insertChildsComposition: true),
     ];
 
     expansibleGroupFromProductComplete =
         EntityFactory.makeExpansibleGroupFromProductCompleteEntity();
 
-    productsInternalCodeOfProductOnERP = loadedProducts
-        .map((e) => e.InternalCodeOnERP!.toInt())
-        .toList();
+    allInternalCodes = loadedProducts.expand((product) {
+      var internalCodes = [product.InternalCodeOnERP!.toInt()];
+      if (product.childsComposition != null) {
+        internalCodes.addAll(product.childsComposition!
+            .map((child) => child.InternalCodeOnERPCodeChild!.toInt()));
+      }
+      return internalCodes;
+    }).toList();
   }
 
   void mockSuccess() {
@@ -85,7 +90,7 @@ void main() {
       await sut.loadComments(loadedProducts);
 
       verify(() => loadExpansibleGroupsFromProductsComplete.load(
-            productsInternalCodeOfProductOnERP,
+            allInternalCodes,
           )).called(1);
     });
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
@@ -163,8 +164,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(commandNumber!);
       }
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+          break;
+        default:
+          mainError = UIError.unexpected;
+          break;
+      }
     } finally {
       isLoading = false;
     }

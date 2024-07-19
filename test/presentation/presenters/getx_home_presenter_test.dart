@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -234,6 +235,41 @@ void main() {
       localCommandData.mockLoad(entity2);
       await sut.getLocalCommandData();
       expect(sut.commandNumber, entity2.commandNumber.toString());
+    });
+  });
+
+  group("load command data", () {
+    test(
+        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
+        () async {
+      menuPresenter.mockLoadDataError(DomainError.commandNotAvailable);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+    });
+    test(
+        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
+        () async {
+      menuPresenter.mockLoadDataError(DomainError.unexpected);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
     });
   });
 }

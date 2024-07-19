@@ -21,11 +21,6 @@ class GetxProductCompositionPresenter extends GetxController
     required this.validateCombox,
   });
 
-  final _productsComposition = Rx<List<ProductCompositionViewModel>>([]);
-  @override
-  Stream<List<ProductCompositionViewModel>> get productsCompositionStream =>
-      _productsComposition.stream;
-
   final _totalPriceComboxStream = Rx<double>(0);
   @override
   Stream<double> get totalPriceComboxStream => _totalPriceComboxStream.stream;
@@ -54,9 +49,8 @@ class GetxProductCompositionPresenter extends GetxController
     updateComboxQuantity(false, true);
 
     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-        product.childsComposition!);
-
-    _productsComposition.subject.add(product.childsComposition!);
+      product.childsComposition!,
+    );
 
     await Future.delayed(const Duration(milliseconds: 500), () {
       updateComboxIsValid(product.childsComposition!);

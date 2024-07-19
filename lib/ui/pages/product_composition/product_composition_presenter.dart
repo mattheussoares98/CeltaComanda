@@ -6,7 +6,6 @@ import '../pages.dart';
 abstract class ProductCompositionPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<ProductCompositionViewModel>> get productsCompositionStream;
   Stream<double> get totalPriceComboxStream;
   Stream<bool> get comboxIsValidStream;
   double get totalComboxQuantity;

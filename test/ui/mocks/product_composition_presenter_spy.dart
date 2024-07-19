@@ -22,8 +22,6 @@ class ProductCompositionPresenterSpy extends Mock
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.productsCompositionStream)
-        .thenAnswer((_) => productsCompositionController.stream);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

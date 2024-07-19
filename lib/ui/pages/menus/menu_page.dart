@@ -122,7 +122,7 @@ class _MenuPageState extends State<MenuPage>
                         builder: (context, selectedProduct) {
                           return Column(
                             children: [
-                              const PreLoadImagesPage(),
+                              // const PreLoadImagesPage(),
                               GroupsAndProducts(
                                 selectedIndex: selectedGroupIndex.data,
                                 selectedProduct: selectedProduct.data,

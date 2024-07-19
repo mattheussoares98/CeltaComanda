@@ -109,116 +109,120 @@ class _HomePageState extends State<HomePage>
       makePrintedProductsPage(homePresenter.isFixedCommandNumber),
       if (homePresenter.isGeneratingVersionToRede) makePaymentPage(),
     ];
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        UserInteraction.restartTimes(_pageController);
-      },
-      onPanDown: (_) {
-        UserInteraction.restartTimes(_pageController);
-      },
-      child: PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) {
-          notificationDialog(
-            context: context,
-            titleMessage: "Fechar aplicativo",
-            content: const Text("Deseja realmente fechar o aplicativo?"),
-            onPress: () async {
-              SystemNavigator.pop();
-            },
-          );
-        },
-        child: Scaffold(
-          key: scaffoldKey,
-          drawer: drawer(
-            context: context,
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            cartPresenter: cartPresenter,
-            homePresenter: homePresenter,
-          ),
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: AppBar(
-              leading: FittedBox(
-                child: Row(
-                  children: [
-                    if (homePresenter.isFixedCommandNumber != true)
-                      IconButton(
-                        icon: Icon(
-                          Icons.exit_to_app,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {
-                          scaffoldKey.currentState?.openDrawer();
-                        },
-                      ),
-                  ],
-                ),
-              ),
-              actions: [
-                if (_currentIndex == 2)
-                  SearchCommandIcon(
-                    loadCommandData: () async {
-                      await homePresenter.loadCommandData(
-                        menuPresenter: menuPresenter,
-                        printedProductsPresenter: printedProductsPresenter,
-                        cartPresenter: cartPresenter,
-                        commentsPresenter: commentsPresenter,
-                      );
-                    },
-                  )
-              ],
-              backgroundColor: const Color(0xFFF1F5F8),
-              title: TitleAppbar(
-                  showLoadMenuAgain: _currentIndex == 0,
-                  loadMenuAgain: () async {
-                    await homePresenter.loadCommandData(
-                      menuPresenter: menuPresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      cartPresenter: cartPresenter,
-                      commentsPresenter: commentsPresenter,
-                    );
-                  },
-                  openDrawer: () {
-                    scaffoldKey.currentState?.openDrawer();
-                  }),
-            ),
-          ),
-          body: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              onPageChanged(
-                index: index,
-                printedProductsPresenter: printedProductsPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                commentsPresenter: commentsPresenter,
+    return Stack(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            UserInteraction.restartTimes(_pageController);
+          },
+          onPanDown: (_) {
+            UserInteraction.restartTimes(_pageController);
+          },
+          child: PopScope(
+            canPop: false,
+            onPopInvoked: (didPop) {
+              notificationDialog(
+                context: context,
+                titleMessage: "Fechar aplicativo",
+                content: const Text("Deseja realmente fechar o aplicativo?"),
+                onPress: () async {
+                  SystemNavigator.pop();
+                },
               );
             },
-            children: screens,
-          ),
-          bottomNavigationBar: Stack(
-            children: [
-              HomeBottomNavigationBarItem(
-                onPageChanged: (value) {
+            child: Scaffold(
+              key: scaffoldKey,
+              drawer: drawer(
+                context: context,
+                menuPresenter: menuPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                cartPresenter: cartPresenter,
+                homePresenter: homePresenter,
+              ),
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(40),
+                child: AppBar(
+                  leading: FittedBox(
+                    child: Row(
+                      children: [
+                        if (homePresenter.isFixedCommandNumber != true)
+                          IconButton(
+                            icon: Icon(
+                              Icons.exit_to_app,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: () {
+                              scaffoldKey.currentState?.openDrawer();
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    if (_currentIndex == 2)
+                      SearchCommandIcon(
+                        loadCommandData: () async {
+                          await homePresenter.loadCommandData(
+                            menuPresenter: menuPresenter,
+                            printedProductsPresenter: printedProductsPresenter,
+                            cartPresenter: cartPresenter,
+                            commentsPresenter: commentsPresenter,
+                          );
+                        },
+                      )
+                  ],
+                  backgroundColor: const Color(0xFFF1F5F8),
+                  title: TitleAppbar(
+                      showLoadMenuAgain: _currentIndex == 0,
+                      loadMenuAgain: () async {
+                        await homePresenter.loadCommandData(
+                          menuPresenter: menuPresenter,
+                          printedProductsPresenter: printedProductsPresenter,
+                          cartPresenter: cartPresenter,
+                          commentsPresenter: commentsPresenter,
+                        );
+                      },
+                      openDrawer: () {
+                        scaffoldKey.currentState?.openDrawer();
+                      }),
+                ),
+              ),
+              body: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
                   onPageChanged(
-                    index: value,
+                    index: index,
                     printedProductsPresenter: printedProductsPresenter,
-                    homePresenter: homePresenter,
                     menuPresenter: menuPresenter,
+                    homePresenter: homePresenter,
                     commentsPresenter: commentsPresenter,
                   );
                 },
-                currentIndex: _currentIndex,
+                children: screens,
               ),
-              const ProductGoingToMenuAnimation(),
-              const CartGoingToPrintedAnimation(),
-            ],
+              bottomNavigationBar: Stack(
+                children: [
+                  HomeBottomNavigationBarItem(
+                    onPageChanged: (value) {
+                      onPageChanged(
+                        index: value,
+                        printedProductsPresenter: printedProductsPresenter,
+                        homePresenter: homePresenter,
+                        menuPresenter: menuPresenter,
+                        commentsPresenter: commentsPresenter,
+                      );
+                    },
+                    currentIndex: _currentIndex,
+                  ),
+                  const ProductGoingToMenuAnimation(),
+                  const CartGoingToPrintedAnimation(),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

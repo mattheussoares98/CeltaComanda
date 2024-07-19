@@ -3,6 +3,7 @@ export './comments/comments.dart';
 export 'menus/menus.dart';
 export './home/home.dart';
 export './payment/payment.dart';
+export './pre_load_images/pre_load_images.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';
 export './product_details/products_details.dart';

@@ -158,42 +158,22 @@ void main() {
 
       expect(sut.totalComboxQuantity, 1);
     });
+
+    test(
+        'Should call validateCombox on loadProductComposition to change button confirmation style',
+        () async {
+      getProductComposition.mockGetFathers([]);
+      getProductComposition.mockGetChildsOfFather([]);
+
+      await sut.updateSelectedProduct(selectedProduct);
+
+      verify(() =>
+              validateCombox.comboxIsValid(selectedProduct.childsComposition!))
+          .called(1);
+    });
   });
 
   // group("GetProductComposition", () {
-
-  //   test(
-  //       'Should change totalComboxQuantity correctly when updateValue and to 1 when call LoadProductComposition',
-  //       () async {
-  //     sut.updateComboxQuantity(true);
-  //     expect(sut.totalComboxQuantity, 2);
-  //     sut.updateComboxQuantity(true);
-  //     expect(sut.totalComboxQuantity, 3);
-  //     sut.updateComboxQuantity(false);
-  //     expect(sut.totalComboxQuantity, 2);
-
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-
-  //     expect(sut.totalComboxQuantity, 1);
-  //   });
-  //   test(
-  //       'Should call validateCombox on loadProductComposition to change button confirmation style',
-  //       () async {
-  //     getProductComposition.mockGetFathers([]);
-  //     getProductComposition.mockGetChildsOfFather([]);
-
-  //     await sut.loadProductComposition(
-  //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-  //       enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-
-  //     verify(() => validateCombox.comboxIsValid([])).called(1);
-  //   });
 
   //   test(
   //       'Should update indexOfSelctedChild if father is obligatory and childs is empty',

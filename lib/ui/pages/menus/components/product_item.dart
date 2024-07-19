@@ -22,6 +22,8 @@ class _ProductItemState extends State<ProductItem> {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
 
     return Expanded(
       child: GestureDetector(
@@ -33,6 +35,12 @@ class _ProductItemState extends State<ProductItem> {
 
           if (widget.productsViewModel.IsPromoCombox == "true") {
             menuPresenter.goToComboxPage(widget.productsViewModel);
+            Future.delayed(Duration.zero, () {
+              // setState(() {
+                productCompositionPresenter
+                    .updateSelectedProduct(widget.productsViewModel);
+              // });
+            });
           }
         },
         child: Padding(
@@ -40,7 +48,8 @@ class _ProductItemState extends State<ProductItem> {
             child: Container(
               height: (MediaQuery.of(context).size.height -
                       AppBar().preferredSize.height -
-                      kBottomNavigationBarHeight - 52) /
+                      kBottomNavigationBarHeight -
+                      52) /
                   2,
               width: double.infinity,
               decoration: BoxDecoration(

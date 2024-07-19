@@ -38,15 +38,30 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<bool> get comboxIsValidStream => _comboxIsValidStream.stream;
 
-  // void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-  //   List<ProductCompositionViewModel> productsComposition,
-  // ) {
-  //   for (var product in productsComposition) {
-  //     if (product.IsOptionalItem == "false" && product.childs?.isEmpty == true) {
-  //       product.indexOfSelectedChild = 0;
-  //     }
-  //   }
-  // }
+  void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
+    List<ProductCompositionViewModel> productsComposition,
+  ) {
+    for (var product in productsComposition) {
+      if (product.IsOptionalItem == "false" &&
+          product.childs?.isEmpty == true) {
+        product.indexOfSelectedChild = 0;
+      }
+    }
+  }
+
+  @override
+  Future<void> updateSelectedProduct(ProductsViewModel product) async {
+    updateComboxQuantity(false, true);
+
+    _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
+        product.childsComposition!);
+
+    _productsComposition.subject.add(product.childsComposition!);
+
+    await Future.delayed(const Duration(milliseconds: 500), () {
+      updateComboxIsValid(product.childsComposition!);
+    });
+  }
 
   // @override
   // Future<void> loadProductComposition({

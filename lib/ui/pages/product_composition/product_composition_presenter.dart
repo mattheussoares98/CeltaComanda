@@ -15,6 +15,8 @@ abstract class ProductCompositionPresenter implements Listenable {
     List<ProductCompositionViewModel> productsCompositionsViewModel,
   );
 
+  Future<void> updateSelectedProduct(ProductsViewModel product);
+
   bool certifyComboxIsValid(
       List<ProductCompositionViewModel> productsCompositions);
   void updateComboxIsValid(

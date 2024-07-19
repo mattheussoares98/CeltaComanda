@@ -26,6 +26,7 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -89,13 +90,19 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
                   ],
                 ),
               ),
-              AddCommentButton(
-                selectedComboxProduct: widget.selectedComboxProduct,
-                father: widget.father,
-                callSetState: () {
-                  widget.callSetState();
-                },
-              ),
+              if (commentsPresenter.loadedComments
+                  .where((e) =>
+                      e.ProductInternalCodeOnErp.toInt() ==
+                          widget.father.InternalCodeOnERPCodeChild!.toInt() &&
+                      e.ProductName == widget.father.ChildName)
+                  .isNotEmpty)
+                AddCommentButton(
+                  selectedComboxProduct: widget.selectedComboxProduct,
+                  father: widget.father,
+                  callSetState: () {
+                    widget.callSetState();
+                  },
+                ),
             ],
           ),
       ],

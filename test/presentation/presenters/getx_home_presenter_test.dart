@@ -252,6 +252,24 @@ void main() {
           commandNumber: sut.commandNumber ?? "001",
           commentsPresenter: commentsPresenter)).called(1);
     });
+    test(
+        "Should not call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is not fixed command number",
+        () async {
+      expect(sut.isFixedCommandNumber, false);
+      sut.updateCommandNumber("001");
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        commentsPresenter: commentsPresenter,
+      );
+
+      verifyNever(
+          () => cartPresenter.loadSaleRequest(sut.commandNumber ?? "001"));
+      verifyNever(() =>
+          printedProductsPresenter.loadPrinted(sut.commandNumber ?? "001"));
+    });
 
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",

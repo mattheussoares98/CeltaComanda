@@ -8,14 +8,14 @@ import '../../pages.dart';
 class Comment extends StatefulWidget {
   final String? comments;
   final String productName;
-  final int productInternalCodeOnERP;
+  final int internalCodeOnErp;
   final Future Function() updateComment;
 
   const Comment({
     required this.comments,
     required this.productName,
     required this.updateComment,
-    required this.productInternalCodeOnERP,
+    required this.internalCodeOnErp,
     super.key,
   });
 
@@ -27,7 +27,7 @@ class _CommentState extends State<Comment> {
   Future<void> onTapCommentIcon(CommentsPresenter commentsPresenter) async {
     commentsPresenter.updateSelectedComments(
       comments: widget.comments,
-      internalCodeOnERP: widget.productInternalCodeOnERP,
+      internalCodeOnERP: widget.internalCodeOnErp,
     );
 
     await showModalBottomSheet(
@@ -46,7 +46,7 @@ class _CommentState extends State<Comment> {
                   widget.updateComment();
                 },
                 selectedProductName: widget.productName,
-                productInternalCodeOnERP: widget.productInternalCodeOnERP,
+                internalCodeOnErp: widget.internalCodeOnErp,
               ),
             ),
           );

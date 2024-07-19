@@ -42,8 +42,8 @@ class AddCommentButton extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.9,
                     child: CommentsPage(
                       selectedProductName: father.ChildName!,
-                      productInternalCodeOnERP:
-                          father.InternalCodeOnERPCodeFather!.toInt(),
+                      internalCodeOnErp:
+                          father.InternalCodeOnERPCodeChild!.toInt(),
                     ),
                   ),
                 );

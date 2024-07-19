@@ -60,7 +60,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
                   );
                 },
                 selectedProductName: widget.selectedProduct!.Name,
-                productInternalCodeOnERP:
+                internalCodeOnErp:
                     widget.selectedProduct!.InternalCodeOnERP!.toInt(),
               ),
             ),

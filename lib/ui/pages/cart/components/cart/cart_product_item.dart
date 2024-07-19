@@ -134,7 +134,7 @@ class _CartProductItemState extends State<CartProductItem> {
             Comment(
               comments: widget.cartProduct.Comments,
               productName: widget.cartProduct.Product.Name,
-              productInternalCodeOnERP: widget
+              internalCodeOnErp: widget
                   .cartProduct.Product.InternalCodeOnERP!
                   .toInt(),
               updateComment: () async {

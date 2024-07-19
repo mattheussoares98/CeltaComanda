@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class CommentsList extends StatefulWidget {
-  final int productInternalCodeOnERP;
+  final int internalCodeOnErp;
   final String selectedProductName;
   const CommentsList({
-    required this.productInternalCodeOnERP,
+    required this.internalCodeOnErp,
     required this.selectedProductName,
     super.key,
   });
@@ -30,13 +30,13 @@ class _CommentsState extends State<CommentsList> {
       itemCount: commentsPresenter.loadedComments
           .where((e) =>
               int.parse(e.ProductInternalCodeOnErp) ==
-              widget.productInternalCodeOnERP)
+              widget.internalCodeOnErp)
           .length,
       itemBuilder: (context, index) {
         final comments = commentsPresenter.loadedComments
             .where((e) =>
                 int.parse(e.ProductInternalCodeOnErp) ==
-                widget.productInternalCodeOnERP)
+                widget.internalCodeOnErp)
             .toList();
 
         final comment = comments[index];

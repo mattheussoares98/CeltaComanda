@@ -9,12 +9,12 @@ import '../../mixins/mixins.dart';
 
 class CommentsPage extends StatefulWidget {
   final String selectedProductName;
-  final int productInternalCodeOnERP;
+  final int internalCodeOnErp;
   final Future Function()? doOnClickInConfirmButton;
   const CommentsPage({
     super.key,
     required this.selectedProductName,
-    required this.productInternalCodeOnERP,
+    required this.internalCodeOnErp,
     this.doOnClickInConfirmButton,
   });
 
@@ -61,11 +61,11 @@ class _CommentsPageState extends State<CommentsPage>
               if (commentsPresenter.loadedComments
                   .where((e) =>
                       e.ProductInternalCodeOnErp.toInt() ==
-                          widget.productInternalCodeOnERP &&
+                          widget.internalCodeOnErp &&
                       e.ProductName == widget.selectedProductName)
                   .isNotEmpty)
                 CommentsList(
-                  productInternalCodeOnERP: widget.productInternalCodeOnERP,
+                  internalCodeOnErp: widget.internalCodeOnErp,
                   selectedProductName: widget.selectedProductName,
                 ),
               SizedBox(

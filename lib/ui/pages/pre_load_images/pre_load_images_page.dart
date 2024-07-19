@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:provider/provider.dart';
 
 import '../../../ui/components/components.dart';
@@ -23,18 +21,6 @@ class PreLoadImagesPage extends StatefulWidget {
 
 class _PreLoadImagesPageState extends State<PreLoadImagesPage>
     with UIErrorManager, LoadingManager {
-  StreamSubscription? loadingSubscription;
-  StreamSubscription? mainErrorSubscription;
-  StreamSubscription? homeLoadingSubscription;
-
-  @override
-  void dispose() {
-    super.dispose();
-    loadingSubscription?.cancel();
-    mainErrorSubscription?.cancel();
-    homeLoadingSubscription?.cancel();
-  }
-
   List<String> getAllPlus(MenuPresenter menuPresenter) {
     List<String> urls = [];
 
@@ -81,22 +67,15 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
 
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    loadingSubscription?.cancel();
-    mainErrorSubscription?.cancel();
-
-    loadingSubscription = handleLoading(context, cartPresenter.isLoadingStream);
-    mainErrorSubscription =
-        handleMainError(context, cartPresenter.mainErrorStream);
-
-    return Scaffold(
-      body: Column(
-        children: [
-          GridView.builder(
+    return Stack(
+      children: [
+        SizedBox(
+          height: 0,
+          child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 2,
+                maxCrossAxisExtent: 1,
                 childAspectRatio: 1,
                 crossAxisSpacing: 0,
                 mainAxisSpacing: 0,
@@ -104,18 +83,21 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
               itemCount: getAllPlus(menuPresenter).length,
               itemBuilder: (context, index) {
                 final plu = getAllPlus(menuPresenter)[index];
-
+    
                 return ImageWidget(
                   ean: null,
                   plu: plu,
                   isAlcoholic: false,
-                  height: 20,
-                  width: 20,
+                  height: 0,
+                  width: 0,
                 );
               }),
-          GridView.builder(
+        ),
+        SizedBox(
+          height: 0,
+          child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 2,
+                maxCrossAxisExtent: 1,
                 childAspectRatio: 1,
                 crossAxisSpacing: 0,
                 mainAxisSpacing: 0,
@@ -123,17 +105,18 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
               itemCount: getAllEans(menuPresenter).length,
               itemBuilder: (context, index) {
                 final ean = getAllEans(menuPresenter)[index];
-
+    
                 return ImageWidget(
                   ean: ean,
                   plu: "",
                   isAlcoholic: false,
-                  height: 20,
-                  width: 20,
+                  height: 0,
+                  width: 0,
                 );
               }),
-        ],
-      ),
+        ),
+        Container(color: Colors.white),
+      ],
     );
   }
 }

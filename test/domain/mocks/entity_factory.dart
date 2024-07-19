@@ -199,7 +199,9 @@ class EntityFactory {
     );
   }
 
-  static ProductsViewModel makeProductViewModel() {
+  static ProductsViewModel makeProductViewModel({
+    bool? insertChildsComposition,
+  }) {
     return ProductsViewModel(
       ProductComplement: faker.randomGenerator.string(10),
       IsPromoCombox: faker.randomGenerator.boolean().toString(),
@@ -266,6 +268,20 @@ class EntityFactory {
       PersonalizedCode: faker.randomGenerator.string(10),
       NameComplete: faker.randomGenerator.string(10),
       NameReduced: faker.randomGenerator.string(10),
+      childsComposition: insertChildsComposition == true
+          ? [
+              makeProductCompositionViewModel(
+                quantity: faker.randomGenerator.decimal(),
+                salePrice: faker.randomGenerator.decimal(),
+                offerPrice: faker.randomGenerator.decimal(),
+                fatherIncrement: faker.randomGenerator.decimal(),
+                childIncrement: faker.randomGenerator.decimal(),
+                isOptionalItem: faker.randomGenerator.boolean(),
+                indexOfSelectedChild: null,
+                insertChilds: false,
+              )
+            ]
+          : null,
     );
   }
 

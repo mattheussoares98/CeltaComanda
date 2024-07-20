@@ -46,6 +46,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     return StreamBuilder<ProductsViewModel?>(
         stream: productCompositionPresenter.selectedComboxProductStream,
         builder: (context, snapshot) {
+          productCompositionPresenter.updateSelectedProduct(selectedProduct);
           return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -221,7 +222,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 // ),
                 Expanded(
                   child: Composition(
-                    selectedComboxProduct: selectedProduct,
+                    selectedComboxProduct: snapshot.data ?? selectedProduct,
                   ),
                 ),
               ],

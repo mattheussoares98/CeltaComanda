@@ -41,208 +41,196 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     mainErrorSubscription =
         handleMainError(context, productCompositionPresenter.mainErrorStream);
 
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: FittedBox(
-      //     child: StreamBuilder<ProductsViewModel?>(
-      //         stream: productCompositionPresenter.selectedComboxProductStream,
-      //         builder: (context, snapshot) {
-      //           return Text(
-      //             textAlign: TextAlign.center,
-      //             snapshot.data?.Name ?? "",
-      //             style: TextStyle(
-      //               fontWeight: FontWeight.bold,
-      //               fontSize: hasMinWidth(context) ? 30 : 20,
-      //               color: Theme.of(context).primaryColorLight,
-      //             ),
-      //           );
-      //         }),
-      //   ),
-      // ),
-      body: StreamBuilder<ProductsViewModel?>(
-          stream: productCompositionPresenter.selectedComboxProductStream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData || snapshot.data == null) {
-              return const SizedBox();
-            }
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Center(child: Icon(Icons.arrow_back)),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 8,
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        snapshot.data?.Name ?? "",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: hasMinWidth(context) ? 30 : 20,
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                      ),
-                    )
-                  ],
+    return StreamBuilder<ProductsViewModel?>(
+        stream: productCompositionPresenter.selectedComboxProductStream,
+        builder: (context, snapshot) {
+          return Scaffold(
+            appBar: AppBar(
+              title: FittedBox(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  snapshot.data?.Name ?? "",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: hasMinWidth(context) ? 30 : 20,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
                 ),
-                Expanded(
-                  child: Row(
+              ),
+            ),
+            body: snapshot.data != null &&
+                    snapshot.data?.childsComposition != null
+                ? Column(
                     children: [
                       Expanded(
-                        child: ListView.builder(
-                            itemCount: snapshot.data!.childsComposition!.length,
-                            itemBuilder: (context, fatherIndex) {
-                              final father = snapshot
-                                  .data!.childsComposition![fatherIndex];
-                              return SizedBox(
-                                height: 60,
-                                child: FittedBox(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: FittedBox(
-                                            child: Text(
-                                              father.ChildName!.toUpperCase(),
-                                              style: TextStyle(
-                                                fontSize:
-                                                    getStringSize(context) *
-                                                        1.5,
-                                                fontWeight: FontWeight.bold,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount:
+                                      snapshot.data!.childsComposition!.length,
+                                  itemBuilder: (context, fatherIndex) {
+                                    final father = snapshot
+                                        .data!.childsComposition![fatherIndex];
+                                    return SizedBox(
+                                      height: 60,
+                                      child: FittedBox(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2,
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    father.ChildName!
+                                                        .toUpperCase(),
+                                                    style: TextStyle(
+                                                      fontSize: getStringSize(
+                                                              context) *
+                                                          1.5,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            const Divider(),
+                                          ],
                                         ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    snapshot.data!.childsComposition!.length,
+                                itemBuilder: (context, fathersIndex) {
+                                  final father = snapshot
+                                      .data!.childsComposition![fathersIndex];
+
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          if (father.childs?.isEmpty == true)
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  father.ChildName!,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          if (father.childs?.isNotEmpty == true)
+                                            Expanded(
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount:
+                                                    father.childs!.length,
+                                                itemBuilder:
+                                                    (context, childsIndex) {
+                                                  final child = father
+                                                      .childs![childsIndex];
+
+                                                  return Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 5,
+                                                            right: 2),
+                                                    padding:
+                                                        const EdgeInsets.all(8),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                          color: const Color
+                                                              .fromARGB(255,
+                                                              220, 218, 218)),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          blurRadius: 10,
+                                                          color:
+                                                              Color(0x33000000),
+                                                          offset:
+                                                              Offset(-3, -1),
+                                                        )
+                                                      ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 20,
+                                                          child: ImageWidget(
+                                                            ean: null,
+                                                            plu:
+                                                                child.PluChild!,
+                                                            isAlcoholic: false,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 80,
+                                                          child: Text(
+                                                            child.ChildName!,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Radio<int>(
+                                                            value: childsIndex,
+                                                            groupValue: father
+                                                                .indexOfSelectedChild,
+                                                            visualDensity:
+                                                                VisualDensity
+                                                                    .compact,
+                                                            toggleable: father
+                                                                    .IsOptionalItem ==
+                                                                "true",
+                                                            onChanged:
+                                                                (int? value) {
+                                                              // updateSelectedIndex();
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                        ],
                                       ),
                                       const Divider(),
                                     ],
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.childsComposition!.length,
-                          itemBuilder: (context, fathersIndex) {
-                            final father =
-                                snapshot.data!.childsComposition![fathersIndex];
-
-                            return Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    if (father.childs?.isEmpty == true)
-                                      Expanded(
-                                        child: Center(
-                                          child: Text(
-                                            father.ChildName!,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    if (father.childs?.isNotEmpty == true)
-                                      Expanded(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: father.childs!.length,
-                                          itemBuilder: (context, childsIndex) {
-                                            final child =
-                                                father.childs![childsIndex];
-
-                                            return Container(
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 5, right: 2),
-                                              padding: const EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                    color: const Color.fromARGB(
-                                                        255, 220, 218, 218)),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    blurRadius: 10,
-                                                    color: Color(0x33000000),
-                                                    offset: Offset(-3, -1),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 20,
-                                                    child: ImageWidget(
-                                                      ean: null,
-                                                      plu: child.PluChild!,
-                                                      isAlcoholic: false,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 80,
-                                                    child: Text(
-                                                      child.ChildName!,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Radio<int>(
-                                                      value: childsIndex,
-                                                      groupValue: father
-                                                          .indexOfSelectedChild,
-                                                      visualDensity:
-                                                          VisualDensity.compact,
-                                                      toggleable: father
-                                                              .IsOptionalItem ==
-                                                          "true",
-                                                      onChanged: (int? value) {
-                                                        // updateSelectedIndex();
-                                                      },
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                                const Divider(),
-                              ],
-                            );
-                          },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      // Expanded(
+                      //   child: Composition(
+                      //     selectedComboxProduct:
+                      //         snapshot.data!,
+                      //   ),
+                      // ),
                     ],
-                  ),
-                ),
-                // Expanded(
-                //   child: Composition(
-                //     selectedComboxProduct:
-                //         snapshot.data!,
-                //   ),
-                // ),
-              ],
-            );
-          }),
-    );
+                  )
+                : const Center(child: Text("Deu algum erro")),
+          );
+        });
   }
 }

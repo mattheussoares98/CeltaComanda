@@ -48,7 +48,7 @@ class GetxProductCompositionPresenter extends GetxController
   Future<void> updateSelectedProduct(ProductsViewModel product) async {
     updateComboxQuantity(false, true);
 
-    _selectedComboxProduct = product;
+    selectedComboxProduct = product;
 
     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
       product.childsComposition!,
@@ -58,44 +58,6 @@ class GetxProductCompositionPresenter extends GetxController
       updateComboxIsValid(product.childsComposition!);
     });
   }
-
-  // @override
-  // Future<void> loadProductComposition({
-  //   required String url,
-  //   required int enterpriseId,
-  //   required int internalCodeOnErp,
-  // }) async {
-  //   isLoading = true;
-  //   mainError = null;
-  //   List<ProductCompositionViewModel> productComposition = [];
-
-  //   try {
-  //     updateComboxQuantity(false, true);
-  //     final fathers = await getProductComposition.getFathers(
-  //       internalCodeOnErp: internalCodeOnErp,
-  //     );
-
-  //     List<ProductCompositionViewModel> childs =
-  //         await getProductComposition.getChildsOfFather(
-  //       internalCodeOnErp: internalCodeOnErp,
-  //       fathers: fathers,
-  //     );
-
-  //     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(childs);
-
-  //     _productsComposition.subject.add(childs);
-  //     productComposition.addAll(childs);
-
-  //     await Future.delayed(const Duration(milliseconds: 500), () {
-  //       updateComboxIsValid(productComposition);
-  //     });
-  //   } catch (e) {
-  //     mainError = UIError.unexpected;
-  //     _productsComposition.subject.add([]);
-  //   } finally {
-  //     isLoading = false;
-  //   }
-  // }
 
   double _getTotalLiquidCombox(
     List<ProductCompositionViewModel> productsCompositionsViewModel,
@@ -322,7 +284,10 @@ class GetxProductCompositionPresenter extends GetxController
     }
   }
 
-  ProductsViewModel? _selectedComboxProduct;
+  final _selectedComboxProduct = Rx<ProductsViewModel?>(null);
   @override
-  ProductsViewModel? get selectedComboxProduct => _selectedComboxProduct;
+  Stream<ProductsViewModel?> get selectedComboxProductStream =>
+      _selectedComboxProduct.stream;
+  set selectedComboxProduct(ProductsViewModel? product) =>
+      _selectedComboxProduct.value = product;
 }

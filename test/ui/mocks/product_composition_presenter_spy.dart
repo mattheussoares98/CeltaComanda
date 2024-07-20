@@ -11,6 +11,8 @@ class ProductCompositionPresenterSpy extends Mock
     implements ProductCompositionPresenter {
   final mainErrorController = StreamController<UIError?>();
   final enterpriseErrorController = StreamController<UIError?>();
+  final selectedComboxProductController =
+      StreamController<ProductsViewModel?>();
   final productsCompositionController =
       StreamController<List<ProductCompositionViewModel>>();
   final isLoadingController = StreamController<bool>();
@@ -22,6 +24,8 @@ class ProductCompositionPresenterSpy extends Mock
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+    when(() => this.selectedComboxProductStream)
+        .thenAnswer((_) => selectedComboxProductController.stream);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

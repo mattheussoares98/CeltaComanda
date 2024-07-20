@@ -239,7 +239,6 @@ class GetxMenuPresenter extends GetxController
       await commentsPresenter.loadComments(allProducts);
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);
-      showPreLoadImage = true;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

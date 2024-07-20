@@ -180,17 +180,17 @@ void main() {
       //selecionado pra na tela da composição, aparecer que ele já foi
       //selecionado. Por isso faz essa alteração
 
-      await sut.updateSelectedProduct(selectedProduct);
+      expectLater(sut.selectedComboxProductStream, emits(selectedProduct));
 
-      expect(sut.selectedComboxProduct, selectedProduct);
+      await sut.updateSelectedProduct(selectedProduct);
     });
 
     test(
         'Should update selectedComboxProduct when call sut.updateSelectedProduct',
         () async {
-      await sut.updateSelectedProduct(selectedProduct);
+      expectLater(sut.selectedComboxProductStream, emits(selectedProduct));
 
-      expect(sut.selectedComboxProduct, selectedProduct);
+      await sut.updateSelectedProduct(selectedProduct);
     });
   });
 

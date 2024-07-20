@@ -46,15 +46,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
         builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
-              title: FittedBox(
-                child: Text(
-                  textAlign: TextAlign.center,
-                  snapshot.data?.Name ?? "",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: hasMinWidth(context) ? 30 : 20,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
+              title: Text(
+                textAlign: TextAlign.center,
+                snapshot.data?.Name ?? "",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: hasMinWidth(context) ? 30 : 20,
+                  color: Theme.of(context).primaryColorLight,
                 ),
               ),
             ),

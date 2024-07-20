@@ -30,169 +30,177 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 5.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(2, 2),
-              color: Color.fromARGB(255, 209, 208, 208),
-              blurRadius: 8,
-            ),
-            BoxShadow(
-              offset: Offset(-2, -2),
-              color: Color.fromARGB(255, 209, 208, 208),
-              blurRadius: 8,
-            ),
-          ],
-        ),
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          primary: false,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: 1,
-          itemBuilder: (context, childIndex) {
-            return Column(
-              children: [
-                RadioListTile<int>(
-                  value: childIndex,
-                  groupValue: widget.father.indexOfSelectedChild,
-                  dense: true,
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  toggleable: widget.father.IsOptionalItem == "true",
-                  onChanged: (int? value) {
-                    setState(() {
-                      widget.father.indexOfSelectedChild = value;
-                    });
-                    productCompositionPresenter.updateTotalLiquidCombox(
-                      widget.productsCompositionsViewModel,
-                    );
-                    productCompositionPresenter.updateComboxIsValid(
-                      widget.productsCompositionsViewModel,
-                    );
-                  },
-                  subtitle: Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            showLargeImage(
-                              context: context,
+    return PopScope(
+      onPopInvoked: (_) {
+        widget.father.commentFather = null;
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5.0),
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(2, 2),
+                color: Color.fromARGB(255, 209, 208, 208),
+                blurRadius: 8,
+              ),
+              BoxShadow(
+                offset: Offset(-2, -2),
+                color: Color.fromARGB(255, 209, 208, 208),
+                blurRadius: 8,
+              ),
+            ],
+          ),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            primary: false,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: 1,
+            itemBuilder: (context, childIndex) {
+              return Column(
+                children: [
+                  RadioListTile<int>(
+                    value: childIndex,
+                    groupValue: widget.father.indexOfSelectedChild,
+                    dense: true,
+                    controlAffinity: ListTileControlAffinity.trailing,
+                    toggleable: widget.father.IsOptionalItem == "true",
+                    onChanged: (int? value) {
+                      setState(() {
+                        widget.father.indexOfSelectedChild = value;
+                      });
+                      productCompositionPresenter.updateTotalLiquidCombox(
+                        widget.productsCompositionsViewModel,
+                      );
+                      productCompositionPresenter.updateComboxIsValid(
+                        widget.productsCompositionsViewModel,
+                      );
+                    },
+                    subtitle: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              showLargeImage(
+                                context: context,
+                                ean: null,
+                                plu: widget.father.PluChild!,
+                                productComplement: null,
+                                showInsertButton: true,
+                                selectedProduct: null,
+                                menuPresenter: menuPresenter,
+                                productName: widget.father.ChildName,
+                              );
+                            },
+                            child: ImageWidget(
                               ean: null,
                               plu: widget.father.PluChild!,
-                              productComplement: null,
-                              showInsertButton: true,
-                              selectedProduct: null,
-                              menuPresenter: menuPresenter,
-                              productName: widget.father.ChildName,
-                            );
-                          },
-                          child: ImageWidget(
-                            ean: null,
-                            plu: widget.father.PluChild!,
-                            height: hasMinWidth(context) ? 140 : 70,
-                            width: hasMinWidth(context) ? 140 : 70,
-                            isAlcoholic: false,
+                              height: hasMinWidth(context) ? 140 : 70,
+                              width: hasMinWidth(context) ? 140 : 70,
+                              isAlcoholic: false,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        const SizedBox(width: 5),
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FatherNameText(name: widget.father.ChildName!),
+                              QuantityText(
+                                quantity: widget.father.Quantity!,
+                              ),
+                              // PriceText(
+                              //   quantity: productCompositionPresenter
+                              //       .calculateTotalLiquid(
+                              //           product: widget.father),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            FatherNameText(name: widget.father.ChildName!),
-                            QuantityText(
-                              quantity: widget.father.Quantity!,
-                            ),
-                            // PriceText(
-                            //   quantity: productCompositionPresenter
-                            //       .calculateTotalLiquid(
-                            //           product: widget.father),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              final dynamic tooltip = _tooltipKey.currentState;
-                              tooltip.ensureTooltipVisible();
-                            },
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0),
-                                  child: Tooltip(
-                                    key: _tooltipKey,
-                                    message: 'Esse produto é obrigatório',
-                                    child: Icon(
-                                      Icons.info,
-                                      color: Theme.of(context)
-                                          .secondaryHeaderColor,
+                            GestureDetector(
+                              onTap: () {
+                                final dynamic tooltip =
+                                    _tooltipKey.currentState;
+                                tooltip.ensureTooltipVisible();
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 2.0),
+                                    child: Tooltip(
+                                      key: _tooltipKey,
+                                      message: 'Esse produto é obrigatório',
+                                      child: Icon(
+                                        Icons.info,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  "Item obrigatório",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontSize: getStringSize(context),
+                                  Text(
+                                    "Item obrigatório",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                      fontSize: getStringSize(context),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (commentsPresenter.productHasComment(
-                            internalCodeOnERP: widget
-                                .father.InternalCodeOnERPCodeChild!
-                                .toInt(),
-                            productName: widget.father.ChildName!,
-                          ))
-                            Expanded(
-                              child: Comment(
-                                comments: widget.father.commentFather,
-                                productName: widget.father.ChildName!,
-                                updateComment: () async {
-                                  productCompositionPresenter.updateComment(
-                                    commentsPresenter: commentsPresenter,
-                                    father: widget.father,
-                                  );
-                                  setState(() {});
-                                  Navigator.of(context).pop();
-                                },
-                                internalCodeOnErp: widget
-                                    .father.InternalCodeOnERPCodeChild!
-                                    .toInt(),
+                                ],
                               ),
                             ),
-                        ],
-                      ),
-                    ],
+                            if (commentsPresenter.productHasComment(
+                              internalCodeOnERP: widget
+                                  .father.InternalCodeOnERPCodeChild!
+                                  .toInt(),
+                              productName: widget.father.ChildName!,
+                            ))
+                              Expanded(
+                                child: Comment(
+                                  comments: widget.father.commentFather,
+                                  productName: widget.father.ChildName!,
+                                  updateComment: () async {
+                                    widget.father.commentFather = null;
+
+                                    productCompositionPresenter.updateComment(
+                                      commentsPresenter: commentsPresenter,
+                                      father: widget.father,
+                                    );
+                                    setState(() {});
+                                    Navigator.of(context).pop();
+                                  },
+                                  internalCodeOnErp: widget
+                                      .father.InternalCodeOnERPCodeChild!
+                                      .toInt(),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

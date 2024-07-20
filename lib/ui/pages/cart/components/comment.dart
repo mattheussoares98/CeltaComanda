@@ -43,6 +43,9 @@ class _CommentState extends State<Comment> {
               height: MediaQuery.of(context).size.height * 0.9,
               child: CommentsPage(
                 doOnClickInConfirmButton: () async {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.of(context).pop();
+                  }
                   widget.updateComment();
                 },
                 selectedProductName: widget.productName,

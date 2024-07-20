@@ -185,7 +185,6 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                                       father: widget.father,
                                     );
                                     setState(() {});
-                                    Navigator.of(context).pop();
                                   },
                                   internalCodeOnErp: widget
                                       .father.InternalCodeOnERPCodeChild!

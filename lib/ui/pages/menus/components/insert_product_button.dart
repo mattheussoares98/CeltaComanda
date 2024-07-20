@@ -11,10 +11,8 @@ import '../../../components/components.dart';
 
 class InsertProductButton extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
-  // final bool popScreen;
   const InsertProductButton({
     required this.selectedProduct,
-    // required this.popScreen,
     super.key,
   });
 
@@ -90,6 +88,7 @@ class _InsertProductButtonState extends State<InsertProductButton>
           menuPresenter: menuPresenter,
         );
       } else {
+        Navigator.of(context).popUntil((route) => route.isFirst);
         await cartPresenter.addProductInCart(
           commentsPresenter: commentsPresenter,
           product: CartProductEntity(

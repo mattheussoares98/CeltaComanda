@@ -107,7 +107,6 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
                         father: widget.father,
                       );
                       setState(() {});
-                      Navigator.of(context).pop();
                     },
                     internalCodeOnErp:
                         widget.father.InternalCodeOnERPCodeChild!.toInt(),

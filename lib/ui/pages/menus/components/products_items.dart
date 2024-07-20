@@ -18,30 +18,24 @@ class ProductsItems extends StatefulWidget {
 
 class _ProductsItemsState extends State<ProductsItems> {
   final _controller = ScrollController();
-  // Future<void> _scrollDown() async {
-  //   final currentPosition = _controller.position.pixels;
-  //   final maxScrollExtent = _controller.position.maxScrollExtent;
+  Future<void> _scrollUp() async {
+    final currentPosition = _controller.position.pixels;
+    final minScrollExtent = _controller.position.minScrollExtent;
 
-  //   if (currentPosition >= maxScrollExtent) {
-  //     await _controller.animateTo(
-  //       _controller.position.minScrollExtent,
-  //       duration: Duration(milliseconds: widget.products.length * 50),
-  //       curve: Curves.linear,
-  //     );
-  //   } else {
-  //     await _controller.animateTo(
-  //       _controller.position.maxScrollExtent,
-  //       duration: Duration(milliseconds: widget.products.length * 50),
-  //       curve: Curves.linear,
-  //     );
-  //   }
-  // }
+    if (currentPosition >= minScrollExtent) {
+      await _controller.animateTo(
+        _controller.position.minScrollExtent,
+        duration: Duration(milliseconds: widget.products.length * 10),
+        curve: Curves.linear,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(Duration.zero, () async {
-    //   await _scrollDown();
-    // });
+    Future.delayed(Duration.zero, () async {
+      await _scrollUp();
+    });
     final itensPerLine = hasMinWidth(context)
         ? 1
         : 2; //no eatAsia pediram pra colocar somente 1 produto por linha, 2 por página. Como somente o tablet vai ter a largura mínima, é tranquilo exibir somente 1 produto por linha nesse caso

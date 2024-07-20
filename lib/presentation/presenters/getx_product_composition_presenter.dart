@@ -288,6 +288,8 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<ProductsViewModel?> get selectedComboxProductStream =>
       _selectedComboxProduct.stream;
-  set selectedComboxProduct(ProductsViewModel? product) =>
-      _selectedComboxProduct.value = product;
+  set selectedComboxProduct(ProductsViewModel? product) {
+    _selectedComboxProduct.value = null;
+    _selectedComboxProduct.subject.add(product);
+  }
 }

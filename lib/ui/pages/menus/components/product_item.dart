@@ -35,11 +35,9 @@ class _ProductItemState extends State<ProductItem> {
 
           if (widget.productsViewModel.IsPromoCombox == "true") {
             menuPresenter.goToComboxPage(widget.productsViewModel);
-            Future.delayed(Duration.zero, () {
-              // setState(() {
-                productCompositionPresenter
-                    .updateSelectedProduct(widget.productsViewModel);
-              // });
+            Future.delayed(const Duration(milliseconds: 100), () async {
+              await productCompositionPresenter
+                  .updateSelectedProduct(widget.productsViewModel);
             });
           }
         },

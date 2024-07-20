@@ -69,19 +69,25 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
               children: [
                 Row(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.arrow_back),
+                    Expanded(
+                      flex: 2,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const Center(child: Icon(Icons.arrow_back)),
+                      ),
                     ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      snapshot.data?.Name ?? "",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: hasMinWidth(context) ? 30 : 20,
-                        color: Theme.of(context).primaryColorLight,
+                    Expanded(
+                      flex: 8,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        snapshot.data?.Name ?? "",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: hasMinWidth(context) ? 30 : 20,
+                          color: Theme.of(context).primaryColorLight,
+                        ),
                       ),
                     )
                   ],

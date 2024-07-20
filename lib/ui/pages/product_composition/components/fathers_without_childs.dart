@@ -28,6 +28,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
@@ -161,17 +162,31 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                               ],
                             ),
                           ),
-                          AddCommentButton(
-                            selectedComboxProduct: widget.selectedComboxProduct,
-                            father: widget.father,
-                            callSetState: () {
-                              setState(() {});
-                            },
-                          ),
+                          if (commentsPresenter.productHasComment(
+                            internalCodeOnERP: widget
+                                .father.InternalCodeOnERPCodeChild!
+                                .toInt(),
+                            productName: widget.father.ChildName!,
+                          ))
+                            Expanded(
+                              child: Comment(
+                                comments: widget.father.commentFather,
+                                productName: widget.father.ChildName!,
+                                updateComment: () async {
+                                  productCompositionPresenter.updateComment(
+                                    commentsPresenter: commentsPresenter,
+                                    father: widget.father,
+                                  );
+                                  setState(() {});
+                                  Navigator.of(context).pop();
+                                },
+                                internalCodeOnErp: widget
+                                    .father.InternalCodeOnERPCodeChild!
+                                    .toInt(),
+                              ),
+                            ),
                         ],
                       ),
-                      if (widget.father.commentFather != null)
-                        CommentRichText(comment: widget.father.commentFather!)
                     ],
                   ),
                 ),

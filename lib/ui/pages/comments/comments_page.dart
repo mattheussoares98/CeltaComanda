@@ -71,9 +71,9 @@ class _CommentsPageState extends State<CommentsPage>
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    Future.delayed(Duration.zero, () {
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                    });
+                    // Future.delayed(Duration.zero, () {
+                    //   Navigator.of(context).popUntil((route) => route.isFirst);
+                    // });
 
                     if (widget.doOnClickInConfirmButton != null) {
                       await widget.doOnClickInConfirmButton!();

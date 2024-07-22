@@ -37,7 +37,9 @@ class ChildItemRadioListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Expanded(
+              SizedBox(
+                height: hasMinWidth(context) ? 100 : 70,
+                width: hasMinWidth(context) ? 100 : 70,
                 child: GestureDetector(
                   onTap: () {
                     showLargeImage(
@@ -64,6 +66,7 @@ class ChildItemRadioListTile extends StatelessWidget {
                   flex: 3,
                   child: Text(
                     child!.ChildName!,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: getStringSize(context),

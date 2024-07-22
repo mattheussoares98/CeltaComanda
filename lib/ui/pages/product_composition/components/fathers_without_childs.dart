@@ -98,8 +98,8 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                             child: ImageWidget(
                               ean: null,
                               plu: widget.father.PluChild!,
-                              height: hasMinWidth(context) ? 140 : 70,
-                              width: hasMinWidth(context) ? 140 : 70,
+                              height: hasMinWidth(context) ? 100 : 70,
+                              width: hasMinWidth(context) ? 100 : 70,
                               isAlcoholic: false,
                             ),
                           ),

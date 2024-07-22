@@ -69,75 +69,81 @@ class _MenuPageState extends State<MenuPage>
         handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
-      body: StreamBuilder<
-          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
-        stream: menuPresenter.menuStream,
-        builder: (context, snapshot) {
-          if (menuPresenter.loadedMenu.isEmpty) {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  AppBar().preferredSize.height,
-              child: Center(
-                child: TextButton.icon(
-                  key: const Key("loadMenu"),
-                  onPressed: () async {
-                    if (homePresenter.isFixedCommandNumber) {
-                      await homePresenter.loadCommandData(
-                        menuPresenter: menuPresenter,
-                        printedProductsPresenter: printedProductsPresenter,
-                        cartPresenter: cartPresenter,
-                        commentsPresenter: commentsPresenter,
-                      );
-                    } else {
-                      await menuPresenter.getGroupsAndProducts(
-                        commandNumber: "001",
-                        commentsPresenter: commentsPresenter,
-                      );
-                    }
-                  },
-                  icon: Icon(
-                    Icons.menu_book,
-                    size: hasMinWidth(context) ? 50 : 30,
-                    color: Theme.of(context).primaryColorDark,
-                  ),
-                  label: Text(
-                    "Carregar menu",
-                    style: TextStyle(
-                      fontSize: hasMinWidth(context) ? 40 : 30,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return StreamBuilder<int>(
-                stream: menuPresenter.indexOfSelectedGroupStream,
-                builder: (context, selectedGroupIndex) {
+      body: StreamBuilder<bool>(
+          stream: menuPresenter.showPreLoadImagesStream,
+          builder: (context, showPreLoadImageSnapshot) {
+            return StreamBuilder<
+                List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
+              stream: menuPresenter.menuStream,
+              builder: (context, snapshot) {
+                if (menuPresenter.loadedMenu.isEmpty) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height -
-                        kBottomNavigationBarHeight,
-                    child: StreamBuilder<ProductsViewModel?>(
-                        stream: menuPresenter.selectedProductStream,
-                        builder: (context, selectedProduct) {
-                          return Column(
-                            children: [
-                              const PreLoadImagesPage(),
-                              GroupsAndProducts(
-                                selectedIndex: selectedGroupIndex.data,
-                                selectedProduct: selectedProduct.data,
-                              ),
-                              InsertProductButton(
-                                selectedProduct: selectedProduct.data,
-                              ),
-                            ],
-                          );
-                        }),
+                        AppBar().preferredSize.height,
+                    child: Center(
+                      child: TextButton.icon(
+                        key: const Key("loadMenu"),
+                        onPressed: () async {
+                          if (homePresenter.isFixedCommandNumber) {
+                            await homePresenter.loadCommandData(
+                              menuPresenter: menuPresenter,
+                              printedProductsPresenter:
+                                  printedProductsPresenter,
+                              cartPresenter: cartPresenter,
+                              commentsPresenter: commentsPresenter,
+                            );
+                          } else {
+                            await menuPresenter.getGroupsAndProducts(
+                              commandNumber: "001",
+                              commentsPresenter: commentsPresenter,
+                            );
+                          }
+                        },
+                        icon: Icon(
+                          Icons.menu_book,
+                          size: hasMinWidth(context) ? 50 : 30,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        label: Text(
+                          "Carregar menu",
+                          style: TextStyle(
+                            fontSize: hasMinWidth(context) ? 40 : 30,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                        ),
+                      ),
+                    ),
                   );
-                });
-          }
-        },
-      ),
+                } else {
+                  return StreamBuilder<int>(
+                      stream: menuPresenter.indexOfSelectedGroupStream,
+                      builder: (context, selectedGroupIndex) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height -
+                              kBottomNavigationBarHeight,
+                          child: StreamBuilder<ProductsViewModel?>(
+                              stream: menuPresenter.selectedProductStream,
+                              builder: (context, selectedProduct) {
+                                return Column(
+                                  children: [
+                                    if (showPreLoadImageSnapshot.data == true)
+                                      const PreLoadImagesPage(),
+                                    GroupsAndProducts(
+                                      selectedIndex: selectedGroupIndex.data,
+                                      selectedProduct: selectedProduct.data,
+                                    ),
+                                    InsertProductButton(
+                                      selectedProduct: selectedProduct.data,
+                                    ),
+                                  ],
+                                );
+                              }),
+                        );
+                      });
+                }
+              },
+            );
+          }),
     );
   }
 }

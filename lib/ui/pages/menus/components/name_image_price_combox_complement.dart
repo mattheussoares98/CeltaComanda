@@ -151,12 +151,13 @@ Widget _namePriceComboxAndComplement(
         textAlign: TextAlign.center,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: getStringSize(context) * (hasMinWidth(context) ? 2 : 1.2),
+          fontSize: getStringSize(context) * (hasMinWidth(context) ? 1.5 : 1.2),
         ),
       ),
       Expanded(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
               productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
@@ -173,18 +174,24 @@ Widget _namePriceComboxAndComplement(
         ),
       ),
       if (productsViewModel.ProductComplement != null)
-        Padding(
-          padding: const EdgeInsets.all(2),
-          child: Text(
-            productsViewModel.ProductComplement!,
-            maxLines: hasMinWidth(context) ? 4 : 4,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: getStringSize(context) * 0.8,
-              color: Theme.of(context).primaryColorDark,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w300,
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(2),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                productsViewModel.ProductComplement!,
+                maxLines: hasMinWidth(context) ? 4 : 4,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: getStringSize(context) * 0.8,
+                  color: Theme.of(context).primaryColorDark,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
             ),
           ),
         )

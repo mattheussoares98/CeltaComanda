@@ -42,6 +42,9 @@ class GetxPrintedProductsPresenter
         productId: saleRequestProductId,
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
+      isLoading = false;
+      //colocando o isLoading == false aqui porque no homePresenter tem o
+      //isLoading dele também e acabava ficando um por cima do outro
 
       await homePresenter.loadCommandData(
         menuPresenter: menuPresenter,

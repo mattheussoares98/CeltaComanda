@@ -5,9 +5,11 @@ import '../../pages.dart';
 class GroupItems extends StatefulWidget {
   final List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   final int selectedIndex;
+  final Function() scrollUpItemsList;
   const GroupItems({
     required this.expansibleGroupsViewModel,
     required this.selectedIndex,
+    required this.scrollUpItemsList,
     super.key,
   });
 
@@ -54,6 +56,7 @@ class _GroupItemsState extends State<GroupItems> {
             onTap: () {
               setState(() {
                 menuPresenter.updateIndexOfSelectedGroup(index);
+                widget.scrollUpItemsList();
               });
             },
             child: Container(

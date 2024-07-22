@@ -6,9 +6,11 @@ import '../../pages.dart';
 class ProductsItems extends StatefulWidget {
   final List<ProductsViewModel> products;
   final ProductsViewModel? selectedProduct;
+  final ScrollController scrollController;
   const ProductsItems({
     required this.products,
     required this.selectedProduct,
+    required this.scrollController,
     super.key,
   });
 
@@ -17,31 +19,14 @@ class ProductsItems extends StatefulWidget {
 }
 
 class _ProductsItemsState extends State<ProductsItems> {
-  final _controller = ScrollController();
-  Future<void> _scrollUp() async {
-    final currentPosition = _controller.position.pixels;
-    final minScrollExtent = _controller.position.minScrollExtent;
-
-    if (currentPosition >= minScrollExtent) {
-      await _controller.animateTo(
-        _controller.position.minScrollExtent,
-        duration: Duration(milliseconds: widget.products.length * 10),
-        curve: Curves.linear,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () async {
-      await _scrollUp();
-    });
     final itensPerLine = hasMinWidth(context)
         ? 1
         : 2; //no eatAsia pediram pra colocar somente 1 produto por linha, 2 por página. Como somente o tablet vai ter a largura mínima, é tranquilo exibir somente 1 produto por linha nesse caso
 
     return ListView.builder(
-      controller: _controller,
+      controller: widget.scrollController,
       itemCount: (widget.products.length / itensPerLine).ceil(),
       itemBuilder: (context, rowIndex) {
         return IntrinsicHeight(

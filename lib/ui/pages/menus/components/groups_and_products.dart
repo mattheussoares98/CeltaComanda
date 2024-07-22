@@ -24,9 +24,29 @@ class GroupsAndProducts extends StatelessWidget {
     return false;
   }
 
+  Future<void> _scrollUp({
+    required MenuPresenter menuPresenter,
+    required ScrollController scrollController,
+  }) async {
+    final currentPosition = scrollController.position.pixels;
+    final minScrollExtent = scrollController.position.minScrollExtent;
+
+    if (currentPosition >= minScrollExtent) {
+      await scrollController.animateTo(
+        scrollController.position.minScrollExtent,
+        duration: Duration(
+            milliseconds: menuPresenter
+                    .loadedMenu[selectedIndex ?? 0].entries.first.value.length *
+                50),
+        curve: Curves.linear,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    final scrollController = ScrollController();
 
     return Expanded(
       child: Row(
@@ -39,6 +59,12 @@ class GroupsAndProducts extends StatelessWidget {
                   .map((element) => element.keys.first)
                   .toList(),
               selectedIndex: selectedIndex ?? 0,
+              scrollUpItemsList: () {
+                _scrollUp(
+                  menuPresenter: menuPresenter,
+                  scrollController: scrollController,
+                );
+              },
             ),
           ),
           if (isDetachSelected(menuPresenter))
@@ -55,6 +81,7 @@ class GroupsAndProducts extends StatelessWidget {
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,
                 selectedProduct: selectedProduct,
+                scrollController: scrollController,
               ),
             ),
         ],

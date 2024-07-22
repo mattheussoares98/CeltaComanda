@@ -45,14 +45,18 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
-    return ListView.builder(
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: hasMinWidth(context) ? 3 : 2,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
+        childAspectRatio: 4,
+      ),
       padding: EdgeInsets.zero,
       primary: false,
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
-      itemCount: widget.isFixedItemInCombox
-          ? 1
-          : (widget.father.childs!.length / getItensPerLine(context)).ceil(),
+      itemCount: widget.isFixedItemInCombox ? 1 : widget.father.childs!.length,
       itemBuilder: (context, childIndex) {
         if (widget.isFixedItemInCombox &&
             widget.father.IsOptionalItem == "false") {
@@ -60,31 +64,18 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
           widget.father.indexOfSelectedChild = childIndex;
         }
 
-        return IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = childIndex * getItensPerLine(context);
-                  i < (childIndex + 1) * getItensPerLine(context);
-                  i++)
-                if (i < widget.father.childs!.length)
-                  ChildItemRadioListTile(
-                    updateSelectedIndex: () {
-                      _updateSelectedIndex(
-                        productCompositionPresenter:
-                            productCompositionPresenter,
-                        value: i,
-                      );
-                    },
-                    index: i,
-                    father: widget.father,
-                    child: widget.isFixedItemInCombox
-                        ? widget.father
-                        : widget.father.childs?[i],
-                  ),
-            ],
-          ),
+        return ChildItemRadioListTile(
+          updateSelectedIndex: () {
+            _updateSelectedIndex(
+              productCompositionPresenter: productCompositionPresenter,
+              value: childIndex,
+            );
+          },
+          index: childIndex,
+          father: widget.father,
+          child: widget.isFixedItemInCombox
+              ? widget.father
+              : widget.father.childs?[childIndex],
         );
       },
     );

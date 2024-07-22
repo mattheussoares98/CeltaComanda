@@ -47,7 +47,7 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
 
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: hasMinWidth(context) ? 3 : 2,
+        crossAxisCount: hasMinWidth(context) ? 3 : 1,
         crossAxisSpacing: 1,
         mainAxisSpacing: 1,
         childAspectRatio: 4,

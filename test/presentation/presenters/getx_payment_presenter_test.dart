@@ -103,21 +103,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.credit,
             params: PayParams(
-              longAmountValue: longAmountValue.toString().toInt(true),
+              longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
             ),
           )).called(1);
     });
     test('Should convert amountValue correctly', () async {
       await sut.payWithCredit(
-        longAmountValue: 280.25,
+        longAmountValue: 280.20,
         portionQuantity: portionQuantity,
       );
 
       verify(() => pay.pay(
             paymentMode: PaymentMode.credit,
             params: PayParams(
-              longAmountValue: 28025,
+              longAmountValue: 28020,
               portionQuantity: portionQuantity,
             ),
           )).called(1);
@@ -155,14 +155,14 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.creditPortion,
             params: PayParams(
-              longAmountValue: longAmountValue.toString().toInt(true),
+              longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
             ),
           )).called(1);
     });
     test('Should convert amountValue correctly', () async {
       await sut.payWithCreditPortion(
-        longAmountValue: 280.25,
+        longAmountValue: 280.250,
         portionQuantity: portionQuantity,
       );
 
@@ -207,21 +207,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.debit,
             params: PayParams(
-              longAmountValue: longAmountValue.toString().toInt(true),
+              longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
             ),
           )).called(1);
     });
     test('Should convert amountValue correctly', () async {
       await sut.payWithDebit(
-        longAmountValue: 280.25,
+        longAmountValue: 28025.00,
         portionQuantity: portionQuantity,
       );
 
       verify(() => pay.pay(
             paymentMode: PaymentMode.debit,
             params: PayParams(
-              longAmountValue: 28025,
+              longAmountValue: 2802500,
               portionQuantity: portionQuantity,
             ),
           )).called(1);
@@ -259,21 +259,21 @@ void main() {
       verify(() => pay.pay(
             paymentMode: PaymentMode.pix,
             params: PayParams(
-              longAmountValue: longAmountValue.toString().toInt(true),
+              longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
             ),
           )).called(1);
     });
     test('Should convert amountValue correctly', () async {
       await sut.payWithPix(
-        longAmountValue: 280.25,
+        longAmountValue: 280.001,
         portionQuantity: portionQuantity,
       );
 
       verify(() => pay.pay(
             paymentMode: PaymentMode.pix,
             params: PayParams(
-              longAmountValue: 28025,
+              longAmountValue: 28000,
               portionQuantity: portionQuantity,
             ),
           )).called(1);

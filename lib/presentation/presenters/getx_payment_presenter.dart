@@ -31,7 +31,7 @@ class GetxPaymentPresenter extends GetxController
         paymentMode: PaymentMode
             .credit, //no MainActivity faz o tratamento para se for o PaymentMode.credit não acionar a opção de credito parcelado, senão gera uma exceção
         params: PayParams(
-          longAmountValue: longAmountValue.toString().toInt(true),
+          longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
         ),
       );
@@ -53,7 +53,7 @@ class GetxPaymentPresenter extends GetxController
       await pay.pay(
         paymentMode: PaymentMode.creditPortion,
         params: PayParams(
-          longAmountValue: longAmountValue.toString().toInt(true),
+          longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
         ),
       );
@@ -75,7 +75,7 @@ class GetxPaymentPresenter extends GetxController
       await pay.pay(
         paymentMode: PaymentMode.debit,
         params: PayParams(
-          longAmountValue: longAmountValue.toString().toInt(true),
+          longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
         ),
       );
@@ -97,7 +97,7 @@ class GetxPaymentPresenter extends GetxController
       await pay.pay(
         paymentMode: PaymentMode.pix,
         params: PayParams(
-          longAmountValue: longAmountValue.toString().toInt(true),
+          longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
         ),
       );

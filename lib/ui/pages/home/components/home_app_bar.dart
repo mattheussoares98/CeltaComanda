@@ -11,6 +11,18 @@ PreferredSize homeAppBar({
   return PreferredSize(
     preferredSize: const Size.fromHeight(40),
     child: AppBar(
+      actions: [
+        ElevatedButton.icon(
+          style:
+              ElevatedButton.styleFrom(shape: const RoundedRectangleBorder()),
+          onPressed: () {},
+          label: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("CARRINHO"),
+          ),
+          icon: const Icon(Icons.shopping_cart_outlined),
+        )
+      ],
       title: TitleAppbar(openDrawer: () {
         scaffoldKey.currentState?.openDrawer();
       }),

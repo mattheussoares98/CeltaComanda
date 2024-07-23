@@ -12,28 +12,30 @@ class CartProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: (cartProducts.length / getItensPerLine(context)).ceil(),
-      itemBuilder: (context, rowIndex) {
-        return IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = rowIndex * getItensPerLine(context);
-                  i < (rowIndex + 1) * getItensPerLine(context);
-                  i++)
-                if (i < cartProducts.length)
-                  CartProductItem(
-                    cartProduct: cartProducts[i],
-                    index: i,
-                  ),
-            ],
-          ),
-        );
-      },
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: (cartProducts.length / getItensPerLine(context)).ceil(),
+        itemBuilder: (context, rowIndex) {
+          return IntrinsicHeight(
+            child: Row(
+              children: [
+                //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
+                for (int i = rowIndex * getItensPerLine(context);
+                    i < (rowIndex + 1) * getItensPerLine(context);
+                    i++)
+                  if (i < cartProducts.length)
+                    CartProductItem(
+                      cartProduct: cartProducts[i],
+                      index: i,
+                      maxWidth: constraints.maxWidth,
+                    ),
+              ],
+            ),
+          );
+        },
+      );
+    });
   }
 }

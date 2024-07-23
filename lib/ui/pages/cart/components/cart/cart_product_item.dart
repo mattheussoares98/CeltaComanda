@@ -9,10 +9,12 @@ import '../../../pages.dart';
 class CartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
   final int index;
+  final double maxWidth;
 
   const CartProductItem({
     required this.cartProduct,
     required this.index,
+    required this.maxWidth,
     super.key,
   });
 
@@ -44,34 +46,36 @@ class _CartProductItemState extends State<CartProductItem> {
     }
   }
 
+  double rightMargin = 2;
+
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Flexible(
-      child: Container(
-        width:
-            (MediaQuery.of(context).size.width / (getItensPerLine(context))),
-        margin: const EdgeInsets.only(bottom: 2, right: 2),
-        padding: const EdgeInsets.fromLTRB(2, 2, 3, 0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 10,
-              color: Color(0x33000000),
-              offset: Offset(-3, -1),
-            )
-          ],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Container(
+      width: widget.maxWidth * 0.3333333 - rightMargin,
+      margin: EdgeInsets.only(bottom: 5, right: rightMargin),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 10,
+            color: Color(0x33000000),
+            offset: Offset(-3, -1),
+          )
+        ],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            width: (MediaQuery.of(context).size.width /
+                (getItensPerLine(context))),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
@@ -133,12 +137,16 @@ class _CartProductItemState extends State<CartProductItem> {
                 ),
               ],
             ),
-            if (commentsPresenter.productHasComment(
-              internalCodeOnERP:
-                  widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
-              productName: widget.cartProduct.Product.Name,
-            ))
-              Comment(
+          ),
+          if (commentsPresenter.productHasComment(
+            internalCodeOnERP:
+                widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
+            productName: widget.cartProduct.Product.Name,
+          ))
+            SizedBox(
+              width: (MediaQuery.of(context).size.width /
+                  (getItensPerLine(context))),
+              child: Comment(
                 comments: widget.cartProduct.Comments,
                 productName: widget.cartProduct.Product.Name,
                 internalCodeOnErp:
@@ -151,8 +159,8 @@ class _CartProductItemState extends State<CartProductItem> {
                   );
                 },
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

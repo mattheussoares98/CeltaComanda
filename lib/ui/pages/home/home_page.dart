@@ -128,18 +128,6 @@ class _HomePageState extends State<HomePage>
                   ],
                 ),
               ),
-              actions: [
-                SearchCommandIcon(
-                  loadCommandData: () async {
-                    await homePresenter.loadCommandData(
-                      menuPresenter: menuPresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      cartPresenter: cartPresenter,
-                      commentsPresenter: commentsPresenter,
-                    );
-                  },
-                )
-              ],
               backgroundColor: const Color(0xFFF1F5F8),
               title: TitleAppbar(loadMenuAgain: () async {
                 await homePresenter.loadCommandData(

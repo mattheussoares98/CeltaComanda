@@ -98,7 +98,7 @@ class TitleAppbar extends StatelessWidget {
                   openDrawer();
                 },
                 child: Text(
-                  "Comanda ${homePresenter.commandNumber}",
+                  "Mesa ${homePresenter.commandNumber?.toInt()}",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

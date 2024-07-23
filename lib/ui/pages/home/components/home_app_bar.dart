@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
 import '../../pages.dart';
 import 'components.dart';
 
@@ -33,32 +32,17 @@ PreferredSize homeAppBar({
           ],
         ),
       ),
-      actions: [
-        if (currentIndex == 2)
-          SearchCommandIcon(
-            loadCommandData: () async {
-              await homePresenter.loadCommandData(
-                menuPresenter: menuPresenter,
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                commentsPresenter: commentsPresenter,
-              );
-            },
-          )
-      ],
       backgroundColor: const Color(0xFFF1F5F8),
-      title: TitleAppbar(
-          loadMenuAgain: () async {
-            await homePresenter.loadCommandData(
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              commentsPresenter: commentsPresenter,
-            );
-          },
-          openDrawer: () {
-            scaffoldKey.currentState?.openDrawer();
-          }),
+      title: TitleAppbar(loadMenuAgain: () async {
+        await homePresenter.loadCommandData(
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          commentsPresenter: commentsPresenter,
+        );
+      }, openDrawer: () {
+        scaffoldKey.currentState?.openDrawer();
+      }),
     ),
   );
 }

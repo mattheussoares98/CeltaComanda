@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../helpers/helpers.dart';
 
 class EmptyCart extends StatelessWidget {
-  final PageController pageController;
   const EmptyCart({
-    required this.pageController,
     super.key,
   });
 
@@ -38,9 +36,7 @@ class EmptyCart extends StatelessWidget {
             ),
           ),
           ElevatedButton.icon(
-            onPressed: () {
-              pageController.jumpToPage(0);
-            },
+            onPressed: () {},
             label: Text(
               "Adicionar itens",
               style: TextStyle(

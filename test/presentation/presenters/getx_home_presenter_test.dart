@@ -103,6 +103,14 @@ void main() {
             clear: true,
           )).called(1);
     });
+    test('Should go to SplashPage', () async {
+      sut.goToCartPage();
+
+      verify(() => navigateTo.navigate(
+            pageRoute: PageRoutes.cart,
+            clear: false,
+          )).called(1);
+    });
   });
 
   group("ClearEnterpriseData", () {
@@ -347,7 +355,8 @@ void main() {
         () async {
       sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber("001");
-      printedProductsPresenter.mockLoadPrintedError(DomainError.commandNotAvailable);
+      printedProductsPresenter
+          .mockLoadPrintedError(DomainError.commandNotAvailable);
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));

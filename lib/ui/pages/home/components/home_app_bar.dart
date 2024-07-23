@@ -15,7 +15,9 @@ PreferredSize homeAppBar({
         ElevatedButton.icon(
           style:
               ElevatedButton.styleFrom(shape: const RoundedRectangleBorder()),
-          onPressed: () {},
+          onPressed: () {
+            homePresenter.goToCartPage();
+          },
           label: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text("CARRINHO"),

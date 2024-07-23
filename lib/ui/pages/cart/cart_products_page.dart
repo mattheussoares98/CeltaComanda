@@ -2,18 +2,13 @@ import 'dart:async';
 
 import 'package:provider/provider.dart';
 
-import '../../../ui/helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
-  final PageController? pageController;
-  final bool? isFixedCommandNumber;
   const CartPage({
-    this.pageController,
-    this.isFixedCommandNumber,
     super.key,
   });
 
@@ -73,9 +68,7 @@ class _CartPageState extends State<CartPage>
                                 ),
                             ],
                           )
-                        : EmptyCart(
-                            pageController:
-                                widget.pageController ?? PageController())),
+                        : const EmptyCart()),
               ),
             ),
             Visibility(
@@ -88,26 +81,26 @@ class _CartPageState extends State<CartPage>
                 right: 0,
                 child: SizedBox(
                   height: _buttonsHeight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     child: Row(
                       children: [
-                        if (widget.pageController != null)
-                          Expanded(
-                            flex: 4,
-                            child: AddMoreCartItensButton(
-                              pageController: widget.pageController!,
-                            ),
-                          ),
-                        if (widget.pageController != null)
-                          SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                        Expanded(
-                          flex: 6,
-                          child: SaveSaleRequestButton(
-                            pageController:
-                                widget.pageController ?? PageController(),
-                          ),
-                        ),
+                        // if (widget.pageController != null)
+                        //   Expanded(
+                        //     flex: 4,
+                        //     child: AddMoreCartItensButton(
+                        //       pageController: widget.pageController!,
+                        //     ),
+                        //   ),
+                        // if (widget.pageController != null)
+                        //   SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                        // Expanded(
+                        //   flex: 6,
+                        //   child: SaveSaleRequestButton(
+                        //     pageController:
+                        //         widget.pageController ?? PageController(),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

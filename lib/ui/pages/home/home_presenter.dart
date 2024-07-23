@@ -23,6 +23,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   });
 
   void goToProductsPage(ExpansibleGroupEntity entity);
+  void goToCartPage();
 
   void onChangePage({
     required MenuPresenter menuPresenter,

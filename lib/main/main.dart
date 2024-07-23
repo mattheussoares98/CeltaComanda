@@ -74,7 +74,7 @@ class App extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-         UserInteraction.restartTimes(null);
+          UserInteraction.restartTimes(null);
         },
         onPanDown: (_) {
           UserInteraction.restartTimes(null);
@@ -111,6 +111,11 @@ class App extends StatelessWidget {
               name: PageRoutes.payment,
               page: makePaymentPage,
               transition: Transition.fadeIn,
+            ),
+            GetPage(
+              name: PageRoutes.cart,
+              page: makeCartPage,
+              transition: Transition.rightToLeft,
             ),
           ],
         ),

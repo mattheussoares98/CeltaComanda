@@ -119,8 +119,7 @@ class _MenuPageState extends State<MenuPage>
                       stream: menuPresenter.indexOfSelectedGroupStream,
                       builder: (context, selectedGroupIndex) {
                         return SizedBox(
-                          height: MediaQuery.of(context).size.height -
-                              kBottomNavigationBarHeight,
+                          height: MediaQuery.of(context).size.height,
                           child: StreamBuilder<ProductsViewModel?>(
                               stream: menuPresenter.selectedProductStream,
                               builder: (context, selectedProduct) {
@@ -130,9 +129,6 @@ class _MenuPageState extends State<MenuPage>
                                       const PreLoadImagesPage(),
                                     GroupsAndProducts(
                                       selectedIndex: selectedGroupIndex.data,
-                                      selectedProduct: selectedProduct.data,
-                                    ),
-                                    InsertProductButton(
                                       selectedProduct: selectedProduct.data,
                                     ),
                                   ],

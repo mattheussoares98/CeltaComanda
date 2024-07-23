@@ -21,7 +21,7 @@ class GroupItem extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: groupIsSelected ? Colors.white : Colors.grey,
-              fontSize: 15,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),

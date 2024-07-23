@@ -43,73 +43,68 @@ class _CartPageState extends State<CartPage>
     mainErrorSubscription =
         handleMainError(context, cartPresenter.mainErrorStream);
 
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: _buttonsHeight),
-                child: SingleChildScrollView(
-                    child: cartPresenter.cartProducts.isNotEmpty == true ||
-                            cartPresenter.confirmedCombox.isNotEmpty == true
-                        ? Column(
-                            children: [
-                              if (cartPresenter.cartProducts.isNotEmpty)
-                                CartProductsItems(
-                                  cartProducts: cartPresenter.cartProducts,
-                                ),
-                              if (cartPresenter.confirmedCombox.isNotEmpty)
-                                ConfirmedChildAndFatherItems(
-                                  confirmedsCombox:
-                                      cartPresenter.confirmedCombox,
-                                ),
-                            ],
-                          )
-                        : const EmptyCart()),
-              ),
-            ),
-            Visibility(
-              visible: cartPresenter.cartProducts.length +
-                      cartPresenter.confirmedCombox.length >
-                  0,
-              child: Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: SizedBox(
-                  height: _buttonsHeight,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        // if (widget.pageController != null)
-                        //   Expanded(
-                        //     flex: 4,
-                        //     child: AddMoreCartItensButton(
-                        //       pageController: widget.pageController!,
-                        //     ),
-                        //   ),
-                        // if (widget.pageController != null)
-                        //   SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                        // Expanded(
-                        //   flex: 6,
-                        //   child: SaveSaleRequestButton(
-                        //     pageController:
-                        //         widget.pageController ?? PageController(),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: _buttonsHeight),
+            child: SingleChildScrollView(
+                child: cartPresenter.cartProducts.isNotEmpty == true ||
+                        cartPresenter.confirmedCombox.isNotEmpty == true
+                    ? Column(
+                        children: [
+                          if (cartPresenter.cartProducts.isNotEmpty)
+                            CartProductsItems(
+                              cartProducts: cartPresenter.cartProducts,
+                            ),
+                          if (cartPresenter.confirmedCombox.isNotEmpty)
+                            ConfirmedChildAndFatherItems(
+                              confirmedsCombox: cartPresenter.confirmedCombox,
+                            ),
+                        ],
+                      )
+                    : const EmptyCart()),
+          ),
+        ),
+        Visibility(
+          visible: cartPresenter.cartProducts.length +
+                  cartPresenter.confirmedCombox.length >
+              0,
+          child: Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              height: _buttonsHeight,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    // if (widget.pageController != null)
+                    //   Expanded(
+                    //     flex: 4,
+                    //     child: AddMoreCartItensButton(
+                    //       pageController: widget.pageController!,
+                    //     ),
+                    //   ),
+                    // if (widget.pageController != null)
+                    //   SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                    // Expanded(
+                    //   flex: 6,
+                    //   child: SaveSaleRequestButton(
+                    //     pageController:
+                    //         widget.pageController ?? PageController(),
+                    //   ),
+                    // ),
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

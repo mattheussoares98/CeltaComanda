@@ -16,7 +16,22 @@ PreferredSize homeAppBar({
           style:
               ElevatedButton.styleFrom(shape: const RoundedRectangleBorder()),
           onPressed: () {
-            homePresenter.goToCartPage();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    insetPadding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.1),
+                    contentPadding: const EdgeInsets.all(0),
+                    content: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: const Align(
+                        alignment: Alignment.centerRight,
+                        child: CartPage(),
+                      ),
+                    ),
+                  );
+                });
           },
           label: const Padding(
             padding: EdgeInsets.all(8.0),

@@ -28,6 +28,8 @@ class GroupsAndProducts extends StatelessWidget {
     required MenuPresenter menuPresenter,
     required ScrollController scrollController,
   }) async {
+    if(!scrollController.hasClients) return;
+
     final currentPosition = scrollController.position.pixels;
     final minScrollExtent = scrollController.position.minScrollExtent;
 
@@ -38,7 +40,7 @@ class GroupsAndProducts extends StatelessWidget {
             milliseconds: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value.length *
                 50),
-        curve: Curves.linear,
+        curve: Curves.fastEaseInToSlowEaseOut,
       );
     }
   }

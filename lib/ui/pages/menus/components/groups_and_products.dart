@@ -55,7 +55,7 @@ class GroupsAndProducts extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            flex: 20,
+            flex: 10,
             child: GroupItems(
               expansibleGroupsViewModel: menuPresenter.loadedMenu
                   .map((element) => element.keys.first)
@@ -71,14 +71,14 @@ class GroupsAndProducts extends StatelessWidget {
           ),
           if (isDetachSelected(menuPresenter))
             Expanded(
-              flex: 80,
+              flex: 90,
               child: DetachItems(
                 products: menuPresenter.loadedMenu[0].entries.first.value,
               ),
             ),
           if (!isDetachSelected(menuPresenter))
             Expanded(
-              flex: 80,
+              flex: 90,
               child: ProductsItems(
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,

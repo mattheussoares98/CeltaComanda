@@ -36,7 +36,7 @@ class _GroupItemsState extends State<GroupItems> {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
     return Container(
-      width: MediaQuery.of(context).size.width * 0.27,
+      width: MediaQuery.of(context).size.width * 0.15,
       height: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,

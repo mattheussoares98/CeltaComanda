@@ -72,7 +72,6 @@ class _HomePageState extends State<HomePage>
         context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no BottomNavigationBarItem
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -109,37 +108,10 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             homePresenter: homePresenter,
           ),
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: AppBar(
-              leading: FittedBox(
-                child: Row(
-                  children: [
-                    if (homePresenter.isFixedCommandNumber != true)
-                      IconButton(
-                        icon: Icon(
-                          Icons.exit_to_app,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {
-                          scaffoldKey.currentState?.openDrawer();
-                        },
-                      ),
-                  ],
-                ),
-              ),
-              backgroundColor: const Color(0xFFF1F5F8),
-              title: TitleAppbar(loadMenuAgain: () async {
-                await homePresenter.loadCommandData(
-                  menuPresenter: menuPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  cartPresenter: cartPresenter,
-                  commentsPresenter: commentsPresenter,
-                );
-              }, openDrawer: () {
-                scaffoldKey.currentState?.openDrawer();
-              }),
-            ),
+          appBar: homeAppBar(
+            homePresenter: homePresenter,
+            context: context,
+            scaffoldKey: scaffoldKey,
           ),
           body: makeMenusPage(homePresenter.isFixedCommandNumber),
         ),

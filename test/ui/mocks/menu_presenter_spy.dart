@@ -15,6 +15,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   final isLoadingController = StreamController<bool>();
   final menuController = StreamController<
       List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>();
+  final showPreLoadImageController = StreamController<bool>();
   final selectedProductController = StreamController<ProductsViewModel?>();
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       expansibleGroupsController = [];
@@ -25,7 +26,15 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     mockLoadCall().thenAnswer((_) async => _);
     when(() => this.loadedMenu).thenAnswer((_) => expansibleGroupsController);
     when(() => this.menuStream).thenAnswer((_) => menuController.stream);
+    when(() => this.showPreLoadImagesStream)
+        .thenAnswer((_) => showPreLoadImageController.stream);
     when(() => this.clear()).thenAnswer((_) async => _);
+    when(() => this.updateIndexOfSelectedGroup(any()))
+        .thenAnswer((_) async => _);
+    when(() => this.updateSelectedProduct(
+          selectedProduct: any(named: "selectedProduct"),
+          commentsPresenter: any(named: "commentsPresenter"),
+        )).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
@@ -44,7 +53,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   }
 
   void mockGoToComboxPage(ProductsViewModel product) {
-    when(() => this.goToComboxPage(any())).thenAnswer((_) => Get.offNamed(
+    when(() => this.goToComboxPage(any())).thenAnswer((_) async => Get.offNamed(
           PageRoutes.productComposition,
           arguments: product,
         ));

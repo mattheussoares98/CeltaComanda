@@ -28,11 +28,12 @@ class _CompositionState extends State<Composition> {
             primary: false,
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
-            itemCount: widget.selectedComboxProduct.childsComposition!.length,
+            itemCount: widget.selectedComboxProduct.childsComposition?.length,
             itemBuilder: (context, index) {
-              father = widget.selectedComboxProduct.childsComposition![index];
+              father = widget.selectedComboxProduct.childsComposition?[index];
 
-              if (father!.childs?.isEmpty == true) {
+              if (father?.childs?.isEmpty == true &&
+                  widget.selectedComboxProduct.childsComposition != null) {
                 return FathersWithoutChilds(
                   selectedComboxProduct: widget.selectedComboxProduct,
                   father: father!,
@@ -41,20 +42,26 @@ class _CompositionState extends State<Composition> {
                 );
               }
 
-              return FathersWithChilds(
-                selectedComboxProduct: widget.selectedComboxProduct,
-                father: father!,
-                productsCompositions:
-                    widget.selectedComboxProduct.childsComposition!,
-                index: index,
-              );
+              if (father != null) {
+                return FathersWithChilds(
+                  selectedComboxProduct: widget.selectedComboxProduct,
+                  father: father!,
+                  productsCompositions:
+                      widget.selectedComboxProduct.childsComposition!,
+                  index: index,
+                );
+              }
+
+              return const SizedBox();
             },
           ),
         ),
-        SaveComboxButton(
-          productsCompositions: widget.selectedComboxProduct.childsComposition!,
-          selectedComboxProduct: widget.selectedComboxProduct,
-        ),
+        if (widget.selectedComboxProduct.childsComposition != null)
+          SaveComboxButton(
+            productsCompositions:
+                widget.selectedComboxProduct.childsComposition!,
+            selectedComboxProduct: widget.selectedComboxProduct,
+          ),
       ],
     );
   }

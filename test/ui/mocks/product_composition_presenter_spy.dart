@@ -26,6 +26,28 @@ class ProductCompositionPresenterSpy extends Mock
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.selectedComboxProductStream)
         .thenAnswer((_) => selectedComboxProductController.stream);
+    when(() => this.updateSelectedIndexOfProduct(
+          father: any(named: "father"),
+          index: any(named: "index"),
+        )).thenAnswer((_) => _);
+    when(() => this.updateComment(
+          commentsPresenter: any(named: "commentsPresenter"),
+          father: any(named: "father"),
+        )).thenAnswer((_) => _);
+    when(() => this.calculateProductPrice(any())).thenAnswer((_) => 0);
+    when(() => this.calculateIncrementValue(any())).thenAnswer((_) => 0);
+    when(() => this.calculateTotalLiquid(product: any(named: "product")))
+        .thenAnswer((_) => 0);
+    when(() => this.updateComboxQuantity(any())).thenAnswer((_) => _);
+    when(() => this.updateSaleRequest(
+          homePresenter: any(named: "homePresenter"),
+          cartPresenter: any(named: "cartPresenter"),
+          productsCompositions: any(named: "productsCompositions"),
+        )).thenAnswer((_) async => true);
+    when(() => this.updateComboxIsValid(any())).thenAnswer((_) => true);
+    when(() => this.certifyComboxIsValid(any())).thenAnswer((_) => true);
+    when(() => this.updateSelectedProduct(any())).thenAnswer((_) async => _);
+    when(() => this.updateTotalLiquidCombox(any())).thenAnswer((_) async => _);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

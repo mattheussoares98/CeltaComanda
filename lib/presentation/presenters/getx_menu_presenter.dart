@@ -44,8 +44,8 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  void goToComboxPage(ProductsViewModel product) {
-    navigateTo.navigate(
+  Future<void> goToComboxPage(ProductsViewModel product) async {
+    await navigateTo.navigate(
       pageRoute: PageRoutes.productComposition,
       arguments: product,
     );
@@ -53,7 +53,7 @@ class GetxMenuPresenter extends GetxController
 
   @override
   void clear() {
-    _menu.value = [];
+    _menu.subject.add([]);
     _loadedMenu.clear();
     _selectedProduct.value = null;
     _searchedProduct = null;

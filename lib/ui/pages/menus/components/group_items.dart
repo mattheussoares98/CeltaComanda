@@ -76,18 +76,9 @@ class _GroupItemsState extends State<GroupItems> {
                     : null,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: FittedBox(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                      child: GroupItem(
-                        expansibleGroupsViewModel: groupViewModel,
-                        groupIsSelected: widget.selectedIndex == index,
-                      ),
-                    ),
-                  ],
-                ),
+              child: GroupItem(
+                expansibleGroupsViewModel: groupViewModel,
+                groupIsSelected: widget.selectedIndex == index,
               ),
             ),
           );

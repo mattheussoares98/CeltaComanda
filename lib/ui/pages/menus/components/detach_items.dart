@@ -68,7 +68,7 @@ class DetachItems extends StatelessWidget {
                     colors: [
                       Colors.transparent,
                       Colors.transparent,
-                      Colors.black12,
+                      Colors.black45,
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

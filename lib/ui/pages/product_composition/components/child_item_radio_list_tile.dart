@@ -22,68 +22,72 @@ class ChildItemRadioListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return InkWell(
-      onTap: () {
-        updateSelectedIndex();
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 2, right: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: const Color.fromARGB(255, 240, 240, 240),
-          ),
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              height: hasMinWidth(context) ? 100 : 70,
-              width: hasMinWidth(context) ? 100 : 70,
-              child: GestureDetector(
-                onTap: () {
-                  showLargeImage(
-                    context: context,
-                    ean: null,
-                    productComplement: null,
-                    plu: child!.PluChild!,
-                    menuPresenter: menuPresenter,
-                    productName: child!.ChildName!,
-                  );
-                },
-                child: ImageWidget(
-                  ean: null,
-                  plu: child!.PluChild!,
-                  height: hasMinWidth(context) ? 100 : 70,
-                  width: hasMinWidth(context) ? 100 : 70,
-                  isAlcoholic: false,
-                ),
-              ),
+    return Flexible(
+      child: InkWell(
+        onTap: () {
+          updateSelectedIndex();
+        },
+        child: Container(
+          width:
+              (MediaQuery.of(context).size.width / (getItensPerLine(context))),
+          margin: const EdgeInsets.only(bottom: 2, right: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: const Color.fromARGB(255, 240, 240, 240),
             ),
-            const SizedBox(width: 5),
-            if (child!.ChildName != null)
-              Expanded(
-                flex: 3,
-                child: Text(
-                  child!.ChildName!,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                height: hasMinWidth(context) ? 100 : 70,
+                width: hasMinWidth(context) ? 100 : 70,
+                child: GestureDetector(
+                  onTap: () {
+                    showLargeImage(
+                      context: context,
+                      ean: null,
+                      productComplement: null,
+                      plu: child!.PluChild!,
+                      menuPresenter: menuPresenter,
+                      productName: child!.ChildName!,
+                    );
+                  },
+                  child: ImageWidget(
+                    ean: null,
+                    plu: child!.PluChild!,
+                    height: hasMinWidth(context) ? 100 : 70,
+                    width: hasMinWidth(context) ? 100 : 70,
+                    isAlcoholic: false,
                   ),
                 ),
               ),
-            Expanded(
-              child: Radio<int>(
-                value: index,
-                groupValue: father.indexOfSelectedChild,
-                visualDensity: VisualDensity.compact,
-                toggleable: father.IsOptionalItem == "true",
-                onChanged: (int? value) {
-                  updateSelectedIndex();
-                },
+              const SizedBox(width: 5),
+              if (child!.ChildName != null)
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    child!.ChildName!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
+                ),
+              Expanded(
+                child: Radio<int>(
+                  value: index,
+                  groupValue: father.indexOfSelectedChild,
+                  visualDensity: VisualDensity.compact,
+                  toggleable: father.IsOptionalItem == "true",
+                  onChanged: (int? value) {
+                    updateSelectedIndex();
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

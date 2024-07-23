@@ -48,7 +48,6 @@ PreferredSize homeAppBar({
       ],
       backgroundColor: const Color(0xFFF1F5F8),
       title: TitleAppbar(
-          showLoadMenuAgain: currentIndex == 0,
           loadMenuAgain: () async {
             await homePresenter.loadCommandData(
               menuPresenter: menuPresenter,

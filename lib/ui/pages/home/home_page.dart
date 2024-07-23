@@ -20,8 +20,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with LoadingManager, UIErrorManager {
-  final PageController _pageController = PageController(initialPage: 0);
-  int _currentIndex = 0;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   StreamSubscription? loadingSubscription;
@@ -31,28 +29,7 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    _pageController.dispose();
     super.dispose();
-  }
-
-  void onPageChanged({
-    required int index,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required HomePresenter homePresenter,
-    required MenuPresenter menuPresenter,
-    required CommentsPresenter commentsPresenter,
-  }) {
-    setState(() {
-      _pageController.jumpToPage(index);
-      _currentIndex = index;
-    });
-    homePresenter.onChangePage(
-      menuPresenter: menuPresenter,
-      commentsPresenter: commentsPresenter,
-      printedProductsPresenter: printedProductsPresenter,
-    );
-    _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   bool _isLoaded = false;
@@ -103,19 +80,13 @@ class _HomePageState extends State<HomePage>
     mainErrorSubscription =
         handleMainError(context, homePresenter.mainErrorStream);
 
-    final List<Widget> screens = [
-      makeMenusPage(homePresenter.isFixedCommandNumber),
-      makeCartPage(_pageController, homePresenter.isFixedCommandNumber),
-      makePrintedProductsPage(homePresenter.isFixedCommandNumber),
-      if (homePresenter.isGeneratingVersionToRede) makePaymentPage(),
-    ];
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        UserInteraction.restartTimes(_pageController);
+        UserInteraction.restartTimes(null);
       },
       onPanDown: (_) {
-        UserInteraction.restartTimes(_pageController);
+        UserInteraction.restartTimes(null);
       },
       child: PopScope(
         canPop: false,
@@ -158,22 +129,8 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               actions: [
-                if (_currentIndex == 2)
-                  SearchCommandIcon(
-                    loadCommandData: () async {
-                      await homePresenter.loadCommandData(
-                        menuPresenter: menuPresenter,
-                        printedProductsPresenter: printedProductsPresenter,
-                        cartPresenter: cartPresenter,
-                        commentsPresenter: commentsPresenter,
-                      );
-                    },
-                  )
-              ],
-              backgroundColor: const Color(0xFFF1F5F8),
-              title: TitleAppbar(
-                  showLoadMenuAgain: _currentIndex == 0,
-                  loadMenuAgain: () async {
+                SearchCommandIcon(
+                  loadCommandData: () async {
                     await homePresenter.loadCommandData(
                       menuPresenter: menuPresenter,
                       printedProductsPresenter: printedProductsPresenter,
@@ -181,42 +138,22 @@ class _HomePageState extends State<HomePage>
                       commentsPresenter: commentsPresenter,
                     );
                   },
-                  openDrawer: () {
-                    scaffoldKey.currentState?.openDrawer();
-                  }),
+                )
+              ],
+              backgroundColor: const Color(0xFFF1F5F8),
+              title: TitleAppbar(loadMenuAgain: () async {
+                await homePresenter.loadCommandData(
+                  menuPresenter: menuPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  cartPresenter: cartPresenter,
+                  commentsPresenter: commentsPresenter,
+                );
+              }, openDrawer: () {
+                scaffoldKey.currentState?.openDrawer();
+              }),
             ),
           ),
-          body: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              onPageChanged(
-                index: index,
-                printedProductsPresenter: printedProductsPresenter,
-                menuPresenter: menuPresenter,
-                homePresenter: homePresenter,
-                commentsPresenter: commentsPresenter,
-              );
-            },
-            children: screens,
-          ),
-          bottomNavigationBar: Stack(
-            children: [
-              HomeBottomNavigationBarItem(
-                onPageChanged: (value) {
-                  onPageChanged(
-                    index: value,
-                    printedProductsPresenter: printedProductsPresenter,
-                    homePresenter: homePresenter,
-                    menuPresenter: menuPresenter,
-                    commentsPresenter: commentsPresenter,
-                  );
-                },
-                currentIndex: _currentIndex,
-              ),
-              const ProductGoingToMenuAnimation(),
-              const CartGoingToPrintedAnimation(),
-            ],
-          ),
+          body: makeMenusPage(homePresenter.isFixedCommandNumber),
         ),
       ),
     );

@@ -7,11 +7,9 @@ import '../../pages.dart';
 
 class TitleAppbar extends StatelessWidget {
   final void Function() loadMenuAgain;
-  final bool showLoadMenuAgain;
   final void Function() openDrawer;
   const TitleAppbar({
     required this.loadMenuAgain,
-    required this.showLoadMenuAgain,
     required this.openDrawer,
     super.key,
   });
@@ -112,7 +110,6 @@ class TitleAppbar extends StatelessWidget {
               ),
             ),
           ),
-        if (showLoadMenuAgain)
           IconButton(
             onPressed: loadMenuAgain,
             icon: Icon(

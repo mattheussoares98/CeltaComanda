@@ -53,115 +53,130 @@ class _PaymentPageState extends State<PaymentPage>
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
-      body: SingleChildScrollView(
-        child: printedProductsPresenter.printedProducts == null ||
-                printedProductsPresenter.printedProducts!.TotalLiquid
-                        .toDouble() ==
-                    0
-            ? SearchDataByCommandNumber(
-                homePresenter: homePresenter,
-                emptyMessage: homePresenter.commandNumber != null
-                    ? "Essa comanda não possui valores em aberto"
-                    : "Consulte alguma comanda para efetuar o pagamento dela",
-                loadCommandData: () async {
-                  await paymentPresenter.getTotalValue(
-                    homePresenter: homePresenter,
-                    cartPresenter: cartPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    menuPresenter: menuPresenter,
-                    commentsPresenter: commentsPresenter,
-                  );
-                },
-              )
-            : SizedBox(
-                height: MediaQuery.of(context).size.height -
-                    AppBar().preferredSize.height,
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (homePresenter.commandNumber != null)
+      body: printedProductsPresenter.printedProducts == null ||
+              printedProductsPresenter.printedProducts!.TotalLiquid
+                      .toDouble() ==
+                  0
+          ? SearchDataByCommandNumber(
+              homePresenter: homePresenter,
+              emptyMessage: homePresenter.commandNumber != null
+                  ? "Essa comanda não possui valores em aberto"
+                  : "Consulte alguma comanda para efetuar o pagamento dela",
+              loadCommandData: () async {
+                await paymentPresenter.getTotalValue(
+                  homePresenter: homePresenter,
+                  cartPresenter: cartPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  menuPresenter: menuPresenter,
+                  commentsPresenter: commentsPresenter,
+                );
+              },
+            )
+          : Center(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
+                            .addBrazilianCoin(),
+                        style: TextStyle(
+                          fontSize: getStringSize(context) * 2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 20,
+                        ),
                         child: Text(
-                          "Comanda ${homePresenter.commandNumber}",
+                          "Selecione uma opção de pagamento",
                           style: TextStyle(
-                            fontSize: 30,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
+                            // color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: getStringSize(context),
                           ),
                         ),
                       ),
-                    Text(
-                      "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
-                          .addBrazilianCoin(),
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 20,
-                      ),
-                      child: Text(
-                        "Selecione uma opção de pagamento abaixo",
-                        style: TextStyle(
-                          // color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
+                      ElevatedButton(
+                        onPressed: () async {
+                          await paymentPresenter.payWithPix(
+                            longAmountValue: printedProductsPresenter
+                                .printedProducts!.TotalLiquid
+                                .toDouble(),
+                            portionQuantity: 1,
+                          );
+                        },
+                        child: Text(
+                          "PIX",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                          ),
                         ),
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await paymentPresenter.payWithCredit(
-                          longAmountValue: printedProductsPresenter
-                              .printedProducts!.TotalLiquid
-                              .toDouble(),
-                          portionQuantity: 1,
-                        );
-                      },
-                      child: const Text("Crédito a vista"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await paymentPresenter.payWithCreditPortion(
-                          longAmountValue: printedProductsPresenter
-                              .printedProducts!.TotalLiquid
-                              .toDouble(),
-                          portionQuantity: 2,
-                        );
-                      },
-                      child: const Text("Crédito parcelado 2x"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await paymentPresenter.payWithDebit(
-                          longAmountValue: printedProductsPresenter
-                              .printedProducts!.TotalLiquid
-                              .toDouble(),
-                          portionQuantity: 1,
-                        );
-                      },
-                      child: const Text("Débito"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await paymentPresenter.payWithPix(
-                          longAmountValue: printedProductsPresenter
-                              .printedProducts!.TotalLiquid
-                              .toDouble(),
-                          portionQuantity: 1,
-                        );
-                      },
-                      child: const Text("PIX"),
-                    ),
-                  ],
+                      // const SizedBox(height: 10),
+                      // ElevatedButton(
+                      //   onPressed: () async {
+                      //     await paymentPresenter.payWithCreditPortion(
+                      //       longAmountValue: printedProductsPresenter
+                      //           .printedProducts!.TotalLiquid
+                      //           .toDouble(),
+                      //       portionQuantity: 2,
+                      //     );
+                      //   },
+                      //   child: Text(
+                      //     "Crédito parcelado 2x",
+                      //     style: TextStyle(
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: getStringSize(context),
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await paymentPresenter.payWithDebit(
+                            longAmountValue: printedProductsPresenter
+                                .printedProducts!.TotalLiquid
+                                .toDouble(),
+                            portionQuantity: 1,
+                          );
+                        },
+                        child: Text(
+                          "Débito".toUpperCase(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await paymentPresenter.payWithCredit(
+                            longAmountValue: printedProductsPresenter
+                                .printedProducts!.TotalLiquid
+                                .toDouble(),
+                            portionQuantity: 1,
+                          );
+                        },
+                        child: Text(
+                          "Crédito a vista".toUpperCase(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-      ),
+            ),
     );
   }
 }

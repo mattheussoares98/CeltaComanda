@@ -33,9 +33,10 @@ PreferredSize homeAppBar({
                   );
                 });
           },
-          label: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("CARRINHO"),
+          label: const Center(
+            child: Text(
+              "CARRINHO",
+            ),
           ),
           icon: const Icon(Icons.shopping_cart_outlined),
         )

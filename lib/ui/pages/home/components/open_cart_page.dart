@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/close_page_icon_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
@@ -15,16 +16,38 @@ class OpenCartPage extends StatelessWidget {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                insetPadding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.1),
-                contentPadding: const EdgeInsets.all(0),
-                content: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: const Align(
-                    alignment: Alignment.centerRight,
-                    child: CartPage(),
-                  ),
+              return Dismissible(
+                key: UniqueKey(),
+                onDismissed: (_) => Navigator.of(context).pop(),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: Navigator.of(context).pop,
+                        child: Container(
+                          height: double.infinity,
+                          color: Colors.transparent,
+                          child: const Align(
+                            alignment: Alignment.topCenter,
+                            child: ClosePageIconButton(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 9,
+                      child: AlertDialog(
+                        insetPadding: const EdgeInsets.all(0),
+                        contentPadding: const EdgeInsets.all(0),
+                        content: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: const CartPage(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             });

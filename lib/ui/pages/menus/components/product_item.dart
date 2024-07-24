@@ -45,9 +45,7 @@ class _ProductItemState extends State<ProductItem> {
             padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),
             child: Container(
               height: (MediaQuery.of(context).size.height -
-                      AppBar().preferredSize.height -
-                      kBottomNavigationBarHeight -
-                      52) /
+                      AppBar().preferredSize.height) /
                   2,
               width: double.infinity,
               decoration: BoxDecoration(

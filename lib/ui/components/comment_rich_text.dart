@@ -17,9 +17,9 @@ class CommentRichText extends StatelessWidget {
           TextSpan(
             text: comment.replaceAll(RegExp(r'\n'), '; '),
             style: TextStyle(
-              color: Colors.red,
+              color: Theme.of(context).primaryColorLight,
               fontStyle: FontStyle.italic,
-              fontSize: getStringSize(context),
+              fontSize: getStringSize(context) * 0.7,
               fontWeight: FontWeight.bold,
             ),
           ),

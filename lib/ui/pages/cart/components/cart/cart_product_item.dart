@@ -29,6 +29,7 @@ class _CartProductItemState extends State<CartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Container(
       width: widget.maxWidth * 0.3333333 - rightMargin,
@@ -97,13 +98,27 @@ class _CartProductItemState extends State<CartProductItem> {
               ),
               const SizedBox(width: 3),
               Expanded(
-                child: Text(
-                  widget.cartProduct.Product.Name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
-                  ),
+                child: Column(
+                  children: [
+                    Text(
+                      widget.cartProduct.Product.Name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: getStringSize(context),
+                      ),
+                    ),
+                    if (commentsPresenter.productHasComment(
+                      internalCodeOnERP:
+                          widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
+                      productName: widget.cartProduct.Product.Name,
+                    ))
+                      SizedBox(
+                        child: CommentRichText(
+                          comment: widget.cartProduct.Comments!,
+                        ),
+                      ),
+                  ],
                 ),
               ),
               PriceAndUpdateProductQuantity(
@@ -126,27 +141,6 @@ class _CartProductItemState extends State<CartProductItem> {
               ),
             ],
           ),
-          //a parte do comentário não vai usar mais, vai ser tudo via combo
-          // if (commentsPresenter.productHasComment(
-          //   internalCodeOnERP:
-          //       widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
-          //   productName: widget.cartProduct.Product.Name,
-          // ))
-          //   SizedBox(
-          //     child: Comment(
-          //       comments: widget.cartProduct.Comments,
-          //       productName: widget.cartProduct.Product.Name,
-          //       internalCodeOnErp:
-          //           widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
-          //       updateComment: () async {
-          //         await cartPresenter.updateCommentOfProductCart(
-          //           index: widget.index,
-          //           newComment:
-          //               commentsPresenter.getConcatenateSelectedComments(),
-          //         );
-          //       },
-          //     ),
-          //   ),
         ],
       ),
     );

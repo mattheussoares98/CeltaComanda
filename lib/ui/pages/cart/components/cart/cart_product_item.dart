@@ -23,35 +23,11 @@ class CartProductItem extends StatefulWidget {
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-  void onPressedAddQuantity({
-    required CartPresenter cartPresenter,
-  }) {
-    cartPresenter.addCartProductQuantity(widget.index);
-  }
-
-  void onPressedReduceQuantity({
-    required CartPresenter cartPresenter,
-  }) {
-    if (widget.cartProduct.Quantity.toDouble() <= 1) {
-      notificationDialog(
-        context: context,
-        titleMessage: "Remover produto do carrinho?",
-        content: null,
-        onPress: () async {
-          cartPresenter.reduceCartProductQuantity(widget.index);
-        },
-      );
-    } else {
-      cartPresenter.reduceCartProductQuantity(widget.index);
-    }
-  }
-
   double rightMargin = 2;
 
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Container(
@@ -72,94 +48,106 @@ class _CartProductItemState extends State<CartProductItem> {
       ),
       child: Column(
         children: [
-          SizedBox(
-            width: (MediaQuery.of(context).size.width /
-                (getItensPerLine(context))),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 70,
-                  width: 70,
-                  child: GestureDetector(
-                    onTap: () {
-                      showLargeImage(
-                        context: context,
-                        ean: widget.cartProduct.Product.EanCode,
-                        plu: widget.cartProduct.Product.PriceLookupCode,
-                        productComplement:
-                            widget.cartProduct.Product.ProductComplement,
-                        menuPresenter: menuPresenter,
-                        productName: widget.cartProduct.Product.Name,
-                        selectedProduct: widget.cartProduct.Product,
-                      );
-                    },
-                    child: ImageWidget(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  //criar funcao e testes para remover os itens do carrinho
+                },
+                child: SizedBox(
+                  height: 100,
+                  width: 40,
+                  child: Center(
+                    child: Icon(
+                      Icons.delete,
+                      size: 30,
+                      color: Theme.of(context).primaryColorLight,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 30),
+              SizedBox(
+                height: 100,
+                width: 100,
+                child: GestureDetector(
+                  onTap: () {
+                    showLargeImage(
+                      context: context,
                       ean: widget.cartProduct.Product.EanCode,
                       plu: widget.cartProduct.Product.PriceLookupCode,
-                      height: 70,
-                      width: 70,
-                      isAlcoholic: widget.cartProduct.Product.IsAlcoholicProduct
-                              .toString() ==
-                          "true",
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 3),
-                Expanded(
-                  child: Text(
-                    widget.cartProduct.Product.Name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getStringSize(context),
-                    ),
-                  ),
-                ),
-                PriceAndUpdateProductQuantity(
-                  showItemPrice: false,
-                  showDeleteIcon: widget.cartProduct.Quantity.toDouble() <= 1,
-                  showUpdateProductQuantity: true,
-                  price: widget.cartProduct.Value.toDouble(),
-                  totalLiquid: widget.cartProduct.Quantity.toDouble() *
-                      widget.cartProduct.Value.toDouble(),
-                  onPressedReduceQuantity: () {
-                    onPressedReduceQuantity(
-                      cartPresenter: cartPresenter,
+                      productComplement:
+                          widget.cartProduct.Product.ProductComplement,
+                      menuPresenter: menuPresenter,
+                      productName: widget.cartProduct.Product.Name,
+                      selectedProduct: widget.cartProduct.Product,
                     );
                   },
-                  onPressedAddQuantity: () {
-                    onPressedAddQuantity(
-                      cartPresenter: cartPresenter,
-                    );
-                  },
-                  productQuantity: widget.cartProduct.Quantity.toDouble(),
+                  child: ImageWidget(
+                    ean: widget.cartProduct.Product.EanCode,
+                    plu: widget.cartProduct.Product.PriceLookupCode,
+                    height: 100,
+                    width: 100,
+                    isAlcoholic: widget.cartProduct.Product.IsAlcoholicProduct
+                            .toString() ==
+                        "true",
+                  ),
                 ),
-              ],
-            ),
-          ),
-          if (commentsPresenter.productHasComment(
-            internalCodeOnERP:
-                widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
-            productName: widget.cartProduct.Product.Name,
-          ))
-            SizedBox(
-              width: (MediaQuery.of(context).size.width /
-                  (getItensPerLine(context))),
-              child: Comment(
-                comments: widget.cartProduct.Comments,
-                productName: widget.cartProduct.Product.Name,
-                internalCodeOnErp:
-                    widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
-                updateComment: () async {
-                  await cartPresenter.updateCommentOfProductCart(
-                    index: widget.index,
-                    newComment:
-                        commentsPresenter.getConcatenateSelectedComments(),
-                  );
-                },
               ),
-            ),
+              const SizedBox(width: 3),
+              Expanded(
+                child: Text(
+                  widget.cartProduct.Product.Name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
+                  ),
+                ),
+              ),
+              PriceAndUpdateProductQuantity(
+                showItemPrice: false,
+                showDeleteIcon: false,
+                showUpdateProductQuantity: true,
+                price: widget.cartProduct.Value.toDouble(),
+                totalLiquid: widget.cartProduct.Quantity.toDouble() *
+                    widget.cartProduct.Value.toDouble(),
+                onPressedReduceQuantity:
+                    widget.cartProduct.Quantity.toDouble() <= 1
+                        ? null
+                        : () {
+                            cartPresenter
+                                .reduceCartProductQuantity(widget.index);
+                          },
+                onPressedAddQuantity: () {
+                  cartPresenter.addCartProductQuantity(widget.index);
+                },
+                productQuantity: widget.cartProduct.Quantity.toDouble(),
+              ),
+            ],
+          ),
+          //a parte do comentário não vai usar mais, vai ser tudo via combo
+          // if (commentsPresenter.productHasComment(
+          //   internalCodeOnERP:
+          //       widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
+          //   productName: widget.cartProduct.Product.Name,
+          // ))
+          //   SizedBox(
+          //     child: Comment(
+          //       comments: widget.cartProduct.Comments,
+          //       productName: widget.cartProduct.Product.Name,
+          //       internalCodeOnErp:
+          //           widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
+          //       updateComment: () async {
+          //         await cartPresenter.updateCommentOfProductCart(
+          //           index: widget.index,
+          //           newComment:
+          //               commentsPresenter.getConcatenateSelectedComments(),
+          //         );
+          //       },
+          //     ),
+          //   ),
         ],
       ),
     );

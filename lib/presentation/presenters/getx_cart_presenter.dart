@@ -409,7 +409,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       isLoading = false;
       animateProductGoingMenuToCart = true;
-      await doProductToCartAnimation();
       notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
@@ -998,19 +997,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   Stream<bool> get animateProductGoingMenuToCartStream =>
       _animateProductGoingMenuToCart.stream;
 
-  @override
-  Future<void> doProductToCartAnimation() async {
-    animateProductGoingMenuToCart = true;
-    await Future.delayed(
-        Duration(
-          milliseconds:
-              AnimationManager.animateNavigationBarItemDurationMilliseconds,
-        ), () {
-      animateProductGoingMenuToCart = false;
-    });
-    notifyListeners();
-  }
-
   final _animateCartGoingToPrintedProducts = false.obs;
   set animateCartGoingToPrintedProducts(bool value) {
     _animateCartGoingToPrintedProducts.value = value;
@@ -1019,16 +1005,4 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   @override
   Stream<bool> get animateCartGoingToPrintedProductsStream =>
       _animateCartGoingToPrintedProducts.stream;
-
-  @override
-  Future<void> doCartToPrintedAnimation() async {
-    // animateCartGoingToPrintedProducts = true;
-    // await Future.delayed(
-    //     Duration(
-    //       milliseconds:
-    //           AnimationManager.animateNavigationBarItemDurationMilliseconds,
-    //     ), () {
-    //   // animateCartGoingToPrintedProducts = false;
-    // });
-  }
 }

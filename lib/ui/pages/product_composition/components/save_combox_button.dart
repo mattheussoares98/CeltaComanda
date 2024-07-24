@@ -69,10 +69,6 @@ class SaveComboxButton extends StatelessWidget {
                               Navigator.of(context)
                                   .popUntil((route) => route.isFirst);
                             });
-                            Future.delayed(const Duration(microseconds: 500),
-                                () async {
-                              await cartPresenter.doProductToCartAnimation();
-                            });
                           }
                         },
                       );

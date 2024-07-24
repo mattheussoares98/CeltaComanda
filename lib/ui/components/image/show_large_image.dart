@@ -18,189 +18,93 @@ void showLargeImage({
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        if (MediaQuery.of(context).orientation == Orientation.landscape &&
-            hasMinWidth(context)) {
-          return _landScapeLargeImage(
-            context: context,
-            ean: ean,
-            productComplement: productComplement,
-            plu: plu,
-            selectedProduct: selectedProduct,
-            menuPresenter: menuPresenter,
-            showInsertButton: showInsertButton,
-            productName: productName,
-          );
-        } else {
-          return _portraitLargeImage(
-            menuPresenter: menuPresenter,
-            context: context,
-            ean: ean,
-            productComplement: productComplement,
-            selectedProduct: selectedProduct,
-            showInsertButton: showInsertButton,
-            plu: plu,
-            productName: productName,
-          );
-        }
-      });
-}
-
-Widget _portraitLargeImage({
-  required BuildContext context,
-  required String? ean,
-  required String? productComplement,
-  required ProductsViewModel? selectedProduct,
-  required bool? showInsertButton,
-  required String plu,
-  required MenuPresenter menuPresenter,
-  required String? productName,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.end,
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const CircleAvatar(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          child: Icon(
-            Icons.close,
-            size: 40,
-          ),
-        ),
-      ),
-      Expanded(
-        child: AlertDialog(
-          insetPadding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (productName != null)
-                Text(
-                  productName,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 40 : 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 5,
+              child: AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
                 ),
-              if (productComplement != null)
-                _productComplement(context, productComplement),
-              Expanded(
-                flex: 2,
-                child: ImageWidget(
-                  ean: ean,
-                  plu: plu,
-                  height: MediaQuery.of(context).size.width,
-                  width: MediaQuery.of(context).size.width,
-                  isAlcoholic: selectedProduct != null &&
-                      selectedProduct.IsAlcoholicProduct.toString() == "true",
-                ),
-              ),
-              const SizedBox(height: 10),
-              if (selectedProduct != null && showInsertButton == true)
-                InsertProductButton(
-                  selectedProduct: selectedProduct,
-                ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _landScapeLargeImage({
-  required BuildContext context,
-  required String? ean,
-  required String? productComplement,
-  required ProductsViewModel? selectedProduct,
-  required String plu,
-  required MenuPresenter menuPresenter,
-  required bool? showInsertButton,
-  required String? productName,
-}) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Expanded(
-        flex: 5,
-        child: AlertDialog(
-          insetPadding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
-          ),
-          content: Column(
-            children: [
-              if (productName != null)
-                Text(
-                  productName,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 40 : 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              Expanded(
-                child: Row(
+                content: Column(
                   children: [
+                    if (productName != null)
+                      Text(
+                        productName,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: hasMinWidth(context) ? 40 : 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     Expanded(
-                      flex: 2,
-                      child: ImageWidget(
-                        ean: ean,
-                        plu: plu,
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        isAlcoholic: selectedProduct != null &&
-                            selectedProduct.IsAlcoholicProduct.toString() ==
-                                "true",
+                      flex: 4,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: ImageWidget(
+                              ean: ean,
+                              plu: plu,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              isAlcoholic: selectedProduct != null &&
+                                  selectedProduct.IsAlcoholicProduct
+                                          .toString() ==
+                                      "true",
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    if (productComplement != null)
-                      _productComplement(context, productComplement),
+                    if (selectedProduct != null && showInsertButton == true)
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            if (productComplement != null)
+                              Expanded(
+                                flex: 2,
+                                child: _productComplement(
+                                    context, productComplement),
+                              ),
+                            Expanded(
+                              child: InsertProductButton(
+                                selectedProduct: selectedProduct,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
-              if (selectedProduct != null && showInsertButton == true)
-                InsertProductButton(
-                  selectedProduct: selectedProduct,
-                ),
-            ],
-          ),
-        ),
-      ),
-      const ClosePageIconButton(),
-    ],
-  );
+            ),
+            const ClosePageIconButton(),
+          ],
+        );
+      });
 }
 
 Widget _productComplement(BuildContext context, String productComplement) {
-  return Expanded(
-    child: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              productComplement,
-              style: TextStyle(
-                fontSize: hasMinWidth(context) ? 20 : 12,
-                color: Theme.of(context).primaryColorLight,
-                fontStyle: FontStyle.italic,
-              ),
+  return SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            productComplement,
+            style: TextStyle(
+              fontSize: hasMinWidth(context) ? 20 : 12,
+              color: Theme.of(context).primaryColorLight,
+              fontStyle: FontStyle.italic,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }

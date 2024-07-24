@@ -145,96 +145,37 @@ class _InsertProductButtonState extends State<InsertProductButton>
     mainErrorSubscription =
         handleMainError(context, cartPresenter.mainErrorStream);
 
-    return SizedBox(
-      height: 50,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(),
+      onPressed: () async {
+        await addProductInCart(
+          menuPresenter: menuPresenter,
+          homePresenter: homePresenter,
+          cartPresenter: cartPresenter,
+          commentsPresenter: commentsPresenter,
+        );
+      },
       child: Padding(
-        padding: const EdgeInsets.only(right: 3.0),
-        child: widget.selectedProduct?.productQuantity == null
-            ? TextButton(
-                onPressed: null,
-                child: Text("Selecione um produto",
-                    style: TextStyle(
-                      fontSize: hasMinWidth(context) ? 23 : 15,
-                    )),
-              )
-            : Row(
-                children: [
-                  // SizedBox(width: hasMinWidth(context) ? 30 : 8),
-                  // UpdateQuantity(
-                  //   iconSize: hasMinWidth(context) ? 50 : 20,
-                  //   showDeleteIcon: false,
-                  //   productQuantity: widget.selectedProduct!.productQuantity,
-                  //   onPressedReduceQuantity: widget.selectedProduct != null &&
-                  //           widget.selectedProduct!.productQuantity <= 1
-                  //       ? null
-                  //       : () {
-                  //           subtractProductQuantity(menuPresenter);
-                  //         },
-                  //   onPressedAddQuantity: () {
-                  //     addProductQuantity(menuPresenter);
-                  //   },
-                  // ),
-                  SizedBox(width: hasMinWidth(context) ? 30 : 8),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(),
-                      onPressed: () async {
-                        await addProductInCart(
-                          menuPresenter: menuPresenter,
-                          homePresenter: homePresenter,
-                          cartPresenter: cartPresenter,
-                          commentsPresenter: commentsPresenter,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                if (hasMinWidth(context))
-                                  Icon(
-                                    Icons.shopping_cart,
-                                    size: getIconSize(context),
-                                  ),
-                                SizedBox(
-                                  width: hasMinWidth(context) ? 30 : 8,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    hasMinWidth(context)
-                                        ? "Inserir no carrinho"
-                                        : "Inserir",
-                                    style: TextStyle(
-                                      fontSize: getStringSize(context),
-                                    ),
-                                  ),
-                                ),
-                                // Flexible(
-                                //   child: Text(
-                                //     (widget.selectedProduct!.SaleRetailPraticed
-                                //                 .toDouble() *
-                                //             widget.selectedProduct!
-                                //                 .productQuantity
-                                //                 .toDouble())
-                                //         .toString()
-                                //         .toBrazilianNumber()
-                                //         .addBrazilianCoin(),
-                                //     style: TextStyle(
-                                //       fontSize: getStringSize(context),
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (hasMinWidth(context))
+              Icon(
+                Icons.shopping_cart,
+                size: getIconSize(context),
               ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: Text(
+                hasMinWidth(context) ? "Inserir no carrinho" : "Inserir",
+                style: TextStyle(
+                  fontSize: getStringSize(context),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

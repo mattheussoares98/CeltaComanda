@@ -213,43 +213,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     notifyListeners();
   }
 
-  // @override
-  // Future<void> loadCommandData({
-  //   required String commandNumber,
-  //   required PrintedProductsPresenter printedProductsPresenter,
-  //   required CartPresenter cartPresenter,
-  //   required MenuPresenter menuPresenter,
-  //   required HomePresenter homePresenter,
-  //   required CommentsPresenter commentsPresenter,
-  // }) async {
-  //   isLoading = true;
-  //   mainError = null;
-  //   homePresenter.updateCommandNumber(commandNumber);
-  //   clear();
-  //   printedProductsPresenter.clear();
-  //   menuPresenter.clear();
-
-  //   try {
-  //     await loadSaleRequest(commandNumber);
-  //     await menuPresenter.getGroupsAndProducts(
-  //       commandNumber: commandNumber,
-  //       commentsPresenter: commentsPresenter,
-  //     );
-  //     await printedProductsPresenter.loadPrinted(commandNumber);
-  //   } on DomainError catch (error) {
-  //     homePresenter.updateCommandNumber(null);
-  //     switch (error) {
-  //       case DomainError.commandNotAvailable:
-  //         mainError = UIError.commandNotAvailable;
-  //         break;
-  //       default:
-  //         mainError = UIError.unexpected;
-  //     }
-  //   } finally {
-  //     isLoading = false;
-  //   }
-  // }
-
   int? _indexOfSelectedProduct;
   @override
   int? get indexOfSelectedProduct => _indexOfSelectedProduct;
@@ -257,9 +220,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final _isLoading = false.obs;
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.subject.add(value);
-  }
+  set isLoading(bool value) => _isLoading.value = value;
 
   final _mainError = Rx<UIError?>(null);
   @override

@@ -17,59 +17,34 @@ class UpdateQuantity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.remove,
-                color: Theme.of(context).primaryColor,
-                size: iconSize,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3),
-                child: Text(
-                  productQuantity.toString().toBrazilianNumber(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: hasMinWidth(context) ? 20 : 15,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.add,
-                color: Theme.of(context).colorScheme.primary,
-                size: iconSize,
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.remove),
+            color: Theme.of(context).primaryColor,
+            onPressed: onPressedReduceQuantity,
           ),
-        ),
-        Positioned.fill(
-          child: Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: onPressedReduceQuantity,
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
-                ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3),
+            child: Text(
+              productQuantity.toString().toBrazilianNumber(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: hasMinWidth(context) ? 20 : 15,
               ),
-              Expanded(
-                child: InkWell(
-                  onTap: onPressedAddQuantity,
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+          IconButton(
+            icon: const Icon(Icons.add),
+            color: Theme.of(context).primaryColor,
+            onPressed: onPressedAddQuantity,
+          ),
+        ],
+      ),
     );
   }
 }

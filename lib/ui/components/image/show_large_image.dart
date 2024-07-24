@@ -1,8 +1,8 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 import '../../../ui/helpers/helpers.dart';
 import '../../pages/pages.dart';
-import 'image.dart';
 
 void showLargeImage({
   required BuildContext context,
@@ -191,19 +191,7 @@ Widget _landScapeLargeImage({
           ),
         ),
       ),
-      IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const CircleAvatar(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          child: Icon(
-            Icons.close,
-            size: 40,
-          ),
-        ),
-      ),
+      const ClosePageIconButton(),
     ],
   );
 }

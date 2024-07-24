@@ -25,7 +25,6 @@ void showLargeImage({
               flex: 5,
               child: AlertDialog(
                 insetPadding: const EdgeInsets.symmetric(
-                  horizontal: 10,
                   vertical: 5,
                 ),
                 content: Column(
@@ -82,7 +81,18 @@ void showLargeImage({
                 ),
               ),
             ),
-            const ClosePageIconButton(),
+            GestureDetector(
+              onTap: Navigator.of(context).pop,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width * 0.1,
+                color: Colors.transparent,
+                child: const Align(
+                  alignment: Alignment.topCenter,
+                  child: ClosePageIconButton(),
+                ),
+              ),
+            ),
           ],
         );
       });

@@ -46,7 +46,7 @@ class _ProductItemState extends State<ProductItem> {
             child: Container(
               height: (MediaQuery.of(context).size.height -
                       AppBar().preferredSize.height) /
-                  2,
+                  2.5,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,

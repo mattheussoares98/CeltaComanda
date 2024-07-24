@@ -20,7 +20,7 @@ void main() {
   late ExpansibleGroupEntity expansibleGroupEntity;
   late HiveSpy hive;
   late BoxSpy mockHiveBox;
-  // late ProductsViewModel productsViewModel;
+  late ProductsViewModel productsViewModel;
 
   setUp(() {
     hive = HiveSpy();
@@ -28,7 +28,7 @@ void main() {
     hive.mockOpenBox(mockHiveBox);
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = MenuPresenterSpy();
-    // productsViewModel = EntityFactory.makeProductViewModel();
+    productsViewModel = EntityFactory.makeProductViewModel();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
   });
@@ -94,6 +94,16 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.products);
+  });
+
+  testWidgets('Should go to InsertProductPage', (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.mockGoToInsertProductpage(productsViewModel);
+
+    presenter.goToInsertProductPage(productsViewModel);
+    await tester.pumpAndSettle();
+
+    expect(currentRoute, PageRoutes.insertProduct);
   });
 
   // testWidgets('Should go to ComboxPage', (WidgetTester tester) async {

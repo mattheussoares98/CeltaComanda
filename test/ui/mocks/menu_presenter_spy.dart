@@ -48,7 +48,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   }
 
   void mockGoToInsertProductpage(ProductsViewModel product) {
-    when(() => this.goToProductsPage(any())).thenAnswer((_) => Get.offNamed(
+    when(() => this.goToInsertProductPage(any())).thenAnswer((_) => Get.offNamed(
           PageRoutes.insertProduct,
           arguments: product,
         ));

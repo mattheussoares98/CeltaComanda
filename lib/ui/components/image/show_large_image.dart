@@ -106,17 +106,10 @@ Widget _portraitLargeImage({
                 ),
               ),
               const SizedBox(height: 10),
-              if (selectedProduct != null &&
-                  showInsertButton == true &&
-                  selectedProduct.IsPromoCombox == "false")
+              if (selectedProduct != null && showInsertButton == true)
                 InsertProductButton(
                   selectedProduct: selectedProduct,
                 ),
-              _addComboxButton(
-                selectedProduct: selectedProduct,
-                context: context,
-                menuPresenter: menuPresenter,
-              ),
             ],
           ),
         ),
@@ -176,17 +169,10 @@ Widget _landScapeLargeImage({
                   ],
                 ),
               ),
-              if (selectedProduct != null &&
-                  showInsertButton == true &&
-                  selectedProduct.IsPromoCombox == "false")
+              if (selectedProduct != null && showInsertButton == true)
                 InsertProductButton(
                   selectedProduct: selectedProduct,
                 ),
-              _addComboxButton(
-                selectedProduct: selectedProduct,
-                context: context,
-                menuPresenter: menuPresenter,
-              ),
             ],
           ),
         ),
@@ -217,31 +203,4 @@ Widget _productComplement(BuildContext context, String productComplement) {
       ),
     ),
   );
-}
-
-Widget _addComboxButton({
-  required ProductsViewModel? selectedProduct,
-  required BuildContext context,
-  required MenuPresenter menuPresenter,
-}) {
-  if (selectedProduct != null && selectedProduct.IsPromoCombox == "true") {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size(double.infinity, 60),
-        maximumSize: const Size(double.infinity, 60),
-      ),
-      onPressed: () {
-        Navigator.of(context).pop();
-        menuPresenter.goToComboxPage(selectedProduct);
-      },
-      child: const FittedBox(
-        child: Text("Escolher produtos do combo",
-            style: TextStyle(
-              fontSize: 60,
-            )),
-      ),
-    );
-  } else {
-    return const SizedBox();
-  }
 }

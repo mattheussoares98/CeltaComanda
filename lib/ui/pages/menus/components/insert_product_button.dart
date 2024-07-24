@@ -7,7 +7,6 @@ import '../../../../domain/entities/entities.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/mixins/mixins.dart';
 import '../../../../ui/pages/pages.dart';
-import '../../../components/components.dart';
 
 class InsertProductButton extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
@@ -160,21 +159,21 @@ class _InsertProductButtonState extends State<InsertProductButton>
               )
             : Row(
                 children: [
-                  SizedBox(width: hasMinWidth(context) ? 30 : 8),
-                  UpdateQuantity(
-                    iconSize: hasMinWidth(context) ? 50 : 20,
-                    showDeleteIcon: false,
-                    productQuantity: widget.selectedProduct!.productQuantity,
-                    onPressedReduceQuantity: widget.selectedProduct != null &&
-                            widget.selectedProduct!.productQuantity <= 1
-                        ? null
-                        : () {
-                            subtractProductQuantity(menuPresenter);
-                          },
-                    onPressedAddQuantity: () {
-                      addProductQuantity(menuPresenter);
-                    },
-                  ),
+                  // SizedBox(width: hasMinWidth(context) ? 30 : 8),
+                  // UpdateQuantity(
+                  //   iconSize: hasMinWidth(context) ? 50 : 20,
+                  //   showDeleteIcon: false,
+                  //   productQuantity: widget.selectedProduct!.productQuantity,
+                  //   onPressedReduceQuantity: widget.selectedProduct != null &&
+                  //           widget.selectedProduct!.productQuantity <= 1
+                  //       ? null
+                  //       : () {
+                  //           subtractProductQuantity(menuPresenter);
+                  //         },
+                  //   onPressedAddQuantity: () {
+                  //     addProductQuantity(menuPresenter);
+                  //   },
+                  // ),
                   SizedBox(width: hasMinWidth(context) ? 30 : 8),
                   Expanded(
                     child: ElevatedButton(
@@ -212,21 +211,21 @@ class _InsertProductButtonState extends State<InsertProductButton>
                                     ),
                                   ),
                                 ),
-                                Flexible(
-                                  child: Text(
-                                    (widget.selectedProduct!.SaleRetailPraticed
-                                                .toDouble() *
-                                            widget.selectedProduct!
-                                                .productQuantity
-                                                .toDouble())
-                                        .toString()
-                                        .toBrazilianNumber()
-                                        .addBrazilianCoin(),
-                                    style: TextStyle(
-                                      fontSize: getStringSize(context),
-                                    ),
-                                  ),
-                                ),
+                                // Flexible(
+                                //   child: Text(
+                                //     (widget.selectedProduct!.SaleRetailPraticed
+                                //                 .toDouble() *
+                                //             widget.selectedProduct!
+                                //                 .productQuantity
+                                //                 .toDouble())
+                                //         .toString()
+                                //         .toBrazilianNumber()
+                                //         .addBrazilianCoin(),
+                                //     style: TextStyle(
+                                //       fontSize: getStringSize(context),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

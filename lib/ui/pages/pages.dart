@@ -2,6 +2,7 @@ export './enterprise_validation/enterprise_validation.dart';
 export './comments/comments.dart';
 export 'menus/menus.dart';
 export './home/home.dart';
+export './insert_product/insert_product.dart';
 export './payment/payment.dart';
 export './pre_load_images/pre_load_images.dart';
 export './printed_products/printed_products.dart';

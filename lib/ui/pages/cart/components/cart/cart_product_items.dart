@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../pages.dart';
 
 class CartProductsItems extends StatelessWidget {
-  final List<CartProductsViewModel> cartProducts;
   const CartProductsItems({
-    required this.cartProducts,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    CartPresenter cartPresenter = Provider.of(context);
+
     return LayoutBuilder(builder: (context, constraints) {
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: cartProducts.length,
+        itemCount: cartPresenter.cartProducts.length,
         itemBuilder: (context, index) {
+          final cartProduct = cartPresenter.cartProducts[index];
+
           return CartProductItem(
-            cartProduct: cartProducts[index],
+            cartProduct: cartProduct,
             index: index,
             maxWidth: constraints.maxWidth,
           );

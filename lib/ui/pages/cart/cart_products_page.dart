@@ -56,9 +56,7 @@ class _CartPageState extends State<CartPage>
                     ? Column(
                         children: [
                           if (cartPresenter.cartProducts.isNotEmpty)
-                            CartProductsItems(
-                              cartProducts: cartPresenter.cartProducts,
-                            ),
+                            const CartProductsItems(),
                           if (cartPresenter.confirmedCombox.isNotEmpty)
                             ConfirmedChildAndFatherItems(
                               confirmedsCombox: cartPresenter.confirmedCombox,

@@ -52,8 +52,9 @@ class _CartProductItemState extends State<CartProductItem> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () {
-                  //criar funcao e testes para remover os itens do carrinho
+                onTap: () async {
+                  await cartPresenter.removeProductFromCart(widget.index);
+                  setState(() {});
                 },
                 child: SizedBox(
                   height: 100,

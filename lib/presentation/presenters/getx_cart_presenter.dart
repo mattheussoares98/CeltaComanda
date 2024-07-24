@@ -428,6 +428,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.updateCartProducts(newCartList);
 
       _cartProducts = newCartList;
+      notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

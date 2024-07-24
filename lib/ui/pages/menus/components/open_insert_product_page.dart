@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/entities/entities.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/mixins/mixins.dart';
 import '../../../../ui/pages/pages.dart';
@@ -21,105 +20,6 @@ class OpenInsertProductPage extends StatefulWidget {
 
 class _OpenInsertProductPageState extends State<OpenInsertProductPage>
     with LoadingManager, UIErrorManager {
-  Future<void> _showModalToSelectComments({
-    required CartPresenter cartPresenter,
-    required CommentsPresenter commentsPresenter,
-    required MenuPresenter menuPresenter,
-  }) async {
-    await showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.9,
-              child: CommentsPage(
-                doOnClickInConfirmButton: () async {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  await cartPresenter.addProductInCart(
-                    commentsPresenter: commentsPresenter,
-                    product: CartProductEntity(
-                      Product: widget.selectedProduct!.toEntity(),
-                      Comments:
-                          "no cartPresenter.addProductInCart atualiza os comentários adicionando o que foi selecionado pelo usuário",
-                      TotalLiquid: widget.selectedProduct!.productQuantity *
-                          widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-                      Quantity: widget.selectedProduct!.productQuantity,
-                      Value:
-                          widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-                      ProductPriceLookUpCode:
-                          widget.selectedProduct!.PriceLookupCode,
-                    ),
-                    menuPresenter: menuPresenter,
-                  );
-                },
-                selectedProductName: widget.selectedProduct!.Name,
-                internalCodeOnErp:
-                    widget.selectedProduct!.InternalCodeOnERP!.toInt(),
-              ),
-            ),
-          );
-        });
-    commentsPresenter.unselectAllComments();
-  }
-
-  Future<void> addProductInCart({
-    required MenuPresenter menuPresenter,
-    required HomePresenter homePresenter,
-    required CartPresenter cartPresenter,
-    required CommentsPresenter commentsPresenter,
-  }) async {
-    setState(() {});
-
-    final comments = commentsPresenter.loadedComments.where((e) =>
-        int.parse(e.ProductInternalCodeOnErp) ==
-        widget.selectedProduct!.InternalCodeOnERP!.toInt());
-
-    try {
-      if (comments.isNotEmpty) {
-        await _showModalToSelectComments(
-          cartPresenter: cartPresenter,
-          commentsPresenter: commentsPresenter,
-          menuPresenter: menuPresenter,
-        );
-      } else {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        await cartPresenter.addProductInCart(
-          commentsPresenter: commentsPresenter,
-          product: CartProductEntity(
-            Product: widget.selectedProduct!.toEntity(),
-            Comments:
-                "no cartPresenter.addProductInCart atualiza os comentários adicionando o que foi selecionado pelo usuário",
-            TotalLiquid: widget.selectedProduct!.productQuantity *
-                widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-            Quantity: widget.selectedProduct!.productQuantity,
-            Value: widget.selectedProduct!.SaleRetailPraticed.toDouble(),
-            ProductPriceLookUpCode: widget.selectedProduct!.PriceLookupCode,
-          ),
-          menuPresenter: menuPresenter,
-        );
-      }
-    } catch (e) {
-      e;
-    }
-  }
-
-  void addProductQuantity(MenuPresenter menuPresenter) {
-    setState(() {
-      widget.selectedProduct?.productQuantity++;
-    });
-  }
-
-  void subtractProductQuantity(MenuPresenter menuPresenter) {
-    setState(() {
-      widget.selectedProduct?.productQuantity--;
-    });
-  }
-
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
@@ -134,9 +34,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: true);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: true);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -148,12 +46,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
     return ElevatedButton(
       style: ElevatedButton.styleFrom(),
       onPressed: () async {
-        await addProductInCart(
-          menuPresenter: menuPresenter,
-          homePresenter: homePresenter,
-          cartPresenter: cartPresenter,
-          commentsPresenter: commentsPresenter,
-        );
+        menuPresenter.goToInsertProductPage(widget.selectedProduct!);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

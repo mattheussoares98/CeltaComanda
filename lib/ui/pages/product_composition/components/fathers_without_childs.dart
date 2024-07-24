@@ -174,7 +174,7 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                               productName: widget.father.ChildName!,
                             ))
                               Expanded(
-                                child: CommentRichText(
+                                child: Comment(
                                   comment: widget.father.commentFather ?? "",
                                 ),
                               ),

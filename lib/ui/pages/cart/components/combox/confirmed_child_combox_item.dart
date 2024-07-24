@@ -112,7 +112,7 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                   internalCodeOnERP: combox.InternalCodeOnERPCodeChild!.toInt(),
                   productName: combox.ChildName!,
                 ))
-                  CommentRichText(comment: combox.commentFather ?? ""),
+                  Comment(comment: combox.commentFather ?? ""),
               ],
             );
           })

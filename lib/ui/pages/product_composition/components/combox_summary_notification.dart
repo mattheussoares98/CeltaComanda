@@ -77,7 +77,7 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
             ],
           ),
           if (selectedProduct.commentFather != null)
-            CommentRichText(comment: selectedProduct.commentFather!),
+            Comment(comment: selectedProduct.commentFather!),
           const Divider(thickness: 0.2, height: 3),
         ],
       );

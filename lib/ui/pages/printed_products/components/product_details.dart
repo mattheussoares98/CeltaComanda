@@ -113,7 +113,7 @@ class ProductDetails extends StatelessWidget {
               ),
             ],
           ),
-          if (comments != null) CommentRichText(comment: comments!),
+          if (comments != null) Comment(comment: comments!),
         ],
       ),
     );

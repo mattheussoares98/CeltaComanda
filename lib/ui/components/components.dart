@@ -1,7 +1,7 @@
 export './alert_message.dart';
 export "./app_theme.dart";
 export 'close_page_icon_button.dart';
-export './comment_rich_text.dart';
+export 'comment.dart';
 export './drawer.dart';
 export './error_message.dart';
 export './headline1.dart';

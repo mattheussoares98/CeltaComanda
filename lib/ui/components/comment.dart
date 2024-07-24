@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../ui/helpers/helpers.dart';
 
-class CommentRichText extends StatelessWidget {
+class Comment extends StatelessWidget {
   final String comment;
-  const CommentRichText({
+  const Comment({
     required this.comment,
     super.key,
   });

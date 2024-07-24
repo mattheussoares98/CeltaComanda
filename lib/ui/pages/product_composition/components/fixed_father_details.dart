@@ -97,7 +97,7 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
                 productName: widget.father.ChildName!,
               ))
                 Expanded(
-                  child: CommentRichText(
+                  child: Comment(
                     comment: widget.father.commentFather ?? "",
                   ),
                 ),

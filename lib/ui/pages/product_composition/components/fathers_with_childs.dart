@@ -60,7 +60,7 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
                 },
               ),
               if (widget.father.commentFather != null)
-                CommentRichText(comment: widget.father.commentFather!),
+                Comment(comment: widget.father.commentFather!),
               ChildsItemsRadioListTile(
                 productsCompositionsViewModel: widget.productsCompositions,
                 isFixedItemInCombox: widget.father.childs?.isEmpty == true,

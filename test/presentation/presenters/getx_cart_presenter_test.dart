@@ -1362,18 +1362,6 @@ void main() {
 
       await sut.clearCartAndConfirmedCombox();
     });
-
-    test(
-        "Should emit correct values on productAnimationStream when add product in cart",
-        () async {
-      expectLater(
-          sut.animateProductGoingMenuToCartStream, emitsInOrder([true, false]));
-
-      await sut.addProductInCart(
-          product: cartProductViewModel.toEntity(),
-          menuPresenter: menuPresenter,
-          commentsPresenter: commentsPresenter);
-    });
   });
 
   group("Save cart products in saleRequesTemp", () {
@@ -1480,8 +1468,6 @@ void main() {
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.animateCartGoingToPrintedProductsStream,
-          emitsInOrder([true, false]));
 
       await sut.saveProducts(
         commentsPresenter: commentsPresenter,

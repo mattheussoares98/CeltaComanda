@@ -407,8 +407,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         commentsPresenter: commentsPresenter,
       );
 
-      isLoading = false;
-      animateProductGoingMenuToCart = true;
       notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;
@@ -551,7 +549,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }) async {
     isLoading = true;
     mainError = null;
-    animateCartGoingToPrintedProducts = true;
     clear();
 
     try {
@@ -666,7 +663,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       return false;
     } finally {
       isLoading = false;
-      animateCartGoingToPrintedProducts = false;
       notifyListeners();
     }
   }
@@ -987,22 +983,4 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       isLoading = false;
     }
   }
-
-  final _animateProductGoingMenuToCart = false.obs;
-  set animateProductGoingMenuToCart(bool value) {
-    _animateProductGoingMenuToCart.value = value;
-  }
-
-  @override
-  Stream<bool> get animateProductGoingMenuToCartStream =>
-      _animateProductGoingMenuToCart.stream;
-
-  final _animateCartGoingToPrintedProducts = false.obs;
-  set animateCartGoingToPrintedProducts(bool value) {
-    _animateCartGoingToPrintedProducts.value = value;
-  }
-
-  @override
-  Stream<bool> get animateCartGoingToPrintedProductsStream =>
-      _animateCartGoingToPrintedProducts.stream;
 }

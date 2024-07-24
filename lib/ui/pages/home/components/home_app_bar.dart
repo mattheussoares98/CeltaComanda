@@ -30,14 +30,19 @@ PreferredSize homeAppBar({
             Positioned(
               top: 2,
               left: 5,
-              child: CircleAvatar(
-                backgroundColor: Colors.black,
-                maxRadius: 8,
-                minRadius: 8,
-                child: Center(
-                  child: FittedBox(
-                    child: Text(
-                      cartPresenter.cartProducts.length.toString(),
+              child: InkWell(
+                onTap: () {
+                  CartPageDialog.open(context);
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  maxRadius: 8,
+                  minRadius: 8,
+                  child: Center(
+                    child: FittedBox(
+                      child: Text(
+                        cartPresenter.cartProducts.length.toString(),
+                      ),
                     ),
                   ),
                 ),

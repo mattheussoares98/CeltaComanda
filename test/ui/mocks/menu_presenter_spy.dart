@@ -47,11 +47,20 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
         ));
   }
 
-  void mockGoToInsertProductpage(ProductsViewModel product) {
-    when(() => this.goToInsertProductPage(any())).thenAnswer((_) => Get.offNamed(
+  void mockGoToInsertProductPage(ProductsViewModel product) {
+    when(() => this.goToInsertProductPage(any())).thenAnswer((_) {
+      if (product.childsComposition?.isNotEmpty == true) {
+        Get.offNamed(
+          PageRoutes.productComposition,
+          arguments: product,
+        );
+      } else {
+        Get.offNamed(
           PageRoutes.insertProduct,
           arguments: product,
-        ));
+        );
+      }
+    });
   }
 
   void mockGoToComboxPage(ProductsViewModel product) {

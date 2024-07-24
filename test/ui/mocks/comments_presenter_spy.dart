@@ -10,6 +10,7 @@ class CommentsPresenterSpy extends Mock implements CommentsPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   final List<CommentViewModel> loadedCommentsController = [];
+  final bool hasSelectedCommentsController = false;
 
   CommentsPresenterSpy() {
     when(() => this.mainErrorStream)
@@ -17,7 +18,13 @@ class CommentsPresenterSpy extends Mock implements CommentsPresenter {
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.loadedComments).thenAnswer((_) => loadedCommentsController);
+    when(() => this.hasSelectedComments)
+        .thenAnswer((_) => hasSelectedCommentsController);
     when(() => this.changeCommentIsSelected(any())).thenAnswer((_) async => _);
+    when(() => this.productHasComment(
+          internalCodeOnERP: any(named: "internalCodeOnERP"),
+          productName: any(named: "productName"),
+        )).thenAnswer((_) => false);
     when(() => this.loadComments(any())).thenAnswer((_) async => _);
   }
 

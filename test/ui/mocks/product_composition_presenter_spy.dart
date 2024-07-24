@@ -10,6 +10,8 @@ import 'package:mocktail/mocktail.dart';
 class ProductCompositionPresenterSpy extends Mock
     implements ProductCompositionPresenter {
   final mainErrorController = StreamController<UIError?>();
+  final totalPriceComboxController = StreamController<double>();
+  final comboxIsValidController = StreamController<bool>();
   final enterpriseErrorController = StreamController<UIError?>();
   final selectedComboxProductController =
       StreamController<ProductsViewModel?>();
@@ -18,14 +20,21 @@ class ProductCompositionPresenterSpy extends Mock
   final isLoadingController = StreamController<bool>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
+  final double totalComboxQuantityController = 0;
 
   ProductCompositionPresenterSpy() {
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
+    when(() => this.comboxIsValidStream)
+        .thenAnswer((_) => comboxIsValidController.stream);
+    when(() => this.totalPriceComboxStream)
+        .thenAnswer((_) => totalPriceComboxController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.selectedComboxProductStream)
         .thenAnswer((_) => selectedComboxProductController.stream);
+    when(() => this.totalComboxQuantity)
+        .thenAnswer((_) => totalComboxQuantityController);
     when(() => this.updateSelectedIndexOfProduct(
           father: any(named: "father"),
           index: any(named: "index"),

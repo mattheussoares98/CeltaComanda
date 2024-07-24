@@ -98,7 +98,7 @@ void main() {
 
   testWidgets('Should go to InsertProductPage', (WidgetTester tester) async {
     await loadPage(tester);
-    presenter.mockGoToInsertProductpage(productsViewModel);
+    presenter.mockGoToInsertProductPage(productsViewModel);
 
     presenter.goToInsertProductPage(productsViewModel);
     await tester.pumpAndSettle();

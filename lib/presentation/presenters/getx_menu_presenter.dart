@@ -262,9 +262,16 @@ class GetxMenuPresenter extends GetxController
 
   @override
   void goToInsertProductPage(ProductsViewModel product) {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.insertProduct,
-      arguments: product,
-    );
+    if (product.childsComposition?.isNotEmpty == true) {
+      navigateTo.navigate(
+        pageRoute: PageRoutes.productComposition,
+        arguments: product,
+      );
+    } else {
+      navigateTo.navigate(
+        pageRoute: PageRoutes.insertProduct,
+        arguments: product,
+      );
+    }
   }
 }

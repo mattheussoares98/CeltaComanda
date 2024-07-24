@@ -49,8 +49,7 @@ class _ProductItemState extends State<ProductItem> {
                   2,
               width: double.infinity,
               decoration: BoxDecoration(
-                color:
-                    widget.productIsSelected ? Colors.grey[400] : Colors.white,
+                color: Colors.white,
                 boxShadow: const [
                   BoxShadow(
                     blurRadius: 3,

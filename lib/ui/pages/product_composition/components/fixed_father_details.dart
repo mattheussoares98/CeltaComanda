@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -27,8 +28,6 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -98,18 +97,8 @@ class _FixedFatherDetailsState extends State<FixedFatherDetails> {
                 productName: widget.father.ChildName!,
               ))
                 Expanded(
-                  child: Comment(
-                    comments: widget.father.commentFather,
-                    productName: widget.father.ChildName!,
-                    updateComment: () async {
-                      productCompositionPresenter.updateComment(
-                        commentsPresenter: commentsPresenter,
-                        father: widget.father,
-                      );
-                      setState(() {});
-                    },
-                    internalCodeOnErp:
-                        widget.father.InternalCodeOnERPCodeChild!.toInt(),
+                  child: CommentRichText(
+                    comment: widget.father.commentFather ?? "",
                   ),
                 ),
             ],

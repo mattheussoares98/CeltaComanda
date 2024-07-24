@@ -31,7 +31,6 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Column(
@@ -113,20 +112,7 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
                   internalCodeOnERP: combox.InternalCodeOnERPCodeChild!.toInt(),
                   productName: combox.ChildName!,
                 ))
-                  Comment(
-                    comments: combox.commentFather,
-                    productName: combox.ChildName!,
-                    internalCodeOnErp:
-                        combox.InternalCodeOnERPCodeChild!.toInt(),
-                    updateComment: () async {
-                      await cartPresenter.updateCommentOfCombox(
-                        indexOfCombox: widget.indexOfConfirmedCombox,
-                        indexOfProduct: index,
-                        newComment:
-                            commentsPresenter.getConcatenateSelectedComments(),
-                      );
-                    },
-                  ),
+                  CommentRichText(comment: combox.commentFather ?? ""),
               ],
             );
           })

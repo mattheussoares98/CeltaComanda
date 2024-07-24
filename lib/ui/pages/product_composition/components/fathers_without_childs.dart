@@ -174,21 +174,8 @@ class _FathersWithoutChildsState extends State<FathersWithoutChilds> {
                               productName: widget.father.ChildName!,
                             ))
                               Expanded(
-                                child: Comment(
-                                  comments: widget.father.commentFather,
-                                  productName: widget.father.ChildName!,
-                                  updateComment: () async {
-                                    widget.father.commentFather = null;
-
-                                    productCompositionPresenter.updateComment(
-                                      commentsPresenter: commentsPresenter,
-                                      father: widget.father,
-                                    );
-                                    setState(() {});
-                                  },
-                                  internalCodeOnErp: widget
-                                      .father.InternalCodeOnERPCodeChild!
-                                      .toInt(),
+                                child: CommentRichText(
+                                  comment: widget.father.commentFather ?? "",
                                 ),
                               ),
                           ],

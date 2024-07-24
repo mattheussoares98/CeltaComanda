@@ -7,9 +7,7 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class SaveSaleRequestButton extends StatelessWidget {
-  final PageController pageController;
   const SaveSaleRequestButton({
-    required this.pageController,
     super.key,
   });
 
@@ -39,7 +37,10 @@ class SaveSaleRequestButton extends StatelessWidget {
           "O pedido foi enviado com sucesso",
         );
       });
-      pageController.jumpToPage(0);
+
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pop();
+      });
     }
   }
 

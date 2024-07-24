@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:provider/provider.dart';
 
+import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -76,26 +77,19 @@ class _CartPageState extends State<CartPage>
             right: 0,
             child: SizedBox(
               height: _buttonsHeight,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   children: [
-                    // if (widget.pageController != null)
-                    //   Expanded(
-                    //     flex: 4,
-                    //     child: AddMoreCartItensButton(
-                    //       pageController: widget.pageController!,
-                    //     ),
-                    //   ),
-                    // if (widget.pageController != null)
-                    //   SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                    // Expanded(
-                    //   flex: 6,
-                    //   child: SaveSaleRequestButton(
-                    //     pageController:
-                    //         widget.pageController ?? PageController(),
-                    //   ),
-                    // ),
+                    const Expanded(
+                      flex: 4,
+                      child: AddMoreCartItensButton(),
+                    ),
+                    SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                    const Expanded(
+                      flex: 6,
+                      child: SaveSaleRequestButton(),
+                    ),
                   ],
                 ),
               ),

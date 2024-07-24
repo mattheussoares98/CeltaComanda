@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../helpers/helpers.dart';
 
 class AddMoreCartItensButton extends StatelessWidget {
-  final PageController pageController;
   const AddMoreCartItensButton({
-    required this.pageController,
     super.key,
   });
 
@@ -15,9 +13,7 @@ class AddMoreCartItensButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
-      onPressed: () {
-        pageController.jumpToPage(0);
-      },
+      onPressed: Navigator.of(context).pop,
       child: FittedBox(
         child: Text(
           "Adicionar mais itens",

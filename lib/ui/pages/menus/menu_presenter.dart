@@ -26,6 +26,7 @@ abstract class MenuPresenter implements Listenable {
 
   void goToProductsPage(ExpansibleGroupEntity entity);
   Future<void> goToComboxPage(ProductsViewModel product);
+  void goToInsertProductPage(ProductsViewModel product);
   void clear();
   void updateIndexOfSelectedGroup(int index);
 }

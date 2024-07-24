@@ -259,4 +259,12 @@ class GetxMenuPresenter extends GetxController
   @override
   Stream<bool> get showPreLoadImagesStream => _showPreLoadImages.stream;
   set showPreLoadImage(bool value) => _showPreLoadImages.subject.add(value);
+
+  @override
+  void goToInsertProductPage(ProductsViewModel product) {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.insertProduct,
+      arguments: product,
+    );
+  }
 }

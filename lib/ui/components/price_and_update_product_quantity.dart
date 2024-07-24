@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/components/components.dart';
-import '../../helpers/helpers.dart';
+import 'components.dart';
+import '../helpers/helpers.dart';
 
 class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;

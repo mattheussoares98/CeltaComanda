@@ -549,6 +549,16 @@ void main() {
         ),
       ).called(1);
     });
+    test('Should go to InsertProductPage', () async {
+      sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
+
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.insertProduct,
+          arguments: ProductsViewModel.fromEntity(productEntity),
+        ),
+      ).called(1);
+    });
   });
 
   group("Selected group", () {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'components.dart';
 import '../helpers/helpers.dart';
 
 class PriceAndUpdateProductQuantity extends StatefulWidget {
@@ -32,48 +31,58 @@ class _PriceAndUpdateProductQuantityState
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if (widget.showItemPrice)
-          Text(
-            widget.price.toString().toBrazilianNumber().addBrazilianCoin(),
+        FittedBox(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey[300],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    color: Theme.of(context).primaryColor,
+                    onPressed: widget.onPressedReduceQuantity,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    child: Text(
+                      widget.productQuantity.toString().toBrazilianNumber(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: hasMinWidth(context) ? 20 : 15,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    color: Theme.of(context).primaryColor,
+                    onPressed: widget.onPressedAddQuantity,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        FittedBox(
+          child: Text(
+            widget.totalLiquid
+                .toString()
+                .toBrazilianNumber()
+                .addBrazilianCoin(),
             style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
               fontSize: getStringSize(context),
             ),
           ),
-        if (widget.showUpdateProductQuantity)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              FittedBox(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey[300],
-                  ),
-                  child: UpdateQuantity(
-                    productQuantity: widget.productQuantity,
-                    onPressedReduceQuantity: widget.onPressedReduceQuantity,
-                    onPressedAddQuantity: widget.onPressedAddQuantity,
-                    iconSize: getStringSize(context),
-                  ),
-                ),
-              ),
-              FittedBox(
-                child: Text(
-                  widget.totalLiquid
-                      .toString()
-                      .toBrazilianNumber()
-                      .addBrazilianCoin(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                    fontSize: getStringSize(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        ),
       ],
     );
   }

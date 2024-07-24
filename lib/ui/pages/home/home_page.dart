@@ -9,7 +9,6 @@ import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
-import 'components/components.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -82,10 +81,10 @@ class _HomePageState extends State<HomePage>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        UserInteraction.restartTimes(null);
+        UserInteraction.restartTimes();
       },
       onPanDown: (_) {
-        UserInteraction.restartTimes(null);
+        UserInteraction.restartTimes();
       },
       child: PopScope(
         canPop: false,

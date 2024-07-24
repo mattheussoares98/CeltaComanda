@@ -74,10 +74,10 @@ class App extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          UserInteraction.restartTimes(null);
+          UserInteraction.restartTimes();
         },
         onPanDown: (_) {
-          UserInteraction.restartTimes(null);
+          UserInteraction.restartTimes();
         },
         child: GetMaterialApp(
           navigatorKey: NavigatorKey.navigatorKey,

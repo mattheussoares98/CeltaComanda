@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../builders.dart';
@@ -16,8 +15,8 @@ class UserInteraction {
     listen: false,
   );
 
-  static void restartTimes([PageController? pageController]) {
-    CartNotEmptyInteraction.restartTime(pageController);
+  static void restartTimes() {
+    CartNotEmptyInteraction.restartTime();
     ShowDetachLargeItemsInteraction.restartTime();
   }
 }

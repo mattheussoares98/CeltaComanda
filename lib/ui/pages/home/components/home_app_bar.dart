@@ -18,7 +18,7 @@ PreferredSize homeAppBar({
               style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder()),
               onPressed: () {
-                openCartPageDialog(context);
+                CartPageDialog.open(context);
               },
               label: const Center(
                 child: Text(

@@ -13,22 +13,25 @@ class CartNotEmptyInteraction {
     listen: false,
   );
 
-  static const _duration = Duration(seconds: 150);
+  static const _duration = Duration(seconds: 3);
   static Timer _timer =
       Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
 
   static void restartTime() {
-    if (!_dialogIsOpen) {
+    if (!CartPageDialog.isOpen && !_alertMessageIsOpen) {
       _timer.cancel();
       _timer = Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
     }
   }
 
-  static bool _dialogIsOpen = false;
-  static void _showCartNotEmptyMessage() async {
-    _timer.cancel();
+  static bool _alertMessageIsOpen = false;
 
-    _dialogIsOpen = true;
+  static void _showCartNotEmptyMessage() async {
+    if (CartPageDialog.isOpen || _alertMessageIsOpen) {
+      return;
+    }
+    _alertMessageIsOpen = true;
+    _timer.cancel();
 
     Navigator.of(NavigatorKey.navigatorKey.currentState!.context).popUntil(
       (route) => route.isFirst,
@@ -73,9 +76,9 @@ class CartNotEmptyInteraction {
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).pop();
-                    await openCartPageDialog(
+                    await CartPageDialog.open(
                         NavigatorKey.navigatorKey.currentState!.context);
-                    _dialogIsOpen = false;
+                    _alertMessageIsOpen = false;
                     restartTime();
                   },
                   child: const Padding(

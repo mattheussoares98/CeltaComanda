@@ -6,6 +6,5 @@ export './home/home.dart';
 export './payment/payment.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';
-export './product_details/product_details.dart';
 export './products/products.dart';
 export './splash/splash.dart';

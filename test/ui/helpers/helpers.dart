@@ -18,12 +18,6 @@ Widget makePage(
       page: () => const ProductsPage(),
     ),
     GetPage(
-      name: PageRoutes.productDetails,
-      page: () => ProductDetailsPage(
-        ProductDetailsPresenterSpy(),
-      ),
-    ),
-    GetPage(
       name: '/any_route',
       page: () => Scaffold(
         appBar: AppBar(title: const Text('any title')),

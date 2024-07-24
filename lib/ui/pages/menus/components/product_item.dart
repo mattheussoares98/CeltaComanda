@@ -19,19 +19,11 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          if (widget.productsViewModel.IsPromoCombox == "true") {
-            menuPresenter.goToComboxPage(widget.productsViewModel);
-            Future.delayed(const Duration(milliseconds: 100), () async {
-              await productCompositionPresenter
-                  .updateSelectedProduct(widget.productsViewModel);
-            });
-          }
+          menuPresenter.goToInsertProductPage(widget.productsViewModel);
         },
         child: Padding(
             padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),

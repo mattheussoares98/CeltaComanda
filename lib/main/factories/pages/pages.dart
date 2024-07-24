@@ -3,6 +3,7 @@ export './comments/comments.dart';
 export './enterprise_validation/enterprise_validation.dart';
 export './menus/menus.dart';
 export './home/home.dart';
+export './insert_product/insert_product.dart';
 export './payment/payment.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';

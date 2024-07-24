@@ -113,9 +113,9 @@ class App extends StatelessWidget {
               transition: Transition.fadeIn,
             ),
             GetPage(
-              name: PageRoutes.cart,
-              page: makeCartPage,
-              transition: Transition.rightToLeft,
+              name: PageRoutes.insertProduct,
+              page: makeInsertProductPage,
+              transition: Transition.fadeIn,
             ),
           ],
         ),

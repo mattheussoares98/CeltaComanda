@@ -55,7 +55,26 @@ class _CartPageState extends State<CartPage>
                 child: cartPresenter.cartProducts.isNotEmpty == true ||
                         cartPresenter.confirmedCombox.isNotEmpty == true
                     ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: Container(
+                              width: double.infinity,
+                              color: Theme.of(context).primaryColorDark,
+                              child: const Center(
+                                  child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  "CARRINHO",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )),
+                            ),
+                          ),
                           if (cartPresenter.cartProducts.isNotEmpty)
                             const CartProductsItems(),
                           if (cartPresenter.confirmedCombox.isNotEmpty)

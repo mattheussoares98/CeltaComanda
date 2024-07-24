@@ -17,6 +17,7 @@ class OpenCartPage extends StatelessWidget {
             context: context,
             builder: (context) {
               return Dismissible(
+                direction: DismissDirection.startToEnd,
                 key: UniqueKey(),
                 onDismissed: (_) => Navigator.of(context).pop(),
                 child: Row(
@@ -39,8 +40,12 @@ class OpenCartPage extends StatelessWidget {
                     Expanded(
                       flex: 9,
                       child: AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
                         insetPadding: const EdgeInsets.all(0),
-                        contentPadding: const EdgeInsets.all(0),
+                        contentPadding
+                        : const EdgeInsets.all(0),
                         content: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: const CartPage(),

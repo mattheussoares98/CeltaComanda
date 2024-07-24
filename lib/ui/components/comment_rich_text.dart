@@ -11,19 +11,13 @@ class CommentRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: <TextSpan>[
-          TextSpan(
-            text: comment.replaceAll(RegExp(r'\n'), '; '),
-            style: TextStyle(
-              color: Theme.of(context).primaryColorLight,
-              fontStyle: FontStyle.italic,
-              fontSize: getStringSize(context) * 0.7,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+    return Text(
+      comment.replaceAll(RegExp(r'\n'), '; '),
+      style: TextStyle(
+        color: Theme.of(context).primaryColorLight,
+        fontStyle: FontStyle.italic,
+        fontSize: getStringSize(context) * 0.7,
+        fontWeight: FontWeight.bold,
       ),
     );
   }

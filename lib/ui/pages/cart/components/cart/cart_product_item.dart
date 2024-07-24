@@ -115,8 +115,7 @@ class _CartProductItemState extends State<CartProductItem> {
                     ))
                       SizedBox(
                         child: CommentRichText(
-                          comment: widget.cartProduct.Comments!,
-                        ),
+                            comment: widget.cartProduct.Comments!),
                       ),
                   ],
                 ),

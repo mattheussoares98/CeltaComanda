@@ -70,7 +70,7 @@ void showLargeImage({
                                     context, productComplement),
                               ),
                             Expanded(
-                              child: InsertProductButton(
+                              child: OpenInsertProductPage(
                                 selectedProduct: selectedProduct,
                               ),
                             ),

@@ -2,7 +2,7 @@ export './detach_items.dart';
 export './group_item.dart';
 export './group_items.dart';
 export './groups_and_products.dart';
-export 'insert_product_button.dart';
+export 'open_insert_product_page.dart';
 export 'name_image_price_combox_complement.dart';
 export './product_item.dart';
 export './products_items.dart';

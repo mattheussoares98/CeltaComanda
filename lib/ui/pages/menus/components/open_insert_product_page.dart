@@ -8,18 +8,18 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/mixins/mixins.dart';
 import '../../../../ui/pages/pages.dart';
 
-class InsertProductButton extends StatefulWidget {
+class OpenInsertProductPage extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
-  const InsertProductButton({
+  const OpenInsertProductPage({
     required this.selectedProduct,
     super.key,
   });
 
   @override
-  State<InsertProductButton> createState() => _InsertProductButtonState();
+  State<OpenInsertProductPage> createState() => _OpenInsertProductPageState();
 }
 
-class _InsertProductButtonState extends State<InsertProductButton>
+class _OpenInsertProductPageState extends State<OpenInsertProductPage>
     with LoadingManager, UIErrorManager {
   Future<void> _showModalToSelectComments({
     required CartPresenter cartPresenter,

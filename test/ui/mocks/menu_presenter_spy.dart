@@ -31,16 +31,11 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     when(() => this.clear()).thenAnswer((_) async => _);
     when(() => this.updateIndexOfSelectedGroup(any()))
         .thenAnswer((_) async => _);
-    when(() => this.updateSelectedProduct(
-          selectedProduct: any(named: "selectedProduct"),
-          commentsPresenter: any(named: "commentsPresenter"),
-        )).thenAnswer((_) async => _);
+
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.selectedProductStream)
-        .thenAnswer((_) => selectedProductController.stream);
     when(() => this.searchProductController)
         .thenAnswer((_) => searchProductControllerMock);
   }

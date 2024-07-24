@@ -10,7 +10,6 @@ abstract class MenuPresenter implements Listenable {
   Stream<bool> get showPreLoadImagesStream;
   Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
       get menuStream;
-  Stream<ProductsViewModel?> get selectedProductStream;
   Stream<int> get indexOfSelectedGroupStream;
 
   ProductsViewModel? get searchedProduct;
@@ -25,21 +24,8 @@ abstract class MenuPresenter implements Listenable {
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
 
-  // Future<void> loadCommandData({
-  //   required String commandNumber,
-  //   required PrintedProductsPresenter printedProductsPresenter,
-  //   required CartPresenter cartPresenter,
-  //   required MenuPresenter menuPresenter,
-  //   required HomePresenter homePresenter,
-  //   required CommentsPresenter commentsPresenter,
-  // });
-
   void goToProductsPage(ExpansibleGroupEntity entity);
   Future<void> goToComboxPage(ProductsViewModel product);
   void clear();
   void updateIndexOfSelectedGroup(int index);
-  void updateSelectedProduct({
-    required ProductsViewModel? selectedProduct,
-    required CommentsPresenter commentsPresenter,
-  });
 }

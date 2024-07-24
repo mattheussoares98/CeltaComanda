@@ -55,7 +55,6 @@ class GetxMenuPresenter extends GetxController
   void clear() {
     _menu.subject.add([]);
     _loadedMenu.clear();
-    _selectedProduct.value = null;
     _searchedProduct = null;
   }
 
@@ -130,13 +129,6 @@ class GetxMenuPresenter extends GetxController
       isLoading = false;
     }
   }
-
-  final _selectedProduct = Rx<ProductsViewModel?>(null);
-  @override
-  Stream<ProductsViewModel?> get selectedProductStream =>
-      _selectedProduct.stream;
-  set selectedProduct(ProductsViewModel? value) =>
-      _selectedProduct.value = value;
 
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       _loadedMenu = [];
@@ -257,23 +249,6 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateIndexOfSelectedGroup(int index) {
     _inexOfSelectedGroup.value = index;
-    _selectedProduct.value = null;
-  }
-
-  @override
-  void updateSelectedProduct({
-    required ProductsViewModel? selectedProduct,
-    required CommentsPresenter commentsPresenter,
-  }) {
-    if (_selectedProduct.value == selectedProduct) {
-      return;
-    } else if (selectedProduct?.IsPromoCombox == "true") {
-      _selectedProduct.value = null;
-    } else {
-      _selectedProduct.value = selectedProduct;
-      selectedProduct?.productQuantity = 1;
-      commentsPresenter.unselectAllComments();
-    }
   }
 
   ProductsViewModel? _searchedProduct;

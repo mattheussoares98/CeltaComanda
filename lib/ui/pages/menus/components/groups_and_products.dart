@@ -5,10 +5,8 @@ import '../../../../ui/pages/pages.dart';
 
 class GroupsAndProducts extends StatelessWidget {
   final int? selectedIndex;
-  final ProductsViewModel? selectedProduct;
   const GroupsAndProducts({
     required this.selectedIndex,
-    required this.selectedProduct,
     super.key,
   });
 
@@ -28,7 +26,7 @@ class GroupsAndProducts extends StatelessWidget {
     required MenuPresenter menuPresenter,
     required ScrollController scrollController,
   }) async {
-    if(!scrollController.hasClients) return;
+    if (!scrollController.hasClients) return;
 
     final currentPosition = scrollController.position.pixels;
     final minScrollExtent = scrollController.position.minScrollExtent;
@@ -82,7 +80,6 @@ class GroupsAndProducts extends StatelessWidget {
               child: ProductsItems(
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,
-                selectedProduct: selectedProduct,
                 scrollController: scrollController,
               ),
             ),

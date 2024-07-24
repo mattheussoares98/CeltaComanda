@@ -120,20 +120,15 @@ class _MenuPageState extends State<MenuPage>
                       builder: (context, selectedGroupIndex) {
                         return SizedBox(
                           height: MediaQuery.of(context).size.height,
-                          child: StreamBuilder<ProductsViewModel?>(
-                              stream: menuPresenter.selectedProductStream,
-                              builder: (context, selectedProduct) {
-                                return Column(
-                                  children: [
-                                    if (showPreLoadImageSnapshot.data == true)
-                                      const PreLoadImagesPage(),
-                                    GroupsAndProducts(
-                                      selectedIndex: selectedGroupIndex.data,
-                                      selectedProduct: selectedProduct.data,
-                                    ),
-                                  ],
-                                );
-                              }),
+                          child: Column(
+                            children: [
+                              if (showPreLoadImageSnapshot.data == true)
+                                const PreLoadImagesPage(),
+                              GroupsAndProducts(
+                                selectedIndex: selectedGroupIndex.data,
+                              ),
+                            ],
+                          ),
                         );
                       });
                 }

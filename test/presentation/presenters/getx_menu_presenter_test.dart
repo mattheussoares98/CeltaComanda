@@ -551,7 +551,7 @@ void main() {
     });
   });
 
-  group("selected product", () {
+  group("Selected group", () {
     test('Should update indexOfSelectedProduct correctly', () async {
       expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 2, 0, 5]));
 
@@ -559,68 +559,6 @@ void main() {
       sut.updateIndexOfSelectedGroup(2);
       sut.updateIndexOfSelectedGroup(0);
       sut.updateIndexOfSelectedGroup(5);
-    });
-    test('Should unselect product when change selected group', () async {
-      expectLater(sut.selectedProductStream, emits(null));
-
-      sut.updateIndexOfSelectedGroup(0);
-    });
-
-    test('Should update indexOfSelectedProduct correctly', () async {
-      expectLater(sut.selectedProductStream, emits(productsViewModel));
-
-      sut.updateSelectedProduct(
-        selectedProduct: productsViewModel,
-        commentsPresenter: commentsPresenter,
-      );
-      sut.updateSelectedProduct(
-        selectedProduct: productsViewModel,
-        commentsPresenter: commentsPresenter,
-      );
-    });
-
-    test('Should unselectAllComments only when click in another product',
-        () async {
-      sut.updateSelectedProduct(
-        selectedProduct: productsViewModel,
-        commentsPresenter: commentsPresenter,
-      );
-      sut.updateSelectedProduct(
-        selectedProduct: productsViewModel,
-        commentsPresenter: commentsPresenter,
-      );
-
-      verify(() => commentsPresenter.unselectAllComments()).called(1);
-    });
-
-    test('Should clear product quantity when click in other product', () async {
-      sut.updateSelectedProduct(
-        selectedProduct: productsViewModel,
-        commentsPresenter: commentsPresenter,
-      );
-      productsViewModel.productQuantity = 2.0;
-      expect(productsViewModel.productQuantity, 2.0);
-
-      sut.updateSelectedProduct(
-        selectedProduct: null,
-        commentsPresenter: commentsPresenter,
-      );
-      sut.updateSelectedProduct(
-        selectedProduct: productsViewModel,
-        commentsPresenter: commentsPresenter,
-      );
-      expect(productsViewModel.productQuantity, 1.0);
-    });
-
-    test('Should clear selected product if click in combox product', () async {
-      expectLater(sut.selectedProductStream, emits(null));
-
-      sut.updateSelectedProduct(
-        selectedProduct: ProductsViewModel.fromEntity(
-          EntityFactory.makeProductsEntitys(isPromoCombox: true)[0],
-        ),
-        commentsPresenter: commentsPresenter,
-      );
     });
   });
 }

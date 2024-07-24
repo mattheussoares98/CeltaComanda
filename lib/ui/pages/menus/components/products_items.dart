@@ -5,11 +5,9 @@ import '../../pages.dart';
 
 class ProductsItems extends StatefulWidget {
   final List<ProductsViewModel> products;
-  final ProductsViewModel? selectedProduct;
   final ScrollController scrollController;
   const ProductsItems({
     required this.products,
-    required this.selectedProduct,
     required this.scrollController,
     super.key,
   });
@@ -40,8 +38,6 @@ class _ProductsItemsState extends State<ProductsItems> {
                 if (i < widget.products.length)
                   ProductItem(
                     productsViewModel: widget.products[i],
-                    productIsSelected:
-                        widget.products[i] == widget.selectedProduct,
                   ),
             ],
           ),

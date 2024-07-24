@@ -5,11 +5,9 @@ import '../../pages.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductsViewModel productsViewModel;
-  final bool productIsSelected;
 
   const ProductItem({
     required this.productsViewModel,
-    required this.productIsSelected,
     super.key,
   });
 
@@ -21,18 +19,12 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          menuPresenter.updateSelectedProduct(
-            selectedProduct: widget.productsViewModel,
-            commentsPresenter: commentsPresenter,
-          );
-
           if (widget.productsViewModel.IsPromoCombox == "true") {
             menuPresenter.goToComboxPage(widget.productsViewModel);
             Future.delayed(const Duration(milliseconds: 100), () async {

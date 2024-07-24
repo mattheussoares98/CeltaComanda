@@ -141,18 +141,6 @@ void main() {
   });
 
   group("On page change", () {
-    test("Should clear selectedProduct when changePage", () {
-      sut.onChangePage(
-        menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      verify(() => menuPresenter.updateSelectedProduct(
-            selectedProduct: null,
-            commentsPresenter: commentsPresenter,
-          )).called(1);
-    });
     test("Should updateCanCancelProducts to false when change page", () {
       printedProductsPresenter.updateCanCancelProducts(true);
 

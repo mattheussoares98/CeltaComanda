@@ -135,10 +135,6 @@ void _onTapImage({
     menuPresenter: menuPresenter,
     productName: productsViewModel.Name,
   );
-  menuPresenter.updateSelectedProduct(
-    selectedProduct: productsViewModel,
-    commentsPresenter: commentsPresenter,
-  );
 }
 
 Widget _namePriceComboxAndComplement(

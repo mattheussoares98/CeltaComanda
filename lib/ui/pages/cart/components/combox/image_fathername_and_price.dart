@@ -79,7 +79,6 @@ class ImageFathernameAndPrice extends StatelessWidget {
         Expanded(
           child: PriceAndUpdateProductQuantity(
             showItemPrice: false,
-            showDeleteIcon: confirmedCombox.quantity <= 1,
             showUpdateProductQuantity: true,
             price: confirmedCombox.totalPrice,
             totalLiquid: confirmedCombox.quantity * confirmedCombox.totalPrice,

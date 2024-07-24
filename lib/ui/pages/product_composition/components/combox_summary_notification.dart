@@ -101,7 +101,6 @@ class _ComboxSummaryNotificationState extends State<ComboxSummaryNotification> {
             children: [
               PriceAndUpdateProductQuantity(
                 showItemPrice: false,
-                showDeleteIcon: false,
                 onPressedReduceQuantity:
                     productCompositionPresenter.totalComboxQuantity <= 1
                         ? null

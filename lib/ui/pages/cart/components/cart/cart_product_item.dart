@@ -108,7 +108,6 @@ class _CartProductItemState extends State<CartProductItem> {
               ),
               PriceAndUpdateProductQuantity(
                 showItemPrice: false,
-                showDeleteIcon: false,
                 showUpdateProductQuantity: true,
                 price: widget.cartProduct.Value.toDouble(),
                 totalLiquid: widget.cartProduct.Quantity.toDouble() *

@@ -111,6 +111,7 @@ class _HomePageState extends State<HomePage>
             homePresenter: homePresenter,
             context: context,
             scaffoldKey: scaffoldKey,
+            cartPresenter: cartPresenter,
           ),
           body: makeMenusPage(homePresenter.isFixedCommandNumber),
         ),

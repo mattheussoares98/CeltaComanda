@@ -54,7 +54,6 @@ class _CartProductItemState extends State<CartProductItem> {
               InkWell(
                 onTap: () async {
                   await cartPresenter.removeProductFromCart(widget.index);
-                  setState(() {});
                 },
                 child: SizedBox(
                   height: 100,
@@ -117,12 +116,12 @@ class _CartProductItemState extends State<CartProductItem> {
                 onPressedReduceQuantity:
                     widget.cartProduct.Quantity.toDouble() <= 1
                         ? null
-                        : () {
-                            cartPresenter
+                        : () async {
+                            await cartPresenter
                                 .reduceCartProductQuantity(widget.index);
                           },
-                onPressedAddQuantity: () {
-                  cartPresenter.addCartProductQuantity(widget.index);
+                onPressedAddQuantity: () async {
+                  await cartPresenter.addCartProductQuantity(widget.index);
                 },
                 productQuantity: widget.cartProduct.Quantity.toDouble(),
               ),

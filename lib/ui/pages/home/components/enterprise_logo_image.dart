@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 
 class EnterpriseLogoImage extends StatelessWidget {
@@ -47,14 +48,12 @@ class EnterpriseLogoImage extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: ImageWidget(
+                              child: CachedImage(
                                 ean: null,
-                                plu: "null",
-                                height:
-                                    MediaQuery.of(context).size.height,
-                                width:
-                                    MediaQuery.of(context).size.width,
-                                isAlcoholic: false,
+                                plu:
+                                    "Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo",
+                                height: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                               ),
                             ),
                           ],
@@ -69,12 +68,14 @@ class EnterpriseLogoImage extends StatelessWidget {
       child: SizedBox(
         height: AppBar().preferredSize.height,
         width: AppBar().preferredSize.height,
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: ImageWidget(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CachedImage(
             ean: null,
-            plu: "null",
-            isAlcoholic: false,
+            plu:
+                "Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
           ),
         ),
       ),

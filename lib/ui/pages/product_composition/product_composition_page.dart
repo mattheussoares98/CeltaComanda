@@ -72,34 +72,46 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                   width: MediaQuery.of(context).size.width * 0.67,
                   child: Column(
                     children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: selectedProduct
-                                    .childsComposition![1].childs?.isEmpty ==
-                                true
-                            ? 1
-                            : selectedProduct
-                                .childsComposition![1].childs!.length,
-                        itemBuilder: (context, index) {
-                          // ProductCompositionViewModel child;
-                          bool hasChilds = selectedProduct
-                                  .childsComposition![0].childs?.isNotEmpty ==
-                              true;
+                      StreamBuilder<int>(
+                          stream: productCompositionPresenter
+                              .selectedFatherIndexStream,
+                          builder: (context, snapshot) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: selectedProduct
+                                          .childsComposition![
+                                              snapshot.data ?? 0]
+                                          .childs
+                                          ?.isEmpty ==
+                                      true
+                                  ? 1
+                                  : selectedProduct
+                                      .childsComposition![snapshot.data ?? 0]
+                                      .childs!
+                                      .length,
+                              itemBuilder: (context, index) {
+                                // ProductCompositionViewModel child;
+                                bool hasChilds = selectedProduct
+                                        .childsComposition![index]
+                                        .childs
+                                        ?.isNotEmpty ==
+                                    true;
 
-                          if (hasChilds) {
-                            // child = selectedProduct
-                            //     .childsComposition![0].childs![index];
-                          } else {
-                            // child = selectedProduct.childsComposition![0];
-                          }
+                                if (hasChilds) {
+                                  // child = selectedProduct
+                                  //     .childsComposition![0].childs![index];
+                                } else {
+                                  // child = selectedProduct.childsComposition![0];
+                                }
 
-                          if(hasChilds){
-                            return const Text("Tem filho");
-                          } else {
-                            return const Text("Não tem filho");
-                          }
-                        },
-                      ),
+                                if (hasChilds) {
+                                  return const Text("Tem filho");
+                                } else {
+                                  return const Text("Não tem filho");
+                                }
+                              },
+                            );
+                          }),
                     ],
                   ),
                 ),

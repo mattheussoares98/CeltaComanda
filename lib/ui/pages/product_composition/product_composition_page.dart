@@ -81,8 +81,14 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 builder: (context, snapshotSelectedFather) {
                   final indexOfSelectedFather =
                       snapshotSelectedFather.data ?? 0;
-                  final selectedFather =
-                      selectedProduct.childsComposition![indexOfSelectedFather];
+                  ProductCompositionViewModel selectedFather =
+                      selectedProduct.childsComposition![0];
+
+                  if (indexOfSelectedFather <
+                      selectedProduct.childsComposition!.length) {
+                    selectedFather = selectedProduct
+                        .childsComposition![indexOfSelectedFather];
+                  }
 
                   return Row(
                     children: [

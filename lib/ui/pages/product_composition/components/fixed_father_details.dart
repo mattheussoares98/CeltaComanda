@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
@@ -22,103 +21,63 @@ class FixedFatherDetails extends StatefulWidget {
 }
 
 class _FixedFatherDetailsState extends State<FixedFatherDetails> {
-  final GlobalKey _tooltipKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
-
     return Row(
       children: [
-        Expanded(
+        Padding(
+          padding: const EdgeInsets.only(top: 10, left: 10),
           child: SizedBox(
             height: 100,
             width: 100,
             child: ImageWidget(
+              height: 100,
+              width: 100,
               ean: null,
               plu: widget.father.PluChild!,
               isAlcoholic: false,
             ),
           ),
         ),
+        const SizedBox(width: 30),
         Expanded(
           flex: 8,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (widget.father.ChildName != null)
-                    Expanded(
-                      child: FatherNameText(name: widget.father.ChildName!),
-                    ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (widget.father.Quantity != null)
-                    QuantityText(
-                      quantity: widget.father.Quantity!,
-                    ),
-                  PriceText(
-                    quantity: cartPresenter
-                        .calculateProductTotalLiquid(widget.father),
+              if (widget.father.ChildName != null)
+                Text(
+                  widget.father.ChildName!,
+                  style: TextStyle(
+                    fontSize: getStringSize(context) * 1.3,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColorDark,
                   ),
-                ],
-              ),
-              if (widget.father.IsOptionalItem != null)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        final dynamic tooltip = _tooltipKey.currentState;
-                        tooltip.ensureTooltipVisible();
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Tooltip(
-                              key: _tooltipKey,
-                              message: widget.father.IsOptionalItem == "true"
-                                  ? "Se desejar, selecione um produto. O preço sele será somado no combo"
-                                  : 'Selecione pelo menos um produto',
-                              child: Icon(
-                                Icons.info,
-                                color: Theme.of(context).secondaryHeaderColor,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            widget.father.IsOptionalItem == "true"
-                                ? "Item opcional"
-                                : "Item obrigatório",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: hasMinWidth(context) ? 23 : 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (commentsPresenter.productHasComment(
-                      internalCodeOnERP:
-                          widget.father.InternalCodeOnERPCodeChild!.toInt(),
-                      productName: widget.father.ChildName!,
-                    ))
-                      Expanded(
-                        child: Comment(
-                          comment: widget.father.commentFather ?? "",
-                        ),
-                      ),
-                  ],
                 ),
+              if (widget.father.Quantity != null)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    "Quantidade: ${widget.father.Quantity!.toBrazilianNumber()}",
+                    style: TextStyle(
+                      fontSize: getStringSize(context) * 0.9,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+
+              // if (commentsPresenter.productHasComment(
+              //   internalCodeOnERP:
+              //       widget.father.InternalCodeOnERPCodeChild!.toInt(),
+              //   productName: widget.father.ChildName!,
+              // ))
+              //   Expanded(
+              //     child: Comment(
+              //       comment: widget.father.commentFather ?? "",
+              //     ),
+              //   ),
             ],
           ),
         ),

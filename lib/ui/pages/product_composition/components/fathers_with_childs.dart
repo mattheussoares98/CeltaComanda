@@ -47,27 +47,24 @@ class _FathersWithChildsState extends State<FathersWithChilds> {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FixedFatherDetails(
-                selectedComboxProduct: widget.selectedComboxProduct,
-                father: widget.father,
-                callSetState: () {
-                  setState(() {});
-                },
-              ),
-              if (widget.father.commentFather != null)
-                Comment(comment: widget.father.commentFather!),
-              ChildsItemsRadioListTile(
-                productsCompositionsViewModel: widget.productsCompositions,
-                isFixedItemInCombox: widget.father.childs?.isEmpty == true,
-                father: widget.father,
-              ),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FixedFatherDetails(
+              selectedComboxProduct: widget.selectedComboxProduct,
+              father: widget.father,
+              callSetState: () {
+                setState(() {});
+              },
+            ),
+            if (widget.father.commentFather != null)
+              Comment(comment: widget.father.commentFather!),
+            ChildsItemsRadioListTile(
+              productsCompositionsViewModel: widget.productsCompositions,
+              isFixedItemInCombox: widget.father.childs?.isEmpty == true,
+              father: widget.father,
+            ),
+          ],
         ),
       ),
     );

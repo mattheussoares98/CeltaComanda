@@ -299,7 +299,13 @@ class GetxProductCompositionPresenter extends GetxController
   Stream<int> get selectedFatherIndexStream => _selectedFatherIndex.stream;
 
   @override
-  void updateSelectedFatherIndex(int index) {
-    selectedFatherIndex = index;
+  void updateSelectedFatherIndex(int index) => selectedFatherIndex = index;
+
+  @override
+  void unselectFatherIndexAndSelectedsChildsIndex(ProductsViewModel product) {
+    selectedFatherIndex = 0;
+    for (var father in product.childsComposition!) {
+      father.indexOfSelectedChild = null;
+    }
   }
 }

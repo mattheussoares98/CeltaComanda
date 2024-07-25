@@ -297,4 +297,9 @@ class GetxProductCompositionPresenter extends GetxController
   set selectedFatherIndex(int value) => _selectedFatherIndex.value = value;
   @override
   Stream<int> get selectedFatherIndexStream => _selectedFatherIndex.stream;
+
+  @override
+  void updateSelectedFatherIndex(int index) {
+    selectedFatherIndex = index;
+  }
 }

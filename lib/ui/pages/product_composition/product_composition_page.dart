@@ -44,7 +44,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     return PopScope(
       onPopInvoked: (_) {
-        productCompositionPresenter.updateSelectedFatherIndex(0);
+        productCompositionPresenter.clearSelectedComboxData(selectedProduct);
       },
       child: StreamBuilder<ProductsViewModel?>(
           stream: productCompositionPresenter.selectedComboxProductStream,

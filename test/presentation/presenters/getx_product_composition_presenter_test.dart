@@ -211,7 +211,7 @@ void main() {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
 
       sut.updateSelectedFatherIndex(1);
-      sut.clearComboxInformations(selectedProduct);
+      sut.clearSelectedComboxData(selectedProduct);
     });
 
     test("Should update index of all selected childs to null", () {
@@ -220,7 +220,7 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, 0);
 
-      sut.clearComboxInformations(selectedProduct);
+      sut.clearSelectedComboxData(selectedProduct);
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
     });
 
@@ -230,8 +230,16 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].commentFather, "comentário");
 
-      sut.clearComboxInformations(selectedProduct);
+      sut.clearSelectedComboxData(selectedProduct);
       expect(selectedProduct.childsComposition![0].commentFather, null);
+    });
+
+    test("Should update combox quantity to 1", () {
+      sut.updateComboxQuantity(true);
+      expect(sut.totalComboxQuantity, 2);
+
+      sut.clearSelectedComboxData(selectedProduct);
+      expect(sut.totalComboxQuantity, 1);
     });
   });
   group("sut.UpdateSaleRequestTemp", () {

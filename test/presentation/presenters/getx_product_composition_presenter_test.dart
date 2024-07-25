@@ -205,6 +205,15 @@ void main() {
       sut.updateSelectedFatherIndex(1);
     });
   });
+
+  group("unselectFatherIndexAndSelectedsChildsIndex", () {
+    test("Should update index of selected father to zero", () {
+      expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
+
+      sut.updateSelectedFatherIndex(1);
+      sut.unselectFatherIndexAndSelectedsChildsIndex(selectedProduct);
+    });
+  });
   group("sut.UpdateSaleRequestTemp", () {
     test(
         "Should call sut.updateSaleRequest with correct values of price and totalLiquid 1",

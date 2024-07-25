@@ -58,13 +58,48 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
             body: Row(
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.9,
+                  width: MediaQuery.of(context).size.width * 0.33,
                   child: Column(
                     children: [
                       NameImageAndComplement(
                         selectedProduct: selectedProduct,
                       ),
                       FathersItems(selectedProduct: selectedProduct)
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.67,
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: selectedProduct
+                                    .childsComposition![1].childs?.isEmpty ==
+                                true
+                            ? 1
+                            : selectedProduct
+                                .childsComposition![1].childs!.length,
+                        itemBuilder: (context, index) {
+                          // ProductCompositionViewModel child;
+                          bool hasChilds = selectedProduct
+                                  .childsComposition![0].childs?.isNotEmpty ==
+                              true;
+
+                          if (hasChilds) {
+                            // child = selectedProduct
+                            //     .childsComposition![0].childs![index];
+                          } else {
+                            // child = selectedProduct.childsComposition![0];
+                          }
+
+                          if(hasChilds){
+                            return const Text("Tem filho");
+                          } else {
+                            return const Text("Não tem filho");
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

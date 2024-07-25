@@ -213,6 +213,16 @@ void main() {
       sut.updateSelectedFatherIndex(1);
       sut.unselectFatherIndexAndSelectedsChildsIndex(selectedProduct);
     });
+
+    test("Should update index of all selected childs to null", () {
+      for (var child in selectedProduct.childsComposition!) {
+        child.indexOfSelectedChild = 0;
+      }
+      expect(selectedProduct.childsComposition![0].indexOfSelectedChild, 0);
+
+      sut.unselectFatherIndexAndSelectedsChildsIndex(selectedProduct);
+      expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
+    });
   });
   group("sut.UpdateSaleRequestTemp", () {
     test(

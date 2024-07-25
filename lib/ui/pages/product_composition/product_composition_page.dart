@@ -90,72 +90,63 @@ class FathersItems extends StatelessWidget {
         shrinkWrap: true,
         itemCount: selectedProduct.childsComposition!.length + 1,
         itemBuilder: (context, index) {
-          if ((index + 1) == (selectedProduct.childsComposition!.length + 1)) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: Container(
-                color: Theme.of(context).primaryColorDark,
-                child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Text(
-                        "QUANTIDADE",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Obrigatório",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: getStringSize(context) * 0.7,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+          if (index + 1 == selectedProduct.childsComposition!.length + 1) {
+            return const FatherItem(
+              isOptional: false,
+              title: "QUANTIDADE",
             );
           }
           final fatherComposition = selectedProduct.childsComposition![index];
 
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
-            child: Container(
-              color: Theme.of(context).primaryColorDark,
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      fatherComposition.ChildName ?? "",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                        fatherComposition.IsOptionalItem == "true"
-                            ? "Opcional"
-                            : "Obrigatório",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: getStringSize(context) * 0.7,
-                        ))
-                  ],
-                ),
-              ),
-            ),
+          return FatherItem(
+            title: fatherComposition.ChildName ?? "",
+            isOptional: fatherComposition.IsOptionalItem == "true",
           );
         },
+      ),
+    );
+  }
+}
+
+class FatherItem extends StatelessWidget {
+  final String title;
+  final bool isOptional;
+  const FatherItem({
+    required this.title,
+    required this.isOptional,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 3.0),
+      child: Container(
+        color: Theme.of(context).primaryColorDark,
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                isOptional ? "Opcional" : "Obrigatório",
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: getStringSize(context) * 0.7,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

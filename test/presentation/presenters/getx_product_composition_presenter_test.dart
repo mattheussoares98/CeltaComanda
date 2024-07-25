@@ -211,7 +211,7 @@ void main() {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
 
       sut.updateSelectedFatherIndex(1);
-      sut.unselectFatherIndexAndSelectedsChildsIndex(selectedProduct);
+      sut.clearComboxInformations(selectedProduct);
     });
 
     test("Should update index of all selected childs to null", () {
@@ -220,7 +220,7 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, 0);
 
-      sut.unselectFatherIndexAndSelectedsChildsIndex(selectedProduct);
+      sut.clearComboxInformations(selectedProduct);
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
     });
   });

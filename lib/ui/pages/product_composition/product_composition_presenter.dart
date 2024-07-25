@@ -45,5 +45,5 @@ abstract class ProductCompositionPresenter implements Listenable {
   });
 
   void updateSelectedFatherIndex(int index);
-  void unselectFatherIndexAndSelectedsChildsIndex(ProductsViewModel product);
+  void clearComboxInformations(ProductsViewModel product);
 }

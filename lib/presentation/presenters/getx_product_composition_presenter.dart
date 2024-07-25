@@ -302,7 +302,7 @@ class GetxProductCompositionPresenter extends GetxController
   void updateSelectedFatherIndex(int index) => selectedFatherIndex = index;
 
   @override
-  void unselectFatherIndexAndSelectedsChildsIndex(ProductsViewModel product) {
+  void clearComboxInformations(ProductsViewModel product) {
     selectedFatherIndex = 0;
     for (var father in product.childsComposition!) {
       father.indexOfSelectedChild = null;

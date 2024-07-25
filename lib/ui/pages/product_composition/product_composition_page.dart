@@ -1,11 +1,9 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../mixins/mixins.dart';
 
@@ -27,27 +25,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-  }
-
-  void _updateSelectedIndex({
-    required ProductCompositionPresenter productCompositionPresenter,
-    required ProductCompositionViewModel father,
-    required List<ProductCompositionViewModel> productsCompositionsViewModel,
-    required int? value,
-  }) {
-    setState(() {
-      productCompositionPresenter.updateSelectedIndexOfProduct(
-        father: father,
-        index: value,
-      );
-
-      productCompositionPresenter.updateTotalLiquidCombox(
-        productsCompositionsViewModel,
-      );
-
-      productCompositionPresenter
-          .updateComboxIsValid(productsCompositionsViewModel);
-    });
   }
 
   @override
@@ -81,14 +58,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 builder: (context, snapshotSelectedFather) {
                   final indexOfSelectedFather =
                       snapshotSelectedFather.data ?? 0;
-                  ProductCompositionViewModel selectedFather =
-                      selectedProduct.childsComposition![0];
-
-                  if (indexOfSelectedFather <
-                      selectedProduct.childsComposition!.length) {
-                    selectedFather = selectedProduct
-                        .childsComposition![indexOfSelectedFather];
-                  }
 
                   return Row(
                     children: [
@@ -115,78 +84,10 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                               const Center(child: Text("Quantidade")),
                             if (indexOfSelectedFather <
                                 selectedProduct.childsComposition!.length)
-                              ListView.builder(
-                                shrinkWrap: true,
-                                itemCount:
-                                    selectedFather.childs?.isEmpty == true
-                                        ? 1
-                                        : selectedFather.childs!.length,
-                                itemBuilder: (context, childsIndex) {
-                                  ProductCompositionViewModel child;
-                                  bool hasChilds =
-                                      selectedFather.childs?.isNotEmpty == true;
-
-                                  if (hasChilds) {
-                                    child = selectedFather.childs![childsIndex];
-                                  } else {
-                                    child = selectedFather;
-                                  }
-
-                                  if (hasChilds) {
-                                    return InkWell(
-                                      onTap: () {
-                                        _updateSelectedIndex(
-                                          productCompositionPresenter:
-                                              productCompositionPresenter,
-                                          father: selectedFather,
-                                          productsCompositionsViewModel:
-                                              selectedProduct
-                                                  .childsComposition!,
-                                          value: childsIndex,
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(width: 5),
-                                          Radio<int>(
-                                            value: childsIndex,
-                                            groupValue: selectedFather
-                                                .indexOfSelectedChild,
-                                            visualDensity:
-                                                VisualDensity.compact,
-                                            toggleable:
-                                                selectedFather.IsOptionalItem ==
-                                                    "true",
-                                            onChanged: (int? value) {
-                                              _updateSelectedIndex(
-                                                productCompositionPresenter:
-                                                    productCompositionPresenter,
-                                                father: selectedFather,
-                                                productsCompositionsViewModel:
-                                                    selectedProduct
-                                                        .childsComposition!,
-                                                value: childsIndex,
-                                              );
-                                            },
-                                          ),
-                                          if (child.ChildName != null)
-                                            Text(
-                                              child.ChildName!,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    );
-                                  } else {
-                                    return const Text("Não tem filho");
-                                  }
-                                },
-                              )
+                              Childs(
+                                indexOfSelectedFather: indexOfSelectedFather,
+                                selectedProduct: selectedProduct,
+                              ),
                           ],
                         ),
                       ),
@@ -195,150 +96,5 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 }),
           );
         });
-  }
-}
-
-class FathersItems extends StatelessWidget {
-  final ProductsViewModel selectedProduct;
-  final int indexOfSelectedFather;
-  const FathersItems({
-    required this.selectedProduct,
-    required this.indexOfSelectedFather,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: selectedProduct.childsComposition!.length + 1,
-        itemBuilder: (context, index) {
-          if (index + 1 == selectedProduct.childsComposition!.length + 1) {
-            return FatherItem(
-              isOptional: false,
-              title: "QUANTIDADE",
-              indexOfSelectedFather: index,
-              fatherIsSelected: indexOfSelectedFather == index,
-            );
-          }
-          final fatherComposition = selectedProduct.childsComposition![index];
-
-          return FatherItem(
-            title: fatherComposition.ChildName ?? "",
-            isOptional: fatherComposition.IsOptionalItem == "true",
-            indexOfSelectedFather: index,
-            fatherIsSelected: indexOfSelectedFather == index,
-          );
-        },
-      ),
-    );
-  }
-}
-
-class FatherItem extends StatelessWidget {
-  final String title;
-  final bool isOptional;
-  final int indexOfSelectedFather;
-  final bool fatherIsSelected;
-  const FatherItem({
-    required this.title,
-    required this.isOptional,
-    required this.indexOfSelectedFather,
-    required this.fatherIsSelected,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
-
-    return InkWell(
-      onTap: () {
-        productCompositionPresenter
-            .updateSelectedFatherIndex(indexOfSelectedFather);
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 3.0),
-        child: Container(
-          color: fatherIsSelected
-              ? Theme.of(context).primaryColorDark
-              : Theme.of(context).primaryColor,
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isOptional ? "Opcional" : "Obrigatório",
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: getStringSize(context) * 0.7,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class NameImageAndComplement extends StatelessWidget {
-  final ProductsViewModel selectedProduct;
-  const NameImageAndComplement({
-    super.key,
-    required this.selectedProduct,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2.9,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              selectedProduct.Name,
-              style: TextStyle(
-                fontSize: getStringSize(context),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            ImageWidget(
-              height: 160,
-              width: 160,
-              ean: selectedProduct.EanCode,
-              plu: selectedProduct.PriceLookupCode,
-              isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
-              beginAnimation: 1.5,
-              endAnimation: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
-              child: Text(
-                selectedProduct.ProductComplement ?? "",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -47,23 +48,54 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
         stream: productCompositionPresenter.selectedComboxProductStream,
         builder: (context, snapshot) {
           productCompositionPresenter.updateSelectedProduct(selectedProduct);
+
+          if (snapshot.hasData) {
+            selectedProduct = snapshot.data!;
+          }
+
           return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                textAlign: TextAlign.center,
-                selectedProduct.Name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: hasMinWidth(context) ? 30 : 20,
-                  color: Theme.of(context).primaryColorLight,
-                ),
-              ),
-            ),
-            body: Column(
+            appBar: AppBar(),
+            body: Row(
               children: [
-                Expanded(
-                  child: Composition(
-                    selectedComboxProduct: snapshot.data ?? selectedProduct,
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              selectedProduct.Name,
+                              style: TextStyle(
+                                fontSize: getStringSize(context),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          ImageWidget(
+                            height: 200,
+                            width: 200,
+                            ean: selectedProduct.EanCode,
+                            plu: selectedProduct.PriceLookupCode,
+                            isAlcoholic:
+                                selectedProduct.IsAlcoholicProduct == "true",
+                            beginAnimation: 1.5,
+                            endAnimation: 1,
+                          ),
+                          SizedBox(
+                            child: Text(
+                              selectedProduct.ProductComplement ?? "",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],

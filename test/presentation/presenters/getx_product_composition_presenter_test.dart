@@ -196,6 +196,15 @@ void main() {
     });
   });
 
+  group("UpdateSelectedFather", () {
+    test("Should emit correct value on call updateSelectedFather", () {
+      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
+
+      sut.updateSelectedFatherIndex(0);
+      sut.updateSelectedFatherIndex(0);
+      sut.updateSelectedFatherIndex(1);
+    });
+  });
   group("sut.UpdateSaleRequestTemp", () {
     test(
         "Should call sut.updateSaleRequest with correct values of price and totalLiquid 1",

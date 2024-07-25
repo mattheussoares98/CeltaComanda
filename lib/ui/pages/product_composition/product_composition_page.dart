@@ -57,14 +57,17 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
             appBar: AppBar(),
             body: Row(
               children: [
-                Column(
-                  children: [
-                    NameImageAndComplement(
-                      selectedProduct: selectedProduct,
-                    ),
-                    const SizedBox(height: 10),
-                    FathersItems(selectedProduct: selectedProduct)
-                  ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.9,
+                  child: Column(
+                    children: [
+                      NameImageAndComplement(
+                        selectedProduct: selectedProduct,
+                      ),
+                      const SizedBox(height: 10),
+                      FathersItems(selectedProduct: selectedProduct)
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -83,8 +86,7 @@ class FathersItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2.9,
+    return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: selectedProduct.childsComposition?.length,
@@ -96,7 +98,8 @@ class FathersItems extends StatelessWidget {
             child: Container(
               color: Theme.of(context).primaryColorDark,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

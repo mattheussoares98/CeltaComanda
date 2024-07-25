@@ -57,50 +57,104 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
             appBar: AppBar(),
             body: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              selectedProduct.Name,
-                              style: TextStyle(
-                                fontSize: getStringSize(context),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          ImageWidget(
-                            height: 200,
-                            width: 200,
-                            ean: selectedProduct.EanCode,
-                            plu: selectedProduct.PriceLookupCode,
-                            isAlcoholic:
-                                selectedProduct.IsAlcoholicProduct == "true",
-                            beginAnimation: 1.5,
-                            endAnimation: 1,
-                          ),
-                          SizedBox(
-                            child: Text(
-                              selectedProduct.ProductComplement ?? "",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                Column(
+                  children: [
+                    NameImageAndComplement(
+                      selectedProduct: selectedProduct,
                     ),
-                  ),
+                    FathersItems(selectedProduct: selectedProduct)
+                  ],
                 ),
               ],
             ),
           );
         });
+  }
+}
+
+class FathersItems extends StatelessWidget {
+  const FathersItems({
+    super.key,
+    required this.selectedProduct,
+  });
+
+  final ProductsViewModel selectedProduct;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 3,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: selectedProduct.childsComposition?.length,
+        itemBuilder: (context, index) {
+          final fatherComposition = selectedProduct.childsComposition?[index];
+
+          return Container(
+            color: Theme.of(context).primaryColorDark,
+            child: Text(
+              fatherComposition?.ChildName ?? "",
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class NameImageAndComplement extends StatelessWidget {
+  const NameImageAndComplement({
+    super.key,
+    required this.selectedProduct,
+  });
+
+  final ProductsViewModel selectedProduct;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width / 3,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  selectedProduct.Name,
+                  style: TextStyle(
+                    fontSize: getStringSize(context),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              ImageWidget(
+                height: 200,
+                width: 200,
+                ean: selectedProduct.EanCode,
+                plu: selectedProduct.PriceLookupCode,
+                isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
+                beginAnimation: 1.5,
+                endAnimation: 1,
+              ),
+              SizedBox(
+                child: Text(
+                  selectedProduct.ProductComplement ?? "",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

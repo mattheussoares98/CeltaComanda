@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage>
               cartPresenter: cartPresenter,
               commentsPresenter: commentsPresenter,
             );
-            setState(() {});
+            // setState(() {});
           }
         });
       });

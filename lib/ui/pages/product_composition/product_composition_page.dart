@@ -29,6 +29,27 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     mainErrorSubscription?.cancel();
   }
 
+  void _updateSelectedIndex({
+    required ProductCompositionPresenter productCompositionPresenter,
+    required ProductCompositionViewModel father,
+    required List<ProductCompositionViewModel> productsCompositionsViewModel,
+    required int? value,
+  }) {
+    setState(() {
+      productCompositionPresenter.updateSelectedIndexOfProduct(
+        father: father,
+        index: value,
+      );
+
+      productCompositionPresenter.updateTotalLiquidCombox(
+        productsCompositionsViewModel,
+      );
+
+      productCompositionPresenter
+          .updateComboxIsValid(productsCompositionsViewModel);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ProductsViewModel selectedProduct = Get.arguments;
@@ -60,6 +81,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                 builder: (context, snapshotSelectedFather) {
                   final indexOfSelectedFather =
                       snapshotSelectedFather.data ?? 0;
+                  final selectedFather =
+                      selectedProduct.childsComposition![indexOfSelectedFather];
 
                   return Row(
                     children: [
@@ -88,36 +111,71 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                 selectedProduct.childsComposition!.length)
                               ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: selectedProduct
-                                            .childsComposition![
-                                                indexOfSelectedFather]
-                                            .childs
-                                            ?.isEmpty ==
-                                        true
-                                    ? 1
-                                    : selectedProduct
-                                        .childsComposition![
-                                            indexOfSelectedFather]
-                                        .childs!
-                                        .length,
+                                itemCount:
+                                    selectedFather.childs?.isEmpty == true
+                                        ? 1
+                                        : selectedFather.childs!.length,
                                 itemBuilder: (context, childsIndex) {
-                                  // ProductCompositionViewModel child;
-                                  bool hasChilds = selectedProduct
-                                          .childsComposition![
-                                              indexOfSelectedFather]
-                                          .childs
-                                          ?.isNotEmpty ==
-                                      true;
+                                  ProductCompositionViewModel child;
+                                  bool hasChilds =
+                                      selectedFather.childs?.isNotEmpty == true;
 
                                   if (hasChilds) {
-                                    // child = selectedProduct
-                                    //     .childsComposition![0].childs![index];
+                                    child = selectedFather.childs![childsIndex];
                                   } else {
-                                    // child = selectedProduct.childsComposition![0];
+                                    child = selectedFather;
                                   }
 
                                   if (hasChilds) {
-                                    return const Text("Tem filho");
+                                    return InkWell(
+                                      onTap: () {
+                                        _updateSelectedIndex(
+                                          productCompositionPresenter:
+                                              productCompositionPresenter,
+                                          father: selectedFather,
+                                          productsCompositionsViewModel:
+                                              selectedProduct
+                                                  .childsComposition!,
+                                          value: childsIndex,
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          const SizedBox(width: 5),
+                                          Radio<int>(
+                                            value: childsIndex,
+                                            groupValue: selectedFather
+                                                .indexOfSelectedChild,
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            toggleable:
+                                                selectedFather.IsOptionalItem ==
+                                                    "true",
+                                            onChanged: (int? value) {
+                                              _updateSelectedIndex(
+                                                productCompositionPresenter:
+                                                    productCompositionPresenter,
+                                                father: selectedFather,
+                                                productsCompositionsViewModel:
+                                                    selectedProduct
+                                                        .childsComposition!,
+                                                value: childsIndex,
+                                              );
+                                            },
+                                          ),
+                                          if (child.ChildName != null)
+                                            Text(
+                                              child.ChildName!,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    );
                                   } else {
                                     return const Text("Não tem filho");
                                   }

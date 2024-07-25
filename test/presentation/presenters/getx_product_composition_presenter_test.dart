@@ -223,6 +223,16 @@ void main() {
       sut.clearComboxInformations(selectedProduct);
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
     });
+
+    test("Should clear all comments", () {
+      for (var child in selectedProduct.childsComposition!) {
+        child.commentFather = "comentário";
+      }
+      expect(selectedProduct.childsComposition![0].commentFather, "comentário");
+
+      sut.clearComboxInformations(selectedProduct);
+      expect(selectedProduct.childsComposition![0].commentFather, null);
+    });
   });
   group("sut.UpdateSaleRequestTemp", () {
     test(

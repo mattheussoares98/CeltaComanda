@@ -306,6 +306,7 @@ class GetxProductCompositionPresenter extends GetxController
     selectedFatherIndex = 0;
     for (var father in product.childsComposition!) {
       father.indexOfSelectedChild = null;
+      father.commentFather = null;
     }
   }
 }

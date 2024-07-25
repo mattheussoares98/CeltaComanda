@@ -1,8 +1,5 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../components/components.dart';
 import '../../pages.dart';
 
 class ChildItemRadioListTile extends StatelessWidget {
@@ -20,75 +17,32 @@ class ChildItemRadioListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-
-    return Flexible(
-      child: InkWell(
-        onTap: () {
-          updateSelectedIndex();
-        },
-        child: Container(
-          width:
-              (MediaQuery.of(context).size.width / (getItensPerLine(context))),
-          margin: const EdgeInsets.only(bottom: 2, right: 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: const Color.fromARGB(255, 240, 240, 240),
+    return InkWell(
+      onTap: () {
+        updateSelectedIndex();
+      },
+      child: Row(
+        children: [
+          const SizedBox(width: 5),
+          Radio<int>(
+            value: index,
+            groupValue: father.indexOfSelectedChild,
+            visualDensity: VisualDensity.compact,
+            toggleable: father.IsOptionalItem == "true",
+            onChanged: (int? value) {
+              updateSelectedIndex();
+            },
+          ),
+          if (child!.ChildName != null)
+            Text(
+              child!.ChildName!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                height: hasMinWidth(context) ? 100 : 70,
-                width: hasMinWidth(context) ? 100 : 70,
-                child: GestureDetector(
-                  onTap: () {
-                    showLargeImage(
-                      context: context,
-                      ean: null,
-                      productComplement: null,
-                      plu: child!.PluChild!,
-                      menuPresenter: menuPresenter,
-                      productName: child!.ChildName!,
-                    );
-                  },
-                  child: ImageWidget(
-                    ean: null,
-                    plu: child!.PluChild!,
-                    height: hasMinWidth(context) ? 100 : 70,
-                    width: hasMinWidth(context) ? 100 : 70,
-                    isAlcoholic: false,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 5),
-              if (child!.ChildName != null)
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    child!.ChildName!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getStringSize(context),
-                    ),
-                  ),
-                ),
-              Expanded(
-                child: Radio<int>(
-                  value: index,
-                  groupValue: father.indexOfSelectedChild,
-                  visualDensity: VisualDensity.compact,
-                  toggleable: father.IsOptionalItem == "true",
-                  onChanged: (int? value) {
-                    updateSelectedIndex();
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

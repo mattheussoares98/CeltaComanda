@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
-import '../../../helpers/helpers.dart';
 
 class ChildsItemsRadioListTile extends StatefulWidget {
   final ProductCompositionViewModel father;
@@ -50,41 +49,26 @@ class _ChildsItemsRadioListTileState extends State<ChildsItemsRadioListTile> {
       primary: false,
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
-      itemCount: widget.isFixedItemInCombox
-          ? 1
-          : (widget.father.childs!.length / getItensPerLine(context)).ceil(),
-      itemBuilder: (context, childIndex) {
+      itemCount: widget.isFixedItemInCombox ? 1 : widget.father.childs!.length,
+      itemBuilder: (context, index) {
         if (widget.isFixedItemInCombox &&
             widget.father.IsOptionalItem == "false") {
           //se o item for obrigatório e não for um combo, já seleciona ele automaticamente
-          widget.father.indexOfSelectedChild = childIndex;
+          widget.father.indexOfSelectedChild = index;
         }
 
-        return IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-              for (int i = childIndex * getItensPerLine(context);
-                  i < (childIndex + 1) * getItensPerLine(context);
-                  i++)
-                if (i < widget.father.childs!.length)
-                  ChildItemRadioListTile(
-                    updateSelectedIndex: () {
-                      _updateSelectedIndex(
-                        productCompositionPresenter:
-                            productCompositionPresenter,
-                        value: i,
-                      );
-                    },
-                    index: i,
-                    father: widget.father,
-                    child: widget.isFixedItemInCombox
-                        ? widget.father
-                        : widget.father.childs?[i],
-                  ),
-            ],
-          ),
+        return ChildItemRadioListTile(
+          updateSelectedIndex: () {
+            _updateSelectedIndex(
+              productCompositionPresenter: productCompositionPresenter,
+              value: index,
+            );
+          },
+          index: index,
+          father: widget.father,
+          child: widget.isFixedItemInCombox
+              ? widget.father
+              : widget.father.childs?[index],
         );
       },
     );

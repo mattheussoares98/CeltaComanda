@@ -89,22 +89,53 @@ class FathersItems extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: selectedProduct.childsComposition?.length,
+        itemCount: selectedProduct.childsComposition!.length + 1,
         itemBuilder: (context, index) {
-          final fatherComposition = selectedProduct.childsComposition?[index];
+          if ((index + 1) == (selectedProduct.childsComposition!.length + 1)) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 3.0),
+              child: Container(
+                color: Theme.of(context).primaryColorDark,
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        "QUANTIDADE",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Obrigatório",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: getStringSize(context) * 0.7,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+          final fatherComposition = selectedProduct.childsComposition![index];
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(bottom: 3.0),
             child: Container(
               color: Theme.of(context).primaryColorDark,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
+                padding: const EdgeInsets.all(5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      fatherComposition?.ChildName ?? "",
+                      fatherComposition.ChildName ?? "",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
@@ -112,7 +143,7 @@ class FathersItems extends StatelessWidget {
                       ),
                     ),
                     Text(
-                        fatherComposition?.IsOptionalItem == "true"
+                        fatherComposition.IsOptionalItem == "true"
                             ? "Opcional"
                             : "Obrigatório",
                         textAlign: TextAlign.end,
@@ -159,8 +190,8 @@ class NameImageAndComplement extends StatelessWidget {
                 ),
               ),
               ImageWidget(
-                height: 200,
-                width: 200,
+                height: 160,
+                width: 160,
                 ean: selectedProduct.EanCode,
                 plu: selectedProduct.PriceLookupCode,
                 isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",

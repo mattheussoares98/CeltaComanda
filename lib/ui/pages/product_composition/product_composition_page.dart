@@ -42,59 +42,64 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     mainErrorSubscription =
         handleMainError(context, productCompositionPresenter.mainErrorStream);
 
-    return StreamBuilder<ProductsViewModel?>(
-        stream: productCompositionPresenter.selectedComboxProductStream,
-        builder: (context, snapshot) {
-          productCompositionPresenter.updateSelectedProduct(selectedProduct);
+    return PopScope(
+      onPopInvoked: (_) {
+        productCompositionPresenter.updateSelectedFatherIndex(0);
+      },
+      child: StreamBuilder<ProductsViewModel?>(
+          stream: productCompositionPresenter.selectedComboxProductStream,
+          builder: (context, snapshot) {
+            productCompositionPresenter.updateSelectedProduct(selectedProduct);
 
-          if (snapshot.hasData) {
-            selectedProduct = snapshot.data!;
-          }
+            if (snapshot.hasData) {
+              selectedProduct = snapshot.data!;
+            }
 
-          return Scaffold(
-            appBar: AppBar(),
-            body: StreamBuilder<int>(
-                stream: productCompositionPresenter.selectedFatherIndexStream,
-                builder: (context, snapshotSelectedFather) {
-                  final indexOfSelectedFather =
-                      snapshotSelectedFather.data ?? 0;
+            return Scaffold(
+              appBar: AppBar(),
+              body: StreamBuilder<int>(
+                  stream: productCompositionPresenter.selectedFatherIndexStream,
+                  builder: (context, snapshotSelectedFather) {
+                    final indexOfSelectedFather =
+                        snapshotSelectedFather.data ?? 0;
 
-                  return Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.33,
-                        child: Column(
-                          children: [
-                            NameImageAndComplement(
-                              selectedProduct: selectedProduct,
-                            ),
-                            FathersItems(
-                              selectedProduct: selectedProduct,
-                              indexOfSelectedFather: indexOfSelectedFather,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.67,
-                        child: Column(
-                          children: [
-                            if (indexOfSelectedFather ==
-                                selectedProduct.childsComposition!.length)
-                              const Center(child: Text("Quantidade")),
-                            if (indexOfSelectedFather <
-                                selectedProduct.childsComposition!.length)
-                              Childs(
-                                indexOfSelectedFather: indexOfSelectedFather,
+                    return Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.33,
+                          child: Column(
+                            children: [
+                              NameImageAndComplement(
                                 selectedProduct: selectedProduct,
                               ),
-                          ],
+                              FathersItems(
+                                selectedProduct: selectedProduct,
+                                indexOfSelectedFather: indexOfSelectedFather,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
-          );
-        });
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.67,
+                          child: Column(
+                            children: [
+                              if (indexOfSelectedFather ==
+                                  selectedProduct.childsComposition!.length)
+                                const Center(child: Text("Quantidade")),
+                              if (indexOfSelectedFather <
+                                  selectedProduct.childsComposition!.length)
+                                Childs(
+                                  indexOfSelectedFather: indexOfSelectedFather,
+                                  selectedProduct: selectedProduct,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+            );
+          }),
+    );
   }
 }

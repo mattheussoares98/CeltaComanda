@@ -9,11 +9,13 @@ class FatherItem extends StatelessWidget {
   final bool isOptional;
   final int indexOfSelectedFather;
   final bool fatherIsSelected;
+  final ProductsViewModel selectedProduct;
   const FatherItem({
     required this.title,
     required this.isOptional,
     required this.indexOfSelectedFather,
     required this.fatherIsSelected,
+    required this.selectedProduct,
     super.key,
   });
 
@@ -24,8 +26,10 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        productCompositionPresenter
-            .updateSelectedFatherIndex(indexOfSelectedFather);
+        productCompositionPresenter.updateSelectedFatherIndex(
+          newIndex: indexOfSelectedFather,
+          selectedProduct: selectedProduct,
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 3.0),

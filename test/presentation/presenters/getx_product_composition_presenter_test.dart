@@ -200,9 +200,18 @@ void main() {
     test("Should emit correct value on call updateSelectedFather", () {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
 
-      sut.updateSelectedFatherIndex(0);
-      sut.updateSelectedFatherIndex(0);
-      sut.updateSelectedFatherIndex(1);
+      sut.updateSelectedFatherIndex(
+        newIndex: 0,
+        selectedProduct: selectedProduct,
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 0,
+        selectedProduct: selectedProduct,
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 1,
+        selectedProduct: selectedProduct,
+      );
     });
   });
 
@@ -210,7 +219,10 @@ void main() {
     test("Should update index of selected father to zero", () {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
 
-      sut.updateSelectedFatherIndex(1);
+      sut.updateSelectedFatherIndex(
+        newIndex: 1,
+        selectedProduct: selectedProduct,
+      );
       sut.clearSelectedComboxData(selectedProduct);
     });
 

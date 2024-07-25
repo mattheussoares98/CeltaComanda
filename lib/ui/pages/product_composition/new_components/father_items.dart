@@ -24,6 +24,7 @@ class FathersItems extends StatelessWidget {
               title: "QUANTIDADE",
               indexOfSelectedFather: index,
               fatherIsSelected: indexOfSelectedFather == index,
+              selectedProduct: selectedProduct,
             );
           }
           final fatherComposition = selectedProduct.childsComposition![index];
@@ -33,6 +34,7 @@ class FathersItems extends StatelessWidget {
             isOptional: fatherComposition.IsOptionalItem == "true",
             indexOfSelectedFather: index,
             fatherIsSelected: indexOfSelectedFather == index,
+            selectedProduct: selectedProduct,
           );
         },
       ),

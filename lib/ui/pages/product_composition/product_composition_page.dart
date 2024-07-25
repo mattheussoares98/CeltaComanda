@@ -62,6 +62,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                     NameImageAndComplement(
                       selectedProduct: selectedProduct,
                     ),
+                    const SizedBox(height: 10),
                     FathersItems(selectedProduct: selectedProduct)
                   ],
                 ),
@@ -83,20 +84,41 @@ class FathersItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 3,
+      width: MediaQuery.of(context).size.width / 2.9,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: selectedProduct.childsComposition?.length,
         itemBuilder: (context, index) {
           final fatherComposition = selectedProduct.childsComposition?[index];
 
-          return Container(
-            color: Theme.of(context).primaryColorDark,
-            child: Text(
-              fatherComposition?.ChildName ?? "",
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              color: Theme.of(context).primaryColorDark,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      fatherComposition?.ChildName ?? "",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                        fatherComposition?.IsOptionalItem == "true"
+                            ? "Opcional"
+                            : "Obrigatório",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: getStringSize(context) * 0.7,
+                        ))
+                  ],
+                ),
               ),
             ),
           );

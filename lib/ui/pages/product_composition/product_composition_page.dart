@@ -72,6 +72,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                             ),
                             FathersItems(
                               selectedProduct: selectedProduct,
+                              indexOfSelectedFather: indexOfSelectedFather,
                             ),
                           ],
                         ),
@@ -135,8 +136,10 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
 class FathersItems extends StatelessWidget {
   final ProductsViewModel selectedProduct;
+  final int indexOfSelectedFather;
   const FathersItems({
     required this.selectedProduct,
+    required this.indexOfSelectedFather,
     super.key,
   });
 
@@ -152,6 +155,7 @@ class FathersItems extends StatelessWidget {
               isOptional: false,
               title: "QUANTIDADE",
               indexOfSelectedFather: index,
+              fatherIsSelected: indexOfSelectedFather == index,
             );
           }
           final fatherComposition = selectedProduct.childsComposition![index];
@@ -160,6 +164,7 @@ class FathersItems extends StatelessWidget {
             title: fatherComposition.ChildName ?? "",
             isOptional: fatherComposition.IsOptionalItem == "true",
             indexOfSelectedFather: index,
+            fatherIsSelected: indexOfSelectedFather == index,
           );
         },
       ),
@@ -171,10 +176,12 @@ class FatherItem extends StatelessWidget {
   final String title;
   final bool isOptional;
   final int indexOfSelectedFather;
+  final bool fatherIsSelected;
   const FatherItem({
     required this.title,
     required this.isOptional,
     required this.indexOfSelectedFather,
+    required this.fatherIsSelected,
     super.key,
   });
 
@@ -185,14 +192,15 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        debugPrint(indexOfSelectedFather.toString());
         productCompositionPresenter
             .updateSelectedFatherIndex(indexOfSelectedFather);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 3.0),
         child: Container(
-          color: Theme.of(context).primaryColorDark,
+          color: fatherIsSelected
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).primaryColor,
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Column(

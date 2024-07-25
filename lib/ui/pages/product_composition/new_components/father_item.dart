@@ -28,7 +28,8 @@ class FatherItem extends StatelessWidget {
       onTap: () {
         productCompositionPresenter.updateSelectedFatherIndex(
           newIndex: indexOfSelectedFather,
-          selectedProduct: selectedProduct,
+          atualFather:
+              selectedProduct.childsComposition![indexOfSelectedFather],
         );
       },
       child: Padding(

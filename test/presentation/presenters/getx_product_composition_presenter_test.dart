@@ -202,15 +202,37 @@ void main() {
 
       sut.updateSelectedFatherIndex(
         newIndex: 0,
-        selectedProduct: selectedProduct,
+        atualFather: selectedProduct.childsComposition![0],
       );
       sut.updateSelectedFatherIndex(
         newIndex: 0,
-        selectedProduct: selectedProduct,
+        atualFather: selectedProduct.childsComposition![0],
       );
       sut.updateSelectedFatherIndex(
         newIndex: 1,
-        selectedProduct: selectedProduct,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+    });
+    test("Should not advance selectedFatherIndex if atual father is invalid",
+        () {
+      selectedProduct.childsComposition = [
+        EntityFactory.makeProductCompositionViewModel(
+          quantity: faker.randomGenerator.decimal(),
+          salePrice: faker.randomGenerator.decimal(),
+          offerPrice: faker.randomGenerator.decimal(),
+          fatherIncrement: faker.randomGenerator.decimal(),
+          childIncrement: faker.randomGenerator.decimal(),
+          isOptionalItem: false,
+          indexOfSelectedChild: null,
+          insertChilds: false,
+        )
+      ];
+
+      expectLater(sut.selectedFatherIndexStream, neverEmits(1));
+
+      sut.updateSelectedFatherIndex(
+        newIndex: 1,
+        atualFather: selectedProduct.childsComposition![0],
       );
     });
   });
@@ -221,7 +243,7 @@ void main() {
 
       sut.updateSelectedFatherIndex(
         newIndex: 1,
-        selectedProduct: selectedProduct,
+        atualFather: selectedProduct.childsComposition![0],
       );
       sut.clearSelectedComboxData(selectedProduct);
     });

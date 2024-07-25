@@ -301,8 +301,12 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   void updateSelectedFatherIndex({
     required int newIndex,
-    required ProductsViewModel selectedProduct,
+    required ProductCompositionViewModel atualFather,
   }) {
+    if (atualFather.IsOptionalItem == "false" &&
+        atualFather.indexOfSelectedChild == null) {
+      return;
+    }
     selectedFatherIndex = newIndex;
   }
 

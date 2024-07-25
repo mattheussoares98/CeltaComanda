@@ -80,42 +80,48 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                         width: MediaQuery.of(context).size.width * 0.67,
                         child: Column(
                           children: [
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: selectedProduct
+                            if (indexOfSelectedFather ==
+                                selectedProduct.childsComposition!.length)
+                              const Center(child: Text("Quantidade")),
+                            if (indexOfSelectedFather <
+                                selectedProduct.childsComposition!.length)
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: selectedProduct
+                                            .childsComposition![
+                                                indexOfSelectedFather]
+                                            .childs
+                                            ?.isEmpty ==
+                                        true
+                                    ? 1
+                                    : selectedProduct
+                                        .childsComposition![
+                                            indexOfSelectedFather]
+                                        .childs!
+                                        .length,
+                                itemBuilder: (context, childsIndex) {
+                                  // ProductCompositionViewModel child;
+                                  bool hasChilds = selectedProduct
                                           .childsComposition![
                                               indexOfSelectedFather]
                                           .childs
-                                          ?.isEmpty ==
-                                      true
-                                  ? 1
-                                  : selectedProduct
-                                      .childsComposition![indexOfSelectedFather]
-                                      .childs!
-                                      .length,
-                              itemBuilder: (context, childsIndex) {
-                                // ProductCompositionViewModel child;
-                                bool hasChilds = selectedProduct
-                                        .childsComposition![
-                                            indexOfSelectedFather]
-                                        .childs
-                                        ?.isNotEmpty ==
-                                    true;
+                                          ?.isNotEmpty ==
+                                      true;
 
-                                if (hasChilds) {
-                                  // child = selectedProduct
-                                  //     .childsComposition![0].childs![index];
-                                } else {
-                                  // child = selectedProduct.childsComposition![0];
-                                }
+                                  if (hasChilds) {
+                                    // child = selectedProduct
+                                    //     .childsComposition![0].childs![index];
+                                  } else {
+                                    // child = selectedProduct.childsComposition![0];
+                                  }
 
-                                if (hasChilds) {
-                                  return const Text("Tem filho");
-                                } else {
-                                  return const Text("Não tem filho");
-                                }
-                              },
-                            )
+                                  if (hasChilds) {
+                                    return const Text("Tem filho");
+                                  } else {
+                                    return const Text("Não tem filho");
+                                  }
+                                },
+                              )
                           ],
                         ),
                       ),

@@ -55,44 +55,50 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
           return Scaffold(
             appBar: AppBar(),
-            body: Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.33,
-                  child: Column(
+            body: StreamBuilder<int>(
+                stream: productCompositionPresenter.selectedFatherIndexStream,
+                builder: (context, snapshotSelectedFather) {
+                  final indexOfSelectedFather =
+                      snapshotSelectedFather.data ?? 0;
+
+                  return Row(
                     children: [
-                      NameImageAndComplement(
-                        selectedProduct: selectedProduct,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.33,
+                        child: Column(
+                          children: [
+                            NameImageAndComplement(
+                              selectedProduct: selectedProduct,
+                            ),
+                            FathersItems(
+                              selectedProduct: selectedProduct,
+                              indexOfSelectedFather: indexOfSelectedFather,
+                            ),
+                          ],
+                        ),
                       ),
-                      FathersItems(selectedProduct: selectedProduct)
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.67,
-                  child: Column(
-                    children: [
-                      StreamBuilder<int>(
-                          stream: productCompositionPresenter
-                              .selectedFatherIndexStream,
-                          builder: (context, snapshot) {
-                            return ListView.builder(
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.67,
+                        child: Column(
+                          children: [
+                            ListView.builder(
                               shrinkWrap: true,
                               itemCount: selectedProduct
                                           .childsComposition![
-                                              snapshot.data ?? 0]
+                                              indexOfSelectedFather]
                                           .childs
                                           ?.isEmpty ==
                                       true
                                   ? 1
                                   : selectedProduct
-                                      .childsComposition![snapshot.data ?? 0]
+                                      .childsComposition![indexOfSelectedFather]
                                       .childs!
                                       .length,
-                              itemBuilder: (context, index) {
+                              itemBuilder: (context, childsIndex) {
                                 // ProductCompositionViewModel child;
                                 bool hasChilds = selectedProduct
-                                        .childsComposition![index]
+                                        .childsComposition![
+                                            indexOfSelectedFather]
                                         .childs
                                         ?.isNotEmpty ==
                                     true;
@@ -110,25 +116,26 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                   return const Text("Não tem filho");
                                 }
                               },
-                            );
-                          }),
+                            )
+                          ],
+                        ),
+                      ),
                     ],
-                  ),
-                ),
-              ],
-            ),
+                  );
+                }),
           );
         });
   }
 }
 
 class FathersItems extends StatelessWidget {
-  const FathersItems({
-    super.key,
-    required this.selectedProduct,
-  });
-
   final ProductsViewModel selectedProduct;
+  final int indexOfSelectedFather;
+  const FathersItems({
+    required this.selectedProduct,
+    required this.indexOfSelectedFather,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +145,10 @@ class FathersItems extends StatelessWidget {
         itemCount: selectedProduct.childsComposition!.length + 1,
         itemBuilder: (context, index) {
           if (index + 1 == selectedProduct.childsComposition!.length + 1) {
-            return const FatherItem(
+            return FatherItem(
               isOptional: false,
               title: "QUANTIDADE",
+              indexOfSelectedFather: index,
             );
           }
           final fatherComposition = selectedProduct.childsComposition![index];
@@ -148,6 +156,7 @@ class FathersItems extends StatelessWidget {
           return FatherItem(
             title: fatherComposition.ChildName ?? "",
             isOptional: fatherComposition.IsOptionalItem == "true",
+            indexOfSelectedFather: index,
           );
         },
       ),
@@ -158,40 +167,52 @@ class FathersItems extends StatelessWidget {
 class FatherItem extends StatelessWidget {
   final String title;
   final bool isOptional;
+  final int indexOfSelectedFather;
   const FatherItem({
     required this.title,
     required this.isOptional,
+    required this.indexOfSelectedFather,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 3.0),
-      child: Container(
-        color: Theme.of(context).primaryColorDark,
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
+
+    return InkWell(
+      onTap: () {
+        debugPrint(indexOfSelectedFather.toString());
+        productCompositionPresenter
+            .updateSelectedFatherIndex(indexOfSelectedFather);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 3.0),
+        child: Container(
+          color: Theme.of(context).primaryColorDark,
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                isOptional ? "Opcional" : "Obrigatório",
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: getStringSize(context) * 0.7,
-                ),
-              )
-            ],
+                Text(
+                  isOptional ? "Opcional" : "Obrigatório",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: getStringSize(context) * 0.7,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -200,12 +221,11 @@ class FatherItem extends StatelessWidget {
 }
 
 class NameImageAndComplement extends StatelessWidget {
+  final ProductsViewModel selectedProduct;
   const NameImageAndComplement({
     super.key,
     required this.selectedProduct,
   });
-
-  final ProductsViewModel selectedProduct;
 
   @override
   Widget build(BuildContext context) {

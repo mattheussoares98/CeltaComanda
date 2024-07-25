@@ -39,7 +39,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   Future<void> loadSaleRequest(String commandNumber) async {
-    isLoading = true;
     clear();
 
     try {
@@ -220,7 +219,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final _isLoading = false.obs;
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) => _isLoading.value = value;
+  set isLoading(bool value) => _isLoading.subject.add(value);
 
   final _mainError = Rx<UIError?>(null);
   @override

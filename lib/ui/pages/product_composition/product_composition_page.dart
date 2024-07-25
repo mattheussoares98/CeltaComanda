@@ -72,7 +72,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                             ),
                             FathersItems(
                               selectedProduct: selectedProduct,
-                              indexOfSelectedFather: indexOfSelectedFather,
                             ),
                           ],
                         ),
@@ -130,10 +129,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
 class FathersItems extends StatelessWidget {
   final ProductsViewModel selectedProduct;
-  final int indexOfSelectedFather;
   const FathersItems({
     required this.selectedProduct,
-    required this.indexOfSelectedFather,
     super.key,
   });
 

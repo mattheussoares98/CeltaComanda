@@ -292,4 +292,9 @@ class GetxProductCompositionPresenter extends GetxController
     _selectedComboxProduct.value = null;
     _selectedComboxProduct.subject.add(product);
   }
+
+  final _selectedFatherIndex = Rx<int>(0);
+  set selectedFatherIndex(int value) => _selectedFatherIndex.value = value;
+  @override
+  Stream<int> get selectedFatherIndexStream => _selectedFatherIndex.stream;
 }

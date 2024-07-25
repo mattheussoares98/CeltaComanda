@@ -8,8 +8,9 @@ abstract class ProductCompositionPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<double> get totalPriceComboxStream;
   Stream<bool> get comboxIsValidStream;
-  double get totalComboxQuantity;
   Stream<ProductsViewModel?> get selectedComboxProductStream;
+  Stream<int> get selectedFatherIndexStream;
+  double get totalComboxQuantity;
 
   void updateTotalLiquidCombox(
     List<ProductCompositionViewModel> productsCompositionsViewModel,

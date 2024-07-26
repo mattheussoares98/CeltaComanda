@@ -33,6 +33,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -44,7 +45,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     return PopScope(
       onPopInvoked: (_) {
-        productCompositionPresenter.clearSelectedComboxData(selectedProduct);
+        productCompositionPresenter.clearSelectedComboxData(
+            product: selectedProduct, commentsPresenter: commentsPresenter);
       },
       child: StreamBuilder<ProductsViewModel?>(
           stream: productCompositionPresenter.selectedComboxProductStream,

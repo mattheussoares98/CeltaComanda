@@ -325,13 +325,17 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void clearSelectedComboxData(ProductsViewModel product) {
+  void clearSelectedComboxData({
+    required ProductsViewModel product,
+    required CommentsPresenter commentsPresenter,
+  }) {
     selectedFatherIndex = 0;
     _totalComboxQuantity = 1;
     for (var father in product.childsComposition!) {
       father.indexOfSelectedChild = null;
       father.commentFather = null;
     }
+    commentsPresenter.unselectAllComments();
   }
 
   @override

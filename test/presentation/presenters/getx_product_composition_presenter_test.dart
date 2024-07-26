@@ -274,13 +274,16 @@ void main() {
     });
   });
 
-  group("unselectFatherIndexAndSelectedsChildsIndex", () {
+  group("clearSelectedComboxData", () {
     test("Should update index of selected father to zero", () async {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedFatherIndex(1);
-      sut.clearSelectedComboxData(selectedProduct);
+      sut.clearSelectedComboxData(
+        product: selectedProduct,
+        commentsPresenter: commentsPresenter,
+      );
     });
 
     test("Should update index of all selected childs to null", () {
@@ -289,7 +292,10 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, 0);
 
-      sut.clearSelectedComboxData(selectedProduct);
+      sut.clearSelectedComboxData(
+        product: selectedProduct,
+        commentsPresenter: commentsPresenter,
+      );
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
     });
 
@@ -299,7 +305,10 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].commentFather, "comentário");
 
-      sut.clearSelectedComboxData(selectedProduct);
+      sut.clearSelectedComboxData(
+        product: selectedProduct,
+        commentsPresenter: commentsPresenter,
+      );
       expect(selectedProduct.childsComposition![0].commentFather, null);
     });
 
@@ -307,8 +316,20 @@ void main() {
       sut.updateComboxQuantity(true);
       expect(sut.totalComboxQuantity, 2);
 
-      sut.clearSelectedComboxData(selectedProduct);
+      sut.clearSelectedComboxData(
+        product: selectedProduct,
+        commentsPresenter: commentsPresenter,
+      );
       expect(sut.totalComboxQuantity, 1);
+    });
+
+    test("Should call commentsPresenter.unselectAllComments", () {
+      sut.clearSelectedComboxData(
+        product: selectedProduct,
+        commentsPresenter: commentsPresenter,
+      );
+
+      verify(() => commentsPresenter.unselectAllComments()).called(1);
     });
   });
   group("sut.UpdateSaleRequestTemp", () {

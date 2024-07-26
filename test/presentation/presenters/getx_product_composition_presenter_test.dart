@@ -33,6 +33,8 @@ void main() {
   late ProductCompositionViewModel obligatoryFather;
   late SaleRequestTempEntity saleRequestTempEntity;
   late ProductsViewModel selectedProduct;
+  late ProductCompositionViewModel validFather;
+  late ProductCompositionViewModel invalidFather;
 
   UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity({
     required ProductCompositionViewModel productCompositionViewModel,
@@ -123,6 +125,27 @@ void main() {
 
     selectedProduct =
         EntityFactory.makeProductViewModel(insertChildsComposition: true);
+
+    invalidFather = EntityFactory.makeProductCompositionViewModel(
+      quantity: faker.randomGenerator.decimal(),
+      salePrice: faker.randomGenerator.decimal(),
+      offerPrice: faker.randomGenerator.decimal(),
+      fatherIncrement: faker.randomGenerator.decimal(),
+      childIncrement: faker.randomGenerator.decimal(),
+      isOptionalItem: false,
+      indexOfSelectedChild: null,
+      insertChilds: false,
+    );
+    validFather = EntityFactory.makeProductCompositionViewModel(
+      quantity: faker.randomGenerator.decimal(),
+      salePrice: faker.randomGenerator.decimal(),
+      offerPrice: faker.randomGenerator.decimal(),
+      fatherIncrement: faker.randomGenerator.decimal(),
+      childIncrement: faker.randomGenerator.decimal(),
+      isOptionalItem: false,
+      indexOfSelectedChild: 0,
+      insertChilds: false,
+    );
   }
 
   setUp(() {
@@ -237,6 +260,60 @@ void main() {
       );
       sut.updateSelectedFatherIndex(
         newIndex: 1,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+    });
+    test(
+        "Should not advance selectedFatherIndex if one of all previous itens is invalid",
+        () async {
+      selectedProduct.childsComposition = [
+        validFather,
+        invalidFather,
+        validFather,
+      ];
+
+      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(
+        newIndex: 0,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 1,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 2,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+    });
+    test("Should advance selectedFatherIndex if all previous itens are valid",
+        () async {
+      selectedProduct.childsComposition = [
+        validFather,
+        validFather,
+        invalidFather,
+        validFather,
+      ];
+
+      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1, 2]));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(
+        newIndex: 0,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 1,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 2,
+        atualFather: selectedProduct.childsComposition![0],
+      );
+      sut.updateSelectedFatherIndex(
+        newIndex: 3,
         atualFather: selectedProduct.childsComposition![0],
       );
     });

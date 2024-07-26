@@ -974,5 +974,15 @@ void main() {
       sut.updateSelectedFatherIndex(0);
       sut.advanceFatherIndex(commentsPresenter);
     });
+    test("Should show comments if produt has comment and not showing comments",
+        () async {
+      commentsPresenter.mockProductHasComment(true);
+
+      selectedProduct.childsComposition = [validFather];
+      expectLater(sut.showCommentsStream, emits(true));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.advanceFatherIndex(commentsPresenter);
+    });
   });
 }

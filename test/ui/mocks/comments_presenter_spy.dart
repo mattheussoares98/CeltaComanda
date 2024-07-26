@@ -32,4 +32,11 @@ class CommentsPresenterSpy extends Mock implements CommentsPresenter {
     when(() => this.getConcatenateSelectedComments())
         .thenAnswer((_) => comment);
   }
+
+  void mockProductHasComment(bool value) {
+    when(() => this.productHasComment(
+          internalCodeOnERP: any(named: "internalCodeOnERP"),
+          productName: any(named: "productName"),
+        )).thenAnswer((_) => value);
+  }
 }

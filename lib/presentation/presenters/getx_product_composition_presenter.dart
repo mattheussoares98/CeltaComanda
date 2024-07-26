@@ -357,8 +357,16 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   void advanceFatherIndex(CommentsPresenter commentsPresenter) {
-    if (fatherIsValid(_selectedComboxProduct
-        .value!.childsComposition![_selectedFatherIndex.value])) {
+    final atualFather = _selectedComboxProduct
+        .value!.childsComposition![_selectedFatherIndex.value];
+
+    if (commentsPresenter.productHasComment(
+          internalCodeOnERP: atualFather.indexOfSelectedChild!.toInt(),
+          productName: atualFather.ChildName!,
+        ) &&
+        _showComments.value == false) {
+      showComments = true;
+    } else if (fatherIsValid(atualFather)) {
       _selectedFatherIndex.value++;
     }
   }

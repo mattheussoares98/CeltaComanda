@@ -214,7 +214,7 @@ void main() {
       );
     });
     test("Should not advance selectedFatherIndex if atual father is invalid",
-        () {
+        () async {
       selectedProduct.childsComposition = [
         EntityFactory.makeProductCompositionViewModel(
           quantity: faker.randomGenerator.decimal(),
@@ -228,8 +228,13 @@ void main() {
         )
       ];
 
-      expectLater(sut.selectedFatherIndexStream, neverEmits(1));
+      expectLater(sut.selectedFatherIndexStream, emits(0));
 
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(
+        newIndex: 0,
+        atualFather: selectedProduct.childsComposition![0],
+      );
       sut.updateSelectedFatherIndex(
         newIndex: 1,
         atualFather: selectedProduct.childsComposition![0],

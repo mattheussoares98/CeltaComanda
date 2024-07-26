@@ -5,17 +5,15 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class FatherItem extends StatelessWidget {
-  final String title;
-  final bool isOptional;
   final int indexOfSelectedFather;
-  final bool fatherIsSelected;
   final ProductsViewModel selectedProduct;
+  final ProductCompositionViewModel? father;
+  final Color itemColor;
   const FatherItem({
-    required this.title,
-    required this.isOptional,
+    required this.father,
     required this.indexOfSelectedFather,
-    required this.fatherIsSelected,
     required this.selectedProduct,
+    required this.itemColor,
     super.key,
   });
 
@@ -32,16 +30,17 @@ class FatherItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 3.0),
         child: Container(
-          color: fatherIsSelected
-              ? Theme.of(context).primaryColorDark
-              : Theme.of(context).primaryColor,
+          color: itemColor,
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  title,
+                  indexOfSelectedFather + 1 ==
+                          selectedProduct.childsComposition!.length + 1
+                      ? "QUANTIDADE"
+                      : father?.ChildName ?? "",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
@@ -49,7 +48,7 @@ class FatherItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  isOptional ? "Opcional" : "Obrigatório",
+                  father?.IsOptionalItem == "true" ? "Opcional" : "Obrigatório",
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     color: Colors.grey,

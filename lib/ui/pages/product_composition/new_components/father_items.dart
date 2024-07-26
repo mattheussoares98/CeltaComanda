@@ -11,6 +11,14 @@ class FathersItems extends StatelessWidget {
     super.key,
   });
 
+  Color getItemColor(int index, BuildContext context) {
+    if (index <= indexOfSelectedFather) {
+      return Theme.of(context).primaryColorDark;
+    } else {
+      return Theme.of(context).primaryColor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -20,21 +28,20 @@ class FathersItems extends StatelessWidget {
         itemBuilder: (context, index) {
           if (index + 1 == selectedProduct.childsComposition!.length + 1) {
             return FatherItem(
-              isOptional: false,
-              title: "QUANTIDADE",
               indexOfSelectedFather: index,
-              fatherIsSelected: indexOfSelectedFather == index,
               selectedProduct: selectedProduct,
+              father: null,
+              itemColor: getItemColor(index, context),
             );
           }
-          final fatherComposition = selectedProduct.childsComposition![index];
+
+          final father = selectedProduct.childsComposition![index];
 
           return FatherItem(
-            title: fatherComposition.ChildName ?? "",
-            isOptional: fatherComposition.IsOptionalItem == "true",
+            father: father,
             indexOfSelectedFather: index,
-            fatherIsSelected: indexOfSelectedFather == index,
             selectedProduct: selectedProduct,
+            itemColor: getItemColor(index, context),
           );
         },
       ),

@@ -356,7 +356,7 @@ class GetxProductCompositionPresenter extends GetxController
   set showComments(bool value) => _showComments.value = value;
 
   @override
-  void advanceFatherIndex() {
+  void advanceFatherIndex(CommentsPresenter commentsPresenter) {
     if (fatherIsValid(_selectedComboxProduct
         .value!.childsComposition![_selectedFatherIndex.value])) {
       _selectedFatherIndex.value++;

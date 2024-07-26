@@ -964,7 +964,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedFatherIndex(0);
-      sut.advanceFatherIndex();
+      sut.advanceFatherIndex(commentsPresenter);
     });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
@@ -972,7 +972,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedFatherIndex(0);
-      sut.advanceFatherIndex();
+      sut.advanceFatherIndex(commentsPresenter);
     });
   });
 }

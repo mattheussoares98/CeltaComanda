@@ -66,6 +66,30 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
         ),
       );
 
+  Widget productOrCommentButton({
+    required bool isSelected,
+    required String text,
+    required Function() onPressed,
+  }) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor:
+            isSelected ? Theme.of(context).primaryColorDark : Colors.white,
+        foregroundColor: isSelected
+            ? Theme.of(context).primaryColorDark
+            : Theme.of(context).primaryColorLight,
+      ),
+      onPressed: onPressed,
+      child: Text(
+        text,
+        style: TextStyle(
+          color:
+              isSelected ? Colors.white : Theme.of(context).primaryColorLight,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ProductsViewModel selectedProduct = Get.arguments;
@@ -104,6 +128,16 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                     final indexOfSelectedFather =
                         snapshotSelectedFather.data ?? 0;
 
+                    bool productHasComment =
+                        commentsPresenter.productHasComment(
+                      internalCodeOnERP: selectedProduct
+                          .childsComposition![indexOfSelectedFather]
+                          .InternalCodeOnERPCodeChild!
+                          .toInt(),
+                      productName: selectedProduct
+                          .childsComposition![indexOfSelectedFather].ChildName!,
+                    );
+
                     return StreamBuilder<bool>(
                         stream: productCompositionPresenter.showCommentsStream,
                         builder: (context, snapshowShowComments) {
@@ -131,73 +165,98 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                 child: Column(
                                   children: [
                                     Expanded(
-                                      child: Column(
+                                      child: Row(
                                         children: [
-                                          if (indexOfSelectedFather ==
-                                              selectedProduct
-                                                  .childsComposition!.length)
-                                            const Center(
-                                                child: Text("Quantidade")),
-                                          if (indexOfSelectedFather <
-                                                  selectedProduct
-                                                      .childsComposition!
-                                                      .length &&
-                                              !showComments)
-                                            Column(
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 50),
+                                            child: Column(
                                               children: [
-                                                rightSideTitleText(getSelectedFather(
-                                                                selectedProduct,
-                                                                indexOfSelectedFather)
-                                                            .IsOptionalItem ==
-                                                        "false"
-                                                    ? "Selecione um produto!"
-                                                    : "Se desejar, selecione um produto"),
-                                                Childs(
-                                                  selectedFather:
-                                                      getSelectedFather(
-                                                          selectedProduct,
-                                                          indexOfSelectedFather),
-                                                  selectedProduct:
-                                                      selectedProduct,
+                                                productOrCommentButton(
+                                                  onPressed: () {
+                                                    productCompositionPresenter
+                                                        .updateSelectedFatherIndex(
+                                                            indexOfSelectedFather);
+                                                  },
+                                                  isSelected: !showComments,
+                                                  text: "Produto",
                                                 ),
-                                              ],
-                                            ),
-                                          if (showComments &&
-                                              commentsPresenter
-                                                  .productHasComment(
-                                                internalCodeOnERP: selectedProduct
-                                                    .childsComposition![
-                                                        indexOfSelectedFather]
-                                                    .InternalCodeOnERPCodeChild!
-                                                    .toInt(),
-                                                productName: selectedProduct
-                                                    .childsComposition![
-                                                        indexOfSelectedFather]
-                                                    .ChildName!,
-                                              ))
-                                            Column(
-                                              children: [
-                                                rightSideTitleText(
-                                                    "Se desejar, selecione uma observação"),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 8.0),
-                                                  child: CommentsList(
-                                                    internalCodeOnErp: selectedProduct
-                                                        .childsComposition![
-                                                            indexOfSelectedFather]
-                                                        .InternalCodeOnERPCodeChild!
-                                                        .toInt(),
-                                                    selectedProductName:
-                                                        selectedProduct
-                                                            .childsComposition![
-                                                                indexOfSelectedFather]
-                                                            .ChildName!,
+                                                const SizedBox(height: 10),
+                                                if (productHasComment)
+                                                  productOrCommentButton(
+                                                    onPressed: () {
+                                                      productCompositionPresenter.advanceFatherIndex(commentsPresenter);
+                                                    },
+                                                    isSelected: showComments,
+                                                    text: "Comentário",
                                                   ),
-                                                ),
                                               ],
                                             ),
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              children: [
+                                                if (indexOfSelectedFather ==
+                                                    selectedProduct
+                                                        .childsComposition!
+                                                        .length)
+                                                  const Center(
+                                                      child:
+                                                          Text("Quantidade")),
+                                                if (indexOfSelectedFather <
+                                                        selectedProduct
+                                                            .childsComposition!
+                                                            .length &&
+                                                    !showComments)
+                                                  Column(
+                                                    children: [
+                                                      rightSideTitleText(getSelectedFather(
+                                                                      selectedProduct,
+                                                                      indexOfSelectedFather)
+                                                                  .IsOptionalItem ==
+                                                              "false"
+                                                          ? "Selecione um produto!"
+                                                          : "Se desejar, selecione um produto"),
+                                                      Childs(
+                                                        selectedFather:
+                                                            getSelectedFather(
+                                                                selectedProduct,
+                                                                indexOfSelectedFather),
+                                                        selectedProduct:
+                                                            selectedProduct,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                if (showComments &&
+                                                    productHasComment)
+                                                  Column(
+                                                    children: [
+                                                      rightSideTitleText(
+                                                          "Se desejar, selecione um comentário"),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal:
+                                                                    8.0),
+                                                        child: CommentsList(
+                                                          internalCodeOnErp: selectedProduct
+                                                              .childsComposition![
+                                                                  indexOfSelectedFather]
+                                                              .InternalCodeOnERPCodeChild!
+                                                              .toInt(),
+                                                          selectedProductName:
+                                                              selectedProduct
+                                                                  .childsComposition![
+                                                                      indexOfSelectedFather]
+                                                                  .ChildName!,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

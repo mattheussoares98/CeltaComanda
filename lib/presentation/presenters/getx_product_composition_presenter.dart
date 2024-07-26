@@ -302,8 +302,9 @@ class GetxProductCompositionPresenter extends GetxController
 
     for (var i = 0; i < newIndex; i++) {
       final item = _selectedComboxProduct.value!.childsComposition![i];
-      if (item.IsOptionalItem == "false" && item.indexOfSelectedChild == null) {
+      if (!fatherIsValid(item)) {
         valid = false;
+        break;
       }
     }
 

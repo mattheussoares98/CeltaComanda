@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,10 +6,12 @@ import '../../../../ui/pages/pages.dart';
 class Childs extends StatefulWidget {
   final int indexOfSelectedFather;
   final ProductsViewModel selectedProduct;
+  final bool showComments;
 
   const Childs({
     required this.indexOfSelectedFather,
     required this.selectedProduct,
+    required this.showComments,
     super.key,
   });
 
@@ -55,7 +56,6 @@ class _ChildsState extends State<Childs> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -108,18 +108,6 @@ class _ChildsState extends State<Childs> {
                     ),
                 ],
               ),
-              if (commentsPresenter.productHasComment(
-                internalCodeOnERP: child.InternalCodeOnERPCodeChild!.toInt(),
-                productName: child.ChildName!,
-              ))
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: CommentsList(
-                    internalCodeOnErp:
-                        child.InternalCodeOnERPCodeChild!.toInt(),
-                    selectedProductName: child.ChildName!,
-                  ),
-                ),
             ],
           ),
         );

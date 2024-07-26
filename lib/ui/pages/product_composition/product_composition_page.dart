@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       return "AVANÇAR";
     }
   }
+
+  bool showComments = false;
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +109,41 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                             .childsComposition!.length)
                                       const Center(child: Text("Quantidade")),
                                     if (indexOfSelectedFather <
-                                        selectedProduct
-                                            .childsComposition!.length)
+                                            selectedProduct
+                                                .childsComposition!.length &&
+                                        !showComments)
                                       Childs(
                                         indexOfSelectedFather:
                                             indexOfSelectedFather,
                                         selectedProduct: selectedProduct,
+                                        showComments: showComments,
+                                      ),
+                                    if (showComments &&
+                                        commentsPresenter.productHasComment(
+                                          internalCodeOnERP: selectedProduct
+                                              .childsComposition![
+                                                  indexOfSelectedFather]
+                                              .InternalCodeOnERPCodeChild!
+                                              .toInt(),
+                                          productName: selectedProduct
+                                              .childsComposition![
+                                                  indexOfSelectedFather]
+                                              .ChildName!,
+                                        ))
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: CommentsList(
+                                          internalCodeOnErp: selectedProduct
+                                              .childsComposition![
+                                                  indexOfSelectedFather]
+                                              .InternalCodeOnERPCodeChild!
+                                              .toInt(),
+                                          selectedProductName: selectedProduct
+                                              .childsComposition![
+                                                  indexOfSelectedFather]
+                                              .ChildName!,
+                                        ),
                                       ),
                                   ],
                                 ),
@@ -123,7 +155,24 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        if (showComments == false &&
+                                            commentsPresenter.productHasComment(
+                                              internalCodeOnERP: selectedProduct
+                                                  .childsComposition![
+                                                      indexOfSelectedFather]
+                                                  .InternalCodeOnERPCodeChild!
+                                                  .toInt(),
+                                              productName: selectedProduct
+                                                  .childsComposition![
+                                                      indexOfSelectedFather]
+                                                  .ChildName!,
+                                            )) {
+                                          setState(() {
+                                            showComments = true;
+                                          });
+                                        }
+                                      },
                                       child: Text(
                                         getButtonText(
                                           indexOfSelectedFather,

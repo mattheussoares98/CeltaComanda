@@ -26,11 +26,8 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        productCompositionPresenter.updateSelectedFatherIndex(
-          newIndex: indexOfSelectedFather,
-          atualFather:
-              selectedProduct.childsComposition![indexOfSelectedFather],
-        );
+        productCompositionPresenter
+            .updateSelectedFatherIndex(indexOfSelectedFather);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 3.0),

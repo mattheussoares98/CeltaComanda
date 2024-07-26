@@ -203,8 +203,7 @@ void main() {
       //selecionado pra na tela da composição, aparecer que ele já foi
       //selecionado. Por isso faz essa alteração
 
-      expectLater(sut.selectedComboxProductStream,
-          emitsInOrder([null, selectedProduct]));
+      expectLater(sut.selectedComboxProductStream, emits(selectedProduct));
 
       await sut.updateSelectedProduct(selectedProduct);
     });
@@ -212,30 +211,13 @@ void main() {
     test(
         'Should update selectedComboxProduct when call sut.updateSelectedProduct',
         () async {
-      expectLater(sut.selectedComboxProductStream,
-          emitsInOrder([null, selectedProduct]));
+      expectLater(sut.selectedComboxProductStream, emits(selectedProduct));
 
       await sut.updateSelectedProduct(selectedProduct);
     });
   });
 
   group("UpdateSelectedFather", () {
-    test("Should emit correct value on call updateSelectedFather", () {
-      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
-
-      sut.updateSelectedFatherIndex(
-        newIndex: 0,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 0,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 1,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-    });
     test("Should not advance selectedFatherIndex if atual father is invalid",
         () async {
       selectedProduct.childsComposition = [
@@ -254,14 +236,8 @@ void main() {
       expectLater(sut.selectedFatherIndexStream, emits(0));
 
       await sut.updateSelectedProduct(selectedProduct);
-      sut.updateSelectedFatherIndex(
-        newIndex: 0,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 1,
-        atualFather: selectedProduct.childsComposition![0],
-      );
+      sut.updateSelectedFatherIndex(0);
+      sut.updateSelectedFatherIndex(1);
     });
     test(
         "Should not advance selectedFatherIndex if one of all previous itens is invalid",
@@ -275,18 +251,9 @@ void main() {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
 
       await sut.updateSelectedProduct(selectedProduct);
-      sut.updateSelectedFatherIndex(
-        newIndex: 0,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 1,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 2,
-        atualFather: selectedProduct.childsComposition![0],
-      );
+      sut.updateSelectedFatherIndex(0);
+      sut.updateSelectedFatherIndex(1);
+      sut.updateSelectedFatherIndex(2);
     });
     test("Should advance selectedFatherIndex if all previous itens are valid",
         () async {
@@ -300,33 +267,19 @@ void main() {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1, 2]));
 
       await sut.updateSelectedProduct(selectedProduct);
-      sut.updateSelectedFatherIndex(
-        newIndex: 0,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 1,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 2,
-        atualFather: selectedProduct.childsComposition![0],
-      );
-      sut.updateSelectedFatherIndex(
-        newIndex: 3,
-        atualFather: selectedProduct.childsComposition![0],
-      );
+      sut.updateSelectedFatherIndex(0);
+      sut.updateSelectedFatherIndex(1);
+      sut.updateSelectedFatherIndex(2);
+      sut.updateSelectedFatherIndex(3);
     });
   });
 
   group("unselectFatherIndexAndSelectedsChildsIndex", () {
-    test("Should update index of selected father to zero", () {
+    test("Should update index of selected father to zero", () async {
       expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
 
-      sut.updateSelectedFatherIndex(
-        newIndex: 1,
-        atualFather: selectedProduct.childsComposition![0],
-      );
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(1);
       sut.clearSelectedComboxData(selectedProduct);
     });
 

@@ -311,10 +311,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateSelectedFatherIndex({
-    required int newIndex,
-    required ProductCompositionViewModel atualFather,
-  }) {
+  void updateSelectedFatherIndex(int newIndex) {
     mainError = null;
     allPreviousFathersAreValids(newIndex);
 

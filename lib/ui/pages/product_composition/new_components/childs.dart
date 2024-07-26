@@ -6,10 +6,12 @@ import '../../../../ui/pages/pages.dart';
 class Childs extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel selectedFather;
+  final Function() callSetState;
 
   const Childs({
     required this.selectedProduct,
     required this.selectedFather,
+    required this.callSetState,
     super.key,
   });
 
@@ -35,6 +37,7 @@ class _ChildsState extends State<Childs> {
       productCompositionPresenter
           .updateComboxIsValid(widget.selectedProduct.childsComposition!);
     });
+    widget.callSetState();
   }
 
   @override

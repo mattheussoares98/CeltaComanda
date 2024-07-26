@@ -42,7 +42,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
   }
 
   ProductCompositionViewModel getSelectedFather(
-      ProductsViewModel selectedProduct, int indexOfSelectedFather) {
+    ProductsViewModel selectedProduct,
+    int indexOfSelectedFather,
+  ) {
     ProductCompositionViewModel selectedFather =
         selectedProduct.childsComposition![0];
 
@@ -185,7 +187,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                 if (productHasComment)
                                                   productOrCommentButton(
                                                     onPressed: () {
-                                                      productCompositionPresenter.advanceFatherIndex(commentsPresenter);
+                                                      productCompositionPresenter
+                                                          .advanceFatherIndex(
+                                                              commentsPresenter);
                                                     },
                                                     isSelected: showComments,
                                                     text: "Comentários",
@@ -218,6 +222,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                           ? "Selecione um produto!"
                                                           : "Se desejar, selecione um produto"),
                                                       Childs(
+                                                        callSetState: () {
+                                                          setState(() {});
+                                                        },
                                                         selectedFather:
                                                             getSelectedFather(
                                                                 selectedProduct,
@@ -268,11 +275,17 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                             MainAxisAlignment.center,
                                         children: [
                                           ElevatedButton(
-                                            onPressed: () {
-                                              productCompositionPresenter
-                                                  .advanceFatherIndex(
-                                                      commentsPresenter);
-                                            },
+                                            onPressed: productCompositionPresenter
+                                                    .fatherIsValid(
+                                                        getSelectedFather(
+                                                            selectedProduct,
+                                                            indexOfSelectedFather))
+                                                ? () {
+                                                    productCompositionPresenter
+                                                        .advanceFatherIndex(
+                                                            commentsPresenter);
+                                                  }
+                                                : null,
                                             child: Text(
                                               getButtonText(
                                                 indexOfSelectedFather,

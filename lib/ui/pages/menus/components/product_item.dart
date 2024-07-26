@@ -19,11 +19,17 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
           menuPresenter.goToInsertProductPage(widget.productsViewModel);
+          if (widget.productsViewModel.childsComposition != null) {
+            productCompositionPresenter
+                .updateSelectedProduct(widget.productsViewModel);
+          }
         },
         child: Padding(
             padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),

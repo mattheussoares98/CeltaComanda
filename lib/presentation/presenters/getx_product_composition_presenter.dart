@@ -289,8 +289,7 @@ class GetxProductCompositionPresenter extends GetxController
   Stream<ProductsViewModel?> get selectedComboxProductStream =>
       _selectedComboxProduct.stream;
   set selectedComboxProduct(ProductsViewModel? product) {
-    _selectedComboxProduct.value = null;
-    _selectedComboxProduct.subject.add(product);
+    _selectedComboxProduct.value = product;
   }
 
   final _selectedFatherIndex = Rx<int>(0);

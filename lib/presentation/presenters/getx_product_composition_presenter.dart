@@ -313,6 +313,7 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   void updateSelectedFatherIndex(int newIndex) {
+    showComments = false;
     allPreviousFathersAreValids(newIndex);
 
     if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {

@@ -272,6 +272,12 @@ void main() {
       sut.updateSelectedFatherIndex(2);
       sut.updateSelectedFatherIndex(3);
     });
+    test("Should update to false the stream to show comments", () async {
+      expectLater(sut.showCommentsStream, emits(false));
+
+      sut.updateSelectedFatherIndex(0);
+      sut.updateSelectedFatherIndex(0);
+    });
   });
 
   group("clearSelectedComboxData", () {

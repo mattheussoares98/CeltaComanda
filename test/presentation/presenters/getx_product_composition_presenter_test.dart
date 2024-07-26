@@ -331,6 +331,15 @@ void main() {
 
       verify(() => commentsPresenter.unselectAllComments()).called(1);
     });
+
+    test("Should emit false in showComments", () {
+      expectLater(sut.showCommentsStream, emits(false));
+
+      sut.clearSelectedComboxData(
+        product: selectedProduct,
+        commentsPresenter: commentsPresenter,
+      );
+    });
   });
   group("sut.UpdateSaleRequestTemp", () {
     test(

@@ -329,6 +329,7 @@ class GetxProductCompositionPresenter extends GetxController
     required ProductsViewModel product,
     required CommentsPresenter commentsPresenter,
   }) {
+    showComments = false;
     selectedFatherIndex = 0;
     _totalComboxQuantity = 1;
     for (var father in product.childsComposition!) {

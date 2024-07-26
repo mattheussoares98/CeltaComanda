@@ -41,8 +41,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     }
   }
 
-  bool showComments = false;
-
   @override
   Widget build(BuildContext context) {
     ProductsViewModel selectedProduct = Get.arguments;
@@ -81,114 +79,114 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                     final indexOfSelectedFather =
                         snapshotSelectedFather.data ?? 0;
 
-                    return Row(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.33,
-                          child: Column(
+                    return StreamBuilder<bool>(
+                        stream: productCompositionPresenter.showCommentsStream,
+                        builder: (context, snapshowShowComments) {
+                          final showComments =
+                              snapshowShowComments.data ?? false;
+                          return Row(
                             children: [
-                              NameImageAndComplement(
-                                selectedProduct: selectedProduct,
-                              ),
-                              FathersItems(
-                                selectedProduct: selectedProduct,
-                                indexOfSelectedFather: indexOfSelectedFather,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.67,
-                          child: Column(
-                            children: [
-                              Expanded(
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.33,
                                 child: Column(
                                   children: [
-                                    if (indexOfSelectedFather ==
-                                        selectedProduct
-                                            .childsComposition!.length)
-                                      const Center(child: Text("Quantidade")),
-                                    if (indexOfSelectedFather <
-                                            selectedProduct
-                                                .childsComposition!.length &&
-                                        !showComments)
-                                      Childs(
-                                        indexOfSelectedFather:
-                                            indexOfSelectedFather,
-                                        selectedProduct: selectedProduct,
-                                        showComments: showComments,
-                                      ),
-                                    if (showComments &&
-                                        commentsPresenter.productHasComment(
-                                          internalCodeOnERP: selectedProduct
-                                              .childsComposition![
-                                                  indexOfSelectedFather]
-                                              .InternalCodeOnERPCodeChild!
-                                              .toInt(),
-                                          productName: selectedProduct
-                                              .childsComposition![
-                                                  indexOfSelectedFather]
-                                              .ChildName!,
-                                        ))
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: CommentsList(
-                                          internalCodeOnErp: selectedProduct
-                                              .childsComposition![
-                                                  indexOfSelectedFather]
-                                              .InternalCodeOnERPCodeChild!
-                                              .toInt(),
-                                          selectedProductName: selectedProduct
-                                              .childsComposition![
-                                                  indexOfSelectedFather]
-                                              .ChildName!,
-                                        ),
-                                      ),
+                                    NameImageAndComplement(
+                                      selectedProduct: selectedProduct,
+                                    ),
+                                    FathersItems(
+                                      selectedProduct: selectedProduct,
+                                      indexOfSelectedFather:
+                                          indexOfSelectedFather,
+                                    ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.67,
+                                child: Column(
                                   children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        if (showComments == false &&
-                                            commentsPresenter.productHasComment(
-                                              internalCodeOnERP: selectedProduct
-                                                  .childsComposition![
-                                                      indexOfSelectedFather]
-                                                  .InternalCodeOnERPCodeChild!
-                                                  .toInt(),
-                                              productName: selectedProduct
-                                                  .childsComposition![
-                                                      indexOfSelectedFather]
-                                                  .ChildName!,
-                                            )) {
-                                          setState(() {
-                                            showComments = true;
-                                          });
-                                        }
-                                      },
-                                      child: Text(
-                                        getButtonText(
-                                          indexOfSelectedFather,
-                                          selectedProduct,
-                                          commentsPresenter,
-                                        ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          if (indexOfSelectedFather ==
+                                              selectedProduct
+                                                  .childsComposition!.length)
+                                            const Center(
+                                                child: Text("Quantidade")),
+                                          if (indexOfSelectedFather <
+                                                  selectedProduct
+                                                      .childsComposition!
+                                                      .length &&
+                                              !showComments)
+                                            Childs(
+                                              indexOfSelectedFather:
+                                                  indexOfSelectedFather,
+                                              selectedProduct: selectedProduct,
+                                              showComments: showComments,
+                                            ),
+                                          if (showComments &&
+                                              commentsPresenter
+                                                  .productHasComment(
+                                                internalCodeOnERP: selectedProduct
+                                                    .childsComposition![
+                                                        indexOfSelectedFather]
+                                                    .InternalCodeOnERPCodeChild!
+                                                    .toInt(),
+                                                productName: selectedProduct
+                                                    .childsComposition![
+                                                        indexOfSelectedFather]
+                                                    .ChildName!,
+                                              ))
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: CommentsList(
+                                                internalCodeOnErp: selectedProduct
+                                                    .childsComposition![
+                                                        indexOfSelectedFather]
+                                                    .InternalCodeOnERPCodeChild!
+                                                    .toInt(),
+                                                selectedProductName:
+                                                    selectedProduct
+                                                        .childsComposition![
+                                                            indexOfSelectedFather]
+                                                        .ChildName!,
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              productCompositionPresenter
+                                                  .advanceFatherIndex(
+                                                      commentsPresenter);
+                                            },
+                                            child: Text(
+                                              getButtonText(
+                                                indexOfSelectedFather,
+                                                selectedProduct,
+                                                commentsPresenter,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    );
+                          );
+                        });
                   }),
             );
           }),

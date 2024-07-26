@@ -28,7 +28,7 @@ class FatherItem extends StatelessWidget {
             .updateSelectedFatherIndex(indexOfSelectedFather);
       },
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 3.0),
+        padding: const EdgeInsets.only(bottom: 1.0),
         child: Container(
           color: itemColor,
           child: Padding(

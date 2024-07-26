@@ -4,14 +4,12 @@ import 'package:provider/provider.dart';
 import '../../../../ui/pages/pages.dart';
 
 class Childs extends StatefulWidget {
-  final int indexOfSelectedFather;
   final ProductsViewModel selectedProduct;
-  final bool showComments;
+  final ProductCompositionViewModel selectedFather;
 
   const Childs({
-    required this.indexOfSelectedFather,
     required this.selectedProduct,
-    required this.showComments,
+    required this.selectedFather,
     super.key,
   });
 
@@ -20,26 +18,13 @@ class Childs extends StatefulWidget {
 }
 
 class _ChildsState extends State<Childs> {
-  ProductCompositionViewModel get selectedFather {
-    ProductCompositionViewModel selectedFather =
-        widget.selectedProduct.childsComposition![0];
-
-    if (widget.indexOfSelectedFather <
-        widget.selectedProduct.childsComposition!.length) {
-      selectedFather = widget
-          .selectedProduct.childsComposition![widget.indexOfSelectedFather];
-    }
-
-    return selectedFather;
-  }
-
   void _updateSelectedIndex({
     required ProductCompositionPresenter productCompositionPresenter,
     required int? value,
   }) {
     setState(() {
       productCompositionPresenter.updateSelectedIndexOfProduct(
-        father: selectedFather,
+        father: widget.selectedFather,
         index: value,
       );
 
@@ -59,17 +44,17 @@ class _ChildsState extends State<Childs> {
 
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: selectedFather.childs?.isEmpty == true
+      itemCount: widget.selectedFather.childs?.isEmpty == true
           ? 1
-          : selectedFather.childs!.length,
+          : widget.selectedFather.childs!.length,
       itemBuilder: (context, childsIndex) {
         ProductCompositionViewModel child;
-        bool hasChilds = selectedFather.childs?.isNotEmpty == true;
+        bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
 
         if (hasChilds) {
-          child = selectedFather.childs![childsIndex];
+          child = widget.selectedFather.childs![childsIndex];
         } else {
-          child = selectedFather;
+          child = widget.selectedFather;
         }
 
         return InkWell(
@@ -86,9 +71,9 @@ class _ChildsState extends State<Childs> {
                   const SizedBox(width: 5),
                   Radio<int>(
                     value: childsIndex,
-                    groupValue: selectedFather.indexOfSelectedChild,
+                    groupValue: widget.selectedFather.indexOfSelectedChild,
                     visualDensity: VisualDensity.compact,
-                    toggleable: selectedFather.IsOptionalItem == "true",
+                    toggleable: widget.selectedFather.IsOptionalItem == "true",
                     onChanged: (int? value) {
                       _updateSelectedIndex(
                         productCompositionPresenter:

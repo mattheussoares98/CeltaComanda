@@ -1,10 +1,10 @@
-import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../mixins/mixins.dart';
 
@@ -40,6 +40,31 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       return "AVANÇAR";
     }
   }
+
+  ProductCompositionViewModel getSelectedFather(
+      ProductsViewModel selectedProduct, int indexOfSelectedFather) {
+    ProductCompositionViewModel selectedFather =
+        selectedProduct.childsComposition![0];
+
+    if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {
+      selectedFather =
+          selectedProduct.childsComposition![indexOfSelectedFather];
+    }
+
+    return selectedFather;
+  }
+
+  Widget rightSideTitleText(String text) => Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Theme.of(context).primaryColorDark,
+            fontWeight: FontWeight.bold,
+            fontSize: getStringSize(context),
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +143,24 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                       .childsComposition!
                                                       .length &&
                                               !showComments)
-                                            Childs(
-                                              indexOfSelectedFather:
-                                                  indexOfSelectedFather,
-                                              selectedProduct: selectedProduct,
-                                              showComments: showComments,
+                                            Column(
+                                              children: [
+                                                rightSideTitleText(getSelectedFather(
+                                                                selectedProduct,
+                                                                indexOfSelectedFather)
+                                                            .IsOptionalItem ==
+                                                        "false"
+                                                    ? "Selecione um produto!"
+                                                    : "Se desejar, selecione um produto"),
+                                                Childs(
+                                                  selectedFather:
+                                                      getSelectedFather(
+                                                          selectedProduct,
+                                                          indexOfSelectedFather),
+                                                  selectedProduct:
+                                                      selectedProduct,
+                                                ),
+                                              ],
                                             ),
                                           if (showComments &&
                                               commentsPresenter
@@ -137,22 +175,28 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                         indexOfSelectedFather]
                                                     .ChildName!,
                                               ))
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                            Column(
+                                              children: [
+                                                rightSideTitleText(
+                                                    "Se desejar, selecione uma observação"),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
                                                       horizontal: 8.0),
-                                              child: CommentsList(
-                                                internalCodeOnErp: selectedProduct
-                                                    .childsComposition![
-                                                        indexOfSelectedFather]
-                                                    .InternalCodeOnERPCodeChild!
-                                                    .toInt(),
-                                                selectedProductName:
-                                                    selectedProduct
+                                                  child: CommentsList(
+                                                    internalCodeOnErp: selectedProduct
                                                         .childsComposition![
                                                             indexOfSelectedFather]
-                                                        .ChildName!,
-                                              ),
+                                                        .InternalCodeOnERPCodeChild!
+                                                        .toInt(),
+                                                    selectedProductName:
+                                                        selectedProduct
+                                                            .childsComposition![
+                                                                indexOfSelectedFather]
+                                                            .ChildName!,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                         ],
                                       ),

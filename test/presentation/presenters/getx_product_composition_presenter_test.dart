@@ -984,5 +984,16 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
       sut.advanceFatherIndex(commentsPresenter);
     });
+    test("Should advance index if already showing comments and advance index",
+        () async {
+      commentsPresenter.mockProductHasComment(true);
+      selectedProduct.childsComposition = [validFather];
+
+      expectLater(sut.selectedFatherIndexStream, emits(1));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceFatherIndex(commentsPresenter);
+    });
   });
 }

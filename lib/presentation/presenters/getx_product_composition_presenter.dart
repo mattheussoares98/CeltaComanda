@@ -297,16 +297,34 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<int> get selectedFatherIndexStream => _selectedFatherIndex.stream;
 
+  bool allPreviousFathersAreValids(int newIndex) {
+    bool valid = true;
+
+    for (var i = 0; i < newIndex; i++) {
+      final item = _selectedComboxProduct.value!.childsComposition![i];
+      if (item.IsOptionalItem == "false" && item.indexOfSelectedChild == null) {
+        valid = false;
+      }
+    }
+
+    return valid;
+  }
+
   @override
   void updateSelectedFatherIndex({
     required int newIndex,
     required ProductCompositionViewModel atualFather,
   }) {
-    if (atualFather.IsOptionalItem == "false" &&
-        atualFather.indexOfSelectedChild == null) {
-      return;
+    mainError = null;
+    allPreviousFathersAreValids(newIndex);
+
+    if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {
+      selectedFatherIndex = newIndex;
+    } else if (allPreviousFathersAreValids(newIndex)) {
+      selectedFatherIndex = newIndex;
+    } else {
+      mainError = UIError.invalidCombox;
     }
-    selectedFatherIndex = newIndex;
   }
 
   @override

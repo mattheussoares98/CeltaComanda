@@ -956,4 +956,23 @@ void main() {
       expect(isValid, false);
     });
   });
+
+  group("Advance Father index", () {
+    test("Should advance index if atual index is valid", () async {
+      selectedProduct.childsComposition = [validFather];
+      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(0);
+      sut.advanceFatherIndex();
+    });
+    test("Should not advance index if atual index is invalid", () async {
+      selectedProduct.childsComposition = [invalidFather];
+      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0]));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(0);
+      sut.advanceFatherIndex();
+    });
+  });
 }

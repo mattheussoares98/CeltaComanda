@@ -354,4 +354,12 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<bool> get showCommentsStream => _showComments.stream;
   set showComments(bool value) => _showComments.value = value;
+
+  @override
+  void advanceFatherIndex() {
+    if (fatherIsValid(_selectedComboxProduct
+        .value!.childsComposition![_selectedFatherIndex.value])) {
+      _selectedFatherIndex.value++;
+    }
+  }
 }

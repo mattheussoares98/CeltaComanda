@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +55,7 @@ class _ChildsState extends State<Childs> {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -77,28 +79,45 @@ class _ChildsState extends State<Childs> {
               value: childsIndex,
             );
           },
-          child: Row(
+          child: Column(
             children: [
-              const SizedBox(width: 5),
-              Radio<int>(
-                value: childsIndex,
-                groupValue: selectedFather.indexOfSelectedChild,
-                visualDensity: VisualDensity.compact,
-                toggleable: selectedFather.IsOptionalItem == "true",
-                onChanged: (int? value) {
-                  _updateSelectedIndex(
-                    productCompositionPresenter: productCompositionPresenter,
+              Row(
+                children: [
+                  const SizedBox(width: 5),
+                  Radio<int>(
                     value: childsIndex,
-                  );
-                },
+                    groupValue: selectedFather.indexOfSelectedChild,
+                    visualDensity: VisualDensity.compact,
+                    toggleable: selectedFather.IsOptionalItem == "true",
+                    onChanged: (int? value) {
+                      _updateSelectedIndex(
+                        productCompositionPresenter:
+                            productCompositionPresenter,
+                        value: childsIndex,
+                      );
+                    },
+                  ),
+                  if (child.ChildName != null)
+                    Text(
+                      child.ChildName!,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                ],
               ),
-              if (child.ChildName != null)
-                Text(
-                  child.ChildName!,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+              if (commentsPresenter.productHasComment(
+                internalCodeOnERP: child.InternalCodeOnERPCodeChild!.toInt(),
+                productName: child.ChildName!,
+              ))
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CommentsList(
+                    internalCodeOnErp:
+                        child.InternalCodeOnERPCodeChild!.toInt(),
+                    selectedProductName: child.ChildName!,
                   ),
                 ),
             ],

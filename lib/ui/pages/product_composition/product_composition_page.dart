@@ -179,7 +179,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                             indexOfSelectedFather);
                                                   },
                                                   isSelected: !showComments,
-                                                  text: "Produto",
+                                                  text: "Produtos",
                                                 ),
                                                 const SizedBox(height: 10),
                                                 if (productHasComment)
@@ -188,7 +188,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                       productCompositionPresenter.advanceFatherIndex(commentsPresenter);
                                                     },
                                                     isSelected: showComments,
-                                                    text: "Comentário",
+                                                    text: "Comentários",
                                                   ),
                                               ],
                                             ),
@@ -232,7 +232,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                   Column(
                                                     children: [
                                                       rightSideTitleText(
-                                                          "Se desejar, selecione um comentário"),
+                                                          "Se desejar, selecione comentários"),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets

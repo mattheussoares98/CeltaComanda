@@ -968,7 +968,7 @@ void main() {
     });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
-      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0]));
+      expectLater(sut.selectedFatherIndexStream, emits(0));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedFatherIndex(0);
@@ -984,15 +984,31 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
       sut.advanceFatherIndex(commentsPresenter);
     });
-    test("Should advance index if already showing comments and advance index",
+    test(
+        "Should emit correct values if already showing comments and advance index",
         () async {
       commentsPresenter.mockProductHasComment(true);
       selectedProduct.childsComposition = [validFather];
 
       expectLater(sut.selectedFatherIndexStream, emits(1));
+      expectLater(sut.showCommentsStream, emitsInOrder([true, false]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceFatherIndex(commentsPresenter);
+    });
+
+    test(
+        "Should emit correct values if new index is the index of quantity and atual father is invalid ",
+        () async {
+      commentsPresenter.mockProductHasComment(false);
+      selectedProduct.childsComposition = [validFather, invalidFather];
+
+      expectLater(sut.selectedFatherIndexStream, emits(1));
+      expectLater(sut.showCommentsStream, emits(false));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedFatherIndex(1);
       sut.advanceFatherIndex(commentsPresenter);
     });
   });

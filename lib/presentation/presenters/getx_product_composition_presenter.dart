@@ -360,13 +360,23 @@ class GetxProductCompositionPresenter extends GetxController
     final atualFather = _selectedComboxProduct
         .value!.childsComposition![_selectedFatherIndex.value];
 
-    if (commentsPresenter.productHasComment(
-          internalCodeOnERP: atualFather.indexOfSelectedChild!.toInt(),
-          productName: atualFather.ChildName!,
-        ) &&
-        _showComments.value == false) {
+    bool productHasComment = commentsPresenter.productHasComment(
+      internalCodeOnERP: atualFather.InternalCodeOnERPCodeChild!.toInt(),
+      productName: atualFather.ChildName!,
+    );
+
+    bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
+        _selectedComboxProduct.value!.childsComposition!.length;
+
+    if (!fatherIsValid(atualFather)) {
+      return;
+    } else if (productHasComment && _showComments.value == false) {
       showComments = true;
-    } else if (fatherIsValid(atualFather)) {
+    } else if (newIndexIsOfQuantity && productHasComment) {
+      showComments = false;
+      _selectedFatherIndex.value++;
+    } else {
+      showComments = false;
       _selectedFatherIndex.value++;
     }
   }

@@ -27,6 +27,19 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     mainErrorSubscription?.cancel();
   }
 
+  String getButtonText(int indexOfSelectedFather,
+      ProductsViewModel selectedProduct, CommentsPresenter commentsPresenter) {
+    if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+      return "INSERIR";
+    } else if (selectedProduct
+            .childsComposition![indexOfSelectedFather].IsOptionalItem ==
+        "true") {
+      return "PULAR";
+    } else {
+      return "AVANÇAR";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ProductsViewModel selectedProduct = Get.arguments;
@@ -112,11 +125,11 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                     ElevatedButton(
                                       onPressed: () {},
                                       child: Text(
-                                        indexOfSelectedFather ==
-                                                selectedProduct
-                                                    .childsComposition!.length
-                                            ? "INSERIR"
-                                            : "AVANÇAR",
+                                        getButtonText(
+                                          indexOfSelectedFather,
+                                          selectedProduct,
+                                          commentsPresenter,
+                                        ),
                                       ),
                                     ),
                                   ],

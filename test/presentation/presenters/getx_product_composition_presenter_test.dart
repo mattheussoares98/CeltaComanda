@@ -906,4 +906,18 @@ void main() {
       expect(optionalFather.indexOfSelectedChild, null);
     });
   });
+
+  group("Father is valid", () {
+    test("Should return true if father is obligatory and index is not null",
+        () {
+      final isValid = sut.fatherIsValid(validFather);
+
+      expect(isValid, true);
+    });
+    test("Should return false if father is obligatory and index is null", () {
+      final isValid = sut.fatherIsValid(invalidFather);
+
+      expect(isValid, false);
+    });
+  });
 }

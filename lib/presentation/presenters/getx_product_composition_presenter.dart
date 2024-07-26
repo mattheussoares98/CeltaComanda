@@ -312,7 +312,6 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   void updateSelectedFatherIndex(int newIndex) {
-    mainError = null;
     allPreviousFathersAreValids(newIndex);
 
     if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {
@@ -320,7 +319,7 @@ class GetxProductCompositionPresenter extends GetxController
     } else if (allPreviousFathersAreValids(newIndex)) {
       selectedFatherIndex = newIndex;
     } else {
-      mainError = UIError.invalidCombox;
+      //algum pai anterior ao índice selecionado não está válido
     }
   }
 

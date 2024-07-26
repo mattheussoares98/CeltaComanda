@@ -332,4 +332,14 @@ class GetxProductCompositionPresenter extends GetxController
       father.commentFather = null;
     }
   }
+
+  @override
+  bool fatherIsValid(ProductCompositionViewModel product) {
+    if (product.IsOptionalItem == "false" &&
+        product.indexOfSelectedChild == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

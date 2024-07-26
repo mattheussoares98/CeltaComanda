@@ -83,15 +83,43 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                           width: MediaQuery.of(context).size.width * 0.67,
                           child: Column(
                             children: [
-                              if (indexOfSelectedFather ==
-                                  selectedProduct.childsComposition!.length)
-                                const Center(child: Text("Quantidade")),
-                              if (indexOfSelectedFather <
-                                  selectedProduct.childsComposition!.length)
-                                Childs(
-                                  indexOfSelectedFather: indexOfSelectedFather,
-                                  selectedProduct: selectedProduct,
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    if (indexOfSelectedFather ==
+                                        selectedProduct
+                                            .childsComposition!.length)
+                                      const Center(child: Text("Quantidade")),
+                                    if (indexOfSelectedFather <
+                                        selectedProduct
+                                            .childsComposition!.length)
+                                      Childs(
+                                        indexOfSelectedFather:
+                                            indexOfSelectedFather,
+                                        selectedProduct: selectedProduct,
+                                      ),
+                                  ],
                                 ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        indexOfSelectedFather ==
+                                                selectedProduct
+                                                    .childsComposition!.length
+                                            ? "INSERIR"
+                                            : "AVANÇAR",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),

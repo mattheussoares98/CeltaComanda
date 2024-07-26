@@ -347,4 +347,9 @@ class GetxProductCompositionPresenter extends GetxController
       return true;
     }
   }
+
+  final _showComments = false.obs;
+  @override
+  Stream<bool> get showCommentsStream => _showComments.stream;
+  set showComments(bool value) => _showComments.value = value;
 }

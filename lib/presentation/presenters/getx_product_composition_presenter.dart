@@ -329,7 +329,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void clearSelectedComboxData({
+  void clearData({
     required ProductsViewModel product,
     required CommentsPresenter commentsPresenter,
   }) {
@@ -360,7 +360,7 @@ class GetxProductCompositionPresenter extends GetxController
   set showComments(bool value) => _showComments.value = value;
 
   @override
-  void advanceFatherIndex(CommentsPresenter commentsPresenter) {
+  void advanceLeftIndex(CommentsPresenter commentsPresenter) {
     final atualFather = _selectedComboxProduct
         .value!.childsComposition![_selectedFatherIndex.value];
 

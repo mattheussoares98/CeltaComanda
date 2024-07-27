@@ -17,6 +17,41 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
+  InsertProductAdapter getInsertProductAdapter(
+    ProductCompositionPresenter productCompositionPresenter,
+    CommentsPresenter commentsPresenter,
+  ) {
+    return InsertProductAdapter(
+        advanceSelectedIndex: () {
+          productCompositionPresenter.advanceLeftIndex(commentsPresenter);
+        },
+        totalProductsQuantity: productCompositionPresenter.totalComboxQuantity,
+        updateTotalLiquid: () {
+          productCompositionPresenter.updateTotalLiquidCombox(
+              widget.productsViewModel.childsComposition!);
+        },
+        totalPriceStream: productCompositionPresenter.totalPriceComboxStream,
+        doScrollStream: productCompositionPresenter.doScrollStream,
+        showCommentsStream: productCompositionPresenter.showCommentsStream,
+        selectedProduct: widget.productsViewModel,
+        isLoadingStream: productCompositionPresenter.isLoadingStream,
+        mainErrorStream: productCompositionPresenter.mainErrorStream,
+        selectedComboxProductStream:
+            productCompositionPresenter.selectedComboxProductStream,
+        selectedItemIndexStream:
+            productCompositionPresenter.selectedFatherIndexStream,
+        updateSelectedProduct: () {
+          productCompositionPresenter
+              .updateSelectedProduct(widget.productsViewModel);
+        },
+        doOnClosePage: () {
+          productCompositionPresenter.clearData(
+            product: widget.productsViewModel,
+            commentsPresenter: commentsPresenter,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -28,39 +63,10 @@ class _ProductItemState extends State<ProductItem> {
       child: GestureDetector(
         onTap: () {
           menuPresenter.goToInsertProductPage(
-            InsertProductAdapter(
-                advanceSelectedIndex: () {
-                  productCompositionPresenter
-                      .advanceFatherIndex(commentsPresenter);
-                },
-                totalProductsQuantity:
-                    productCompositionPresenter.totalComboxQuantity,
-                updateTotalLiquid: () {
-                  productCompositionPresenter.updateTotalLiquidCombox(
-                      widget.productsViewModel.childsComposition!);
-                },
-                totalPriceStream:
-                    productCompositionPresenter.totalPriceComboxStream,
-                doScrollStream: productCompositionPresenter.doScrollStream,
-                showCommentsStream:
-                    productCompositionPresenter.showCommentsStream,
-                selectedProduct: widget.productsViewModel,
-                isLoadingStream: productCompositionPresenter.isLoadingStream,
-                mainErrorStream: productCompositionPresenter.mainErrorStream,
-                selectedComboxProductStream:
-                    productCompositionPresenter.selectedComboxProductStream,
-                selectedItemIndexStream:
-                    productCompositionPresenter.selectedFatherIndexStream,
-                updateSelectedProduct: () {
-                  productCompositionPresenter
-                      .updateSelectedProduct(widget.productsViewModel);
-                },
-                doOnClosePage: () {
-                  productCompositionPresenter.clearSelectedComboxData(
-                    product: widget.productsViewModel,
-                    commentsPresenter: commentsPresenter,
-                  );
-                }),
+            getInsertProductAdapter(
+              productCompositionPresenter,
+              commentsPresenter,
+            ),
           );
           if (widget.productsViewModel.childsComposition != null) {
             productCompositionPresenter

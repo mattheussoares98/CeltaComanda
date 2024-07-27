@@ -286,7 +286,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
-      sut.clearSelectedComboxData(
+      sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
@@ -298,7 +298,7 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, 0);
 
-      sut.clearSelectedComboxData(
+      sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
@@ -311,7 +311,7 @@ void main() {
       }
       expect(selectedProduct.childsComposition![0].commentFather, "comentário");
 
-      sut.clearSelectedComboxData(
+      sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
@@ -322,7 +322,7 @@ void main() {
       sut.updateComboxQuantity(true);
       expect(sut.totalComboxQuantity, 2);
 
-      sut.clearSelectedComboxData(
+      sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
@@ -337,7 +337,7 @@ void main() {
     });
 
     test("Should call commentsPresenter.unselectAllComments", () {
-      sut.clearSelectedComboxData(
+      sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
@@ -348,7 +348,7 @@ void main() {
     test("Should emit false in showComments", () {
       expectLater(sut.showCommentsStream, emits(false));
 
-      sut.clearSelectedComboxData(
+      sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
@@ -971,7 +971,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
-      sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceLeftIndex(commentsPresenter);
     });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
@@ -979,7 +979,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
-      sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceLeftIndex(commentsPresenter);
     });
     test("Should show comments if produt has comment and not showing comments",
         () async {
@@ -989,7 +989,7 @@ void main() {
       expectLater(sut.showCommentsStream, emits(true));
 
       await sut.updateSelectedProduct(selectedProduct);
-      sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceLeftIndex(commentsPresenter);
     });
     test(
         "Should emit correct values if already showing comments and advance index",
@@ -1001,8 +1001,8 @@ void main() {
       expectLater(sut.showCommentsStream, emitsInOrder([true, false]));
 
       await sut.updateSelectedProduct(selectedProduct);
-      sut.advanceFatherIndex(commentsPresenter);
-      sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceLeftIndex(commentsPresenter);
+      sut.advanceLeftIndex(commentsPresenter);
     });
 
     test(
@@ -1016,7 +1016,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
-      sut.advanceFatherIndex(commentsPresenter);
+      sut.advanceLeftIndex(commentsPresenter);
     });
   });
 }

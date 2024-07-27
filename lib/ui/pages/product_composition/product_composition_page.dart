@@ -172,39 +172,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 0, vertical: 50),
-                                            child: Column(
-                                              children: [
-                                                productOrCommentButton(
-                                                  onPressed: () {
-                                                    productCompositionPresenter
-                                                        .updateSelectedFatherIndex(
-                                                            indexOfSelectedFather);
-                                                    productCompositionPresenter
-                                                        .scrollToIndex(
-                                                            _scrollController);
-                                                  },
-                                                  isSelected: !showComments,
-                                                  text: "Produtos",
-                                                ),
-                                                const SizedBox(height: 10),
-                                                if (productHasComment)
-                                                  productOrCommentButton(
-                                                    onPressed: () {
-                                                      productCompositionPresenter
-                                                          .advanceFatherIndex(
-                                                              commentsPresenter);
-                                                      productCompositionPresenter
-                                                          .scrollToIndex(
-                                                              _scrollController);
-                                                    },
-                                                    isSelected: showComments,
-                                                    text: "Comentários",
-                                                  ),
-                                              ],
-                                            ),
+                                          ProductsAndCommentsButtons(
+                                            productHasComment:
+                                                productHasComment,
+                                            indexOfSelectedFather:
+                                                indexOfSelectedFather,
+                                            scrollController: _scrollController,
+                                            showComments: showComments,
                                           ),
                                           Expanded(
                                             child: Column(

@@ -19,7 +19,7 @@ class ProductsAndCommentsButtons extends StatelessWidget {
   static Widget productOrCommentButton({
     required bool isSelected,
     required String text,
-    required Function() onPressed,
+    required void Function()? onPressed,
     required BuildContext context,
   }) {
     return TextButton(
@@ -53,11 +53,13 @@ class ProductsAndCommentsButtons extends StatelessWidget {
         children: [
           productOrCommentButton(
             context: context,
-            onPressed: () {
-              productCompositionPresenter
-                  .updateSelectedFatherIndex(indexOfSelectedFather);
-              productCompositionPresenter.scrollToIndex(scrollController);
-            },
+            onPressed: !showComments
+                ? null
+                : () {
+                    productCompositionPresenter
+                        .updateSelectedFatherIndex(indexOfSelectedFather);
+                    productCompositionPresenter.scrollToIndex(scrollController);
+                  },
             isSelected: !showComments,
             text: "Produtos",
           ),
@@ -65,11 +67,14 @@ class ProductsAndCommentsButtons extends StatelessWidget {
           if (productHasComment)
             productOrCommentButton(
               context: context,
-              onPressed: () {
-                productCompositionPresenter
-                    .advanceFatherIndex(commentsPresenter);
-                productCompositionPresenter.scrollToIndex(scrollController);
-              },
+              onPressed: showComments
+                  ? null
+                  : () {
+                      productCompositionPresenter
+                          .advanceFatherIndex(commentsPresenter);
+                      productCompositionPresenter
+                          .scrollToIndex(scrollController);
+                    },
               isSelected: showComments,
               text: "Comentários",
             ),

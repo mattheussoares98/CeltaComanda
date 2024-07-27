@@ -25,7 +25,7 @@ class TotalPriceCombox extends StatelessWidget {
                 .updateTotalLiquidCombox(selectedProduct.childsComposition!);
           });
 
-          double total = snapshot.data ?? 0;
+          double totalLiquid = snapshot.data ?? 0;
           return Container(
             width: double.infinity,
             color: Theme.of(context).primaryColor,
@@ -41,7 +41,10 @@ class TotalPriceCombox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    total.toString().toBrazilianNumber().addBrazilianCoin(),
+                    (productCompositionPresenter.totalComboxQuantity * totalLiquid)
+                        .toString()
+                        .toBrazilianNumber()
+                        .addBrazilianCoin(),
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

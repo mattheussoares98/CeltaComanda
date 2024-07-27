@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/domain/entities/cart_product_entity.dart';
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -78,11 +80,25 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required double totalPrice,
     required BuildContext context,
     required ProductCompositionPresenter productCompositionPresenter,
+    required MenuPresenter menuPresenter,
+    required CommentsPresenter commentsPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
-      //add product in cart
+      await cartPresenter.addProductInCart(
+        product: CartProductEntity(
+          Product: widget.selectedProduct.toEntity(),
+          Comments: commentsPresenter.getConcatenateSelectedComments(),
+          TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
+              productCompositionPresenter.totalComboxQuantity,
+          Quantity: productCompositionPresenter.totalComboxQuantity.toDouble(),
+          Value: widget.selectedProduct.SaleRetailPraticed.toDouble(),
+          ProductPriceLookUpCode: widget.selectedProduct.PriceLookupCode,
+        ),
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
+      );
     } else {
-      bool added = await cartPresenter.addConfirmedCombox(
+      await cartPresenter.addConfirmedCombox(
         selectedChilds: widget.selectedProduct.childsComposition!
             .where((e) => e.indexOfSelectedChild != null)
             .toList(),
@@ -90,12 +106,10 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         quantity: productCompositionPresenter.totalComboxQuantity,
         selectedCombox: widget.selectedProduct,
       );
-      if (added) {
-        Future.delayed(Duration.zero, () {
-          Navigator.of(context).pop();
-        });
-      }
     }
+    Future.delayed(Duration.zero, () {
+      Navigator.of(context).pop();
+    });
   }
 
   Future<void> _advanceOrAddInCart({
@@ -105,12 +119,20 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required BuildContext context,
     required CommentsPresenter commentsPresenter,
     required ProductCompositionPresenter productCompositionPresenter,
+    required MenuPresenter menuPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 0 && widget.productHasComment) {
         widget.advanceSelectedIndex();
       } else {
-        //adicionar no carrinho
+        await _addInCart(
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          commentsPresenter: commentsPresenter,
+          productCompositionPresenter: productCompositionPresenter,
+          totalPrice: totalPrice,
+          context: context,
+        );
       }
     } else {
       if (widget.leftSelectedIndex !=
@@ -119,6 +141,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          commentsPresenter: commentsPresenter,
           productCompositionPresenter: productCompositionPresenter,
           totalPrice: totalPrice,
           context: context,
@@ -142,6 +166,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
@@ -160,6 +185,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
                       context: context,
                       commentsPresenter: commentsPresenter,
                       productCompositionPresenter: productCompositionPresenter,
+                      menuPresenter: menuPresenter,
                     );
                   }
                 : null,

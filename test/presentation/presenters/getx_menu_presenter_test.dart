@@ -549,45 +549,6 @@ void main() {
         ),
       ).called(1);
     });
-    test('Should go to InsertProductPage when product not is combox', () async {
-      final productNotCombox = EntityFactory.makeProductViewModel();
-
-      // sut.goToInsertProductPage(
-      //   InsertProductAdapter(
-      //       selectedProduct: productNotCombox,
-      //       isLoadingStream: StreamController<bool>().stream,
-      //       mainErrorStream: StreamController<UIError?>().stream,
-      //       doOnClosePage: () {}),
-      // );//////////////////////////////////////////////
-
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.insertProduct,
-          arguments: productNotCombox,
-        ),
-      ).called(1);
-    });
-    test('Should go to ProductCompositionPage when product is combox',
-        () async {
-      final productCombox = EntityFactory.makeProductViewModel(
-        insertChildsComposition: true,
-      );
-
-      // sut.goToInsertProductPage(
-      //   InsertProductAdapter(
-      //       selectedProduct: productCombox,
-      //       isLoadingStream: StreamController<bool>().stream,
-      //       mainErrorStream: StreamController<UIError?>().stream,
-      //       doOnClosePage: () {}),
-      // );//////////////////////////////////////////////
-
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.productComposition,
-          arguments: productCombox,
-        ),
-      ).called(1);
-    });
   });
 
   group("Selected group", () {

@@ -12,6 +12,7 @@ abstract class ProductCompositionPresenter implements Listenable {
   Stream<bool> get showCommentsStream;
   Stream<ProductsViewModel?> get selectedComboxProductStream;
   Stream<int> get selectedFatherIndexStream;
+  Stream<bool> get doScrollStream;
   double get totalComboxQuantity;
 
   void updateTotalLiquidCombox(
@@ -53,7 +54,4 @@ abstract class ProductCompositionPresenter implements Listenable {
   });
   bool fatherIsValid(ProductCompositionViewModel product);
   void advanceFatherIndex(CommentsPresenter commentsPresenter);
-
-  double viewportHeight = 0;
-  void scrollToIndex(ScrollController scrollController);
 }

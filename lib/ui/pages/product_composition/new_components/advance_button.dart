@@ -6,11 +6,9 @@ import '../../pages.dart';
 class AdvanceButton extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
-  final ScrollController scrollController;
   const AdvanceButton({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
-    required this.scrollController,
     super.key,
   });
 
@@ -62,7 +60,6 @@ class AdvanceButton extends StatelessWidget {
                 ? () {
                     productCompositionPresenter
                         .advanceFatherIndex(commentsPresenter);
-                    productCompositionPresenter.scrollToIndex(scrollController);
                   }
                 : null,
             child: Padding(

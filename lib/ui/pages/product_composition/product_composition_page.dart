@@ -19,7 +19,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  final _scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -27,7 +26,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    _scrollController.dispose();
   }
 
   @override
@@ -99,13 +97,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                       selectedProduct: selectedProduct,
                                     ),
                                     FathersItems(
-                                      scrollController: _scrollController,
                                       selectedProduct: selectedProduct,
                                       indexOfSelectedFather:
                                           indexOfSelectedFather,
                                     ),
                                     Divider(
-                                      color: Theme.of(context).primaryColorLight,
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                       thickness: 0.1,
                                       height: 1,
                                     ),
@@ -130,8 +128,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                   productHasComment,
                                               indexOfSelectedFather:
                                                   indexOfSelectedFather,
-                                              scrollController:
-                                                  _scrollController,
                                               showComments: showComments,
                                             ),
                                           QuantityChildsAndComments(
@@ -152,7 +148,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                       selectedProduct: selectedProduct,
                                       indexOfSelectedFather:
                                           indexOfSelectedFather,
-                                      scrollController: _scrollController,
                                     ),
                                   ],
                                 ),

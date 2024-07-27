@@ -6,12 +6,10 @@ import '../../pages.dart';
 class ProductsAndCommentsButtons extends StatelessWidget {
   final bool productHasComment;
   final int indexOfSelectedFather;
-  final ScrollController scrollController;
   final bool showComments;
   const ProductsAndCommentsButtons({
     required this.productHasComment,
     required this.indexOfSelectedFather,
-    required this.scrollController,
     required this.showComments,
     super.key,
   });
@@ -58,7 +56,6 @@ class ProductsAndCommentsButtons extends StatelessWidget {
                 : () {
                     productCompositionPresenter
                         .updateSelectedFatherIndex(indexOfSelectedFather);
-                    productCompositionPresenter.scrollToIndex(scrollController);
                   },
             isSelected: !showComments,
             text: "Produtos",
@@ -72,8 +69,6 @@ class ProductsAndCommentsButtons extends StatelessWidget {
                   : () {
                       productCompositionPresenter
                           .advanceFatherIndex(commentsPresenter);
-                      productCompositionPresenter
-                          .scrollToIndex(scrollController);
                     },
               isSelected: showComments,
               text: "Comentários",

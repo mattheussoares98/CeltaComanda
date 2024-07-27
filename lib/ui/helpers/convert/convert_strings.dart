@@ -43,7 +43,7 @@ extension StringModifier on String {
         return int.parse(
             replaceAll(RegExp(r','), '').replaceAll(RegExp(r'\.'), ''));
       } else {
-        return int.parse(this);
+        return (double.parse(this)).toInt();
       }
     } catch (e) {
       return -1;

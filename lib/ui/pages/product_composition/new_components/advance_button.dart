@@ -20,7 +20,7 @@ class AdvanceButton extends StatelessWidget {
     CommentsPresenter commentsPresenter,
   ) {
     if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
-      return "INSERIR";
+      return "INSERIR NO CARRINHO";
     } else if (selectedProduct
             .childsComposition![indexOfSelectedFather].IsOptionalItem ==
         "true") {
@@ -65,11 +65,14 @@ class AdvanceButton extends StatelessWidget {
                     productCompositionPresenter.scrollToIndex(scrollController);
                   }
                 : null,
-            child: Text(
-              getButtonText(
-                indexOfSelectedFather,
-                selectedProduct,
-                commentsPresenter,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                getButtonText(
+                  indexOfSelectedFather,
+                  selectedProduct,
+                  commentsPresenter,
+                ),
               ),
             ),
           ),

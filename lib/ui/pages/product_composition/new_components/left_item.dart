@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -10,33 +9,42 @@ class LeftItem extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
+  final bool productHasComment;
   const LeftItem({
     required this.father,
     required this.indexOfLeftSelectedItem,
     required this.selectedProduct,
     required this.itemColor,
+    required this.productHasComment,
     super.key,
   });
 
   String getIsOptionalOrObligatory() {
-    if (father == null || father?.IsOptionalItem == "false") {
+    if (selectedProduct.childsComposition == null &&
+        productHasComment &&
+        indexOfLeftSelectedItem == 0) {
+      return "Opcional";
+    } else if (selectedProduct.childsComposition == null) {
+      return "Obrigatório";
+    } else if (father == null || father?.IsOptionalItem == "false") {
       return "Obrigatório";
     } else {
       return "Opcional";
     }
   }
 
-  String getLeftItemTitle() {
+  String getLeftItemTitle(CommentsPresenter commentsPresenter) {
     if (selectedProduct.childsComposition != null) {
-      if (indexOfLeftSelectedItem ==
-          selectedProduct.childsComposition!.length) {
-        return "QUANTIDADE";
+      if (commentsPresenter.productHasComment(
+          internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
+          productName: selectedProduct.Name)) {
+        return "COMENTÁRIOS";
       } else {
-        return father!.ChildName ?? "";
+        return "QUANTIDADE";
       }
     } else {
-      if (indexOfLeftSelectedItem == 0) {
-        return selectedProduct.Name;
+      if (productHasComment && indexOfLeftSelectedItem == 0) {
+        return "COMENTÁRIOS";
       } else {
         return "QUANTIDADE";
       }
@@ -47,6 +55,7 @@ class LeftItem extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return InkWell(
       onTap: () {
@@ -65,7 +74,7 @@ class LeftItem extends StatelessWidget {
           children: [
             FittedBox(
               child: Text(
-                getLeftItemTitle(),
+                getLeftItemTitle(commentsPresenter),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

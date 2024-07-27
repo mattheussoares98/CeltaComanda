@@ -36,7 +36,7 @@ class QuantityChildsAndComments extends StatelessWidget {
 
   String getTitleText() {
     if (selectedProduct.childsComposition == null) {
-      if (selectedLeftIndex == 0) {
+      if (selectedLeftIndex == 0 && productHasComment) {
         return "Se desejar, selecione um comentário";
       } else {
         return "Informe a quantidade";
@@ -61,7 +61,7 @@ class QuantityChildsAndComments extends StatelessWidget {
 
   bool showUpdateQuantity() {
     if (selectedProduct.childsComposition == null) {
-      if (selectedLeftIndex == 0) {
+      if (selectedLeftIndex == 0 && productHasComment) {
         return false;
       } else {
         return true;

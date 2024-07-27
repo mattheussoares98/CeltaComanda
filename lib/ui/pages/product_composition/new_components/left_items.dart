@@ -61,9 +61,9 @@ class _LeftItemsState extends State<LeftItems> {
   int getItemsCount() {
     if (widget.selectedProduct.childsComposition == null) {
       if (widget.productHasComment) {
-        return 3;
-      } else {
         return 2;
+      } else {
+        return 1;
       }
     } else {
       return widget.selectedProduct.childsComposition!.length + 1;
@@ -108,6 +108,7 @@ class _LeftItemsState extends State<LeftItems> {
                             selectedProduct: widget.selectedProduct,
                             father: null,
                             itemColor: getItemColor(index, context),
+                            productHasComment: widget.productHasComment,
                           );
                         });
                   }
@@ -116,6 +117,7 @@ class _LeftItemsState extends State<LeftItems> {
                       widget.selectedProduct.childsComposition?[index];
 
                   return LeftItem(
+                    productHasComment: widget.productHasComment,
                     father: father,
                     indexOfLeftSelectedItem: index,
                     selectedProduct: widget.selectedProduct,

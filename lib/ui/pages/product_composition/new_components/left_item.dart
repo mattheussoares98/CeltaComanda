@@ -39,8 +39,12 @@ class LeftItem extends StatelessWidget {
           internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
           productName: selectedProduct.Name)) {
         return "COMENTÁRIOS";
-      } else {
+      } else if (indexOfLeftSelectedItem ==
+          selectedProduct.childsComposition!.length) {
         return "QUANTIDADE";
+      } else {
+        return selectedProduct
+            .childsComposition![indexOfLeftSelectedItem].ChildName!;
       }
     } else {
       if (productHasComment && indexOfLeftSelectedItem == 0) {

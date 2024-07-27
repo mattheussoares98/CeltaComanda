@@ -6,9 +6,11 @@ import '../../pages.dart';
 class AdvanceButton extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
+  final void Function() advanceSelectedIndex;
   const AdvanceButton({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
+    required this.advanceSelectedIndex,
     super.key,
   });
 
@@ -28,10 +30,13 @@ class AdvanceButton extends StatelessWidget {
     }
   }
 
-  ProductCompositionViewModel getSelectedFather(
-    ProductsViewModel selectedProduct,
-    int indexOfSelectedFather,
+  bool canAdvanceIndex(
+    ProductCompositionPresenter productCompositionPresenter,
   ) {
+    if (selectedProduct.childsComposition == null) {
+      return true;
+    }
+
     ProductCompositionViewModel selectedFather =
         selectedProduct.childsComposition![0];
 
@@ -40,7 +45,7 @@ class AdvanceButton extends StatelessWidget {
           selectedProduct.childsComposition![indexOfSelectedFather];
     }
 
-    return selectedFather;
+    return productCompositionPresenter.fatherIsValid(selectedFather);
   }
 
   @override
@@ -55,12 +60,8 @@ class AdvanceButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: productCompositionPresenter.fatherIsValid(
-                    getSelectedFather(selectedProduct, indexOfSelectedFather))
-                ? () {
-                    productCompositionPresenter
-                        .advanceFatherIndex(commentsPresenter);
-                  }
+            onPressed: canAdvanceIndex(productCompositionPresenter)
+                ? advanceSelectedIndex
                 : null,
             child: Padding(
               padding: const EdgeInsets.all(10.0),

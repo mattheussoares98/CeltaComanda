@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/adapters/adapters.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
@@ -261,16 +262,17 @@ class GetxMenuPresenter extends GetxController
   set showPreLoadImage(bool value) => _showPreLoadImages.subject.add(value);
 
   @override
-  void goToInsertProductPage(ProductsViewModel product) {
-    if (product.childsComposition?.isNotEmpty == true) {
+  void goToInsertProductPage(InsertProductAdapter insertProductAdapter) {
+    if (insertProductAdapter.selectedProduct.childsComposition?.isNotEmpty ==
+        true) {
       navigateTo.navigate(
         pageRoute: PageRoutes.productComposition,
-        arguments: product,
+        arguments: insertProductAdapter,
       );
     } else {
       navigateTo.navigate(
         pageRoute: PageRoutes.insertProduct,
-        arguments: product,
+        arguments: insertProductAdapter,
       );
     }
   }

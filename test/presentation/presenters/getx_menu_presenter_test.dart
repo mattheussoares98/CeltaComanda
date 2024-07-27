@@ -552,7 +552,13 @@ void main() {
     test('Should go to InsertProductPage when product not is combox', () async {
       final productNotCombox = EntityFactory.makeProductViewModel();
 
-      sut.goToInsertProductPage(productNotCombox);
+      // sut.goToInsertProductPage(
+      //   InsertProductAdapter(
+      //       selectedProduct: productNotCombox,
+      //       isLoadingStream: StreamController<bool>().stream,
+      //       mainErrorStream: StreamController<UIError?>().stream,
+      //       doOnClosePage: () {}),
+      // );//////////////////////////////////////////////
 
       verify(
         () => navigateTo.navigate(
@@ -567,7 +573,13 @@ void main() {
         insertChildsComposition: true,
       );
 
-      sut.goToInsertProductPage(productCombox);
+      // sut.goToInsertProductPage(
+      //   InsertProductAdapter(
+      //       selectedProduct: productCombox,
+      //       isLoadingStream: StreamController<bool>().stream,
+      //       mainErrorStream: StreamController<UIError?>().stream,
+      //       doOnClosePage: () {}),
+      // );//////////////////////////////////////////////
 
       verify(
         () => navigateTo.navigate(

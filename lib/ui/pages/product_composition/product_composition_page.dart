@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
+import '../../adapters/adapters.dart';
 import '../../mixins/mixins.dart';
 
 class ProductCompositionPage extends StatefulWidget {
@@ -28,31 +29,51 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     mainErrorSubscription?.cancel();
   }
 
+  ProductsViewModel? selectedProduct;
+
+  bool getProducthasComment({
+    required int indexOfLeftItem,
+    required CommentsPresenter commentsPresenter,
+  }) {
+    if (selectedProduct!.childsComposition == null) {
+      return commentsPresenter.productHasComment(
+        internalCodeOnERP: selectedProduct!.InternalCodeOnERP!.toInt(),
+        productName: selectedProduct!.Name,
+      );
+    } else if (indexOfLeftItem == selectedProduct!.childsComposition!.length) {
+      return false;
+    } else {
+      return commentsPresenter.productHasComment(
+        internalCodeOnERP: selectedProduct!
+            .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
+            .toInt(),
+        productName:
+            selectedProduct!.childsComposition![indexOfLeftItem].ChildName!,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    ProductsViewModel selectedProduct = Get.arguments;
+    InsertProductAdapter adapter = Get.arguments;
+    selectedProduct = adapter.selectedProduct;
 
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
-    loadingSubscription =
-        handleLoading(context, productCompositionPresenter.isLoadingStream);
-    mainErrorSubscription =
-        handleMainError(context, productCompositionPresenter.mainErrorStream);
+    loadingSubscription = handleLoading(context, adapter.isLoadingStream);
+    mainErrorSubscription = handleMainError(context, adapter.mainErrorStream);
 
     return PopScope(
       onPopInvoked: (_) {
-        productCompositionPresenter.clearSelectedComboxData(
-            product: selectedProduct, commentsPresenter: commentsPresenter);
+        adapter.doOnClosePage();
       },
       child: StreamBuilder<ProductsViewModel?>(
-          stream: productCompositionPresenter.selectedComboxProductStream,
+          stream: adapter.selectedComboxProductStream,
           builder: (context, snapshot) {
-            productCompositionPresenter.updateSelectedProduct(selectedProduct);
+            adapter.updateSelectedProduct;
 
             if (snapshot.hasData) {
               selectedProduct = snapshot.data!;
@@ -61,29 +82,12 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
             return Scaffold(
               appBar: AppBar(),
               body: StreamBuilder<int>(
-                  stream: productCompositionPresenter.selectedFatherIndexStream,
-                  builder: (context, snapshotSelectedFather) {
-                    final indexOfSelectedFather =
-                        snapshotSelectedFather.data ?? 0;
-
-                    bool productHasComment;
-                    if (indexOfSelectedFather ==
-                        selectedProduct.childsComposition!.length) {
-                      productHasComment = false;
-                    } else {
-                      productHasComment = commentsPresenter.productHasComment(
-                        internalCodeOnERP: selectedProduct
-                            .childsComposition![indexOfSelectedFather]
-                            .InternalCodeOnERPCodeChild!
-                            .toInt(),
-                        productName: selectedProduct
-                            .childsComposition![indexOfSelectedFather]
-                            .ChildName!,
-                      );
-                    }
+                  stream: adapter.selectedItemIndexStream,
+                  builder: (context, snapshotLeftItems) {
+                    final indexOfLeftItem = snapshotLeftItems.data ?? 0;
 
                     return StreamBuilder<bool>(
-                        stream: productCompositionPresenter.showCommentsStream,
+                        stream: adapter.showCommentsStream,
                         builder: (context, snapshowShowComments) {
                           final showComments =
                               snapshowShowComments.data ?? false;
@@ -94,12 +98,16 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                 child: Column(
                                   children: [
                                     NameImageAndComplement(
-                                      selectedProduct: selectedProduct,
+                                      selectedProduct: selectedProduct!,
                                     ),
                                     FathersItems(
-                                      selectedProduct: selectedProduct,
-                                      indexOfSelectedFather:
-                                          indexOfSelectedFather,
+                                      selectedProduct: selectedProduct!,
+                                      indexOfSelectedFather: indexOfLeftItem,
+                                      doScrollStream: adapter.doScrollStream,
+                                      productHasComment: getProducthasComment(
+                                        indexOfLeftItem: indexOfLeftItem,
+                                        commentsPresenter: commentsPresenter,
+                                      ),
                                     ),
                                     Divider(
                                       color:
@@ -108,7 +116,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                       height: 1,
                                     ),
                                     TotalPriceCombox(
-                                      selectedProduct: selectedProduct,
+                                      totalProductsQuantity:
+                                          adapter.totalProductsQuantity,
+                                      selectedProduct: selectedProduct!,
+                                      totalPriceStream:
+                                          adapter.totalPriceStream,
+                                      updateTotalLiquid:
+                                          adapter.updateTotalLiquid,
                                     ),
                                   ],
                                 ),
@@ -120,34 +134,46 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          if (indexOfSelectedFather <
-                                              selectedProduct
+                                          if (indexOfLeftItem <
+                                              selectedProduct!
                                                   .childsComposition!.length)
                                             ProductsAndCommentsButtons(
+                                              advanceSelectedIndex:
+                                                  adapter.advanceSelectedIndex,
                                               productHasComment:
-                                                  productHasComment,
+                                                  getProducthasComment(
+                                                indexOfLeftItem:
+                                                    indexOfLeftItem,
+                                                commentsPresenter:
+                                                    commentsPresenter,
+                                              ),
                                               indexOfSelectedFather:
-                                                  indexOfSelectedFather,
+                                                  indexOfLeftItem,
                                               showComments: showComments,
                                             ),
                                           QuantityChildsAndComments(
                                             indexOfSelectedFather:
-                                                indexOfSelectedFather,
-                                            selectedProduct: selectedProduct,
+                                                indexOfLeftItem,
+                                            selectedProduct: selectedProduct!,
                                             showComments: showComments,
                                             callSetState: () {
                                               setState(() {});
                                             },
                                             productHasComment:
-                                                productHasComment,
+                                                getProducthasComment(
+                                              indexOfLeftItem: indexOfLeftItem,
+                                              commentsPresenter:
+                                                  commentsPresenter,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     AdvanceButton(
-                                      selectedProduct: selectedProduct,
-                                      indexOfSelectedFather:
-                                          indexOfSelectedFather,
+                                      advanceSelectedIndex:
+                                          adapter.advanceSelectedIndex,
+                                      selectedProduct: selectedProduct!,
+                                      indexOfSelectedFather: indexOfLeftItem,
                                     ),
                                   ],
                                 ),

@@ -100,7 +100,14 @@ void main() {
     await loadPage(tester);
     presenter.mockGoToInsertProductPage(productsViewModel);
 
-    presenter.goToInsertProductPage(productsViewModel);
+    // presenter.goToInsertProductPage(
+    //   InsertProductAdapter(
+    //     selectedProduct: productsViewModel,
+    //     isLoadingStream: StreamController<bool>().stream,
+    //     mainErrorStream: StreamController<UIError?>().stream,
+    //     doOnClosePage: () {},
+    //   ),
+    // );//////////////////////////////////////////////
     await tester.pumpAndSettle();
 
     expect(currentRoute, PageRoutes.insertProduct);

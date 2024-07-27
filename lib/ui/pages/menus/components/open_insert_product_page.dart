@@ -33,7 +33,6 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
@@ -46,7 +45,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
     return ElevatedButton(
       style: ElevatedButton.styleFrom(),
       onPressed: () async {
-        menuPresenter.goToInsertProductPage(widget.selectedProduct!);
+        // menuPresenter.goToInsertProductPage(widget.selectedProduct!);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

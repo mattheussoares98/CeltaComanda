@@ -20,7 +20,7 @@ class ProductCompositionPresenterSpy extends Mock
   final isLoadingController = StreamController<bool>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
-  final double totalComboxQuantityController = 0;
+  final int totalComboxQuantityController = 0;
 
   ProductCompositionPresenterSpy() {
     when(() => this.mainErrorStream)

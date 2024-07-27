@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
 class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
+  final bool productHasComment;
+  final Stream<bool> doScrollStream;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
+    required this.productHasComment,
+    required this.doScrollStream,
     super.key,
   });
 
@@ -55,11 +58,20 @@ class _FathersItemsState extends State<FathersItems> {
 
   bool _doScrollExecuted = false;
 
+  int getItemsCount() {
+    if (widget.selectedProduct.childsComposition == null) {
+      if (widget.productHasComment) {
+        return 3;
+      } else {
+        return 2;
+      }
+    } else {
+      return widget.selectedProduct.childsComposition!.length + 1;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
-
     return Expanded(
       child: Column(
         children: [
@@ -70,17 +82,15 @@ class _FathersItemsState extends State<FathersItems> {
                 controller: _scrollController,
                 itemExtent: 42,
                 shrinkWrap: true,
-                itemCount: widget.selectedProduct.childsComposition!.length + 1,
+                itemCount: getItemsCount(),
                 itemBuilder: (context, index) {
-                  if (index + 1 ==
-                      widget.selectedProduct.childsComposition!.length + 1) {
+                  if (index + 1 == getItemsCount()) {
                     return StreamBuilder<bool>(
-                        stream: productCompositionPresenter.doScrollStream,
+                        stream: widget.doScrollStream,
                         builder: (context, snapshot) {
                           if (snapshot.data == true) {
                             // Verifique se a função ainda não foi chamada
                             if (!_doScrollExecuted) {
-                              debugPrint("chamou o scroll");
                               doScroll(
                                 index: index,
                                 scrollController: _scrollController,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../pages.dart';
+import '../../../ui/adapters/adapters.dart';
 import '../../helpers/helpers.dart';
+import '../pages.dart';
 
 abstract class MenuPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
@@ -26,7 +27,7 @@ abstract class MenuPresenter implements Listenable {
 
   void goToProductsPage(ExpansibleGroupEntity entity);
   Future<void> goToComboxPage(ProductsViewModel product);
-  void goToInsertProductPage(ProductsViewModel product);
+  void goToInsertProductPage(InsertProductAdapter insertProductAdapter);
   void clear();
   void updateIndexOfSelectedGroup(int index);
 }

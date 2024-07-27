@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class TotalPriceCombox extends StatelessWidget {
   final ProductsViewModel selectedProduct;
+  final Stream<double> totalPriceStream;
+  final Function() updateTotalLiquid;
+  final int totalProductsQuantity;
 
   const TotalPriceCombox({
-    super.key,
     required this.selectedProduct,
+    required this.totalPriceStream,
+    required this.updateTotalLiquid,
+    required this.totalProductsQuantity,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
-
     return StreamBuilder<double>(
-        stream: productCompositionPresenter.totalPriceComboxStream,
+        stream: totalPriceStream,
         builder: (context, snapshot) {
           Future.delayed(Duration.zero, () {
-            productCompositionPresenter
-                .updateTotalLiquidCombox(selectedProduct.childsComposition!);
+            updateTotalLiquid();
           });
 
           double totalLiquid = snapshot.data ?? 0;
@@ -41,7 +42,7 @@ class TotalPriceCombox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    (productCompositionPresenter.totalComboxQuantity * totalLiquid)
+                    (totalProductsQuantity * totalLiquid)
                         .toString()
                         .toBrazilianNumber()
                         .addBrazilianCoin(),

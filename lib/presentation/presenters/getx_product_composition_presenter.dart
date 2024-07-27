@@ -25,9 +25,9 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   Stream<double> get totalPriceComboxStream => _totalPriceComboxStream.stream;
 
-  double _totalComboxQuantity = 1;
+  int _totalComboxQuantity = 1;
   @override
-  double get totalComboxQuantity => _totalComboxQuantity;
+  int get totalComboxQuantity => _totalComboxQuantity;
 
   final _comboxIsValidStream = RxBool(false);
   @override

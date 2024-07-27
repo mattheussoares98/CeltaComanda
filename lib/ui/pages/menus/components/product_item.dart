@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/adapters/adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,13 +20,48 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          menuPresenter.goToInsertProductPage(widget.productsViewModel);
+          menuPresenter.goToInsertProductPage(
+            InsertProductAdapter(
+                advanceSelectedIndex: () {
+                  productCompositionPresenter
+                      .advanceFatherIndex(commentsPresenter);
+                },
+                totalProductsQuantity:
+                    productCompositionPresenter.totalComboxQuantity,
+                updateTotalLiquid: () {
+                  productCompositionPresenter.updateTotalLiquidCombox(
+                      widget.productsViewModel.childsComposition!);
+                },
+                totalPriceStream:
+                    productCompositionPresenter.totalPriceComboxStream,
+                doScrollStream: productCompositionPresenter.doScrollStream,
+                showCommentsStream:
+                    productCompositionPresenter.showCommentsStream,
+                selectedProduct: widget.productsViewModel,
+                isLoadingStream: productCompositionPresenter.isLoadingStream,
+                mainErrorStream: productCompositionPresenter.mainErrorStream,
+                selectedComboxProductStream:
+                    productCompositionPresenter.selectedComboxProductStream,
+                selectedItemIndexStream:
+                    productCompositionPresenter.selectedFatherIndexStream,
+                updateSelectedProduct: () {
+                  productCompositionPresenter
+                      .updateSelectedProduct(widget.productsViewModel);
+                },
+                doOnClosePage: () {
+                  productCompositionPresenter.clearSelectedComboxData(
+                    product: widget.productsViewModel,
+                    commentsPresenter: commentsPresenter,
+                  );
+                }),
+          );
           if (widget.productsViewModel.childsComposition != null) {
             productCompositionPresenter
                 .updateSelectedProduct(widget.productsViewModel);

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../pages.dart';
 
 class ProductsAndCommentsButtons extends StatelessWidget {
   final bool productHasComment;
   final int indexOfSelectedFather;
   final bool showComments;
+  final Function() advanceSelectedIndex;
   const ProductsAndCommentsButtons({
     required this.productHasComment,
     required this.indexOfSelectedFather,
     required this.showComments,
+    required this.advanceSelectedIndex,
     super.key,
   });
 
@@ -41,22 +40,13 @@ class ProductsAndCommentsButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 50),
       child: Column(
         children: [
           productOrCommentButton(
             context: context,
-            onPressed: !showComments
-                ? null
-                : () {
-                    productCompositionPresenter
-                        .updateSelectedFatherIndex(indexOfSelectedFather);
-                  },
+            onPressed: !showComments ? null : advanceSelectedIndex,
             isSelected: !showComments,
             text: "Produtos",
           ),
@@ -64,12 +54,7 @@ class ProductsAndCommentsButtons extends StatelessWidget {
           if (productHasComment)
             productOrCommentButton(
               context: context,
-              onPressed: showComments
-                  ? null
-                  : () {
-                      productCompositionPresenter
-                          .advanceFatherIndex(commentsPresenter);
-                    },
+              onPressed: showComments ? null : advanceSelectedIndex,
               isSelected: showComments,
               text: "Comentários",
             ),

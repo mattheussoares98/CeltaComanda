@@ -59,10 +59,8 @@ class LeftItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        if (selectedProduct.childsComposition != null) {
-          productCompositionPresenter
-              .updateSelectedLeftItem(indexOfLeftSelectedItem);
-        }
+        productCompositionPresenter
+            .updateSelectedLeftItem(indexOfLeftSelectedItem);
       },
       child: Container(
         height: 42,

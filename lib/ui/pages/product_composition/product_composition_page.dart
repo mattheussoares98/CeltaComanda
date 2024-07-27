@@ -53,11 +53,12 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     }
   }
 
-  bool getShowComments(
-    AsyncSnapshot<bool> snapshowShowComments,
-    ProductsViewModel product,
-  ) {
-    if (product.childsComposition == null) {
+  bool getShowComments({
+    required AsyncSnapshot<bool> snapshowShowComments,
+    required ProductsViewModel product,
+    required int indexOfLeftItem,
+  }) {
+    if (product.childsComposition == null && indexOfLeftItem == 0) {
       return true;
     } else {
       return snapshowShowComments.data ?? false;
@@ -176,8 +177,11 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                         indexOfLeftItem,
                                                     showComments:
                                                         getShowComments(
-                                                      snapshowShowComments,
-                                                      selectedProduct!,
+                                                      snapshowShowComments:
+                                                          snapshowShowComments,
+                                                      product: selectedProduct!,
+                                                      indexOfLeftItem:
+                                                          indexOfLeftItem,
                                                     ),
                                                   ),
                                                 QuantityChildsAndComments(
@@ -186,8 +190,11 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                   selectedProduct:
                                                       selectedProduct!,
                                                   showComments: getShowComments(
-                                                    snapshowShowComments,
-                                                    selectedProduct!,
+                                                    snapshowShowComments:
+                                                        snapshowShowComments,
+                                                    product: selectedProduct!,
+                                                    indexOfLeftItem:
+                                                        indexOfLeftItem,
                                                   ),
                                                   callSetState: () {
                                                     setState(() {});

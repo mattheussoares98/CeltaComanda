@@ -62,6 +62,7 @@ class AdvanceButton extends StatelessWidget {
     required CartPresenter cartPresenter,
     required double totalPrice,
     required int quantity,
+    required BuildContext context,
   }) async {
     if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
       advanceSelectedIndex();
@@ -70,7 +71,7 @@ class AdvanceButton extends StatelessWidget {
       //adicionar produto no carrinho
     } else if (selectedProduct.childsComposition != null &&
         leftSelectedIndex == selectedProduct.childsComposition!.length) {
-      await cartPresenter.addConfirmedCombox(
+      bool added = await cartPresenter.addConfirmedCombox(
         selectedChilds: selectedProduct.childsComposition!
             .where((e) => e.indexOfSelectedChild != null)
             .toList(),
@@ -78,6 +79,11 @@ class AdvanceButton extends StatelessWidget {
         quantity: quantity,
         selectedCombox: selectedProduct,
       );
+      if (added) {
+        Future.delayed(Duration.zero, () {
+          Navigator.of(context).pop();
+        });
+      }
     } else {
       advanceSelectedIndex();
     }
@@ -102,6 +108,7 @@ class AdvanceButton extends StatelessWidget {
                       cartPresenter: cartPresenter,
                       totalPrice: totalPrice,
                       quantity: quantity,
+                      context: context,
                     );
                   }
                 : null,

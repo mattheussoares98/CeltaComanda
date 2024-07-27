@@ -29,6 +29,9 @@ class _ProductItemState extends State<ProductItem> {
         onTap: () {
           menuPresenter.goToInsertProductPage(
             InsertProductAdapter(
+              addInCart: () async {
+                // await CartPresenter().addConfirmedCombox(selectedChilds: selectedChilds, totalPrice: totalPrice, quantity: quantity, selectedCombox: selectedCombox)
+              },
                 advanceSelectedIndex: () {
                   productCompositionPresenter
                       .advanceFatherIndex(commentsPresenter);

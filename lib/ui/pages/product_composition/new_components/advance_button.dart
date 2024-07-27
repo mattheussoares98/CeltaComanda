@@ -5,25 +5,34 @@ import '../../pages.dart';
 
 class AdvanceButton extends StatelessWidget {
   final ProductsViewModel selectedProduct;
-  final int indexOfSelectedFather;
+  final int leftSelectedIndex;
   final void Function() advanceSelectedIndex;
+  final void Function() addInCart;
   const AdvanceButton({
     required this.selectedProduct,
-    required this.indexOfSelectedFather,
+    required this.leftSelectedIndex,
     required this.advanceSelectedIndex,
+    required this.addInCart,
     super.key,
   });
 
   String getButtonText(
-    int indexOfSelectedFather,
     ProductsViewModel selectedProduct,
     CommentsPresenter commentsPresenter,
   ) {
-    if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+    if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
+      return "AVANÇAR";
+    } else if (selectedProduct.childsComposition == null &&
+        leftSelectedIndex == 1) {
+      return "INSERIR NO CARRINHO";
+    } else if (leftSelectedIndex == selectedProduct.childsComposition!.length) {
       return "INSERIR NO CARRINHO";
     } else if (selectedProduct
-            .childsComposition![indexOfSelectedFather].IsOptionalItem ==
-        "true") {
+                .childsComposition![leftSelectedIndex].IsOptionalItem ==
+            "true" &&
+        selectedProduct
+                .childsComposition![leftSelectedIndex].indexOfSelectedChild ==
+            null) {
       return "PULAR";
     } else {
       return "AVANÇAR";
@@ -40,12 +49,24 @@ class AdvanceButton extends StatelessWidget {
     ProductCompositionViewModel selectedFather =
         selectedProduct.childsComposition![0];
 
-    if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {
-      selectedFather =
-          selectedProduct.childsComposition![indexOfSelectedFather];
+    if (leftSelectedIndex < selectedProduct.childsComposition!.length) {
+      selectedFather = selectedProduct.childsComposition![leftSelectedIndex];
     }
 
     return productCompositionPresenter.fatherIsValid(selectedFather);
+  }
+
+  Function getAdvanceOrAddInCartFunction() {
+    if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
+      return advanceSelectedIndex;
+    } else if (selectedProduct.childsComposition == null &&
+        leftSelectedIndex == 1) {
+      return addInCart;
+    } else if (selectedProduct.childsComposition != null) {
+      return addInCart;
+    } else {
+      return advanceSelectedIndex;
+    }
   }
 
   @override
@@ -61,13 +82,12 @@ class AdvanceButton extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: canAdvanceIndex(productCompositionPresenter)
-                ? advanceSelectedIndex
+                ? getAdvanceOrAddInCartFunction
                 : null,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 getButtonText(
-                  indexOfSelectedFather,
                   selectedProduct,
                   commentsPresenter,
                 ),

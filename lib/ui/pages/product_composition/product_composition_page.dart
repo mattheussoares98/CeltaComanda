@@ -173,7 +173,8 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                       advanceSelectedIndex:
                                           adapter.advanceSelectedIndex,
                                       selectedProduct: selectedProduct!,
-                                      indexOfSelectedFather: indexOfLeftItem,
+                                      leftSelectedIndex: indexOfLeftItem,
+                                      addInCart: adapter.addInCart,
                                     ),
                                   ],
                                 ),

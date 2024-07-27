@@ -50,6 +50,10 @@ class GetxProductCompositionPresenter extends GetxController
 
     selectedComboxProduct = product;
 
+    if (product.childsComposition == null) {
+      return;
+    }
+
     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
       product.childsComposition!,
     );
@@ -286,12 +290,12 @@ class GetxProductCompositionPresenter extends GetxController
     }
   }
 
-  final _selectedComboxProduct = Rx<ProductsViewModel?>(null);
+  final _selectedProduct = Rx<ProductsViewModel?>(null);
   @override
   Stream<ProductsViewModel?> get selectedComboxProductStream =>
-      _selectedComboxProduct.stream;
+      _selectedProduct.stream;
   set selectedComboxProduct(ProductsViewModel? product) {
-    _selectedComboxProduct.value = product;
+    _selectedProduct.value = product;
   }
 
   final _selectedFatherIndex = Rx<int>(0);
@@ -302,8 +306,12 @@ class GetxProductCompositionPresenter extends GetxController
   bool allPreviousFathersAreValids(int newIndex) {
     bool valid = true;
 
+    if (_selectedProduct.value!.childsComposition == null) {
+      return valid;
+    }
+
     for (var i = 0; i < newIndex; i++) {
-      final item = _selectedComboxProduct.value!.childsComposition![i];
+      final item = _selectedProduct.value!.childsComposition![i];
       if (!fatherIsValid(item)) {
         valid = false;
         break;
@@ -363,8 +371,21 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   void advanceLeftIndex(CommentsPresenter commentsPresenter) {
-    final atualFather = _selectedComboxProduct
-        .value!.childsComposition![_selectedFatherIndex.value];
+    if (_selectedProduct.value!.childsComposition == null) {
+      if (commentsPresenter.productHasComment(
+              internalCodeOnERP:
+                  _selectedProduct.value!.InternalCodeOnERP!.toInt(),
+              productName: _selectedProduct.value!.Name) &&
+          _selectedFatherIndex.value == 0) {
+        showComments = true;
+        _selectedFatherIndex.value++;
+      }
+
+      return;
+    }
+
+    final atualFather =
+        _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
 
     bool productHasComment = commentsPresenter.productHasComment(
       internalCodeOnERP: atualFather.InternalCodeOnERPCodeChild!.toInt(),
@@ -372,7 +393,7 @@ class GetxProductCompositionPresenter extends GetxController
     );
 
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
-        _selectedComboxProduct.value!.childsComposition!.length;
+        _selectedProduct.value!.childsComposition!.length;
 
     if (!fatherIsValid(atualFather)) {
     } else if (productHasComment && _showComments.value == false) {

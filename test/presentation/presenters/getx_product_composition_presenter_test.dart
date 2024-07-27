@@ -1018,5 +1018,32 @@ void main() {
       sut.updateSelectedLeftItem(1);
       sut.advanceLeftIndex(commentsPresenter);
     });
+
+    test(
+        "Should emit correct values if product has comment, dont is combox and index is equal zero",
+        () async {
+      commentsPresenter.mockProductHasComment(true);
+      selectedProduct.childsComposition = null;
+
+      expectLater(sut.selectedFatherIndexStream, emits(1));
+      expectLater(sut.showCommentsStream, emits(false));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedLeftItem(1);
+      sut.advanceLeftIndex(commentsPresenter);
+    });
+
+    test(
+        "Should emit correct values if product dont have comment, dont is combox and index is equal zero",
+        () async {
+      commentsPresenter.mockProductHasComment(false);
+      selectedProduct.childsComposition = null;
+
+      expectLater(sut.showCommentsStream, emits(false));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedLeftItem(1);
+      sut.advanceLeftIndex(commentsPresenter);
+    });
   });
 }

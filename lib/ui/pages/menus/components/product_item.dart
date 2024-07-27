@@ -70,10 +70,8 @@ class _ProductItemState extends State<ProductItem> {
               commentsPresenter,
             ),
           );
-          if (widget.productsViewModel.childsComposition != null) {
-            productCompositionPresenter
-                .updateSelectedProduct(widget.productsViewModel);
-          }
+          productCompositionPresenter
+              .updateSelectedProduct(widget.productsViewModel);
         },
         child: Padding(
             padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),

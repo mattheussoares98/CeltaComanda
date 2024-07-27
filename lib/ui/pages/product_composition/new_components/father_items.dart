@@ -49,24 +49,40 @@ class _FathersItemsState extends State<FathersItems> {
 
                   if (index + 1 ==
                       widget.selectedProduct.childsComposition!.length + 1) {
-                    return FatherItem(
-                      scrollController: widget.scrollController,
-                      indexOfSelectedFather: index,
-                      selectedProduct: widget.selectedProduct,
-                      father: null,
-                      itemColor: getItemColor(index, context),
+                    return InkWell(
+                      onTap: () {
+                        productCompositionPresenter
+                            .updateSelectedFatherIndex(index);
+                        productCompositionPresenter
+                            .scrollToIndex(widget.scrollController);
+                      },
+                      child: FatherItem(
+                        scrollController: widget.scrollController,
+                        indexOfSelectedFather: index,
+                        selectedProduct: widget.selectedProduct,
+                        father: null,
+                        itemColor: getItemColor(index, context),
+                      ),
                     );
                   }
 
                   final father =
                       widget.selectedProduct.childsComposition![index];
 
-                  return FatherItem(
-                    scrollController: widget.scrollController,
-                    father: father,
-                    indexOfSelectedFather: index,
-                    selectedProduct: widget.selectedProduct,
-                    itemColor: getItemColor(index, context),
+                  return InkWell(
+                    onTap: () {
+                      productCompositionPresenter
+                          .updateSelectedFatherIndex(index);
+                      productCompositionPresenter
+                          .scrollToIndex(widget.scrollController);
+                    },
+                    child: FatherItem(
+                      scrollController: widget.scrollController,
+                      father: father,
+                      indexOfSelectedFather: index,
+                      selectedProduct: widget.selectedProduct,
+                      itemColor: getItemColor(index, context),
+                    ),
                   );
                 },
               ),

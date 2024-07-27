@@ -92,7 +92,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                           return Row(
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.33,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Column(
                                   children: [
                                     NameImageAndComplement(
@@ -116,7 +116,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.67,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 child: Column(
                                   children: [
                                     Expanded(

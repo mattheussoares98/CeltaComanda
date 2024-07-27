@@ -18,18 +18,6 @@ class QuantityChildsAndComments extends StatelessWidget {
     super.key,
   });
 
-  Widget rightSideTitleText(String text, BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 15.0),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Theme.of(context).primaryColorDark,
-            fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
-          ),
-        ),
-      );
-
   ProductCompositionViewModel getSelectedFather(
     ProductsViewModel selectedProduct,
     int indexOfSelectedFather,
@@ -58,13 +46,13 @@ class QuantityChildsAndComments extends StatelessWidget {
               !showComments)
             Column(
               children: [
-                rightSideTitleText(
-                    getSelectedFather(selectedProduct, indexOfSelectedFather)
+                TitleText(
+                    text: getSelectedFather(
+                                    selectedProduct, indexOfSelectedFather)
                                 .IsOptionalItem ==
                             "false"
                         ? "Selecione um produto!"
-                        : "Se desejar, selecione um produto",
-                    context),
+                        : "Se desejar, selecione um produto"),
                 Childs(
                   callSetState: callSetState,
                   selectedFather:
@@ -76,8 +64,7 @@ class QuantityChildsAndComments extends StatelessWidget {
           if (showComments && productHasComment)
             Column(
               children: [
-                rightSideTitleText(
-                    "Se desejar, selecione comentários", context),
+                const TitleText(text: "Se desejar, selecione comentários"),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: CommentsList(

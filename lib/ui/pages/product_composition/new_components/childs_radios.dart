@@ -30,8 +30,8 @@ class _ChildsRadiosState extends State<ChildsRadios> {
         index: value,
       );
 
-      productCompositionPresenter.updateTotalLiquidCombox(
-        widget.selectedProduct.childsComposition!,
+      productCompositionPresenter.updateTotalLiquid(
+        widget.selectedProduct,
       );
 
       productCompositionPresenter

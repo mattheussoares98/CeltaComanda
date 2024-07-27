@@ -21,9 +21,9 @@ class GetxProductCompositionPresenter extends GetxController
     required this.validateCombox,
   });
 
-  final _totalPriceComboxStream = Rx<double>(0);
+  final _totalPrice = Rx<double>(0);
   @override
-  Stream<double> get totalPriceComboxStream => _totalPriceComboxStream.stream;
+  Stream<double> get totalPrice => _totalPrice.stream;
 
   int _totalComboxQuantity = 1;
   @override
@@ -80,12 +80,14 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateTotalLiquidCombox(
-    List<ProductCompositionViewModel> productsCompositionsViewModel,
-  ) {
-    double totalLiquid = _getTotalLiquidCombox(productsCompositionsViewModel);
+  void updateTotalLiquid(ProductsViewModel product) {
+    if (product.childsComposition == null) {
+      _totalPrice.subject.add(product.SaleRetailPraticed.toDouble());
+    } else {
+      double totalLiquid = _getTotalLiquidCombox(product.childsComposition!);
 
-    _totalPriceComboxStream.subject.add(totalLiquid);
+      _totalPrice.subject.add(totalLiquid);
+    }
   }
 
   @override

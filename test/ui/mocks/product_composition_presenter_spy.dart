@@ -27,7 +27,7 @@ class ProductCompositionPresenterSpy extends Mock
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.comboxIsValidStream)
         .thenAnswer((_) => comboxIsValidController.stream);
-    when(() => this.totalPriceComboxStream)
+    when(() => this.totalPrice)
         .thenAnswer((_) => totalPriceComboxController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
@@ -56,7 +56,7 @@ class ProductCompositionPresenterSpy extends Mock
     when(() => this.updateComboxIsValid(any())).thenAnswer((_) => true);
     when(() => this.certifyComboxIsValid(any())).thenAnswer((_) => true);
     when(() => this.updateSelectedProduct(any())).thenAnswer((_) async => _);
-    when(() => this.updateTotalLiquidCombox(any())).thenAnswer((_) async => _);
+    when(() => this.updateTotalLiquid(any())).thenAnswer((_) async => _);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

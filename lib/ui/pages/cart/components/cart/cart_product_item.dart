@@ -114,8 +114,7 @@ class _CartProductItemState extends State<CartProductItem> {
                       productName: widget.cartProduct.Product.Name,
                     ))
                       SizedBox(
-                        child: Comment(
-                            comment: widget.cartProduct.Comments!),
+                        child: Comment(comment: widget.cartProduct.Comments!),
                       ),
                   ],
                 ),
@@ -136,7 +135,7 @@ class _CartProductItemState extends State<CartProductItem> {
                 onPressedAddQuantity: () async {
                   await cartPresenter.addCartProductQuantity(widget.index);
                 },
-                productQuantity: widget.cartProduct.Quantity.toDouble(),
+                productQuantity: widget.cartProduct.Quantity.toInt(),
               ),
             ],
           ),

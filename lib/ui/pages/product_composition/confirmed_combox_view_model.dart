@@ -8,7 +8,7 @@ class ConfirmedComboxViewModel extends Equatable {
   final List<ProductCompositionViewModel> products;
   final ProductsViewModel father;
   final double totalPrice;
-  final double quantity;
+  final int quantity;
 
   const ConfirmedComboxViewModel({
     required this.products,

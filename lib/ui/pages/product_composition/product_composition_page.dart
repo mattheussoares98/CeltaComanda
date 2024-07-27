@@ -70,95 +70,52 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       onPopInvoked: (_) {
         adapter.doOnClosePage();
       },
-      child: StreamBuilder<ProductsViewModel?>(
-          stream: adapter.selectedComboxProductStream,
-          builder: (context, snapshot) {
-            adapter.updateSelectedProduct;
+      child: StreamBuilder<double>(
+          stream: adapter.totalPriceStream,
+          builder: (context, snapshotTotalPrice) {
+            Future.delayed(Duration.zero, () {
+              adapter.updateTotalLiquid();
+            });
 
-            if (snapshot.hasData) {
-              selectedProduct = snapshot.data!;
-            }
+            double totalLiquid = snapshotTotalPrice.data ?? 0;
 
-            return Scaffold(
-              appBar: AppBar(),
-              body: StreamBuilder<int>(
-                  stream: adapter.selectedItemIndexStream,
-                  builder: (context, snapshotLeftItems) {
-                    final indexOfLeftItem = snapshotLeftItems.data ?? 0;
+            return StreamBuilder<ProductsViewModel?>(
+                stream: adapter.selectedComboxProductStream,
+                builder: (context, snapshot) {
+                  adapter.updateSelectedProduct;
 
-                    return StreamBuilder<bool>(
-                        stream: adapter.showCommentsStream,
-                        builder: (context, snapshowShowComments) {
-                          final showComments =
-                              snapshowShowComments.data ?? false;
-                          return Row(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: Column(
+                  if (snapshot.hasData) {
+                    selectedProduct = snapshot.data!;
+                  }
+
+                  return Scaffold(
+                    appBar: AppBar(),
+                    body: StreamBuilder<int>(
+                        stream: adapter.selectedItemIndexStream,
+                        builder: (context, snapshotLeftItems) {
+                          final indexOfLeftItem = snapshotLeftItems.data ?? 0;
+
+                          return StreamBuilder<bool>(
+                              stream: adapter.showCommentsStream,
+                              builder: (context, snapshowShowComments) {
+                                final showComments =
+                                    snapshowShowComments.data ?? false;
+                                return Row(
                                   children: [
-                                    NameImageAndComplement(
-                                      selectedProduct: selectedProduct!,
-                                    ),
-                                    FathersItems(
-                                      selectedProduct: selectedProduct!,
-                                      indexOfSelectedFather: indexOfLeftItem,
-                                      doScrollStream: adapter.doScrollStream,
-                                      productHasComment: getProducthasComment(
-                                        indexOfLeftItem: indexOfLeftItem,
-                                        commentsPresenter: commentsPresenter,
-                                      ),
-                                    ),
-                                    Divider(
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                      thickness: 0.1,
-                                      height: 1,
-                                    ),
-                                    TotalPriceCombox(
-                                      totalProductsQuantity:
-                                          adapter.totalProductsQuantity,
-                                      selectedProduct: selectedProduct!,
-                                      totalPriceStream:
-                                          adapter.totalPriceStream,
-                                      updateTotalLiquid:
-                                          adapter.updateTotalLiquid,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Row(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Column(
                                         children: [
-                                          if (indexOfLeftItem <
-                                              selectedProduct!
-                                                  .childsComposition!.length)
-                                            ProductsAndCommentsButtons(
-                                              advanceSelectedIndex:
-                                                  adapter.advanceSelectedIndex,
-                                              productHasComment:
-                                                  getProducthasComment(
-                                                indexOfLeftItem:
-                                                    indexOfLeftItem,
-                                                commentsPresenter:
-                                                    commentsPresenter,
-                                              ),
-                                              indexOfSelectedFather:
-                                                  indexOfLeftItem,
-                                              showComments: showComments,
-                                            ),
-                                          QuantityChildsAndComments(
+                                          NameImageAndComplement(
+                                            selectedProduct: selectedProduct!,
+                                          ),
+                                          FathersItems(
+                                            selectedProduct: selectedProduct!,
                                             indexOfSelectedFather:
                                                 indexOfLeftItem,
-                                            selectedProduct: selectedProduct!,
-                                            showComments: showComments,
-                                            callSetState: () {
-                                              setState(() {});
-                                            },
+                                            doScrollStream:
+                                                adapter.doScrollStream,
                                             productHasComment:
                                                 getProducthasComment(
                                               indexOfLeftItem: indexOfLeftItem,
@@ -166,24 +123,85 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                   commentsPresenter,
                                             ),
                                           ),
+                                          Divider(
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
+                                            thickness: 0.1,
+                                            height: 1,
+                                          ),
+                                          TotalPriceCombox(
+                                            totalLiquid: totalLiquid,
+                                            totalProductsQuantity:
+                                                adapter.totalProductsQuantity,
+                                            selectedProduct: selectedProduct!,
+                                          ),
                                         ],
                                       ),
                                     ),
-                                    AdvanceButton(
-                                      advanceSelectedIndex:
-                                          adapter.advanceSelectedIndex,
-                                      selectedProduct: selectedProduct!,
-                                      leftSelectedIndex: indexOfLeftItem,
-                                      addInCart: adapter.addInCart,
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                if (indexOfLeftItem <
+                                                    selectedProduct!
+                                                        .childsComposition!
+                                                        .length)
+                                                  ProductsAndCommentsButtons(
+                                                    advanceSelectedIndex: adapter
+                                                        .advanceSelectedIndex,
+                                                    productHasComment:
+                                                        getProducthasComment(
+                                                      indexOfLeftItem:
+                                                          indexOfLeftItem,
+                                                      commentsPresenter:
+                                                          commentsPresenter,
+                                                    ),
+                                                    indexOfSelectedFather:
+                                                        indexOfLeftItem,
+                                                    showComments: showComments,
+                                                  ),
+                                                QuantityChildsAndComments(
+                                                  indexOfSelectedFather:
+                                                      indexOfLeftItem,
+                                                  selectedProduct:
+                                                      selectedProduct!,
+                                                  showComments: showComments,
+                                                  callSetState: () {
+                                                    setState(() {});
+                                                  },
+                                                  productHasComment:
+                                                      getProducthasComment(
+                                                    indexOfLeftItem:
+                                                        indexOfLeftItem,
+                                                    commentsPresenter:
+                                                        commentsPresenter,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          AdvanceButton(
+                                            totalPrice: totalLiquid,
+                                            quantity:
+                                                adapter.totalProductsQuantity,
+                                            advanceSelectedIndex:
+                                                adapter.advanceSelectedIndex,
+                                            selectedProduct: selectedProduct!,
+                                            leftSelectedIndex: indexOfLeftItem,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ],
-                          );
-                        });
-                  }),
-            );
+                                );
+                              });
+                        }),
+                  );
+                });
           }),
     );
   }

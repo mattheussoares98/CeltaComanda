@@ -16,7 +16,6 @@ class InsertProductAdapter {
   final Function() updateSelectedProduct;
   final Function() updateTotalLiquid;
   final Function() advanceSelectedIndex;
-  final Function() addInCart;
 
   InsertProductAdapter({
     required this.selectedProduct,
@@ -32,6 +31,5 @@ class InsertProductAdapter {
     required this.totalPriceStream,
     required this.updateTotalLiquid,
     required this.advanceSelectedIndex,
-    required this.addInCart,
   });
 }

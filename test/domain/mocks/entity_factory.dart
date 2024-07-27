@@ -722,7 +722,7 @@ class EntityFactory {
     required List<ProductCompositionViewModel> products,
     required ProductsViewModel father,
     required double totalPrice,
-    required double quantity,
+    required int quantity,
   }) =>
       ConfirmedComboxViewModel(
         products: products

@@ -7,12 +7,14 @@ class AdvanceButton extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final int leftSelectedIndex;
   final void Function() advanceSelectedIndex;
-  final void Function() addInCart;
+  final int quantity;
+  final double totalPrice;
   const AdvanceButton({
     required this.selectedProduct,
     required this.leftSelectedIndex,
     required this.advanceSelectedIndex,
-    required this.addInCart,
+    required this.quantity,
+    required this.totalPrice,
     super.key,
   });
 
@@ -56,15 +58,26 @@ class AdvanceButton extends StatelessWidget {
     return productCompositionPresenter.fatherIsValid(selectedFather);
   }
 
-  advanceOrAddInCart() {
+  advanceOrAddInCart({
+    required CartPresenter cartPresenter,
+    required double totalPrice,
+    required int quantity,
+  }) async {
     if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
       advanceSelectedIndex();
     } else if (selectedProduct.childsComposition == null &&
         leftSelectedIndex == 1) {
-      addInCart();
+      //adicionar produto no carrinho
     } else if (selectedProduct.childsComposition != null &&
         leftSelectedIndex == selectedProduct.childsComposition!.length) {
-      addInCart();
+      await cartPresenter.addConfirmedCombox(
+        selectedChilds: selectedProduct.childsComposition!
+            .where((e) => e.indexOfSelectedChild != null)
+            .toList(),
+        totalPrice: totalPrice,
+        quantity: quantity,
+        selectedCombox: selectedProduct,
+      );
     } else {
       advanceSelectedIndex();
     }
@@ -75,6 +88,7 @@ class AdvanceButton extends StatelessWidget {
     ProductCompositionPresenter productCompositionPresenter =
         Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -83,7 +97,13 @@ class AdvanceButton extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: canAdvanceIndex(productCompositionPresenter)
-                ? advanceOrAddInCart
+                ? () {
+                    advanceOrAddInCart(
+                      cartPresenter: cartPresenter,
+                      totalPrice: totalPrice,
+                      quantity: quantity,
+                    );
+                  }
                 : null,
             child: Padding(
               padding: const EdgeInsets.all(10.0),

@@ -5,7 +5,7 @@ import '../helpers/helpers.dart';
 class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
-  final double productQuantity;
+  final int productQuantity;
   final double price;
   final double totalLiquid;
   final bool showUpdateProductQuantity;

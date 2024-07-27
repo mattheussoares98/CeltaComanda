@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/adapters/adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../ui/adapters/adapters.dart';
 import '../../pages.dart';
 
 class ProductItem extends StatefulWidget {
@@ -29,9 +29,6 @@ class _ProductItemState extends State<ProductItem> {
         onTap: () {
           menuPresenter.goToInsertProductPage(
             InsertProductAdapter(
-              addInCart: () async {
-                // await CartPresenter().addConfirmedCombox(selectedChilds: selectedChilds, totalPrice: totalPrice, quantity: quantity, selectedCombox: selectedCombox)
-              },
                 advanceSelectedIndex: () {
                   productCompositionPresenter
                       .advanceFatherIndex(commentsPresenter);

@@ -2222,7 +2222,7 @@ void main() {
                     .toList(),
                 father: confirmedComboxWithtwoQuantities.father,
                 totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-                quantity: 3.0,
+                quantity: 3,
               )
             ],
           )).called(1);
@@ -2300,7 +2300,7 @@ void main() {
                     .toList(),
                 father: confirmedComboxWithtwoQuantities.father,
                 totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-                quantity: 1.0,
+                quantity: 1,
               ),
             ],
           )).called(1);
@@ -2348,7 +2348,7 @@ void main() {
               .toList(),
           father: confirmedComboxWithtwoQuantities.father,
           totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-          quantity: 1.0,
+          quantity: 1,
         ),
       ]);
     });

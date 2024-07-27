@@ -110,7 +110,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                           NameImageAndComplement(
                                             selectedProduct: selectedProduct!,
                                           ),
-                                          FathersItems(
+                                          LeftItems(
                                             selectedProduct: selectedProduct!,
                                             indexOfSelectedFather:
                                                 indexOfLeftItem,

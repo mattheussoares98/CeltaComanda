@@ -314,7 +314,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateSelectedFatherIndex(int newIndex) {
+  void updateSelectedLeftItem(int newIndex) {
     showComments = false;
     allPreviousFathersAreValids(newIndex);
 

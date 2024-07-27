@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class FathersItems extends StatefulWidget {
+class LeftItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
   final bool productHasComment;
   final Stream<bool> doScrollStream;
-  const FathersItems({
+  const LeftItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
     required this.productHasComment,
@@ -16,10 +16,10 @@ class FathersItems extends StatefulWidget {
   });
 
   @override
-  State<FathersItems> createState() => _FathersItemsState();
+  State<LeftItems> createState() => _LeftItemsState();
 }
 
-class _FathersItemsState extends State<FathersItems> {
+class _LeftItemsState extends State<LeftItems> {
   final _scrollController = ScrollController();
 
   Color getItemColor(int index, BuildContext context) {
@@ -103,8 +103,8 @@ class _FathersItemsState extends State<FathersItems> {
                             // Se o valor da stream não for mais true, redefina a variável de controle
                             _doScrollExecuted = false;
                           }
-                          return FatherItem(
-                            indexOfSelectedFather: index,
+                          return LeftItem(
+                            indexOfLeftSelectedItem: index,
                             selectedProduct: widget.selectedProduct,
                             father: null,
                             itemColor: getItemColor(index, context),
@@ -113,11 +113,11 @@ class _FathersItemsState extends State<FathersItems> {
                   }
 
                   final father =
-                      widget.selectedProduct.childsComposition![index];
+                      widget.selectedProduct.childsComposition?[index];
 
-                  return FatherItem(
+                  return LeftItem(
                     father: father,
-                    indexOfSelectedFather: index,
+                    indexOfLeftSelectedItem: index,
                     selectedProduct: widget.selectedProduct,
                     itemColor: getItemColor(index, context),
                   );

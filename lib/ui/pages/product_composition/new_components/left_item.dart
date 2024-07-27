@@ -5,18 +5,43 @@ import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class FatherItem extends StatelessWidget {
-  final int indexOfSelectedFather;
+class LeftItem extends StatelessWidget {
+  final int indexOfLeftSelectedItem;
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
-  const FatherItem({
+  const LeftItem({
     required this.father,
-    required this.indexOfSelectedFather,
+    required this.indexOfLeftSelectedItem,
     required this.selectedProduct,
     required this.itemColor,
     super.key,
   });
+
+  String getIsOptionalOrObligatory() {
+    if (father == null || father?.IsOptionalItem == "false") {
+      return "Obrigatório";
+    } else {
+      return "Opcional";
+    }
+  }
+
+  String getLeftItemTitle() {
+    if (selectedProduct.childsComposition != null) {
+      if (indexOfLeftSelectedItem ==
+          selectedProduct.childsComposition!.length) {
+        return "QUANTIDADE";
+      } else {
+        return father!.ChildName ?? "";
+      }
+    } else {
+      if (indexOfLeftSelectedItem == 0) {
+        return selectedProduct.Name;
+      } else {
+        return "QUANTIDADE";
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +50,10 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        productCompositionPresenter
-            .updateSelectedFatherIndex(indexOfSelectedFather);
+        if (selectedProduct.childsComposition != null) {
+          productCompositionPresenter
+              .updateSelectedLeftItem(indexOfLeftSelectedItem);
+        }
       },
       child: Container(
         height: 42,
@@ -38,10 +65,7 @@ class FatherItem extends StatelessWidget {
           children: [
             FittedBox(
               child: Text(
-                indexOfSelectedFather + 1 ==
-                        selectedProduct.childsComposition!.length + 1
-                    ? "QUANTIDADE"
-                    : father?.ChildName ?? "",
+                getLeftItemTitle(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -52,7 +76,7 @@ class FatherItem extends StatelessWidget {
             ),
             FittedBox(
               child: Text(
-                father?.IsOptionalItem == "true" ? "Opcional" : "Obrigatório",
+                getIsOptionalOrObligatory(),
                 textAlign: TextAlign.end,
                 style: TextStyle(
                   color: Colors.grey,

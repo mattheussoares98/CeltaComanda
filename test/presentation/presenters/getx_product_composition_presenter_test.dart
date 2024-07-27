@@ -329,6 +329,13 @@ void main() {
       expect(sut.totalComboxQuantity, 1);
     });
 
+    test("Should not reduce quantity when atual quantity is 1", () {
+      sut.updateComboxQuantity(false);
+      sut.updateComboxQuantity(false);
+      sut.updateComboxQuantity(false);
+      expect(sut.totalComboxQuantity, 1);
+    });
+
     test("Should call commentsPresenter.unselectAllComments", () {
       sut.clearSelectedComboxData(
         product: selectedProduct,

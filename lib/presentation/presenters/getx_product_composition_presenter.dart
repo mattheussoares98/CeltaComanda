@@ -260,6 +260,8 @@ class GetxProductCompositionPresenter extends GetxController
       _totalComboxQuantity = 1;
     } else if (isAddingQuantity) {
       _totalComboxQuantity++;
+    } else if (_totalComboxQuantity <= 1) {
+      return;
     } else {
       _totalComboxQuantity--;
     }
@@ -386,7 +388,8 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   void scrollToIndex(ScrollController scrollController) {
-    final proportion = ((42 / 1.5) * _selectedFatherIndex.value) / viewportHeight;
+    final proportion =
+        ((42 / 1.5) * _selectedFatherIndex.value) / viewportHeight;
 
     final double targetPosition = viewportHeight * proportion;
 

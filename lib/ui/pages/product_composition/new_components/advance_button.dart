@@ -56,16 +56,17 @@ class AdvanceButton extends StatelessWidget {
     return productCompositionPresenter.fatherIsValid(selectedFather);
   }
 
-  Function getAdvanceOrAddInCartFunction() {
+  advanceOrAddInCart() {
     if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
-      return advanceSelectedIndex;
+      advanceSelectedIndex();
     } else if (selectedProduct.childsComposition == null &&
         leftSelectedIndex == 1) {
-      return addInCart;
-    } else if (selectedProduct.childsComposition != null) {
-      return addInCart;
+      addInCart();
+    } else if (selectedProduct.childsComposition != null &&
+        leftSelectedIndex == selectedProduct.childsComposition!.length) {
+      addInCart();
     } else {
-      return advanceSelectedIndex;
+      advanceSelectedIndex();
     }
   }
 
@@ -82,7 +83,7 @@ class AdvanceButton extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: canAdvanceIndex(productCompositionPresenter)
-                ? getAdvanceOrAddInCartFunction
+                ? advanceOrAddInCart
                 : null,
             child: Padding(
               padding: const EdgeInsets.all(10.0),

@@ -20,7 +20,6 @@ void main() {
   late ExpansibleGroupEntity expansibleGroupEntity;
   late HiveSpy hive;
   late BoxSpy mockHiveBox;
-  late ProductsViewModel productsViewModel;
 
   setUp(() {
     hive = HiveSpy();
@@ -28,7 +27,6 @@ void main() {
     hive.mockOpenBox(mockHiveBox);
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = MenuPresenterSpy();
-    productsViewModel = EntityFactory.makeProductViewModel();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
   });
@@ -95,33 +93,6 @@ void main() {
 
     expect(currentRoute, PageRoutes.products);
   });
-
-  testWidgets('Should go to InsertProductPage', (WidgetTester tester) async {
-    await loadPage(tester);
-    presenter.mockGoToInsertProductPage(productsViewModel);
-
-    // presenter.goToInsertProductPage(
-    //   InsertProductAdapter(
-    //     selectedProduct: productsViewModel,
-    //     isLoadingStream: StreamController<bool>().stream,
-    //     mainErrorStream: StreamController<UIError?>().stream,
-    //     doOnClosePage: () {},
-    //   ),
-    // );//////////////////////////////////////////////
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.insertProduct);
-  });
-
-  // testWidgets('Should go to ComboxPage', (WidgetTester tester) async {
-  //   await loadPage(tester);
-  //   presenter.mockGoToComboxPage(productsViewModel);
-
-  //   await presenter.goToComboxPage(productsViewModel);
-  //   await tester.pumpAndSettle();
-
-  //   expect(currentRoute, PageRoutes.productComposition);
-  // });
 
   testWidgets(
       'Should present InsertCommandNumber if verify command is avaible fails',

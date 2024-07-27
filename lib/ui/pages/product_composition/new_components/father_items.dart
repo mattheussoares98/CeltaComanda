@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class FathersItems extends StatelessWidget {
+class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
   const FathersItems({
@@ -13,12 +13,42 @@ class FathersItems extends StatelessWidget {
     super.key,
   });
 
+  @override
+  State<FathersItems> createState() => _FathersItemsState();
+}
+
+class _FathersItemsState extends State<FathersItems> {
+  final ScrollController _scrollController = ScrollController();
+
   Color getItemColor(int index, BuildContext context) {
-    if (index <= indexOfSelectedFather) {
+    if (index <= widget.indexOfSelectedFather) {
       return Theme.of(context).primaryColorDark;
     } else {
       return Theme.of(context).primaryColor;
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  void _scrollToIndex(int index) {
+    final double viewportHeight = MediaQuery.of(context).size.height;
+
+    final proportion = ((42 / 2) * index) / viewportHeight;
+
+    final double targetPosition = viewportHeight * proportion;
+
+    final double scrollOffset =
+        targetPosition.clamp(0.0, _scrollController.position.maxScrollExtent);
+
+    _scrollController.animateTo(
+      scrollOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -33,25 +63,34 @@ class FathersItems extends StatelessWidget {
             child: Container(
               color: Theme.of(context).primaryColor,
               child: ListView.builder(
+                controller: _scrollController,
+                itemExtent: 42,
                 shrinkWrap: true,
-                itemCount: selectedProduct.childsComposition!.length + 1,
+                itemCount: widget.selectedProduct.childsComposition!.length + 1,
                 itemBuilder: (context, index) {
                   if (index + 1 ==
-                      selectedProduct.childsComposition!.length + 1) {
+                      widget.selectedProduct.childsComposition!.length + 1) {
                     return FatherItem(
+                      scrollToIndex: () {
+                        _scrollToIndex(index);
+                      },
                       indexOfSelectedFather: index,
-                      selectedProduct: selectedProduct,
+                      selectedProduct: widget.selectedProduct,
                       father: null,
                       itemColor: getItemColor(index, context),
                     );
                   }
 
-                  final father = selectedProduct.childsComposition![index];
+                  final father =
+                      widget.selectedProduct.childsComposition![index];
 
                   return FatherItem(
+                    scrollToIndex: () {
+                      _scrollToIndex(index);
+                    },
                     father: father,
                     indexOfSelectedFather: index,
-                    selectedProduct: selectedProduct,
+                    selectedProduct: widget.selectedProduct,
                     itemColor: getItemColor(index, context),
                   );
                 },
@@ -63,7 +102,7 @@ class FathersItems extends StatelessWidget {
               builder: (context, snapshot) {
                 Future.delayed(Duration.zero, () {
                   productCompositionPresenter.updateTotalLiquidCombox(
-                      selectedProduct.childsComposition!);
+                      widget.selectedProduct.childsComposition!);
                 });
 
                 double total = snapshot.data ?? 0;

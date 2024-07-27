@@ -10,11 +10,13 @@ class FatherItem extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
+  final Function() scrollToIndex;
   const FatherItem({
     required this.father,
     required this.indexOfSelectedFather,
     required this.selectedProduct,
     required this.itemColor,
+    required this.scrollToIndex,
     super.key,
   });
 
@@ -27,6 +29,7 @@ class FatherItem extends StatelessWidget {
       onTap: () {
         productCompositionPresenter
             .updateSelectedFatherIndex(indexOfSelectedFather);
+        scrollToIndex();
       },
       child: Container(
         height: 40,

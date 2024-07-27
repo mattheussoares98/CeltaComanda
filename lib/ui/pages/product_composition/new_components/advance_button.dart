@@ -76,8 +76,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   Future<void> _addInCart({
     required CartPresenter cartPresenter,
     required double totalPrice,
-    required int quantity,
     required BuildContext context,
+    required ProductCompositionPresenter productCompositionPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
       //add product in cart
@@ -87,7 +87,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
             .where((e) => e.indexOfSelectedChild != null)
             .toList(),
         totalPrice: totalPrice,
-        quantity: quantity,
+        quantity: productCompositionPresenter.totalComboxQuantity,
         selectedCombox: widget.selectedProduct,
       );
       if (added) {
@@ -104,6 +104,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required int quantity,
     required BuildContext context,
     required CommentsPresenter commentsPresenter,
+    required ProductCompositionPresenter productCompositionPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 0 && widget.productHasComment) {
@@ -118,8 +119,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
+          productCompositionPresenter: productCompositionPresenter,
           totalPrice: totalPrice,
-          quantity: quantity,
           context: context,
         );
       }
@@ -141,6 +142,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -156,6 +159,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
                       quantity: widget.quantity,
                       context: context,
                       commentsPresenter: commentsPresenter,
+                      productCompositionPresenter: productCompositionPresenter,
                     );
                   }
                 : null,

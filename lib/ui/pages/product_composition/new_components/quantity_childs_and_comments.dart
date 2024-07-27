@@ -99,12 +99,15 @@ class QuantityChildsAndComments extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CommentsList(
-                internalCodeOnErp: selectedProduct
-                    .childsComposition![selectedLeftIndex]
-                    .InternalCodeOnERPCodeChild!
-                    .toInt(),
-                selectedProductName: selectedProduct
-                    .childsComposition![selectedLeftIndex].ChildName!,
+                internalCodeOnErp: selectedProduct.childsComposition == null
+                    ? selectedProduct.InternalCodeOnERP!.toInt()
+                    : selectedProduct.childsComposition![selectedLeftIndex]
+                        .InternalCodeOnERPCodeChild!
+                        .toInt(),
+                selectedProductName: selectedProduct.childsComposition == null
+                    ? selectedProduct.Name
+                    : selectedProduct
+                        .childsComposition![selectedLeftIndex].ChildName!,
               ),
             ),
         ],

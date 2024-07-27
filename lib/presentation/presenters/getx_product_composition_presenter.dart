@@ -336,12 +336,14 @@ class GetxProductCompositionPresenter extends GetxController
     showComments = false;
     selectedFatherIndex = 0;
     _totalComboxQuantity = 1;
-    for (var father in product.childsComposition!) {
-      father.indexOfSelectedChild = null;
-      father.commentFather = null;
+
+    if (product.childsComposition != null) {
+      for (var father in product.childsComposition!) {
+        father.indexOfSelectedChild = null;
+        father.commentFather = null;
+      }
     }
     commentsPresenter.unselectAllComments();
-    //////////////////////////////////// alterar a quantidade do combo pra 1
   }
 
   @override

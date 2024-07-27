@@ -53,6 +53,17 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     }
   }
 
+  bool getShowComments(
+    AsyncSnapshot<bool> snapshowShowComments,
+    ProductsViewModel product,
+  ) {
+    if (product.childsComposition == null) {
+      return true;
+    } else {
+      return snapshowShowComments.data ?? false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     InsertProductAdapter adapter = Get.arguments;
@@ -98,8 +109,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                           return StreamBuilder<bool>(
                               stream: adapter.showCommentsStream,
                               builder: (context, snapshowShowComments) {
-                                final showComments =
-                                    snapshowShowComments.data ?? false;
                                 return Row(
                                   children: [
                                     SizedBox(
@@ -165,14 +174,21 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                     ),
                                                     indexOfSelectedFather:
                                                         indexOfLeftItem,
-                                                    showComments: showComments,
+                                                    showComments:
+                                                        getShowComments(
+                                                      snapshowShowComments,
+                                                      selectedProduct!,
+                                                    ),
                                                   ),
                                                 QuantityChildsAndComments(
                                                   selectedLeftIndex:
                                                       indexOfLeftItem,
                                                   selectedProduct:
                                                       selectedProduct!,
-                                                  showComments: showComments,
+                                                  showComments: getShowComments(
+                                                    snapshowShowComments,
+                                                    selectedProduct!,
+                                                  ),
                                                   callSetState: () {
                                                     setState(() {});
                                                   },

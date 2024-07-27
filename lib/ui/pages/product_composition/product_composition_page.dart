@@ -80,7 +80,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       adapter.updateTotalLiquid();
     });
     totalLiquid = snapshotTotalPrice.data ?? 0;
-    adapter.updateSelectedProduct();
 
     if (snapshotSelectedProduct.hasData) {
       selectedProduct = snapshotSelectedProduct.data!;

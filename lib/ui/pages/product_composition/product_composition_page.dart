@@ -58,42 +58,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     return selectedFather;
   }
 
-  Widget rightSideTitleText(String text) => Padding(
-        padding: const EdgeInsets.only(bottom: 15.0),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Theme.of(context).primaryColorDark,
-            fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
-          ),
-        ),
-      );
-
-  Widget productOrCommentButton({
-    required bool isSelected,
-    required String text,
-    required Function() onPressed,
-  }) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor:
-            isSelected ? Theme.of(context).primaryColorDark : Colors.white,
-        foregroundColor: isSelected
-            ? Theme.of(context).primaryColorDark
-            : Theme.of(context).primaryColorLight,
-      ),
-      onPressed: onPressed,
-      child: Text(
-        text,
-        style: TextStyle(
-          color:
-              isSelected ? Colors.white : Theme.of(context).primaryColorLight,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     ProductsViewModel selectedProduct = Get.arguments;
@@ -180,72 +144,16 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                             scrollController: _scrollController,
                                             showComments: showComments,
                                           ),
-                                          Expanded(
-                                            child: Column(
-                                              children: [
-                                                if (indexOfSelectedFather ==
-                                                    selectedProduct
-                                                        .childsComposition!
-                                                        .length)
-                                                  const Center(
-                                                      child:
-                                                          Text("Quantidade")),
-                                                if (indexOfSelectedFather <
-                                                        selectedProduct
-                                                            .childsComposition!
-                                                            .length &&
-                                                    !showComments)
-                                                  Column(
-                                                    children: [
-                                                      rightSideTitleText(getSelectedFather(
-                                                                      selectedProduct,
-                                                                      indexOfSelectedFather)
-                                                                  .IsOptionalItem ==
-                                                              "false"
-                                                          ? "Selecione um produto!"
-                                                          : "Se desejar, selecione um produto"),
-                                                      Childs(
-                                                        callSetState: () {
-                                                          setState(() {});
-                                                        },
-                                                        selectedFather:
-                                                            getSelectedFather(
-                                                                selectedProduct,
-                                                                indexOfSelectedFather),
-                                                        selectedProduct:
-                                                            selectedProduct,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                if (showComments &&
-                                                    productHasComment)
-                                                  Column(
-                                                    children: [
-                                                      rightSideTitleText(
-                                                          "Se desejar, selecione comentários"),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal:
-                                                                    8.0),
-                                                        child: CommentsList(
-                                                          internalCodeOnErp: selectedProduct
-                                                              .childsComposition![
-                                                                  indexOfSelectedFather]
-                                                              .InternalCodeOnERPCodeChild!
-                                                              .toInt(),
-                                                          selectedProductName:
-                                                              selectedProduct
-                                                                  .childsComposition![
-                                                                      indexOfSelectedFather]
-                                                                  .ChildName!,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                              ],
-                                            ),
+                                          QuantityChildsAndComments(
+                                            indexOfSelectedFather:
+                                                indexOfSelectedFather,
+                                            selectedProduct: selectedProduct,
+                                            showComments: showComments,
+                                            callSetState: () {
+                                              setState(() {});
+                                            },
+                                            productHasComment:
+                                                productHasComment,
                                           ),
                                         ],
                                       ),

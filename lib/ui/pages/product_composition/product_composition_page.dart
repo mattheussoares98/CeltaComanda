@@ -146,10 +146,13 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                           Expanded(
                                             child: Row(
                                               children: [
-                                                if (indexOfLeftItem <
-                                                    selectedProduct!
-                                                        .childsComposition!
-                                                        .length)
+                                                if (selectedProduct!
+                                                            .childsComposition !=
+                                                        null &&
+                                                    indexOfLeftItem <
+                                                        selectedProduct!
+                                                            .childsComposition!
+                                                            .length)
                                                   ProductsAndCommentsButtons(
                                                     advanceSelectedIndex: adapter
                                                         .advanceSelectedIndex,

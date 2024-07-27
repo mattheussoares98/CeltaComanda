@@ -30,34 +30,6 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     _scrollController.dispose();
   }
 
-  String getButtonText(int indexOfSelectedFather,
-      ProductsViewModel selectedProduct, CommentsPresenter commentsPresenter) {
-    if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
-      return "INSERIR";
-    } else if (selectedProduct
-            .childsComposition![indexOfSelectedFather].IsOptionalItem ==
-        "true") {
-      return "PULAR";
-    } else {
-      return "AVANÇAR";
-    }
-  }
-
-  ProductCompositionViewModel getSelectedFather(
-    ProductsViewModel selectedProduct,
-    int indexOfSelectedFather,
-  ) {
-    ProductCompositionViewModel selectedFather =
-        selectedProduct.childsComposition![0];
-
-    if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {
-      selectedFather =
-          selectedProduct.childsComposition![indexOfSelectedFather];
-    }
-
-    return selectedFather;
-  }
-
   @override
   Widget build(BuildContext context) {
     ProductsViewModel selectedProduct = Get.arguments;
@@ -158,38 +130,11 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                         ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ElevatedButton(
-                                            onPressed: productCompositionPresenter
-                                                    .fatherIsValid(
-                                                        getSelectedFather(
-                                                            selectedProduct,
-                                                            indexOfSelectedFather))
-                                                ? () {
-                                                    productCompositionPresenter
-                                                        .advanceFatherIndex(
-                                                            commentsPresenter);
-                                                    productCompositionPresenter
-                                                        .scrollToIndex(
-                                                            _scrollController);
-                                                  }
-                                                : null,
-                                            child: Text(
-                                              getButtonText(
-                                                indexOfSelectedFather,
-                                                selectedProduct,
-                                                commentsPresenter,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                    AdvanceButton(
+                                      selectedProduct: selectedProduct,
+                                      indexOfSelectedFather:
+                                          indexOfSelectedFather,
+                                      scrollController: _scrollController,
                                     ),
                                   ],
                                 ),

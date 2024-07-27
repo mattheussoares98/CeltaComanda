@@ -168,7 +168,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                     showComments: showComments,
                                                   ),
                                                 QuantityChildsAndComments(
-                                                  indexOfSelectedFather:
+                                                  selectedLeftIndex:
                                                       indexOfLeftItem,
                                                   selectedProduct:
                                                       selectedProduct!,

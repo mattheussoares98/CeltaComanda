@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
 
-class Childs extends StatefulWidget {
+class ChildsRadios extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel selectedFather;
   final Function() callSetState;
 
-  const Childs({
+  const ChildsRadios({
     required this.selectedProduct,
     required this.selectedFather,
     required this.callSetState,
@@ -16,10 +16,10 @@ class Childs extends StatefulWidget {
   });
 
   @override
-  State<Childs> createState() => _ChildsState();
+  State<ChildsRadios> createState() => _ChildsRadiosState();
 }
 
-class _ChildsState extends State<Childs> {
+class _ChildsRadiosState extends State<ChildsRadios> {
   void _updateSelectedIndex({
     required ProductCompositionPresenter productCompositionPresenter,
     required int? value,

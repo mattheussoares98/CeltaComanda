@@ -1,7 +1,7 @@
 export './advance_button.dart';
 export './father_items.dart';
 export 'left_item.dart';
-export './childs.dart';
+export 'childs_radios.dart';
 export './name_image_and_complement.dart';
 export './products_and_comments_buttons.dart';
 export './quantity_childs_and_comments.dart';

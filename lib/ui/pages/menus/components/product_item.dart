@@ -27,8 +27,10 @@ class _ProductItemState extends State<ProductItem> {
         },
         totalProductsQuantity: productCompositionPresenter.totalComboxQuantity,
         updateTotalLiquid: () {
-          productCompositionPresenter.updateTotalLiquidCombox(
-              widget.productsViewModel.childsComposition!);
+          if (widget.productsViewModel.childsComposition != null) {
+            productCompositionPresenter.updateTotalLiquidCombox(
+                widget.productsViewModel.childsComposition!);
+          }
         },
         totalPriceStream: productCompositionPresenter.totalPriceComboxStream,
         doScrollStream: productCompositionPresenter.doScrollStream,

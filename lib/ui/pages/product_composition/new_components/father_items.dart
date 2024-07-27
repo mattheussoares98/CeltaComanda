@@ -72,9 +72,6 @@ class _FathersItemsState extends State<FathersItems> {
               ),
             ),
           ),
-          TotalPriceCombox(
-            fatherItems: widget,
-          ),
         ],
       ),
     );

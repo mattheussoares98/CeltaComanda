@@ -34,7 +34,7 @@ class FatherItem extends StatelessWidget {
       child: Container(
         height: 42,
         color: itemColor,
-        margin: const EdgeInsets.only(bottom: 2),
+        margin: const EdgeInsets.only(bottom: 1),
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

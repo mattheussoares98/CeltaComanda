@@ -104,6 +104,14 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                       indexOfSelectedFather:
                                           indexOfSelectedFather,
                                     ),
+                                    Divider(
+                                      color: Theme.of(context).primaryColorLight,
+                                      thickness: 0.1,
+                                      height: 1,
+                                    ),
+                                    TotalPriceCombox(
+                                      selectedProduct: selectedProduct,
+                                    ),
                                   ],
                                 ),
                               ),

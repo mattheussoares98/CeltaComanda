@@ -5,11 +5,11 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class TotalPriceCombox extends StatelessWidget {
-  final FathersItems fatherItems;
+  final ProductsViewModel selectedProduct;
 
   const TotalPriceCombox({
     super.key,
-    required this.fatherItems,
+    required this.selectedProduct,
   });
 
   @override
@@ -21,8 +21,8 @@ class TotalPriceCombox extends StatelessWidget {
         stream: productCompositionPresenter.totalPriceComboxStream,
         builder: (context, snapshot) {
           Future.delayed(Duration.zero, () {
-            productCompositionPresenter.updateTotalLiquidCombox(
-                fatherItems.selectedProduct.childsComposition!);
+            productCompositionPresenter
+                .updateTotalLiquidCombox(selectedProduct.childsComposition!);
           });
 
           double total = snapshot.data ?? 0;

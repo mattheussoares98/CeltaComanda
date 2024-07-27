@@ -233,6 +233,12 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                 adapter.advanceSelectedIndex,
                                             selectedProduct: selectedProduct!,
                                             leftSelectedIndex: indexOfLeftItem,
+                                            productHasComment:
+                                                getProducthasComment(
+                                              indexOfLeftItem: indexOfLeftItem,
+                                              commentsPresenter:
+                                                  commentsPresenter,
+                                            ),
                                           ),
                                         ],
                                       ),

@@ -3,96 +3,142 @@ import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
-class AdvanceButton extends StatelessWidget {
+class AdvanceButton extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int leftSelectedIndex;
   final void Function() advanceSelectedIndex;
   final int quantity;
   final double totalPrice;
+  final bool productHasComment;
   const AdvanceButton({
     required this.selectedProduct,
     required this.leftSelectedIndex,
     required this.advanceSelectedIndex,
     required this.quantity,
     required this.totalPrice,
+    required this.productHasComment,
     super.key,
   });
 
-  String getButtonText(
+  @override
+  State<AdvanceButton> createState() => _AdvanceButtonState();
+}
+
+class _AdvanceButtonState extends State<AdvanceButton> {
+  String _getButtonText(
     ProductsViewModel selectedProduct,
     CommentsPresenter commentsPresenter,
   ) {
-    if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
-      return "AVANÇAR";
-    } else if (selectedProduct.childsComposition == null &&
-        leftSelectedIndex == 1) {
-      return "INSERIR NO CARRINHO";
-    } else if (leftSelectedIndex == selectedProduct.childsComposition!.length) {
-      return "INSERIR NO CARRINHO";
-    } else if (selectedProduct
-                .childsComposition![leftSelectedIndex].IsOptionalItem ==
-            "true" &&
-        selectedProduct
-                .childsComposition![leftSelectedIndex].indexOfSelectedChild ==
-            null) {
-      return "PULAR";
+    if (selectedProduct.childsComposition == null) {
+      if (widget.leftSelectedIndex == 1) {
+        return "INSERIR NO CARRINHO";
+      } else if (widget.leftSelectedIndex == 0 && !widget.productHasComment) {
+        return "INSERIR NO CARRINHO";
+      } else {
+        return "AVANÇAR";
+      }
     } else {
-      return "AVANÇAR";
+      if (widget.leftSelectedIndex ==
+          selectedProduct.childsComposition!.length) {
+        return "INSERIR NO CARRINHO";
+      } else if (selectedProduct.childsComposition![widget.leftSelectedIndex]
+                  .IsOptionalItem ==
+              "true" &&
+          selectedProduct.childsComposition![widget.leftSelectedIndex]
+                  .indexOfSelectedChild ==
+              null) {
+        return "PULAR";
+      } else {
+        return "AVANÇAR";
+      }
     }
   }
 
-  bool canAdvanceIndex(
+  bool _getCanAdvanceIndex(
     ProductCompositionPresenter productCompositionPresenter,
   ) {
-    if (selectedProduct.childsComposition == null) {
+    if (widget.selectedProduct.childsComposition == null) {
       return true;
     }
 
     ProductCompositionViewModel selectedFather =
-        selectedProduct.childsComposition![0];
+        widget.selectedProduct.childsComposition![0];
 
-    if (leftSelectedIndex < selectedProduct.childsComposition!.length) {
-      selectedFather = selectedProduct.childsComposition![leftSelectedIndex];
+    if (widget.leftSelectedIndex <
+        widget.selectedProduct.childsComposition!.length) {
+      selectedFather =
+          widget.selectedProduct.childsComposition![widget.leftSelectedIndex];
     }
 
     return productCompositionPresenter.fatherIsValid(selectedFather);
   }
 
-  advanceOrAddInCart({
+  Future<void> _addInCart({
     required CartPresenter cartPresenter,
     required double totalPrice,
     required int quantity,
     required BuildContext context,
   }) async {
-    if (selectedProduct.childsComposition == null && leftSelectedIndex == 0) {
-      advanceSelectedIndex();
-    } else if (selectedProduct.childsComposition == null &&
-        leftSelectedIndex == 1) {
-      //adicionar produto no carrinho
-    } else if (selectedProduct.childsComposition != null &&
-        leftSelectedIndex == selectedProduct.childsComposition!.length) {
+    if (widget.selectedProduct.childsComposition == null) {
+      //add product in cart
+    } else {
       bool added = await cartPresenter.addConfirmedCombox(
-        selectedChilds: selectedProduct.childsComposition!
+        selectedChilds: widget.selectedProduct.childsComposition!
             .where((e) => e.indexOfSelectedChild != null)
             .toList(),
         totalPrice: totalPrice,
         quantity: quantity,
-        selectedCombox: selectedProduct,
+        selectedCombox: widget.selectedProduct,
       );
       if (added) {
         Future.delayed(Duration.zero, () {
           Navigator.of(context).pop();
         });
       }
-    } else {
-      advanceSelectedIndex();
     }
+  }
+
+  Future<void> _advanceOrAddInCart({
+    required CartPresenter cartPresenter,
+    required double totalPrice,
+    required int quantity,
+    required BuildContext context,
+    required CommentsPresenter commentsPresenter,
+  }) async {
+    if (widget.selectedProduct.childsComposition == null) {
+      if (widget.leftSelectedIndex == 0 && widget.productHasComment) {
+        widget.advanceSelectedIndex();
+      } else {
+        //adicionar no carrinho
+      }
+    } else {
+      if (widget.leftSelectedIndex !=
+          widget.selectedProduct.childsComposition!.length) {
+        widget.advanceSelectedIndex();
+      } else {
+        await _addInCart(
+          cartPresenter: cartPresenter,
+          totalPrice: totalPrice,
+          quantity: quantity,
+          context: context,
+        );
+      }
+    }
+  }
+
+  static bool canAdvanceIndex = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    ProductCompositionPresenter productCompositionPresenter =
+        Provider.of(context, listen: false);
+    canAdvanceIndex = _getCanAdvanceIndex(productCompositionPresenter);
   }
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
 
@@ -102,21 +148,22 @@ class AdvanceButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: canAdvanceIndex(productCompositionPresenter)
-                ? () {
-                    advanceOrAddInCart(
+            onPressed: canAdvanceIndex
+                ? () async {
+                    await _advanceOrAddInCart(
                       cartPresenter: cartPresenter,
-                      totalPrice: totalPrice,
-                      quantity: quantity,
+                      totalPrice: widget.totalPrice,
+                      quantity: widget.quantity,
                       context: context,
+                      commentsPresenter: commentsPresenter,
                     );
                   }
                 : null,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                getButtonText(
-                  selectedProduct,
+                _getButtonText(
+                  widget.selectedProduct,
                   commentsPresenter,
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/pages/product_composition/new_components/update_quantity.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/pages.dart';
@@ -59,7 +60,7 @@ class QuantityChildsAndComments extends StatelessWidget {
           TitleText(text: getTitleText()),
           if (indexOfSelectedFather ==
               selectedProduct.childsComposition!.length)
-            const Center(child: Text("Quantidade")),
+            const UpdateQuantity(),
           if (indexOfSelectedFather <
                   selectedProduct.childsComposition!.length &&
               !showComments)

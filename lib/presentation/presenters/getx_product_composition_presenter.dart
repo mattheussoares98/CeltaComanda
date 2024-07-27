@@ -340,6 +340,7 @@ class GetxProductCompositionPresenter extends GetxController
       father.commentFather = null;
     }
     commentsPresenter.unselectAllComments();
+    //////////////////////////////////// alterar a quantidade do combo pra 1
   }
 
   @override

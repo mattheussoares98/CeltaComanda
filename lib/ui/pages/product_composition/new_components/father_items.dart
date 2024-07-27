@@ -7,9 +7,11 @@ import '../../pages.dart';
 class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
+  final ScrollController scrollController;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
+    required this.scrollController,
     super.key,
   });
 
@@ -18,37 +20,12 @@ class FathersItems extends StatefulWidget {
 }
 
 class _FathersItemsState extends State<FathersItems> {
-  final ScrollController _scrollController = ScrollController();
-
   Color getItemColor(int index, BuildContext context) {
     if (index <= widget.indexOfSelectedFather) {
       return Theme.of(context).primaryColorDark;
     } else {
       return Theme.of(context).primaryColor;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
-
-  void _scrollToIndex(int index) {
-    final double viewportHeight = MediaQuery.of(context).size.height;
-
-    final proportion = ((42 / 2) * index) / viewportHeight;
-
-    final double targetPosition = viewportHeight * proportion;
-
-    final double scrollOffset =
-        targetPosition.clamp(0.0, _scrollController.position.maxScrollExtent);
-
-    _scrollController.animateTo(
-      scrollOffset,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
@@ -63,17 +40,18 @@ class _FathersItemsState extends State<FathersItems> {
             child: Container(
               color: Theme.of(context).primaryColor,
               child: ListView.builder(
-                controller: _scrollController,
+                controller: widget.scrollController,
                 itemExtent: 42,
                 shrinkWrap: true,
                 itemCount: widget.selectedProduct.childsComposition!.length + 1,
                 itemBuilder: (context, index) {
+                  productCompositionPresenter.viewportHeight =
+                      MediaQuery.of(context).size.height;
+
                   if (index + 1 ==
                       widget.selectedProduct.childsComposition!.length + 1) {
                     return FatherItem(
-                      scrollToIndex: () {
-                        _scrollToIndex(index);
-                      },
+                      scrollController: widget.scrollController,
                       indexOfSelectedFather: index,
                       selectedProduct: widget.selectedProduct,
                       father: null,
@@ -85,9 +63,7 @@ class _FathersItemsState extends State<FathersItems> {
                       widget.selectedProduct.childsComposition![index];
 
                   return FatherItem(
-                    scrollToIndex: () {
-                      _scrollToIndex(index);
-                    },
+                    scrollController: widget.scrollController,
                     father: father,
                     indexOfSelectedFather: index,
                     selectedProduct: widget.selectedProduct,

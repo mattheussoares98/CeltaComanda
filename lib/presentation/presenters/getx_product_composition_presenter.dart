@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -380,4 +382,23 @@ class GetxProductCompositionPresenter extends GetxController
       _selectedFatherIndex.value++;
     }
   }
+
+  @override
+  void scrollToIndex(ScrollController scrollController) {
+    final proportion = ((42 / 1.5) * _selectedFatherIndex.value) / viewportHeight;
+
+    final double targetPosition = viewportHeight * proportion;
+
+    final double scrollOffset =
+        targetPosition.clamp(0.0, scrollController.position.maxScrollExtent);
+
+    scrollController.animateTo(
+      scrollOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  double viewportHeight = 0;
 }

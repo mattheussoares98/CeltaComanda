@@ -19,6 +19,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  final _scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -26,6 +27,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    _scrollController.dispose();
   }
 
   String getButtonText(int indexOfSelectedFather,
@@ -155,6 +157,7 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                       selectedProduct: selectedProduct,
                                     ),
                                     FathersItems(
+                                      scrollController: _scrollController,
                                       selectedProduct: selectedProduct,
                                       indexOfSelectedFather:
                                           indexOfSelectedFather,
@@ -179,6 +182,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                     productCompositionPresenter
                                                         .updateSelectedFatherIndex(
                                                             indexOfSelectedFather);
+                                                    productCompositionPresenter
+                                                        .scrollToIndex(
+                                                            _scrollController);
                                                   },
                                                   isSelected: !showComments,
                                                   text: "Produtos",
@@ -190,6 +196,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                       productCompositionPresenter
                                                           .advanceFatherIndex(
                                                               commentsPresenter);
+                                                      productCompositionPresenter
+                                                          .scrollToIndex(
+                                                              _scrollController);
                                                     },
                                                     isSelected: showComments,
                                                     text: "Comentários",
@@ -284,6 +293,9 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                                     productCompositionPresenter
                                                         .advanceFatherIndex(
                                                             commentsPresenter);
+                                                    productCompositionPresenter
+                                                        .scrollToIndex(
+                                                            _scrollController);
                                                   }
                                                 : null,
                                             child: Text(

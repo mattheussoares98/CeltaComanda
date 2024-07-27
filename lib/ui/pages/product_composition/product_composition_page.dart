@@ -68,15 +68,21 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                     final indexOfSelectedFather =
                         snapshotSelectedFather.data ?? 0;
 
-                    bool productHasComment =
-                        commentsPresenter.productHasComment(
-                      internalCodeOnERP: selectedProduct
-                          .childsComposition![indexOfSelectedFather]
-                          .InternalCodeOnERPCodeChild!
-                          .toInt(),
-                      productName: selectedProduct
-                          .childsComposition![indexOfSelectedFather].ChildName!,
-                    );
+                    bool productHasComment;
+                    if (indexOfSelectedFather ==
+                        selectedProduct.childsComposition!.length) {
+                      productHasComment = false;
+                    } else {
+                      productHasComment = commentsPresenter.productHasComment(
+                        internalCodeOnERP: selectedProduct
+                            .childsComposition![indexOfSelectedFather]
+                            .InternalCodeOnERPCodeChild!
+                            .toInt(),
+                        productName: selectedProduct
+                            .childsComposition![indexOfSelectedFather]
+                            .ChildName!,
+                      );
+                    }
 
                     return StreamBuilder<bool>(
                         stream: productCompositionPresenter.showCommentsStream,
@@ -108,14 +114,18 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          ProductsAndCommentsButtons(
-                                            productHasComment:
-                                                productHasComment,
-                                            indexOfSelectedFather:
-                                                indexOfSelectedFather,
-                                            scrollController: _scrollController,
-                                            showComments: showComments,
-                                          ),
+                                          if (indexOfSelectedFather <
+                                              selectedProduct
+                                                  .childsComposition!.length)
+                                            ProductsAndCommentsButtons(
+                                              productHasComment:
+                                                  productHasComment,
+                                              indexOfSelectedFather:
+                                                  indexOfSelectedFather,
+                                              scrollController:
+                                                  _scrollController,
+                                              showComments: showComments,
+                                            ),
                                           QuantityChildsAndComments(
                                             indexOfSelectedFather:
                                                 indexOfSelectedFather,

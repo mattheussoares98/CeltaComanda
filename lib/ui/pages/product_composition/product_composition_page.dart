@@ -60,9 +60,32 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
   }) {
     if (product.childsComposition == null && indexOfLeftItem == 0) {
       return true;
+    } else if (product.childsComposition == null && indexOfLeftItem == 1) {
+      return false;
     } else {
       return snapshowShowComments.data ?? false;
     }
+  }
+
+  double totalLiquid = 0;
+  int indexOfLeftItem = 0;
+
+  void doOnBuildStreams({
+    required InsertProductAdapter adapter,
+    required AsyncSnapshot<double> snapshotTotalPrice,
+    required AsyncSnapshot<ProductsViewModel?> snapshotSelectedProduct,
+    required AsyncSnapshot<int> snapshotLeftItems,
+  }) {
+    Future.delayed(Duration.zero, () {
+      adapter.updateTotalLiquid();
+    });
+    totalLiquid = snapshotTotalPrice.data ?? 0;
+    adapter.updateSelectedProduct();
+
+    if (snapshotSelectedProduct.hasData) {
+      selectedProduct = snapshotSelectedProduct.data!;
+    }
+    indexOfLeftItem = snapshotLeftItems.data ?? 0;
   }
 
   @override
@@ -85,31 +108,24 @@ class _ProductCompositionPageState extends State<ProductCompositionPage>
       child: StreamBuilder<double>(
           stream: adapter.totalPriceStream,
           builder: (context, snapshotTotalPrice) {
-            Future.delayed(Duration.zero, () {
-              adapter.updateTotalLiquid();
-            });
-
-            double totalLiquid = snapshotTotalPrice.data ?? 0;
-
             return StreamBuilder<ProductsViewModel?>(
                 stream: adapter.selectedComboxProductStream,
-                builder: (context, snapshot) {
-                  adapter.updateSelectedProduct;
-
-                  if (snapshot.hasData) {
-                    selectedProduct = snapshot.data!;
-                  }
-
+                builder: (context, snapshotSelectedProduct) {
                   return Scaffold(
                     appBar: AppBar(),
                     body: StreamBuilder<int>(
                         stream: adapter.selectedItemIndexStream,
                         builder: (context, snapshotLeftItems) {
-                          final indexOfLeftItem = snapshotLeftItems.data ?? 0;
-
                           return StreamBuilder<bool>(
                               stream: adapter.showCommentsStream,
                               builder: (context, snapshowShowComments) {
+                                doOnBuildStreams(
+                                  adapter: adapter,
+                                  snapshotTotalPrice: snapshotTotalPrice,
+                                  snapshotSelectedProduct:
+                                      snapshotSelectedProduct,
+                                  snapshotLeftItems: snapshotLeftItems,
+                                );
                                 return Row(
                                   children: [
                                     SizedBox(

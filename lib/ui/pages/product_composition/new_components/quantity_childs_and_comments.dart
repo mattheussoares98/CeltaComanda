@@ -33,11 +33,30 @@ class QuantityChildsAndComments extends StatelessWidget {
     return selectedFather;
   }
 
+  String getTitleText() {
+    if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+      return "Informe a quantidade";
+    } else if (indexOfSelectedFather <
+            selectedProduct.childsComposition!.length &&
+        !showComments) {
+      if (getSelectedFather(selectedProduct, indexOfSelectedFather)
+              .IsOptionalItem ==
+          "false") {
+        return "Selecione um produto!";
+      } else {
+        return "Se desejar, selecione um produto";
+      }
+    } else {
+      return "Se desejar, selecione comentários";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         children: [
+          TitleText(text: getTitleText()),
           if (indexOfSelectedFather ==
               selectedProduct.childsComposition!.length)
             const Center(child: Text("Quantidade")),
@@ -46,13 +65,6 @@ class QuantityChildsAndComments extends StatelessWidget {
               !showComments)
             Column(
               children: [
-                TitleText(
-                    text: getSelectedFather(
-                                    selectedProduct, indexOfSelectedFather)
-                                .IsOptionalItem ==
-                            "false"
-                        ? "Selecione um produto!"
-                        : "Se desejar, selecione um produto"),
                 Childs(
                   callSetState: callSetState,
                   selectedFather:
@@ -62,21 +74,16 @@ class QuantityChildsAndComments extends StatelessWidget {
               ],
             ),
           if (showComments && productHasComment)
-            Column(
-              children: [
-                const TitleText(text: "Se desejar, selecione comentários"),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: CommentsList(
-                    internalCodeOnErp: selectedProduct
-                        .childsComposition![indexOfSelectedFather]
-                        .InternalCodeOnERPCodeChild!
-                        .toInt(),
-                    selectedProductName: selectedProduct
-                        .childsComposition![indexOfSelectedFather].ChildName!,
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: CommentsList(
+                internalCodeOnErp: selectedProduct
+                    .childsComposition![indexOfSelectedFather]
+                    .InternalCodeOnERPCodeChild!
+                    .toInt(),
+                selectedProductName: selectedProduct
+                    .childsComposition![indexOfSelectedFather].ChildName!,
+              ),
             ),
         ],
       ),

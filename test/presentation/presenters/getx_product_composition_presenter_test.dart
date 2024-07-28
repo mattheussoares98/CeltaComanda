@@ -1046,4 +1046,16 @@ void main() {
       sut.advanceLeftIndex(commentsPresenter);
     });
   });
+
+  group("get can advance index", () {
+    test("Should return true if childsComposition is null", () async {
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.canAdvanceIndex, true);
+    });
+    //não criei mais testes porque nas outras possibilidades chama a função
+    //fatherIsValid, que já possui testes. Só passa o produto pai do índice
+    //selecionado como parâmetro da função pra validar o pai
+  });
 }

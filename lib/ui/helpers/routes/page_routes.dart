@@ -3,7 +3,6 @@ class PageRoutes {
   static const String comments = "/comments";
   static const String enterpriseValidation = "/enterprise_validation";
   static const String home = "/home";
-  static const String insertProduct = "/insert_product";
   static const String menus = "/menus";
   static const String payment = "/payment";
   static const String printedProducts = "/printed_products";

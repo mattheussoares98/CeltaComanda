@@ -112,11 +112,6 @@ class App extends StatelessWidget {
               page: makePaymentPage,
               transition: Transition.fadeIn,
             ),
-            GetPage(
-              name: PageRoutes.insertProduct,
-              page: makeInsertProductPage,
-              transition: Transition.fadeIn,
-            ),
           ],
         ),
       ),

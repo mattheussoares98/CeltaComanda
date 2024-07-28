@@ -52,10 +52,6 @@ Widget makePage(
       name: PageRoutes.productComposition,
       page: () => const ProductCompositionPage(),
     ),
-    GetPage(
-      name: PageRoutes.insertProduct,
-      page: () => const InsertProductPage(),
-    ),
   ];
 
   final index = allPages.indexWhere((element) => element.name == path);

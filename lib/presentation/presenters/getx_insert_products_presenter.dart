@@ -31,7 +31,8 @@ class GetxInsertProductsPresenter extends GetxController
 
   final _comboxIsValidStream = RxBool(false);
   @override
-  Stream<bool> get childsCompositionIsValidStream => _comboxIsValidStream.stream;
+  Stream<bool> get childsCompositionIsValidStream =>
+      _comboxIsValidStream.stream;
 
   void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
     List<InsertProductsViewModel> productsComposition,
@@ -238,26 +239,6 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  bool certifyChildsCompositionIsValid(
-    List<InsertProductsViewModel> productsCompositions,
-  ) {
-    mainError = null;
-    try {
-      _comboxIsValidStream.value =
-          validateCombox.comboxIsValid(productsCompositions);
-
-      if (_comboxIsValidStream.value == false) {
-        throw Exception();
-      }
-
-      return _comboxIsValidStream.value;
-    } catch (e) {
-      mainError = UIError.invalidCombox;
-      return _comboxIsValidStream.value;
-    }
-  }
-
-  @override
   void updateTotalProductsQuantity(bool isAddingQuantity,
       [bool clearTotalComboxQuantity = false]) {
     if (clearTotalComboxQuantity) {
@@ -423,7 +404,6 @@ class GetxInsertProductsPresenter extends GetxController
     });
   }
 
-  
   @override
   bool get canAdvanceIndex {
     if (_selectedProduct.value!.childsComposition == null) {

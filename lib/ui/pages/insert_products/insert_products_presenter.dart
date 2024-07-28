@@ -19,8 +19,6 @@ abstract class InsertProductPresenter implements Listenable {
 
   Future<void> updateSelectedProduct(ProductsViewModel product);
 
-  bool certifyChildsCompositionIsValid(
-      List<InsertProductsViewModel> productsCompositions);
   void updateChildsCompositionIsValid(
       List<InsertProductsViewModel> productsCompositions);
 

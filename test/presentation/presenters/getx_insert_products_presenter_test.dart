@@ -872,21 +872,6 @@ void main() {
   });
 
   group("validate combox", () {
-    test("Should emit correct envets on certifyComboxIsValid return true", () {
-      expectLater(sut.childsCompositionIsValidStream, emits(true));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      sut.certifyChildsCompositionIsValid([]);
-    });
-    test("Should emit correct envets on certifyComboxIsValid return false", () {
-      validateCombox.mockValidateCombox(false);
-
-      expectLater(sut.childsCompositionIsValidStream, emits(false));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
-
-      sut.certifyChildsCompositionIsValid([]);
-    });
     test("Should update comboxIsValidStream correctly on combox is valid", () {
       validateCombox.mockValidateCombox(true);
 

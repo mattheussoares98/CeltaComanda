@@ -54,7 +54,6 @@ class InsertProductsPresenterSpy extends Mock
           productsCompositions: any(named: "productsCompositions"),
         )).thenAnswer((_) async => true);
     when(() => this.updateChildsCompositionIsValid(any())).thenAnswer((_) => true);
-    when(() => this.certifyChildsCompositionIsValid(any())).thenAnswer((_) => true);
     when(() => this.updateSelectedProduct(any())).thenAnswer((_) async => _);
     when(() => this.updateTotalLiquid(any())).thenAnswer((_) async => _);
   }

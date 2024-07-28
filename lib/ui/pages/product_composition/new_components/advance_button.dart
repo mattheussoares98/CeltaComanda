@@ -56,24 +56,24 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     }
   }
 
-  bool _getCanAdvanceIndex(
-    ProductCompositionPresenter productCompositionPresenter,
-  ) {
-    if (widget.selectedProduct.childsComposition == null) {
-      return true;
-    }
+  // bool _getCanAdvanceIndex(
+  //   ProductCompositionPresenter productCompositionPresenter,
+  // ) {
+  //   if (widget.selectedProduct.childsComposition == null) {
+  //     return true;
+  //   }
 
-    ProductCompositionViewModel selectedFather =
-        widget.selectedProduct.childsComposition![0];
+  //   ProductCompositionViewModel selectedFather =
+  //       widget.selectedProduct.childsComposition![0];
 
-    if (widget.leftSelectedIndex <
-        widget.selectedProduct.childsComposition!.length) {
-      selectedFather =
-          widget.selectedProduct.childsComposition![widget.leftSelectedIndex];
-    }
+  //   if (widget.leftSelectedIndex <
+  //       widget.selectedProduct.childsComposition!.length) {
+  //     selectedFather =
+  //         widget.selectedProduct.childsComposition![widget.leftSelectedIndex];
+  //   }
 
-    return productCompositionPresenter.fatherIsValid(selectedFather);
-  }
+  //   return productCompositionPresenter.fatherIsValid(selectedFather);
+  // }
 
   Future<void> _addInCart({
     required CartPresenter cartPresenter,
@@ -83,30 +83,19 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required MenuPresenter menuPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
-    if (widget.selectedProduct.childsComposition == null) {
-      await cartPresenter.addProductInCart(
-        product: CartProductEntity(
-          Product: widget.selectedProduct.toEntity(),
-          Comments: commentsPresenter.getConcatenateSelectedComments(),
-          TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
-              productCompositionPresenter.totalComboxQuantity,
-          Quantity: productCompositionPresenter.totalComboxQuantity.toDouble(),
-          Value: widget.selectedProduct.SaleRetailPraticed.toDouble(),
-          ProductPriceLookUpCode: widget.selectedProduct.PriceLookupCode,
-        ),
-        menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
-      );
-    } else {
-      await cartPresenter.addConfirmedCombox(
-        selectedChilds: widget.selectedProduct.childsComposition!
-            .where((e) => e.indexOfSelectedChild != null)
-            .toList(),
-        totalPrice: totalPrice,
-        quantity: productCompositionPresenter.totalComboxQuantity,
-        selectedCombox: widget.selectedProduct,
-      );
-    }
+    await cartPresenter.addProductInCart(
+      product: CartProductEntity(
+        Product: widget.selectedProduct.toEntity(),
+        Comments: commentsPresenter.getConcatenateSelectedComments(),
+        TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
+            productCompositionPresenter.totalComboxQuantity,
+        Quantity: productCompositionPresenter.totalComboxQuantity.toDouble(),
+        Value: widget.selectedProduct.SaleRetailPraticed.toDouble(),
+        ProductPriceLookUpCode: widget.selectedProduct.PriceLookupCode,
+      ),
+      menuPresenter: menuPresenter,
+      commentsPresenter: commentsPresenter,
+    );
     Future.delayed(Duration.zero, () {
       Navigator.of(context).pop();
     });
@@ -151,17 +140,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     }
   }
 
-  static bool canAdvanceIndex = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    ProductCompositionPresenter productCompositionPresenter =
-        Provider.of(context, listen: false);
-    canAdvanceIndex = _getCanAdvanceIndex(productCompositionPresenter);
-  }
-
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
@@ -176,7 +154,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: canAdvanceIndex
+            onPressed: productCompositionPresenter.canAdvanceIndex
                 ? () async {
                     await _advanceOrAddInCart(
                       cartPresenter: cartPresenter,

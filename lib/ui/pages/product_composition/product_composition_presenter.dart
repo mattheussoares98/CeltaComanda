@@ -52,4 +52,5 @@ abstract class ProductCompositionPresenter implements Listenable {
   });
   bool fatherIsValid(ProductCompositionViewModel product);
   void advanceLeftIndex(CommentsPresenter commentsPresenter);
+  bool get canAdvanceIndex;
 }

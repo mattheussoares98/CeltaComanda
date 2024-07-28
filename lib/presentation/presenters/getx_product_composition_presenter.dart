@@ -422,4 +422,23 @@ class GetxProductCompositionPresenter extends GetxController
       });
     });
   }
+
+  
+  @override
+  bool get canAdvanceIndex {
+    if (_selectedProduct.value!.childsComposition == null) {
+      return true;
+    }
+
+    ProductCompositionViewModel selectedFather =
+        _selectedProduct.value!.childsComposition![0];
+
+    if (_selectedFatherIndex.value <
+        _selectedProduct.value!.childsComposition!.length) {
+      selectedFather = _selectedProduct
+          .value!.childsComposition![_selectedFatherIndex.value];
+    }
+
+    return fatherIsValid(selectedFather);
+  }
 }

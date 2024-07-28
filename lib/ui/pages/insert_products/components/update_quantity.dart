@@ -14,7 +14,7 @@ class UpdateQuantity extends StatefulWidget {
 class _UpdateQuantityState extends State<UpdateQuantity> {
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
+    InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
     return Expanded(
@@ -27,7 +27,7 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    productCompositionPresenter.updateComboxQuantity(false);
+                    insertProductsPresenter.updateTotalProductsQuantity(false);
                   });
                 },
                 child: CircleAvatar(
@@ -42,7 +42,7 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                   radius: 40,
                   child: FittedBox(
                     child: Text(
-                      productCompositionPresenter.totalComboxQuantity
+                      insertProductsPresenter.totalProductsQuantity
                           .toString()
                           .toBrazilianNumber(0),
                       style: const TextStyle(
@@ -56,7 +56,7 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    productCompositionPresenter.updateComboxQuantity(true);
+                    insertProductsPresenter.updateTotalProductsQuantity(true);
                   });
                 },
                 child: CircleAvatar(

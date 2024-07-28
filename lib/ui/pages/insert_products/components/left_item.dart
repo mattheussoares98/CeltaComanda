@@ -7,7 +7,7 @@ import '../../pages.dart';
 class LeftItem extends StatelessWidget {
   final int indexOfLeftSelectedItem;
   final ProductsViewModel selectedProduct;
-  final ProductCompositionViewModel? father;
+  final InsertProductsViewModel? father;
   final Color itemColor;
   final bool productHasComment;
   const LeftItem({
@@ -57,13 +57,13 @@ class LeftItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
+    InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return InkWell(
       onTap: () {
-        productCompositionPresenter
+        insertProductsPresenter
             .updateSelectedLeftItem(indexOfLeftSelectedItem);
       },
       child: Container(

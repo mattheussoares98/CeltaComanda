@@ -19,7 +19,7 @@ import '../../domain/mocks/validate_combox_spy.dart';
 import '../../ui/mocks/mocks.dart';
 
 void main() {
-  late GetxProductCompositionPresenter sut;
+  late GetxInsertProductsPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
   late CommentsPresenterSpy commentsPresenter;
@@ -30,14 +30,14 @@ void main() {
   late ValidateComboxSpy validateCombox;
 
   late List<ProductCompositionEntity> optionalFathers;
-  late ProductCompositionViewModel obligatoryFather;
+  late InsertProductsViewModel obligatoryFather;
   late SaleRequestTempEntity saleRequestTempEntity;
   late ProductsViewModel selectedProduct;
-  late ProductCompositionViewModel validFather;
-  late ProductCompositionViewModel invalidFather;
+  late InsertProductsViewModel validFather;
+  late InsertProductsViewModel invalidFather;
 
   UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity({
-    required ProductCompositionViewModel productCompositionViewModel,
+    required InsertProductsViewModel productCompositionViewModel,
     required double totalLiquid,
     required double productValue,
   }) {
@@ -70,7 +70,7 @@ void main() {
   Get.testMode = true;
 
   void initPresenters() {
-    sut = GetxProductCompositionPresenter(
+    sut = GetxInsertProductsPresenter(
       getProductComposition: getProductComposition,
       updateSaleRequestTemp: updateSaleRequestTemp,
       validateCombox: validateCombox,
@@ -90,7 +90,7 @@ void main() {
   void initMocks() {
     getProductComposition.mockGetFathers(optionalFathers);
     getProductComposition.mockGetChildsOfFather(optionalFathers
-        .map((element) => ProductCompositionViewModel.fromEntityWithChilds(
+        .map((element) => InsertProductsViewModel.fromEntityWithChilds(
             element, optionalFathers))
         .toList());
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
@@ -170,16 +170,16 @@ void main() {
     test(
         'Should change totalComboxQuantity correctly when updateValue and to 1 when call LoadProductComposition',
         () async {
-      sut.updateComboxQuantity(true);
-      expect(sut.totalComboxQuantity, 2);
-      sut.updateComboxQuantity(true);
-      expect(sut.totalComboxQuantity, 3);
-      sut.updateComboxQuantity(false);
-      expect(sut.totalComboxQuantity, 2);
+      sut.updateTotalProductsQuantity(true);
+      expect(sut.totalProductsQuantity, 2);
+      sut.updateTotalProductsQuantity(true);
+      expect(sut.totalProductsQuantity, 3);
+      sut.updateTotalProductsQuantity(false);
+      expect(sut.totalProductsQuantity, 2);
 
       await sut.updateSelectedProduct(selectedProduct);
 
-      expect(sut.totalComboxQuantity, 1);
+      expect(sut.totalProductsQuantity, 1);
     });
 
     test(
@@ -203,7 +203,7 @@ void main() {
       //selecionado pra na tela da composição, aparecer que ele já foi
       //selecionado. Por isso faz essa alteração
 
-      expectLater(sut.selectedComboxProductStream, emits(selectedProduct));
+      expectLater(sut.selectedProductStream, emits(selectedProduct));
 
       await sut.updateSelectedProduct(selectedProduct);
     });
@@ -211,7 +211,7 @@ void main() {
     test(
         'Should update selectedComboxProduct when call sut.updateSelectedProduct',
         () async {
-      expectLater(sut.selectedComboxProductStream, emits(selectedProduct));
+      expectLater(sut.selectedProductStream, emits(selectedProduct));
 
       await sut.updateSelectedProduct(selectedProduct);
     });
@@ -233,7 +233,7 @@ void main() {
         )
       ];
 
-      expectLater(sut.selectedFatherIndexStream, emits(0));
+      expectLater(sut.selectedLeftIndexStream, emits(0));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
@@ -248,7 +248,7 @@ void main() {
         validFather,
       ];
 
-      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
+      expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
@@ -264,7 +264,7 @@ void main() {
         validFather,
       ];
 
-      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1, 2]));
+      expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1, 2]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
@@ -282,7 +282,7 @@ void main() {
 
   group("clearSelectedComboxData", () {
     test("Should update index of selected father to zero", () async {
-      expectLater(sut.selectedFatherIndexStream, emitsInOrder([1, 0]));
+      expectLater(sut.selectedLeftIndexStream, emitsInOrder([1, 0]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
@@ -319,21 +319,21 @@ void main() {
     });
 
     test("Should update combox quantity to 1", () {
-      sut.updateComboxQuantity(true);
-      expect(sut.totalComboxQuantity, 2);
+      sut.updateTotalProductsQuantity(true);
+      expect(sut.totalProductsQuantity, 2);
 
       sut.clearData(
         product: selectedProduct,
         commentsPresenter: commentsPresenter,
       );
-      expect(sut.totalComboxQuantity, 1);
+      expect(sut.totalProductsQuantity, 1);
     });
 
     test("Should not reduce quantity when atual quantity is 1", () {
-      sut.updateComboxQuantity(false);
-      sut.updateComboxQuantity(false);
-      sut.updateComboxQuantity(false);
-      expect(sut.totalComboxQuantity, 1);
+      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(false);
+      expect(sut.totalProductsQuantity, 1);
     });
 
     test("Should call commentsPresenter.unselectAllComments", () {
@@ -591,13 +591,13 @@ void main() {
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.comboxIsValidStream, emits(true));
+      expectLater(sut.childsCompositionIsValidStream, emits(true));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -606,7 +606,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -619,7 +619,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -630,12 +630,12 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
 
       verify(() => validateCombox.comboxIsValid(optionalFathers
-          .map((element) => ProductCompositionViewModel.fromEntity(element))
+          .map((element) => InsertProductsViewModel.fromEntity(element))
           .toList())).called(1);
     });
 
@@ -645,13 +645,13 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
-      expectLater(sut.comboxIsValidStream, emits(false));
+      expectLater(sut.childsCompositionIsValidStream, emits(false));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -727,7 +727,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -744,7 +744,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -754,7 +754,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -774,7 +774,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -792,7 +792,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -822,7 +822,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -839,7 +839,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -873,34 +873,34 @@ void main() {
 
   group("validate combox", () {
     test("Should emit correct envets on certifyComboxIsValid return true", () {
-      expectLater(sut.comboxIsValidStream, emits(true));
+      expectLater(sut.childsCompositionIsValidStream, emits(true));
       expectLater(sut.mainErrorStream, emits(null));
 
-      sut.certifyComboxIsValid([]);
+      sut.certifyChildsCompositionIsValid([]);
     });
     test("Should emit correct envets on certifyComboxIsValid return false", () {
       validateCombox.mockValidateCombox(false);
 
-      expectLater(sut.comboxIsValidStream, emits(false));
+      expectLater(sut.childsCompositionIsValidStream, emits(false));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
 
-      sut.certifyComboxIsValid([]);
+      sut.certifyChildsCompositionIsValid([]);
     });
     test("Should update comboxIsValidStream correctly on combox is valid", () {
       validateCombox.mockValidateCombox(true);
 
-      expectLater(sut.comboxIsValidStream, emits(true));
+      expectLater(sut.childsCompositionIsValidStream, emits(true));
 
-      sut.updateComboxIsValid([]);
+      sut.updateChildsCompositionIsValid([]);
     });
     test("Should update comboxIsValidStream correctly on combox is invalid",
         () {
       validateCombox.mockValidateCombox(false);
 
-      expectLater(sut.comboxIsValidStream, emits(false));
+      expectLater(sut.childsCompositionIsValidStream, emits(false));
 
-      sut.updateComboxIsValid([]);
+      sut.updateChildsCompositionIsValid([]);
     });
   });
 
@@ -909,7 +909,7 @@ void main() {
         "Should update selected index of child if click in product that have child",
         () {
       final optionalFather =
-          ProductCompositionViewModel.fromEntity(optionalFathers[0]);
+          InsertProductsViewModel.fromEntity(optionalFathers[0]);
 
       expect(optionalFather.indexOfSelectedChild, null);
       sut.updateSelectedIndexOfProduct(
@@ -935,7 +935,7 @@ void main() {
     test("Should update index if click in the same product and is optional",
         () {
       final optionalFather =
-          ProductCompositionViewModel.fromEntity(optionalFathers[0]);
+          InsertProductsViewModel.fromEntity(optionalFathers[0]);
 
       sut.updateSelectedIndexOfProduct(
         father: optionalFather,
@@ -967,7 +967,7 @@ void main() {
   group("Advance Father index", () {
     test("Should advance index if atual index is valid", () async {
       selectedProduct.childsComposition = [validFather];
-      expectLater(sut.selectedFatherIndexStream, emitsInOrder([0, 1]));
+      expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
@@ -975,7 +975,7 @@ void main() {
     });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
-      expectLater(sut.selectedFatherIndexStream, emits(0));
+      expectLater(sut.selectedLeftIndexStream, emits(0));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
@@ -997,7 +997,7 @@ void main() {
       commentsPresenter.mockProductHasComment(true);
       selectedProduct.childsComposition = [validFather];
 
-      expectLater(sut.selectedFatherIndexStream, emits(1));
+      expectLater(sut.selectedLeftIndexStream, emits(1));
       expectLater(sut.showCommentsStream, emitsInOrder([true, false]));
 
       await sut.updateSelectedProduct(selectedProduct);
@@ -1011,7 +1011,7 @@ void main() {
       commentsPresenter.mockProductHasComment(false);
       selectedProduct.childsComposition = [validFather, invalidFather];
 
-      expectLater(sut.selectedFatherIndexStream, emits(1));
+      expectLater(sut.selectedLeftIndexStream, emits(1));
       expectLater(sut.showCommentsStream, emits(false));
 
       await sut.updateSelectedProduct(selectedProduct);
@@ -1025,7 +1025,7 @@ void main() {
       commentsPresenter.mockProductHasComment(true);
       selectedProduct.childsComposition = null;
 
-      expectLater(sut.selectedFatherIndexStream, emits(1));
+      expectLater(sut.selectedLeftIndexStream, emits(1));
       expectLater(sut.showCommentsStream, emits(false));
 
       await sut.updateSelectedProduct(selectedProduct);

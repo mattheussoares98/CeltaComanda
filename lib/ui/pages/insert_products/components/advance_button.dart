@@ -57,7 +57,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   }
 
   // bool _getCanAdvanceIndex(
-  //   ProductCompositionPresenter productCompositionPresenter,
+  //   InsertProductsPresenter insertProductsPresenter,
   // ) {
   //   if (widget.selectedProduct.childsComposition == null) {
   //     return true;
@@ -72,14 +72,14 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   //         widget.selectedProduct.childsComposition![widget.leftSelectedIndex];
   //   }
 
-  //   return productCompositionPresenter.fatherIsValid(selectedFather);
+  //   return insertProductsPresenter.fatherIsValid(selectedFather);
   // }
 
   Future<void> _addInCart({
     required CartPresenter cartPresenter,
     required double totalPrice,
     required BuildContext context,
-    required ProductCompositionPresenter productCompositionPresenter,
+    required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
@@ -88,8 +88,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         Product: widget.selectedProduct.toEntity(),
         Comments: commentsPresenter.getConcatenateSelectedComments(),
         TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
-            productCompositionPresenter.totalComboxQuantity,
-        Quantity: productCompositionPresenter.totalComboxQuantity.toDouble(),
+            insertProductsPresenter.totalProductsQuantity,
+        Quantity: insertProductsPresenter.totalProductsQuantity.toDouble(),
         Value: widget.selectedProduct.SaleRetailPraticed.toDouble(),
         ProductPriceLookUpCode: widget.selectedProduct.PriceLookupCode,
       ),
@@ -107,7 +107,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required int quantity,
     required BuildContext context,
     required CommentsPresenter commentsPresenter,
-    required ProductCompositionPresenter productCompositionPresenter,
+    required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
@@ -118,7 +118,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
           commentsPresenter: commentsPresenter,
-          productCompositionPresenter: productCompositionPresenter,
+          insertProductsPresenter: insertProductsPresenter,
           totalPrice: totalPrice,
           context: context,
         );
@@ -132,7 +132,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
           commentsPresenter: commentsPresenter,
-          productCompositionPresenter: productCompositionPresenter,
+          insertProductsPresenter: insertProductsPresenter,
           totalPrice: totalPrice,
           context: context,
         );
@@ -145,7 +145,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ProductCompositionPresenter productCompositionPresenter =
+    InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
     return Padding(
@@ -154,7 +154,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: productCompositionPresenter.canAdvanceIndex
+            onPressed: insertProductsPresenter.canAdvanceIndex
                 ? () async {
                     await _advanceOrAddInCart(
                       cartPresenter: cartPresenter,
@@ -162,7 +162,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
                       quantity: widget.quantity,
                       context: context,
                       commentsPresenter: commentsPresenter,
-                      productCompositionPresenter: productCompositionPresenter,
+                      insertProductsPresenter: insertProductsPresenter,
                       menuPresenter: menuPresenter,
                     );
                   }

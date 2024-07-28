@@ -44,13 +44,13 @@ void main() {
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
-  late ProductCompositionViewModel selectedChildWithOneQuantity;
-  late ProductCompositionViewModel selectedChildWithTwoQuantities;
-  late ProductCompositionViewModel notSelectedChild;
+  late InsertProductsViewModel selectedChildWithOneQuantity;
+  late InsertProductsViewModel selectedChildWithTwoQuantities;
+  late InsertProductsViewModel notSelectedChild;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithtwoQuantities;
   late String? newComment;
-  late List<ProductCompositionViewModel> productsSelectedsInCombox;
+  late List<InsertProductsViewModel> productsSelectedsInCombox;
   late ConfirmedComboxViewModel comboxWithSelectedProducts;
   late int tableNumber;
   late CommentViewModel commentViewModel;
@@ -2062,7 +2062,7 @@ void main() {
         () async {
       await sut.addConfirmedCombox(
         selectedChilds: [selectedChildWithOneQuantity]
-            .map((element) => ProductCompositionViewModel(
+            .map((element) => InsertProductsViewModel(
                   Quantity: 1.0.toString(),
                   ProductCompositionId: element.ProductCompositionId,
                   EnterpriseId: element.EnterpriseId,
@@ -2161,7 +2161,7 @@ void main() {
             [
               ConfirmedComboxViewModel(
                 products: [selectedChildWithOneQuantity]
-                    .map((element) => ProductCompositionViewModel(
+                    .map((element) => InsertProductsViewModel(
                           Quantity: (element.Quantity.toString().toDouble() + 1)
                               .toString(),
                           ProductCompositionId: element.ProductCompositionId,
@@ -2200,7 +2200,7 @@ void main() {
             [
               ConfirmedComboxViewModel(
                 products: [selectedChildWithTwoQuantities]
-                    .map((element) => ProductCompositionViewModel(
+                    .map((element) => InsertProductsViewModel(
                           Quantity: 6.0.toString(),
                           ProductCompositionId: element.ProductCompositionId,
                           EnterpriseId: element.EnterpriseId,
@@ -2278,7 +2278,7 @@ void main() {
             [
               ConfirmedComboxViewModel(
                 products: [selectedChildWithTwoQuantities]
-                    .map((element) => ProductCompositionViewModel(
+                    .map((element) => InsertProductsViewModel(
                           Quantity: 2.0.toString(),
                           ProductCompositionId: element.ProductCompositionId,
                           EnterpriseId: element.EnterpriseId,
@@ -2326,7 +2326,7 @@ void main() {
       expect(sut.confirmedCombox, [
         ConfirmedComboxViewModel(
           products: [selectedChildWithTwoQuantities]
-              .map((element) => ProductCompositionViewModel(
+              .map((element) => InsertProductsViewModel(
                     Quantity: 2.0.toString(),
                     ProductCompositionId: element.ProductCompositionId,
                     EnterpriseId: element.EnterpriseId,
@@ -2391,7 +2391,7 @@ void main() {
       verify(() => cartInformations.updateConfirmedCombox([
             ConfirmedComboxViewModel(
               products: confirmedComboxWithOneQuantity.products
-                  .map((element) => ProductCompositionViewModel(
+                  .map((element) => InsertProductsViewModel(
                         commentFather: newComment,
                         ProductCompositionId: element.ProductCompositionId,
                         EnterpriseId: element.EnterpriseId,

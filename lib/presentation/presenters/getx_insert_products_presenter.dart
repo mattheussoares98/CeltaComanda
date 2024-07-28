@@ -8,14 +8,14 @@ import '../mixins/mixins.dart';
 
 import 'package:get/get.dart';
 
-class GetxProductCompositionPresenter extends GetxController
+class GetxInsertProductsPresenter extends GetxController
     with LoadingManager, UIErrorManager
-    implements ProductCompositionPresenter {
+    implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final ValidateCombox validateCombox;
 
-  GetxProductCompositionPresenter({
+  GetxInsertProductsPresenter({
     required this.getProductComposition,
     required this.updateSaleRequestTemp,
     required this.validateCombox,
@@ -27,14 +27,14 @@ class GetxProductCompositionPresenter extends GetxController
 
   int _totalComboxQuantity = 1;
   @override
-  int get totalComboxQuantity => _totalComboxQuantity;
+  int get totalProductsQuantity => _totalComboxQuantity;
 
   final _comboxIsValidStream = RxBool(false);
   @override
-  Stream<bool> get comboxIsValidStream => _comboxIsValidStream.stream;
+  Stream<bool> get childsCompositionIsValidStream => _comboxIsValidStream.stream;
 
   void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-    List<ProductCompositionViewModel> productsComposition,
+    List<InsertProductsViewModel> productsComposition,
   ) {
     for (var product in productsComposition) {
       if (product.IsOptionalItem == "false" &&
@@ -46,7 +46,7 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   Future<void> updateSelectedProduct(ProductsViewModel product) async {
-    updateComboxQuantity(false, true);
+    updateTotalProductsQuantity(false, true);
 
     selectedComboxProduct = product;
 
@@ -59,12 +59,12 @@ class GetxProductCompositionPresenter extends GetxController
     );
 
     await Future.delayed(const Duration(milliseconds: 500), () {
-      updateComboxIsValid(product.childsComposition!);
+      updateChildsCompositionIsValid(product.childsComposition!);
     });
   }
 
   double _getTotalLiquidCombox(
-    List<ProductCompositionViewModel> productsCompositionsViewModel,
+    List<InsertProductsViewModel> productsCompositionsViewModel,
   ) {
     double totalLiquid = 0;
     for (var product in productsCompositionsViewModel) {
@@ -91,7 +91,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  double calculateIncrementValue(ProductCompositionViewModel product) {
+  double calculateIncrementValue(InsertProductsViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -111,14 +111,14 @@ class GetxProductCompositionPresenter extends GetxController
 
   @override
   double calculateTotalLiquid({
-    required ProductCompositionViewModel product,
+    required InsertProductsViewModel product,
   }) {
     return calculateProductPrice(product) *
         product.Quantity.toString().toDouble();
   }
 
   @override
-  double calculateProductPrice(ProductCompositionViewModel product) {
+  double calculateProductPrice(InsertProductsViewModel product) {
     if (product.IsOptionalItem == "true") {
       return calculateIncrementValue(product);
     } else if (product.OfferPrice.toString().toDouble() > 0) {
@@ -133,7 +133,7 @@ class GetxProductCompositionPresenter extends GetxController
   List<UpdateSaleRequestTempProductEntity>
       _productsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,
-    required List<ProductCompositionViewModel> productsCompositions,
+    required List<InsertProductsViewModel> productsCompositions,
   }) {
     List<UpdateSaleRequestTempProductEntity> products = [];
 
@@ -143,7 +143,7 @@ class GetxProductCompositionPresenter extends GetxController
           continue;
         }
 
-        ProductCompositionViewModel selectedChild;
+        InsertProductsViewModel selectedChild;
         if (product.childs?.isEmpty == true) {
           selectedChild = product;
         } else {
@@ -155,12 +155,12 @@ class GetxProductCompositionPresenter extends GetxController
           ProductInternalCodeOnErp:
               selectedChild.InternalCodeOnERPCodeChild.toString().toInt(),
           ProductPriceLookUpCode: selectedChild.PluChild!,
-          Quantity: selectedChild.Quantity!.toDouble() * totalComboxQuantity,
+          Quantity: selectedChild.Quantity!.toDouble() * totalProductsQuantity,
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: calculateTotalLiquid(
                 product: product,
               ) *
-              totalComboxQuantity,
+              totalProductsQuantity,
           Value: calculateProductPrice(product),
           Comments: product.commentFather,
         );
@@ -178,7 +178,7 @@ class GetxProductCompositionPresenter extends GetxController
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required List<ProductCompositionViewModel> productsCompositions,
+    required List<InsertProductsViewModel> productsCompositions,
   }) async {
     isLoading = true;
     mainError = null;
@@ -198,7 +198,7 @@ class GetxProductCompositionPresenter extends GetxController
         SaleRequestTempId:
             cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
         TotalLiquid:
-            _getTotalLiquidCombox(productsCompositions) * totalComboxQuantity,
+            _getTotalLiquidCombox(productsCompositions) * totalProductsQuantity,
         Products: _productsCompositionToUpdateSaleRequestTempProductEntity(
           saleRequestTempId:
               cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
@@ -229,8 +229,8 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateComboxIsValid(
-    List<ProductCompositionViewModel> productsCompositions,
+  void updateChildsCompositionIsValid(
+    List<InsertProductsViewModel> productsCompositions,
   ) {
     _comboxIsValidStream.subject.add(
       validateCombox.comboxIsValid(productsCompositions),
@@ -238,8 +238,8 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  bool certifyComboxIsValid(
-    List<ProductCompositionViewModel> productsCompositions,
+  bool certifyChildsCompositionIsValid(
+    List<InsertProductsViewModel> productsCompositions,
   ) {
     mainError = null;
     try {
@@ -258,7 +258,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  void updateComboxQuantity(bool isAddingQuantity,
+  void updateTotalProductsQuantity(bool isAddingQuantity,
       [bool clearTotalComboxQuantity = false]) {
     if (clearTotalComboxQuantity) {
       _totalComboxQuantity = 1;
@@ -274,14 +274,14 @@ class GetxProductCompositionPresenter extends GetxController
   @override
   void updateComment({
     required CommentsPresenter commentsPresenter,
-    required ProductCompositionViewModel father,
+    required InsertProductsViewModel father,
   }) {
     father.commentFather = commentsPresenter.getConcatenateSelectedComments();
   }
 
   @override
   void updateSelectedIndexOfProduct({
-    required ProductCompositionViewModel father,
+    required InsertProductsViewModel father,
     required int? index,
   }) {
     if (father.IsOptionalItem == "true" &&
@@ -294,7 +294,7 @@ class GetxProductCompositionPresenter extends GetxController
 
   final _selectedProduct = Rx<ProductsViewModel?>(null);
   @override
-  Stream<ProductsViewModel?> get selectedComboxProductStream =>
+  Stream<ProductsViewModel?> get selectedProductStream =>
       _selectedProduct.stream;
   set selectedComboxProduct(ProductsViewModel? product) {
     _selectedProduct.value = product;
@@ -303,7 +303,7 @@ class GetxProductCompositionPresenter extends GetxController
   final _selectedFatherIndex = Rx<int>(0);
   set selectedFatherIndex(int value) => _selectedFatherIndex.value = value;
   @override
-  Stream<int> get selectedFatherIndexStream => _selectedFatherIndex.stream;
+  Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
 
   bool allPreviousFathersAreValids(int newIndex) {
     bool valid = true;
@@ -357,7 +357,7 @@ class GetxProductCompositionPresenter extends GetxController
   }
 
   @override
-  bool fatherIsValid(ProductCompositionViewModel product) {
+  bool fatherIsValid(InsertProductsViewModel product) {
     if (product.IsOptionalItem == "false" &&
         product.indexOfSelectedChild == null) {
       return false;
@@ -430,7 +430,7 @@ class GetxProductCompositionPresenter extends GetxController
       return true;
     }
 
-    ProductCompositionViewModel selectedFather =
+    InsertProductsViewModel selectedFather =
         _selectedProduct.value!.childsComposition![0];
 
     if (_selectedFatherIndex.value <

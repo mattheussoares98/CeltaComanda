@@ -41,7 +41,7 @@ class _ConfirmedChildComboxItemState extends State<ConfirmedChildComboxItem> {
           Builder(builder: (context) {
             final combox = widget.confirmedCombox.products[index];
 
-            ProductCompositionViewModel product;
+            InsertProductsViewModel product;
             if (combox.childs?.isNotEmpty == true &&
                 combox.indexOfSelectedChild != null) {
               product = combox.childs![combox.indexOfSelectedChild!];

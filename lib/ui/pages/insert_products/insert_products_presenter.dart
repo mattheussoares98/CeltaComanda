@@ -4,44 +4,44 @@ import 'package:flutter/widgets.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
-abstract class ProductCompositionPresenter implements Listenable {
+abstract class InsertProductPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<double> get totalPrice;
-  Stream<bool> get comboxIsValidStream;
+  Stream<bool> get childsCompositionIsValidStream;
   Stream<bool> get showCommentsStream;
-  Stream<ProductsViewModel?> get selectedComboxProductStream;
-  Stream<int> get selectedFatherIndexStream;
+  Stream<ProductsViewModel?> get selectedProductStream;
+  Stream<int> get selectedLeftIndexStream;
   Stream<bool> get doScrollStream;
-  int get totalComboxQuantity;
+  int get totalProductsQuantity;
 
   void updateTotalLiquid(ProductsViewModel product);
 
   Future<void> updateSelectedProduct(ProductsViewModel product);
 
-  bool certifyComboxIsValid(
-      List<ProductCompositionViewModel> productsCompositions);
-  void updateComboxIsValid(
-      List<ProductCompositionViewModel> productsCompositions);
+  bool certifyChildsCompositionIsValid(
+      List<InsertProductsViewModel> productsCompositions);
+  void updateChildsCompositionIsValid(
+      List<InsertProductsViewModel> productsCompositions);
 
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required List<ProductCompositionViewModel> productsCompositions,
+    required List<InsertProductsViewModel> productsCompositions,
   });
 
-  void updateComboxQuantity(bool isAddingQuantity);
+  void updateTotalProductsQuantity(bool isAddingQuantity);
 
-  double calculateTotalLiquid({required ProductCompositionViewModel product});
-  double calculateIncrementValue(ProductCompositionViewModel product);
-  double calculateProductPrice(ProductCompositionViewModel product);
+  double calculateTotalLiquid({required InsertProductsViewModel product});
+  double calculateIncrementValue(InsertProductsViewModel product);
+  double calculateProductPrice(InsertProductsViewModel product);
   void updateComment({
     required CommentsPresenter commentsPresenter,
-    required ProductCompositionViewModel father,
+    required InsertProductsViewModel father,
   });
 
   void updateSelectedIndexOfProduct({
-    required ProductCompositionViewModel father,
+    required InsertProductsViewModel father,
     required int? index,
   });
 
@@ -50,7 +50,7 @@ abstract class ProductCompositionPresenter implements Listenable {
     required ProductsViewModel product,
     required CommentsPresenter commentsPresenter,
   });
-  bool fatherIsValid(ProductCompositionViewModel product);
+  bool fatherIsValid(InsertProductsViewModel product);
   void advanceLeftIndex(CommentsPresenter commentsPresenter);
   bool get canAdvanceIndex;
 }

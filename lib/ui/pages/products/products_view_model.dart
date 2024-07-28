@@ -72,7 +72,7 @@ class ProductsViewModel extends Equatable {
   final String? ProductComplement;
   final String PackingAbbreviation;
   final String IsPromoCombox;
-  List<ProductCompositionViewModel>? childsComposition;
+  List<InsertProductsViewModel>? childsComposition;
   double productQuantity;
 
   ProductsViewModel({

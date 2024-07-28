@@ -50,7 +50,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.productComposition,
-      page: () => const ProductCompositionPage(),
+      page: () => const InsertProductsPage(),
     ),
   ];
 
@@ -88,8 +88,8 @@ Widget makePage(
       ListenableProvider<ProductsPresenter>(
         create: (_) => ProductsPresenterSpy(),
       ),
-      ListenableProvider<ProductCompositionPresenter>(
-        create: (_) => ProductCompositionPresenterSpy(),
+      ListenableProvider<InsertProductPresenter>(
+        create: (_) => InsertProductsPresenterSpy(),
       ),
       ListenableProvider<CommentsPresenter>(
         create: (_) => CommentsPresenterSpy(),

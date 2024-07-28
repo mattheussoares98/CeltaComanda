@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/helpers/helpers.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class TotalPriceCombox extends StatelessWidget {
@@ -18,7 +18,7 @@ class TotalPriceCombox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
+    InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
     return Container(
@@ -36,7 +36,7 @@ class TotalPriceCombox extends StatelessWidget {
               ),
             ),
             Text(
-              (productCompositionPresenter.totalComboxQuantity * totalLiquid)
+              (insertProductsPresenter.totalProductsQuantity * totalLiquid)
                   .toString()
                   .toBrazilianNumber()
                   .addBrazilianCoin(),

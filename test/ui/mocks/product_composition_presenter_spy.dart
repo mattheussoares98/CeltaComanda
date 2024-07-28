@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class ProductCompositionPresenterSpy extends Mock
-    implements ProductCompositionPresenter {
+class InsertProductsPresenterSpy extends Mock
+    implements InsertProductPresenter {
   final mainErrorController = StreamController<UIError?>();
   final totalPriceComboxController = StreamController<double>();
   final comboxIsValidController = StreamController<bool>();
@@ -16,24 +16,24 @@ class ProductCompositionPresenterSpy extends Mock
   final selectedComboxProductController =
       StreamController<ProductsViewModel?>();
   final productsCompositionController =
-      StreamController<List<ProductCompositionViewModel>>();
+      StreamController<List<InsertProductsViewModel>>();
   final isLoadingController = StreamController<bool>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
   final int totalComboxQuantityController = 0;
 
-  ProductCompositionPresenterSpy() {
+  InsertProductsPresenterSpy() {
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.comboxIsValidStream)
+    when(() => this.childsCompositionIsValidStream)
         .thenAnswer((_) => comboxIsValidController.stream);
     when(() => this.totalPrice)
         .thenAnswer((_) => totalPriceComboxController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.selectedComboxProductStream)
+    when(() => this.selectedProductStream)
         .thenAnswer((_) => selectedComboxProductController.stream);
-    when(() => this.totalComboxQuantity)
+    when(() => this.totalProductsQuantity)
         .thenAnswer((_) => totalComboxQuantityController);
     when(() => this.updateSelectedIndexOfProduct(
           father: any(named: "father"),
@@ -47,14 +47,14 @@ class ProductCompositionPresenterSpy extends Mock
     when(() => this.calculateIncrementValue(any())).thenAnswer((_) => 0);
     when(() => this.calculateTotalLiquid(product: any(named: "product")))
         .thenAnswer((_) => 0);
-    when(() => this.updateComboxQuantity(any())).thenAnswer((_) => _);
+    when(() => this.updateTotalProductsQuantity(any())).thenAnswer((_) => _);
     when(() => this.updateSaleRequest(
           homePresenter: any(named: "homePresenter"),
           cartPresenter: any(named: "cartPresenter"),
           productsCompositions: any(named: "productsCompositions"),
         )).thenAnswer((_) async => true);
-    when(() => this.updateComboxIsValid(any())).thenAnswer((_) => true);
-    when(() => this.certifyComboxIsValid(any())).thenAnswer((_) => true);
+    when(() => this.updateChildsCompositionIsValid(any())).thenAnswer((_) => true);
+    when(() => this.certifyChildsCompositionIsValid(any())).thenAnswer((_) => true);
     when(() => this.updateSelectedProduct(any())).thenAnswer((_) async => _);
     when(() => this.updateTotalLiquid(any())).thenAnswer((_) async => _);
   }

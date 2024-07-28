@@ -42,7 +42,7 @@ void main() {
   late ProductsViewModel productsViewModel;
   late List<ProductEntity> products;
   late List<ProductEntity> productsEntityThatIsPromoCombox;
-  late List<ProductCompositionViewModel> productsCompositionsViewModel;
+  late List<InsertProductsViewModel> productsCompositionsViewModel;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -116,7 +116,7 @@ void main() {
     );
 
     productsCompositionsViewModel = productsCompositionsEntitys
-        .map((e) => ProductCompositionViewModel.fromEntity(e))
+        .map((e) => InsertProductsViewModel.fromEntity(e))
         .toList();
   }
 

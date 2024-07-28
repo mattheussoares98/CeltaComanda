@@ -5,6 +5,6 @@ export './getx_home_presenter.dart';
 export './getx_menu_presenter.dart';
 export './getx_payment_presenter.dart';
 export './getx_printed_products_presenter.dart';
-export './getx_product_composition_presenter.dart';
+export 'getx_insert_products_presenter.dart';
 export './getx_products_presenter.dart';
 export './getx_splash_presenter.dart';

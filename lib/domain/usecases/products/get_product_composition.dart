@@ -6,7 +6,7 @@ abstract class GetProductComposition {
     required int internalCodeOnErp,
   });
 
-  Future<List<ProductCompositionViewModel>> getChildsOfFather({
+  Future<List<InsertProductsViewModel>> getChildsOfFather({
     required int internalCodeOnErp,
     required List<ProductCompositionEntity> fathers,
   });

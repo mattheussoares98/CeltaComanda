@@ -648,7 +648,7 @@ class EntityFactory {
         ),
       ];
 
-  static ProductCompositionViewModel makeProductCompositionViewModel({
+  static InsertProductsViewModel makeProductCompositionViewModel({
     required double quantity,
     required double salePrice,
     required double offerPrice,
@@ -658,7 +658,7 @@ class EntityFactory {
     required int? indexOfSelectedChild,
     required bool insertChilds,
   }) =>
-      ProductCompositionViewModel(
+      InsertProductsViewModel(
         ProductCompositionId: "1",
         EnterpriseId: "1",
         InternalCodeOnERPCodeFather: "1",
@@ -675,7 +675,7 @@ class EntityFactory {
         childs: !insertChilds
             ? []
             : [
-                ProductCompositionViewModel(
+                InsertProductsViewModel(
                   ProductCompositionId: "1",
                   EnterpriseId: "1",
                   InternalCodeOnERPCodeFather: "1",
@@ -719,14 +719,14 @@ class EntityFactory {
       );
 
   static ConfirmedComboxViewModel makeConfirmedComboxViewModel({
-    required List<ProductCompositionViewModel> products,
+    required List<InsertProductsViewModel> products,
     required ProductsViewModel father,
     required double totalPrice,
     required int quantity,
   }) =>
       ConfirmedComboxViewModel(
         products: products
-            .map((element) => ProductCompositionViewModel(
+            .map((element) => InsertProductsViewModel(
                   Quantity:
                       (element.Quantity!.toDouble() * quantity).toString(),
                   ProductCompositionId: element.ProductCompositionId,

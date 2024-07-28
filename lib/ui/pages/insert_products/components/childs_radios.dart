@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../../pages.dart';
 
 class ChildsRadios extends StatefulWidget {
   final ProductsViewModel selectedProduct;
-  final ProductCompositionViewModel selectedFather;
+  final InsertProductsViewModel selectedFather;
   final Function() callSetState;
 
   const ChildsRadios({
@@ -21,28 +21,28 @@ class ChildsRadios extends StatefulWidget {
 
 class _ChildsRadiosState extends State<ChildsRadios> {
   void _updateSelectedIndex({
-    required ProductCompositionPresenter productCompositionPresenter,
+    required InsertProductPresenter insertProductsPresenter,
     required int? value,
   }) {
     setState(() {
-      productCompositionPresenter.updateSelectedIndexOfProduct(
+      insertProductsPresenter.updateSelectedIndexOfProduct(
         father: widget.selectedFather,
         index: value,
       );
 
-      productCompositionPresenter.updateTotalLiquid(
+      insertProductsPresenter.updateTotalLiquid(
         widget.selectedProduct,
       );
 
-      productCompositionPresenter
-          .updateComboxIsValid(widget.selectedProduct.childsComposition!);
+      insertProductsPresenter
+          .updateChildsCompositionIsValid(widget.selectedProduct.childsComposition!);
     });
     widget.callSetState();
   }
 
   @override
   Widget build(BuildContext context) {
-    ProductCompositionPresenter productCompositionPresenter =
+    InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
     return ListView.builder(
@@ -51,7 +51,7 @@ class _ChildsRadiosState extends State<ChildsRadios> {
           ? 1
           : widget.selectedFather.childs!.length,
       itemBuilder: (context, childsIndex) {
-        ProductCompositionViewModel child;
+        InsertProductsViewModel child;
         bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
 
         if (hasChilds) {
@@ -63,7 +63,7 @@ class _ChildsRadiosState extends State<ChildsRadios> {
         return InkWell(
           onTap: () {
             _updateSelectedIndex(
-              productCompositionPresenter: productCompositionPresenter,
+              insertProductsPresenter: insertProductsPresenter,
               value: childsIndex,
             );
           },
@@ -79,8 +79,8 @@ class _ChildsRadiosState extends State<ChildsRadios> {
                     toggleable: widget.selectedFather.IsOptionalItem == "true",
                     onChanged: (int? value) {
                       _updateSelectedIndex(
-                        productCompositionPresenter:
-                            productCompositionPresenter,
+                        insertProductsPresenter:
+                            insertProductsPresenter,
                         value: childsIndex,
                       );
                     },

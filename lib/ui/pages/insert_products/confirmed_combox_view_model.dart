@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../pages.dart';
 
 class ConfirmedComboxViewModel extends Equatable {
-  final List<ProductCompositionViewModel> products;
+  final List<InsertProductsViewModel> products;
   final ProductsViewModel father;
   final double totalPrice;
   final int quantity;
@@ -23,8 +23,8 @@ class ConfirmedComboxViewModel extends Equatable {
   factory ConfirmedComboxViewModel.fromJson(Map json) {
     return ConfirmedComboxViewModel(
       products: json["products"]
-          .map<ProductCompositionViewModel>(
-              (element) => ProductCompositionViewModel.fromJson(element))
+          .map<InsertProductsViewModel>(
+              (element) => InsertProductsViewModel.fromJson(element))
           .toList(),
       father: ProductsViewModel.fromJson(json["father"]),
       totalPrice: json["totalPrice"],

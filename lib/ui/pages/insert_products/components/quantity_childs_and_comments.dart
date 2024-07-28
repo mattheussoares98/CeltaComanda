@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/pages/product_composition/new_components/update_quantity.dart';
+import 'package:clean_celta_mobile/ui/pages/insert_products/components/update_quantity.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class QuantityChildsAndComments extends StatelessWidget {
@@ -19,11 +19,11 @@ class QuantityChildsAndComments extends StatelessWidget {
     super.key,
   });
 
-  ProductCompositionViewModel getSelectedFather(
+  InsertProductsViewModel getSelectedFather(
     ProductsViewModel selectedProduct,
     int indexOfSelectedFather,
   ) {
-    ProductCompositionViewModel selectedFather =
+    InsertProductsViewModel selectedFather =
         selectedProduct.childsComposition![0];
 
     if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {

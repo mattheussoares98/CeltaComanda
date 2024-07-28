@@ -645,7 +645,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   Future<bool> addConfirmedCombox({
-    required List<ProductCompositionViewModel> selectedChilds,
+    required List<InsertProductsViewModel> selectedChilds,
     required double totalPrice,
     required int quantity,
     required ProductsViewModel selectedCombox,
@@ -658,7 +658,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         ConfirmedComboxViewModel(
           products: selectedChilds
               .where((selected) => selected.indexOfSelectedChild != null)
-              .map((element) => ProductCompositionViewModel(
+              .map((element) => InsertProductsViewModel(
                     Quantity:
                         (element.Quantity.toString().toDouble() * quantity)
                             .toString(),
@@ -729,7 +729,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           final newQuantity =
               (element.Quantity.toString().toDouble() + productQuantity);
 
-          return ProductCompositionViewModel(
+          return InsertProductsViewModel(
             Quantity: newQuantity.toString(),
             ProductCompositionId: element.ProductCompositionId,
             EnterpriseId: element.EnterpriseId,
@@ -777,7 +777,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             final newQuantity =
                 (element.Quantity.toString().toDouble() - productQuantity);
 
-            return ProductCompositionViewModel(
+            return InsertProductsViewModel(
               Quantity: newQuantity.toString(),
               ProductCompositionId: element.ProductCompositionId,
               EnterpriseId: element.EnterpriseId,
@@ -857,7 +857,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           continue;
         }
 
-        ProductCompositionViewModel selectedChild;
+        InsertProductsViewModel selectedChild;
         if (product.childs?.isEmpty == true) {
           selectedChild = product;
         } else {
@@ -884,7 +884,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateIncrementValue(ProductCompositionViewModel product) {
+  double calculateIncrementValue(InsertProductsViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -903,13 +903,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateProductTotalLiquid(ProductCompositionViewModel product) {
+  double calculateProductTotalLiquid(InsertProductsViewModel product) {
     return calculateProductPrice(product) *
         product.Quantity.toString().toDouble();
   }
 
   @override
-  double calculateProductPrice(ProductCompositionViewModel product) {
+  double calculateProductPrice(InsertProductsViewModel product) {
     if (product.IsOptionalItem == "true") {
       return calculateIncrementValue(product);
     } else if (product.OfferPrice.toString().toDouble() > 0) {

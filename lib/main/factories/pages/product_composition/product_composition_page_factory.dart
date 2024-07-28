@@ -1,4 +1,4 @@
 import '../../../../ui/pages/pages.dart';
 
-ProductCompositionPage makeProductCompositionPage() =>
-    const ProductCompositionPage();
+InsertProductsPage makeProductCompositionPage() =>
+    const InsertProductsPage();

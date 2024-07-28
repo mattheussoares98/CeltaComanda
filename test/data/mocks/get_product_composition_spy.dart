@@ -21,7 +21,7 @@ class GetProductCompositionSpy extends Mock implements GetProductComposition {
         internalCodeOnErp: any(named: "internalCodeOnErp"),
         fathers: any(named: "fathers"),
       ));
-  void mockGetChildsOfFather(List<ProductCompositionViewModel> childs) =>
+  void mockGetChildsOfFather(List<InsertProductsViewModel> childs) =>
       this.mockGetChildsOfFatherCall().thenAnswer((_) async => childs);
   void mockGetChildsOfFatherError() =>
       this.mockGetFathersCall().thenThrow(Exception());

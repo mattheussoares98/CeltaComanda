@@ -4,19 +4,19 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../ui/helpers/helpers.dart';
-import '../../../ui/pages/pages.dart';
+import '../../helpers/helpers.dart';
+import '../pages.dart';
 import '../../adapters/adapters.dart';
 import '../../mixins/mixins.dart';
 
-class ProductCompositionPage extends StatefulWidget {
-  const ProductCompositionPage({super.key});
+class InsertProductsPage extends StatefulWidget {
+  const InsertProductsPage({super.key});
 
   @override
-  State<ProductCompositionPage> createState() => _ProductCompositionPageState();
+  State<InsertProductsPage> createState() => _InsertProductsPageState();
 }
 
-class _ProductCompositionPageState extends State<ProductCompositionPage>
+class _InsertProductsPageState extends State<InsertProductsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;

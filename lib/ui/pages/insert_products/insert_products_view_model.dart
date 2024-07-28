@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
 
-class ProductCompositionViewModel extends Equatable {
+class InsertProductsViewModel extends Equatable {
   final String? ProductCompositionId;
   final String? EnterpriseId;
   final String? InternalCodeOnERPCodeFather;
@@ -17,11 +17,11 @@ class ProductCompositionViewModel extends Equatable {
   final String? IncrementValue;
   final String? IsOptionalItem;
   final String? ProductOptions;
-  final List<ProductCompositionViewModel>? childs;
+  final List<InsertProductsViewModel>? childs;
   int? indexOfSelectedChild;
   String? commentFather;
 
-  ProductCompositionViewModel({
+  InsertProductsViewModel({
     required this.ProductCompositionId,
     required this.EnterpriseId,
     required this.InternalCodeOnERPCodeFather,
@@ -59,9 +59,9 @@ class ProductCompositionViewModel extends Equatable {
         commentFather,
       ];
 
-  factory ProductCompositionViewModel.fromEntity(
+  factory InsertProductsViewModel.fromEntity(
           ProductCompositionEntity entity) =>
-      ProductCompositionViewModel(
+      InsertProductsViewModel(
         ProductCompositionId: entity.ProductCompositionId.toString(),
         EnterpriseId: entity.EnterpriseId.toString(),
         InternalCodeOnERPCodeFather:
@@ -78,11 +78,11 @@ class ProductCompositionViewModel extends Equatable {
         ProductOptions: entity.ProductOptions.toString(),
       );
 
-  factory ProductCompositionViewModel.fromEntityWithChilds(
+  factory InsertProductsViewModel.fromEntityWithChilds(
     ProductCompositionEntity entity,
     List<ProductCompositionEntity> childs,
   ) =>
-      ProductCompositionViewModel(
+      InsertProductsViewModel(
         ProductCompositionId: entity.ProductCompositionId.toString(),
         EnterpriseId: entity.EnterpriseId.toString(),
         InternalCodeOnERPCodeFather:
@@ -98,7 +98,7 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem.toString(),
         ProductOptions: entity.ProductOptions.toString(),
         childs: childs
-            .map((element) => ProductCompositionViewModel.fromEntity(element))
+            .map((element) => InsertProductsViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -137,8 +137,8 @@ class ProductCompositionViewModel extends Equatable {
         "commentFather": commentFather,
       };
 
-  factory ProductCompositionViewModel.fromJson(Map json) =>
-      ProductCompositionViewModel(
+  factory InsertProductsViewModel.fromJson(Map json) =>
+      InsertProductsViewModel(
         ProductCompositionId: json["ProductCompositionId"],
         EnterpriseId: json["EnterpriseId"],
         InternalCodeOnERPCodeFather: json["InternalCodeOnERPCodeFather"],
@@ -152,8 +152,8 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: json["IsOptionalItem"],
         ProductOptions: json["ProductOptions"],
         indexOfSelectedChild: json["indexOfSelectedChild"],
-        childs: json["childs"]?.map<ProductCompositionViewModel>(
-                    (element) => ProductCompositionViewModel.fromJson(element))
+        childs: json["childs"]?.map<InsertProductsViewModel>(
+                    (element) => InsertProductsViewModel.fromJson(element))
                 .toList(),
         commentFather: json["commentFather"],
       );

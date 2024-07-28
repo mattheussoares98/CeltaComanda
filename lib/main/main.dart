@@ -62,7 +62,7 @@ class App extends StatelessWidget {
           create: (_) => makeGetxProductsPresenter(),
         ),
         ListenableProvider(
-          create: (_) => makeGetxProductCompositionPresenter(),
+          create: (_) => makeGetxInsertProductsPresenter(),
         ),
         ListenableProvider(
           create: (_) => makeGetxPaymentPresenter(),

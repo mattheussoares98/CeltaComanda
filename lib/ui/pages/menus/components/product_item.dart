@@ -18,34 +18,34 @@ class ProductItem extends StatefulWidget {
 
 class _ProductItemState extends State<ProductItem> {
   InsertProductAdapter getInsertProductAdapter(
-    ProductCompositionPresenter productCompositionPresenter,
+    InsertProductPresenter insertProductsPresenter,
     CommentsPresenter commentsPresenter,
   ) {
     return InsertProductAdapter(
         advanceSelectedIndex: () {
-          productCompositionPresenter.advanceLeftIndex(commentsPresenter);
+          insertProductsPresenter.advanceLeftIndex(commentsPresenter);
         },
-        totalProductsQuantity: productCompositionPresenter.totalComboxQuantity,
+        totalProductsQuantity: insertProductsPresenter.totalProductsQuantity,
         updateTotalLiquid: () {
-          productCompositionPresenter
+          insertProductsPresenter
               .updateTotalLiquid(widget.productsViewModel);
         },
-        totalPriceStream: productCompositionPresenter.totalPrice,
-        doScrollStream: productCompositionPresenter.doScrollStream,
-        showCommentsStream: productCompositionPresenter.showCommentsStream,
+        totalPriceStream: insertProductsPresenter.totalPrice,
+        doScrollStream: insertProductsPresenter.doScrollStream,
+        showCommentsStream: insertProductsPresenter.showCommentsStream,
         selectedProduct: widget.productsViewModel,
-        isLoadingStream: productCompositionPresenter.isLoadingStream,
-        mainErrorStream: productCompositionPresenter.mainErrorStream,
+        isLoadingStream: insertProductsPresenter.isLoadingStream,
+        mainErrorStream: insertProductsPresenter.mainErrorStream,
         selectedComboxProductStream:
-            productCompositionPresenter.selectedComboxProductStream,
+            insertProductsPresenter.selectedProductStream,
         selectedItemIndexStream:
-            productCompositionPresenter.selectedFatherIndexStream,
+            insertProductsPresenter.selectedLeftIndexStream,
         updateSelectedProduct: () {
-          productCompositionPresenter
+          insertProductsPresenter
               .updateSelectedProduct(widget.productsViewModel);
         },
         doOnClosePage: () {
-          productCompositionPresenter.clearData(
+          insertProductsPresenter.clearData(
             product: widget.productsViewModel,
             commentsPresenter: commentsPresenter,
           );
@@ -56,7 +56,7 @@ class _ProductItemState extends State<ProductItem> {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
-    ProductCompositionPresenter productCompositionPresenter =
+    InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
     return Expanded(
@@ -64,11 +64,11 @@ class _ProductItemState extends State<ProductItem> {
         onTap: () {
           menuPresenter.goToInsertProductPage(
             getInsertProductAdapter(
-              productCompositionPresenter,
+              insertProductsPresenter,
               commentsPresenter,
             ),
           );
-          productCompositionPresenter
+          insertProductsPresenter
               .updateSelectedProduct(widget.productsViewModel);
         },
         child: Padding(

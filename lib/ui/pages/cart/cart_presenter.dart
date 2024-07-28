@@ -12,49 +12,8 @@ abstract class CartPresenter implements ChangeNotifier {
   String get totalSaleRequestTempPrice;
 
   Future<void> loadSaleRequest(String commandNumber);
-  Future<void> addProductQuantity({
-    required String url,
-    required int saleRequestProductTempId,
-    required String commandNumber,
-  });
-  Future<void> subtractProductQuantity({
-    required String url,
-    required int saleRequestProductTempId,
-    required int productQuantity,
-    required String commandNumber,
-  });
-
-  // Future<void> loadCommandData({
-  //   required String commandNumber,
-  //   required PrintedProductsPresenter printedProductsPresenter,
-  //   required CartPresenter cartPresenter,
-  //   required MenuPresenter menuPresenter,
-  //   required HomePresenter homePresenter,
-  //   required CommentsPresenter commentsPresenter,
-  // });
 
   void clear();
-
-  Future<void> updateComment({
-    required String comments,
-    required int saleRequestProductTempId,
-    required MenuPresenter menuPresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-  });
-
-  void updateLocalSaleRequestComment(String newComment);
-
-  Future<void> finishSaleRequest({
-    required SaleRequestTempEntity saleRequestTempEntity,
-    required MenuPresenter menuPresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
-  });
 
   Future<void> addNewPrintRequestInFirebase();
 
@@ -83,21 +42,7 @@ abstract class CartPresenter implements ChangeNotifier {
 
   List<ConfirmedComboxViewModel> get confirmedCombox;
   int? get indexOfSelectedProductCombox;
-  Future<bool> addConfirmedCombox({
-    required List<InsertProductsViewModel> selectedChilds,
-    required double totalPrice,
-    required int quantity,
-    required ProductsViewModel selectedCombox,
-  });
-  Future<void> getLocalConfirmedsCombox();
-  Future<void> addComboxQuantity(int index);
-  Future<void> reduceComboxQuantity(int index);
-  Future<void> updateCommentOfCombox({
-    required int indexOfCombox,
-    required int? indexOfProduct,
-    required String? newComment,
-  });
-  void updateIndexOfSelectedProductCombox(int index);
+
   List<UpdateSaleRequestTempProductEntity>
       convertProductsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,

@@ -46,7 +46,6 @@ class _MenuPageState extends State<MenuPage>
         Duration.zero,
         () async {
           await cartPresenter.getLocalCartProductsData();
-          await cartPresenter.getLocalConfirmedsCombox();
         },
       );
     }

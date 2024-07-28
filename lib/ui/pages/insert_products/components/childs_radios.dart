@@ -33,9 +33,6 @@ class _ChildsRadiosState extends State<ChildsRadios> {
       insertProductsPresenter.updateTotalLiquid(
         widget.selectedProduct,
       );
-
-      insertProductsPresenter
-          .updateChildsCompositionIsValid(widget.selectedProduct.childsComposition!);
     });
     widget.callSetState();
   }
@@ -79,8 +76,7 @@ class _ChildsRadiosState extends State<ChildsRadios> {
                     toggleable: widget.selectedFather.IsOptionalItem == "true",
                     onChanged: (int? value) {
                       _updateSelectedIndex(
-                        insertProductsPresenter:
-                            insertProductsPresenter,
+                        insertProductsPresenter: insertProductsPresenter,
                         value: childsIndex,
                       );
                     },

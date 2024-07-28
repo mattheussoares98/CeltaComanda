@@ -33,9 +33,7 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
 
   late SaleRequestTempEntity saleRequestTempEntity;
-  late int saleRequestProductTempId;
   late String comments;
-  late PrintRequestEntity printRequestEntity;
   late CartProductEntity cartProductEntity;
   late String commandNumber;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
@@ -45,11 +43,7 @@ void main() {
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
   late InsertProductsViewModel selectedChildWithOneQuantity;
-  late InsertProductsViewModel selectedChildWithTwoQuantities;
-  late InsertProductsViewModel notSelectedChild;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
-  late ConfirmedComboxViewModel confirmedComboxWithtwoQuantities;
-  late String? newComment;
   late List<InsertProductsViewModel> productsSelectedsInCombox;
   late ConfirmedComboxViewModel comboxWithSelectedProducts;
   late int tableNumber;
@@ -93,7 +87,6 @@ void main() {
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    saleRequestProductTempId = faker.randomGenerator.integer(3);
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString();
     comments = faker.randomGenerator.string(10);
@@ -101,7 +94,6 @@ void main() {
 
     saleRequestTempEntity =
         EntityFactory.makeSaleRequestTempEntity(tableNumber);
-    printRequestEntity = EntityFactory.makePrintRequestEntity();
     cartProductEntity = EntityFactory.makeCartProductEntity(
       maximumProductQuantity: 200,
       minimumProductQuantity: 2,
@@ -190,28 +182,6 @@ void main() {
       insertChilds: false,
       childIncrement: 0,
     );
-    selectedChildWithTwoQuantities =
-        EntityFactory.makeProductCompositionViewModel(
-      quantity: 2,
-      salePrice: 10,
-      offerPrice: 10,
-      fatherIncrement: 0,
-      isOptionalItem: false,
-      indexOfSelectedChild: 0,
-      insertChilds: false,
-      childIncrement: 0,
-    );
-
-    notSelectedChild = EntityFactory.makeProductCompositionViewModel(
-      quantity: 1,
-      salePrice: 10,
-      offerPrice: 10,
-      fatherIncrement: 0,
-      isOptionalItem: false,
-      indexOfSelectedChild: null,
-      insertChilds: false,
-      childIncrement: 0,
-    );
 
     confirmedComboxWithOneQuantity = EntityFactory.makeConfirmedComboxViewModel(
       products: [selectedChildWithOneQuantity],
@@ -219,14 +189,6 @@ void main() {
       totalPrice: 10,
       quantity: 1,
     );
-    confirmedComboxWithtwoQuantities =
-        EntityFactory.makeConfirmedComboxViewModel(
-      products: [selectedChildWithTwoQuantities],
-      father: fatherOfCombox,
-      totalPrice: 20,
-      quantity: 2,
-    );
-    newComment = faker.randomGenerator.string(10);
 
     commentViewModel = EntityFactory.makeCommentViewModel(selected: true);
   }
@@ -574,122 +536,6 @@ void main() {
       );
     });
   });
-  group("AddProductQuantity group", () {
-    test("Should call AddProductQuantity with correct values", () async {
-      await sut.addProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: homePresenter.commandNumberMock!,
-      );
-
-      verify(
-        () => updateProductQuantity.add(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-        ),
-      ).called(1);
-    });
-
-    test("Should emits correct events on error to AddProductQuantity",
-        () async {
-      updateProductQuantity.mockAddProductQuantityError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.addProductQuantity(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        saleRequestProductTempId: saleRequestProductTempId,
-        commandNumber: homePresenter.commandNumberMock!,
-      );
-    });
-
-    test("Should emits correct events on AddtractProductQuantity", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.addProductQuantity(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          commandNumber: homePresenter.commandNumberMock!);
-    });
-  });
-  group("SubtractProductQuantity group", () {
-    test("Should call SubtractProductQuantity with correct values", () async {
-      await sut.subtractProductQuantity(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          productQuantity: 10,
-          commandNumber: homePresenter.commandNumberMock!);
-
-      verify(
-        () => updateProductQuantity.subtract(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-        ),
-      );
-    });
-
-    test("Should emits correct events on error to SubtractProductQuantity",
-        () async {
-      updateProductQuantity.mockSubtractProductQuantityError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.subtractProductQuantity(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          productQuantity: 10,
-          commandNumber: homePresenter.commandNumberMock!);
-    });
-
-    test("Should emits correct events on SubtractProductQuantity", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.subtractProductQuantity(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          productQuantity: 10,
-          commandNumber: homePresenter.commandNumberMock!);
-    });
-
-    test("Should call delete product if productQuantity is less than 1",
-        () async {
-      await sut.subtractProductQuantity(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          productQuantity: 1,
-          commandNumber: homePresenter.commandNumberMock!);
-
-      verify(
-        () => updateProductQuantity.delete(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-        ),
-      ).called(1);
-    });
-
-    test(
-        "Should call subtract product quantity if productQuantity is more than 1",
-        () async {
-      await sut.subtractProductQuantity(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-          productQuantity: 2,
-          commandNumber: homePresenter.commandNumberMock!);
-
-      verify(
-        () => updateProductQuantity.subtract(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          saleRequestProductTempId: saleRequestProductTempId,
-        ),
-      ).called(1);
-    });
-  });
 
   group("LoadSaleRequestTemp", () {
     test("Should update SaleRequestTemp correctly on LoadSaleRequestTemp",
@@ -729,320 +575,138 @@ void main() {
     });
   });
 
-  group("UpdateProductComment", () {
-    test("Should call UpdateComment with correct values", () async {
-      await sut.updateComment(
-        commentsPresenter: commentsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
+  // group("Add PrintRequest", () {
+  //   test("Should call addPrintRequest when finish success", () async {
+  //     await sut.finishSaleRequest(
+  //       commentsPresenter: commentsPresenter,
+  //       saleRequestTempEntity: saleRequestTempEntity,
+  //       menuPresenter: menuPresenter,
+  //       printedProductsPresenter: printedProductsPresenter,
+  //       cartPresenter: sut,
+  //       homePresenter: homePresenter,
+  //     );
 
-      verify(() => updateProductComment.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            saleRequestProductTempId: saleRequestProductTempId,
-            comments: comments,
-          ));
-    });
+  //     verify(
+  //       () => addPrintRequest.add(printRequestEntity),
+  //     ).called(1);
+  //   });
 
-    test("Should emit correct events on UpdateComment success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+  //   test(
+  //       "Should call correct printRequests when finish success and has printRequestEntity in local data",
+  //       () async {
+  //     localPrintRequest.mockGetMergedPrinted(printRequestEntity);
 
-      await sut.updateComment(
-        commentsPresenter: commentsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-    });
+  //     await sut.finishSaleRequest(
+  //       commentsPresenter: commentsPresenter,
+  //       saleRequestTempEntity: saleRequestTempEntity,
+  //       menuPresenter: menuPresenter,
+  //       printedProductsPresenter: printedProductsPresenter,
+  //       cartPresenter: sut,
+  //       homePresenter: homePresenter,
+  //     );
 
-    test("Should emit correct events on UpdateComment throws", () async {
-      updateProductComment
-          .mockUpdateProductCommentError(DomainError.unexpected);
+  //     verify(
+  //       () => localPrintRequest.getLocalPrintedEntity(),
+  //     ).called(1);
+  //     verify(
+  //       () => localPrintRequest.clear(),
+  //     ).called(1);
+  //     verify(
+  //       () => addPrintRequest.add(
+  //         PrintRequestEntity(
+  //           dates: [
+  //             ...printRequestEntity.dates,
+  //             "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+  //           ],
+  //           timesUsed: printRequestEntity.timesUsed + 1,
+  //         ),
+  //       ),
+  //     ).called(1);
+  //   });
 
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+  //   test(
+  //       "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
+  //       () async {
+  //     await sut.finishSaleRequest(
+  //       commentsPresenter: commentsPresenter,
+  //       saleRequestTempEntity: saleRequestTempEntity,
+  //       menuPresenter: menuPresenter,
+  //       printedProductsPresenter: printedProductsPresenter,
+  //       cartPresenter: sut,
+  //       homePresenter: homePresenter,
+  //     );
 
-      await sut.updateComment(
-        commentsPresenter: commentsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-    });
+  //     verify(
+  //       () => localPrintRequest.getLocalPrintedEntity(),
+  //     ).called(1);
+  //     verify(
+  //       () => localPrintRequest.clear(),
+  //     ).called(1);
+  //     verify(
+  //       () => addPrintRequest.add(printRequestEntity),
+  //     ).called(1);
+  //   });
 
-    test("Should emit correct events on UpdateComment cant add comment",
-        () async {
-      updateProductComment
-          .mockUpdateProductCommentError(DomainError.addComment);
+  //   test("Should call correct printRequests when finish throw", () async {
+  //     finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.addComment]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+  //     await sut.finishSaleRequest(
+  //       commentsPresenter: commentsPresenter,
+  //       saleRequestTempEntity: saleRequestTempEntity,
+  //       menuPresenter: menuPresenter,
+  //       printedProductsPresenter: printedProductsPresenter,
+  //       cartPresenter: sut,
+  //       homePresenter: homePresenter,
+  //     );
 
-      await sut.updateComment(
-        commentsPresenter: commentsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-    });
+  //     verify(
+  //       () => localPrintRequest.getLocalPrintedEntity(),
+  //     ).called(1);
+  //     verify(
+  //       () => localPrintRequest.clear(),
+  //     ).called(1);
+  //     verify(
+  //       () => addPrintRequest.add(printRequestEntity),
+  //     ).called(1);
+  //   });
 
-    test("Should call homePresenter.loadCommandData when UpdateComment",
-        () async {
-      await sut.updateComment(
-        commentsPresenter: commentsPresenter,
-        comments: comments,
-        saleRequestProductTempId: saleRequestProductTempId,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
+  //   test("Should call LocalAddPrintRequest when addPrintRequest throws",
+  //       () async {
+  //     addPrintRequest.mockRemoteAddError();
 
-      verify(() => homePresenter.loadCommandData(
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            cartPresenter: sut,
-            commentsPresenter: commentsPresenter,
-          )).called(1);
-    });
-  });
+  //     await sut.finishSaleRequest(
+  //       commentsPresenter: commentsPresenter,
+  //       saleRequestTempEntity: saleRequestTempEntity,
+  //       menuPresenter: menuPresenter,
+  //       printedProductsPresenter: printedProductsPresenter,
+  //       cartPresenter: sut,
+  //       homePresenter: homePresenter,
+  //     );
 
-  group("FinishSaleRequestTemp", () {
-    test("Should call FinishSaleRequestTemp with correct values", () async {
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
+  //     verify(
+  //       () => localPrintRequest.add(printRequestEntity),
+  //     ).called(1);
+  //   });
 
-      verify(
-        () => finishSaleRequestTemp.finish(
-          saleRequestTempEntity: saleRequestTempEntity,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        ),
-      ).called(1);
-    });
+  //   test(
+  //       "Should call LocalAddPrintRequest when localPrintRequest.GetMergedPrint throws",
+  //       () async {
+  //     localPrintRequest.mockGetMergedPrintedError();
 
-    test("Should emit correct events on FinishSaleRequestTemp success",
-        () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+  //     await sut.finishSaleRequest(
+  //       commentsPresenter: commentsPresenter,
+  //       saleRequestTempEntity: saleRequestTempEntity,
+  //       menuPresenter: menuPresenter,
+  //       printedProductsPresenter: printedProductsPresenter,
+  //       cartPresenter: sut,
+  //       homePresenter: homePresenter,
+  //     );
 
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test("Should emit correct events on FinishSaleRequestTemp throws",
-        () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-    });
-    test("Should emit correct events on homePresenter.loadCommandData throws",
-        () async {
-      homePresenter.mockLoadCommandDataError();
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test(
-        "Should call homePresenter.loadCommandData on FinishSaleRequest success",
-        () async {
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => homePresenter.loadCommandData(
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            cartPresenter: sut,
-            commentsPresenter: commentsPresenter,
-          )).called(1);
-    });
-  });
-
-  group("Add PrintRequest", () {
-    test("Should call addPrintRequest when finish success", () async {
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => addPrintRequest.add(printRequestEntity),
-      ).called(1);
-    });
-
-    test(
-        "Should call correct printRequests when finish success and has printRequestEntity in local data",
-        () async {
-      localPrintRequest.mockGetMergedPrinted(printRequestEntity);
-
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => localPrintRequest.getLocalPrintedEntity(),
-      ).called(1);
-      verify(
-        () => localPrintRequest.clear(),
-      ).called(1);
-      verify(
-        () => addPrintRequest.add(
-          PrintRequestEntity(
-            dates: [
-              ...printRequestEntity.dates,
-              "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
-            ],
-            timesUsed: printRequestEntity.timesUsed + 1,
-          ),
-        ),
-      ).called(1);
-    });
-
-    test(
-        "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
-        () async {
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => localPrintRequest.getLocalPrintedEntity(),
-      ).called(1);
-      verify(
-        () => localPrintRequest.clear(),
-      ).called(1);
-      verify(
-        () => addPrintRequest.add(printRequestEntity),
-      ).called(1);
-    });
-
-    test("Should call correct printRequests when finish throw", () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
-
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => localPrintRequest.getLocalPrintedEntity(),
-      ).called(1);
-      verify(
-        () => localPrintRequest.clear(),
-      ).called(1);
-      verify(
-        () => addPrintRequest.add(printRequestEntity),
-      ).called(1);
-    });
-
-    test("Should call LocalAddPrintRequest when addPrintRequest throws",
-        () async {
-      addPrintRequest.mockRemoteAddError();
-
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => localPrintRequest.add(printRequestEntity),
-      ).called(1);
-    });
-
-    test(
-        "Should call LocalAddPrintRequest when localPrintRequest.GetMergedPrint throws",
-        () async {
-      localPrintRequest.mockGetMergedPrintedError();
-
-      await sut.finishSaleRequest(
-        commentsPresenter: commentsPresenter,
-        saleRequestTempEntity: saleRequestTempEntity,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: sut,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => localPrintRequest.add(printRequestEntity),
-      ).called(1);
-    });
-  });
+  //     verify(
+  //       () => localPrintRequest.add(printRequestEntity),
+  //     ).called(1);
+  //   });
+  // });
 
   group("Cart products", () {
     test("Should add correctly CartProduct", () async {
@@ -1309,19 +973,6 @@ void main() {
       await sut.clearCartAndConfirmedCombox();
 
       expect(sut.cartProducts, []);
-    });
-
-    test("Should clear confirmedCombox on call clearCartAndConfirmedCombox",
-        () async {
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-      await sut.clearCartAndConfirmedCombox();
-
-      expect(sut.confirmedCombox, []);
     });
 
     test(
@@ -1975,502 +1626,6 @@ void main() {
   });
 
   group("Confirmed combox products", () {
-    test("Should emit correct values on addConfirmedCombox success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-    });
-    test("Should emit correct values on addConfirmedCombox throws", () async {
-      cartInformations.mockUpdateConfirmedComboxError();
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-    });
-    test("Should add new ConfirmedComboxViewModel with one quantity correctly",
-        () async {
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-
-      expect(sut.confirmedCombox, [confirmedComboxWithOneQuantity]);
-    });
-
-    test("Should not add ConfirmedComboxViewModel if not selected", () async {
-      await sut.addConfirmedCombox(
-        selectedChilds: [notSelectedChild, selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-
-      expect(sut.confirmedCombox, [confirmedComboxWithOneQuantity]);
-    });
-    test(
-        "Should add new ConfirmedComboxViewModel with two quantities correctly",
-        () async {
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithTwoQuantities],
-        totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-        selectedCombox: confirmedComboxWithtwoQuantities.father,
-        quantity: confirmedComboxWithtwoQuantities.quantity,
-      );
-
-      expect(sut.confirmedCombox, [confirmedComboxWithtwoQuantities]);
-    });
-
-    test("Should return true on addConfirmedCombox success", () async {
-      bool isConfirmed = await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-
-      expect(isConfirmed, true);
-    });
-    test("Should return false on addConfirmedCombox throws", () async {
-      cartInformations.mockUpdateConfirmedComboxError();
-
-      bool isConfirmed = await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-
-      expect(isConfirmed, false);
-    });
-
-    test(
-        "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox with one quantity",
-        () async {
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity]
-            .map((element) => InsertProductsViewModel(
-                  Quantity: 1.0.toString(),
-                  ProductCompositionId: element.ProductCompositionId,
-                  EnterpriseId: element.EnterpriseId,
-                  InternalCodeOnERPCodeFather:
-                      element.InternalCodeOnERPCodeFather,
-                  InternalCodeOnERPCodeChild:
-                      element.InternalCodeOnERPCodeChild,
-                  PluChild: element.PluChild,
-                  ChildName: element.ChildName,
-                  SalePrice: element.SalePrice,
-                  OfferPrice: element.OfferPrice,
-                  IncrementValue: element.IncrementValue,
-                  IsOptionalItem: element.IsOptionalItem,
-                  ProductOptions: element.ProductOptions,
-                  childs: element.childs,
-                  commentFather: element.commentFather,
-                  indexOfSelectedChild: element.indexOfSelectedChild,
-                ))
-            .toList(),
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-
-      verify(() => cartInformations
-          .updateConfirmedCombox([confirmedComboxWithOneQuantity])).called(1);
-    });
-    test(
-        "Should call cartInformations.updateConfirmedCombox on addConfirmedCombox with 2 quantities",
-        () async {
-      await sut.addConfirmedCombox(
-        selectedChilds: [selectedChildWithOneQuantity],
-        totalPrice: 10,
-        selectedCombox: fatherOfCombox,
-        quantity: 1,
-      );
-
-      verify(() => cartInformations
-          .updateConfirmedCombox([confirmedComboxWithOneQuantity])).called(1);
-    });
-
-    test("Should emit correct values on getLocalConfirmedsCombox success",
-        () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.getLocalConfirmedsCombox();
-    });
-
-    test("Should emit correct values on getLocalConfirmedsCombox throws",
-        () async {
-      cartInformations.mockGetConfirmedsComboxError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.getLocalConfirmedsCombox();
-    });
-
-    test("Should update confirmedCombox with correct local values", () async {
-      expect(sut.confirmedCombox, []);
-
-      await sut.getLocalConfirmedsCombox();
-
-      expect(sut.confirmedCombox, [confirmedComboxWithOneQuantity]);
-    });
-
-    test("Should emit correct values on addComboxQuantity succeeds", () async {
-      cartInformations.mockUpdateConfirmedComboxError();
-
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.addComboxQuantity(0);
-    });
-
-    test("Should emit correct values on addComboxQuantity throws", () async {
-      cartInformations.mockUpdateConfirmedComboxError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.addComboxQuantity(0);
-    });
-
-    test(
-        "Should call updateConfirmedCombox correctly on addComboxQuantity with one quantity",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-
-      await sut.addComboxQuantity(0);
-
-      verify(() => cartInformations.updateConfirmedCombox(
-            [
-              ConfirmedComboxViewModel(
-                products: [selectedChildWithOneQuantity]
-                    .map((element) => InsertProductsViewModel(
-                          Quantity: (element.Quantity.toString().toDouble() + 1)
-                              .toString(),
-                          ProductCompositionId: element.ProductCompositionId,
-                          EnterpriseId: element.EnterpriseId,
-                          InternalCodeOnERPCodeFather:
-                              element.InternalCodeOnERPCodeFather,
-                          InternalCodeOnERPCodeChild:
-                              element.InternalCodeOnERPCodeChild,
-                          PluChild: element.PluChild,
-                          ChildName: element.ChildName,
-                          SalePrice: element.SalePrice,
-                          OfferPrice: element.OfferPrice,
-                          IncrementValue: element.IncrementValue,
-                          IsOptionalItem: element.IsOptionalItem,
-                          ProductOptions: element.ProductOptions,
-                          childs: element.childs,
-                          commentFather: element.commentFather,
-                          indexOfSelectedChild: element.indexOfSelectedChild,
-                        ))
-                    .toList(),
-                father: confirmedComboxWithOneQuantity.father,
-                totalPrice: confirmedComboxWithOneQuantity.totalPrice,
-                quantity: confirmedComboxWithOneQuantity.quantity + 1,
-              )
-            ],
-          )).called(1);
-    });
-    test(
-        "Should call updateConfirmedCombox correctly on addComboxQuantity with 2 quantities",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
-
-      await sut.addComboxQuantity(0);
-
-      verify(() => cartInformations.updateConfirmedCombox(
-            [
-              ConfirmedComboxViewModel(
-                products: [selectedChildWithTwoQuantities]
-                    .map((element) => InsertProductsViewModel(
-                          Quantity: 6.0.toString(),
-                          ProductCompositionId: element.ProductCompositionId,
-                          EnterpriseId: element.EnterpriseId,
-                          InternalCodeOnERPCodeFather:
-                              element.InternalCodeOnERPCodeFather,
-                          InternalCodeOnERPCodeChild:
-                              element.InternalCodeOnERPCodeChild,
-                          PluChild: element.PluChild,
-                          ChildName: element.ChildName,
-                          SalePrice: element.SalePrice,
-                          OfferPrice: element.OfferPrice,
-                          IncrementValue: element.IncrementValue,
-                          IsOptionalItem: element.IsOptionalItem,
-                          ProductOptions: element.ProductOptions,
-                          childs: element.childs,
-                          commentFather: element.commentFather,
-                          indexOfSelectedChild: element.indexOfSelectedChild,
-                        ))
-                    .toList(),
-                father: confirmedComboxWithtwoQuantities.father,
-                totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-                quantity: 3,
-              )
-            ],
-          )).called(1);
-    });
-
-    test("Should add new combox quantity correctly", () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-
-      await sut.addComboxQuantity(0);
-
-      expect(sut.confirmedCombox[0].totalPrice, 10);
-      expect(sut.confirmedCombox[0].quantity, 2);
-      expect(sut.confirmedCombox[0].products.first.Quantity, "2.0");
-    });
-
-    test("Should add new combox quantity correctly ²", () async {
-      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
-
-      await sut.addComboxQuantity(0);
-
-      expect(sut.confirmedCombox[0].totalPrice, 20);
-      expect(sut.confirmedCombox[0].quantity, 3);
-      expect(sut.confirmedCombox[0].products.first.Quantity, "6.0");
-    });
-
-    test("Should emit correct values on subtract combox quantity succeeds",
-        () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.reduceComboxQuantity(0);
-    });
-
-    test("Should emit correct values on subtract combox quantity throws",
-        () async {
-      cartInformations.mockUpdateConfirmedComboxError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.reduceComboxQuantity(0);
-    });
-
-    test(
-        "Should call cartInformations.updateConfirmedCombox when reduce quantity",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
-
-      await sut.reduceComboxQuantity(0);
-
-      verify(() => cartInformations.updateConfirmedCombox(
-            [
-              ConfirmedComboxViewModel(
-                products: [selectedChildWithTwoQuantities]
-                    .map((element) => InsertProductsViewModel(
-                          Quantity: 2.0.toString(),
-                          ProductCompositionId: element.ProductCompositionId,
-                          EnterpriseId: element.EnterpriseId,
-                          InternalCodeOnERPCodeFather:
-                              element.InternalCodeOnERPCodeFather,
-                          InternalCodeOnERPCodeChild:
-                              element.InternalCodeOnERPCodeChild,
-                          PluChild: element.PluChild,
-                          ChildName: element.ChildName,
-                          SalePrice: element.SalePrice,
-                          OfferPrice: element.OfferPrice,
-                          IncrementValue: element.IncrementValue,
-                          IsOptionalItem: element.IsOptionalItem,
-                          ProductOptions: element.ProductOptions,
-                          childs: element.childs,
-                          commentFather: element.commentFather,
-                          indexOfSelectedChild: element.indexOfSelectedChild,
-                        ))
-                    .toList(),
-                father: confirmedComboxWithtwoQuantities.father,
-                totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-                quantity: 1,
-              ),
-            ],
-          )).called(1);
-    });
-
-    test(
-        "Should remove combox when subtract and have only one quantity or less",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-
-      await sut.reduceComboxQuantity(0);
-
-      expect(sut.confirmedCombox, []);
-    });
-
-    test(
-        "Should reduce combox quantity correctly when have more than 1 combox quantity",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithtwoQuantities);
-
-      await sut.reduceComboxQuantity(0);
-
-      expect(sut.confirmedCombox, [
-        ConfirmedComboxViewModel(
-          products: [selectedChildWithTwoQuantities]
-              .map((element) => InsertProductsViewModel(
-                    Quantity: 2.0.toString(),
-                    ProductCompositionId: element.ProductCompositionId,
-                    EnterpriseId: element.EnterpriseId,
-                    InternalCodeOnERPCodeFather:
-                        element.InternalCodeOnERPCodeFather,
-                    InternalCodeOnERPCodeChild:
-                        element.InternalCodeOnERPCodeChild,
-                    PluChild: element.PluChild,
-                    ChildName: element.ChildName,
-                    SalePrice: element.SalePrice,
-                    OfferPrice: element.OfferPrice,
-                    IncrementValue: element.IncrementValue,
-                    IsOptionalItem: element.IsOptionalItem,
-                    ProductOptions: element.ProductOptions,
-                    childs: element.childs,
-                    commentFather: element.commentFather,
-                    indexOfSelectedChild: element.indexOfSelectedChild,
-                  ))
-              .toList(),
-          father: confirmedComboxWithtwoQuantities.father,
-          totalPrice: confirmedComboxWithtwoQuantities.totalPrice,
-          quantity: 1,
-        ),
-      ]);
-    });
-
-    test("Should emit correct values on update combox comment succeeds",
-        () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateCommentOfCombox(
-        indexOfCombox: 0,
-        indexOfProduct: 0,
-        newComment: newComment,
-      );
-    });
-
-    test("Should emit correct values on update combox comment throws",
-        () async {
-      cartInformations.mockUpdateConfirmedComboxError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateCommentOfCombox(
-        indexOfCombox: 0,
-        indexOfProduct: 0,
-        newComment: newComment,
-      );
-    });
-
-    test(
-        "Should call cartInformations.updateConfirmedCombox when update comment",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-
-      await sut.updateCommentOfCombox(
-          indexOfCombox: 0, indexOfProduct: 0, newComment: newComment);
-
-      verify(() => cartInformations.updateConfirmedCombox([
-            ConfirmedComboxViewModel(
-              products: confirmedComboxWithOneQuantity.products
-                  .map((element) => InsertProductsViewModel(
-                        commentFather: newComment,
-                        ProductCompositionId: element.ProductCompositionId,
-                        EnterpriseId: element.EnterpriseId,
-                        InternalCodeOnERPCodeFather:
-                            element.InternalCodeOnERPCodeFather,
-                        InternalCodeOnERPCodeChild:
-                            element.InternalCodeOnERPCodeChild,
-                        PluChild: element.PluChild,
-                        ChildName: element.ChildName,
-                        Quantity: element.Quantity,
-                        SalePrice: element.SalePrice,
-                        OfferPrice: element.OfferPrice,
-                        IncrementValue: element.IncrementValue,
-                        IsOptionalItem: element.IsOptionalItem,
-                        ProductOptions: element.ProductOptions,
-                        childs: element.childs,
-                        indexOfSelectedChild: element.indexOfSelectedChild,
-                      ))
-                  .toList(),
-              father: confirmedComboxWithOneQuantity.father,
-              totalPrice: confirmedComboxWithOneQuantity.totalPrice,
-              quantity: confirmedComboxWithOneQuantity.quantity,
-            )
-          ])).called(1);
-    });
-
-    test("Should update comment correctly", () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-
-      await sut.updateCommentOfCombox(
-        indexOfCombox: 0,
-        indexOfProduct: 0,
-        newComment: newComment,
-      );
-
-      expect(
-        sut.confirmedCombox.first.products.first.commentFather,
-        newComment,
-      );
-    });
-    test("Should clear comment correctly", () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-
-      await sut.updateCommentOfCombox(
-        indexOfCombox: 0,
-        indexOfProduct: 0,
-        newComment: null,
-      );
-
-      expect(
-        sut.confirmedCombox.first.products.first.commentFather,
-        null,
-      );
-    });
-
-    test("Should update indexOfSelectedCombox correctly", () async {
-      expect(sut.indexOfSelectedProductCombox, null);
-
-      sut.updateIndexOfSelectedProductCombox(1);
-      expect(sut.indexOfSelectedProductCombox, 1);
-
-      sut.updateIndexOfSelectedProductCombox(1);
-      expect(sut.indexOfSelectedProductCombox, null);
-    });
-
-    test("Should remove indexOfSelectedCombox when update comment succeeds",
-        () async {
-      sut.confirmedCombox.add(confirmedComboxWithOneQuantity);
-      sut.updateIndexOfSelectedProductCombox(0);
-
-      await sut.updateCommentOfCombox(
-        indexOfCombox: 0,
-        indexOfProduct: 0,
-        newComment: newComment,
-      );
-
-      expect(sut.indexOfSelectedProductCombox, null);
-    });
-
     test("Should return incrementValue when is optionalItem", () async {
       double price = sut
           .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(

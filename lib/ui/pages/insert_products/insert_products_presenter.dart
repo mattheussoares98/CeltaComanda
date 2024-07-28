@@ -19,14 +19,11 @@ abstract class InsertProductPresenter implements Listenable {
 
   Future<void> updateSelectedProduct(ProductsViewModel product);
 
-  void updateChildsCompositionIsValid(
-      List<InsertProductsViewModel> productsCompositions);
-
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required List<InsertProductsViewModel> productsCompositions,
-  });
+  }); //usa só pra validar se o total do combo está calculando corretamente
 
   void updateTotalProductsQuantity(bool isAddingQuantity);
 

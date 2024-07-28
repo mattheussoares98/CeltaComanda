@@ -27,46 +27,11 @@ class CartPresenterSpy extends Mock implements CartPresenter {
         .thenAnswer((_) => isLoadingController.stream);
 
     when(() => this.loadSaleRequest(any())).thenAnswer((_) async => _);
-    when(() => this.getLocalConfirmedsCombox()).thenAnswer((_) async => _);
-    when(() => this.addConfirmedCombox(
-          selectedChilds: any(named: "selectedChilds"),
-          totalPrice: any(named: "totalPrice"),
-          selectedCombox: any(named: "selectedCombox"),
-          quantity: any(named: "quantity"),
-        )).thenAnswer((_) async => true);
-    mockAddProductQuantityCall().thenAnswer((_) async => _);
-
-    mockSubtractProductQuantityCall().thenAnswer((_) async => _);
     when(() => this.clear()).thenAnswer((_) async => _);
   }
 
   void mockLoadSaleRequestTempError(DomainError error) {
     when(() => this.loadSaleRequest(any())).thenThrow(error);
-  }
-
-  When mockSubtractProductQuantityCall() {
-    return when(() => this.subtractProductQuantity(
-          saleRequestProductTempId: any(named: "saleRequestProductTempId"),
-          url: any(named: "url"),
-          productQuantity: any(named: "productQuantity"),
-          commandNumber: any(named: "commandNumber"),
-        ));
-  }
-
-  void mockSubtractProductQuantityError() {
-    mockSubtractProductQuantityCall().thenThrow(DomainError.unexpected);
-  }
-
-  When mockAddProductQuantityCall() {
-    return when(() => this.addProductQuantity(
-          saleRequestProductTempId: any(named: "saleRequestProductTempId"),
-          url: any(named: "url"),
-          commandNumber: any(named: "commandNumber"),
-        ));
-  }
-
-  void mockAddProductQuantityError() {
-    mockAddProductQuantityCall().thenThrow(DomainError.unexpected);
   }
 
   void addSaleRequestTempViewModel(SaleRequestTempViewModel? data) =>

@@ -90,18 +90,11 @@ class ImageFathernameAndPrice extends StatelessWidget {
                   context: context,
                   titleMessage: "Remover combo do carrinho?",
                   content: null,
-                  onPress: () async {
-                    await cartPresenter
-                        .reduceComboxQuantity(confirmedComboxIndex);
-                  },
+                  onPress: () async {},
                 );
-              } else {
-                await cartPresenter.reduceComboxQuantity(confirmedComboxIndex);
-              }
+              } else {}
             },
-            onPressedAddQuantity: () async {
-              await cartPresenter.addComboxQuantity(confirmedComboxIndex);
-            },
+            onPressedAddQuantity: () async {},
             productQuantity: confirmedCombox.quantity,
           ),
         ),

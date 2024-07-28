@@ -58,10 +58,6 @@ class GetxInsertProductsPresenter extends GetxController
     _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
       product.childsComposition!,
     );
-
-    await Future.delayed(const Duration(milliseconds: 500), () {
-      updateChildsCompositionIsValid(product.childsComposition!);
-    });
   }
 
   double _getTotalLiquidCombox(
@@ -227,15 +223,6 @@ class GetxInsertProductsPresenter extends GetxController
     } finally {
       isLoading = false;
     }
-  }
-
-  @override
-  void updateChildsCompositionIsValid(
-    List<InsertProductsViewModel> productsCompositions,
-  ) {
-    _comboxIsValidStream.subject.add(
-      validateCombox.comboxIsValid(productsCompositions),
-    );
   }
 
   @override

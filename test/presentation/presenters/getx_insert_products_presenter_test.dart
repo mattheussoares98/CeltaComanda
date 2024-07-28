@@ -871,24 +871,6 @@ void main() {
     });
   });
 
-  group("validate combox", () {
-    test("Should update comboxIsValidStream correctly on combox is valid", () {
-      validateCombox.mockValidateCombox(true);
-
-      expectLater(sut.childsCompositionIsValidStream, emits(true));
-
-      sut.updateChildsCompositionIsValid([]);
-    });
-    test("Should update comboxIsValidStream correctly on combox is invalid",
-        () {
-      validateCombox.mockValidateCombox(false);
-
-      expectLater(sut.childsCompositionIsValidStream, emits(false));
-
-      sut.updateChildsCompositionIsValid([]);
-    });
-  });
-
   group("update selected child", () {
     test(
         "Should update selected index of child if click in product that have child",

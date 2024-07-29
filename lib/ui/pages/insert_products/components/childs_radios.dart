@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -64,9 +65,10 @@ class _ChildsRadiosState extends State<ChildsRadios> {
               value: childsIndex,
             );
           },
-          child: Column(
+          child: Row(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(width: 5),
                   Radio<int>(
@@ -92,6 +94,16 @@ class _ChildsRadiosState extends State<ChildsRadios> {
                     ),
                 ],
               ),
+              if (child.IncrementValue!.toDouble() > 0)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Text(
+                      "+ ${child.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ),
             ],
           ),
         );

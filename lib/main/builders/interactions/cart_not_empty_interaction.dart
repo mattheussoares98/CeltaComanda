@@ -29,8 +29,7 @@ class CartNotEmptyInteraction {
   static void _showCartNotEmptyMessage() async {
     if (CartPageDialog.isOpen ||
         _alertMessageIsOpen ||
-        (cartPresenter.cartProducts.isEmpty &&
-            cartPresenter.confirmedCombox.isEmpty)) {
+        cartPresenter.cartProducts.isEmpty) {
       return;
     }
     _alertMessageIsOpen = true;

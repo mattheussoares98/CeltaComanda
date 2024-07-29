@@ -52,10 +52,9 @@ class _CartPageState extends State<CartPage>
           child: Padding(
             padding: EdgeInsets.only(bottom: _buttonsHeight),
             child: SingleChildScrollView(
-                child: cartPresenter.cartProducts.isNotEmpty == true ||
-                        cartPresenter.confirmedCombox.isNotEmpty == true
+                child: cartPresenter.cartProducts.isNotEmpty == true
                     ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
@@ -77,19 +76,13 @@ class _CartPageState extends State<CartPage>
                           ),
                           if (cartPresenter.cartProducts.isNotEmpty)
                             const CartProductsItems(),
-                          if (cartPresenter.confirmedCombox.isNotEmpty)
-                            ConfirmedChildAndFatherItems(
-                              confirmedsCombox: cartPresenter.confirmedCombox,
-                            ),
                         ],
                       )
                     : const EmptyCart()),
           ),
         ),
         Visibility(
-          visible: cartPresenter.cartProducts.length +
-                  cartPresenter.confirmedCombox.length >
-              0,
+          visible: cartPresenter.cartProducts.isNotEmpty,
           child: Positioned(
             bottom: 0,
             left: 0,

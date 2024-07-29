@@ -103,9 +103,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     double totalComboxPrice = 0;
 
-    for (var combox in _confirmedCombox) {
-      for (var product in combox.products) {
-        totalComboxPrice += calculateProductTotalLiquid(product);
+    for (var combox in _cartProducts) {
+      if (combox.Product.childsComposition != null) {
+        for (var product in combox.Product.childsComposition!) {
+          totalComboxPrice += calculateProductTotalLiquid(product);
+        }
       }
     }
     return (totalCartProductsPrice + totalComboxPrice)
@@ -464,7 +466,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await printedProductsPresenter.loadPrinted(informedCommandNumber);
 
       _cartProducts.clear();
-      _confirmedCombox.clear();
       commentsPresenter.unselectAllComments();
 
       return true;
@@ -501,10 +502,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     }
   }
 
-  final List<ConfirmedComboxViewModel> _confirmedCombox = [];
-  @override
-  List<ConfirmedComboxViewModel> get confirmedCombox => _confirmedCombox;
-
   int? _indexOfSelectedProductCombox;
   @override
   int? get indexOfSelectedProductCombox => _indexOfSelectedProductCombox;
@@ -515,8 +512,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required int saleRequestTempId,
   }) {
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
-    for (var combox in _confirmedCombox) {
-      for (var product in combox.products) {
+    for (var combox in _cartProducts) {
+      for (var product in combox.Product.childsComposition!) {
         if (product.indexOfSelectedChild == null) {
           continue;
         }
@@ -592,7 +589,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     try {
       _cartProducts.clear();
-      _confirmedCombox.clear();
       await cartInformations.clearCartProducts();
       await cartInformations.clearConfirmedCombox();
       notifyListeners();

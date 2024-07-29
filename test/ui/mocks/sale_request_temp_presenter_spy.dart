@@ -13,12 +13,9 @@ class CartPresenterSpy extends Mock implements CartPresenter {
   final isLoadingController = StreamController<bool>();
   SaleRequestTempViewModel? saleRequestTempMock;
   List<CartProductsViewModel> cartProductsController = [];
-  List<ConfirmedComboxViewModel> confirmedComboxController = [];
 
   CartPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
-    when(() => this.confirmedCombox)
-        .thenAnswer((_) => confirmedComboxController);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
     when(() => this.getLocalCartProductsData()).thenAnswer((_) async => _);
     when(() => this.mainErrorStream)

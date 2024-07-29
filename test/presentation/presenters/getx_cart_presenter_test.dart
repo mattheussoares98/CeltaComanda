@@ -1083,7 +1083,7 @@ void main() {
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
         () async {
-      sut.confirmedCombox.add(comboxWithSelectedProducts);
+      sut.cartProducts.add(cartProductViewModel);
       final products =
           sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
@@ -1804,7 +1804,7 @@ void main() {
       final firstProduct = productsSelectedsInCombox[0];
       final secondProduct = productsSelectedsInCombox[1];
 
-      sut.confirmedCombox.add(comboxWithSelectedProducts);
+      // sut.confirmedCombox.add(comboxWithSelectedProducts);
       //adiciono esse combo pra conseguir testar
 
       final fakeSaleRequestTempId = faker.randomGenerator.integer(10);

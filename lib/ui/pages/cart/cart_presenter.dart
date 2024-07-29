@@ -40,7 +40,6 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> getLocalCartProductsData();
   Future<void> clearCartAndConfirmedCombox();
 
-  List<ConfirmedComboxViewModel> get confirmedCombox;
   int? get indexOfSelectedProductCombox;
 
   List<UpdateSaleRequestTempProductEntity>

@@ -91,6 +91,13 @@ void main() {
             arguments: expansibleGroupEntity,
           )).called(1);
     });
+    test('Should go to PrintedProductsPage', () async {
+      sut.goToPrintedProductsPage();
+
+      verify(() => navigateTo.navigate(
+            pageRoute: PageRoutes.printedProducts,
+          )).called(1);
+    });
     test('Should go to SplashPage', () async {
       await sut.goToSplashPage(
         printedProductsPresenter: printedProductsPresenter,

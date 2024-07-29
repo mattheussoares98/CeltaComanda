@@ -177,4 +177,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   void goToCartPage() {
     navigateTo.navigate(pageRoute: PageRoutes.cart);
   }
+
+  @override
+  void goToPrintedProductsPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.printedProducts);
+  }
 }

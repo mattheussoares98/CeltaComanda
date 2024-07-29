@@ -43,8 +43,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   Widget build(BuildContext context) {
     const totalPriceContainerHeight = 50.0;
 
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context,
+        listen:
+            true); //pra atualizar corretamente quando remove o produto do carrinho
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);

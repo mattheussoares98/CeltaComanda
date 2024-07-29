@@ -46,7 +46,7 @@ class RequestSummary extends StatelessWidget {
               ),
               const SizedBox(width: 30),
               Text(
-                "${printedProductsPresenter.printedProducts!.TotalLiquid} R\$",
+                "${printedProductsPresenter.printedProducts?.TotalLiquid} R\$",
                 style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
                   fontWeight: FontWeight.bold,

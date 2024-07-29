@@ -41,6 +41,7 @@ class _PrintedItemState extends State<PrintedItem> {
       commentsPresenter: commentsPresenter,
       printedProductsPresenter: printedProductsPresenter,
     );
+    setState(() {});
   }
 
   @override

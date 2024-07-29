@@ -524,4 +524,14 @@ void main() {
       expect(sut.printedProducts, null);
     });
   });
+
+  group("Do on close page", () {
+    test("Should clear permission to cancel", () {
+      sut.updateCanCancelProducts(true);
+
+      expect(sut.canCancelProducts, true);
+      sut.doOnClosePage();
+      expect(sut.canCancelProducts, false);
+    });
+  });
 }

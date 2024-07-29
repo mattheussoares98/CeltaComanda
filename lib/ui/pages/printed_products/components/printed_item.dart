@@ -6,7 +6,7 @@ import '../../../../ui/components/components.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class PrintedItem extends StatelessWidget {
+class PrintedItem extends StatefulWidget {
   final PrintedViewModel printed;
   final GlobalKey<FormState> formKey;
   final TextEditingController personalizedCodeController;
@@ -20,6 +20,11 @@ class PrintedItem extends StatelessWidget {
     super.key,
   });
 
+  @override
+  State<PrintedItem> createState() => _PrintedItemState();
+}
+
+class _PrintedItemState extends State<PrintedItem> {
   Future<void> _removeProduct({
     required PrintedProductsPresenter printedProductsPresenter,
     required MenuPresenter menuPresenter,
@@ -58,7 +63,8 @@ class PrintedItem extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount:
-                    (printed.Products.length / getItensPerLine(context)).ceil(),
+                    (widget.printed.Products.length / getItensPerLine(context))
+                        .ceil(),
                 itemBuilder: (context, index) {
                   return IntrinsicHeight(
                     child: Row(
@@ -68,9 +74,9 @@ class PrintedItem extends StatelessWidget {
                         for (int i = index * getItensPerLine(context);
                             i < (index + 1) * getItensPerLine(context);
                             i++)
-                          if (i < printed.Products.length)
+                          if (i < widget.printed.Products.length)
                             Builder(builder: (context) {
-                              final product = printed.Products[i];
+                              final product = widget.printed.Products[i];
                               return Flexible(
                                 child: Container(
                                   width: (MediaQuery.of(context).size.width /
@@ -121,16 +127,18 @@ class PrintedItem extends StatelessWidget {
                                           );
                                         },
                                         validateUserAndCancelProducts: () {
-                                          validateUserAndCancelProductDialog(
-                                            context: context,
-                                            formKey: formKey,
-                                            personalizedCodeController:
-                                                personalizedCodeController,
-                                            passwordController:
-                                                passwordController,
-                                            printedProductsPresenter:
-                                                printedProductsPresenter,
-                                          );
+                                          setState(() {
+                                            validateUserAndCancelProductDialog(
+                                              context: context,
+                                              formKey: widget.formKey,
+                                              personalizedCodeController: widget
+                                                  .personalizedCodeController,
+                                              passwordController:
+                                                  widget.passwordController,
+                                              printedProductsPresenter:
+                                                  printedProductsPresenter,
+                                            );
+                                          });
                                         },
                                         quantity: product.Quantity,
                                         value: (product.TotalLiquid.toDouble() /

@@ -184,4 +184,9 @@ class GetxPrintedProductsPresenter
   @override
   Stream<String?> get alertMessageStream => _alertMessage.stream;
   set alertMessage(String? value) => _alertMessage.value = value;
+
+  @override
+  void doOnClosePage() {
+    _canCancelProducts = false;
+  }
 }

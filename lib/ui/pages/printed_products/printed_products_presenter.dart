@@ -15,6 +15,7 @@ abstract class PrintedProductsPresenter
   void updateCanCancelProducts(bool value);
   Future<void> loadPrinted(String commandNumber);
   void clear();
+  void doOnClosePage();
   PrintedViewModel? get printedProducts;
 
   Future<void> removeProduct({

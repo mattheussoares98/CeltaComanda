@@ -61,44 +61,52 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     alertMessageSubscription = handleAlertMessage(
         context, printedProductsPresenter.alertMessageStream);
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        height: double.infinity,
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: totalPriceContainerHeight),
-              child: SingleChildScrollView(
-                child: printedProductsPresenter.printedProducts != null
-                    ? PrintedItem(
-                        printed: printedProductsPresenter.printedProducts!,
-                        formKey: formKey,
-                        passwordController: passwordController,
-                        personalizedCodeController: personalizedCodeController,
-                      )
-                    : SearchDataByCommandNumber(
-                        homePresenter: homePresenter,
-                        emptyMessage: homePresenter.commandNumber == null
-                            ? "Consulte alguma comanda para visualizar os produtos solicitados"
-                            : "Não há produtos solicitados nessa comanda",
-                        loadCommandData: () async {
-                          await homePresenter.loadCommandData(
-                            menuPresenter: menuPresenter,
-                            printedProductsPresenter: printedProductsPresenter,
-                            cartPresenter: cartPresenter,
-                            commentsPresenter: commentsPresenter,
-                          );
-                        },
-                      ),
+    return PopScope(
+      onPopInvoked: (_) {
+        printedProductsPresenter.doOnClosePage();
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: SizedBox(
+          height: double.infinity,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: totalPriceContainerHeight),
+                child: SingleChildScrollView(
+                  child: printedProductsPresenter.printedProducts != null
+                      ? PrintedItem(
+                          printed: printedProductsPresenter.printedProducts!,
+                          formKey: formKey,
+                          passwordController: passwordController,
+                          personalizedCodeController:
+                              personalizedCodeController,
+                        )
+                      : SearchDataByCommandNumber(
+                          homePresenter: homePresenter,
+                          emptyMessage: homePresenter.commandNumber == null
+                              ? "Consulte alguma comanda para visualizar os produtos solicitados"
+                              : "Não há produtos solicitados nessa comanda",
+                          loadCommandData: () async {
+                            await homePresenter.loadCommandData(
+                              menuPresenter: menuPresenter,
+                              printedProductsPresenter:
+                                  printedProductsPresenter,
+                              cartPresenter: cartPresenter,
+                              commentsPresenter: commentsPresenter,
+                            );
+                          },
+                        ),
+                ),
               ),
-            ),
-            if (printedProductsPresenter.printedProducts != null)
-              const RequestSummary(
-                totalPriceContainerHeight: totalPriceContainerHeight,
-              ),
-          ],
+              if (printedProductsPresenter.printedProducts != null)
+                const RequestSummary(
+                  totalPriceContainerHeight: totalPriceContainerHeight,
+                ),
+            ],
+          ),
         ),
       ),
     );

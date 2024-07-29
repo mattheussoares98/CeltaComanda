@@ -108,6 +108,7 @@ class _HomePageState extends State<HomePage>
             homePresenter: homePresenter,
           ),
           appBar: homeAppBar(
+            printedProductsPresenter: printedProductsPresenter,
             homePresenter: homePresenter,
             context: context,
             scaffoldKey: scaffoldKey,

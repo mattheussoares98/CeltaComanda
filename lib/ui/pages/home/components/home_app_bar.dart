@@ -4,6 +4,7 @@ import '../../pages.dart';
 
 PreferredSize homeAppBar({
   required HomePresenter homePresenter,
+  required PrintedProductsPresenter printedProductsPresenter,
   required BuildContext context,
   required GlobalKey<ScaffoldState> scaffoldKey,
   required CartPresenter cartPresenter,
@@ -12,6 +13,50 @@ PreferredSize homeAppBar({
     preferredSize: const Size.fromHeight(40),
     child: AppBar(
       actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 1),
+          child: Stack(
+            children: [
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder()),
+                onPressed: () {
+                  CartPageDialog.open(context);
+                },
+                label: const Center(
+                  child: Text(
+                    "SOLICITADOS",
+                  ),
+                ),
+                icon: const Icon(Icons.list),
+              ),
+              Positioned(
+                top: 2,
+                left: 5,
+                child: InkWell(
+                  onTap: () {
+                    CartPageDialog.open(context);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    maxRadius: 8,
+                    minRadius: 8,
+                    child: Center(
+                      child: FittedBox(
+                        child: Text(
+                          (printedProductsPresenter
+                                      .printedProducts?.Products.length ??
+                                  0)
+                              .toString(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         Stack(
           children: [
             ElevatedButton.icon(

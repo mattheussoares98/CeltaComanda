@@ -30,6 +30,8 @@ class _CartProductItemState extends State<CartProductItem> {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
@@ -138,6 +140,21 @@ class _CartProductItemState extends State<CartProductItem> {
                 productQuantity: widget.cartProduct.Quantity.toInt(),
               ),
             ],
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.cartProduct.Product.childsComposition!.length,
+            itemBuilder: (context, i) {
+              final child = widget.cartProduct.Product.childsComposition![i];
+              return Column(
+                children: [
+                  Text("ChildName: ${child.ChildName!}"),
+                  Text("Comments: ${child.commentFather.toString()}"),
+                  Text(
+                      "Price: ${insertProductPresenter.calculateProductPrice(child).toString().toBrazilianNumber().addBrazilianCoin()}"),
+                ],
+              );
+            },
           ),
         ],
       ),

@@ -20,26 +20,6 @@ class CartProductsItems extends StatelessWidget {
         itemBuilder: (context, index) {
           final cartProduct = cartPresenter.cartProducts[index];
 
-          if (cartProduct.Product.childsComposition != null) {
-            return Column(
-              children: [
-                CartProductItem(
-                  cartProduct: cartProduct,
-                  index: index,
-                  maxWidth: constraints.maxWidth,
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: cartProduct.Product.childsComposition!.length,
-                  itemBuilder: (context, i) {
-                    final child = cartProduct.Product.childsComposition![i];
-                    return Text(child.ChildName!);
-                  },
-                ),
-              ],
-            );
-          }
-
           return CartProductItem(
             cartProduct: cartProduct,
             index: index,

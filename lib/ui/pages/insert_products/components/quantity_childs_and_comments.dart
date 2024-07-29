@@ -1,8 +1,6 @@
-import 'package:clean_celta_mobile/ui/pages/insert_products/components/update_quantity.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
-import '../../../helpers/helpers.dart';
 
 class QuantityChildsAndComments extends StatelessWidget {
   final int selectedLeftIndex;
@@ -99,15 +97,8 @@ class QuantityChildsAndComments extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CommentsList(
-                internalCodeOnErp: selectedProduct.childsComposition == null
-                    ? selectedProduct.InternalCodeOnERP!.toInt()
-                    : selectedProduct.childsComposition![selectedLeftIndex]
-                        .InternalCodeOnERPCodeChild!
-                        .toInt(),
-                selectedProductName: selectedProduct.childsComposition == null
-                    ? selectedProduct.Name
-                    : selectedProduct
-                        .childsComposition![selectedLeftIndex].ChildName!,
+                selectedProduct: selectedProduct,
+                selectedLeftIndex: selectedLeftIndex,
               ),
             ),
         ],

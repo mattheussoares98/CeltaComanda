@@ -7,3 +7,4 @@ export 'products_and_comments_buttons.dart';
 export 'quantity_childs_and_comments.dart';
 export 'title_text.dart';
 export 'total_price_combox.dart';
+export './update_quantity.dart';

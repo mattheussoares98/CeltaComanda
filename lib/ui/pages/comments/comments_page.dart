@@ -11,10 +11,12 @@ class CommentsPage extends StatefulWidget {
   final String selectedProductName;
   final int internalCodeOnErp;
   final Future Function()? doOnClickInConfirmButton;
+  final ProductsViewModel selectedProduct;
   const CommentsPage({
     super.key,
     required this.selectedProductName,
     required this.internalCodeOnErp,
+    required this.selectedProduct,
     this.doOnClickInConfirmButton,
   });
 
@@ -63,8 +65,8 @@ class _CommentsPageState extends State<CommentsPage>
                 productName: widget.selectedProductName,
               ))
                 CommentsList(
-                  internalCodeOnErp: widget.internalCodeOnErp,
-                  selectedProductName: widget.selectedProductName,
+                  selectedProduct: widget.selectedProduct,
+                  selectedLeftIndex: 0,
                 ),
               SizedBox(
                 height: 50,

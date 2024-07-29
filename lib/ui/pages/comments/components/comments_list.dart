@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -5,11 +6,11 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class CommentsList extends StatefulWidget {
-  final int internalCodeOnErp;
-  final String selectedProductName;
+  final ProductsViewModel selectedProduct;
+  final int selectedLeftIndex;
   const CommentsList({
-    required this.internalCodeOnErp,
-    required this.selectedProductName,
+    required this.selectedProduct,
+    required this.selectedLeftIndex,
     super.key,
   });
 
@@ -20,6 +21,16 @@ class CommentsList extends StatefulWidget {
 class _CommentsState extends State<CommentsList> {
   final iconButtonFocusNode = FocusNode();
 
+  int getInternalCodeOnErp() {
+    if (widget.selectedProduct.childsComposition == null) {
+      return widget.selectedProduct.InternalCodeOnERP!.toInt();
+    } else {
+      return widget.selectedProduct.childsComposition![widget.selectedLeftIndex]
+          .InternalCodeOnERPCodeChild!
+          .toInt();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context);
@@ -29,14 +40,12 @@ class _CommentsState extends State<CommentsList> {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: commentsPresenter.loadedComments
           .where((e) =>
-              int.parse(e.ProductInternalCodeOnErp) ==
-              widget.internalCodeOnErp)
+              int.parse(e.ProductInternalCodeOnErp) == getInternalCodeOnErp())
           .length,
       itemBuilder: (context, index) {
         final comments = commentsPresenter.loadedComments
             .where((e) =>
-                int.parse(e.ProductInternalCodeOnErp) ==
-                widget.internalCodeOnErp)
+                int.parse(e.ProductInternalCodeOnErp) == getInternalCodeOnErp())
             .toList();
 
         final comment = comments[index];

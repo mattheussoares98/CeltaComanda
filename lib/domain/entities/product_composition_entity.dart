@@ -17,6 +17,7 @@ class ProductCompositionEntity extends Equatable {
   final bool? IsOptionalItem;
   final dynamic ProductOptions;
   String? comment;
+  List<ProductCompositionEntity>? childsComposition;
 
   ProductCompositionEntity({
     required this.ProductCompositionId,
@@ -32,6 +33,7 @@ class ProductCompositionEntity extends Equatable {
     required this.IsOptionalItem,
     required this.ProductOptions,
     required this.comment,
+    this.childsComposition,
   });
 
   @override
@@ -48,5 +50,6 @@ class ProductCompositionEntity extends Equatable {
         IncrementValue,
         IsOptionalItem,
         ProductOptions,
+        childsComposition,
       ];
 }

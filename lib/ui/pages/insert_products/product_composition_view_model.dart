@@ -104,22 +104,22 @@ class ProductCompositionViewModel extends Equatable {
       );
 
   ProductCompositionEntity toEntity() => ProductCompositionEntity(
-        ProductCompositionId: int.tryParse(ProductCompositionId.toString()),
-        EnterpriseId: int.tryParse(EnterpriseId.toString()),
-        InternalCodeOnERPCodeFather:
-            int.tryParse(InternalCodeOnERPCodeFather.toString()),
-        InternalCodeOnERPCodeChild:
-            int.tryParse(InternalCodeOnERPCodeChild.toString()),
-        PluChild: PluChild,
-        ChildName: ChildName,
-        Quantity: double.tryParse(Quantity.toString()),
-        SalePrice: double.tryParse(SalePrice.toString()),
-        OfferPrice: double.tryParse(OfferPrice.toString()),
-        IncrementValue: double.tryParse(IncrementValue.toString()),
-        IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
-        ProductOptions: ProductOptions,
-        comment: commentFather,
-      );
+      ProductCompositionId: int.tryParse(ProductCompositionId.toString()),
+      EnterpriseId: int.tryParse(EnterpriseId.toString()),
+      InternalCodeOnERPCodeFather:
+          int.tryParse(InternalCodeOnERPCodeFather.toString()),
+      InternalCodeOnERPCodeChild:
+          int.tryParse(InternalCodeOnERPCodeChild.toString()),
+      PluChild: PluChild,
+      ChildName: ChildName,
+      Quantity: double.tryParse(Quantity.toString()),
+      SalePrice: double.tryParse(SalePrice.toString()),
+      OfferPrice: double.tryParse(OfferPrice.toString()),
+      IncrementValue: double.tryParse(IncrementValue.toString()),
+      IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
+      ProductOptions: ProductOptions,
+      comment: commentFather,
+      childsComposition: childs?.map((e) => e.toEntity()).toList());
 
   Map toJson() => {
         "ProductCompositionId": ProductCompositionId,
@@ -154,9 +154,10 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: json["IsOptionalItem"],
         ProductOptions: json["ProductOptions"],
         indexOfSelectedChild: json["indexOfSelectedChild"],
-        childs: json["childs"]?.map<ProductCompositionViewModel>(
-                    (element) => ProductCompositionViewModel.fromJson(element))
-                .toList(),
+        childs: json["childs"]
+            ?.map<ProductCompositionViewModel>(
+                (element) => ProductCompositionViewModel.fromJson(element))
+            .toList(),
         commentFather: json["commentFather"],
       );
 }

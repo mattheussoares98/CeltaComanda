@@ -88,7 +88,8 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  double calculateProductCompositionIncrementValue(ProductCompositionViewModel product) {
+  double calculateProductCompositionIncrementValue(
+      ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -408,5 +409,18 @@ class GetxInsertProductsPresenter extends GetxController
     }
 
     return fatherIsValid(selectedFather);
+  }
+
+  @override
+  double getProductPrice(ProductsViewModel product) {
+    if (product.childsComposition == null) {
+      return product.SaleRetailPraticed.toDouble();
+    } else {
+      double total = 0;
+      for (var child in product.childsComposition!) {
+        total += calculateProductCompositionTotalLiquid(product: child);
+      }
+      return total;
+    }
   }
 }

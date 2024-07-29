@@ -70,7 +70,7 @@ class GetxInsertProductsPresenter extends GetxController
         continue;
       }
 
-      totalLiquid += calculateTotalLiquid(product: product);
+      totalLiquid += calculateProductCompositionTotalLiquid(product: product);
     }
 
     return totalLiquid;
@@ -88,7 +88,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  double calculateIncrementValue(ProductCompositionViewModel product) {
+  double calculateProductCompositionIncrementValue(ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -107,23 +107,23 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  double calculateTotalLiquid({
+  double calculateProductCompositionTotalLiquid({
     required ProductCompositionViewModel product,
   }) {
-    return calculateProductPrice(product) *
+    return calculateProductCompositionPrice(product) *
         product.Quantity.toString().toDouble();
   }
 
   @override
-  double calculateProductPrice(ProductCompositionViewModel product) {
+  double calculateProductCompositionPrice(ProductCompositionViewModel product) {
     if (product.IsOptionalItem == "true") {
-      return calculateIncrementValue(product);
+      return calculateProductCompositionIncrementValue(product);
     } else if (product.OfferPrice.toString().toDouble() > 0) {
       return product.OfferPrice.toString().toDouble() +
-          calculateIncrementValue(product);
+          calculateProductCompositionIncrementValue(product);
     } else {
       return product.SalePrice.toString().toDouble() +
-          calculateIncrementValue(product);
+          calculateProductCompositionIncrementValue(product);
     }
   }
 
@@ -154,11 +154,11 @@ class GetxInsertProductsPresenter extends GetxController
           ProductPriceLookUpCode: selectedChild.PluChild!,
           Quantity: selectedChild.Quantity!.toDouble() * totalProductsQuantity,
           SaleRequestTempId: saleRequestTempId,
-          TotalLiquid: calculateTotalLiquid(
+          TotalLiquid: calculateProductCompositionTotalLiquid(
                 product: product,
               ) *
               totalProductsQuantity,
-          Value: calculateProductPrice(product),
+          Value: calculateProductCompositionPrice(product),
           Comments: product.commentFather,
         );
 

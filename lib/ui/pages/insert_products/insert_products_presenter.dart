@@ -27,9 +27,9 @@ abstract class InsertProductPresenter implements Listenable {
 
   void updateTotalProductsQuantity(bool isAddingQuantity);
 
-  double calculateTotalLiquid({required ProductCompositionViewModel product});
-  double calculateIncrementValue(ProductCompositionViewModel product);
-  double calculateProductPrice(ProductCompositionViewModel product);
+  double calculateProductCompositionTotalLiquid({required ProductCompositionViewModel product});
+  double calculateProductCompositionIncrementValue(ProductCompositionViewModel product);
+  double calculateProductCompositionPrice(ProductCompositionViewModel product);
   void updateComment({
     required CommentsPresenter commentsPresenter,
     required ProductCompositionViewModel father,

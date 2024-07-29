@@ -43,9 +43,9 @@ class InsertProductsPresenterSpy extends Mock
           commentsPresenter: any(named: "commentsPresenter"),
           father: any(named: "father"),
         )).thenAnswer((_) => _);
-    when(() => this.calculateProductPrice(any())).thenAnswer((_) => 0);
-    when(() => this.calculateIncrementValue(any())).thenAnswer((_) => 0);
-    when(() => this.calculateTotalLiquid(product: any(named: "product")))
+    when(() => this.calculateProductCompositionPrice(any())).thenAnswer((_) => 0);
+    when(() => this.calculateProductCompositionIncrementValue(any())).thenAnswer((_) => 0);
+    when(() => this.calculateProductCompositionTotalLiquid(product: any(named: "product")))
         .thenAnswer((_) => 0);
     when(() => this.updateTotalProductsQuantity(any())).thenAnswer((_) => _);
     when(() => this.updateSaleRequest(

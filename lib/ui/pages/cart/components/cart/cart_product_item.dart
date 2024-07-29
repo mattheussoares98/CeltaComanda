@@ -152,7 +152,7 @@ class _CartProductItemState extends State<CartProductItem> {
                   Text("ChildName: ${child.ChildName!}"),
                   Text("Comments: ${child.commentFather.toString()}"),
                   Text(
-                      "Price: ${insertProductPresenter.calculateProductPrice(child).toString().toBrazilianNumber().addBrazilianCoin()}"),
+                      "Price: ${insertProductPresenter.calculateProductCompositionPrice(child).toString().toBrazilianNumber().addBrazilianCoin()}"),
                 ],
               );
             },

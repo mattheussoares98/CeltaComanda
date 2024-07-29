@@ -9,6 +9,7 @@ Future<void> _validateUserAndPermissionToCancelProducts({
   required PrintedProductsPresenter printedProductsPresenter,
   required TextEditingController personalizedCodeController,
   required TextEditingController passwordController,
+  required Function() callSetState,
 }) async {
   bool isValid = formKey.currentState!.validate();
   if (!isValid) {
@@ -25,6 +26,7 @@ Future<void> _validateUserAndPermissionToCancelProducts({
   );
   personalizedCodeController.clear();
   passwordController.clear();
+  callSetState();
 }
 
 void validateUserAndCancelProductDialog({
@@ -33,6 +35,7 @@ void validateUserAndCancelProductDialog({
   required TextEditingController personalizedCodeController,
   required TextEditingController passwordController,
   required PrintedProductsPresenter printedProductsPresenter,
+  required Function() callSetState,
 }) {
   FocusNode passwordFocus = FocusNode();
   FocusNode userFocus = FocusNode();
@@ -97,6 +100,7 @@ void validateUserAndCancelProductDialog({
                           personalizedCodeController:
                               personalizedCodeController,
                           passwordController: passwordController,
+                          callSetState: callSetState,
                         );
                       },
                       validator: (value) {
@@ -125,6 +129,7 @@ void validateUserAndCancelProductDialog({
                       printedProductsPresenter: printedProductsPresenter,
                       personalizedCodeController: personalizedCodeController,
                       passwordController: passwordController,
+                      callSetState: callSetState,
                     );
                   },
                   child: const Text("Liberar cancelamento"),

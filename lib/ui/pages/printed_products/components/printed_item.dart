@@ -127,8 +127,7 @@ class _PrintedItemState extends State<PrintedItem> {
                                           );
                                         },
                                         validateUserAndCancelProducts: () {
-                                          setState(() {
-                                            validateUserAndCancelProductDialog(
+                                          validateUserAndCancelProductDialog(
                                               context: context,
                                               formKey: widget.formKey,
                                               personalizedCodeController: widget
@@ -137,8 +136,9 @@ class _PrintedItemState extends State<PrintedItem> {
                                                   widget.passwordController,
                                               printedProductsPresenter:
                                                   printedProductsPresenter,
-                                            );
-                                          });
+                                              callSetState: () {
+                                                setState(() {});
+                                              });
                                         },
                                         quantity: product.Quantity,
                                         value: (product.TotalLiquid.toDouble() /

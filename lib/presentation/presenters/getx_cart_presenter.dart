@@ -104,7 +104,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     for (var combox in _cartProducts) {
       if (combox.Product.childsComposition != null) {
         for (var product in combox.Product.childsComposition!) {
-          totalCartProductsPrice += calculateProductCompositionTotalLiquid(product);
+          totalCartProductsPrice +=
+              calculateProductCompositionTotalLiquid(product);
         }
       }
     }
@@ -543,7 +544,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateProductCompositionIncrementValue(ProductCompositionViewModel product) {
+  double calculateProductCompositionIncrementValue(
+      ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -562,7 +564,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateProductCompositionTotalLiquid(ProductCompositionViewModel product) {
+  double calculateProductCompositionTotalLiquid(
+      ProductCompositionViewModel product) {
     return calculateProductCompositionPrice(product) *
         product.Quantity.toString().toDouble();
   }
@@ -594,6 +597,19 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
+    }
+  }
+
+  @override
+  double calculateProductPrice(ProductsViewModel product) {
+    if (product.childsComposition == null) {
+      return product.SaleRetailPraticed.toDouble();
+    } else {
+      double total = 0;
+      for (var child in product.childsComposition!) {
+        total += calculateProductCompositionPrice(child);
+      }
+      return total;
     }
   }
 }

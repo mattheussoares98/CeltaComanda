@@ -102,15 +102,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       if (products.Product.childsComposition != null) {
         for (var child in products.Product.childsComposition!) {
           totalCartProductsPrice +=
-              calculateProductCompositionTotalLiquid(child) *
-                  child.Quantity!.toDouble();
+              calculateProductCompositionTotalLiquid(child);
         }
       } else {
         totalCartProductsPrice += _cartProducts.fold(
             0.0,
             (previousValue, element) =>
-                (element.TotalLiquid.toDouble() * element.Quantity.toDouble()) +
-                previousValue);
+                element.TotalLiquid.toDouble() + previousValue);
       }
     }
     return totalCartProductsPrice
@@ -334,6 +332,34 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     mainError = null;
 
     try {
+      if (_cartProducts[index].Product.childsComposition != null) {
+        _cartProducts[index].Product.childsComposition =
+            _cartProducts[index].Product.childsComposition!.map((e) {
+          double childQuantityInCombox = e.Quantity!.toDouble() /
+              //o produto pode ter 2 quantidades informadas na montagem do combo, por isso eu faço esse cálculo de proporção pra somar sempre a quantidade correta
+              _cartProducts[index].Quantity.toDouble();
+
+          return ProductCompositionViewModel(
+            ProductCompositionId: e.ProductCompositionId,
+            EnterpriseId: e.EnterpriseId,
+            InternalCodeOnERPCodeFather: e.InternalCodeOnERPCodeFather,
+            InternalCodeOnERPCodeChild: e.InternalCodeOnERPCodeChild,
+            PluChild: e.PluChild,
+            ChildName: e.ChildName,
+            Quantity:
+                (e.Quantity!.toDouble() + childQuantityInCombox).toString(),
+            SalePrice: e.SalePrice,
+            OfferPrice: e.OfferPrice,
+            IncrementValue: e.IncrementValue,
+            IsOptionalItem: e.IsOptionalItem,
+            ProductOptions: e.ProductOptions,
+            childs: e.childs,
+            commentFather: e.commentFather,
+            indexOfSelectedChild: e.indexOfSelectedChild,
+          );
+        }).toList();
+      }
+
       final newCartList = [..._cartProducts];
 
       final newQuantity = newCartList[index].Quantity.toDouble() + 1;

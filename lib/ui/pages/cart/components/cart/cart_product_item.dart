@@ -151,6 +151,8 @@ class _CartProductItemState extends State<CartProductItem> {
                 children: [
                   Text("ChildName: ${child.ChildName!}"),
                   Text("Comments: ${child.commentFather.toString()}"),
+                  Text("Quantity: ${child.Quantity.toString()}"),
+                  Text("IncrementValue: ${child.IncrementValue.toString()}"),
                   Text(
                       "Price: ${insertProductPresenter.calculateProductCompositionPrice(child).toString().toBrazilianNumber().addBrazilianCoin()}"),
                 ],

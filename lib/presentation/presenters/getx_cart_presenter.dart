@@ -521,7 +521,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           continue;
         }
 
-        InsertProductsViewModel selectedChild;
+        ProductCompositionViewModel selectedChild;
         if (product.childs?.isEmpty == true) {
           selectedChild = product;
         } else {
@@ -548,7 +548,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateIncrementValue(InsertProductsViewModel product) {
+  double calculateIncrementValue(ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -567,13 +567,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateProductTotalLiquid(InsertProductsViewModel product) {
+  double calculateProductTotalLiquid(ProductCompositionViewModel product) {
     return calculateProductPrice(product) *
         product.Quantity.toString().toDouble();
   }
 
   @override
-  double calculateProductPrice(InsertProductsViewModel product) {
+  double calculateProductPrice(ProductCompositionViewModel product) {
     if (product.IsOptionalItem == "true") {
       return calculateIncrementValue(product);
     } else if (product.OfferPrice.toString().toDouble() > 0) {

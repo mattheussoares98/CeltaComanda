@@ -1,6 +1,6 @@
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 
-import '../../../ui/pages/insert_products/insert_products_view_model.dart';
+import '../../../ui/pages/insert_products/product_composition_view_model.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/helpers/helpers.dart';
@@ -40,12 +40,12 @@ class RemoteGetProductComposition extends GetProductComposition {
   }
 
   @override
-  Future<List<InsertProductsViewModel>> getChildsOfFather({
+  Future<List<ProductCompositionViewModel>> getChildsOfFather({
     required int internalCodeOnErp,
     required List<ProductCompositionEntity> fathers,
   }) async {
     try {
-      List<InsertProductsViewModel> childs = [];
+      List<ProductCompositionViewModel> childs = [];
 
       for (var father in fathers) {
         final childrenOfFather = await getFathers(
@@ -53,7 +53,7 @@ class RemoteGetProductComposition extends GetProductComposition {
         );
 
         final fatherWithChildrens =
-            InsertProductsViewModel.fromEntityWithChilds(
+            ProductCompositionViewModel.fromEntityWithChilds(
           father,
           childrenOfFather,
         );

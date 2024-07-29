@@ -17,11 +17,11 @@ class QuantityChildsAndComments extends StatelessWidget {
     super.key,
   });
 
-  InsertProductsViewModel getSelectedFather(
+  ProductCompositionViewModel getSelectedFather(
     ProductsViewModel selectedProduct,
     int indexOfSelectedFather,
   ) {
-    InsertProductsViewModel selectedFather =
+    ProductCompositionViewModel selectedFather =
         selectedProduct.childsComposition![0];
 
     if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {

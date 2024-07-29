@@ -7,7 +7,7 @@ import '../../pages.dart';
 class LeftItem extends StatelessWidget {
   final int indexOfLeftSelectedItem;
   final ProductsViewModel selectedProduct;
-  final InsertProductsViewModel? father;
+  final ProductCompositionViewModel? father;
   final Color itemColor;
   final bool productHasComment;
   const LeftItem({

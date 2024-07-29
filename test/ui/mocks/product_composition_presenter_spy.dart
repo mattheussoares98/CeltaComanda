@@ -16,7 +16,7 @@ class InsertProductsPresenterSpy extends Mock
   final selectedComboxProductController =
       StreamController<ProductsViewModel?>();
   final productsCompositionController =
-      StreamController<List<InsertProductsViewModel>>();
+      StreamController<List<ProductCompositionViewModel>>();
   final isLoadingController = StreamController<bool>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;

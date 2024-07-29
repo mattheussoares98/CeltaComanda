@@ -72,7 +72,7 @@ class ProductsViewModel extends Equatable {
   final String? ProductComplement;
   final String PackingAbbreviation;
   final String IsPromoCombox;
-  List<InsertProductsViewModel>? childsComposition;
+  List<ProductCompositionViewModel>? childsComposition;
   double productQuantity;
 
   ProductsViewModel({
@@ -297,7 +297,7 @@ class ProductsViewModel extends Equatable {
         CofinsPercentage: entity.CofinsPercentage.toString(),
         PisPercentage: entity.PisPercentage.toString(),
         childsComposition: entity.childsComposition
-            ?.map((e) => InsertProductsViewModel.fromEntity(e))
+            ?.map((e) => ProductCompositionViewModel.fromEntity(e))
             .toList(),
       );
 

@@ -6,7 +6,7 @@ import '../../pages.dart';
 
 class ChildsRadios extends StatefulWidget {
   final ProductsViewModel selectedProduct;
-  final InsertProductsViewModel selectedFather;
+  final ProductCompositionViewModel selectedFather;
   final Function() callSetState;
 
   const ChildsRadios({
@@ -49,7 +49,7 @@ class _ChildsRadiosState extends State<ChildsRadios> {
           ? 1
           : widget.selectedFather.childs!.length,
       itemBuilder: (context, childsIndex) {
-        InsertProductsViewModel child;
+        ProductCompositionViewModel child;
         bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
 
         if (hasChilds) {

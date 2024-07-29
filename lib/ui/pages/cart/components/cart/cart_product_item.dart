@@ -141,6 +141,7 @@ class _CartProductItemState extends State<CartProductItem> {
               ),
             ],
           ),
+          if(widget.cartProduct.Product.childsComposition != null)
           ListView.builder(
             shrinkWrap: true,
             itemCount: widget.cartProduct.Product.childsComposition!.length,

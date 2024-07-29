@@ -35,7 +35,7 @@ class GetxInsertProductsPresenter extends GetxController
       _comboxIsValidStream.stream;
 
   void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-    List<InsertProductsViewModel> productsComposition,
+    List<ProductCompositionViewModel> productsComposition,
   ) {
     for (var product in productsComposition) {
       if (product.IsOptionalItem == "false" &&
@@ -61,7 +61,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   double _getTotalLiquidCombox(
-    List<InsertProductsViewModel> productsCompositionsViewModel,
+    List<ProductCompositionViewModel> productsCompositionsViewModel,
   ) {
     double totalLiquid = 0;
     for (var product in productsCompositionsViewModel) {
@@ -88,7 +88,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  double calculateIncrementValue(InsertProductsViewModel product) {
+  double calculateIncrementValue(ProductCompositionViewModel product) {
     if (product.IncrementValue.toString().toDouble() > 0) {
       //se houver acréscimo no produto pai, retorna ele
       return product.IncrementValue.toString().toDouble();
@@ -108,14 +108,14 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   double calculateTotalLiquid({
-    required InsertProductsViewModel product,
+    required ProductCompositionViewModel product,
   }) {
     return calculateProductPrice(product) *
         product.Quantity.toString().toDouble();
   }
 
   @override
-  double calculateProductPrice(InsertProductsViewModel product) {
+  double calculateProductPrice(ProductCompositionViewModel product) {
     if (product.IsOptionalItem == "true") {
       return calculateIncrementValue(product);
     } else if (product.OfferPrice.toString().toDouble() > 0) {
@@ -130,7 +130,7 @@ class GetxInsertProductsPresenter extends GetxController
   List<UpdateSaleRequestTempProductEntity>
       _productsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,
-    required List<InsertProductsViewModel> productsCompositions,
+    required List<ProductCompositionViewModel> productsCompositions,
   }) {
     List<UpdateSaleRequestTempProductEntity> products = [];
 
@@ -140,7 +140,7 @@ class GetxInsertProductsPresenter extends GetxController
           continue;
         }
 
-        InsertProductsViewModel selectedChild;
+        ProductCompositionViewModel selectedChild;
         if (product.childs?.isEmpty == true) {
           selectedChild = product;
         } else {
@@ -175,7 +175,7 @@ class GetxInsertProductsPresenter extends GetxController
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required List<InsertProductsViewModel> productsCompositions,
+    required List<ProductCompositionViewModel> productsCompositions,
   }) async {
     isLoading = true;
     mainError = null;
@@ -242,7 +242,7 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void updateComment({
     required CommentsPresenter commentsPresenter,
-    required InsertProductsViewModel father,
+    required ProductCompositionViewModel father,
   }) {
     father.commentFather = commentsPresenter.getConcatenateSelectedComments(
         father.InternalCodeOnERPCodeChild!.toInt());
@@ -250,7 +250,7 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void updateSelectedIndexOfProduct({
-    required InsertProductsViewModel father,
+    required ProductCompositionViewModel father,
     required int? index,
   }) {
     if (father.IsOptionalItem == "true" &&
@@ -326,7 +326,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  bool fatherIsValid(InsertProductsViewModel product) {
+  bool fatherIsValid(ProductCompositionViewModel product) {
     if (product.IsOptionalItem == "false" &&
         product.indexOfSelectedChild == null) {
       return false;
@@ -398,7 +398,7 @@ class GetxInsertProductsPresenter extends GetxController
       return true;
     }
 
-    InsertProductsViewModel selectedFather =
+    ProductCompositionViewModel selectedFather =
         _selectedProduct.value!.childsComposition![0];
 
     if (_selectedFatherIndex.value <

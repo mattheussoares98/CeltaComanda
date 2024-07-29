@@ -635,6 +635,7 @@ class EntityFactory {
           IncrementValue: faker.randomGenerator.decimal(),
           ProductOptions: faker.randomGenerator.string(10),
           IsOptionalItem: isOptionalItem,
+          comment: faker.randomGenerator.string(10),
         ),
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
@@ -649,10 +650,11 @@ class EntityFactory {
           IncrementValue: faker.randomGenerator.decimal(),
           ProductOptions: faker.randomGenerator.string(10),
           IsOptionalItem: isOptionalItem,
+          comment: faker.randomGenerator.string(10),
         ),
       ];
 
-  static InsertProductsViewModel makeProductCompositionViewModel({
+  static ProductCompositionViewModel makeProductCompositionViewModel({
     required double quantity,
     required double salePrice,
     required double offerPrice,
@@ -662,7 +664,7 @@ class EntityFactory {
     required int? indexOfSelectedChild,
     required bool insertChilds,
   }) =>
-      InsertProductsViewModel(
+      ProductCompositionViewModel(
         ProductCompositionId: "1",
         EnterpriseId: "1",
         InternalCodeOnERPCodeFather: "1",
@@ -679,7 +681,7 @@ class EntityFactory {
         childs: !insertChilds
             ? []
             : [
-                InsertProductsViewModel(
+                ProductCompositionViewModel(
                   ProductCompositionId: "1",
                   EnterpriseId: "1",
                   InternalCodeOnERPCodeFather: "1",
@@ -723,14 +725,14 @@ class EntityFactory {
       );
 
   static ConfirmedComboxViewModel makeConfirmedComboxViewModel({
-    required List<InsertProductsViewModel> products,
+    required List<ProductCompositionViewModel> products,
     required ProductsViewModel father,
     required double totalPrice,
     required int quantity,
   }) =>
       ConfirmedComboxViewModel(
         products: products
-            .map((element) => InsertProductsViewModel(
+            .map((element) => ProductCompositionViewModel(
                   Quantity:
                       (element.Quantity!.toDouble() * quantity).toString(),
                   ProductCompositionId: element.ProductCompositionId,

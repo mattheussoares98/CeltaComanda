@@ -30,14 +30,14 @@ void main() {
   late ValidateComboxSpy validateCombox;
 
   late List<ProductCompositionEntity> optionalFathers;
-  late InsertProductsViewModel obligatoryFather;
+  late ProductCompositionViewModel obligatoryFather;
   late SaleRequestTempEntity saleRequestTempEntity;
   late ProductsViewModel selectedProduct;
-  late InsertProductsViewModel validFather;
-  late InsertProductsViewModel invalidFather;
+  late ProductCompositionViewModel validFather;
+  late ProductCompositionViewModel invalidFather;
 
   UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity({
-    required InsertProductsViewModel productCompositionViewModel,
+    required ProductCompositionViewModel productCompositionViewModel,
     required double totalLiquid,
     required double productValue,
   }) {
@@ -90,7 +90,7 @@ void main() {
   void initMocks() {
     getProductComposition.mockGetFathers(optionalFathers);
     getProductComposition.mockGetChildsOfFather(optionalFathers
-        .map((element) => InsertProductsViewModel.fromEntityWithChilds(
+        .map((element) => ProductCompositionViewModel.fromEntityWithChilds(
             element, optionalFathers))
         .toList());
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
@@ -585,7 +585,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -594,7 +594,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -607,7 +607,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -618,12 +618,12 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
 
       verify(() => validateCombox.comboxIsValid(optionalFathers
-          .map((element) => InsertProductsViewModel.fromEntity(element))
+          .map((element) => ProductCompositionViewModel.fromEntity(element))
           .toList())).called(1);
     });
 
@@ -639,7 +639,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -715,7 +715,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -732,7 +732,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -742,7 +742,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
 
@@ -762,7 +762,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -780,7 +780,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -810,7 +810,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -827,7 +827,7 @@ void main() {
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         productsCompositions: optionalFathers
-            .map((element) => InsertProductsViewModel.fromEntity(element))
+            .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
     });
@@ -864,7 +864,7 @@ void main() {
         "Should update selected index of child if click in product that have child",
         () {
       final optionalFather =
-          InsertProductsViewModel.fromEntity(optionalFathers[0]);
+          ProductCompositionViewModel.fromEntity(optionalFathers[0]);
 
       expect(optionalFather.indexOfSelectedChild, null);
       sut.updateSelectedIndexOfProduct(
@@ -890,7 +890,7 @@ void main() {
     test("Should update index if click in the same product and is optional",
         () {
       final optionalFather =
-          InsertProductsViewModel.fromEntity(optionalFathers[0]);
+          ProductCompositionViewModel.fromEntity(optionalFathers[0]);
 
       sut.updateSelectedIndexOfProduct(
         father: optionalFather,

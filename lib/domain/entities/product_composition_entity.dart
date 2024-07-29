@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class ProductCompositionEntity extends Equatable {
   final int? ProductCompositionId;
   final int? EnterpriseId;
@@ -15,8 +16,9 @@ class ProductCompositionEntity extends Equatable {
   final double? IncrementValue;
   final bool? IsOptionalItem;
   final dynamic ProductOptions;
+  String? comment;
 
-  const ProductCompositionEntity({
+  ProductCompositionEntity({
     required this.ProductCompositionId,
     required this.EnterpriseId,
     required this.InternalCodeOnERPCodeFather,
@@ -29,6 +31,7 @@ class ProductCompositionEntity extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductOptions,
+    required this.comment,
   });
 
   @override

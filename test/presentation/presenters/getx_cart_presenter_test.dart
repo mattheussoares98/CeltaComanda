@@ -42,9 +42,9 @@ void main() {
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
   late ProductsViewModel fatherOfCombox;
-  late InsertProductsViewModel selectedChildWithOneQuantity;
+  late ProductCompositionViewModel selectedChildWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
-  late List<InsertProductsViewModel> productsSelectedsInCombox;
+  late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late ConfirmedComboxViewModel comboxWithSelectedProducts;
   late int tableNumber;
   late CommentViewModel commentViewModel;

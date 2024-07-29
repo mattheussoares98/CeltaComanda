@@ -75,6 +75,22 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   //   return insertProductsPresenter.fatherIsValid(selectedFather);
   // }
 
+  void updateSelectedCommentsOfChildsComposition(
+      CommentsPresenter commentsPresenter) {
+    if (widget.selectedProduct.childsComposition != null) {
+      for (var child in widget.selectedProduct.childsComposition!) {
+        if (commentsPresenter.productHasComment(
+          internalCodeOnERP: child.InternalCodeOnERPCodeChild!.toInt(),
+          productName: child.ChildName!,
+        )) {
+          child.commentFather =
+              commentsPresenter.getConcatenateSelectedComments(
+                  child.InternalCodeOnERPCodeChild!.toInt());
+        }
+      }
+    }
+  }
+
   Future<void> _addInCart({
     required CartPresenter cartPresenter,
     required double totalPrice,
@@ -83,6 +99,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required MenuPresenter menuPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
+    updateSelectedCommentsOfChildsComposition(commentsPresenter);
+
     await cartPresenter.addProductInCart(
       product: CartProductEntity(
         Product: widget.selectedProduct.toEntity(),

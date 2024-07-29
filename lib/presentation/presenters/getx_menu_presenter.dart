@@ -219,7 +219,7 @@ class GetxMenuPresenter extends GetxController
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
           );
 
-          List<InsertProductsViewModel> childs =
+          List<ProductCompositionViewModel> childs =
               await getProductComposition.getChildsOfFather(
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
             fathers: fathers,

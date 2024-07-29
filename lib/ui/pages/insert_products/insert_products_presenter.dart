@@ -22,21 +22,21 @@ abstract class InsertProductPresenter implements Listenable {
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required List<InsertProductsViewModel> productsCompositions,
+    required List<ProductCompositionViewModel> productsCompositions,
   }); //usa só pra validar se o total do combo está calculando corretamente
 
   void updateTotalProductsQuantity(bool isAddingQuantity);
 
-  double calculateTotalLiquid({required InsertProductsViewModel product});
-  double calculateIncrementValue(InsertProductsViewModel product);
-  double calculateProductPrice(InsertProductsViewModel product);
+  double calculateTotalLiquid({required ProductCompositionViewModel product});
+  double calculateIncrementValue(ProductCompositionViewModel product);
+  double calculateProductPrice(ProductCompositionViewModel product);
   void updateComment({
     required CommentsPresenter commentsPresenter,
-    required InsertProductsViewModel father,
+    required ProductCompositionViewModel father,
   });
 
   void updateSelectedIndexOfProduct({
-    required InsertProductsViewModel father,
+    required ProductCompositionViewModel father,
     required int? index,
   });
 
@@ -45,7 +45,7 @@ abstract class InsertProductPresenter implements Listenable {
     required ProductsViewModel product,
     required CommentsPresenter commentsPresenter,
   });
-  bool fatherIsValid(InsertProductsViewModel product);
+  bool fatherIsValid(ProductCompositionViewModel product);
   void advanceLeftIndex(CommentsPresenter commentsPresenter);
   bool get canAdvanceIndex;
 }

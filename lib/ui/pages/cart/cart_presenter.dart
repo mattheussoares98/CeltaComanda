@@ -47,9 +47,9 @@ abstract class CartPresenter implements ChangeNotifier {
     required int saleRequestTempId,
   });
 
-  double calculateProductTotalLiquid(ProductCompositionViewModel product);
-  double calculateIncrementValue(ProductCompositionViewModel product);
-  double calculateProductPrice(ProductCompositionViewModel product);
+  double calculateProductCompositionTotalLiquid(ProductCompositionViewModel product);
+  double calculateProductCompositionIncrementValue(ProductCompositionViewModel product);
+  double calculateProductCompositionPrice(ProductCompositionViewModel product);
 
   CartProductEntity productWithSelectedsComments({
     required CommentsPresenter commentsPresenter,

@@ -154,8 +154,8 @@ void main() {
       father: fatherOfCombox,
       products: productsSelectedsInCombox,
       totalPrice:
-          sut.calculateProductTotalLiquid(productsSelectedsInCombox[0]) +
-              sut.calculateProductTotalLiquid(productsSelectedsInCombox[1]),
+          sut.calculateProductCompositionTotalLiquid(productsSelectedsInCombox[0]) +
+              sut.calculateProductCompositionTotalLiquid(productsSelectedsInCombox[1]),
       quantity: 2,
     );
 
@@ -1103,8 +1103,8 @@ void main() {
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         TotalLiquid: (sut
-                    .calculateProductTotalLiquid(productsSelectedsInCombox[0]) +
-                sut.calculateProductTotalLiquid(productsSelectedsInCombox[1])) *
+                    .calculateProductCompositionTotalLiquid(productsSelectedsInCombox[0]) +
+                sut.calculateProductCompositionTotalLiquid(productsSelectedsInCombox[1])) *
             comboxWithSelectedProducts.quantity,
         Products: [...products],
       );
@@ -1628,7 +1628,7 @@ void main() {
   group("Confirmed combox products", () {
     test("Should return incrementValue when is optionalItem", () async {
       double price = sut
-          .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
+          .calculateProductCompositionPrice(EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 15,
@@ -1646,7 +1646,7 @@ void main() {
         "Should return offerPrice + incrementValue when offer is more than 0 and is not optional item",
         () async {
       double price = sut
-          .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
+          .calculateProductCompositionPrice(EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 15,
@@ -1664,7 +1664,7 @@ void main() {
         "Should return SalePrice + incrementValue when offer is less than 0 and is not optional item",
         () async {
       double price = sut
-          .calculateProductPrice(EntityFactory.makeProductCompositionViewModel(
+          .calculateProductCompositionPrice(EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 0,
@@ -1679,7 +1679,7 @@ void main() {
     });
 
     test("Should calculate correctly ProductTotalLiquid 1", () async {
-      double totalLiquid = sut.calculateProductTotalLiquid(
+      double totalLiquid = sut.calculateProductCompositionTotalLiquid(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1695,7 +1695,7 @@ void main() {
     });
 
     test("Should calculate correctly ProductTotalLiquid 2", () async {
-      double totalLiquid = sut.calculateProductTotalLiquid(
+      double totalLiquid = sut.calculateProductCompositionTotalLiquid(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1711,7 +1711,7 @@ void main() {
     });
 
     test("Should calculate correctly ProductTotalLiquid 3", () async {
-      double totalLiquid = sut.calculateProductTotalLiquid(
+      double totalLiquid = sut.calculateProductCompositionTotalLiquid(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1727,7 +1727,7 @@ void main() {
     });
 
     test("Should calculate correctly ProductTotalLiquid 3", () async {
-      double totalLiquid = sut.calculateProductTotalLiquid(
+      double totalLiquid = sut.calculateProductCompositionTotalLiquid(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1743,7 +1743,7 @@ void main() {
     });
 
     test("Should calculate correctly increment value 1", () async {
-      double totalIncrement = sut.calculateIncrementValue(
+      double totalIncrement = sut.calculateProductCompositionIncrementValue(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1759,7 +1759,7 @@ void main() {
     });
 
     test("Should calculate correctly increment value 2", () async {
-      double totalIncrement = sut.calculateIncrementValue(
+      double totalIncrement = sut.calculateProductCompositionIncrementValue(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1775,7 +1775,7 @@ void main() {
     });
     test("Should calculate correctly increment value 3", () async {
       //se o produto pai não tiver acréscimo mas o produto filho tiver, deve somar o acréscimo do filho
-      double totalIncrement = sut.calculateIncrementValue(
+      double totalIncrement = sut.calculateProductCompositionIncrementValue(
           EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
         salePrice: 20,
@@ -1822,10 +1822,10 @@ void main() {
           ProductPriceLookUpCode: firstProduct.PluChild!,
           Quantity: firstProduct.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: fakeSaleRequestTempId,
-          TotalLiquid: sut.calculateProductPrice(firstProduct) *
+          TotalLiquid: sut.calculateProductCompositionPrice(firstProduct) *
               firstProduct.Quantity!.toDouble() *
               totalComboxQuantity,
-          Value: sut.calculateProductPrice(firstProduct),
+          Value: sut.calculateProductCompositionPrice(firstProduct),
           Comments: firstProduct.commentFather,
         ),
         UpdateSaleRequestTempProductEntity(
@@ -1834,10 +1834,10 @@ void main() {
           ProductPriceLookUpCode: secondProduct.PluChild!,
           Quantity: secondProduct.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: fakeSaleRequestTempId,
-          TotalLiquid: sut.calculateProductPrice(secondProduct) *
+          TotalLiquid: sut.calculateProductCompositionPrice(secondProduct) *
               secondProduct.Quantity!.toDouble() *
               totalComboxQuantity,
-          Value: sut.calculateProductPrice(secondProduct),
+          Value: sut.calculateProductCompositionPrice(secondProduct),
           Comments: secondProduct.commentFather,
         ),
       ]);

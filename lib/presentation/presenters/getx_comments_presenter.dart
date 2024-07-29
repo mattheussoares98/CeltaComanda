@@ -98,9 +98,10 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   }
 
   @override
-  String? getConcatenateSelectedComments() {
+  String? getConcatenateSelectedComments(int internalCodeOnERP) {
     final concatenateSelectedComments = _loadedComments
         .where((comment) => comment.selected)
+        .where((e) => e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP)
         .map((element) => element.GroupName)
         .join("\n");
 

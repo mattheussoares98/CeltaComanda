@@ -86,7 +86,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     await cartPresenter.addProductInCart(
       product: CartProductEntity(
         Product: widget.selectedProduct.toEntity(),
-        Comments: commentsPresenter.getConcatenateSelectedComments(),
+        Comments: commentsPresenter.getConcatenateSelectedComments(
+            widget.selectedProduct.InternalCodeOnERP!.toInt()),
         TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
             insertProductsPresenter.totalProductsQuantity,
         Quantity: insertProductsPresenter.totalProductsQuantity.toDouble(),

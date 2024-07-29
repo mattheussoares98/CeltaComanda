@@ -244,7 +244,8 @@ class GetxInsertProductsPresenter extends GetxController
     required CommentsPresenter commentsPresenter,
     required InsertProductsViewModel father,
   }) {
-    father.commentFather = commentsPresenter.getConcatenateSelectedComments();
+    father.commentFather = commentsPresenter.getConcatenateSelectedComments(
+        father.InternalCodeOnERPCodeChild!.toInt());
   }
 
   @override

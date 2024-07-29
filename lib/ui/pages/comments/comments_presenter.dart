@@ -13,7 +13,7 @@ abstract class CommentsPresenter implements Listenable {
   Future<void> changeCommentIsSelected(CommentViewModel comment);
   void unselectAllComments();
   void updateHasSelectedComments();
-  String? getConcatenateSelectedComments();
+  String? getConcatenateSelectedComments(int internalCodeOnERP);
   void updateSelectedComments({
     required String? comments,
     required int internalCodeOnERP,

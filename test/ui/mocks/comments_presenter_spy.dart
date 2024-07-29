@@ -29,7 +29,7 @@ class CommentsPresenterSpy extends Mock implements CommentsPresenter {
   }
 
   void mockGetConcatenateSelectedComments(String? comment) {
-    when(() => this.getConcatenateSelectedComments())
+    when(() => this.getConcatenateSelectedComments(any()))
         .thenAnswer((_) => comment);
   }
 

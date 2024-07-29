@@ -124,9 +124,9 @@ class _CartProductItemState extends State<CartProductItem> {
               PriceAndUpdateProductQuantity(
                 showItemPrice: false,
                 showUpdateProductQuantity: true,
-                price: widget.cartProduct.Value.toDouble(),
+                price: cartPresenter.calculateProductPrice(widget.cartProduct.Product),
                 totalLiquid: widget.cartProduct.Quantity.toDouble() *
-                    widget.cartProduct.Value.toDouble(),
+                    cartPresenter.calculateProductPrice(widget.cartProduct.Product),
                 onPressedReduceQuantity:
                     widget.cartProduct.Quantity.toDouble() <= 1
                         ? null

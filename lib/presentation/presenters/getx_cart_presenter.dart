@@ -98,17 +98,19 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   String get totalSaleRequestTempPrice {
     double totalCartProductsPrice = 0;
 
-    for (var combox in _cartProducts) {
-      if (combox.Product.childsComposition != null) {
-        for (var product in combox.Product.childsComposition!) {
+    for (var products in _cartProducts) {
+      if (products.Product.childsComposition != null) {
+        for (var child in products.Product.childsComposition!) {
           totalCartProductsPrice +=
-              calculateProductCompositionTotalLiquid(product);
+              calculateProductCompositionTotalLiquid(child) *
+                  child.Quantity!.toDouble();
         }
       } else {
         totalCartProductsPrice += _cartProducts.fold(
             0.0,
             (previousValue, element) =>
-                element.TotalLiquid.toDouble() + previousValue);
+                (element.TotalLiquid.toDouble() * element.Quantity.toDouble()) +
+                previousValue);
       }
     }
     return totalCartProductsPrice

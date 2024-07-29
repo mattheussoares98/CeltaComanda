@@ -83,6 +83,7 @@ class EntityFactory {
         NameComplete: faker.randomGenerator.string(100),
         NameReduced: faker.randomGenerator.string(100),
         PackingAbbreviation: faker.randomGenerator.string(100),
+        childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
       ProductEntity(
         ProductComplement: faker.randomGenerator.string(100),
@@ -150,6 +151,7 @@ class EntityFactory {
         NameComplete: faker.randomGenerator.string(100),
         NameReduced: faker.randomGenerator.string(100),
         PackingAbbreviation: faker.randomGenerator.string(100),
+        childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
     ];
   }
@@ -353,6 +355,7 @@ class EntityFactory {
         AllowQuantityInPdv: faker.randomGenerator.boolean(),
         GoesForFastTable: faker.randomGenerator.boolean(),
         IsAlcoholicProduct: faker.randomGenerator.boolean(),
+        childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
       ProductModel(
         ProductComplement: faker.randomGenerator.string(10),
@@ -420,6 +423,7 @@ class EntityFactory {
         AllowQuantityInPdv: faker.randomGenerator.boolean(),
         GoesForFastTable: faker.randomGenerator.boolean(),
         IsAlcoholicProduct: faker.randomGenerator.boolean(),
+        childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
     ];
   }

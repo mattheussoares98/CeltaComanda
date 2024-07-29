@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/entities.dart';
+
 class ProductEntity extends Equatable {
   final int ProductsId;
   final int? InternalCodeOnERP;
@@ -71,6 +73,7 @@ class ProductEntity extends Equatable {
   final String? NameReduced;
   final String? ProductComplement;
   final String PackingAbbreviation;
+  final List<ProductCompositionEntity>? childsComposition;
 
   const ProductEntity({
     required this.PackingAbbreviation,
@@ -138,6 +141,7 @@ class ProductEntity extends Equatable {
     required this.StockQuantity,
     required this.ProductComplement,
     required this.SaleRetailPraticedString,
+    required this.childsComposition,
   });
 
   @override
@@ -207,5 +211,6 @@ class ProductEntity extends Equatable {
         StockQuantity,
         SaleRetailPraticedString,
         ProductComplement,
+        childsComposition,
       ];
 }

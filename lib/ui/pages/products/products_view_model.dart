@@ -142,7 +142,7 @@ class ProductsViewModel extends Equatable {
     required this.NameComplete,
     required this.NameReduced,
     this.productQuantity = 1,
-    this.childsComposition,
+    required this.childsComposition,
   });
 
   @override
@@ -296,6 +296,9 @@ class ProductsViewModel extends Equatable {
         PercImpNBPTNational: entity.PercImpNBPTNational.toString(),
         CofinsPercentage: entity.CofinsPercentage.toString(),
         PisPercentage: entity.PisPercentage.toString(),
+        childsComposition: entity.childsComposition
+            ?.map((e) => InsertProductsViewModel.fromEntity(e))
+            .toList(),
       );
 
   ProductEntity toEntity() => ProductEntity(
@@ -367,6 +370,7 @@ class ProductsViewModel extends Equatable {
         NameComplete: NameComplete,
         NameReduced: NameReduced,
         PackingAbbreviation: PackingAbbreviation,
+        childsComposition: childsComposition?.map((e) => e.toEntity()).toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -435,6 +439,7 @@ class ProductsViewModel extends Equatable {
         "PackingAbbreviation": PackingAbbreviation,
         "IsPromoCombox": IsPromoCombox,
         "productQuantity": productQuantity,
+        "childsComposition": childsComposition,
       };
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
@@ -505,5 +510,6 @@ class ProductsViewModel extends Equatable {
         NameComplete: json["NameComplete"],
         NameReduced: json["NameReduced"],
         productQuantity: json["productQuantity"],
+        childsComposition: json["childsComposition"],
       );
 }

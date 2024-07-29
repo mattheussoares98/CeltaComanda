@@ -20,6 +20,10 @@ class CartProductsItems extends StatelessWidget {
         itemBuilder: (context, index) {
           final cartProduct = cartPresenter.cartProducts[index];
 
+          if (cartProduct.Product.childsComposition != null) {
+            return const Text("Isso aqui é um combo");
+          }
+
           return CartProductItem(
             cartProduct: cartProduct,
             index: index,

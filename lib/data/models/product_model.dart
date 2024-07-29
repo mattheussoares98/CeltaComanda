@@ -68,6 +68,7 @@ class ProductModel {
   final bool? AllowQuantityInPdv;
   final bool? GoesForFastTable;
   final bool? IsAlcoholicProduct;
+  final List<ProductCompositionEntity>? childsComposition;
 
   ProductModel({
     required this.ProductsId,
@@ -135,6 +136,7 @@ class ProductModel {
     required this.AllowQuantityInPdv,
     required this.GoesForFastTable,
     required this.IsAlcoholicProduct,
+    required this.childsComposition,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -216,6 +218,7 @@ class ProductModel {
       NameComplete: json["NameComplete"],
       NameReduced: json["NameReduced"],
       ProductComplement: json["ProductComplement"],
+      childsComposition: json["childsComposition"],
     );
   }
 
@@ -286,6 +289,7 @@ class ProductModel {
       NameComplete: entity.NameComplete,
       NameReduced: entity.NameReduced,
       ProductComplement: entity.ProductComplement,
+      childsComposition: entity.childsComposition,
     );
   }
 
@@ -424,5 +428,6 @@ class ProductModel {
         SaleRetailPraticed: SaleRetailPraticed,
         SaleRetailPraticedString: SaleRetailPraticedString,
         ProductComplement: ProductComplement,
+        childsComposition: childsComposition,
       );
 }

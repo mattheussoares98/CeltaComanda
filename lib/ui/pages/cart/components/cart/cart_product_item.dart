@@ -32,7 +32,6 @@ class _CartProductItemState extends State<CartProductItem> {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Container(
-      width: widget.maxWidth * 0.3333333 - rightMargin,
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(

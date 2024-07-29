@@ -21,7 +21,23 @@ class CartProductsItems extends StatelessWidget {
           final cartProduct = cartPresenter.cartProducts[index];
 
           if (cartProduct.Product.childsComposition != null) {
-            return const Text("Isso aqui é um combo");
+            return Column(
+              children: [
+                CartProductItem(
+                  cartProduct: cartProduct,
+                  index: index,
+                  maxWidth: constraints.maxWidth,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: cartProduct.Product.childsComposition!.length,
+                  itemBuilder: (context, i) {
+                    final child = cartProduct.Product.childsComposition![i];
+                    return Text(child.ChildName!);
+                  },
+                ),
+              ],
+            );
           }
 
           return CartProductItem(

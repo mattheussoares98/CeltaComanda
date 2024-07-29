@@ -77,6 +77,9 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem.toString(),
         ProductOptions: entity.ProductOptions.toString(),
         commentFather: entity.comment,
+        childs: entity.childsComposition
+            ?.map((e) => ProductCompositionViewModel.fromEntity(e))
+            .toList(),
       );
 
   factory ProductCompositionViewModel.fromEntityWithChilds(

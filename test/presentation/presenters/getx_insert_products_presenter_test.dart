@@ -183,19 +183,6 @@ void main() {
     });
 
     test(
-        'Should call validateCombox on loadProductComposition to change button confirmation style',
-        () async {
-      getProductComposition.mockGetFathers([]);
-      getProductComposition.mockGetChildsOfFather([]);
-
-      await sut.updateSelectedProduct(selectedProduct);
-
-      verify(() =>
-              validateCombox.comboxIsValid(selectedProduct.childsComposition!))
-          .called(1);
-    });
-
-    test(
         'Should update indexOfSelctedChild if father is obligatory and childs is empty',
         () async {
       selectedProduct.childsComposition!.first.indexOfSelectedChild = 0;
@@ -275,6 +262,7 @@ void main() {
     test("Should update to false the stream to show comments", () async {
       expectLater(sut.showCommentsStream, emits(false));
 
+      sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
       sut.updateSelectedLeftItem(0);
     });

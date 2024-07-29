@@ -62,15 +62,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         context, printedProductsPresenter.alertMessageStream);
 
     return Scaffold(
-      drawer: widget.isFixedCommandNumber == true
-          ? null
-          : drawer(
-              context: context,
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              homePresenter: homePresenter,
-            ),
+      appBar: AppBar(),
       body: SizedBox(
         height: double.infinity,
         child: Stack(

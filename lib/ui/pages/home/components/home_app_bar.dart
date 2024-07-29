@@ -21,7 +21,7 @@ PreferredSize homeAppBar({
                 style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder()),
                 onPressed: () {
-                  CartPageDialog.open(context);
+                  homePresenter.goToPrintedProductsPage();
                 },
                 label: const Center(
                   child: Text(
@@ -35,7 +35,7 @@ PreferredSize homeAppBar({
                 left: 5,
                 child: InkWell(
                   onTap: () {
-                    CartPageDialog.open(context);
+                    homePresenter.goToPrintedProductsPage();
                   },
                   child: CircleAvatar(
                     backgroundColor: Colors.black,

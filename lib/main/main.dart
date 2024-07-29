@@ -112,6 +112,15 @@ class App extends StatelessWidget {
               page: makePaymentPage,
               transition: Transition.fadeIn,
             ),
+            GetPage(
+              name: PageRoutes.printedProducts,
+              page: () {
+                return makePrintedProductsPage(
+                  makeGetxHomePresenter().isFixedCommandNumber,
+                );
+              },
+              transition: Transition.fadeIn,
+            ),
           ],
         ),
       ),

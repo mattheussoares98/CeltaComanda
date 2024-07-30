@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable
 
+import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -108,7 +109,8 @@ class ProductCompositionViewModel extends Equatable {
             .toList(),
       );
 
-  ProductCompositionEntity toEntity() => ProductCompositionEntity(
+  ProductCompositionEntity toEntity([int productQuantity = 1]) =>
+      ProductCompositionEntity(
         ProductCompositionId: int.tryParse(ProductCompositionId.toString()),
         EnterpriseId: int.tryParse(EnterpriseId.toString()),
         InternalCodeOnERPCodeFather:
@@ -117,10 +119,10 @@ class ProductCompositionViewModel extends Equatable {
             int.tryParse(InternalCodeOnERPCodeChild.toString()),
         PluChild: PluChild,
         ChildName: ChildName,
-        Quantity: double.tryParse(Quantity.toString()),
-        SalePrice: double.tryParse(SalePrice.toString()),
-        OfferPrice: double.tryParse(OfferPrice.toString()),
-        IncrementValue: double.tryParse(IncrementValue.toString()),
+        Quantity: Quantity!.toDouble() * productQuantity,
+        SalePrice: SalePrice!.toDouble(),
+        OfferPrice: OfferPrice!.toDouble(),
+        IncrementValue: IncrementValue!.toDouble(),
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
         comment: commentFather,

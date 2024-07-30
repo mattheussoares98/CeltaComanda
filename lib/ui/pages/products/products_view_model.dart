@@ -373,7 +373,8 @@ class ProductsViewModel extends Equatable {
         childsComposition: childsComposition?.map((e) => e.toEntity()).toList(),
       );
 
-  ProductEntity toEntityWithSelectedChilds() => ProductEntity(
+  ProductEntity toEntityWithSelectedChilds(int productQuantity) =>
+      ProductEntity(
         ProductComplement: ProductComplement,
         IsPromoCombox: bool.parse(IsPromoCombox),
         Name: Name,
@@ -445,7 +446,7 @@ class ProductsViewModel extends Equatable {
         childsComposition: childsComposition
             ?.where((e) => e.indexOfSelectedChild != null)
             .map(
-              (e) => e.toEntity(),
+              (e) => e.toEntity(productQuantity),
             )
             .toList(),
       );

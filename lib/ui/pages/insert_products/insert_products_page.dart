@@ -85,6 +85,14 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       selectedProduct = snapshotSelectedProduct.data!;
     }
     indexOfLeftItem = snapshotLeftItems.data ?? 0;
+
+    if (selectedProduct?.childsComposition != null) {
+      for (var child in adapter.selectedProduct.childsComposition!) {
+        if (child.childs?.isEmpty == true) {
+          child.indexOfSelectedChild = 0;
+        }
+      }
+    }
   }
 
   @override

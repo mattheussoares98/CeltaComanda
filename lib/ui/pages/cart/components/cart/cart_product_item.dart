@@ -30,8 +30,6 @@ class _CartProductItemState extends State<CartProductItem> {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
-    InsertProductPresenter insertProductPresenter =
-        Provider.of(context, listen: false);
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
@@ -144,41 +142,7 @@ class _CartProductItemState extends State<CartProductItem> {
             ],
           ),
           if (widget.cartProduct.Product.childsComposition != null)
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.cartProduct.Product.childsComposition!.length,
-              itemBuilder: (context, i) {
-                final child = widget.cartProduct.Product.childsComposition![i];
-                String childName = child.ChildName!;
-
-                if (child.childs?.isNotEmpty == true &&
-                    child.indexOfSelectedChild != null) {
-                  childName =
-                      child.childs![child.indexOfSelectedChild!].ChildName!;
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          childName,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(child.Quantity!),
-                    Text(
-                        (child.Quantity!.toDouble() * insertProductPresenter.calculateProductCompositionPrice(child).toDouble()).toString().toBrazilianNumber().addBrazilianCoin()),
-                    if (child.commentFather != null)
-                      Comment(comment: child.commentFather!),
-                  ],
-                );
-              },
-            ),
+            SelectedChilds(cartProduct: widget.cartProduct),
         ],
       ),
     );

@@ -153,9 +153,10 @@ void main() {
     comboxWithSelectedProducts = EntityFactory.makeConfirmedComboxViewModel(
       father: fatherOfCombox,
       products: productsSelectedsInCombox,
-      totalPrice:
-          sut.calculateProductCompositionTotalLiquid(productsSelectedsInCombox[0]) +
-              sut.calculateProductCompositionTotalLiquid(productsSelectedsInCombox[1]),
+      totalPrice: sut.calculateProductCompositionTotalLiquid(
+              productsSelectedsInCombox[0]) +
+          sut.calculateProductCompositionTotalLiquid(
+              productsSelectedsInCombox[1]),
       quantity: 2,
     );
 
@@ -878,23 +879,6 @@ void main() {
     });
 
     test(
-        "Should update product quantity when add equal product in cart instead of add other product",
-        () async {
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
-      );
-      await sut.addProductInCart(
-        product: cartProductEntity,
-        menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
-      );
-
-      expect(sut.cartProducts.length, 1);
-    });
-
-    test(
         "Should add new product in cart if already contains equal PLU in cart but the comment is differente",
         () async {
       commentsPresenter
@@ -1102,9 +1086,10 @@ void main() {
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-        TotalLiquid: (sut
-                    .calculateProductCompositionTotalLiquid(productsSelectedsInCombox[0]) +
-                sut.calculateProductCompositionTotalLiquid(productsSelectedsInCombox[1])) *
+        TotalLiquid: (sut.calculateProductCompositionTotalLiquid(
+                    productsSelectedsInCombox[0]) +
+                sut.calculateProductCompositionTotalLiquid(
+                    productsSelectedsInCombox[1])) *
             comboxWithSelectedProducts.quantity,
         Products: [...products],
       );
@@ -1627,8 +1612,8 @@ void main() {
 
   group("Confirmed combox products", () {
     test("Should return incrementValue when is optionalItem", () async {
-      double price = sut
-          .calculateProductCompositionPrice(EntityFactory.makeProductCompositionViewModel(
+      double price = sut.calculateProductCompositionPrice(
+          EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 15,
@@ -1645,8 +1630,8 @@ void main() {
     test(
         "Should return offerPrice + incrementValue when offer is more than 0 and is not optional item",
         () async {
-      double price = sut
-          .calculateProductCompositionPrice(EntityFactory.makeProductCompositionViewModel(
+      double price = sut.calculateProductCompositionPrice(
+          EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 15,
@@ -1663,8 +1648,8 @@ void main() {
     test(
         "Should return SalePrice + incrementValue when offer is less than 0 and is not optional item",
         () async {
-      double price = sut
-          .calculateProductCompositionPrice(EntityFactory.makeProductCompositionViewModel(
+      double price = sut.calculateProductCompositionPrice(
+          EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
         salePrice: 10,
         offerPrice: 0,

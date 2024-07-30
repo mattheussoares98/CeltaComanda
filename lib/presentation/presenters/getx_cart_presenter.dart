@@ -140,36 +140,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   @override
   List<CartProductsViewModel> get cartProducts => _cartProducts;
 
-  int _getIndexOfEqualProduct(CartProductEntity product) {
-    return _cartProducts.indexWhere(
-      (cartProduct) =>
-          cartProduct.ProductPriceLookUpCode ==
-              product.ProductPriceLookUpCode &&
-          cartProduct.Comments == product.Comments &&
-          cartProduct.Value == product.Value.toString(),
-    );
-  }
-
-  CartProductsViewModel _getProductWithNewQuantity({
-    required int indexOfEqualProduct,
-    required CartProductEntity newProduct,
-  }) {
-    final productWithNewQuantity = CartProductsViewModel(
-      Product: _cartProducts[indexOfEqualProduct].Product,
-      Comments: _cartProducts[indexOfEqualProduct].Comments,
-      TotalLiquid: (_cartProducts[indexOfEqualProduct].TotalLiquid.toDouble() +
-              newProduct.TotalLiquid)
-          .toString(),
-      Quantity: (_cartProducts[indexOfEqualProduct].Quantity.toDouble() +
-              newProduct.Quantity)
-          .toString(),
-      Value: newProduct.Value.toString(),
-      ProductPriceLookUpCode: newProduct.ProductPriceLookUpCode,
-    );
-
-    return productWithNewQuantity;
-  }
-
   @override
   CartProductEntity productWithSelectedsComments({
     required CommentsPresenter commentsPresenter,
@@ -200,20 +170,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         commentsPresenter: commentsPresenter,
         product: product,
       );
-
-      final indexOfEqualProduct =
-          _getIndexOfEqualProduct(productWithNewComment);
+      
       final newCartList = [..._cartProducts];
 
-      if (indexOfEqualProduct == -1) {
-        newCartList
-            .add(CartProductsViewModel.fromEntity(productWithNewComment));
-      } else {
-        newCartList[indexOfEqualProduct] = _getProductWithNewQuantity(
-          indexOfEqualProduct: indexOfEqualProduct,
-          newProduct: product,
-        );
-      }
+      newCartList.add(CartProductsViewModel.fromEntity(productWithNewComment));
 
       await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;

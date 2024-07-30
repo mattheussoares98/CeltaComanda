@@ -523,29 +523,24 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required int saleRequestTempId,
   }) {
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
-    for (var combox in _cartProducts) {
-      for (var product in combox.Product.childsComposition!) {
-        if (product.indexOfSelectedChild == null) {
+    for (var product in _cartProducts) {
+      for (var child in product.Product.childsComposition!) {
+        if (child.indexOfSelectedChild == null) {
           continue;
-        }
-
-        ProductCompositionViewModel selectedChild;
-        if (product.childs?.isEmpty == true) {
-          selectedChild = product;
-        } else {
-          selectedChild = product.childs![product.indexOfSelectedChild!];
         }
 
         final updateSaleRequestTempProductEntity =
             UpdateSaleRequestTempProductEntity(
           ProductInternalCodeOnErp:
-              selectedChild.InternalCodeOnERPCodeChild.toString().toInt(),
-          ProductPriceLookUpCode: selectedChild.PluChild!,
-          Quantity: selectedChild.Quantity!.toDouble(),
+              child.InternalCodeOnERPCodeChild.toString().toInt(),
+          ProductPriceLookUpCode: child.childs?.isEmpty == true
+              ? child.PluChild!
+              : child.childs![child.indexOfSelectedChild!].PluChild!,
+          Quantity: child.Quantity!.toDouble() * product.Quantity.toDouble(),
           SaleRequestTempId: saleRequestTempId,
-          TotalLiquid: calculateProductCompositionTotalLiquid(product),
-          Value: calculateProductCompositionPrice(product),
-          Comments: product.commentFather,
+          TotalLiquid: calculateProductCompositionTotalLiquid(child),
+          Value: calculateProductCompositionPrice(child),
+          Comments: child.commentFather,
         );
 
         productsEntitys.add(updateSaleRequestTempProductEntity);

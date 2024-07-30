@@ -15,7 +15,8 @@ class EntityFactory {
     );
   }
 
-  static List<ProductEntity> makeProductsEntitys({bool? isPromoCombox}) {
+  static List<ProductEntity> makeProductsEntitys(
+      {bool? isPromoCombox, bool? generateChilds}) {
     return [
       ProductEntity(
         ProductComplement: faker.randomGenerator.string(100),
@@ -83,7 +84,9 @@ class EntityFactory {
         NameComplete: faker.randomGenerator.string(100),
         NameReduced: faker.randomGenerator.string(100),
         PackingAbbreviation: faker.randomGenerator.string(100),
-        childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
+        childsComposition: generateChilds == true
+            ? makeProductsCompositionsEntity(isOptionalItem: true)
+            : null,
       ),
       ProductEntity(
         ProductComplement: faker.randomGenerator.string(100),
@@ -151,7 +154,9 @@ class EntityFactory {
         NameComplete: faker.randomGenerator.string(100),
         NameReduced: faker.randomGenerator.string(100),
         PackingAbbreviation: faker.randomGenerator.string(100),
-        childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
+        childsComposition: generateChilds == true
+            ? makeProductsCompositionsEntity(isOptionalItem: true)
+            : null,
       ),
     ];
   }

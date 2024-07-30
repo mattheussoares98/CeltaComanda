@@ -170,7 +170,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         commentsPresenter: commentsPresenter,
         product: product,
       );
-      
+
       final newCartList = [..._cartProducts];
 
       newCartList.add(CartProductsViewModel.fromEntity(productWithNewComment));
@@ -405,18 +405,21 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
 
       final products = _cartProducts
-          .map((element) => UpdateSaleRequestTempProductEntity(
-                ProductInternalCodeOnErp:
-                    element.toEntity().Product.InternalCodeOnERP!.toInt(),
-                ProductPriceLookUpCode:
-                    element.toEntity().ProductPriceLookUpCode,
-                Quantity: element.Quantity.toDouble(),
-                SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-                TotalLiquid: element.TotalLiquid.toDouble(),
-                Value: element.Value.toDouble(),
-                Comments: element.Comments,
-              ))
-          .toList();
+          .where((e) => e.Product.childsComposition?.isEmpty == true)
+          .map(
+        (element) {
+          return UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                element.toEntity().Product.InternalCodeOnERP!.toInt(),
+            ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
+            Quantity: element.Quantity.toDouble(),
+            SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+            TotalLiquid: element.TotalLiquid.toDouble(),
+            Value: element.Value.toDouble(),
+            Comments: element.Comments,
+          );
+        },
+      ).toList();
 
       final selectedComboxProducts =
           convertProductsCompositionToUpdateSaleRequestTempProductEntity(

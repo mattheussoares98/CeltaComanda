@@ -588,6 +588,8 @@ class ProductsViewModel extends Equatable {
         NameComplete: json["NameComplete"],
         NameReduced: json["NameReduced"],
         productQuantity: json["productQuantity"],
-        childsComposition: json["childsComposition"],
+        childsComposition: json["childsComposition"]?.map<ProductCompositionViewModel>(
+                    (e) => ProductCompositionViewModel.fromJson(e))
+                .toList(),
       );
 }

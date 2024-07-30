@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
 import '../pages.dart';
-import '../../adapters/adapters.dart';
 import '../../mixins/mixins.dart';
 
 class InsertProductsPage extends StatefulWidget {
@@ -71,23 +69,24 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   int indexOfLeftItem = 0;
 
   void doOnBuildStreams({
-    required InsertProductAdapter adapter,
     required AsyncSnapshot<double> snapshotTotalPrice,
     required AsyncSnapshot<ProductsViewModel?> snapshotSelectedProduct,
     required AsyncSnapshot<int> snapshotLeftItems,
+    required InsertProductPresenter insertProductPresenter,
   }) {
-    Future.delayed(Duration.zero, () {
-      adapter.updateTotalLiquid();
-    });
     totalLiquid = snapshotTotalPrice.data ?? 0;
 
     if (snapshotSelectedProduct.hasData) {
       selectedProduct = snapshotSelectedProduct.data!;
+
+      Future.delayed(Duration.zero, () {
+        insertProductPresenter.updateTotalLiquid(selectedProduct!);
+      });
     }
     indexOfLeftItem = snapshotLeftItems.data ?? 0;
 
     if (selectedProduct?.childsComposition != null) {
-      for (var child in adapter.selectedProduct.childsComposition!) {
+      for (var child in selectedProduct!.childsComposition!) {
         if (child.childs?.isEmpty == true) {
           child.indexOfSelectedChild = 0;
         }
@@ -97,37 +96,44 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    InsertProductAdapter adapter = Get.arguments;
-    selectedProduct = adapter.selectedProduct;
+    // InsertProductAdapter adapter = Get.arguments;
 
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
-    loadingSubscription = handleLoading(context, adapter.isLoadingStream);
-    mainErrorSubscription = handleMainError(context, adapter.mainErrorStream);
+    loadingSubscription =
+        handleLoading(context, insertProductPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, insertProductPresenter.mainErrorStream);
 
     return PopScope(
       onPopInvoked: (_) {
-        adapter.doOnClosePage();
+        insertProductPresenter.clearData(
+          product: selectedProduct!,
+          commentsPresenter: commentsPresenter,
+        );
       },
       child: StreamBuilder<double>(
-          stream: adapter.totalPriceStream,
+          stream: insertProductPresenter.totalPrice,
           builder: (context, snapshotTotalPrice) {
             return StreamBuilder<ProductsViewModel?>(
-                stream: adapter.selectedComboxProductStream,
+                stream: insertProductPresenter.selectedProductStream,
                 builder: (context, snapshotSelectedProduct) {
                   return Scaffold(
                     appBar: AppBar(),
                     body: StreamBuilder<int>(
-                        stream: adapter.selectedItemIndexStream,
+                        stream: insertProductPresenter.selectedLeftIndexStream,
                         builder: (context, snapshotLeftItems) {
                           return StreamBuilder<bool>(
-                              stream: adapter.showCommentsStream,
+                              stream: insertProductPresenter.showCommentsStream,
                               builder: (context, snapshowShowComments) {
                                 doOnBuildStreams(
-                                  adapter: adapter,
+                                  insertProductPresenter:
+                                      insertProductPresenter,
                                   snapshotTotalPrice: snapshotTotalPrice,
                                   snapshotSelectedProduct:
                                       snapshotSelectedProduct,
@@ -148,7 +154,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                             indexOfSelectedFather:
                                                 indexOfLeftItem,
                                             doScrollStream:
-                                                adapter.doScrollStream,
+                                                insertProductPresenter
+                                                    .doScrollStream,
                                             productHasComment:
                                                 getProducthasComment(
                                               indexOfLeftItem: indexOfLeftItem,
@@ -165,7 +172,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                           TotalPriceCombox(
                                             totalLiquid: totalLiquid,
                                             totalProductsQuantity:
-                                                adapter.totalProductsQuantity,
+                                                insertProductPresenter
+                                                    .totalProductsQuantity,
                                             selectedProduct: selectedProduct!,
                                           ),
                                         ],
@@ -187,8 +195,11 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                                             .childsComposition!
                                                             .length)
                                                   ProductsAndCommentsButtons(
-                                                    advanceSelectedIndex: adapter
-                                                        .advanceSelectedIndex,
+                                                    advanceSelectedIndex: () {
+                                                      insertProductPresenter
+                                                          .advanceLeftIndex(
+                                                              commentsPresenter);
+                                                    },
                                                     productHasComment:
                                                         getProducthasComment(
                                                       indexOfLeftItem:
@@ -235,10 +246,13 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                           ),
                                           AdvanceButton(
                                             totalPrice: totalLiquid,
-                                            quantity:
-                                                adapter.totalProductsQuantity,
-                                            advanceSelectedIndex:
-                                                adapter.advanceSelectedIndex,
+                                            quantity: insertProductPresenter
+                                                .totalProductsQuantity,
+                                            advanceSelectedIndex: () {
+                                              insertProductPresenter
+                                                  .advanceLeftIndex(
+                                                      commentsPresenter);
+                                            },
                                             selectedProduct: selectedProduct!,
                                             leftSelectedIndex: indexOfLeftItem,
                                             productHasComment:

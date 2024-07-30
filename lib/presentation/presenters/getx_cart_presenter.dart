@@ -533,14 +533,16 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
         final updateSaleRequestTempProductEntity =
             UpdateSaleRequestTempProductEntity(
-          ProductInternalCodeOnErp: child.childs?.isEmpty == true
-              ? child.InternalCodeOnERPCodeChild!.toInt()
-              : child.childs![child.indexOfSelectedChild!]
-                  .InternalCodeOnERPCodeChild!
-                  .toInt(),
-          ProductPriceLookUpCode: child.childs?.isEmpty == true
-              ? child.PluChild!
-              : child.childs![child.indexOfSelectedChild!].PluChild!,
+          ProductInternalCodeOnErp:
+              child.childs?.isEmpty == true || child.childs == null
+                  ? child.InternalCodeOnERPCodeChild!.toInt()
+                  : child.childs![child.indexOfSelectedChild!]
+                      .InternalCodeOnERPCodeChild!
+                      .toInt(),
+          ProductPriceLookUpCode:
+              child.childs?.isEmpty == true || child.childs == null
+                  ? child.PluChild!
+                  : child.childs![child.indexOfSelectedChild!].PluChild!,
           Quantity: child.Quantity!.toDouble(),
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: calculateProductCompositionTotalLiquid(child),

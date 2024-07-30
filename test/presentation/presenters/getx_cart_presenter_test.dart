@@ -45,7 +45,6 @@ void main() {
   late ProductCompositionViewModel selectedChildWithOneQuantity;
   late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
-  late ConfirmedComboxViewModel comboxWithSelectedProducts;
   late int tableNumber;
   late CommentViewModel commentViewModel;
 
@@ -95,10 +94,12 @@ void main() {
     saleRequestTempEntity =
         EntityFactory.makeSaleRequestTempEntity(tableNumber);
     cartProductEntity = EntityFactory.makeCartProductEntity(
+      generateChilds: true,
       maximumProductQuantity: 200,
       minimumProductQuantity: 2,
     );
     cartProductWithOneQuantity = EntityFactory.makeCartProductEntity(
+      generateChilds: true,
       maximumProductQuantity: 1,
       minimumProductQuantity: 1,
     );
@@ -150,15 +151,6 @@ void main() {
       ),
     ];
     fatherOfCombox = EntityFactory.makeProductViewModel();
-    comboxWithSelectedProducts = EntityFactory.makeConfirmedComboxViewModel(
-      father: fatherOfCombox,
-      products: productsSelectedsInCombox,
-      totalPrice: sut.calculateProductCompositionTotalLiquid(
-              productsSelectedsInCombox[0]) +
-          sut.calculateProductCompositionTotalLiquid(
-              productsSelectedsInCombox[1]),
-      quantity: 2,
-    );
 
     updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
       DeliveryControl: saleRequestTempEntity.DeliveryControl,
@@ -1002,6 +994,8 @@ void main() {
   group("Save cart products in saleRequesTemp", () {
     test("Should call correct functions on save products in SaleRequestTemp",
         () async {
+      cartProductViewModel.Product.childsComposition = null;
+
       sut.cartProducts.add(cartProductViewModel);
       confirmedCartProducts.mockIsConfirmed(false);
 
@@ -1067,7 +1061,11 @@ void main() {
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
         () async {
+      for (var child in cartProductViewModel.Product.childsComposition!) {
+        child.indexOfSelectedChild = 0;
+      }
       sut.cartProducts.add(cartProductViewModel);
+
       final products =
           sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
@@ -1086,11 +1084,8 @@ void main() {
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-        TotalLiquid: (sut.calculateProductCompositionTotalLiquid(
-                    productsSelectedsInCombox[0]) +
-                sut.calculateProductCompositionTotalLiquid(
-                    productsSelectedsInCombox[1])) *
-            comboxWithSelectedProducts.quantity,
+        TotalLiquid: products.fold(0.0,
+            (previousValue, element) => element.TotalLiquid + previousValue),
         Products: [...products],
       );
 

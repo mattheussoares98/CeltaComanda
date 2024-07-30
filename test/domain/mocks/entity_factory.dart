@@ -719,9 +719,10 @@ class EntityFactory {
   static CartProductEntity makeCartProductEntity({
     required int maximumProductQuantity,
     required int minimumProductQuantity,
+    bool? generateChilds,
   }) =>
       CartProductEntity(
-        Product: makeProductsEntitys()[0],
+        Product: makeProductsEntitys(generateChilds: generateChilds)[0],
         Comments: null,
         TotalLiquid: faker.randomGenerator.decimal(),
         Quantity: faker.randomGenerator

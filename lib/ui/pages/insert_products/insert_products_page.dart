@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -74,15 +75,22 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     required AsyncSnapshot<int> snapshotLeftItems,
     required InsertProductPresenter insertProductPresenter,
   }) {
-    totalLiquid = snapshotTotalPrice.data ?? 0;
+    if (Get.arguments != null) {
+      selectedProduct = Get.arguments;
+    }
+
+    if (snapshotTotalPrice.hasData) {
+      totalLiquid = snapshotTotalPrice.data!;
+    }
 
     if (snapshotSelectedProduct.hasData) {
       selectedProduct = snapshotSelectedProduct.data!;
-
-      Future.delayed(Duration.zero, () {
-        insertProductPresenter.updateTotalLiquid(selectedProduct!);
-      });
     }
+
+    Future.delayed(Duration.zero, () {
+      insertProductPresenter.updateTotalLiquid(selectedProduct!);
+    });
+
     indexOfLeftItem = snapshotLeftItems.data ?? 0;
 
     if (selectedProduct?.childsComposition != null) {
@@ -96,8 +104,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    // InsertProductAdapter adapter = Get.arguments;
-
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);

@@ -395,7 +395,7 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   bool get canAdvanceIndex {
-    if (_selectedProduct.value!.childsComposition == null) {
+    if (_selectedProduct.value?.childsComposition == null) {
       return true;
     }
 

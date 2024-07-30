@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/adapters/adapters.dart';
 import '../../pages.dart';
 
 class ProductItem extends StatefulWidget {
@@ -17,57 +16,16 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
-  InsertProductAdapter getInsertProductAdapter(
-    InsertProductPresenter insertProductsPresenter,
-    CommentsPresenter commentsPresenter,
-  ) {
-    return InsertProductAdapter(
-        advanceSelectedIndex: () {
-          insertProductsPresenter.advanceLeftIndex(commentsPresenter);
-        },
-        totalProductsQuantity: insertProductsPresenter.totalProductsQuantity,
-        updateTotalLiquid: () {
-          insertProductsPresenter
-              .updateTotalLiquid(widget.productsViewModel);
-        },
-        totalPriceStream: insertProductsPresenter.totalPrice,
-        doScrollStream: insertProductsPresenter.doScrollStream,
-        showCommentsStream: insertProductsPresenter.showCommentsStream,
-        selectedProduct: widget.productsViewModel,
-        isLoadingStream: insertProductsPresenter.isLoadingStream,
-        mainErrorStream: insertProductsPresenter.mainErrorStream,
-        selectedComboxProductStream:
-            insertProductsPresenter.selectedProductStream,
-        selectedItemIndexStream:
-            insertProductsPresenter.selectedLeftIndexStream,
-        updateSelectedProduct: () {
-          insertProductsPresenter
-              .updateSelectedProduct(widget.productsViewModel);
-        },
-        doOnClosePage: () {
-          insertProductsPresenter.clearData(
-            product: widget.productsViewModel,
-            commentsPresenter: commentsPresenter,
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          menuPresenter.goToInsertProductPage(
-            getInsertProductAdapter(
-              insertProductsPresenter,
-              commentsPresenter,
-            ),
-          );
+          menuPresenter.goToInsertProductPage(widget.productsViewModel);
           insertProductsPresenter
               .updateSelectedProduct(widget.productsViewModel);
         },

@@ -46,6 +46,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
     return ElevatedButton(
       style: ElevatedButton.styleFrom(),
       onPressed: () async {
+        Navigator.of(context).pop();
         menuPresenter.goToInsertProductPage(widget.selectedProduct);
       },
       child: Padding(

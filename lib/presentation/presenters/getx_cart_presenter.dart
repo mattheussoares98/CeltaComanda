@@ -404,9 +404,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       _saleRequestTemp =
           SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
 
-      final products = _cartProducts
-          .where((e) => e.Product.childsComposition?.isEmpty == true)
-          .map(
+      final products =
+          _cartProducts.where((e) => e.Product.childsComposition == null).map(
         (element) {
           return UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp:
@@ -524,6 +523,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }) {
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
     for (var product in _cartProducts) {
+      if (product.Product.childsComposition == null) {
+        continue;
+      }
       for (var child in product.Product.childsComposition!) {
         if (child.indexOfSelectedChild == null) {
           continue;

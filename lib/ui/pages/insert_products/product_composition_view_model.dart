@@ -77,6 +77,7 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem.toString(),
         ProductOptions: entity.ProductOptions.toString(),
         commentFather: entity.comment,
+        indexOfSelectedChild: entity.indexOfSelectedChild,
         childs: entity.childsComposition
             ?.map((e) => ProductCompositionViewModel.fromEntity(e))
             .toList(),
@@ -101,28 +102,31 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
         IsOptionalItem: entity.IsOptionalItem.toString(),
         ProductOptions: entity.ProductOptions.toString(),
+        indexOfSelectedChild: entity.indexOfSelectedChild,
         childs: childs
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
       );
 
   ProductCompositionEntity toEntity() => ProductCompositionEntity(
-      ProductCompositionId: int.tryParse(ProductCompositionId.toString()),
-      EnterpriseId: int.tryParse(EnterpriseId.toString()),
-      InternalCodeOnERPCodeFather:
-          int.tryParse(InternalCodeOnERPCodeFather.toString()),
-      InternalCodeOnERPCodeChild:
-          int.tryParse(InternalCodeOnERPCodeChild.toString()),
-      PluChild: PluChild,
-      ChildName: ChildName,
-      Quantity: double.tryParse(Quantity.toString()),
-      SalePrice: double.tryParse(SalePrice.toString()),
-      OfferPrice: double.tryParse(OfferPrice.toString()),
-      IncrementValue: double.tryParse(IncrementValue.toString()),
-      IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
-      ProductOptions: ProductOptions,
-      comment: commentFather,
-      childsComposition: childs?.map((e) => e.toEntity()).toList());
+        ProductCompositionId: int.tryParse(ProductCompositionId.toString()),
+        EnterpriseId: int.tryParse(EnterpriseId.toString()),
+        InternalCodeOnERPCodeFather:
+            int.tryParse(InternalCodeOnERPCodeFather.toString()),
+        InternalCodeOnERPCodeChild:
+            int.tryParse(InternalCodeOnERPCodeChild.toString()),
+        PluChild: PluChild,
+        ChildName: ChildName,
+        Quantity: double.tryParse(Quantity.toString()),
+        SalePrice: double.tryParse(SalePrice.toString()),
+        OfferPrice: double.tryParse(OfferPrice.toString()),
+        IncrementValue: double.tryParse(IncrementValue.toString()),
+        IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
+        ProductOptions: ProductOptions,
+        comment: commentFather,
+        childsComposition: childs?.map((e) => e.toEntity()).toList(),
+        indexOfSelectedChild: indexOfSelectedChild,
+      );
 
   Map toJson() => {
         "ProductCompositionId": ProductCompositionId,

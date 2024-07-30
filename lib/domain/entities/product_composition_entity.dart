@@ -18,6 +18,7 @@ class ProductCompositionEntity extends Equatable {
   final dynamic ProductOptions;
   String? comment;
   List<ProductCompositionEntity>? childsComposition;
+  int? indexOfSelectedChild;
 
   ProductCompositionEntity({
     required this.ProductCompositionId,
@@ -33,6 +34,7 @@ class ProductCompositionEntity extends Equatable {
     required this.IsOptionalItem,
     required this.ProductOptions,
     required this.comment,
+    required this.indexOfSelectedChild,
     this.childsComposition,
   });
 
@@ -51,5 +53,6 @@ class ProductCompositionEntity extends Equatable {
         IsOptionalItem,
         ProductOptions,
         childsComposition,
+        indexOfSelectedChild,
       ];
 }

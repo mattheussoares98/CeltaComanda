@@ -18,6 +18,7 @@ class ProductCompositionModel extends Equatable {
   final bool? IsOptionalItem;
   final dynamic ProductOptions;
   final String? comment;
+  final int? indexOfSelectedChild;
 
   const ProductCompositionModel({
     required this.ProductCompositionId,
@@ -33,6 +34,7 @@ class ProductCompositionModel extends Equatable {
     required this.IsOptionalItem,
     required this.ProductOptions,
     required this.comment,
+    required this.indexOfSelectedChild,
   });
 
   factory ProductCompositionModel.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class ProductCompositionModel extends Equatable {
       IsOptionalItem: json["IsOptionalItem"],
       ProductOptions: json["ProductOptions"],
       comment: json["comment"],
+      indexOfSelectedChild: json["indexOfSelectedChild"],
     );
   }
 
@@ -81,6 +84,7 @@ class ProductCompositionModel extends Equatable {
       IsOptionalItem: entity.IsOptionalItem,
       ProductOptions: entity.ProductOptions,
       comment: entity.comment,
+      indexOfSelectedChild: entity.indexOfSelectedChild,
     );
   }
 
@@ -114,6 +118,7 @@ class ProductCompositionModel extends Equatable {
         IsOptionalItem: IsOptionalItem,
         ProductOptions: ProductOptions,
         comment: comment,
+        indexOfSelectedChild: indexOfSelectedChild,
       );
 
   @override

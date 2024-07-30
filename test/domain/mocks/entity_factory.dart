@@ -636,6 +636,7 @@ class EntityFactory {
           ProductOptions: faker.randomGenerator.string(10),
           IsOptionalItem: isOptionalItem,
           comment: faker.randomGenerator.string(10),
+          indexOfSelectedChild: null,
         ),
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
@@ -651,6 +652,7 @@ class EntityFactory {
           ProductOptions: faker.randomGenerator.string(10),
           IsOptionalItem: isOptionalItem,
           comment: faker.randomGenerator.string(10),
+          indexOfSelectedChild: null,
         ),
       ];
 

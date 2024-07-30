@@ -531,8 +531,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
         final updateSaleRequestTempProductEntity =
             UpdateSaleRequestTempProductEntity(
-          ProductInternalCodeOnErp:
-              child.InternalCodeOnERPCodeChild.toString().toInt(),
+          ProductInternalCodeOnErp: child.childs?.isEmpty == true
+              ? child.InternalCodeOnERPCodeChild!.toInt()
+              : child.childs![child.indexOfSelectedChild!]
+                  .InternalCodeOnERPCodeChild!
+                  .toInt(),
           ProductPriceLookUpCode: child.childs?.isEmpty == true
               ? child.PluChild!
               : child.childs![child.indexOfSelectedChild!].PluChild!,

@@ -124,9 +124,11 @@ class _CartProductItemState extends State<CartProductItem> {
               PriceAndUpdateProductQuantity(
                 showItemPrice: false,
                 showUpdateProductQuantity: true,
-                price: cartPresenter.calculateProductPrice(widget.cartProduct.Product),
+                price: cartPresenter
+                    .calculateProductPrice(widget.cartProduct.Product),
                 totalLiquid: widget.cartProduct.Quantity.toDouble() *
-                    cartPresenter.calculateProductPrice(widget.cartProduct.Product),
+                    cartPresenter
+                        .calculateProductPrice(widget.cartProduct.Product),
                 onPressedReduceQuantity:
                     widget.cartProduct.Quantity.toDouble() <= 1
                         ? null
@@ -141,24 +143,42 @@ class _CartProductItemState extends State<CartProductItem> {
               ),
             ],
           ),
-          if(widget.cartProduct.Product.childsComposition != null)
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.cartProduct.Product.childsComposition!.length,
-            itemBuilder: (context, i) {
-              final child = widget.cartProduct.Product.childsComposition![i];
-              return Column(
-                children: [
-                  Text("ChildName: ${child.ChildName!}"),
-                  Text("Comments: ${child.commentFather.toString()}"),
-                  Text("Quantity: ${child.Quantity.toString()}"),
-                  Text("IncrementValue: ${child.IncrementValue.toString()}"),
-                  Text(
-                      "Price: ${insertProductPresenter.calculateProductCompositionPrice(child).toString().toBrazilianNumber().addBrazilianCoin()}"),
-                ],
-              );
-            },
-          ),
+          if (widget.cartProduct.Product.childsComposition != null)
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.cartProduct.Product.childsComposition!.length,
+              itemBuilder: (context, i) {
+                final child = widget.cartProduct.Product.childsComposition![i];
+                String childName = child.ChildName!;
+
+                if (child.childs?.isNotEmpty == true &&
+                    child.indexOfSelectedChild != null) {
+                  childName =
+                      child.childs![child.indexOfSelectedChild!].ChildName!;
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          childName,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(child.Quantity!),
+                    Text(
+                        (child.Quantity!.toDouble() * insertProductPresenter.calculateProductCompositionPrice(child).toDouble()).toString().toBrazilianNumber().addBrazilianCoin()),
+                    if (child.commentFather != null)
+                      Comment(comment: child.commentFather!),
+                  ],
+                );
+              },
+            ),
         ],
       ),
     );

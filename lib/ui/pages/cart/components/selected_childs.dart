@@ -50,63 +50,68 @@ class SelectedChilds extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: cartProduct.Product.childsComposition!.length,
-          itemBuilder: (context, i) {
-            final child = cartProduct.Product.childsComposition![i];
-            String childName = child.ChildName!;
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: cartProduct.Product.childsComposition!.length,
+            itemBuilder: (context, i) {
+              final child = cartProduct.Product.childsComposition![i];
+              String childName = child.ChildName!;
 
-            if (child.childs?.isNotEmpty == true &&
-                child.indexOfSelectedChild != null) {
-              childName = child.childs![child.indexOfSelectedChild!].ChildName!;
-            }
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            childName,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+              if (child.childs?.isNotEmpty == true &&
+                  child.indexOfSelectedChild != null) {
+                childName =
+                    child.childs![child.indexOfSelectedChild!].ChildName!;
+              }
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              childName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          if (child.commentFather != null)
-                            Comment(comment: child.commentFather!),
-                        ],
+                            if (child.commentFather != null)
+                              Comment(comment: child.commentFather!),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                        child: Text(
-                      child.Quantity!.toBrazilianNumber(),
-                      textAlign: TextAlign.center,
-                    )),
-                    Expanded(
-                      child: Text(
-                        (child.Quantity!.toDouble() *
-                                insertProductPresenter
-                                    .calculateProductCompositionPrice(child)
-                                    .toDouble())
-                            .toString()
-                            .toBrazilianNumber()
-                            .addBrazilianCoin(),
+                      Expanded(
+                          child: Text(
+                        child.Quantity!.toBrazilianNumber(),
                         textAlign: TextAlign.center,
+                      )),
+                      Expanded(
+                        child: Text(
+                          (child.Quantity!.toDouble() *
+                                  insertProductPresenter
+                                      .calculateProductCompositionPrice(child)
+                                      .toDouble())
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
+                    ],
+                  ),
+                  if (i < cartProduct.Product.childsComposition!.length - 1)
+                    const Divider(
+                      thickness: 0.2,
+                      height: 10,
                     ),
-                  ],
-                ),
-                const Divider(
-                  thickness: 0.2,
-                  height: 10,
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ],
     );

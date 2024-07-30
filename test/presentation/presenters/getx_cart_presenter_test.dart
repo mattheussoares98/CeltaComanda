@@ -1783,11 +1783,19 @@ void main() {
       //crio uma lista com 3 produtos. Sendo um opcional e sem índice de filho
       //selecionado. Por isso ele precisa ser ignorado e leva em consideração
       //somente os dois primeiros
-      const double totalComboxQuantity = 2;
+      double totalComboxQuantity = cartProductViewModel.Product.productQuantity;
       //o preço total do produto precisa ser multiplicado pela quantidade de
       //combos, por isso essa variável
-      final firstProduct = productsSelectedsInCombox[0];
-      final secondProduct = productsSelectedsInCombox[1];
+      cartProductViewModel.Product.childsComposition =
+          productsSelectedsInCombox;
+      final firstProduct = cartProductViewModel.Product.childsComposition![0];
+      final secondProduct = cartProductViewModel.Product.childsComposition![1];
+
+      await sut.addProductInCart(
+        product: cartProductViewModel.toEntity(),
+        menuPresenter: menuPresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
       // sut.confirmedCombox.add(comboxWithSelectedProducts);
       //adiciono esse combo pra conseguir testar

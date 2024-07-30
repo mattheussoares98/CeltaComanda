@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -31,15 +32,12 @@ class SaveSaleRequestButton extends StatelessWidget {
     );
 
     if (isUpdated) {
-      Future.delayed(Duration.zero, () {
+      await Future.delayed(Duration.zero, () {
+        Navigator.of(NavigatorKey.navigatorKey.currentState!.context).pop();
         showAlertMessage(
           context,
           "O pedido foi enviado com sucesso",
         );
-      });
-
-      Future.delayed(Duration.zero, () {
-        Navigator.of(context).pop();
       });
     }
   }

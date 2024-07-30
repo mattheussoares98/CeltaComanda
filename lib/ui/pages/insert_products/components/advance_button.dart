@@ -117,7 +117,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       commentsPresenter: commentsPresenter,
     );
     Future.delayed(Duration.zero, () {
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      CartPageDialog.open(context);
     });
   }
 

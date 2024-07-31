@@ -8,7 +8,9 @@ import '../../../components/components.dart';
 import '../../pages.dart';
 
 class SaveSaleRequestButton extends StatelessWidget {
+  final double buttonHeight;
   const SaveSaleRequestButton({
+    required this.buttonHeight,
     super.key,
   });
 
@@ -54,6 +56,10 @@ class SaveSaleRequestButton extends StatelessWidget {
     GlobalKey<FormState> tableKey = GlobalKey<FormState>();
 
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(double.infinity, buttonHeight),
+        maximumSize: Size(double.infinity, buttonHeight),
+      ),
       onPressed: () async {
         if (homePresenter.isFixedCommandNumber) {
           notificationDialog(

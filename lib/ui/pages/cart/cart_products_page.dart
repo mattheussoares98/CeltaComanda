@@ -31,7 +31,7 @@ class _CartPageState extends State<CartPage>
     homeLoadingSubscription?.cancel();
   }
 
-  final double _buttonsHeight = 50;
+  final double _buttonHeight = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _CartPageState extends State<CartPage>
         SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Padding(
-            padding: EdgeInsets.only(bottom: _buttonsHeight),
+            padding: EdgeInsets.only(bottom: _buttonHeight),
             child: SingleChildScrollView(
                 child: cartPresenter.cartProducts.isNotEmpty == true
                     ? Column(
@@ -88,19 +88,23 @@ class _CartPageState extends State<CartPage>
             left: 0,
             right: 0,
             child: SizedBox(
-              height: _buttonsHeight,
+              height: _buttonHeight,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       flex: 4,
-                      child: AddMoreCartItensButton(),
+                      child: AddMoreCartItensButton(
+                        buttonHeight: _buttonHeight,
+                      ),
                     ),
                     SizedBox(width: hasMinWidth(context) ? 20 : 5),
-                    const Expanded(
+                    Expanded(
                       flex: 6,
-                      child: SaveSaleRequestButton(),
+                      child: SaveSaleRequestButton(
+                        buttonHeight: _buttonHeight,
+                      ),
                     ),
                   ],
                 ),

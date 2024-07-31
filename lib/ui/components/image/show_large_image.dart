@@ -16,54 +16,58 @@ void showLargeImage({
 }) {
   AnimatedAlertDialog.open(
       context: context,
-      page: Column(
-        children: [
-          if (productName != null)
-            Text(
-              productName,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: hasMinWidth(context) ? 40 : 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: ImageWidget(
-                    ean: ean,
-                    plu: plu,
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    isAlcoholic: selectedProduct != null &&
-                        selectedProduct.IsAlcoholicProduct.toString() == "true",
-                  ),
+      page: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            if (productName != null)
+              Text(
+                productName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 40 : 20,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
-          ),
-          if (selectedProduct != null && showInsertButton == true)
+              ),
             Expanded(
+              flex: 4,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  if (productComplement != null)
-                    Expanded(
-                      flex: 2,
-                      child: _productComplement(context, productComplement),
-                    ),
                   Expanded(
-                    child: OpenInsertProductPage(
-                      selectedProduct: selectedProduct,
+                    flex: 2,
+                    child: ImageWidget(
+                      ean: ean,
+                      plu: plu,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      isAlcoholic: selectedProduct != null &&
+                          selectedProduct.IsAlcoholicProduct.toString() ==
+                              "true",
                     ),
                   ),
                 ],
               ),
             ),
-        ],
+            if (selectedProduct != null && showInsertButton == true)
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    if (productComplement != null)
+                      Expanded(
+                        flex: 2,
+                        child: _productComplement(context, productComplement),
+                      ),
+                    Expanded(
+                      child: OpenInsertProductPage(
+                        selectedProduct: selectedProduct,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ));
 }
 

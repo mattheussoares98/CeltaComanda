@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../helpers/helpers.dart';
 
 class AddMoreCartItensButton extends StatelessWidget {
+  final double buttonHeight;
   const AddMoreCartItensButton({
+    required this.buttonHeight,
     super.key,
   });
 
@@ -12,6 +14,8 @@ class AddMoreCartItensButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).primaryColorLight,
+        minimumSize: Size(double.infinity, buttonHeight),
+        maximumSize: Size(double.infinity, buttonHeight),
       ),
       onPressed: Navigator.of(context).pop,
       child: FittedBox(

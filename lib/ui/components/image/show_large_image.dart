@@ -14,95 +14,57 @@ void showLargeImage({
   required MenuPresenter menuPresenter,
   String? productName,
 }) {
-  showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dismissible(
-          key: UniqueKey(),
-          direction: DismissDirection.startToEnd,
-          onDismissed: (_) {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: Navigator.of(context).pop,
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width * 0.1,
-                  color: Colors.transparent,
-                  child: const Align(
-                    alignment: Alignment.topCenter,
-                    child: ClosePageIconButton(),
+  AnimatedAlertDialog.open(
+      context,
+      Column(
+        children: [
+          if (productName != null)
+            Text(
+              productName,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: hasMinWidth(context) ? 40 : 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          Expanded(
+            flex: 4,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ImageWidget(
+                    ean: ean,
+                    plu: plu,
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    isAlcoholic: selectedProduct != null &&
+                        selectedProduct.IsAlcoholicProduct.toString() == "true",
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 5,
-                child: AlertDialog(
-                  insetPadding: const EdgeInsets.symmetric(
-                    vertical: 5,
-                  ),
-                  content: Column(
-                    children: [
-                      if (productName != null)
-                        Text(
-                          productName,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: hasMinWidth(context) ? 40 : 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      Expanded(
-                        flex: 4,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: ImageWidget(
-                                ean: ean,
-                                plu: plu,
-                                height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width,
-                                isAlcoholic: selectedProduct != null &&
-                                    selectedProduct.IsAlcoholicProduct
-                                            .toString() ==
-                                        "true",
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (selectedProduct != null && showInsertButton == true)
-                        Expanded(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              if (productComplement != null)
-                                Expanded(
-                                  flex: 2,
-                                  child: _productComplement(
-                                      context, productComplement),
-                                ),
-                              Expanded(
-                                child: OpenInsertProductPage(
-                                  selectedProduct: selectedProduct,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        );
-      });
+          if (selectedProduct != null && showInsertButton == true)
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if (productComplement != null)
+                    Expanded(
+                      flex: 2,
+                      child: _productComplement(context, productComplement),
+                    ),
+                  Expanded(
+                    child: OpenInsertProductPage(
+                      selectedProduct: selectedProduct,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ));
 }
 
 Widget _productComplement(BuildContext context, String productComplement) {

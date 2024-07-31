@@ -51,15 +51,13 @@ class GetxInsertProductsPresenter extends GetxController
 
     selectedComboxProduct = product;
 
-    updateTotalLiquid(product);
-
-    if (product.childsComposition == null) {
-      return;
+    if (product.childsComposition != null) {
+      _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
+        product.childsComposition!,
+      );
     }
 
-    _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-      product.childsComposition!,
-    );
+    updateTotalLiquid(product);
   }
 
   double _getTotalLiquidCombox(

@@ -1014,7 +1014,7 @@ void main() {
     //selecionado como parâmetro da função pra validar o pai
   });
 
-  group("Update product price", () {
+  group("Update product price without childsComposition", () {
     test("Should update price when update selected product", () async {
       expectLater(
           sut.totalPrice,
@@ -1049,6 +1049,58 @@ void main() {
           ));
 
       selectedProduct.childsComposition = null;
+
+      await sut.updateSelectedProduct(selectedProduct);
+    });
+  });
+  group("Update product price with childsComposition", () {
+    test("Should update price when update selected product", () async {
+      expectLater(
+          sut.totalPrice,
+          emits(
+            sut.calculateProductCompositionTotalLiquid(
+              product: selectedProduct.childsComposition![0],
+            ),
+          ));
+
+      selectedProduct.childsComposition![0].indexOfSelectedChild = 0;
+      await sut.updateSelectedProduct(selectedProduct);
+    });
+    test("Should update price add product quantity", () async {
+      expectLater(
+          sut.totalPrice,
+          emitsInOrder([
+            sut.calculateProductCompositionTotalLiquid(
+              product: selectedProduct.childsComposition![0],
+            ),
+            sut.calculateProductCompositionTotalLiquid(
+                  product: selectedProduct.childsComposition![0],
+                ) *
+                2,
+            sut.calculateProductCompositionTotalLiquid(
+                  product: selectedProduct.childsComposition![0],
+                ) *
+                3,
+            sut.calculateProductCompositionTotalLiquid(
+                  product: selectedProduct.childsComposition![0],
+                ) *
+                2,
+          ]));
+
+      selectedProduct.childsComposition![0].indexOfSelectedChild = 0;
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(false);
+    });
+    test("Should update total liquid when update selected product", () async {
+      expectLater(
+          sut.totalPrice,
+          emits(
+            sut.calculateProductCompositionTotalLiquid(
+              product: selectedProduct.childsComposition![0],
+            ),
+          ));
 
       await sut.updateSelectedProduct(selectedProduct);
     });

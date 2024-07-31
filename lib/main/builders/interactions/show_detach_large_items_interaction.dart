@@ -65,9 +65,16 @@ class ShowDetachLargeItemsInteraction {
                 icon: const CircleAvatar(
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  child: Icon(
-                    Icons.close,
-                    size: 40,
+                  minRadius: 40,
+                  maxRadius: 40,
+                  child: FittedBox(
+                    child: Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Icon(
+                        Icons.close,
+                        size: 100,
+                      ),
+                    ),
                   ),
                 ),
               ),

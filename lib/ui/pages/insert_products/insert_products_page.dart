@@ -191,12 +191,32 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                     Expanded(
                                       child: Column(
                                         children: [
+                                          if (selectedProduct
+                                                      ?.childsComposition !=
+                                                  null &&
+                                              indexOfLeftItem <
+                                                  selectedProduct!
+                                                      .childsComposition!
+                                                      .length)
+                                            Text(
+                                              selectedProduct!
+                                                  .childsComposition![
+                                                      indexOfLeftItem]
+                                                  .ChildName!,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    getStringSize(context) *
+                                                        1.4,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                              ),
+                                            ),
                                           Expanded(
                                             child: QuantityChildsOrComments(
                                               selectedLeftIndex:
                                                   indexOfLeftItem,
-                                              selectedProduct:
-                                                  selectedProduct!,
+                                              selectedProduct: selectedProduct!,
                                               showComments: getShowComments(
                                                 snapshowShowComments:
                                                     snapshowShowComments,
@@ -225,14 +245,11 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                                   .advanceLeftIndex(
                                                       commentsPresenter);
                                             },
-                                            selectedProduct:
-                                                selectedProduct!,
-                                            leftSelectedIndex:
-                                                indexOfLeftItem,
+                                            selectedProduct: selectedProduct!,
+                                            leftSelectedIndex: indexOfLeftItem,
                                             productHasComment:
                                                 getProducthasComment(
-                                              indexOfLeftItem:
-                                                  indexOfLeftItem,
+                                              indexOfLeftItem: indexOfLeftItem,
                                               commentsPresenter:
                                                   commentsPresenter,
                                             ),

@@ -162,9 +162,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                             selectedProduct: selectedProduct!,
                                             indexOfSelectedFather:
                                                 indexOfLeftItem,
-                                            doScrollStream:
-                                                insertProductPresenter
-                                                    .doScrollStream,
                                             productHasComment:
                                                 getProducthasComment(
                                               indexOfLeftItem: indexOfLeftItem,

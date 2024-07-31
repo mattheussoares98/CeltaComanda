@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
@@ -6,12 +7,10 @@ class LeftItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
   final bool productHasComment;
-  final Stream<bool> doScrollStream;
   const LeftItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
     required this.productHasComment,
-    required this.doScrollStream,
     super.key,
   });
 
@@ -72,6 +71,9 @@ class _LeftItemsState extends State<LeftItems> {
 
   @override
   Widget build(BuildContext context) {
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
+
     return Expanded(
       child: Column(
         children: [
@@ -86,7 +88,7 @@ class _LeftItemsState extends State<LeftItems> {
                 itemBuilder: (context, index) {
                   if (index + 1 == getItemsCount()) {
                     return StreamBuilder<bool>(
-                        stream: widget.doScrollStream,
+                        stream: insertProductPresenter.doScrollStream,
                         builder: (context, snapshot) {
                           if (snapshot.data == true) {
                             // Verifique se a função ainda não foi chamada

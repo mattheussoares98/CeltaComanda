@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class QuantityChildsAndComments extends StatelessWidget {
+class QuantityChildsOrComments extends StatelessWidget {
   final int selectedLeftIndex;
   final ProductsViewModel selectedProduct;
   final bool showComments;
   final Function() callSetState;
   final bool productHasComment;
-  const QuantityChildsAndComments({
+  const QuantityChildsOrComments({
     required this.selectedLeftIndex,
     required this.selectedProduct,
     required this.showComments,
@@ -75,34 +75,28 @@ class QuantityChildsAndComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          TitleText(text: getTitleText()),
-          if (showUpdateQuantity()) const UpdateQuantity(),
-          if (selectedProduct.childsComposition != null &&
-              selectedLeftIndex < selectedProduct.childsComposition!.length &&
-              !showComments)
-            Column(
-              children: [
-                ChildsRadios(
-                  callSetState: callSetState,
-                  selectedFather:
-                      getSelectedFather(selectedProduct, selectedLeftIndex),
-                  selectedProduct: selectedProduct,
-                ),
-              ],
+    return Column(
+      children: [
+        TitleText(text: getTitleText()),
+        if (showUpdateQuantity()) const UpdateQuantity(),
+        if (selectedProduct.childsComposition != null &&
+            selectedLeftIndex < selectedProduct.childsComposition!.length &&
+            !showComments)
+          ChildsRadios(
+            callSetState: callSetState,
+            selectedFather:
+                getSelectedFather(selectedProduct, selectedLeftIndex),
+            selectedProduct: selectedProduct,
+          ),
+        if (showComments && productHasComment)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: CommentsList(
+              selectedProduct: selectedProduct,
+              selectedLeftIndex: selectedLeftIndex,
             ),
-          if (showComments && productHasComment)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: CommentsList(
-                selectedProduct: selectedProduct,
-                selectedLeftIndex: selectedLeftIndex,
-              ),
-            ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }

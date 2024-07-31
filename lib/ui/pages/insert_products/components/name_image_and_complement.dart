@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
@@ -13,40 +14,38 @@ class NameImageAndComplement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2.9,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              selectedProduct.Name,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            selectedProduct.Name,
+            style: TextStyle(
+              fontSize: getStringSize(context) * 1.4,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ImageWidget(
+            height: 160,
+            width: 160,
+            ean: selectedProduct.EanCode,
+            plu: selectedProduct.PriceLookupCode,
+            isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
+            beginAnimation: 1.5,
+            endAnimation: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
+            child: Text(
+              selectedProduct.ProductComplement ?? "",
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: getStringSize(context),
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w300,
+                fontStyle: FontStyle.italic,
+                fontSize: getStringSize(context) * 0.8,
               ),
             ),
-            ImageWidget(
-              height: 160,
-              width: 160,
-              ean: selectedProduct.EanCode,
-              plu: selectedProduct.PriceLookupCode,
-              isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
-              beginAnimation: 1.5,
-              endAnimation: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
-              child: Text(
-                selectedProduct.ProductComplement ?? "",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

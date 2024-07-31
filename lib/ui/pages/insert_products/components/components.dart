@@ -4,7 +4,7 @@ export 'left_item.dart';
 export 'childs_radios.dart';
 export 'name_image_and_complement.dart';
 export 'products_and_comments_buttons.dart';
-export 'quantity_childs_and_comments.dart';
+export 'quantity_childs_or_comments.dart';
 export 'title_text.dart';
 export 'total_price_combox.dart';
 export './update_quantity.dart';

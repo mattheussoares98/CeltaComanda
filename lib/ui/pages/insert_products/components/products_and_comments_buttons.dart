@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 class ProductsAndCommentsButtons extends StatelessWidget {
@@ -21,6 +22,8 @@ class ProductsAndCommentsButtons extends StatelessWidget {
   }) {
     return TextButton(
       style: TextButton.styleFrom(
+        maximumSize: const Size(300, 50),
+        minimumSize: const Size(300, 50),
         backgroundColor:
             isSelected ? Theme.of(context).primaryColorDark : Colors.white,
         foregroundColor: isSelected
@@ -28,11 +31,14 @@ class ProductsAndCommentsButtons extends StatelessWidget {
             : Theme.of(context).primaryColorLight,
       ),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: TextStyle(
-          color:
-              isSelected ? Colors.white : Theme.of(context).primaryColorLight,
+      child: FittedBox(
+        child: Text(
+          text,
+          style: TextStyle(
+            color:
+                isSelected ? Colors.white : Theme.of(context).primaryColorLight,
+            fontSize: getStringSize(context),
+          ),
         ),
       ),
     );
@@ -40,26 +46,23 @@ class ProductsAndCommentsButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 50),
-      child: Column(
-        children: [
+    return Column(
+      children: [
+        productOrCommentButton(
+          context: context,
+          onPressed: !showComments ? null : advanceSelectedIndex,
+          isSelected: !showComments,
+          text: "Produtos",
+        ),
+        const SizedBox(height: 10),
+        if (productHasComment)
           productOrCommentButton(
             context: context,
-            onPressed: !showComments ? null : advanceSelectedIndex,
-            isSelected: !showComments,
-            text: "Produtos",
+            onPressed: showComments ? null : advanceSelectedIndex,
+            isSelected: showComments,
+            text: "Comentários",
           ),
-          const SizedBox(height: 10),
-          if (productHasComment)
-            productOrCommentButton(
-              context: context,
-              onPressed: showComments ? null : advanceSelectedIndex,
-              isSelected: showComments,
-              text: "Comentários",
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

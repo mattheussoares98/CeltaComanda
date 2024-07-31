@@ -1,8 +1,8 @@
-import 'package:clean_celta_mobile/domain/entities/cart_product_entity.dart';
-import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/entities/entities.dart';
+import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
@@ -56,25 +56,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       }
     }
   }
-
-  // bool _getCanAdvanceIndex(
-  //   InsertProductsPresenter insertProductsPresenter,
-  // ) {
-  //   if (widget.selectedProduct.childsComposition == null) {
-  //     return true;
-  //   }
-
-  //   ProductCompositionViewModel selectedFather =
-  //       widget.selectedProduct.childsComposition![0];
-
-  //   if (widget.leftSelectedIndex <
-  //       widget.selectedProduct.childsComposition!.length) {
-  //     selectedFather =
-  //         widget.selectedProduct.childsComposition![widget.leftSelectedIndex];
-  //   }
-
-  //   return insertProductsPresenter.fatherIsValid(selectedFather);
-  // }
 
   void updateSelectedCommentsOfChildsComposition(
       CommentsPresenter commentsPresenter) {
@@ -195,11 +176,13 @@ class _AdvanceButtonState extends State<AdvanceButton> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                _getButtonText(
-                  widget.selectedProduct,
-                  commentsPresenter,
-                ),
-              ),
+                  _getButtonText(
+                    widget.selectedProduct,
+                    commentsPresenter,
+                  ),
+                  style: TextStyle(
+                    fontSize: getStringSize(context),
+                  )),
             ),
           ),
         ],

@@ -43,71 +43,84 @@ class _ChildsRadiosState extends State<ChildsRadios> {
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: widget.selectedFather.childs?.isEmpty == true
-          ? 1
-          : widget.selectedFather.childs!.length,
-      itemBuilder: (context, childsIndex) {
-        ProductCompositionViewModel child;
-        bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
+    return Expanded(
+      child: ListView.builder(
+        itemCount: widget.selectedFather.childs?.isEmpty == true
+            ? 1
+            : widget.selectedFather.childs!.length,
+        itemBuilder: (context, childsIndex) {
+          ProductCompositionViewModel child;
+          bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
 
-        if (hasChilds) {
-          child = widget.selectedFather.childs![childsIndex];
-        } else {
-          child = widget.selectedFather;
-        }
+          if (hasChilds) {
+            child = widget.selectedFather.childs![childsIndex];
+          } else {
+            child = widget.selectedFather;
+          }
 
-        return InkWell(
-          onTap: () {
-            _updateSelectedIndex(
-              insertProductsPresenter: insertProductsPresenter,
-              value: childsIndex,
-            );
-          },
-          child: Row(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SizedBox(width: 5),
-                  Radio<int>(
-                    value: childsIndex,
-                    groupValue: widget.selectedFather.indexOfSelectedChild,
-                    visualDensity: VisualDensity.compact,
-                    toggleable: widget.selectedFather.IsOptionalItem == "true",
-                    onChanged: (int? value) {
-                      _updateSelectedIndex(
-                        insertProductsPresenter: insertProductsPresenter,
-                        value: childsIndex,
-                      );
-                    },
-                  ),
-                  if (child.ChildName != null)
-                    Text(
-                      child.ChildName!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                ],
-              ),
-              if (child.IncrementValue!.toDouble() > 0)
+          return InkWell(
+            onTap: () {
+              _updateSelectedIndex(
+                insertProductsPresenter: insertProductsPresenter,
+                value: childsIndex,
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      "+ ${child.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                      textAlign: TextAlign.end,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 5),
+                      Radio<int>(
+                        value: childsIndex,
+                        groupValue: widget.selectedFather.indexOfSelectedChild,
+                        visualDensity: VisualDensity.compact,
+                        toggleable:
+                            widget.selectedFather.IsOptionalItem == "true",
+                        onChanged: (int? value) {
+                          _updateSelectedIndex(
+                            insertProductsPresenter: insertProductsPresenter,
+                            value: childsIndex,
+                          );
+                        },
+                      ),
+                      if (child.ChildName != null)
+                        Expanded(
+                          child: Text(
+                            child.ChildName!,
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: getStringSize(context),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
-            ],
-          ),
-        );
-      },
+                if (child.IncrementValue!.toDouble() > 0)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Text(
+                        "+ ${child.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                          fontWeight: FontWeight.w300,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

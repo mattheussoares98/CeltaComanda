@@ -188,46 +188,53 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                if (selectedProduct!
-                                                            .childsComposition !=
-                                                        null &&
-                                                    indexOfLeftItem <
-                                                        selectedProduct!
-                                                            .childsComposition!
-                                                            .length)
-                                                  ProductsAndCommentsButtons(
-                                                    advanceSelectedIndex: () {
-                                                      insertProductPresenter
-                                                          .advanceLeftIndex(
-                                                              commentsPresenter);
-                                                    },
-                                                    productHasComment:
-                                                        getProducthasComment(
-                                                      indexOfLeftItem:
-                                                          indexOfLeftItem,
-                                                      commentsPresenter:
-                                                          commentsPresenter,
-                                                    ),
-                                                    indexOfSelectedFather:
-                                                        indexOfLeftItem,
-                                                    showComments:
-                                                        getShowComments(
-                                                      snapshowShowComments:
-                                                          snapshowShowComments,
-                                                      product: selectedProduct!,
-                                                      indexOfLeftItem:
-                                                          indexOfLeftItem,
-                                                    ),
-                                                  ),
-                                                QuantityChildsAndComments(
+                                    Row(
+                                      children: [
+                                        if (selectedProduct!
+                                                    .childsComposition !=
+                                                null &&
+                                            indexOfLeftItem <
+                                                selectedProduct!
+                                                    .childsComposition!.length)
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.12,
+                                            child: ProductsAndCommentsButtons(
+                                              advanceSelectedIndex: () {
+                                                insertProductPresenter
+                                                    .advanceLeftIndex(
+                                                        commentsPresenter);
+                                              },
+                                              productHasComment:
+                                                  getProducthasComment(
+                                                indexOfLeftItem:
+                                                    indexOfLeftItem,
+                                                commentsPresenter:
+                                                    commentsPresenter,
+                                              ),
+                                              indexOfSelectedFather:
+                                                  indexOfLeftItem,
+                                              showComments: getShowComments(
+                                                snapshowShowComments:
+                                                    snapshowShowComments,
+                                                product: selectedProduct!,
+                                                indexOfLeftItem:
+                                                    indexOfLeftItem,
+                                              ),
+                                            ),
+                                          ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.48,
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child:
+                                                    QuantityChildsOrComments(
                                                   selectedLeftIndex:
                                                       indexOfLeftItem,
                                                   selectedProduct:
@@ -250,29 +257,32 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                                         commentsPresenter,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              AdvanceButton(
+                                                totalPrice: totalLiquid,
+                                                quantity: insertProductPresenter
+                                                    .totalProductsQuantity,
+                                                advanceSelectedIndex: () {
+                                                  insertProductPresenter
+                                                      .advanceLeftIndex(
+                                                          commentsPresenter);
+                                                },
+                                                selectedProduct:
+                                                    selectedProduct!,
+                                                leftSelectedIndex:
+                                                    indexOfLeftItem,
+                                                productHasComment:
+                                                    getProducthasComment(
+                                                  indexOfLeftItem:
+                                                      indexOfLeftItem,
+                                                  commentsPresenter:
+                                                      commentsPresenter,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          AdvanceButton(
-                                            totalPrice: totalLiquid,
-                                            quantity: insertProductPresenter
-                                                .totalProductsQuantity,
-                                            advanceSelectedIndex: () {
-                                              insertProductPresenter
-                                                  .advanceLeftIndex(
-                                                      commentsPresenter);
-                                            },
-                                            selectedProduct: selectedProduct!,
-                                            leftSelectedIndex: indexOfLeftItem,
-                                            productHasComment:
-                                                getProducthasComment(
-                                              indexOfLeftItem: indexOfLeftItem,
-                                              commentsPresenter:
-                                                  commentsPresenter,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 );

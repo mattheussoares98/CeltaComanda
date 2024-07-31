@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../helpers/helpers.dart';
+
 class TotalPriceCombox extends StatelessWidget {
   final double totalLiquid;
 
@@ -19,10 +20,12 @@ class TotalPriceCombox extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Text(
+            Text(
               "Total",
               style: TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: getStringSize(context) * 1.2,
               ),
             ),
             Text(

@@ -23,7 +23,7 @@ class AddMoreCartItensButton extends StatelessWidget {
           "Adicionar mais itens",
           style: TextStyle(
             color: Colors.white,
-            fontSize: hasMinWidth(context) ? 23 : 16,
+            fontSize: getStringSize(context),
           ),
         ),
       ),

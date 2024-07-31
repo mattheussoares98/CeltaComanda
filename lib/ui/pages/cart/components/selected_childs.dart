@@ -25,7 +25,7 @@ class SelectedChilds extends StatelessWidget {
             color: Theme.of(context).primaryColorLight.withAlpha(30),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Row(
+          child: Row(
             children: [
               Expanded(
                 flex: 4,
@@ -33,18 +33,29 @@ class SelectedChilds extends StatelessWidget {
                   'Produto selecionados e comentários',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
                   ),
                 ),
               ),
               Expanded(
-                child: Text('Quantidade',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(
+                  'Quantidade',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
+                  ),
+                ),
               ),
               Expanded(
-                child: Text('Preço',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(
+                  'Preço',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
+                  ),
+                ),
               ),
             ],
           ),
@@ -76,8 +87,9 @@ class SelectedChilds extends StatelessWidget {
                           children: [
                             Text(
                               childName,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
+                                fontSize: getStringSize(context) * 0.9,
                               ),
                             ),
                             if (child.commentFather != null)
@@ -89,6 +101,9 @@ class SelectedChilds extends StatelessWidget {
                           child: Text(
                         child.Quantity!.toBrazilianNumber(),
                         textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: getStringSize(context) * 0.9,
+                        ),
                       )),
                       Expanded(
                         child: Text(
@@ -100,6 +115,9 @@ class SelectedChilds extends StatelessWidget {
                               .toBrazilianNumber()
                               .addBrazilianCoin(),
                           textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: getStringSize(context) * 0.9,
+                          ),
                         ),
                       ),
                     ],

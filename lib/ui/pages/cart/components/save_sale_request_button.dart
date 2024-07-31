@@ -156,7 +156,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                 'Enviar pedido',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: hasMinWidth(context) ? 23 : 16,
+                  fontSize: getStringSize(context),
                 ),
               ),
             ),
@@ -165,7 +165,7 @@ class SaveSaleRequestButton extends StatelessWidget {
               child: Text(
                 cartPresenter.totalSaleRequestTempPrice,
                 style: TextStyle(
-                  fontSize: hasMinWidth(context) ? 23 : 16,
+                  fontSize: getStringSize(context),
                 ),
               ),
             ),

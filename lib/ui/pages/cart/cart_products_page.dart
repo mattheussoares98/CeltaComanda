@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
@@ -31,7 +32,7 @@ class _CartPageState extends State<CartPage>
     homeLoadingSubscription?.cancel();
   }
 
-  final double _buttonHeight = 50;
+  final double _buttonHeight = 65;
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +62,16 @@ class _CartPageState extends State<CartPage>
                             child: Container(
                               width: double.infinity,
                               color: Theme.of(context).primaryColorDark,
-                              child: const Center(
+                              child: Center(
                                   child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Text(
                                   "CARRINHO",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: getStringSize(context),
                                   ),
                                 ),
                               )),
@@ -90,7 +93,7 @@ class _CartPageState extends State<CartPage>
             child: SizedBox(
               height: _buttonHeight,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
                     Expanded(

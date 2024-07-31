@@ -1013,4 +1013,44 @@ void main() {
     //fatherIsValid, que já possui testes. Só passa o produto pai do índice
     //selecionado como parâmetro da função pra validar o pai
   });
+
+  group("Update product price", () {
+    test("Should update price when update selected product", () async {
+      expectLater(
+          sut.totalPrice,
+          emits(
+            selectedProduct.SaleRetailPraticed.toDouble(),
+          ));
+
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(selectedProduct);
+    });
+    test("Should update price add product quantity", () async {
+      expectLater(
+          sut.totalPrice,
+          emitsInOrder([
+            selectedProduct.SaleRetailPraticed.toDouble(),
+            selectedProduct.SaleRetailPraticed.toDouble() * 2,
+            selectedProduct.SaleRetailPraticed.toDouble() * 3,
+            selectedProduct.SaleRetailPraticed.toDouble() * 2,
+          ]));
+
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(false);
+    });
+    test("Should update total liquid when update selected product", () async {
+      expectLater(
+          sut.totalPrice,
+          emits(
+            selectedProduct.SaleRetailPraticed.toDouble(),
+          ));
+
+      selectedProduct.childsComposition = null;
+
+      await sut.updateSelectedProduct(selectedProduct);
+    });
+  });
 }

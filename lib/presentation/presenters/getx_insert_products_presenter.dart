@@ -25,9 +25,9 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<double> get totalPrice => _totalPrice.stream;
 
-  int _totalComboxQuantity = 1;
+  int _totalProductsQuantity = 1;
   @override
-  int get totalProductsQuantity => _totalComboxQuantity;
+  int get totalProductsQuantity => _totalProductsQuantity;
 
   final _comboxIsValidStream = RxBool(false);
   @override
@@ -47,9 +47,11 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   Future<void> updateSelectedProduct(ProductsViewModel product) async {
-    updateTotalProductsQuantity(false, true);
+    _totalProductsQuantity = 1;
 
     selectedComboxProduct = product;
+
+    updateTotalLiquid(product);
 
     if (product.childsComposition == null) {
       return;
@@ -79,7 +81,8 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void updateTotalLiquid(ProductsViewModel product) {
     if (product.childsComposition == null) {
-      _totalPrice.subject.add(product.SaleRetailPraticed.toDouble());
+      _totalPrice.subject
+          .add(product.SaleRetailPraticed.toDouble() * _totalProductsQuantity);
     } else {
       double totalLiquid = _getTotalLiquidCombox(product.childsComposition!);
 
@@ -227,16 +230,17 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void updateTotalProductsQuantity(bool isAddingQuantity,
-      [bool clearTotalComboxQuantity = false]) {
-    if (clearTotalComboxQuantity) {
-      _totalComboxQuantity = 1;
-    } else if (isAddingQuantity) {
-      _totalComboxQuantity++;
-    } else if (_totalComboxQuantity <= 1) {
+  void updateTotalProductsQuantity(bool isAddingQuantity) {
+    if (isAddingQuantity) {
+      _totalProductsQuantity++;
+    } else if (_totalProductsQuantity <= 1) {
       return;
     } else {
-      _totalComboxQuantity--;
+      _totalProductsQuantity--;
+    }
+
+    if (_selectedProduct.value != null) {
+      updateTotalLiquid(_selectedProduct.value!);
     }
   }
 
@@ -315,7 +319,7 @@ class GetxInsertProductsPresenter extends GetxController
   }) {
     showComments = false;
     selectedFatherIndex = 0;
-    _totalComboxQuantity = 1;
+    _totalProductsQuantity = 1;
 
     if (product.childsComposition != null) {
       for (var father in product.childsComposition!) {

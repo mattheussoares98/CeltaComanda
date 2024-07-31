@@ -103,6 +103,10 @@ class AnimatedDialogState extends State<AnimatedDialog>
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
+        iconPadding: const EdgeInsets.all(0),
+        titlePadding: const EdgeInsets.all(0),
+        buttonPadding: const EdgeInsets.all(0),
+        actionsPadding: const EdgeInsets.all(0),
         insetPadding: const EdgeInsets.all(0),
         contentPadding: const EdgeInsets.all(0),
         actions: widget.actions ?? [],

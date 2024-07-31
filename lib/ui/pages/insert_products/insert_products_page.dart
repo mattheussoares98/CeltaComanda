@@ -85,7 +85,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       selectedProduct = Get.arguments;
 
       Future.delayed(Duration.zero, () {
-        insertProductPresenter.updateTotalLiquid(selectedProduct!);
         insertProductPresenter.updateSelectedProduct(selectedProduct!);
       });
 
@@ -101,9 +100,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     if (snapshotTotalPrice.hasData && totalLiquid != snapshotTotalPrice.data) {
       debugPrint("Preço diferente");
       totalLiquid = snapshotTotalPrice.data!;
-      Future.delayed(Duration.zero, () {
-        insertProductPresenter.updateTotalLiquid(selectedProduct!);
-      });
     }
 
     if (snapshotLeftItems.hasData &&
@@ -188,10 +184,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                           ),
                                           TotalPriceCombox(
                                             totalLiquid: totalLiquid,
-                                            totalProductsQuantity:
-                                                insertProductPresenter
-                                                    .totalProductsQuantity,
-                                            selectedProduct: selectedProduct!,
                                           ),
                                         ],
                                       ),

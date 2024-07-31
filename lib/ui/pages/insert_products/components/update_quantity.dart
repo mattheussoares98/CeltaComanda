@@ -12,59 +12,63 @@ class UpdateQuantity extends StatefulWidget {
 }
 
 class _UpdateQuantityState extends State<UpdateQuantity> {
+  Widget getCircleAvatar({
+    required InsertProductPresenter insertProductPresenter,
+    required bool isAddingQuantity,
+  }) {
+    return Flexible(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            insertProductPresenter
+                .updateTotalProductsQuantity(isAddingQuantity);
+          });
+        },
+        child: CircleAvatar(
+          maxRadius: 40,
+          backgroundColor: Theme.of(context).primaryColorLight,
+          child: Icon(isAddingQuantity ? Icons.add : Icons.remove),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    InsertProductPresenter insertProductsPresenter =
+    InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
     return Expanded(
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    insertProductsPresenter.updateTotalProductsQuantity(false);
-                  });
-                },
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColorLight,
-                  child: const Icon(Icons.remove),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  radius: 40,
-                  child: FittedBox(
-                    child: Text(
-                      insertProductsPresenter.totalProductsQuantity
-                          .toString()
-                          .toBrazilianNumber(0),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                      ),
+          getCircleAvatar(
+            insertProductPresenter: insertProductPresenter,
+            isAddingQuantity: false,
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: CircleAvatar(
+                backgroundColor: Theme.of(context).primaryColorDark,
+                radius: 70,
+                child: FittedBox(
+                  child: Text(
+                    insertProductPresenter.totalProductsQuantity
+                        .toString()
+                        .toBrazilianNumber(0),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 50,
                     ),
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    insertProductsPresenter.updateTotalProductsQuantity(true);
-                  });
-                },
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColorLight,
-                  child: const Icon(Icons.add),
-                ),
-              ),
-            ],
+            ),
+          ),
+          getCircleAvatar(
+            insertProductPresenter: insertProductPresenter,
+            isAddingQuantity: true,
           ),
         ],
       ),

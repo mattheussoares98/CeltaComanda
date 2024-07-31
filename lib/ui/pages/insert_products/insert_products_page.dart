@@ -80,8 +80,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     if (snapshotSelectedProduct.hasData &&
             snapshotSelectedProduct.data != selectedProduct ||
         (selectedProduct == null && Get.arguments != null)) {
-      debugPrint("Produto diferente");
-
       selectedProduct = Get.arguments;
 
       Future.delayed(Duration.zero, () {
@@ -98,13 +96,11 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     }
 
     if (snapshotTotalPrice.hasData && totalLiquid != snapshotTotalPrice.data) {
-      debugPrint("Preço diferente");
       totalLiquid = snapshotTotalPrice.data!;
     }
 
     if (snapshotLeftItems.hasData &&
         snapshotLeftItems.data != indexOfLeftItem) {
-      debugPrint("Índice diferente");
       indexOfLeftItem = snapshotLeftItems.data ?? 0;
     }
   }

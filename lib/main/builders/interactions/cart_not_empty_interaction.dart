@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ui/components/components.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../builders.dart';
 
@@ -18,7 +19,7 @@ class CartNotEmptyInteraction {
       Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
 
   static void restartTime() {
-    if (!CartPageDialog.isOpen && !_alertMessageIsOpen) {
+    if (!AnimatedAlertDialog.isOpen && !_alertMessageIsOpen) {
       _timer.cancel();
       _timer = Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
     }
@@ -27,7 +28,7 @@ class CartNotEmptyInteraction {
   static bool _alertMessageIsOpen = false;
 
   static void _showCartNotEmptyMessage() async {
-    if (CartPageDialog.isOpen ||
+    if (AnimatedAlertDialog.isOpen ||
         _alertMessageIsOpen ||
         cartPresenter.cartProducts.isEmpty) {
       return;
@@ -78,8 +79,9 @@ class CartNotEmptyInteraction {
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).pop();
-                    await CartPageDialog.open(
-                        NavigatorKey.navigatorKey.currentState!.context);
+                    await AnimatedAlertDialog.open(
+                        NavigatorKey.navigatorKey.currentState!.context,
+                        const CartPage());
                     _alertMessageIsOpen = false;
                     restartTime();
                   },

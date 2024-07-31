@@ -1,4 +1,5 @@
 export './alert_message.dart';
+export './animated_alert_dialog.dart';
 export "./app_theme.dart";
 export 'close_page_icon_button.dart';
 export 'comment.dart';

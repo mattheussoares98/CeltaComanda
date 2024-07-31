@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../pages.dart';
 
 class AdvanceButton extends StatefulWidget {
@@ -118,7 +119,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     );
     Future.delayed(Duration.zero, () {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      CartPageDialog.open(context);
+      AnimatedAlertDialog.open(context, const CartPage());
     });
   }
 

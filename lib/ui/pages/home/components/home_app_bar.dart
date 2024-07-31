@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/components.dart';
 import '../../pages.dart';
 
 PreferredSize homeAppBar({
@@ -63,7 +64,7 @@ PreferredSize homeAppBar({
               style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder()),
               onPressed: () {
-                CartPageDialog.open(context);
+                AnimatedAlertDialog.open(context, const CartPage());
               },
               label: const Center(
                 child: Text(
@@ -77,7 +78,7 @@ PreferredSize homeAppBar({
               left: 5,
               child: InkWell(
                 onTap: () {
-                  CartPageDialog.open(context);
+                  AnimatedAlertDialog.open(context, const CartPage());
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.black,

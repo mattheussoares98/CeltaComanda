@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
-import '../../pages.dart';
+import 'components.dart';
 
-class CartPageDialog {
+class AnimatedAlertDialog {
   static bool isOpen = false;
 
-  static Future<void> open(BuildContext context) async {
+  static Future<void> open(
+    BuildContext context,
+    Widget page,
+  ) async {
     isOpen = true;
 
     await showDialog(
@@ -41,7 +43,7 @@ class CartPageDialog {
               ),
               Expanded(
                 flex: 9,
-                child: _AnimatedDialog(),
+                child: AnimatedDialog(page: page),
               ),
             ],
           ),
@@ -51,12 +53,16 @@ class CartPageDialog {
   }
 }
 
-class _AnimatedDialog extends StatefulWidget {
+class AnimatedDialog extends StatefulWidget {
+  final Widget page;
+  const AnimatedDialog({super.key, required this.page});
+
   @override
-  __AnimatedDialogState createState() => __AnimatedDialogState();
+  AnimatedDialogState createState() => AnimatedDialogState();
 }
 
-class __AnimatedDialogState extends State<_AnimatedDialog> with SingleTickerProviderStateMixin {
+class AnimatedDialogState extends State<AnimatedDialog>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
 
@@ -95,7 +101,7 @@ class __AnimatedDialogState extends State<_AnimatedDialog> with SingleTickerProv
         contentPadding: const EdgeInsets.all(0),
         content: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: const CartPage(),
+          child: widget.page,
         ),
       ),
     );

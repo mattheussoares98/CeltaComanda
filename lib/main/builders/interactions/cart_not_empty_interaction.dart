@@ -44,23 +44,26 @@ class CartNotEmptyInteraction {
     await AnimatedAlertDialog.open(
       context: NavigatorKey.navigatorKey.currentState!.context,
       actions: [
-        Align(
-          alignment: Alignment.center,
-          child: ElevatedButton.icon(
-            onPressed: () async {
-              Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
-                  .pop();
-              await AnimatedAlertDialog.open(
-                  context: NavigatorKey.navigatorKey.currentState!.context,
-                  page: const CartPage());
-              restartTime();
-            },
-            icon: const Icon(Icons.shopping_cart),
-            label: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "VISUALIZAR CARRINHO",
-                textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Align(
+            alignment: Alignment.center,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
+                    .pop();
+                await AnimatedAlertDialog.open(
+                    context: NavigatorKey.navigatorKey.currentState!.context,
+                    page: const CartPage());
+                restartTime();
+              },
+              icon: const Icon(Icons.shopping_cart),
+              label: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "VISUALIZAR CARRINHO",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -96,64 +99,5 @@ class CartNotEmptyInteraction {
       ),
     );
     restartTime();
-
-    // await showDialog(
-    //     context: NavigatorKey.navigatorKey.currentState!.context,
-    //     builder: (context) {
-    //       return PopScope(
-    //         canPop: false,
-    //         child: AlertDialog(
-    //           insetPadding: EdgeInsets.symmetric(
-    //             horizontal: MediaQuery.of(context).size.width * 0.2,
-    //             vertical: MediaQuery.of(context).size.height * 0.2,
-    //           ),
-    //           contentPadding:
-    //               const EdgeInsets.symmetric(vertical: 50, horizontal: 100),
-    //           actionsAlignment: MainAxisAlignment.center,
-    //           title: const Icon(Icons.info, size: 50),
-    //           content: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: [
-    //               Text(
-    //                 "Seu pedido está pendente!",
-    //                 textAlign: TextAlign.center,
-    //                 style: TextStyle(
-    //                   color: Theme.of(context).primaryColorDark,
-    //                   fontSize: getStringSize(context),
-    //                   fontWeight: FontWeight.bold,
-    //                 ),
-    //               ),
-    //               const SizedBox(height: 10),
-    //               Text(
-    //                 "Há produtos no carrinho que não foram enviados. Pode ser que você tenha esquecido de enviar",
-    //                 textAlign: TextAlign.center,
-    //                 style: TextStyle(
-    //                   color: Theme.of(context).primaryColor,
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //           actions: [
-    //             ElevatedButton(
-    //               onPressed: () async {
-    //                 Navigator.of(context).pop();
-    //                 await AnimatedAlertDialog.open(
-    //                     context:
-    //                         NavigatorKey.navigatorKey.currentState!.context,
-    //                     page: const CartPage());
-    //                 _alertMessageIsOpen = false;
-    //                 restartTime();
-    //               },
-    //               child: const Padding(
-    //                 padding: EdgeInsets.all(8.0),
-    //                 child: Text(
-    //                   "VISUALIZAR CARRINHO",
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       );
-    //     });
   }
 }

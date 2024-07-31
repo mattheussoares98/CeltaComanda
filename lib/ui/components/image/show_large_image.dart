@@ -15,8 +15,8 @@ void showLargeImage({
   String? productName,
 }) {
   AnimatedAlertDialog.open(
-      context,
-      Column(
+      context: context,
+      page: Column(
         children: [
           if (productName != null)
             Text(

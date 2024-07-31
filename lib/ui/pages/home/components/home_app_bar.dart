@@ -64,7 +64,10 @@ PreferredSize homeAppBar({
               style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder()),
               onPressed: () {
-                AnimatedAlertDialog.open(context, const CartPage());
+                AnimatedAlertDialog.open(
+                  context: context,
+                  page: const CartPage(),
+                );
               },
               label: const Center(
                 child: Text(
@@ -78,7 +81,10 @@ PreferredSize homeAppBar({
               left: 5,
               child: InkWell(
                 onTap: () {
-                  AnimatedAlertDialog.open(context, const CartPage());
+                  AnimatedAlertDialog.open(
+                    context: context,
+                    page: const CartPage(),
+                  );
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.black,

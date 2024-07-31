@@ -80,8 +80,9 @@ class CartNotEmptyInteraction {
                   onPressed: () async {
                     Navigator.of(context).pop();
                     await AnimatedAlertDialog.open(
-                        NavigatorKey.navigatorKey.currentState!.context,
-                        const CartPage());
+                        context:
+                            NavigatorKey.navigatorKey.currentState!.context,
+                        page: const CartPage());
                     _alertMessageIsOpen = false;
                     restartTime();
                   },

@@ -119,7 +119,10 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     );
     Future.delayed(Duration.zero, () {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      AnimatedAlertDialog.open(context, const CartPage());
+      AnimatedAlertDialog.open(
+        context: context,
+        page: const CartPage(),
+      );
     });
   }
 

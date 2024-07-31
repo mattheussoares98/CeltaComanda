@@ -5,10 +5,11 @@ import 'components.dart';
 class AnimatedAlertDialog {
   static bool isOpen = false;
 
-  static Future<void> open(
-    BuildContext context,
-    Widget page,
-  ) async {
+  static Future<void> open({
+    required BuildContext context,
+    required Widget page,
+    List<Widget>? actions,
+  }) async {
     isOpen = true;
 
     await showDialog(
@@ -43,7 +44,7 @@ class AnimatedAlertDialog {
               ),
               Expanded(
                 flex: 9,
-                child: AnimatedDialog(page: page),
+                child: AnimatedDialog(page: page, actions: actions),
               ),
             ],
           ),
@@ -55,7 +56,12 @@ class AnimatedAlertDialog {
 
 class AnimatedDialog extends StatefulWidget {
   final Widget page;
-  const AnimatedDialog({super.key, required this.page});
+  final List<Widget>? actions;
+  const AnimatedDialog({
+    super.key,
+    required this.page,
+    required this.actions,
+  });
 
   @override
   AnimatedDialogState createState() => AnimatedDialogState();
@@ -99,6 +105,7 @@ class AnimatedDialogState extends State<AnimatedDialog>
         ),
         insetPadding: const EdgeInsets.all(0),
         contentPadding: const EdgeInsets.all(0),
+        actions: widget.actions ?? [],
         content: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: widget.page,

@@ -107,6 +107,19 @@ class _CartProductItemState extends State<CartProductItem> {
                         fontSize: getStringSize(context),
                       ),
                     ),
+                    if (widget.cartProduct.Product.childsComposition != null)
+                      FittedBox(
+                        child: Text(
+                          "(COMBO)",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).secondaryHeaderColor,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
                     if (commentsPresenter.productHasComment(
                       internalCodeOnERP:
                           widget.cartProduct.Product.InternalCodeOnERP!.toInt(),

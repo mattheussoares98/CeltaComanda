@@ -84,7 +84,8 @@ class GetxInsertProductsPresenter extends GetxController
       _totalPrice.subject
           .add(product.SaleRetailPraticed.toDouble() * _totalProductsQuantity);
     } else {
-      double totalLiquid = _getTotalLiquidCombox(product.childsComposition!);
+      double totalLiquid = _getTotalLiquidCombox(product.childsComposition!) *
+          _totalProductsQuantity;
 
       _totalPrice.subject.add(totalLiquid);
     }

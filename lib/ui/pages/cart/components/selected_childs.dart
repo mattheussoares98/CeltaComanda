@@ -54,6 +54,7 @@ class SelectedChilds extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.builder(
             shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: cartProduct.Product.childsComposition!.length,
             itemBuilder: (context, i) {
               final child = cartProduct.Product.childsComposition![i];

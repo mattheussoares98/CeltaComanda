@@ -343,7 +343,7 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void advanceLeftIndex(CommentsPresenter commentsPresenter) {
-    if (_selectedProduct.value!.childsComposition == null) {
+    if (_selectedProduct.value?.childsComposition == null) {
       if (commentsPresenter.productHasComment(
               internalCodeOnERP:
                   _selectedProduct.value!.InternalCodeOnERP!.toInt(),

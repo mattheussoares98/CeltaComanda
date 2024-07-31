@@ -69,36 +69,47 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   double totalLiquid = 0;
   int indexOfLeftItem = 0;
 
+  double? previousTotalPrice;
+
   void doOnBuildStreams({
     required AsyncSnapshot<double> snapshotTotalPrice,
     required AsyncSnapshot<ProductsViewModel?> snapshotSelectedProduct,
     required AsyncSnapshot<int> snapshotLeftItems,
     required InsertProductPresenter insertProductPresenter,
   }) {
-    if (Get.arguments != null) {
+    if (snapshotSelectedProduct.hasData &&
+            snapshotSelectedProduct.data != selectedProduct ||
+        (selectedProduct == null && Get.arguments != null)) {
+      debugPrint("Produto diferente");
+
       selectedProduct = Get.arguments;
-    }
 
-    if (snapshotTotalPrice.hasData) {
-      totalLiquid = snapshotTotalPrice.data!;
-    }
+      Future.delayed(Duration.zero, () {
+        insertProductPresenter.updateTotalLiquid(selectedProduct!);
+        insertProductPresenter.updateSelectedProduct(selectedProduct!);
+      });
 
-    if (snapshotSelectedProduct.hasData) {
-      selectedProduct = snapshotSelectedProduct.data!;
-    }
-
-    Future.delayed(Duration.zero, () {
-      insertProductPresenter.updateTotalLiquid(selectedProduct!);
-    });
-
-    indexOfLeftItem = snapshotLeftItems.data ?? 0;
-
-    if (selectedProduct?.childsComposition != null) {
-      for (var child in selectedProduct!.childsComposition!) {
-        if (child.childs?.isEmpty == true) {
-          child.indexOfSelectedChild = 0;
+      if (selectedProduct?.childsComposition != null) {
+        for (var child in selectedProduct!.childsComposition!) {
+          if (child.childs?.isEmpty == true) {
+            child.indexOfSelectedChild = 0;
+          }
         }
       }
+    }
+
+    if (snapshotTotalPrice.hasData && totalLiquid != snapshotTotalPrice.data) {
+      debugPrint("Preço diferente");
+      totalLiquid = snapshotTotalPrice.data!;
+      Future.delayed(Duration.zero, () {
+        insertProductPresenter.updateTotalLiquid(selectedProduct!);
+      });
+    }
+
+    if (snapshotLeftItems.hasData &&
+        snapshotLeftItems.data != indexOfLeftItem) {
+      debugPrint("Índice diferente");
+      indexOfLeftItem = snapshotLeftItems.data ?? 0;
     }
   }
 

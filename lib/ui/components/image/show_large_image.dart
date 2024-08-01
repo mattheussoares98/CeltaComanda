@@ -49,26 +49,51 @@ void showLargeImage({
               ),
             ),
             if (selectedProduct != null && showInsertButton == true)
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    if (productComplement != null)
-                      Expanded(
-                        flex: 2,
-                        child: _productComplement(context, productComplement),
-                      ),
-                    Expanded(
-                      child: OpenInsertProductPage(
-                        selectedProduct: selectedProduct,
-                      ),
-                    ),
-                  ],
-                ),
+              _complementAndInsertProductButton(
+                productComplement: productComplement,
+                context: context,
+                selectedProduct: selectedProduct,
               ),
           ],
         ),
       ));
+}
+
+Widget _complementAndInsertProductButton({
+  required String? productComplement,
+  required BuildContext context,
+  required ProductsViewModel selectedProduct,
+}) {
+  if (hasMinWidth(context)) {
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (productComplement != null)
+            Expanded(
+              flex: 2,
+              child: _productComplement(context, productComplement),
+            ),
+          Expanded(
+            child: OpenInsertProductPage(
+              selectedProduct: selectedProduct,
+            ),
+          ),
+        ],
+      ),
+    );
+  } else {
+    return Column(
+      children: [
+        if (productComplement != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: _productComplement(context, productComplement),
+          ),
+        OpenInsertProductPage(selectedProduct: selectedProduct),
+      ],
+    );
+  }
 }
 
 Widget _productComplement(BuildContext context, String productComplement) {

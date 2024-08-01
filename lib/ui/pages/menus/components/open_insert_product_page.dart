@@ -54,15 +54,14 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (hasMinWidth(context))
-              Icon(
-                Icons.shopping_cart,
-                size: getIconSize(context),
-              ),
+            Icon(
+              Icons.shopping_cart,
+              size: getIconSize(context),
+            ),
             const SizedBox(width: 20),
             Expanded(
               child: Text(
-                hasMinWidth(context) ? "Inserir no carrinho" : "Inserir",
+                "Inserir no carrinho",
                 style: TextStyle(
                   fontSize: getStringSize(context),
                 ),

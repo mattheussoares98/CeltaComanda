@@ -560,5 +560,11 @@ void main() {
       sut.updateIndexOfSelectedGroup(0);
       sut.updateIndexOfSelectedGroup(5);
     });
+    test('Should emit correct value to scroll groups when click in any group',
+        () async {
+      expectLater(sut.doScrollGroupsStream, emits(true));
+
+      sut.updateIndexOfSelectedGroup(1);
+    });
   });
 }

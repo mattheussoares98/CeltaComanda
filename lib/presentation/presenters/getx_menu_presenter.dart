@@ -249,6 +249,7 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateIndexOfSelectedGroup(int index) {
     _inexOfSelectedGroup.value = index;
+    doScroll = true;
   }
 
   ProductsViewModel? _searchedProduct;

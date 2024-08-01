@@ -32,9 +32,40 @@ class _GroupItemsState extends State<GroupItems> {
     }
   }
 
+  final ScrollController _scrollController = ScrollController();
+  final double itemExtent = 70;
+  bool _doScrollExecuted = false;
+
+  void doScroll(int index) {
+    final viewportHeight = MediaQuery.of(context).size.height;
+
+    // Calcula a posição de destino para centralizar o item
+    final double targetPosition =
+        (index * itemExtent) - (viewportHeight / 2) + (itemExtent / 2);
+
+    // Garante que a posição de rolagem esteja dentro dos limites permitidos
+    final double scrollOffset = targetPosition.clamp(
+      0.0,
+      _scrollController.position.maxScrollExtent,
+    );
+
+    _scrollController.animateTo(
+      scrollOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.15,
       height: double.infinity,
@@ -47,41 +78,58 @@ class _GroupItemsState extends State<GroupItems> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListView.builder(
+        itemExtent: itemExtent,
         shrinkWrap: true,
+        controller: _scrollController,
         itemCount: widget.expansibleGroupsViewModel.length,
         itemBuilder: (context, index) {
           final groupViewModel = widget.expansibleGroupsViewModel[index];
 
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                menuPresenter.updateIndexOfSelectedGroup(index);
-                widget.scrollUpItemsList();
+          return StreamBuilder<bool>(
+              stream: menuPresenter.doScrollGroupsStream,
+              builder: (context, snapshot) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      menuPresenter.updateIndexOfSelectedGroup(index);
+                      widget.scrollUpItemsList();
+                      _doScrollExecuted = false;
+                    });
+                    if (snapshot.data == true) {
+                      // Verifique se a função ainda não foi chamada
+                      if (!_doScrollExecuted) {
+                        doScroll(index);
+                        _doScrollExecuted = true;
+                      }
+                    } else {
+                      // Se o valor da stream não for mais true, redefina a variável de controle
+                      _doScrollExecuted = false;
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(1),
+                    height: 70,
+                    decoration: BoxDecoration(
+                      gradient: widget.selectedIndex == index
+                          ? LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [
+                                Theme.of(context).primaryColorLight,
+                                Theme.of(context).primaryColor,
+                                Theme.of(context).primaryColorDark,
+                              ],
+                            )
+                          : null,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: GroupItem(
+                      expansibleGroupsViewModel: groupViewModel,
+                      groupIsSelected: widget.selectedIndex == index,
+                    ),
+                  ),
+                );
               });
-            },
-            child: Container(
-              margin: const EdgeInsets.all(1),
-              height: 70,
-              decoration: BoxDecoration(
-                gradient: widget.selectedIndex == index
-                    ? LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          Theme.of(context).primaryColorLight,
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColorDark,
-                        ],
-                      )
-                    : null,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: GroupItem(
-                expansibleGroupsViewModel: groupViewModel,
-                groupIsSelected: widget.selectedIndex == index,
-              ),
-            ),
-          );
         },
       ),
     );

@@ -15,38 +15,41 @@ class AnimatedAlertDialog {
     await showDialog(
       context: context,
       builder: (context) {
-        return Dismissible(
-          direction: DismissDirection.startToEnd,
-          key: UniqueKey(),
-          onDismissed: (_) {
-            Navigator.of(context).pop();
-            isOpen = false;
-          },
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    isOpen = false;
-                  },
-                  child: Container(
-                    height: double.infinity,
-                    color: Colors.transparent,
-                    child: const Align(
-                      alignment: Alignment.topCenter,
-                      child: ClosePageIconButton(),
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Dismissible(
+            direction: DismissDirection.startToEnd,
+            key: UniqueKey(),
+            onDismissed: (_) {
+              Navigator.of(context).pop();
+              isOpen = false;
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      isOpen = false;
+                    },
+                    child: Container(
+                      height: double.infinity,
+                      color: Colors.transparent,
+                      child: const Align(
+                        alignment: Alignment.topCenter,
+                        child: ClosePageIconButton(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 9,
-                child: AnimatedDialog(page: page, actions: actions),
-              ),
-            ],
+                Expanded(
+                  flex: 9,
+                  child: AnimatedDialog(page: page, actions: actions),
+                ),
+              ],
+            ),
           ),
         );
       },

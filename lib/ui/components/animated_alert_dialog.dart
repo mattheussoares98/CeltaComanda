@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import 'components.dart';
@@ -29,6 +30,7 @@ class AnimatedAlertDialog {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Expanded(
+                  flex: hasMinWidth(context) ? 1 : 2,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).pop();

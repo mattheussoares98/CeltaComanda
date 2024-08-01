@@ -12,9 +12,11 @@ class ClosePageIconButton extends StatelessWidget {
       icon: const CircleAvatar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        child: Icon(
-          Icons.close,
-          size: 40,
+        child: FittedBox(
+          child: Icon(
+            Icons.close,
+            size: 40,
+          ),
         ),
       ),
     );

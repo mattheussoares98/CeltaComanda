@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
@@ -23,10 +24,12 @@ PreferredSize homeAppBar({
                 onPressed: () {
                   homePresenter.goToPrintedProductsPage();
                 },
-                label: const Center(
-                  child: Text(
-                    "SOLICITADOS",
-                  ),
+                label: Center(
+                  child: hasMinWidth(context)
+                      ? const Text(
+                          "SOLICITADOS",
+                        )
+                      : null,
                 ),
                 icon: const Icon(Icons.list),
               ),
@@ -68,10 +71,12 @@ PreferredSize homeAppBar({
                   page: const CartPage(),
                 );
               },
-              label: const Center(
-                child: Text(
-                  "CARRINHO",
-                ),
+              label: Center(
+                child: hasMinWidth(context)
+                    ? const Text(
+                        "CARRINHO",
+                      )
+                    : null,
               ),
               icon: const Icon(Icons.shopping_cart_outlined),
             ),

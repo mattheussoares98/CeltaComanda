@@ -178,11 +178,11 @@ Widget _namePriceComboxAndComplement(
               alignment: Alignment.bottomCenter,
               child: Text(
                 productsViewModel.ProductComplement!,
-                maxLines: hasMinWidth(context) ? 4 : 4,
+                maxLines: hasMinWidth(context) ? 4 : 3,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: getStringSize(context) * 0.8,
+                  fontSize: getStringSize(context),
                   color: Theme.of(context).primaryColorDark,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w300,

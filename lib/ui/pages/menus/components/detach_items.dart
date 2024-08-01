@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -77,15 +78,13 @@ class DetachItems extends StatelessWidget {
               ),
               Positioned(
                 bottom: 30,
-                left: 30,
-                child: FittedBox(
-                  child: Text(
-                    product.Name.toUpperCase(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40,
-                      color: Colors.white,
-                    ),
+                left: hasMinWidth(context) ? 30 : 5,
+                child: Text(
+                  product.Name.toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: hasMinWidth(context) ? 40 : 17,
+                    color: Colors.white,
                   ),
                 ),
               ),

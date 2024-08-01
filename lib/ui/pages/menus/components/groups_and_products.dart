@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +54,7 @@ class GroupsAndProducts extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            flex: 10,
+            flex: hasMinWidth(context) ? 10 : 25,
             child: GroupItems(
               expansibleGroupsViewModel: menuPresenter.loadedMenu
                   .map((element) => element.keys.first)
@@ -69,14 +70,14 @@ class GroupsAndProducts extends StatelessWidget {
           ),
           if (isDetachSelected(menuPresenter))
             Expanded(
-              flex: 90,
+              flex: hasMinWidth(context) ? 90 : 75,
               child: DetachItems(
                 products: menuPresenter.loadedMenu[0].entries.first.value,
               ),
             ),
           if (!isDetachSelected(menuPresenter))
             Expanded(
-              flex: 90,
+              flex: hasMinWidth(context) ? 90 : 75,
               child: ProductsItems(
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,

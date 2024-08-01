@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 
 import '../pages.dart';
 
-class InsertProductsPageBody extends StatefulWidget {
+class LandscapeInsertProductsPageBody extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfLeftItem;
   final double totalLiquid;
   final AsyncSnapshot<bool> snapshowShowComments;
-  const InsertProductsPageBody({
+  const LandscapeInsertProductsPageBody({
     required this.selectedProduct,
     required this.indexOfLeftItem,
     required this.totalLiquid,
@@ -18,10 +18,10 @@ class InsertProductsPageBody extends StatefulWidget {
   });
 
   @override
-  State<InsertProductsPageBody> createState() => _InsertProductsPageBodyState();
+  State<LandscapeInsertProductsPageBody> createState() => _LandscapeInsertProductsPageBodyState();
 }
 
-class _InsertProductsPageBodyState extends State<InsertProductsPageBody> {
+class _LandscapeInsertProductsPageBodyState extends State<LandscapeInsertProductsPageBody> {
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
@@ -34,7 +34,7 @@ class _InsertProductsPageBodyState extends State<InsertProductsPageBody> {
           width: MediaQuery.of(context).size.width * 0.4,
           child: Column(
             children: [
-              NameImageAndComplement(
+              ImageAndComplement(
                 selectedProduct: widget.selectedProduct,
               ),
               LeftItems(

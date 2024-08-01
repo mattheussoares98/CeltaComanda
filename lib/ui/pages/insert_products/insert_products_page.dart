@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -99,13 +100,24 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               snapshotLeftItems: snapshotLeftItems,
                             );
                             return Scaffold(
-                              appBar: AppBar(),
-                              body: InsertProductsPageBody(
-                                selectedProduct: selectedProduct!,
-                                indexOfLeftItem: indexOfLeftItem,
-                                totalLiquid: totalLiquid,
-                                snapshowShowComments: snapshowShowComments,
+                              appBar: AppBar(
+                                title: Text(selectedProduct!.Name),
                               ),
+                              body: hasMinWidth(context)
+                                  ? LandscapeInsertProductsPageBody(
+                                      selectedProduct: selectedProduct!,
+                                      indexOfLeftItem: indexOfLeftItem,
+                                      totalLiquid: totalLiquid,
+                                      snapshowShowComments:
+                                          snapshowShowComments,
+                                    )
+                                  : PortraitInsertProductsPageBody(
+                                      selectedProduct: selectedProduct!,
+                                      indexOfLeftItem: indexOfLeftItem,
+                                      totalLiquid: totalLiquid,
+                                      snapshowShowComments:
+                                          snapshowShowComments,
+                                    ),
                             );
                           },
                         );

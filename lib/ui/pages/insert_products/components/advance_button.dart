@@ -154,38 +154,29 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: insertProductsPresenter.canAdvanceIndex
-                ? () async {
-                    await _advanceOrAddInCart(
-                      cartPresenter: cartPresenter,
-                      totalPrice: widget.totalPrice,
-                      quantity: widget.quantity,
-                      context: context,
-                      commentsPresenter: commentsPresenter,
-                      insertProductsPresenter: insertProductsPresenter,
-                      menuPresenter: menuPresenter,
-                    );
-                  }
-                : null,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                  _getButtonText(
-                    widget.selectedProduct,
-                    commentsPresenter,
-                  ),
-                  style: TextStyle(
-                    fontSize: getStringSize(context),
-                  )),
+    return ElevatedButton(
+      onPressed: insertProductsPresenter.canAdvanceIndex
+          ? () async {
+              await _advanceOrAddInCart(
+                cartPresenter: cartPresenter,
+                totalPrice: widget.totalPrice,
+                quantity: widget.quantity,
+                context: context,
+                commentsPresenter: commentsPresenter,
+                insertProductsPresenter: insertProductsPresenter,
+                menuPresenter: menuPresenter,
+              );
+            }
+          : null,
+      child: FittedBox(
+        child: Text(
+            _getButtonText(
+              widget.selectedProduct,
+              commentsPresenter,
             ),
-          ),
-        ],
+            style: TextStyle(
+              fontSize: getStringSize(context),
+            )),
       ),
     );
   }

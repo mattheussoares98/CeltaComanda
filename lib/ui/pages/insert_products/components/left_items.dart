@@ -74,62 +74,54 @@ class _LeftItemsState extends State<LeftItems> {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
-    return Expanded(
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              child: ListView.builder(
-                controller: _scrollController,
-                itemExtent: 42,
-                shrinkWrap: true,
-                itemCount: getItemsCount(),
-                itemBuilder: (context, index) {
-                  if (index + 1 == getItemsCount()) {
-                    return StreamBuilder<bool>(
-                        stream: insertProductPresenter.doScrollStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.data == true) {
-                            // Verifique se a função ainda não foi chamada
-                            if (!_doScrollExecuted) {
-                              doScroll(
-                                index: index,
-                                scrollController: _scrollController,
-                                viewportHeight:
-                                    MediaQuery.of(context).size.height,
-                              );
-                              _doScrollExecuted = true;
-                            }
-                          } else {
-                            // Se o valor da stream não for mais true, redefina a variável de controle
-                            _doScrollExecuted = false;
-                          }
-                          return LeftItem(
-                            indexOfLeftSelectedItem: index,
-                            selectedProduct: widget.selectedProduct,
-                            father: null,
-                            itemColor: getItemColor(index, context),
-                            productHasComment: widget.productHasComment,
-                          );
-                        });
+    return Container(
+      color: Theme.of(context).primaryColor,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemExtent: 42,
+        shrinkWrap: true,
+        itemCount: getItemsCount(),
+        itemBuilder: (context, index) {
+          if (index + 1 == getItemsCount()) {
+            return StreamBuilder<bool>(
+                stream: insertProductPresenter.doScrollStream,
+                builder: (context, snapshot) {
+                  if (snapshot.data == true) {
+                    // Verifique se a função ainda não foi chamada
+                    if (!_doScrollExecuted) {
+                      doScroll(
+                        index: index,
+                        scrollController: _scrollController,
+                        viewportHeight:
+                            MediaQuery.of(context).size.height,
+                      );
+                      _doScrollExecuted = true;
+                    }
+                  } else {
+                    // Se o valor da stream não for mais true, redefina a variável de controle
+                    _doScrollExecuted = false;
                   }
-
-                  final father =
-                      widget.selectedProduct.childsComposition?[index];
-
                   return LeftItem(
-                    productHasComment: widget.productHasComment,
-                    father: father,
                     indexOfLeftSelectedItem: index,
                     selectedProduct: widget.selectedProduct,
+                    father: null,
                     itemColor: getItemColor(index, context),
+                    productHasComment: widget.productHasComment,
                   );
-                },
-              ),
-            ),
-          ),
-        ],
+                });
+          }
+      
+          final father =
+              widget.selectedProduct.childsComposition?[index];
+      
+          return LeftItem(
+            productHasComment: widget.productHasComment,
+            father: father,
+            indexOfLeftSelectedItem: index,
+            selectedProduct: widget.selectedProduct,
+            itemColor: getItemColor(index, context),
+          );
+        },
       ),
     );
   }

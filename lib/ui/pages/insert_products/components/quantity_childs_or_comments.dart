@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
@@ -77,7 +78,7 @@ class QuantityChildsOrComments extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TitleText(text: getTitleText()),
+        if (hasMinWidth(context)) TitleText(text: getTitleText()),
         if (showUpdateQuantity()) const UpdateQuantity(),
         if (selectedProduct.childsComposition != null &&
             selectedLeftIndex < selectedProduct.childsComposition!.length &&

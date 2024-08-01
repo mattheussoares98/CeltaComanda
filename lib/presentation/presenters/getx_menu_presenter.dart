@@ -267,4 +267,16 @@ class GetxMenuPresenter extends GetxController
       arguments: product,
     );
   }
+
+  final _doScrollGroupsStream = false.obs;
+  @override
+  Stream<bool> get doScrollGroupsStream => _doScrollGroupsStream.stream;
+  set doScroll(bool _) {
+    // Future.delayed(const Duration(milliseconds: 50), () {
+    //   _doScrollStream.subject.add(false);
+    // });
+    Future.delayed(const Duration(milliseconds: 50), () {
+      _doScrollGroupsStream.subject.add(true);
+    });
+  }
 }

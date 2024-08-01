@@ -5,9 +5,7 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class TitleAppbar extends StatelessWidget {
-  final void Function() openDrawer;
   const TitleAppbar({
-    required this.openDrawer,
     super.key,
   });
 
@@ -28,9 +26,7 @@ class TitleAppbar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
-                onDoubleTap: () {
-                  openDrawer();
-                },
+                onDoubleTap: () {},
                 child: Text(
                   "Mesa ${homePresenter.commandNumber?.toInt()}",
                   textAlign: TextAlign.center,

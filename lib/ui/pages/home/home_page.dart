@@ -19,8 +19,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with LoadingManager, UIErrorManager {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
@@ -99,7 +97,6 @@ class _HomePageState extends State<HomePage>
           );
         },
         child: Scaffold(
-          key: scaffoldKey,
           drawer: drawer(
             context: context,
             menuPresenter: menuPresenter,
@@ -111,7 +108,6 @@ class _HomePageState extends State<HomePage>
             printedProductsPresenter: printedProductsPresenter,
             homePresenter: homePresenter,
             context: context,
-            scaffoldKey: scaffoldKey,
             cartPresenter: cartPresenter,
           ),
           body: makeMenusPage(homePresenter.isFixedCommandNumber),

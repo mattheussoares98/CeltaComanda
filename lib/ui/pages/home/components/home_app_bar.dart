@@ -7,7 +7,6 @@ PreferredSize homeAppBar({
   required HomePresenter homePresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required BuildContext context,
-  required GlobalKey<ScaffoldState> scaffoldKey,
   required CartPresenter cartPresenter,
 }) {
   return PreferredSize(
@@ -103,23 +102,11 @@ PreferredSize homeAppBar({
           ],
         ),
       ],
-      title: TitleAppbar(openDrawer: () {
-        scaffoldKey.currentState?.openDrawer();
-      }),
-      leading: FittedBox(
+      title: const TitleAppbar(),
+      leading: const FittedBox(
         child: Row(
           children: [
-            if (homePresenter.isFixedCommandNumber != true)
-              IconButton(
-                icon: Icon(
-                  Icons.exit_to_app,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  scaffoldKey.currentState?.openDrawer();
-                },
-              ),
-            const EnterpriseLogoImage(),
+            EnterpriseLogoImage(),
           ],
         ),
       ),

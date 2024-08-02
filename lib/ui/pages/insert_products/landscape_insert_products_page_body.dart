@@ -24,11 +24,24 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
 
 class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
+  bool showComments = false;
+  bool productHasComment = false;
+
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+    showComments = _getShowComments(
+      snapshowShowComments: widget.snapshowShowComments,
+      product: widget.selectedProduct,
+      indexOfLeftItem: widget.indexOfLeftItem,
+    );
+    productHasComment = _getProducthasComment(
+      indexOfLeftItem: widget.indexOfLeftItem,
+      commentsPresenter: commentsPresenter,
+      selectedProduct: widget.selectedProduct,
+    );
 
     return Row(
       children: [
@@ -39,78 +52,93 @@ class _LandscapeInsertProductsPageBodyState
               ImageAndComplement(
                 selectedProduct: widget.selectedProduct,
               ),
-              LeftItems(
-                selectedProduct: widget.selectedProduct,
-                indexOfSelectedFather: widget.indexOfLeftItem,
-                productHasComment: _getProducthasComment(
-                  indexOfLeftItem: widget.indexOfLeftItem,
-                  commentsPresenter: commentsPresenter,
+              Expanded(
+                child: LeftItems(
                   selectedProduct: widget.selectedProduct,
+                  indexOfSelectedFather: widget.indexOfLeftItem,
+                  productHasComment: productHasComment,
                 ),
               ),
-              Divider(
-                color: Theme.of(context).primaryColorLight,
-                thickness: 0.1,
-                height: 1,
-              ),
-              TotalPriceCombox(
-                totalLiquid: widget.totalLiquid,
+              Padding(
+                padding: const EdgeInsets.only(top: 1),
+                child: TotalPriceCombox(
+                  totalLiquid: widget.totalLiquid,
+                ),
               ),
             ],
           ),
         ),
         Expanded(
-          child: Column(
-            children: [
-              if (widget.selectedProduct.childsComposition != null &&
-                  widget.indexOfLeftItem <
-                      widget.selectedProduct.childsComposition!.length)
-                Text(
-                  widget.selectedProduct
-                      .childsComposition![widget.indexOfLeftItem].ChildName!,
-                  style: TextStyle(
-                    fontSize: getStringSize(context) * 1.4,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).secondaryHeaderColor,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Column(
+              children: [
+                if (widget.selectedProduct.childsComposition != null &&
+                    widget.indexOfLeftItem <
+                        widget.selectedProduct.childsComposition!.length)
+                  Text(
+                    _selectedFather(
+                            widget.selectedProduct, widget.indexOfLeftItem)
+                        .ChildName!,
+                    style: TextStyle(
+                      fontSize: getStringSize(context) * 1.4,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).secondaryHeaderColor,
+                    ),
                   ),
-                ),
-              Expanded(
-                child: TitleText(
-                  selectedLeftIndex: widget.indexOfLeftItem,
-                  selectedProduct: widget.selectedProduct,
-                  showComments: _getShowComments(
-                    snapshowShowComments: widget.snapshowShowComments,
-                    product: widget.selectedProduct,
-                    indexOfLeftItem: widget.indexOfLeftItem,
-                  ),
-                  productHasComment: _getProducthasComment(
-                    indexOfLeftItem: widget.indexOfLeftItem,
-                    commentsPresenter: commentsPresenter,
+                if (hasMinWidth(context))
+                  TitleText(
+                    selectedLeftIndex: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
+                    showComments: showComments,
+                    productHasComment: productHasComment,
                   ),
-                ),
-              ),
-              AdvanceButton(
-                totalPrice: widget.totalLiquid,
-                quantity: insertProductPresenter.totalProductsQuantity,
-                advanceSelectedIndex: () {
-                  insertProductPresenter.advanceLeftIndex(commentsPresenter);
-                },
-                selectedProduct: widget.selectedProduct,
-                leftSelectedIndex: widget.indexOfLeftItem,
-                productHasComment: _getProducthasComment(
-                  indexOfLeftItem: widget.indexOfLeftItem,
-                  commentsPresenter: commentsPresenter,
+                if (showComments)
+                  Expanded(
+                    child: CommentsList(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfLeftItem,
+                    ),
+                  ),
+                if (widget.selectedProduct.childsComposition!.length ==
+                    widget.indexOfLeftItem)
+                  const Expanded(child: UpdateQuantity()),
+                if (!showComments &&
+                    widget.selectedProduct.childsComposition!.length !=
+                        widget.indexOfLeftItem)
+                  Expanded(
+                    child: ChildsRadios(
+                      selectedProduct: widget.selectedProduct,
+                      selectedFather: _selectedFather(
+                          widget.selectedProduct, widget.indexOfLeftItem),
+                      callSetState: () {
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                AdvanceButton(
+                  totalPrice: widget.totalLiquid,
+                  quantity: insertProductPresenter.totalProductsQuantity,
+                  advanceSelectedIndex: () {
+                    insertProductPresenter.advanceLeftIndex(commentsPresenter);
+                  },
                   selectedProduct: widget.selectedProduct,
+                  leftSelectedIndex: widget.indexOfLeftItem,
+                  productHasComment: productHasComment,
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 }
+
+ProductCompositionViewModel _selectedFather(
+        ProductsViewModel selectedProduct, int indexOfLeftItem) =>
+    selectedProduct.childsComposition![indexOfLeftItem];
 
 bool _getProducthasComment({
   required int indexOfLeftItem,

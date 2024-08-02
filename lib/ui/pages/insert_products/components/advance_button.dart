@@ -169,14 +169,17 @@ class _AdvanceButtonState extends State<AdvanceButton> {
             }
           : null,
       child: FittedBox(
-        child: Text(
-            _getButtonText(
-              widget.selectedProduct,
-              commentsPresenter,
-            ),
-            style: TextStyle(
-              fontSize: getStringSize(context),
-            )),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+              _getButtonText(
+                widget.selectedProduct,
+                commentsPresenter,
+              ),
+              style: TextStyle(
+                fontSize: getStringSize(context),
+              )),
+        ),
       ),
     );
   }

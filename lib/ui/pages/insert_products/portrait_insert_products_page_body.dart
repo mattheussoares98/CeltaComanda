@@ -46,51 +46,66 @@ class _PortraitInsertProductsPageBodyState
       indexOfLeftItem: widget.indexOfLeftItem,
     );
 
-    return SingleChildScrollView(
-      child: Column(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
         children: [
-          ImageAndComplement(selectedProduct: widget.selectedProduct),
-          LeftItems(
-            selectedProduct: widget.selectedProduct,
-            indexOfSelectedFather: widget.indexOfLeftItem,
-            productHasComment: productHasComment,
-          ),
-          if (widget.selectedProduct.childsComposition != null &&
-              widget.indexOfLeftItem <
-                  widget.selectedProduct.childsComposition!.length &&
-              !showComments)
-            ChildsRadios(
-              callSetState: () {
-                setState(() {});
-              },
-              selectedFather: _getSelectedFather(
-                  widget.selectedProduct, widget.indexOfLeftItem),
-              selectedProduct: widget.selectedProduct,
-            ),
-          if (showComments && productHasComment)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
-              child: CommentsList(
-                selectedProduct: widget.selectedProduct,
-                selectedLeftIndex: widget.indexOfLeftItem,
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: buttonHeight + 5),
+              child: Column(
+                children: [
+                  ImageAndComplement(selectedProduct: widget.selectedProduct),
+                  LeftItems(
+                    selectedProduct: widget.selectedProduct,
+                    indexOfSelectedFather: widget.indexOfLeftItem,
+                    productHasComment: productHasComment,
+                  ),
+                  if (widget.selectedProduct.childsComposition != null &&
+                      widget.indexOfLeftItem <
+                          widget.selectedProduct.childsComposition!.length &&
+                      !showComments)
+                    ChildsRadios(
+                      callSetState: () {
+                        setState(() {});
+                      },
+                      selectedFather: _getSelectedFather(
+                          widget.selectedProduct, widget.indexOfLeftItem),
+                      selectedProduct: widget.selectedProduct,
+                    ),
+                  if (showComments && productHasComment)
+                    CommentsList(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfLeftItem,
+                    ),
+                  if (_showUpdateQuantity(
+                      selectedProduct: widget.selectedProduct,
+                      indexOfSelectedFather: widget.indexOfLeftItem,
+                      productHasComment: productHasComment))
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: UpdateQuantity(),
+                    ),
+                ],
               ),
             ),
-          if (_showUpdateQuantity(
-              selectedProduct: widget.selectedProduct,
-              indexOfSelectedFather: widget.indexOfLeftItem,
-              productHasComment: productHasComment))
-            const UpdateQuantity(),
-          SizedBox(
-            height: buttonHeight,
-            child: AdvanceButton(
-              totalPrice: widget.totalLiquid,
-              quantity: insertProductPresenter.totalProductsQuantity,
-              advanceSelectedIndex: () {
-                insertProductPresenter.advanceLeftIndex(commentsPresenter);
-              },
-              selectedProduct: widget.selectedProduct,
-              leftSelectedIndex: widget.indexOfLeftItem,
-              productHasComment: productHasComment,
+          ),
+          Positioned(
+            bottom: 5,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              height: buttonHeight,
+              child: AdvanceButton(
+                totalPrice: widget.totalLiquid,
+                quantity: insertProductPresenter.totalProductsQuantity,
+                advanceSelectedIndex: () {
+                  insertProductPresenter.advanceLeftIndex(commentsPresenter);
+                },
+                selectedProduct: widget.selectedProduct,
+                leftSelectedIndex: widget.indexOfLeftItem,
+                productHasComment: productHasComment,
+              ),
             ),
           ),
         ],

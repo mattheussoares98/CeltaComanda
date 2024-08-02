@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class ChildsRadios extends StatefulWidget {
@@ -21,23 +21,6 @@ class ChildsRadios extends StatefulWidget {
 }
 
 class _ChildsRadiosState extends State<ChildsRadios> {
-  void _updateSelectedIndex({
-    required InsertProductPresenter insertProductsPresenter,
-    required int? value,
-  }) {
-    setState(() {
-      insertProductsPresenter.updateSelectedIndexOfProduct(
-        father: widget.selectedFather,
-        index: value,
-      );
-
-      insertProductsPresenter.updateTotalLiquid(
-        widget.selectedProduct,
-      );
-    });
-    widget.callSetState();
-  }
-
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
@@ -48,12 +31,12 @@ class _ChildsRadiosState extends State<ChildsRadios> {
       itemCount: widget.selectedFather.childs?.isEmpty == true
           ? 1
           : widget.selectedFather.childs!.length,
-      itemBuilder: (context, childsIndex) {
+      itemBuilder: (context, i) {
         ProductCompositionViewModel child;
         bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
 
         if (hasChilds) {
-          child = widget.selectedFather.childs![childsIndex];
+          child = widget.selectedFather.childs![i];
         } else {
           child = widget.selectedFather;
         }
@@ -62,45 +45,43 @@ class _ChildsRadiosState extends State<ChildsRadios> {
           onTap: () {
             _updateSelectedIndex(
               insertProductsPresenter: insertProductsPresenter,
-              value: childsIndex,
+              value: i,
+              selectedFather: widget.selectedFather,
+              selectedProduct: widget.selectedProduct,
             );
+            widget.callSetState();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 5),
-                    Radio<int>(
-                      value: childsIndex,
-                      groupValue: widget.selectedFather.indexOfSelectedChild,
-                      visualDensity: VisualDensity.compact,
-                      toggleable:
-                          widget.selectedFather.IsOptionalItem == "true",
-                      onChanged: (int? value) {
-                        _updateSelectedIndex(
-                          insertProductsPresenter: insertProductsPresenter,
-                          value: childsIndex,
-                        );
-                      },
-                    ),
-                    if (child.ChildName != null)
-                      Expanded(
-                        child: Text(
-                          child.ChildName!,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
+              const SizedBox(width: 5),
+              Radio<int>(
+                value: i,
+                groupValue: widget.selectedFather.indexOfSelectedChild,
+                visualDensity: VisualDensity.compact,
+                toggleable: widget.selectedFather.IsOptionalItem == "true",
+                onChanged: (int? value) {
+                  _updateSelectedIndex(
+                    insertProductsPresenter: insertProductsPresenter,
+                    value: value,
+                    selectedFather: widget.selectedFather,
+                    selectedProduct: widget.selectedProduct,
+                  );
+                  widget.callSetState();
+                },
               ),
+              if (child.ChildName != null)
+                Expanded(
+                  child: Text(
+                    child.ChildName!,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
+                ),
               if (child.IncrementValue!.toDouble() > 0)
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
@@ -120,4 +101,20 @@ class _ChildsRadiosState extends State<ChildsRadios> {
       },
     );
   }
+}
+
+void _updateSelectedIndex({
+  required InsertProductPresenter insertProductsPresenter,
+  required int? value,
+  required ProductCompositionViewModel selectedFather,
+  required ProductsViewModel selectedProduct,
+}) {
+  insertProductsPresenter.updateSelectedIndexOfProduct(
+    father: selectedFather,
+    index: value,
+  );
+
+  insertProductsPresenter.updateTotalLiquid(
+    selectedProduct,
+  );
 }

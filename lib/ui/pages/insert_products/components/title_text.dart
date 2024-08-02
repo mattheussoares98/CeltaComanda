@@ -58,16 +58,12 @@ class TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (hasMinWidth(context))
-          TitleText(
-            selectedLeftIndex: selectedLeftIndex,
-            selectedProduct: selectedProduct,
-            showComments: showComments,
-            productHasComment: productHasComment,
-          ),
-      ],
+    return Text(
+      getTitleText(),
+      style: TextStyle(
+        fontSize: getStringSize(context) * 1.4,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

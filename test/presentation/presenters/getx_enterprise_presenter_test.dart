@@ -70,9 +70,10 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
   });
 
   test('Should emit null if enterpriseName validation succeeds', () {

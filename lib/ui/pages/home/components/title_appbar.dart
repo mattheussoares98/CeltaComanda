@@ -47,6 +47,7 @@ class TitleAppbar extends StatelessWidget {
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
               commentsPresenter: commentsPresenter,
+              homePresenter: homePresenter,
             );
           },
           icon: Icon(

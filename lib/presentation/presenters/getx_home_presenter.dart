@@ -143,6 +143,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> loadCommandData({
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
+    required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required CommentsPresenter commentsPresenter,
   }) async {
@@ -157,7 +158,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (isFixedCommandNumber && commandNumber != null) {
         await cartPresenter.loadSaleRequest(commandNumber!);
-        await printedProductsPresenter.loadPrinted(commandNumber!);
+        await printedProductsPresenter.loadPrinted(homePresenter);
       }
     } on DomainError catch (error) {
       switch (error) {

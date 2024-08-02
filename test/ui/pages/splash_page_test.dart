@@ -19,11 +19,11 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {

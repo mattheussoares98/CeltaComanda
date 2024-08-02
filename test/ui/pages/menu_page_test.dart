@@ -47,11 +47,11 @@ void main() {
       indexOfSelectedChild: 0,
       insertChilds: false,
     ));
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {

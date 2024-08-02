@@ -90,6 +90,7 @@ class _MenuPageState extends State<MenuPage>
                                   printedProductsPresenter,
                               cartPresenter: cartPresenter,
                               commentsPresenter: commentsPresenter,
+                              homePresenter: homePresenter,
                             );
                           } else {
                             await menuPresenter.getGroupsAndProducts(

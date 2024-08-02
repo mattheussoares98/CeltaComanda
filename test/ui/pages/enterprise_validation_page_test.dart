@@ -34,11 +34,11 @@ void main() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
   });
 
   tearDown(() {

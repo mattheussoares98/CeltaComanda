@@ -42,9 +42,9 @@ class PrintedProductsPresenterSpy extends Mock
           saleRequestProductId: any(named: "saleRequestProductId"),
           menuPresenter: any(named: "menuPresenter"),
           cartPresenter: any(named: "cartPresenter"),
-          homePresenter: any(named: "homePresenter"),
           commentsPresenter: any(named: "commentsPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
+          homePresenter: any(named: "homePresenter"),
         )).thenAnswer((_) async => _);
   }
 

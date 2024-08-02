@@ -124,6 +124,7 @@ class GetxPaymentPresenter extends GetxController
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         commentsPresenter: commentsPresenter,
+        homePresenter: homePresenter,
       );
     } on DomainError catch (e) {
       switch (e) {

@@ -51,6 +51,7 @@ class GetxPrintedProductsPresenter
         printedProductsPresenter: this,
         cartPresenter: cartPresenter,
         commentsPresenter: commentsPresenter,
+        homePresenter: homePresenter,
       );
       notifyListeners();
     } on DomainError catch (error) {
@@ -71,21 +72,21 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> loadPrinted(String commandNumber) async {
+  Future<void> loadPrinted(HomePresenter homePresenter) async {
     isLoading = true;
     mainError = null;
 
     try {
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
+        commandNumber: homePresenter.commandNumber ?? "001",
       );
 
       clear();
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: int.tryParse(commandNumber) ?? 0,
+        commandNumber: homePresenter.commandNumber!.toInt(),
       );
 
       if (printedProducts?.Products.isEmpty == false) {

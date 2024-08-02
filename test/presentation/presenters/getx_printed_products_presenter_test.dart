@@ -83,6 +83,7 @@ void main() {
     userValidations.mockCanCancel(true);
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     barcodeScanner.mockBarcodeScanner(homePresenter.commandNumberMock!);
+    homePresenter.mockLoadCommandData();
   }
 
   setUp(() {
@@ -96,6 +97,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
@@ -332,17 +334,17 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.loadPrinted(homePresenter.commandNumberMock!);
+      await sut.loadPrinted(homePresenter);
     });
     test('Should update printedProducts correctly on loadPrinted success',
         () async {
-      await sut.loadPrinted(homePresenter.commandNumberMock!);
+      await sut.loadPrinted(homePresenter);
 
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
     });
 
     test("Should call loadPrintedProducts with correct values", () async {
-      await sut.loadPrinted(homePresenter.commandNumberMock!);
+      await sut.loadPrinted(homePresenter);
 
       verify(() => loadPrintedProducts.load(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -379,7 +381,7 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      final error = sut.loadPrinted(homePresenter.commandNumberMock!);
+      final error = sut.loadPrinted(homePresenter);
 
       expect(error, throwsA(DomainError.unexpected));
     });
@@ -389,13 +391,13 @@ void main() {
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
-      final error = sut.loadPrinted(homePresenter.commandNumberMock!);
+      final error = sut.loadPrinted(homePresenter);
 
       expect(error, throwsA(DomainError.commandNotAvailable));
     });
 
     test("Should clear printed on call clearPrinted", () async {
-      await sut.loadPrinted(homePresenter.commandNumberMock!);
+      await sut.loadPrinted(homePresenter);
       sut.clear();
 
       expect(sut.printedProducts, null);
@@ -428,6 +430,7 @@ void main() {
             printedProductsPresenter: sut,
             cartPresenter: cartPresenter,
             commentsPresenter: commentsPresenter,
+            homePresenter: homePresenter,
           )).called(1);
 
       expect(sut.canCancelProducts, true);
@@ -549,7 +552,7 @@ void main() {
         DeliveryControl: faker.randomGenerator.integer(10),
       ));
 
-      await sut.loadPrinted(homePresenter.commandNumberMock!);
+      await sut.loadPrinted(homePresenter);
 
       expect(sut.printedProducts, null);
     });

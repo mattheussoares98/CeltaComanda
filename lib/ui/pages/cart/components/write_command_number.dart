@@ -148,6 +148,7 @@ Future<void> _onPress({
       printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
       commentsPresenter: commentsPresenter,
+      homePresenter: homePresenter,
     );
   } else {
     await paymentPresenter.getTotalValue(

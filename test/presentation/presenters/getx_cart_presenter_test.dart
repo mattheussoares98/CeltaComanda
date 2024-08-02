@@ -211,6 +211,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
@@ -1055,7 +1056,7 @@ void main() {
             saleRequestTempEntity: saleRequestTempEntity,
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(commandNumber))
+      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
           .called(1);
     });
     test(

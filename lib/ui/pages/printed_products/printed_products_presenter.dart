@@ -13,7 +13,7 @@ abstract class PrintedProductsPresenter
   bool get canCancelProducts;
 
   void updateCanCancelProducts(bool value);
-  Future<void> loadPrinted(String commandNumber);
+  Future<void> loadPrinted(HomePresenter homePresenter);
   void clear();
   void doOnClosePage();
   PrintedViewModel? get printedProducts;

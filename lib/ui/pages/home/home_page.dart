@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage>
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
               commentsPresenter: commentsPresenter,
+              homePresenter: homePresenter,
             );
             // setState(() {});
           }

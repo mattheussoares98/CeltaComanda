@@ -17,13 +17,13 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
   });
 
   // ignore: unused_element

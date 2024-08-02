@@ -21,6 +21,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
   late CommentsPresenterSpy commentsPresenter;
+  late HomePresenterSpy homePresenter;
 
   late NavigateToSpy navigateTo;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
@@ -39,6 +40,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
     commentsPresenter = CommentsPresenterSpy();
+    homePresenter = HomePresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
       navigateTo: navigateTo,
@@ -80,6 +82,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
   });
 
   group("Navigation", () {
@@ -245,6 +248,7 @@ void main() {
     test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
         () async {
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -262,6 +266,7 @@ void main() {
       sut.updateCommandNumber("001");
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -270,8 +275,7 @@ void main() {
 
       verifyNever(
           () => cartPresenter.loadSaleRequest(sut.commandNumber ?? "001"));
-      verifyNever(() =>
-          printedProductsPresenter.loadPrinted(sut.commandNumber ?? "001"));
+      verifyNever(() => printedProductsPresenter.loadPrinted(homePresenter));
     });
     test(
         "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
@@ -280,6 +284,7 @@ void main() {
       sut.updateCommandNumber("001");
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -287,7 +292,7 @@ void main() {
       );
 
       verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!))
+      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
           .called(1);
     });
     test(
@@ -302,6 +307,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -321,6 +327,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -339,6 +346,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -358,6 +366,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -375,6 +384,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -391,6 +401,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
+        homePresenter: homePresenter,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,

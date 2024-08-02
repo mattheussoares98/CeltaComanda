@@ -473,7 +473,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.updateConfirmedCombox([]);
 
       await Future.delayed(const Duration(seconds: 3));
-      await printedProductsPresenter.loadPrinted(informedCommandNumber);
+      await printedProductsPresenter.loadPrinted(homePresenter);
 
       _cartProducts.clear();
       commentsPresenter.unselectAllComments();

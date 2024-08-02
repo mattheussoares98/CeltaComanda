@@ -46,10 +46,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context,
         listen:
             true); //pra atualizar corretamente quando remove o produto do carrinho
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -71,9 +68,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter.loadPrinted(
-                  homePresenter.commandNumber!,
-                );
+                await printedProductsPresenter.loadPrinted(homePresenter);
               },
               icon: const Icon(Icons.refresh),
             ),
@@ -102,13 +97,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                               ? "Consulte alguma comanda para visualizar os produtos solicitados"
                               : "Não há produtos solicitados nessa comanda",
                           loadCommandData: () async {
-                            await homePresenter.loadCommandData(
-                              menuPresenter: menuPresenter,
-                              printedProductsPresenter:
-                                  printedProductsPresenter,
-                              cartPresenter: cartPresenter,
-                              commentsPresenter: commentsPresenter,
-                            );
+                            await printedProductsPresenter
+                                .loadPrinted(homePresenter);
                           },
                         ),
                 ),

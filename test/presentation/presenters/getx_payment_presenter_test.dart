@@ -69,6 +69,7 @@ void main() {
     pay.mockPay();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     barcodeScanner.mockBarcodeScanner(commandNumber);
+    homePresenter.mockLoadCommandData();
   }
 
   setUp(() {
@@ -86,11 +87,11 @@ void main() {
     registerFallbackValue(EntityFactory.makeCommentViewModel());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
   });
 
   group("Credit payment", () {

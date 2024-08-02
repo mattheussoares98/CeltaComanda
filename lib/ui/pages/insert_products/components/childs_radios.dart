@@ -102,17 +102,15 @@ class _ChildsRadiosState extends State<ChildsRadios> {
                 ),
               ),
               if (child.IncrementValue!.toDouble() > 0)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      "+ ${child.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: getStringSize(context),
-                        fontWeight: FontWeight.w300,
-                        fontStyle: FontStyle.italic,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    "+ ${child.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                      fontWeight: FontWeight.w300,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),

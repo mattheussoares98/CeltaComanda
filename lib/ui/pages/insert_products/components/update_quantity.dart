@@ -38,40 +38,38 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          getCircleAvatar(
-            insertProductPresenter: insertProductPresenter,
-            isAddingQuantity: false,
-          ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColorDark,
-                radius: 70,
-                child: FittedBox(
-                  child: Text(
-                    insertProductPresenter.totalProductsQuantity
-                        .toString()
-                        .toBrazilianNumber(0),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
-                    ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        getCircleAvatar(
+          insertProductPresenter: insertProductPresenter,
+          isAddingQuantity: false,
+        ),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: CircleAvatar(
+              backgroundColor: Theme.of(context).primaryColorDark,
+              radius: 70,
+              child: FittedBox(
+                child: Text(
+                  insertProductPresenter.totalProductsQuantity
+                      .toString()
+                      .toBrazilianNumber(0),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 50,
                   ),
                 ),
               ),
             ),
           ),
-          getCircleAvatar(
-            insertProductPresenter: insertProductPresenter,
-            isAddingQuantity: true,
-          ),
-        ],
-      ),
+        ),
+        getCircleAvatar(
+          insertProductPresenter: insertProductPresenter,
+          isAddingQuantity: true,
+        ),
+      ],
     );
   }
 }

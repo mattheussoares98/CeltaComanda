@@ -18,10 +18,12 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
   });
 
   @override
-  State<LandscapeInsertProductsPageBody> createState() => _LandscapeInsertProductsPageBodyState();
+  State<LandscapeInsertProductsPageBody> createState() =>
+      _LandscapeInsertProductsPageBodyState();
 }
 
-class _LandscapeInsertProductsPageBodyState extends State<LandscapeInsertProductsPageBody> {
+class _LandscapeInsertProductsPageBodyState
+    extends State<LandscapeInsertProductsPageBody> {
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
@@ -73,7 +75,7 @@ class _LandscapeInsertProductsPageBodyState extends State<LandscapeInsertProduct
                   ),
                 ),
               Expanded(
-                child: QuantityChildsOrComments(
+                child: TitleText(
                   selectedLeftIndex: widget.indexOfLeftItem,
                   selectedProduct: widget.selectedProduct,
                   showComments: _getShowComments(
@@ -81,9 +83,6 @@ class _LandscapeInsertProductsPageBodyState extends State<LandscapeInsertProduct
                     product: widget.selectedProduct,
                     indexOfLeftItem: widget.indexOfLeftItem,
                   ),
-                  callSetState: () {
-                    setState(() {});
-                  },
                   productHasComment: _getProducthasComment(
                     indexOfLeftItem: widget.indexOfLeftItem,
                     commentsPresenter: commentsPresenter,

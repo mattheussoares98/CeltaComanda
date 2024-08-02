@@ -25,6 +25,8 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
 class _PortraitInsertProductsPageBodyState
     extends State<PortraitInsertProductsPageBody> {
   final double buttonHeight = 50;
+  bool showComments = false;
+  bool productHasComment = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,44 +34,53 @@ class _PortraitInsertProductsPageBodyState
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
-    return Stack(
-      children: [
-        Column(
-          children: [
-            ImageAndComplement(selectedProduct: widget.selectedProduct),
-            LeftItems(
-              selectedProduct: widget.selectedProduct,
-              indexOfSelectedFather: widget.indexOfLeftItem,
-              productHasComment: _getProducthasComment(
-                indexOfLeftItem: widget.indexOfLeftItem,
-                commentsPresenter: commentsPresenter,
-                selectedProduct: widget.selectedProduct,
-              ),
-            ),
-            QuantityChildsOrComments(
-              selectedLeftIndex: widget.indexOfLeftItem,
-              selectedProduct: widget.selectedProduct,
-              showComments: _getShowComments(
-                snapshowShowComments: widget.snapshowShowComments,
-                product: widget.selectedProduct,
-                indexOfLeftItem: widget.indexOfLeftItem,
-              ),
+    productHasComment = _producthasComment(
+      indexOfLeftItem: widget.indexOfLeftItem,
+      commentsPresenter: commentsPresenter,
+      selectedProduct: widget.selectedProduct,
+    );
+
+    showComments = _showComments(
+      snapshowShowComments: widget.snapshowShowComments,
+      product: widget.selectedProduct,
+      indexOfLeftItem: widget.indexOfLeftItem,
+    );
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ImageAndComplement(selectedProduct: widget.selectedProduct),
+          LeftItems(
+            selectedProduct: widget.selectedProduct,
+            indexOfSelectedFather: widget.indexOfLeftItem,
+            productHasComment: productHasComment,
+          ),
+          if (widget.selectedProduct.childsComposition != null &&
+              widget.indexOfLeftItem <
+                  widget.selectedProduct.childsComposition!.length &&
+              !showComments)
+            ChildsRadios(
               callSetState: () {
                 setState(() {});
               },
-              productHasComment: _getProducthasComment(
-                indexOfLeftItem: widget.indexOfLeftItem,
-                commentsPresenter: commentsPresenter,
+              selectedFather: _getSelectedFather(
+                  widget.selectedProduct, widget.indexOfLeftItem),
+              selectedProduct: widget.selectedProduct,
+            ),
+          if (showComments && productHasComment)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
+              child: CommentsList(
                 selectedProduct: widget.selectedProduct,
+                selectedLeftIndex: widget.indexOfLeftItem,
               ),
             ),
-          ],
-        ),
-        Positioned(
-          left: 5,
-          right: 5,
-          bottom: 5,
-          child: SizedBox(
+          if (_showUpdateQuantity(
+              selectedProduct: widget.selectedProduct,
+              indexOfSelectedFather: widget.indexOfLeftItem,
+              productHasComment: productHasComment))
+            const UpdateQuantity(),
+          SizedBox(
             height: buttonHeight,
             child: AdvanceButton(
               totalPrice: widget.totalLiquid,
@@ -79,20 +90,16 @@ class _PortraitInsertProductsPageBodyState
               },
               selectedProduct: widget.selectedProduct,
               leftSelectedIndex: widget.indexOfLeftItem,
-              productHasComment: _getProducthasComment(
-                indexOfLeftItem: widget.indexOfLeftItem,
-                commentsPresenter: commentsPresenter,
-                selectedProduct: widget.selectedProduct,
-              ),
+              productHasComment: productHasComment,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
-bool _getProducthasComment({
+bool _producthasComment({
   required int indexOfLeftItem,
   required CommentsPresenter commentsPresenter,
   required ProductsViewModel selectedProduct,
@@ -115,7 +122,7 @@ bool _getProducthasComment({
   }
 }
 
-bool _getShowComments({
+bool _showComments({
   required AsyncSnapshot<bool> snapshowShowComments,
   required ProductsViewModel product,
   required int indexOfLeftItem,
@@ -126,5 +133,39 @@ bool _getShowComments({
     return false;
   } else {
     return snapshowShowComments.data ?? false;
+  }
+}
+
+ProductCompositionViewModel _getSelectedFather(
+  ProductsViewModel selectedProduct,
+  int indexOfSelectedFather,
+) {
+  ProductCompositionViewModel selectedFather =
+      selectedProduct.childsComposition![0];
+
+  if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {
+    selectedFather = selectedProduct.childsComposition![indexOfSelectedFather];
+  }
+
+  return selectedFather;
+}
+
+bool _showUpdateQuantity({
+  required ProductsViewModel selectedProduct,
+  required int indexOfSelectedFather,
+  required bool productHasComment,
+}) {
+  if (selectedProduct.childsComposition == null) {
+    if (indexOfSelectedFather == 0 && productHasComment) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+    return true;
+  } else {
+    return false;
   }
 }

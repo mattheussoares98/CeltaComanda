@@ -141,7 +141,7 @@ class _PortraitInsertProductsPageBodyState
                   callSetState: () {
                     setState(() {});
                   },
-                  selectedFather: _getSelectedFather(
+                  selectedFather: _selectedFather(
                       widget.selectedProduct, widget.indexOfLeftItem),
                   selectedProduct: widget.selectedProduct,
                 ),
@@ -201,20 +201,6 @@ bool _showComments({
   } else {
     return snapshowShowComments.data ?? false;
   }
-}
-
-ProductCompositionViewModel _getSelectedFather(
-  ProductsViewModel selectedProduct,
-  int indexOfSelectedFather,
-) {
-  ProductCompositionViewModel selectedFather =
-      selectedProduct.childsComposition![0];
-
-  if (indexOfSelectedFather < selectedProduct.childsComposition!.length) {
-    selectedFather = selectedProduct.childsComposition![indexOfSelectedFather];
-  }
-
-  return selectedFather;
 }
 
 bool _showUpdateQuantity({

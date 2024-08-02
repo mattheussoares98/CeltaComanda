@@ -478,6 +478,26 @@ void main() {
       );
     });
 
+    test("Should load printed products again when removeProduct throws",
+        () async {
+      removePrintedProduct.mockError(DomainError.unexpected);
+
+      await sut.removeProduct(
+        printedProductsPresenter: printedProductsPresenter,
+        commentsPresenter: commentsPresenter,
+        saleRequestProductId: saleRequestProductId,
+        menuPresenter: menuPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => loadPrintedProducts.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: homePresenter.commandNumberMock!.toInt())).called(1);
+    });
+
     test("Should emit correct values on removeProduct throws", () async {
       removePrintedProduct.mockError(DomainError.unexpected);
       expectLater(

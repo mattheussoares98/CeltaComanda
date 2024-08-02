@@ -54,6 +54,11 @@ class GetxPrintedProductsPresenter
       );
       notifyListeners();
     } on DomainError catch (error) {
+      loadPrintedProducts.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: homePresenter.commandNumber!.toInt(),
+      );
       switch (error) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;

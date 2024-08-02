@@ -67,6 +67,9 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> loadPrinted(String commandNumber) async {
+    isLoading = true;
+    mainError = null;
+
     try {
       await ticketIsPermitted.verify(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -93,6 +96,7 @@ class GetxPrintedProductsPresenter
           throw DomainError.unexpected;
       }
     } finally {
+      isLoading = false;
       notifyListeners();
     }
   }

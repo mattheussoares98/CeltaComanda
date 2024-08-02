@@ -67,7 +67,18 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         printedProductsPresenter.doOnClosePage();
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await printedProductsPresenter.loadPrinted(
+                  homePresenter.commandNumber!,
+                );
+              },
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+        ),
         body: SizedBox(
           height: double.infinity,
           child: Stack(

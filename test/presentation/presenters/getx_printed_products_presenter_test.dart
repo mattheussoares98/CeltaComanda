@@ -328,6 +328,12 @@ void main() {
   });
 
   group("Manipulate data", () {
+    test('Should emit correct values on success to loadPrintes', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.loadPrinted(homePresenter.commandNumberMock!);
+    });
     test('Should update printedProducts correctly on loadPrinted success',
         () async {
       await sut.loadPrinted(homePresenter.commandNumberMock!);

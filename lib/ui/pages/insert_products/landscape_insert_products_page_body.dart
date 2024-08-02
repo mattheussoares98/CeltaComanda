@@ -53,7 +53,7 @@ class _LandscapeInsertProductsPageBodyState
                 selectedProduct: widget.selectedProduct,
               ),
               Expanded(
-                child: LeftItems(
+                child: FathersItems(
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
                   productHasComment: productHasComment,

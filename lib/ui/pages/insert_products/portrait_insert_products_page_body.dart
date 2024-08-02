@@ -63,7 +63,7 @@ class _PortraitInsertProductsPageBodyState
           Column(
             children: [
               ImageAndComplement(selectedProduct: widget.selectedProduct),
-              LeftItems(
+              FathersItems(
                 selectedProduct: widget.selectedProduct,
                 indexOfSelectedFather: widget.indexOfLeftItem,
                 productHasComment: productHasComment,

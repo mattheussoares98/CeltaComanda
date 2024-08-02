@@ -4,13 +4,13 @@ import 'package:provider/provider.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class LeftItem extends StatelessWidget {
+class FatherItem extends StatelessWidget {
   final int indexOfLeftSelectedItem;
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
   final bool productHasComment;
-  const LeftItem({
+  const FatherItem({
     required this.father,
     required this.indexOfLeftSelectedItem,
     required this.selectedProduct,

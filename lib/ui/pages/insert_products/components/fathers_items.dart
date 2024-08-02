@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
-class LeftItems extends StatefulWidget {
+class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
   final bool productHasComment;
-  const LeftItems({
+  const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
     required this.productHasComment,
@@ -15,10 +15,10 @@ class LeftItems extends StatefulWidget {
   });
 
   @override
-  State<LeftItems> createState() => _LeftItemsState();
+  State<FathersItems> createState() => _FathersItemsState();
 }
 
-class _LeftItemsState extends State<LeftItems> {
+class _FathersItemsState extends State<FathersItems> {
   final _scrollController = ScrollController();
 
   Color getItemColor(int index, BuildContext context) {
@@ -101,7 +101,7 @@ class _LeftItemsState extends State<LeftItems> {
                     // Se o valor da stream não for mais true, redefina a variável de controle
                     _doScrollExecuted = false;
                   }
-                  return LeftItem(
+                  return FatherItem(
                     indexOfLeftSelectedItem: index,
                     selectedProduct: widget.selectedProduct,
                     father: null,
@@ -114,7 +114,7 @@ class _LeftItemsState extends State<LeftItems> {
           final father =
               widget.selectedProduct.childsComposition?[index];
       
-          return LeftItem(
+          return FatherItem(
             productHasComment: widget.productHasComment,
             father: father,
             indexOfLeftSelectedItem: index,

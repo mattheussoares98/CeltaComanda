@@ -377,6 +377,8 @@ void main() {
     test("Should emit correct events on loadPrintedProducts throws", () async {
       loadPrintedProducts.mockError(DomainError.unexpected);
 
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       final error = sut.loadPrinted(homePresenter.commandNumberMock!);
 
       expect(error, throwsA(DomainError.unexpected));
@@ -385,6 +387,8 @@ void main() {
     test("Should emit correct events on ticket is not permitted", () async {
       loadPrintedProducts.mockError(DomainError.commandNotAvailable);
 
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
       final error = sut.loadPrinted(homePresenter.commandNumberMock!);
 
       expect(error, throwsA(DomainError.commandNotAvailable));

@@ -208,6 +208,7 @@ class EntityFactory {
 
   static ProductsViewModel makeProductViewModel({
     bool? insertChildsComposition,
+    bool? isOptionalChilds,
   }) {
     return ProductsViewModel(
       ProductComplement: faker.randomGenerator.string(10),
@@ -283,7 +284,8 @@ class EntityFactory {
                 offerPrice: faker.randomGenerator.decimal(),
                 fatherIncrement: faker.randomGenerator.decimal(),
                 childIncrement: faker.randomGenerator.decimal(),
-                isOptionalItem: faker.randomGenerator.boolean(),
+                isOptionalItem:
+                    isOptionalChilds ?? faker.randomGenerator.boolean(),
                 indexOfSelectedChild: null,
                 insertChilds: false,
               )

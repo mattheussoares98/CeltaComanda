@@ -123,8 +123,10 @@ void main() {
       insertChilds: false,
     );
 
-    selectedProduct =
-        EntityFactory.makeProductViewModel(insertChildsComposition: true);
+    selectedProduct = EntityFactory.makeProductViewModel(
+      insertChildsComposition: true,
+      isOptionalChilds: false,
+    );
 
     invalidFather = EntityFactory.makeProductCompositionViewModel(
       quantity: faker.randomGenerator.decimal(),

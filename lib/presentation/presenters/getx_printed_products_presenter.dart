@@ -91,8 +91,10 @@ class GetxPrintedProductsPresenter
     } catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
           throw DomainError.commandNotAvailable;
         default:
+          mainError = UIError.unexpected;
           throw DomainError.unexpected;
       }
     } finally {

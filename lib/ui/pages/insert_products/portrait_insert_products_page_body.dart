@@ -27,12 +27,21 @@ class _PortraitInsertProductsPageBodyState
   final double buttonHeight = 50;
   bool showComments = false;
   bool productHasComment = false;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
 
     productHasComment = _producthasComment(
       indexOfLeftItem: widget.indexOfLeftItem,
@@ -47,6 +56,7 @@ class _PortraitInsertProductsPageBodyState
     );
 
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -93,24 +103,32 @@ class _PortraitInsertProductsPageBodyState
                         ),
                       ),
                     ),
-                    // Text(
-                    //   "Total: ${widget.totalLiquid.toString().toBrazilianNumber().addBrazilianCoin()}",
-                    //   style: TextStyle(
-                    //     color: Colors.white,
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: getStringSize(context) * 1.5,
-                    //   ),
-                    // ),
-                    AdvanceButton(
-                      totalPrice: widget.totalLiquid,
-                      quantity: insertProductPresenter.totalProductsQuantity,
-                      advanceSelectedIndex: () {
-                        insertProductPresenter
-                            .advanceLeftIndex(commentsPresenter);
-                      },
-                      selectedProduct: widget.selectedProduct,
-                      leftSelectedIndex: widget.indexOfLeftItem,
-                      productHasComment: productHasComment,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AdvanceButton(
+                          totalPrice: widget.totalLiquid,
+                          quantity:
+                              insertProductPresenter.totalProductsQuantity,
+                          advanceSelectedIndex: () {
+                            insertProductPresenter
+                                .advanceLeftIndex(commentsPresenter);
+                          },
+                          selectedProduct: widget.selectedProduct,
+                          leftSelectedIndex: widget.indexOfLeftItem,
+                          productHasComment: productHasComment,
+                        ),
+                        Text(
+                          widget.totalLiquid
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context) * 1.5,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

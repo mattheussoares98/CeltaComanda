@@ -20,7 +20,7 @@ class CartProductsItems extends StatelessWidget {
         itemBuilder: (context, index) {
           final cartProduct = cartPresenter.cartProducts[index];
 
-          return CartProductItem(
+          return LandscapeCartProductItem(
             cartProduct: cartProduct,
             index: index,
             maxWidth: constraints.maxWidth,

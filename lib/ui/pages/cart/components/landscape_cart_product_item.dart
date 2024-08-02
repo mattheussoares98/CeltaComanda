@@ -6,12 +6,12 @@ import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class CartProductItem extends StatefulWidget {
+class LandscapeCartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
   final int index;
   final double maxWidth;
 
-  const CartProductItem({
+  const LandscapeCartProductItem({
     required this.cartProduct,
     required this.index,
     required this.maxWidth,
@@ -19,10 +19,10 @@ class CartProductItem extends StatefulWidget {
   });
 
   @override
-  State<CartProductItem> createState() => _CartProductItemState();
+  State<LandscapeCartProductItem> createState() => _LandscapeCartProductItemState();
 }
 
-class _CartProductItemState extends State<CartProductItem> {
+class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
   double rightMargin = 2;
 
   @override

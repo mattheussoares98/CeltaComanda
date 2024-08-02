@@ -12,6 +12,10 @@ class SelectedChilds extends StatelessWidget {
     super.key,
   });
 
+  static const _productAndCommentFlex = 3;
+  static const _quantityFlex = 1;
+  static const _priceFlex = 1;
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
@@ -28,9 +32,11 @@ class SelectedChilds extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 4,
+                flex: _productAndCommentFlex,
                 child: Text(
-                  'Produto selecionados e comentários',
+                  hasMinWidth(context)
+                      ? 'Produto selecionados e comentários'
+                      : "Produtos e comentários",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: getStringSize(context),
@@ -38,8 +44,9 @@ class SelectedChilds extends StatelessWidget {
                 ),
               ),
               Expanded(
+                flex: _quantityFlex,
                 child: Text(
-                  'Quantidade',
+                  hasMinWidth(context) ? 'Quantidade' : "Qtd",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -48,6 +55,7 @@ class SelectedChilds extends StatelessWidget {
                 ),
               ),
               Expanded(
+                flex: _priceFlex,
                 child: Text(
                   'Preço',
                   textAlign: TextAlign.center,
@@ -62,7 +70,8 @@ class SelectedChilds extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding:
+              EdgeInsets.symmetric(horizontal: hasMinWidth(context) ? 8 : 2),
           child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -81,7 +90,7 @@ class SelectedChilds extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        flex: 4,
+                        flex: _productAndCommentFlex,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -98,14 +107,16 @@ class SelectedChilds extends StatelessWidget {
                         ),
                       ),
                       Expanded(
+                          flex: _quantityFlex,
                           child: Text(
-                        child.Quantity!.toBrazilianNumber(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: getStringSize(context) * 0.9,
-                        ),
-                      )),
+                            child.Quantity!.toBrazilianNumber(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: getStringSize(context) * 0.9,
+                            ),
+                          )),
                       Expanded(
+                        flex: _priceFlex,
                         child: Text(
                           (child.Quantity!.toDouble() *
                                   insertProductPresenter

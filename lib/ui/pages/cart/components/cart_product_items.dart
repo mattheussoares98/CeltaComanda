@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../pages.dart';
 
 class CartProductsItems extends StatelessWidget {
@@ -19,12 +20,19 @@ class CartProductsItems extends StatelessWidget {
         itemCount: cartPresenter.cartProducts.length,
         itemBuilder: (context, index) {
           final cartProduct = cartPresenter.cartProducts[index];
-
-          return LandscapeCartProductItem(
-            cartProduct: cartProduct,
-            index: index,
-            maxWidth: constraints.maxWidth,
-          );
+          if (hasMinWidth(context)) {
+            return LandscapeCartProductItem(
+              cartProduct: cartProduct,
+              index: index,
+              maxWidth: constraints.maxWidth,
+            );
+          } else {
+            return PortraitCartProductItem(
+              cartProduct: cartProduct,
+              index: index,
+              maxWidth: constraints.maxWidth,
+            );
+          }
         },
       );
     });

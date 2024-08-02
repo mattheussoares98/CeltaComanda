@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ui/helpers/helpers.dart';
 import '../pages.dart';
 
 class PortraitInsertProductsPageBody extends StatefulWidget {
@@ -46,67 +46,101 @@ class _PortraitInsertProductsPageBodyState
       indexOfLeftItem: widget.indexOfLeftItem,
     );
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: Stack(
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: buttonHeight + 5),
-              child: Column(
-                children: [
-                  ImageAndComplement(selectedProduct: widget.selectedProduct),
-                  LeftItems(
-                    selectedProduct: widget.selectedProduct,
-                    indexOfSelectedFather: widget.indexOfLeftItem,
-                    productHasComment: productHasComment,
-                  ),
-                  if (widget.selectedProduct.childsComposition != null &&
-                      widget.indexOfLeftItem <
-                          widget.selectedProduct.childsComposition!.length &&
-                      !showComments)
-                    ChildsRadios(
-                      callSetState: () {
-                        setState(() {});
-                      },
-                      selectedFather: _getSelectedFather(
-                          widget.selectedProduct, widget.indexOfLeftItem),
-                      selectedProduct: widget.selectedProduct,
-                    ),
-                  if (showComments && productHasComment)
-                    CommentsList(
-                      selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfLeftItem,
-                    ),
-                  if (_showUpdateQuantity(
-                      selectedProduct: widget.selectedProduct,
-                      indexOfSelectedFather: widget.indexOfLeftItem,
-                      productHasComment: productHasComment))
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: UpdateQuantity(),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 5,
-            left: 0,
-            right: 0,
-            child: SizedBox(
-              height: buttonHeight,
-              child: AdvanceButton(
-                totalPrice: widget.totalLiquid,
-                quantity: insertProductPresenter.totalProductsQuantity,
-                advanceSelectedIndex: () {
-                  insertProductPresenter.advanceLeftIndex(commentsPresenter);
-                },
+          Column(
+            children: [
+              ImageAndComplement(selectedProduct: widget.selectedProduct),
+              LeftItems(
                 selectedProduct: widget.selectedProduct,
-                leftSelectedIndex: widget.indexOfLeftItem,
+                indexOfSelectedFather: widget.indexOfLeftItem,
                 productHasComment: productHasComment,
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Column(
+                          children: [
+                            if (widget.selectedProduct.childsComposition !=
+                                    null &&
+                                widget.indexOfLeftItem <
+                                    widget.selectedProduct.childsComposition!
+                                        .length)
+                              Text(
+                                _selectedFather(widget.selectedProduct,
+                                        widget.indexOfLeftItem)
+                                    .ChildName!,
+                                style: TextStyle(
+                                  fontSize: getStringSize(context) * 1.4,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ),
+                              ),
+                            TitleText(
+                              indexOfLeftItem: widget.indexOfLeftItem,
+                              selectedProduct: widget.selectedProduct,
+                              showComments: showComments,
+                              productHasComment: productHasComment,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Text(
+                    //   "Total: ${widget.totalLiquid.toString().toBrazilianNumber().addBrazilianCoin()}",
+                    //   style: TextStyle(
+                    //     color: Colors.white,
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: getStringSize(context) * 1.5,
+                    //   ),
+                    // ),
+                    AdvanceButton(
+                      totalPrice: widget.totalLiquid,
+                      quantity: insertProductPresenter.totalProductsQuantity,
+                      advanceSelectedIndex: () {
+                        insertProductPresenter
+                            .advanceLeftIndex(commentsPresenter);
+                      },
+                      selectedProduct: widget.selectedProduct,
+                      leftSelectedIndex: widget.indexOfLeftItem,
+                      productHasComment: productHasComment,
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.selectedProduct.childsComposition != null &&
+                  widget.indexOfLeftItem <
+                      widget.selectedProduct.childsComposition!.length &&
+                  !showComments)
+                ChildsRadios(
+                  callSetState: () {
+                    setState(() {});
+                  },
+                  selectedFather: _getSelectedFather(
+                      widget.selectedProduct, widget.indexOfLeftItem),
+                  selectedProduct: widget.selectedProduct,
+                ),
+              if (showComments && productHasComment)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: CommentsList(
+                    selectedProduct: widget.selectedProduct,
+                    selectedLeftIndex: widget.indexOfLeftItem,
+                  ),
+                ),
+              if (_showUpdateQuantity(
+                  selectedProduct: widget.selectedProduct,
+                  indexOfSelectedFather: widget.indexOfLeftItem,
+                  productHasComment: productHasComment))
+                const UpdateQuantity(),
+            ],
           ),
         ],
       ),
@@ -184,3 +218,7 @@ bool _showUpdateQuantity({
     return false;
   }
 }
+
+ProductCompositionViewModel _selectedFather(
+        ProductsViewModel selectedProduct, int indexOfLeftItem) =>
+    selectedProduct.childsComposition![indexOfLeftItem];

@@ -28,6 +28,7 @@ class _ChildsRadiosState extends State<ChildsRadios> {
 
     return ListView.builder(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: widget.selectedFather.childs?.isEmpty == true
           ? 1
           : widget.selectedFather.childs!.length,

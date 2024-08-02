@@ -88,7 +88,7 @@ class _LandscapeInsertProductsPageBodyState
                   ),
                 if (hasMinWidth(context))
                   TitleText(
-                    selectedLeftIndex: widget.indexOfLeftItem,
+                    indexOfLeftItem: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
                     showComments: showComments,
                     productHasComment: productHasComment,

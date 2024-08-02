@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class TitleText extends StatelessWidget {
-  final int selectedLeftIndex;
+  final int indexOfLeftItem;
   final ProductsViewModel selectedProduct;
   final bool showComments;
   final bool productHasComment;
   const TitleText({
-    required this.selectedLeftIndex,
+    required this.indexOfLeftItem,
     required this.selectedProduct,
     required this.showComments,
     required this.productHasComment,
@@ -33,18 +33,18 @@ class TitleText extends StatelessWidget {
 
   String getTitleText() {
     if (selectedProduct.childsComposition == null) {
-      if (selectedLeftIndex == 0 && productHasComment) {
+      if (indexOfLeftItem == 0 && productHasComment) {
         return "Se desejar, selecione um comentário";
       } else {
         return "Informe a quantidade";
       }
     }
 
-    if (selectedLeftIndex == selectedProduct.childsComposition!.length) {
+    if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
       return "Informe a quantidade";
-    } else if (selectedLeftIndex < selectedProduct.childsComposition!.length &&
+    } else if (indexOfLeftItem < selectedProduct.childsComposition!.length &&
         !showComments) {
-      if (getSelectedFather(selectedProduct, selectedLeftIndex)
+      if (getSelectedFather(selectedProduct, indexOfLeftItem)
               .IsOptionalItem ==
           "false") {
         return "Selecione um produto!";
@@ -60,6 +60,7 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       getTitleText(),
+      textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: getStringSize(context) * 1.4,
         fontWeight: FontWeight.bold,

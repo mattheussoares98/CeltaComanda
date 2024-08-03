@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -26,7 +27,12 @@ class TitleAppbar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
-                onDoubleTap: () {},
+                onDoubleTap: () {
+                  AnimatedAlertDialog.open(
+                    context: context,
+                    page: const UpdateCommandNumber(),
+                  );
+                },
                 child: Text(
                   "Mesa ${homePresenter.commandNumber?.toInt()}",
                   textAlign: TextAlign.center,

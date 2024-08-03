@@ -55,7 +55,7 @@ class GetxPrintedProductsPresenter
       );
       notifyListeners();
     } on DomainError catch (error) {
-      loadPrintedProducts.load(
+      await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: homePresenter.commandNumber!.toInt(),

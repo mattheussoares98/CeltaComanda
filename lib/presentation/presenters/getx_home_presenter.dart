@@ -184,4 +184,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   void goToPrintedProductsPage() {
     navigateTo.navigate(pageRoute: PageRoutes.printedProducts);
   }
+
+  @override
+  Future<void> updateFixedCommandNumber({
+    required int commandNumber,
+    required String user,
+    required String password,
+  }) async {}
 }

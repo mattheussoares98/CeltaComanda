@@ -33,7 +33,7 @@ void main() {
   late ExpansibleGroupEntity expansibleGroupEntity;
   late CommandEntity commandEntity;
   late int newFixedCommandNumber;
-  late String user;
+  late int userPersonalizedCode;
   late String password;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +75,7 @@ void main() {
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     commandEntity = EntityFactory.makeCommandEntity();
     newFixedCommandNumber = faker.randomGenerator.integer(999);
-    user = faker.person.name();
+    userPersonalizedCode = faker.randomGenerator.integer(999);
     password = faker.guid.guid();
   }
 
@@ -426,7 +426,7 @@ void main() {
 
       await sut.updateFixedCommandNumber(
         newFixedCommandNumber: newFixedCommandNumber,
-        user: user,
+        userPersonalizedCode: userPersonalizedCode,
         password: password,
       );
     });
@@ -434,7 +434,22 @@ void main() {
         () async {
       await sut.updateFixedCommandNumber(
         newFixedCommandNumber: newFixedCommandNumber,
-        user: user,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verify(
+        () => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
+    });
+    test("Should validate user and password to change command number",
+        () async {
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
         password: password,
       );
 

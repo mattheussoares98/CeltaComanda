@@ -190,7 +190,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Future<void> updateFixedCommandNumber({
     required int newFixedCommandNumber,
-    required String user,
+    required int userPersonalizedCode,
     required String password,
   }) async {
     isLoading = true;

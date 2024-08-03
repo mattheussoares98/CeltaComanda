@@ -189,14 +189,19 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> updateFixedCommandNumber({
-    required int commandNumber,
+    required int newFixedCommandNumber,
     required String user,
     required String password,
   }) async {
     isLoading = true;
     mainError = null;
 
-    try {} catch (e) {
+    try {
+      await ticketIsPermitted.verify(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        commandNumber: newFixedCommandNumber.toString(),
+      );
+    } catch (e) {
       e;
     } finally {
       isLoading = false;

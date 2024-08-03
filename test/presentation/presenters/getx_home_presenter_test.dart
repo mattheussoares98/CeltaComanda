@@ -425,10 +425,25 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(
-        commandNumber: newFixedCommandNumber,
+        newFixedCommandNumber: newFixedCommandNumber,
         user: user,
         password: password,
       );
+    });
+    test("Should validate ticket is permitted to validate command number",
+        () async {
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        user: user,
+        password: password,
+      );
+
+      verify(
+        () => ticketIsPermitted.verify(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
     });
   });
 }

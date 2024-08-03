@@ -464,8 +464,41 @@ void main() {
     test("Should emit correct values on ticket is permitted throws", () async {
       ticketIsPermitted.mockError();
 
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test(
+        "Should emit correct values on user validations throws invalidCredentialsOrAccessDenied",
+        () async {
+      userValidations.mockIsValidPasswordError(
+        DomainError.invalidCredentialsOrAccessDenied,
+      );
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test("Should emit correct values on user validations throws unexpected",
+        () async {
+      userValidations.mockIsValidPasswordError(
+        DomainError.unexpected,
+      );
+
       expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(

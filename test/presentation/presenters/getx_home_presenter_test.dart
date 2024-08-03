@@ -461,5 +461,18 @@ void main() {
         ),
       ).called(1);
     });
+    test("Should emit correct values on ticket is permitted throws", () async {
+      ticketIsPermitted.mockError();
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
   });
 }

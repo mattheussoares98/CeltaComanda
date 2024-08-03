@@ -207,8 +207,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         personalizedCode: userPersonalizedCode,
         password: password,
       );
-    } catch (e) {
-      e;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

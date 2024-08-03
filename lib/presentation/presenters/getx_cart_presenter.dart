@@ -42,11 +42,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     clear();
 
     try {
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
-      );
-
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,

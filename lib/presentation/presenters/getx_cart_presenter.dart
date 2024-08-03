@@ -389,11 +389,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       homePresenter.updateCommandNumber(informedCommandNumber);
 
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: informedCommandNumber,
-      );
-
       SaleRequestTempEntity saleRequestTempResult =
           await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -470,9 +465,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await confirmedCartProducts.updateValue(false);
 
       await cartInformations.clearCartProducts();
-      await cartInformations.updateConfirmedCombox([]);
-
-      await Future.delayed(const Duration(seconds: 3));
       await printedProductsPresenter.loadPrinted(homePresenter);
 
       _cartProducts.clear();

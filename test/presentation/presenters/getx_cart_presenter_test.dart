@@ -1010,11 +1010,6 @@ void main() {
 
       verify(() => barcodeScanner.read()).called(1);
 
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: commandNumber,
-          )).called(1);
-
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1165,11 +1160,6 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: commandNumber,
-          )).called(1);
-
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -1193,12 +1183,12 @@ void main() {
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           ));
     });
-    test("Should emit correct values TicketIsPermited throws", () async {
-      ticketIsPermitted.mockError();
+    test("Should emit correct values LoadSaleRequestTemp throws", () async {
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
         commentsPresenter: commentsPresenter,
@@ -1207,9 +1197,9 @@ void main() {
         homePresenter: homePresenter,
       );
     });
-    test("Should call correct functions when TicketIsPermited throws",
+    test("Should call correct functions when LoadSaleRequestTemp throws",
         () async {
-      ticketIsPermitted.mockError();
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.saveProducts(
         commentsPresenter: commentsPresenter,
@@ -1218,19 +1208,14 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: commandNumber,
-          )).called(1);
-
-      verifyNever(
+      verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: commandNumber,
         ),
-      );
+      ).called(1);
 
       verifyNever(() => confirmedCartProducts.isConfirmed());
       verifyNever(() => confirmedCartProducts.updateValue(true));
@@ -1274,11 +1259,6 @@ void main() {
         tableNumber: tableNumber,
         homePresenter: homePresenter,
       );
-
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: commandNumber,
-          )).called(1);
 
       verify(
         () => loadSaleRequestTemp.load(
@@ -1327,11 +1307,6 @@ void main() {
         tableNumber: tableNumber,
         homePresenter: homePresenter,
       );
-
-      verify(() => ticketIsPermitted.verify(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            commandNumber: commandNumber,
-          )).called(1);
 
       verify(
         () => loadSaleRequestTemp.load(
@@ -1481,7 +1456,7 @@ void main() {
       expect(isUpdated, true);
     });
     test("Should return false on saveProducts throws", () async {
-      ticketIsPermitted.mockError();
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       final isUpdated = await sut.saveProducts(
         commentsPresenter: commentsPresenter,
@@ -1494,7 +1469,7 @@ void main() {
     });
 
     test("Should return false on saveProducts throws", () async {
-      ticketIsPermitted.mockError();
+      loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       final isUpdated = await sut.saveProducts(
         commentsPresenter: commentsPresenter,
@@ -1586,13 +1561,6 @@ void main() {
         tableNumber: tableNumber,
         homePresenter: homePresenter,
       );
-
-      verify(
-        () => ticketIsPermitted.verify(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: fixedCommandNumber,
-        ),
-      ).called(1);
     });
     test("Should clear all selected comments", () async {
       await sut.saveProducts(

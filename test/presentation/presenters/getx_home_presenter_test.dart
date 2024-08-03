@@ -31,6 +31,9 @@ void main() {
 
   late ExpansibleGroupEntity expansibleGroupEntity;
   late CommandEntity commandEntity;
+  late int newFixedCommandNumber;
+  late String user;
+  late String password;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -68,6 +71,9 @@ void main() {
         EntityFactory.makeEnterpriseData();
     expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     commandEntity = EntityFactory.makeCommandEntity();
+    newFixedCommandNumber = faker.randomGenerator.integer(999);
+    user = faker.person.name();
+    password = faker.guid.guid();
   }
 
   setUp(() {
@@ -406,6 +412,19 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         commentsPresenter: commentsPresenter,
+      );
+    });
+  });
+
+  group("Update fixed command number", () {
+    test("Should emit correct values when update command number", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateFixedCommandNumber(
+        commandNumber: newFixedCommandNumber,
+        user: user,
+        password: password,
       );
     });
   });

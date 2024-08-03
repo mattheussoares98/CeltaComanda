@@ -190,5 +190,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required int commandNumber,
     required String user,
     required String password,
-  }) async {}
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {} catch (e) {
+      e;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

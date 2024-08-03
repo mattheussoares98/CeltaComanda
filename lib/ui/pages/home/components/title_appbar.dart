@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -28,9 +27,13 @@ class TitleAppbar extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
                 onDoubleTap: () {
-                  AnimatedAlertDialog.open(
+                  showDialog(
                     context: context,
-                    page: const UpdateCommandNumber(),
+                    builder: (context) {
+                      return const AlertDialog(
+                        content: UpdateCommandNumber(),
+                      );
+                    },
                   );
                 },
                 child: Text(

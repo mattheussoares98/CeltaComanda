@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
 
-class UpdateCommandNumber extends StatelessWidget {
+import '../../../../data/usecases/usecases.dart';
+
+class UpdateCommandNumber extends StatefulWidget {
   const UpdateCommandNumber({super.key});
 
-  static int? _selectedCommandNumber;
+  @override
+  State<UpdateCommandNumber> createState() => _UpdateCommandNumberState();
+}
+
+class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
+  final _userController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _passwordFocusNode = FocusNode();
+
+  int? _selectedCommandNumber;
+  final _cameraBarcodeScanner = CameraBarcodeScanner();
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _userController.dispose();
+    _passwordController.dispose();
+    _passwordFocusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return SingleChildScrollView(
+      child: Column(
         children: [
           DropdownButtonFormField(
             decoration: const InputDecoration(
@@ -35,15 +56,32 @@ class UpdateCommandNumber extends StatelessWidget {
               _selectedCommandNumber = value ?? 0 + 1;
             },
           ),
+          const SizedBox(height: 10),
           TextFormField(
+            onFieldSubmitted: (_) {
+              _passwordFocusNode.requestFocus();
+            },
+            controller: _userController,
             decoration: const InputDecoration(
               hintText: "Usuário",
               labelText: "Usuário",
             ),
           ),
+          const SizedBox(height: 10),
           TextFormField(
-            decoration: const InputDecoration(
-              suffixIcon: Icon(Icons.camera_alt),
+            focusNode: _passwordFocusNode,
+            controller: _passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                onPressed: () async {
+                  final password = await _cameraBarcodeScanner.read();
+                  if (password.isNotEmpty) {
+                    _passwordController.text = password;
+                  }
+                },
+                icon: const Icon(Icons.camera_alt),
+              ),
               hintText: "Senha",
               labelText: "Senha",
             ),
@@ -53,8 +91,19 @@ class UpdateCommandNumber extends StatelessWidget {
               _selectedCommandNumber = _selectedCommandNumber;
             },
             child: const Text(
-              "Alterar mesa",
+              "Confirmar",
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Reservar mesa",
+                ),
+              ),
+            ],
           ),
         ],
       ),

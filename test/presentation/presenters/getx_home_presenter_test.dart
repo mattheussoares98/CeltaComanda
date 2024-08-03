@@ -28,6 +28,7 @@ void main() {
   late LocalEnterpriseDataSpy localEnterpriseData;
   late TicketIsPermittedSpy ticketIsPermitted;
   late LoadCommandDataSpy localCommandData;
+  late UserValidationsSpy userValidations;
 
   late ExpansibleGroupEntity expansibleGroupEntity;
   late CommandEntity commandEntity;
@@ -50,6 +51,7 @@ void main() {
       localEnterpriseData: localEnterpriseData,
       ticketIsPermitted: ticketIsPermitted,
       localCommandData: localCommandData,
+      userValidations: userValidations,
     );
   }
 
@@ -59,6 +61,7 @@ void main() {
     ticketIsPermitted = TicketIsPermittedSpy();
     navigateTo = NavigateToSpy();
     localCommandData = LoadCommandDataSpy();
+    userValidations = UserValidationsSpy();
   }
 
   void initMocks() {

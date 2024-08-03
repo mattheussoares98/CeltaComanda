@@ -15,6 +15,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final TicketIsPermitted ticketIsPermitted;
   final LoadExpansibleGroups loadExpansibleGroups;
   final LocalCommandData localCommandData;
+  final UserValidations userValidations;
 
   GetxHomePresenter({
     required this.loadExpansibleGroups,
@@ -22,6 +23,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.localEnterpriseData,
     required this.ticketIsPermitted,
     required this.localCommandData,
+    required this.userValidations,
   });
 
   @override

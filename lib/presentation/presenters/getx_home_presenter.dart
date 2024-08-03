@@ -207,6 +207,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         personalizedCode: userPersonalizedCode,
         password: password,
       );
+
+      final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
+
+      updateCommandNumber(commandNumber);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:

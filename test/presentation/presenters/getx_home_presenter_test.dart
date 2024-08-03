@@ -507,5 +507,15 @@ void main() {
         password: password,
       );
     });
+    test("Should update command number", () async {
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      expect(
+          sut.commandNumber, newFixedCommandNumber.toString().padLeft(3, '0'));
+    });
   });
 }

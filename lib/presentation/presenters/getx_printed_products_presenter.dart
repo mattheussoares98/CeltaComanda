@@ -71,12 +71,6 @@ class GetxPrintedProductsPresenter
     mainError = null;
 
     try {
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: homePresenter.commandNumber ?? "001",
-      );
-
-      clear();
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,

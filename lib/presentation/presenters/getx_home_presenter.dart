@@ -201,6 +201,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: newFixedCommandNumber.toString(),
       );
+
+      await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
     } catch (e) {
       e;
     } finally {

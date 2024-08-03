@@ -454,9 +454,10 @@ void main() {
       );
 
       verify(
-        () => ticketIsPermitted.verify(
+        () => userValidations.isValidPassword(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: newFixedCommandNumber.toString(),
+          personalizedCode: userPersonalizedCode,
+          password: password,
         ),
       ).called(1);
     });

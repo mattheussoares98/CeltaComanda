@@ -160,6 +160,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(homePresenter);
       }
+      notifyListeners();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

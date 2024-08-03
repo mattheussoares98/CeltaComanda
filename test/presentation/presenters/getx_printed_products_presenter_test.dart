@@ -417,22 +417,14 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verifyNever(() =>
-          homePresenter.updateCommandNumber(homePresenter.commandNumberMock!));
-      verifyNever(() => menuPresenter.clear());
-      verifyNever(() => menuPresenter.getGroupsAndProducts(
-            commandNumber: homePresenter.commandNumberMock!,
-            commentsPresenter: commentsPresenter,
-          ));
-
-      verify(() => homePresenter.loadCommandData(
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: sut,
-            cartPresenter: cartPresenter,
-            commentsPresenter: commentsPresenter,
-            homePresenter: homePresenter,
-          )).called(1);
-
+      verify(
+        () => loadPrintedProducts.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: homePresenter.commandNumberMock!.toInt(),
+        ),
+      ).called(1);
       expect(sut.canCancelProducts, true);
     });
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
@@ -518,7 +510,7 @@ void main() {
     });
 
     test("Should emit correct values on ticket is not permitted", () async {
-      homePresenter.mockLoadCommandDataError();
+      removePrintedProduct.mockError(DomainError.unexpected);
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

@@ -41,9 +41,6 @@ void main() {
       cartSaleRequestTempProductsEntity;
   late CartProductsViewModel cartProductViewModel;
   late CartProductEntity cartProductWithOneQuantity;
-  late ProductsViewModel fatherOfCombox;
-  late ProductCompositionViewModel selectedChildWithOneQuantity;
-  late ConfirmedComboxViewModel confirmedComboxWithOneQuantity;
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late int tableNumber;
   late CommentViewModel commentViewModel;
@@ -150,7 +147,6 @@ void main() {
         childIncrement: 0,
       ),
     ];
-    fatherOfCombox = EntityFactory.makeProductViewModel();
 
     updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
       DeliveryControl: saleRequestTempEntity.DeliveryControl,
@@ -164,25 +160,6 @@ void main() {
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
-    selectedChildWithOneQuantity =
-        EntityFactory.makeProductCompositionViewModel(
-      quantity: 1,
-      salePrice: 10,
-      offerPrice: 10,
-      fatherIncrement: 0,
-      isOptionalItem: false,
-      indexOfSelectedChild: 0,
-      insertChilds: false,
-      childIncrement: 0,
-    );
-
-    confirmedComboxWithOneQuantity = EntityFactory.makeConfirmedComboxViewModel(
-      products: [selectedChildWithOneQuantity],
-      father: fatherOfCombox,
-      totalPrice: 10,
-      quantity: 1,
-    );
-
     commentViewModel = EntityFactory.makeCommentViewModel(selected: true);
   }
 
@@ -191,9 +168,6 @@ void main() {
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModel]);
     cartInformations.mockGetCart([cartProductViewModel]);
-    cartInformations
-        .mockUpdateConfirmedCombox([confirmedComboxWithOneQuantity]);
-    cartInformations.mockGetConfirmedsCombox([confirmedComboxWithOneQuantity]);
     barcodeScanner.mockBarcodeScanner(commandNumber);
   }
 
@@ -947,7 +921,7 @@ void main() {
     test("Should clear cartProducts on call clearCartAndConfirmedCombox",
         () async {
       sut.cartProducts.add(cartProductViewModel);
-      await sut.clearCartAndConfirmedCombox();
+      await sut.clearCart();
 
       expect(sut.cartProducts, []);
     });
@@ -955,21 +929,15 @@ void main() {
     test(
         "Should call cartInformations.clearCartProducts() on clearCartAndConfirmedCombox",
         () async {
-      await sut.clearCartAndConfirmedCombox();
+      await sut.clearCart();
 
       verify(() => cartInformations.clearCartProducts()).called(1);
     });
-    test(
-        "Should call cartInformations.clearConfirmedCombox() on clearCartAndConfirmedCombox",
-        () async {
-      await sut.clearCartAndConfirmedCombox();
 
-      verify(() => cartInformations.clearConfirmedCombox()).called(1);
-    });
     test(
         "Should call cartInformations.clearCartProduct on clearCartAndConfirmedCombox",
         () async {
-      await sut.clearCartAndConfirmedCombox();
+      await sut.clearCart();
 
       verify(() => cartInformations.clearCartProducts()).called(1);
     });
@@ -978,7 +946,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.clearCartAndConfirmedCombox();
+      await sut.clearCart();
     });
     test("Should emit correct values on clearCartAndConfirmedCombox throws",
         () async {
@@ -988,7 +956,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.clearCartAndConfirmedCombox();
+      await sut.clearCart();
     });
   });
 

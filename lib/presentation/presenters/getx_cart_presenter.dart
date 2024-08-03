@@ -463,7 +463,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       );
 
       await confirmedCartProducts.updateValue(false);
-
       await cartInformations.clearCartProducts();
       await printedProductsPresenter.loadPrinted(homePresenter);
 
@@ -590,14 +589,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<void> clearCartAndConfirmedCombox() async {
+  Future<void> clearCart() async {
     isLoading = true;
     mainError = null;
 
     try {
       _cartProducts.clear();
       await cartInformations.clearCartProducts();
-      await cartInformations.clearConfirmedCombox();
       notifyListeners();
     } catch (e) {
       mainError = UIError.unexpected;

@@ -21,11 +21,20 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
 
   int? _selectedCommandNumber;
   final _cameraBarcodeScanner = CameraBarcodeScanner();
+  bool _isUpdatingCommandNumber = false;
 
-  Future<void> _updateCommandNumber(HomePresenter homePresenter) async {
+  bool _isValidUserAndPassword() {
     bool? isValid = _key.currentState?.validate();
 
     if (isValid != true) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future<void> _updateCommandNumber(HomePresenter homePresenter) async {
+    if (!_isValidUserAndPassword()) {
       return;
     }
 
@@ -57,6 +66,10 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -67,7 +80,9 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
               const SizedBox(height: 10),
               DropdownButtonFormField<int>(
                 validator: (value) {
-                  if (value == null) {
+                  if (!_isUpdatingCommandNumber) {
+                    return null;
+                  } else if (value == null) {
                     return "Selecione a comanda";
                   }
 
@@ -126,6 +141,7 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
                   return null;
                 },
                 onFieldSubmitted: (_) async {
+                  _isUpdatingCommandNumber = true;
                   await _updateCommandNumber(homePresenter);
                 },
                 decoration: InputDecoration(
@@ -144,6 +160,7 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
               ),
               TextButton(
                 onPressed: () async {
+                  _isUpdatingCommandNumber = true;
                   await _updateCommandNumber(homePresenter);
                 },
                 child: const Text(
@@ -153,10 +170,33 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Reservar mesa",
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () async {
+                        _isUpdatingCommandNumber = false;
+                        if (_isValidUserAndPassword()) {
+                          await homePresenter.goToSplashPage(
+                            printedProductsPresenter: printedProductsPresenter,
+                            cartPresenter: cartPresenter,
+                            menuPresenter: menuPresenter,
+                          );
+                        }
+                      },
+                      child: const FittedBox(
+                        child: Text(
+                          "Fazer logout",
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: FittedBox(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Reservar mesa",
+                        ),
+                      ),
                     ),
                   ),
                 ],

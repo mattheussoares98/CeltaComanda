@@ -29,11 +29,17 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
     }
 
     if (_selectedCommandNumber != null) {
-      await homePresenter.updateFixedCommandNumber(
+      final updated = await homePresenter.updateFixedCommandNumber(
         newFixedCommandNumber: _selectedCommandNumber!,
         userPersonalizedCode: _userController.text.toInt(),
         password: _passwordController.text,
       );
+
+      if (updated) {
+        Future.delayed(Duration.zero, () {
+          Navigator.of(context).pop();
+        });
+      }
     }
   }
 

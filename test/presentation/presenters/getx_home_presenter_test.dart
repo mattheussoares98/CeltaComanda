@@ -491,6 +491,21 @@ void main() {
         password: password,
       );
     });
+    test(
+        "Should emit invalidCredentialsOrAccessDenied when userValidations return false",
+        () async {
+      userValidations.mockIsValidPassword(false);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
     test("Should emit correct values on user validations throws unexpected",
         () async {
       userValidations.mockIsValidPasswordError(

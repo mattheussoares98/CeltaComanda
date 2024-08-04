@@ -202,11 +202,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         commandNumber: newFixedCommandNumber.toString(),
       );
 
-      await userValidations.isValidPassword(
+      bool isValidPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         personalizedCode: userPersonalizedCode,
         password: password,
       );
+
+      if (isValidPassword != true) {
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
 
       final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
 

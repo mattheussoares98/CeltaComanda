@@ -188,7 +188,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> updateFixedCommandNumber({
+  Future<bool> updateFixedCommandNumber({
     required int newFixedCommandNumber,
     required int userPersonalizedCode,
     required String password,
@@ -211,6 +211,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
 
       updateCommandNumber(commandNumber);
+      return true;
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.commandNotAvailable:
@@ -220,6 +221,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         default:
           mainError = UIError.unexpected;
       }
+      return false;
     } finally {
       isLoading = false;
     }

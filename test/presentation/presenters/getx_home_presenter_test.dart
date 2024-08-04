@@ -517,5 +517,25 @@ void main() {
       expect(
           sut.commandNumber, newFixedCommandNumber.toString().padLeft(3, '0'));
     });
+    test("Should return false if update fixed command number throws", () async {
+      ticketIsPermitted.mockError();
+
+      final value = await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      expect(value, false);
+    });
+    test("Should return true if update fixed command number success", () async {
+      final value = await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      expect(value, true);
+    });
   });
 }

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/alert_message.dart';
 import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,7 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
 
       if (updated) {
         Future.delayed(Duration.zero, () {
+          showAlertMessage(context, "Número da mesa alterado com sucesso");
           Navigator.of(context).pop();
         });
       }

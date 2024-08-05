@@ -9,6 +9,12 @@ class EvaluateService extends StatefulWidget {
 }
 
 class _EvaluateServiceState extends State<EvaluateService> {
+  int? foodNote;
+  int? drinkNote;
+  int? environmentNote;
+  int? serviceNote;
+  int? costBenefitNote;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,45 +29,55 @@ class _EvaluateServiceState extends State<EvaluateService> {
                   text: "Comida",
                   icon: Icons.food_bank,
                   updateIndex: (int index) {
-                    debugPrint((index + 1).toString());
+                    setState(() {
+                      foodNote = index + 1;
+                    });
                   },
-                  evaluateNumber: 3,
+                  evaluateNumber: foodNote,
                 ),
                 generateEvaluateItem(
                   context: context,
                   text: "Bebida",
                   icon: Icons.wine_bar,
                   updateIndex: (int index) {
-                    debugPrint((index + 1).toString());
+                    setState(() {
+                      drinkNote = index + 1;
+                    });
                   },
-                  evaluateNumber: 3,
+                  evaluateNumber: drinkNote,
                 ),
                 generateEvaluateItem(
                   context: context,
                   text: "Ambiente",
                   icon: Icons.house,
                   updateIndex: (int index) {
-                    debugPrint((index + 1).toString());
+                    setState(() {
+                      environmentNote = index + 1;
+                    });
                   },
-                  evaluateNumber: 3,
+                  evaluateNumber: environmentNote,
                 ),
                 generateEvaluateItem(
                   context: context,
                   text: "Atendimento",
                   icon: Icons.person,
                   updateIndex: (int index) {
-                    debugPrint((index + 1).toString());
+                    setState(() {
+                      serviceNote = index + 1;
+                    });
                   },
-                  evaluateNumber: 3,
+                  evaluateNumber: serviceNote,
                 ),
                 generateEvaluateItem(
                   context: context,
                   text: "Custo benefício",
                   icon: Icons.monetization_on_rounded,
                   updateIndex: (int index) {
-                    debugPrint((index + 1).toString());
+                    setState(() {
+                      costBenefitNote = index + 1;
+                    });
                   },
-                  evaluateNumber: null,
+                  evaluateNumber: costBenefitNote,
                 ),
               ],
             ),

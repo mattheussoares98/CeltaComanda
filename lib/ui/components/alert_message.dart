@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import '../../main/builders/builders.dart';
 import '../helpers/helpers.dart';
 
-void showAlertMessage(BuildContext context, String message) {
+void showAlertMessage(BuildContext context, String message,
+    [Color? backgroundColor]) {
   ScaffoldMessenger.of(NavigatorKey.navigatorKey.currentContext ?? context)
       .clearSnackBars();
   ScaffoldMessenger.of(NavigatorKey.navigatorKey.currentContext ?? context)
       .showSnackBar(
     SnackBar(
-      backgroundColor: Colors.green,
+      backgroundColor: backgroundColor ?? Colors.green,
       content: Text(
         message,
         textAlign: TextAlign.center,

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/alert_message.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
             padding: const EdgeInsets.only(left: 8),
             child: Column(
               children: [
-                generateEvaluateItem(
+                _generateEvaluateItem(
                   context: context,
                   text: "Comida",
                   icon: Icons.food_bank,
@@ -48,7 +49,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                   },
                   evaluateNumber: foodNote,
                 ),
-                generateEvaluateItem(
+                _generateEvaluateItem(
                   context: context,
                   text: "Bebida",
                   icon: Icons.wine_bar,
@@ -59,7 +60,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                   },
                   evaluateNumber: drinkNote,
                 ),
-                generateEvaluateItem(
+                _generateEvaluateItem(
                   context: context,
                   text: "Ambiente",
                   icon: Icons.house,
@@ -70,7 +71,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                   },
                   evaluateNumber: environmentNote,
                 ),
-                generateEvaluateItem(
+                _generateEvaluateItem(
                   context: context,
                   text: "Atendimento",
                   icon: Icons.person,
@@ -81,7 +82,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                   },
                   evaluateNumber: serviceNote,
                 ),
-                generateEvaluateItem(
+                _generateEvaluateItem(
                   context: context,
                   text: "Custo benefício",
                   icon: Icons.monetization_on_rounded,
@@ -100,6 +101,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
                   controller: nameController,
@@ -134,6 +136,30 @@ class _EvaluateServiceState extends State<EvaluateService> {
                     hintText: "Sugestão, crítica ou elogio",
                   ),
                 ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _sendAvaliation(
+                      foodNote: foodNote,
+                      drinkNote: drinkNote,
+                      environmentNote: environmentNote,
+                      serviceNote: serviceNote,
+                      costBenefitNote: costBenefitNote,
+                      nameController: nameController,
+                      phoneController: phoneController,
+                      emailController: emailController,
+                      suggestionCriticalOrPraiseController:
+                          suggestionCriticalOrPraiseController,
+                      context: context,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Enviar avaliação".toUpperCase(),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -143,7 +169,34 @@ class _EvaluateServiceState extends State<EvaluateService> {
   }
 }
 
-Widget generateEvaluateItem({
+Future<void> _sendAvaliation({
+  required int? foodNote,
+  required int? drinkNote,
+  required int? environmentNote,
+  required int? serviceNote,
+  required int? costBenefitNote,
+  required TextEditingController nameController,
+  required TextEditingController phoneController,
+  required TextEditingController emailController,
+  required TextEditingController suggestionCriticalOrPraiseController,
+  required BuildContext context,
+}) async {
+  if (foodNote == null) {
+    showAlertMessage(context, "Avalie a comida", Colors.red);
+  } else if (drinkNote == null) {
+    showAlertMessage(context, "Avalie a bebida", Colors.red);
+  } else if (environmentNote == null) {
+    showAlertMessage(context, "Avalie o ambiente", Colors.red);
+  } else if (serviceNote == null) {
+    showAlertMessage(context, "Avalie o atendimento", Colors.red);
+  } else if (costBenefitNote == null) {
+    showAlertMessage(context, "Avalie o custo benefício", Colors.red);
+  } else if (nameController.text.isEmpty) {
+    showAlertMessage(context, "Informe o seu nome", Colors.red);
+  }
+}
+
+Widget _generateEvaluateItem({
   required String text,
   required IconData icon,
   required Function(int) updateIndex,

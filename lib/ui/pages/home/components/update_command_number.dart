@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../ui/components/components.dart';
-import '../../../../../ui/helpers/convert/convert.dart';
+import '../../../../../ui/helpers/helpers.dart';
 import '../../../../data/usecases/usecases.dart';
 import '../../pages.dart';
 
@@ -163,8 +163,11 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
                   _isUpdatingCommandNumber = true;
                   await _updateCommandNumber(homePresenter);
                 },
-                child: const Text(
-                  "Confirmar",
+                child: Text(
+                  "Alterar mesa",
+                  style: TextStyle(
+                    fontSize: getStringSize(context),
+                  ),
                 ),
               ),
               Row(
@@ -202,19 +205,23 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
                           }
                         }
                       },
-                      child: const FittedBox(
+                      child: FittedBox(
                         child: Text(
                           "Fazer logout",
+                          style: TextStyle(
+                            fontSize: getStringSize(context),
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: FittedBox(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Reservar mesa",
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Reservar mesa",
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
                         ),
                       ),
                     ),

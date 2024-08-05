@@ -30,8 +30,33 @@ class TitleAppbar extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const AlertDialog(
-                        content: UpdateCommandNumber(),
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        iconPadding: const EdgeInsets.all(8),
+                        titlePadding: const EdgeInsets.all(8),
+                        buttonPadding: const EdgeInsets.all(8),
+                        actionsPadding: const EdgeInsets.all(8),
+                        insetPadding: const EdgeInsets.all(20),
+                        contentPadding: const EdgeInsets.all(10),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Fechar",
+                              style: TextStyle(
+                                fontSize: getStringSize(context),
+                              ),
+                            ),
+                          ),
+                        ],
+                        content: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: const UpdateCommandNumber(),
+                        ),
                       );
                     },
                   );

@@ -14,6 +14,19 @@ class _EvaluateServiceState extends State<EvaluateService> {
   int? environmentNote;
   int? serviceNote;
   int? costBenefitNote;
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  final suggestionCriticalOrPraiseController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    suggestionCriticalOrPraiseController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +102,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
             child: Column(
               children: [
                 TextFormField(
+                  controller: nameController,
                   decoration: const InputDecoration(
                     labelText: "Nome",
                     hintText: "Nome",
@@ -96,6 +110,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
+                  controller: phoneController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: "Celular",
@@ -104,6 +119,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: "E-mail",
@@ -112,6 +128,7 @@ class _EvaluateServiceState extends State<EvaluateService> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
+                  controller: suggestionCriticalOrPraiseController,
                   decoration: const InputDecoration(
                     labelText: "Sugestão, crítica ou elogio",
                     hintText: "Sugestão, crítica ou elogio",

@@ -1,8 +1,8 @@
-import 'package:clean_celta_mobile/ui/components/alert_message.dart';
-import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../ui/components/components.dart';
+import '../../../../../ui/helpers/convert/convert.dart';
 import '../../../../data/usecases/usecases.dart';
 import '../../pages.dart';
 
@@ -175,11 +175,31 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
                       onPressed: () async {
                         _isUpdatingCommandNumber = false;
                         if (_isValidUserAndPassword()) {
-                          await homePresenter.goToSplashPage(
-                            printedProductsPresenter: printedProductsPresenter,
-                            cartPresenter: cartPresenter,
-                            menuPresenter: menuPresenter,
-                          );
+                          if (cartPresenter.cartProducts.isNotEmpty) {
+                            notificationDialog(
+                                context: context,
+                                titleMessage: "Limpar carrinho",
+                                content: const Text(
+                                    "Ao fazer o logout, o carrinho será limpo!"),
+                                onPress: () async {
+                                  if (_isValidUserAndPassword()) {
+                                    cartPresenter.clearCart();
+                                    await homePresenter.goToSplashPage(
+                                      printedProductsPresenter:
+                                          printedProductsPresenter,
+                                      cartPresenter: cartPresenter,
+                                      menuPresenter: menuPresenter,
+                                    );
+                                  }
+                                });
+                          } else {
+                            await homePresenter.goToSplashPage(
+                              printedProductsPresenter:
+                                  printedProductsPresenter,
+                              cartPresenter: cartPresenter,
+                              menuPresenter: menuPresenter,
+                            );
+                          }
                         }
                       },
                       child: const FittedBox(

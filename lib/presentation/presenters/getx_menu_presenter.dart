@@ -228,6 +228,14 @@ class GetxMenuPresenter extends GetxController
         }
       }
 
+      _loadedMenu.add({
+        const ExpansibleGroupsViewModel(
+          Name: "Avaliar atendimento",
+          ExpansibleGroupId: "",
+          ExpansibleGroupType: "",
+          OrderClassification: "",
+        ): []
+      });
       await commentsPresenter.loadComments(allProducts);
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);

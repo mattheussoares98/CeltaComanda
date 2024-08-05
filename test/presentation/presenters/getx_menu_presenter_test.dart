@@ -202,6 +202,14 @@ void main() {
       verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId))
           .called(1);
     });
+    test('Should add fixed group of avaliation in last index', () async {
+      await sut.getGroupsAndProducts(
+        commentsPresenter: commentsPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      expect(sut.loadedMenu.last.entries.first.key.Name, "Avaliar atendimento");
+    });
 
     test('Should return correct value on success to load', () async {
       await sut.getGroupsAndProducts(

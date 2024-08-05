@@ -79,6 +79,7 @@ class GroupsAndProducts extends StatelessWidget {
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
               child: ProductsItems(
+                selectedGroupIndex: selectedIndex,
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,
                 scrollController: scrollController,

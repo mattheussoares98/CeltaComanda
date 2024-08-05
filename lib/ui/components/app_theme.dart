@@ -66,12 +66,12 @@ ThemeData makeAppTheme() {
       splashColor: primaryColorLight,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       textTheme: ButtonTextTheme.primary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)));
 
   final elevatedButtonTheme = ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     backgroundColor: primaryColorDark,
     foregroundColor: Colors.white,
   ));

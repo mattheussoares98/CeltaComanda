@@ -9,10 +9,38 @@ PreferredSize homeAppBar({
   required PrintedProductsPresenter printedProductsPresenter,
   required BuildContext context,
   required CartPresenter cartPresenter,
+  required MenuPresenter menuPresenter,
 }) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(40),
     child: AppBar(
+      title: const TitleAppbar(),
+      leading: FittedBox(
+        child: Row(
+          children: [
+            if (!homePresenter.isFixedCommandNumber)
+              IconButton(
+                onPressed: () {
+                  notificationDialog(
+                      context: context,
+                      titleMessage: "Fazer logout",
+                      content: const Text("Deseja realmente fazer o logout?"),
+                      onPress: () async {
+                        await homePresenter.goToSplashPage(
+                          printedProductsPresenter: printedProductsPresenter,
+                          cartPresenter: cartPresenter,
+                          menuPresenter: menuPresenter,
+                        );
+                        await cartPresenter.clearCart();
+                      });
+                },
+                icon: const Icon(Icons.logout),
+              ),
+            const EnterpriseLogoImage(),
+          ],
+        ),
+      ),
+      backgroundColor: const Color(0xFFF1F5F8),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 1),
@@ -107,15 +135,6 @@ PreferredSize homeAppBar({
           ],
         ),
       ],
-      title: const TitleAppbar(),
-      leading: const FittedBox(
-        child: Row(
-          children: [
-            EnterpriseLogoImage(),
-          ],
-        ),
-      ),
-      backgroundColor: const Color(0xFFF1F5F8),
     ),
   );
 }

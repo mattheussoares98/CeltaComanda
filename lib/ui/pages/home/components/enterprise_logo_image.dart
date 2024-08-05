@@ -69,7 +69,7 @@ class EnterpriseLogoImage extends StatelessWidget {
         height: AppBar().preferredSize.height,
         width: AppBar().preferredSize.height,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: CachedImage(
             ean: null,
             plu:

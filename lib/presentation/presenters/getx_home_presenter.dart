@@ -215,6 +215,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
 
       updateCommandNumber(commandNumber);
+      await localCommandData.update(
+        CommandEntity(
+          commandNumber: commandNumber,
+          isFixedCommandNumber: true,
+        ),
+      );
       notifyListeners();
       return true;
     } on DomainError catch (e) {

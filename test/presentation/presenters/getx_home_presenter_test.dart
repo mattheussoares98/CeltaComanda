@@ -90,6 +90,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductViewModel());
     registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(CommentsPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
   });
@@ -458,6 +459,23 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           personalizedCode: userPersonalizedCode,
           password: password,
+        ),
+      ).called(1);
+    });
+    test("Should update local command data", () async {
+      localCommandData.mockUpdate();
+      await sut.updateFixedCommandNumber(
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verify(
+        () => localCommandData.update(
+          CommandEntity(
+            commandNumber: newFixedCommandNumber.toString(),
+            isFixedCommandNumber: true,
+          ),
         ),
       ).called(1);
     });

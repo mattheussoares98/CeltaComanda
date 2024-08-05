@@ -109,7 +109,15 @@ void main() {
                 return ProductsViewModel.fromEntity(product);
               }).toList(),
             })
-        .toList();
+        .toList()
+      ..add({
+        const ExpansibleGroupsViewModel(
+          Name: "Avaliar",
+          ExpansibleGroupId: "0",
+          ExpansibleGroupType: "0",
+          OrderClassification: "0",
+        ): []
+      });
 
     productsCompositionsEntitys = EntityFactory.makeProductsCompositionsEntity(
       isOptionalItem: true,
@@ -208,7 +216,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
       );
 
-      expect(sut.loadedMenu.last.entries.first.key.Name, "Avaliar atendimento");
+      expect(sut.loadedMenu.last.entries.first.key.Name, "Avaliar");
     });
 
     test('Should return correct value on success to load', () async {
@@ -242,11 +250,11 @@ void main() {
     });
 
     test('Should put "destaques" in first group list', () async {
-      final anyGroup = ExpansibleGroupsViewModel(
-        Name: "a",
-        ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
-        ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
-        OrderClassification: faker.randomGenerator.integer(10).toString(),
+      const avaliationGroup = ExpansibleGroupsViewModel(
+        Name: "Avaliar",
+        ExpansibleGroupId: "0",
+        ExpansibleGroupType: "0",
+        OrderClassification: "0",
       );
       final detachGroup = ExpansibleGroupsViewModel(
         Name: "Destaques",
@@ -255,7 +263,6 @@ void main() {
         OrderClassification: faker.randomGenerator.integer(10).toString(),
       );
       final groups = [
-        anyGroup,
         detachGroup,
       ];
 
@@ -270,7 +277,7 @@ void main() {
             [],
             [
               {detachGroup: []},
-              {anyGroup: []},
+              {avaliationGroup: []},
             ]
           ]));
 

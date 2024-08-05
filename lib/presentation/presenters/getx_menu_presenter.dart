@@ -230,10 +230,10 @@ class GetxMenuPresenter extends GetxController
 
       _loadedMenu.add({
         const ExpansibleGroupsViewModel(
-          Name: "Avaliar atendimento",
-          ExpansibleGroupId: "",
-          ExpansibleGroupType: "",
-          OrderClassification: "",
+          Name: "Avaliar",
+          ExpansibleGroupId: "0",
+          ExpansibleGroupType: "0",
+          OrderClassification: "0",
         ): []
       });
       await commentsPresenter.loadComments(allProducts);

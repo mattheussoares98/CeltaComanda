@@ -67,6 +67,7 @@ void main() {
   void initMocks() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localCommandData.mockLoad(commandEntity);
+    localCommandData.mockUpdate();
   }
 
   void initEntitys() {
@@ -182,6 +183,8 @@ void main() {
       await sut.updateIsFixedCommandNumber();
     });
     test("Should emit correct values on error", () async {
+      localCommandData.mockUpdateError();
+
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -308,12 +311,11 @@ void main() {
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
         () async {
-      sut.updateIsFixedCommandNumber();
+      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber("001");
       cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.mainErrorStream, emits(UIError.unexpected));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -327,13 +329,12 @@ void main() {
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.commandNotAvailable",
         () async {
-      sut.updateIsFixedCommandNumber();
+      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber("001");
       cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -347,12 +348,11 @@ void main() {
     test(
         "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.unexpected",
         () async {
-      sut.updateIsFixedCommandNumber();
+      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber("001");
       printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
 
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.mainErrorStream, emits(UIError.unexpected));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -366,13 +366,12 @@ void main() {
     test(
         "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.commandNotAvailable",
         () async {
-      sut.updateIsFixedCommandNumber();
+      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber("001");
       printedProductsPresenter
           .mockLoadPrintedError(DomainError.commandNotAvailable);
 
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(

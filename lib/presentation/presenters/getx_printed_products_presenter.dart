@@ -43,17 +43,9 @@ class GetxPrintedProductsPresenter
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!.toInt(),
-      );
+      await loadPrinted(homePresenter);
     } on DomainError catch (error) {
-      await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!.toInt(),
-      );
+      await loadPrinted(homePresenter);
       switch (error) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;

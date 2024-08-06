@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../ui/helpers/helpers.dart';
+import '../../pages.dart';
 
 class UpdateCommandNumber extends StatelessWidget {
   final bool isUpdatingCommandNumber;
@@ -11,7 +15,10 @@ class UpdateCommandNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return DropdownButtonFormField<int>(
+      value: homePresenter.commandNumber?.toInt(),
       validator: (value) {
         if (!isUpdatingCommandNumber) {
           return null;

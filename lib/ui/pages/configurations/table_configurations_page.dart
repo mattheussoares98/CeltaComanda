@@ -107,18 +107,26 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   await _updateCommandNumber(homePresenter);
                 },
               ),
-              TextButton(
-                onPressed: () async {
-                  setState(() {
-                    _isUpdatingCommandNumber = true;
-                    _isUpdatingPeopleNumbers = true;
-                  });
-                  await _updateCommandNumber(homePresenter);
-                },
-                child: Text(
-                  "Alterar mesa e qtd de pessoas",
-                  style: TextStyle(
-                    fontSize: getStringSize(context),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      _isUpdatingCommandNumber = true;
+                      _isUpdatingPeopleNumbers = true;
+                    });
+                    await _updateCommandNumber(homePresenter);
+                  },
+                  child: FittedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Alterar mesa e quantidade de pessoas",
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -135,8 +143,9 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                       },
                     ),
                   ),
+                  const SizedBox(width: 10),
                   Expanded(
-                    child: TextButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                         showDialog(
@@ -145,10 +154,15 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                               return const ReserveTable();
                             });
                       },
-                      child: Text(
-                        "Reservar mesa",
-                        style: TextStyle(
-                          fontSize: getStringSize(context),
+                      child: FittedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Reservar mesa",
+                            style: TextStyle(
+                              fontSize: getStringSize(context),
+                            ),
+                          ),
                         ),
                       ),
                     ),

@@ -26,12 +26,15 @@ class LogoutButton extends StatelessWidget {
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return TextButton(
-      child: FittedBox(
-        child: Text(
-          "Fazer logout",
-          style: TextStyle(
-            fontSize: getStringSize(context),
+    return ElevatedButton(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FittedBox(
+          child: Text(
+            "Fazer logout",
+            style: TextStyle(
+              fontSize: getStringSize(context),
+            ),
           ),
         ),
       ),

@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+
+import '../../../../components/components.dart';
+
+class ClientInformations extends StatelessWidget {
+  final int? foodNote;
+  final int? drinkNote;
+  final int? environmentNote;
+  final int? serviceNote;
+  final int? costBenefitNote;
+  final TextEditingController nameController;
+  final TextEditingController phoneController;
+  final TextEditingController emailController;
+  final TextEditingController suggestionCriticalOrPraiseController;
+  const ClientInformations({
+    required this.foodNote,
+    required this.drinkNote,
+    required this.environmentNote,
+    required this.serviceNote,
+    required this.costBenefitNote,
+    required this.nameController,
+    required this.phoneController,
+    required this.emailController,
+    required this.suggestionCriticalOrPraiseController,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextFormField(
+          controller: nameController,
+          decoration: const InputDecoration(
+            labelText: "Nome",
+            hintText: "Nome",
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: phoneController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            labelText: "Celular",
+            hintText: "Celular",
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: emailController,
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(
+            labelText: "E-mail",
+            hintText: "E-mail",
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: suggestionCriticalOrPraiseController,
+          decoration: const InputDecoration(
+            labelText: "Sugestão, crítica ou elogio",
+            hintText: "Sugestão, crítica ou elogio",
+          ),
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () async {
+            await _sendAvaliation(
+              foodNote: foodNote,
+              drinkNote: drinkNote,
+              environmentNote: environmentNote,
+              serviceNote: serviceNote,
+              costBenefitNote: costBenefitNote,
+              nameController: nameController,
+              phoneController: phoneController,
+              emailController: emailController,
+              suggestionCriticalOrPraiseController:
+                  suggestionCriticalOrPraiseController,
+              context: context,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Enviar avaliação".toUpperCase(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+Future<void> _sendAvaliation({
+  required int? foodNote,
+  required int? drinkNote,
+  required int? environmentNote,
+  required int? serviceNote,
+  required int? costBenefitNote,
+  required TextEditingController nameController,
+  required TextEditingController phoneController,
+  required TextEditingController emailController,
+  required TextEditingController suggestionCriticalOrPraiseController,
+  required BuildContext context,
+}) async {
+  if (foodNote == null) {
+    showAlertMessage(context, "Avalie a comida", Colors.red);
+  } else if (drinkNote == null) {
+    showAlertMessage(context, "Avalie a bebida", Colors.red);
+  } else if (environmentNote == null) {
+    showAlertMessage(context, "Avalie o ambiente", Colors.red);
+  } else if (serviceNote == null) {
+    showAlertMessage(context, "Avalie o atendimento", Colors.red);
+  } else if (costBenefitNote == null) {
+    showAlertMessage(context, "Avalie o custo benefício", Colors.red);
+  } else if (nameController.text.isEmpty) {
+    showAlertMessage(context, "Informe o seu nome", Colors.red);
+  }
+}

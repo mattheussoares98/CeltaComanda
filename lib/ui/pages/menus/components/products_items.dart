@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,11 @@ class _ProductsItemsState extends State<ProductsItems> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     if (widget.selectedGroupIndex! + 1 == menuPresenter.loadedMenu.length) {
-      return const EvaluateService();
+      if (hasMinWidth(context)) {
+        return const LandscapeEvaluateService();
+      } else {
+        return const PortraitEvaluateService();
+      }
     }
     return ListView.builder(
       controller: widget.scrollController,

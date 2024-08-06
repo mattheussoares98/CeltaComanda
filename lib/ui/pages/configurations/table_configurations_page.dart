@@ -68,10 +68,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -127,46 +123,11 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
-                    child: TextButton(
-                      child: FittedBox(
-                        child: Text(
-                          "Fazer logout",
-                          style: TextStyle(
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                      onPressed: () async {
+                    child: LogoutButton(
+                      isValidUserAndPassword: _isValidUserAndPassword(),
+                      changeIsUpdatingCommandNumber: () {
                         _isUpdatingCommandNumber = false;
-                        if (_isValidUserAndPassword()) {
-                          if (cartPresenter.cartProducts.isNotEmpty) {
-                            notificationDialog(
-                                context: context,
-                                titleMessage: "Limpar carrinho",
-                                content: const Text(
-                                    "Ao fazer o logout, o carrinho será limpo!"),
-                                onPress: () async {
-                                  if (_isValidUserAndPassword()) {
-                                    cartPresenter.clearCart();
-                                    await homePresenter.goToSplashPage(
-                                      printedProductsPresenter:
-                                          printedProductsPresenter,
-                                      cartPresenter: cartPresenter,
-                                      menuPresenter: menuPresenter,
-                                    );
-                                  }
-                                });
-                          } else {
-                            await homePresenter.goToSplashPage(
-                              printedProductsPresenter:
-                                  printedProductsPresenter,
-                              cartPresenter: cartPresenter,
-                              menuPresenter: menuPresenter,
-                            );
-                          }
-                        }
                       },
-                      
                     ),
                   ),
                   Expanded(

@@ -6,11 +6,15 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class LogoutButton extends StatelessWidget {
-  final bool isValidUserAndPassword;
   final Function() changeIsUpdatingCommandNumber;
+  final GlobalKey<FormState> validationKey;
+  final TextEditingController userPersonalizedCode;
+  final TextEditingController userPassword;
   const LogoutButton({
-    required this.isValidUserAndPassword,
     required this.changeIsUpdatingCommandNumber,
+    required this.validationKey,
+    required this.userPassword,
+    required this.userPersonalizedCode,
     super.key,
   });
 
@@ -33,23 +37,36 @@ class LogoutButton extends StatelessWidget {
       ),
       onPressed: () async {
         changeIsUpdatingCommandNumber();
+
+        if (validationKey.currentState?.validate() != true) {
+          return;
+        }
+
+        bool isValidUserAndPassword =
+            await homePresenter.isValidUserAndPassword(
+          personalizedCode: userPersonalizedCode.text.toInt(),
+          password: userPassword.text,
+        );
+
         if (isValidUserAndPassword) {
           if (cartPresenter.cartProducts.isNotEmpty) {
-            notificationDialog(
-                context: context,
-                titleMessage: "Limpar carrinho",
-                content:
-                    const Text("Ao fazer o logout, o carrinho será limpo!"),
-                onPress: () async {
-                  if (isValidUserAndPassword) {
-                    cartPresenter.clearCart();
-                    await homePresenter.goToSplashPage(
-                      printedProductsPresenter: printedProductsPresenter,
-                      cartPresenter: cartPresenter,
-                      menuPresenter: menuPresenter,
-                    );
-                  }
-                });
+            Future.delayed(Duration.zero, () {
+              notificationDialog(
+                  context: context,
+                  titleMessage: "Limpar carrinho",
+                  content:
+                      const Text("Ao fazer o logout, o carrinho será limpo!"),
+                  onPress: () async {
+                    if (isValidUserAndPassword) {
+                      cartPresenter.clearCart();
+                      await homePresenter.goToSplashPage(
+                        printedProductsPresenter: printedProductsPresenter,
+                        cartPresenter: cartPresenter,
+                        menuPresenter: menuPresenter,
+                      );
+                    }
+                  });
+            });
           } else {
             await homePresenter.goToSplashPage(
               printedProductsPresenter: printedProductsPresenter,

@@ -14,7 +14,7 @@ class TableConfigurationsPage extends StatefulWidget {
 }
 
 class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
-  final _userController = TextEditingController();
+  final _personalizedCodeController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();
   final _key = GlobalKey<FormState>();
@@ -43,7 +43,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     if (_selectedCommandNumber != null) {
       final updated = await homePresenter.updateFixedCommandNumber(
         newFixedCommandNumber: _selectedCommandNumber!,
-        userPersonalizedCode: _userController.text.toInt(),
+        userPersonalizedCode: _personalizedCodeController.text.toInt(),
         password: _passwordController.text,
       );
 
@@ -60,7 +60,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   void dispose() {
     super.dispose();
 
-    _userController.dispose();
+    _personalizedCodeController.dispose();
     _passwordController.dispose();
     _passwordFocusNode.dispose();
   }
@@ -94,7 +94,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               const SizedBox(height: 10),
               UserPersonalizedCodeInput(
                 passwordFocusNode: _passwordFocusNode,
-                userController: _userController,
+                userController: _personalizedCodeController,
               ),
               const SizedBox(height: 10),
               PasswordInput(
@@ -127,8 +127,9 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 children: [
                   Expanded(
                     child: LogoutButton(
-                      isValidUserAndPassword:
-                          _isValidUserPasswordTableNumberAndPeopleNumbers(),
+                      userPassword: _passwordController,
+                      userPersonalizedCode: _personalizedCodeController,
+                      validationKey: _key,
                       changeIsUpdatingCommandNumber: () {
                         _isUpdatingCommandNumber = false;
                       },

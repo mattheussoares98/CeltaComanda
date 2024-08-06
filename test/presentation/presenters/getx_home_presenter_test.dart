@@ -585,7 +585,7 @@ void main() {
       userValidations.mockIsValidPassword(false);
 
       expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+          emitsInOrder([null, UIError.invalidCredentials]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.isValidUserAndPassword(

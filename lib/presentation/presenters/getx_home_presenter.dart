@@ -254,14 +254,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (!isValid) {
-        throw DomainError.invalidCredentialsOrAccessDenied;
+        throw DomainError.invalidCredentials;
       }
 
       return isValid;
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
+        case DomainError.invalidCredentials:
+          mainError = UIError.invalidCredentials;
           break;
         default:
           mainError = UIError.unexpected;

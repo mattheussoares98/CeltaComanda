@@ -5,13 +5,11 @@ import '../../../../data/usecases/usecases.dart';
 class PasswordInput extends StatelessWidget {
   final FocusNode passwordFocusNode;
   final TextEditingController passwordController;
-  final Function() changeIsUpdatingCommandNumber;
   final Future Function() updateCommandNumber;
 
   const PasswordInput({
     required this.passwordFocusNode,
     required this.passwordController,
-    required this.changeIsUpdatingCommandNumber,
     required this.updateCommandNumber,
     super.key,
   });
@@ -31,7 +29,6 @@ class PasswordInput extends StatelessWidget {
         return null;
       },
       onFieldSubmitted: (_) async {
-        changeIsUpdatingCommandNumber();
         await updateCommandNumber();
       },
       decoration: InputDecoration(

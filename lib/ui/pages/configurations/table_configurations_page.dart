@@ -40,7 +40,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       return;
     }
 
-    if (_selectedCommandNumber != null) {
+    if (_selectedCommandNumber != null && _selectedPeopleNumbers != null) {
       final updated = await homePresenter.updateFixedCommandNumber(
         newFixedCommandNumber: _selectedCommandNumber!,
         userPersonalizedCode: _personalizedCodeController.text.toInt(),
@@ -49,7 +49,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
       if (updated) {
         Future.delayed(Duration.zero, () {
-          showAlertMessage(context, "Número da mesa e quantidade de pessoas alterados com sucesso");
+          showAlertMessage(context,
+              "Número da mesa e quantidade de pessoas alterados com sucesso");
           Navigator.of(context).pop();
         });
       }
@@ -100,10 +101,11 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               PasswordInput(
                 passwordFocusNode: _passwordFocusNode,
                 passwordController: _passwordController,
-                changeIsUpdatingCommandNumber: () {
-                  _isUpdatingCommandNumber = true;
-                },
                 updateCommandNumber: () async {
+                  setState(() {
+                    _isUpdatingCommandNumber = true;
+                    _isUpdatingPeopleNumbers = true;
+                  });
                   await _updateCommandNumber(homePresenter);
                 },
               ),

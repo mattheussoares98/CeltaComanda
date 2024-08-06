@@ -570,4 +570,60 @@ void main() {
       expect(value, true);
     });
   });
+
+  group("Is valid user and password", () {
+    test("Should emit correct values on validate", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.isValidUserAndPassword(
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test("Should emit correct values if password is invalid", () async {
+      userValidations.mockIsValidPassword(false);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.isValidUserAndPassword(
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test("Should emit correct values on validation throws", () async {
+      userValidations.mockIsValidPasswordError(DomainError.unexpected);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.isValidUserAndPassword(
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test("Should return false if password is invalid", () async {
+      userValidations.mockIsValidPassword(false);
+
+      final isValid = await sut.isValidUserAndPassword(
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      expect(isValid, false);
+    });
+    test("Should return true if password is valid", () async {
+      userValidations.mockIsValidPassword(true);
+
+      final isValid = await sut.isValidUserAndPassword(
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      expect(isValid, true);
+    });
+  });
 }

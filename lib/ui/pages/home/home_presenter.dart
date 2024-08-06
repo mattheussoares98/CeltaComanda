@@ -45,4 +45,8 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required CartPresenter cartPresenter,
     required CommentsPresenter commentsPresenter,
   });
+  Future<bool> isValidUserAndPassword({
+    required int personalizedCode,
+    required String password,
+  });
 }

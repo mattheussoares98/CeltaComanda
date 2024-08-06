@@ -237,4 +237,38 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = false;
     }
   }
+
+  @override
+  Future<bool> isValidUserAndPassword({
+    required int personalizedCode,
+    required String password,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      final isValid = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      if (!isValid) {
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
+
+      return isValid;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

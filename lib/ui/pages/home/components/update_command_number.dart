@@ -217,7 +217,14 @@ class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ReserveTable();
+                            });
+                      },
                       child: Text(
                         "Reservar mesa",
                         style: TextStyle(

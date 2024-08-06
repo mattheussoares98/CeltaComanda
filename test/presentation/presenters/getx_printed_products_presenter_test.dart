@@ -343,6 +343,17 @@ void main() {
       expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
     });
 
+    test(
+        'Should clear printed products if the second search dont return anything',
+        () async {
+      await sut.loadPrinted(homePresenter);
+      expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
+
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+      await sut.loadPrinted(homePresenter);
+      expect(sut.printedProducts, null);
+    });
+
     test("Should call loadPrintedProducts with correct values", () async {
       await sut.loadPrinted(homePresenter);
 

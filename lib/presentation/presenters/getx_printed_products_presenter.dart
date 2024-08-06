@@ -69,6 +69,7 @@ class GetxPrintedProductsPresenter
         commandNumber: homePresenter.commandNumber!.toInt(),
       );
 
+      _printedProducts = null;
       if (printedProducts?.Products.isEmpty == false) {
         _printedProducts = PrintedViewModel.fromEntity(printedProducts!);
         _printedProducts!.Products

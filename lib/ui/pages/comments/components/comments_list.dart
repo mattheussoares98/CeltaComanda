@@ -76,7 +76,9 @@ class _CommentsState extends State<CommentsList> {
                 });
               },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: hasMinWidth(context)
+                    ? const EdgeInsets.all(8.0)
+                    : const EdgeInsets.only(left: 8),
                 child: Row(
                   children: [
                     Expanded(

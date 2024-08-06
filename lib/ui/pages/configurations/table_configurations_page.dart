@@ -23,9 +23,9 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   // ignore: unused_field
   int? _selectedPeopleNumbers;
   bool _isUpdatingCommandNumber = false;
-  final bool _isUpdatingPeopleNumbers = false;
+  bool _isUpdatingPeopleNumbers = false;
 
-  bool _isValidUserAndPassword() {
+  bool _isValidUserPasswordTableNumberAndPeopleNumbers() {
     bool? isValid = _key.currentState?.validate();
 
     if (isValid != true) {
@@ -36,7 +36,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   }
 
   Future<void> _updateCommandNumber(HomePresenter homePresenter) async {
-    if (!_isValidUserAndPassword()) {
+    if (!_isValidUserPasswordTableNumberAndPeopleNumbers()) {
       return;
     }
 
@@ -109,11 +109,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               ),
               TextButton(
                 onPressed: () async {
-                  _isUpdatingCommandNumber = true;
+                  setState(() {
+                    _isUpdatingCommandNumber = true;
+                    _isUpdatingPeopleNumbers = true;
+                  });
                   await _updateCommandNumber(homePresenter);
                 },
                 child: Text(
-                  "Alterar mesa",
+                  "Alterar mesa e qtd de pessoas",
                   style: TextStyle(
                     fontSize: getStringSize(context),
                   ),
@@ -124,7 +127,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 children: [
                   Expanded(
                     child: LogoutButton(
-                      isValidUserAndPassword: _isValidUserAndPassword(),
+                      isValidUserAndPassword:
+                          _isValidUserPasswordTableNumberAndPeopleNumbers(),
                       changeIsUpdatingCommandNumber: () {
                         _isUpdatingCommandNumber = false;
                       },

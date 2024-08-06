@@ -60,11 +60,22 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
             ),
             const SizedBox(width: 20),
             Expanded(
-              child: Text(
-                "Inserir no carrinho",
-                style: TextStyle(
-                  fontSize: getStringSize(context),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Inserir no carrinho",
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
+                  Text(
+                    widget.selectedProduct.SaleRetailPraticed.toDouble().toString().toBrazilianNumber().addBrazilianCoin(),
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

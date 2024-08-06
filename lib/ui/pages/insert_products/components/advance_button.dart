@@ -155,6 +155,11 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         Provider.of(context, listen: false);
 
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: insertProductsPresenter.canAdvanceIndex
+            ? Theme.of(context).secondaryHeaderColor
+            : Theme.of(context).primaryColorDark,
+      ),
       onPressed: insertProductsPresenter.canAdvanceIndex
           ? () async {
               await _advanceOrAddInCart(

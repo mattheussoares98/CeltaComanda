@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,23 +57,23 @@ class ShowDetachLargeItemsInteraction {
               ),
             ),
             Positioned(
-              top: 30,
-              right: 30,
+              top: hasMinWidth(context) ? 30 : 5,
+              right: hasMinWidth(context) ? 30 : 5,
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const CircleAvatar(
+                icon: CircleAvatar(
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  minRadius: 40,
-                  maxRadius: 40,
+                  minRadius: hasMinWidth(context) ? 40 : 20,
+                  maxRadius: hasMinWidth(context) ? 40 : 20,
                   child: FittedBox(
                     child: Padding(
-                      padding: EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Icon(
                         Icons.close,
-                        size: 100,
+                        size: hasMinWidth(context) ? 100 : 30,
                       ),
                     ),
                   ),

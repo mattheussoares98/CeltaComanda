@@ -6,14 +6,14 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../../data/usecases/usecases.dart';
 import '../pages.dart';
 
-class TableConfigurations extends StatefulWidget {
-  const TableConfigurations({super.key});
+class TableConfigurationsPage extends StatefulWidget {
+  const TableConfigurationsPage({super.key});
 
   @override
-  State<TableConfigurations> createState() => _TableConfigurationsState();
+  State<TableConfigurationsPage> createState() => _TableConfigurationsPageState();
 }
 
-class _TableConfigurationsState extends State<TableConfigurations> {
+class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   final _userController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();
@@ -78,37 +78,11 @@ class _TableConfigurationsState extends State<TableConfigurations> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              DropdownButtonFormField<int>(
-                validator: (value) {
-                  if (!_isUpdatingCommandNumber) {
-                    return null;
-                  } else if (value == null) {
-                    return "Selecione a comanda";
-                  }
-
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    hintText: "Número da mesa", labelText: "Número da mesa"),
-                items: List<int>.generate(
-                  100,
-                  (int index) => index++,
-                  growable: true,
-                )
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e + 1,
-                        onTap: () {
-                          _selectedCommandNumber = e + 1;
-                        },
-                        child: Text(
-                          (e + 1).toString(),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  _selectedCommandNumber = value ?? 0 + 1;
+              UpdateCommandNumber(
+                isUpdatingCommandNumber: _isUpdatingCommandNumber,
+                updateCommandNumber: (selectedCommandNumber) {
+                  selectedCommandNumber.toString();
+                  _selectedCommandNumber = selectedCommandNumber;
                 },
               ),
               const SizedBox(height: 10),

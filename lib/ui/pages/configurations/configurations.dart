@@ -1,1 +1,2 @@
-export 'update_command_number.dart';
+export './components/components.dart';
+export 'table_configurations_page.dart';

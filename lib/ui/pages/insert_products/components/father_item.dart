@@ -35,16 +35,15 @@ class FatherItem extends StatelessWidget {
 
   String getLeftItemTitle(CommentsPresenter commentsPresenter) {
     if (selectedProduct.childsComposition != null) {
-      if (commentsPresenter.productHasComment(
-          internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
-          productName: selectedProduct.Name)) {
-        return "COMENTÁRIOS";
+      if (indexOfLeftSelectedItem !=
+          selectedProduct.childsComposition!.length) {
+        return selectedProduct
+            .childsComposition![indexOfLeftSelectedItem].ChildName!;
       } else if (indexOfLeftSelectedItem ==
           selectedProduct.childsComposition!.length) {
         return "QUANTIDADE";
       } else {
-        return selectedProduct
-            .childsComposition![indexOfLeftSelectedItem].ChildName!;
+        return "COMENTÁRIOS";
       }
     } else {
       if (productHasComment && indexOfLeftSelectedItem == 0) {
@@ -63,8 +62,7 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        insertProductsPresenter
-            .updateSelectedLeftItem(indexOfLeftSelectedItem);
+        insertProductsPresenter.updateSelectedLeftItem(indexOfLeftSelectedItem);
       },
       child: Container(
         height: 42,

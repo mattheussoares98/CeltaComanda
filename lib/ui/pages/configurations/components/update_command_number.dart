@@ -17,6 +17,8 @@ class UpdateCommandNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
+    updateCommandNumber(homePresenter.commandNumber?.toInt() ?? 0);
+
     return DropdownButtonFormField<int>(
       value: homePresenter.commandNumber?.toInt(),
       validator: (value) {

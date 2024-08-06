@@ -49,7 +49,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
       if (updated) {
         Future.delayed(Duration.zero, () {
-          showAlertMessage(context, "Número da mesa alterado com sucesso");
+          showAlertMessage(context, "Número da mesa e quantidade de pessoas alterados com sucesso");
           Navigator.of(context).pop();
         });
       }

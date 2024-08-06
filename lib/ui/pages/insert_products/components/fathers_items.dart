@@ -75,6 +75,7 @@ class _FathersItemsState extends State<FathersItems> {
         Provider.of(context, listen: false);
 
     return Container(
+      height: getItemsCount() * 42,
       color: Theme.of(context).primaryColor,
       child: ListView.builder(
         controller: _scrollController,

@@ -79,21 +79,22 @@ Widget _landScapeImageAndComplement({
             endAnimation: 0.8,
           ),
         ),
-        Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
-            child: Text(
-              selectedProduct.ProductComplement ?? "",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w300,
-                fontStyle: FontStyle.italic,
-                fontSize: getStringSize(context) * 0.8,
+        if (selectedProduct.ProductComplement != null)
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
+              child: Text(
+                selectedProduct.ProductComplement!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.italic,
+                  fontSize: getStringSize(context) * 0.8,
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }

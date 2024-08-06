@@ -34,7 +34,7 @@ class TitleText extends StatelessWidget {
   String getTitleText() {
     if (selectedProduct.childsComposition == null) {
       if (indexOfLeftItem == 0 && productHasComment) {
-        return "Se desejar, selecione um comentário";
+        return "Se desejar, selecione comentários";
       } else {
         return "Informe a quantidade";
       }

@@ -100,11 +100,15 @@ class _LandscapeInsertProductsPageBodyState
                       selectedLeftIndex: widget.indexOfLeftItem,
                     ),
                   ),
-                if (widget.selectedProduct.childsComposition!.length ==
-                    widget.indexOfLeftItem)
+                if (_showUpdateQuantity(
+                  selectedProduct: widget.selectedProduct,
+                  indexOfSelectedFather: widget.indexOfLeftItem,
+                  productHasComment: productHasComment,
+                ))
                   const Expanded(child: UpdateQuantity()),
                 if (!showComments &&
-                    widget.selectedProduct.childsComposition!.length !=
+                    widget.selectedProduct.childsComposition != null &&
+                    widget.selectedProduct.childsComposition?.length !=
                         widget.indexOfLeftItem)
                   Expanded(
                     child: ChildsRadios(
@@ -174,5 +178,25 @@ bool _getShowComments({
     return false;
   } else {
     return snapshowShowComments.data ?? false;
+  }
+}
+
+bool _showUpdateQuantity({
+  required ProductsViewModel selectedProduct,
+  required int indexOfSelectedFather,
+  required bool productHasComment,
+}) {
+  if (selectedProduct.childsComposition == null) {
+    if (indexOfSelectedFather == 0 && productHasComment) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+    return true;
+  } else {
+    return false;
   }
 }

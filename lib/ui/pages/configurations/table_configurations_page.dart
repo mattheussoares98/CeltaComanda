@@ -10,7 +10,8 @@ class TableConfigurationsPage extends StatefulWidget {
   const TableConfigurationsPage({super.key});
 
   @override
-  State<TableConfigurationsPage> createState() => _TableConfigurationsPageState();
+  State<TableConfigurationsPage> createState() =>
+      _TableConfigurationsPageState();
 }
 
 class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
@@ -20,8 +21,11 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   final _key = GlobalKey<FormState>();
 
   int? _selectedCommandNumber;
+  // ignore: unused_field
+  int? _selectedPeopleNumbers;
   final _cameraBarcodeScanner = CameraBarcodeScanner();
   bool _isUpdatingCommandNumber = false;
+  final bool _isUpdatingPeopleNumbers = false;
 
   bool _isValidUserAndPassword() {
     bool? isValid = _key.currentState?.validate();
@@ -83,6 +87,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 updateCommandNumber: (selectedCommandNumber) {
                   selectedCommandNumber.toString();
                   _selectedCommandNumber = selectedCommandNumber;
+                },
+              ),
+              const SizedBox(height: 10),
+              UpdatePeopleNumbers(
+                isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
+                updatePeopleNumbers: (selectedPeopleNumbers) {
+                  selectedPeopleNumbers.toString();
+                  _selectedPeopleNumbers = selectedPeopleNumbers;
                 },
               ),
               const SizedBox(height: 10),

@@ -1,5 +1,6 @@
 export './enterprise_validation/enterprise_validation.dart';
 export './comments/comments.dart';
+export './configurations/configurations.dart';
 export 'menus/menus.dart';
 export './home/home.dart';
 export './payment/payment.dart';

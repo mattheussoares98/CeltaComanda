@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../ui/components/components.dart';
-import '../../../../../ui/helpers/helpers.dart';
-import '../../../../data/usecases/usecases.dart';
-import '../../pages.dart';
+import '../../../../ui/components/components.dart';
+import '../../../../ui/helpers/helpers.dart';
+import '../../../data/usecases/usecases.dart';
+import '../pages.dart';
 
-class UpdateCommandNumber extends StatefulWidget {
-  const UpdateCommandNumber({super.key});
+class TableConfigurations extends StatefulWidget {
+  const TableConfigurations({super.key});
 
   @override
-  State<UpdateCommandNumber> createState() => _UpdateCommandNumberState();
+  State<TableConfigurations> createState() => _TableConfigurationsState();
 }
 
-class _UpdateCommandNumberState extends State<UpdateCommandNumber> {
+class _TableConfigurationsState extends State<TableConfigurations> {
   final _userController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();

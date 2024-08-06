@@ -55,7 +55,7 @@ class TitleAppbar extends StatelessWidget {
                         ],
                         content: SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          child: const UpdateCommandNumber(),
+                          child: const TableConfigurations(),
                         ),
                       );
                     },

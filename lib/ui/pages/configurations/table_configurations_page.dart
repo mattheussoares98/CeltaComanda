@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../ui/components/components.dart';
 import '../../../../ui/helpers/helpers.dart';
-import '../../../data/usecases/usecases.dart';
 import '../pages.dart';
 
 class TableConfigurationsPage extends StatefulWidget {
@@ -23,7 +22,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   int? _selectedCommandNumber;
   // ignore: unused_field
   int? _selectedPeopleNumbers;
-  final _cameraBarcodeScanner = CameraBarcodeScanner();
   bool _isUpdatingCommandNumber = false;
   final bool _isUpdatingPeopleNumbers = false;
 
@@ -98,51 +96,20 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 },
               ),
               const SizedBox(height: 10),
-              TextFormField(
-                onFieldSubmitted: (_) {
-                  _passwordFocusNode.requestFocus();
-                },
-                controller: _userController,
-                validator: (value) {
-                  if (value?.isEmpty == true) {
-                    return "Digite o código do usuário";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  hintText: "Código do usuário",
-                  labelText: "Código do usuário",
-                ),
+              UserPersonalizedCodeInput(
+                passwordFocusNode: _passwordFocusNode,
+                userController: _userController,
               ),
               const SizedBox(height: 10),
-              TextFormField(
-                focusNode: _passwordFocusNode,
-                controller: _passwordController,
-                obscureText: true,
-                validator: (value) {
-                  if (value?.isEmpty == true) {
-                    return "Digite a senha";
-                  }
-                  return null;
-                },
-                onFieldSubmitted: (_) async {
+              PasswordInput(
+                passwordFocusNode: _passwordFocusNode,
+                passwordController: _passwordController,
+                changeIsUpdatingCommandNumber: () {
                   _isUpdatingCommandNumber = true;
+                },
+                updateCommandNumber: () async {
                   await _updateCommandNumber(homePresenter);
                 },
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      final password = await _cameraBarcodeScanner.read();
-                      if (password.isNotEmpty) {
-                        _passwordController.text = password;
-                      }
-                    },
-                    icon: const Icon(Icons.camera_alt),
-                  ),
-                  hintText: "Senha",
-                  labelText: "Senha",
-                ),
               ),
               TextButton(
                 onPressed: () async {
@@ -161,6 +128,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 children: [
                   Expanded(
                     child: TextButton(
+                      child: FittedBox(
+                        child: Text(
+                          "Fazer logout",
+                          style: TextStyle(
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
                       onPressed: () async {
                         _isUpdatingCommandNumber = false;
                         if (_isValidUserAndPassword()) {
@@ -191,14 +166,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                           }
                         }
                       },
-                      child: FittedBox(
-                        child: Text(
-                          "Fazer logout",
-                          style: TextStyle(
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
+                      
                     ),
                   ),
                   Expanded(

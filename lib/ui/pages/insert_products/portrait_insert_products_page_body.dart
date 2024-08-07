@@ -67,6 +67,7 @@ class _PortraitInsertProductsPageBodyState
                 selectedProduct: widget.selectedProduct,
                 indexOfSelectedFather: widget.indexOfLeftItem,
                 productHasComment: productHasComment,
+                showComments: showComments,
               ),
               Padding(
                 padding: const EdgeInsets.all(5),

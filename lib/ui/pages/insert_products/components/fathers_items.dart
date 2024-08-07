@@ -7,10 +7,12 @@ class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
   final bool productHasComment;
+  final bool showComments;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
     required this.productHasComment,
+    required this.showComments,
     super.key,
   });
 
@@ -93,8 +95,7 @@ class _FathersItemsState extends State<FathersItems> {
                       doScroll(
                         index: index,
                         scrollController: _scrollController,
-                        viewportHeight:
-                            MediaQuery.of(context).size.height,
+                        viewportHeight: MediaQuery.of(context).size.height,
                       );
                       _doScrollExecuted = true;
                     }
@@ -108,19 +109,20 @@ class _FathersItemsState extends State<FathersItems> {
                     father: null,
                     itemColor: getItemColor(index, context),
                     productHasComment: widget.productHasComment,
+                    showComments: widget.showComments,
                   );
                 });
           }
-      
-          final father =
-              widget.selectedProduct.childsComposition?[index];
-      
+
+          final father = widget.selectedProduct.childsComposition?[index];
+
           return FatherItem(
             productHasComment: widget.productHasComment,
             father: father,
             indexOfLeftSelectedItem: index,
             selectedProduct: widget.selectedProduct,
             itemColor: getItemColor(index, context),
+            showComments: widget.showComments,
           );
         },
       ),

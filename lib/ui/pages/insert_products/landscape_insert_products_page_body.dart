@@ -57,6 +57,7 @@ class _LandscapeInsertProductsPageBodyState
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
                   productHasComment: productHasComment,
+                  showComments: showComments,
                 ),
               ),
               Padding(

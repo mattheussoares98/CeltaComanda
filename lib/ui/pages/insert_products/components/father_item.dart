@@ -10,12 +10,14 @@ class FatherItem extends StatelessWidget {
   final ProductCompositionViewModel? father;
   final Color itemColor;
   final bool productHasComment;
+  final bool showComments;
   const FatherItem({
     required this.father,
     required this.indexOfLeftSelectedItem,
     required this.selectedProduct,
     required this.itemColor,
     required this.productHasComment,
+    required this.showComments,
     super.key,
   });
 

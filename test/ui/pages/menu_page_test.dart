@@ -3,7 +3,6 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -17,7 +16,6 @@ import '../mocks/mocks.dart';
 void main() {
   late MenuPresenterSpy presenter;
 
-  late ExpansibleGroupEntity expansibleGroupEntity;
   late HiveSpy hive;
   late BoxSpy mockHiveBox;
 
@@ -25,7 +23,6 @@ void main() {
     hive = HiveSpy();
     mockHiveBox = BoxSpy();
     hive.mockOpenBox(mockHiveBox);
-    expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     presenter = MenuPresenterSpy();
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
@@ -82,16 +79,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key("loadMenu")), findsOneWidget);
-  });
-
-  testWidgets('Should go to ProductsPage', (WidgetTester tester) async {
-    await loadPage(tester);
-    presenter.mockGoToProductsPage(expansibleGroupEntity);
-
-    presenter.goToProductsPage(expansibleGroupEntity);
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.products);
   });
 
   testWidgets(

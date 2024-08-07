@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -40,13 +39,6 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
         .thenAnswer((_) => searchProductControllerMock);
   }
 
-  void mockGoToProductsPage(ExpansibleGroupEntity entity) {
-    when(() => this.goToProductsPage(any())).thenAnswer((_) => Get.offNamed(
-          PageRoutes.products,
-          arguments: entity,
-        ));
-  }
-
   void mockGoToInsertProductPage(ProductsViewModel product) {
     when(() => this.goToInsertProductPage(any())).thenAnswer((_) {
       Get.offNamed(
@@ -54,13 +46,6 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
         arguments: product,
       );
     });
-  }
-
-  void mockGoToComboxPage(ProductsViewModel product) {
-    when(() => this.goToComboxPage(any())).thenAnswer((_) async => Get.offNamed(
-          PageRoutes.productComposition,
-          arguments: product,
-        ));
   }
 
   void mockLoadDataError(DomainError error) {

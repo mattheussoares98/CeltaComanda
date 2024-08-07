@@ -543,20 +543,10 @@ void main() {
   });
 
   group("Navigation", () {
-    test('Should go to products page ExpansibleGroupItem click', () async {
-      sut.goToProductsPage(expansibleGroups[0]);
-
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.products,
-          arguments: expansibleGroups[0],
-        ),
-      ).called(1);
-    });
     test('Should go to ComboxPage', () async {
       await sut.searchProduct(productEan);
 
-      sut.goToComboxPage(ProductsViewModel.fromEntity(productEntity));
+      sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
 
       verify(
         () => navigateTo.navigate(

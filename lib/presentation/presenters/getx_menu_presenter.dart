@@ -36,22 +36,6 @@ class GetxMenuPresenter extends GetxController
   });
 
   @override
-  void goToProductsPage(ExpansibleGroupEntity entity) {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.products,
-      arguments: entity,
-    );
-  }
-
-  @override
-  Future<void> goToComboxPage(ProductsViewModel product) async {
-    await navigateTo.navigate(
-      pageRoute: PageRoutes.productComposition,
-      arguments: product,
-    );
-  }
-
-  @override
   void clear() {
     _menu.subject.add([]);
     _loadedMenu.clear();

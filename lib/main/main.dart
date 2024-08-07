@@ -19,7 +19,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky); //hide the buttons of navigation
+  SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersiveSticky); //hide the buttons of navigation
 
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
@@ -58,9 +59,6 @@ class App extends StatelessWidget {
         ),
         ListenableProvider(
           create: (_) => makeGetxMenuPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxProductsPresenter(),
         ),
         ListenableProvider(
           create: (_) => makeGetxInsertProductsPresenter(),

@@ -12,7 +12,7 @@ PreferredSize homeAppBar({
   required MenuPresenter menuPresenter,
 }) {
   return PreferredSize(
-    preferredSize: const Size.fromHeight(40),
+    preferredSize: Size.fromHeight(hasMinWidth(context) ? 60 : 40),
     child: AppBar(
       title: const TitleAppbar(),
       leading: FittedBox(

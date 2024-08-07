@@ -23,8 +23,6 @@ class SaveSaleRequestButton extends StatelessWidget {
     required int? tableNumber,
     String? commandNumber,
   }) async {
-    // cartPresenter.doCartToPrintedAnimation();
-    // return;
     bool isUpdated = await cartPresenter.saveProducts(
       printedProductsPresenter: printedProductsPresenter,
       tableNumber: tableNumber,

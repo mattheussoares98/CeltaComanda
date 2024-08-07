@@ -27,14 +27,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   });
 
   @override
-  void goToProductsPage(ExpansibleGroupEntity entity) {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.products,
-      arguments: entity,
-    );
-  }
-
-  @override
   Future<void> goToSplashPage({
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,

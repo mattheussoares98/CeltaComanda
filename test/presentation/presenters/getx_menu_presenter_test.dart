@@ -550,7 +550,7 @@ void main() {
 
       verify(
         () => navigateTo.navigate(
-          pageRoute: PageRoutes.productComposition,
+          pageRoute: PageRoutes.insertProducts,
           arguments: ProductsViewModel.fromEntity(productEntity),
         ),
       ).called(1);

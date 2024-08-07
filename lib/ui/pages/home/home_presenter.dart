@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
@@ -27,7 +26,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required MenuPresenter menuPresenter,
   });
 
-  void goToProductsPage(ExpansibleGroupEntity entity);
   void goToCartPage();
   void goToPrintedProductsPage();
 

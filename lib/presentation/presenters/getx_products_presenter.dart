@@ -89,7 +89,7 @@ class GetxProductsPresenter with ChangeNotifier implements ProductsPresenter {
   @override
   void goToComboxPage(ProductsViewModel product) {
     navigateTo.navigate(
-      pageRoute: PageRoutes.productComposition,
+      pageRoute: PageRoutes.insertProducts,
       arguments: product,
     );
   }

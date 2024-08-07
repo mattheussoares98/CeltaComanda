@@ -30,7 +30,6 @@ void main() {
   late LoadCommandDataSpy localCommandData;
   late UserValidationsSpy userValidations;
 
-  late ExpansibleGroupEntity expansibleGroupEntity;
   late CommandEntity commandEntity;
   late int newFixedCommandNumber;
   late int userPersonalizedCode;
@@ -73,7 +72,6 @@ void main() {
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    expansibleGroupEntity = EntityFactory.makeExpansibleGroupsEntity()[0];
     commandEntity = EntityFactory.makeCommandEntity();
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     userPersonalizedCode = faker.randomGenerator.integer(999);
@@ -97,14 +95,6 @@ void main() {
   });
 
   group("Navigation", () {
-    test('Should go to ProductsPage', () async {
-      sut.goToProductsPage(expansibleGroupEntity);
-
-      verify(() => navigateTo.navigate(
-            pageRoute: PageRoutes.products,
-            arguments: expansibleGroupEntity,
-          )).called(1);
-    });
     test('Should go to PrintedProductsPage', () async {
       sut.goToPrintedProductsPage();
 

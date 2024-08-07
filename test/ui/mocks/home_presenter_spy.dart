@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -25,13 +24,6 @@ class HomePresenterSpy extends Mock implements HomePresenter {
     when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
     when(() => this.getLocalCommandData()).thenAnswer((_) async => _);
     when(() => this.updateIsFixedCommandNumber()).thenAnswer((_) async => _);
-  }
-
-  void mockGoToProductsPage(ExpansibleGroupEntity entity) {
-    when(() => this.goToProductsPage(any())).thenAnswer((_) => Get.offNamed(
-          PageRoutes.products,
-          arguments: entity,
-        ));
   }
 
   void mockGoToSplashPage() {

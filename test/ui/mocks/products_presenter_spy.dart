@@ -39,7 +39,7 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {
 
   void mockGoToComboxPage(ProductsViewModel product) {
     when(() => this.goToComboxPage(any())).thenAnswer((_) => Get.offNamed(
-          PageRoutes.productComposition,
+          PageRoutes.insertProducts,
           arguments: product,
         ));
   }

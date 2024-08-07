@@ -14,10 +14,6 @@ Widget makePage(
     dynamic arguments}) {
   final allPages = [
     GetPage(
-      name: PageRoutes.products,
-      page: () => const ProductsPage(),
-    ),
-    GetPage(
       name: '/any_route',
       page: () => Scaffold(
         appBar: AppBar(title: const Text('any title')),
@@ -49,7 +45,7 @@ Widget makePage(
       page: () => const HomePage(),
     ),
     GetPage(
-      name: PageRoutes.productComposition,
+      name: PageRoutes.insertProducts,
       page: () => const InsertProductsPage(),
     ),
   ];
@@ -84,9 +80,6 @@ Widget makePage(
       ),
       ChangeNotifierProvider<HomePresenter>(
         create: (_) => HomePresenterSpy(),
-      ),
-      ListenableProvider<ProductsPresenter>(
-        create: (_) => ProductsPresenterSpy(),
       ),
       ListenableProvider<InsertProductPresenter>(
         create: (_) => InsertProductsPresenterSpy(),

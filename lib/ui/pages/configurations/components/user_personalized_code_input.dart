@@ -27,9 +27,9 @@ class UserPersonalizedCodeInput extends StatelessWidget {
         return null;
       },
       keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-        hintText: "Código do usuário",
-        labelText: "Código do usuário",
+      decoration: InputDecoration(
+        hintText: R.string.userCode,
+        labelText: R.string.userCode,
       ),
     );
   }

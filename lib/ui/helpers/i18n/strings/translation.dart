@@ -71,6 +71,7 @@ abstract class Translation {
   String get turnBack;
   String get updateTableNumberAndPeopleNumbers;
   String get url;
+  String get userCode;
   String get user;
   String get validateEnterprise;
   String get wait;

@@ -87,6 +87,7 @@ class PtBr implements Translation {
   String get turnBack => 'Voltar';
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";
+  String get userCode => 'Código do usuário';
   String get user => 'Usuário';
   String get url => 'Empresa ou url';
   String get validateEnterprise => 'Validar empresa';

@@ -70,7 +70,7 @@ class SaveSaleRequestButton extends StatelessWidget {
               ),
             ),
             cancelMessage: R.string.turnBack,
-            confirmMessage: "Enviar",
+            confirmMessage: R.string.send,
             onPress: () async {
               await _addProducts(
                 cartPresenter: cartPresenter,
@@ -132,7 +132,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (int.tryParse(value!) == null) {
-                          return "Número inválido";
+                          return R.string.msgInvalidNumber;
                         }
                         return null;
                       },
@@ -151,7 +151,7 @@ class SaveSaleRequestButton extends StatelessWidget {
           children: [
             FittedBox(
               child: Text(
-                'Enviar pedido',
+                R.string.sendRequest,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: getStringSize(context),

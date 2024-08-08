@@ -67,6 +67,7 @@ class PtBr implements Translation {
   String get login => 'Login';
   String get name => 'Nome';
   String get password => 'Senha';
+  String get peopleQuantity => 'Quantidade de pessoas';
   String get price => 'Preço';
   String get productsAndComments => 'Produtos e comentários';
   String get quantity => 'Quantidade';

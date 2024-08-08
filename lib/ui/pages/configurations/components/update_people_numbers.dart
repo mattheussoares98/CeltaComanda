@@ -23,9 +23,9 @@ class UpdatePeopleNumbers extends StatelessWidget {
 
         return null;
       },
-      decoration: const InputDecoration(
-        hintText: "Quantidade de pessoas",
-        labelText: "Quantidade de pessoas",
+      decoration: InputDecoration(
+        hintText: R.string.peopleQuantity,
+        labelText: R.string.peopleQuantity,
       ),
       items: List<int>.generate(
         50,

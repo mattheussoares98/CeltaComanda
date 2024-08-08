@@ -53,6 +53,7 @@ abstract class Translation {
   String get login;
   String get name;
   String get password;
+  String get peopleQuantity;
   String get price;
   String get productsAndComments;
   String get quantity;

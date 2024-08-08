@@ -80,7 +80,7 @@ class _SearchProductState extends State<SearchProduct> {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
-                      hintText: "EAN ou PLU",
+                      hintText: R.string.eanOrPlu,
                       label: const Text("Consultar produto"),
                       labelStyle: TextStyle(
                         fontSize: 17,

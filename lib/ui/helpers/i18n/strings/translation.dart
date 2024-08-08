@@ -67,6 +67,7 @@ abstract class Translation {
   String get detach;
   String get doLogout;
   String get drink;
+  String get eanOrPlu;
   String get email;
   String get emptyCart;
   String get enterpriseOrUrlNotFound;

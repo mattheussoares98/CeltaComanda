@@ -81,6 +81,7 @@ class PtBr implements Translation {
   String get detach => "Destaques";
   String get doLogout => "Fazer logout";
   String get drink => "Bebida";
+  String get eanOrPlu => "EAN ou PLU";
   String get email => "E-mail";
   String get emptyCart => 'O carrinho está vazio';
   String get enterprise => 'Empresa';

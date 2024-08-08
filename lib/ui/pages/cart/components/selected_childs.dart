@@ -59,7 +59,7 @@ class SelectedChilds extends StatelessWidget {
               Expanded(
                 flex: _priceFlex,
                 child: Text(
-                  'Preço',
+                  R.string.price,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

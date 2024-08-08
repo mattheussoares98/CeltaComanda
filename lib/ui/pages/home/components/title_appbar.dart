@@ -46,7 +46,7 @@ class TitleAppbar extends StatelessWidget {
                               Navigator.of(context).pop();
                             },
                             child: Text(
-                              "Fechar",
+                              R.string.close.toUpperCase(),
                               style: TextStyle(
                                 fontSize: getStringSize(context),
                               ),

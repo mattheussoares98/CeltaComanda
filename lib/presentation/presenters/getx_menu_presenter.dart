@@ -213,8 +213,8 @@ class GetxMenuPresenter extends GetxController
       }
 
       _loadedMenu.add({
-        const ExpansibleGroupsViewModel(
-          Name: "Avaliar",
+        ExpansibleGroupsViewModel(
+          Name: R.string.avaliate,
           ExpansibleGroupId: "0",
           ExpansibleGroupType: "0",
           OrderClassification: "0",

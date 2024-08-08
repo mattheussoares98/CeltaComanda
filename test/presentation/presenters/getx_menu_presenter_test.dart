@@ -111,8 +111,8 @@ void main() {
             })
         .toList()
       ..add({
-        const ExpansibleGroupsViewModel(
-          Name: "Avaliar",
+        ExpansibleGroupsViewModel(
+          Name: R.string.avaliate,
           ExpansibleGroupId: "0",
           ExpansibleGroupType: "0",
           OrderClassification: "0",
@@ -216,7 +216,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
       );
 
-      expect(sut.loadedMenu.last.entries.first.key.Name, "Avaliar");
+      expect(sut.loadedMenu.last.entries.first.key.Name, R.string.avaliate);
     });
 
     test('Should return correct value on success to load', () async {
@@ -250,8 +250,8 @@ void main() {
     });
 
     test('Should put "destaques" in first group list', () async {
-      const avaliationGroup = ExpansibleGroupsViewModel(
-        Name: "Avaliar",
+      final avaliationGroup = ExpansibleGroupsViewModel(
+        Name: R.string.avaliate,
         ExpansibleGroupId: "0",
         ExpansibleGroupType: "0",
         OrderClassification: "0",

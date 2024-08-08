@@ -17,10 +17,10 @@ class TitlePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const FittedBox(
+              FittedBox(
                 child: Text(
-                  "Comentários do produto",
-                  style: TextStyle(
+                  R.string.commentsOfProduct,
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),

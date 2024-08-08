@@ -88,7 +88,7 @@ class _CommentsPageState extends State<CommentsPage>
                       const SizedBox(width: 20),
                       FittedBox(
                         child: Text(
-                          "Confirmar",
+                          R.string.confirm,
                           style: TextStyle(
                             fontSize: getStringSize(context),
                           ),

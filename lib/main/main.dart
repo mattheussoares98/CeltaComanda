@@ -103,7 +103,7 @@ class App extends StatelessWidget {
             ),
             GetPage(
               name: PageRoutes.insertProducts,
-              page: makeProductCompositionPage,
+              page: makeInsertProductsPage,
               transition: Transition.fadeIn,
             ),
             GetPage(

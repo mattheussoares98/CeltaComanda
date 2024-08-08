@@ -68,7 +68,7 @@ class _EvaluateItemsState extends State<EvaluateItems> {
           ),
           _generateEvaluateItem(
             context: context,
-            text: "Custo benefício",
+            text: R.string.costBenefit,
             icon: Icons.monetization_on_rounded,
             updateIndex: widget.updateCostBenefitNote,
             evaluateNumber: widget.costBenefitNote,

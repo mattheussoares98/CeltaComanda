@@ -47,6 +47,7 @@ class PtBr implements Translation {
   String get msgWriteCommandNumber => "Digite o número da comanda";
   String get msgWriteEanOrPlu => "Digite o EAN ou o PLU";
   String get msgWriteName => "Informe o seu nome";
+  String get msgWriteOnlyNumbers => "Digite somente números";
   String get msgWritePassword => "Digite a senha";
   String get msgWriteTableNumber => "Digite o número da mesa";
   String get msgWriteThreeNumbers => "Digite 3 números";

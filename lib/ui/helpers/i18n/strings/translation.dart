@@ -33,6 +33,7 @@ abstract class Translation {
   String get msgWriteCommandNumber;
   String get msgWriteEanOrPlu;
   String get msgWriteName;
+  String get msgWriteOnlyNumbers;
   String get msgWritePassword;
   String get msgWriteTableNumber;
   String get msgWriteThreeNumbers;

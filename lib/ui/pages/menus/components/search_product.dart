@@ -73,7 +73,7 @@ class _SearchProductState extends State<SearchProduct> {
                       if (value?.isEmpty == true) {
                         return R.string.msgWriteEanOrPlu;
                       } else if (int.tryParse(value!) == null) {
-                        return "Digite somente números";
+                        return R.string.msgWriteOnlyNumbers;
                       }
                       return null;
                     },

@@ -74,14 +74,19 @@ class FatherItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FittedBox(
-              child: Text(
-                getLeftItemTitle(commentsPresenter),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  text: getLeftItemTitle(commentsPresenter),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: showComments ? "  (COMENTÁRIO)" : null,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -90,7 +95,7 @@ class FatherItem extends StatelessWidget {
                 getIsOptionalOrObligatory(),
                 textAlign: TextAlign.end,
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: Colors.white,
                   fontSize: getStringSize(context) * 0.7,
                 ),
               ),

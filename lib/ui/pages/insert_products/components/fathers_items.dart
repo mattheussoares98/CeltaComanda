@@ -24,8 +24,10 @@ class _FathersItemsState extends State<FathersItems> {
   final _scrollController = ScrollController();
 
   Color getItemColor(int index, BuildContext context) {
-    if (index <= widget.indexOfSelectedFather) {
+    if (index < widget.indexOfSelectedFather) {
       return Theme.of(context).primaryColorDark;
+    } else if (index == widget.indexOfSelectedFather) {
+      return Theme.of(context).secondaryHeaderColor;
     } else {
       return Theme.of(context).primaryColor;
     }
@@ -109,7 +111,8 @@ class _FathersItemsState extends State<FathersItems> {
                     father: null,
                     itemColor: getItemColor(index, context),
                     productHasComment: widget.productHasComment,
-                    showComments: widget.showComments,
+                    showComments: widget.showComments &&
+                        index == widget.indexOfSelectedFather,
                   );
                 });
           }
@@ -122,7 +125,8 @@ class _FathersItemsState extends State<FathersItems> {
             indexOfLeftSelectedItem: index,
             selectedProduct: widget.selectedProduct,
             itemColor: getItemColor(index, context),
-            showComments: widget.showComments,
+            showComments:
+                widget.showComments && index == widget.indexOfSelectedFather,
           );
         },
       ),

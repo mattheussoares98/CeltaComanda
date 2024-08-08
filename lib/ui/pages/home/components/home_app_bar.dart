@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
@@ -55,9 +54,7 @@ PreferredSize homeAppBar({
                 },
                 label: Center(
                   child: hasMinWidth(context)
-                      ? const Text(
-                          "SOLICITADOS",
-                        )
+                      ? Text(R.string.requested.toUpperCase())
                       : null,
                 ),
                 icon: const Icon(Icons.list),

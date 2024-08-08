@@ -105,12 +105,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   Future<void> addNewPrintRequestInFirebase() async {
-    PrintRequestEntity newRequest = PrintRequestEntity(
-      dates: [
-        "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
-      ],
-      timesUsed: 1,
-    );
+    PrintRequestEntity? newRequest;
     try {
       final localEntity = await localPrintRequest.getLocalPrintedEntity();
 
@@ -124,10 +119,14 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         );
       }
 
-      await addPrintRequest.add(newRequest);
+      if (newRequest != null) {
+        await addPrintRequest.add(newRequest);
+      }
       await localPrintRequest.clear();
     } catch (e) {
-      await localPrintRequest.add(newRequest);
+      if (newRequest != null) {
+        await localPrintRequest.add(newRequest);
+      }
     }
   }
 
@@ -372,6 +371,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     isLoading = true;
     mainError = null;
     clear();
+    addNewPrintRequestInFirebase();
 
     try {
       String informedCommandNumber;
@@ -497,10 +497,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       isLoading = false;
     }
   }
-
-  int? _indexOfSelectedProductCombox;
-  @override
-  int? get indexOfSelectedProductCombox => _indexOfSelectedProductCombox;
 
   @override
   List<UpdateSaleRequestTempProductEntity>

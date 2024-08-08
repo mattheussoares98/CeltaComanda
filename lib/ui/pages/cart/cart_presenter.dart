@@ -40,15 +40,15 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> getLocalCartProductsData();
   Future<void> clearCart();
 
-  int? get indexOfSelectedProductCombox;
-
   List<UpdateSaleRequestTempProductEntity>
       convertProductsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,
   });
 
-  double calculateProductCompositionTotalLiquid(ProductCompositionViewModel product);
-  double calculateProductCompositionIncrementValue(ProductCompositionViewModel product);
+  double calculateProductCompositionTotalLiquid(
+      ProductCompositionViewModel product);
+  double calculateProductCompositionIncrementValue(
+      ProductCompositionViewModel product);
   double calculateProductCompositionPrice(ProductCompositionViewModel product);
   double calculateProductPrice(ProductsViewModel product);
 

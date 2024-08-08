@@ -73,6 +73,7 @@ class PtBr implements Translation {
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get insertInCart => 'Inserir no carrinho';
+  String get ifWantSelectComments => 'Se desejar, selecione comentários';
   String get jump => 'Pular';
   String get login => 'Login';
   String get name => 'Nome';

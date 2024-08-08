@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class TitleText extends StatelessWidget {
@@ -34,7 +35,7 @@ class TitleText extends StatelessWidget {
   String getTitleText() {
     if (selectedProduct.childsComposition == null) {
       if (indexOfLeftItem == 0 && productHasComment) {
-        return "Se desejar, selecione comentários";
+        return R.string.ifWantSelectComments;
       } else {
         return "Informe a quantidade";
       }
@@ -44,8 +45,7 @@ class TitleText extends StatelessWidget {
       return "Informe a quantidade";
     } else if (indexOfLeftItem < selectedProduct.childsComposition!.length &&
         !showComments) {
-      if (getSelectedFather(selectedProduct, indexOfLeftItem)
-              .IsOptionalItem ==
+      if (getSelectedFather(selectedProduct, indexOfLeftItem).IsOptionalItem ==
           "false") {
         return "Selecione um produto!";
       } else {

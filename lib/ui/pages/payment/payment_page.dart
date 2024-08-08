@@ -79,7 +79,7 @@ class _PaymentPageState extends State<PaymentPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Total: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
+                        "${R.string.total}: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
                             .addBrazilianCoin(),
                         style: TextStyle(
                           fontSize: getStringSize(context) * 2,
@@ -92,7 +92,7 @@ class _PaymentPageState extends State<PaymentPage>
                           vertical: 20,
                         ),
                         child: Text(
-                          "Selecione uma opção de pagamento",
+                          R.string.selectPaymentOption,
                           style: TextStyle(
                             // color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w400,

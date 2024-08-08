@@ -113,6 +113,7 @@ class PtBr implements Translation {
   String get searchProduct => "Consultar produto";
   String get selectedProductsAndComments =>
       'Produto selecionados e comentários';
+  String get selectPaymentOption => "Selecione uma opção de pagamento";
   String get selectProduct => "Selecione um produto!";
   String get selectQuantity => "Informe a quantidade";
   String get sendEvaluation => 'Enviar avaliação';

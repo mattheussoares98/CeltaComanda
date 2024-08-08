@@ -107,7 +107,7 @@ class _PrintedItemState extends State<PrintedItem> {
                                         onPressedRemoveProduct: () async {
                                           notificationDialog(
                                             context: context,
-                                            titleMessage: "Remover produto",
+                                            titleMessage: R.string.removeProduct,
                                             content: const Text(
                                               "Deseja realmente remover o produto dos produtos solicitados?",
                                               textAlign: TextAlign.center,

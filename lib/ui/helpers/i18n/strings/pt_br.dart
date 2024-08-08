@@ -108,6 +108,7 @@ class PtBr implements Translation {
   String get quantity => 'Quantidade';
   String get quantityAbbreviated => 'Qtd';
   String get reload => 'Recarregar';
+  String get removeProduct => 'Remover produto';
   String get requested => 'Solicitados';
   String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';

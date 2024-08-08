@@ -48,11 +48,12 @@ void showLargeImage({
                 ],
               ),
             ),
-            if (selectedProduct != null && showInsertButton == true)
+            if (selectedProduct != null)
               _complementAndInsertProductButton(
                 productComplement: productComplement,
                 context: context,
                 selectedProduct: selectedProduct,
+                showInsertButton: showInsertButton == true,
               ),
           ],
         ),
@@ -63,6 +64,7 @@ Widget _complementAndInsertProductButton({
   required String? productComplement,
   required BuildContext context,
   required ProductsViewModel selectedProduct,
+  required bool showInsertButton,
 }) {
   if (hasMinWidth(context)) {
     return Expanded(
@@ -74,11 +76,12 @@ Widget _complementAndInsertProductButton({
               flex: 2,
               child: _productComplement(context, productComplement),
             ),
-          Expanded(
-            child: OpenInsertProductPage(
-              selectedProduct: selectedProduct,
+          if (showInsertButton)
+            Expanded(
+              child: OpenInsertProductPage(
+                selectedProduct: selectedProduct,
+              ),
             ),
-          ),
         ],
       ),
     );

@@ -54,7 +54,7 @@ class _EvaluateItemsState extends State<EvaluateItems> {
           ),
           _generateEvaluateItem(
             context: context,
-            text: "Ambiente",
+            text: R.string.environment,
             icon: Icons.house,
             updateIndex: widget.updateEnvironmentNote,
             evaluateNumber: widget.environmentNote,

@@ -68,6 +68,7 @@ abstract class Translation {
   String get emptyCart;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
+  String get environment;
   String get insertInCart;
   String get ifWantSelectComments;
   String get ifWantSelectProducts;

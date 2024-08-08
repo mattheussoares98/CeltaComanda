@@ -20,6 +20,7 @@ abstract class Translation {
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
   String get msgWriteTableNumber;
+  String get msgWriteThreeNumbers;
 
   String get accessDenied;
   String get alwaysUseSameTable;

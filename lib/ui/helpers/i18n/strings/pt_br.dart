@@ -17,7 +17,7 @@ class PtBr implements Translation {
       'O número da comanda é obrigatório';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';
   String get msgProductNotFound => 'O produto não foi encontrado';
-  String get msgRequestSentSuccessfully => 'Campo obrigatório';
+  String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';
   String get msgSuccessToCancelProducts => 'Cancelamento de produtos liberado';
   String get msgTableNumber => 'Número da mesa';
@@ -32,6 +32,7 @@ class PtBr implements Translation {
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteCommandNumber => "Digite o número da comanda";
   String get msgWriteTableNumber => "Digite o número da mesa";
+  String get msgWriteThreeNumbers => "Digite 3 números";
 
   String get accessDenied => 'O usuário não possui permissão';
   String get addAccount => 'Criar conta';

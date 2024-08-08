@@ -48,13 +48,13 @@ void writeCommandNumber({
               focusNode: focusNode,
               decoration: InputDecoration(
                 label: Text(R.string.command),
-                hintText: "Exp: 001",
+                hintText: "Exp: 1",
               ),
               validator: (value) {
                 if (value?.isEmpty == true) {
                   return R.string.msgWriteCommandNumber;
                 } else if (value!.length < 3) {
-                  return "Digite 3 números";
+                  return R.string.msgWriteThreeNumbers;
                 } else if (int.tryParse(value) == null) {
                   return R.string.msgInvalidNumber;
                 }
@@ -139,7 +139,7 @@ Future<void> _onPress({
       Future.delayed(Duration.zero, () {
         showAlertMessage(
           context,
-          "O pedido foi enviado com sucesso",
+          R.string.msgRequestSentSuccessfully,
         );
       });
     }

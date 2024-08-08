@@ -19,7 +19,8 @@ class LandscapeCartProductItem extends StatefulWidget {
   });
 
   @override
-  State<LandscapeCartProductItem> createState() => _LandscapeCartProductItemState();
+  State<LandscapeCartProductItem> createState() =>
+      _LandscapeCartProductItemState();
 }
 
 class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
@@ -110,7 +111,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                     if (widget.cartProduct.Product.childsComposition != null)
                       FittedBox(
                         child: Text(
-                          "(COMBO)",
+                          "(${R.string.combox})",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Theme.of(context).secondaryHeaderColor,

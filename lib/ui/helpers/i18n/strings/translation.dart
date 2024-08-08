@@ -24,6 +24,7 @@ abstract class Translation {
   String get addFlagOrTable;
   String get avaliate;
   String get cart;
+  String get combox;
   String get commandNotAvailable;
   String get confirmFlag;
   String get confirmPassword;

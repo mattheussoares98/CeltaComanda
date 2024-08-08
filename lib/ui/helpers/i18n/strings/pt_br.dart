@@ -36,6 +36,7 @@ class PtBr implements Translation {
   String get avaliate => 'Avaliar';
   String get cart => "Carrinho";
   String get detach => "Destaques";
+  String get combox => "Combo";
   String get commandNotAvailable => "Comanda não disponível";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';

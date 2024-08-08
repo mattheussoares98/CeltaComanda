@@ -32,6 +32,7 @@ class PtBr implements Translation {
   String get addAccount => 'Criar conta';
   String get addCommentError => 'Ocorreu um erro para adicionar o comentário';
   String get addFlagOrTable => "Adicionar número da bandeira/mesa";
+  String get addItens => "Adicionar itens";
   String get addMoreItens => "Adicionar mais itens";
   String get alwaysUseSameTable => "Usar sempre a mesma mesa";
   String get avaliate => 'Avaliar';

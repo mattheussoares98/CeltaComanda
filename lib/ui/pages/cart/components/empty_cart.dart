@@ -38,7 +38,7 @@ class EmptyCart extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: Navigator.of(context).pop,
             label: Text(
-              "Adicionar itens",
+              R.string.addItens,
               style: TextStyle(
                 fontSize: hasMinWidth(context) ? 25 : 20,
               ),

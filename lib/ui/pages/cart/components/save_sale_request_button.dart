@@ -69,7 +69,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                 fontSize: hasMinWidth(context) ? 23 : 17,
               ),
             ),
-            cancelMessage: "Voltar",
+            cancelMessage: R.string.turnBack,
             confirmMessage: "Enviar",
             onPress: () async {
               await _addProducts(

@@ -67,6 +67,7 @@ class PtBr implements Translation {
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get table => 'Mesa';
+  String get turnBack => 'Voltar';
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";
   String get user => 'Usuário';

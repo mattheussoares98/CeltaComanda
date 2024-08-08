@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../helpers/helpers.dart';
 
 Future<void> _validateUserAndPermissionToCancelProducts({
   required BuildContext context,
@@ -48,10 +49,10 @@ void validateUserAndCancelProductDialog({
           child: SingleChildScrollView(
             child: AlertDialog(
               key: const Key("AlertDialogSearchCommand"),
-              title: const Text(
-                "Liberar cancelamento de itens",
+              title: Text(
+                R.string.liberateCancelProducts,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),

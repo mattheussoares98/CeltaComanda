@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
+
 class ReserveTable extends StatelessWidget {
   const ReserveTable({super.key});
 
@@ -11,22 +13,22 @@ class ReserveTable extends StatelessWidget {
         onLongPress: () {
           Navigator.of(context).pop();
         },
-        child: const Scaffold(
+        child: Scaffold(
           backgroundColor: Colors.black45,
           body: Center(
             child: FittedBox(
               child: Column(
                 children: [
                   Text(
-                    "MESA",
+                    R.string.table.toUpperCase(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 300,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "RESERVADA",
                     textAlign: TextAlign.center,
                     style: TextStyle(

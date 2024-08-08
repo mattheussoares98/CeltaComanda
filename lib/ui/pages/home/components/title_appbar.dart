@@ -62,7 +62,7 @@ class TitleAppbar extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  "Mesa ${homePresenter.commandNumber?.toInt()}",
+                  "${R.string.table} ${homePresenter.commandNumber?.toInt()}",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

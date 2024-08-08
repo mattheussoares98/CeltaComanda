@@ -38,6 +38,7 @@ abstract class Translation {
   String get reserveTable;
   String get surveys;
   String get surveyResult;
+  String get table;
   String get updateTableNumberAndPeopleNumbers;
   String get url;
   String get user;

@@ -69,7 +69,7 @@ class PtBr implements Translation {
   String get emptyCart => 'O carrinho está vazio';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
-  String get invalidCredentials => 'Credenciais inválidas';
+  String get insertInCart => 'Inserir no carrinho';
   String get jump => 'Pular';
   String get login => 'Login';
   String get name => 'Nome';

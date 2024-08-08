@@ -34,23 +34,23 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   ) {
     if (selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 1) {
-        return "INSERIR NO CARRINHO";
+        return R.string.insertInCart.toUpperCase();
       } else if (widget.leftSelectedIndex == 0 && !widget.productHasComment) {
-        return "INSERIR NO CARRINHO";
+        return R.string.insertInCart.toUpperCase();
       } else {
         return "AVANÇAR";
       }
     } else {
       if (widget.leftSelectedIndex ==
           selectedProduct.childsComposition!.length) {
-        return "INSERIR NO CARRINHO";
+        return R.string.insertInCart.toUpperCase();
       } else if (selectedProduct.childsComposition![widget.leftSelectedIndex]
                   .IsOptionalItem ==
               "true" &&
           selectedProduct.childsComposition![widget.leftSelectedIndex]
                   .indexOfSelectedChild ==
               null) {
-        return "PULAR";
+        return R.string.jump.toUpperCase();
       } else {
         return "AVANÇAR";
       }

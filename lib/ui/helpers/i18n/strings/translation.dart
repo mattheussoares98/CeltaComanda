@@ -55,6 +55,7 @@ abstract class Translation {
   String get emptyCart;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
+  String get insertInCart;
   String get jump;
   String get login;
   String get name;

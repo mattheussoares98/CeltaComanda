@@ -45,11 +45,11 @@ class FatherItem extends StatelessWidget {
           selectedProduct.childsComposition!.length) {
         return R.string.quantity.toUpperCase();
       } else {
-        return "COMENTÁRIOS";
+        return R.string.comments.toUpperCase();
       }
     } else {
       if (productHasComment && indexOfLeftSelectedItem == 0) {
-        return "COMENTÁRIOS";
+        return R.string.comments.toUpperCase();
       } else {
         return R.string.quantity.toUpperCase();
       }
@@ -82,7 +82,9 @@ class FatherItem extends StatelessWidget {
                       ? null
                       : <TextSpan>[
                           TextSpan(
-                            text: showComments ? "  (COMENTÁRIO)" : null,
+                            text: showComments
+                                ? "  (${R.string.comment.toUpperCase()})"
+                                : null,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.yellow,

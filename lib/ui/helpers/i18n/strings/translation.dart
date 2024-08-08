@@ -48,6 +48,8 @@ abstract class Translation {
   String get commandNotAvailable;
   String get command;
   String get commentsOfProduct;
+  String get comments;
+  String get comment;
   String get confirmFlag;
   String get confirm;
   String get confirmPassword;

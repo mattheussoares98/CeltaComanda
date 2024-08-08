@@ -46,8 +46,8 @@ void writeCommandNumber({
               keyboardType: TextInputType.number,
               maxLength: 3,
               focusNode: focusNode,
-              decoration: const InputDecoration(
-                label: Text("Comanda"),
+              decoration: InputDecoration(
+                label: Text(R.string.command),
                 hintText: "Exp: 001",
               ),
               validator: (value) {

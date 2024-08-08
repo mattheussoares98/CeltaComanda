@@ -44,6 +44,7 @@ class PtBr implements Translation {
   String get cancel => "Cancelar";
   String get combox => "Combo";
   String get commandNotAvailable => "Comanda não disponível";
+  String get command => "Comanda";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
   String get confirm => 'Confirmar';

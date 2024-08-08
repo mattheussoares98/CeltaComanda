@@ -105,7 +105,7 @@ class _MenuPageState extends State<MenuPage>
                           color: Theme.of(context).primaryColorDark,
                         ),
                         label: Text(
-                          "Carregar menu",
+                          R.string.loadMenu,
                           style: TextStyle(
                             fontSize: hasMinWidth(context) ? 40 : 30,
                             color: Theme.of(context).primaryColorDark,

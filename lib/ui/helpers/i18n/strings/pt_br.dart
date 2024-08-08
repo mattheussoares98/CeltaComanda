@@ -92,6 +92,7 @@ class PtBr implements Translation {
   String get ifWantSelectComments => 'Se desejar, selecione comentários';
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';
+  String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get name => 'Nome';
   String get obligatory => 'Obrigatório';

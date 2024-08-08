@@ -78,6 +78,7 @@ abstract class Translation {
   String get ifWantSelectComments;
   String get ifWantSelectProducts;
   String get jump;
+  String get loadMenu;
   String get login;
   String get name;
   String get obligatory;

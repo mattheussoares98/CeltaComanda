@@ -147,7 +147,7 @@ class _PaymentPageState extends State<PaymentPage>
                           );
                         },
                         child: Text(
-                          "Débito".toUpperCase(),
+                          R.string.debit.toUpperCase(),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: getStringSize(context),

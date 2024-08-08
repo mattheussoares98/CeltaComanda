@@ -65,7 +65,7 @@ abstract class Translation {
   String get confirm;
   String get confirmPassword;
   String get costBenefit;
-  String get suggestionCriticalOrPraise;
+  String get debit;
   String get detach;
   String get doLogout;
   String get drink;
@@ -104,6 +104,7 @@ abstract class Translation {
   String get sendRequest;
   String get send;
   String get service;
+  String get suggestionCriticalOrPraise;
   String get surveys;
   String get surveyResult;
   String get table;

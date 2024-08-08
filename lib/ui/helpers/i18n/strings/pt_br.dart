@@ -80,6 +80,7 @@ class PtBr implements Translation {
   String get confirm => 'Confirmar';
   String get costBenefit => 'Custo benefício';
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
+  String get debit => "Débito";
   String get detach => "Destaques";
   String get doLogout => "Fazer logout";
   String get drink => "Bebida";

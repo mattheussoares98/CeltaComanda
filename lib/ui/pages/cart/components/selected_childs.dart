@@ -36,7 +36,7 @@ class SelectedChilds extends StatelessWidget {
                 child: Text(
                   hasMinWidth(context)
                       ? R.string.selectedProductsAndComments
-                      : "Produtos e comentários",
+                      : R.string.productsAndComments,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: getStringSize(context),

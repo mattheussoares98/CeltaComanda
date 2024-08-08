@@ -106,19 +106,40 @@ Future<void> _sendAvaliation({
   required BuildContext context,
 }) async {
   if (foodNote == null) {
-    showAlertMessage(context, "Avalie a comida", backgroundColor: Colors.red);
+    showAlertMessage(
+      context,
+      R.string.msgEvaluateFood,
+      backgroundColor: Colors.red,
+    );
   } else if (drinkNote == null) {
-    showAlertMessage(context, "Avalie a bebida", backgroundColor: Colors.red);
+    showAlertMessage(
+      context,
+      R.string.msgEvaluateDrink,
+      backgroundColor: Colors.red,
+    );
   } else if (environmentNote == null) {
-    showAlertMessage(context, "Avalie o ambiente", backgroundColor: Colors.red);
+    showAlertMessage(
+      context,
+      R.string.msgEvaluateEnvironment,
+      backgroundColor: Colors.red,
+    );
   } else if (serviceNote == null) {
-    showAlertMessage(context, "Avalie o atendimento",
-        backgroundColor: Colors.red);
+    showAlertMessage(
+      context,
+      R.string.msgEvaluateService,
+      backgroundColor: Colors.red,
+    );
   } else if (costBenefitNote == null) {
-    showAlertMessage(context, "Avalie o custo benefício",
-        backgroundColor: Colors.red);
+    showAlertMessage(
+      context,
+      R.string.msgEvaluateCostBenefit,
+      backgroundColor: Colors.red,
+    );
   } else if (nameController.text.isEmpty) {
-    showAlertMessage(context, "Informe o seu nome",
-        backgroundColor: Colors.red);
+    showAlertMessage(
+      context,
+      R.string.msgWriteName,
+      backgroundColor: Colors.red,
+    );
   }
 }

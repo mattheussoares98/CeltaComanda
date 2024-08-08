@@ -8,6 +8,11 @@ class PtBr implements Translation {
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgCloseApplication => "Fechar aplicativo";
+  String get msgEvaluateFood => "Avalie a comida";
+  String get msgEvaluateDrink => "Avalie a bebida";
+  String get msgEvaluateEnvironment => "Avalie o ambiente";
+  String get msgEvaluateService => "Avalie o atendimento";
+  String get msgEvaluateCostBenefit => "Avalie o custo benefício";
   String get msgInsertCommandNumber => "Informe o número da comanda";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
@@ -40,6 +45,7 @@ class PtBr implements Translation {
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteCommandNumber => "Digite o número da comanda";
+  String get msgWriteName => "Informe o seu nome";
   String get msgWritePassword => "Digite a senha";
   String get msgWriteTableNumber => "Digite o número da mesa";
   String get msgWriteThreeNumbers => "Digite 3 números";

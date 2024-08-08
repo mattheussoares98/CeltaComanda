@@ -3,6 +3,11 @@ abstract class Translation {
   String get msgEmailInUse;
   String get msgClearCartOnLogout;
   String get msgCloseApplication;
+  String get msgEvaluateFood;
+  String get msgEvaluateDrink;
+  String get msgEvaluateEnvironment;
+  String get msgEvaluateService;
+  String get msgEvaluateCostBenefit;
   String get msgInsertCommandNumber;
   String get msgInvalidCombox;
   String get msgInvalidCredentials;
@@ -26,6 +31,7 @@ abstract class Translation {
   String get msgWantDoLogout;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
+  String get msgWriteName;
   String get msgWritePassword;
   String get msgWriteTableNumber;
   String get msgWriteThreeNumbers;

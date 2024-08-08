@@ -44,6 +44,7 @@ class PtBr implements Translation {
   String get avaliate => 'Avaliar';
   String get cart => "Carrinho";
   String get cancel => "Cancelar";
+  String get clearCart => "Limpar carrinho";
   String get combox => "Combo";
   String get commandNotAvailable => "Comanda não disponível";
   String get command => "Comanda";

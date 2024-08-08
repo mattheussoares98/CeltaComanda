@@ -56,7 +56,7 @@ class LogoutButton extends StatelessWidget {
             Future.delayed(Duration.zero, () {
               notificationDialog(
                   context: context,
-                  titleMessage: "Limpar carrinho",
+                  titleMessage: R.string.clearCart,
                   content:
                       const Text("Ao fazer o logout, o carrinho será limpo!"),
                   onPress: () async {

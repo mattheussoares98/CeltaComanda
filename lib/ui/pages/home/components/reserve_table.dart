@@ -28,10 +28,10 @@ class ReserveTable extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text(
-                    "RESERVADA",
+                  Text(
+                    R.string.reserved,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 300,
                       fontWeight: FontWeight.bold,

@@ -27,9 +27,9 @@ class FatherItem extends StatelessWidget {
         indexOfLeftSelectedItem == 0) {
       return "Opcional";
     } else if (selectedProduct.childsComposition == null) {
-      return "Obrigatório";
+      return R.string.obligatory;
     } else if (father == null || father?.IsOptionalItem == "false") {
-      return "Obrigatório";
+      return R.string.obligatory;
     } else {
       return "Opcional";
     }

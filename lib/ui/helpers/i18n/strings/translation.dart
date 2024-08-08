@@ -60,6 +60,7 @@ abstract class Translation {
   String get jump;
   String get login;
   String get name;
+  String get obligatory;
   String get password;
   String get peopleQuantity;
   String get price;

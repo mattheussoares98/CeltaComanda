@@ -44,9 +44,9 @@ class FixedCommandNumberInput extends StatelessWidget {
             if (value == null) {
               return R.string.msgWriteTableNumber;
             } else if (int.tryParse(value) == null) {
-              return "Número inválido";
+              return R.string.msgInvalidNumber;
             } else if (int.parse(value) == 0) {
-              return "Número inválido";
+              return R.string.msgInvalidNumber;
             } else {
               return null;
             }

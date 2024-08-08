@@ -105,7 +105,12 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   Future<void> addNewPrintRequestInFirebase() async {
-    PrintRequestEntity? newRequest;
+    PrintRequestEntity newRequest = PrintRequestEntity(
+      dates: [
+        "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+      ],
+      timesUsed: 1,
+    );
     try {
       final localEntity = await localPrintRequest.getLocalPrintedEntity();
 
@@ -119,14 +124,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         );
       }
 
-      if (newRequest != null) {
-        await addPrintRequest.add(newRequest);
-      }
+      await addPrintRequest.add(newRequest);
       await localPrintRequest.clear();
     } catch (e) {
-      if (newRequest != null) {
-        await localPrintRequest.add(newRequest);
-      }
+      await localPrintRequest.add(newRequest);
     }
   }
 

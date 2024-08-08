@@ -44,6 +44,7 @@ void main() {
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late int tableNumber;
   late CommentViewModel commentViewModel;
+  late PrintRequestEntity printRequestEntity;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -161,6 +162,7 @@ void main() {
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
     commentViewModel = EntityFactory.makeCommentViewModel(selected: true);
+    printRequestEntity = EntityFactory.makePrintRequestEntity();
   }
 
   void initMockSuccess() {
@@ -543,138 +545,126 @@ void main() {
     });
   });
 
-  // group("Add PrintRequest", () {
-  //   test("Should call addPrintRequest when finish success", () async {
-  //     await sut.finishSaleRequest(
-  //       commentsPresenter: commentsPresenter,
-  //       saleRequestTempEntity: saleRequestTempEntity,
-  //       menuPresenter: menuPresenter,
-  //       printedProductsPresenter: printedProductsPresenter,
-  //       cartPresenter: sut,
-  //       homePresenter: homePresenter,
-  //     );
+  group("Add PrintRequest", () {
+    test("Should call addPrintRequest when save products", () async {
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
-  //     verify(
-  //       () => addPrintRequest.add(printRequestEntity),
-  //     ).called(1);
-  //   });
+      verify(
+        () => addPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
 
-  //   test(
-  //       "Should call correct printRequests when finish success and has printRequestEntity in local data",
-  //       () async {
-  //     localPrintRequest.mockGetMergedPrinted(printRequestEntity);
+    test(
+        "Should call correct printRequests when finish success and has printRequestEntity in local data",
+        () async {
+      localPrintRequest.mockGetMergedPrinted(printRequestEntity);
 
-  //     await sut.finishSaleRequest(
-  //       commentsPresenter: commentsPresenter,
-  //       saleRequestTempEntity: saleRequestTempEntity,
-  //       menuPresenter: menuPresenter,
-  //       printedProductsPresenter: printedProductsPresenter,
-  //       cartPresenter: sut,
-  //       homePresenter: homePresenter,
-  //     );
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
-  //     verify(
-  //       () => localPrintRequest.getLocalPrintedEntity(),
-  //     ).called(1);
-  //     verify(
-  //       () => localPrintRequest.clear(),
-  //     ).called(1);
-  //     verify(
-  //       () => addPrintRequest.add(
-  //         PrintRequestEntity(
-  //           dates: [
-  //             ...printRequestEntity.dates,
-  //             "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
-  //           ],
-  //           timesUsed: printRequestEntity.timesUsed + 1,
-  //         ),
-  //       ),
-  //     ).called(1);
-  //   });
+      verify(
+        () => localPrintRequest.getLocalPrintedEntity(),
+      ).called(1);
+      verify(
+        () => localPrintRequest.clear(),
+      ).called(1);
+      verify(
+        () => addPrintRequest.add(
+          PrintRequestEntity(
+            dates: [
+              ...printRequestEntity.dates,
+              "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+            ],
+            timesUsed: printRequestEntity.timesUsed + 1,
+          ),
+        ),
+      ).called(1);
+    });
 
-  //   test(
-  //       "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
-  //       () async {
-  //     await sut.finishSaleRequest(
-  //       commentsPresenter: commentsPresenter,
-  //       saleRequestTempEntity: saleRequestTempEntity,
-  //       menuPresenter: menuPresenter,
-  //       printedProductsPresenter: printedProductsPresenter,
-  //       cartPresenter: sut,
-  //       homePresenter: homePresenter,
-  //     );
+    test(
+        "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
+        () async {
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
-  //     verify(
-  //       () => localPrintRequest.getLocalPrintedEntity(),
-  //     ).called(1);
-  //     verify(
-  //       () => localPrintRequest.clear(),
-  //     ).called(1);
-  //     verify(
-  //       () => addPrintRequest.add(printRequestEntity),
-  //     ).called(1);
-  //   });
+      verify(
+        () => localPrintRequest.getLocalPrintedEntity(),
+      ).called(1);
+      verify(
+        () => localPrintRequest.clear(),
+      ).called(1);
+      verify(
+        () => addPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
 
-  //   test("Should call correct printRequests when finish throw", () async {
-  //     finishSaleRequestTemp.mockFinishSaleRequestTempError();
+    test("Should call correct printRequests when finish throw", () async {
+      finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
-  //     await sut.finishSaleRequest(
-  //       commentsPresenter: commentsPresenter,
-  //       saleRequestTempEntity: saleRequestTempEntity,
-  //       menuPresenter: menuPresenter,
-  //       printedProductsPresenter: printedProductsPresenter,
-  //       cartPresenter: sut,
-  //       homePresenter: homePresenter,
-  //     );
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
-  //     verify(
-  //       () => localPrintRequest.getLocalPrintedEntity(),
-  //     ).called(1);
-  //     verify(
-  //       () => localPrintRequest.clear(),
-  //     ).called(1);
-  //     verify(
-  //       () => addPrintRequest.add(printRequestEntity),
-  //     ).called(1);
-  //   });
+      verify(
+        () => localPrintRequest.getLocalPrintedEntity(),
+      ).called(1);
+      verify(
+        () => localPrintRequest.clear(),
+      ).called(1);
+      verify(
+        () => addPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
 
-  //   test("Should call LocalAddPrintRequest when addPrintRequest throws",
-  //       () async {
-  //     addPrintRequest.mockRemoteAddError();
+    test("Should call LocalAddPrintRequest when addPrintRequest throws",
+        () async {
+      addPrintRequest.mockRemoteAddError();
 
-  //     await sut.finishSaleRequest(
-  //       commentsPresenter: commentsPresenter,
-  //       saleRequestTempEntity: saleRequestTempEntity,
-  //       menuPresenter: menuPresenter,
-  //       printedProductsPresenter: printedProductsPresenter,
-  //       cartPresenter: sut,
-  //       homePresenter: homePresenter,
-  //     );
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
-  //     verify(
-  //       () => localPrintRequest.add(printRequestEntity),
-  //     ).called(1);
-  //   });
+      verify(
+        () => localPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
 
-  //   test(
-  //       "Should call LocalAddPrintRequest when localPrintRequest.GetMergedPrint throws",
-  //       () async {
-  //     localPrintRequest.mockGetMergedPrintedError();
+    test(
+        "Should call LocalAddPrintRequest when localPrintRequest.GetMergedPrint throws",
+        () async {
+      localPrintRequest.mockGetMergedPrintedError();
 
-  //     await sut.finishSaleRequest(
-  //       commentsPresenter: commentsPresenter,
-  //       saleRequestTempEntity: saleRequestTempEntity,
-  //       menuPresenter: menuPresenter,
-  //       printedProductsPresenter: printedProductsPresenter,
-  //       cartPresenter: sut,
-  //       homePresenter: homePresenter,
-  //     );
+      await sut.saveProducts(
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commentsPresenter: commentsPresenter,
+      );
 
-  //     verify(
-  //       () => localPrintRequest.add(printRequestEntity),
-  //     ).called(1);
-  //   });
-  // });
+      verify(
+        () => localPrintRequest.add(printRequestEntity),
+      ).called(1);
+    });
+  });
 
   group("Cart products", () {
     test("Should add correctly CartProduct", () async {

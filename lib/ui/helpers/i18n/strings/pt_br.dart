@@ -33,6 +33,7 @@ class PtBr implements Translation {
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteCommandNumber => "Digite o número da comanda";
+  String get msgWritePassword => "Digite a senha";
   String get msgWriteTableNumber => "Digite o número da mesa";
   String get msgWriteThreeNumbers => "Digite 3 números";
 

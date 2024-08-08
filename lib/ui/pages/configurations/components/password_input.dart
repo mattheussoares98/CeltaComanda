@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../data/usecases/usecases.dart';
+import '../../../helpers/helpers.dart';
 
 class PasswordInput extends StatelessWidget {
   final FocusNode passwordFocusNode;
@@ -24,7 +25,7 @@ class PasswordInput extends StatelessWidget {
       obscureText: true,
       validator: (value) {
         if (value?.isEmpty == true) {
-          return "Digite a senha";
+          return R.string.msgWritePassword;
         }
         return null;
       },
@@ -41,8 +42,8 @@ class PasswordInput extends StatelessWidget {
           },
           icon: const Icon(Icons.camera_alt),
         ),
-        hintText: "Senha",
-        labelText: "Senha",
+        hintText: R.string.password,
+        labelText: R.string.password,
       ),
     );
   }

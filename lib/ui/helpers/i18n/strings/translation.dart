@@ -20,6 +20,7 @@ abstract class Translation {
   String get msgVeryShortField;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
+  String get msgWritePassword;
   String get msgWriteTableNumber;
   String get msgWriteThreeNumbers;
 

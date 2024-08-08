@@ -22,6 +22,7 @@ abstract class Translation {
   String get addAccount;
   String get addCommentError;
   String get addFlagOrTable;
+  String get addMoreItens;
   String get avaliate;
   String get cart;
   String get combox;

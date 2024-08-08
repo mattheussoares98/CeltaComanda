@@ -20,7 +20,7 @@ class AddMoreCartItensButton extends StatelessWidget {
       onPressed: Navigator.of(context).pop,
       child: FittedBox(
         child: Text(
-          "Adicionar mais itens",
+          R.string.addMoreItens,
           style: TextStyle(
             color: Colors.white,
             fontSize: getStringSize(context),

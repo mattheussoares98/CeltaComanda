@@ -45,6 +45,7 @@ class PtBr implements Translation {
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteCommandNumber => "Digite o número da comanda";
+  String get msgWriteEanOrPlu => "Digite o EAN ou o PLU";
   String get msgWriteName => "Informe o seu nome";
   String get msgWritePassword => "Digite a senha";
   String get msgWriteTableNumber => "Digite o número da mesa";

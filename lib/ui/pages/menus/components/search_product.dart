@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class SearchProduct extends StatefulWidget {
@@ -70,7 +71,7 @@ class _SearchProductState extends State<SearchProduct> {
                     },
                     validator: (value) {
                       if (value?.isEmpty == true) {
-                        return "Digite o EAN ou PLU";
+                        return R.string.msgWriteEanOrPlu;
                       } else if (int.tryParse(value!) == null) {
                         return "Digite somente números";
                       }

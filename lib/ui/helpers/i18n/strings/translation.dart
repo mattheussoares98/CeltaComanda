@@ -31,6 +31,7 @@ abstract class Translation {
   String get msgWantDoLogout;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
+  String get msgWriteEanOrPlu;
   String get msgWriteName;
   String get msgWritePassword;
   String get msgWriteTableNumber;

@@ -46,6 +46,7 @@ dependencies:
   flutter_cache_manager: ^3.3.2
   carousel_slider: ^4.2.1
   wakelock_plus: ^1.2.5
+  battery_plus: ^6.0.2
 
 dev_dependencies:
   flutter_test:

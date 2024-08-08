@@ -4,7 +4,7 @@ import '../../main/builders/builders.dart';
 import '../helpers/helpers.dart';
 
 void showAlertMessage(BuildContext context, String message,
-    [Color? backgroundColor]) {
+    {Color? backgroundColor}) {
   ScaffoldMessenger.of(NavigatorKey.navigatorKey.currentContext ?? context)
       .clearSnackBars();
   ScaffoldMessenger.of(NavigatorKey.navigatorKey.currentContext ?? context)

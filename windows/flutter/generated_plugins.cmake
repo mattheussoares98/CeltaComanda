@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  battery_plus
   cloud_firestore
   firebase_core
   flutter_secure_storage_windows

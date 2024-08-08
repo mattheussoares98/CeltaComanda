@@ -105,16 +105,19 @@ Future<void> _sendAvaliation({
   required BuildContext context,
 }) async {
   if (foodNote == null) {
-    showAlertMessage(context, "Avalie a comida", Colors.red);
+    showAlertMessage(context, "Avalie a comida", backgroundColor: Colors.red);
   } else if (drinkNote == null) {
-    showAlertMessage(context, "Avalie a bebida", Colors.red);
+    showAlertMessage(context, "Avalie a bebida", backgroundColor: Colors.red);
   } else if (environmentNote == null) {
-    showAlertMessage(context, "Avalie o ambiente", Colors.red);
+    showAlertMessage(context, "Avalie o ambiente", backgroundColor: Colors.red);
   } else if (serviceNote == null) {
-    showAlertMessage(context, "Avalie o atendimento", Colors.red);
+    showAlertMessage(context, "Avalie o atendimento",
+        backgroundColor: Colors.red);
   } else if (costBenefitNote == null) {
-    showAlertMessage(context, "Avalie o custo benefício", Colors.red);
+    showAlertMessage(context, "Avalie o custo benefício",
+        backgroundColor: Colors.red);
   } else if (nameController.text.isEmpty) {
-    showAlertMessage(context, "Informe o seu nome", Colors.red);
+    showAlertMessage(context, "Informe o seu nome",
+        backgroundColor: Colors.red);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:battery_plus/battery_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -24,9 +25,12 @@ class _HomePageState extends State<HomePage>
 
   @override
   void dispose() {
+    super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    super.dispose();
+    if (_batteryStateSubscription != null) {
+      _batteryStateSubscription!.cancel();
+    }
   }
 
   bool _isLoaded = false;
@@ -62,12 +66,53 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  final Battery _battery = Battery();
+
+  BatteryState? _batteryState;
+  StreamSubscription<BatteryState>? _batteryStateSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _battery.batteryState.then(_updateBatteryState);
+    _batteryStateSubscription =
+        _battery.onBatteryStateChanged.listen(_updateBatteryState);
+  }
+
+  int _lastUpdatedBatteryLevel = 0;
+
+  void _updateBatteryState(BatteryState state) async {
+    final int atualBatteryLevel = await _battery.batteryLevel;
+
+    final differenceBetweenLastUpdatedAndAtualBattery =
+        (_lastUpdatedBatteryLevel - atualBatteryLevel).abs();
+
+    if (atualBatteryLevel > 20 ||
+        _batteryState == BatteryState.charging ||
+        differenceBetweenLastUpdatedAndAtualBattery < 5) {
+      return;
+    }
+
+    _lastUpdatedBatteryLevel = atualBatteryLevel;
+
+    Future.delayed(Duration.zero, () {
+      showAlertMessage(
+        context,
+        "Nível de bateria em $atualBatteryLevel%. Coloque o dispositivo para carregar",
+        backgroundColor: Colors.red,
+      );
+    });
+
+    if (_batteryState == state) return;
+    _batteryState = state;
+  }
+
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(
-        context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no BottomNavigationBarItem
+        context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no AppBar
     PrintedProductsPresenter printedProductsPresenter = Provider.of(
-        context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no BottomNavigationBarItem
+        context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no AppBar
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 

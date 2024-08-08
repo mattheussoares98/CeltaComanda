@@ -119,4 +119,5 @@ abstract class Translation {
   String get user;
   String get validateEnterprise;
   String get wait;
+  String get wantRemoveRequestedProduct;
 }

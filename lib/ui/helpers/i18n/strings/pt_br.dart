@@ -136,4 +136,5 @@ class PtBr implements Translation {
   String get url => 'Empresa ou url';
   String get validateEnterprise => 'Validar empresa';
   String get wait => 'Aguarde...';
+  String get wantRemoveRequestedProduct => 'Deseja realmente remover o produto dos produtos solicitados?';
 }

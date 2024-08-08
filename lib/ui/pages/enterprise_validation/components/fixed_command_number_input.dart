@@ -42,7 +42,7 @@ class FixedCommandNumberInput extends StatelessWidget {
           },
           validator: (value) {
             if (value == null) {
-              return "Digite o número da mesa";
+              return R.string.msgWriteTableNumber;
             } else if (int.tryParse(value) == null) {
               return "Número inválido";
             } else if (int.parse(value) == 0) {

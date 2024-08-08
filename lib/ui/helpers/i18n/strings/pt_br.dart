@@ -23,6 +23,7 @@ class PtBr implements Translation {
   String get msgUnexpectedError =>
       'Algo errado aconteceu. Tente novamente em breve.';
   String get msgVeryShortField => 'Campo muito curto';
+  String get msgWriteTableNumber => "Digite o número da mesa";
 
   String get accessDenied => 'O usuário não possui permissão';
   String get addAccount => 'Criar conta';

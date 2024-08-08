@@ -84,7 +84,7 @@ class ClientInformations extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Enviar avaliação".toUpperCase(),
+              R.string.sendEvaluation.toUpperCase(),
             ),
           ),
         ),

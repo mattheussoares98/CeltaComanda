@@ -98,6 +98,7 @@ class PtBr implements Translation {
       'Produto selecionados e comentários';
   String get selectProduct => "Selecione um produto!";
   String get selectQuantity => "Informe a quantidade";
+  String get sendEvaluation => 'Enviar avaliação';
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';
   String get surveys => 'Enquetes';

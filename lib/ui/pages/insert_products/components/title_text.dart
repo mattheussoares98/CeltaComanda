@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../helpers/helpers.dart';

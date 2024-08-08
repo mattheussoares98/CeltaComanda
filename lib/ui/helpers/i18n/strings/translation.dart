@@ -8,6 +8,7 @@ abstract class Translation {
   String get msgInvalidCredentialsOrAccessDenied;
   String get msgInvalidField;
   String get msgInvalidNumber;
+  String get msgLowBatteryChargeDevice;
   String get msgObligatoryFixedCommandNumber;
   String get msgProductNotFound;
   String get msgRequestSentSuccessfully;

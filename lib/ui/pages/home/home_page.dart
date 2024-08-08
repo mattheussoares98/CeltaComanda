@@ -10,6 +10,7 @@ import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
+import '../../helpers/helpers.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage>
     Future.delayed(Duration.zero, () {
       showAlertMessage(
         context,
-        "Nível de bateria em $atualBatteryLevel%. Coloque o dispositivo para carregar",
+        "$atualBatteryLevel%. ${R.string.msgLowBatteryChargeDevice}",
         backgroundColor: Colors.red,
       );
     });

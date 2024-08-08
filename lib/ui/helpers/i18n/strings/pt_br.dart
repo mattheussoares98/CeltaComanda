@@ -15,6 +15,7 @@ class PtBr implements Translation {
       'Credenciais inválidas ou usuário sem permissão';
   String get msgInvalidField => 'Campo inválido';
   String get msgInvalidNumber => "Número inválido";
+  String get msgLowBatteryChargeDevice => "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';

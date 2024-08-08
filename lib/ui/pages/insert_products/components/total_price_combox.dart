@@ -21,7 +21,7 @@ class TotalPriceCombox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              "Total",
+              R.string.total,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

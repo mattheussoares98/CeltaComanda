@@ -31,7 +31,7 @@ class LogoutButton extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: FittedBox(
           child: Text(
-            "Fazer logout",
+            R.string.doLogout,
             style: TextStyle(
               fontSize: getStringSize(context),
             ),

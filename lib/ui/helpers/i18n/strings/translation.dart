@@ -40,6 +40,7 @@ abstract class Translation {
   String get confirm;
   String get confirmPassword;
   String get detach;
+  String get doLogout;
   String get emptyCart;
   String get enterpriseOrUrlNotFound;
   String get enterprise;

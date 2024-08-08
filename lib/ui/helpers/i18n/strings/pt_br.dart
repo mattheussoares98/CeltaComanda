@@ -52,6 +52,7 @@ class PtBr implements Translation {
   String get confirmPassword => 'Confirmar senha';
   String get confirm => 'Confirmar';
   String get detach => "Destaques";
+  String get doLogout => "Fazer logout";
   String get emptyCart => 'O carrinho está vazio';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';

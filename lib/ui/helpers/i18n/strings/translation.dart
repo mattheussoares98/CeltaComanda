@@ -13,6 +13,7 @@ abstract class Translation {
   String get msgTableNumber;
   String get msgUpdatedTableAndPeopleNumberSuccess;
   String get msgUnexpectedError;
+  String get msgUseOnlyWhenIsFixedTableNumber;
   String get msgVeryShortField;
   String get msgWriteTableNumber;
 

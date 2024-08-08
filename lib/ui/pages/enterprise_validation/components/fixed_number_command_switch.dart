@@ -45,8 +45,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
           },
           child: Tooltip(
             key: tooltipKey,
-            message:
-                'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa',
+            message: R.string.msgUseOnlyWhenIsFixedTableNumber,
             child: Icon(
               Icons.info,
               size: hasMinWidth(context) ? 40 : 30,

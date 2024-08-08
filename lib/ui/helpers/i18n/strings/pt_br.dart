@@ -23,6 +23,8 @@ class PtBr implements Translation {
       "Número da mesa e quantidade de pessoas alterados com sucesso";
   String get msgUnexpectedError =>
       'Algo errado aconteceu. Tente novamente em breve.';
+  String get msgUseOnlyWhenIsFixedTableNumber =>
+      'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa';
   String get msgVeryShortField => 'Campo muito curto';
   String get msgWriteTableNumber => "Digite o número da mesa";
 

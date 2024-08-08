@@ -59,9 +59,9 @@ class ClientInformations extends StatelessWidget {
         const SizedBox(height: 8),
         TextFormField(
           controller: suggestionCriticalOrPraiseController,
-          decoration: const InputDecoration(
-            labelText: "Sugestão, crítica ou elogio",
-            hintText: "Sugestão, crítica ou elogio",
+          decoration: InputDecoration(
+            labelText: R.string.suggestionCriticalOrPraise,
+            hintText: R.string.suggestionCriticalOrPraise,
           ),
         ),
         const SizedBox(height: 10),

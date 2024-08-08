@@ -54,6 +54,7 @@ abstract class Translation {
   String get confirmFlag;
   String get confirm;
   String get confirmPassword;
+  String get suggestionCriticalOrPraise;
   String get detach;
   String get doLogout;
   String get email;

@@ -28,6 +28,7 @@ abstract class Translation {
   String get addItens;
   String get addMoreItens;
   String get avaliate;
+  String get cancel;
   String get cart;
   String get combox;
   String get commandNotAvailable;

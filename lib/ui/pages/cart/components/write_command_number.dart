@@ -31,7 +31,7 @@ void writeCommandNumber({
     context: context,
     titleMessage: R.string.msgInsertCommandNumber,
     confirmMessage: R.string.confirm,
-    cancelMessage: "Cancelar",
+    cancelMessage: R.string.cancel,
     content: Row(
       children: [
         const Expanded(child: SizedBox()),

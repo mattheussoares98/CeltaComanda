@@ -60,6 +60,7 @@ abstract class Translation {
   String get enterprise;
   String get insertInCart;
   String get ifWantSelectComments;
+  String get ifWantSelectProducts;
   String get jump;
   String get login;
   String get name;

@@ -49,10 +49,10 @@ class TitleText extends StatelessWidget {
           "false") {
         return R.string.selectProduct;
       } else {
-        return "Se desejar, selecione um produto";
+        return R.string.ifWantSelectProducts;
       }
     } else {
-      return "Se desejar, selecione comentários";
+      return R.string.ifWantSelectComments;
     }
   }
 

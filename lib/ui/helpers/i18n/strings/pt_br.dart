@@ -5,6 +5,8 @@ import './translation.dart';
 class PtBr implements Translation {
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgEmailInUse => 'O email já está em uso.';
+  String get msgClearCartOnLogout =>
+      'Ao fazer o logout, o carrinho será limpo!';
   String get msgInsertCommandNumber => "Informe o número da comanda";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';

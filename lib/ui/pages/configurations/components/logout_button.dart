@@ -57,8 +57,7 @@ class LogoutButton extends StatelessWidget {
               notificationDialog(
                   context: context,
                   titleMessage: R.string.clearCart,
-                  content:
-                      const Text("Ao fazer o logout, o carrinho será limpo!"),
+                  content: Text(R.string.msgClearCartOnLogout),
                   onPress: () async {
                     if (isValidUserAndPassword) {
                       cartPresenter.clearCart();

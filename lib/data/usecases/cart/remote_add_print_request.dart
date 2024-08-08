@@ -1,4 +1,4 @@
-import '../../cache/cache.dart';
+import '../../database/database.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 

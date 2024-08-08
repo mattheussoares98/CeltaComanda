@@ -1,4 +1,4 @@
-import '../../data/cache/cache.dart';
+import '../../data/database/database.dart';
 import 'package:hive/hive.dart';
 
 class HiveAdapter implements HiveStorage {

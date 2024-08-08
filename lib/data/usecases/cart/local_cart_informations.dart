@@ -4,7 +4,7 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 import '../../../ui/pages/pages.dart';
-import '../../cache/cache.dart';
+import '../../database/database.dart';
 
 class LocalCartInformations implements CartInformations {
   final HiveStorage hiveStorage;

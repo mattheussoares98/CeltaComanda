@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../data/cache/cache.dart';
+import '../../data/database/database.dart';
 import '../../domain/entities/print_request_entity.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';

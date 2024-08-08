@@ -4,7 +4,7 @@ import '../../../domain/usecases/usecases.dart';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../infra/helpers/helperts.dart';
-import '../../cache/cache.dart';
+import '../../database/database.dart';
 
 class LocalLoadCommandData implements LocalCommandData {
   final HiveStorage hiveStorage;

@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:clean_celta_mobile/data/cache/cache.dart';
+import 'package:clean_celta_mobile/data/database/database.dart';
 
 import 'package:mocktail/mocktail.dart';
 

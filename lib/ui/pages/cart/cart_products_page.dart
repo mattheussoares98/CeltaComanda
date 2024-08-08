@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
@@ -67,7 +66,7 @@ class _CartPageState extends State<CartPage>
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Text(
-                                  "CARRINHO",
+                                  R.string.cart.toUpperCase(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

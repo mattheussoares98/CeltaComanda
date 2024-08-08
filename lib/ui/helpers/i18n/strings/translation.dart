@@ -15,6 +15,7 @@ abstract class Translation {
   String get accessDenied;
   String get addCommentError;
   String get addAccount;
+  String get cart;
   String get commandNotAvailable;
   String get confirmPassword;
   String get enterpriseOrUrlNotFound;

@@ -72,6 +72,7 @@ abstract class Translation {
   String get surveyResult;
   String get table;
   String get turnBack;
+  String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;
   String get url;
   String get userCode;

@@ -88,7 +88,7 @@ class TitleAppbar extends StatelessWidget {
             Icons.refresh_outlined,
             color: Theme.of(context).colorScheme.primary,
           ),
-          tooltip: "Atualizar menu",
+          tooltip: R.string.updateMenu,
         ),
       ],
     );

@@ -58,21 +58,29 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
               Icons.shopping_cart,
               size: getIconSize(context),
             ),
-            const SizedBox(width: 20),
+            const SizedBox(width: 8),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Inserir no carrinho",
-                    style: TextStyle(
-                      fontSize: getStringSize(context),
+                  Expanded(
+                    child: Text(
+                      "Inserir",
+                      style: TextStyle(
+                        fontSize: getStringSize(context),
+                      ),
                     ),
                   ),
-                  Text(
-                    widget.selectedProduct.SaleRetailPraticed.toDouble().toString().toBrazilianNumber().addBrazilianCoin(),
-                    style: TextStyle(
-                      fontSize: getStringSize(context),
+                  Expanded(
+                    child: Text(
+                      widget.selectedProduct.SaleRetailPraticed
+                          .toDouble()
+                          .toString()
+                          .toBrazilianNumber()
+                          .addBrazilianCoin(),
+                      style: TextStyle(
+                        fontSize: getStringSize(context),
+                      ),
                     ),
                   ),
                 ],

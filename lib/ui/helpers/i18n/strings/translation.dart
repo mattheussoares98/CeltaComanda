@@ -20,6 +20,7 @@ abstract class Translation {
   String get msgProductNotFound;
   String get msgRequestSentSuccessfully;
   String get msgRequiredField;
+  String get msgSearchCommandToPay;
   String get msgSelectCommand;
   String get msgSelectPeopleNumbers;
   String get msgSuccessToCancelProducts;

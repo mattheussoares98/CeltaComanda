@@ -61,7 +61,7 @@ class _PaymentPageState extends State<PaymentPage>
               homePresenter: homePresenter,
               emptyMessage: homePresenter.commandNumber != null
                   ? R.string.msgCommandDontHaveOpenValues
-                  : "Consulte alguma comanda para efetuar o pagamento dela",
+                  : R.string.msgSearchCommandToPay,
               loadCommandData: () async {
                 await paymentPresenter.getTotalValue(
                   homePresenter: homePresenter,

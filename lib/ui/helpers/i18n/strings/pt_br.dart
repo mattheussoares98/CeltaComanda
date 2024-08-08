@@ -8,6 +8,7 @@ class PtBr implements Translation {
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgCloseApplication => "Fechar aplicativo";
+  String get msgCommandDontHaveOpenValues => "Essa comanda não possui valores em aberto";
   String get msgEvaluateFood => "Avalie a comida";
   String get msgEvaluateDrink => "Avalie a bebida";
   String get msgEvaluateEnvironment => "Avalie o ambiente";

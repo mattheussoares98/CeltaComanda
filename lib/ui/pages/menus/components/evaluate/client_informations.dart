@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../components/components.dart';
+import '../../../../helpers/helpers.dart';
 
 class ClientInformations extends StatelessWidget {
   final int? foodNote;
@@ -32,18 +33,18 @@ class ClientInformations extends StatelessWidget {
       children: [
         TextFormField(
           controller: nameController,
-          decoration: const InputDecoration(
-            labelText: "Nome",
-            hintText: "Nome",
+          decoration: InputDecoration(
+            labelText: R.string.name,
+            hintText: R.string.name,
           ),
         ),
         const SizedBox(height: 8),
         TextFormField(
           controller: phoneController,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: "Celular",
-            hintText: "Celular",
+          decoration: InputDecoration(
+            labelText: R.string.cellPhone,
+            hintText: R.string.cellPhone,
           ),
         ),
         const SizedBox(height: 8),

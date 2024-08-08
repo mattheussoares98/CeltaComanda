@@ -93,6 +93,7 @@ abstract class Translation {
   String get sendEvaluation;
   String get sendRequest;
   String get send;
+  String get service;
   String get surveys;
   String get surveyResult;
   String get table;

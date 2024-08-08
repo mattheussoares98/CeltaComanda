@@ -61,7 +61,7 @@ class _EvaluateItemsState extends State<EvaluateItems> {
           ),
           _generateEvaluateItem(
             context: context,
-            text: "Atendimento",
+            text: R.string.service,
             icon: Icons.person,
             updateIndex: widget.updateServiceNote,
             evaluateNumber: widget.serviceNote,

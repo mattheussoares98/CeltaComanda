@@ -81,7 +81,7 @@ class _SearchProductState extends State<SearchProduct> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
                       hintText: R.string.eanOrPlu,
-                      label: const Text("Consultar produto"),
+                      label: Text(R.string.searchProduct),
                       labelStyle: TextStyle(
                         fontSize: 17,
                         color: Theme.of(context).colorScheme.primary,

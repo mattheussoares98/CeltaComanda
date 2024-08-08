@@ -70,6 +70,7 @@ class PtBr implements Translation {
   String get confirm => 'Confirmar';
   String get detach => "Destaques";
   String get doLogout => "Fazer logout";
+  String get email => "E-mail";
   String get emptyCart => 'O carrinho está vazio';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';

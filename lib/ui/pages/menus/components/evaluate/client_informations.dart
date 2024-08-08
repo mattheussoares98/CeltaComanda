@@ -51,9 +51,9 @@ class ClientInformations extends StatelessWidget {
         TextFormField(
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-            labelText: "E-mail",
-            hintText: "E-mail",
+          decoration: InputDecoration(
+            labelText: R.string.email,
+            hintText: R.string.email,
           ),
         ),
         const SizedBox(height: 8),

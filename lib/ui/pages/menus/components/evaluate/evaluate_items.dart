@@ -47,7 +47,7 @@ class _EvaluateItemsState extends State<EvaluateItems> {
           ),
           _generateEvaluateItem(
             context: context,
-            text: "Bebida",
+            text: R.string.drink,
             icon: Icons.wine_bar,
             updateIndex: widget.updateDrinkNote,
             evaluateNumber: widget.drinkNote,

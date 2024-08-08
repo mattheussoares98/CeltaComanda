@@ -13,15 +13,18 @@ abstract class Translation {
   String get msgUnexpectedError;
 
   String get accessDenied;
-  String get addCommentError;
   String get addAccount;
+  String get addCommentError;
+  String get addFlagOrTable;
   String get avaliate;
   String get cart;
   String get commandNotAvailable;
+  String get confirmFlag;
   String get confirmPassword;
   String get detach;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
+  String get jump;
   String get login;
   String get name;
   String get password;

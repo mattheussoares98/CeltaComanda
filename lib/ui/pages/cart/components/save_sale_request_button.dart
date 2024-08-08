@@ -85,9 +85,9 @@ class SaveSaleRequestButton extends StatelessWidget {
         } else {
           notificationDialog(
             context: context,
-            titleMessage: "Adicionar número da bandeira/mesa",
-            cancelMessage: "Pular",
-            confirmMessage: "Confirmar bandeira",
+            titleMessage: R.string.addFlagOrTable,
+            cancelMessage: R.string.jump,
+            confirmMessage: R.string.confirmFlag,
             closeDialogOnConfirmPress: false,
             onCancelPress: () async {
               await _addProducts(

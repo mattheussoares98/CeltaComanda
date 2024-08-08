@@ -11,7 +11,8 @@ class PtBr implements Translation {
   String get msgInvalidCredentialsOrAccessDenied =>
       'Credenciais inválidas ou usuário sem permissão';
   String get msgInvalidField => 'Campo inválido';
-  String get msgObligatoryFixedCommandNumber => 'O número da comanda é obrigatório';
+  String get msgObligatoryFixedCommandNumber =>
+      'O número da comanda é obrigatório';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequiredField => 'Campo obrigatório';
@@ -23,14 +24,17 @@ class PtBr implements Translation {
   String get accessDenied => 'O usuário não possui permissão';
   String get addAccount => 'Criar conta';
   String get addCommentError => 'Ocorreu um erro para adicionar o comentário';
+  String get addFlagOrTable => '"Adicionar número da bandeira/mesa"';
   String get avaliate => 'Avaliar';
   String get cart => "Carrinho";
   String get detach => "Destaques";
   String get commandNotAvailable => "Comanda não disponível";
+  String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get invalidCredentials => 'Credenciais inválidas';
+  String get jump => 'Pular';
   String get login => 'Login';
   String get name => 'Nome';
   String get password => 'Senha';

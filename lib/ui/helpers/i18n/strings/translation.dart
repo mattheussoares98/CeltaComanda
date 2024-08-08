@@ -76,6 +76,7 @@ abstract class Translation {
   String get reserved;
   String get reserveTable;
   String get selectedProductsAndComments;
+  String get selectQuantity;
   String get sendRequest;
   String get send;
   String get surveys;

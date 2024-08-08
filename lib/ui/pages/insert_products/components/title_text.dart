@@ -37,12 +37,12 @@ class TitleText extends StatelessWidget {
       if (indexOfLeftItem == 0 && productHasComment) {
         return R.string.ifWantSelectComments;
       } else {
-        return "Informe a quantidade";
+        return R.string.selectQuantity;
       }
     }
 
     if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
-      return "Informe a quantidade";
+      return R.string.selectQuantity;
     } else if (indexOfLeftItem < selectedProduct.childsComposition!.length &&
         !showComments) {
       if (getSelectedFather(selectedProduct, indexOfLeftItem).IsOptionalItem ==

@@ -20,6 +20,7 @@ abstract class Translation {
   String get msgUnexpectedError;
   String get msgUseOnlyWhenIsFixedTableNumber;
   String get msgVeryShortField;
+  String get msgWantDoLogout;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
   String get msgWritePassword;

@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 PreferredSize homeAppBar({
@@ -23,8 +24,8 @@ PreferredSize homeAppBar({
                 onPressed: () {
                   notificationDialog(
                       context: context,
-                      titleMessage: "Fazer logout",
-                      content: const Text("Deseja realmente fazer o logout?"),
+                      titleMessage: R.string.doLogout,
+                      content: Text(R.string.msgWantDoLogout),
                       onPress: () async {
                         await homePresenter.goToSplashPage(
                           printedProductsPresenter: printedProductsPresenter,

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 enum OnWriteCommand {
@@ -28,7 +29,7 @@ void writeCommandNumber({
 
   notificationDialog(
     context: context,
-    titleMessage: "Insira o número da comanda",
+    titleMessage: R.string.msgInsertCommandNumber,
     confirmMessage: "Confirmar",
     cancelMessage: "Cancelar",
     content: Row(

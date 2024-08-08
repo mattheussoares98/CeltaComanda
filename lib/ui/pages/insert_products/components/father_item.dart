@@ -78,15 +78,17 @@ class FatherItem extends StatelessWidget {
               child: RichText(
                 text: TextSpan(
                   text: getLeftItemTitle(commentsPresenter),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: showComments ? "  (COMENTÁRIO)" : null,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.yellow,
-                      ),
-                    ),
-                  ],
+                  children: selectedProduct.childsComposition == null
+                      ? null
+                      : <TextSpan>[
+                          TextSpan(
+                            text: showComments ? "  (COMENTÁRIO)" : null,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.yellow,
+                            ),
+                          ),
+                        ],
                 ),
               ),
             ),

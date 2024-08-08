@@ -47,7 +47,7 @@ class TitleText extends StatelessWidget {
         !showComments) {
       if (getSelectedFather(selectedProduct, indexOfLeftItem).IsOptionalItem ==
           "false") {
-        return "Selecione um produto!";
+        return R.string.selectProduct;
       } else {
         return "Se desejar, selecione um produto";
       }

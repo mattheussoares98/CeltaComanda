@@ -30,6 +30,7 @@ class PtBr implements Translation {
   String get msgVeryShortField => 'Campo muito curto';
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
+  String get msgWriteCommandNumber => "Digite o número da comanda";
   String get msgWriteTableNumber => "Digite o número da mesa";
 
   String get accessDenied => 'O usuário não possui permissão';

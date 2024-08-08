@@ -52,11 +52,11 @@ void writeCommandNumber({
               ),
               validator: (value) {
                 if (value?.isEmpty == true) {
-                  return "Digite o número da comanda";
+                  return R.string.msgWriteCommandNumber;
                 } else if (value!.length < 3) {
                   return "Digite 3 números";
                 } else if (int.tryParse(value) == null) {
-                  return "Número inválido";
+                  return R.string.msgInvalidNumber;
                 }
                 return null;
               },

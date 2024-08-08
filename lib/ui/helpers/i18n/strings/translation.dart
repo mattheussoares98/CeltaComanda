@@ -38,6 +38,7 @@ abstract class Translation {
   String get reload;
   String get reserved;
   String get reserveTable;
+  String get selectedProductsAndComments;
   String get surveys;
   String get surveyResult;
   String get table;

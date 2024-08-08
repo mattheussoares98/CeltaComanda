@@ -50,6 +50,8 @@ class PtBr implements Translation {
   String get reload => 'Recarregar';
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
+  String get selectedProductsAndComments =>
+      'Produto selecionados e comentários';
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get table => 'Mesa';

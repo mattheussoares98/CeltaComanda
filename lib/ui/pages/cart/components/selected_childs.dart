@@ -35,7 +35,7 @@ class SelectedChilds extends StatelessWidget {
                 flex: _productAndCommentFlex,
                 child: Text(
                   hasMinWidth(context)
-                      ? 'Produto selecionados e comentários'
+                      ? R.string.selectedProductsAndComments
                       : "Produtos e comentários",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

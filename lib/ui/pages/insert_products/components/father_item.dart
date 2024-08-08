@@ -25,13 +25,13 @@ class FatherItem extends StatelessWidget {
     if (selectedProduct.childsComposition == null &&
         productHasComment &&
         indexOfLeftSelectedItem == 0) {
-      return "Opcional";
+      return R.string.optional;
     } else if (selectedProduct.childsComposition == null) {
       return R.string.obligatory;
     } else if (father == null || father?.IsOptionalItem == "false") {
       return R.string.obligatory;
     } else {
-      return "Opcional";
+      return R.string.optional;
     }
   }
 
@@ -43,7 +43,7 @@ class FatherItem extends StatelessWidget {
             .childsComposition![indexOfLeftSelectedItem].ChildName!;
       } else if (indexOfLeftSelectedItem ==
           selectedProduct.childsComposition!.length) {
-        return "QUANTIDADE";
+        return R.string.quantity.toUpperCase();
       } else {
         return "COMENTÁRIOS";
       }
@@ -51,7 +51,7 @@ class FatherItem extends StatelessWidget {
       if (productHasComment && indexOfLeftSelectedItem == 0) {
         return "COMENTÁRIOS";
       } else {
-        return "QUANTIDADE";
+        return R.string.quantity.toUpperCase();
       }
     }
   }

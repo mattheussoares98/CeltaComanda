@@ -7,6 +7,7 @@ class PtBr implements Translation {
   String get msgEmailInUse => 'O email já está em uso.';
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
+  String get msgCloseApplication => "Fechar aplicativo";
   String get msgInsertCommandNumber => "Informe o número da comanda";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
@@ -15,7 +16,8 @@ class PtBr implements Translation {
       'Credenciais inválidas ou usuário sem permissão';
   String get msgInvalidField => 'Campo inválido';
   String get msgInvalidNumber => "Número inválido";
-  String get msgLowBatteryChargeDevice => "Carregue o dispositivo. Ele está com pouca bateria";
+  String get msgLowBatteryChargeDevice =>
+      "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';

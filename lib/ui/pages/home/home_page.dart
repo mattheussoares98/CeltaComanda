@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage>
         onPopInvoked: (didPop) {
           notificationDialog(
             context: context,
-            titleMessage: "Fechar aplicativo",
+            titleMessage: R.string.msgCloseApplication,
             content: const Text("Deseja realmente fechar o aplicativo?"),
             onPress: () async {
               SystemNavigator.pop();

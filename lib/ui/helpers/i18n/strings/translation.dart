@@ -10,8 +10,9 @@ abstract class Translation {
   String get msgRequiredField;
   String get msgSuccessToCancelProducts;
   String get msgTableNumber;
-  String get msgVeryShortField;
+  String get msgUpdatedTableAndPeopleNumberSuccess;
   String get msgUnexpectedError;
+  String get msgVeryShortField;
 
   String get accessDenied;
   String get addAccount;

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../helpers/helpers.dart';
 
 class FixedCommandNumberInput extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -50,9 +51,9 @@ class FixedCommandNumberInput extends StatelessWidget {
               return null;
             }
           },
-          decoration: const InputDecoration(
-            label: Text("Número da mesa"),
-            hintText: "Número da mesa",
+          decoration: InputDecoration(
+            label: Text(R.string.msgTableNumber),
+            hintText: R.string.msgTableNumber,
             counterText: "",
           ),
         ),

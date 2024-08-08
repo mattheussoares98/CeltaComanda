@@ -38,7 +38,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       } else if (widget.leftSelectedIndex == 0 && !widget.productHasComment) {
         return R.string.insertInCart.toUpperCase();
       } else {
-        return "AVANÇAR";
+        return R.string.advance.toUpperCase();
       }
     } else {
       if (widget.leftSelectedIndex ==
@@ -52,7 +52,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
               null) {
         return R.string.jump.toUpperCase();
       } else {
-        return "AVANÇAR";
+        return R.string.advance.toUpperCase();
       }
     }
   }

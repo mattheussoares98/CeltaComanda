@@ -46,6 +46,7 @@ class PtBr implements Translation {
   String get msgWriteUserCode => "Digite o código do usuário";
 
   String get accessDenied => 'O usuário não possui permissão';
+  String get advance => 'Avançar';
   String get addAccount => 'Criar conta';
   String get addCommentError => 'Ocorreu um erro para adicionar o comentário';
   String get addFlagOrTable => "Adicionar número da bandeira/mesa";

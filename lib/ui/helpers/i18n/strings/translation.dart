@@ -16,6 +16,7 @@ abstract class Translation {
   String get msgUnexpectedError;
   String get msgUseOnlyWhenIsFixedTableNumber;
   String get msgVeryShortField;
+  String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteTableNumber;
 
   String get accessDenied;

@@ -27,6 +27,8 @@ class PtBr implements Translation {
   String get msgUseOnlyWhenIsFixedTableNumber =>
       'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa';
   String get msgVeryShortField => 'Campo muito curto';
+  String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
+      'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteTableNumber => "Digite o número da mesa";
 
   String get accessDenied => 'O usuário não possui permissão';

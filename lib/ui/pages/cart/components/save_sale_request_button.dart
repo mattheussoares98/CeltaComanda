@@ -64,7 +64,7 @@ class SaveSaleRequestButton extends StatelessWidget {
             context: context,
             titleMessage: R.string.sendRequest,
             content: Text(
-              "Ao confirmar, os produtos serão solicitados e em breve serão servidos",
+              R.string.msgWhenConfirmProductsAreRequestAndSoonIncome,
               style: TextStyle(
                 fontSize: hasMinWidth(context) ? 23 : 17,
               ),

@@ -93,7 +93,8 @@ Widget _complementAndInsertProductButton({
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: _productComplement(context, productComplement),
           ),
-        OpenInsertProductPage(selectedProduct: selectedProduct),
+        if (showInsertButton)
+          OpenInsertProductPage(selectedProduct: selectedProduct),
       ],
     );
   }

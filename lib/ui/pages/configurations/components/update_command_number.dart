@@ -25,7 +25,7 @@ class UpdateCommandNumber extends StatelessWidget {
         if (!isUpdatingCommandNumber) {
           return null;
         } else if (value == null) {
-          return "Selecione a comanda";
+          return R.string.msgSelectCommand;
         }
 
         return null;

@@ -21,6 +21,7 @@ class PtBr implements Translation {
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';
+  String get msgSelectCommand => 'Selecione a comanda';
   String get msgSuccessToCancelProducts => 'Cancelamento de produtos liberado';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableAndPeopleNumberSuccess =>

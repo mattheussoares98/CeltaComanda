@@ -36,6 +36,8 @@ abstract class Translation {
   String get name;
   String get password;
   String get productsAndComments;
+  String get quantity;
+  String get quantityAbbreviated;
   String get reload;
   String get reserved;
   String get reserveTable;

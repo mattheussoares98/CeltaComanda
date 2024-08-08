@@ -46,7 +46,9 @@ class SelectedChilds extends StatelessWidget {
               Expanded(
                 flex: _quantityFlex,
                 child: Text(
-                  hasMinWidth(context) ? 'Quantidade' : "Qtd",
+                  hasMinWidth(context)
+                      ? R.string.quantity
+                      : R.string.quantityAbbreviated,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

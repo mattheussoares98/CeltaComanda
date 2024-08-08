@@ -30,6 +30,7 @@ abstract class Translation {
   String get confirmFlag;
   String get confirmPassword;
   String get detach;
+  String get emptyCart;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
   String get jump;

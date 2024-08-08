@@ -19,7 +19,7 @@ class EmptyCart extends StatelessWidget {
         children: [
           FittedBox(
             child: Text(
-              "O carrinho está vazio",
+              R.string.emptyCart,
               style: TextStyle(
                 fontSize: hasMinWidth(context) ? 30 : 20,
                 color: Colors.red,

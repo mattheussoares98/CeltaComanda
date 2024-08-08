@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
+
 class UserPersonalizedCodeInput extends StatelessWidget {
   const UserPersonalizedCodeInput({
     super.key,
@@ -20,7 +22,7 @@ class UserPersonalizedCodeInput extends StatelessWidget {
       controller: _userController,
       validator: (value) {
         if (value?.isEmpty == true) {
-          return "Digite o código do usuário";
+          return R.string.msgWriteUserCode;
         }
         return null;
       },

@@ -35,6 +35,7 @@ class PtBr implements Translation {
   String get msgUseOnlyWhenIsFixedTableNumber =>
       'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa';
   String get msgVeryShortField => 'Campo muito curto';
+  String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';

@@ -17,6 +17,7 @@ abstract class Translation {
   String get msgWriteTableNumber;
 
   String get accessDenied;
+  String get alwaysUseSameTable;
   String get addAccount;
   String get addCommentError;
   String get addFlagOrTable;

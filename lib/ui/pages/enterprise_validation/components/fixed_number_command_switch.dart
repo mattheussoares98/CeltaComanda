@@ -32,7 +32,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
         const SizedBox(width: 10),
         Flexible(
           child: Text(
-            "Usar sempre a mesma mesa",
+            R.string.alwaysUseSameTable,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: hasMinWidth(context) ? 23 : 15),
           ),

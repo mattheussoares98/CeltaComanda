@@ -29,7 +29,8 @@ class PtBr implements Translation {
   String get accessDenied => 'O usuário não possui permissão';
   String get addAccount => 'Criar conta';
   String get addCommentError => 'Ocorreu um erro para adicionar o comentário';
-  String get addFlagOrTable => '"Adicionar número da bandeira/mesa"';
+  String get addFlagOrTable => "Adicionar número da bandeira/mesa";
+  String get alwaysUseSameTable => "Usar sempre a mesma mesa";
   String get avaliate => 'Avaliar';
   String get cart => "Carrinho";
   String get detach => "Destaques";

@@ -125,7 +125,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Alterar mesa e quantidade de pessoas",
+                        R.string.updateTableNumberAndPeopleNumbers,
                         style: TextStyle(
                           fontSize: getStringSize(context),
                         ),

@@ -37,6 +37,7 @@ abstract class Translation {
   String get reload;
   String get surveys;
   String get surveyResult;
+  String get updateTableNumberAndPeopleNumbers;
   String get url;
   String get user;
   String get validateEnterprise;

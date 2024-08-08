@@ -12,7 +12,7 @@ class ReserveTable extends StatelessWidget {
           Navigator.of(context).pop();
         },
         child: const Scaffold(
-          backgroundColor: Colors.black12,
+          backgroundColor: Colors.black45,
           body: Center(
             child: FittedBox(
               child: Column(

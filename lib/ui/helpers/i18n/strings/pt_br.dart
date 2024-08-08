@@ -47,6 +47,7 @@ class PtBr implements Translation {
   String get name => 'Nome';
   String get password => 'Senha';
   String get reload => 'Recarregar';
+  String get reserveTable => 'Reservar mesa';
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get updateTableNumberAndPeopleNumbers =>

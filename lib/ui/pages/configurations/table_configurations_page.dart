@@ -162,7 +162,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Reservar mesa",
+                            R.string.reserveTable,
                             style: TextStyle(
                               fontSize: getStringSize(context),
                             ),

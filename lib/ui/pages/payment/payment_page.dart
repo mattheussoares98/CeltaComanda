@@ -165,7 +165,7 @@ class _PaymentPageState extends State<PaymentPage>
                           );
                         },
                         child: Text(
-                          "Crédito a vista".toUpperCase(),
+                          R.string.cashCredit.toUpperCase(),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: getStringSize(context),

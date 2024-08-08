@@ -52,6 +52,7 @@ abstract class Translation {
   String get avaliate;
   String get cancel;
   String get cart;
+  String get cashCredit;
   String get cellPhone;
   String get clearCart;
   String get close;

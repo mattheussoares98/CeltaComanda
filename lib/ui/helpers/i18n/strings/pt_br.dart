@@ -16,6 +16,7 @@ class PtBr implements Translation {
       'O número da comanda é obrigatório';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';
   String get msgProductNotFound => 'O produto não foi encontrado';
+  String get msgRequestSentSuccessfully => 'Campo obrigatório';
   String get msgRequiredField => 'Campo obrigatório';
   String get msgSuccessToCancelProducts => 'Cancelamento de produtos liberado';
   String get msgTableNumber => 'Número da mesa';
@@ -55,6 +56,7 @@ class PtBr implements Translation {
   String get quantity => 'Quantidade';
   String get quantityAbbreviated => 'Qtd';
   String get reload => 'Recarregar';
+  String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
   String get selectedProductsAndComments =>

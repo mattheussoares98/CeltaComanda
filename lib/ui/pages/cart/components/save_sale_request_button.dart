@@ -36,7 +36,7 @@ class SaveSaleRequestButton extends StatelessWidget {
         Navigator.of(NavigatorKey.navigatorKey.currentState!.context).pop();
         showAlertMessage(
           context,
-          "O pedido foi enviado com sucesso",
+          R.string.msgRequestSentSuccessfully,
         );
       });
     }

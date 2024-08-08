@@ -8,6 +8,7 @@ abstract class Translation {
   String get msgInvalidNumber;
   String get msgObligatoryFixedCommandNumber;
   String get msgProductNotFound;
+  String get msgRequestSentSuccessfully;
   String get msgRequiredField;
   String get msgSuccessToCancelProducts;
   String get msgTableNumber;

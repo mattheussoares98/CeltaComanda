@@ -72,7 +72,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                     if (widget.cartProduct.Product.childsComposition != null)
                       FittedBox(
                         child: Text(
-                          "(COMBO)",
+                          "(${R.string.combox})",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Theme.of(context).secondaryHeaderColor,

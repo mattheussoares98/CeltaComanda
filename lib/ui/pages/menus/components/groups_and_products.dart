@@ -1,8 +1,8 @@
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
+import '../../../helpers/helpers.dart';
 
 class GroupsAndProducts extends StatelessWidget {
   final int? selectedIndex;
@@ -14,7 +14,7 @@ class GroupsAndProducts extends StatelessWidget {
   bool isDetachSelected(MenuPresenter menuPresenter) {
     for (var menu in menuPresenter.loadedMenu) {
       for (var group in menu.keys) {
-        if (group.Name.toLowerCase() == "destaques" &&
+        if (group.Name.toLowerCase() == R.string.detach.toLowerCase() &&
             (selectedIndex == 0 || selectedIndex == null)) {
           return true;
         }

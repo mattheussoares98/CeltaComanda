@@ -18,6 +18,7 @@ abstract class Translation {
   String get cart;
   String get commandNotAvailable;
   String get confirmPassword;
+  String get detach;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
   String get login;

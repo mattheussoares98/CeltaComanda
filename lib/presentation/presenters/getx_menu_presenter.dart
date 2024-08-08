@@ -143,7 +143,7 @@ class GetxMenuPresenter extends GetxController
     List<ExpansibleGroupEntity> expansibleGroups,
   ) {
     ExpansibleGroupEntity? detachGroup = expansibleGroups.firstWhereOrNull(
-        (e) => e.Name.toLowerCase() == "DESTAQUES".toLowerCase());
+        (e) => e.Name.toLowerCase() == R.string.detach.toLowerCase());
 
     if (detachGroup == null) {
       return expansibleGroups;

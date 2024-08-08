@@ -24,6 +24,7 @@ class PtBr implements Translation {
   String get addAccount => 'Criar conta';
   String get addCommentError => 'Ocorreu um erro para adicionar o comentário';
   String get cart => "Carrinho";
+  String get detach => "Destaques";
   String get commandNotAvailable => "Comanda não disponível";
   String get confirmPassword => 'Confirmar senha';
   String get enterprise => 'Empresa';

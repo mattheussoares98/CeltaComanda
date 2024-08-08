@@ -257,7 +257,7 @@ void main() {
         OrderClassification: "0",
       );
       final detachGroup = ExpansibleGroupsViewModel(
-        Name: "Destaques",
+        Name: R.string.detach.toLowerCase(),
         ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
         ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
         OrderClassification: faker.randomGenerator.integer(10).toString(),

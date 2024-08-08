@@ -62,7 +62,7 @@ class SaveSaleRequestButton extends StatelessWidget {
         if (homePresenter.isFixedCommandNumber) {
           notificationDialog(
             context: context,
-            titleMessage: "Enviar pedido",
+            titleMessage: R.string.sendRequest,
             content: Text(
               "Ao confirmar, os produtos serão solicitados e em breve serão servidos",
               style: TextStyle(

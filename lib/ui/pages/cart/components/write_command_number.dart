@@ -30,7 +30,7 @@ void writeCommandNumber({
   notificationDialog(
     context: context,
     titleMessage: R.string.msgInsertCommandNumber,
-    confirmMessage: "Confirmar",
+    confirmMessage: R.string.confirm,
     cancelMessage: "Cancelar",
     content: Row(
       children: [

@@ -32,6 +32,7 @@ abstract class Translation {
   String get combox;
   String get commandNotAvailable;
   String get confirmFlag;
+  String get confirm;
   String get confirmPassword;
   String get detach;
   String get emptyCart;

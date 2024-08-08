@@ -46,6 +46,7 @@ class PtBr implements Translation {
   String get commandNotAvailable => "Comanda não disponível";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
+  String get confirm => 'Confirmar';
   String get emptyCart => 'O carrinho está vazio';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
+
 class UpdatePeopleNumbers extends StatelessWidget {
   final bool isUpdatingPeopleNumbers;
   final Function(int value) updatePeopleNumbers;
@@ -16,7 +18,7 @@ class UpdatePeopleNumbers extends StatelessWidget {
         if (!isUpdatingPeopleNumbers) {
           return null;
         } else if (value == null) {
-          return "Selecione a quantidade de pessoas";
+          return R.string.msgSelectPeopleNumbers;
         }
 
         return null;

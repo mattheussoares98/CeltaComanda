@@ -65,7 +65,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
                 children: [
                   Expanded(
                     child: Text(
-                      "Inserir",
+                      R.string.insert,
                       style: TextStyle(
                         fontSize: getStringSize(context),
                       ),

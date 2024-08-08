@@ -200,7 +200,7 @@ Widget _mountCombox(BuildContext context) {
     padding: const EdgeInsets.symmetric(horizontal: 5),
     child: FittedBox(
       child: Text(
-        "(COMBO)",
+        "(${R.string.combox})",
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Theme.of(context).secondaryHeaderColor,

@@ -71,6 +71,7 @@ abstract class Translation {
   String get enterprise;
   String get environment;
   String get insertInCart;
+  String get insert;
   String get ifWantSelectComments;
   String get ifWantSelectProducts;
   String get jump;

@@ -30,9 +30,9 @@ class UpdateCommandNumber extends StatelessWidget {
 
         return null;
       },
-      decoration: const InputDecoration(
-        hintText: "Número da mesa",
-        labelText: "Número da mesa",
+      decoration: InputDecoration(
+        hintText: R.string.msgTableNumber,
+        labelText: R.string.msgTableNumber,
       ),
       items: List<int>.generate(
         100,

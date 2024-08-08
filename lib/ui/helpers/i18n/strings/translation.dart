@@ -9,6 +9,7 @@ abstract class Translation {
   String get msgProductNotFound;
   String get msgRequiredField;
   String get msgSuccessToCancelProducts;
+  String get msgTableNumber;
   String get msgVeryShortField;
   String get msgUnexpectedError;
 

@@ -6,7 +6,7 @@ import '../../ui/pages/pages.dart';
 import '../../domain/usecases/usecases.dart';
 
 class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
-  final LoadExpansibleGroupsFromProductsComplete
+  final LoadComments
       loadExpansibleGroupsFromProductsComplete;
 
   GetxCommentsPresenter({

@@ -6,14 +6,13 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
-class RemoteLoadExpansibleGroupsFromProductsComplete
-    implements LoadExpansibleGroupsFromProductsComplete {
+class RemoteLoadComments implements LoadComments {
   final HttpClient httpAdapter;
 
-  RemoteLoadExpansibleGroupsFromProductsComplete({required this.httpAdapter});
+  RemoteLoadComments({required this.httpAdapter});
 
   @override
-  Future<List<ExpansibleGroupFromProductCompleteEntity>> load(
+  Future<List<CommentsEntity>> load(
     List<int> productPackingInternalCodesOnErp,
   ) async {
     try {
@@ -22,7 +21,8 @@ class RemoteLoadExpansibleGroupsFromProductsComplete
               "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIGroups/FindFromProductsComplete",
           method: "post",
           body: {
-            "ExpansibleGroupType": 22, //tipo do grupo expansível (opcional)
+            "ExpansibleGroupType":
+                22, //tipo do grupo expansível (opcional no BS)
             "ProductPackingInternalCodesOnErp":
                 productPackingInternalCodesOnErp,
           });
@@ -30,7 +30,7 @@ class RemoteLoadExpansibleGroupsFromProductsComplete
         throw Error();
       }
 
-      return response.map<ExpansibleGroupFromProductCompleteEntity>((element) {
+      return response.map<CommentsEntity>((element) {
         return ExpansibleGroupFromProductsCompleteModel.fromJson(element)
             .toEntity();
       }).toList();

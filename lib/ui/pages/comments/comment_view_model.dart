@@ -20,7 +20,7 @@ class CommentViewModel extends Equatable {
   });
 
   factory CommentViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
-          ExpansibleGroupFromProductCompleteEntity entity) =>
+          CommentsEntity entity) =>
       CommentViewModel(
         selected: false,
         ProductName: entity.ProductName,

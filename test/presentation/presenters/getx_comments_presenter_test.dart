@@ -17,7 +17,7 @@ void main() {
       loadExpansibleGroupsFromProductsComplete;
 
   late List<ProductsViewModel> loadedProducts;
-  late List<ExpansibleGroupFromProductCompleteEntity>
+  late List<CommentsEntity>
       expansibleGroupFromProductComplete;
   late List<int> allInternalCodes;
 

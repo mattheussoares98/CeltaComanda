@@ -7,11 +7,11 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadExpansibleGroupsFromProductsCompleteSpy extends Mock
-    implements LoadExpansibleGroupsFromProductsComplete {
+    implements LoadComments {
   When mockCall() => when(() => this.load(any()));
 
   void mockLoad(
-          List<ExpansibleGroupFromProductCompleteEntity>
+          List<CommentsEntity>
               expansibleGroupFromProductComplete) =>
       this
           .mockCall()

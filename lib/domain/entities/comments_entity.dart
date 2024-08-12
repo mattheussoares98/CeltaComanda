@@ -2,13 +2,13 @@
 
 import 'package:equatable/equatable.dart';
 
-class ExpansibleGroupFromProductCompleteEntity extends Equatable {
+class CommentsEntity extends Equatable {
   final int ExpansibleGroupId;
   final int ProductInternalCodeOnErp;
   final String GroupName;
   final String ProductName;
 
-  const ExpansibleGroupFromProductCompleteEntity({
+  const CommentsEntity({
     required this.ExpansibleGroupId,
     required this.ProductInternalCodeOnErp,
     required this.GroupName,
@@ -16,6 +16,10 @@ class ExpansibleGroupFromProductCompleteEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [ExpansibleGroupId, ProductInternalCodeOnErp, GroupName, ProductName];
+  List<Object?> get props => [
+        ExpansibleGroupId,
+        ProductInternalCodeOnErp,
+        GroupName,
+        ProductName,
+      ];
 }

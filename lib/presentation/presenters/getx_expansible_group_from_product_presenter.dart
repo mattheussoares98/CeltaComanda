@@ -156,4 +156,16 @@ class GetxExpansibleGroupFromProductPresenter
             e.ProductName == productName)
         .isNotEmpty;
   }
+
+  @override
+  bool productHasObligatoryOption({
+    required int internalCodeOnERP,
+    required String productName,
+  }) {
+    return loadedComments
+        .where((e) =>
+            e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP &&
+            e.ProductName == productName)
+        .isNotEmpty;
+  }
 }

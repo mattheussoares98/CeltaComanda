@@ -25,4 +25,8 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
     required int internalCodeOnERP,
     required String productName,
   });
+  bool productHasObligatoryOption({
+    required int internalCodeOnERP,
+    required String productName,
+  });
 }

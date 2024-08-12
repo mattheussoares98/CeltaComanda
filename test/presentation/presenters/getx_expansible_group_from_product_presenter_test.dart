@@ -188,7 +188,7 @@ void main() {
     });
   });
 
-  group("Product has comment", () {
+  group("Product has ExpansibleGroupFromProduct", () {
     test("Should return true if product has comment", () async {
       loadedProducts[0].childsComposition = null;
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
@@ -215,6 +215,40 @@ void main() {
 
       expect(
         sut.productHasComment(
+          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
+          productName: loadedProducts[0].Name,
+        ),
+        false,
+      );
+    });
+
+    test("Should return true if product has obligatory option", () async {
+      loadedProducts[0].childsComposition = null;
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(expansibleGroupFromProductComplete);
+
+      expect(
+        sut.productHasObligatoryOption(
+          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
+          productName: loadedProducts[0].Name,
+        ),
+        true,
+      );
+    });
+    test("Should return false if product dont have obligatory option",
+        () async {
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(EntityFactory.makeExpansibleGroupFromProductCompleteEntity(
+        loadedProducts[1],
+      ));
+
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(expansibleGroupFromProductComplete);
+
+      expect(
+        sut.productHasObligatoryOption(
           internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
           productName: loadedProducts[0].Name,
         ),

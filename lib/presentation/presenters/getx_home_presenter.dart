@@ -131,7 +131,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  bool get isGeneratingVersionToRede => false;
+  bool get isGeneratingVersionToRede => true;
 
   @override
   Future<void> loadCommandData({

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../data/usecases/usecases.dart';
 import '../../../helpers/helpers.dart';
+import '../../pages.dart';
 
 class PasswordInput extends StatelessWidget {
   final FocusNode passwordFocusNode;
@@ -18,6 +20,7 @@ class PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CameraBarcodeScanner cameraBarcodeScanner = CameraBarcodeScanner();
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return TextFormField(
       focusNode: passwordFocusNode,
@@ -33,15 +36,17 @@ class PasswordInput extends StatelessWidget {
         await updateCommandNumber();
       },
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          onPressed: () async {
-            final password = await cameraBarcodeScanner.read();
-            if (password.isNotEmpty) {
-              passwordController.text = password;
-            }
-          },
-          icon: const Icon(Icons.camera_alt),
-        ),
+        suffixIcon: homePresenter.isGeneratingVersionToRede
+            ? null
+            : IconButton(
+                onPressed: () async {
+                  final password = await cameraBarcodeScanner.read();
+                  if (password.isNotEmpty) {
+                    passwordController.text = password;
+                  }
+                },
+                icon: const Icon(Icons.camera_alt),
+              ),
         hintText: R.string.password,
         labelText: R.string.password,
       ),

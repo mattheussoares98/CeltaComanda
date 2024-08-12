@@ -1,6 +1,5 @@
 export './cart_product_entity.dart';
 export './command_entity.dart';
-export './comment_entity.dart';
 export './enterprise_entity.dart';
 export './expansible_group_entity.dart';
 export 'comments_entity.dart';

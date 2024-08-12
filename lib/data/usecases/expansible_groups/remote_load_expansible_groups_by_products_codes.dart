@@ -6,15 +6,17 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
-class RemoteLoadComments implements LoadComments {
+class RemoteLoadExpansibleGroupsByProductsCodes
+    implements LoadExpansibleGroupsByProductsCodes {
   final HttpClient httpAdapter;
 
-  RemoteLoadComments({required this.httpAdapter});
+  RemoteLoadExpansibleGroupsByProductsCodes({required this.httpAdapter});
 
   @override
-  Future<List<CommentsEntity>> load(
-    List<int> productPackingInternalCodesOnErp,
-  ) async {
+  Future<List<CommentsEntity>> load({
+    required List<int> productsPackingInternalCodesOnErp,
+    required int expansibleGroupType,
+  }) async {
     try {
       final response = await httpAdapter.request(
           url:
@@ -24,7 +26,7 @@ class RemoteLoadComments implements LoadComments {
             "ExpansibleGroupType":
                 22, //tipo do grupo expansível (opcional no BS)
             "ProductPackingInternalCodesOnErp":
-                productPackingInternalCodesOnErp,
+                productsPackingInternalCodesOnErp,
           });
       if (response == null) {
         throw Error();

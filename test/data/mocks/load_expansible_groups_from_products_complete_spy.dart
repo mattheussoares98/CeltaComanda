@@ -7,15 +7,18 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadExpansibleGroupsFromProductsCompleteSpy extends Mock
-    implements LoadComments {
-  When mockCall() => when(() => this.load(any()));
+    implements LoadExpansibleGroupsByProductsCodes {
+  When mockCall() => when(
+        () => this.load(
+          productsPackingInternalCodesOnErp:
+              any(named: "productsPackingInternalCodesOnErp"),
+          expansibleGroupType: any(named: "expansibleGroupType"),
+        ),
+      );
 
-  void mockLoad(
-          List<CommentsEntity>
-              expansibleGroupFromProductComplete) =>
-      this
-          .mockCall()
-          .thenAnswer((_) async => expansibleGroupFromProductComplete);
+  void mockLoad(List<CommentsEntity> expansibleGroupFromProductComplete) => this
+      .mockCall()
+      .thenAnswer((_) async => expansibleGroupFromProductComplete);
 
   void mockError() => this.mockCall().thenThrow(DomainError.unexpected);
 }

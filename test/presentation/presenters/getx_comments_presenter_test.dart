@@ -17,8 +17,7 @@ void main() {
       loadExpansibleGroupsFromProductsComplete;
 
   late List<ProductsViewModel> loadedProducts;
-  late List<CommentsEntity>
-      expansibleGroupFromProductComplete;
+  late List<CommentsEntity> expansibleGroupFromProductComplete;
   late List<int> allInternalCodes;
 
   void initUseCases() {
@@ -85,12 +84,13 @@ void main() {
 
       await sut.loadComments(loadedProducts);
     });
-    test("Should call loadExpansibleGroupsFromProductsComplete on loadComments",
+    test("Should call loadExpansibleGroupsFromProductsComplete with correct values on loadComments",
         () async {
       await sut.loadComments(loadedProducts);
 
       verify(() => loadExpansibleGroupsFromProductsComplete.load(
-            allInternalCodes,
+            productsPackingInternalCodesOnErp: allInternalCodes,
+            expansibleGroupType: 22,
           )).called(1);
     });
 

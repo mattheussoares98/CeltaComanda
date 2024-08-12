@@ -6,8 +6,7 @@ import '../../ui/pages/pages.dart';
 import '../../domain/usecases/usecases.dart';
 
 class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
-  final LoadComments
-      loadExpansibleGroupsFromProductsComplete;
+  final LoadExpansibleGroupsByProductsCodes loadExpansibleGroupsFromProductsComplete;
 
   GetxCommentsPresenter({
     required this.loadExpansibleGroupsFromProductsComplete,
@@ -38,8 +37,11 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
     mainError = null;
 
     try {
-      final optionalGroups = await loadExpansibleGroupsFromProductsComplete
-          .load(_getAllInternalCodes(loadedProducts));
+      final optionalGroups =
+          await loadExpansibleGroupsFromProductsComplete.load(
+        expansibleGroupType: 22, //comentários
+        productsPackingInternalCodesOnErp: _getAllInternalCodes(loadedProducts),
+      );
 
       _loadedComments = optionalGroups
           .map((e) =>

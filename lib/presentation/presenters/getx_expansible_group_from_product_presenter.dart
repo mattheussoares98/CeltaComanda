@@ -88,6 +88,15 @@ class GetxExpansibleGroupFromProductPresenter
     _loadedComments[index].selected = !_loadedComments[index].selected;
   }
 
+  @override
+  Future<void> changeObligatoryOptionIsSelected(
+    ExpansibleGroupFromProductViewModel group,
+  ) async {
+    int index = _loadedObligatoryOptions.indexOf(group);
+    _loadedObligatoryOptions[index].selected =
+        !_loadedObligatoryOptions[index].selected;
+  }
+
   final _isLoading = false.obs;
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;

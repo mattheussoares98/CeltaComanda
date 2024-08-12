@@ -132,4 +132,21 @@ void main() {
               .toList());
     });
   });
+
+  group("Change is selected", () {
+    test("Should update correctly comment is selected", () async {
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+
+      expect(sut.loadedComments[0].selected, false);
+      sut.changeCommentIsSelected(sut.loadedComments[0]);
+      expect(sut.loadedComments[0].selected, true);
+    });
+    test("Should update correctly obligatory option is selected", () async {
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+
+      expect(sut.loadedObligatoryOptions[0].selected, false);
+      sut.changeObligatoryOptionIsSelected(sut.loadedObligatoryOptions[0]);
+      expect(sut.loadedObligatoryOptions[0].selected, true);
+    });
+  });
 }

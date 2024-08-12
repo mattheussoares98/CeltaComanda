@@ -20,7 +20,7 @@ class GetxExpansibleGroupFromProductPresenter
   List<ExpansibleGroupFromProductViewModel> get loadedComments =>
       _loadedComments;
 
-  final List<ExpansibleGroupFromProductViewModel> _loadedObligatoryOptions = [];
+  List<ExpansibleGroupFromProductViewModel> _loadedObligatoryOptions = [];
   @override
   List<ExpansibleGroupFromProductViewModel> get loadedObligatoryOptions =>
       _loadedObligatoryOptions;
@@ -54,6 +54,19 @@ class GetxExpansibleGroupFromProductPresenter
       );
 
       _loadedComments = optionalGroups
+          .map((e) => ExpansibleGroupFromProductViewModel
+                  .fromExpansibleGroupsFromProductsCompleteEntity(
+                e,
+              ))
+          .toList();
+
+      final obligatoryOptions =
+          await loadExpansibleGroupsFromProductsComplete.load(
+        expansibleGroupType: 23, //opcionais obrigatórios
+        productsPackingInternalCodesOnErp: _getAllInternalCodes(loadedProducts),
+      );
+
+      _loadedObligatoryOptions = obligatoryOptions
           .map((e) => ExpansibleGroupFromProductViewModel
                   .fromExpansibleGroupsFromProductsCompleteEntity(
                 e,

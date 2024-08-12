@@ -84,7 +84,8 @@ void main() {
 
       await sut.loadCommentsAndObligatoryOptions(loadedProducts);
     });
-    test("Should call loadExpansibleGroupsFromProductsComplete with correct values on loadComments",
+    test(
+        "Should call loadExpansibleGroupsFromProductsComplete with correct values on loadComments",
         () async {
       await sut.loadCommentsAndObligatoryOptions(loadedProducts);
 
@@ -92,9 +93,14 @@ void main() {
             productsPackingInternalCodesOnErp: allInternalCodes,
             expansibleGroupType: 22,
           )).called(1);
+      verify(() => loadExpansibleGroupsFromProductsComplete.load(
+            productsPackingInternalCodesOnErp: allInternalCodes,
+            expansibleGroupType: 23,
+          )).called(1);
     });
 
-    test("Should call loadExpansibleGroupsFromProductsComplete on loadComments",
+    test(
+        "Should update loadedComments correctly on loadCommentsAndObligatoryOptions",
         () async {
       expect(sut.loadedComments, []);
 
@@ -102,6 +108,22 @@ void main() {
 
       expect(
           sut.loadedComments,
+          expansibleGroupFromProductComplete
+              .map((e) => ExpansibleGroupFromProductViewModel
+                      .fromExpansibleGroupsFromProductsCompleteEntity(
+                    e,
+                  ))
+              .toList());
+    });
+    test(
+        "Should update loadedObligatoryOptions correctly on loadCommentsAndObligatoryOptions",
+        () async {
+      expect(sut.loadedObligatoryOptions, []);
+
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+
+      expect(
+          sut.loadedObligatoryOptions,
           expansibleGroupFromProductComplete
               .map((e) => ExpansibleGroupFromProductViewModel
                       .fromExpansibleGroupsFromProductsCompleteEntity(

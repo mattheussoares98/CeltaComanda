@@ -40,19 +40,6 @@ class TitleAppbar extends StatelessWidget {
                         actionsPadding: const EdgeInsets.all(8),
                         insetPadding: const EdgeInsets.all(20),
                         contentPadding: const EdgeInsets.all(10),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              R.string.close.toUpperCase(),
-                              style: TextStyle(
-                                fontSize: getStringSize(context),
-                              ),
-                            ),
-                          ),
-                        ],
                         content: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: const TableConfigurationsPage(),

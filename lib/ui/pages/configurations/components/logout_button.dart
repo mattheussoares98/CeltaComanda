@@ -39,6 +39,7 @@ class LogoutButton extends StatelessWidget {
         ),
       ),
       onPressed: () async {
+        FocusScope.of(context).unfocus();
         changeIsUpdatingCommandNumber();
 
         if (validationKey.currentState?.validate() != true) {

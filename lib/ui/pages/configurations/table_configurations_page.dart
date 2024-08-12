@@ -105,6 +105,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () async {
+                    FocusScope.of(context).unfocus();
                     setState(() {
                       _isUpdatingCommandNumber = true;
                       _isUpdatingPeopleNumbers = true;
@@ -163,6 +164,25 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        R.string.close.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

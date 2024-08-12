@@ -26,6 +26,7 @@ abstract class Translation {
   String get msgSuccessToCancelProducts;
   String get msgTableNumber;
   String get msgUpdatedTableAndPeopleNumberSuccess;
+  String get msgUpdatedTableSuccess;
   String get msgUnexpectedError;
   String get msgUseOnlyWhenIsFixedTableNumber;
   String get msgVeryShortField;
@@ -115,6 +116,7 @@ abstract class Translation {
   String get turnBack;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;
+  String get updateTableNumber;
   String get url;
   String get userCode;
   String get user;

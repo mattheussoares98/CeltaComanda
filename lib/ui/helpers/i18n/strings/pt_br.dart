@@ -8,7 +8,8 @@ class PtBr implements Translation {
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgCloseApplication => "Fechar aplicativo";
-  String get msgCommandDontHaveOpenValues => "Essa comanda não possui valores em aberto";
+  String get msgCommandDontHaveOpenValues =>
+      "Essa comanda não possui valores em aberto";
   String get msgEvaluateFood => "Avalie a comida";
   String get msgEvaluateDrink => "Avalie a bebida";
   String get msgEvaluateEnvironment => "Avalie o ambiente";
@@ -30,13 +31,15 @@ class PtBr implements Translation {
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';
-  String get msgSearchCommandToPay => 'Consulte alguma comanda para efetuar o pagamento dela';
+  String get msgSearchCommandToPay =>
+      'Consulte alguma comanda para efetuar o pagamento dela';
   String get msgSelectCommand => 'Selecione a comanda';
   String get msgSelectPeopleNumbers => 'Selecione a quantidade de pessoas';
   String get msgSuccessToCancelProducts => 'Cancelamento de produtos liberado';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableAndPeopleNumberSuccess =>
       "Número da mesa e quantidade de pessoas alterados com sucesso";
+  String get msgUpdatedTableSuccess => "Número da mesa alterado com sucesso";
   String get msgUnexpectedError =>
       'Algo errado aconteceu. Tente novamente em breve.';
   String get msgUseOnlyWhenIsFixedTableNumber =>
@@ -132,10 +135,12 @@ class PtBr implements Translation {
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";
+  String get updateTableNumber => "Alterar mesa";
   String get userCode => 'Código do usuário';
   String get user => 'Usuário';
   String get url => 'Empresa ou url';
   String get validateEnterprise => 'Validar empresa';
   String get wait => 'Aguarde...';
-  String get wantRemoveRequestedProduct => 'Deseja realmente remover o produto dos produtos solicitados?';
+  String get wantRemoveRequestedProduct =>
+      'Deseja realmente remover o produto dos produtos solicitados?';
 }

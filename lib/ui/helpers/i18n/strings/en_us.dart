@@ -36,6 +36,7 @@ class EnUs implements Translation {
   String get msgTableNumber => 'Table number';
   String get msgUpdatedTableAndPeopleNumberSuccess =>
       'Table number and number of people updated successfully';
+  String get msgUpdatedTableSuccess => "Table number updated successfully";
   String get msgUnexpectedError =>
       'Something went wrong. Please try again later.';
   String get msgUseOnlyWhenIsFixedTableNumber =>
@@ -131,6 +132,7 @@ class EnUs implements Translation {
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>
       'Update table and number of people';
+  String get updateTableNumber => "Update table number";
   String get userCode => 'User code';
   String get user => 'User';
   String get url => 'Enterprise or URL';

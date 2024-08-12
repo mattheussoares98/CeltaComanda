@@ -23,7 +23,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   // ignore: unused_field
   int? _selectedPeopleNumbers;
   bool _isUpdatingCommandNumber = false;
-  bool _isUpdatingPeopleNumbers = false;
+  // bool _isUpdatingPeopleNumbers = false;
 
   Future<void> _updateCommandNumber(HomePresenter homePresenter) async {
     if (_key.currentState?.validate() != true) {
@@ -41,7 +41,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         Future.delayed(Duration.zero, () {
           showAlertMessage(
             context,
-            R.string.msgUpdatedTableAndPeopleNumberSuccess,
+            R.string.msgUpdatedTableSuccess,
           );
           Navigator.of(context).pop();
         });
@@ -76,14 +76,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   _selectedCommandNumber = selectedCommandNumber;
                 },
               ),
-              const SizedBox(height: 10),
-              UpdatePeopleNumbers(
-                isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
-                updatePeopleNumbers: (selectedPeopleNumbers) {
-                  selectedPeopleNumbers.toString();
-                  _selectedPeopleNumbers = selectedPeopleNumbers;
-                },
-              ),
+              // const SizedBox(height: 10),
+              // UpdatePeopleNumbers(
+              //   isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
+              //   updatePeopleNumbers: (selectedPeopleNumbers) {
+              //     selectedPeopleNumbers.toString();
+              //     _selectedPeopleNumbers = selectedPeopleNumbers;
+              //   },
+              // ),
               const SizedBox(height: 10),
               UserPersonalizedCodeInput(
                 passwordFocusNode: _passwordFocusNode,
@@ -96,35 +96,12 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 updateCommandNumber: () async {
                   setState(() {
                     _isUpdatingCommandNumber = true;
-                    _isUpdatingPeopleNumbers = true;
+                    // _isUpdatingPeopleNumbers = true;
                   });
                   await _updateCommandNumber(homePresenter);
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    FocusScope.of(context).unfocus();
-                    setState(() {
-                      _isUpdatingCommandNumber = true;
-                      _isUpdatingPeopleNumbers = true;
-                    });
-                    await _updateCommandNumber(homePresenter);
-                  },
-                  child: FittedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        R.string.updateTableNumberAndPeopleNumbers,
-                        style: TextStyle(
-                          fontSize: getStringSize(context),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -136,6 +113,33 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                       changeIsUpdatingCommandNumber: () {
                         _isUpdatingCommandNumber = false;
                       },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          FocusScope.of(context).unfocus();
+                          setState(() {
+                            _isUpdatingCommandNumber = true;
+                            // _isUpdatingPeopleNumbers = true;
+                          });
+                          await _updateCommandNumber(homePresenter);
+                        },
+                        child: FittedBox(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              R.string.updateTableNumber,
+                              style: TextStyle(
+                                fontSize: getStringSize(context),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),

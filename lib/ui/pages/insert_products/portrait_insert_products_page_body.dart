@@ -27,11 +27,13 @@ class _PortraitInsertProductsPageBodyState
   final double buttonHeight = 50;
   bool showComments = false;
   bool productHasComment = false;
+  bool productHasObligatoryOption = false;
   final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter =
+        Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
@@ -55,6 +57,12 @@ class _PortraitInsertProductsPageBodyState
       indexOfLeftItem: widget.indexOfLeftItem,
     );
 
+    productHasObligatoryOption = _getProductHasObligatoryOption(
+      indexOfLeftItem: widget.indexOfLeftItem,
+      expansibleGroupFromProductPresenter: commentsPresenter,
+      selectedProduct: widget.selectedProduct,
+    );
+
     return SingleChildScrollView(
       controller: _scrollController,
       child: Column(
@@ -68,6 +76,7 @@ class _PortraitInsertProductsPageBodyState
                 indexOfSelectedFather: widget.indexOfLeftItem,
                 productHasComment: productHasComment,
                 showComments: showComments,
+                productHasObligatoryOption: productHasObligatoryOption,
               ),
               Padding(
                 padding: const EdgeInsets.all(5),
@@ -163,6 +172,30 @@ class _PortraitInsertProductsPageBodyState
           ),
         ],
       ),
+    );
+  }
+}
+
+bool _getProductHasObligatoryOption({
+  required int indexOfLeftItem,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
+  required ProductsViewModel selectedProduct,
+}) {
+  if (selectedProduct.childsComposition == null) {
+    return expansibleGroupFromProductPresenter.productHasComment(
+      internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
+      productName: selectedProduct.Name,
+    );
+  } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
+    return false;
+  } else {
+    return expansibleGroupFromProductPresenter.productHasComment(
+      internalCodeOnERP: selectedProduct
+          .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
+          .toInt(),
+      productName:
+          selectedProduct.childsComposition![indexOfLeftItem].ChildName!,
     );
   }
 }

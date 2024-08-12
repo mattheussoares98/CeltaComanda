@@ -26,10 +26,12 @@ class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
   bool showComments = false;
   bool productHasComment = false;
+  bool productHasObligatoryOption = false;
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter =
+        Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
     showComments = _getShowComments(
@@ -39,7 +41,12 @@ class _LandscapeInsertProductsPageBodyState
     );
     productHasComment = _getProducthasComment(
       indexOfLeftItem: widget.indexOfLeftItem,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: commentsPresenter,
+      selectedProduct: widget.selectedProduct,
+    );
+    productHasObligatoryOption = _getProductHasObligatoryOption(
+      indexOfLeftItem: widget.indexOfLeftItem,
+      expansibleGroupFromProductPresenter: commentsPresenter,
       selectedProduct: widget.selectedProduct,
     );
 
@@ -58,6 +65,7 @@ class _LandscapeInsertProductsPageBodyState
                   indexOfSelectedFather: widget.indexOfLeftItem,
                   productHasComment: productHasComment,
                   showComments: showComments,
+                  productHasObligatoryOption: productHasComment,
                 ),
               ),
               Padding(
@@ -147,18 +155,43 @@ ProductCompositionViewModel _selectedFather(
 
 bool _getProducthasComment({
   required int indexOfLeftItem,
-  required ExpansibleGroupFromProductPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
   required ProductsViewModel selectedProduct,
 }) {
   if (selectedProduct.childsComposition == null) {
-    return commentsPresenter.productHasComment(
+    return expansibleGroupFromProductPresenter.productHasComment(
       internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
       productName: selectedProduct.Name,
     );
   } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
     return false;
   } else {
-    return commentsPresenter.productHasComment(
+    return expansibleGroupFromProductPresenter.productHasComment(
+      internalCodeOnERP: selectedProduct
+          .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
+          .toInt(),
+      productName:
+          selectedProduct.childsComposition![indexOfLeftItem].ChildName!,
+    );
+  }
+}
+
+bool _getProductHasObligatoryOption({
+  required int indexOfLeftItem,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
+  required ProductsViewModel selectedProduct,
+}) {
+  if (selectedProduct.childsComposition == null) {
+    return expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
+      productName: selectedProduct.Name,
+    );
+  } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
+    return false;
+  } else {
+    return expansibleGroupFromProductPresenter.productHasObligatoryOption(
       internalCodeOnERP: selectedProduct
           .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
           .toInt(),

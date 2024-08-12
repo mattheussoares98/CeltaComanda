@@ -8,11 +8,13 @@ class FathersItems extends StatefulWidget {
   final int indexOfSelectedFather;
   final bool productHasComment;
   final bool showComments;
+  final bool productHasObligatoryOption;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
     required this.productHasComment,
     required this.showComments,
+    required this.productHasObligatoryOption,
     super.key,
   });
 
@@ -63,7 +65,11 @@ class _FathersItemsState extends State<FathersItems> {
 
   int getItemsCount() {
     if (widget.selectedProduct.childsComposition == null) {
-      if (widget.productHasComment) {
+      if (widget.productHasComment && widget.productHasObligatoryOption) {
+        return 3;
+      } else if (widget.productHasComment) {
+        return 2;
+      } else if (widget.productHasObligatoryOption) {
         return 2;
       } else {
         return 1;

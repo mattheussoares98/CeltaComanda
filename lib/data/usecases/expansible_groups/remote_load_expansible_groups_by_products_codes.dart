@@ -24,7 +24,7 @@ class RemoteLoadExpansibleGroupsByProductsCodes
           method: "post",
           body: {
             "ExpansibleGroupType":
-                22, //tipo do grupo expansível (opcional no BS)
+                expansibleGroupType, //tipo do grupo expansível (opcional no BS)
             "ProductPackingInternalCodesOnErp":
                 productsPackingInternalCodesOnErp,
           });

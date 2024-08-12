@@ -184,10 +184,12 @@ bool _getProductHasObligatoryOption({
   required ProductsViewModel selectedProduct,
 }) {
   if (selectedProduct.childsComposition == null) {
-    return expansibleGroupFromProductPresenter.productHasObligatoryOption(
+    final value =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
       internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
       productName: selectedProduct.Name,
     );
+    return value;
   } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
     return false;
   } else {

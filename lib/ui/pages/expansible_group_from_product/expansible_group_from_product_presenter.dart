@@ -8,14 +8,12 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   List<ExpansibleGroupFromProductViewModel> get loadedComments;
   List<ExpansibleGroupFromProductViewModel> get loadedObligatoryOptions;
-  bool get hasSelectedComments;
 
   Future<void> loadComments(List<ProductsViewModel> loadedProducts);
   Future<void> changeCommentIsSelected(
     ExpansibleGroupFromProductViewModel comment,
   );
   void unselectAllComments();
-  void updateHasSelectedComments();
   String? getConcatenateSelectedComments(int internalCodeOnERP);
   void updateSelectedComments({
     required String? comments,

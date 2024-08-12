@@ -72,7 +72,6 @@ class GetxExpansibleGroupFromProductPresenter
       ExpansibleGroupFromProductViewModel comment) async {
     int index = _loadedComments.indexOf(comment);
     _loadedComments[index].selected = !_loadedComments[index].selected;
-    updateHasSelectedComments();
   }
 
   final _isLoading = false.obs;
@@ -90,23 +89,6 @@ class GetxExpansibleGroupFromProductPresenter
     for (var comment in loadedComments) {
       comment.selected = false;
     }
-    updateHasSelectedComments();
-  }
-
-  bool _hasSelectedComments = false;
-  @override
-  bool get hasSelectedComments => _hasSelectedComments;
-
-  @override
-  void updateHasSelectedComments() {
-    _hasSelectedComments = false;
-    for (var comment in _loadedComments) {
-      if (comment.selected) {
-        _hasSelectedComments = true;
-        break;
-      }
-    }
-    notifyListeners();
   }
 
   @override

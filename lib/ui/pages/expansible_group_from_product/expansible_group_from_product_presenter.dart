@@ -19,11 +19,8 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
   );
   void unselectAllComments();
   void unselectAllOptionalObligatory();
-  String? getConcatenateSelectedCommentsAndObligatoryOptions(int internalCodeOnERP);
-  void updateSelectedComments({
-    required String? comments,
-    required int internalCodeOnERP,
-  });
+  String? getConcatenateSelectedCommentsAndObligatoryOptions(
+      int internalCodeOnERP);
   bool productHasComment({
     required int internalCodeOnERP,
     required String productName,

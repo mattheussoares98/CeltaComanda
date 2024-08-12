@@ -146,21 +146,6 @@ class GetxExpansibleGroupFromProductPresenter
   }
 
   @override
-  void updateSelectedComments({
-    required String? comments,
-    required int internalCodeOnERP,
-  }) {
-    for (var loadedComment in loadedComments) {
-      loadedComment.selected = false;
-
-      loadedComment.selected = comments != null &&
-          comments.contains(loadedComment.GroupName) &&
-          loadedComment.ProductInternalCodeOnErp.toInt() == internalCodeOnERP;
-    }
-    notifyListeners();
-  }
-
-  @override
   bool productHasComment({
     required int internalCodeOnERP,
     required String productName,

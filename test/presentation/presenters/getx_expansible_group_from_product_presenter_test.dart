@@ -187,4 +187,39 @@ void main() {
       );
     });
   });
+
+  group("Product has comment", () {
+    test("Should return true if product has comment", () async {
+      loadedProducts[0].childsComposition = null;
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(expansibleGroupFromProductComplete);
+
+      expect(
+        sut.productHasComment(
+          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
+          productName: loadedProducts[0].Name,
+        ),
+        true,
+      );
+    });
+    test("Should return false if product dont have comment", () async {
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(EntityFactory.makeExpansibleGroupFromProductCompleteEntity(
+        loadedProducts[1],
+      ));
+
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(expansibleGroupFromProductComplete);
+
+      expect(
+        sut.productHasComment(
+          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
+          productName: loadedProducts[0].Name,
+        ),
+        false,
+      );
+    });
+  });
 }

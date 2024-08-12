@@ -24,7 +24,8 @@ class _ProductsItemsState extends State<ProductsItems> {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    if (widget.selectedGroupIndex! + 1 == menuPresenter.loadedMenu.length) {
+    if ((widget.selectedGroupIndex ?? 0) + 1 ==
+        menuPresenter.loadedMenu.length) {
       if (hasMinWidth(context)) {
         return const LandscapeEvaluateService();
       } else {

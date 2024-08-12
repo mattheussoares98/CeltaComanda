@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../data/usecases/usecases.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
@@ -40,6 +41,7 @@ void validateUserAndCancelProductDialog({
 }) {
   FocusNode passwordFocus = FocusNode();
   FocusNode userFocus = FocusNode();
+  CameraBarcodeScanner cameraBarcodeScanner = CameraBarcodeScanner();
 
   showDialog(
       context: context,
@@ -73,7 +75,6 @@ void validateUserAndCancelProductDialog({
 
                         FocusScope.of(context).requestFocus(passwordFocus);
                       },
-                      // onChanged: (value) {},
                       validator: (value) {
                         if (value == null) {
                           return "Digite o código do usuário";
@@ -111,12 +112,41 @@ void validateUserAndCancelProductDialog({
                         return null;
                       },
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                          fontSize: getStringSize(context),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: getStringSize(context),
+                        ),
                         labelText: "Senha do usuário",
                         hintText: "Senha do usuário",
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            final value = await cameraBarcodeScanner.read();
+                            if (value.isNotEmpty) {
+                              passwordController.text = value;
+                              Future.delayed(Duration.zero, () async {
+                                await _validateUserAndPermissionToCancelProducts(
+                                  context: context,
+                                  formKey: formKey,
+                                  printedProductsPresenter:
+                                      printedProductsPresenter,
+                                  personalizedCodeController:
+                                      personalizedCodeController,
+                                  passwordController: passwordController,
+                                  callSetState: callSetState,
+                                );
+                              });
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            size: 30,
+                          ),
+                        ),
                       ),
                       obscureText: true,
-                      keyboardType: TextInputType.number,
                     ),
                   ],
                 ),
@@ -133,7 +163,12 @@ void validateUserAndCancelProductDialog({
                       callSetState: callSetState,
                     );
                   },
-                  child: const Text("Liberar cancelamento"),
+                  child: Text(
+                    "Liberar cancelamento",
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
                 )
               ],
             ),

@@ -30,7 +30,7 @@ class AdvanceButton extends StatefulWidget {
 class _AdvanceButtonState extends State<AdvanceButton> {
   String _getButtonText(
     ProductsViewModel selectedProduct,
-    CommentsPresenter commentsPresenter,
+    ExpansibleGroupFromProductPresenter commentsPresenter,
   ) {
     if (selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 1) {
@@ -58,7 +58,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   }
 
   void updateSelectedCommentsOfChildsComposition(
-      CommentsPresenter commentsPresenter) {
+      ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (widget.selectedProduct.childsComposition != null) {
       for (var child in widget.selectedProduct.childsComposition!) {
         if (commentsPresenter.productHasComment(
@@ -79,7 +79,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required BuildContext context,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
   }) async {
     updateSelectedCommentsOfChildsComposition(commentsPresenter);
 
@@ -112,7 +112,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required double totalPrice,
     required int quantity,
     required BuildContext context,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
@@ -148,7 +148,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
   @override
   Widget build(BuildContext context) {
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductsPresenter =

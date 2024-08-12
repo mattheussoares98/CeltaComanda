@@ -30,7 +30,7 @@ class _PrintedItemState extends State<PrintedItem> {
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     required String saleRequestProductId,
   }) async {
     await printedProductsPresenter.removeProduct(
@@ -51,7 +51,7 @@ class _PrintedItemState extends State<PrintedItem> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),

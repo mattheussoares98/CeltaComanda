@@ -30,7 +30,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),

@@ -19,7 +19,7 @@ class DetachItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return CarouselSlider(
       options: CarouselOptions(

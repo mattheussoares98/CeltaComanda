@@ -15,7 +15,7 @@ class NameImagePriceComboxAndComplement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    CommentsPresenter commentsPresenter = Provider.of(context);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context);
 
     if (hasMinWidth(context)) {
       return _landScapeNameImagePluAndCombox(
@@ -39,7 +39,7 @@ Widget _landScapeNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required CommentsPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter commentsPresenter,
 }) {
   return Row(
     children: [
@@ -84,7 +84,7 @@ Widget _portraitNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required CommentsPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter commentsPresenter,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +123,7 @@ void _onTapImage({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required CommentsPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter commentsPresenter,
 }) {
   showLargeImage(
     context: context,

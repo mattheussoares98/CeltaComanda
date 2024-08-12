@@ -113,7 +113,7 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     mainError = null;

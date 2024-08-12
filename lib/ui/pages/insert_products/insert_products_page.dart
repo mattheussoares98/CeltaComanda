@@ -62,7 +62,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 

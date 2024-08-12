@@ -21,7 +21,7 @@ void writeCommandNumber({
   MenuPresenter menuPresenter = Provider.of(context, listen: false);
   CartPresenter cartPresenter = Provider.of(context, listen: false);
   HomePresenter homePresenter = Provider.of(context, listen: false);
-  CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+  ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
   PrintedProductsPresenter printedProductsPresenter =
       Provider.of(context, listen: false);
   PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
@@ -116,7 +116,7 @@ Future<void> _onPress({
   required OnWriteCommand onWriteCommand,
   required FocusNode focusNode,
   required PaymentPresenter paymentPresenter,
-  required CommentsPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter commentsPresenter,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 

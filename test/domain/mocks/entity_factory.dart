@@ -768,8 +768,8 @@ class EntityFactory {
         quantity: quantity,
       );
 
-  static CommentViewModel makeCommentViewModel({bool? selected = false}) =>
-      CommentViewModel(
+  static ExpansibleGroupFromProductViewModel makeCommentViewModel({bool? selected = false}) =>
+      ExpansibleGroupFromProductViewModel(
         GroupName: faker.randomGenerator.string(10),
         ProductName: faker.randomGenerator.string(10),
         selected: selected!,

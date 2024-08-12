@@ -19,7 +19,7 @@ abstract class MenuPresenter implements Listenable {
 
   Future<void> getGroupsAndProducts({
     required String commandNumber,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
   });
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();

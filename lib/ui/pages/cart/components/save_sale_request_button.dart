@@ -17,7 +17,7 @@ class SaveSaleRequestButton extends StatelessWidget {
   _addProducts({
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     required BuildContext context,
     required HomePresenter homePresenter,
     required int? tableNumber,
@@ -46,7 +46,7 @@ class SaveSaleRequestButton extends StatelessWidget {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: true);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 

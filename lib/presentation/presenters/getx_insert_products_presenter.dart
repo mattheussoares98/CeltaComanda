@@ -245,7 +245,7 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void updateComment({
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     required ProductCompositionViewModel father,
   }) {
     father.commentFather = commentsPresenter.getConcatenateSelectedComments(
@@ -314,7 +314,7 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void clearData({
     required ProductsViewModel product,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
   }) {
     showComments = false;
     selectedFatherIndex = 0;
@@ -345,7 +345,7 @@ class GetxInsertProductsPresenter extends GetxController
   set showComments(bool value) => _showComments.value = value;
 
   @override
-  void advanceLeftIndex(CommentsPresenter commentsPresenter) {
+  void advanceLeftIndex(ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (_selectedProduct.value?.childsComposition == null) {
       if (commentsPresenter.productHasComment(
               internalCodeOnERP:

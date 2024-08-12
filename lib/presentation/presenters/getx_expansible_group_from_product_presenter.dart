@@ -5,16 +5,20 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../../domain/usecases/usecases.dart';
 
-class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
-  final LoadExpansibleGroupsByProductsCodes loadExpansibleGroupsFromProductsComplete;
+class GetxExpansibleGroupFromProductPresenter
+    with ChangeNotifier
+    implements ExpansibleGroupFromProductPresenter {
+  final LoadExpansibleGroupsByProductsCodes
+      loadExpansibleGroupsFromProductsComplete;
 
-  GetxCommentsPresenter({
+  GetxExpansibleGroupFromProductPresenter({
     required this.loadExpansibleGroupsFromProductsComplete,
   });
 
-  List<CommentViewModel> _loadedComments = [];
+  List<ExpansibleGroupFromProductViewModel> _loadedComments = [];
   @override
-  List<CommentViewModel> get loadedComments => _loadedComments;
+  List<ExpansibleGroupFromProductViewModel> get loadedComments =>
+      _loadedComments;
 
   List<int> _getAllInternalCodes(List<ProductsViewModel> allProducts) {
     List<int> allInternalCodes = [];
@@ -44,8 +48,8 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
       );
 
       _loadedComments = optionalGroups
-          .map((e) =>
-              CommentViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
+          .map((e) => ExpansibleGroupFromProductViewModel
+                  .fromExpansibleGroupsFromProductsCompleteEntity(
                 e,
               ))
           .toList();
@@ -59,7 +63,8 @@ class GetxCommentsPresenter with ChangeNotifier implements CommentsPresenter {
   }
 
   @override
-  Future<void> changeCommentIsSelected(CommentViewModel comment) async {
+  Future<void> changeCommentIsSelected(
+      ExpansibleGroupFromProductViewModel comment) async {
     int index = _loadedComments.indexOf(comment);
     _loadedComments[index].selected = !_loadedComments[index].selected;
     updateHasSelectedComments();

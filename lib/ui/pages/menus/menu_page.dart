@@ -54,7 +54,7 @@ class _MenuPageState extends State<MenuPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =

@@ -31,7 +31,7 @@ class _PortraitInsertProductsPageBodyState
 
   @override
   Widget build(BuildContext context) {
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
@@ -169,7 +169,7 @@ class _PortraitInsertProductsPageBodyState
 
 bool _producthasComment({
   required int indexOfLeftItem,
-  required CommentsPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter commentsPresenter,
   required ProductsViewModel selectedProduct,
 }) {
   if (selectedProduct.childsComposition == null) {

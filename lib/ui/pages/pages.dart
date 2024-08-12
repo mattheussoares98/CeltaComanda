@@ -1,5 +1,5 @@
 export './enterprise_validation/enterprise_validation.dart';
-export './comments/comments.dart';
+export 'expansible_group_from_product/expansible_group_from_product.dart';
 export './configurations/configurations.dart';
 export 'menus/menus.dart';
 export './home/home.dart';

@@ -35,7 +35,7 @@ class FatherItem extends StatelessWidget {
     }
   }
 
-  String getLeftItemTitle(CommentsPresenter commentsPresenter) {
+  String getLeftItemTitle(ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (selectedProduct.childsComposition != null) {
       if (indexOfLeftSelectedItem !=
           selectedProduct.childsComposition!.length) {
@@ -60,7 +60,7 @@ class FatherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
-    CommentsPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
 
     return InkWell(
       onTap: () {

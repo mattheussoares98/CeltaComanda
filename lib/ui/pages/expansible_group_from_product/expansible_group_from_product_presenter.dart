@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/pages/pages.dart';
+import '../pages.dart';
 import '../../helpers/helpers.dart';
 
-abstract class CommentsPresenter implements Listenable {
+abstract class ExpansibleGroupFromProductPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  List<CommentViewModel> get loadedComments;
+  List<ExpansibleGroupFromProductViewModel> get loadedComments;
   bool get hasSelectedComments;
 
   Future<void> loadComments(List<ProductsViewModel> loadedProducts);
-  Future<void> changeCommentIsSelected(CommentViewModel comment);
+  Future<void> changeCommentIsSelected(
+    ExpansibleGroupFromProductViewModel comment,
+  );
   void unselectAllComments();
   void updateHasSelectedComments();
   String? getConcatenateSelectedComments(int internalCodeOnERP);

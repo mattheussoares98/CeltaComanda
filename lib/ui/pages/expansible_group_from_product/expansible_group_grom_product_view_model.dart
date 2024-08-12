@@ -4,14 +4,14 @@ import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
 
-class CommentViewModel extends Equatable {
+class ExpansibleGroupFromProductViewModel extends Equatable {
   bool selected = false;
   final String ProductName;
   final String GroupName;
   final String ExpansibleGroupId;
   final String ProductInternalCodeOnErp;
 
-  CommentViewModel({
+  ExpansibleGroupFromProductViewModel({
     required this.selected,
     required this.ProductName,
     required this.GroupName,
@@ -19,9 +19,9 @@ class CommentViewModel extends Equatable {
     required this.ProductInternalCodeOnErp,
   });
 
-  factory CommentViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
+  factory ExpansibleGroupFromProductViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
           CommentsEntity entity) =>
-      CommentViewModel(
+      ExpansibleGroupFromProductViewModel(
         selected: false,
         ProductName: entity.ProductName,
         GroupName: entity.GroupName,

@@ -137,7 +137,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   CartProductEntity productWithSelectedsComments({
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     required CartProductEntity product,
   }) {
     return CartProductEntity(
@@ -155,7 +155,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -366,7 +366,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
     required HomePresenter homePresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
     String? commandNumber,
   }) async {
     isLoading = true;

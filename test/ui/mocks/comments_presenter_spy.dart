@@ -6,10 +6,10 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class CommentsPresenterSpy extends Mock implements CommentsPresenter {
+class CommentsPresenterSpy extends Mock implements ExpansibleGroupFromProductPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
-  final List<CommentViewModel> loadedCommentsController = [];
+  final List<ExpansibleGroupFromProductViewModel> loadedCommentsController = [];
   final bool hasSelectedCommentsController = false;
 
   CommentsPresenterSpy() {

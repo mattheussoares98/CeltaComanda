@@ -29,6 +29,6 @@ abstract class PaymentPresenter implements Listenable {
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required MenuPresenter menuPresenter,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
   });
 }

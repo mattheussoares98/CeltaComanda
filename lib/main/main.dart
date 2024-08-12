@@ -67,7 +67,7 @@ class App extends StatelessWidget {
           create: (_) => makeGetxPaymentPresenter(),
         ),
         ListenableProvider(
-          create: (_) => makeGetxCommentsPresenter(),
+          create: (_) => makeGetxExpansibleGroupFromProductPresenter(),
         ),
       ],
       child: GestureDetector(

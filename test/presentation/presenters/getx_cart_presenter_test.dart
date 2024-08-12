@@ -43,7 +43,7 @@ void main() {
   late CartProductEntity cartProductWithOneQuantity;
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late int tableNumber;
-  late CommentViewModel commentViewModel;
+  late ExpansibleGroupFromProductViewModel commentViewModel;
   late PrintRequestEntity printRequestEntity;
 
   void initUsecases() {

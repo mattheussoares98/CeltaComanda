@@ -156,7 +156,7 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<void> getGroupsAndProducts({
     required String commandNumber,
-    required CommentsPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter commentsPresenter,
   }) async {
     isLoading = true;
     mainError = null;

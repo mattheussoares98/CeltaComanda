@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late GetxCommentsPresenter sut;
+  late GetxExpansibleGroupFromProductPresenter sut;
 
   late LoadExpansibleGroupsFromProductsCompleteSpy
       loadExpansibleGroupsFromProductsComplete;
@@ -26,7 +26,7 @@ void main() {
   }
 
   void initPresenters() {
-    sut = GetxCommentsPresenter(
+    sut = GetxExpansibleGroupFromProductPresenter(
       loadExpansibleGroupsFromProductsComplete:
           loadExpansibleGroupsFromProductsComplete,
     );
@@ -103,7 +103,7 @@ void main() {
       expect(
           sut.loadedComments,
           expansibleGroupFromProductComplete
-              .map((e) => CommentViewModel
+              .map((e) => ExpansibleGroupFromProductViewModel
                       .fromExpansibleGroupsFromProductsCompleteEntity(
                     e,
                   ))

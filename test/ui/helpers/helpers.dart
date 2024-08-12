@@ -84,7 +84,7 @@ Widget makePage(
       ListenableProvider<InsertProductPresenter>(
         create: (_) => InsertProductsPresenterSpy(),
       ),
-      ListenableProvider<CommentsPresenter>(
+      ListenableProvider<ExpansibleGroupFromProductPresenter>(
         create: (_) => CommentsPresenterSpy(),
       ),
     ],

@@ -768,7 +768,8 @@ class EntityFactory {
         quantity: quantity,
       );
 
-  static ExpansibleGroupFromProductViewModel makeCommentViewModel({bool? selected = false}) =>
+  static ExpansibleGroupFromProductViewModel makeCommentViewModel(
+          {bool? selected = false}) =>
       ExpansibleGroupFromProductViewModel(
         GroupName: faker.randomGenerator.string(10),
         ProductName: faker.randomGenerator.string(10),
@@ -782,13 +783,15 @@ class EntityFactory {
         isFixedCommandNumber: faker.randomGenerator.boolean(),
       );
 
-  static List<CommentsEntity>
-      makeExpansibleGroupFromProductCompleteEntity() => [
-            CommentsEntity(
-              ExpansibleGroupId: faker.randomGenerator.integer(100),
-              ProductInternalCodeOnErp: faker.randomGenerator.integer(100),
-              GroupName: faker.randomGenerator.string(10),
-              ProductName: faker.randomGenerator.string(10),
-            ),
-          ];
+  static List<CommentsEntity> makeExpansibleGroupFromProductCompleteEntity(
+    ProductsViewModel product,
+  ) =>
+      [
+        CommentsEntity(
+          ExpansibleGroupId: faker.randomGenerator.integer(100),
+          ProductInternalCodeOnErp: product.InternalCodeOnERP!.toInt(),
+          GroupName: faker.randomGenerator.string(10),
+          ProductName: product.Name,
+        ),
+      ];
 }

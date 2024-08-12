@@ -129,19 +129,19 @@ class GetxExpansibleGroupFromProductPresenter
         .where((comment) => comment.selected)
         .where((e) => e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP)
         .map((element) => element.GroupName)
-        .join("\n");
+        .join("; ");
 
     final concatenateObligatoryOptions = _loadedObligatoryOptions
         .where((obligatoryOption) => obligatoryOption.selected)
         .where((e) => e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP)
         .map((element) => element.GroupName)
-        .join("\n");
+        .join("; ");
 
     if (concatenateSelectedComments.isEmpty &&
         concatenateObligatoryOptions.isEmpty) {
       return null;
     } else {
-      return concatenateSelectedComments + concatenateObligatoryOptions;
+      return "$concatenateSelectedComments$concatenateObligatoryOptions";
     }
   }
 

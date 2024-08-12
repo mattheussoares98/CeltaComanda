@@ -39,7 +39,9 @@ void main() {
     ];
 
     expansibleGroupFromProductComplete =
-        EntityFactory.makeExpansibleGroupFromProductCompleteEntity();
+        EntityFactory.makeExpansibleGroupFromProductCompleteEntity(
+      loadedProducts[0],
+    );
 
     allInternalCodes = loadedProducts.expand((product) {
       var internalCodes = [product.InternalCodeOnERP!.toInt()];
@@ -171,8 +173,18 @@ void main() {
 
   group("Get concatenate selected values", () {
     test("Should return correctly concatenate values", () async {
-      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
-      expect(true, false); //arrumar esse teste
+      loadedProducts[0].childsComposition = null;
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      loadExpansibleGroupsFromProductsComplete
+          .mockLoad(expansibleGroupFromProductComplete);
+
+      await sut.changeCommentIsSelected(sut.loadedComments[0]);
+      expect(
+        sut.getConcatenateSelectedCommentsAndObligatoryOptions(
+          loadedProducts[0].InternalCodeOnERP!.toInt(),
+        ),
+        sut.loadedComments[0].GroupName,
+      );
     });
   });
 }

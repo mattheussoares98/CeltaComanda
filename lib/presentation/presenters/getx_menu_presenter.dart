@@ -220,7 +220,7 @@ class GetxMenuPresenter extends GetxController
           OrderClassification: "0",
         ): []
       });
-      await commentsPresenter.loadComments(allProducts);
+      await commentsPresenter.loadCommentsAndObligatoryOptions(allProducts);
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);
     } on DomainError catch (error) {

@@ -293,7 +293,7 @@ void main() {
         commandNumber: homePresenter.commandNumberMock!,
       );
 
-      verify(() => commentsPresenter.loadComments(sut.loadedMenu
+      verify(() => commentsPresenter.loadCommentsAndObligatoryOptions(sut.loadedMenu
           .expand((map) =>
               map.values) // Expande todas as listas de produtos em um Iterable
           .expand((lista) =>

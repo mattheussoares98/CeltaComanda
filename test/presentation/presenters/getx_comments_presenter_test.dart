@@ -73,7 +73,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.loadComments(loadedProducts);
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
     });
     test("Should emit correct events on error", () async {
       loadExpansibleGroupsFromProductsComplete.mockError();
@@ -82,11 +82,11 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.loadComments(loadedProducts);
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
     });
     test("Should call loadExpansibleGroupsFromProductsComplete with correct values on loadComments",
         () async {
-      await sut.loadComments(loadedProducts);
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
 
       verify(() => loadExpansibleGroupsFromProductsComplete.load(
             productsPackingInternalCodesOnErp: allInternalCodes,
@@ -98,7 +98,7 @@ void main() {
         () async {
       expect(sut.loadedComments, []);
 
-      await sut.loadComments(loadedProducts);
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
 
       expect(
           sut.loadedComments,

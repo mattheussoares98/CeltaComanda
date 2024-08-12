@@ -24,7 +24,7 @@ class CommentsPresenterSpy extends Mock
           internalCodeOnERP: any(named: "internalCodeOnERP"),
           productName: any(named: "productName"),
         )).thenAnswer((_) => false);
-    when(() => this.loadComments(any())).thenAnswer((_) async => _);
+    when(() => this.loadCommentsAndObligatoryOptions(any())).thenAnswer((_) async => _);
   }
 
   void mockGetConcatenateSelectedComments(String? comment) {

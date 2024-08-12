@@ -41,7 +41,8 @@ class GetxExpansibleGroupFromProductPresenter
   }
 
   @override
-  Future<void> loadComments(List<ProductsViewModel> loadedProducts) async {
+  Future<void> loadCommentsAndObligatoryOptions(
+      List<ProductsViewModel> loadedProducts) async {
     isLoading = true;
     mainError = null;
 

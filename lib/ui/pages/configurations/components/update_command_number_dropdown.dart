@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class UpdateCommandNumber extends StatelessWidget {
+class UpdateCommandNumberDropdown extends StatelessWidget {
   final bool isUpdatingCommandNumber;
   final Function(int value) updateCommandNumber;
-  const UpdateCommandNumber({
+  const UpdateCommandNumberDropdown({
     required this.isUpdatingCommandNumber,
     required this.updateCommandNumber,
     super.key,

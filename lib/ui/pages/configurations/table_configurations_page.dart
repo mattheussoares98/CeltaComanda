@@ -69,7 +69,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              UpdateCommandNumber(
+              UpdateCommandNumberDropdown(
                 isUpdatingCommandNumber: _isUpdatingCommandNumber,
                 updateCommandNumber: (selectedCommandNumber) {
                   selectedCommandNumber.toString();

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../helpers/helpers.dart';
 
-class UpdatePeopleNumbers extends StatelessWidget {
+class UpdatePeopleNumbersDropdown extends StatelessWidget {
   final bool isUpdatingPeopleNumbers;
   final Function(int value) updatePeopleNumbers;
-  const UpdatePeopleNumbers({
+  const UpdatePeopleNumbersDropdown({
     required this.isUpdatingPeopleNumbers,
     required this.updatePeopleNumbers,
     super.key,

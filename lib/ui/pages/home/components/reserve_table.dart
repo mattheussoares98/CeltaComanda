@@ -29,7 +29,7 @@ class ReserveTable extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    R.string.reserved,
+                    R.string.reserved.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,

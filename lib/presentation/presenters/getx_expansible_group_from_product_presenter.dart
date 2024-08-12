@@ -109,8 +109,15 @@ class GetxExpansibleGroupFromProductPresenter
 
   @override
   void unselectAllComments() {
-    for (var comment in loadedComments) {
+    for (var comment in _loadedComments) {
       comment.selected = false;
+    }
+  }
+
+  @override
+  void unselectAllOptionalObligatory() {
+    for (var obligatoryOptional in _loadedObligatoryOptions) {
+      obligatoryOptional.selected = false;
     }
   }
 

@@ -149,4 +149,22 @@ void main() {
       expect(sut.loadedObligatoryOptions[0].selected, true);
     });
   });
+  group("Unselect all data", () {
+    test("Should unselect correctly when call sut.unselectAllComments",
+        () async {
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+      sut.loadedComments[0].selected = true;
+
+      sut.unselectAllComments();
+      expect(sut.loadedComments[0].selected, false);
+    });
+    test("Should unselect correctly when call sut.unselectAllOptionalObligatory",
+        () async {
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+      sut.loadedObligatoryOptions[0].selected = true;
+
+      sut.unselectAllOptionalObligatory();
+      expect(sut.loadedObligatoryOptions[0].selected, false);
+    });
+  });
 }

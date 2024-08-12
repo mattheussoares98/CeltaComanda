@@ -248,7 +248,7 @@ class GetxInsertProductsPresenter extends GetxController
     required ExpansibleGroupFromProductPresenter commentsPresenter,
     required ProductCompositionViewModel father,
   }) {
-    father.commentFather = commentsPresenter.getConcatenateSelectedComments(
+    father.commentFather = commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
         father.InternalCodeOnERPCodeChild!.toInt());
   }
 

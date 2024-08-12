@@ -158,13 +158,21 @@ void main() {
       sut.unselectAllComments();
       expect(sut.loadedComments[0].selected, false);
     });
-    test("Should unselect correctly when call sut.unselectAllOptionalObligatory",
+    test(
+        "Should unselect correctly when call sut.unselectAllOptionalObligatory",
         () async {
       await sut.loadCommentsAndObligatoryOptions(loadedProducts);
       sut.loadedObligatoryOptions[0].selected = true;
 
       sut.unselectAllOptionalObligatory();
       expect(sut.loadedObligatoryOptions[0].selected, false);
+    });
+  });
+
+  group("Get concatenate selected values", () {
+    test("Should return correctly concatenate values", () async {
+      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+      expect(true, false); //arrumar esse teste
     });
   });
 }

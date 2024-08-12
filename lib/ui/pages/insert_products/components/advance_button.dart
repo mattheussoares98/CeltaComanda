@@ -66,7 +66,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           productName: child.ChildName!,
         )) {
           child.commentFather =
-              commentsPresenter.getConcatenateSelectedComments(
+              commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
                   child.InternalCodeOnERPCodeChild!.toInt());
         }
       }
@@ -87,7 +87,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       product: CartProductEntity(
         Product: widget.selectedProduct.toEntityWithSelectedChilds(
             insertProductsPresenter.totalProductsQuantity),
-        Comments: commentsPresenter.getConcatenateSelectedComments(
+        Comments: commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
             widget.selectedProduct.InternalCodeOnERP!.toInt()),
         TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
             insertProductsPresenter.totalProductsQuantity,

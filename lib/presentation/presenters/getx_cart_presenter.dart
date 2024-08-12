@@ -142,7 +142,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }) {
     return CartProductEntity(
       Comments: commentsPresenter
-          .getConcatenateSelectedComments(product.Product.InternalCodeOnERP!),
+          .getConcatenateSelectedCommentsAndObligatoryOptions(product.Product.InternalCodeOnERP!),
       Product: product.Product,
       TotalLiquid: product.TotalLiquid,
       Quantity: product.Quantity,

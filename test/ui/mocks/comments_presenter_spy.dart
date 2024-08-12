@@ -28,7 +28,7 @@ class CommentsPresenterSpy extends Mock
   }
 
   void mockGetConcatenateSelectedComments(String? comment) {
-    when(() => this.getConcatenateSelectedComments(any()))
+    when(() => this.getConcatenateSelectedCommentsAndObligatoryOptions(any()))
         .thenAnswer((_) => comment);
   }
 

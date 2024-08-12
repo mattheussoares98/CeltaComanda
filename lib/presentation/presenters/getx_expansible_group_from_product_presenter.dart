@@ -122,17 +122,26 @@ class GetxExpansibleGroupFromProductPresenter
   }
 
   @override
-  String? getConcatenateSelectedComments(int internalCodeOnERP) {
+  String? getConcatenateSelectedCommentsAndObligatoryOptions(
+    int internalCodeOnERP,
+  ) {
     final concatenateSelectedComments = _loadedComments
         .where((comment) => comment.selected)
         .where((e) => e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP)
         .map((element) => element.GroupName)
         .join("\n");
 
-    if (concatenateSelectedComments.isEmpty) {
+    final concatenateObligatoryOptions = _loadedObligatoryOptions
+        .where((obligatoryOption) => obligatoryOption.selected)
+        .where((e) => e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP)
+        .map((element) => element.GroupName)
+        .join("\n");
+
+    if (concatenateSelectedComments.isEmpty &&
+        concatenateObligatoryOptions.isEmpty) {
       return null;
     } else {
-      return concatenateSelectedComments;
+      return concatenateSelectedComments + concatenateObligatoryOptions;
     }
   }
 

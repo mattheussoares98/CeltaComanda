@@ -25,18 +25,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   bool _isUpdatingCommandNumber = false;
   bool _isUpdatingPeopleNumbers = false;
 
-  bool _isValidUserPasswordTableNumberAndPeopleNumbers() {
-    bool? isValid = _key.currentState?.validate();
-
-    if (isValid != true) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   Future<void> _updateCommandNumber(HomePresenter homePresenter) async {
-    if (!_isValidUserPasswordTableNumberAndPeopleNumbers()) {
+    if (_key.currentState?.validate() != true) {
       return;
     }
 

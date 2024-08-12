@@ -20,6 +20,11 @@ class GetxExpansibleGroupFromProductPresenter
   List<ExpansibleGroupFromProductViewModel> get loadedComments =>
       _loadedComments;
 
+  final List<ExpansibleGroupFromProductViewModel> _loadedObligatoryOptions = [];
+  @override
+  List<ExpansibleGroupFromProductViewModel> get loadedObligatoryOptions =>
+      _loadedObligatoryOptions;
+
   List<int> _getAllInternalCodes(List<ProductsViewModel> allProducts) {
     List<int> allInternalCodes = [];
     for (var product in allProducts) {

@@ -7,6 +7,7 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   List<ExpansibleGroupFromProductViewModel> get loadedComments;
+  List<ExpansibleGroupFromProductViewModel> get loadedObligatoryOptions;
   bool get hasSelectedComments;
 
   Future<void> loadComments(List<ProductsViewModel> loadedProducts);

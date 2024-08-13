@@ -5,13 +5,15 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class FatherItem extends StatelessWidget {
-  final int indexOfLeftSelectedItem;
+  final int indexOfSelectedFather;
+  final int atualIndex;
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
   const FatherItem({
     required this.father,
-    required this.indexOfLeftSelectedItem,
+    required this.atualIndex,
+    required this.indexOfSelectedFather,
     required this.selectedProduct,
     required this.itemColor,
     super.key,
@@ -25,7 +27,7 @@ class FatherItem extends StatelessWidget {
           product: selectedProduct,
           indexOfChild: 0,
         ) &&
-        indexOfLeftSelectedItem == 0) {
+        atualIndex == 0) {
       return R.string.optional;
     } else if (selectedProduct.childsComposition == null) {
       return R.string.obligatory;
@@ -39,12 +41,9 @@ class FatherItem extends StatelessWidget {
   String getLeftItemTitle(
       ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
     if (selectedProduct.childsComposition != null) {
-      if (indexOfLeftSelectedItem !=
-          selectedProduct.childsComposition!.length) {
-        return selectedProduct
-            .childsComposition![indexOfLeftSelectedItem].ChildName!;
-      } else if (indexOfLeftSelectedItem ==
-          selectedProduct.childsComposition!.length) {
+      if (atualIndex != selectedProduct.childsComposition!.length) {
+        return selectedProduct.childsComposition![atualIndex].ChildName!;
+      } else if (atualIndex == selectedProduct.childsComposition!.length) {
         return R.string.quantity.toUpperCase();
       } else {
         return R.string.comments.toUpperCase();
@@ -62,7 +61,7 @@ class FatherItem extends StatelessWidget {
         indexOfChild: -1,
       );
 
-      if (indexOfLeftSelectedItem == 0) {
+      if (atualIndex == 0) {
         if (productHasComment) {
           return R.string.comments.toUpperCase();
         } else if (productHasObligatoryOption) {
@@ -70,7 +69,7 @@ class FatherItem extends StatelessWidget {
         } else {
           return R.string.quantity.toUpperCase();
         }
-      } else if (indexOfLeftSelectedItem == 1) {
+      } else if (atualIndex == 1) {
         if (productHasComment && productHasObligatoryOption) {
           return R.string.obligatoryOptions.toUpperCase();
         } else {
@@ -91,7 +90,7 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        insertProductPresenter.updateFatherIndex(indexOfLeftSelectedItem);
+        insertProductPresenter.updateFatherIndex(atualIndex);
       },
       child: Container(
         height: 42,
@@ -110,8 +109,9 @@ class FatherItem extends StatelessWidget {
                       : <TextSpan>[
                           TextSpan(
                             text: insertProductPresenter.getShowComments(
-                              expansibleGroupFromProductPresenter,
-                            )
+                                      expansibleGroupFromProductPresenter,
+                                    ) &&
+                                    atualIndex == indexOfSelectedFather
                                 ? "  (${R.string.comment.toUpperCase()})"
                                 : null,
                             style: const TextStyle(

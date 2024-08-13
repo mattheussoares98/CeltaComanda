@@ -110,7 +110,8 @@ class _FathersItemsState extends State<FathersItems> {
                     _doScrollExecuted = false;
                   }
                   return FatherItem(
-                    indexOfLeftSelectedItem: index,
+                    indexOfSelectedFather: widget.indexOfSelectedFather,
+                    atualIndex: index,
                     selectedProduct: widget.selectedProduct,
                     father: null,
                     itemColor: getItemColor(index, context),
@@ -122,7 +123,8 @@ class _FathersItemsState extends State<FathersItems> {
 
           return FatherItem(
             father: father,
-            indexOfLeftSelectedItem: index,
+            indexOfSelectedFather: widget.indexOfSelectedFather,
+            atualIndex: index,
             selectedProduct: widget.selectedProduct,
             itemColor: getItemColor(index, context),
           );

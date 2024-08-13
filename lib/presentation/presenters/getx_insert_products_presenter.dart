@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -336,8 +338,10 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  bool fatherIsValid(ProductCompositionViewModel product) {
-    if (product.IsOptionalItem == "false" &&
+  bool fatherIsValid(ProductCompositionViewModel? product) {
+    if (product == null) {
+      return false;
+    } else if (product.IsOptionalItem == "false" &&
         product.indexOfSelectedChild == null) {
       return false;
     } else {
@@ -367,27 +371,31 @@ class GetxInsertProductsPresenter extends GetxController
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
         _selectedProduct.value!.childsComposition?.length;
 
-    if (_selectedProduct.value?.childsComposition != null &&
-        productHasComment &&
-        _showComments.value != true &&
-        atualFather != null &&
-        fatherIsValid(atualFather)) {
-      showComments = true;
-    } else if (_selectedProduct.value?.childsComposition != null &&
-        productHasObligatoryOptions &&
-        atualFather != null &&
-        fatherIsValid(atualFather)) {
-      showComments = false;
-      showObligatoryOptions = true;
-    } else if (_selectedProduct.value?.childsComposition == null &&
-        productHasComment &&
-        _selectedFatherIndex.value == 0) {
-      selectedFatherIndex = _selectedFatherIndex.value ++;
-    } else if (atualFather != null && !fatherIsValid(atualFather)) {
-    } else if (newIndexIsOfQuantity && productHasComment) {
-      selectedFatherIndex = _selectedFatherIndex.value ++;
+    bool hasChilds = _selectedProduct.value?.childsComposition != null;
+
+    if (hasChilds) {
+      if (productHasComment &&
+          _showComments.value != true &&
+          fatherIsValid(atualFather)) {
+        showComments = true;
+      } else if (productHasObligatoryOptions && fatherIsValid(atualFather)) {
+        showComments = false;
+        showObligatoryOptions = true;
+      } else {
+        debugPrint(
+            "Criar tratamento para ter pelo menos uma opção obrigatória selecionada");
+        showObligatoryOptions = false;
+        showComments = false;
+        selectedFatherIndex = _selectedFatherIndex.value++;
+      }
     } else {
-      selectedFatherIndex = _selectedFatherIndex.value ++;
+      if (productHasComment && _selectedFatherIndex.value == 0) {
+        selectedFatherIndex = _selectedFatherIndex.value++;
+      } else if (newIndexIsOfQuantity && productHasComment) {
+        selectedFatherIndex = _selectedFatherIndex.value++;
+      } else {
+        selectedFatherIndex = _selectedFatherIndex.value++;
+      }
     }
 
     doScroll = true;

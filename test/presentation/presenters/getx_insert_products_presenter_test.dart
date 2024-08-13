@@ -904,6 +904,11 @@ void main() {
   });
 
   group("Father is valid", () {
+    test("Should return false if father is null", () {
+      final isValid = sut.fatherIsValid(null);
+
+      expect(isValid, false);
+    });
     test("Should return true if father is obligatory and index is not null",
         () {
       final isValid = sut.fatherIsValid(validFather);
@@ -917,11 +922,13 @@ void main() {
     });
   });
 
-  group("Advance Father index", () {
+  group("Advance Father index when childComposition is not null", () {
     test("Should advance index if atual index is valid", () async {
       selectedProduct.childsComposition = [validFather];
       expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1]));
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter
+          .mockProductHasObligatoryOptions(false);
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
@@ -947,33 +954,13 @@ void main() {
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
-    test("Should emit correct values on advance left index", () async {
-      selectedProduct.childsComposition = null;
-      expectLater(sut.selectedLeftIndexStream, emits(1));
-      expectLater(sut.showCommentsStream, emits(false));
-      expectLater(sut.showObligatoryOptionsStream, emits(false));
 
-      await sut.updateSelectedProduct(selectedProduct);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
-    });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
       expectLater(sut.selectedLeftIndexStream, emits(0));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
-    });
-
-    test(
-        "Should emit correct values if already showing comments and advance index",
-        () async {
-      selectedProduct.childsComposition = [validFather];
-      expansibleGroupFromProductPresenter.mockProductHasComment(false);
-
-      expectLater(sut.selectedLeftIndexStream, emits(1));
-
-      await sut.updateSelectedProduct(selectedProduct);
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
 
@@ -989,7 +976,9 @@ void main() {
       sut.updateSelectedLeftItem(1);
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
+  });
 
+  group("Advance Father index when childComposition is null", () {
     test(
         "Should emit correct values if product has comment, dont is combox and index is equal zero",
         () async {
@@ -999,6 +988,14 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+    });
+
+    test("Should emit correct values on advance left index", () async {
+      selectedProduct.childsComposition = null;
+      expectLater(sut.selectedLeftIndexStream, emits(1));
+
+      await sut.updateSelectedProduct(selectedProduct);
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
   });

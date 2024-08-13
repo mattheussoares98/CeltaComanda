@@ -522,20 +522,26 @@ class GetxInsertProductsPresenter extends GetxController
       indexOfChild: _selectedFatherIndex.value,
     );
 
-    if (_selectedProduct.value?.childsComposition?.length ==
-        _selectedFatherIndex.value) {
-      return true;
-    } else if (!hasObligatoryOptions && !hasComment) {
-      return true;
-    } else if ((!hasComment || !hasObligatoryOptions) &&
-        _selectedFatherIndex.value == 1) {
-      return true;
-    } else if (hasComment &&
-        hasObligatoryOptions &&
-        _selectedFatherIndex.value == 2) {
-      return true;
+    if (_selectedProduct.value?.childsComposition != null) {
+      if (_selectedProduct.value?.childsComposition?.length ==
+          _selectedFatherIndex.value) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      if (!hasObligatoryOptions && !hasComment) {
+        return true;
+      } else if ((!hasComment || !hasObligatoryOptions) &&
+          _selectedFatherIndex.value == 1) {
+        return true;
+      } else if (hasComment &&
+          hasObligatoryOptions &&
+          _selectedFatherIndex.value == 2) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }

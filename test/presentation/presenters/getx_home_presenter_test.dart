@@ -157,7 +157,8 @@ void main() {
 
       sut.onChangePage(
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
       );
 
@@ -255,12 +256,14 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(() => menuPresenter.getGroupsAndProducts(
           commandNumber: sut.commandNumber ?? "001",
-          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter)).called(1);
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter)).called(1);
     });
     test(
         "Should not call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is not fixed command number",
@@ -273,7 +276,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verifyNever(
@@ -291,7 +295,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
@@ -313,7 +318,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -332,7 +338,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -350,7 +357,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -369,7 +377,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
 
@@ -387,7 +396,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -404,7 +414,8 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
   });
@@ -461,7 +472,7 @@ void main() {
       verify(
         () => localCommandData.update(
           CommandEntity(
-            commandNumber: newFixedCommandNumber.toString(),
+            commandNumber: newFixedCommandNumber.toString().padLeft(3, '0'),
             isFixedCommandNumber: true,
           ),
         ),

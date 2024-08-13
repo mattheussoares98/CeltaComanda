@@ -26,28 +26,14 @@ class _PortraitInsertProductsPageBodyState
     extends State<PortraitInsertProductsPageBody> {
   final double buttonHeight = 50;
   bool showComments = false;
+  bool showObligatoryOptions = false;
   bool productHasComment = false;
   bool productHasObligatoryOption = false;
   final _scrollController = ScrollController();
 
-  @override
-  Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
-    InsertProductPresenter insertProductPresenter =
-        Provider.of(context, listen: false);
-
-    showComments = widget.selectedProduct.childsComposition == null &&
-        widget.indexOfLeftItem == 0;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
-
+  void doOnBuildScreen(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
     productHasObligatoryOption =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
       indexOfChild: widget.indexOfLeftItem,
@@ -58,6 +44,38 @@ class _PortraitInsertProductsPageBodyState
       indexOfChild: widget.indexOfLeftItem,
       product: widget.selectedProduct,
     );
+
+    showComments = false;
+    showObligatoryOptions = false;
+
+    if (widget.indexOfLeftItem == 0) {
+      if (productHasComment &&
+          widget.selectedProduct.childsComposition == null) {
+        showComments = true;
+      } else if (productHasObligatoryOption) {
+        showObligatoryOptions = true;
+      }
+    } else if (widget.indexOfLeftItem == 1 && productHasObligatoryOption) {
+      showObligatoryOptions = true;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
+
+    doOnBuildScreen(expansibleGroupFromProductPresenter);
 
     return SingleChildScrollView(
       controller: _scrollController,
@@ -157,10 +175,20 @@ class _PortraitInsertProductsPageBodyState
                     selectedLeftIndex: widget.indexOfLeftItem,
                   ),
                 ),
+              if (showObligatoryOptions && productHasObligatoryOption)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: ObligatoryOptions(
+                    selectedProduct: widget.selectedProduct,
+                    selectedLeftIndex: widget.indexOfLeftItem,
+                  ),
+                ),
               if (_showUpdateQuantity(
-                  selectedProduct: widget.selectedProduct,
-                  indexOfSelectedFather: widget.indexOfLeftItem,
-                  productHasComment: productHasComment))
+                showComments: showComments,
+                showObligatoryOptions: showObligatoryOptions,
+                product: widget.selectedProduct,
+                indexOfSelectedFather: widget.indexOfLeftItem,
+              ))
                 const UpdateQuantity(),
             ],
           ),
@@ -171,19 +199,16 @@ class _PortraitInsertProductsPageBodyState
 }
 
 bool _showUpdateQuantity({
-  required ProductsViewModel selectedProduct,
+  required bool showComments,
+  required bool showObligatoryOptions,
+  required ProductsViewModel product,
   required int indexOfSelectedFather,
-  required bool productHasComment,
 }) {
-  if (selectedProduct.childsComposition == null) {
-    if (indexOfSelectedFather == 0 && productHasComment) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+  if (showComments || showObligatoryOptions) {
+    return false;
+  } else if (product.childsComposition == null) {
+    return true;
+  } else if (product.childsComposition!.length == indexOfSelectedFather) {
     return true;
   } else {
     return false;

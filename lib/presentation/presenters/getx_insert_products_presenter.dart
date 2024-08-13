@@ -245,11 +245,12 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void updateComment({
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required ProductCompositionViewModel father,
   }) {
-    father.commentFather =
-        expansibleGroupFromProductPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
+    father.commentFather = expansibleGroupFromProductPresenter
+        .getConcatenateSelectedCommentsAndObligatoryOptions(
             father.InternalCodeOnERPCodeChild!.toInt());
   }
 
@@ -314,7 +315,8 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void clearData({
     required ProductsViewModel product,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   }) {
     selectedFatherIndex = 0;
     _totalProductsQuantity = 1;
@@ -339,7 +341,8 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void advanceLeftIndex(ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
+  void advanceLeftIndex(
+      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
     if (_selectedProduct.value?.childsComposition == null) {
       if (expansibleGroupFromProductPresenter.productHasComment(
               product: _selectedProduct.value!,
@@ -354,10 +357,11 @@ class GetxInsertProductsPresenter extends GetxController
     final atualFather =
         _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
 
-    bool productHasComment = expansibleGroupFromProductPresenter.productHasComment(
-            product: _selectedProduct.value!,
-            indexOfChild: _selectedFatherIndex.value) &&
-        _selectedFatherIndex.value == 0;
+    bool productHasComment =
+        expansibleGroupFromProductPresenter.productHasComment(
+                product: _selectedProduct.value!,
+                indexOfChild: _selectedFatherIndex.value) &&
+            _selectedFatherIndex.value == 0;
 
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
         _selectedProduct.value!.childsComposition!.length;
@@ -464,4 +468,9 @@ class GetxInsertProductsPresenter extends GetxController
 
     return false;
   }
+
+  final _showComments = false.obs;
+  @override
+  Stream<bool> get showCommentsStream => _showComments.stream;
+  set showComments(bool value) => _showComments.value = value;
 }

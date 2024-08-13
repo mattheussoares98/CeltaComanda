@@ -12,6 +12,7 @@ abstract class InsertProductPresenter implements Listenable {
   Stream<ProductsViewModel?> get selectedProductStream;
   Stream<int> get selectedLeftIndexStream;
   Stream<bool> get doScrollStream;
+  Stream<bool> get showCommentsStream;
   int get totalProductsQuantity;
 
   void updateTotalLiquid(ProductsViewModel product);
@@ -33,7 +34,8 @@ abstract class InsertProductPresenter implements Listenable {
   double calculateProductCompositionPrice(ProductCompositionViewModel product);
   double getProductPrice(ProductsViewModel product);
   void updateComment({
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required ProductCompositionViewModel father,
   });
 
@@ -45,10 +47,12 @@ abstract class InsertProductPresenter implements Listenable {
   void updateSelectedLeftItem(int newIndex);
   void clearData({
     required ProductsViewModel product,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   });
   bool fatherIsValid(ProductCompositionViewModel product);
-  void advanceLeftIndex(ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter);
+  void advanceLeftIndex(
+      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter);
   bool get canAdvanceIndex;
 
   bool getShowComments(

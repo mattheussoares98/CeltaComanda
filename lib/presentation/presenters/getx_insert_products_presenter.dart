@@ -473,4 +473,9 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<bool> get showCommentsStream => _showComments.stream;
   set showComments(bool value) => _showComments.value = value;
+
+  final _showObligatoryOptions = false.obs;
+  @override
+  Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
+  set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
 }

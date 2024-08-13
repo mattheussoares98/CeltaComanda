@@ -13,6 +13,7 @@ abstract class InsertProductPresenter implements Listenable {
   Stream<int> get selectedLeftIndexStream;
   Stream<bool> get doScrollStream;
   Stream<bool> get showCommentsStream;
+  Stream<bool> get showObligatoryOptionsStream;
   int get totalProductsQuantity;
 
   void updateTotalLiquid(ProductsViewModel product);

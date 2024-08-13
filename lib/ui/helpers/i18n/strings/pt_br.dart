@@ -103,7 +103,9 @@ class PtBr implements Translation {
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get name => 'Nome';
+  String get no => 'Não';
   String get obligatory => 'Obrigatório';
+  String get obligatoryOptions => 'Opções obrigatórias';
   String get optional => 'Opcional';
   String get password => 'Senha';
   String get peopleQuantity => 'Quantidade de pessoas';
@@ -143,4 +145,5 @@ class PtBr implements Translation {
   String get wait => 'Aguarde...';
   String get wantRemoveRequestedProduct =>
       'Deseja realmente remover o produto dos produtos solicitados?';
+  String get yes => "Sim";
 }

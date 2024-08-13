@@ -86,7 +86,9 @@ abstract class Translation {
   String get loadMenu;
   String get login;
   String get name;
+  String get no;
   String get obligatory;
+  String get obligatoryOptions;
   String get optional;
   String get password;
   String get peopleQuantity;
@@ -123,4 +125,5 @@ abstract class Translation {
   String get validateEnterprise;
   String get wait;
   String get wantRemoveRequestedProduct;
+  String get yes;
 }

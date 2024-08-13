@@ -101,7 +101,9 @@ class EnUs implements Translation {
   String get loadMenu => 'Load menu';
   String get login => 'Login';
   String get name => 'Name';
+  String get no => 'No';
   String get obligatory => 'Mandatory';
+  String get obligatoryOptions => 'Mandatory options';
   String get optional => 'Optional';
   String get password => 'Password';
   String get peopleQuantity => 'Number of people';
@@ -140,4 +142,5 @@ class EnUs implements Translation {
   String get wait => 'Please wait...';
   String get wantRemoveRequestedProduct =>
       'Do you really want to remove the product from the requested products?';
+  String get yes => "yes";
 }

@@ -306,7 +306,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void updateSelectedLeftItem(int newIndex) {
+  void updateFatherIndex(int newIndex) {
     allPreviousFathersAreValids(newIndex);
 
     if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {
@@ -506,4 +506,36 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
   set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
+
+  @override
+  bool getShowUpdateQuantity(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
+      product: _selectedProduct.value!,
+      indexOfChild: _selectedFatherIndex.value,
+    );
+
+    bool hasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      product: _selectedProduct.value!,
+      indexOfChild: _selectedFatherIndex.value,
+    );
+
+    if (_selectedProduct.value?.childsComposition?.length ==
+        _selectedFatherIndex.value) {
+      return true;
+    } else if (!hasObligatoryOptions && !hasComment) {
+      return true;
+    } else if ((!hasComment || !hasObligatoryOptions) &&
+        _selectedFatherIndex.value == 1) {
+      return true;
+    } else if (hasComment &&
+        hasObligatoryOptions &&
+        _selectedFatherIndex.value == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -45,7 +45,7 @@ abstract class InsertProductPresenter implements Listenable {
     required int? index,
   });
 
-  void updateSelectedLeftItem(int newIndex);
+  void updateFatherIndex(int newIndex);
   void clearData({
     required ProductsViewModel product,
     required ExpansibleGroupFromProductPresenter
@@ -61,6 +61,10 @@ abstract class InsertProductPresenter implements Listenable {
   );
 
   bool getShowObligatoryOptions(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  );
+
+  bool getShowUpdateQuantity(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   );
 }

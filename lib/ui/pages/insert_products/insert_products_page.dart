@@ -24,6 +24,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   bool showComments = false;
   bool productHasComments = false;
   bool productHasObligatoryOptions = false;
+  bool showUpdateQuantity = false;
 
   @override
   void dispose() {
@@ -91,19 +92,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       indexOfChild: indexOfAtualFather,
       product: selectedProduct!,
     );
-
-    showObligatoryOptions = false;
-
-    if (indexOfAtualFather == 0) {
-      if (productHasComments && selectedProduct!.childsComposition == null) {
-      } else if (productHasObligatoryOptions) {
-        showObligatoryOptions = true;
-      }
-    } else if (indexOfAtualFather == 1 &&
-        productHasObligatoryOptions &&
-        selectedProduct!.childsComposition != null) {
-      showObligatoryOptions = true;
-    }
   }
 
   @override

@@ -91,7 +91,7 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        insertProductPresenter.updateSelectedLeftItem(indexOfLeftSelectedItem);
+        insertProductPresenter.updateFatherIndex(indexOfLeftSelectedItem);
       },
       child: Container(
         height: 42,

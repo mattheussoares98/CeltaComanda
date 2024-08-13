@@ -370,7 +370,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void advanceLeftIndex(
+  void advanceFatherIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     bool productHasComment =

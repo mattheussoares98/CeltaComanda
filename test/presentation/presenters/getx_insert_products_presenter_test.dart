@@ -989,7 +989,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
       sut.updateFatherIndex(0);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should show comments if hasComment, comment not showing and atualFather is valid",
@@ -1002,7 +1002,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should emit correct values if childsComposition not null, productHasObligatoryOptions and fatherIsValid",
@@ -1016,8 +1016,8 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
 
     test("Should not advance index if atual index is invalid", () async {
@@ -1030,7 +1030,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
       sut.updateFatherIndex(0);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
 
     test(
@@ -1047,7 +1047,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
       sut.updateFatherIndex(1);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
   });
 
@@ -1065,7 +1065,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
       sut.updateFatherIndex(1);
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
 
     test("Should emit correct values on advance left index", () async {
@@ -1077,7 +1077,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
   });
 

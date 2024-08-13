@@ -121,7 +121,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       if (widget.leftSelectedIndex == 0 &&
           expansibleGroupFromProductPresenter.productHasComment(
               product: widget.selectedProduct, indexOfChild: 0)) {
-        insertProductsPresenter.advanceLeftIndex(expansibleGroupFromProductPresenter);
+        insertProductsPresenter.advanceFatherIndex(expansibleGroupFromProductPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
@@ -135,7 +135,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     } else {
       if (widget.leftSelectedIndex !=
           widget.selectedProduct.childsComposition!.length) {
-        insertProductsPresenter.advanceLeftIndex(expansibleGroupFromProductPresenter);
+        insertProductsPresenter.advanceFatherIndex(expansibleGroupFromProductPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,

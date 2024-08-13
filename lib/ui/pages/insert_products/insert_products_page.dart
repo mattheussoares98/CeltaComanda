@@ -21,6 +21,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   StreamSubscription? mainErrorSubscription;
 
   bool showObligatoryOptions = false;
+  bool showComments = false;
   bool productHasComments = false;
   bool productHasObligatoryOptions = false;
 
@@ -39,15 +40,25 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   double? previousTotalPrice;
 
   void doOnBuildStreams({
-    required AsyncSnapshot<double> snapshotTotalPrice,
-    required AsyncSnapshot<ProductsViewModel?> snapshotSelectedProduct,
+    required AsyncSnapshot<double> snapShowTotalPrice,
+    required AsyncSnapshot<bool> snapShowComments,
+    required AsyncSnapshot<bool> snapShowObligatoryOptions,
+    required AsyncSnapshot<ProductsViewModel?> snapShowSelectedProduct,
     required AsyncSnapshot<int> snapshotLeftItems,
     required InsertProductPresenter insertProductPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) {
-    if (snapshotSelectedProduct.hasData &&
-            snapshotSelectedProduct.data != selectedProduct ||
+    if (snapShowObligatoryOptions.data == true) {
+      showObligatoryOptions = true;
+    }
+
+    if (snapShowComments.data == true) {
+      showComments = true;
+    }
+
+    if (snapShowSelectedProduct.hasData &&
+            snapShowSelectedProduct.data != selectedProduct ||
         (selectedProduct == null && Get.arguments != null)) {
       selectedProduct = Get.arguments;
 
@@ -56,8 +67,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       });
     }
 
-    if (snapshotTotalPrice.hasData && totalLiquid != snapshotTotalPrice.data) {
-      totalLiquid = snapshotTotalPrice.data!;
+    if (snapShowTotalPrice.hasData && totalLiquid != snapShowTotalPrice.data) {
+      totalLiquid = snapShowTotalPrice.data!;
     }
 
     if (snapshotLeftItems.hasData &&
@@ -136,10 +147,13 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                   builder:
                                       (context, snapshotShowObligatoryOptions) {
                                     doOnBuildStreams(
+                                      snapShowComments: snapshotShowComments,
+                                      snapShowObligatoryOptions:
+                                          snapshotShowObligatoryOptions,
                                       insertProductPresenter:
                                           insertProductPresenter,
-                                      snapshotTotalPrice: snapshotTotalPrice,
-                                      snapshotSelectedProduct:
+                                      snapShowTotalPrice: snapshotTotalPrice,
+                                      snapShowSelectedProduct:
                                           snapshotSelectedProduct,
                                       snapshotLeftItems: snapshotLeftItems,
                                       expansibleGroupFromProductPresenter:

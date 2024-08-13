@@ -9,13 +9,11 @@ class FatherItem extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
-  final bool showComments;
   const FatherItem({
     required this.father,
     required this.indexOfLeftSelectedItem,
     required this.selectedProduct,
     required this.itemColor,
-    required this.showComments,
     super.key,
   });
 
@@ -86,14 +84,14 @@ class FatherItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    InsertProductPresenter insertProductsPresenter =
+    InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
     return InkWell(
       onTap: () {
-        insertProductsPresenter.updateSelectedLeftItem(indexOfLeftSelectedItem);
+        insertProductPresenter.updateSelectedLeftItem(indexOfLeftSelectedItem);
       },
       child: Container(
         height: 42,
@@ -111,7 +109,9 @@ class FatherItem extends StatelessWidget {
                       ? null
                       : <TextSpan>[
                           TextSpan(
-                            text: showComments
+                            text: insertProductPresenter.getShowComments(
+                              expansibleGroupFromProductPresenter,
+                            )
                                 ? "  (${R.string.comment.toUpperCase()})"
                                 : null,
                             style: const TextStyle(

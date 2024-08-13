@@ -8,9 +8,7 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfLeftItem;
   final double totalLiquid;
-  final AsyncSnapshot<bool> snapshowShowComments;
   final bool showUpdateQuantity;
-  final bool showComments;
   final bool productHasComments;
   final bool productHasObligatoryOptions;
   final bool showObligatoryOptions;
@@ -18,9 +16,7 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
     required this.selectedProduct,
     required this.indexOfLeftItem,
     required this.totalLiquid,
-    required this.snapshowShowComments,
     required this.showUpdateQuantity,
-    required this.showComments,
     required this.productHasComments,
     required this.productHasObligatoryOptions,
     required this.showObligatoryOptions,
@@ -56,9 +52,6 @@ class _PortraitInsertProductsPageBodyState
               FathersItems(
                 selectedProduct: widget.selectedProduct,
                 indexOfSelectedFather: widget.indexOfLeftItem,
-                showComments:
-                    widget.selectedProduct.childsComposition == null &&
-                        widget.indexOfLeftItem == 0,
                 productHasComments: widget.productHasComments,
                 productHasObligatoryOptions: widget.productHasObligatoryOptions,
               ),
@@ -90,7 +83,6 @@ class _PortraitInsertProductsPageBodyState
                             TitleText(
                               indexOfLeftItem: widget.indexOfLeftItem,
                               selectedProduct: widget.selectedProduct,
-                              showComments: widget.showComments,
                               showObligatoryOptions:
                                   widget.showObligatoryOptions,
                             ),
@@ -130,7 +122,9 @@ class _PortraitInsertProductsPageBodyState
               if (widget.selectedProduct.childsComposition != null &&
                   widget.indexOfLeftItem <
                       widget.selectedProduct.childsComposition!.length &&
-                  !widget.showComments)
+                  !insertProductPresenter.getShowComments(
+                    expansibleGroupFromProductPresenter,
+                  ))
                 ChildsRadios(
                   callSetState: () {
                     setState(() {});
@@ -139,7 +133,10 @@ class _PortraitInsertProductsPageBodyState
                       widget.selectedProduct, widget.indexOfLeftItem),
                   selectedProduct: widget.selectedProduct,
                 ),
-              if (widget.showComments && widget.productHasComments)
+              if (insertProductPresenter.getShowComments(
+                    expansibleGroupFromProductPresenter,
+                  ) &&
+                  widget.productHasComments)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: CommentsList(
@@ -157,7 +154,9 @@ class _PortraitInsertProductsPageBodyState
                   ),
                 ),
               if (_showUpdateQuantity(
-                showComments: widget.showComments,
+                showComments: insertProductPresenter.getShowComments(
+                  expansibleGroupFromProductPresenter,
+                ),
                 showObligatoryOptions: widget.showObligatoryOptions,
                 product: widget.selectedProduct,
                 indexOfSelectedFather: widget.indexOfLeftItem,

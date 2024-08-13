@@ -20,7 +20,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
-  bool showComments = false;
   bool showObligatoryOptions = false;
   bool productHasComments = false;
   bool productHasObligatoryOptions = false;
@@ -82,12 +81,10 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       product: selectedProduct!,
     );
 
-    showComments = false;
     showObligatoryOptions = false;
 
     if (indexOfLeftItem == 0) {
       if (productHasComments && selectedProduct!.childsComposition == null) {
-        showComments = true;
       } else if (productHasObligatoryOptions) {
         showObligatoryOptions = true;
       }
@@ -144,24 +141,24 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               ),
                               body: hasMinWidth(context)
                                   ? LandscapeInsertProductsPageBody(
-                                      showComments: showComments,
                                       productHasComments: productHasComments,
                                       productHasObligatoryOptions:
                                           productHasObligatoryOptions,
                                       showObligatoryOptions:
                                           showObligatoryOptions,
                                       showUpdateQuantity: _showUpdateQuantity(
-                                        showComments: showComments,
                                         showObligatoryOptions:
                                             showObligatoryOptions,
                                         product: selectedProduct!,
                                         indexOfSelectedFather: indexOfLeftItem,
+                                        expansibleGroupFromProductPresenter:
+                                            expansibleGroupFromProductPresenter,
+                                        insertProductPresenter:
+                                            insertProductPresenter,
                                       ),
                                       selectedProduct: selectedProduct!,
                                       indexOfLeftItem: indexOfLeftItem,
                                       totalLiquid: totalLiquid,
-                                      snapshowShowComments:
-                                          snapshowShowComments,
                                     )
                                   : PortraitInsertProductsPageBody(
                                       productHasComments: productHasComments,
@@ -169,18 +166,18 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                           productHasObligatoryOptions,
                                       showObligatoryOptions:
                                           showObligatoryOptions,
-                                      showComments: showComments,
                                       selectedProduct: selectedProduct!,
                                       indexOfLeftItem: indexOfLeftItem,
                                       totalLiquid: totalLiquid,
-                                      snapshowShowComments:
-                                          snapshowShowComments,
                                       showUpdateQuantity: _showUpdateQuantity(
-                                        showComments: showComments,
                                         showObligatoryOptions:
                                             showObligatoryOptions,
                                         product: selectedProduct!,
                                         indexOfSelectedFather: indexOfLeftItem,
+                                        expansibleGroupFromProductPresenter:
+                                            expansibleGroupFromProductPresenter,
+                                        insertProductPresenter:
+                                            insertProductPresenter,
                                       ),
                                     ),
                             );
@@ -194,12 +191,16 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 }
 
 bool _showUpdateQuantity({
-  required bool showComments,
   required bool showObligatoryOptions,
   required ProductsViewModel product,
   required int indexOfSelectedFather,
+  required InsertProductPresenter insertProductPresenter,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
 }) {
-  if (showComments || showObligatoryOptions) {
+  if (insertProductPresenter
+          .getShowComments(expansibleGroupFromProductPresenter) ||
+      showObligatoryOptions) {
     return false;
   } else if (product.childsComposition == null) {
     return true;

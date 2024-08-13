@@ -6,13 +6,11 @@ import '../../pages.dart';
 class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
-  final bool showComments;
   final bool productHasComments;
   final bool productHasObligatoryOptions;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
-    required this.showComments,
     required this.productHasComments,
     required this.productHasObligatoryOptions,
     super.key,
@@ -116,8 +114,6 @@ class _FathersItemsState extends State<FathersItems> {
                     selectedProduct: widget.selectedProduct,
                     father: null,
                     itemColor: getItemColor(index, context),
-                    showComments: widget.showComments &&
-                        index == widget.indexOfSelectedFather,
                   );
                 });
           }
@@ -129,8 +125,6 @@ class _FathersItemsState extends State<FathersItems> {
             indexOfLeftSelectedItem: index,
             selectedProduct: widget.selectedProduct,
             itemColor: getItemColor(index, context),
-            showComments:
-                widget.showComments && index == widget.indexOfSelectedFather,
           );
         },
       ),

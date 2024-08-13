@@ -7,12 +7,10 @@ import '../../pages.dart';
 class TitleText extends StatelessWidget {
   final int indexOfLeftItem;
   final ProductsViewModel selectedProduct;
-  final bool showComments;
   final bool showObligatoryOptions;
   const TitleText({
     required this.indexOfLeftItem,
     required this.selectedProduct,
-    required this.showComments,
     required this.showObligatoryOptions,
     super.key,
   });
@@ -32,9 +30,14 @@ class TitleText extends StatelessWidget {
     return selectedFather;
   }
 
-  String getTitleText(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  ) {
+  String getTitleText({
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required InsertProductPresenter insertProductPresenter,
+  }) {
+    bool showComments = insertProductPresenter.getShowComments(
+      expansibleGroupFromProductPresenter,
+    );
     if (showComments) {
       return R.string.ifWantSelectComments;
     } else if (showObligatoryOptions) {
@@ -62,9 +65,15 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
 
     return Text(
-      getTitleText(expansibleGroupFromProductPresenter),
+      getTitleText(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        insertProductPresenter: insertProductPresenter,
+      ),
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: getStringSize(context) * 1.4,

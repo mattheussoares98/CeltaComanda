@@ -8,8 +8,6 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfLeftItem;
   final double totalLiquid;
-  final AsyncSnapshot<bool> snapshowShowComments;
-  final bool showComments;
   final bool showObligatoryOptions;
   final bool showUpdateQuantity;
   final bool productHasComments;
@@ -18,8 +16,6 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
     required this.selectedProduct,
     required this.indexOfLeftItem,
     required this.totalLiquid,
-    required this.snapshowShowComments,
-    required this.showComments,
     required this.showObligatoryOptions,
     required this.showUpdateQuantity,
     required this.productHasComments,
@@ -36,7 +32,7 @@ class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter =
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
@@ -54,7 +50,6 @@ class _LandscapeInsertProductsPageBodyState
                 child: FathersItems(
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
-                  showComments: widget.showComments,
                   productHasComments: widget.productHasComments,
                   productHasObligatoryOptions:
                       widget.productHasObligatoryOptions,
@@ -91,10 +86,11 @@ class _LandscapeInsertProductsPageBodyState
                   TitleText(
                     indexOfLeftItem: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
-                    showComments: widget.showComments,
                     showObligatoryOptions: widget.showObligatoryOptions,
                   ),
-                if (widget.showComments)
+                if (insertProductPresenter.getShowComments(
+                  expansibleGroupFromProductPresenter,
+                ))
                   Expanded(
                     child: CommentsList(
                       selectedProduct: widget.selectedProduct,
@@ -110,7 +106,9 @@ class _LandscapeInsertProductsPageBodyState
                   ),
                 if (widget.showUpdateQuantity)
                   const Expanded(child: UpdateQuantity()),
-                if (!widget.showComments &&
+                if (!insertProductPresenter.getShowComments(
+                      expansibleGroupFromProductPresenter,
+                    ) &&
                     widget.selectedProduct.childsComposition != null &&
                     widget.selectedProduct.childsComposition?.length !=
                         widget.indexOfLeftItem)
@@ -128,7 +126,8 @@ class _LandscapeInsertProductsPageBodyState
                   totalPrice: widget.totalLiquid,
                   quantity: insertProductPresenter.totalProductsQuantity,
                   advanceSelectedIndex: () {
-                    insertProductPresenter.advanceLeftIndex(commentsPresenter);
+                    insertProductPresenter
+                        .advanceLeftIndex(expansibleGroupFromProductPresenter);
                   },
                   selectedProduct: widget.selectedProduct,
                   leftSelectedIndex: widget.indexOfLeftItem,

@@ -452,7 +452,6 @@ void main() {
       ).called(1);
     });
     test("Should update local command data", () async {
-      localCommandData.mockUpdate();
       await sut.updateFixedCommandNumber(
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,

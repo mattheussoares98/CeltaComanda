@@ -213,7 +213,7 @@ void main() {
       expect(
         sut.productHasComment(
           product: loadedProducts[0],
-          indexOfChild: -1,
+          indexOfChild: 0,
         ),
         false,
       );

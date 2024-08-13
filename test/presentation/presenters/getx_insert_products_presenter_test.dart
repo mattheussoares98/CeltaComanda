@@ -934,7 +934,6 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.advanceLeftIndex(commentsPresenter);
-      sut.advanceLeftIndex(commentsPresenter);
     });
 
     test(

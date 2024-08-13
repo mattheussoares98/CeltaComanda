@@ -299,7 +299,6 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void updateSelectedLeftItem(int newIndex) {
-    showComments = false;
     allPreviousFathersAreValids(newIndex);
 
     if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {
@@ -317,7 +316,6 @@ class GetxInsertProductsPresenter extends GetxController
     required ProductsViewModel product,
     required ExpansibleGroupFromProductPresenter commentsPresenter,
   }) {
-    showComments = false;
     selectedFatherIndex = 0;
     _totalProductsQuantity = 1;
 
@@ -340,18 +338,12 @@ class GetxInsertProductsPresenter extends GetxController
     }
   }
 
-  final _showComments = false.obs;
-  @override
-  Stream<bool> get showCommentsStream => _showComments.stream;
-  set showComments(bool value) => _showComments.value = value;
-
   @override
   void advanceLeftIndex(ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (_selectedProduct.value?.childsComposition == null) {
       if (commentsPresenter.productHasComment(
               product: _selectedProduct.value!, indexOfChild: -1) &&
           _selectedFatherIndex.value == 0) {
-        showComments = true;
         _selectedFatherIndex.value++;
       }
 
@@ -369,13 +361,9 @@ class GetxInsertProductsPresenter extends GetxController
         _selectedProduct.value!.childsComposition!.length;
 
     if (!fatherIsValid(atualFather)) {
-    } else if (productHasComment && _showComments.value == false) {
-      showComments = true;
     } else if (newIndexIsOfQuantity && productHasComment) {
-      showComments = false;
       _selectedFatherIndex.value++;
     } else {
-      showComments = false;
       _selectedFatherIndex.value++;
     }
 

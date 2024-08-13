@@ -263,13 +263,6 @@ void main() {
       sut.updateSelectedLeftItem(2);
       sut.updateSelectedLeftItem(3);
     });
-    test("Should update to false the stream to show comments", () async {
-      expectLater(sut.showCommentsStream, emits(false));
-
-      sut.updateSelectedProduct(selectedProduct);
-      sut.updateSelectedLeftItem(0);
-      sut.updateSelectedLeftItem(0);
-    });
   });
 
   group("clearSelectedComboxData", () {
@@ -335,15 +328,6 @@ void main() {
       );
 
       verify(() => commentsPresenter.unselectAllComments()).called(1);
-    });
-
-    test("Should emit false in showComments", () {
-      expectLater(sut.showCommentsStream, emits(false));
-
-      sut.clearData(
-        product: selectedProduct,
-        commentsPresenter: commentsPresenter,
-      );
     });
   });
   group("sut.UpdateSaleRequestTemp", () {
@@ -940,21 +924,13 @@ void main() {
       sut.updateSelectedLeftItem(0);
       sut.advanceLeftIndex(commentsPresenter);
     });
-    test("Should show comments if produt has comment and not showing comments",
-        () async {
-      selectedProduct.childsComposition = [validFather];
-      expectLater(sut.showCommentsStream, emits(true));
 
-      await sut.updateSelectedProduct(selectedProduct);
-      sut.advanceLeftIndex(commentsPresenter);
-    });
     test(
         "Should emit correct values if already showing comments and advance index",
         () async {
       selectedProduct.childsComposition = [validFather];
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
-      expectLater(sut.showCommentsStream, emitsInOrder([true, false]));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.advanceLeftIndex(commentsPresenter);
@@ -968,7 +944,6 @@ void main() {
       selectedProduct.childsComposition = [validFather, invalidFather];
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
-      expectLater(sut.showCommentsStream, emits(false));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
@@ -981,20 +956,6 @@ void main() {
       selectedProduct.childsComposition = null;
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
-      expectLater(sut.showCommentsStream, emits(false));
-
-      await sut.updateSelectedProduct(selectedProduct);
-      sut.updateSelectedLeftItem(1);
-      sut.advanceLeftIndex(commentsPresenter);
-    });
-
-    test(
-        "Should emit correct values if product dont have comment, dont is combox and index is equal zero",
-        () async {
-      commentsPresenter.mockProductHasComment(false);
-      selectedProduct.childsComposition = null;
-
-      expectLater(sut.showCommentsStream, emits(false));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);

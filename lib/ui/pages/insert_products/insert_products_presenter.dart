@@ -9,7 +9,6 @@ abstract class InsertProductPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<double> get totalPrice;
   Stream<bool> get childsCompositionIsValidStream;
-  Stream<bool> get showCommentsStream;
   Stream<ProductsViewModel?> get selectedProductStream;
   Stream<int> get selectedLeftIndexStream;
   Stream<bool> get doScrollStream;

@@ -88,7 +88,9 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       } else if (productHasObligatoryOptions) {
         showObligatoryOptions = true;
       }
-    } else if (indexOfLeftItem == 1 && productHasObligatoryOptions) {
+    } else if (indexOfLeftItem == 1 &&
+        productHasObligatoryOptions &&
+        selectedProduct!.childsComposition != null) {
       showObligatoryOptions = true;
     }
   }
@@ -124,64 +126,57 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                   return StreamBuilder<int>(
                       stream: insertProductPresenter.selectedLeftIndexStream,
                       builder: (context, snapshotLeftItems) {
-                        return StreamBuilder<bool>(
-                          stream: insertProductPresenter.showCommentsStream,
-                          builder: (context, snapshowShowComments) {
-                            doOnBuildStreams(
-                              insertProductPresenter: insertProductPresenter,
-                              snapshotTotalPrice: snapshotTotalPrice,
-                              snapshotSelectedProduct: snapshotSelectedProduct,
-                              snapshotLeftItems: snapshotLeftItems,
-                              expansibleGroupFromProductPresenter:
-                                  expansibleGroupFromProductPresenter,
-                            );
-                            return Scaffold(
-                              appBar: AppBar(
-                                title: Text(selectedProduct!.Name),
-                              ),
-                              body: hasMinWidth(context)
-                                  ? LandscapeInsertProductsPageBody(
-                                      productHasComments: productHasComments,
-                                      productHasObligatoryOptions:
-                                          productHasObligatoryOptions,
-                                      showObligatoryOptions:
-                                          showObligatoryOptions,
-                                      showUpdateQuantity: _showUpdateQuantity(
-                                        showObligatoryOptions:
-                                            showObligatoryOptions,
-                                        product: selectedProduct!,
-                                        indexOfSelectedFather: indexOfLeftItem,
-                                        expansibleGroupFromProductPresenter:
-                                            expansibleGroupFromProductPresenter,
-                                        insertProductPresenter:
-                                            insertProductPresenter,
-                                      ),
-                                      selectedProduct: selectedProduct!,
-                                      indexOfLeftItem: indexOfLeftItem,
-                                      totalLiquid: totalLiquid,
-                                    )
-                                  : PortraitInsertProductsPageBody(
-                                      productHasComments: productHasComments,
-                                      productHasObligatoryOptions:
-                                          productHasObligatoryOptions,
-                                      showObligatoryOptions:
-                                          showObligatoryOptions,
-                                      selectedProduct: selectedProduct!,
-                                      indexOfLeftItem: indexOfLeftItem,
-                                      totalLiquid: totalLiquid,
-                                      showUpdateQuantity: _showUpdateQuantity(
-                                        showObligatoryOptions:
-                                            showObligatoryOptions,
-                                        product: selectedProduct!,
-                                        indexOfSelectedFather: indexOfLeftItem,
-                                        expansibleGroupFromProductPresenter:
-                                            expansibleGroupFromProductPresenter,
-                                        insertProductPresenter:
-                                            insertProductPresenter,
-                                      ),
-                                    ),
-                            );
-                          },
+                        doOnBuildStreams(
+                          insertProductPresenter: insertProductPresenter,
+                          snapshotTotalPrice: snapshotTotalPrice,
+                          snapshotSelectedProduct: snapshotSelectedProduct,
+                          snapshotLeftItems: snapshotLeftItems,
+                          expansibleGroupFromProductPresenter:
+                              expansibleGroupFromProductPresenter,
+                        );
+                        return Scaffold(
+                          appBar: AppBar(
+                            title: Text(selectedProduct!.Name),
+                          ),
+                          body: hasMinWidth(context)
+                              ? LandscapeInsertProductsPageBody(
+                                  productHasComments: productHasComments,
+                                  productHasObligatoryOptions:
+                                      productHasObligatoryOptions,
+                                  showObligatoryOptions: showObligatoryOptions,
+                                  showUpdateQuantity: _showUpdateQuantity(
+                                    showObligatoryOptions:
+                                        showObligatoryOptions,
+                                    product: selectedProduct!,
+                                    indexOfSelectedFather: indexOfLeftItem,
+                                    expansibleGroupFromProductPresenter:
+                                        expansibleGroupFromProductPresenter,
+                                    insertProductPresenter:
+                                        insertProductPresenter,
+                                  ),
+                                  selectedProduct: selectedProduct!,
+                                  indexOfLeftItem: indexOfLeftItem,
+                                  totalLiquid: totalLiquid,
+                                )
+                              : PortraitInsertProductsPageBody(
+                                  productHasComments: productHasComments,
+                                  productHasObligatoryOptions:
+                                      productHasObligatoryOptions,
+                                  showObligatoryOptions: showObligatoryOptions,
+                                  selectedProduct: selectedProduct!,
+                                  indexOfLeftItem: indexOfLeftItem,
+                                  totalLiquid: totalLiquid,
+                                  showUpdateQuantity: _showUpdateQuantity(
+                                    showObligatoryOptions:
+                                        showObligatoryOptions,
+                                    product: selectedProduct!,
+                                    indexOfSelectedFather: indexOfLeftItem,
+                                    expansibleGroupFromProductPresenter:
+                                        expansibleGroupFromProductPresenter,
+                                    insertProductPresenter:
+                                        insertProductPresenter,
+                                  ),
+                                ),
                         );
                       });
                 });

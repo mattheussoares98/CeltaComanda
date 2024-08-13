@@ -39,4 +39,11 @@ class CommentsPresenterSpy extends Mock
           indexOfChild: any(named: "indexOfChild"),
         )).thenAnswer((_) => value);
   }
+
+  void mockProductHasObligatoryOptions(bool value) {
+    when(() => this.productHasObligatoryOption(
+          product: any(named: "product"),
+          indexOfChild: any(named: "indexOfChild"),
+        )).thenAnswer((_) => value);
+  }
 }

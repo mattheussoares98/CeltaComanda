@@ -95,6 +95,7 @@ void main() {
         .toList());
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     commentsPresenter.mockProductHasComment(true);
+    commentsPresenter.mockProductHasObligatoryOptions(true);
   }
 
   void initEntitys() {
@@ -1083,6 +1084,19 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
 
       expect(sut.getShowComments(commentsPresenter), true);
+    });
+  });
+
+  group("Get show Obligatory Options", () {
+    test(
+        "Should return true if index == 0, dont have comment, childComposition is null and hasObligatoryOptions",
+        () async {
+      sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
+      commentsPresenter.mockProductHasComment(false);
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.getShowObligatoryOptions(commentsPresenter), true);
     });
   });
 }

@@ -432,4 +432,29 @@ class GetxInsertProductsPresenter extends GetxController
     }
     return false;
   }
+
+  @override
+  bool getShowObligatoryOptions(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
+      product: _selectedProduct.value!,
+      indexOfChild: -1,
+    );
+
+    bool hasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      product: _selectedProduct.value!,
+      indexOfChild: -1,
+    );
+
+    if (_selectedFatherIndex.value == 0 &&
+        !hasComment &&
+        _selectedProduct.value!.childsComposition == null &&
+        hasObligatoryOptions) {
+      return true;
+    } else if (_selectedFatherIndex.value == 1 && hasComment) {}
+
+    return false;
+  }
 }

@@ -54,4 +54,8 @@ abstract class InsertProductPresenter implements Listenable {
   bool getShowComments(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   );
+
+  bool getShowObligatoryOptions(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  );
 }

@@ -1239,6 +1239,20 @@ void main() {
 
       expect(sut.getShowComments(expansibleGroupFromProductPresenter), true);
     });
+    test(
+        "Should return true if childComposition is not null, has product and click in advance index",
+        () async {
+      expectLater(sut.showCommentsStream, emits(true));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      expect(sut.getShowComments(expansibleGroupFromProductPresenter), true);
+    });
   });
 
   group("Get show Obligatory Options", () {

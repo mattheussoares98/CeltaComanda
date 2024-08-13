@@ -471,6 +471,9 @@ class GetxInsertProductsPresenter extends GetxController
   bool getShowComments(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
+    if (_showComments.value == true) {
+      return true;
+    }
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
       product: _selectedProduct.value!,
       indexOfChild: _selectedFatherIndex.value,

@@ -426,9 +426,15 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  bool get showComments {
+  bool getShowComments(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
     if (_selectedFatherIndex.value == 0 &&
-        _selectedProduct.value!.childsComposition == null) {
+        _selectedProduct.value!.childsComposition == null &&
+        !expansibleGroupFromProductPresenter.productHasComment(
+          product: _selectedProduct.value!,
+          indexOfChild: -1,
+        )) {
       return false;
     }
     return false;

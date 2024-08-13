@@ -1116,7 +1116,7 @@ void main() {
       commentsPresenter.mockProductHasComment(true);
       sut.updateSelectedProduct(selectedProduct);
 
-      expect(sut.showComments, false);
+      expect(sut.getShowComments(commentsPresenter), false);
     });
   });
 }

@@ -9,11 +9,17 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
   final int indexOfLeftItem;
   final double totalLiquid;
   final AsyncSnapshot<bool> snapshowShowComments;
+  final bool showComments;
+  final bool showObligatoryOptions;
+  final bool showUpdateQuantity;
   const LandscapeInsertProductsPageBody({
     required this.selectedProduct,
     required this.indexOfLeftItem,
     required this.totalLiquid,
     required this.snapshowShowComments,
+    required this.showComments,
+    required this.showObligatoryOptions,
+    required this.showUpdateQuantity,
     super.key,
   });
 
@@ -24,19 +30,12 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
 
 class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
-  bool showComments = false;
-
   @override
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter commentsPresenter =
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
-    showComments = _getShowComments(
-      snapshowShowComments: widget.snapshowShowComments,
-      product: widget.selectedProduct,
-      indexOfLeftItem: widget.indexOfLeftItem,
-    );
 
     return Row(
       children: [
@@ -51,7 +50,7 @@ class _LandscapeInsertProductsPageBodyState
                 child: FathersItems(
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
-                  showComments: showComments,
+                  showComments: widget.showComments,
                 ),
               ),
               Padding(
@@ -85,21 +84,25 @@ class _LandscapeInsertProductsPageBodyState
                   TitleText(
                     indexOfLeftItem: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
-                    showComments: showComments,
+                    showComments: widget.showComments,
                   ),
-                if (showComments)
+                if (widget.showComments)
                   Expanded(
                     child: CommentsList(
                       selectedProduct: widget.selectedProduct,
                       selectedLeftIndex: widget.indexOfLeftItem,
                     ),
                   ),
-                if (_showUpdateQuantity(
-                  selectedProduct: widget.selectedProduct,
-                  indexOfSelectedFather: widget.indexOfLeftItem,
-                ))
+                if (widget.showObligatoryOptions)
+                  Expanded(
+                    child: ObligatoryOptions(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfLeftItem,
+                    ),
+                  ),
+                if (widget.showUpdateQuantity)
                   const Expanded(child: UpdateQuantity()),
-                if (!showComments &&
+                if (!widget.showComments &&
                     widget.selectedProduct.childsComposition != null &&
                     widget.selectedProduct.childsComposition?.length !=
                         widget.indexOfLeftItem)
@@ -135,29 +138,3 @@ class _LandscapeInsertProductsPageBodyState
 ProductCompositionViewModel _selectedFather(
         ProductsViewModel selectedProduct, int indexOfLeftItem) =>
     selectedProduct.childsComposition![indexOfLeftItem];
-
-bool _getShowComments({
-  required AsyncSnapshot<bool> snapshowShowComments,
-  required ProductsViewModel product,
-  required int indexOfLeftItem,
-}) {
-  if (product.childsComposition == null && indexOfLeftItem == 0) {
-    return true;
-  } else if (product.childsComposition == null && indexOfLeftItem == 1) {
-    return false;
-  } else {
-    return snapshowShowComments.data ?? false;
-  }
-}
-
-bool _showUpdateQuantity({
-  required ProductsViewModel selectedProduct,
-  required int indexOfSelectedFather,
-}) {
-  if (selectedProduct.childsComposition != null &&
-      indexOfSelectedFather == selectedProduct.childsComposition!.length) {
-    return true;
-  } else {
-    return false;
-  }
-}

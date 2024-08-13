@@ -144,6 +144,16 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               ),
                               body: hasMinWidth(context)
                                   ? LandscapeInsertProductsPageBody(
+                                      showComments: showComments,
+                                      showObligatoryOptions:
+                                          showObligatoryOptions,
+                                      showUpdateQuantity: _showUpdateQuantity(
+                                        showComments: showComments,
+                                        showObligatoryOptions:
+                                            showObligatoryOptions,
+                                        product: selectedProduct!,
+                                        indexOfSelectedFather: indexOfLeftItem,
+                                      ),
                                       selectedProduct: selectedProduct!,
                                       indexOfLeftItem: indexOfLeftItem,
                                       totalLiquid: totalLiquid,

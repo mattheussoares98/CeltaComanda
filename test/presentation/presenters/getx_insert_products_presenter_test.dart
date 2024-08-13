@@ -94,6 +94,7 @@ void main() {
             element, optionalFathers))
         .toList());
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    commentsPresenter.mockProductHasComment(true);
   }
 
   void initEntitys() {
@@ -941,8 +942,6 @@ void main() {
     });
     test("Should show comments if produt has comment and not showing comments",
         () async {
-      commentsPresenter.mockProductHasComment(true);
-
       selectedProduct.childsComposition = [validFather];
       expectLater(sut.showCommentsStream, emits(true));
 
@@ -952,7 +951,6 @@ void main() {
     test(
         "Should emit correct values if already showing comments and advance index",
         () async {
-      commentsPresenter.mockProductHasComment(true);
       selectedProduct.childsComposition = [validFather];
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
@@ -980,7 +978,6 @@ void main() {
     test(
         "Should emit correct values if product has comment, dont is combox and index is equal zero",
         () async {
-      commentsPresenter.mockProductHasComment(true);
       selectedProduct.childsComposition = null;
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
@@ -1110,13 +1107,22 @@ void main() {
   });
 
   group("Get show comments", () {
-    test("Should return false if index is 0, hascomment and dont have childs",
+    test(
+        "Should return false if index is 0, dont have comments and dont have childs",
         () async {
       sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
-      commentsPresenter.mockProductHasComment(true);
-      sut.updateSelectedProduct(selectedProduct);
+      commentsPresenter.mockProductHasComment(false);
+      await sut.updateSelectedProduct(selectedProduct);
 
       expect(sut.getShowComments(commentsPresenter), false);
+    });
+    test("Should return true if index is 0, hascomment and dont have childs",
+        () async {
+      selectedProduct.childsComposition = null;
+      sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
+      await sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.getShowComments(commentsPresenter), true);
     });
   });
 }

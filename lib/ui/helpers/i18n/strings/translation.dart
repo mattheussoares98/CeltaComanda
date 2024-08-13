@@ -88,7 +88,7 @@ abstract class Translation {
   String get name;
   String get no;
   String get obligatory;
-  String get obligatoryOptions;
+  String get obligatoryComments;
   String get optional;
   String get password;
   String get peopleQuantity;
@@ -102,6 +102,7 @@ abstract class Translation {
   String get reserved;
   String get reserveTable;
   String get searchProduct;
+  String get selectOneComment;
   String get selectedProductsAndComments;
   String get selectPaymentOption;
   String get selectProduct;

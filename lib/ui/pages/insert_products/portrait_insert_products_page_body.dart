@@ -81,8 +81,6 @@ class _PortraitInsertProductsPageBodyState
                             TitleText(
                               indexOfLeftItem: widget.indexOfLeftItem,
                               selectedProduct: widget.selectedProduct,
-                              showObligatoryOptions:
-                                  widget.showObligatoryOptions,
                             ),
                           ],
                         ),

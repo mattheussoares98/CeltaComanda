@@ -84,7 +84,6 @@ class _LandscapeInsertProductsPageBodyState
                   TitleText(
                     indexOfLeftItem: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
-                    showObligatoryOptions: widget.showObligatoryOptions,
                   ),
                 if (insertProductPresenter.getShowComments(
                   expansibleGroupFromProductPresenter,

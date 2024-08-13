@@ -65,19 +65,38 @@ class FatherItem extends StatelessWidget {
         if (productHasComment) {
           return R.string.comments.toUpperCase();
         } else if (productHasObligatoryOption) {
-          return R.string.obligatoryOptions.toUpperCase();
+          return R.string.obligatoryComments.toUpperCase();
         } else {
           return R.string.quantity.toUpperCase();
         }
       } else if (atualIndex == 1) {
         if (productHasComment && productHasObligatoryOption) {
-          return R.string.obligatoryOptions.toUpperCase();
+          return R.string.obligatoryComments.toUpperCase();
         } else {
           return R.string.quantity.toUpperCase();
         }
       }
 
       return R.string.quantity.toUpperCase();
+    }
+  }
+
+  String appendStringToIndicateShowingCommentsOrObrigatoryOptions(
+    InsertProductPresenter insertProductPresenter,
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    if (insertProductPresenter.getShowComments(
+          expansibleGroupFromProductPresenter,
+        ) &&
+        atualIndex == indexOfSelectedFather) {
+      return "  (${R.string.comment.toUpperCase()})";
+    } else if (insertProductPresenter.getShowObligatoryOptions(
+          expansibleGroupFromProductPresenter,
+        ) &&
+        atualIndex == indexOfSelectedFather) {
+      return "  (${R.string.obligatoryComments.toUpperCase()})";
+    } else {
+      return "";
     }
   }
 
@@ -108,12 +127,11 @@ class FatherItem extends StatelessWidget {
                       ? null
                       : <TextSpan>[
                           TextSpan(
-                            text: insertProductPresenter.getShowComments(
-                                      expansibleGroupFromProductPresenter,
-                                    ) &&
-                                    atualIndex == indexOfSelectedFather
-                                ? "  (${R.string.comment.toUpperCase()})"
-                                : null,
+                            text:
+                                appendStringToIndicateShowingCommentsOrObrigatoryOptions(
+                              insertProductPresenter,
+                              expansibleGroupFromProductPresenter,
+                            ),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.yellow,

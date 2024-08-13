@@ -7,11 +7,9 @@ import '../../pages.dart';
 class TitleText extends StatelessWidget {
   final int indexOfLeftItem;
   final ProductsViewModel selectedProduct;
-  final bool showObligatoryOptions;
   const TitleText({
     required this.indexOfLeftItem,
     required this.selectedProduct,
-    required this.showObligatoryOptions,
     super.key,
   });
 
@@ -38,10 +36,15 @@ class TitleText extends StatelessWidget {
     bool showComments = insertProductPresenter.getShowComments(
       expansibleGroupFromProductPresenter,
     );
+    bool showObligatoryOptions =
+        insertProductPresenter.getShowObligatoryOptions(
+      expansibleGroupFromProductPresenter,
+    );
+
     if (showComments) {
       return R.string.ifWantSelectComments;
     } else if (showObligatoryOptions) {
-      return "SELECIONE PELO MENOS UMA OPÇÃO OBRIGATÓRIA (CRIAR TRANSLATION)";
+      return R.string.selectOneComment;
     } else if (selectedProduct.childsComposition == null) {
       return R.string.selectQuantity;
     } else {

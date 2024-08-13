@@ -105,7 +105,7 @@ class PtBr implements Translation {
   String get name => 'Nome';
   String get no => 'Não';
   String get obligatory => 'Obrigatório';
-  String get obligatoryOptions => 'Opções obrigatórias';
+  String get obligatoryComments => 'Comentários obrigatórios';
   String get optional => 'Opcional';
   String get password => 'Senha';
   String get peopleQuantity => 'Quantidade de pessoas';
@@ -120,6 +120,7 @@ class PtBr implements Translation {
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
   String get searchProduct => "Consultar produto";
+  String get selectOneComment => "Selecione um comentário";
   String get selectedProductsAndComments =>
       'Produto selecionados e comentários';
   String get selectPaymentOption => "Selecione uma opção de pagamento";

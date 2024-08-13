@@ -103,7 +103,7 @@ class EnUs implements Translation {
   String get name => 'Name';
   String get no => 'No';
   String get obligatory => 'Mandatory';
-  String get obligatoryOptions => 'Mandatory options';
+  String get obligatoryComments => 'Mandatory comments';
   String get optional => 'Optional';
   String get password => 'Password';
   String get peopleQuantity => 'Number of people';
@@ -118,6 +118,7 @@ class EnUs implements Translation {
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';
   String get searchProduct => 'Search product';
+  String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';
   String get selectPaymentOption => 'Select a payment option';
   String get selectProduct => 'Select a product!';

@@ -245,11 +245,11 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void updateComment({
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required ProductCompositionViewModel father,
   }) {
     father.commentFather =
-        commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
+        expansibleGroupFromProductPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
             father.InternalCodeOnERPCodeChild!.toInt());
   }
 
@@ -314,7 +314,7 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void clearData({
     required ProductsViewModel product,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   }) {
     selectedFatherIndex = 0;
     _totalProductsQuantity = 1;
@@ -325,7 +325,7 @@ class GetxInsertProductsPresenter extends GetxController
         father.commentFather = null;
       }
     }
-    commentsPresenter.unselectAllComments();
+    expansibleGroupFromProductPresenter.unselectAllComments();
   }
 
   @override
@@ -339,9 +339,9 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void advanceLeftIndex(ExpansibleGroupFromProductPresenter commentsPresenter) {
+  void advanceLeftIndex(ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
     if (_selectedProduct.value?.childsComposition == null) {
-      if (commentsPresenter.productHasComment(
+      if (expansibleGroupFromProductPresenter.productHasComment(
               product: _selectedProduct.value!,
               indexOfChild: _selectedFatherIndex.value) &&
           _selectedFatherIndex.value == 0) {
@@ -354,7 +354,7 @@ class GetxInsertProductsPresenter extends GetxController
     final atualFather =
         _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
 
-    bool productHasComment = commentsPresenter.productHasComment(
+    bool productHasComment = expansibleGroupFromProductPresenter.productHasComment(
             product: _selectedProduct.value!,
             indexOfChild: _selectedFatherIndex.value) &&
         _selectedFatherIndex.value == 0;

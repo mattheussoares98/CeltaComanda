@@ -26,13 +26,13 @@ class AdvanceButton extends StatefulWidget {
 class _AdvanceButtonState extends State<AdvanceButton> {
   String _getButtonText(
     ProductsViewModel selectedProduct,
-    ExpansibleGroupFromProductPresenter commentsPresenter,
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     if (selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 1) {
         return R.string.insertInCart.toUpperCase();
       } else if (widget.leftSelectedIndex == 0 &&
-          !commentsPresenter.productHasComment(
+          !expansibleGroupFromProductPresenter.productHasComment(
               product: widget.selectedProduct, indexOfChild: 0)) {
         return R.string.insertInCart.toUpperCase();
       } else {
@@ -56,16 +56,16 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   }
 
   void updateSelectedCommentsOfChildsComposition(
-      ExpansibleGroupFromProductPresenter commentsPresenter) {
+      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
     if (widget.selectedProduct.childsComposition != null) {
       for (int index = 0;
           index < widget.selectedProduct.childsComposition!.length;
           index++) {
         final child = widget.selectedProduct.childsComposition![index];
 
-        if (commentsPresenter.productHasComment(
+        if (expansibleGroupFromProductPresenter.productHasComment(
             product: widget.selectedProduct, indexOfChild: index)) {
-          child.commentFather = commentsPresenter
+          child.commentFather = expansibleGroupFromProductPresenter
               .getConcatenateSelectedCommentsAndObligatoryOptions(
                   child.InternalCodeOnERPCodeChild!.toInt());
         }
@@ -79,15 +79,15 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required BuildContext context,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   }) async {
-    updateSelectedCommentsOfChildsComposition(commentsPresenter);
+    updateSelectedCommentsOfChildsComposition(expansibleGroupFromProductPresenter);
 
     await cartPresenter.addProductInCart(
       product: CartProductEntity(
         Product: widget.selectedProduct.toEntityWithSelectedChilds(
             insertProductsPresenter.totalProductsQuantity),
-        Comments: commentsPresenter
+        Comments: expansibleGroupFromProductPresenter
             .getConcatenateSelectedCommentsAndObligatoryOptions(
                 widget.selectedProduct.InternalCodeOnERP!.toInt()),
         TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
@@ -97,7 +97,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         ProductPriceLookUpCode: widget.selectedProduct.PriceLookupCode,
       ),
       menuPresenter: menuPresenter,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
     Future.delayed(Duration.zero, () {
       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -113,20 +113,20 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required double totalPrice,
     required int quantity,
     required BuildContext context,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 0 &&
-          commentsPresenter.productHasComment(
+          expansibleGroupFromProductPresenter.productHasComment(
               product: widget.selectedProduct, indexOfChild: 0)) {
-        insertProductsPresenter.advanceLeftIndex(commentsPresenter);
+        insertProductsPresenter.advanceLeftIndex(expansibleGroupFromProductPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
-          commentsPresenter: commentsPresenter,
+          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
           insertProductsPresenter: insertProductsPresenter,
           totalPrice: totalPrice,
           context: context,
@@ -135,12 +135,12 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     } else {
       if (widget.leftSelectedIndex !=
           widget.selectedProduct.childsComposition!.length) {
-        insertProductsPresenter.advanceLeftIndex(commentsPresenter);
+        insertProductsPresenter.advanceLeftIndex(expansibleGroupFromProductPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
-          commentsPresenter: commentsPresenter,
+          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
           insertProductsPresenter: insertProductsPresenter,
           totalPrice: totalPrice,
           context: context,
@@ -151,7 +151,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter =
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -171,7 +171,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
                 totalPrice: widget.totalPrice,
                 quantity: widget.quantity,
                 context: context,
-                commentsPresenter: commentsPresenter,
+                expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
                 insertProductsPresenter: insertProductsPresenter,
                 menuPresenter: menuPresenter,
               );
@@ -183,7 +183,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           child: Text(
               _getButtonText(
                 widget.selectedProduct,
-                commentsPresenter,
+                expansibleGroupFromProductPresenter,
               ),
               style: TextStyle(
                 fontSize: getStringSize(context),

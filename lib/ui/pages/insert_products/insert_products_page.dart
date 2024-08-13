@@ -114,7 +114,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       onPopInvoked: (_) {
         insertProductPresenter.clearData(
           product: selectedProduct!,
-          commentsPresenter: expansibleGroupFromProductPresenter,
+          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         );
       },
       child: StreamBuilder<double>(

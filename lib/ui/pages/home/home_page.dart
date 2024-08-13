@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage>
             Provider.of(context, listen: false);
         CartPresenter cartPresenter = Provider.of(context, listen: false);
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
-        ExpansibleGroupFromProductPresenter commentsPresenter =
+        ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
             Provider.of(context, listen: false);
 
         WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage>
               menuPresenter: menuPresenter,
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
-              commentsPresenter: commentsPresenter,
+              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
               homePresenter: homePresenter,
             );
             // setState(() {});

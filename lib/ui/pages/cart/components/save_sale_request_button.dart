@@ -17,7 +17,7 @@ class SaveSaleRequestButton extends StatelessWidget {
   _addProducts({
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required BuildContext context,
     required HomePresenter homePresenter,
     required int? tableNumber,
@@ -28,7 +28,7 @@ class SaveSaleRequestButton extends StatelessWidget {
       tableNumber: tableNumber,
       commandNumber: commandNumber,
       homePresenter: homePresenter,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
 
     if (isUpdated) {
@@ -46,7 +46,7 @@ class SaveSaleRequestButton extends StatelessWidget {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: true);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -78,7 +78,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                 printedProductsPresenter: printedProductsPresenter,
                 tableNumber: null,
                 homePresenter: homePresenter,
-                commentsPresenter: commentsPresenter,
+                expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
               );
             },
           );
@@ -96,7 +96,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                 printedProductsPresenter: printedProductsPresenter,
                 tableNumber: null,
                 homePresenter: homePresenter,
-                commentsPresenter: commentsPresenter,
+                expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
               );
             },
             onPress: () async {
@@ -110,7 +110,7 @@ class SaveSaleRequestButton extends StatelessWidget {
                   printedProductsPresenter: printedProductsPresenter,
                   tableNumber: int.tryParse(tableNumberController.text),
                   homePresenter: homePresenter,
-                  commentsPresenter: commentsPresenter,
+                  expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
                 );
               }
             },

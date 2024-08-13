@@ -156,7 +156,7 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<void> getGroupsAndProducts({
     required String commandNumber,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -220,7 +220,7 @@ class GetxMenuPresenter extends GetxController
           OrderClassification: "0",
         ): []
       });
-      await commentsPresenter.loadCommentsAndObligatoryOptions(allProducts);
+      await expansibleGroupFromProductPresenter.loadCommentsAndObligatoryOptions(allProducts);
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);
     } on DomainError catch (error) {

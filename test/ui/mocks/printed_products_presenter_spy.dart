@@ -42,7 +42,7 @@ class PrintedProductsPresenterSpy extends Mock
           saleRequestProductId: any(named: "saleRequestProductId"),
           menuPresenter: any(named: "menuPresenter"),
           cartPresenter: any(named: "cartPresenter"),
-          commentsPresenter: any(named: "commentsPresenter"),
+          expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((_) async => _);

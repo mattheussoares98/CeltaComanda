@@ -20,7 +20,7 @@ void main() {
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
-  late CommentsPresenterSpy commentsPresenter;
+  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
   late HomePresenterSpy homePresenter;
 
   late NavigateToSpy navigateTo;
@@ -42,7 +42,7 @@ void main() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
-    commentsPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
     homePresenter = HomePresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
@@ -157,7 +157,7 @@ void main() {
 
       sut.onChangePage(
         menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
       );
 
@@ -255,12 +255,12 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
 
       verify(() => menuPresenter.getGroupsAndProducts(
           commandNumber: sut.commandNumber ?? "001",
-          commentsPresenter: commentsPresenter)).called(1);
+          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter)).called(1);
     });
     test(
         "Should not call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is not fixed command number",
@@ -273,7 +273,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
 
       verifyNever(
@@ -291,7 +291,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
 
       verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
@@ -313,7 +313,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -332,7 +332,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -350,7 +350,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -369,7 +369,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
 
@@ -387,7 +387,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
     test(
@@ -404,7 +404,7 @@ void main() {
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
   });

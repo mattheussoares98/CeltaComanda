@@ -31,7 +31,7 @@ class GetxPrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     isLoading = true;

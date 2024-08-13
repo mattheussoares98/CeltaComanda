@@ -23,7 +23,7 @@ abstract class PrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   });
 
@@ -31,7 +31,7 @@ abstract class PrintedProductsPresenter
   //   required CartPresenter cartPresenter,
   //   required MenuPresenter menuPresenter,
   //   required HomePresenter homePresenter,
-  //   required CommentsPresenter commentsPresenter,
+  //   required CommentsPresenter expansibleGroupFromProductPresenter,
   //   required bool clearPermissionToCancelProducts,
   //   required bool isRemovingProduct,
   // });

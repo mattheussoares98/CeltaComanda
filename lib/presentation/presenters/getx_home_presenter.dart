@@ -66,7 +66,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   void onChangePage({
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) {
     printedProductsPresenter.updateCanCancelProducts(false);
@@ -139,7 +139,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -147,7 +147,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     try {
       await menuPresenter.getGroupsAndProducts(
         commandNumber: commandNumber ?? "001",
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
 
       if (isFixedCommandNumber && commandNumber != null) {

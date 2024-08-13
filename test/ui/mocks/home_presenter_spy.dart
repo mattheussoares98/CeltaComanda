@@ -44,7 +44,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         menuPresenter: any(named: "menuPresenter"),
         printedProductsPresenter: any(named: "printedProductsPresenter"),
         cartPresenter: any(named: "cartPresenter"),
-        commentsPresenter: any(named: "commentsPresenter"),
+        expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
         homePresenter: any(named: "homePresenter"),
       ));
 

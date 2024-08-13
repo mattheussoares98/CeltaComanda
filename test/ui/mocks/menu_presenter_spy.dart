@@ -54,7 +54,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
 
   When mockLoadCall() => when(() => this.getGroupsAndProducts(
         commandNumber: any(named: "commandNumber"),
-        commentsPresenter: any(named: "commentsPresenter"),
+        expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
       ));
 
   void mockExpansibleGroupStreamError(DomainError error) {

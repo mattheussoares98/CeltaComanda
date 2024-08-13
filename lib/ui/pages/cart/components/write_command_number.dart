@@ -21,7 +21,7 @@ void writeCommandNumber({
   MenuPresenter menuPresenter = Provider.of(context, listen: false);
   CartPresenter cartPresenter = Provider.of(context, listen: false);
   HomePresenter homePresenter = Provider.of(context, listen: false);
-  ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+  ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
   PrintedProductsPresenter printedProductsPresenter =
       Provider.of(context, listen: false);
   PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
@@ -74,7 +74,7 @@ void writeCommandNumber({
                     onWriteCommand: action,
                     focusNode: focusNode,
                     paymentPresenter: paymentPresenter,
-                    commentsPresenter: commentsPresenter,
+                    expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
                   );
                 } else {
                   focusNode.requestFocus();
@@ -99,7 +99,7 @@ void writeCommandNumber({
         onWriteCommand: action,
         focusNode: focusNode,
         paymentPresenter: paymentPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     },
   );
@@ -116,7 +116,7 @@ Future<void> _onPress({
   required OnWriteCommand onWriteCommand,
   required FocusNode focusNode,
   required PaymentPresenter paymentPresenter,
-  required ExpansibleGroupFromProductPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 
@@ -132,7 +132,7 @@ Future<void> _onPress({
       tableNumber: 0,
       commandNumber: commandNumber,
       homePresenter: homePresenter,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
 
     if (isUpdated) {
@@ -148,7 +148,7 @@ Future<void> _onPress({
       menuPresenter: menuPresenter,
       printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       homePresenter: homePresenter,
     );
   } else {
@@ -157,7 +157,7 @@ Future<void> _onPress({
       cartPresenter: cartPresenter,
       menuPresenter: menuPresenter,
       printedProductsPresenter: printedProductsPresenter,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
   }
 }

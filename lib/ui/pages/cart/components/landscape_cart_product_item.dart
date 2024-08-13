@@ -30,7 +30,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter commentsPresenter =
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
     return Container(
@@ -122,7 +122,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                           ),
                         ),
                       ),
-                    if (commentsPresenter.productHasComment(
+                    if (expansibleGroupFromProductPresenter.productHasComment(
                       product: widget.cartProduct.Product,
                       indexOfChild: -1,
                     ))

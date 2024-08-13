@@ -31,7 +31,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
 
   void onChangePage({
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   });
 
@@ -41,7 +41,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   });
   Future<bool> isValidUserAndPassword({
     required int personalizedCode,

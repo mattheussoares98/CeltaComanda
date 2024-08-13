@@ -30,7 +30,7 @@ class _PrintedItemState extends State<PrintedItem> {
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required String saleRequestProductId,
   }) async {
     await printedProductsPresenter.removeProduct(
@@ -38,7 +38,7 @@ class _PrintedItemState extends State<PrintedItem> {
       menuPresenter: menuPresenter,
       cartPresenter: cartPresenter,
       homePresenter: homePresenter,
-      commentsPresenter: commentsPresenter,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       printedProductsPresenter: printedProductsPresenter,
     );
     setState(() {});
@@ -51,7 +51,7 @@ class _PrintedItemState extends State<PrintedItem> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
@@ -123,8 +123,8 @@ class _PrintedItemState extends State<PrintedItem> {
                                                 homePresenter: homePresenter,
                                                 saleRequestProductId: product
                                                     .SaleRequestProductId,
-                                                commentsPresenter:
-                                                    commentsPresenter,
+                                                expansibleGroupFromProductPresenter:
+                                                    expansibleGroupFromProductPresenter,
                                               );
                                             },
                                           );

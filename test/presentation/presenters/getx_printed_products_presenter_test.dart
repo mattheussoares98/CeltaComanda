@@ -18,7 +18,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
   late HomePresenterSpy homePresenter;
-  late CommentsPresenterSpy commentsPresenter;
+  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late UserValidationsSpy userValidations;
@@ -39,7 +39,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
     homePresenter = HomePresenterSpy();
-    commentsPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
 
     sut = GetxPrintedProductsPresenter(
@@ -421,7 +421,7 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -441,7 +441,7 @@ void main() {
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -460,7 +460,7 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -476,7 +476,7 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -490,7 +490,7 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -512,7 +512,7 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -528,7 +528,7 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,

@@ -16,7 +16,7 @@ class TitleAppbar extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +67,7 @@ class TitleAppbar extends StatelessWidget {
               menuPresenter: menuPresenter,
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
-              commentsPresenter: commentsPresenter,
+              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
               homePresenter: homePresenter,
             );
           },

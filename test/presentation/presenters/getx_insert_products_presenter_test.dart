@@ -22,7 +22,7 @@ void main() {
   late GetxInsertProductsPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
-  late CommentsPresenterSpy commentsPresenter;
+  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
 
   late GetProductCompositionSpy getProductComposition;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -77,7 +77,7 @@ void main() {
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
-    commentsPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
   }
 
   void initUsecases() {
@@ -94,8 +94,8 @@ void main() {
             element, optionalFathers))
         .toList());
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    commentsPresenter.mockProductHasComment(true);
-    commentsPresenter.mockProductHasObligatoryOptions(true);
+    expansibleGroupFromProductPresenter.mockProductHasComment(true);
+    expansibleGroupFromProductPresenter.mockProductHasObligatoryOptions(true);
   }
 
   void initEntitys() {
@@ -274,7 +274,7 @@ void main() {
       sut.updateSelectedLeftItem(1);
       sut.clearData(
         product: selectedProduct,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     });
 
@@ -286,7 +286,7 @@ void main() {
 
       sut.clearData(
         product: selectedProduct,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
     });
@@ -299,7 +299,7 @@ void main() {
 
       sut.clearData(
         product: selectedProduct,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
       expect(selectedProduct.childsComposition![0].commentFather, null);
     });
@@ -310,7 +310,7 @@ void main() {
 
       sut.clearData(
         product: selectedProduct,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
       expect(sut.totalProductsQuantity, 1);
     });
@@ -322,13 +322,13 @@ void main() {
       expect(sut.totalProductsQuantity, 1);
     });
 
-    test("Should call commentsPresenter.unselectAllComments", () {
+    test("Should call expansibleGroupFromProductPresenter.unselectAllComments", () {
       sut.clearData(
         product: selectedProduct,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
 
-      verify(() => commentsPresenter.unselectAllComments()).called(1);
+      verify(() => expansibleGroupFromProductPresenter.unselectAllComments()).called(1);
     });
   });
   group("sut.UpdateSaleRequestTemp", () {
@@ -824,7 +824,7 @@ void main() {
 
   group("Product comment", () {
     test(
-        "Should update correctly the comment according to what returned in commentsPresenter",
+        "Should update correctly the comment according to what returned in expansibleGroupFromProductPresenter",
         () async {
       final father = EntityFactory.makeProductCompositionViewModel(
         quantity: 1,
@@ -837,10 +837,10 @@ void main() {
         insertChilds: true,
       );
 
-      commentsPresenter.mockGetConcatenateSelectedComments("any");
+      expansibleGroupFromProductPresenter.mockGetConcatenateSelectedComments("any");
 
       sut.updateComment(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         father: father,
       );
 
@@ -915,7 +915,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
-      sut.advanceLeftIndex(commentsPresenter);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
@@ -923,7 +923,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
-      sut.advanceLeftIndex(commentsPresenter);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
 
     test(
@@ -934,20 +934,20 @@ void main() {
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
       await sut.updateSelectedProduct(selectedProduct);
-      sut.advanceLeftIndex(commentsPresenter);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
 
     test(
         "Should emit correct values if new index is the index of quantity and atual father is invalid ",
         () async {
-      commentsPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
       selectedProduct.childsComposition = [validFather, invalidFather];
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
-      sut.advanceLeftIndex(commentsPresenter);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
 
     test(
@@ -959,7 +959,7 @@ void main() {
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
-      sut.advanceLeftIndex(commentsPresenter);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
   });
 
@@ -1072,10 +1072,10 @@ void main() {
         "Should return false if index is 0, dont have comments and dont have childs",
         () async {
       sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
-      commentsPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
       await sut.updateSelectedProduct(selectedProduct);
 
-      expect(sut.getShowComments(commentsPresenter), false);
+      expect(sut.getShowComments(expansibleGroupFromProductPresenter), false);
     });
     test("Should return true if index is 0, hascomment and dont have childs",
         () async {
@@ -1083,7 +1083,7 @@ void main() {
       sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
       await sut.updateSelectedProduct(selectedProduct);
 
-      expect(sut.getShowComments(commentsPresenter), true);
+      expect(sut.getShowComments(expansibleGroupFromProductPresenter), true);
     });
   });
 
@@ -1091,12 +1091,12 @@ void main() {
     test(
         "Should return true if index == 0, dont have comment, childComposition is null and hasObligatoryOptions",
         () async {
-      commentsPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
       selectedProduct.childsComposition = null;
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
 
-      expect(sut.getShowObligatoryOptions(commentsPresenter), true);
+      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter), true);
     });
     test(
         "Should return true if index == 1, have comment, childComposition is null and hasObligatoryOptions",
@@ -1105,7 +1105,7 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
 
-      expect(sut.getShowObligatoryOptions(commentsPresenter), true);
+      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter), true);
     });
   });
 }

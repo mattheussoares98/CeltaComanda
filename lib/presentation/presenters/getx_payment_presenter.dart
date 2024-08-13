@@ -113,7 +113,7 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     mainError = null;
@@ -123,7 +123,7 @@ class GetxPaymentPresenter extends GetxController
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
       );
     } on DomainError catch (e) {

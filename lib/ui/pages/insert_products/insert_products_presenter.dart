@@ -33,7 +33,7 @@ abstract class InsertProductPresenter implements Listenable {
   double calculateProductCompositionPrice(ProductCompositionViewModel product);
   double getProductPrice(ProductsViewModel product);
   void updateComment({
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required ProductCompositionViewModel father,
   });
 
@@ -45,10 +45,10 @@ abstract class InsertProductPresenter implements Listenable {
   void updateSelectedLeftItem(int newIndex);
   void clearData({
     required ProductsViewModel product,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   });
   bool fatherIsValid(ProductCompositionViewModel product);
-  void advanceLeftIndex(ExpansibleGroupFromProductPresenter commentsPresenter);
+  void advanceLeftIndex(ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter);
   bool get canAdvanceIndex;
 
   bool getShowComments(

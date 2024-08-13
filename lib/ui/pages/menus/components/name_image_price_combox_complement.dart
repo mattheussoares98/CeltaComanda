@@ -15,21 +15,21 @@ class NameImagePriceComboxAndComplement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context);
 
     if (hasMinWidth(context)) {
       return _landScapeNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,
         menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     } else {
       return _portraitNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,
         menuPresenter: menuPresenter,
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       );
     }
   }
@@ -39,7 +39,7 @@ Widget _landScapeNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
 }) {
   return Row(
     children: [
@@ -51,7 +51,7 @@ Widget _landScapeNameImagePluAndCombox({
               context: context,
               productsViewModel: productsViewModel,
               menuPresenter: menuPresenter,
-              commentsPresenter: commentsPresenter,
+              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
             );
           },
           child: ImageWidget(
@@ -84,7 +84,7 @@ Widget _portraitNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,7 +98,7 @@ Widget _portraitNameImagePluAndCombox({
               context: context,
               productsViewModel: productsViewModel,
               menuPresenter: menuPresenter,
-              commentsPresenter: commentsPresenter,
+              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
             );
           },
           child: ImageWidget(
@@ -123,7 +123,7 @@ void _onTapImage({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter commentsPresenter,
+  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
 }) {
   showLargeImage(
     context: context,

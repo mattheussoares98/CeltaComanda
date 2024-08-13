@@ -20,7 +20,7 @@ void main() {
   late GetxMenuPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
-  late CommentsPresenterSpy commentsPresenter;
+  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
@@ -63,7 +63,7 @@ void main() {
   void initPresenters() {
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
-    commentsPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
 
     sut = GetxMenuPresenter(
       navigateTo: navigateTo,
@@ -168,7 +168,7 @@ void main() {
           sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
 
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
@@ -179,7 +179,7 @@ void main() {
           .mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
       final future = sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -192,7 +192,7 @@ void main() {
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
       final future = sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -200,7 +200,7 @@ void main() {
     });
     test('Should call LoadExpansibleGroups and loadProducts', () async {
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -212,7 +212,7 @@ void main() {
     });
     test('Should add fixed group of avaliation in last index', () async {
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -221,7 +221,7 @@ void main() {
 
     test('Should return correct value on success to load', () async {
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -230,7 +230,7 @@ void main() {
 
     test('Should clear expansibleGroups', () async {
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
       expect(sut.loadedMenu, menuListWithoutPromoCombox);
@@ -244,7 +244,7 @@ void main() {
       expectLater(sut.indexOfSelectedGroupStream, emits(0));
 
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
@@ -282,18 +282,18 @@ void main() {
           ]));
 
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
     });
 
-    test("Should call commentsPresenter.loadComments", () async {
+    test("Should call expansibleGroupFromProductPresenter.loadComments", () async {
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
-      verify(() => commentsPresenter.loadCommentsAndObligatoryOptions(sut.loadedMenu
+      verify(() => expansibleGroupFromProductPresenter.loadCommentsAndObligatoryOptions(sut.loadedMenu
           .expand((map) =>
               map.values) // Expande todas as listas de produtos em um Iterable
           .expand((lista) =>
@@ -310,7 +310,7 @@ void main() {
       loadExpansibleGroups.mockLoadExpansibleGroups([expansibleGroups[0]]);
 
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -330,7 +330,7 @@ void main() {
       loadExpansibleGroups.mockLoadExpansibleGroups([expansibleGroups[0]]);
 
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
 
@@ -449,7 +449,7 @@ void main() {
       expect(sut.searchedProduct, productsViewModel);
 
       await sut.getGroupsAndProducts(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandNumberMock!,
       );
       expect(sut.searchedProduct, null);

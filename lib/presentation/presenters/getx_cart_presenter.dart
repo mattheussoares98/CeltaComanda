@@ -137,11 +137,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   CartProductEntity productWithSelectedsComments({
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     required CartProductEntity product,
   }) {
     return CartProductEntity(
-      Comments: commentsPresenter
+      Comments: expansibleGroupFromProductPresenter
           .getConcatenateSelectedCommentsAndObligatoryOptions(product.Product.InternalCodeOnERP!),
       Product: product.Product,
       TotalLiquid: product.TotalLiquid,
@@ -155,14 +155,14 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
       final productWithNewComment = productWithSelectedsComments(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         product: product,
       );
 
@@ -366,7 +366,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter commentsPresenter,
+    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     String? commandNumber,
   }) async {
     isLoading = true;
@@ -463,7 +463,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await printedProductsPresenter.loadPrinted(homePresenter);
 
       _cartProducts.clear();
-      commentsPresenter.unselectAllComments();
+      expansibleGroupFromProductPresenter.unselectAllComments();
 
       return true;
     } on DomainError catch (e) {

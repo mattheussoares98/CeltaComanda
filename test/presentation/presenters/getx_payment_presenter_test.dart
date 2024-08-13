@@ -24,7 +24,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late MenuPresenterSpy menuPresenter;
-  late CommentsPresenterSpy commentsPresenter;
+  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -51,7 +51,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     menuPresenter = MenuPresenterSpy();
-    commentsPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
   }
 
   initEntitys() {
@@ -350,7 +350,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.getTotalValue(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -366,7 +366,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.getTotalValue(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -390,7 +390,7 @@ void main() {
       homePresenter.commandNumberMock = "001";
 
       await sut.getTotalValue(
-        commentsPresenter: commentsPresenter,
+        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -398,7 +398,7 @@ void main() {
       );
 
       // verify(() => printedProductsPresenter.loadCommandData(
-      //       commentsPresenter: commentsPresenter,
+      //       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
       //       cartPresenter: cartPresenter,
       //       menuPresenter: menuPresenter,
       //       homePresenter: homePresenter,

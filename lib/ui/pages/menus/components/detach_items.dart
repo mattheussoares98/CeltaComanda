@@ -19,7 +19,7 @@ class DetachItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
 
     return CarouselSlider(
       options: CarouselOptions(
@@ -34,7 +34,7 @@ class DetachItems extends StatelessWidget {
       items: products.map((product) {
         return InkWell(
           onTap: () {
-            commentsPresenter.unselectAllComments();
+            expansibleGroupFromProductPresenter.unselectAllComments();
 
             if (popOnImageClick == true) {
               Navigator.of(context).popUntil((route) => route.isFirst);

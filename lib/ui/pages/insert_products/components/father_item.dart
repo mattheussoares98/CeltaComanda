@@ -66,15 +66,15 @@ class FatherItem extends StatelessWidget {
 
       if (indexOfLeftSelectedItem == 0) {
         if (productHasComment) {
-          return R.string.comments;
+          return R.string.comments.toUpperCase();
         } else if (productHasObligatoryOption) {
-          return "Obrigatório hein (criar translation)";
+          return R.string.obligatoryOptions.toUpperCase();
         } else {
           return R.string.quantity.toUpperCase();
         }
       } else if (indexOfLeftSelectedItem == 1) {
         if (productHasComment && productHasObligatoryOption) {
-          return "Obrigatório hein (criar translation)";
+          return R.string.obligatoryOptions.toUpperCase();
         } else {
           return R.string.quantity.toUpperCase();
         }

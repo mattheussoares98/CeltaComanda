@@ -9,10 +9,12 @@ Future<void> notificationDialog({
   required Future Function() onPress,
   Future Function()? onCancelPress,
   bool? closeDialogOnConfirmPress = true,
-  String? cancelMessage = "NÃO",
-  String? confirmMessage = "SIM",
+  String? cancelMessage,
+  String? confirmMessage,
   bool canPop = true,
 }) async {
+  cancelMessage = R.string.no;
+  confirmMessage = R.string.yes;
   await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -42,7 +44,7 @@ Future<void> notificationDialog({
                           if (onCancelPress != null) {
                             await onCancelPress();
                           }
-          
+
                           Future.delayed(Duration.zero, () {
                             Navigator.of(context).pop();
                           });

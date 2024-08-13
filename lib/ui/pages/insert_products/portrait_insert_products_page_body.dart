@@ -149,37 +149,12 @@ class _PortraitInsertProductsPageBodyState
                     selectedLeftIndex: widget.indexOfLeftItem,
                   ),
                 ),
-              if (_showUpdateQuantity(
-                showComments: insertProductPresenter.getShowComments(
-                  expansibleGroupFromProductPresenter,
-                ),
-                showObligatoryOptions: widget.showObligatoryOptions,
-                product: widget.selectedProduct,
-                indexOfSelectedFather: widget.indexOfLeftItem,
-              ))
-                const UpdateQuantity(),
+              if (widget.showUpdateQuantity) const UpdateQuantity(),
             ],
           ),
         ],
       ),
     );
-  }
-}
-
-bool _showUpdateQuantity({
-  required bool showComments,
-  required bool showObligatoryOptions,
-  required ProductsViewModel product,
-  required int indexOfSelectedFather,
-}) {
-  if (showComments || showObligatoryOptions) {
-    return false;
-  } else if (product.childsComposition == null) {
-    return true;
-  } else if (product.childsComposition!.length == indexOfSelectedFather) {
-    return true;
-  } else {
-    return false;
   }
 }
 

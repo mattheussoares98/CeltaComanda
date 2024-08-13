@@ -35,7 +35,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   ProductsViewModel? selectedProduct;
   double totalLiquid = 0;
-  int indexOfLeftItem = 0;
+  int indexOfAtualFather = 0;
 
   double? previousTotalPrice;
 
@@ -72,8 +72,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     }
 
     if (snapshotLeftItems.hasData &&
-        snapshotLeftItems.data != indexOfLeftItem) {
-      indexOfLeftItem = snapshotLeftItems.data ?? 0;
+        snapshotLeftItems.data != indexOfAtualFather) {
+      indexOfAtualFather = snapshotLeftItems.data ?? 0;
     }
     doOnBuildScreen(expansibleGroupFromProductPresenter);
   }
@@ -83,23 +83,23 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   ) {
     productHasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      indexOfChild: indexOfLeftItem,
+      indexOfChild: indexOfAtualFather,
       product: selectedProduct!,
     );
 
     productHasComments = expansibleGroupFromProductPresenter.productHasComment(
-      indexOfChild: indexOfLeftItem,
+      indexOfChild: indexOfAtualFather,
       product: selectedProduct!,
     );
 
     showObligatoryOptions = false;
 
-    if (indexOfLeftItem == 0) {
+    if (indexOfAtualFather == 0) {
       if (productHasComments && selectedProduct!.childsComposition == null) {
       } else if (productHasObligatoryOptions) {
         showObligatoryOptions = true;
       }
-    } else if (indexOfLeftItem == 1 &&
+    } else if (indexOfAtualFather == 1 &&
         productHasObligatoryOptions &&
         selectedProduct!.childsComposition != null) {
       showObligatoryOptions = true;
@@ -172,19 +172,11 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                               showObligatoryOptions:
                                                   showObligatoryOptions,
                                               showUpdateQuantity:
-                                                  _showUpdateQuantity(
-                                                showObligatoryOptions:
-                                                    showObligatoryOptions,
-                                                product: selectedProduct!,
-                                                indexOfSelectedFather:
-                                                    indexOfLeftItem,
-                                                expansibleGroupFromProductPresenter:
-                                                    expansibleGroupFromProductPresenter,
-                                                insertProductPresenter:
-                                                    insertProductPresenter,
-                                              ),
+                                                  !showObligatoryOptions &&
+                                                      !showComments,
                                               selectedProduct: selectedProduct!,
-                                              indexOfLeftItem: indexOfLeftItem,
+                                              indexOfLeftItem:
+                                                  indexOfAtualFather,
                                               totalLiquid: totalLiquid,
                                             )
                                           : PortraitInsertProductsPageBody(
@@ -195,20 +187,12 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                               showObligatoryOptions:
                                                   showObligatoryOptions,
                                               selectedProduct: selectedProduct!,
-                                              indexOfLeftItem: indexOfLeftItem,
+                                              indexOfLeftItem:
+                                                  indexOfAtualFather,
                                               totalLiquid: totalLiquid,
                                               showUpdateQuantity:
-                                                  _showUpdateQuantity(
-                                                showObligatoryOptions:
-                                                    showObligatoryOptions,
-                                                product: selectedProduct!,
-                                                indexOfSelectedFather:
-                                                    indexOfLeftItem,
-                                                expansibleGroupFromProductPresenter:
-                                                    expansibleGroupFromProductPresenter,
-                                                insertProductPresenter:
-                                                    insertProductPresenter,
-                                              ),
+                                                  !showObligatoryOptions &&
+                                                      !showComments,
                                             ),
                                     );
                                   });
@@ -217,26 +201,5 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                 });
           }),
     );
-  }
-}
-
-bool _showUpdateQuantity({
-  required bool showObligatoryOptions,
-  required ProductsViewModel product,
-  required int indexOfSelectedFather,
-  required InsertProductPresenter insertProductPresenter,
-  required ExpansibleGroupFromProductPresenter
-      expansibleGroupFromProductPresenter,
-}) {
-  if (insertProductPresenter
-          .getShowComments(expansibleGroupFromProductPresenter) ||
-      showObligatoryOptions) {
-    return false;
-  } else if (product.childsComposition == null) {
-    return true;
-  } else if (product.childsComposition!.length == indexOfSelectedFather) {
-    return true;
-  } else {
-    return false;
   }
 }

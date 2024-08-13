@@ -159,14 +159,31 @@ class GetxExpansibleGroupFromProductPresenter
 
   @override
   bool productHasObligatoryOption({
-    required int internalCodeOnERP,
-    required String productName,
+    required ProductsViewModel product,
+    required int indexOfChild,
   }) {
-    final value = _loadedObligatoryOptions
-        .where((e) =>
-            e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP &&
-            e.ProductName == productName)
-        .isNotEmpty;
-    return value;
+    if (product.childsComposition == null) {
+      return _loadedObligatoryOptions
+          .where(
+            (e) =>
+                e.ProductInternalCodeOnErp == product.InternalCodeOnERP &&
+                e.ProductName == product.Name,
+          )
+          .isNotEmpty;
+    } else if (product.childsComposition != null &&
+        indexOfChild == product.childsComposition!.length) {
+      return false;
+    } else {
+      return _loadedObligatoryOptions
+          .where(
+            (e) =>
+                e.ProductInternalCodeOnErp ==
+                    product.childsComposition![indexOfChild]
+                        .InternalCodeOnERPCodeChild! &&
+                e.ProductName ==
+                    product.childsComposition![indexOfChild].ChildName!,
+          )
+          .isNotEmpty;
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
+import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -192,8 +193,6 @@ void main() {
     test("Should return true if product has comment", () async {
       loadedProducts[0].childsComposition = null;
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
-      loadExpansibleGroupsFromProductsComplete
-          .mockLoad(expansibleGroupFromProductComplete);
 
       expect(
         sut.productHasComment(
@@ -210,8 +209,6 @@ void main() {
       ));
 
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
-      loadExpansibleGroupsFromProductsComplete
-          .mockLoad(expansibleGroupFromProductComplete);
 
       expect(
         sut.productHasComment(
@@ -225,13 +222,49 @@ void main() {
     test("Should return true if product has obligatory option", () async {
       loadedProducts[0].childsComposition = null;
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
-      loadExpansibleGroupsFromProductsComplete
-          .mockLoad(expansibleGroupFromProductComplete);
 
       expect(
         sut.productHasObligatoryOption(
-          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
-          productName: loadedProducts[0].Name,
+          product: loadedProducts[0],
+          indexOfChild: 0,
+        ),
+        true,
+      );
+    });
+    test(
+        "Should return false if childsComposition is null and indexOfFather is equal childsComposition.length",
+        () async {
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+
+      expect(
+        sut.productHasObligatoryOption(
+          product: loadedProducts[0],
+          indexOfChild: loadedProducts[0].childsComposition!.length,
+        ),
+        false,
+      );
+    });
+    test(
+        "Should return true if childs is not empty and indexofchild is selected",
+        () async {
+      loadExpansibleGroupsFromProductsComplete.mockLoad([
+        CommentsEntity(
+          ExpansibleGroupId: faker.randomGenerator.integer(10),
+          ProductInternalCodeOnErp: loadedProducts[0]
+              .childsComposition![0]
+              .InternalCodeOnERPCodeChild!
+              .toInt(),
+          GroupName: "Any",
+          ProductName: loadedProducts[0].childsComposition![0].ChildName!,
+        ),
+      ]);
+
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+
+      expect(
+        sut.productHasObligatoryOption(
+          product: loadedProducts[0],
+          indexOfChild: 0,
         ),
         true,
       );
@@ -249,8 +282,8 @@ void main() {
 
       expect(
         sut.productHasObligatoryOption(
-          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
-          productName: loadedProducts[0].Name,
+          product: loadedProducts[0],
+          indexOfChild: 0,
         ),
         false,
       );

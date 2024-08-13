@@ -29,6 +29,29 @@ class _LandscapeInsertProductsPageBodyState
   bool productHasObligatoryOption = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+    _updateHasObligatoryOptionAndHasComments(
+      expansibleGroupFromProductPresenter,
+    );
+  }
+
+  void _updateHasObligatoryOptionAndHasComments(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    Future.delayed(Duration.zero, () {
+      productHasObligatoryOption =
+          expansibleGroupFromProductPresenter.productHasObligatoryOption(
+        indexOfChild: widget.indexOfLeftItem,
+        product: widget.selectedProduct,
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter commentsPresenter =
         Provider.of(context, listen: false);
@@ -40,11 +63,6 @@ class _LandscapeInsertProductsPageBodyState
       indexOfLeftItem: widget.indexOfLeftItem,
     );
     productHasComment = _getProducthasComment(
-      indexOfLeftItem: widget.indexOfLeftItem,
-      expansibleGroupFromProductPresenter: commentsPresenter,
-      selectedProduct: widget.selectedProduct,
-    );
-    productHasObligatoryOption = _getProductHasObligatoryOption(
       indexOfLeftItem: widget.indexOfLeftItem,
       expansibleGroupFromProductPresenter: commentsPresenter,
       selectedProduct: widget.selectedProduct,
@@ -168,32 +186,6 @@ bool _getProducthasComment({
     return false;
   } else {
     return expansibleGroupFromProductPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct
-          .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
-          .toInt(),
-      productName:
-          selectedProduct.childsComposition![indexOfLeftItem].ChildName!,
-    );
-  }
-}
-
-bool _getProductHasObligatoryOption({
-  required int indexOfLeftItem,
-  required ExpansibleGroupFromProductPresenter
-      expansibleGroupFromProductPresenter,
-  required ProductsViewModel selectedProduct,
-}) {
-  if (selectedProduct.childsComposition == null) {
-    final value =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
-      productName: selectedProduct.Name,
-    );
-    return value;
-  } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
-    return false;
-  } else {
-    return expansibleGroupFromProductPresenter.productHasObligatoryOption(
       internalCodeOnERP: selectedProduct
           .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
           .toInt(),

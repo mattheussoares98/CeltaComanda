@@ -350,6 +350,12 @@ class GetxInsertProductsPresenter extends GetxController
       indexOfChild: _selectedFatherIndex.value,
     );
 
+    bool productHasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      product: _selectedProduct.value!,
+      indexOfChild: _selectedFatherIndex.value,
+    );
+
     final atualFather =
         _selectedProduct.value!.childsComposition?[_selectedFatherIndex.value];
 
@@ -362,6 +368,12 @@ class GetxInsertProductsPresenter extends GetxController
         atualFather != null &&
         fatherIsValid(atualFather)) {
       showComments = true;
+    } else if (_selectedProduct.value?.childsComposition != null &&
+        productHasObligatoryOptions &&
+        atualFather != null &&
+        fatherIsValid(atualFather)) {
+      showComments = false;
+      showObligatoryOptions = true;
     } else if (_selectedProduct.value?.childsComposition == null &&
         productHasComment &&
         _selectedFatherIndex.value == 0) {

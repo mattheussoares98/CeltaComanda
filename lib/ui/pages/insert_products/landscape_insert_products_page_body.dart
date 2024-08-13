@@ -125,10 +125,6 @@ class _LandscapeInsertProductsPageBodyState
                 AdvanceButton(
                   totalPrice: widget.totalLiquid,
                   quantity: insertProductPresenter.totalProductsQuantity,
-                  advanceSelectedIndex: () {
-                    insertProductPresenter
-                        .advanceLeftIndex(expansibleGroupFromProductPresenter);
-                  },
                   selectedProduct: widget.selectedProduct,
                   leftSelectedIndex: widget.indexOfLeftItem,
                 ),

@@ -9,13 +9,11 @@ import '../../pages.dart';
 class AdvanceButton extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int leftSelectedIndex;
-  final void Function() advanceSelectedIndex;
   final int quantity;
   final double totalPrice;
   const AdvanceButton({
     required this.selectedProduct,
     required this.leftSelectedIndex,
-    required this.advanceSelectedIndex,
     required this.quantity,
     required this.totalPrice,
     super.key,
@@ -123,7 +121,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       if (widget.leftSelectedIndex == 0 &&
           commentsPresenter.productHasComment(
               product: widget.selectedProduct, indexOfChild: 0)) {
-        widget.advanceSelectedIndex();
+        insertProductsPresenter.advanceLeftIndex(commentsPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
@@ -137,7 +135,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     } else {
       if (widget.leftSelectedIndex !=
           widget.selectedProduct.childsComposition!.length) {
-        widget.advanceSelectedIndex();
+        insertProductsPresenter.advanceLeftIndex(commentsPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,

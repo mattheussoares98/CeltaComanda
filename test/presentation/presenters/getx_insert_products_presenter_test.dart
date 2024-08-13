@@ -1108,4 +1108,15 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
     });
   });
+
+  group("Get show comments", () {
+    test("Should return false if index is 0, hascomment and dont have childs",
+        () async {
+      sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
+      commentsPresenter.mockProductHasComment(true);
+      sut.updateSelectedProduct(selectedProduct);
+
+      expect(sut.showComments, false);
+    });
+  });
 }

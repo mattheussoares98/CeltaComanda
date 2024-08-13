@@ -424,4 +424,13 @@ class GetxInsertProductsPresenter extends GetxController
       return total;
     }
   }
+
+  @override
+  bool get showComments {
+    if (_selectedFatherIndex.value == 0 &&
+        _selectedProduct.value!.childsComposition == null) {
+      return false;
+    }
+    return false;
+  }
 }

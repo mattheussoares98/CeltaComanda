@@ -12,14 +12,12 @@ class AdvanceButton extends StatefulWidget {
   final void Function() advanceSelectedIndex;
   final int quantity;
   final double totalPrice;
-  final bool productHasComment;
   const AdvanceButton({
     required this.selectedProduct,
     required this.leftSelectedIndex,
     required this.advanceSelectedIndex,
     required this.quantity,
     required this.totalPrice,
-    required this.productHasComment,
     super.key,
   });
 
@@ -35,7 +33,9 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     if (selectedProduct.childsComposition == null) {
       if (widget.leftSelectedIndex == 1) {
         return R.string.insertInCart.toUpperCase();
-      } else if (widget.leftSelectedIndex == 0 && !widget.productHasComment) {
+      } else if (widget.leftSelectedIndex == 0 &&
+          !commentsPresenter.productHasComment(
+              product: widget.selectedProduct, indexOfChild: 0)) {
         return R.string.insertInCart.toUpperCase();
       } else {
         return R.string.advance.toUpperCase();
@@ -60,13 +60,15 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   void updateSelectedCommentsOfChildsComposition(
       ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (widget.selectedProduct.childsComposition != null) {
-      for (var child in widget.selectedProduct.childsComposition!) {
+      for (int index = 0;
+          index < widget.selectedProduct.childsComposition!.length;
+          index++) {
+        final child = widget.selectedProduct.childsComposition![index];
+
         if (commentsPresenter.productHasComment(
-          internalCodeOnERP: child.InternalCodeOnERPCodeChild!.toInt(),
-          productName: child.ChildName!,
-        )) {
-          child.commentFather =
-              commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
+            product: widget.selectedProduct, indexOfChild: index)) {
+          child.commentFather = commentsPresenter
+              .getConcatenateSelectedCommentsAndObligatoryOptions(
                   child.InternalCodeOnERPCodeChild!.toInt());
         }
       }
@@ -87,8 +89,9 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       product: CartProductEntity(
         Product: widget.selectedProduct.toEntityWithSelectedChilds(
             insertProductsPresenter.totalProductsQuantity),
-        Comments: commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
-            widget.selectedProduct.InternalCodeOnERP!.toInt()),
+        Comments: commentsPresenter
+            .getConcatenateSelectedCommentsAndObligatoryOptions(
+                widget.selectedProduct.InternalCodeOnERP!.toInt()),
         TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
             insertProductsPresenter.totalProductsQuantity,
         Quantity: insertProductsPresenter.totalProductsQuantity.toDouble(),
@@ -117,7 +120,9 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required MenuPresenter menuPresenter,
   }) async {
     if (widget.selectedProduct.childsComposition == null) {
-      if (widget.leftSelectedIndex == 0 && widget.productHasComment) {
+      if (widget.leftSelectedIndex == 0 &&
+          commentsPresenter.productHasComment(
+              product: widget.selectedProduct, indexOfChild: 0)) {
         widget.advanceSelectedIndex();
       } else {
         await _addInCart(
@@ -148,7 +153,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter =
+        Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductsPresenter =

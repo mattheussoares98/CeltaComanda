@@ -31,19 +31,28 @@ class _CommentsState extends State<CommentsList> {
     }
   }
 
+  int getCommentsLenght(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    final lenght = expansibleGroupFromProductPresenter.loadedComments
+        .where(
+            (e) => e.ProductInternalCodeOnErp.toInt() == getInternalCodeOnErp())
+        .length;
+
+    return lenght;
+  }
+
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context);
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: commentsPresenter.loadedComments
-          .where((e) =>
-              int.parse(e.ProductInternalCodeOnErp) == getInternalCodeOnErp())
-          .length,
+      itemCount: getCommentsLenght(expansibleGroupFromProductPresenter),
       itemBuilder: (context, index) {
-        final comments = commentsPresenter.loadedComments
+        final comments = expansibleGroupFromProductPresenter.loadedComments
             .where((e) =>
                 int.parse(e.ProductInternalCodeOnErp) == getInternalCodeOnErp())
             .toList();
@@ -72,7 +81,8 @@ class _CommentsState extends State<CommentsList> {
             child: InkWell(
               onTap: () {
                 setState(() {
-                  commentsPresenter.changeCommentIsSelected(comment);
+                  expansibleGroupFromProductPresenter
+                      .changeCommentIsSelected(comment);
                 });
               },
               child: Padding(
@@ -95,7 +105,8 @@ class _CommentsState extends State<CommentsList> {
                       value: comment.selected,
                       onChanged: (value) {
                         setState(() {
-                          commentsPresenter.changeCommentIsSelected(comment);
+                          expansibleGroupFromProductPresenter
+                              .changeCommentIsSelected(comment);
                         });
                       },
                     ),

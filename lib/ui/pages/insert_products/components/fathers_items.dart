@@ -6,15 +6,11 @@ import '../../pages.dart';
 class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
-  final bool productHasComment;
   final bool showComments;
-  final bool productHasObligatoryOption;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
-    required this.productHasComment,
     required this.showComments,
-    required this.productHasObligatoryOption,
     super.key,
   });
 
@@ -24,6 +20,8 @@ class FathersItems extends StatefulWidget {
 
 class _FathersItemsState extends State<FathersItems> {
   final _scrollController = ScrollController();
+  bool productHasObligatoryOption = false;
+  bool productHasComment = false;
 
   Color getItemColor(int index, BuildContext context) {
     if (index < widget.indexOfSelectedFather) {
@@ -65,11 +63,11 @@ class _FathersItemsState extends State<FathersItems> {
 
   int getItemsCount() {
     if (widget.selectedProduct.childsComposition == null) {
-      if (widget.productHasComment && widget.productHasObligatoryOption) {
+      if (productHasComment && productHasObligatoryOption) {
         return 3;
-      } else if (widget.productHasComment) {
+      } else if (productHasComment) {
         return 2;
-      } else if (widget.productHasObligatoryOption) {
+      } else if (productHasObligatoryOption) {
         return 2;
       } else {
         return 1;
@@ -83,6 +81,19 @@ class _FathersItemsState extends State<FathersItems> {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+
+    productHasObligatoryOption =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      indexOfChild: widget.indexOfSelectedFather,
+      product: widget.selectedProduct,
+    );
+
+    productHasComment = expansibleGroupFromProductPresenter.productHasComment(
+      indexOfChild: widget.indexOfSelectedFather,
+      product: widget.selectedProduct,
+    );
 
     return Container(
       height: getItemsCount() * 42,
@@ -116,7 +127,7 @@ class _FathersItemsState extends State<FathersItems> {
                     selectedProduct: widget.selectedProduct,
                     father: null,
                     itemColor: getItemColor(index, context),
-                    productHasComment: widget.productHasComment,
+                    productHasComment: productHasComment,
                     showComments: widget.showComments &&
                         index == widget.indexOfSelectedFather,
                   );
@@ -126,7 +137,7 @@ class _FathersItemsState extends State<FathersItems> {
           final father = widget.selectedProduct.childsComposition?[index];
 
           return FatherItem(
-            productHasComment: widget.productHasComment,
+            productHasComment: productHasComment,
             father: father,
             indexOfLeftSelectedItem: index,
             selectedProduct: widget.selectedProduct,

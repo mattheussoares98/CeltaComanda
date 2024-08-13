@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -7,12 +8,10 @@ class TitleText extends StatelessWidget {
   final int indexOfLeftItem;
   final ProductsViewModel selectedProduct;
   final bool showComments;
-  final bool productHasComment;
   const TitleText({
     required this.indexOfLeftItem,
     required this.selectedProduct,
     required this.showComments,
-    required this.productHasComment,
     super.key,
   });
 
@@ -31,9 +30,12 @@ class TitleText extends StatelessWidget {
     return selectedFather;
   }
 
-  String getTitleText() {
+  String getTitleText(
+      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
     if (selectedProduct.childsComposition == null) {
-      if (indexOfLeftItem == 0 && productHasComment) {
+      if (indexOfLeftItem == 0 &&
+          expansibleGroupFromProductPresenter.productHasComment(
+              product: selectedProduct, indexOfChild: 0)) {
         return R.string.ifWantSelectComments;
       } else {
         return R.string.selectQuantity;
@@ -57,8 +59,11 @@ class TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+
     return Text(
-      getTitleText(),
+      getTitleText(expansibleGroupFromProductPresenter),
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: getStringSize(context) * 1.4,

@@ -248,8 +248,9 @@ class GetxInsertProductsPresenter extends GetxController
     required ExpansibleGroupFromProductPresenter commentsPresenter,
     required ProductCompositionViewModel father,
   }) {
-    father.commentFather = commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
-        father.InternalCodeOnERPCodeChild!.toInt());
+    father.commentFather =
+        commentsPresenter.getConcatenateSelectedCommentsAndObligatoryOptions(
+            father.InternalCodeOnERPCodeChild!.toInt());
   }
 
   @override
@@ -348,9 +349,7 @@ class GetxInsertProductsPresenter extends GetxController
   void advanceLeftIndex(ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (_selectedProduct.value?.childsComposition == null) {
       if (commentsPresenter.productHasComment(
-              internalCodeOnERP:
-                  _selectedProduct.value!.InternalCodeOnERP!.toInt(),
-              productName: _selectedProduct.value!.Name) &&
+              product: _selectedProduct.value!, indexOfChild: -1) &&
           _selectedFatherIndex.value == 0) {
         showComments = true;
         _selectedFatherIndex.value++;
@@ -363,9 +362,8 @@ class GetxInsertProductsPresenter extends GetxController
         _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
 
     bool productHasComment = commentsPresenter.productHasComment(
-      internalCodeOnERP: atualFather.InternalCodeOnERPCodeChild!.toInt(),
-      productName: atualFather.ChildName!,
-    );
+            product: _selectedProduct.value!, indexOfChild: -1) &&
+        _selectedFatherIndex.value == 0;
 
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
         _selectedProduct.value!.childsComposition!.length;

@@ -196,8 +196,8 @@ void main() {
 
       expect(
         sut.productHasComment(
-          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
-          productName: loadedProducts[0].Name,
+          product: loadedProducts[0],
+          indexOfChild: -1,
         ),
         true,
       );
@@ -212,8 +212,8 @@ void main() {
 
       expect(
         sut.productHasComment(
-          internalCodeOnERP: loadedProducts[0].InternalCodeOnERP!.toInt(),
-          productName: loadedProducts[0].Name,
+          product: loadedProducts[0],
+          indexOfChild: -1,
         ),
         false,
       );

@@ -147,14 +147,34 @@ class GetxExpansibleGroupFromProductPresenter
 
   @override
   bool productHasComment({
-    required int internalCodeOnERP,
-    required String productName,
+    required ProductsViewModel product,
+    required int indexOfChild,
   }) {
-    return loadedComments
-        .where((e) =>
-            e.ProductInternalCodeOnErp.toInt() == internalCodeOnERP &&
-            e.ProductName == productName)
-        .isNotEmpty;
+    bool hasComment = false;
+    if (product.childsComposition == null) {
+      hasComment = _loadedComments
+          .where(
+            (e) =>
+                e.ProductInternalCodeOnErp == product.InternalCodeOnERP &&
+                e.ProductName == product.Name,
+          )
+          .isNotEmpty;
+    } else if (product.childsComposition != null &&
+        indexOfChild == product.childsComposition!.length) {
+      return hasComment;
+    } else {
+      hasComment = _loadedComments
+          .where(
+            (e) =>
+                e.ProductInternalCodeOnErp ==
+                    product.childsComposition![indexOfChild]
+                        .InternalCodeOnERPCodeChild! &&
+                e.ProductName ==
+                    product.childsComposition![indexOfChild].ChildName!,
+          )
+          .isNotEmpty;
+    }
+    return hasComment;
   }
 
   @override

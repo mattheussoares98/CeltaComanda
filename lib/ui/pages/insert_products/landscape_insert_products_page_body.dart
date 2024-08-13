@@ -25,31 +25,6 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
 class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
   bool showComments = false;
-  bool productHasComment = false;
-  bool productHasObligatoryOption = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
-    _updateHasObligatoryOptionAndHasComments(
-      expansibleGroupFromProductPresenter,
-    );
-  }
-
-  void _updateHasObligatoryOptionAndHasComments(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  ) {
-    Future.delayed(Duration.zero, () {
-      productHasObligatoryOption =
-          expansibleGroupFromProductPresenter.productHasObligatoryOption(
-        indexOfChild: widget.indexOfLeftItem,
-        product: widget.selectedProduct,
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +36,6 @@ class _LandscapeInsertProductsPageBodyState
       snapshowShowComments: widget.snapshowShowComments,
       product: widget.selectedProduct,
       indexOfLeftItem: widget.indexOfLeftItem,
-    );
-    productHasComment = _getProducthasComment(
-      indexOfLeftItem: widget.indexOfLeftItem,
-      expansibleGroupFromProductPresenter: commentsPresenter,
-      selectedProduct: widget.selectedProduct,
     );
 
     return Row(
@@ -81,9 +51,7 @@ class _LandscapeInsertProductsPageBodyState
                 child: FathersItems(
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
-                  productHasComment: productHasComment,
                   showComments: showComments,
-                  productHasObligatoryOption: productHasComment,
                 ),
               ),
               Padding(
@@ -118,7 +86,6 @@ class _LandscapeInsertProductsPageBodyState
                     indexOfLeftItem: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
                     showComments: showComments,
-                    productHasComment: productHasComment,
                   ),
                 if (showComments)
                   Expanded(
@@ -130,7 +97,6 @@ class _LandscapeInsertProductsPageBodyState
                 if (_showUpdateQuantity(
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
-                  productHasComment: productHasComment,
                 ))
                   const Expanded(child: UpdateQuantity()),
                 if (!showComments &&
@@ -155,7 +121,6 @@ class _LandscapeInsertProductsPageBodyState
                   },
                   selectedProduct: widget.selectedProduct,
                   leftSelectedIndex: widget.indexOfLeftItem,
-                  productHasComment: productHasComment,
                 ),
                 const SizedBox(height: 10),
               ],
@@ -170,30 +135,6 @@ class _LandscapeInsertProductsPageBodyState
 ProductCompositionViewModel _selectedFather(
         ProductsViewModel selectedProduct, int indexOfLeftItem) =>
     selectedProduct.childsComposition![indexOfLeftItem];
-
-bool _getProducthasComment({
-  required int indexOfLeftItem,
-  required ExpansibleGroupFromProductPresenter
-      expansibleGroupFromProductPresenter,
-  required ProductsViewModel selectedProduct,
-}) {
-  if (selectedProduct.childsComposition == null) {
-    return expansibleGroupFromProductPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
-      productName: selectedProduct.Name,
-    );
-  } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
-    return false;
-  } else {
-    return expansibleGroupFromProductPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct
-          .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
-          .toInt(),
-      productName:
-          selectedProduct.childsComposition![indexOfLeftItem].ChildName!,
-    );
-  }
-}
 
 bool _getShowComments({
   required AsyncSnapshot<bool> snapshowShowComments,
@@ -212,17 +153,9 @@ bool _getShowComments({
 bool _showUpdateQuantity({
   required ProductsViewModel selectedProduct,
   required int indexOfSelectedFather,
-  required bool productHasComment,
 }) {
-  if (selectedProduct.childsComposition == null) {
-    if (indexOfSelectedFather == 0 && productHasComment) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  if (indexOfSelectedFather == selectedProduct.childsComposition!.length) {
+  if (selectedProduct.childsComposition != null &&
+      indexOfSelectedFather == selectedProduct.childsComposition!.length) {
     return true;
   } else {
     return false;

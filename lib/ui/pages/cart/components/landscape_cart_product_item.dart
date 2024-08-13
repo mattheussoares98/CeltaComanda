@@ -30,7 +30,8 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter commentsPresenter =
+        Provider.of(context, listen: false);
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
@@ -122,9 +123,8 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                         ),
                       ),
                     if (commentsPresenter.productHasComment(
-                      internalCodeOnERP:
-                          widget.cartProduct.Product.InternalCodeOnERP!.toInt(),
-                      productName: widget.cartProduct.Product.Name,
+                      product: widget.cartProduct.Product,
+                      indexOfChild: -1,
                     ))
                       SizedBox(
                         child:

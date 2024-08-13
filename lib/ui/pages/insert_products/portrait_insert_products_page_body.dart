@@ -32,10 +32,13 @@ class _PortraitInsertProductsPageBodyState
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter =
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+
+    showComments = widget.selectedProduct.childsComposition == null &&
+        widget.indexOfLeftItem == 0;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(
@@ -45,22 +48,15 @@ class _PortraitInsertProductsPageBodyState
       );
     });
 
-    productHasComment = _producthasComment(
-      indexOfLeftItem: widget.indexOfLeftItem,
-      commentsPresenter: commentsPresenter,
-      selectedProduct: widget.selectedProduct,
-    );
-
-    showComments = _showComments(
-      snapshowShowComments: widget.snapshowShowComments,
+    productHasObligatoryOption =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      indexOfChild: widget.indexOfLeftItem,
       product: widget.selectedProduct,
-      indexOfLeftItem: widget.indexOfLeftItem,
     );
 
-    productHasObligatoryOption = _getProductHasObligatoryOption(
-      indexOfLeftItem: widget.indexOfLeftItem,
-      expansibleGroupFromProductPresenter: commentsPresenter,
-      selectedProduct: widget.selectedProduct,
+    productHasComment = expansibleGroupFromProductPresenter.productHasComment(
+      indexOfChild: widget.indexOfLeftItem,
+      product: widget.selectedProduct,
     );
 
     return SingleChildScrollView(
@@ -74,9 +70,9 @@ class _PortraitInsertProductsPageBodyState
               FathersItems(
                 selectedProduct: widget.selectedProduct,
                 indexOfSelectedFather: widget.indexOfLeftItem,
-                productHasComment: productHasComment,
-                showComments: showComments,
-                productHasObligatoryOption: productHasObligatoryOption,
+                showComments:
+                    widget.selectedProduct.childsComposition == null &&
+                        widget.indexOfLeftItem == 0,
               ),
               Padding(
                 padding: const EdgeInsets.all(5),
@@ -107,7 +103,6 @@ class _PortraitInsertProductsPageBodyState
                               indexOfLeftItem: widget.indexOfLeftItem,
                               selectedProduct: widget.selectedProduct,
                               showComments: showComments,
-                              productHasComment: productHasComment,
                             ),
                           ],
                         ),
@@ -121,12 +116,11 @@ class _PortraitInsertProductsPageBodyState
                           quantity:
                               insertProductPresenter.totalProductsQuantity,
                           advanceSelectedIndex: () {
-                            insertProductPresenter
-                                .advanceLeftIndex(commentsPresenter);
+                            insertProductPresenter.advanceLeftIndex(
+                                expansibleGroupFromProductPresenter);
                           },
                           selectedProduct: widget.selectedProduct,
                           leftSelectedIndex: widget.indexOfLeftItem,
-                          productHasComment: productHasComment,
                         ),
                         Text(
                           widget.totalLiquid
@@ -173,67 +167,6 @@ class _PortraitInsertProductsPageBodyState
         ],
       ),
     );
-  }
-}
-
-bool _getProductHasObligatoryOption({
-  required int indexOfLeftItem,
-  required ExpansibleGroupFromProductPresenter
-      expansibleGroupFromProductPresenter,
-  required ProductsViewModel selectedProduct,
-}) {
-  if (selectedProduct.childsComposition == null) {
-    return expansibleGroupFromProductPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
-      productName: selectedProduct.Name,
-    );
-  } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
-    return false;
-  } else {
-    return expansibleGroupFromProductPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct
-          .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
-          .toInt(),
-      productName:
-          selectedProduct.childsComposition![indexOfLeftItem].ChildName!,
-    );
-  }
-}
-
-bool _producthasComment({
-  required int indexOfLeftItem,
-  required ExpansibleGroupFromProductPresenter commentsPresenter,
-  required ProductsViewModel selectedProduct,
-}) {
-  if (selectedProduct.childsComposition == null) {
-    return commentsPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct.InternalCodeOnERP!.toInt(),
-      productName: selectedProduct.Name,
-    );
-  } else if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
-    return false;
-  } else {
-    return commentsPresenter.productHasComment(
-      internalCodeOnERP: selectedProduct
-          .childsComposition![indexOfLeftItem].InternalCodeOnERPCodeChild!
-          .toInt(),
-      productName:
-          selectedProduct.childsComposition![indexOfLeftItem].ChildName!,
-    );
-  }
-}
-
-bool _showComments({
-  required AsyncSnapshot<bool> snapshowShowComments,
-  required ProductsViewModel product,
-  required int indexOfLeftItem,
-}) {
-  if (product.childsComposition == null && indexOfLeftItem == 0) {
-    return true;
-  } else if (product.childsComposition == null && indexOfLeftItem == 1) {
-    return false;
-  } else {
-    return snapshowShowComments.data ?? false;
   }
 }
 

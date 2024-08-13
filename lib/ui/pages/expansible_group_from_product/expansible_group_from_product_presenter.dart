@@ -22,8 +22,8 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
   String? getConcatenateSelectedCommentsAndObligatoryOptions(
       int internalCodeOnERP);
   bool productHasComment({
-    required int internalCodeOnERP,
-    required String productName,
+    required ProductsViewModel product,
+    required int indexOfChild,
   });
   bool productHasObligatoryOption({
     required ProductsViewModel product,

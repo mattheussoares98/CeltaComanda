@@ -21,10 +21,11 @@ class CommentsPresenterSpy extends Mock
     when(() => this.loadedComments).thenAnswer((_) => loadedCommentsController);
     when(() => this.changeCommentIsSelected(any())).thenAnswer((_) async => _);
     when(() => this.productHasComment(
-          internalCodeOnERP: any(named: "internalCodeOnERP"),
-          productName: any(named: "productName"),
+          product: any(named: "product"),
+          indexOfChild: any(named: "indexOfChild"),
         )).thenAnswer((_) => false);
-    when(() => this.loadCommentsAndObligatoryOptions(any())).thenAnswer((_) async => _);
+    when(() => this.loadCommentsAndObligatoryOptions(any()))
+        .thenAnswer((_) async => _);
   }
 
   void mockGetConcatenateSelectedComments(String? comment) {
@@ -34,8 +35,8 @@ class CommentsPresenterSpy extends Mock
 
   void mockProductHasComment(bool value) {
     when(() => this.productHasComment(
-          internalCodeOnERP: any(named: "internalCodeOnERP"),
-          productName: any(named: "productName"),
+          product: any(named: "product"),
+          indexOfChild: any(named: "indexOfChild"),
         )).thenAnswer((_) => value);
   }
 }

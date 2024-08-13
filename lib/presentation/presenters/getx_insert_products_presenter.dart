@@ -329,6 +329,8 @@ class GetxInsertProductsPresenter extends GetxController
   void updateFatherIndex(int newIndex) {
     allPreviousFathersAreValids(newIndex);
 
+    debugPrint(
+        "Criar tratamento para quando alterar o índice clicando nele, emitir valor nas streams que exibem ou nao o comentario e as opcoes obrigatorias pra remover as funcoes getShowComments e getShowObligatoryOptions");
     if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {
       selectedFatherIndex = newIndex;
     } else if (allPreviousFathersAreValids(newIndex)) {

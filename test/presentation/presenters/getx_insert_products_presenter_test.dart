@@ -1285,6 +1285,23 @@ void main() {
       expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
           true);
     });
+    test("Should return correct values when have comment and advance index",
+        () async {
+      expectLater(sut.showObligatoryOptionsStream, emits(true));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
+          false); //primeiro vai pro comentário
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
+          true);
+    });
   });
 
   group("Get show update quantity", () {

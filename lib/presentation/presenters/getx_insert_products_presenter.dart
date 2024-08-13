@@ -276,7 +276,12 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   final _selectedFatherIndex = Rx<int>(0);
-  set selectedFatherIndex(int value) => _selectedFatherIndex.value = value;
+  set selectedFatherIndex(int value) {
+    _selectedFatherIndex.value = value;
+    showComments = false;
+    showObligatoryOptions = false;
+  }
+
   @override
   Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
 
@@ -377,12 +382,12 @@ class GetxInsertProductsPresenter extends GetxController
     } else if (_selectedProduct.value?.childsComposition == null &&
         productHasComment &&
         _selectedFatherIndex.value == 0) {
-      _selectedFatherIndex.value++;
+      selectedFatherIndex = _selectedFatherIndex.value ++;
     } else if (atualFather != null && !fatherIsValid(atualFather)) {
     } else if (newIndexIsOfQuantity && productHasComment) {
-      _selectedFatherIndex.value++;
+      selectedFatherIndex = _selectedFatherIndex.value ++;
     } else {
-      _selectedFatherIndex.value++;
+      selectedFatherIndex = _selectedFatherIndex.value ++;
     }
 
     doScroll = true;

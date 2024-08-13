@@ -947,6 +947,15 @@ void main() {
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
+    test("Should emit correct values on advance left index", () async {
+      selectedProduct.childsComposition = null;
+      expectLater(sut.selectedLeftIndexStream, emits(1));
+      expectLater(sut.showCommentsStream, emits(false));
+      expectLater(sut.showObligatoryOptionsStream, emits(false));
+
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+    });
     test("Should not advance index if atual index is invalid", () async {
       selectedProduct.childsComposition = [invalidFather];
       expectLater(sut.selectedLeftIndexStream, emits(0));

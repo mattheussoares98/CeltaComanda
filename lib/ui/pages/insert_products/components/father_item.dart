@@ -9,21 +9,24 @@ class FatherItem extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel? father;
   final Color itemColor;
-  final bool productHasComment;
   final bool showComments;
   const FatherItem({
     required this.father,
     required this.indexOfLeftSelectedItem,
     required this.selectedProduct,
     required this.itemColor,
-    required this.productHasComment,
     required this.showComments,
     super.key,
   });
 
-  String getIsOptionalOrObligatory() {
+  String getIsOptionalOrObligatory(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
     if (selectedProduct.childsComposition == null &&
-        productHasComment &&
+        expansibleGroupFromProductPresenter.productHasComment(
+          product: selectedProduct,
+          indexOfChild: 0,
+        ) &&
         indexOfLeftSelectedItem == 0) {
       return R.string.optional;
     } else if (selectedProduct.childsComposition == null) {
@@ -35,7 +38,8 @@ class FatherItem extends StatelessWidget {
     }
   }
 
-  String getLeftItemTitle(ExpansibleGroupFromProductPresenter commentsPresenter) {
+  String getLeftItemTitle(
+      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
     if (selectedProduct.childsComposition != null) {
       if (indexOfLeftSelectedItem !=
           selectedProduct.childsComposition!.length) {
@@ -48,11 +52,35 @@ class FatherItem extends StatelessWidget {
         return R.string.comments.toUpperCase();
       }
     } else {
-      if (productHasComment && indexOfLeftSelectedItem == 0) {
-        return R.string.comments.toUpperCase();
-      } else {
-        return R.string.quantity.toUpperCase();
+      final productHasComment =
+          expansibleGroupFromProductPresenter.productHasComment(
+        product: selectedProduct,
+        indexOfChild: -1,
+      );
+
+      final productHasObligatoryOption =
+          expansibleGroupFromProductPresenter.productHasObligatoryOption(
+        product: selectedProduct,
+        indexOfChild: -1,
+      );
+
+      if (indexOfLeftSelectedItem == 0) {
+        if (productHasComment) {
+          return R.string.comments;
+        } else if (productHasObligatoryOption) {
+          return "Obrigatório hein (criar translation)";
+        } else {
+          return R.string.quantity.toUpperCase();
+        }
+      } else if (indexOfLeftSelectedItem == 1) {
+        if (productHasComment && productHasObligatoryOption) {
+          return "Obrigatório hein (criar translation)";
+        } else {
+          return R.string.quantity.toUpperCase();
+        }
       }
+
+      return R.string.quantity.toUpperCase();
     }
   }
 
@@ -60,7 +88,8 @@ class FatherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
 
     return InkWell(
       onTap: () {
@@ -77,7 +106,7 @@ class FatherItem extends StatelessWidget {
             Expanded(
               child: RichText(
                 text: TextSpan(
-                  text: getLeftItemTitle(commentsPresenter),
+                  text: getLeftItemTitle(expansibleGroupFromProductPresenter),
                   children: selectedProduct.childsComposition == null
                       ? null
                       : <TextSpan>[
@@ -96,7 +125,7 @@ class FatherItem extends StatelessWidget {
             ),
             FittedBox(
               child: Text(
-                getIsOptionalOrObligatory(),
+                getIsOptionalOrObligatory(expansibleGroupFromProductPresenter),
                 textAlign: TextAlign.end,
                 style: TextStyle(
                   color: Colors.white,

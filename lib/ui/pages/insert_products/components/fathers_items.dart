@@ -127,7 +127,6 @@ class _FathersItemsState extends State<FathersItems> {
                     selectedProduct: widget.selectedProduct,
                     father: null,
                     itemColor: getItemColor(index, context),
-                    productHasComment: productHasComment,
                     showComments: widget.showComments &&
                         index == widget.indexOfSelectedFather,
                   );
@@ -137,7 +136,6 @@ class _FathersItemsState extends State<FathersItems> {
           final father = widget.selectedProduct.childsComposition?[index];
 
           return FatherItem(
-            productHasComment: productHasComment,
             father: father,
             indexOfLeftSelectedItem: index,
             selectedProduct: widget.selectedProduct,

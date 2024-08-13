@@ -159,9 +159,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                                   productHasObligatoryOptions,
                                               showObligatoryOptions:
                                                   showObligatoryOptions,
-                                              showUpdateQuantity:
-                                                  !showObligatoryOptions &&
-                                                      !showComments,
                                               selectedProduct: selectedProduct!,
                                               indexOfLeftItem:
                                                   indexOfAtualFather,
@@ -178,9 +175,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                               indexOfLeftItem:
                                                   indexOfAtualFather,
                                               totalLiquid: totalLiquid,
-                                              showUpdateQuantity:
-                                                  !showObligatoryOptions &&
-                                                      !showComments,
                                             ),
                                     );
                                   });

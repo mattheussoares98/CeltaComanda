@@ -9,7 +9,6 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
   final int indexOfLeftItem;
   final double totalLiquid;
   final bool showObligatoryOptions;
-  final bool showUpdateQuantity;
   final bool productHasComments;
   final bool productHasObligatoryOptions;
   const LandscapeInsertProductsPageBody({
@@ -17,7 +16,6 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
     required this.indexOfLeftItem,
     required this.totalLiquid,
     required this.showObligatoryOptions,
-    required this.showUpdateQuantity,
     required this.productHasComments,
     required this.productHasObligatoryOptions,
     super.key,
@@ -104,7 +102,9 @@ class _LandscapeInsertProductsPageBodyState
                       selectedLeftIndex: widget.indexOfLeftItem,
                     ),
                   ),
-                if (widget.showUpdateQuantity)
+                if (insertProductPresenter.getShowUpdateQuantity(
+                  expansibleGroupFromProductPresenter,
+                ))
                   const Expanded(child: UpdateQuantity()),
                 if (!insertProductPresenter.getShowComments(
                       expansibleGroupFromProductPresenter,

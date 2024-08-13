@@ -8,7 +8,6 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfLeftItem;
   final double totalLiquid;
-  final bool showUpdateQuantity;
   final bool productHasComments;
   final bool productHasObligatoryOptions;
   final bool showObligatoryOptions;
@@ -16,7 +15,6 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
     required this.selectedProduct,
     required this.indexOfLeftItem,
     required this.totalLiquid,
-    required this.showUpdateQuantity,
     required this.productHasComments,
     required this.productHasObligatoryOptions,
     required this.showObligatoryOptions,
@@ -149,7 +147,10 @@ class _PortraitInsertProductsPageBodyState
                     selectedLeftIndex: widget.indexOfLeftItem,
                   ),
                 ),
-              if (widget.showUpdateQuantity) const UpdateQuantity(),
+              if (insertProductPresenter.getShowUpdateQuantity(
+                expansibleGroupFromProductPresenter,
+              ))
+                const UpdateQuantity(),
             ],
           ),
         ],

@@ -64,7 +64,11 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       selectedProduct = Get.arguments;
 
       Future.delayed(Duration.zero, () {
-        insertProductPresenter.updateSelectedProduct(selectedProduct!);
+        insertProductPresenter.updateSelectedProduct(
+          product: selectedProduct!,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
       });
     }
 

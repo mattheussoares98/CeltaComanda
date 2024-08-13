@@ -34,11 +34,17 @@ class _ProductItemState extends State<ProductItem> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
 
     return GestureDetector(
       onTap: () {
         menuPresenter.goToInsertProductPage(widget.productsViewModel);
-        insertProductsPresenter.updateSelectedProduct(widget.productsViewModel);
+        insertProductsPresenter.updateSelectedProduct(
+          product: widget.productsViewModel,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
       },
       child: Padding(
           padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),

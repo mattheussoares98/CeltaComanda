@@ -48,7 +48,11 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  Future<void> updateSelectedProduct(ProductsViewModel product) async {
+  Future<void> updateSelectedProduct({
+    required ProductsViewModel product,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  }) async {
     _totalProductsQuantity = 1;
 
     selectedComboxProduct = product;
@@ -60,6 +64,14 @@ class GetxInsertProductsPresenter extends GetxController
     }
 
     updateTotalLiquid(product);
+
+    if (expansibleGroupFromProductPresenter.productHasComment(
+          product: product,
+          indexOfChild: _selectedFatherIndex.value,
+        ) &&
+        product.childsComposition == null) {
+      showComments = true;
+    }
   }
 
   double _getTotalLiquidCombox(

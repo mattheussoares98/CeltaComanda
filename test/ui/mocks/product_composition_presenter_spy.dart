@@ -40,20 +40,27 @@ class InsertProductsPresenterSpy extends Mock
           index: any(named: "index"),
         )).thenAnswer((_) => _);
     when(() => this.updateComment(
-          expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
+          expansibleGroupFromProductPresenter:
+              any(named: "expansibleGroupFromProductPresenter"),
           father: any(named: "father"),
         )).thenAnswer((_) => _);
-    when(() => this.calculateProductCompositionPrice(any())).thenAnswer((_) => 0);
-    when(() => this.calculateProductCompositionIncrementValue(any())).thenAnswer((_) => 0);
-    when(() => this.calculateProductCompositionTotalLiquid(product: any(named: "product")))
+    when(() => this.calculateProductCompositionPrice(any()))
         .thenAnswer((_) => 0);
+    when(() => this.calculateProductCompositionIncrementValue(any()))
+        .thenAnswer((_) => 0);
+    when(() => this.calculateProductCompositionTotalLiquid(
+        product: any(named: "product"))).thenAnswer((_) => 0);
     when(() => this.updateTotalProductsQuantity(any())).thenAnswer((_) => _);
     when(() => this.updateSaleRequest(
           homePresenter: any(named: "homePresenter"),
           cartPresenter: any(named: "cartPresenter"),
           productsCompositions: any(named: "productsCompositions"),
         )).thenAnswer((_) async => true);
-    when(() => this.updateSelectedProduct(any())).thenAnswer((_) async => _);
+    when(() => this.updateSelectedProduct(
+          product: any(named: "product"),
+          expansibleGroupFromProductPresenter:
+              any(named: "expansibleGroupFromProductPresenter"),
+        )).thenAnswer((_) async => _);
     when(() => this.updateTotalLiquid(any())).thenAnswer((_) async => _);
   }
 

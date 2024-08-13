@@ -18,7 +18,11 @@ abstract class InsertProductPresenter implements Listenable {
 
   void updateTotalLiquid(ProductsViewModel product);
 
-  Future<void> updateSelectedProduct(ProductsViewModel product);
+  Future<void> updateSelectedProduct({
+    required ProductsViewModel product,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  });
 
   Future<bool> updateSaleRequest({
     required HomePresenter homePresenter,

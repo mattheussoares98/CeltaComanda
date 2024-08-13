@@ -356,7 +356,13 @@ class GetxInsertProductsPresenter extends GetxController
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
         _selectedProduct.value!.childsComposition?.length;
 
-    if (_selectedProduct.value?.childsComposition == null &&
+    if (_selectedProduct.value?.childsComposition != null &&
+        productHasComment &&
+        _showComments.value != true &&
+        atualFather != null &&
+        fatherIsValid(atualFather)) {
+      showComments = true;
+    } else if (_selectedProduct.value?.childsComposition == null &&
         productHasComment &&
         _selectedFatherIndex.value == 0) {
       _selectedFatherIndex.value++;

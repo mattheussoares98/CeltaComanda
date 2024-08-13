@@ -274,7 +274,8 @@ void main() {
       sut.updateSelectedLeftItem(1);
       sut.clearData(
         product: selectedProduct,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
 
@@ -286,7 +287,8 @@ void main() {
 
       sut.clearData(
         product: selectedProduct,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       expect(selectedProduct.childsComposition![0].indexOfSelectedChild, null);
     });
@@ -299,7 +301,8 @@ void main() {
 
       sut.clearData(
         product: selectedProduct,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       expect(selectedProduct.childsComposition![0].commentFather, null);
     });
@@ -310,7 +313,8 @@ void main() {
 
       sut.clearData(
         product: selectedProduct,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       expect(sut.totalProductsQuantity, 1);
     });
@@ -322,13 +326,16 @@ void main() {
       expect(sut.totalProductsQuantity, 1);
     });
 
-    test("Should call expansibleGroupFromProductPresenter.unselectAllComments", () {
+    test("Should call expansibleGroupFromProductPresenter.unselectAllComments",
+        () {
       sut.clearData(
         product: selectedProduct,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
-      verify(() => expansibleGroupFromProductPresenter.unselectAllComments()).called(1);
+      verify(() => expansibleGroupFromProductPresenter.unselectAllComments())
+          .called(1);
     });
   });
   group("sut.UpdateSaleRequestTemp", () {
@@ -837,10 +844,12 @@ void main() {
         insertChilds: true,
       );
 
-      expansibleGroupFromProductPresenter.mockGetConcatenateSelectedComments("any");
+      expansibleGroupFromProductPresenter
+          .mockGetConcatenateSelectedComments("any");
 
       sut.updateComment(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         father: father,
       );
 
@@ -912,9 +921,19 @@ void main() {
     test("Should advance index if atual index is valid", () async {
       selectedProduct.childsComposition = [validFather];
       expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1]));
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
 
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
+      sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
+    });
+    test(
+        "Should show comments if hasComment, comment not showing and atualFather is valid",
+        () async {
+      selectedProduct.childsComposition = [validFather];
+      expectLater(sut.showCommentsStream, emits(true));
+
+      await sut.updateSelectedProduct(selectedProduct);
       sut.advanceLeftIndex(expansibleGroupFromProductPresenter);
     });
     test("Should not advance index if atual index is invalid", () async {
@@ -930,6 +949,7 @@ void main() {
         "Should emit correct values if already showing comments and advance index",
         () async {
       selectedProduct.childsComposition = [validFather];
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
@@ -1096,7 +1116,8 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(0);
 
-      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter), true);
+      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
+          true);
     });
     test(
         "Should return true if index == 1, have comment, childComposition is null and hasObligatoryOptions",
@@ -1105,7 +1126,8 @@ void main() {
       await sut.updateSelectedProduct(selectedProduct);
       sut.updateSelectedLeftItem(1);
 
-      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter), true);
+      expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
+          true);
     });
   });
 }

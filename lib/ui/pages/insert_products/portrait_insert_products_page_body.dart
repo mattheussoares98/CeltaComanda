@@ -9,11 +9,21 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
   final int indexOfLeftItem;
   final double totalLiquid;
   final AsyncSnapshot<bool> snapshowShowComments;
+  final bool showUpdateQuantity;
+  final bool showComments;
+  final bool productHasComments;
+  final bool productHasObligatoryOptions;
+  final bool showObligatoryOptions;
   const PortraitInsertProductsPageBody({
     required this.selectedProduct,
     required this.indexOfLeftItem,
     required this.totalLiquid,
     required this.snapshowShowComments,
+    required this.showUpdateQuantity,
+    required this.showComments,
+    required this.productHasComments,
+    required this.productHasObligatoryOptions,
+    required this.showObligatoryOptions,
     super.key,
   });
 
@@ -25,48 +35,8 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
 class _PortraitInsertProductsPageBodyState
     extends State<PortraitInsertProductsPageBody> {
   final double buttonHeight = 50;
-  bool showComments = false;
-  bool showObligatoryOptions = false;
-  bool productHasComment = false;
-  bool productHasObligatoryOption = false;
+
   final _scrollController = ScrollController();
-
-  void doOnBuildScreen(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  ) {
-    productHasObligatoryOption =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      indexOfChild: widget.indexOfLeftItem,
-      product: widget.selectedProduct,
-    );
-
-    productHasComment = expansibleGroupFromProductPresenter.productHasComment(
-      indexOfChild: widget.indexOfLeftItem,
-      product: widget.selectedProduct,
-    );
-
-    showComments = false;
-    showObligatoryOptions = false;
-
-    if (widget.indexOfLeftItem == 0) {
-      if (productHasComment &&
-          widget.selectedProduct.childsComposition == null) {
-        showComments = true;
-      } else if (productHasObligatoryOption) {
-        showObligatoryOptions = true;
-      }
-    } else if (widget.indexOfLeftItem == 1 && productHasObligatoryOption) {
-      showObligatoryOptions = true;
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +44,6 @@ class _PortraitInsertProductsPageBodyState
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
-
-    doOnBuildScreen(expansibleGroupFromProductPresenter);
 
     return SingleChildScrollView(
       controller: _scrollController,
@@ -120,7 +88,7 @@ class _PortraitInsertProductsPageBodyState
                             TitleText(
                               indexOfLeftItem: widget.indexOfLeftItem,
                               selectedProduct: widget.selectedProduct,
-                              showComments: showComments,
+                              showComments: widget.showComments,
                             ),
                           ],
                         ),
@@ -158,7 +126,7 @@ class _PortraitInsertProductsPageBodyState
               if (widget.selectedProduct.childsComposition != null &&
                   widget.indexOfLeftItem <
                       widget.selectedProduct.childsComposition!.length &&
-                  !showComments)
+                  !widget.showComments)
                 ChildsRadios(
                   callSetState: () {
                     setState(() {});
@@ -167,7 +135,7 @@ class _PortraitInsertProductsPageBodyState
                       widget.selectedProduct, widget.indexOfLeftItem),
                   selectedProduct: widget.selectedProduct,
                 ),
-              if (showComments && productHasComment)
+              if (widget.showComments && widget.productHasComments)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: CommentsList(
@@ -175,7 +143,8 @@ class _PortraitInsertProductsPageBodyState
                     selectedLeftIndex: widget.indexOfLeftItem,
                   ),
                 ),
-              if (showObligatoryOptions && productHasObligatoryOption)
+              if (widget.showObligatoryOptions &&
+                  widget.productHasObligatoryOptions)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: ObligatoryOptions(
@@ -184,8 +153,8 @@ class _PortraitInsertProductsPageBodyState
                   ),
                 ),
               if (_showUpdateQuantity(
-                showComments: showComments,
-                showObligatoryOptions: showObligatoryOptions,
+                showComments: widget.showComments,
+                showObligatoryOptions: widget.showObligatoryOptions,
                 product: widget.selectedProduct,
                 indexOfSelectedFather: widget.indexOfLeftItem,
               ))

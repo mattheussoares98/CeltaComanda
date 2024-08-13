@@ -20,6 +20,11 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
+  bool showComments = false;
+  bool showObligatoryOptions = false;
+  bool productHasComments = false;
+  bool productHasObligatoryOptions = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -39,6 +44,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     required AsyncSnapshot<ProductsViewModel?> snapshotSelectedProduct,
     required AsyncSnapshot<int> snapshotLeftItems,
     required InsertProductPresenter insertProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   }) {
     if (snapshotSelectedProduct.hasData &&
             snapshotSelectedProduct.data != selectedProduct ||
@@ -58,11 +65,41 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         snapshotLeftItems.data != indexOfLeftItem) {
       indexOfLeftItem = snapshotLeftItems.data ?? 0;
     }
+    doOnBuildScreen(expansibleGroupFromProductPresenter);
+  }
+
+  void doOnBuildScreen(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    productHasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      indexOfChild: indexOfLeftItem,
+      product: selectedProduct!,
+    );
+
+    productHasComments = expansibleGroupFromProductPresenter.productHasComment(
+      indexOfChild: indexOfLeftItem,
+      product: selectedProduct!,
+    );
+
+    showComments = false;
+    showObligatoryOptions = false;
+
+    if (indexOfLeftItem == 0) {
+      if (productHasComments && selectedProduct!.childsComposition == null) {
+        showComments = true;
+      } else if (productHasObligatoryOptions) {
+        showObligatoryOptions = true;
+      }
+    } else if (indexOfLeftItem == 1 && productHasObligatoryOptions) {
+      showObligatoryOptions = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter commentsPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
@@ -78,7 +115,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       onPopInvoked: (_) {
         insertProductPresenter.clearData(
           product: selectedProduct!,
-          commentsPresenter: commentsPresenter,
+          commentsPresenter: expansibleGroupFromProductPresenter,
         );
       },
       child: StreamBuilder<double>(
@@ -98,6 +135,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               snapshotTotalPrice: snapshotTotalPrice,
                               snapshotSelectedProduct: snapshotSelectedProduct,
                               snapshotLeftItems: snapshotLeftItems,
+                              expansibleGroupFromProductPresenter:
+                                  expansibleGroupFromProductPresenter,
                             );
                             return Scaffold(
                               appBar: AppBar(
@@ -112,11 +151,24 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                           snapshowShowComments,
                                     )
                                   : PortraitInsertProductsPageBody(
+                                      productHasComments: productHasComments,
+                                      productHasObligatoryOptions:
+                                          productHasObligatoryOptions,
+                                      showObligatoryOptions:
+                                          showObligatoryOptions,
+                                      showComments: showComments,
                                       selectedProduct: selectedProduct!,
                                       indexOfLeftItem: indexOfLeftItem,
                                       totalLiquid: totalLiquid,
                                       snapshowShowComments:
                                           snapshowShowComments,
+                                      showUpdateQuantity: _showUpdateQuantity(
+                                        showComments: showComments,
+                                        showObligatoryOptions:
+                                            showObligatoryOptions,
+                                        product: selectedProduct!,
+                                        indexOfSelectedFather: indexOfLeftItem,
+                                      ),
                                     ),
                             );
                           },
@@ -125,5 +177,22 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                 });
           }),
     );
+  }
+}
+
+bool _showUpdateQuantity({
+  required bool showComments,
+  required bool showObligatoryOptions,
+  required ProductsViewModel product,
+  required int indexOfSelectedFather,
+}) {
+  if (showComments || showObligatoryOptions) {
+    return false;
+  } else if (product.childsComposition == null) {
+    return true;
+  } else if (product.childsComposition!.length == indexOfSelectedFather) {
+    return true;
+  } else {
+    return false;
   }
 }

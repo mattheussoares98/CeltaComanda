@@ -7,10 +7,14 @@ class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfSelectedFather;
   final bool showComments;
+  final bool productHasComments;
+  final bool productHasObligatoryOptions;
   const FathersItems({
     required this.selectedProduct,
     required this.indexOfSelectedFather,
     required this.showComments,
+    required this.productHasComments,
+    required this.productHasObligatoryOptions,
     super.key,
   });
 
@@ -20,8 +24,6 @@ class FathersItems extends StatefulWidget {
 
 class _FathersItemsState extends State<FathersItems> {
   final _scrollController = ScrollController();
-  bool productHasObligatoryOption = false;
-  bool productHasComment = false;
 
   Color getItemColor(int index, BuildContext context) {
     if (index < widget.indexOfSelectedFather) {
@@ -63,11 +65,11 @@ class _FathersItemsState extends State<FathersItems> {
 
   int getItemsCount() {
     if (widget.selectedProduct.childsComposition == null) {
-      if (productHasComment && productHasObligatoryOption) {
+      if (widget.productHasComments && widget.productHasObligatoryOptions) {
         return 3;
-      } else if (productHasComment) {
+      } else if (widget.productHasComments) {
         return 2;
-      } else if (productHasObligatoryOption) {
+      } else if (widget.productHasObligatoryOptions) {
         return 2;
       } else {
         return 1;
@@ -81,19 +83,6 @@ class _FathersItemsState extends State<FathersItems> {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
-
-    productHasObligatoryOption =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      indexOfChild: widget.indexOfSelectedFather,
-      product: widget.selectedProduct,
-    );
-
-    productHasComment = expansibleGroupFromProductPresenter.productHasComment(
-      indexOfChild: widget.indexOfSelectedFather,
-      product: widget.selectedProduct,
-    );
 
     return Container(
       height: getItemsCount() * 42,

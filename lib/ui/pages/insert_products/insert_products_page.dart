@@ -145,6 +145,9 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               body: hasMinWidth(context)
                                   ? LandscapeInsertProductsPageBody(
                                       showComments: showComments,
+                                      productHasComments: productHasComments,
+                                      productHasObligatoryOptions:
+                                          productHasObligatoryOptions,
                                       showObligatoryOptions:
                                           showObligatoryOptions,
                                       showUpdateQuantity: _showUpdateQuantity(

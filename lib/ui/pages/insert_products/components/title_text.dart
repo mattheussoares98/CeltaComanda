@@ -8,10 +8,12 @@ class TitleText extends StatelessWidget {
   final int indexOfLeftItem;
   final ProductsViewModel selectedProduct;
   final bool showComments;
+  final bool showObligatoryOptions;
   const TitleText({
     required this.indexOfLeftItem,
     required this.selectedProduct,
     required this.showComments,
+    required this.showObligatoryOptions,
     super.key,
   });
 
@@ -31,30 +33,29 @@ class TitleText extends StatelessWidget {
   }
 
   String getTitleText(
-      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
-    if (selectedProduct.childsComposition == null) {
-      if (indexOfLeftItem == 0 &&
-          expansibleGroupFromProductPresenter.productHasComment(
-              product: selectedProduct, indexOfChild: 0)) {
-        return R.string.ifWantSelectComments;
-      } else {
-        return R.string.selectQuantity;
-      }
-    }
-
-    if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
-      return R.string.selectQuantity;
-    } else if (indexOfLeftItem < selectedProduct.childsComposition!.length &&
-        !showComments) {
-      if (getSelectedFather(selectedProduct, indexOfLeftItem).IsOptionalItem ==
-          "false") {
-        return R.string.selectProduct;
-      } else {
-        return R.string.ifWantSelectProducts;
-      }
-    } else {
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    if (showComments) {
       return R.string.ifWantSelectComments;
+    } else if (showObligatoryOptions) {
+      return "SELECIONE PELO MENOS UMA OPÇÃO OBRIGATÓRIA (CRIAR TRANSLATION)";
+    } else if (selectedProduct.childsComposition == null) {
+      return R.string.selectQuantity;
+    } else {
+      if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
+        return R.string.selectQuantity;
+      } else if (indexOfLeftItem < selectedProduct.childsComposition!.length &&
+          !showComments) {
+        if (getSelectedFather(selectedProduct, indexOfLeftItem)
+                .IsOptionalItem ==
+            "false") {
+          return R.string.selectProduct;
+        } else {
+          return R.string.ifWantSelectProducts;
+        }
+      }
     }
+    return R.string.selectProduct;
   }
 
   @override

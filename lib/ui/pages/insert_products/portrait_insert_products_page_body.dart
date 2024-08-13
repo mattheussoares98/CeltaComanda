@@ -59,6 +59,8 @@ class _PortraitInsertProductsPageBodyState
                 showComments:
                     widget.selectedProduct.childsComposition == null &&
                         widget.indexOfLeftItem == 0,
+                productHasComments: widget.productHasComments,
+                productHasObligatoryOptions: widget.productHasObligatoryOptions,
               ),
               Padding(
                 padding: const EdgeInsets.all(5),
@@ -89,6 +91,8 @@ class _PortraitInsertProductsPageBodyState
                               indexOfLeftItem: widget.indexOfLeftItem,
                               selectedProduct: widget.selectedProduct,
                               showComments: widget.showComments,
+                              showObligatoryOptions:
+                                  widget.showObligatoryOptions,
                             ),
                           ],
                         ),

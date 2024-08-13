@@ -12,6 +12,8 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
   final bool showComments;
   final bool showObligatoryOptions;
   final bool showUpdateQuantity;
+  final bool productHasComments;
+  final bool productHasObligatoryOptions;
   const LandscapeInsertProductsPageBody({
     required this.selectedProduct,
     required this.indexOfLeftItem,
@@ -20,6 +22,8 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
     required this.showComments,
     required this.showObligatoryOptions,
     required this.showUpdateQuantity,
+    required this.productHasComments,
+    required this.productHasObligatoryOptions,
     super.key,
   });
 
@@ -51,6 +55,9 @@ class _LandscapeInsertProductsPageBodyState
                   selectedProduct: widget.selectedProduct,
                   indexOfSelectedFather: widget.indexOfLeftItem,
                   showComments: widget.showComments,
+                  productHasComments: widget.productHasComments,
+                  productHasObligatoryOptions:
+                      widget.productHasObligatoryOptions,
                 ),
               ),
               Padding(
@@ -85,6 +92,7 @@ class _LandscapeInsertProductsPageBodyState
                     indexOfLeftItem: widget.indexOfLeftItem,
                     selectedProduct: widget.selectedProduct,
                     showComments: widget.showComments,
+                    showObligatoryOptions: widget.showObligatoryOptions,
                   ),
                 if (widget.showComments)
                   Expanded(

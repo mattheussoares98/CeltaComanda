@@ -375,10 +375,13 @@ class GetxInsertProductsPresenter extends GetxController
 
     if (hasChilds) {
       if (productHasComment &&
-          _showComments.value != true &&
-          fatherIsValid(atualFather)) {
+          !_showComments.value &&
+          fatherIsValid(atualFather) &&
+          !_showObligatoryOptions.value) {
         showComments = true;
-      } else if (productHasObligatoryOptions && fatherIsValid(atualFather)) {
+      } else if (productHasObligatoryOptions &&
+          fatherIsValid(atualFather) &&
+          !_showObligatoryOptions.value) {
         showComments = false;
         showObligatoryOptions = true;
       } else {
@@ -386,15 +389,15 @@ class GetxInsertProductsPresenter extends GetxController
             "Criar tratamento para ter pelo menos uma opção obrigatória selecionada");
         showObligatoryOptions = false;
         showComments = false;
-        selectedFatherIndex = _selectedFatherIndex.value++;
+        selectedFatherIndex = _selectedFatherIndex.value + 1;
       }
     } else {
       if (productHasComment && _selectedFatherIndex.value == 0) {
-        selectedFatherIndex = _selectedFatherIndex.value++;
+        selectedFatherIndex = _selectedFatherIndex.value + 1;
       } else if (newIndexIsOfQuantity && productHasComment) {
-        selectedFatherIndex = _selectedFatherIndex.value++;
+        selectedFatherIndex = _selectedFatherIndex.value + 1;
       } else {
-        selectedFatherIndex = _selectedFatherIndex.value++;
+        selectedFatherIndex = _selectedFatherIndex.value + 1;
       }
     }
 

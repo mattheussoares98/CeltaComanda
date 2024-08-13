@@ -342,7 +342,8 @@ class GetxInsertProductsPresenter extends GetxController
   void advanceLeftIndex(ExpansibleGroupFromProductPresenter commentsPresenter) {
     if (_selectedProduct.value?.childsComposition == null) {
       if (commentsPresenter.productHasComment(
-              product: _selectedProduct.value!, indexOfChild: -1) &&
+              product: _selectedProduct.value!,
+              indexOfChild: _selectedFatherIndex.value) &&
           _selectedFatherIndex.value == 0) {
         _selectedFatherIndex.value++;
       }
@@ -440,13 +441,13 @@ class GetxInsertProductsPresenter extends GetxController
   ) {
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
       product: _selectedProduct.value!,
-      indexOfChild: -1,
+      indexOfChild: _selectedFatherIndex.value,
     );
 
     bool hasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
       product: _selectedProduct.value!,
-      indexOfChild: -1,
+      indexOfChild: _selectedFatherIndex.value,
     );
 
     if (_selectedFatherIndex.value == 0 &&

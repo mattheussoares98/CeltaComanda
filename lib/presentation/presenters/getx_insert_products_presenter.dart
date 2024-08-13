@@ -343,30 +343,23 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void advanceLeftIndex(
       ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter) {
-    if (_selectedProduct.value?.childsComposition == null) {
-      if (expansibleGroupFromProductPresenter.productHasComment(
-              product: _selectedProduct.value!,
-              indexOfChild: _selectedFatherIndex.value) &&
-          _selectedFatherIndex.value == 0) {
-        _selectedFatherIndex.value++;
-      }
-
-      return;
-    }
-
-    final atualFather =
-        _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
-
     bool productHasComment =
         expansibleGroupFromProductPresenter.productHasComment(
                 product: _selectedProduct.value!,
                 indexOfChild: _selectedFatherIndex.value) &&
             _selectedFatherIndex.value == 0;
 
+    final atualFather =
+        _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
+
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
         _selectedProduct.value!.childsComposition!.length;
 
-    if (!fatherIsValid(atualFather)) {
+    if (_selectedProduct.value?.childsComposition == null &&
+        productHasComment &&
+        _selectedFatherIndex.value == 0) {
+      _selectedFatherIndex.value++;
+    } else if (!fatherIsValid(atualFather)) {
     } else if (newIndexIsOfQuantity && productHasComment) {
       _selectedFatherIndex.value++;
     } else {

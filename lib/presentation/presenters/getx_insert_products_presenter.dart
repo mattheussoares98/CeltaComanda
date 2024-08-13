@@ -354,7 +354,8 @@ class GetxInsertProductsPresenter extends GetxController
         _selectedProduct.value!.childsComposition![_selectedFatherIndex.value];
 
     bool productHasComment = commentsPresenter.productHasComment(
-            product: _selectedProduct.value!, indexOfChild: -1) &&
+            product: _selectedProduct.value!,
+            indexOfChild: _selectedFatherIndex.value) &&
         _selectedFatherIndex.value == 0;
 
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
@@ -419,7 +420,7 @@ class GetxInsertProductsPresenter extends GetxController
   ) {
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
       product: _selectedProduct.value!,
-      indexOfChild: -1,
+      indexOfChild: _selectedFatherIndex.value,
     );
     if (_selectedFatherIndex.value == 0 &&
         _selectedProduct.value!.childsComposition == null &&

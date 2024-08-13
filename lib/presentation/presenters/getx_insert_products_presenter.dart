@@ -65,12 +65,20 @@ class GetxInsertProductsPresenter extends GetxController
 
     updateTotalLiquid(product);
 
-    if (expansibleGroupFromProductPresenter.productHasComment(
-          product: product,
-          indexOfChild: _selectedFatherIndex.value,
-        ) &&
-        product.childsComposition == null) {
+    bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
+      product: product,
+      indexOfChild: _selectedFatherIndex.value,
+    );
+    bool hasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      product: product,
+      indexOfChild: _selectedFatherIndex.value,
+    );
+
+    if (hasComment && product.childsComposition == null) {
       showComments = true;
+    } else if (hasObligatoryOptions && product.childsComposition == null) {
+      showObligatoryOptions = true;
     }
   }
 

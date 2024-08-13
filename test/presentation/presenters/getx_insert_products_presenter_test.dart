@@ -231,6 +231,19 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
+    test(
+        'Should emit true when product dont have comment, have obligatoryOptions and childsComposition is null',
+        () async {
+      expectLater(sut.showObligatoryOptionsStream, emits(true));
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      selectedProduct.childsComposition = null;
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
   });
 
   group("UpdateSelectedFather", () {

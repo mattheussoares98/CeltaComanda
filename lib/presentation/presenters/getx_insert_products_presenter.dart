@@ -455,7 +455,12 @@ class GetxInsertProductsPresenter extends GetxController
         _selectedProduct.value!.childsComposition == null &&
         hasObligatoryOptions) {
       return true;
-    } else if (_selectedFatherIndex.value == 1 && hasComment) {}
+    } else if (_selectedFatherIndex.value == 1 &&
+        hasComment &&
+        _selectedProduct.value!.childsComposition == null &&
+        hasObligatoryOptions) {
+      return true;
+    }
 
     return false;
   }

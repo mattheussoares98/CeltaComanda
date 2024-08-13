@@ -1091,10 +1091,19 @@ void main() {
     test(
         "Should return true if index == 0, dont have comment, childComposition is null and hasObligatoryOptions",
         () async {
-      sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
       commentsPresenter.mockProductHasComment(false);
       selectedProduct.childsComposition = null;
       await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedLeftItem(0);
+
+      expect(sut.getShowObligatoryOptions(commentsPresenter), true);
+    });
+    test(
+        "Should return true if index == 1, have comment, childComposition is null and hasObligatoryOptions",
+        () async {
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(selectedProduct);
+      sut.updateSelectedLeftItem(1);
 
       expect(sut.getShowObligatoryOptions(commentsPresenter), true);
     });

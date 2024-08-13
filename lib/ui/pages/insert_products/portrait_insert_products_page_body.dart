@@ -118,6 +118,9 @@ class _PortraitInsertProductsPageBodyState
                       widget.selectedProduct.childsComposition!.length &&
                   !insertProductPresenter.getShowComments(
                     expansibleGroupFromProductPresenter,
+                  ) &&
+                  !insertProductPresenter.getShowObligatoryOptions(
+                    expansibleGroupFromProductPresenter,
                   ))
                 ChildsRadios(
                   callSetState: () {
@@ -138,8 +141,8 @@ class _PortraitInsertProductsPageBodyState
                     selectedLeftIndex: widget.indexOfLeftItem,
                   ),
                 ),
-              if (widget.showObligatoryOptions &&
-                  widget.productHasObligatoryOptions)
+              if (insertProductPresenter.getShowObligatoryOptions(
+                  expansibleGroupFromProductPresenter))
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: ObligatoryOptions(

@@ -494,6 +494,9 @@ class GetxInsertProductsPresenter extends GetxController
   bool getShowObligatoryOptions(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
+    if (_showObligatoryOptions.value == true) {
+      return true;
+    }
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
       product: _selectedProduct.value!,
       indexOfChild: _selectedFatherIndex.value,

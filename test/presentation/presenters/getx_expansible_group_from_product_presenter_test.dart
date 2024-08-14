@@ -145,14 +145,24 @@ void main() {
       expect(sut.loadedComments[0].selected, true);
     });
     test("Should update correctly obligatory option is selected", () async {
-      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      loadExpansibleGroupsFromProductsComplete.mockLoad([
+        EntityFactory.makeCommentViewModel().toEntity(),
+        EntityFactory.makeCommentViewModel().toEntity(),
+      ]);
 
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
+      
       expect(sut.loadedObligatoryOptions[0].selected, false);
       sut.changeObligatoryOptionIsSelected(
         obligatoryOptionsShowing: sut.loadedObligatoryOptions,
         selectedIndex: 0,
       );
-      expect(sut.loadedObligatoryOptions[0].selected, true);
+      sut.changeObligatoryOptionIsSelected(
+        obligatoryOptionsShowing: sut.loadedObligatoryOptions,
+        selectedIndex: 1,
+      );
+      expect(sut.loadedObligatoryOptions[0].selected, false);
+      expect(sut.loadedObligatoryOptions[1].selected, true);
     });
   });
   group("Unselect all data", () {

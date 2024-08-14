@@ -93,8 +93,14 @@ class GetxExpansibleGroupFromProductPresenter
     required List<ExpansibleGroupFromProductViewModel> obligatoryOptionsShowing,
     required int selectedIndex,
   }) async {
-    obligatoryOptionsShowing[selectedIndex].selected =
-        !obligatoryOptionsShowing[selectedIndex].selected;
+    bool previousValue = obligatoryOptionsShowing[selectedIndex].selected;
+    for (var group in obligatoryOptionsShowing) {
+      group.selected = false;
+    }
+
+    if (previousValue == false) {
+      obligatoryOptionsShowing[selectedIndex].selected = true;
+    }
   }
 
   final _isLoading = false.obs;

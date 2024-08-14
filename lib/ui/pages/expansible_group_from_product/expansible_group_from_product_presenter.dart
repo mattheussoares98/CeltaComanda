@@ -14,7 +14,7 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
   Future<void> changeCommentIsSelected(
     ExpansibleGroupFromProductViewModel comment,
   );
-  Future<void> changeObligatoryOptionIsSelected({
+  void changeObligatoryOptionIsSelected({
     required List<ExpansibleGroupFromProductViewModel> obligatoryOptionsShowing,
     required int selectedIndex,
   });

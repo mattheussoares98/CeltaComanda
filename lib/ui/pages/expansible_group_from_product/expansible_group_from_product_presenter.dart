@@ -15,6 +15,7 @@ abstract class ExpansibleGroupFromProductPresenter implements Listenable {
     ExpansibleGroupFromProductViewModel comment,
   );
   void changeObligatoryOptionIsSelected({
+    required InsertProductPresenter insertProductPresenter,
     required List<ExpansibleGroupFromProductViewModel> obligatoryOptionsShowing,
     required int selectedIndex,
   });

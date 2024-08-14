@@ -92,6 +92,7 @@ class GetxExpansibleGroupFromProductPresenter
   void changeObligatoryOptionIsSelected({
     required List<ExpansibleGroupFromProductViewModel> obligatoryOptionsShowing,
     required int selectedIndex,
+    required InsertProductPresenter insertProductPresenter,
   }) {
     bool previousValue = obligatoryOptionsShowing[selectedIndex].selected;
     for (var group in obligatoryOptionsShowing) {
@@ -101,6 +102,8 @@ class GetxExpansibleGroupFromProductPresenter
     if (previousValue == false) {
       obligatoryOptionsShowing[selectedIndex].selected = true;
     }
+
+    insertProductPresenter.updateCanAdvanceIndex(this);
   }
 
   final _isLoading = false.obs;

@@ -43,7 +43,9 @@ class _CommentsState extends State<ObligatoryOptions> {
   @override
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context);
+        Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -81,6 +83,7 @@ class _CommentsState extends State<ObligatoryOptions> {
                     obligatoryOptionsShowing: getObligatoryOptions(
                         expansibleGroupFromProductPresenter),
                     selectedIndex: index,
+                    insertProductPresenter: insertProductPresenter,
                   );
                 });
               },
@@ -109,6 +112,7 @@ class _CommentsState extends State<ObligatoryOptions> {
                             obligatoryOptionsShowing: getObligatoryOptions(
                                 expansibleGroupFromProductPresenter),
                             selectedIndex: index,
+                            insertProductPresenter: insertProductPresenter,
                           );
                         });
                       },

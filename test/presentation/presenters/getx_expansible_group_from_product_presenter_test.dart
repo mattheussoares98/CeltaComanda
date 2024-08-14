@@ -11,8 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mocktail/mocktail.dart';
 
+import '../../ui/mocks/mocks.dart';
+
 void main() {
   late GetxExpansibleGroupFromProductPresenter sut;
+  late InsertProductsPresenterSpy insertProductPresenter;
 
   late LoadExpansibleGroupsFromProductsCompleteSpy
       loadExpansibleGroupsFromProductsComplete;
@@ -31,6 +34,7 @@ void main() {
       loadExpansibleGroupsFromProductsComplete:
           loadExpansibleGroupsFromProductsComplete,
     );
+    insertProductPresenter = InsertProductsPresenterSpy();
   }
 
   void initEntitys() {
@@ -151,13 +155,15 @@ void main() {
       ]);
 
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
-      
+
       expect(sut.loadedObligatoryOptions[0].selected, false);
       sut.changeObligatoryOptionIsSelected(
+        insertProductPresenter: insertProductPresenter,
         obligatoryOptionsShowing: sut.loadedObligatoryOptions,
         selectedIndex: 0,
       );
       sut.changeObligatoryOptionIsSelected(
+        insertProductPresenter: insertProductPresenter,
         obligatoryOptionsShowing: sut.loadedObligatoryOptions,
         selectedIndex: 1,
       );

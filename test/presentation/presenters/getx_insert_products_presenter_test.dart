@@ -1076,6 +1076,100 @@ void main() {
     //não criei mais testes porque nas outras possibilidades chama a função
     //fatherIsValid, que já possui testes. Só passa o produto pai do índice
     //selecionado como parâmetro da função pra validar o pai
+
+    test(
+        "Should return true if has childs, is showing obligatory options and one option is selected",
+        () async {
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.loadedObligatoryOptionsController = [
+        ExpansibleGroupFromProductViewModel(
+          selected: true,
+          ProductName: faker.randomGenerator.string(10),
+          GroupName: faker.randomGenerator.string(10),
+          ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+          ProductInternalCodeOnErp:
+              validFather.InternalCodeOnERPCodeChild.toString(),
+        ),
+      ];
+      selectedProduct.childsComposition = [validFather];
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), true);
+    });
+    test(
+        "Should return false if has childs, is showing obligatory options and option IS NOT selected",
+        () async {
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.loadedObligatoryOptionsController = [
+        ExpansibleGroupFromProductViewModel(
+          selected: false,
+          ProductName: faker.randomGenerator.string(10),
+          GroupName: faker.randomGenerator.string(10),
+          ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+          ProductInternalCodeOnErp:
+              validFather.InternalCodeOnERPCodeChild.toString(),
+        ),
+      ];
+      selectedProduct.childsComposition = [validFather];
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      expect(
+          sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), false);
+    });
+    test(
+        "Should return true if dont have childs, is showing obligatory options and obligatory is selected",
+        () async {
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.loadedObligatoryOptionsController = [
+        ExpansibleGroupFromProductViewModel(
+          selected: true,
+          ProductName: faker.randomGenerator.string(10),
+          GroupName: faker.randomGenerator.string(10),
+          ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+          ProductInternalCodeOnErp: selectedProduct.InternalCodeOnERP!,
+        ),
+      ];
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), true);
+    });
+    test(
+        "Should return false if dont have childs, is showing obligatory options and obligatory is NOT selected",
+        () async {
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.loadedObligatoryOptionsController = [
+        ExpansibleGroupFromProductViewModel(
+          selected: false,
+          ProductName: faker.randomGenerator.string(10),
+          GroupName: faker.randomGenerator.string(10),
+          ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+          ProductInternalCodeOnErp: selectedProduct.InternalCodeOnERP!,
+        ),
+      ];
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), false);
+    });
   });
 
   group("Update product price without childsComposition", () {

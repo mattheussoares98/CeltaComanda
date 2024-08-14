@@ -11,6 +11,8 @@ class CommentsPresenterSpy extends Mock
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   final List<ExpansibleGroupFromProductViewModel> loadedCommentsController = [];
+  List<ExpansibleGroupFromProductViewModel> loadedObligatoryOptionsController =
+      [];
   final bool hasSelectedCommentsController = false;
 
   CommentsPresenterSpy() {
@@ -19,6 +21,8 @@ class CommentsPresenterSpy extends Mock
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
     when(() => this.loadedComments).thenAnswer((_) => loadedCommentsController);
+    when(() => this.loadedObligatoryOptions)
+        .thenAnswer((_) => loadedObligatoryOptionsController);
     when(() => this.changeCommentIsSelected(any())).thenAnswer((_) async => _);
     when(() => this.productHasComment(
           product: any(named: "product"),

@@ -16,7 +16,8 @@ class GetxInsertProductsPresenter extends GetxController
         UIErrorManager,
         CanAdvanceIndexManager,
         ComboxIsValidManager,
-        DoScrollManager
+        DoScrollManager,
+        SelectedProductviewmodelManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -252,8 +253,8 @@ class GetxInsertProductsPresenter extends GetxController
       _totalProductsQuantity--;
     }
 
-    if (_selectedProduct.value != null) {
-      updateTotalLiquid(_selectedProduct.value!);
+    if (selectedProductValue != null) {
+      updateTotalLiquid(selectedProductValue!);
     }
   }
 
@@ -325,23 +326,23 @@ class GetxInsertProductsPresenter extends GetxController
   ) {
     bool productHasComment =
         expansibleGroupFromProductPresenter.productHasComment(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
 
     bool productHasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
 
     final atualFather =
-        _selectedProduct.value!.childsComposition?[_selectedFatherIndex.value];
+        selectedProductValue!.childsComposition?[_selectedFatherIndex.value];
 
     bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
-        _selectedProduct.value!.childsComposition?.length;
+        selectedProductValue!.childsComposition?.length;
 
-    bool hasChilds = _selectedProduct.value?.childsComposition != null;
+    bool hasChilds = selectedProductValue?.childsComposition != null;
 
     if (hasChilds) {
       if (productHasComment &&
@@ -379,7 +380,7 @@ class GetxInsertProductsPresenter extends GetxController
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     List<ProductCompositionViewModel>? childsComposition =
-        _selectedProduct.value?.childsComposition;
+        selectedProductValue?.childsComposition;
 
     if (_showObligatoryOptions.value) {
       List<ExpansibleGroupFromProductViewModel> selectedOptions;
@@ -397,7 +398,7 @@ class GetxInsertProductsPresenter extends GetxController
             .loadedObligatoryOptions
             .where((e) =>
                 e.ProductInternalCodeOnErp ==
-                    _selectedProduct.value!.InternalCodeOnERP &&
+                    selectedProductValue!.InternalCodeOnERP &&
                 e.selected)
             .toList();
       }
@@ -414,12 +415,12 @@ class GetxInsertProductsPresenter extends GetxController
     }
 
     ProductCompositionViewModel selectedFather =
-        _selectedProduct.value!.childsComposition![0];
+        selectedProductValue!.childsComposition![0];
 
     if (_selectedFatherIndex.value <
-        _selectedProduct.value!.childsComposition!.length) {
-      selectedFather = _selectedProduct
-          .value!.childsComposition![_selectedFatherIndex.value];
+        selectedProductValue!.childsComposition!.length) {
+      selectedFather =
+          selectedProductValue!.childsComposition![_selectedFatherIndex.value];
     }
 
     return fatherIsValid(selectedFather);
@@ -446,15 +447,15 @@ class GetxInsertProductsPresenter extends GetxController
       return true;
     }
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
     if (_selectedFatherIndex.value == 0 &&
-        _selectedProduct.value!.childsComposition == null &&
+        selectedProductValue!.childsComposition == null &&
         !hasComment) {
       return false;
     } else if (_selectedFatherIndex.value == 0 &&
-        _selectedProduct.value!.childsComposition == null &&
+        selectedProductValue!.childsComposition == null &&
         hasComment) {
       return true;
     }
@@ -469,24 +470,24 @@ class GetxInsertProductsPresenter extends GetxController
       return true;
     }
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
 
     bool hasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
 
     if (_selectedFatherIndex.value == 0 &&
         !hasComment &&
-        _selectedProduct.value!.childsComposition == null &&
+        selectedProductValue!.childsComposition == null &&
         hasObligatoryOptions) {
       return true;
     } else if (_selectedFatherIndex.value == 1 &&
         hasComment &&
-        _selectedProduct.value!.childsComposition == null &&
+        selectedProductValue!.childsComposition == null &&
         hasObligatoryOptions) {
       return true;
     }
@@ -499,18 +500,18 @@ class GetxInsertProductsPresenter extends GetxController
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
 
     bool hasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: _selectedProduct.value!,
+      product: selectedProductValue!,
       indexOfChild: _selectedFatherIndex.value,
     );
 
-    if (_selectedProduct.value?.childsComposition != null) {
-      if (_selectedProduct.value?.childsComposition?.length ==
+    if (selectedProductValue?.childsComposition != null) {
+      if (selectedProductValue?.childsComposition?.length ==
           _selectedFatherIndex.value) {
         return true;
       } else {
@@ -541,14 +542,6 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
   set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
-
-  final _selectedProduct = Rx<ProductsViewModel?>(null);
-  @override
-  Stream<ProductsViewModel?> get selectedProductStream =>
-      _selectedProduct.stream;
-  set selectedComboxProduct(ProductsViewModel? product) {
-    _selectedProduct.value = product;
-  }
 
   final _selectedFatherIndex = Rx<int>(0);
   set selectedFatherIndex(int value) {

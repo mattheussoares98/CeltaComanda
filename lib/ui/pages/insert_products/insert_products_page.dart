@@ -155,7 +155,9 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                     );
                                     return Scaffold(
                                       appBar: AppBar(
-                                        title: Text(selectedProduct!.Name),
+                                        title: FittedBox(
+                                          child: Text(selectedProduct!.Name),
+                                        ),
                                       ),
                                       body: hasMinWidth(context)
                                           ? LandscapeInsertProductsPageBody(

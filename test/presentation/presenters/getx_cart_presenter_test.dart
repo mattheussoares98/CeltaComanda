@@ -200,7 +200,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -215,7 +216,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.cartProducts, []);
@@ -227,7 +229,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
     test("Should emit correct events on addProductInCart throws", () async {
@@ -239,7 +242,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     });
 
@@ -249,7 +253,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       await sut.removeProductFromCart(0);
 
@@ -393,7 +398,8 @@ void main() {
     test("Should call cartInformations.clear when saveProducts succeeds",
         () async {
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -551,7 +557,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -568,7 +575,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -597,7 +605,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -618,7 +627,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -640,7 +650,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -657,7 +668,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       verify(
@@ -673,7 +685,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.cartProducts, [cartProductViewModel]);
@@ -688,12 +701,14 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       await sut.addProductInCart(
         product: cartProduct1,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.cartProducts, [
@@ -764,12 +779,14 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       await sut.addProductInCart(
         product: cartProductWithOneQuantity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       await sut.reduceCartProductQuantity(0);
@@ -784,7 +801,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       expect(sut.cartProducts[0].TotalLiquid,
           cartProductEntity.TotalLiquid.toString());
@@ -800,7 +818,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       await sut.addCartProductQuantity(0);
@@ -813,7 +832,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
       expect(sut.cartProducts[0].TotalLiquid,
           cartProductEntity.TotalLiquid.toString());
@@ -829,7 +849,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.indexOfSelectedProduct, null);
@@ -845,7 +866,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expansibleGroupFromProductPresenter
@@ -853,7 +875,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.cartProducts.length, 2);
@@ -865,7 +888,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       final productWithNewComment = CartProductEntity(
@@ -879,7 +903,8 @@ void main() {
       await sut.addProductInCart(
         product: productWithNewComment,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.cartProducts.length, 2);
@@ -892,7 +917,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       expect(sut.cartProducts, [
@@ -959,7 +985,8 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1026,7 +1053,8 @@ void main() {
       );
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1055,7 +1083,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1071,7 +1100,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1087,7 +1117,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1102,7 +1133,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1112,7 +1144,8 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1149,7 +1182,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1160,7 +1194,8 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1199,7 +1234,8 @@ void main() {
 
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1212,7 +1248,8 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1249,7 +1286,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1260,7 +1298,8 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1294,7 +1333,8 @@ void main() {
         "Should call verify is confirmed cart products when call saveCartProducts",
         () async {
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1306,7 +1346,8 @@ void main() {
         "Should call udpate confirmedCartProducts with true value when saveCartProducts succeeds",
         () async {
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1321,7 +1362,8 @@ void main() {
       updateSaleRequestTemp
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1333,7 +1375,8 @@ void main() {
         "Should call udpate confirmedCartProducts with false value when finishSaleRequestTemp succeeds",
         () async {
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1347,7 +1390,8 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1360,7 +1404,8 @@ void main() {
         () async {
       confirmedCartProducts.mockIsConfirmed(true);
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1376,7 +1421,8 @@ void main() {
         () async {
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1391,11 +1437,13 @@ void main() {
       sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1405,7 +1453,8 @@ void main() {
     });
     test("Should return true on saveProducts succeeds", () async {
       final isUpdated = await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1417,7 +1466,8 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       final isUpdated = await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1430,7 +1480,8 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       final isUpdated = await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1444,7 +1495,8 @@ void main() {
       sut.cartProducts.add(cartProductViewModel);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: null,
         homePresenter: homePresenter,
@@ -1470,7 +1522,8 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1496,7 +1549,8 @@ void main() {
       expect(homePresenter.isFixedCommandNumber, true);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -1514,21 +1568,12 @@ void main() {
       expect(homePresenter.commandNumber, fixedCommandNumber);
 
       await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
       );
-    });
-    test("Should clear all selected comments", () async {
-      await sut.saveProducts(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => expansibleGroupFromProductPresenter.unselectAllComments()).called(1);
     });
   });
 
@@ -1716,7 +1761,8 @@ void main() {
       await sut.addProductInCart(
         product: cartProductViewModel.toEntity(),
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       // sut.confirmedCombox.add(comboxWithSelectedProducts);

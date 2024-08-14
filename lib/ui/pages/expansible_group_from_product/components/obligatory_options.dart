@@ -76,11 +76,12 @@ class _CommentsState extends State<ObligatoryOptions> {
             child: InkWell(
               onTap: () {
                 setState(() {
-                  debugPrint(
-                    "Criar opção para alterar o índice da opção obrigatória selecionada e remover a opção selecionada ao sair da página",
+                  expansibleGroupFromProductPresenter
+                      .changeObligatoryOptionIsSelected(
+                    obligatoryOptionsShowing: getObligatoryOptions(
+                        expansibleGroupFromProductPresenter),
+                    selectedIndex: index,
                   );
-                  // expansibleGroupFromProductPresenter
-                  //     .changeCommentIsSelected(comment);
                 });
               },
               child: Padding(
@@ -103,11 +104,12 @@ class _CommentsState extends State<ObligatoryOptions> {
                       value: obligatoryOption.selected,
                       onChanged: (value) {
                         setState(() {
-                          debugPrint(
-                            "Criar opção para alterar o índice da opção obrigatória selecionada e remover a opção selecionada ao sair da página",
+                          expansibleGroupFromProductPresenter
+                              .changeObligatoryOptionIsSelected(
+                            obligatoryOptionsShowing: getObligatoryOptions(
+                                expansibleGroupFromProductPresenter),
+                            selectedIndex: index,
                           );
-                          // expansibleGroupFromProductPresenter
-                          //     .changeCommentIsSelected(comment);
                         });
                       },
                     ),

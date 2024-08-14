@@ -307,38 +307,12 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
 
-  bool allPreviousFathersAreValids(int newIndex) {
-    bool valid = true;
-
-    if (_selectedProduct.value!.childsComposition == null) {
-      return valid;
-    }
-
-    for (var i = 0; i < newIndex; i++) {
-      final item = _selectedProduct.value!.childsComposition![i];
-      if (!fatherIsValid(item)) {
-        valid = false;
-        break;
-      }
-    }
-
-    return valid;
-  }
-
   @override
   void updateFatherIndex(int newIndex) {
-    allPreviousFathersAreValids(newIndex);
-
-    debugPrint(
-        "Criar tratamento para quando alterar o índice clicando nele, emitir valor nas streams que exibem ou nao o comentario e as opcoes obrigatorias pra remover as funcoes getShowComments e getShowObligatoryOptions");
-    if (newIndex <= _selectedFatherIndex.value || newIndex == 0) {
+    if (newIndex <= _selectedFatherIndex.value) {
       selectedFatherIndex = newIndex;
-    } else if (allPreviousFathersAreValids(newIndex)) {
-      selectedFatherIndex = newIndex;
-    } else {
-      //algum pai anterior ao índice selecionado não está válido
+      doScroll = true;
     }
-    doScroll = true;
   }
 
   @override

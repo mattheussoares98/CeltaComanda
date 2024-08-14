@@ -272,16 +272,16 @@ void main() {
       sut.updateFatherIndex(0);
       sut.updateFatherIndex(1);
     });
-    test(
-        "Should not advance selectedFatherIndex if one of all previous itens is invalid",
+
+    test("Should never advance index if newIndex is greather than atual index",
         () async {
       selectedProduct.childsComposition = [
         validFather,
-        invalidFather,
+        validFather,
         validFather,
       ];
 
-      expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1]));
+      expectLater(sut.selectedLeftIndexStream, emits(0));
 
       await sut.updateSelectedProduct(
         product: selectedProduct,
@@ -291,40 +291,20 @@ void main() {
       sut.updateFatherIndex(0);
       sut.updateFatherIndex(1);
       sut.updateFatherIndex(2);
-    });
-    test("Should advance selectedFatherIndex if all previous itens are valid",
-        () async {
-      selectedProduct.childsComposition = [
-        validFather,
-        validFather,
-        invalidFather,
-        validFather,
-      ];
-
-      expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1, 2]));
-
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.updateFatherIndex(0);
-      sut.updateFatherIndex(1);
-      sut.updateFatherIndex(2);
-      sut.updateFatherIndex(3);
     });
   });
 
   group("clearSelectedComboxData", () {
     test("Should update index of selected father to zero", () async {
       expectLater(sut.selectedLeftIndexStream, emitsInOrder([1, 0]));
+      selectedProduct.childsComposition = null;
 
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(1);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
       sut.clearData(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
@@ -1037,6 +1017,7 @@ void main() {
         "Should emit correct values if new index is the index of quantity and atual father is invalid ",
         () async {
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter.mockProductHasObligatoryOptions(false);
       selectedProduct.childsComposition = [validFather, invalidFather];
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
@@ -1046,7 +1027,6 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(1);
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
   });
@@ -1280,7 +1260,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(1);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
 
       expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
           true);
@@ -1313,7 +1293,11 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      sut.updateFatherIndex(selectedProduct.childsComposition!.length);
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expansibleGroupFromProductPresenter
+          .mockProductHasObligatoryOptions(false);
+
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
 
       expect(
           sut.getShowUpdateQuantity(expansibleGroupFromProductPresenter), true);
@@ -1344,7 +1328,7 @@ void main() {
       );
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
 
-      sut.updateFatherIndex(1);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
       expect(
           sut.getShowUpdateQuantity(expansibleGroupFromProductPresenter), true);
     });
@@ -1360,7 +1344,7 @@ void main() {
       expansibleGroupFromProductPresenter
           .mockProductHasObligatoryOptions(false);
 
-      sut.updateFatherIndex(1);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
       expect(
           sut.getShowUpdateQuantity(expansibleGroupFromProductPresenter), true);
     });
@@ -1374,7 +1358,8 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      sut.updateFatherIndex(2);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
       expect(
           sut.getShowUpdateQuantity(expansibleGroupFromProductPresenter), true);
     });

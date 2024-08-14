@@ -919,6 +919,8 @@ void main() {
 
       expect(optionalFather.indexOfSelectedChild, null);
       sut.updateSelectedIndexOfProduct(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         father: optionalFather,
         index: 0,
       );
@@ -928,10 +930,14 @@ void main() {
         "Should not update index if click in the same product and father is not optional",
         () {
       sut.updateSelectedIndexOfProduct(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         father: obligatoryFather,
         index: 0,
       );
       sut.updateSelectedIndexOfProduct(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         father: obligatoryFather,
         index: 0,
       );
@@ -944,10 +950,14 @@ void main() {
           ProductCompositionViewModel.fromEntity(optionalFathers[0]);
 
       sut.updateSelectedIndexOfProduct(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         father: optionalFather,
         index: 0,
       );
       sut.updateSelectedIndexOfProduct(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         father: optionalFather,
         index: 0,
       );
@@ -1329,7 +1339,13 @@ void main() {
     test(
         "Should return false if index is 0, dont have comments and dont have childs",
         () async {
-      sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
+      sut.updateSelectedIndexOfProduct(
+        father: validFather,
+        index: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
       await sut.updateSelectedProduct(
         product: selectedProduct,
@@ -1342,7 +1358,12 @@ void main() {
     test("Should return true if index is 0, hascomment and dont have childs",
         () async {
       selectedProduct.childsComposition = null;
-      sut.updateSelectedIndexOfProduct(father: validFather, index: 0);
+      sut.updateSelectedIndexOfProduct(
+        father: validFather,
+        index: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:

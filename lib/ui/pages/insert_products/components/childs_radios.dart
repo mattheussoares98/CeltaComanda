@@ -25,6 +25,8 @@ class _ChildsRadiosState extends State<ChildsRadios> {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
@@ -45,6 +47,8 @@ class _ChildsRadiosState extends State<ChildsRadios> {
         return InkWell(
           onTap: () {
             _updateSelectedIndex(
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
               insertProductsPresenter: insertProductsPresenter,
               value: i,
               selectedFather: widget.selectedFather,
@@ -63,6 +67,8 @@ class _ChildsRadiosState extends State<ChildsRadios> {
                 toggleable: widget.selectedFather.IsOptionalItem == "true",
                 onChanged: (int? value) {
                   _updateSelectedIndex(
+                    expansibleGroupFromProductPresenter:
+                        expansibleGroupFromProductPresenter,
                     insertProductsPresenter: insertProductsPresenter,
                     value: value,
                     selectedFather: widget.selectedFather,
@@ -109,10 +115,13 @@ void _updateSelectedIndex({
   required int? value,
   required ProductCompositionViewModel selectedFather,
   required ProductsViewModel selectedProduct,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
 }) {
   insertProductsPresenter.updateSelectedIndexOfProduct(
     father: selectedFather,
     index: value,
+    expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
   );
 
   insertProductsPresenter.updateTotalLiquid(

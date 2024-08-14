@@ -277,6 +277,8 @@ class GetxInsertProductsPresenter extends GetxController
   void updateSelectedIndexOfProduct({
     required ProductCompositionViewModel father,
     required int? index,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   }) {
     if (father.IsOptionalItem == "true" &&
         father.indexOfSelectedChild == index) {
@@ -284,6 +286,8 @@ class GetxInsertProductsPresenter extends GetxController
     } else {
       father.indexOfSelectedChild = index;
     }
+
+    updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 
   @override

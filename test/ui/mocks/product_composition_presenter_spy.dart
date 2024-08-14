@@ -38,6 +38,7 @@ class InsertProductsPresenterSpy extends Mock
     when(() => this.updateSelectedIndexOfProduct(
           father: any(named: "father"),
           index: any(named: "index"),
+          expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
         )).thenAnswer((_) => _);
     when(() => this.updateComment(
           expansibleGroupFromProductPresenter:

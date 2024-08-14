@@ -89,12 +89,12 @@ class GetxExpansibleGroupFromProductPresenter
   }
 
   @override
-  Future<void> changeObligatoryOptionIsSelected(
-    ExpansibleGroupFromProductViewModel group,
-  ) async {
-    int index = _loadedObligatoryOptions.indexOf(group);
-    _loadedObligatoryOptions[index].selected =
-        !_loadedObligatoryOptions[index].selected;
+  Future<void> changeObligatoryOptionIsSelected({
+    required List<ExpansibleGroupFromProductViewModel> obligatoryOptionsShowing,
+    required int selectedIndex,
+  }) async {
+    obligatoryOptionsShowing[selectedIndex].selected =
+        !obligatoryOptionsShowing[selectedIndex].selected;
   }
 
   final _isLoading = false.obs;

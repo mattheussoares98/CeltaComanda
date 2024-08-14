@@ -145,10 +145,13 @@ void main() {
       expect(sut.loadedComments[0].selected, true);
     });
     test("Should update correctly obligatory option is selected", () async {
-      await sut.loadCommentsAndObligatoryOptions(loadedProducts);
+      await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);
 
       expect(sut.loadedObligatoryOptions[0].selected, false);
-      sut.changeObligatoryOptionIsSelected(sut.loadedObligatoryOptions[0]);
+      sut.changeObligatoryOptionIsSelected(
+        obligatoryOptionsShowing: sut.loadedObligatoryOptions,
+        selectedIndex: 0,
+      );
       expect(sut.loadedObligatoryOptions[0].selected, true);
     });
   });

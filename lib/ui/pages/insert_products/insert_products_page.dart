@@ -124,7 +124,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         expansibleGroupFromProductPresenter.unselectAllObligatoryOptions();
       },
       child: StreamBuilder<double>(
-          stream: insertProductPresenter.totalPrice,
+          stream: insertProductPresenter.totalPriceStream,
           builder: (context, snapshotTotalPrice) {
             return StreamBuilder<ProductsViewModel?>(
                 stream: insertProductPresenter.selectedProductStream,

@@ -608,7 +608,7 @@ void main() {
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.childsCompositionIsValidStream, emits(true));
+      expectLater(sut.comboxIsValidStream, emits(true));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
@@ -662,7 +662,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.invalidCombox]));
-      expectLater(sut.childsCompositionIsValidStream, emits(false));
+      expectLater(sut.comboxIsValidStream, emits(false));
 
       await sut.updateSaleRequest(
         homePresenter: homePresenter,
@@ -1175,7 +1175,7 @@ void main() {
   group("Update product price without childsComposition", () {
     test("Should update price when update selected product", () async {
       expectLater(
-          sut.totalPrice,
+          sut.totalPriceStream,
           emits(
             selectedProduct.SaleRetailPraticed.toDouble(),
           ));
@@ -1189,7 +1189,7 @@ void main() {
     });
     test("Should update price add product quantity", () async {
       expectLater(
-          sut.totalPrice,
+          sut.totalPriceStream,
           emitsInOrder([
             selectedProduct.SaleRetailPraticed.toDouble(),
             selectedProduct.SaleRetailPraticed.toDouble() * 2,
@@ -1209,7 +1209,7 @@ void main() {
     });
     test("Should update total liquid when update selected product", () async {
       expectLater(
-          sut.totalPrice,
+          sut.totalPriceStream,
           emits(
             selectedProduct.SaleRetailPraticed.toDouble(),
           ));
@@ -1226,7 +1226,7 @@ void main() {
   group("Update product price with childsComposition", () {
     test("Should update price when update selected product", () async {
       expectLater(
-          sut.totalPrice,
+          sut.totalPriceStream,
           emits(
             sut.calculateProductCompositionTotalLiquid(
               product: selectedProduct.childsComposition![0],
@@ -1242,7 +1242,7 @@ void main() {
     });
     test("Should update price add product quantity", () async {
       expectLater(
-          sut.totalPrice,
+          sut.totalPriceStream,
           emitsInOrder([
             sut.calculateProductCompositionTotalLiquid(
               product: selectedProduct.childsComposition![0],
@@ -1273,7 +1273,7 @@ void main() {
     });
     test("Should update total liquid when update selected product", () async {
       expectLater(
-          sut.totalPrice,
+          sut.totalPriceStream,
           emits(
             sut.calculateProductCompositionTotalLiquid(
               product: selectedProduct.childsComposition![0],

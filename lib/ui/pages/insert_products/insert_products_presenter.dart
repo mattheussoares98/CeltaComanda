@@ -7,8 +7,8 @@ import '../pages.dart';
 abstract class InsertProductPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<double> get totalPrice;
-  Stream<bool> get childsCompositionIsValidStream;
+  Stream<double> get totalPriceStream;
+  Stream<bool> get comboxIsValidStream;
   Stream<ProductsViewModel?> get selectedProductStream;
   Stream<int> get selectedLeftIndexStream;
   Stream<bool> get doScrollStream;

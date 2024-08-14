@@ -25,9 +25,9 @@ class InsertProductsPresenterSpy extends Mock
   InsertProductsPresenterSpy() {
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.childsCompositionIsValidStream)
+    when(() => this.comboxIsValidStream)
         .thenAnswer((_) => comboxIsValidController.stream);
-    when(() => this.totalPrice)
+    when(() => this.totalPriceStream)
         .thenAnswer((_) => totalPriceComboxController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);

@@ -11,7 +11,11 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxInsertProductsPresenter extends GetxController
-    with LoadingManager, UIErrorManager, CanAdvanceIndexManager
+    with
+        LoadingManager,
+        UIErrorManager,
+        CanAdvanceIndexManager,
+        ComboxIsValidManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -194,9 +198,9 @@ class GetxInsertProductsPresenter extends GetxController
 
     try {
       if (validateCombox.comboxIsValid(productsCompositions)) {
-        _comboxIsValidStream.value = true;
+        comboxIsValid = true;
       } else {
-        _comboxIsValidStream.value = false;
+        comboxIsValid = false;
         throw DomainError.invalidCombox;
       }
 
@@ -569,14 +573,9 @@ class GetxInsertProductsPresenter extends GetxController
 
   final _totalPrice = Rx<double>(0);
   @override
-  Stream<double> get totalPrice => _totalPrice.stream;
+  Stream<double> get totalPriceStream => _totalPrice.stream;
 
   int _totalProductsQuantity = 1;
   @override
   int get totalProductsQuantity => _totalProductsQuantity;
-
-  final _comboxIsValidStream = RxBool(false);
-  @override
-  Stream<bool> get childsCompositionIsValidStream =>
-      _comboxIsValidStream.stream;
 }

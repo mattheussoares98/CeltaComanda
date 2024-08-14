@@ -23,19 +23,6 @@ class GetxInsertProductsPresenter extends GetxController
     required this.validateCombox,
   });
 
-  final _totalPrice = Rx<double>(0);
-  @override
-  Stream<double> get totalPrice => _totalPrice.stream;
-
-  int _totalProductsQuantity = 1;
-  @override
-  int get totalProductsQuantity => _totalProductsQuantity;
-
-  final _comboxIsValidStream = RxBool(false);
-  @override
-  Stream<bool> get childsCompositionIsValidStream =>
-      _comboxIsValidStream.stream;
-
   void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
     List<ProductCompositionViewModel> productsComposition,
   ) {
@@ -289,24 +276,6 @@ class GetxInsertProductsPresenter extends GetxController
     }
   }
 
-  final _selectedProduct = Rx<ProductsViewModel?>(null);
-  @override
-  Stream<ProductsViewModel?> get selectedProductStream =>
-      _selectedProduct.stream;
-  set selectedComboxProduct(ProductsViewModel? product) {
-    _selectedProduct.value = product;
-  }
-
-  final _selectedFatherIndex = Rx<int>(0);
-  set selectedFatherIndex(int value) {
-    _selectedFatherIndex.value = value;
-    showComments = false;
-    showObligatoryOptions = false;
-  }
-
-  @override
-  Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
-
   @override
   void updateFatherIndex(int newIndex) {
     if (newIndex <= _selectedFatherIndex.value) {
@@ -400,18 +369,6 @@ class GetxInsertProductsPresenter extends GetxController
     doScroll = true;
   }
 
-  final _doScrollStream = false.obs;
-  @override
-  Stream<bool> get doScrollStream => _doScrollStream.stream;
-  set doScroll(bool _) {
-    Future.delayed(const Duration(milliseconds: 50), () {
-      _doScrollStream.subject.add(false);
-      Future.delayed(const Duration(milliseconds: 50), () {
-        _doScrollStream.subject.add(true);
-      });
-    });
-  }
-
   @override
   bool getCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
@@ -422,9 +379,12 @@ class GetxInsertProductsPresenter extends GetxController
     if (_showObligatoryOptions.value) {
       List<ExpansibleGroupFromProductViewModel> selectedOptions;
       if (childsComposition != null) {
-        selectedOptions = expansibleGroupFromProductPresenter.loadedObligatoryOptions
+        selectedOptions = expansibleGroupFromProductPresenter
+            .loadedObligatoryOptions
             .where((e) =>
-                e.ProductInternalCodeOnErp == childsComposition[_selectedFatherIndex.value].InternalCodeOnERPCodeChild &&
+                e.ProductInternalCodeOnErp ==
+                    childsComposition[_selectedFatherIndex.value]
+                        .InternalCodeOnERPCodeChild &&
                 e.selected)
             .toList();
       } else {
@@ -529,16 +489,6 @@ class GetxInsertProductsPresenter extends GetxController
     return false;
   }
 
-  final _showComments = false.obs;
-  @override
-  Stream<bool> get showCommentsStream => _showComments.stream;
-  set showComments(bool value) => _showComments.value = value;
-
-  final _showObligatoryOptions = false.obs;
-  @override
-  Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
-  set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
-
   @override
   bool getShowUpdateQuantity(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
@@ -576,4 +526,62 @@ class GetxInsertProductsPresenter extends GetxController
       }
     }
   }
+
+  final _canAdvanceIndex = false.obs;
+  @override
+  Stream<bool> get canAdvanceIndexStream => _canAdvanceIndex.stream;
+  set canAdvanceIndex(bool value) => _canAdvanceIndex.value = value;
+
+  final _showComments = false.obs;
+  @override
+  Stream<bool> get showCommentsStream => _showComments.stream;
+  set showComments(bool value) => _showComments.value = value;
+
+  final _showObligatoryOptions = false.obs;
+  @override
+  Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
+  set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
+
+  final _doScrollStream = false.obs;
+  @override
+  Stream<bool> get doScrollStream => _doScrollStream.stream;
+  set doScroll(bool _) {
+    Future.delayed(const Duration(milliseconds: 50), () {
+      _doScrollStream.subject.add(false);
+      Future.delayed(const Duration(milliseconds: 50), () {
+        _doScrollStream.subject.add(true);
+      });
+    });
+  }
+
+  final _selectedProduct = Rx<ProductsViewModel?>(null);
+  @override
+  Stream<ProductsViewModel?> get selectedProductStream =>
+      _selectedProduct.stream;
+  set selectedComboxProduct(ProductsViewModel? product) {
+    _selectedProduct.value = product;
+  }
+
+  final _selectedFatherIndex = Rx<int>(0);
+  set selectedFatherIndex(int value) {
+    _selectedFatherIndex.value = value;
+    showComments = false;
+    showObligatoryOptions = false;
+  }
+
+  @override
+  Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
+
+  final _totalPrice = Rx<double>(0);
+  @override
+  Stream<double> get totalPrice => _totalPrice.stream;
+
+  int _totalProductsQuantity = 1;
+  @override
+  int get totalProductsQuantity => _totalProductsQuantity;
+
+  final _comboxIsValidStream = RxBool(false);
+  @override
+  Stream<bool> get childsCompositionIsValidStream =>
+      _comboxIsValidStream.stream;
 }

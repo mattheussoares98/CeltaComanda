@@ -31,15 +31,13 @@ class _CommentsState extends State<ObligatoryOptions> {
     }
   }
 
-  int getObligatoryOptionsLenght(
+  List<ExpansibleGroupFromProductViewModel> getObligatoryOptions(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    final lenght = expansibleGroupFromProductPresenter.loadedObligatoryOptions
+    return expansibleGroupFromProductPresenter.loadedObligatoryOptions
         .where(
             (e) => e.ProductInternalCodeOnErp.toInt() == getInternalCodeOnErp())
-        .length;
-
-    return lenght;
+        .toList();
   }
 
   @override
@@ -51,15 +49,10 @@ class _CommentsState extends State<ObligatoryOptions> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount:
-          getObligatoryOptionsLenght(expansibleGroupFromProductPresenter),
+          getObligatoryOptions(expansibleGroupFromProductPresenter).length,
       itemBuilder: (context, index) {
-        final obligatoryOptions = expansibleGroupFromProductPresenter
-            .loadedObligatoryOptions
-            .where((e) =>
-                int.parse(e.ProductInternalCodeOnErp) == getInternalCodeOnErp())
-            .toList();
-
-        final obligatoryOption = obligatoryOptions[index];
+        final obligatoryOption =
+            getObligatoryOptions(expansibleGroupFromProductPresenter)[index];
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),

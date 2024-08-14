@@ -6,6 +6,7 @@ export './form_manager.dart';
 export './loading_manager.dart';
 export './navigation_menager.dart';
 export './selected_productviewmodel_manager.dart';
+export './show_comments_manager.dart';
 export './show_obligatory_options_manager.dart';
 export './text_controller_manager.dart';
 export './ui_error_manager.dart';

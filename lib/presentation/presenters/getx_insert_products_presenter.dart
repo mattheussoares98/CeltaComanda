@@ -18,7 +18,8 @@ class GetxInsertProductsPresenter extends GetxController
         ComboxIsValidManager,
         DoScrollManager,
         SelectedProductviewmodelManager,
-        ShowObligatoryOptionsManager
+        ShowObligatoryOptionsManager,
+        ShowCommentsManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -347,7 +348,7 @@ class GetxInsertProductsPresenter extends GetxController
 
     if (hasChilds) {
       if (productHasComment &&
-          !_showComments.value &&
+          !showCommentsValue &&
           fatherIsValid(atualFather) &&
           !showObligatoryOptionValue) {
         showComments = true;
@@ -444,7 +445,7 @@ class GetxInsertProductsPresenter extends GetxController
   bool getShowComments(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    if (_showComments.value == true) {
+    if (showCommentsValue == true) {
       return true;
     }
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
@@ -533,11 +534,6 @@ class GetxInsertProductsPresenter extends GetxController
       }
     }
   }
-
-  final _showComments = false.obs;
-  @override
-  Stream<bool> get showCommentsStream => _showComments.stream;
-  set showComments(bool value) => _showComments.value = value;
 
   final _selectedFatherIndex = Rx<int>(0);
   set selectedFatherIndex(int value) {

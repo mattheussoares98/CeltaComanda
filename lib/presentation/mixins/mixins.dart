@@ -1,5 +1,6 @@
 export './can_advance_index_manager.dart';
 export './combox_is_valid_manager.dart';
+export './do_scroll_manager.dart';
 export './form_manager.dart';
 export './loading_manager.dart';
 export './navigation_menager.dart';

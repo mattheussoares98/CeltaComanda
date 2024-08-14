@@ -15,7 +15,8 @@ class GetxInsertProductsPresenter extends GetxController
         LoadingManager,
         UIErrorManager,
         CanAdvanceIndexManager,
-        ComboxIsValidManager
+        ComboxIsValidManager,
+        DoScrollManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -540,18 +541,6 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
   set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
-
-  final _doScrollStream = false.obs;
-  @override
-  Stream<bool> get doScrollStream => _doScrollStream.stream;
-  set doScroll(bool _) {
-    Future.delayed(const Duration(milliseconds: 50), () {
-      _doScrollStream.subject.add(false);
-      Future.delayed(const Duration(milliseconds: 50), () {
-        _doScrollStream.subject.add(true);
-      });
-    });
-  }
 
   final _selectedProduct = Rx<ProductsViewModel?>(null);
   @override

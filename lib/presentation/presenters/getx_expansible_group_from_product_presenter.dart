@@ -115,7 +115,7 @@ class GetxExpansibleGroupFromProductPresenter
   }
 
   @override
-  void unselectAllOptionalObligatory() {
+  void unselectAllObligatoryOptions() {
     for (var obligatoryOptional in _loadedObligatoryOptions) {
       obligatoryOptional.selected = false;
     }

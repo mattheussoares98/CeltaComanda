@@ -167,7 +167,7 @@ void main() {
       await sut.loadCommentsAndObligatoryOptions(loadedProducts);
       sut.loadedObligatoryOptions[0].selected = true;
 
-      sut.unselectAllOptionalObligatory();
+      sut.unselectAllObligatoryOptions();
       expect(sut.loadedObligatoryOptions[0].selected, false);
     });
   });

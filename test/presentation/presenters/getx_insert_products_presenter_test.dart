@@ -1070,12 +1070,10 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
+      expectLater(sut.canAdvanceIndexStream, emits(true));
 
-      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), true);
+      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
     });
-    //não criei mais testes porque nas outras possibilidades chama a função
-    //fatherIsValid, que já possui testes. Só passa o produto pai do índice
-    //selecionado como parâmetro da função pra validar o pai
 
     test(
         "Should return true if has childs, is showing obligatory options and one option is selected",
@@ -1099,7 +1097,9 @@ void main() {
       );
 
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), true);
+      expectLater(sut.canAdvanceIndexStream, emits(true));
+
+      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should return false if has childs, is showing obligatory options and option IS NOT selected",
@@ -1123,8 +1123,9 @@ void main() {
       );
 
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-      expect(
-          sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), false);
+      expectLater(sut.canAdvanceIndexStream, emits(false));
+
+      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should return true if dont have childs, is showing obligatory options and obligatory is selected",
@@ -1146,7 +1147,9 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), true);
+      expectLater(sut.canAdvanceIndexStream, emits(true));
+
+      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should return false if dont have childs, is showing obligatory options and obligatory is NOT selected",
@@ -1168,7 +1171,9 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), false);
+      expectLater(sut.canAdvanceIndexStream, emits(false));
+
+      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
     });
   });
 

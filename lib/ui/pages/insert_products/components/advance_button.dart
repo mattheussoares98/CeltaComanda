@@ -159,18 +159,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   bool canAdvanceIndex = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
-    InsertProductPresenter insertProductsPresenter =
-        Provider.of(context, listen: false);
-    canAdvanceIndex = insertProductsPresenter
-        .getCanAdvanceIndex(expansibleGroupFromProductPresenter);
-  }
-
-  @override
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);

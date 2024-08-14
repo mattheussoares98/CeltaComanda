@@ -380,7 +380,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  bool getCanAdvanceIndex(
+  void updateCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     List<ProductCompositionViewModel>? childsComposition =
@@ -408,26 +408,28 @@ class GetxInsertProductsPresenter extends GetxController
       }
 
       if (selectedOptions.isEmpty) {
-        return false;
+        canAdvanceIndex = false;
       } else {
-        return true;
+        canAdvanceIndex = true;
+      }
+    } else if (childsComposition == null) {
+      canAdvanceIndex = true;
+    } else {
+      ProductCompositionViewModel selectedFather =
+          selectedProductValue!.childsComposition![0];
+
+      if (_selectedFatherIndex.value <
+          selectedProductValue!.childsComposition!.length) {
+        selectedFather = selectedProductValue!
+            .childsComposition![_selectedFatherIndex.value];
+      }
+
+      if (fatherIsValid(selectedFather)) {
+        canAdvanceIndex = true;
+      } else {
+        canAdvanceIndex = false;
       }
     }
-
-    if (childsComposition == null) {
-      return true;
-    }
-
-    ProductCompositionViewModel selectedFather =
-        selectedProductValue!.childsComposition![0];
-
-    if (_selectedFatherIndex.value <
-        selectedProductValue!.childsComposition!.length) {
-      selectedFather =
-          selectedProductValue!.childsComposition![_selectedFatherIndex.value];
-    }
-
-    return fatherIsValid(selectedFather);
   }
 
   @override

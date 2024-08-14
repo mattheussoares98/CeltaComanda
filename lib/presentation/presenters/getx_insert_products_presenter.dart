@@ -12,16 +12,16 @@ import 'package:get/get.dart';
 
 class GetxInsertProductsPresenter extends GetxController
     with
-        LoadingManager,
-        UIErrorManager,
         CanAdvanceIndexManager,
         ComboxIsValidManager,
         DoScrollManager,
+        LoadingManager,
         SelectedProductviewmodelManager,
-        ShowObligatoryOptionsManager,
         ShowCommentsManager,
+        ShowObligatoryOptionsManager,
         TotalPriceManager,
-        TotalProductsQuantityManager
+        TotalProductsQuantityManager,
+        UIErrorManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;

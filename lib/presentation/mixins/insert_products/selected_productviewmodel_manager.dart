@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../ui/pages/pages.dart';
+import '../../../ui/pages/pages.dart';
 
 mixin SelectedProductviewmodelManager on GetxController {
   final _selectedProduct = Rx<ProductsViewModel?>(null);

@@ -1,14 +1,7 @@
-export './can_advance_index_manager.dart';
-export './combox_is_valid_manager.dart';
-export './do_scroll_manager.dart';
+export './insert_products/insert_products.dart';
 export './focus_node_manager.dart';
 export './form_manager.dart';
 export './loading_manager.dart';
 export './navigation_menager.dart';
-export './selected_productviewmodel_manager.dart';
-export './show_comments_manager.dart';
-export './show_obligatory_options_manager.dart';
 export './text_controller_manager.dart';
-export './total_price_manager.dart';
-export './total_products_quantity_manager.dart';
 export './ui_error_manager.dart';

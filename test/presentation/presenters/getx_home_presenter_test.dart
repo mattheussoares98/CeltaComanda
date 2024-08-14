@@ -421,11 +421,22 @@ void main() {
   });
 
   group("Update fixed command number", () {
+    test("Should call printedProductsPresenter.load", () async {
+      await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verify(() => printedProductsPresenter.loadPrinted(sut)).called(1);
+    });
     test("Should emit correct values when update command number", () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -434,6 +445,7 @@ void main() {
     test("Should validate ticket is permitted to validate command number",
         () async {
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -449,6 +461,7 @@ void main() {
     test("Should validate user and password to change command number",
         () async {
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -464,6 +477,7 @@ void main() {
     });
     test("Should update local command data", () async {
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -486,6 +500,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -503,6 +518,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -518,6 +534,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -534,6 +551,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -541,6 +559,7 @@ void main() {
     });
     test("Should update command number", () async {
       await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -553,6 +572,7 @@ void main() {
       ticketIsPermitted.mockError();
 
       final value = await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
@@ -562,6 +582,7 @@ void main() {
     });
     test("Should return true if update fixed command number success", () async {
       final value = await sut.updateFixedCommandNumber(
+        printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,

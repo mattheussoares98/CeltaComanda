@@ -25,7 +25,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   bool _isUpdatingCommandNumber = false;
   // bool _isUpdatingPeopleNumbers = false;
 
-  Future<void> _updateCommandNumber(HomePresenter homePresenter) async {
+  Future<void> _updateCommandNumber(
+    HomePresenter homePresenter,
+    PrintedProductsPresenter printedProductsPresenter,
+  ) async {
     if (_key.currentState?.validate() != true) {
       return;
     }
@@ -36,6 +39,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         newFixedCommandNumber: _selectedCommandNumber!,
         userPersonalizedCode: _personalizedCodeController.text.toInt(),
         password: _passwordController.text,
+        printedProductsPresenter: printedProductsPresenter,
       );
 
       if (updated) {
@@ -62,6 +66,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -99,7 +105,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                     _isUpdatingCommandNumber = true;
                     // _isUpdatingPeopleNumbers = true;
                   });
-                  await _updateCommandNumber(homePresenter);
+                  await _updateCommandNumber(
+                    homePresenter,
+                    printedProductsPresenter,
+                  );
                 },
               ),
 
@@ -127,7 +136,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                             _isUpdatingCommandNumber = true;
                             // _isUpdatingPeopleNumbers = true;
                           });
-                          await _updateCommandNumber(homePresenter);
+                          await _updateCommandNumber(
+                            homePresenter,
+                            printedProductsPresenter,
+                          );
                         },
                         child: FittedBox(
                           child: Padding(

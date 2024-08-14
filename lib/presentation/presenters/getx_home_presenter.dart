@@ -66,7 +66,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   void onChangePage({
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) {
     printedProductsPresenter.updateCanCancelProducts(false);
@@ -139,7 +140,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -147,7 +149,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     try {
       await menuPresenter.getGroupsAndProducts(
         commandNumber: commandNumber ?? "001",
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
 
       if (isFixedCommandNumber && commandNumber != null) {
@@ -184,6 +187,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required int newFixedCommandNumber,
     required int userPersonalizedCode,
     required String password,
+    required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -213,6 +217,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           isFixedCommandNumber: true,
         ),
       );
+
+      await printedProductsPresenter.loadPrinted(this);
       notifyListeners();
       return true;
     } on DomainError catch (e) {

@@ -80,12 +80,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         snapshotLeftItems.data != indexOfAtualFather) {
       indexOfAtualFather = snapshotLeftItems.data ?? 0;
     }
-    doOnBuildScreen(expansibleGroupFromProductPresenter);
-  }
 
-  void doOnBuildScreen(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  ) {
     productHasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
       indexOfChild: indexOfAtualFather,
@@ -96,6 +91,9 @@ class _InsertProductsPageState extends State<InsertProductsPage>
       indexOfChild: indexOfAtualFather,
       product: selectedProduct!,
     );
+
+    insertProductPresenter
+        .updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 
   @override

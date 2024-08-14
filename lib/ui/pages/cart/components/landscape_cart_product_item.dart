@@ -124,7 +124,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                       ),
                     if (expansibleGroupFromProductPresenter.productHasComment(
                       product: widget.cartProduct.Product,
-                      indexOfChild: -1,
+                      indexOfChild: 0,
                     ))
                       SizedBox(
                         child:

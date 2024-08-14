@@ -120,6 +120,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
+        expansibleGroupFromProductPresenter.unselectAllComments();
+        expansibleGroupFromProductPresenter.unselectAllObligatoryOptions();
       },
       child: StreamBuilder<double>(
           stream: insertProductPresenter.totalPrice,

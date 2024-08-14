@@ -287,11 +287,16 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void updateFatherIndex(int newIndex) {
+  void updateFatherIndex({
+    required int newIndex,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  }) {
     if (newIndex <= _selectedFatherIndex.value) {
       selectedFatherIndex = newIndex;
       doScroll = true;
     }
+    updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 
   @override

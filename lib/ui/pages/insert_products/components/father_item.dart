@@ -109,7 +109,11 @@ class FatherItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        insertProductPresenter.updateFatherIndex(atualIndex);
+        insertProductPresenter.updateFatherIndex(
+          newIndex: atualIndex,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
       },
       child: Container(
         height: 42,

@@ -50,7 +50,11 @@ abstract class InsertProductPresenter implements Listenable {
     required int? index,
   });
 
-  void updateFatherIndex(int newIndex);
+  void updateFatherIndex({
+    required int newIndex,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  });
   void clearData({
     required ProductsViewModel product,
     required ExpansibleGroupFromProductPresenter

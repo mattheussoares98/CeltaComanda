@@ -269,8 +269,16 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(0);
-      sut.updateFatherIndex(1);
+      sut.updateFatherIndex(
+        newIndex: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      sut.updateFatherIndex(
+        newIndex: 1,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
     });
 
     test("Should never advance index if newIndex is greather than atual index",
@@ -288,9 +296,21 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(0);
-      sut.updateFatherIndex(1);
-      sut.updateFatherIndex(2);
+      sut.updateFatherIndex(
+        newIndex: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      sut.updateFatherIndex(
+        newIndex: 1,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      sut.updateFatherIndex(
+        newIndex: 2,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
     });
   });
 
@@ -968,7 +988,11 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(0);
+      sut.updateFatherIndex(
+        newIndex: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
     test(
@@ -1009,7 +1033,11 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(0);
+      sut.updateFatherIndex(
+        newIndex: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
 
@@ -1045,7 +1073,11 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(1);
+      sut.updateFatherIndex(
+        newIndex: 1,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
 
@@ -1346,7 +1378,11 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(0);
+      sut.updateFatherIndex(
+        newIndex: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
 
       expect(sut.getShowObligatoryOptions(expansibleGroupFromProductPresenter),
           true);

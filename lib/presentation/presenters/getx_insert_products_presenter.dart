@@ -11,7 +11,7 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxInsertProductsPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, CanAdvanceIndexManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -526,11 +526,6 @@ class GetxInsertProductsPresenter extends GetxController
       }
     }
   }
-
-  final _canAdvanceIndex = false.obs;
-  @override
-  Stream<bool> get canAdvanceIndexStream => _canAdvanceIndex.stream;
-  set canAdvanceIndex(bool value) => _canAdvanceIndex.value = value;
 
   final _showComments = false.obs;
   @override

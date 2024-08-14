@@ -17,7 +17,8 @@ class GetxInsertProductsPresenter extends GetxController
         CanAdvanceIndexManager,
         ComboxIsValidManager,
         DoScrollManager,
-        SelectedProductviewmodelManager
+        SelectedProductviewmodelManager,
+        ShowObligatoryOptionsManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -348,11 +349,11 @@ class GetxInsertProductsPresenter extends GetxController
       if (productHasComment &&
           !_showComments.value &&
           fatherIsValid(atualFather) &&
-          !_showObligatoryOptions.value) {
+          !showObligatoryOptionValue) {
         showComments = true;
       } else if (productHasObligatoryOptions &&
           fatherIsValid(atualFather) &&
-          !_showObligatoryOptions.value) {
+          !showObligatoryOptionValue) {
         showComments = false;
         showObligatoryOptions = true;
       } else {
@@ -382,7 +383,7 @@ class GetxInsertProductsPresenter extends GetxController
     List<ProductCompositionViewModel>? childsComposition =
         selectedProductValue?.childsComposition;
 
-    if (_showObligatoryOptions.value) {
+    if (showObligatoryOptionValue) {
       List<ExpansibleGroupFromProductViewModel> selectedOptions;
       if (childsComposition != null) {
         selectedOptions = expansibleGroupFromProductPresenter
@@ -466,7 +467,7 @@ class GetxInsertProductsPresenter extends GetxController
   bool getShowObligatoryOptions(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    if (_showObligatoryOptions.value == true) {
+    if (showObligatoryOptionValue == true) {
       return true;
     }
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
@@ -537,11 +538,6 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<bool> get showCommentsStream => _showComments.stream;
   set showComments(bool value) => _showComments.value = value;
-
-  final _showObligatoryOptions = false.obs;
-  @override
-  Stream<bool> get showObligatoryOptionsStream => _showObligatoryOptions.stream;
-  set showObligatoryOptions(bool value) => _showObligatoryOptions.value = value;
 
   final _selectedFatherIndex = Rx<int>(0);
   set selectedFatherIndex(int value) {

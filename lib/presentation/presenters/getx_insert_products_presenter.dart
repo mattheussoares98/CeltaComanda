@@ -19,7 +19,8 @@ class GetxInsertProductsPresenter extends GetxController
         DoScrollManager,
         SelectedProductviewmodelManager,
         ShowObligatoryOptionsManager,
-        ShowCommentsManager
+        ShowCommentsManager,
+        TotalPriceManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -96,13 +97,13 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void updateTotalLiquid(ProductsViewModel product) {
     if (product.childsComposition == null) {
-      _totalPrice.subject
-          .add(product.SaleRetailPraticed.toDouble() * _totalProductsQuantity);
+      totalPrice =
+          product.SaleRetailPraticed.toDouble() * _totalProductsQuantity;
     } else {
       double totalLiquid = _getTotalLiquidCombox(product.childsComposition!) *
           _totalProductsQuantity;
 
-      _totalPrice.subject.add(totalLiquid);
+      totalPrice = totalLiquid;
     }
   }
 
@@ -544,10 +545,6 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
-
-  final _totalPrice = Rx<double>(0);
-  @override
-  Stream<double> get totalPriceStream => _totalPrice.stream;
 
   int _totalProductsQuantity = 1;
   @override

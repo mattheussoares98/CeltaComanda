@@ -10,4 +10,5 @@ export './show_comments_manager.dart';
 export './show_obligatory_options_manager.dart';
 export './text_controller_manager.dart';
 export './total_price_manager.dart';
+export './total_products_quantity_manager.dart';
 export './ui_error_manager.dart';

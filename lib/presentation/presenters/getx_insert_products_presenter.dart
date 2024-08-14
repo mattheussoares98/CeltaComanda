@@ -20,7 +20,8 @@ class GetxInsertProductsPresenter extends GetxController
         SelectedProductviewmodelManager,
         ShowObligatoryOptionsManager,
         ShowCommentsManager,
-        TotalPriceManager
+        TotalPriceManager,
+        TotalProductsQuantityManager
     implements InsertProductPresenter {
   final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -49,7 +50,7 @@ class GetxInsertProductsPresenter extends GetxController
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) async {
-    _totalProductsQuantity = 1;
+    totalProductsQuantity = 1;
 
     selectedComboxProduct = product;
 
@@ -98,10 +99,10 @@ class GetxInsertProductsPresenter extends GetxController
   void updateTotalLiquid(ProductsViewModel product) {
     if (product.childsComposition == null) {
       totalPrice =
-          product.SaleRetailPraticed.toDouble() * _totalProductsQuantity;
+          product.SaleRetailPraticed.toDouble() * totalProductsQuantity;
     } else {
       double totalLiquid = _getTotalLiquidCombox(product.childsComposition!) *
-          _totalProductsQuantity;
+          totalProductsQuantity;
 
       totalPrice = totalLiquid;
     }
@@ -249,11 +250,11 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void updateTotalProductsQuantity(bool isAddingQuantity) {
     if (isAddingQuantity) {
-      _totalProductsQuantity++;
-    } else if (_totalProductsQuantity <= 1) {
+      totalProductsQuantity = totalProductsQuantity + 1;
+    } else if (totalProductsQuantity <= 1) {
       return;
     } else {
-      _totalProductsQuantity--;
+      totalProductsQuantity = totalProductsQuantity - 1;
     }
 
     if (selectedProductValue != null) {
@@ -300,7 +301,7 @@ class GetxInsertProductsPresenter extends GetxController
         expansibleGroupFromProductPresenter,
   }) {
     selectedFatherIndex = 0;
-    _totalProductsQuantity = 1;
+    totalProductsQuantity = 1;
 
     if (product.childsComposition != null) {
       for (var father in product.childsComposition!) {
@@ -545,8 +546,4 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
-
-  int _totalProductsQuantity = 1;
-  @override
-  int get totalProductsQuantity => _totalProductsQuantity;
 }

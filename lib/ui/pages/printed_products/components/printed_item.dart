@@ -30,7 +30,8 @@ class _PrintedItemState extends State<PrintedItem> {
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required String saleRequestProductId,
   }) async {
     await printedProductsPresenter.removeProduct(
@@ -44,6 +45,8 @@ class _PrintedItemState extends State<PrintedItem> {
     setState(() {});
   }
 
+  final double rightMargin = 2;
+
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
@@ -51,7 +54,8 @@ class _PrintedItemState extends State<PrintedItem> {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
@@ -78,93 +82,88 @@ class _PrintedItemState extends State<PrintedItem> {
                           if (i < widget.printed.Products.length)
                             Builder(builder: (context) {
                               final product = widget.printed.Products[i];
-                              return Flexible(
-                                child: Container(
-                                  width: (MediaQuery.of(context).size.width /
-                                      getItensPerLine(context)),
-                                  margin: const EdgeInsets.all(1),
-                                  padding: const EdgeInsets.only(right: 2),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 220, 218, 218)),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        blurRadius: 10,
-                                        color: Color(0x33000000),
-                                        offset: Offset(-3, -1),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      ProductDetails(
-                                        product: product.Products,
-                                        onPressedRemoveProduct: () async {
-                                          notificationDialog(
-                                            context: context,
-                                            titleMessage:
-                                                R.string.removeProduct,
-                                            content: Text(
-                                              R.string
-                                                  .wantRemoveRequestedProduct,
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            onPress: () async {
-                                              await _removeProduct(
-                                                printedProductsPresenter:
-                                                    printedProductsPresenter,
-                                                menuPresenter: menuPresenter,
-                                                cartPresenter: cartPresenter,
-                                                homePresenter: homePresenter,
-                                                saleRequestProductId: product
-                                                    .SaleRequestProductId,
-                                                expansibleGroupFromProductPresenter:
-                                                    expansibleGroupFromProductPresenter,
-                                              );
-                                            },
-                                          );
-                                        },
-                                        validateUserAndCancelProducts: () {
-                                          validateUserAndCancelProductDialog(
-                                              context: context,
-                                              formKey: widget.formKey,
-                                              personalizedCodeController: widget
-                                                  .personalizedCodeController,
-                                              passwordController:
-                                                  widget.passwordController,
+                              return Container(
+                                width: (MediaQuery.of(context).size.width /
+                                        getItensPerLine(context)) -
+                                    rightMargin,
+                                margin: const EdgeInsets.all(1),
+                                padding: EdgeInsets.only(right: rightMargin),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: const Color.fromARGB(
+                                          255, 220, 218, 218)),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 10,
+                                      color: Color(0x33000000),
+                                      offset: Offset(-3, -1),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  children: [
+                                    ProductDetails(
+                                      product: product.Products,
+                                      onPressedRemoveProduct: () async {
+                                        notificationDialog(
+                                          context: context,
+                                          titleMessage: R.string.removeProduct,
+                                          content: Text(
+                                            R.string.wantRemoveRequestedProduct,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          onPress: () async {
+                                            await _removeProduct(
                                               printedProductsPresenter:
                                                   printedProductsPresenter,
-                                              callSetState: () {
-                                                setState(() {});
-                                              });
-                                        },
-                                        quantity: product.Quantity,
-                                        value: (product.TotalLiquid.toDouble() /
-                                                product.Quantity.toDouble())
-                                            .toString()
-                                            .toBrazilianNumber(),
-                                        totalLiquid: product.TotalLiquid,
-                                        comments: product.Comments,
-                                      ),
-                                      // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
-                                      // Text(
-                                      //     "SaleRequestProductId ${product.SaleRequestProductId}"),
-                                      // Text("Quantity ${product.Quantity}"),
-                                      // Text("UserId ${product.UserId}"),
-                                      // Text("IsCancelled ${product.IsCancelled}"),
-                                      // Text("IsDelivered ${product.IsDelivered}"),
-                                      // Text("IsPrinted ${product.IsPrinted}"),
-                                      // Text("ProductionStatus ${product.ProductionStatus}"),
-                                      // Text(
-                                      //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
-                                      // Text("SaleRequestId ${product.SaleRequestId}"),
-                                    ],
-                                  ),
+                                              menuPresenter: menuPresenter,
+                                              cartPresenter: cartPresenter,
+                                              homePresenter: homePresenter,
+                                              saleRequestProductId:
+                                                  product.SaleRequestProductId,
+                                              expansibleGroupFromProductPresenter:
+                                                  expansibleGroupFromProductPresenter,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      validateUserAndCancelProducts: () {
+                                        validateUserAndCancelProductDialog(
+                                            context: context,
+                                            formKey: widget.formKey,
+                                            personalizedCodeController: widget
+                                                .personalizedCodeController,
+                                            passwordController:
+                                                widget.passwordController,
+                                            printedProductsPresenter:
+                                                printedProductsPresenter,
+                                            callSetState: () {
+                                              setState(() {});
+                                            });
+                                      },
+                                      quantity: product.Quantity,
+                                      value: (product.TotalLiquid.toDouble() /
+                                              product.Quantity.toDouble())
+                                          .toString()
+                                          .toBrazilianNumber(),
+                                      totalLiquid: product.TotalLiquid,
+                                      comments: product.Comments,
+                                    ),
+                                    // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
+                                    // Text(
+                                    //     "SaleRequestProductId ${product.SaleRequestProductId}"),
+                                    // Text("Quantity ${product.Quantity}"),
+                                    // Text("UserId ${product.UserId}"),
+                                    // Text("IsCancelled ${product.IsCancelled}"),
+                                    // Text("IsDelivered ${product.IsDelivered}"),
+                                    // Text("IsPrinted ${product.IsPrinted}"),
+                                    // Text("ProductionStatus ${product.ProductionStatus}"),
+                                    // Text(
+                                    //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
+                                    // Text("SaleRequestId ${product.SaleRequestId}"),
+                                  ],
                                 ),
                               );
                             })

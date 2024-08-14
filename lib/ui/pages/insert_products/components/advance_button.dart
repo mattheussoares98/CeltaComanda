@@ -156,8 +156,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     }
   }
 
-  bool canAdvanceIndex = false;
-
   @override
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
@@ -167,39 +165,43 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     InsertProductPresenter insertProductsPresenter =
         Provider.of(context, listen: false);
 
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: canAdvanceIndex
-            ? Theme.of(context).secondaryHeaderColor
-            : Theme.of(context).primaryColorDark,
-      ),
-      onPressed: canAdvanceIndex
-          ? () async {
-              await _advanceOrAddInCart(
-                cartPresenter: cartPresenter,
-                totalPrice: widget.totalPrice,
-                quantity: widget.quantity,
-                context: context,
-                expansibleGroupFromProductPresenter:
-                    expansibleGroupFromProductPresenter,
-                insertProductsPresenter: insertProductsPresenter,
-                menuPresenter: menuPresenter,
-              );
-            }
-          : null,
-      child: FittedBox(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-              _getButtonText(
-                widget.selectedProduct,
-                expansibleGroupFromProductPresenter,
+    return StreamBuilder<bool>(
+        stream: insertProductsPresenter.canAdvanceIndexStream,
+        builder: (context, snapshot) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: snapshot.data == true
+                  ? Theme.of(context).secondaryHeaderColor
+                  : Theme.of(context).primaryColorDark,
+            ),
+            onPressed: snapshot.data == true
+                ? () async {
+                    await _advanceOrAddInCart(
+                      cartPresenter: cartPresenter,
+                      totalPrice: widget.totalPrice,
+                      quantity: widget.quantity,
+                      context: context,
+                      expansibleGroupFromProductPresenter:
+                          expansibleGroupFromProductPresenter,
+                      insertProductsPresenter: insertProductsPresenter,
+                      menuPresenter: menuPresenter,
+                    );
+                  }
+                : null,
+            child: FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    _getButtonText(
+                      widget.selectedProduct,
+                      expansibleGroupFromProductPresenter,
+                    ),
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                    )),
               ),
-              style: TextStyle(
-                fontSize: getStringSize(context),
-              )),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }

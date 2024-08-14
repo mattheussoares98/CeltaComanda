@@ -377,6 +377,7 @@ class GetxInsertProductsPresenter extends GetxController
     }
 
     doScroll = true;
+    updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 
   @override

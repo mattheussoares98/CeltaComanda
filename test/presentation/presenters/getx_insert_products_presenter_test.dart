@@ -1017,7 +1017,8 @@ void main() {
         "Should emit correct values if new index is the index of quantity and atual father is invalid ",
         () async {
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
-      expansibleGroupFromProductPresenter.mockProductHasObligatoryOptions(false);
+      expansibleGroupFromProductPresenter
+          .mockProductHasObligatoryOptions(false);
       selectedProduct.childsComposition = [validFather, invalidFather];
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
@@ -1070,7 +1071,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.canAdvanceIndex, true);
+      expect(sut.getCanAdvanceIndex(expansibleGroupFromProductPresenter), true);
     });
     //não criei mais testes porque nas outras possibilidades chama a função
     //fatherIsValid, que já possui testes. Só passa o produto pai do índice

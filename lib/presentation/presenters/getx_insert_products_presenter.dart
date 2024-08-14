@@ -413,8 +413,38 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  bool get canAdvanceIndex {
-    if (_selectedProduct.value?.childsComposition == null) {
+  bool getCanAdvanceIndex(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    List<ProductCompositionViewModel>? childsComposition =
+        _selectedProduct.value?.childsComposition;
+
+    if (_showObligatoryOptions.value) {
+      List<ExpansibleGroupFromProductViewModel> selectedOptions;
+      if (childsComposition != null) {
+        selectedOptions = expansibleGroupFromProductPresenter.loadedObligatoryOptions
+            .where((e) =>
+                e.ProductInternalCodeOnErp == childsComposition[_selectedFatherIndex.value].InternalCodeOnERPCodeChild &&
+                e.selected)
+            .toList();
+      } else {
+        selectedOptions = expansibleGroupFromProductPresenter
+            .loadedObligatoryOptions
+            .where((e) =>
+                e.ProductInternalCodeOnErp ==
+                    _selectedProduct.value!.InternalCodeOnERP &&
+                e.selected)
+            .toList();
+      }
+
+      if (selectedOptions.isEmpty) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    if (childsComposition == null) {
       return true;
     }
 

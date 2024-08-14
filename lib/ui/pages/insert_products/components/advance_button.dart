@@ -79,9 +79,11 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required BuildContext context,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   }) async {
-    updateSelectedCommentsOfChildsComposition(expansibleGroupFromProductPresenter);
+    updateSelectedCommentsOfChildsComposition(
+        expansibleGroupFromProductPresenter);
 
     await cartPresenter.addProductInCart(
       product: CartProductEntity(
@@ -113,7 +115,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required double totalPrice,
     required int quantity,
     required BuildContext context,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
@@ -121,12 +124,14 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       if (widget.leftSelectedIndex == 0 &&
           expansibleGroupFromProductPresenter.productHasComment(
               product: widget.selectedProduct, indexOfChild: 0)) {
-        insertProductsPresenter.advanceFatherIndex(expansibleGroupFromProductPresenter);
+        insertProductsPresenter
+            .advanceFatherIndex(expansibleGroupFromProductPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
-          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
           insertProductsPresenter: insertProductsPresenter,
           totalPrice: totalPrice,
           context: context,
@@ -135,18 +140,34 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     } else {
       if (widget.leftSelectedIndex !=
           widget.selectedProduct.childsComposition!.length) {
-        insertProductsPresenter.advanceFatherIndex(expansibleGroupFromProductPresenter);
+        insertProductsPresenter
+            .advanceFatherIndex(expansibleGroupFromProductPresenter);
       } else {
         await _addInCart(
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
-          expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
           insertProductsPresenter: insertProductsPresenter,
           totalPrice: totalPrice,
           context: context,
         );
       }
     }
+  }
+
+  bool canAdvanceIndex = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+    InsertProductPresenter insertProductsPresenter =
+        Provider.of(context, listen: false);
+    canAdvanceIndex = insertProductsPresenter
+        .getCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 
   @override
@@ -160,18 +181,19 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: insertProductsPresenter.canAdvanceIndex
+        backgroundColor: canAdvanceIndex
             ? Theme.of(context).secondaryHeaderColor
             : Theme.of(context).primaryColorDark,
       ),
-      onPressed: insertProductsPresenter.canAdvanceIndex
+      onPressed: canAdvanceIndex
           ? () async {
               await _advanceOrAddInCart(
                 cartPresenter: cartPresenter,
                 totalPrice: widget.totalPrice,
                 quantity: widget.quantity,
                 context: context,
-                expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
                 insertProductsPresenter: insertProductsPresenter,
                 menuPresenter: menuPresenter,
               );

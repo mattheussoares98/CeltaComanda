@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -27,6 +28,13 @@ class ExpansibleGroupFromProductViewModel extends Equatable {
         GroupName: entity.GroupName,
         ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
+      );
+
+  CommentsEntity toEntity() => CommentsEntity(
+        ExpansibleGroupId: ExpansibleGroupId.toInt(),
+        ProductInternalCodeOnErp: ProductInternalCodeOnErp.toInt(),
+        GroupName: GroupName,
+        ProductName: ProductName,
       );
 
   @override

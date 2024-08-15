@@ -25,10 +25,20 @@ class CachedImage extends StatelessWidget {
     ),
   );
 
+  static final Set<String> _failedUrls = {};
+
   @override
   Widget build(BuildContext context) {
     String url =
         "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${ean ?? plu}.PNG";
+
+    if (_failedUrls.contains(url)) {
+      return _defaultImage(
+        height: height,
+        width: width,
+        cacheManager: _customCacheManager,
+      );
+    }
 
     return CachedNetworkImage(
       fit: BoxFit.contain,
@@ -38,6 +48,7 @@ class CachedImage extends StatelessWidget {
       height: height,
       width: width,
       errorWidget: (context, url, error) {
+        _failedUrls.add(url);
         return _defaultImage(
           height: height,
           width: width,

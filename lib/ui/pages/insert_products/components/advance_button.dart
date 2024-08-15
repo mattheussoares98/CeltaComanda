@@ -28,15 +28,26 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     ProductsViewModel selectedProduct,
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
+    final productHasComment =
+        expansibleGroupFromProductPresenter.productHasComment(
+      product: widget.selectedProduct,
+      indexOfChild: 0,
+    );
+    final productHasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      product: widget.selectedProduct,
+      indexOfChild: 0,
+    );
+
     if (selectedProduct.childsComposition == null) {
-      if (widget.leftSelectedIndex == 1) {
-        return R.string.insertInCart.toUpperCase();
-      } else if (widget.leftSelectedIndex == 0 &&
-          !expansibleGroupFromProductPresenter.productHasComment(
-              product: widget.selectedProduct, indexOfChild: 0)) {
-        return R.string.insertInCart.toUpperCase();
+      if (widget.leftSelectedIndex == 0 && productHasComment) {
+        return R.string.advance;
+      } else if (widget.leftSelectedIndex == 0 && productHasObligatoryOptions) {
+        return R.string.advance;
+      } else if (widget.leftSelectedIndex == 1 && productHasObligatoryOptions) {
+        return R.string.advance;
       } else {
-        return R.string.advance.toUpperCase();
+        return R.string.insertInCart.toUpperCase();
       }
     } else {
       if (widget.leftSelectedIndex ==
@@ -120,10 +131,25 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
+    final productHasComment =
+        expansibleGroupFromProductPresenter.productHasComment(
+      product: widget.selectedProduct,
+      indexOfChild: 0,
+    );
+
+    final productHasObligatoryOptions =
+        expansibleGroupFromProductPresenter.productHasObligatoryOption(
+      product: widget.selectedProduct,
+      indexOfChild: 0,
+    );
     if (widget.selectedProduct.childsComposition == null) {
-      if (widget.leftSelectedIndex == 0 &&
-          expansibleGroupFromProductPresenter.productHasComment(
-              product: widget.selectedProduct, indexOfChild: 0)) {
+      if (widget.leftSelectedIndex == 0 && productHasComment) {
+        insertProductsPresenter
+            .advanceFatherIndex(expansibleGroupFromProductPresenter);
+      } else if (widget.leftSelectedIndex == 0 && productHasObligatoryOptions) {
+        insertProductsPresenter
+            .advanceFatherIndex(expansibleGroupFromProductPresenter);
+      } else if (widget.leftSelectedIndex == 1 && productHasObligatoryOptions) {
         insertProductsPresenter
             .advanceFatherIndex(expansibleGroupFromProductPresenter);
       } else {

@@ -21,6 +21,7 @@ class CachedImage extends StatelessWidget {
   static final _customCacheManager = CacheManager(
     Config(
       CacheKeys.images.name,
+      maxNrOfCacheObjects: 100,
       stalePeriod: const Duration(days: 1),
     ),
   );
@@ -42,6 +43,8 @@ class CachedImage extends StatelessWidget {
 
     return CachedNetworkImage(
       fit: BoxFit.contain,
+      memCacheHeight: 887,
+      memCacheWidth: 887,
       cacheManager: _customCacheManager,
       key: ValueKey<String>(url),
       imageUrl: url,

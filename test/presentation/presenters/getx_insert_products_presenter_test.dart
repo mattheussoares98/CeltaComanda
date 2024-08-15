@@ -1006,7 +1006,20 @@ void main() {
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
     test(
-        "Should show comments if hasComment, comment not showing and atualFather is valid",
+        "Should emit false if hasComment, comment not showing and atualFather is invalid",
+        () async {
+      selectedProduct.childsComposition = [invalidFather];
+      expectLater(sut.showCommentsStream, emits(false));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+    });
+    test(
+        "Should emit true if hasComment, comment not showing and atualFather is valid",
         () async {
       selectedProduct.childsComposition = [validFather];
       expectLater(sut.showCommentsStream, emits(true));
@@ -1373,9 +1386,10 @@ void main() {
       expect(sut.getShowComments(expansibleGroupFromProductPresenter), true);
     });
     test(
-        "Should return true if childComposition is not null, has product and click in advance index",
+        "Should return true if childComposition is not null, father is valid, has product and click in advance index",
         () async {
       expectLater(sut.showCommentsStream, emits(true));
+      selectedProduct.childsComposition = [validFather];
 
       await sut.updateSelectedProduct(
         product: selectedProduct,
@@ -1425,6 +1439,7 @@ void main() {
     test("Should return correct values when have comment and advance index",
         () async {
       expectLater(sut.showObligatoryOptionsStream, emits(true));
+      selectedProduct.childsComposition = [validFather];
 
       await sut.updateSelectedProduct(
         product: selectedProduct,

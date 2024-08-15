@@ -33,17 +33,6 @@ class GetxInsertProductsPresenter extends GetxController
     required this.validateCombox,
   });
 
-  void _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-    List<ProductCompositionViewModel> productsComposition,
-  ) {
-    for (var product in productsComposition) {
-      if (product.IsOptionalItem == "false" &&
-          product.childs?.isEmpty == true) {
-        product.indexOfSelectedChild = 0;
-      }
-    }
-  }
-
   @override
   Future<void> updateSelectedProduct({
     required ProductsViewModel product,
@@ -54,11 +43,11 @@ class GetxInsertProductsPresenter extends GetxController
 
     selectedComboxProduct = product;
 
-    if (product.childsComposition != null) {
-      _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-        product.childsComposition!,
-      );
-    }
+    // if (product.childsComposition != null) {
+    //   _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
+    //     product.childsComposition!,
+    //   );
+    // }
 
     updateTotalLiquid(product);
 
@@ -361,7 +350,8 @@ class GetxInsertProductsPresenter extends GetxController
       if (productHasComment &&
           !showCommentsValue &&
           fatherIsValid(atualFather) &&
-          !showObligatoryOptionValue) {
+          !showObligatoryOptionValue &&
+          (atualFather?.indexOfSelectedChild != null)) {
         showComments = true;
       } else if (productHasObligatoryOptions &&
           fatherIsValid(atualFather) &&

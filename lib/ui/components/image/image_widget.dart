@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../ui/helpers/helpers.dart';
-import '../../../main/builders/builders.dart';
 import '../components.dart';
 
 class ImageWidget extends StatefulWidget {
@@ -13,6 +12,7 @@ class ImageWidget extends StatefulWidget {
   final double? beginAnimation;
   final double? endAnimation;
   final bool isAlcoholic;
+
   const ImageWidget({
     this.height = 65,
     this.width = 65,
@@ -30,6 +30,33 @@ class ImageWidget extends StatefulWidget {
 
 class _ImageWidgetState extends State<ImageWidget>
     with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 6),
+    )..repeat(reverse: true);
+
+    final CurvedAnimation curvedAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut, // Escolha a curva desejada aqui
+    );
+
+    _animation =
+        Tween<double>(begin: widget.beginAnimation!, end: widget.endAnimation!)
+            .animate(curvedAnimation);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -40,16 +67,10 @@ class _ImageWidgetState extends State<ImageWidget>
           child: ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: AnimatedBuilder(
-              animation: AnimationManager.getAnimation(
-                begin: widget.beginAnimation!,
-                end: widget.endAnimation!,
-              ),
+              animation: _animation,
               builder: (context, child) {
                 return Transform.scale(
-                  scale: AnimationManager.getAnimation(
-                    begin: widget.beginAnimation!,
-                    end: widget.endAnimation!,
-                  ).value,
+                  scale: _animation.value,
                   child: CachedImage(
                     ean: widget.ean,
                     plu: widget.plu,

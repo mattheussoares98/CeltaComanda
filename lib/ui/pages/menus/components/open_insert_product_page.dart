@@ -35,6 +35,10 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -47,6 +51,11 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
       style: ElevatedButton.styleFrom(),
       onPressed: () async {
         Navigator.of(context).pop();
+        await insertProductPresenter.updateSelectedProduct(
+          product: widget.selectedProduct,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
         menuPresenter.goToInsertProductPage(widget.selectedProduct);
       },
       child: Padding(

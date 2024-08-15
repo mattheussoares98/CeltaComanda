@@ -67,9 +67,9 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeCommandEntity());
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(HomePresenterSpy());

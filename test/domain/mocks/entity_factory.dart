@@ -184,7 +184,7 @@ class EntityFactory {
       SaleRequestTempId: faker.randomGenerator.integer(3).toString(),
       Products: products
           .map((e) => SaleRequestTempProductsViewModel(
-                Product: makeProductViewModel(),
+                Product: makeProductsViewModel(),
                 IsPrinted: faker.randomGenerator.boolean().toString(),
                 SaleRequestProductTempId:
                     faker.randomGenerator.integer(10).toString(),
@@ -206,7 +206,7 @@ class EntityFactory {
     );
   }
 
-  static ProductsViewModel makeProductViewModel({
+  static ProductsViewModel makeProductsViewModel({
     bool? insertChildsComposition,
     bool? isOptionalChilds,
   }) {
@@ -457,7 +457,7 @@ class EntityFactory {
   static List<PrintedProductsViewModel> makePrintedProductsViewModel() {
     return [
       PrintedProductsViewModel(
-        Products: makeProductViewModel(),
+        Products: makeProductsViewModel(),
         SaleRequestProductId: faker.randomGenerator.string(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
         Value: faker.randomGenerator.string(10),
@@ -474,7 +474,7 @@ class EntityFactory {
         SaleRequestId: faker.randomGenerator.string(10),
       ),
       PrintedProductsViewModel(
-        Products: makeProductViewModel(),
+        Products: makeProductsViewModel(),
         SaleRequestProductId: faker.randomGenerator.string(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
         Value: faker.randomGenerator.string(10),
@@ -547,7 +547,7 @@ class EntityFactory {
       makeSaleRequestTempProductsViewModel() =>
           SaleRequestTempProductsViewModel(
             Comments: faker.randomGenerator.string(10),
-            Product: makeProductViewModel(),
+            Product: makeProductsViewModel(),
             SaleRequestProductTempId:
                 faker.randomGenerator.integer(10).toString(),
             ProductPriceLookUpCode:
@@ -768,7 +768,7 @@ class EntityFactory {
         quantity: quantity,
       );
 
-  static ExpansibleGroupFromProductViewModel makeCommentViewModel(
+  static ExpansibleGroupFromProductViewModel makeExpansibleGroupFromProductPresenter(
           {bool? selected = false}) =>
       ExpansibleGroupFromProductViewModel(
         GroupName: faker.randomGenerator.string(10),

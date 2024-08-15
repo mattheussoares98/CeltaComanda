@@ -32,10 +32,10 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
     registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

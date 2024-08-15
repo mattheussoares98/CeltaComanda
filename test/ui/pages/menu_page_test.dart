@@ -32,8 +32,8 @@ void main() {
     registerFallbackValue(EntityFactory.makeExpansibleGroupsEntity()[0]);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
     registerFallbackValue(EntityFactory.makeProductCompositionViewModel(
       quantity: 0,
       salePrice: 0,
@@ -45,7 +45,7 @@ void main() {
       insertChilds: false,
     ));
     registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());

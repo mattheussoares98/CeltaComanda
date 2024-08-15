@@ -6,7 +6,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
-class CommentsPresenterSpy extends Mock
+class ExpansibleGroupFromProductPresenterSpy extends Mock
     implements ExpansibleGroupFromProductPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
@@ -15,7 +15,7 @@ class CommentsPresenterSpy extends Mock
       [];
   final bool hasSelectedCommentsController = false;
 
-  CommentsPresenterSpy() {
+  ExpansibleGroupFromProductPresenterSpy() {
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

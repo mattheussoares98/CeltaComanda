@@ -24,7 +24,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late MenuPresenterSpy menuPresenter;
-  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -51,7 +51,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     menuPresenter = MenuPresenterSpy();
-    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
   }
 
   initEntitys() {
@@ -83,12 +83,12 @@ void main() {
     registerFallbackValue(
       const PayParams(longAmountValue: 0, portionQuantity: 0),
     );
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
     registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

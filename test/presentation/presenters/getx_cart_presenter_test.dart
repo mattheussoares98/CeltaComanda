@@ -18,7 +18,7 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late HomePresenterSpy homePresenter;
-  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
@@ -78,7 +78,7 @@ void main() {
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
     );
-    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
   }
 
   void initEntitys() {
@@ -161,7 +161,7 @@ void main() {
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
-    commentViewModel = EntityFactory.makeCommentViewModel(selected: true);
+    commentViewModel = EntityFactory.makeExpansibleGroupFromProductPresenter(selected: true);
     printRequestEntity = EntityFactory.makePrintRequestEntity();
   }
 
@@ -184,15 +184,15 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(null));
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(UpdateSaleRequestTempEntity);
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
   });
 
   group("CartInformations", () {

@@ -22,7 +22,7 @@ void main() {
   late GetxInsertProductsPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
-  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
 
   late GetProductCompositionSpy getProductComposition;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -77,7 +77,7 @@ void main() {
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
-    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
   }
 
   void initUsecases() {
@@ -125,7 +125,7 @@ void main() {
       insertChilds: false,
     );
 
-    selectedProduct = EntityFactory.makeProductViewModel(
+    selectedProduct = EntityFactory.makeProductsViewModel(
       insertChildsComposition: true,
       isOptionalChilds: false,
     );
@@ -162,10 +162,10 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
     registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

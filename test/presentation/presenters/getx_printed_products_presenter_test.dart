@@ -18,7 +18,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
   late HomePresenterSpy homePresenter;
-  late CommentsPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late UserValidationsSpy userValidations;
@@ -39,7 +39,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
     homePresenter = HomePresenterSpy();
-    expansibleGroupFromProductPresenter = CommentsPresenterSpy();
+    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
 
     sut = GetxPrintedProductsPresenter(
@@ -95,10 +95,10 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
-    registerFallbackValue(EntityFactory.makeProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommentViewModel());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
     registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(CommentsPresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());

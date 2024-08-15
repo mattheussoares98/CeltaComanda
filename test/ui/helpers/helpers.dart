@@ -85,7 +85,7 @@ Widget makePage(
         create: (_) => InsertProductsPresenterSpy(),
       ),
       ListenableProvider<ExpansibleGroupFromProductPresenter>(
-        create: (_) => CommentsPresenterSpy(),
+        create: (_) => ExpansibleGroupFromProductPresenterSpy(),
       ),
     ],
     child: GetMaterialApp(

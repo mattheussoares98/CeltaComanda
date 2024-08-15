@@ -43,12 +43,6 @@ class GetxInsertProductsPresenter extends GetxController
 
     selectedComboxProduct = product;
 
-    // if (product.childsComposition != null) {
-    //   _updateSelectedIndexOfObligatoryFatherAndEmptyChilds(
-    //     product.childsComposition!,
-    //   );
-    // }
-
     updateTotalLiquid(product);
 
     bool hasComment = expansibleGroupFromProductPresenter.productHasComment(

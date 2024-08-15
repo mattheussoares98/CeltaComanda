@@ -39,8 +39,8 @@ void main() {
 
   void initEntitys() {
     loadedProducts = [
-      EntityFactory.makeProductViewModel(insertChildsComposition: true),
-      EntityFactory.makeProductViewModel(insertChildsComposition: true),
+      EntityFactory.makeProductsViewModel(insertChildsComposition: true),
+      EntityFactory.makeProductsViewModel(insertChildsComposition: true),
     ];
 
     expansibleGroupFromProductComplete =
@@ -73,6 +73,21 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
+    registerFallbackValue(EntityFactory.makeProductCompositionViewModel(
+      quantity: faker.randomGenerator.decimal(),
+      salePrice: faker.randomGenerator.decimal(),
+      offerPrice: faker.randomGenerator.decimal(),
+      fatherIncrement: faker.randomGenerator.decimal(),
+      childIncrement: faker.randomGenerator.decimal(),
+      indexOfSelectedChild: faker.randomGenerator.integer(10),
+      isOptionalItem: faker.randomGenerator.boolean(),
+      insertChilds: faker.randomGenerator.boolean(),
+    ));
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   group("Load comments/expansibleGroupsFromProductsComplete", () {
@@ -150,8 +165,8 @@ void main() {
     });
     test("Should update correctly obligatory option is selected", () async {
       loadExpansibleGroupsFromProductsComplete.mockLoad([
-        EntityFactory.makeCommentViewModel().toEntity(),
-        EntityFactory.makeCommentViewModel().toEntity(),
+        EntityFactory.makeExpansibleGroupFromProductPresenter().toEntity(),
+        EntityFactory.makeExpansibleGroupFromProductPresenter().toEntity(),
       ]);
 
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);

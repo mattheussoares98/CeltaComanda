@@ -28,8 +28,6 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Column(
@@ -82,18 +80,18 @@ class ProductDetails extends StatelessWidget {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-                        InkWell(
-                          onTap: printedProductsPresenter.canCancelProducts
-                              ? onPressedRemoveProduct
-                              : validateUserAndCancelProducts,
-                          child: Icon(
-                            Icons.delete,
-                            color: printedProductsPresenter.canCancelProducts
-                                ? Colors.red
-                                : Colors.grey,
-                            size: 30,
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: printedProductsPresenter.canCancelProducts
+                        //       ? onPressedRemoveProduct
+                        //       : validateUserAndCancelProducts,
+                        //   child: Icon(
+                        //     Icons.delete,
+                        //     color: printedProductsPresenter.canCancelProducts
+                        //         ? Colors.red
+                        //         : Colors.grey,
+                        //     size: 30,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

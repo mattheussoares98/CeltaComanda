@@ -94,7 +94,9 @@ class _LandscapeInsertProductsPageBodyState
                       selectedLeftIndex: widget.indexOfLeftItem,
                     ),
                   ),
-                if (widget.showObligatoryOptions)
+                if (insertProductPresenter.getShowObligatoryOptions(
+                  expansibleGroupFromProductPresenter,
+                ))
                   Expanded(
                     child: ObligatoryOptions(
                       selectedProduct: widget.selectedProduct,
@@ -106,6 +108,9 @@ class _LandscapeInsertProductsPageBodyState
                 ))
                   const Expanded(child: UpdateQuantity()),
                 if (!insertProductPresenter.getShowComments(
+                      expansibleGroupFromProductPresenter,
+                    ) &&
+                    !insertProductPresenter.getShowObligatoryOptions(
                       expansibleGroupFromProductPresenter,
                     ) &&
                     widget.selectedProduct.childsComposition != null &&

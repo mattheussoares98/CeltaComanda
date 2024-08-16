@@ -542,4 +542,9 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
+
+  final _insertProducts = Rx<List<InsertProductsViewModel>?>(null);
+  @override
+  Stream<List<InsertProductsViewModel>?> get insertProductsStream =>
+      _insertProducts.stream;
 }

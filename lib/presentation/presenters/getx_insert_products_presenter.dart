@@ -15,7 +15,6 @@ class GetxInsertProductsPresenter extends GetxController
         DoScrollManager,
         LoadingManager,
         SelectedProductviewmodelManager,
-        ShowObligatoryOptionsManager,
         TotalPriceManager,
         TotalProductsQuantityManager,
         UIErrorManager
@@ -426,53 +425,9 @@ class GetxInsertProductsPresenter extends GetxController
   void updateCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    List<ProductCompositionViewModel>? childsComposition =
-        selectedProductValue?.childsComposition;
-
-    if (showObligatoryOptionValue) {
-      List<ExpansibleGroupFromProductViewModel> selectedOptions;
-      if (childsComposition != null) {
-        selectedOptions = expansibleGroupFromProductPresenter
-            .loadedObligatoryOptions
-            .where((e) =>
-                e.ProductInternalCodeOnErp ==
-                    childsComposition[_selectedFatherIndex.value]
-                        .InternalCodeOnERPCodeChild &&
-                e.selected)
-            .toList();
-      } else {
-        selectedOptions = expansibleGroupFromProductPresenter
-            .loadedObligatoryOptions
-            .where((e) =>
-                e.ProductInternalCodeOnErp ==
-                    selectedProductValue!.InternalCodeOnERP &&
-                e.selected)
-            .toList();
-      }
-
-      if (selectedOptions.isEmpty) {
-        canAdvanceIndex = false;
-      } else {
-        canAdvanceIndex = true;
-      }
-    } else if (childsComposition == null) {
-      canAdvanceIndex = true;
-    } else {
-      ProductCompositionViewModel selectedFather =
-          selectedProductValue!.childsComposition![0];
-
-      if (_selectedFatherIndex.value <
-          selectedProductValue!.childsComposition!.length) {
-        selectedFather = selectedProductValue!
-            .childsComposition![_selectedFatherIndex.value];
-      }
-
-      if (fatherIsValid(selectedFather)) {
-        canAdvanceIndex = true;
-      } else {
-        canAdvanceIndex = false;
-      }
-    }
+    // if (fatherIsValid(selectedFather)) {
+    //   canAdvanceIndex = true;
+    // }
   }
 
   @override

@@ -36,7 +36,6 @@ void main() {
   late ProductsViewModel selectedProduct;
   late ProductCompositionViewModel validFather;
   late ProductCompositionViewModel invalidFather;
-  late InsertProductsViewModel productInsertProductsViewModel;
   late InsertProductsViewModel obligatoryOptionsInsertProductsViewModel;
   late InsertProductsViewModel optionalOptionsInsertProductsViewModel;
   late InsertProductsViewModel quantityInsertProductsViewModel;
@@ -160,11 +159,6 @@ void main() {
       insertChilds: false,
     );
 
-    productInsertProductsViewModel = InsertProductsViewModel(
-      selectedOptions: {
-        SelectedOptionType.product: selectedProduct,
-      },
-    );
     optionalOptionsInsertProductsViewModel = InsertProductsViewModel(
       selectedOptions: {
         SelectedOptionType.optionalExpansibleGroup:
@@ -1361,7 +1355,6 @@ void main() {
           sut.insertProductsViewModelStream,
           emits(
             [
-              productInsertProductsViewModel,
               optionalOptionsInsertProductsViewModel,
               obligatoryOptionsInsertProductsViewModel,
               quantityInsertProductsViewModel,
@@ -1384,7 +1377,6 @@ void main() {
           sut.insertProductsViewModelStream,
           emits(
             [
-              productInsertProductsViewModel,
               obligatoryOptionsInsertProductsViewModel,
               quantityInsertProductsViewModel,
             ],
@@ -1407,7 +1399,6 @@ void main() {
           sut.insertProductsViewModelStream,
           emits(
             [
-              productInsertProductsViewModel,
               optionalOptionsInsertProductsViewModel,
               quantityInsertProductsViewModel,
             ],

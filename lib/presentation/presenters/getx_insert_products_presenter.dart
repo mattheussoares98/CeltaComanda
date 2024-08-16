@@ -50,11 +50,6 @@ class GetxInsertProductsPresenter extends GetxController
       indexOfChild: _selectedFatherIndex.value,
     );
 
-    insertViewModel.add(InsertProductsViewModel(
-      selectedOptions: {
-        SelectedOptionType.product: product,
-      },
-    ));
     if (productHasComment) {
       insertViewModel.add(InsertProductsViewModel(selectedOptions: {
         SelectedOptionType.optionalExpansibleGroup:

@@ -27,14 +27,27 @@ class _PortraitInsertProductsPageBodyState
   final double buttonHeight = 50;
 
   final _scrollController = ScrollController();
+  SelectedOptionType? atualOption;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
+    if (widget.insertProductsViewModel != null) {
+      atualOption = widget.insertProductsViewModel![widget.indexOfAtualOption]
+          .selectedOptions.keys.first;
+    }
+
     return SingleChildScrollView(
-      controller: _scrollController,
+      controller:
+          _scrollController, //verificar se pode removar sem causar problemas, pois pelo jeito não usa
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -57,11 +70,8 @@ class _PortraitInsertProductsPageBodyState
                         padding: const EdgeInsets.only(right: 5),
                         child: Column(
                           children: [
-                            if (widget.selectedProduct.childsComposition !=
-                                    null &&
-                                widget.indexOfAtualOption <
-                                    widget.selectedProduct.childsComposition!
-                                        .length)
+                            if (atualOption ==
+                                SelectedOptionType.fatherComposition)
                               Text(
                                 _selectedFather(widget.selectedProduct,
                                         widget.indexOfAtualOption)
@@ -108,29 +118,33 @@ class _PortraitInsertProductsPageBodyState
                   ],
                 ),
               ),
-              ChildsRadios(
-                callSetState: () {
-                  setState(() {});
-                },
-                selectedFather: _selectedFather(
-                    widget.selectedProduct, widget.indexOfAtualOption),
-                selectedProduct: widget.selectedProduct,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: CommentsList(
+              if (atualOption == SelectedOptionType.fatherComposition)
+                ChildsRadios(
+                  callSetState: () {
+                    setState(() {});
+                  },
+                  selectedFather: _selectedFather(
+                      widget.selectedProduct, widget.indexOfAtualOption),
                   selectedProduct: widget.selectedProduct,
-                  selectedLeftIndex: widget.indexOfAtualOption,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: ObligatoryOptions(
-                  selectedProduct: widget.selectedProduct,
-                  selectedLeftIndex: widget.indexOfAtualOption,
+              if (atualOption == SelectedOptionType.optionalExpansibleGroup)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: CommentsList(
+                    selectedProduct: widget.selectedProduct,
+                    selectedLeftIndex: widget.indexOfAtualOption,
+                  ),
                 ),
-              ),
-              const UpdateQuantity(),
+              if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: ObligatoryOptions(
+                    selectedProduct: widget.selectedProduct,
+                    selectedLeftIndex: widget.indexOfAtualOption,
+                  ),
+                ),
+              if (atualOption == SelectedOptionType.quantity)
+                const UpdateQuantity(),
             ],
           ),
         ],

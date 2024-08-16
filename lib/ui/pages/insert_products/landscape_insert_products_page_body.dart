@@ -86,7 +86,7 @@ class _LandscapeInsertProductsPageBodyState
                   ),
                 if (atualOption == SelectedOptionType.optionalExpansibleGroup)
                   Expanded(
-                    child: CommentsList(
+                    child: OptionalGroups(
                       selectedProduct: widget.selectedProduct,
                       selectedLeftIndex: widget.indexOfAtualOption,
                     ),

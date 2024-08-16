@@ -130,7 +130,7 @@ class _PortraitInsertProductsPageBodyState
               if (atualOption == SelectedOptionType.optionalExpansibleGroup)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
-                  child: CommentsList(
+                  child: OptionalGroups(
                     selectedProduct: widget.selectedProduct,
                     selectedLeftIndex: widget.indexOfAtualOption,
                   ),

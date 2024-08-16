@@ -45,61 +45,117 @@ class GetxInsertProductsPresenter extends GetxController
 
     updateTotalLiquid(product);
 
-    bool hasComment = expansibleGroupFromProductPresenter.productHasComment(
+    bool productHasComment =
+        expansibleGroupFromProductPresenter.productHasComment(
       product: product,
       indexOfChild: _selectedFatherIndex.value,
     );
-    bool hasObligatoryOptions =
+    bool productHasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
       product: product,
       indexOfChild: _selectedFatherIndex.value,
     );
 
-    if (hasComment && product.childsComposition == null) {
+    if (productHasComment && product.childsComposition == null) {
       showComments = true;
-    } else if (hasObligatoryOptions && product.childsComposition == null) {
+    } else if (productHasObligatoryOptions &&
+        product.childsComposition == null) {
       showObligatoryOptions = true;
     }
 
+    List<InsertProductsViewModel> insertViewModel = [];
+
     if (product.childsComposition == null) {
-      final insertViewModel = [
-        InsertProductsViewModel(
+      insertViewModel.add(InsertProductsViewModel(
+        selectedOptions: {
+          SelectedOptionType.product: product,
+        },
+      ));
+      if (productHasComment) {
+        insertViewModel.add(InsertProductsViewModel(selectedOptions: {
+          SelectedOptionType.optionalExpansibleGroup:
+              expansibleGroupFromProductPresenter.loadedComments
+                  .where(
+                    (e) =>
+                        e.ProductInternalCodeOnErp == product.InternalCodeOnERP,
+                  )
+                  .toList(),
+        }));
+      }
+      if (productHasObligatoryOptions) {
+        insertViewModel.add(InsertProductsViewModel(
           selectedOptions: {
-            SelectedOptionType.product: product,
-          },
-        ),
-        if (hasComment)
-          InsertProductsViewModel(selectedOptions: {
-            SelectedOptionType.optionalExpansibleGroup:
-                expansibleGroupFromProductPresenter.loadedComments
+            SelectedOptionType.obligatoryExpansibleGroup:
+                expansibleGroupFromProductPresenter.loadedObligatoryOptions
                     .where(
                       (e) =>
                           e.ProductInternalCodeOnErp ==
                           product.InternalCodeOnERP,
                     )
                     .toList(),
-          }),
-        if (hasObligatoryOptions)
+          },
+        ));
+      }
+    } else {
+      for (var father in product.childsComposition!) {
+        bool fatherHasComment =
+            expansibleGroupFromProductPresenter.productHasComment(
+          product: product,
+          indexOfChild: father.InternalCodeOnERPCodeChild!.toInt(),
+        );
+        bool fatherHasObligatoryOptions =
+            expansibleGroupFromProductPresenter.productHasObligatoryOption(
+          product: product,
+          indexOfChild: father.InternalCodeOnERPCodeChild!.toInt(),
+        );
+
+        insertViewModel.add(
           InsertProductsViewModel(
+            selectedOptions: {
+              SelectedOptionType.fatherComposition: father,
+            },
+          ),
+        );
+
+        if (fatherHasComment) {
+          insertViewModel.add(InsertProductsViewModel(
+            selectedOptions: {
+              SelectedOptionType.optionalExpansibleGroup:
+                  expansibleGroupFromProductPresenter.loadedObligatoryOptions
+                      .where(
+                        (e) =>
+                            e.ProductInternalCodeOnErp ==
+                            father.InternalCodeOnERPCodeChild,
+                      )
+                      .toList(),
+            },
+          ));
+        }
+        if (fatherHasObligatoryOptions) {
+          insertViewModel.add(InsertProductsViewModel(
             selectedOptions: {
               SelectedOptionType.obligatoryExpansibleGroup:
                   expansibleGroupFromProductPresenter.loadedObligatoryOptions
                       .where(
                         (e) =>
                             e.ProductInternalCodeOnErp ==
-                            product.InternalCodeOnERP,
+                            father.InternalCodeOnERPCodeChild,
                       )
                       .toList(),
             },
-          ),
-        const InsertProductsViewModel(
-          selectedOptions: {
-            SelectedOptionType.quantity: null,
-          },
-        ),
-      ];
-      _insertProductsViewModel.subject.add(insertViewModel);
+          ));
+        }
+      }
     }
+
+    insertViewModel.add(
+      const InsertProductsViewModel(
+        selectedOptions: {
+          SelectedOptionType.quantity: null,
+        },
+      ),
+    );
+    _insertProductsViewModel.subject.add(insertViewModel);
   }
 
   double _getTotalLiquidCombox(

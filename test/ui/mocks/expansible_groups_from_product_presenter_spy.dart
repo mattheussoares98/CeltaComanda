@@ -10,7 +10,7 @@ class ExpansibleGroupFromProductPresenterSpy extends Mock
     implements ExpansibleGroupFromProductPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
-  final List<ExpansibleGroupFromProductViewModel> loadedCommentsController = [];
+  List<ExpansibleGroupFromProductViewModel> loadedCommentsController = [];
   List<ExpansibleGroupFromProductViewModel> loadedObligatoryOptionsController =
       [];
   final bool hasSelectedCommentsController = false;

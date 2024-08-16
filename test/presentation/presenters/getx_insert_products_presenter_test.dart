@@ -40,6 +40,9 @@ void main() {
   late InsertProductsViewModel obligatoryOptionsInsertProductsViewModel;
   late InsertProductsViewModel optionalOptionsInsertProductsViewModel;
   late InsertProductsViewModel quantityInsertProductsViewModel;
+  late InsertProductsViewModel fatherInsertProductsViewModel;
+  late InsertProductsViewModel fatherOptionalInsertProductsViewModel;
+  late InsertProductsViewModel fatherObligatoryInsertProductsViewModel;
 
   UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity({
     required ProductCompositionViewModel productCompositionViewModel,
@@ -191,6 +194,32 @@ void main() {
         SelectedOptionType.quantity: null,
       },
     );
+    fatherInsertProductsViewModel = InsertProductsViewModel(
+      selectedOptions: {
+        SelectedOptionType.fatherComposition:
+            selectedProduct.childsComposition![0],
+      },
+    );
+    fatherOptionalInsertProductsViewModel =
+        InsertProductsViewModel(selectedOptions: {
+      SelectedOptionType.optionalExpansibleGroup:
+          expansibleGroupFromProductPresenter.loadedComments
+              .where((e) =>
+                  e.ProductInternalCodeOnErp ==
+                  selectedProduct
+                      .childsComposition![0].InternalCodeOnERPCodeChild)
+              .toList(),
+    });
+    fatherObligatoryInsertProductsViewModel =
+        InsertProductsViewModel(selectedOptions: {
+      SelectedOptionType.obligatoryExpansibleGroup:
+          expansibleGroupFromProductPresenter.loadedObligatoryOptions
+              .where((e) =>
+                  e.ProductInternalCodeOnErp ==
+                  selectedProduct
+                      .childsComposition![0].InternalCodeOnERPCodeChild)
+              .toList(),
+    });
   }
 
   setUp(() {
@@ -1447,6 +1476,66 @@ void main() {
             sut.calculateProductCompositionTotalLiquid(
               product: selectedProduct.childsComposition![0],
             ),
+          ));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test("Should emit correct values in insertProductsViewModelStream",
+        () async {
+      expectLater(
+          sut.insertProductsViewModelStream,
+          emits(
+            [
+              fatherInsertProductsViewModel,
+              fatherOptionalInsertProductsViewModel,
+              fatherObligatoryInsertProductsViewModel,
+              quantityInsertProductsViewModel,
+            ],
+          ));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test(
+        "Should emit correct values in insertProductsViewModelStream when dont have optional groups",
+        () async {
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+      expectLater(
+          sut.insertProductsViewModelStream,
+          emits(
+            [
+              fatherInsertProductsViewModel,
+              fatherObligatoryInsertProductsViewModel,
+              quantityInsertProductsViewModel,
+            ],
+          ));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test(
+        "Should emit correct values in insertProductsViewModelStream when dont have obligatory options",
+        () async {
+      expansibleGroupFromProductPresenter
+          .mockProductHasObligatoryOptions(false);
+      expectLater(
+          sut.insertProductsViewModelStream,
+          emits(
+            [
+              fatherInsertProductsViewModel,
+              fatherOptionalInsertProductsViewModel,
+              quantityInsertProductsViewModel,
+            ],
           ));
 
       await sut.updateSelectedProduct(

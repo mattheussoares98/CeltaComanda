@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -17,7 +15,6 @@ class GetxInsertProductsPresenter extends GetxController
         DoScrollManager,
         LoadingManager,
         SelectedProductviewmodelManager,
-        ShowCommentsManager,
         ShowObligatoryOptionsManager,
         TotalPriceManager,
         TotalProductsQuantityManager,
@@ -145,24 +142,6 @@ class GetxInsertProductsPresenter extends GetxController
     selectedComboxProduct = product;
 
     updateTotalLiquid(product);
-
-    bool productHasComment =
-        expansibleGroupFromProductPresenter.productHasComment(
-      product: product,
-      indexOfChild: _selectedFatherIndex.value,
-    );
-    bool productHasObligatoryOptions =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: product,
-      indexOfChild: _selectedFatherIndex.value,
-    );
-
-    if (productHasComment && product.childsComposition == null) {
-      showComments = true;
-    } else if (productHasObligatoryOptions &&
-        product.childsComposition == null) {
-      showObligatoryOptions = true;
-    }
 
     List<InsertProductsViewModel> insertViewModel = [];
 
@@ -439,55 +418,6 @@ class GetxInsertProductsPresenter extends GetxController
   void advanceFatherIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    bool productHasComment =
-        expansibleGroupFromProductPresenter.productHasComment(
-      product: selectedProductValue!,
-      indexOfChild: _selectedFatherIndex.value,
-    );
-
-    bool productHasObligatoryOptions =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: selectedProductValue!,
-      indexOfChild: _selectedFatherIndex.value,
-    );
-
-    final atualFather =
-        selectedProductValue!.childsComposition?[_selectedFatherIndex.value];
-
-    bool newIndexIsOfQuantity = _selectedFatherIndex.value + 1 ==
-        selectedProductValue!.childsComposition?.length;
-
-    bool hasChilds = selectedProductValue?.childsComposition != null;
-
-    if (hasChilds) {
-      if (productHasComment &&
-          !showCommentsValue &&
-          fatherIsValid(atualFather) &&
-          !showObligatoryOptionValue &&
-          (atualFather?.indexOfSelectedChild != null)) {
-        showComments = true;
-      } else if (productHasObligatoryOptions &&
-          fatherIsValid(atualFather) &&
-          !showObligatoryOptionValue) {
-        showComments = false;
-        showObligatoryOptions = true;
-      } else {
-        debugPrint(
-            "Criar tratamento para ter pelo menos uma opção obrigatória selecionada");
-        showObligatoryOptions = false;
-        showComments = false;
-        selectedFatherIndex = _selectedFatherIndex.value + 1;
-      }
-    } else {
-      if (productHasComment && _selectedFatherIndex.value == 0) {
-        selectedFatherIndex = _selectedFatherIndex.value + 1;
-      } else if (newIndexIsOfQuantity && productHasComment) {
-        selectedFatherIndex = _selectedFatherIndex.value + 1;
-      } else {
-        selectedFatherIndex = _selectedFatherIndex.value + 1;
-      }
-    }
-
     doScroll = true;
     updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
@@ -561,8 +491,6 @@ class GetxInsertProductsPresenter extends GetxController
   final _selectedFatherIndex = Rx<int>(0);
   set selectedFatherIndex(int value) {
     _selectedFatherIndex.value = value;
-    showComments = false;
-    showObligatoryOptions = false;
   }
 
   @override

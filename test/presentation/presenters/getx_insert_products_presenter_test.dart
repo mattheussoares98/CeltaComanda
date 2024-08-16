@@ -284,18 +284,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
-    test(
-        'Should emit true when product has comment and childsComposition is null',
-        () async {
-      expectLater(sut.showCommentsStream, emits(true));
-      selectedProduct.childsComposition = null;
 
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    });
     test(
         'Should emit true when product dont have comment, have obligatoryOptions and childsComposition is null',
         () async {
@@ -1040,47 +1029,6 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-    });
-    test(
-        "Should emit false if hasComment, comment not showing and atualFather is invalid",
-        () async {
-      selectedProduct.childsComposition = [invalidFather];
-      expectLater(sut.showCommentsStream, emits(false));
-
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-    });
-    test(
-        "Should emit true if hasComment, comment not showing and atualFather is valid",
-        () async {
-      selectedProduct.childsComposition = [validFather];
-      expectLater(sut.showCommentsStream, emits(true));
-
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-    });
-    test(
-        "Should emit correct values if childsComposition not null, productHasObligatoryOptions and fatherIsValid",
-        () async {
-      selectedProduct.childsComposition = [validFather];
-      expectLater(sut.showCommentsStream, emitsInOrder([true, false]));
-      expectLater(sut.showObligatoryOptionsStream, emits(true));
-
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
 

@@ -31,8 +31,6 @@ class InsertProductsPresenterSpy extends Mock
         .thenAnswer((_) => totalPriceComboxController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.selectedProductStream)
-        .thenAnswer((_) => selectedComboxProductController.stream);
     when(() => this.totalProductsQuantity)
         .thenAnswer((_) => totalComboxQuantityController);
     when(() => this.updateSelectedIndexOfProduct(

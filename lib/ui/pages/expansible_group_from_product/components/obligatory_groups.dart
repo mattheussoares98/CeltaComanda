@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 
 import '../../pages.dart';
 
-class ObligatoryOptions extends StatefulWidget {
+class ObligatoryGroups extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int selectedLeftIndex;
-  const ObligatoryOptions({
+  const ObligatoryGroups({
     required this.selectedProduct,
     required this.selectedLeftIndex,
     super.key,
   });
 
   @override
-  State<ObligatoryOptions> createState() => _CommentsState();
+  State<ObligatoryGroups> createState() => _CommentsState();
 }
 
-class _CommentsState extends State<ObligatoryOptions> {
+class _CommentsState extends State<ObligatoryGroups> {
   final iconButtonFocusNode = FocusNode();
 
   int getInternalCodeOnErp() {

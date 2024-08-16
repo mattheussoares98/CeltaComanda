@@ -138,7 +138,7 @@ class _PortraitInsertProductsPageBodyState
               if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
-                  child: ObligatoryOptions(
+                  child: ObligatoryGroups(
                     selectedProduct: widget.selectedProduct,
                     selectedLeftIndex: widget.indexOfAtualOption,
                   ),

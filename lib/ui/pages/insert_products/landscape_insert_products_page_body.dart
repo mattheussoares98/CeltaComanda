@@ -93,7 +93,7 @@ class _LandscapeInsertProductsPageBodyState
                   ),
                 if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
                   Expanded(
-                    child: ObligatoryOptions(
+                    child: ObligatoryGroups(
                       selectedProduct: widget.selectedProduct,
                       selectedLeftIndex: widget.indexOfAtualOption,
                     ),

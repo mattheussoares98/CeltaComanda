@@ -10,12 +10,14 @@ class OptionItem extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final Color itemColor;
   final InsertProductsViewModel insertProductViewModel;
+  final String? lastFatherName;
   const OptionItem({
     required this.atualIndex,
     required this.indexOfSelectedFather,
     required this.selectedProduct,
     required this.itemColor,
     required this.insertProductViewModel,
+    required this.lastFatherName,
     super.key,
   });
 
@@ -45,18 +47,24 @@ class OptionItem extends StatelessWidget {
     return R.string.optional;
   }
 
-  String getOptionItemTitle() {
-    SelectedOptionType atualOption =
-        insertProductViewModel.selectedOptions.entries.first.key;
+  String getOptionItemTitle(SelectedOptionType atualOption) {
     dynamic optionValue =
         insertProductViewModel.selectedOptions.entries.first.value;
 
     // product,
 
     if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
-      return R.string.comment.toUpperCase();
+      if (lastFatherName != null) {
+        return lastFatherName!;
+      } else {
+        return R.string.comment.toUpperCase();
+      }
     } else if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
-      return R.string.comment.toUpperCase();
+      if (lastFatherName != null) {
+        return lastFatherName!;
+      } else {
+        return R.string.comment.toUpperCase();
+      }
     } else if (atualOption == SelectedOptionType.fatherComposition) {
       return (optionValue as ProductCompositionViewModel).ChildName.toString();
     } else {
@@ -70,6 +78,8 @@ class OptionItem extends StatelessWidget {
         Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
+    SelectedOptionType atualOption =
+        insertProductViewModel.selectedOptions.entries.first.key;
 
     return InkWell(
       onTap: () {
@@ -90,13 +100,15 @@ class OptionItem extends StatelessWidget {
             Expanded(
               child: RichText(
                 text: TextSpan(
-                  text: getOptionItemTitle(),
-                  children: selectedProduct.childsComposition == null
+                  text: getOptionItemTitle(atualOption),
+                  children: lastFatherName == null ||
+                          atualOption == SelectedOptionType.fatherComposition ||
+                          atualOption == SelectedOptionType.quantity
                       ? null
                       : <TextSpan>[
-                          const TextSpan(
-                            text: "Alterar aqui esse texto",
-                            style: TextStyle(
+                          TextSpan(
+                            text: " (${R.string.comment.toUpperCase()})",
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.yellow,
                             ),

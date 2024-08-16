@@ -18,7 +18,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(CartPresenterSpy());

@@ -88,7 +88,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());

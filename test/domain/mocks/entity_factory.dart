@@ -735,7 +735,7 @@ class EntityFactory {
       );
 
   static ExpansibleGroupFromProductViewModel
-      makeExpansibleGroupFromProductPresenter({bool? selected = false}) =>
+      makeExpansibleGroupFromProductViewModel({bool? selected = false}) =>
           ExpansibleGroupFromProductViewModel(
             GroupName: faker.randomGenerator.string(10),
             ProductName: faker.randomGenerator.string(10),
@@ -750,15 +750,16 @@ class EntityFactory {
         isFixedCommandNumber: faker.randomGenerator.boolean(),
       );
 
-  static List<ExpansibleGroupFromProductsCompleteEntity> makeExpansibleGroupFromProductCompleteEntity(
+  static List<ExpansibleGroupFromProductsCompleteEntity>
+      makeExpansibleGroupFromProductCompleteEntity(
     ProductsViewModel product,
   ) =>
-      [
-        ExpansibleGroupFromProductsCompleteEntity(
-          ExpansibleGroupId: faker.randomGenerator.integer(100),
-          ProductInternalCodeOnErp: product.InternalCodeOnERP!.toInt(),
-          GroupName: faker.randomGenerator.string(10),
-          ProductName: product.Name,
-        ),
-      ];
+          [
+            ExpansibleGroupFromProductsCompleteEntity(
+              ExpansibleGroupId: faker.randomGenerator.integer(100),
+              ProductInternalCodeOnErp: product.InternalCodeOnERP!.toInt(),
+              GroupName: faker.randomGenerator.string(10),
+              ProductName: product.Name,
+            ),
+          ];
 }

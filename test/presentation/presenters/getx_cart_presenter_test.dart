@@ -161,7 +161,7 @@ void main() {
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
-    commentViewModel = EntityFactory.makeExpansibleGroupFromProductPresenter(selected: true);
+    commentViewModel = EntityFactory.makeExpansibleGroupFromProductViewModel(selected: true);
     printRequestEntity = EntityFactory.makePrintRequestEntity();
   }
 
@@ -185,14 +185,14 @@ void main() {
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(UpdateSaleRequestTempEntity);
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
   });
 
   group("CartInformations", () {

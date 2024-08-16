@@ -83,7 +83,7 @@ void main() {
       isOptionalItem: faker.randomGenerator.boolean(),
       insertChilds: faker.randomGenerator.boolean(),
     ));
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
@@ -165,8 +165,8 @@ void main() {
     });
     test("Should update correctly obligatory option is selected", () async {
       loadExpansibleGroupsFromProductsComplete.mockLoad([
-        EntityFactory.makeExpansibleGroupFromProductPresenter().toEntity(),
-        EntityFactory.makeExpansibleGroupFromProductPresenter().toEntity(),
+        EntityFactory.makeExpansibleGroupFromProductViewModel().toEntity(),
+        EntityFactory.makeExpansibleGroupFromProductViewModel().toEntity(),
       ]);
 
       await sut.loadCommentsAndObligatoryOptions([loadedProducts[0]]);

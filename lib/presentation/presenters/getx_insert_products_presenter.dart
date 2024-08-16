@@ -439,6 +439,8 @@ class GetxInsertProductsPresenter extends GetxController
 
       if (fatherIsValid((selectedFather))) {
         canAdvanceIndex = true;
+      } else {
+        canAdvanceIndex = false;
       }
     } else if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
       ExpansibleGroupFromProductViewModel? selectedGroup =
@@ -447,6 +449,8 @@ class GetxInsertProductsPresenter extends GetxController
 
       if (selectedGroup != null) {
         canAdvanceIndex = true;
+      } else {
+        canAdvanceIndex = false;
       }
     } else {
       canAdvanceIndex = false;

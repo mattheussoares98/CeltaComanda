@@ -33,7 +33,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeProductCompositionViewModel(
       quantity: 0,
       salePrice: 0,

@@ -84,7 +84,7 @@ void main() {
       const PayParams(longAmountValue: 0, portionQuantity: 0),
     );
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
     registerFallbackValue(HomePresenterSpy());

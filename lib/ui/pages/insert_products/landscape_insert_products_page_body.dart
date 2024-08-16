@@ -1,23 +1,19 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../pages.dart';
 
 class LandscapeInsertProductsPageBody extends StatefulWidget {
+  final List<InsertProductsViewModel>? insertProductsViewModel;
   final ProductsViewModel selectedProduct;
-  final int indexOfLeftItem;
   final double totalLiquid;
-  final bool showObligatoryOptions;
-  final bool productHasComments;
-  final bool productHasObligatoryOptions;
+  final int indexOfAtualOption;
   const LandscapeInsertProductsPageBody({
+    required this.insertProductsViewModel,
     required this.selectedProduct,
-    required this.indexOfLeftItem,
     required this.totalLiquid,
-    required this.showObligatoryOptions,
-    required this.productHasComments,
-    required this.productHasObligatoryOptions,
+    required this.indexOfAtualOption,
     super.key,
   });
 
@@ -44,15 +40,14 @@ class _LandscapeInsertProductsPageBodyState
               ImageAndComplement(
                 selectedProduct: widget.selectedProduct,
               ),
-              Expanded(
-                child: FathersItems(
-                  selectedProduct: widget.selectedProduct,
-                  indexOfSelectedFather: widget.indexOfLeftItem,
-                  productHasComments: widget.productHasComments,
-                  productHasObligatoryOptions:
-                      widget.productHasObligatoryOptions,
+              if (widget.insertProductsViewModel != null)
+                Expanded(
+                  child: FathersItems(
+                    selectedProduct: widget.selectedProduct,
+                    indexOfAtualOption: widget.indexOfAtualOption,
+                    insertProductsViewModel: widget.insertProductsViewModel!,
+                  ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.only(top: 1),
                 child: TotalPriceCombox(
@@ -68,11 +63,11 @@ class _LandscapeInsertProductsPageBodyState
             child: Column(
               children: [
                 if (widget.selectedProduct.childsComposition != null &&
-                    widget.indexOfLeftItem <
+                    widget.indexOfAtualOption <
                         widget.selectedProduct.childsComposition!.length)
                   Text(
                     _selectedFather(
-                            widget.selectedProduct, widget.indexOfLeftItem)
+                            widget.selectedProduct, widget.indexOfAtualOption)
                         .ChildName!,
                     style: TextStyle(
                       fontSize: getStringSize(context) * 1.4,
@@ -82,7 +77,7 @@ class _LandscapeInsertProductsPageBodyState
                   ),
                 if (hasMinWidth(context))
                   TitleText(
-                    indexOfLeftItem: widget.indexOfLeftItem,
+                    indexOfAtualOption: widget.indexOfAtualOption,
                     selectedProduct: widget.selectedProduct,
                   ),
                 if (insertProductPresenter.getShowComments(
@@ -91,7 +86,7 @@ class _LandscapeInsertProductsPageBodyState
                   Expanded(
                     child: CommentsList(
                       selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfLeftItem,
+                      selectedLeftIndex: widget.indexOfAtualOption,
                     ),
                   ),
                 if (insertProductPresenter.getShowObligatoryOptions(
@@ -100,7 +95,7 @@ class _LandscapeInsertProductsPageBodyState
                   Expanded(
                     child: ObligatoryOptions(
                       selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfLeftItem,
+                      selectedLeftIndex: widget.indexOfAtualOption,
                     ),
                   ),
                 if (insertProductPresenter.getShowUpdateQuantity(
@@ -115,12 +110,12 @@ class _LandscapeInsertProductsPageBodyState
                     ) &&
                     widget.selectedProduct.childsComposition != null &&
                     widget.selectedProduct.childsComposition?.length !=
-                        widget.indexOfLeftItem)
+                        widget.indexOfAtualOption)
                   Expanded(
                     child: ChildsRadios(
                       selectedProduct: widget.selectedProduct,
                       selectedFather: _selectedFather(
-                          widget.selectedProduct, widget.indexOfLeftItem),
+                          widget.selectedProduct, widget.indexOfAtualOption),
                       callSetState: () {
                         setState(() {});
                       },
@@ -130,7 +125,7 @@ class _LandscapeInsertProductsPageBodyState
                   totalPrice: widget.totalLiquid,
                   quantity: insertProductPresenter.totalProductsQuantity,
                   selectedProduct: widget.selectedProduct,
-                  leftSelectedIndex: widget.indexOfLeftItem,
+                  leftSelectedIndex: widget.indexOfAtualOption,
                 ),
                 const SizedBox(height: 10),
               ],
@@ -143,5 +138,5 @@ class _LandscapeInsertProductsPageBodyState
 }
 
 ProductCompositionViewModel _selectedFather(
-        ProductsViewModel selectedProduct, int indexOfLeftItem) =>
-    selectedProduct.childsComposition![indexOfLeftItem];
+        ProductsViewModel selectedProduct, int indexOfAtualOption) =>
+    selectedProduct.childsComposition![indexOfAtualOption];

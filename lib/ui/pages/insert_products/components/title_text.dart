@@ -5,10 +5,10 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class TitleText extends StatelessWidget {
-  final int indexOfLeftItem;
+  final int indexOfAtualOption;
   final ProductsViewModel selectedProduct;
   const TitleText({
-    required this.indexOfLeftItem,
+    required this.indexOfAtualOption,
     required this.selectedProduct,
     super.key,
   });
@@ -48,11 +48,11 @@ class TitleText extends StatelessWidget {
     } else if (selectedProduct.childsComposition == null) {
       return R.string.selectQuantity;
     } else {
-      if (indexOfLeftItem == selectedProduct.childsComposition!.length) {
+      if (indexOfAtualOption == selectedProduct.childsComposition!.length) {
         return R.string.selectQuantity;
-      } else if (indexOfLeftItem < selectedProduct.childsComposition!.length &&
+      } else if (indexOfAtualOption < selectedProduct.childsComposition!.length &&
           !showComments) {
-        if (getSelectedFather(selectedProduct, indexOfLeftItem)
+        if (getSelectedFather(selectedProduct, indexOfAtualOption)
                 .IsOptionalItem ==
             "false") {
           return R.string.selectProduct;

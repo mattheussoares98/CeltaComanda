@@ -5,14 +5,12 @@ import '../../pages.dart';
 
 class FathersItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
-  final int indexOfSelectedFather;
-  final bool productHasComments;
-  final bool productHasObligatoryOptions;
+  final int indexOfAtualOption;
+  final List<InsertProductsViewModel> insertProductsViewModel;
   const FathersItems({
     required this.selectedProduct,
-    required this.indexOfSelectedFather,
-    required this.productHasComments,
-    required this.productHasObligatoryOptions,
+    required this.indexOfAtualOption,
+    required this.insertProductsViewModel,
     super.key,
   });
 
@@ -24,9 +22,9 @@ class _FathersItemsState extends State<FathersItems> {
   final _scrollController = ScrollController();
 
   Color getItemColor(int index, BuildContext context) {
-    if (index < widget.indexOfSelectedFather) {
+    if (index < widget.indexOfAtualOption) {
       return Theme.of(context).primaryColorDark;
-    } else if (index == widget.indexOfSelectedFather) {
+    } else if (index == widget.indexOfAtualOption) {
       return Theme.of(context).secondaryHeaderColor;
     } else {
       return Theme.of(context).primaryColor;
@@ -38,8 +36,7 @@ class _FathersItemsState extends State<FathersItems> {
     required ScrollController scrollController,
     required double viewportHeight,
   }) {
-    final proportion =
-        ((40 / 2) * widget.indexOfSelectedFather) / viewportHeight;
+    final proportion = ((40 / 2) * widget.indexOfAtualOption) / viewportHeight;
 
     final double targetPosition = viewportHeight * proportion;
 
@@ -61,37 +58,21 @@ class _FathersItemsState extends State<FathersItems> {
 
   bool _doScrollExecuted = false;
 
-  int getItemsCount() {
-    if (widget.selectedProduct.childsComposition == null) {
-      if (widget.productHasComments && widget.productHasObligatoryOptions) {
-        return 3;
-      } else if (widget.productHasComments) {
-        return 2;
-      } else if (widget.productHasObligatoryOptions) {
-        return 2;
-      } else {
-        return 1;
-      }
-    } else {
-      return widget.selectedProduct.childsComposition!.length + 1;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
     return Container(
-      height: getItemsCount() * 42,
+      height: widget.insertProductsViewModel.length * 42,
       color: Theme.of(context).primaryColor,
       child: ListView.builder(
         controller: _scrollController,
         itemExtent: 42,
         shrinkWrap: true,
-        itemCount: getItemsCount(),
+        itemCount: widget.insertProductsViewModel.length,
         itemBuilder: (context, index) {
-          if (index + 1 == getItemsCount()) {
+          if (index + 1 == widget.insertProductsViewModel.length) {
             return StreamBuilder<bool>(
                 stream: insertProductPresenter.doScrollStream,
                 builder: (context, snapshot) {
@@ -110,7 +91,7 @@ class _FathersItemsState extends State<FathersItems> {
                     _doScrollExecuted = false;
                   }
                   return FatherItem(
-                    indexOfSelectedFather: widget.indexOfSelectedFather,
+                    indexOfSelectedFather: widget.indexOfAtualOption,
                     atualIndex: index,
                     selectedProduct: widget.selectedProduct,
                     father: null,
@@ -123,7 +104,7 @@ class _FathersItemsState extends State<FathersItems> {
 
           return FatherItem(
             father: father,
-            indexOfSelectedFather: widget.indexOfSelectedFather,
+            indexOfSelectedFather: widget.indexOfAtualOption,
             atualIndex: index,
             selectedProduct: widget.selectedProduct,
             itemColor: getItemColor(index, context),

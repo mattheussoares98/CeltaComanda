@@ -5,19 +5,15 @@ import '../../../ui/helpers/helpers.dart';
 import '../pages.dart';
 
 class PortraitInsertProductsPageBody extends StatefulWidget {
+  final List<InsertProductsViewModel>? insertProductsViewModel;
   final ProductsViewModel selectedProduct;
-  final int indexOfLeftItem;
   final double totalLiquid;
-  final bool productHasComments;
-  final bool productHasObligatoryOptions;
-  final bool showObligatoryOptions;
+  final int indexOfAtualOption;
   const PortraitInsertProductsPageBody({
+    required this.insertProductsViewModel,
     required this.selectedProduct,
-    required this.indexOfLeftItem,
     required this.totalLiquid,
-    required this.productHasComments,
-    required this.productHasObligatoryOptions,
-    required this.showObligatoryOptions,
+    required this.indexOfAtualOption,
     super.key,
   });
 
@@ -47,12 +43,12 @@ class _PortraitInsertProductsPageBodyState
           Column(
             children: [
               ImageAndComplement(selectedProduct: widget.selectedProduct),
-              FathersItems(
-                selectedProduct: widget.selectedProduct,
-                indexOfSelectedFather: widget.indexOfLeftItem,
-                productHasComments: widget.productHasComments,
-                productHasObligatoryOptions: widget.productHasObligatoryOptions,
-              ),
+              if (widget.insertProductsViewModel != null)
+                FathersItems(
+                  selectedProduct: widget.selectedProduct,
+                  indexOfAtualOption: widget.indexOfAtualOption,
+                  insertProductsViewModel: widget.insertProductsViewModel!,
+                ),
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Row(
@@ -65,12 +61,12 @@ class _PortraitInsertProductsPageBodyState
                           children: [
                             if (widget.selectedProduct.childsComposition !=
                                     null &&
-                                widget.indexOfLeftItem <
+                                widget.indexOfAtualOption <
                                     widget.selectedProduct.childsComposition!
                                         .length)
                               Text(
                                 _selectedFather(widget.selectedProduct,
-                                        widget.indexOfLeftItem)
+                                        widget.indexOfAtualOption)
                                     .ChildName!,
                                 style: TextStyle(
                                   fontSize: getStringSize(context) * 1.4,
@@ -79,7 +75,7 @@ class _PortraitInsertProductsPageBodyState
                                 ),
                               ),
                             TitleText(
-                              indexOfLeftItem: widget.indexOfLeftItem,
+                              indexOfAtualOption: widget.indexOfAtualOption,
                               selectedProduct: widget.selectedProduct,
                             ),
                           ],
@@ -94,7 +90,7 @@ class _PortraitInsertProductsPageBodyState
                           quantity:
                               insertProductPresenter.totalProductsQuantity,
                           selectedProduct: widget.selectedProduct,
-                          leftSelectedIndex: widget.indexOfLeftItem,
+                          leftSelectedIndex: widget.indexOfAtualOption,
                         ),
                         Text(
                           widget.totalLiquid
@@ -112,7 +108,7 @@ class _PortraitInsertProductsPageBodyState
                 ),
               ),
               if (widget.selectedProduct.childsComposition != null &&
-                  widget.indexOfLeftItem <
+                  widget.indexOfAtualOption <
                       widget.selectedProduct.childsComposition!.length &&
                   !insertProductPresenter.getShowComments(
                     expansibleGroupFromProductPresenter,
@@ -125,18 +121,17 @@ class _PortraitInsertProductsPageBodyState
                     setState(() {});
                   },
                   selectedFather: _selectedFather(
-                      widget.selectedProduct, widget.indexOfLeftItem),
+                      widget.selectedProduct, widget.indexOfAtualOption),
                   selectedProduct: widget.selectedProduct,
                 ),
               if (insertProductPresenter.getShowComments(
-                    expansibleGroupFromProductPresenter,
-                  ) &&
-                  widget.productHasComments)
+                expansibleGroupFromProductPresenter,
+              ))
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: CommentsList(
                     selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfLeftItem,
+                    selectedLeftIndex: widget.indexOfAtualOption,
                   ),
                 ),
               if (insertProductPresenter.getShowObligatoryOptions(
@@ -145,7 +140,7 @@ class _PortraitInsertProductsPageBodyState
                   padding: const EdgeInsets.only(top: 5),
                   child: ObligatoryOptions(
                     selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfLeftItem,
+                    selectedLeftIndex: widget.indexOfAtualOption,
                   ),
                 ),
               if (insertProductPresenter.getShowUpdateQuantity(
@@ -161,5 +156,5 @@ class _PortraitInsertProductsPageBodyState
 }
 
 ProductCompositionViewModel _selectedFather(
-        ProductsViewModel selectedProduct, int indexOfLeftItem) =>
-    selectedProduct.childsComposition![indexOfLeftItem];
+        ProductsViewModel selectedProduct, int indexOfAtualOption) =>
+    selectedProduct.childsComposition![indexOfAtualOption];

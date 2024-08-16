@@ -36,7 +36,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   ProductsViewModel? selectedProduct;
   double totalLiquid = 0;
-  int indexOfAtualFather = 0;
+  int indexOfAtualOption = 0;
 
   double? previousTotalPrice;
 
@@ -64,8 +64,8 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     }
 
     if (snapshotLeftItems.hasData &&
-        snapshotLeftItems.data != indexOfAtualFather) {
-      indexOfAtualFather = snapshotLeftItems.data ?? 0;
+        snapshotLeftItems.data != indexOfAtualOption) {
+      indexOfAtualOption = snapshotLeftItems.data ?? 0;
     }
   }
 
@@ -118,22 +118,18 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                           ),
                           body: hasMinWidth(context)
                               ? LandscapeInsertProductsPageBody(
-                                  productHasComments: productHasComments,
-                                  productHasObligatoryOptions:
-                                      productHasObligatoryOptions,
-                                  showObligatoryOptions: showObligatoryOptions,
                                   selectedProduct: selectedProduct!,
-                                  indexOfLeftItem: indexOfAtualFather,
                                   totalLiquid: totalLiquid,
+                                  indexOfAtualOption: indexOfAtualOption,
+                                  insertProductsViewModel:
+                                      snapshotInsertProduct.data,
                                 )
                               : PortraitInsertProductsPageBody(
-                                  productHasComments: productHasComments,
-                                  productHasObligatoryOptions:
-                                      productHasObligatoryOptions,
-                                  showObligatoryOptions: showObligatoryOptions,
                                   selectedProduct: selectedProduct!,
-                                  indexOfLeftItem: indexOfAtualFather,
                                   totalLiquid: totalLiquid,
+                                  indexOfAtualOption: indexOfAtualOption,
+                                  insertProductsViewModel:
+                                      snapshotInsertProduct.data,
                                 ),
                         );
                       });

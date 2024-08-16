@@ -46,7 +46,22 @@ class OptionItem extends StatelessWidget {
   }
 
   String getOptionItemTitle() {
-    return R.string.quantity.toUpperCase();
+    SelectedOptionType atualOption =
+        insertProductViewModel.selectedOptions.entries.first.key;
+    dynamic optionValue =
+        insertProductViewModel.selectedOptions.entries.first.value;
+
+    // product,
+
+    if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
+      return R.string.comment.toUpperCase();
+    } else if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
+      return R.string.comment.toUpperCase();
+    } else if (atualOption == SelectedOptionType.fatherComposition) {
+      return (optionValue as ProductCompositionViewModel).ChildName.toString();
+    } else {
+      return R.string.quantity.toUpperCase();
+    }
   }
 
   @override
@@ -95,7 +110,7 @@ class OptionItem extends StatelessWidget {
                 getIsOptionalOrObligatory(),
                 textAlign: TextAlign.end,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.yellow,
                   fontSize: getStringSize(context) * 0.7,
                 ),
               ),

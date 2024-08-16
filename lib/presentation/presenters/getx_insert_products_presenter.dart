@@ -62,18 +62,43 @@ class GetxInsertProductsPresenter extends GetxController
     }
 
     if (product.childsComposition == null) {
-      _insertProductsViewModel.subject.add([
+      final insertViewModel = [
         InsertProductsViewModel(
           selectedOptions: {
             SelectedOptionType.product: product,
           },
         ),
+        if (hasComment)
+          InsertProductsViewModel(selectedOptions: {
+            SelectedOptionType.optionalExpansibleGroup:
+                expansibleGroupFromProductPresenter.loadedComments
+                    .where(
+                      (e) =>
+                          e.ProductInternalCodeOnErp ==
+                          product.InternalCodeOnERP,
+                    )
+                    .toList(),
+          }),
+        if (hasObligatoryOptions)
+          InsertProductsViewModel(
+            selectedOptions: {
+              SelectedOptionType.obligatoryExpansibleGroup:
+                  expansibleGroupFromProductPresenter.loadedObligatoryOptions
+                      .where(
+                        (e) =>
+                            e.ProductInternalCodeOnErp ==
+                            product.InternalCodeOnERP,
+                      )
+                      .toList(),
+            },
+          ),
         const InsertProductsViewModel(
           selectedOptions: {
             SelectedOptionType.quantity: null,
           },
         ),
-      ]);
+      ];
+      _insertProductsViewModel.subject.add(insertViewModel);
     }
   }
 

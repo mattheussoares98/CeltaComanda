@@ -36,6 +36,10 @@ void main() {
   late ProductsViewModel selectedProduct;
   late ProductCompositionViewModel validFather;
   late ProductCompositionViewModel invalidFather;
+  late InsertProductsViewModel productInsertProductsViewModel;
+  late InsertProductsViewModel obligatoryOptionsInsertProductsViewModel;
+  late InsertProductsViewModel optionalOptionsInsertProductsViewModel;
+  late InsertProductsViewModel quantityInsertProductsViewModel;
 
   UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity({
     required ProductCompositionViewModel productCompositionViewModel,
@@ -151,6 +155,41 @@ void main() {
       isOptionalItem: false,
       indexOfSelectedChild: 0,
       insertChilds: false,
+    );
+
+    productInsertProductsViewModel = InsertProductsViewModel(
+      selectedOptions: {
+        SelectedOptionType.product: selectedProduct,
+      },
+    );
+    optionalOptionsInsertProductsViewModel = InsertProductsViewModel(
+      selectedOptions: {
+        SelectedOptionType.optionalExpansibleGroup:
+            expansibleGroupFromProductPresenter.loadedComments
+                .where(
+                  (e) =>
+                      e.ProductInternalCodeOnErp ==
+                      selectedProduct.InternalCodeOnERP,
+                )
+                .toList(),
+      },
+    );
+    obligatoryOptionsInsertProductsViewModel = InsertProductsViewModel(
+      selectedOptions: {
+        SelectedOptionType.obligatoryExpansibleGroup:
+            expansibleGroupFromProductPresenter.loadedObligatoryOptions
+                .where(
+                  (e) =>
+                      e.ProductInternalCodeOnErp ==
+                      selectedProduct.InternalCodeOnERP,
+                )
+                .toList(),
+      },
+    );
+    quantityInsertProductsViewModel = const InsertProductsViewModel(
+      selectedOptions: {
+        SelectedOptionType.quantity: null,
+      },
     );
   }
 
@@ -1286,21 +1325,62 @@ void main() {
       );
     });
 
-    test("Should update price when update selected product", () async {
+    test(
+        "Should update insertProductViewModel correctly when has obligatory and optional groups",
+        () async {
       expectLater(
           sut.insertProductsViewModelStream,
           emits(
             [
-              InsertProductsViewModel(
-                selectedOptions: {
-                  SelectedOptionType.product: selectedProduct,
-                },
-              ),
-              const InsertProductsViewModel(
-                selectedOptions: {
-                  SelectedOptionType.quantity: null,
-                },
-              ),
+              productInsertProductsViewModel,
+              optionalOptionsInsertProductsViewModel,
+              obligatoryOptionsInsertProductsViewModel,
+              quantityInsertProductsViewModel,
+            ],
+          ));
+
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test(
+        "Should update insertProductViewModel correctly when dont have obligatory groups",
+        () async {
+      expansibleGroupFromProductPresenter.mockProductHasComment(false);
+
+      expectLater(
+          sut.insertProductsViewModelStream,
+          emits(
+            [
+              productInsertProductsViewModel,
+              obligatoryOptionsInsertProductsViewModel,
+              quantityInsertProductsViewModel,
+            ],
+          ));
+
+      selectedProduct.childsComposition = null;
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test(
+        "Should update insertProductViewModel correctly when dont have optional groups",
+        () async {
+      expansibleGroupFromProductPresenter
+          .mockProductHasObligatoryOptions(false);
+
+      expectLater(
+          sut.insertProductsViewModelStream,
+          emits(
+            [
+              productInsertProductsViewModel,
+              optionalOptionsInsertProductsViewModel,
+              quantityInsertProductsViewModel,
             ],
           ));
 

@@ -24,10 +24,17 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
 
 class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
+  SelectedOptionType? atualOption;
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+
+    if (widget.insertProductsViewModel != null) {
+      atualOption = widget.insertProductsViewModel![widget.indexOfAtualOption]
+          .selectedOptions.keys.first;
+    }
 
     return Row(
       children: [
@@ -60,9 +67,7 @@ class _LandscapeInsertProductsPageBodyState
             padding: const EdgeInsets.only(left: 5.0),
             child: Column(
               children: [
-                if (widget.selectedProduct.childsComposition != null &&
-                    widget.indexOfAtualOption <
-                        widget.selectedProduct.childsComposition!.length)
+                if (atualOption == SelectedOptionType.fatherComposition)
                   Text(
                     _selectedFather(
                             widget.selectedProduct, widget.indexOfAtualOption)
@@ -79,29 +84,33 @@ class _LandscapeInsertProductsPageBodyState
                     insertProductsViewModel: widget
                         .insertProductsViewModel![widget.indexOfAtualOption],
                   ),
-                Expanded(
-                  child: CommentsList(
-                    selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfAtualOption,
+                if (atualOption == SelectedOptionType.optionalExpansibleGroup)
+                  Expanded(
+                    child: CommentsList(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfAtualOption,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: ObligatoryOptions(
-                    selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfAtualOption,
+                if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
+                  Expanded(
+                    child: ObligatoryOptions(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfAtualOption,
+                    ),
                   ),
-                ),
-                const Expanded(child: UpdateQuantity()),
-                Expanded(
-                  child: ChildsRadios(
-                    selectedProduct: widget.selectedProduct,
-                    selectedFather: _selectedFather(
-                        widget.selectedProduct, widget.indexOfAtualOption),
-                    callSetState: () {
-                      setState(() {});
-                    },
+                if (atualOption == SelectedOptionType.quantity)
+                  const Expanded(child: UpdateQuantity()),
+                if (atualOption == SelectedOptionType.fatherComposition)
+                  Expanded(
+                    child: ChildsRadios(
+                      selectedProduct: widget.selectedProduct,
+                      selectedFather: _selectedFather(
+                          widget.selectedProduct, widget.indexOfAtualOption),
+                      callSetState: () {
+                        setState(() {});
+                      },
+                    ),
                   ),
-                ),
                 AdvanceButton(
                   totalPrice: widget.totalLiquid,
                   quantity: insertProductPresenter.totalProductsQuantity,

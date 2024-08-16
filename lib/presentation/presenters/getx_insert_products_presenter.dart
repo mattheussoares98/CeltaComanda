@@ -167,7 +167,7 @@ class GetxInsertProductsPresenter extends GetxController
         },
       ),
     );
-    _insertProductsViewModel.subject.add(insertViewModel);
+    _insertProductsViewModel.value = insertViewModel;
   }
 
   double _getTotalLiquidCombox(
@@ -425,9 +425,32 @@ class GetxInsertProductsPresenter extends GetxController
   void updateCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    // if (fatherIsValid(selectedFather)) {
-    //   canAdvanceIndex = true;
-    // }
+    final atualOption = _insertProductsViewModel
+        .value![_selectedFatherIndex.value].selectedOptions.keys.first;
+    final atualValue = _insertProductsViewModel
+        .value![_selectedFatherIndex.value].selectedOptions.values.first;
+
+    if (atualOption == SelectedOptionType.quantity) {
+      canAdvanceIndex = true;
+    } else if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
+      canAdvanceIndex = true;
+    } else if (atualOption == SelectedOptionType.fatherComposition) {
+      final selectedFather = (atualValue as ProductCompositionViewModel);
+
+      if (fatherIsValid((selectedFather))) {
+        canAdvanceIndex = true;
+      }
+    } else if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
+      ExpansibleGroupFromProductViewModel? selectedGroup =
+          expansibleGroupFromProductPresenter.loadedObligatoryOptions
+              .firstWhereOrNull((e) => e.selected);
+
+      if (selectedGroup != null) {
+        canAdvanceIndex = true;
+      }
+    } else {
+      canAdvanceIndex = false;
+    }
   }
 
   @override

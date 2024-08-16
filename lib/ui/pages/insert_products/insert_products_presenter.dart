@@ -60,16 +60,4 @@ abstract class InsertProductPresenter implements Listenable {
   void updateCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   );
-
-  bool getShowComments(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  );
-
-  bool getShowObligatoryOptions(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  );
-
-  bool getShowUpdateQuantity(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  );
 }

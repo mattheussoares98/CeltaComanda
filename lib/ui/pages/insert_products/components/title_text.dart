@@ -5,11 +5,11 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class TitleText extends StatelessWidget {
-  final int indexOfAtualOption;
   final ProductsViewModel selectedProduct;
+  final InsertProductsViewModel insertProductsViewModel;
   const TitleText({
-    required this.indexOfAtualOption,
     required this.selectedProduct,
+    required this.insertProductsViewModel,
     super.key,
   });
 
@@ -33,32 +33,22 @@ class TitleText extends StatelessWidget {
         expansibleGroupFromProductPresenter,
     required InsertProductPresenter insertProductPresenter,
   }) {
-    bool showComments = insertProductPresenter.getShowComments(
-      expansibleGroupFromProductPresenter,
-    );
-    bool showObligatoryOptions =
-        insertProductPresenter.getShowObligatoryOptions(
-      expansibleGroupFromProductPresenter,
-    );
+    final atualOption =
+        insertProductsViewModel.selectedOptions.entries.first.key;
 
-    if (showComments) {
+    if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
       return R.string.ifWantSelectComments;
-    } else if (showObligatoryOptions) {
+    } else if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
       return R.string.selectOneComment;
-    } else if (selectedProduct.childsComposition == null) {
+    } else if (atualOption == SelectedOptionType.quantity) {
       return R.string.selectQuantity;
-    } else {
-      if (indexOfAtualOption == selectedProduct.childsComposition!.length) {
-        return R.string.selectQuantity;
-      } else if (indexOfAtualOption < selectedProduct.childsComposition!.length &&
-          !showComments) {
-        if (getSelectedFather(selectedProduct, indexOfAtualOption)
-                .IsOptionalItem ==
-            "false") {
-          return R.string.selectProduct;
-        } else {
-          return R.string.ifWantSelectProducts;
-        }
+    } else if (atualOption == SelectedOptionType.fatherComposition) {
+      final father =
+          insertProductsViewModel.selectedOptions.entries.first.value;
+      if ((father as ProductCompositionViewModel).IsOptionalItem == "false") {
+        return R.string.selectProduct;
+      } else {
+        return R.string.ifWantSelectProducts;
       }
     }
     return R.string.selectProduct;

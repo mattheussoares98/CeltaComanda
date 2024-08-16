@@ -30,8 +30,6 @@ class _PortraitInsertProductsPageBodyState
 
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
@@ -74,10 +72,13 @@ class _PortraitInsertProductsPageBodyState
                                   color: Theme.of(context).secondaryHeaderColor,
                                 ),
                               ),
-                            TitleText(
-                              indexOfAtualOption: widget.indexOfAtualOption,
-                              selectedProduct: widget.selectedProduct,
-                            ),
+                            if (widget.insertProductsViewModel != null)
+                              TitleText(
+                                selectedProduct: widget.selectedProduct,
+                                insertProductsViewModel:
+                                    widget.insertProductsViewModel![
+                                        widget.indexOfAtualOption],
+                              ),
                           ],
                         ),
                       ),
@@ -107,46 +108,29 @@ class _PortraitInsertProductsPageBodyState
                   ],
                 ),
               ),
-              if (widget.selectedProduct.childsComposition != null &&
-                  widget.indexOfAtualOption <
-                      widget.selectedProduct.childsComposition!.length &&
-                  !insertProductPresenter.getShowComments(
-                    expansibleGroupFromProductPresenter,
-                  ) &&
-                  !insertProductPresenter.getShowObligatoryOptions(
-                    expansibleGroupFromProductPresenter,
-                  ))
-                ChildsRadios(
-                  callSetState: () {
-                    setState(() {});
-                  },
-                  selectedFather: _selectedFather(
-                      widget.selectedProduct, widget.indexOfAtualOption),
+              ChildsRadios(
+                callSetState: () {
+                  setState(() {});
+                },
+                selectedFather: _selectedFather(
+                    widget.selectedProduct, widget.indexOfAtualOption),
+                selectedProduct: widget.selectedProduct,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: CommentsList(
                   selectedProduct: widget.selectedProduct,
+                  selectedLeftIndex: widget.indexOfAtualOption,
                 ),
-              if (insertProductPresenter.getShowComments(
-                expansibleGroupFromProductPresenter,
-              ))
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: CommentsList(
-                    selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfAtualOption,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: ObligatoryOptions(
+                  selectedProduct: widget.selectedProduct,
+                  selectedLeftIndex: widget.indexOfAtualOption,
                 ),
-              if (insertProductPresenter.getShowObligatoryOptions(
-                  expansibleGroupFromProductPresenter))
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: ObligatoryOptions(
-                    selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfAtualOption,
-                  ),
-                ),
-              if (insertProductPresenter.getShowUpdateQuantity(
-                expansibleGroupFromProductPresenter,
-              ))
-                const UpdateQuantity(),
+              ),
+              const UpdateQuantity(),
             ],
           ),
         ],

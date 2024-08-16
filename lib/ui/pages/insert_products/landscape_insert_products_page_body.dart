@@ -26,8 +26,6 @@ class _LandscapeInsertProductsPageBodyState
     extends State<LandscapeInsertProductsPageBody> {
   @override
   Widget build(BuildContext context) {
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
 
@@ -75,52 +73,35 @@ class _LandscapeInsertProductsPageBodyState
                       color: Theme.of(context).secondaryHeaderColor,
                     ),
                   ),
-                if (hasMinWidth(context))
+                if (widget.insertProductsViewModel != null)
                   TitleText(
-                    indexOfAtualOption: widget.indexOfAtualOption,
                     selectedProduct: widget.selectedProduct,
+                    insertProductsViewModel: widget
+                        .insertProductsViewModel![widget.indexOfAtualOption],
                   ),
-                if (insertProductPresenter.getShowComments(
-                  expansibleGroupFromProductPresenter,
-                ))
-                  Expanded(
-                    child: CommentsList(
-                      selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfAtualOption,
-                    ),
+                Expanded(
+                  child: CommentsList(
+                    selectedProduct: widget.selectedProduct,
+                    selectedLeftIndex: widget.indexOfAtualOption,
                   ),
-                if (insertProductPresenter.getShowObligatoryOptions(
-                  expansibleGroupFromProductPresenter,
-                ))
-                  Expanded(
-                    child: ObligatoryOptions(
-                      selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfAtualOption,
-                    ),
+                ),
+                Expanded(
+                  child: ObligatoryOptions(
+                    selectedProduct: widget.selectedProduct,
+                    selectedLeftIndex: widget.indexOfAtualOption,
                   ),
-                if (insertProductPresenter.getShowUpdateQuantity(
-                  expansibleGroupFromProductPresenter,
-                ))
-                  const Expanded(child: UpdateQuantity()),
-                if (!insertProductPresenter.getShowComments(
-                      expansibleGroupFromProductPresenter,
-                    ) &&
-                    !insertProductPresenter.getShowObligatoryOptions(
-                      expansibleGroupFromProductPresenter,
-                    ) &&
-                    widget.selectedProduct.childsComposition != null &&
-                    widget.selectedProduct.childsComposition?.length !=
-                        widget.indexOfAtualOption)
-                  Expanded(
-                    child: ChildsRadios(
-                      selectedProduct: widget.selectedProduct,
-                      selectedFather: _selectedFather(
-                          widget.selectedProduct, widget.indexOfAtualOption),
-                      callSetState: () {
-                        setState(() {});
-                      },
-                    ),
+                ),
+                const Expanded(child: UpdateQuantity()),
+                Expanded(
+                  child: ChildsRadios(
+                    selectedProduct: widget.selectedProduct,
+                    selectedFather: _selectedFather(
+                        widget.selectedProduct, widget.indexOfAtualOption),
+                    callSetState: () {
+                      setState(() {});
+                    },
                   ),
+                ),
                 AdvanceButton(
                   totalPrice: widget.totalLiquid,
                   quantity: insertProductPresenter.totalProductsQuantity,

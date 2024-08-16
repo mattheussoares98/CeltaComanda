@@ -36,11 +36,6 @@ abstract class InsertProductPresenter implements Listenable {
       ProductCompositionViewModel product);
   double calculateProductCompositionPrice(ProductCompositionViewModel product);
   double getProductPrice(ProductsViewModel product);
-  void updateComment({
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required ProductCompositionViewModel father,
-  });
 
   void updateSelectedIndexOfProduct({
     required ProductCompositionViewModel father,

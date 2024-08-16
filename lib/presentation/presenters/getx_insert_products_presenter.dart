@@ -376,17 +376,6 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void updateComment({
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required ProductCompositionViewModel father,
-  }) {
-    father.commentFather = expansibleGroupFromProductPresenter
-        .getConcatenateSelectedCommentsAndObligatoryOptions(
-            father.InternalCodeOnERPCodeChild!.toInt());
-  }
-
-  @override
   void updateSelectedIndexOfProduct({
     required ProductCompositionViewModel father,
     required int? index,

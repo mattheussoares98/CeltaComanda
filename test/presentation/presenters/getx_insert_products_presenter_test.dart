@@ -947,34 +947,6 @@ void main() {
     });
   });
 
-  group("Product comment", () {
-    test(
-        "Should update correctly the comment according to what returned in expansibleGroupFromProductPresenter",
-        () async {
-      final father = EntityFactory.makeProductCompositionViewModel(
-        quantity: 1,
-        salePrice: 0,
-        offerPrice: 0,
-        fatherIncrement: 0,
-        childIncrement: 0,
-        isOptionalItem: false,
-        indexOfSelectedChild: 0,
-        insertChilds: true,
-      );
-
-      expansibleGroupFromProductPresenter
-          .mockGetConcatenateSelectedComments("any");
-
-      sut.updateComment(
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        father: father,
-      );
-
-      expect(father.commentFather, "any");
-    });
-  });
-
   group("update selected child", () {
     test(
         "Should update selected index of child if click in product that have child",

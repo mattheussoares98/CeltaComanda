@@ -33,11 +33,6 @@ class InsertProductsPresenterSpy extends Mock
           index: any(named: "index"),
           expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
         )).thenAnswer((_) => _);
-    when(() => this.updateComment(
-          expansibleGroupFromProductPresenter:
-              any(named: "expansibleGroupFromProductPresenter"),
-          father: any(named: "father"),
-        )).thenAnswer((_) => _);
     when(() => this.calculateProductCompositionPrice(any()))
         .thenAnswer((_) => 0);
     when(() => this.calculateProductCompositionIncrementValue(any()))

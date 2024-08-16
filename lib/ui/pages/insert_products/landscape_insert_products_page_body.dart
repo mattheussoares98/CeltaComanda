@@ -55,7 +55,7 @@ class _LandscapeInsertProductsPageBodyState
                 ),
               Padding(
                 padding: const EdgeInsets.only(top: 1),
-                child: TotalPriceCombox(
+                child: TotalPrice(
                   totalLiquid: widget.totalLiquid,
                 ),
               ),

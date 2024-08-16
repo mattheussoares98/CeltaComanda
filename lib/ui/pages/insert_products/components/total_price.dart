@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../helpers/helpers.dart';
 
-class TotalPriceCombox extends StatelessWidget {
+class TotalPrice extends StatelessWidget {
   final double totalLiquid;
 
-  const TotalPriceCombox({
+  const TotalPrice({
     required this.totalLiquid,
     super.key,
   });

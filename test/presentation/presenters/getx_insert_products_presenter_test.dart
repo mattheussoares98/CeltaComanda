@@ -998,92 +998,51 @@ void main() {
   });
 
   group("Advance Father index when childComposition is not null", () {
-    test("Should advance index if atual index is valid", () async {
+    test("Should advance index if atual option is optionalExpansibleGroup",
+        () async {
+      selectedProduct.childsComposition = null;
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      expectLater(sut.selectedLeftIndexStream, emits(1));
+
+      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+    });
+    test(
+        "Should advance index if atual option is fatherComposition and father is valid",
+        () async {
       selectedProduct.childsComposition = [validFather];
-      expectLater(sut.selectedLeftIndexStream, emitsInOrder([0, 1]));
-      expansibleGroupFromProductPresenter.mockProductHasComment(false);
-      expansibleGroupFromProductPresenter
-          .mockProductHasObligatoryOptions(false);
 
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
-        newIndex: 0,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
+
+      expectLater(sut.selectedLeftIndexStream, emits(1));
+
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
-
-    test("Should not advance index if atual index is invalid", () async {
-      selectedProduct.childsComposition = [invalidFather];
-      expectLater(sut.selectedLeftIndexStream, emits(0));
-
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.updateFatherIndex(
-        newIndex: 0,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-    });
-
     test(
-        "Should emit correct values if new index is the index of quantity and atual father is invalid ",
+        "Should advance index if atual option is obligatoryExpansibleGroup and has selected option",
         () async {
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
-      expansibleGroupFromProductPresenter
-          .mockProductHasObligatoryOptions(false);
-      selectedProduct.childsComposition = [validFather, invalidFather];
-
-      expectLater(sut.selectedLeftIndexStream, emits(1));
-
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-    });
-  });
-
-  group("Advance Father index when childComposition is null", () {
-    test(
-        "Should emit correct values if product has comment, dont is combox and index is equal zero",
-        () async {
+      expansibleGroupFromProductPresenter.loadedObligatoryOptionsController = [
+        EntityFactory.makeExpansibleGroupFromProductViewModel(selected: true)
+      ];
       selectedProduct.childsComposition = null;
 
-      expectLater(sut.selectedLeftIndexStream, emits(1));
-
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
-        newIndex: 1,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
-    });
 
-    test("Should emit correct values on advance left index", () async {
-      selectedProduct.childsComposition = null;
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
-      await sut.updateSelectedProduct(
-        product: selectedProduct,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
       sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
     });
   });

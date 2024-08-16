@@ -418,6 +418,27 @@ class GetxInsertProductsPresenter extends GetxController
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     doScroll = true;
+    final atualOption = _insertProductsViewModel
+        .value![_selectedFatherIndex.value].selectedOptions.keys.first;
+    final atualValue = _insertProductsViewModel
+        .value![_selectedFatherIndex.value].selectedOptions.values.first;
+
+    if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
+      _selectedFatherIndex.value = _selectedFatherIndex.value + 1;
+    } else if (atualOption == SelectedOptionType.fatherComposition) {
+      if (fatherIsValid(atualValue as ProductCompositionViewModel)) {
+        _selectedFatherIndex.value = _selectedFatherIndex.value + 1;
+      }
+    } else if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
+      ExpansibleGroupFromProductViewModel? selectedGroup =
+          expansibleGroupFromProductPresenter.loadedObligatoryOptions
+              .firstWhereOrNull((e) => e.selected);
+
+      if (selectedGroup != null) {
+        _selectedFatherIndex.value = _selectedFatherIndex.value + 1;
+      }
+    }
+
     updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 

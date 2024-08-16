@@ -734,49 +734,16 @@ class EntityFactory {
         ProductPriceLookUpCode: faker.randomGenerator.string(20),
       );
 
-  static ConfirmedComboxViewModel makeConfirmedComboxViewModel({
-    required List<ProductCompositionViewModel> products,
-    required ProductsViewModel father,
-    required double totalPrice,
-    required int quantity,
-  }) =>
-      ConfirmedComboxViewModel(
-        products: products
-            .map((element) => ProductCompositionViewModel(
-                  Quantity:
-                      (element.Quantity!.toDouble() * quantity).toString(),
-                  ProductCompositionId: element.ProductCompositionId,
-                  EnterpriseId: element.EnterpriseId,
-                  InternalCodeOnERPCodeFather:
-                      element.InternalCodeOnERPCodeFather,
-                  InternalCodeOnERPCodeChild:
-                      element.InternalCodeOnERPCodeChild,
-                  PluChild: element.PluChild,
-                  ChildName: element.ChildName,
-                  SalePrice: element.SalePrice,
-                  OfferPrice: element.OfferPrice,
-                  IncrementValue: element.IncrementValue,
-                  IsOptionalItem: element.IsOptionalItem,
-                  ProductOptions: element.ProductOptions,
-                  childs: element.childs,
-                  commentFather: element.commentFather,
-                  indexOfSelectedChild: element.indexOfSelectedChild,
-                ))
-            .toList(),
-        father: father,
-        totalPrice: totalPrice,
-        quantity: quantity,
-      );
-
-  static ExpansibleGroupFromProductViewModel makeExpansibleGroupFromProductPresenter(
-          {bool? selected = false}) =>
-      ExpansibleGroupFromProductViewModel(
-        GroupName: faker.randomGenerator.string(10),
-        ProductName: faker.randomGenerator.string(10),
-        selected: selected!,
-        ExpansibleGroupId: faker.randomGenerator.integer(100).toString(),
-        ProductInternalCodeOnErp: faker.randomGenerator.integer(100).toString(),
-      );
+  static ExpansibleGroupFromProductViewModel
+      makeExpansibleGroupFromProductPresenter({bool? selected = false}) =>
+          ExpansibleGroupFromProductViewModel(
+            GroupName: faker.randomGenerator.string(10),
+            ProductName: faker.randomGenerator.string(10),
+            selected: selected!,
+            ExpansibleGroupId: faker.randomGenerator.integer(100).toString(),
+            ProductInternalCodeOnErp:
+                faker.randomGenerator.integer(100).toString(),
+          );
 
   static CommandEntity makeCommandEntity() => CommandEntity(
         commandNumber: faker.randomGenerator.integer(100).toString(),

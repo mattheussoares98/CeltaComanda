@@ -11,10 +11,7 @@ class InsertProductsPresenterSpy extends Mock
     implements InsertProductPresenter {
   final mainErrorController = StreamController<UIError?>();
   final totalPriceComboxController = StreamController<double>();
-  final comboxIsValidController = StreamController<bool>();
   final enterpriseErrorController = StreamController<UIError?>();
-  final selectedComboxProductController =
-      StreamController<ProductsViewModel?>();
   final productsCompositionController =
       StreamController<List<ProductCompositionViewModel>>();
   final isLoadingController = StreamController<bool>();
@@ -25,8 +22,6 @@ class InsertProductsPresenterSpy extends Mock
   InsertProductsPresenterSpy() {
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
-    when(() => this.comboxIsValidStream)
-        .thenAnswer((_) => comboxIsValidController.stream);
     when(() => this.totalPriceStream)
         .thenAnswer((_) => totalPriceComboxController.stream);
     when(() => this.isLoadingStream)

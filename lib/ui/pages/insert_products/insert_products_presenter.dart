@@ -8,7 +8,6 @@ abstract class InsertProductPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<double> get totalPriceStream;
-  Stream<bool> get comboxIsValidStream;
   Stream<int> get selectedLeftIndexStream;
   Stream<bool> get doScrollStream;
   Stream<bool> get showCommentsStream;

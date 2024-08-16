@@ -42,25 +42,12 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   void doOnBuildStreams({
     required AsyncSnapshot<double> snapShowTotalPrice,
-    required AsyncSnapshot<bool> snapShowComments,
-    required AsyncSnapshot<bool> snapShowObligatoryOptions,
-    required AsyncSnapshot<ProductsViewModel?> snapShowSelectedProduct,
     required AsyncSnapshot<int> snapshotLeftItems,
     required InsertProductPresenter insertProductPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) {
-    if (snapShowObligatoryOptions.data == true) {
-      showObligatoryOptions = true;
-    }
-
-    if (snapShowComments.data == true) {
-      showComments = true;
-    }
-
-    if (snapShowSelectedProduct.hasData &&
-            snapShowSelectedProduct.data != selectedProduct ||
-        (selectedProduct == null && Get.arguments != null)) {
+    if (selectedProduct == null && Get.arguments != null) {
       selectedProduct = Get.arguments;
 
       Future.delayed(Duration.zero, () {
@@ -80,20 +67,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         snapshotLeftItems.data != indexOfAtualFather) {
       indexOfAtualFather = snapshotLeftItems.data ?? 0;
     }
-
-    productHasObligatoryOptions =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      indexOfChild: indexOfAtualFather,
-      product: selectedProduct!,
-    );
-
-    productHasComments = expansibleGroupFromProductPresenter.productHasComment(
-      indexOfChild: indexOfAtualFather,
-      product: selectedProduct!,
-    );
-
-    insertProductPresenter
-        .updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
   }
 
   @override
@@ -121,70 +94,48 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         expansibleGroupFromProductPresenter.unselectAllComments();
         expansibleGroupFromProductPresenter.unselectAllObligatoryOptions();
       },
-      child: StreamBuilder<double>(
-          stream: insertProductPresenter.totalPriceStream,
-          builder: (context, snapshotTotalPrice) {
-            return StreamBuilder<ProductsViewModel?>(
-                stream: insertProductPresenter.selectedProductStream,
-                builder: (context, snapshotSelectedProduct) {
+      child: StreamBuilder<List<InsertProductsViewModel>?>(
+          stream: insertProductPresenter.insertProductsViewModelStream,
+          builder: (context, snapshotInsertProduct) {
+            return StreamBuilder<double>(
+                stream: insertProductPresenter.totalPriceStream,
+                builder: (context, snapshotTotalPrice) {
                   return StreamBuilder<int>(
                       stream: insertProductPresenter.selectedLeftIndexStream,
                       builder: (context, snapshotLeftItems) {
-                        return StreamBuilder<bool>(
-                            stream: insertProductPresenter.showCommentsStream,
-                            builder: (context, snapshotShowComments) {
-                              return StreamBuilder<bool>(
-                                  stream: insertProductPresenter
-                                      .showObligatoryOptionsStream,
-                                  builder:
-                                      (context, snapshotShowObligatoryOptions) {
-                                    doOnBuildStreams(
-                                      snapShowComments: snapshotShowComments,
-                                      snapShowObligatoryOptions:
-                                          snapshotShowObligatoryOptions,
-                                      insertProductPresenter:
-                                          insertProductPresenter,
-                                      snapShowTotalPrice: snapshotTotalPrice,
-                                      snapShowSelectedProduct:
-                                          snapshotSelectedProduct,
-                                      snapshotLeftItems: snapshotLeftItems,
-                                      expansibleGroupFromProductPresenter:
-                                          expansibleGroupFromProductPresenter,
-                                    );
-                                    return Scaffold(
-                                      appBar: AppBar(
-                                        title: FittedBox(
-                                          child: Text(selectedProduct!.Name),
-                                        ),
-                                      ),
-                                      body: hasMinWidth(context)
-                                          ? LandscapeInsertProductsPageBody(
-                                              productHasComments:
-                                                  productHasComments,
-                                              productHasObligatoryOptions:
-                                                  productHasObligatoryOptions,
-                                              showObligatoryOptions:
-                                                  showObligatoryOptions,
-                                              selectedProduct: selectedProduct!,
-                                              indexOfLeftItem:
-                                                  indexOfAtualFather,
-                                              totalLiquid: totalLiquid,
-                                            )
-                                          : PortraitInsertProductsPageBody(
-                                              productHasComments:
-                                                  productHasComments,
-                                              productHasObligatoryOptions:
-                                                  productHasObligatoryOptions,
-                                              showObligatoryOptions:
-                                                  showObligatoryOptions,
-                                              selectedProduct: selectedProduct!,
-                                              indexOfLeftItem:
-                                                  indexOfAtualFather,
-                                              totalLiquid: totalLiquid,
-                                            ),
-                                    );
-                                  });
-                            });
+                        doOnBuildStreams(
+                          insertProductPresenter: insertProductPresenter,
+                          snapShowTotalPrice: snapshotTotalPrice,
+                          snapshotLeftItems: snapshotLeftItems,
+                          expansibleGroupFromProductPresenter:
+                              expansibleGroupFromProductPresenter,
+                        );
+                        return Scaffold(
+                          appBar: AppBar(
+                            title: FittedBox(
+                              child: Text(selectedProduct!.Name),
+                            ),
+                          ),
+                          body: hasMinWidth(context)
+                              ? LandscapeInsertProductsPageBody(
+                                  productHasComments: productHasComments,
+                                  productHasObligatoryOptions:
+                                      productHasObligatoryOptions,
+                                  showObligatoryOptions: showObligatoryOptions,
+                                  selectedProduct: selectedProduct!,
+                                  indexOfLeftItem: indexOfAtualFather,
+                                  totalLiquid: totalLiquid,
+                                )
+                              : PortraitInsertProductsPageBody(
+                                  productHasComments: productHasComments,
+                                  productHasObligatoryOptions:
+                                      productHasObligatoryOptions,
+                                  showObligatoryOptions: showObligatoryOptions,
+                                  selectedProduct: selectedProduct!,
+                                  indexOfLeftItem: indexOfAtualFather,
+                                  totalLiquid: totalLiquid,
+                                ),
+                        );
                       });
                 });
           }),

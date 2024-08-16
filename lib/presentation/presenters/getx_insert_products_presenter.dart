@@ -82,16 +82,17 @@ class GetxInsertProductsPresenter extends GetxController
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) {
-    for (var father in product.childsComposition!) {
+    for (int index = 0; index < product.childsComposition!.length; index++) {
+      final father = product.childsComposition![index];
       bool fatherHasComment =
           expansibleGroupFromProductPresenter.productHasComment(
         product: product,
-        indexOfChild: father.InternalCodeOnERPCodeChild!.toInt(),
+        indexOfChild: index,
       );
       bool fatherHasObligatoryOptions =
           expansibleGroupFromProductPresenter.productHasObligatoryOption(
         product: product,
-        indexOfChild: father.InternalCodeOnERPCodeChild!.toInt(),
+        indexOfChild: index,
       );
 
       insertViewModel.add(

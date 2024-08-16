@@ -60,6 +60,21 @@ class GetxInsertProductsPresenter extends GetxController
     } else if (hasObligatoryOptions && product.childsComposition == null) {
       showObligatoryOptions = true;
     }
+
+    if (product.childsComposition == null) {
+      _insertProductsViewModel.subject.add([
+        InsertProductsViewModel(
+          selectedOptions: {
+            SelectedOptionType.product: product,
+          },
+        ),
+        const InsertProductsViewModel(
+          selectedOptions: {
+            SelectedOptionType.quantity: null,
+          },
+        ),
+      ]);
+    }
   }
 
   double _getTotalLiquidCombox(
@@ -543,8 +558,8 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
 
-  final _insertProducts = Rx<List<InsertProductsViewModel>?>(null);
+  final _insertProductsViewModel = Rx<List<InsertProductsViewModel>?>(null);
   @override
-  Stream<List<InsertProductsViewModel>?> get insertProductsStream =>
-      _insertProducts.stream;
+  Stream<List<InsertProductsViewModel>?> get insertProductsViewModelStream =>
+      _insertProductsViewModel.stream;
 }

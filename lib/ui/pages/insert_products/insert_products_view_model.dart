@@ -1,9 +1,14 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../ui/pages/pages.dart';
 
-class InsertProductsViewModel {
-  final List<Map<SelectedOptionType, dynamic>> selectedOptions;
+class InsertProductsViewModel extends Equatable {
+  final Map<SelectedOptionType, dynamic> selectedOptions;
 
-  InsertProductsViewModel({
+  const InsertProductsViewModel({
     required this.selectedOptions,
   });
+
+  @override
+  List<Object?> get props => [selectedOptions];
 }

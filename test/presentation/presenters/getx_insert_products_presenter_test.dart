@@ -22,7 +22,8 @@ void main() {
   late GetxInsertProductsPresenter sut;
   late HomePresenterSpy homePresenter;
   late CartPresenterSpy cartPresenter;
-  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy
+      expansibleGroupFromProductPresenter;
 
   late GetProductCompositionSpy getProductComposition;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -77,7 +78,8 @@ void main() {
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
-    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
+    expansibleGroupFromProductPresenter =
+        ExpansibleGroupFromProductPresenterSpy();
   }
 
   void initUsecases() {
@@ -163,7 +165,8 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductPresenter());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductPresenter());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
@@ -1276,6 +1279,32 @@ void main() {
 
       selectedProduct.childsComposition = null;
 
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+
+    test("Should update price when update selected product", () async {
+      expectLater(
+          sut.insertProductsViewModelStream,
+          emits(
+            [
+              InsertProductsViewModel(
+                selectedOptions: {
+                  SelectedOptionType.product: selectedProduct,
+                },
+              ),
+              const InsertProductsViewModel(
+                selectedOptions: {
+                  SelectedOptionType.quantity: null,
+                },
+              ),
+            ],
+          ));
+
+      selectedProduct.childsComposition = null;
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:

@@ -44,7 +44,7 @@ class _PortraitInsertProductsPageBodyState
             children: [
               ImageAndComplement(selectedProduct: widget.selectedProduct),
               if (widget.insertProductsViewModel != null)
-                FathersItems(
+                OptionItems(
                   selectedProduct: widget.selectedProduct,
                   indexOfAtualOption: widget.indexOfAtualOption,
                   insertProductsViewModel: widget.insertProductsViewModel!,

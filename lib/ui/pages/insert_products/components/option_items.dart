@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
-class FathersItems extends StatefulWidget {
+class OptionItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int indexOfAtualOption;
   final List<InsertProductsViewModel> insertProductsViewModel;
-  const FathersItems({
+  const OptionItems({
     required this.selectedProduct,
     required this.indexOfAtualOption,
     required this.insertProductsViewModel,
@@ -15,10 +15,10 @@ class FathersItems extends StatefulWidget {
   });
 
   @override
-  State<FathersItems> createState() => _FathersItemsState();
+  State<OptionItems> createState() => _OptionItemsState();
 }
 
-class _FathersItemsState extends State<FathersItems> {
+class _OptionItemsState extends State<OptionItems> {
   final _scrollController = ScrollController();
 
   Color getItemColor(int index, BuildContext context) {
@@ -72,43 +72,33 @@ class _FathersItemsState extends State<FathersItems> {
         shrinkWrap: true,
         itemCount: widget.insertProductsViewModel.length,
         itemBuilder: (context, index) {
-          if (index + 1 == widget.insertProductsViewModel.length) {
-            return StreamBuilder<bool>(
-                stream: insertProductPresenter.doScrollStream,
-                builder: (context, snapshot) {
-                  if (snapshot.data == true) {
-                    // Verifique se a função ainda não foi chamada
-                    if (!_doScrollExecuted) {
-                      doScroll(
-                        index: index,
-                        scrollController: _scrollController,
-                        viewportHeight: MediaQuery.of(context).size.height,
-                      );
-                      _doScrollExecuted = true;
-                    }
-                  } else {
-                    // Se o valor da stream não for mais true, redefina a variável de controle
-                    _doScrollExecuted = false;
+          final insertProductViewModel = widget.insertProductsViewModel[index];
+
+          return StreamBuilder<bool>(
+              stream: insertProductPresenter.doScrollStream,
+              builder: (context, snapshot) {
+                if (snapshot.data == true) {
+                  // Verifique se a função ainda não foi chamada
+                  if (!_doScrollExecuted) {
+                    doScroll(
+                      index: index,
+                      scrollController: _scrollController,
+                      viewportHeight: MediaQuery.of(context).size.height,
+                    );
+                    _doScrollExecuted = true;
                   }
-                  return FatherItem(
-                    indexOfSelectedFather: widget.indexOfAtualOption,
-                    atualIndex: index,
-                    selectedProduct: widget.selectedProduct,
-                    father: null,
-                    itemColor: getItemColor(index, context),
-                  );
-                });
-          }
-
-          final father = widget.selectedProduct.childsComposition?[index];
-
-          return FatherItem(
-            father: father,
-            indexOfSelectedFather: widget.indexOfAtualOption,
-            atualIndex: index,
-            selectedProduct: widget.selectedProduct,
-            itemColor: getItemColor(index, context),
-          );
+                } else {
+                  // Se o valor da stream não for mais true, redefina a variável de controle
+                  _doScrollExecuted = false;
+                }
+                return OptionItem(
+                  insertProductViewModel: insertProductViewModel,
+                  indexOfSelectedFather: widget.indexOfAtualOption,
+                  atualIndex: index,
+                  selectedProduct: widget.selectedProduct,
+                  itemColor: getItemColor(index, context),
+                );
+              });
         },
       ),
     );

@@ -42,7 +42,7 @@ class _LandscapeInsertProductsPageBodyState
               ),
               if (widget.insertProductsViewModel != null)
                 Expanded(
-                  child: FathersItems(
+                  child: OptionItems(
                     selectedProduct: widget.selectedProduct,
                     indexOfAtualOption: widget.indexOfAtualOption,
                     insertProductsViewModel: widget.insertProductsViewModel!,

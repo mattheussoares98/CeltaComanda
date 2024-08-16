@@ -750,11 +750,11 @@ class EntityFactory {
         isFixedCommandNumber: faker.randomGenerator.boolean(),
       );
 
-  static List<CommentsEntity> makeExpansibleGroupFromProductCompleteEntity(
+  static List<ExpansibleGroupFromProductsCompleteEntity> makeExpansibleGroupFromProductCompleteEntity(
     ProductsViewModel product,
   ) =>
       [
-        CommentsEntity(
+        ExpansibleGroupFromProductsCompleteEntity(
           ExpansibleGroupId: faker.randomGenerator.integer(100),
           ProductInternalCodeOnErp: product.InternalCodeOnERP!.toInt(),
           GroupName: faker.randomGenerator.string(10),

@@ -21,7 +21,7 @@ void main() {
       loadExpansibleGroupsFromProductsComplete;
 
   late List<ProductsViewModel> loadedProducts;
-  late List<CommentsEntity> expansibleGroupFromProductComplete;
+  late List<ExpansibleGroupFromProductsCompleteEntity> expansibleGroupFromProductComplete;
   late List<int> allInternalCodes;
 
   void initUseCases() {
@@ -282,7 +282,7 @@ void main() {
         "Should return true if childs is not empty and indexofchild is selected",
         () async {
       loadExpansibleGroupsFromProductsComplete.mockLoad([
-        CommentsEntity(
+        ExpansibleGroupFromProductsCompleteEntity(
           ExpansibleGroupId: faker.randomGenerator.integer(10),
           ProductInternalCodeOnErp: loadedProducts[0]
               .childsComposition![0]

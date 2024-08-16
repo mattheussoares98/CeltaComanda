@@ -13,7 +13,7 @@ class RemoteLoadExpansibleGroupsByProductsCodes
   RemoteLoadExpansibleGroupsByProductsCodes({required this.httpAdapter});
 
   @override
-  Future<List<CommentsEntity>> load({
+  Future<List<ExpansibleGroupFromProductsCompleteEntity>> load({
     required List<int> productsPackingInternalCodesOnErp,
     required int expansibleGroupType,
   }) async {
@@ -32,7 +32,7 @@ class RemoteLoadExpansibleGroupsByProductsCodes
         throw Error();
       }
 
-      return response.map<CommentsEntity>((element) {
+      return response.map<ExpansibleGroupFromProductsCompleteEntity>((element) {
         return ExpansibleGroupFromProductsCompleteModel.fromJson(element)
             .toEntity();
       }).toList();

@@ -21,7 +21,7 @@ class ExpansibleGroupFromProductViewModel extends Equatable {
   });
 
   factory ExpansibleGroupFromProductViewModel.fromExpansibleGroupsFromProductsCompleteEntity(
-          CommentsEntity entity) =>
+          ExpansibleGroupFromProductsCompleteEntity entity) =>
       ExpansibleGroupFromProductViewModel(
         selected: false,
         ProductName: entity.ProductName,
@@ -30,7 +30,7 @@ class ExpansibleGroupFromProductViewModel extends Equatable {
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
       );
 
-  CommentsEntity toEntity() => CommentsEntity(
+  ExpansibleGroupFromProductsCompleteEntity toEntity() => ExpansibleGroupFromProductsCompleteEntity(
         ExpansibleGroupId: ExpansibleGroupId.toInt(),
         ProductInternalCodeOnErp: ProductInternalCodeOnErp.toInt(),
         GroupName: GroupName,

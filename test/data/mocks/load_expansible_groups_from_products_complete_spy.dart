@@ -16,7 +16,7 @@ class LoadExpansibleGroupsFromProductsCompleteSpy extends Mock
         ),
       );
 
-  void mockLoad(List<CommentsEntity> expansibleGroupFromProductComplete) => this
+  void mockLoad(List<ExpansibleGroupFromProductsCompleteEntity> expansibleGroupFromProductComplete) => this
       .mockCall()
       .thenAnswer((_) async => expansibleGroupFromProductComplete);
 

@@ -31,7 +31,7 @@ class ExpansibleGroupFromProductsCompleteModel {
   }
 
   factory ExpansibleGroupFromProductsCompleteModel.fromEntity(
-          CommentsEntity entity) =>
+          ExpansibleGroupFromProductsCompleteEntity entity) =>
       ExpansibleGroupFromProductsCompleteModel(
         ExpansibleGroupId: entity.ExpansibleGroupId,
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp,
@@ -39,8 +39,8 @@ class ExpansibleGroupFromProductsCompleteModel {
         GroupName: entity.GroupName,
       );
 
-  CommentsEntity toEntity() =>
-      CommentsEntity(
+  ExpansibleGroupFromProductsCompleteEntity toEntity() =>
+      ExpansibleGroupFromProductsCompleteEntity(
         ProductName: ProductName,
         ExpansibleGroupId: ExpansibleGroupId,
         ProductInternalCodeOnErp: ProductInternalCodeOnErp,

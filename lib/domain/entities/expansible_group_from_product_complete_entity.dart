@@ -2,13 +2,13 @@
 
 import 'package:equatable/equatable.dart';
 
-class CommentsEntity extends Equatable {
+class ExpansibleGroupFromProductsCompleteEntity extends Equatable {
   final int ExpansibleGroupId;
   final int ProductInternalCodeOnErp;
   final String GroupName;
   final String ProductName;
 
-  const CommentsEntity({
+  const ExpansibleGroupFromProductsCompleteEntity({
     required this.ExpansibleGroupId,
     required this.ProductInternalCodeOnErp,
     required this.GroupName,

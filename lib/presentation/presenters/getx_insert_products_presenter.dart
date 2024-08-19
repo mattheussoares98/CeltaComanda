@@ -140,8 +140,6 @@ class GetxInsertProductsPresenter extends GetxController
 
     selectedComboxProduct = product;
 
-    updateTotalLiquid(product);
-
     List<InsertProductsViewModel> insertViewModel = [];
 
     if (product.childsComposition == null) {
@@ -168,6 +166,8 @@ class GetxInsertProductsPresenter extends GetxController
       ),
     );
     _insertProductsViewModel.value = insertViewModel;
+
+    updateTotalLiquid(product);
   }
 
   double _getTotalLiquidCombox(

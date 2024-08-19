@@ -156,7 +156,8 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<void> getGroupsAndProducts({
     required String commandNumber,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -208,7 +209,28 @@ class GetxMenuPresenter extends GetxController
             fathers: fathers,
           );
 
-          product.childsComposition = childs;
+          if (fathers.toString() ==
+              childs.map((e) => e.toEntity()).toList().toString()) {
+            product.childsComposition = [
+              ProductCompositionViewModel(
+                ProductCompositionId: childs[0].ProductCompositionId,
+                EnterpriseId: childs[0].EnterpriseId,
+                InternalCodeOnERPCodeFather: product.InternalCodeOnERP,
+                InternalCodeOnERPCodeChild: product.InternalCodeOnERP,
+                PluChild: product.PriceLookupCode,
+                ChildName: product.Name,
+                Quantity: "1",
+                SalePrice: product.SaleRetailPraticed,
+                OfferPrice: product.OfferRetailPrice,
+                IncrementValue: childs[0].IncrementValue,
+                IsOptionalItem: childs[0].IsOptionalItem,
+                ProductOptions: "",
+                childs: [...childs],
+              )
+            ];
+          } else {
+            product.childsComposition = childs;
+          }
         }
       }
 
@@ -220,7 +242,8 @@ class GetxMenuPresenter extends GetxController
           OrderClassification: "0",
         ): []
       });
-      await expansibleGroupFromProductPresenter.loadCommentsAndObligatoryOptions(allProducts);
+      await expansibleGroupFromProductPresenter
+          .loadCommentsAndObligatoryOptions(allProducts);
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);
     } on DomainError catch (error) {

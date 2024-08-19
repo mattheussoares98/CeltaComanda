@@ -126,7 +126,9 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
         comment: commentFather,
-        childsComposition: childs?.map((e) => e.toEntity()).toList(),
+        childsComposition: childs?.isEmpty == true
+            ? null
+            : childs?.map((e) => e.toEntity()).toList(),
         indexOfSelectedChild: indexOfSelectedChild,
       );
 

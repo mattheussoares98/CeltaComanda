@@ -503,4 +503,32 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   Stream<List<InsertProductsViewModel>?> get insertProductsViewModelStream =>
       _insertProductsViewModel.stream;
+
+  @override
+  ProductCompositionViewModel? getLastSelectedFather(
+    InsertProductsViewModel atualInsertProductViewModel,
+  ) {
+    int index =
+        _insertProductsViewModel.value!.indexOf(atualInsertProductViewModel);
+
+    if (selectedProductValue?.childsComposition == null) {
+      return null;
+    } else if (atualInsertProductViewModel.selectedOptions.keys.first ==
+        SelectedOptionType.fatherComposition) {
+      return (atualInsertProductViewModel.selectedOptions.values.first
+          as ProductCompositionViewModel);
+    } else if (_insertProductsViewModel
+            .value?[index - 1].selectedOptions.keys.first ==
+        SelectedOptionType.fatherComposition) {
+      return (_insertProductsViewModel.value?[index - 1].selectedOptions.values
+          .first as ProductCompositionViewModel);
+    } else if (_insertProductsViewModel
+            .value?[index - 2].selectedOptions.keys.first ==
+        SelectedOptionType.fatherComposition) {
+      return (_insertProductsViewModel.value?[index - 2].selectedOptions.values
+          .first as ProductCompositionViewModel);
+    } else {
+      return null;
+    }
+  }
 }

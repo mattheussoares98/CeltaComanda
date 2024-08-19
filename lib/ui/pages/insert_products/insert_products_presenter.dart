@@ -60,4 +60,8 @@ abstract class InsertProductPresenter implements Listenable {
   void updateCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   );
+
+  ProductCompositionViewModel? getLastSelectedFather(
+    InsertProductsViewModel atualInsertProductViewModel,
+  );
 }

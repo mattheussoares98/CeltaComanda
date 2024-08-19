@@ -58,31 +58,6 @@ class _OptionItemsState extends State<OptionItems> {
 
   bool _doScrollExecuted = false;
 
-  ProductCompositionViewModel? getLastSelectedFather(
-    InsertProductsViewModel insertProductViewModel,
-    int index,
-  ) {
-    if (widget.selectedProduct.childsComposition == null) {
-      return null;
-    } else if (insertProductViewModel.selectedOptions.keys.first ==
-        SelectedOptionType.fatherComposition) {
-      return (insertProductViewModel.selectedOptions.values.first
-          as ProductCompositionViewModel);
-    } else if (widget
-            .insertProductsViewModel[index - 1].selectedOptions.keys.first ==
-        SelectedOptionType.fatherComposition) {
-      return (widget.insertProductsViewModel[index - 1].selectedOptions.values
-          .first as ProductCompositionViewModel);
-    } else if (widget
-            .insertProductsViewModel[index - 2].selectedOptions.keys.first ==
-        SelectedOptionType.fatherComposition) {
-      return (widget.insertProductsViewModel[index - 2].selectedOptions.values
-          .first as ProductCompositionViewModel);
-    } else {
-      return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
@@ -120,9 +95,9 @@ class _OptionItemsState extends State<OptionItems> {
                   insertProductViewModel: insertProductViewModel,
                   atualIndex: index,
                   itemColor: getItemColor(index, context),
-                  lastSelectedFather: getLastSelectedFather(
+                  lastSelectedFather:
+                      insertProductPresenter.getLastSelectedFather(
                     insertProductViewModel,
-                    index,
                   ),
                 );
               });

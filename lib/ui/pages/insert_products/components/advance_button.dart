@@ -11,11 +11,13 @@ class AdvanceButton extends StatefulWidget {
   final int leftSelectedIndex;
   final int quantity;
   final double totalPrice;
+  final SelectedOptionType? atualOption;
   const AdvanceButton({
     required this.selectedProduct,
     required this.leftSelectedIndex,
     required this.quantity,
     required this.totalPrice,
+    required this.atualOption,
     super.key,
   });
 
@@ -24,45 +26,11 @@ class AdvanceButton extends StatefulWidget {
 }
 
 class _AdvanceButtonState extends State<AdvanceButton> {
-  String _getButtonText(
-    ProductsViewModel selectedProduct,
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  ) {
-    final productHasComment =
-        expansibleGroupFromProductPresenter.productHasComment(
-      product: widget.selectedProduct,
-      indexOfChild: 0,
-    );
-    final productHasObligatoryOptions =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: widget.selectedProduct,
-      indexOfChild: 0,
-    );
-
-    if (selectedProduct.childsComposition == null) {
-      if (widget.leftSelectedIndex == 0 && productHasComment) {
-        return R.string.advance;
-      } else if (widget.leftSelectedIndex == 0 && productHasObligatoryOptions) {
-        return R.string.advance;
-      } else if (widget.leftSelectedIndex == 1 && productHasObligatoryOptions) {
-        return R.string.advance;
-      } else {
-        return R.string.insertInCart.toUpperCase();
-      }
+  String _getButtonText() {
+    if (widget.atualOption == SelectedOptionType.quantity) {
+      return R.string.insertInCart.toUpperCase();
     } else {
-      if (widget.leftSelectedIndex ==
-          selectedProduct.childsComposition!.length) {
-        return R.string.insertInCart.toUpperCase();
-      } else if (selectedProduct.childsComposition![widget.leftSelectedIndex]
-                  .IsOptionalItem ==
-              "true" &&
-          selectedProduct.childsComposition![widget.leftSelectedIndex]
-                  .indexOfSelectedChild ==
-              null) {
-        return R.string.jump.toUpperCase();
-      } else {
-        return R.string.advance.toUpperCase();
-      }
+      return R.string.advance.toUpperCase();
     }
   }
 
@@ -164,11 +132,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         );
       }
     } else {
-      if (widget.leftSelectedIndex !=
-          widget.selectedProduct.childsComposition!.length) {
-        insertProductsPresenter
-            .advanceFatherIndex(expansibleGroupFromProductPresenter);
-      } else {
+      if (widget.atualOption == SelectedOptionType.quantity) {
         await _addInCart(
           cartPresenter: cartPresenter,
           menuPresenter: menuPresenter,
@@ -178,6 +142,9 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           totalPrice: totalPrice,
           context: context,
         );
+      } else {
+        insertProductsPresenter
+            .advanceFatherIndex(expansibleGroupFromProductPresenter);
       }
     }
   }
@@ -217,11 +184,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
             child: FittedBox(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                    _getButtonText(
-                      widget.selectedProduct,
-                      expansibleGroupFromProductPresenter,
-                    ),
+                child: Text(_getButtonText(),
                     style: TextStyle(
                       fontSize: getStringSize(context),
                     )),

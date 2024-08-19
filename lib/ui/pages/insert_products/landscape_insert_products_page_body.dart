@@ -116,6 +116,7 @@ class _LandscapeInsertProductsPageBodyState
                   quantity: insertProductPresenter.totalProductsQuantity,
                   selectedProduct: widget.selectedProduct,
                   leftSelectedIndex: widget.indexOfAtualOption,
+                  atualOption: atualOption,
                 ),
                 const SizedBox(height: 10),
               ],

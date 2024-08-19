@@ -102,6 +102,7 @@ class _PortraitInsertProductsPageBodyState
                               insertProductPresenter.totalProductsQuantity,
                           selectedProduct: widget.selectedProduct,
                           leftSelectedIndex: widget.indexOfAtualOption,
+                          atualOption: atualOption,
                         ),
                         Text(
                           widget.totalLiquid

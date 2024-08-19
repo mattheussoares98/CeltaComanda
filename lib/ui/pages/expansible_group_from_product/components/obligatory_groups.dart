@@ -21,22 +21,25 @@ class ObligatoryGroups extends StatefulWidget {
 class _CommentsState extends State<ObligatoryGroups> {
   final iconButtonFocusNode = FocusNode();
 
-  int getInternalCodeOnErp() {
-    if (widget.selectedProduct.childsComposition == null) {
+  int getInternalCodeOnErp(InsertProductPresenter insertProductPresenter) {
+    ProductCompositionViewModel? lastSelectedFather =
+        insertProductPresenter.getLastSelectedFather(widget.selectedLeftIndex);
+
+    if (lastSelectedFather == null) {
       return widget.selectedProduct.InternalCodeOnERP!.toInt();
     } else {
-      return widget.selectedProduct.childsComposition![widget.selectedLeftIndex]
-          .InternalCodeOnERPCodeChild!
-          .toInt();
+      return lastSelectedFather.InternalCodeOnERPCodeChild!.toInt();
     }
   }
 
   List<ExpansibleGroupFromProductViewModel> getObligatoryOptions(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    InsertProductPresenter insertProductPresenter,
   ) {
     return expansibleGroupFromProductPresenter.loadedObligatoryOptions
-        .where(
-            (e) => e.ProductInternalCodeOnErp.toInt() == getInternalCodeOnErp())
+        .where((e) =>
+            e.ProductInternalCodeOnErp.toInt() ==
+            getInternalCodeOnErp(insertProductPresenter))
         .toList();
   }
 
@@ -50,11 +53,15 @@ class _CommentsState extends State<ObligatoryGroups> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount:
-          getObligatoryOptions(expansibleGroupFromProductPresenter).length,
+      itemCount: getObligatoryOptions(
+        expansibleGroupFromProductPresenter,
+        insertProductPresenter,
+      ).length,
       itemBuilder: (context, index) {
-        final obligatoryOption =
-            getObligatoryOptions(expansibleGroupFromProductPresenter)[index];
+        final obligatoryOption = getObligatoryOptions(
+          expansibleGroupFromProductPresenter,
+          insertProductPresenter,
+        )[index];
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
@@ -81,7 +88,9 @@ class _CommentsState extends State<ObligatoryGroups> {
                   expansibleGroupFromProductPresenter
                       .changeObligatoryOptionIsSelected(
                     obligatoryOptionsShowing: getObligatoryOptions(
-                        expansibleGroupFromProductPresenter),
+                      expansibleGroupFromProductPresenter,
+                      insertProductPresenter,
+                    ),
                     selectedIndex: index,
                     insertProductPresenter: insertProductPresenter,
                   );
@@ -110,7 +119,9 @@ class _CommentsState extends State<ObligatoryGroups> {
                           expansibleGroupFromProductPresenter
                               .changeObligatoryOptionIsSelected(
                             obligatoryOptionsShowing: getObligatoryOptions(
-                                expansibleGroupFromProductPresenter),
+                              expansibleGroupFromProductPresenter,
+                              insertProductPresenter,
+                            ),
                             selectedIndex: index,
                             insertProductPresenter: insertProductPresenter,
                           );

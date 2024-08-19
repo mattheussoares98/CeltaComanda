@@ -54,6 +54,7 @@ class ProductEntity extends Equatable {
   final double SaleRetailPraticed;
   final double? CofinsPercentage;
   final double? PisPercentage;
+  final double? MaximumQuantityForSale;
 
   final String? CFOP;
   final String? FiscalClassificationNCM;
@@ -142,6 +143,7 @@ class ProductEntity extends Equatable {
     required this.ProductComplement,
     required this.SaleRetailPraticedString,
     required this.childsComposition,
+    required this.MaximumQuantityForSale,
   });
 
   @override
@@ -212,5 +214,6 @@ class ProductEntity extends Equatable {
         SaleRetailPraticedString,
         ProductComplement,
         childsComposition,
+        MaximumQuantityForSale,
       ];
 }

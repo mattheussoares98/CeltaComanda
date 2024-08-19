@@ -19,6 +19,7 @@ class EntityFactory {
       {bool? isPromoCombox, bool? generateChilds}) {
     return [
       ProductEntity(
+        MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(100),
         IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(100),
@@ -89,6 +90,7 @@ class EntityFactory {
             : null,
       ),
       ProductEntity(
+        MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(100),
         IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
         ProductsId: faker.randomGenerator.integer(100),
@@ -211,6 +213,7 @@ class EntityFactory {
     bool? isOptionalChilds,
   }) {
     return ProductsViewModel(
+      MaximumQuantityForSale: faker.randomGenerator.decimal().toString(),
       ProductComplement: faker.randomGenerator.string(10),
       IsPromoCombox: faker.randomGenerator.boolean().toString(),
       SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01).toString(),
@@ -297,6 +300,7 @@ class EntityFactory {
   static List<ProductModel> makeProductModel() {
     return [
       ProductModel(
+        MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
         InternalCodeOnERP: faker.randomGenerator.integer(20),
@@ -365,6 +369,7 @@ class EntityFactory {
         childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
       ProductModel(
+        MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
         InternalCodeOnERP: faker.randomGenerator.integer(20),

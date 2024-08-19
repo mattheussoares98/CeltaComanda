@@ -42,6 +42,7 @@ class ProductModel {
   final double? IcmsStave;
   final double? PercImpNBPTState;
   final double? PercImpNBPTMunicipal;
+  final double? MaximumQuantityForSale;
   final String? CFOP;
   final String? FiscalClassificationNCM;
   final String? TributarySituationCode;
@@ -85,6 +86,7 @@ class ProductModel {
     required this.ProductIsFatherComposition,
     required this.QuantityMinimumWholeSale,
     required this.QuantityMinimumWholeSaleByClass,
+    required this.MaximumQuantityForSale,
     required this.BalanceTare,
     required this.StockQuantity,
     required this.SaleRetailPrice,
@@ -154,6 +156,7 @@ class ProductModel {
 
     return ProductModel(
       SaleRetailPraticed: json["SaleRetailPraticed"],
+      MaximumQuantityForSale: json["MaximumQuantityForSale"],
       IsPromoCombox: json["IsPromoCombox"],
       Name: json["Name"],
       ProductsId: json["ProductsId"],
@@ -225,6 +228,7 @@ class ProductModel {
   factory ProductModel.fromEntity(ProductEntity entity) {
     return ProductModel(
       SaleRetailPraticed: entity.SaleRetailPraticed,
+      MaximumQuantityForSale: entity.MaximumQuantityForSale,
       IsPromoCombox: entity.IsPromoCombox,
       Name: entity.Name,
       ProductsId: entity.ProductsId,
@@ -296,6 +300,7 @@ class ProductModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ProductsId'] = ProductsId;
+    data['MaximumQuantityForSale'] = MaximumQuantityForSale;
     data['InternalCodeOnERP'] = InternalCodeOnERP;
     data['InternalCodeOfProductOnERP'] = InternalCodeOfProductOnERP;
     data['EnterpriseId'] = EnterpriseId;
@@ -364,6 +369,7 @@ class ProductModel {
 
   ProductEntity toEntity() => ProductEntity(
         IsPromoCombox: IsPromoCombox,
+        MaximumQuantityForSale: MaximumQuantityForSale,
         ProductsId: ProductsId,
         InternalCodeOnERP: InternalCodeOnERP,
         InternalCodeOfProductOnERP: InternalCodeOfProductOnERP,

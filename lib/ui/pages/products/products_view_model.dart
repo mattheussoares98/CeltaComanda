@@ -72,10 +72,12 @@ class ProductsViewModel extends Equatable {
   final String? ProductComplement;
   final String PackingAbbreviation;
   final String IsPromoCombox;
+  final String? MaximumQuantityForSale;
   List<ProductCompositionViewModel>? childsComposition;
   double productQuantity;
 
   ProductsViewModel({
+    required this.MaximumQuantityForSale,
     required this.IsPromoCombox,
     required this.ProductComplement,
     required this.ProductsId,
@@ -212,12 +214,14 @@ class ProductsViewModel extends Equatable {
         NameReduced,
         productQuantity,
         childsComposition,
+        MaximumQuantityForSale,
       ];
 
   factory ProductsViewModel.fromEntity(ProductEntity entity) =>
       ProductsViewModel(
         IsPromoCombox: entity.IsPromoCombox.toString(),
         PriceLookupCode: entity.PriceLookupCode,
+        MaximumQuantityForSale: entity.MaximumQuantityForSale.toString(),
         ProductComplement: entity.ProductComplement,
         Name: entity.Name,
         PackingAbbreviation: entity.PackingAbbreviation,
@@ -303,6 +307,7 @@ class ProductsViewModel extends Equatable {
 
   ProductEntity toEntity() => ProductEntity(
         ProductComplement: ProductComplement,
+        MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
         IsPromoCombox: bool.parse(IsPromoCombox),
         Name: Name,
         CFOP: CFOP,
@@ -376,6 +381,7 @@ class ProductsViewModel extends Equatable {
   ProductEntity toEntityWithSelectedChilds(int productQuantity) =>
       ProductEntity(
         ProductComplement: ProductComplement,
+        MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
         IsPromoCombox: bool.parse(IsPromoCombox),
         Name: Name,
         CFOP: CFOP,
@@ -453,6 +459,7 @@ class ProductsViewModel extends Equatable {
 
   Map<String, dynamic> toJson() => {
         "ProductsId": ProductsId,
+        "MaximumQuantityForSale": MaximumQuantityForSale,
         "InternalCodeOnERP": InternalCodeOnERP,
         "InternalCodeOfProductOnERP": InternalCodeOfProductOnERP,
         "EenterpriseId": EenterpriseId,
@@ -522,6 +529,7 @@ class ProductsViewModel extends Equatable {
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
         IsPromoCombox: json["IsPromoCombox"],
+        MaximumQuantityForSale: json["MaximumQuantityForSale"],
         ProductComplement: json["ProductComplement"],
         ProductsId: json["ProductsId"],
         SaleRetailPraticed: json["SaleRetailPraticed"],
@@ -588,8 +596,9 @@ class ProductsViewModel extends Equatable {
         NameComplete: json["NameComplete"],
         NameReduced: json["NameReduced"],
         productQuantity: json["productQuantity"],
-        childsComposition: json["childsComposition"]?.map<ProductCompositionViewModel>(
-                    (e) => ProductCompositionViewModel.fromJson(e))
-                .toList(),
+        childsComposition: json["childsComposition"]
+            ?.map<ProductCompositionViewModel>(
+                (e) => ProductCompositionViewModel.fromJson(e))
+            .toList(),
       );
 }

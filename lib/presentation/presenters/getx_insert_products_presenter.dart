@@ -341,8 +341,11 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   void updateTotalProductsQuantity(bool isAddingQuantity) {
     if (isAddingQuantity) {
-      if (totalProductsQuantity + 1 >
-          (selectedProductValue?.MaximumQuantityForSale?.toDouble() ?? 99)) {
+      if (selectedProductValue?.MaximumQuantityForSale != null &&
+          selectedProductValue!.MaximumQuantityForSale!.toDouble() > 1 &&
+          totalProductsQuantity + 1 >
+              (selectedProductValue?.MaximumQuantityForSale!.toDouble() ??
+                  99)) {
         mainError = UIError.maximumQuantityAchieved;
       } else {
         totalProductsQuantity = totalProductsQuantity + 1;

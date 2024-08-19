@@ -925,11 +925,17 @@ void main() {
   group("update selected child", () {
     test(
         "Should update selected index of child if click in product that have child",
-        () {
+        () async {
       final optionalFather =
           ProductCompositionViewModel.fromEntity(optionalFathers[0]);
 
       expect(optionalFather.indexOfSelectedChild, null);
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       sut.updateSelectedIndexOfProduct(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -940,7 +946,12 @@ void main() {
     });
     test(
         "Should not update index if click in the same product and father is not optional",
-        () {
+        () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       sut.updateSelectedIndexOfProduct(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -957,9 +968,15 @@ void main() {
       expect(obligatoryFather.indexOfSelectedChild, 0);
     });
     test("Should update index if click in the same product and is optional",
-        () {
+        () async {
       final optionalFather =
           ProductCompositionViewModel.fromEntity(optionalFathers[0]);
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
 
       sut.updateSelectedIndexOfProduct(
         expansibleGroupFromProductPresenter:

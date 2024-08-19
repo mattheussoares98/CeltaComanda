@@ -21,22 +21,25 @@ class OptionalGroups extends StatefulWidget {
 class _CommentsState extends State<OptionalGroups> {
   final iconButtonFocusNode = FocusNode();
 
-  int getInternalCodeOnErp() {
-    if (widget.selectedProduct.childsComposition == null) {
+  int getInternalCodeOnErp(InsertProductPresenter insertProductPresenter) {
+    ProductCompositionViewModel? lastSelectedFather =
+        insertProductPresenter.getLastSelectedFather(widget.selectedLeftIndex);
+
+    if (lastSelectedFather == null) {
       return widget.selectedProduct.InternalCodeOnERP!.toInt();
     } else {
-      return widget.selectedProduct.childsComposition![widget.selectedLeftIndex]
-          .InternalCodeOnERPCodeChild!
-          .toInt();
+      return lastSelectedFather.InternalCodeOnERPCodeChild!.toInt();
     }
   }
 
   int getCommentsLenght(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    InsertProductPresenter insertProductPresenter,
   ) {
     final lenght = expansibleGroupFromProductPresenter.loadedComments
-        .where(
-            (e) => e.ProductInternalCodeOnErp.toInt() == getInternalCodeOnErp())
+        .where((e) =>
+            e.ProductInternalCodeOnErp.toInt() ==
+            getInternalCodeOnErp(insertProductPresenter))
         .length;
 
     return lenght;
@@ -45,16 +48,20 @@ class _CommentsState extends State<OptionalGroups> {
   @override
   Widget build(BuildContext context) {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context);
+        Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: getCommentsLenght(expansibleGroupFromProductPresenter),
+      itemCount: getCommentsLenght(
+          expansibleGroupFromProductPresenter, insertProductPresenter),
       itemBuilder: (context, index) {
         final comments = expansibleGroupFromProductPresenter.loadedComments
             .where((e) =>
-                int.parse(e.ProductInternalCodeOnErp) == getInternalCodeOnErp())
+                int.parse(e.ProductInternalCodeOnErp) ==
+                getInternalCodeOnErp(insertProductPresenter))
             .toList();
 
         final comment = comments[index];

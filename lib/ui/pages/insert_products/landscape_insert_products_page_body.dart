@@ -69,8 +69,8 @@ class _LandscapeInsertProductsPageBodyState
               children: [
                 if (atualOption == SelectedOptionType.fatherComposition)
                   Text(
-                    _selectedFather(
-                            widget.selectedProduct, widget.indexOfAtualOption)
+                    insertProductPresenter
+                        .getLastSelectedFather(widget.indexOfAtualOption)!
                         .ChildName!,
                     style: TextStyle(
                       fontSize: getStringSize(context) * 1.4,
@@ -104,8 +104,8 @@ class _LandscapeInsertProductsPageBodyState
                   Expanded(
                     child: ChildsRadios(
                       selectedProduct: widget.selectedProduct,
-                      selectedFather: _selectedFather(
-                          widget.selectedProduct, widget.indexOfAtualOption),
+                      selectedFather: insertProductPresenter
+                          .getLastSelectedFather(widget.indexOfAtualOption)!,
                       callSetState: () {
                         setState(() {});
                       },
@@ -126,7 +126,3 @@ class _LandscapeInsertProductsPageBodyState
     );
   }
 }
-
-ProductCompositionViewModel _selectedFather(
-        ProductsViewModel selectedProduct, int indexOfAtualOption) =>
-    selectedProduct.childsComposition![indexOfAtualOption];

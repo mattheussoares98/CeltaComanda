@@ -90,59 +90,24 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
   Future<void> _advanceOrAddInCart({
     required CartPresenter cartPresenter,
-    required double totalPrice,
-    required int quantity,
     required BuildContext context,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
   }) async {
-    final productHasComment =
-        expansibleGroupFromProductPresenter.productHasComment(
-      product: widget.selectedProduct,
-      indexOfChild: 0,
-    );
-
-    final productHasObligatoryOptions =
-        expansibleGroupFromProductPresenter.productHasObligatoryOption(
-      product: widget.selectedProduct,
-      indexOfChild: 0,
-    );
-    if (widget.selectedProduct.childsComposition == null) {
-      if (widget.leftSelectedIndex == 0 && productHasComment) {
-        insertProductsPresenter
-            .advanceFatherIndex(expansibleGroupFromProductPresenter);
-      } else if (widget.leftSelectedIndex == 0 && productHasObligatoryOptions) {
-        insertProductsPresenter
-            .advanceFatherIndex(expansibleGroupFromProductPresenter);
-      } else if (widget.leftSelectedIndex == 1 && productHasObligatoryOptions) {
-        insertProductsPresenter
-            .advanceFatherIndex(expansibleGroupFromProductPresenter);
-      } else {
-        await _addInCart(
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          insertProductsPresenter: insertProductsPresenter,
-          context: context,
-        );
-      }
+    if (widget.atualOption == SelectedOptionType.quantity) {
+      await _addInCart(
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        insertProductsPresenter: insertProductsPresenter,
+        context: context,
+      );
     } else {
-      if (widget.atualOption == SelectedOptionType.quantity) {
-        await _addInCart(
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          insertProductsPresenter: insertProductsPresenter,
-          context: context,
-        );
-      } else {
-        insertProductsPresenter
-            .advanceFatherIndex(expansibleGroupFromProductPresenter);
-      }
+      insertProductsPresenter
+          .advanceFatherIndex(expansibleGroupFromProductPresenter);
     }
   }
 
@@ -171,8 +136,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
                 ? () async {
                     await _advanceOrAddInCart(
                       cartPresenter: cartPresenter,
-                      totalPrice: widget.totalPrice,
-                      quantity: widget.quantity,
                       context: context,
                       expansibleGroupFromProductPresenter:
                           expansibleGroupFromProductPresenter,

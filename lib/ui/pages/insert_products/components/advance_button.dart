@@ -54,7 +54,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
   Future<void> _addInCart({
     required CartPresenter cartPresenter,
-    required double totalPrice,
     required BuildContext context,
     required InsertProductPresenter insertProductsPresenter,
     required MenuPresenter menuPresenter,
@@ -127,7 +126,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
           insertProductsPresenter: insertProductsPresenter,
-          totalPrice: totalPrice,
           context: context,
         );
       }
@@ -139,7 +137,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
           insertProductsPresenter: insertProductsPresenter,
-          totalPrice: totalPrice,
           context: context,
         );
       } else {

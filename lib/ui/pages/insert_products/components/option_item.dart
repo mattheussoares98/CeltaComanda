@@ -5,19 +5,15 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class OptionItem extends StatelessWidget {
-  final int indexOfSelectedFather;
   final int atualIndex;
-  final ProductsViewModel selectedProduct;
   final Color itemColor;
   final InsertProductsViewModel insertProductViewModel;
-  final String? lastFatherName;
+  final ProductCompositionViewModel? lastSelectedFather;
   const OptionItem({
     required this.atualIndex,
-    required this.indexOfSelectedFather,
-    required this.selectedProduct,
     required this.itemColor,
     required this.insertProductViewModel,
-    required this.lastFatherName,
+    required this.lastSelectedFather,
     super.key,
   });
 
@@ -54,14 +50,14 @@ class OptionItem extends StatelessWidget {
     // product,
 
     if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
-      if (lastFatherName != null) {
-        return lastFatherName!;
+      if (lastSelectedFather != null) {
+        return lastSelectedFather!.ChildName!;
       } else {
         return R.string.comment.toUpperCase();
       }
     } else if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
-      if (lastFatherName != null) {
-        return lastFatherName!;
+      if (lastSelectedFather != null) {
+        return lastSelectedFather!.ChildName!;
       } else {
         return R.string.comment.toUpperCase();
       }
@@ -101,7 +97,7 @@ class OptionItem extends StatelessWidget {
               child: RichText(
                 text: TextSpan(
                   text: getOptionItemTitle(atualOption),
-                  children: lastFatherName == null ||
+                  children: lastSelectedFather == null ||
                           atualOption == SelectedOptionType.fatherComposition ||
                           atualOption == SelectedOptionType.quantity
                       ? null

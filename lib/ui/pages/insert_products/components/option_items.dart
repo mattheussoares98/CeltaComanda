@@ -58,7 +58,7 @@ class _OptionItemsState extends State<OptionItems> {
 
   bool _doScrollExecuted = false;
 
-  String? getLastFatherName(
+  ProductCompositionViewModel? getLastSelectedFather(
     InsertProductsViewModel insertProductViewModel,
     int index,
   ) {
@@ -67,20 +67,17 @@ class _OptionItemsState extends State<OptionItems> {
     } else if (insertProductViewModel.selectedOptions.keys.first ==
         SelectedOptionType.fatherComposition) {
       return (insertProductViewModel.selectedOptions.values.first
-              as ProductCompositionViewModel)
-          .ChildName;
+          as ProductCompositionViewModel);
     } else if (widget
             .insertProductsViewModel[index - 1].selectedOptions.keys.first ==
         SelectedOptionType.fatherComposition) {
       return (widget.insertProductsViewModel[index - 1].selectedOptions.values
-              .first as ProductCompositionViewModel)
-          .ChildName;
+          .first as ProductCompositionViewModel);
     } else if (widget
             .insertProductsViewModel[index - 2].selectedOptions.keys.first ==
         SelectedOptionType.fatherComposition) {
       return (widget.insertProductsViewModel[index - 2].selectedOptions.values
-              .first as ProductCompositionViewModel)
-          .ChildName;
+          .first as ProductCompositionViewModel);
     } else {
       return null;
     }
@@ -121,11 +118,9 @@ class _OptionItemsState extends State<OptionItems> {
                 }
                 return OptionItem(
                   insertProductViewModel: insertProductViewModel,
-                  indexOfSelectedFather: widget.indexOfAtualOption,
                   atualIndex: index,
-                  selectedProduct: widget.selectedProduct,
                   itemColor: getItemColor(index, context),
-                  lastFatherName: getLastFatherName(
+                  lastSelectedFather: getLastSelectedFather(
                     insertProductViewModel,
                     index,
                   ),

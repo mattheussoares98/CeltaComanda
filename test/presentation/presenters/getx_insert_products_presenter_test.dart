@@ -136,6 +136,7 @@ void main() {
     selectedProduct = EntityFactory.makeProductsViewModel(
       insertChildsComposition: true,
       isOptionalChilds: false,
+      maximumProductQuantity: 3,
     );
 
     invalidFather = EntityFactory.makeProductCompositionViewModel(
@@ -1448,6 +1449,55 @@ void main() {
       final result = sut.getLastSelectedFather(2);
 
       expect(result, selectedProduct.childsComposition?[0]);
+    });
+  });
+
+  group("Update total products quantity", () {
+    test("Should add quantity if is adding", () async {
+      expect(sut.totalProductsQuantity, 1);
+
+      sut.updateTotalProductsQuantity(true);
+
+      expect(sut.totalProductsQuantity, 2);
+    });
+    test("Should emit error on try add more than the maximum quantity",
+        () async {
+      expect(sut.totalProductsQuantity, 1);
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expectLater(sut.mainErrorStream, emits(UIError.maximumQuantityAchieved));
+
+      sut.updateTotalProductsQuantity(true);
+      expect(sut.totalProductsQuantity, 2);
+      sut.updateTotalProductsQuantity(true);
+      expect(sut.totalProductsQuantity, 3);
+      sut.updateTotalProductsQuantity(
+          true); //o máximo é 3, por isso aqui emite o erro
+      expect(sut.totalProductsQuantity, 3);
+    });
+    test(
+        "Should not reduce quantity if is reducing and quantity is equal or less than 1",
+        () async {
+      expect(sut.totalProductsQuantity, 1);
+
+      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(false);
+      expect(sut.totalProductsQuantity, 1);
+    });
+    test(
+        "Should reduce quantity if atual quantity is more than 2",
+        () async {
+      expect(sut.totalProductsQuantity, 1);
+
+      sut.updateTotalProductsQuantity(true);
+      expect(sut.totalProductsQuantity, 2);
+      sut.updateTotalProductsQuantity(false);
+      expect(sut.totalProductsQuantity, 1);
     });
   });
 }

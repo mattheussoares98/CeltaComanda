@@ -211,9 +211,12 @@ class EntityFactory {
   static ProductsViewModel makeProductsViewModel({
     bool? insertChildsComposition,
     bool? isOptionalChilds,
+    int? maximumProductQuantity,
   }) {
     return ProductsViewModel(
-      MaximumQuantityForSale: faker.randomGenerator.decimal().toString(),
+      MaximumQuantityForSale: maximumProductQuantity != null
+          ? maximumProductQuantity.toString()
+          : faker.randomGenerator.decimal().toString(),
       ProductComplement: faker.randomGenerator.string(10),
       IsPromoCombox: faker.randomGenerator.boolean().toString(),
       SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01).toString(),

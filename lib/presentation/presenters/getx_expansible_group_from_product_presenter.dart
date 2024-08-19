@@ -149,8 +149,12 @@ class GetxExpansibleGroupFromProductPresenter
     if (concatenateSelectedComments.isEmpty &&
         concatenateObligatoryOptions.isEmpty) {
       return null;
+    } else if (concatenateObligatoryOptions.isEmpty) {
+      return concatenateSelectedComments;
+    } else if (concatenateSelectedComments.isEmpty) {
+      return concatenateObligatoryOptions;
     } else {
-      return "$concatenateSelectedComments$concatenateObligatoryOptions";
+      return "$concatenateSelectedComments; $concatenateObligatoryOptions";
     }
   }
 

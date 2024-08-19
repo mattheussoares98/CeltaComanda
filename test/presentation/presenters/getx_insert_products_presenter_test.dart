@@ -1382,4 +1382,53 @@ void main() {
       );
     });
   });
+
+  group("Get last selected father", () {
+    test("Should return null if selected product is null", () async {
+      final result = sut.getLastSelectedFather(fatherInsertProductsViewModel);
+
+      expect(result, isNull);
+    });
+    test(
+        "Should return ProductCompositionViewModel if atualInsertProductViewModel is fatherComposition",
+        () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final result = sut.getLastSelectedFather(fatherInsertProductsViewModel);
+
+      expect(result, selectedProduct.childsComposition?[0]);
+    });
+    test(
+        "Should return last ProductCompositionViewModel if index of insertProductsViewModel -1 is equal fatherComposition",
+        () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final result =
+          sut.getLastSelectedFather(fatherOptionalInsertProductsViewModel);
+
+      expect(result, selectedProduct.childsComposition?[0]);
+    });
+    test(
+        "Should return last ProductCompositionViewModel if index of insertProductsViewModel -2 is equal fatherComposition",
+        () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final result =
+          sut.getLastSelectedFather(fatherObligatoryInsertProductsViewModel);
+
+      expect(result, selectedProduct.childsComposition?[0]);
+    });
+  });
 }

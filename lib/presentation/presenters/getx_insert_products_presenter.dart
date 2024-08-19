@@ -505,9 +505,14 @@ class GetxInsertProductsPresenter extends GetxController
       _insertProductsViewModel.stream;
 
   @override
-  ProductCompositionViewModel? getLastSelectedFather(
-    InsertProductsViewModel atualInsertProductViewModel,
-  ) {
+  ProductCompositionViewModel? getLastSelectedFather(int indexOfAtualOption) {
+    final atualInsertProductViewModel =
+        _insertProductsViewModel.value?[indexOfAtualOption];
+
+    if (atualInsertProductViewModel == null) {
+      return null;
+    }
+
     int? index =
         _insertProductsViewModel.value?.indexOf(atualInsertProductViewModel);
 
@@ -518,14 +523,14 @@ class GetxInsertProductsPresenter extends GetxController
       return (atualInsertProductViewModel.selectedOptions.values.first
           as ProductCompositionViewModel);
     } else if (_insertProductsViewModel
-            .value?[(index ?? 0) -1].selectedOptions.keys.first ==
+            .value?[(index ?? 0) - 1].selectedOptions.keys.first ==
         SelectedOptionType.fatherComposition) {
-      return (_insertProductsViewModel.value?[(index ?? 0) -1].selectedOptions
+      return (_insertProductsViewModel.value?[(index ?? 0) - 1].selectedOptions
           .values.first as ProductCompositionViewModel);
     } else if (_insertProductsViewModel
-            .value?[(index ?? 0) -2].selectedOptions.keys.first ==
+            .value?[(index ?? 0) - 2].selectedOptions.keys.first ==
         SelectedOptionType.fatherComposition) {
-      return (_insertProductsViewModel.value?[(index ?? 0) -2].selectedOptions
+      return (_insertProductsViewModel.value?[(index ?? 0) - 2].selectedOptions
           .values.first as ProductCompositionViewModel);
     } else {
       return null;

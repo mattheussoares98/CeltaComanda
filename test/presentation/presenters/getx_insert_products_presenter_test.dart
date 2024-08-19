@@ -1385,7 +1385,7 @@ void main() {
 
   group("Get last selected father", () {
     test("Should return null if selected product is null", () async {
-      final result = sut.getLastSelectedFather(fatherInsertProductsViewModel);
+      final result = sut.getLastSelectedFather(0);
 
       expect(result, isNull);
     });
@@ -1398,35 +1398,37 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      final result = sut.getLastSelectedFather(fatherInsertProductsViewModel);
+      final result = sut.getLastSelectedFather(0);
 
       expect(result, selectedProduct.childsComposition?[0]);
     });
     test(
         "Should return last ProductCompositionViewModel if index of insertProductsViewModel -1 is equal fatherComposition",
         () async {
+      selectedProduct.childsComposition = [validFather];
+
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
 
-      final result =
-          sut.getLastSelectedFather(fatherOptionalInsertProductsViewModel);
+      final result = sut.getLastSelectedFather(1);
 
       expect(result, selectedProduct.childsComposition?[0]);
     });
     test(
         "Should return last ProductCompositionViewModel if index of insertProductsViewModel -2 is equal fatherComposition",
         () async {
+      selectedProduct.childsComposition = [validFather];
+
       await sut.updateSelectedProduct(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
 
-      final result =
-          sut.getLastSelectedFather(fatherObligatoryInsertProductsViewModel);
+      final result = sut.getLastSelectedFather(2);
 
       expect(result, selectedProduct.childsComposition?[0]);
     });

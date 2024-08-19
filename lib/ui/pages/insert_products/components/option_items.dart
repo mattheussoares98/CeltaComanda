@@ -96,9 +96,7 @@ class _OptionItemsState extends State<OptionItems> {
                   atualIndex: index,
                   itemColor: getItemColor(index, context),
                   lastSelectedFather:
-                      insertProductPresenter.getLastSelectedFather(
-                    insertProductViewModel,
-                  ),
+                      insertProductPresenter.getLastSelectedFather(index),
                 );
               });
         },

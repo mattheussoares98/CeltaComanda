@@ -25,6 +25,7 @@ class PtBr implements Translation {
   String get msgInvalidNumber => "Número inválido";
   String get msgLowBatteryChargeDevice =>
       "Carregue o dispositivo. Ele está com pouca bateria";
+  String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';

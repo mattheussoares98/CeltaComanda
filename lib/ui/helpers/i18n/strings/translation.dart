@@ -16,6 +16,7 @@ abstract class Translation {
   String get msgInvalidField;
   String get msgInvalidNumber;
   String get msgLowBatteryChargeDevice;
+  String get msgMaximumQuantityAchieved;
   String get msgObligatoryFixedCommandNumber;
   String get msgProductNotFound;
   String get msgRequestSentSuccessfully;

@@ -11,6 +11,7 @@ enum UIError {
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   invalidField,
+  maximumQuantityAchieved,
   obligatoryFixedCommandNumber,
   productNotFound,
   requiredField,
@@ -39,6 +40,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgInvalidCredentials;
       case UIError.invalidCredentialsOrAccessDenied:
         return R.string.msgInvalidCredentialsOrAccessDenied;
+      case UIError.maximumQuantityAchieved:
+        return R.string.msgMaximumQuantityAchieved;
       case UIError.obligatoryFixedCommandNumber:
         return R.string.msgObligatoryFixedCommandNumber;
       case UIError.productNotFound:

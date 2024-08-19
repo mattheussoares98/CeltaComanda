@@ -23,6 +23,7 @@ class EnUs implements Translation {
   String get msgInvalidNumber => 'Invalid number';
   String get msgLowBatteryChargeDevice =>
       'Charge the device. It is running low on battery';
+  String get msgMaximumQuantityAchieved => "Maximum quantity achivied";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
   String get msgPaymentEmpty => 'The command has no open values';

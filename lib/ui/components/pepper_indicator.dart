@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 Widget pepperIndicator(String? productComplement) {
-  if (productComplement?.contains("(P)") == true) {
+  String lowerCaseComplement = productComplement.toString().toLowerCase();
+
+  if (lowerCaseComplement.contains("(p)") == true) {
     return _pepperImage();
-  } else if (productComplement?.contains("(PP)") == true) {
+  } else if (lowerCaseComplement.contains("(pp)") == true) {
     return Row(
       children: [
         _pepperImage(),
         _pepperImage(),
       ],
     );
-  } else if (productComplement?.contains("(PPP)") == true) {
+  } else if (lowerCaseComplement.contains("(ppp)") == true) {
     return Row(
       children: [
         _pepperImage(),

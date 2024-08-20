@@ -9,6 +9,29 @@ class TitleAppbar extends StatelessWidget {
     super.key,
   });
 
+  void doOnTapOrLongPress(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          iconPadding: const EdgeInsets.all(8),
+          titlePadding: const EdgeInsets.all(8),
+          buttonPadding: const EdgeInsets.all(8),
+          actionsPadding: const EdgeInsets.all(8),
+          insetPadding: const EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(10),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: const TableConfigurationsPage(),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: true);
@@ -22,26 +45,10 @@ class TitleAppbar extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
                 onDoubleTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        iconPadding: const EdgeInsets.all(8),
-                        titlePadding: const EdgeInsets.all(8),
-                        buttonPadding: const EdgeInsets.all(8),
-                        actionsPadding: const EdgeInsets.all(8),
-                        insetPadding: const EdgeInsets.all(20),
-                        contentPadding: const EdgeInsets.all(10),
-                        content: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: const TableConfigurationsPage(),
-                        ),
-                      );
-                    },
-                  );
+                  doOnTapOrLongPress(context);
+                },
+                onLongPress: () {
+                  doOnTapOrLongPress(context);
                 },
                 child: Text(
                   "${R.string.table} ${homePresenter.commandNumber?.toInt()}",

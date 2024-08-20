@@ -431,6 +431,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         TotalLiquid: products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: products,
+        Comments: _saleRequestTemp?.Comments,
+        Peoples: _saleRequestTemp!.Peoples.toInt(),
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -459,6 +461,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           TotalLiquid: saleRequestTempResult.TotalLiquid,
           DeliveryControl: tableNumber ?? 0,
           Comments: saleRequestTempResult.Comments,
+          Peoples: saleRequestTempResult.Peoples,
         ),
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );

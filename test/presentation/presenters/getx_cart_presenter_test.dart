@@ -18,7 +18,8 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late HomePresenterSpy homePresenter;
-  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy
+      expansibleGroupFromProductPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateProductQuantitySpy updateProductQuantity;
@@ -78,7 +79,8 @@ void main() {
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
     );
-    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
+    expansibleGroupFromProductPresenter =
+        ExpansibleGroupFromProductPresenterSpy();
   }
 
   void initEntitys() {
@@ -157,11 +159,14 @@ void main() {
       TotalLiquid: cartSaleRequestTempProductsEntity.fold(
           0.0, (previousValue, element) => element.TotalLiquid + previousValue),
       Products: cartSaleRequestTempProductsEntity,
+      Comments: saleRequestTempEntity.Comments,
+      Peoples: saleRequestTempEntity.Peoples,
     );
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
 
-    commentViewModel = EntityFactory.makeExpansibleGroupFromProductViewModel(selected: true);
+    commentViewModel =
+        EntityFactory.makeExpansibleGroupFromProductViewModel(selected: true);
     printRequestEntity = EntityFactory.makePrintRequestEntity();
   }
 
@@ -185,14 +190,16 @@ void main() {
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(UpdateSaleRequestTempEntity);
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
   });
 
   group("CartInformations", () {
@@ -1008,29 +1015,31 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
-      verify(() => updateSaleRequestTemp.update(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          entity: UpdateSaleRequestTempEntity(
-            DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
-            EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
-            PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+      final teste = UpdateSaleRequestTempEntity(
+        Comments: updateSaleRequestTempEntity.Comments,
+        Peoples: updateSaleRequestTempEntity.Peoples,
+        DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
+        EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
+        PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp:
+                cartProductViewModel.Product.InternalCodeOnERP!.toInt(),
+            ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+            Quantity: cartProductViewModel.Quantity.toDouble(),
             SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
             TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
-            Products: [
-              UpdateSaleRequestTempProductEntity(
-                ProductInternalCodeOnErp:
-                    cartProductViewModel.Product.InternalCodeOnERP!.toInt(),
-                ProductPriceLookUpCode:
-                    cartProductViewModel.ProductPriceLookUpCode,
-                Quantity: cartProductViewModel.Quantity.toDouble(),
-                SaleRequestTempId:
-                    updateSaleRequestTempEntity.SaleRequestTempId,
-                TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
-                Value: cartProductViewModel.Value.toDouble(),
-                Comments: cartProductViewModel.Comments,
-              )
-            ],
-          ))).called(1);
+            Value: cartProductViewModel.Value.toDouble(),
+            Comments: cartProductViewModel.Comments,
+          )
+        ],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          entity: teste)).called(1);
 
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: saleRequestTempEntity,
@@ -1062,6 +1071,8 @@ void main() {
       );
 
       final entity = UpdateSaleRequestTempEntity(
+        Comments: updateSaleRequestTempEntity.Comments,
+        Peoples: updateSaleRequestTempEntity.Peoples,
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
@@ -1504,6 +1515,7 @@ void main() {
 
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: SaleRequestTempEntity(
+              Peoples: updateSaleRequestTempEntity.Peoples,
               DeliveryControl: 0,
               Products: saleRequestTempEntity.Products,
               SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
@@ -1531,6 +1543,7 @@ void main() {
 
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: SaleRequestTempEntity(
+              Peoples: updateSaleRequestTempEntity.Peoples,
               DeliveryControl: tableNumber,
               Products: saleRequestTempEntity.Products,
               SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,

@@ -314,6 +314,8 @@ class GetxInsertProductsPresenter extends GetxController
               cartPresenter.saleRequestTemp!.SaleRequestTempId.toInt(),
           productsCompositions: productsCompositions,
         ),
+        Peoples: cartPresenter.saleRequestTemp!.Peoples.toInt(),
+        Comments: cartPresenter.saleRequestTemp!.Comments,
       );
 
       await updateSaleRequestTemp.update(

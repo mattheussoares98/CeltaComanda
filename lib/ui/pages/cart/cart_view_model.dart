@@ -14,6 +14,7 @@ class SaleRequestTempViewModel extends Equatable {
   final String DeliveryControl;
   final String? Comments;
   final String SaleRequestTempId;
+  final String Peoples;
 
   @override
   List get props => [
@@ -24,6 +25,7 @@ class SaleRequestTempViewModel extends Equatable {
         DeliveryControl,
         Comments,
         SaleRequestTempId,
+        Peoples,
       ];
 
   const SaleRequestTempViewModel({
@@ -33,7 +35,8 @@ class SaleRequestTempViewModel extends Equatable {
     required this.TotalLiquid,
     required this.DeliveryControl,
     required this.SaleRequestTempId,
-    this.Comments,
+    required this.Comments,
+    required this.Peoples,
   });
 
   factory SaleRequestTempViewModel.fromEntity(SaleRequestTempEntity entity) =>
@@ -46,17 +49,19 @@ class SaleRequestTempViewModel extends Equatable {
         TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).toBrazilianNumber(),
         DeliveryControl: entity.DeliveryControl.toString(),
         Comments: entity.Comments,
+        Peoples: entity.Peoples.toString(),
         SaleRequestTempId: entity.SaleRequestTempId.toString(),
       );
 
   SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
         Products: Products.map((e) => e.toEntity()).toList(),
         PersonalizedCode: PersonalizedCode,
-        SaleRequestTempId: int.parse(SaleRequestTempId),
-        EnterpriseId: int.parse(EnterpriseId),
-        DeliveryControl: int.parse(DeliveryControl),
+        SaleRequestTempId: SaleRequestTempId.toInt(),
+        EnterpriseId: EnterpriseId.toInt(),
+        DeliveryControl: DeliveryControl.toInt(),
         TotalLiquid: TotalLiquid.toDouble(),
         Comments: Comments,
+        Peoples: Peoples.toInt(),
       );
 
   Map toJson() => {
@@ -67,5 +72,6 @@ class SaleRequestTempViewModel extends Equatable {
         "DeliveryControl": DeliveryControl,
         "TotalLiquid": TotalLiquid,
         "Comments": Comments,
+        "Peoples": Peoples,
       };
 }

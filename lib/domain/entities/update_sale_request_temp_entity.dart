@@ -11,10 +11,12 @@ class UpdateSaleRequestTempEntity extends Equatable {
   final String PersonalizedCode;
   final int SaleRequestTempId;
   final double TotalLiquid;
+  final int? Peoples;
   final List<UpdateSaleRequestTempProductEntity> Products;
 
   const UpdateSaleRequestTempEntity({
-    this.Comments,
+    required this.Comments,
+    required this.Peoples,
     required this.DeliveryControl,
     required this.EnterpriseId,
     required this.PersonalizedCode,
@@ -32,5 +34,6 @@ class UpdateSaleRequestTempEntity extends Equatable {
         SaleRequestTempId,
         TotalLiquid,
         Products,
+        Peoples,
       ];
 }

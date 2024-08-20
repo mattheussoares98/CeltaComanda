@@ -10,6 +10,7 @@ class SaleRequestModel {
   final int EnterpriseId;
   final double TotalLiquid;
   final int DeliveryControl;
+  final int? Peoples;
   final String? Comments;
 
   SaleRequestModel({
@@ -19,7 +20,8 @@ class SaleRequestModel {
     required this.EnterpriseId,
     required this.TotalLiquid,
     required this.DeliveryControl,
-    this.Comments,
+    required this.Peoples,
+    required this.Comments,
   });
 
   factory SaleRequestModel.fromJson(Map json) {
@@ -44,6 +46,7 @@ class SaleRequestModel {
       TotalLiquid: json["TotalLiquid"],
       DeliveryControl: json["DeliveryControl"],
       Comments: json["Comments"],
+      Peoples: json["Peoples"],
     );
   }
 
@@ -56,6 +59,7 @@ class SaleRequestModel {
         TotalLiquid: entity.TotalLiquid,
         DeliveryControl: entity.DeliveryControl,
         Comments: entity.Comments,
+        Peoples: entity.Peoples,
       );
 
   SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
@@ -66,6 +70,7 @@ class SaleRequestModel {
         TotalLiquid: TotalLiquid,
         DeliveryControl: DeliveryControl,
         Comments: Comments,
+        Peoples: Peoples,
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,5 +81,6 @@ class SaleRequestModel {
         "TotalLiquid": TotalLiquid,
         "DeliveryControl": DeliveryControl,
         "Comments": Comments,
+        "Peoples": Peoples,
       };
 }

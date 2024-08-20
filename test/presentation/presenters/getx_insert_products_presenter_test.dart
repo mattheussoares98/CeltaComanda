@@ -49,6 +49,8 @@ void main() {
     required double productValue,
   }) {
     final updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
+        Comments: cartPresenter.saleRequestTempMock!.Comments,
+        Peoples: cartPresenter.saleRequestTempMock!.Peoples.toInt(),
         DeliveryControl:
             cartPresenter.saleRequestTempMock!.DeliveryControl.toInt(),
         EnterpriseId: cartPresenter.saleRequestTempMock!.EnterpriseId.toInt(),
@@ -1489,9 +1491,7 @@ void main() {
       sut.updateTotalProductsQuantity(false);
       expect(sut.totalProductsQuantity, 1);
     });
-    test(
-        "Should reduce quantity if atual quantity is more than 2",
-        () async {
+    test("Should reduce quantity if atual quantity is more than 2", () async {
       expect(sut.totalProductsQuantity, 1);
 
       sut.updateTotalProductsQuantity(true);

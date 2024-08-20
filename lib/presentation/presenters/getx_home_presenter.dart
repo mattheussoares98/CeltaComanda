@@ -55,6 +55,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     await localEnterpriseData.add(emptyEntity);
   }
 
+  int? _peoples;
+  @override
+  int? get peoples => _peoples;
+  set peoples(int? value) => _peoples = value;
+  
   String? _commandNumber;
   @override
   String? get commandNumber => _commandNumber;

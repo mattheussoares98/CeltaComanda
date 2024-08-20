@@ -40,6 +40,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         userPersonalizedCode: _personalizedCodeController.text.toInt(),
         password: _passwordController.text,
         printedProductsPresenter: printedProductsPresenter,
+        peoples: null,//só mudar aqui que já deve funcionar
       );
 
       if (updated) {

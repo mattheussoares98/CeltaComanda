@@ -16,6 +16,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required int newFixedCommandNumber,
     required int userPersonalizedCode,
     required String password,
+    required int? peoples,
     required PrintedProductsPresenter printedProductsPresenter,
   });
 

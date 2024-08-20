@@ -44,7 +44,7 @@ abstract class InsertProductPresenter implements Listenable {
         expansibleGroupFromProductPresenter,
   });
 
-  void updateFatherIndex({
+  void updateOptionIndex({
     required int newIndex,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
@@ -55,7 +55,7 @@ abstract class InsertProductPresenter implements Listenable {
         expansibleGroupFromProductPresenter,
   });
   bool fatherIsValid(ProductCompositionViewModel? product);
-  void advanceFatherIndex(
+  void advanceOptionIndex(
       ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter);
   void updateCanAdvanceIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,

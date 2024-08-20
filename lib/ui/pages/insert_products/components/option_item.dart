@@ -79,7 +79,7 @@ class OptionItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        insertProductPresenter.updateFatherIndex(
+        insertProductPresenter.updateOptionIndex(
           newIndex: atualIndex,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,

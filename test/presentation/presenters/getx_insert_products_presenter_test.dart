@@ -290,7 +290,7 @@ void main() {
   });
 
   group("UpdateSelectedFather", () {
-    test("Should not advance selectedFatherIndex if atual father is invalid",
+    test("Should not advance selectedOptionIndex if atual father is invalid",
         () async {
       selectedProduct.childsComposition = [
         EntityFactory.makeProductCompositionViewModel(
@@ -312,12 +312,12 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
+      sut.updateOptionIndex(
         newIndex: 0,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
+      sut.updateOptionIndex(
         newIndex: 1,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -339,17 +339,17 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
+      sut.updateOptionIndex(
         newIndex: 0,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
+      sut.updateOptionIndex(
         newIndex: 1,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateFatherIndex(
+      sut.updateOptionIndex(
         newIndex: 2,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -367,7 +367,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      sut.advanceOptionIndex(expansibleGroupFromProductPresenter);
       sut.clearData(
         product: selectedProduct,
         expansibleGroupFromProductPresenter:
@@ -1029,7 +1029,7 @@ void main() {
       );
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      sut.advanceOptionIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should advance index if atual option is fatherComposition and father is valid",
@@ -1044,7 +1044,7 @@ void main() {
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      sut.advanceOptionIndex(expansibleGroupFromProductPresenter);
     });
     test(
         "Should advance index if atual option is obligatoryExpansibleGroup and has selected option",
@@ -1063,7 +1063,7 @@ void main() {
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
 
-      sut.advanceFatherIndex(expansibleGroupFromProductPresenter);
+      sut.advanceOptionIndex(expansibleGroupFromProductPresenter);
     });
   });
 

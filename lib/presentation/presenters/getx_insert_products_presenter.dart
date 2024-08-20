@@ -38,12 +38,12 @@ class GetxInsertProductsPresenter extends GetxController
     bool productHasComment =
         expansibleGroupFromProductPresenter.productHasComment(
       product: product,
-      indexOfChild: _selectedFatherIndex.value,
+      indexOfChild: _selectedOptionIndex.value,
     );
     bool productHasObligatoryOptions =
         expansibleGroupFromProductPresenter.productHasObligatoryOption(
       product: product,
-      indexOfChild: _selectedFatherIndex.value,
+      indexOfChild: _selectedOptionIndex.value,
     );
 
     if (productHasComment) {
@@ -381,13 +381,13 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void updateFatherIndex({
+  void updateOptionIndex({
     required int newIndex,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) {
-    if (newIndex <= _selectedFatherIndex.value) {
-      selectedFatherIndex = newIndex;
+    if (newIndex <= _selectedOptionIndex.value) {
+      selectedOptionIndex = newIndex;
       doScroll = true;
     }
     updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
@@ -399,7 +399,7 @@ class GetxInsertProductsPresenter extends GetxController
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) {
-    selectedFatherIndex = 0;
+    selectedOptionIndex = 0;
     totalProductsQuantity = 1;
 
     if (product.childsComposition != null) {
@@ -424,20 +424,20 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void advanceFatherIndex(
+  void advanceOptionIndex(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     doScroll = true;
     final atualOption = _insertProductsViewModel
-        .value![_selectedFatherIndex.value].selectedOptions.keys.first;
+        .value![_selectedOptionIndex.value].selectedOptions.keys.first;
     final atualValue = _insertProductsViewModel
-        .value![_selectedFatherIndex.value].selectedOptions.values.first;
+        .value![_selectedOptionIndex.value].selectedOptions.values.first;
 
     if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
-      _selectedFatherIndex.value = _selectedFatherIndex.value + 1;
+      _selectedOptionIndex.value = _selectedOptionIndex.value + 1;
     } else if (atualOption == SelectedOptionType.fatherComposition) {
       if (fatherIsValid(atualValue as ProductCompositionViewModel)) {
-        _selectedFatherIndex.value = _selectedFatherIndex.value + 1;
+        _selectedOptionIndex.value = _selectedOptionIndex.value + 1;
       }
     } else if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
       ExpansibleGroupFromProductViewModel? selectedGroup =
@@ -445,7 +445,7 @@ class GetxInsertProductsPresenter extends GetxController
               .firstWhereOrNull((e) => e.selected);
 
       if (selectedGroup != null) {
-        _selectedFatherIndex.value = _selectedFatherIndex.value + 1;
+        _selectedOptionIndex.value = _selectedOptionIndex.value + 1;
       }
     }
 
@@ -457,9 +457,9 @@ class GetxInsertProductsPresenter extends GetxController
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
     final atualOption = _insertProductsViewModel
-        .value![_selectedFatherIndex.value].selectedOptions.keys.first;
+        .value![_selectedOptionIndex.value].selectedOptions.keys.first;
     final atualValue = _insertProductsViewModel
-        .value![_selectedFatherIndex.value].selectedOptions.values.first;
+        .value![_selectedOptionIndex.value].selectedOptions.values.first;
 
     if (atualOption == SelectedOptionType.quantity) {
       canAdvanceIndex = true;
@@ -501,13 +501,13 @@ class GetxInsertProductsPresenter extends GetxController
     }
   }
 
-  final _selectedFatherIndex = Rx<int>(0);
-  set selectedFatherIndex(int value) {
-    _selectedFatherIndex.value = value;
+  final _selectedOptionIndex = Rx<int>(0);
+  set selectedOptionIndex(int value) {
+    _selectedOptionIndex.value = value;
   }
 
   @override
-  Stream<int> get selectedLeftIndexStream => _selectedFatherIndex.stream;
+  Stream<int> get selectedLeftIndexStream => _selectedOptionIndex.stream;
 
   final _insertProductsViewModel = Rx<List<InsertProductsViewModel>?>(null);
   @override

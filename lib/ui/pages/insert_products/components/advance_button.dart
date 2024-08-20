@@ -107,7 +107,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       );
     } else {
       insertProductsPresenter
-          .advanceFatherIndex(expansibleGroupFromProductPresenter);
+          .advanceOptionIndex(expansibleGroupFromProductPresenter);
     }
   }
 

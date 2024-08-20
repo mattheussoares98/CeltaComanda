@@ -22,7 +22,6 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
-  late HomePresenterSpy homePresenter;
 
   late NavigateToSpy navigateTo;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
@@ -50,7 +49,6 @@ void main() {
     menuPresenter = MenuPresenterSpy();
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
-    homePresenter = HomePresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
       navigateTo: navigateTo,
@@ -291,7 +289,7 @@ void main() {
     test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
         () async {
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -311,7 +309,7 @@ void main() {
       sut.updateCommandNumber("001");
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -321,7 +319,7 @@ void main() {
 
       verifyNever(
           () => cartPresenter.loadSaleRequest(sut.commandNumber ?? "001"));
-      verifyNever(() => printedProductsPresenter.loadPrinted(homePresenter));
+      verifyNever(() => printedProductsPresenter.loadPrinted(sut));
     });
     test(
         "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
@@ -330,7 +328,7 @@ void main() {
       sut.updateCommandNumber("001");
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -339,7 +337,7 @@ void main() {
       );
 
       verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
+      verify(() => printedProductsPresenter.loadPrinted(sut))
           .called(1);
     });
     test(
@@ -353,7 +351,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -373,7 +371,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -392,7 +390,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -412,7 +410,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -431,7 +429,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -449,7 +447,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: homePresenter,
+        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -459,7 +457,7 @@ void main() {
     });
   });
 
-  group("Update fixed command number", () {
+  group("Update command data", () {
     test("Should call printedProductsPresenter.load", () async {
       await sut.updateCommandData(
         peoples: peoples,
@@ -674,6 +672,19 @@ void main() {
           entity: updateSaleRequestTempEntity,
         ),
       ).called(1);
+    });
+    test("Should update peoples number", () async {
+      expect(sut.peoples, null);
+
+      await sut.updateCommandData(
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      expect(sut.peoples, peoples);
     });
   });
 

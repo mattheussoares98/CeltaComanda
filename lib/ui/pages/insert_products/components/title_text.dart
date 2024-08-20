@@ -37,9 +37,27 @@ class TitleText extends StatelessWidget {
         insertProductsViewModel.selectedOptions.entries.first.key;
 
     if (atualOption == SelectedOptionType.optionalExpansibleGroup) {
-      return R.string.ifWantSelectComments;
+      RegExp regex = RegExp(r'\(op\|(.*?)\|op\)');
+
+      Match? match = regex.firstMatch(
+          selectedProduct.ProductComplement.toString().toLowerCase());
+
+      if (match != null) {
+        return match.group(1)!;
+      } else {
+        return R.string.ifWantSelectComments;
+      }
     } else if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
-      return R.string.selectOneComment;
+      RegExp regex = RegExp(r'\(ob\|(.*?)\|ob\)');
+
+      Match? match = regex.firstMatch(
+          selectedProduct.ProductComplement.toString().toLowerCase());
+
+      if (match != null) {
+        return match.group(1)!;
+      } else {
+        return R.string.selectOneComment;
+      }
     } else if (atualOption == SelectedOptionType.quantity) {
       return R.string.selectQuantity;
     } else if (atualOption == SelectedOptionType.fatherComposition) {

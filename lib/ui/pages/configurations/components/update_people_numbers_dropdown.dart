@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../helpers/helpers.dart';
+import '../../pages.dart';
 
 class UpdatePeopleNumbersDropdown extends StatelessWidget {
   final bool isUpdatingPeopleNumbers;
@@ -13,7 +15,10 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return DropdownButtonFormField<int>(
+      value: homePresenter.peoples,
       validator: (value) {
         if (!isUpdatingPeopleNumbers) {
           return null;

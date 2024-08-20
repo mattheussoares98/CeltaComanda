@@ -19,9 +19,9 @@ class ProductComplement extends StatelessWidget {
 
     String complement = productComplement
         .toString()
+        .toLowerCase()
         .replaceAll(optionalRegex, '')
         .replaceAll(obligatoryRegex, '')
-        .toLowerCase()
         .replaceAll(RegExp(r'\(p\)'), '')
         .replaceAll(RegExp(r'\(pp\)'), '')
         .replaceAll(RegExp(r'\(ppp\)'), '');

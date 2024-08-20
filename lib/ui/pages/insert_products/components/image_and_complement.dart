@@ -14,88 +14,43 @@ class ImageAndComplement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _landScapeImageAndComplement(
-      selectedProduct: selectedProduct,
-      context: context,
-    );
-  }
-}
-
-Widget _landScapeImageAndComplement({
-  required ProductsViewModel selectedProduct,
-  required BuildContext context,
-}) {
-  if (hasMinWidth(context)) {
-    return Column(
-      children: [
-        // Text(
-        //   selectedProduct.Name,
-        //   style: TextStyle(
-        //     fontSize: getStringSize(context) * 1.4,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        // ),
-        ImageWidget(
-          height: 160,
-          width: 160,
-          ean: selectedProduct.EanCode,
-          plu: selectedProduct.PriceLookupCode,
-          isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
-          beginAnimation: 1.5,
-          endAnimation: 1,
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
-          child: Text(
-            selectedProduct.ProductComplement ?? "",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontStyle: FontStyle.italic,
-              fontSize: getStringSize(context) * 0.8,
-            ),
-          ),
-        ),
-      ],
-    );
-  } else {
-    return Row(
-      children: [
-        // Text(
-        //   selectedProduct.Name,
-        //   style: TextStyle(
-        //     fontSize: getStringSize(context) * 1.4,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        // ),
-        Flexible(
-          child: ImageWidget(
-            height: 100,
-            width: 100,
+    if (hasMinWidth(context)) {
+      return Column(
+        children: [
+          ImageWidget(
+            height: 160,
+            width: 160,
             ean: selectedProduct.EanCode,
             plu: selectedProduct.PriceLookupCode,
             isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
-            beginAnimation: 1.2,
-            endAnimation: 0.8,
+            beginAnimation: 1.5,
+            endAnimation: 1,
           ),
-        ),
-        if (selectedProduct.ProductComplement != null)
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
-              child: Text(
-                selectedProduct.ProductComplement!,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontStyle: FontStyle.italic,
-                  fontSize: getStringSize(context) * 0.8,
-                ),
-              ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
+            child: ProductComplement(
+                productComplement: selectedProduct.ProductComplement),
+          ),
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          Flexible(
+            child: ImageWidget(
+              height: 100,
+              width: 100,
+              ean: selectedProduct.EanCode,
+              plu: selectedProduct.PriceLookupCode,
+              isAlcoholic: selectedProduct.IsAlcoholicProduct == "true",
+              beginAnimation: 1.2,
+              endAnimation: 0.8,
             ),
           ),
-      ],
-    );
+          ProductComplement(
+              productComplement: selectedProduct.ProductComplement)
+        ],
+      );
+    }
   }
 }

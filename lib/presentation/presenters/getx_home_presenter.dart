@@ -131,6 +131,13 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (isFixedCommandNumber && commandNumber != null) {
+        final saleRequest = await loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber!,
+        );
+        _peoples = saleRequest.Peoples;
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(homePresenter);
       }

@@ -337,8 +337,7 @@ void main() {
       );
 
       verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(sut))
-          .called(1);
+      verify(() => printedProductsPresenter.loadPrinted(sut)).called(1);
     });
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
@@ -454,6 +453,28 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
+    });
+    test("Should call loadSaleRequestTemp", () async {
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
     });
   });
 

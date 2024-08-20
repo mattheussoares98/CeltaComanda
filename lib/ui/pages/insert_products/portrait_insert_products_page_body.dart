@@ -46,114 +46,125 @@ class _PortraitInsertProductsPageBodyState
     }
 
     return SingleChildScrollView(
-      controller:
-          _scrollController, //verificar se pode removar sem causar problemas, pois pelo jeito não usa
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              ImageAndComplement(selectedProduct: widget.selectedProduct),
-              if (widget.insertProductsViewModel != null)
-                OptionItems(
-                  selectedProduct: widget.selectedProduct,
-                  indexOfAtualOption: widget.indexOfAtualOption,
-                  insertProductsViewModel: widget.insertProductsViewModel!,
-                ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+      controller: _scrollController,
+      child: StreamBuilder<bool>(
+          stream: insertProductPresenter.doScrollStream,
+          builder: (context, snapshot) {
+            if (snapshot.data == true) {
+              _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeOut,
+              );
+            }
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: Column(
-                          children: [
-                            if (atualOption ==
-                                SelectedOptionType.fatherComposition)
+                    ImageAndComplement(selectedProduct: widget.selectedProduct),
+                    if (widget.insertProductsViewModel != null)
+                      OptionItems(
+                        selectedProduct: widget.selectedProduct,
+                        indexOfAtualOption: widget.indexOfAtualOption,
+                        insertProductsViewModel:
+                            widget.insertProductsViewModel!,
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 5),
+                              child: Column(
+                                children: [
+                                  if (atualOption ==
+                                      SelectedOptionType.fatherComposition)
+                                    Text(
+                                      insertProductPresenter
+                                          .getLastSelectedFather(
+                                              widget.indexOfAtualOption)!
+                                          .ChildName!,
+                                      style: TextStyle(
+                                        fontSize: getStringSize(context) * 1.4,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ),
+                                    ),
+                                  if (widget.insertProductsViewModel != null)
+                                    TitleText(
+                                      selectedProduct: widget.selectedProduct,
+                                      insertProductsViewModel:
+                                          widget.insertProductsViewModel![
+                                              widget.indexOfAtualOption],
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AdvanceButton(
+                                totalPrice: widget.totalLiquid,
+                                quantity: insertProductPresenter
+                                    .totalProductsQuantity,
+                                selectedProduct: widget.selectedProduct,
+                                leftSelectedIndex: widget.indexOfAtualOption,
+                                atualOption: atualOption,
+                              ),
                               Text(
-                                _selectedFather(widget.selectedProduct,
-                                        widget.indexOfAtualOption)
-                                    .ChildName!,
+                                widget.totalLiquid
+                                    .toString()
+                                    .toBrazilianNumber()
+                                    .addBrazilianCoin(),
                                 style: TextStyle(
-                                  fontSize: getStringSize(context) * 1.4,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).secondaryHeaderColor,
+                                  fontSize: getStringSize(context) * 1.5,
                                 ),
                               ),
-                            if (widget.insertProductsViewModel != null)
-                              TitleText(
-                                selectedProduct: widget.selectedProduct,
-                                insertProductsViewModel:
-                                    widget.insertProductsViewModel![
-                                        widget.indexOfAtualOption],
-                              ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AdvanceButton(
-                          totalPrice: widget.totalLiquid,
-                          quantity:
-                              insertProductPresenter.totalProductsQuantity,
+                    if (atualOption == SelectedOptionType.fatherComposition)
+                      ChildsRadios(
+                        callSetState: () {
+                          setState(() {});
+                        },
+                        selectedFather: insertProductPresenter
+                            .getLastSelectedFather(widget.indexOfAtualOption)!,
+                        selectedProduct: widget.selectedProduct,
+                      ),
+                    if (atualOption ==
+                        SelectedOptionType.optionalExpansibleGroup)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: OptionalGroups(
                           selectedProduct: widget.selectedProduct,
-                          leftSelectedIndex: widget.indexOfAtualOption,
-                          atualOption: atualOption,
+                          selectedLeftIndex: widget.indexOfAtualOption,
                         ),
-                        Text(
-                          widget.totalLiquid
-                              .toString()
-                              .toBrazilianNumber()
-                              .addBrazilianCoin(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context) * 1.5,
-                          ),
+                      ),
+                    if (atualOption ==
+                        SelectedOptionType.obligatoryExpansibleGroup)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: ObligatoryGroups(
+                          selectedProduct: widget.selectedProduct,
+                          selectedLeftIndex: widget.indexOfAtualOption,
                         ),
-                      ],
-                    ),
+                      ),
+                    if (atualOption == SelectedOptionType.quantity)
+                      const UpdateQuantity(),
                   ],
                 ),
-              ),
-              if (atualOption == SelectedOptionType.fatherComposition)
-                ChildsRadios(
-                  callSetState: () {
-                    setState(() {});
-                  },
-                  selectedFather: _selectedFather(
-                      widget.selectedProduct, widget.indexOfAtualOption),
-                  selectedProduct: widget.selectedProduct,
-                ),
-              if (atualOption == SelectedOptionType.optionalExpansibleGroup)
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: OptionalGroups(
-                    selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfAtualOption,
-                  ),
-                ),
-              if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: ObligatoryGroups(
-                    selectedProduct: widget.selectedProduct,
-                    selectedLeftIndex: widget.indexOfAtualOption,
-                  ),
-                ),
-              if (atualOption == SelectedOptionType.quantity)
-                const UpdateQuantity(),
-            ],
-          ),
-        ],
-      ),
+              ],
+            );
+          }),
     );
   }
 }
-
-ProductCompositionViewModel _selectedFather(
-        ProductsViewModel selectedProduct, int indexOfAtualOption) =>
-    selectedProduct.childsComposition![indexOfAtualOption];

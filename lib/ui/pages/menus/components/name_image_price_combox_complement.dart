@@ -184,44 +184,8 @@ Widget _namePriceComboxAndComplement(
           ],
         ),
       ),
-      if (productsViewModel.ProductComplement != null)
-        _productComplement(context, productsViewModel.ProductComplement!),
+      ProductComplement(productComplement: productsViewModel.ProductComplement),
     ],
-  );
-}
-
-Widget _productComplement(BuildContext context, String productComplement) {
-  RegExp optionalRegex = RegExp(r'\(opcional\|[^|]*\|opcional\)');
-  RegExp obligatoryRegex = RegExp(r'\(obrigatorio\|[^|]*\|obrigatorio\)');
-
-  String complement = productComplement
-      .replaceAll(optionalRegex, '')
-      .replaceAll(obligatoryRegex, '')
-      .toLowerCase()
-      .replaceAll(RegExp(r'\(p\)'), '')
-      .replaceAll(RegExp(r'\(pp\)'), '')
-      .replaceAll(RegExp(r'\(ppp\)'), '');
-
-  return Expanded(
-    flex: 2,
-    child: Padding(
-      padding: const EdgeInsets.all(2),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Text(
-          complement,
-          maxLines: hasMinWidth(context) ? 4 : 3,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: getStringSize(context),
-            color: Theme.of(context).primaryColorDark,
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w300,
-          ),
-        ),
-      ),
-    ),
   );
 }
 

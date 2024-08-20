@@ -38,6 +38,7 @@ void main() {
   late int userPersonalizedCode;
   late String password;
   late SaleRequestTempEntity saleRequestTempEntity;
+  late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -77,6 +78,7 @@ void main() {
     localCommandData.mockLoad(commandEntity);
     localCommandData.mockUpdate();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    updateSaleRequestTemp.mockUpdateSaleRequestTemp();
   }
 
   void initEntitys() {
@@ -88,6 +90,25 @@ void main() {
     password = faker.guid.guid();
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(
       newFixedCommandNumber,
+    );
+    updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
+      Comments: saleRequestTempEntity.Comments,
+      Peoples: saleRequestTempEntity.Peoples,
+      DeliveryControl: saleRequestTempEntity.DeliveryControl,
+      EnterpriseId: saleRequestTempEntity.EnterpriseId,
+      PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+      SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
+      TotalLiquid: saleRequestTempEntity.TotalLiquid,
+      Products: saleRequestTempEntity.Products.map(
+          (e) => UpdateSaleRequestTempProductEntity(
+                ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
+                ProductPriceLookUpCode: e.ProductPriceLookUpCode,
+                Quantity: e.Quantity,
+                SaleRequestTempId: e.SaleRequestTempId,
+                TotalLiquid: e.TotalLiquid,
+                Value: e.Value,
+                Comments: e.Comments,
+              )).toList(),
     );
   }
 
@@ -619,6 +640,21 @@ void main() {
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
+    });
+    test("Should call updateSaleRequestTemp", () async {
+      await sut.updateCommandData(
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verify(
+        () => updateSaleRequestTemp.update(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          entity: updateSaleRequestTempEntity,
         ),
       ).called(1);
     });

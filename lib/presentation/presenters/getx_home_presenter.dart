@@ -227,35 +227,35 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         ),
       );
 
-      /* final saleRequestTempEntity = */ await loadSaleRequestTemp.load(
+      final saleRequestTempEntity = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 
-      // await updateSaleRequestTemp.update(
-      //   url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      //   entity: UpdateSaleRequestTempEntity(
-      //     Comments: saleRequestTempEntity.Comments,
-      //     Peoples: peoples,
-      //     DeliveryControl: saleRequestTempEntity.DeliveryControl,
-      //     EnterpriseId: saleRequestTempEntity.EnterpriseId,
-      //     PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
-      //     SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
-      //     TotalLiquid: saleRequestTempEntity.TotalLiquid,
-      //     Products: saleRequestTempEntity.Products.map(
-      //       (e) => UpdateSaleRequestTempProductEntity(
-      //         ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
-      //         ProductPriceLookUpCode: e.ProductPriceLookUpCode,
-      //         Quantity: e.Quantity,
-      //         SaleRequestTempId: e.SaleRequestTempId,
-      //         TotalLiquid: e.TotalLiquid,
-      //         Value: e.Value,
-      //         Comments: e.Comments,
-      //       ),
-      //     ).toList(),
-      //   ),
-      // );
+      await updateSaleRequestTemp.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        entity: UpdateSaleRequestTempEntity(
+          Comments: saleRequestTempEntity.Comments,
+          Peoples: peoples,
+          DeliveryControl: saleRequestTempEntity.DeliveryControl,
+          EnterpriseId: saleRequestTempEntity.EnterpriseId,
+          PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+          SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
+          TotalLiquid: saleRequestTempEntity.TotalLiquid,
+          Products: saleRequestTempEntity.Products.map(
+            (e) => UpdateSaleRequestTempProductEntity(
+              ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
+              ProductPriceLookUpCode: e.ProductPriceLookUpCode,
+              Quantity: e.Quantity,
+              SaleRequestTempId: e.SaleRequestTempId,
+              TotalLiquid: e.TotalLiquid,
+              Value: e.Value,
+              Comments: e.Comments,
+            ),
+          ).toList(),
+        ),
+      );
       await printedProductsPresenter.loadPrinted(this);
       notifyListeners();
       return true;

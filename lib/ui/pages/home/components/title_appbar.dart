@@ -12,11 +12,6 @@ class TitleAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: true);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,22 +56,6 @@ class TitleAppbar extends StatelessWidget {
               ),
             ),
           ),
-        IconButton(
-          onPressed: () async {
-            await homePresenter.loadCommandData(
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-              homePresenter: homePresenter,
-            );
-          },
-          icon: Icon(
-            Icons.refresh_outlined,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          tooltip: R.string.updateMenu,
-        ),
       ],
     );
   }

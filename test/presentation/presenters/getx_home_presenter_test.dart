@@ -37,6 +37,7 @@ void main() {
   late int newFixedCommandNumber;
   late int userPersonalizedCode;
   late String password;
+  late SaleRequestTempEntity saleRequestTempEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -75,6 +76,7 @@ void main() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localCommandData.mockLoad(commandEntity);
     localCommandData.mockUpdate();
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
   }
 
   void initEntitys() {
@@ -84,6 +86,9 @@ void main() {
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     userPersonalizedCode = faker.randomGenerator.integer(999);
     password = faker.guid.guid();
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(
+      newFixedCommandNumber,
+    );
   }
 
   setUp(() {
@@ -99,6 +104,7 @@ void main() {
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
   });
@@ -598,6 +604,23 @@ void main() {
       );
 
       expect(value, true);
+    });
+    test("Should call loadSaleRequestTemp", () async {
+      await sut.updateCommandData(
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
     });
   });
 

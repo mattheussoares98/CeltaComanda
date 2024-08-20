@@ -15,6 +15,7 @@ class PtBr implements Translation {
   String get msgEvaluateEnvironment => "Avalie o ambiente";
   String get msgEvaluateService => "Avalie o atendimento";
   String get msgEvaluateCostBenefit => "Avalie o custo benefício";
+  String get msgIfLogoutClearCart => 'Se você fizer o logout, o carrinho será limpo';
   String get msgInsertCommandNumber => "Informe o número da comanda";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';

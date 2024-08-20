@@ -9,6 +9,7 @@ abstract class Translation {
   String get msgEvaluateEnvironment;
   String get msgEvaluateService;
   String get msgEvaluateCostBenefit;
+  String get msgIfLogoutClearCart;
   String get msgInsertCommandNumber;
   String get msgInvalidCombox;
   String get msgInvalidCredentials;

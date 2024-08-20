@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
+import '../helpers/helpers.dart';
 import '../pages/pages.dart';
 
 Future<void> _logout({
@@ -44,9 +45,8 @@ Widget drawer({
               if (cartPresenter.cartProducts.isNotEmpty) {
                 notificationDialog(
                     context: context,
-                    titleMessage: "Fazer logout?",
-                    content: const Text(
-                        "Há produtos no carrinho que não foram solicitados. Ao fazer o logout, todos produtos serão excluídos. Deseja realmente fazer o logou?"),
+                    titleMessage: R.string.doLogout,
+                    content: Text(R.string.msgIfLogoutClearCart),
                     onPress: () async {
                       await _logout(
                         homePresenter: homePresenter,

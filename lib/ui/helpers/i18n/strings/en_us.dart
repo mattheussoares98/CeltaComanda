@@ -13,6 +13,7 @@ class EnUs implements Translation {
   String get msgEvaluateEnvironment => 'Rate the environment';
   String get msgEvaluateService => 'Rate the service';
   String get msgEvaluateCostBenefit => 'Rate the cost-benefit';
+  String get msgIfLogoutClearCart => 'If you do logout, the cart was clear';
   String get msgInsertCommandNumber => 'Enter the command number';
   String get msgInvalidCombox =>
       'Select all mandatory products to save the combo';

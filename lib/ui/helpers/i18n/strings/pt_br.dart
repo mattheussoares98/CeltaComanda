@@ -41,7 +41,6 @@ class PtBr implements Translation {
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableAndPeopleNumberSuccess =>
       "Número da mesa e quantidade de pessoas alterados com sucesso";
-  String get msgUpdatedTableSuccess => "Número da mesa alterado com sucesso";
   String get msgUnexpectedError =>
       'Algo errado aconteceu. Tente novamente em breve.';
   String get msgUseOnlyWhenIsFixedTableNumber =>

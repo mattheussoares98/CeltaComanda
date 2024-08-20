@@ -45,7 +45,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         Future.delayed(Duration.zero, () {
           showAlertMessage(
             context,
-            R.string.msgUpdatedTableSuccess,
+            R.string.msgUpdatedTableAndPeopleNumberSuccess,
           );
           Navigator.of(context).pop();
         });

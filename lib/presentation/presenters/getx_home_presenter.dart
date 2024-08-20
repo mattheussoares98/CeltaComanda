@@ -225,6 +225,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           ).toList(),
         ),
       );
+
+      _peoples = peoples;
       await printedProductsPresenter.loadPrinted(this);
       notifyListeners();
       return true;
@@ -289,7 +291,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   int? _peoples;
   @override
   int? get peoples => _peoples;
-  set peoples(int? newNumber) => _peoples = newNumber;
 
   final _isLoading = false.obs;
   @override

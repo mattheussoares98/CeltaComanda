@@ -94,6 +94,7 @@ class EnUs implements Translation {
   String get enterprise => 'Enterprise';
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';
+  String get exit => 'Exit';
   String get insertInCart => 'Add to cart';
   String get insert => 'Insert';
   String get ifWantSelectComments => 'If desired, select comments';

@@ -64,7 +64,7 @@ Widget drawer({
                 );
               }
             },
-            text: "Sair",
+            text: R.string.exit,
             leading: Icon(
               Icons.logout,
               color: Theme.of(context).colorScheme.primary,

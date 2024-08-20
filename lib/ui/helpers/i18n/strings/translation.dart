@@ -79,6 +79,7 @@ abstract class Translation {
   String get enterpriseOrUrlNotFound;
   String get enterprise;
   String get environment;
+  String get exit;
   String get insertInCart;
   String get insert;
   String get ifWantSelectComments;

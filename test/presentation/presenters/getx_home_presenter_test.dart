@@ -476,6 +476,21 @@ void main() {
         ),
       ).called(1);
     });
+    test("Should update peoples number", () async {
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.peoples, saleRequestTempEntity.Peoples);
+    });
   });
 
   group("Update command data", () {

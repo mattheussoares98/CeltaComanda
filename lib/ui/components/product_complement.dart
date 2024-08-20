@@ -26,23 +26,20 @@ class ProductComplement extends StatelessWidget {
         .replaceAll(RegExp(r'\(pp\)'), '')
         .replaceAll(RegExp(r'\(ppp\)'), '');
 
-    return Expanded(
-      flex: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(2),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Text(
-            complement,
-            maxLines: hasMinWidth(context) ? 4 : 3,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: getStringSize(context),
-              color: Theme.of(context).primaryColorDark,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w300,
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(2),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Text(
+          complement,
+          maxLines: hasMinWidth(context) ? 4 : 3,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: getStringSize(context),
+            color: Theme.of(context).primaryColorDark,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ),

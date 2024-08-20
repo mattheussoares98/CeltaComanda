@@ -47,8 +47,11 @@ class ImageAndComplement extends StatelessWidget {
               endAnimation: 0.8,
             ),
           ),
-          ProductComplement(
-              productComplement: selectedProduct.ProductComplement)
+          Expanded(
+            flex: 2,
+            child: ProductComplement(
+                productComplement: selectedProduct.ProductComplement),
+          )
         ],
       );
     }

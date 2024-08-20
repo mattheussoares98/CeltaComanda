@@ -59,11 +59,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     await localEnterpriseData.add(emptyEntity);
   }
 
-  int? _peoples;
-  @override
-  int? get peoples => _peoples;
-  set peoples(int? value) => _peoples = value;
-
   String? _commandNumber;
   @override
   String? get commandNumber => _commandNumber;
@@ -237,7 +232,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         entity: UpdateSaleRequestTempEntity(
           Comments: saleRequestTempEntity.Comments,
-          Peoples: peoples,
+          Peoples: 1,
           DeliveryControl: saleRequestTempEntity.DeliveryControl,
           EnterpriseId: saleRequestTempEntity.EnterpriseId,
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,

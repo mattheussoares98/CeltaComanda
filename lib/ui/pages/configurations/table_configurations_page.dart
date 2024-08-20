@@ -20,10 +20,9 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   final _key = GlobalKey<FormState>();
 
   int? _selectedCommandNumber;
-  // ignore: unused_field
   int? _selectedPeopleNumbers;
   bool _isUpdatingCommandNumber = false;
-  // bool _isUpdatingPeopleNumbers = false;
+  bool _isUpdatingPeopleNumbers = false;
 
   Future<void> _updateCommandNumber(
     HomePresenter homePresenter,
@@ -33,14 +32,13 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       return;
     }
 
-    if (_selectedCommandNumber !=
-        null /*  && _selectedPeopleNumbers != null */) {
+    if (_selectedCommandNumber != null && _selectedPeopleNumbers != null) {
       final updated = await homePresenter.updateCommandData(
         newFixedCommandNumber: _selectedCommandNumber!,
         userPersonalizedCode: _personalizedCodeController.text.toInt(),
         password: _passwordController.text,
         printedProductsPresenter: printedProductsPresenter,
-        peoples: null,//só mudar aqui que já deve funcionar
+        peoples: _selectedPeopleNumbers,
       );
 
       if (updated) {
@@ -84,14 +82,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   _selectedCommandNumber = selectedCommandNumber;
                 },
               ),
-              // const SizedBox(height: 10),
-              // UpdatePeopleNumbers(
-              //   isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
-              //   updatePeopleNumbers: (selectedPeopleNumbers) {
-              //     selectedPeopleNumbers.toString();
-              //     _selectedPeopleNumbers = selectedPeopleNumbers;
-              //   },
-              // ),
+              const SizedBox(height: 10),
+              UpdatePeopleNumbersDropdown(
+                isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
+                updatePeopleNumbers: (selectedPeopleNumbers) {
+                  selectedPeopleNumbers.toString();
+                  _selectedPeopleNumbers = selectedPeopleNumbers;
+                },
+              ),
               const SizedBox(height: 10),
               UserPersonalizedCodeInput(
                 passwordFocusNode: _passwordFocusNode,
@@ -104,7 +102,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 updateCommandNumber: () async {
                   setState(() {
                     _isUpdatingCommandNumber = true;
-                    // _isUpdatingPeopleNumbers = true;
+                    _isUpdatingPeopleNumbers = true;
                   });
                   await _updateCommandNumber(
                     homePresenter,
@@ -112,7 +110,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   );
                 },
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -135,7 +132,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                           FocusScope.of(context).unfocus();
                           setState(() {
                             _isUpdatingCommandNumber = true;
-                            // _isUpdatingPeopleNumbers = true;
+                            _isUpdatingPeopleNumbers = true;
                           });
                           await _updateCommandNumber(
                             homePresenter,

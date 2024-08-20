@@ -20,7 +20,8 @@ void main() {
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
-  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy
+      expansibleGroupFromProductPresenter;
   late HomePresenterSpy homePresenter;
 
   late NavigateToSpy navigateTo;
@@ -29,6 +30,8 @@ void main() {
   late TicketIsPermittedSpy ticketIsPermitted;
   late LoadCommandDataSpy localCommandData;
   late UserValidationsSpy userValidations;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
   late CommandEntity commandEntity;
   late int newFixedCommandNumber;
@@ -42,7 +45,8 @@ void main() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
-    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
+    expansibleGroupFromProductPresenter =
+        ExpansibleGroupFromProductPresenterSpy();
     homePresenter = HomePresenterSpy();
     sut = GetxHomePresenter(
       loadExpansibleGroups: loadExpansibleGroups,
@@ -51,6 +55,8 @@ void main() {
       ticketIsPermitted: ticketIsPermitted,
       localCommandData: localCommandData,
       userValidations: userValidations,
+      loadSaleRequestTemp: loadSaleRequestTemp,
+      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   }
 
@@ -61,6 +67,8 @@ void main() {
     navigateTo = NavigateToSpy();
     localCommandData = LoadCommandDataSpy();
     userValidations = UserValidationsSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
   }
 
   void initMocks() {
@@ -88,7 +96,8 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());

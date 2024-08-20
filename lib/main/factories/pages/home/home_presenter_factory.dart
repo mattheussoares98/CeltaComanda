@@ -9,4 +9,6 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       ticketIsPermitted: makeRemoteticketIsPermitted(),
       localCommandData: makeLocalUseFixedCommandNumber(),
       userValidations: makeRemoteUserValidations(),
+      loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
     );

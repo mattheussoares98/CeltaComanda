@@ -35,7 +35,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
     if (_selectedCommandNumber !=
         null /*  && _selectedPeopleNumbers != null */) {
-      final updated = await homePresenter.updateFixedCommandNumber(
+      final updated = await homePresenter.updateCommandData(
         newFixedCommandNumber: _selectedCommandNumber!,
         userPersonalizedCode: _personalizedCodeController.text.toInt(),
         password: _passwordController.text,

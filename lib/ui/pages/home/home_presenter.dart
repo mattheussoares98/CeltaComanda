@@ -13,7 +13,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   int? get peoples;
   void updateCommandNumber(String? value);
   Future<void> updateIsFixedCommandNumber();
-  Future<bool> updateFixedCommandNumber({
+  Future<bool> updateCommandData({
     required int newFixedCommandNumber,
     required int userPersonalizedCode,
     required String password,

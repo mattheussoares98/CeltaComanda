@@ -59,7 +59,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   int? get peoples => _peoples;
   set peoples(int? value) => _peoples = value;
-  
+
   String? _commandNumber;
   @override
   String? get commandNumber => _commandNumber;
@@ -188,7 +188,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<bool> updateFixedCommandNumber({
+  Future<bool> updateCommandData({
     required int newFixedCommandNumber,
     required int userPersonalizedCode,
     required String password,

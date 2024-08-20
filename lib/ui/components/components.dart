@@ -11,6 +11,7 @@ export './login_header.dart';
 export './loading_image.dart';
 export './loading_dialog.dart';
 export './notification_dialog.dart';
+export './pepper_indicator.dart';
 export './price_and_update_product_quantity.dart';
 export './reload_screen.dart';
 export './request_summary.dart';

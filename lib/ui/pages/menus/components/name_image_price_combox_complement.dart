@@ -15,21 +15,24 @@ class NameImagePriceComboxAndComplement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context);
 
     if (hasMinWidth(context)) {
       return _landScapeNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     } else {
       return _portraitNameImagePluAndCombox(
         context: context,
         productsViewModel: productsViewModel,
         menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     }
   }
@@ -39,7 +42,8 @@ Widget _landScapeNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
 }) {
   return Row(
     children: [
@@ -51,7 +55,8 @@ Widget _landScapeNameImagePluAndCombox({
               context: context,
               productsViewModel: productsViewModel,
               menuPresenter: menuPresenter,
-              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
             );
           },
           child: ImageWidget(
@@ -65,7 +70,7 @@ Widget _landScapeNameImagePluAndCombox({
         ),
       ),
       Expanded(
-        flex: 3,
+        flex: 4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -84,7 +89,8 @@ Widget _portraitNameImagePluAndCombox({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,7 +104,8 @@ Widget _portraitNameImagePluAndCombox({
               context: context,
               productsViewModel: productsViewModel,
               menuPresenter: menuPresenter,
-              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
             );
           },
           child: ImageWidget(
@@ -123,7 +130,8 @@ void _onTapImage({
   required BuildContext context,
   required ProductsViewModel productsViewModel,
   required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
 }) {
   showLargeImage(
     context: context,
@@ -152,20 +160,27 @@ Widget _namePriceComboxAndComplement(
       ),
       Expanded(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).primaryColorLight,
-                fontWeight: FontWeight.bold,
-                fontSize: getStringSize(context) * 1.2,
+            pepperIndicator(
+              productsViewModel.ProductComplement,
+            ),
+            Expanded(
+              child: Text(
+                productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColorLight,
+                  fontWeight: FontWeight.bold,
+                  fontSize: getStringSize(context) * 1.2,
+                ),
               ),
             ),
             if (productsViewModel.IsPromoCombox == "true")
-              Flexible(child: _mountCombox(context)),
+              _mountCombox(
+                context,
+              ),
           ],
         ),
       ),

@@ -44,93 +44,25 @@ PreferredSize homeAppBar({
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 1),
-          child: Stack(
-            children: [
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder()),
-                onPressed: () {
-                  homePresenter.goToPrintedProductsPage();
-                },
-                label: Center(
-                  child: hasMinWidth(context)
-                      ? Text(R.string.requested.toUpperCase())
-                      : null,
-                ),
-                icon: const Icon(Icons.list),
-              ),
-              Positioned(
-                top: 2,
-                left: 5,
-                child: InkWell(
-                  onTap: () {
-                    homePresenter.goToPrintedProductsPage();
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black,
-                    maxRadius: 8,
-                    minRadius: 8,
-                    child: Center(
-                      child: FittedBox(
-                        child: Text(
-                          (printedProductsPresenter
-                                      .printedProducts?.Products.length ??
-                                  0)
-                              .toString(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          child: AppBarButton(
+            onPress: homePresenter.goToPrintedProductsPage,
+            buttonName: R.string.requested,
+            icon: Icons.list,
+            quantity:
+                (printedProductsPresenter.printedProducts?.Products.length ??
+                    0),
           ),
         ),
-        Stack(
-          children: [
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                  shape: const RoundedRectangleBorder()),
-              onPressed: () {
-                AnimatedAlertDialog.open(
-                  context: context,
-                  page: const CartPage(),
-                );
-              },
-              label: Center(
-                child: hasMinWidth(context)
-                    ? const Text(
-                        "CARRINHO",
-                      )
-                    : null,
-              ),
-              icon: const Icon(Icons.shopping_cart_outlined),
-            ),
-            Positioned(
-              top: 2,
-              left: 5,
-              child: InkWell(
-                onTap: () {
-                  AnimatedAlertDialog.open(
-                    context: context,
-                    page: const CartPage(),
-                  );
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.black,
-                  maxRadius: 8,
-                  minRadius: 8,
-                  child: Center(
-                    child: FittedBox(
-                      child: Text(
-                        cartPresenter.cartProducts.length.toString(),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        AppBarButton(
+          onPress: () {
+            AnimatedAlertDialog.open(
+              context: context,
+              page: const CartPage(),
+            );
+          },
+          icon: Icons.shopping_cart_outlined,
+          buttonName: R.string.cart,
+          quantity: cartPresenter.cartProducts.length,
         ),
       ],
     ),

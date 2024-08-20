@@ -59,14 +59,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     await localEnterpriseData.add(emptyEntity);
   }
 
-  String? _commandNumber;
-  @override
-  String? get commandNumber => _commandNumber;
-  @override
-  void updateCommandNumber(String? value) {
-    _commandNumber = value;
-  }
-
   @override
   void onChangePage({
     required MenuPresenter menuPresenter,
@@ -98,22 +90,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     }
   }
 
-  final _isLoading = false.obs;
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  set isLoading(bool value) {
-    _isLoading.value = value;
-  }
-
-  final _mainError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get mainErrorStream => _mainError.stream;
-  set mainError(UIError? value) => _mainError.value = value;
-
-  bool _isFixedCommandNumber = false;
-  @override
-  bool get isFixedCommandNumber => _isFixedCommandNumber;
-
   @override
   Future<void> updateIsFixedCommandNumber() async {
     isLoading = true;
@@ -134,9 +110,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = false;
     }
   }
-
-  @override
-  bool get isGeneratingVersionToRede => true;
 
   @override
   Future<void> loadCommandData({
@@ -228,7 +201,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: commandNumber,
       );
-      
+
       await updateSaleRequestTemp.update(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         entity: UpdateSaleRequestTempEntity(
@@ -303,4 +276,37 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = false;
     }
   }
+
+  @override
+  void updateCommandNumber(String? value) {
+    _commandNumber = value;
+  }
+
+  String? _commandNumber;
+  @override
+  String? get commandNumber => _commandNumber;
+
+  int? _peoples;
+  @override
+  int? get peoples => _peoples;
+  set peoples(int? newNumber) => _peoples = newNumber;
+
+  final _isLoading = false.obs;
+  @override
+  Stream<bool> get isLoadingStream => _isLoading.stream;
+  set isLoading(bool value) {
+    _isLoading.value = value;
+  }
+
+  final _mainError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get mainErrorStream => _mainError.stream;
+  set mainError(UIError? value) => _mainError.value = value;
+
+  bool _isFixedCommandNumber = false;
+  @override
+  bool get isFixedCommandNumber => _isFixedCommandNumber;
+
+  @override
+  bool get isGeneratingVersionToRede => true;
 }

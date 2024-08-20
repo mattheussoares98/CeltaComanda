@@ -38,13 +38,13 @@ class _ProductItemState extends State<ProductItem> {
         Provider.of(context, listen: false);
 
     return GestureDetector(
-      onTap: () {
-        menuPresenter.goToInsertProductPage(widget.productsViewModel);
-        insertProductsPresenter.updateSelectedProduct(
+      onTap: () async {
+        await insertProductsPresenter.updateSelectedProduct(
           product: widget.productsViewModel,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
+        menuPresenter.goToInsertProductPage(widget.productsViewModel);
       },
       child: Padding(
           padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),

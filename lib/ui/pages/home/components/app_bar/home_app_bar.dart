@@ -42,15 +42,31 @@ PreferredSize homeAppBar({
       ),
       backgroundColor: const Color(0xFFF1F5F8),
       actions: [
+        if (homePresenter.isGeneratingVersionToRede)
+          Padding(
+            padding: const EdgeInsets.only(right: 1),
+            child: AppBarButton(
+              onPress: () {
+                debugPrint("Ir para página de pagamento");
+              },
+              icon: Icons.paypal_rounded,
+              isPrice: true,
+              buttonName: "Pagar",
+              quantityString: printedProductsPresenter
+                  .printedProducts!.TotalLiquid
+                  .toDouble()
+                  .toString(),
+            ),
+          ),
         Padding(
           padding: const EdgeInsets.only(right: 1),
           child: AppBarButton(
             onPress: homePresenter.goToPrintedProductsPage,
             buttonName: R.string.requested,
             icon: Icons.list,
-            quantity:
-                (printedProductsPresenter.printedProducts?.Products.length ??
-                    0),
+            quantityString:
+                (printedProductsPresenter.printedProducts?.Products.length ?? 0)
+                    .toString(),
           ),
         ),
         AppBarButton(
@@ -62,7 +78,7 @@ PreferredSize homeAppBar({
           },
           icon: Icons.shopping_cart_outlined,
           buttonName: R.string.cart,
-          quantity: cartPresenter.cartProducts.length,
+          quantityString: cartPresenter.cartProducts.length.toString(),
         ),
       ],
     ),

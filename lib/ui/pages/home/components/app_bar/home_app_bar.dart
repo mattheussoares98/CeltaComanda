@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import '../../../../components/components.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
 PreferredSize homeAppBar({
   required HomePresenter homePresenter,

@@ -28,7 +28,7 @@ class LogoutButton extends StatelessWidget {
 
     return ElevatedButton(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
         child: FittedBox(
           child: Text(
             R.string.doLogout,

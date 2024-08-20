@@ -123,10 +123,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: hasMinWidth(context) ? 10 : 1),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
                       child: ElevatedButton(
                         onPressed: () async {
                           FocusScope.of(context).unfocus();
@@ -141,7 +141,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                         },
                         child: FittedBox(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding:
+                                EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
                             child: Text(
                               R.string.updateTableNumber,
                               style: TextStyle(
@@ -153,7 +154,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: hasMinWidth(context) ? 10 : 1),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -166,7 +167,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                       },
                       child: FittedBox(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:
+                              EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
                           child: Text(
                             R.string.reserveTable,
                             style: TextStyle(

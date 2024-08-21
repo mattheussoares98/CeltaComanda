@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
+import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -94,8 +95,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       : SearchDataByCommandNumber(
                           homePresenter: homePresenter,
                           emptyMessage: homePresenter.commandNumber == null
-                              ? "Consulte alguma comanda para visualizar os produtos solicitados"
-                              : "Não há produtos solicitados nessa comanda",
+                              ? R.string.msgConsultCommandToViewProducts
+                              : R.string.msgCommandDontHaveProducts,
                           loadCommandData: () async {
                             await printedProductsPresenter
                                 .loadPrinted(homePresenter);

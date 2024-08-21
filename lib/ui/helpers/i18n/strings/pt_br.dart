@@ -10,6 +10,10 @@ class PtBr implements Translation {
   String get msgCloseApplication => "Fechar aplicativo";
   String get msgCommandDontHaveOpenValues =>
       "Essa comanda não possui valores em aberto";
+  String get msgCommandDontHaveProducts =>
+      "Não há produtos solicitados nessa mesa";
+  String get msgConsultCommandToViewProducts =>
+      "Consulte alguma comanda para visualizar os produtos solicitados";
   String get msgEvaluateFood => "Avalie a comida";
   String get msgEvaluateDrink => "Avalie a bebida";
   String get msgEvaluateEnvironment => "Avalie o ambiente";

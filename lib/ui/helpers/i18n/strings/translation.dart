@@ -4,6 +4,8 @@ abstract class Translation {
   String get msgClearCartOnLogout;
   String get msgCloseApplication;
   String get msgCommandDontHaveOpenValues;
+  String get msgCommandDontHaveProducts;
+  String get msgConsultCommandToViewProducts;
   String get msgEvaluateFood;
   String get msgEvaluateDrink;
   String get msgEvaluateEnvironment;

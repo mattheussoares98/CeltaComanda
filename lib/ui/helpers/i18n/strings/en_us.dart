@@ -8,6 +8,10 @@ class EnUs implements Translation {
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
   String get msgCloseApplication => 'Close application';
   String get msgCommandDontHaveOpenValues => 'This command has no open values';
+  String get msgCommandDontHaveProducts =>
+      "This command has no products inserted";
+  String get msgConsultCommandToViewProducts =>
+      "Search command to view products";
   String get msgEvaluateFood => 'Rate the food';
   String get msgEvaluateDrink => 'Rate the drink';
   String get msgEvaluateEnvironment => 'Rate the environment';

@@ -24,7 +24,8 @@ class ProductComplement extends StatelessWidget {
         .replaceAll(obligatoryRegex, '')
         .replaceAll(RegExp(r'\(p\)'), '')
         .replaceAll(RegExp(r'\(pp\)'), '')
-        .replaceAll(RegExp(r'\(ppp\)'), '');
+        .replaceAll(RegExp(r'\(ppp\)'), '')
+        .replaceAll(RegExp(r'\(novo\)'), '');
 
     return Padding(
       padding: const EdgeInsets.all(2),

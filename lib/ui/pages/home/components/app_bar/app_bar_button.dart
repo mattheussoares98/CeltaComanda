@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../helpers/helpers.dart';
-import '../../../pages.dart';
 
 class AppBarButton extends StatelessWidget {
   final Function() onPress;
@@ -21,8 +19,6 @@ class AppBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
     if (!isPrice) {
       return Stack(
         children: [
@@ -69,11 +65,12 @@ class AppBarButton extends StatelessWidget {
       );
     } else {
       return InkWell(
-        onTap: homePresenter.goToPaymentPage,
+        onTap: onPress,
         child: Container(
           color: Colors.black,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+            padding: EdgeInsets.symmetric(
+                horizontal: hasMinWidth(context) ? 16 : 5, vertical: 1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

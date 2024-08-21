@@ -31,6 +31,7 @@ void main() {
   late UserValidationsSpy userValidations;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
+  late LoadSellersSpy loadSellers;
 
   late CommandEntity commandEntity;
   late int newFixedCommandNumber;
@@ -58,6 +59,7 @@ void main() {
       userValidations: userValidations,
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateSaleRequestTemp: updateSaleRequestTemp,
+      loadSellers: loadSellers,
     );
   }
 
@@ -70,6 +72,7 @@ void main() {
     userValidations = UserValidationsSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+    loadSellers = LoadSellersSpy();
   }
 
   void initMocks() {

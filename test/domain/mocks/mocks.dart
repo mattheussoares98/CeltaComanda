@@ -6,6 +6,7 @@ export './confirmed_cart_products_spy.dart';
 export './entity_factory.dart';
 export './load_sale_request_printed_products_spy.dart';
 export 'load_sale_request_temp_spy.dart';
+export './load_sellers_spy.dart';
 export 'local_enterprise_data_spy.dart';
 export './local_print_request_spy.dart';
 export 'use_fixed_command_number.dart';

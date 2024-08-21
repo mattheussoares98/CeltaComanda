@@ -11,4 +11,5 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       userValidations: makeRemoteUserValidations(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
+      loadSellers: makeRemoteLoadSellers(),
     );

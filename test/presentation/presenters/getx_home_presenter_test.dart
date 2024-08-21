@@ -802,5 +802,13 @@ void main() {
 
       await sut.getSellers();
     });
+    test("Should emit correct values on throws", () async {
+      loadSellers.mockLoadSellersError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getSellers();
+    });
   });
 }

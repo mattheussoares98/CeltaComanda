@@ -159,6 +159,13 @@ void main() {
             clear: false,
           )).called(1);
     });
+    test('Should go to PaymentPage', () async {
+      sut.goToPaymentPage();
+
+      verify(() => navigateTo.navigate(
+            pageRoute: PageRoutes.payment,
+          )).called(1);
+    });
   });
 
   group("ClearEnterpriseData", () {

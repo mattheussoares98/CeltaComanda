@@ -52,10 +52,9 @@ PreferredSize homeAppBar({
               icon: Icons.paypal_rounded,
               isPrice: true,
               buttonName: "Pagar",
-              quantityString: printedProductsPresenter
-                  .printedProducts!.TotalLiquid
-                  .toDouble()
-                  .toString(),
+              quantityString:
+                  printedProductsPresenter.printedProducts?.TotalLiquid ??
+                      "0".toDouble().toString(),
             ),
           ),
         Padding(

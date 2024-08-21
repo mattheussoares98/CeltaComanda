@@ -64,40 +64,56 @@ class AppBarButton extends StatelessWidget {
         ],
       );
     } else {
-      return Column(
-        children: [
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(shape: const RoundedRectangleBorder()),
-            onPressed: onPress,
-            child: Row(
-              mainAxisAlignment:
-                  isPrice ? MainAxisAlignment.end : MainAxisAlignment.start,
-              children: [
-                Icon(icon),
-                Center(
-                  child: hasMinWidth(context)
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(buttonName.toUpperCase()),
-                        )
-                      : null,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.white,
-            child: InkWell(
-              onTap: onPress,
-              child: FittedBox(
-                child: Text(
-                  quantityString,
+      return Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Icon(icon, color: Colors.white),
+                    SizedBox(width: hasMinWidth(context) ? 3 : 0),
+                    Center(
+                      child: hasMinWidth(context)
+                          ? Text(buttonName.toUpperCase(),
+                              style: const TextStyle(color: Colors.white))
+                          : null,
+                    ),
+                  ],
                 ),
               ),
-            ),
+              const SizedBox(height: 2),
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      color: Colors.black,
+                      child: InkWell(
+                        onTap: onPress,
+                        child: FittedBox(
+                          child: Text(
+                            quantityString
+                                .toDouble()
+                                .toString()
+                                .toBrazilianNumber()
+                                .addBrazilianCoin(),
+                            style: TextStyle(
+                              color: Theme.of(context).secondaryHeaderColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       );
     }
   }

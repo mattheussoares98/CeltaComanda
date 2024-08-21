@@ -30,7 +30,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
         children: [
           if (homePresenter.commandNumber != null)
             Text(
-              "Comanda ${homePresenter.commandNumber}",
+              "Comanda ${homePresenter.commandNumber?.replaceAll(RegExp(r'0'), '')}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,

@@ -22,8 +22,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
   int? _selectedCommandNumber;
   int? _selectedPeopleNumbers;
+  SellersViewModel? _selectedSeller;
   bool _isUpdatingCommandNumber = false;
   bool _isUpdatingPeopleNumbers = false;
+  bool _isUpdatingSellers = false;
 
   Future<void> _updateCommandNumber(
     HomePresenter homePresenter,
@@ -33,7 +35,9 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       return;
     }
 
-    if (_selectedCommandNumber != null && _selectedPeopleNumbers != null) {
+    if (_selectedCommandNumber != null &&
+        _selectedPeopleNumbers != null &&
+        _selectedSeller != null) {
       final updated = await homePresenter.updateCommandData(
         newFixedCommandNumber: _selectedCommandNumber!,
         userPersonalizedCode: _personalizedCodeController.text.toInt(),
@@ -83,7 +87,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               UpdateCommandNumberDropdown(
                 isUpdatingCommandNumber: _isUpdatingCommandNumber,
                 updateCommandNumber: (selectedCommandNumber) {
-                  selectedCommandNumber.toString();
                   _selectedCommandNumber = selectedCommandNumber;
                 },
               ),
@@ -91,8 +94,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               UpdatePeopleNumbersDropdown(
                 isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
                 updatePeopleNumbers: (selectedPeopleNumbers) {
-                  selectedPeopleNumbers.toString();
                   _selectedPeopleNumbers = selectedPeopleNumbers;
+                },
+              ),
+              const SizedBox(height: 10),
+              UpdateSellerDropdown(
+                isUpdatingSeller: _isUpdatingSellers,
+                updateSelectedSeller: (selectedSeller) {
+                  _selectedSeller = selectedSeller;
                 },
               ),
               const SizedBox(height: 10),
@@ -108,6 +117,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   setState(() {
                     _isUpdatingCommandNumber = true;
                     _isUpdatingPeopleNumbers = true;
+                    _isUpdatingSellers = true;
                   });
                   await _updateCommandNumber(
                     homePresenter,
@@ -138,6 +148,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                           setState(() {
                             _isUpdatingCommandNumber = true;
                             _isUpdatingPeopleNumbers = true;
+                            _isUpdatingSellers = true;
                           });
                           await _updateCommandNumber(
                             homePresenter,

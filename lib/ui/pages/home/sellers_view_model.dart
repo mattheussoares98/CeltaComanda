@@ -23,6 +23,13 @@ class SellersViewModel extends Equatable {
         PersonalizedCode: PersonalizedCode,
       );
 
+  factory SellersViewModel.fromEntity(SellerEntity entity) => SellersViewModel(
+        SellersId: entity.SellersId,
+        EnterpriseId: entity.EnterpriseId,
+        Name: entity.Name,
+        PersonalizedCode: entity.PersonalizedCode,
+      );
+
   @override
   List<Object?> get props => [
         SellersId,

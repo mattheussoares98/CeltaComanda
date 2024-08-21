@@ -304,7 +304,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      await loadSellers.load();
+      final entity = await loadSellers.load();
+      _sellers.value = SellersViewModel.fromEntity(entity);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

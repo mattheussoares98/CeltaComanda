@@ -775,4 +775,11 @@ class EntityFactory {
               ProductName: product.Name,
             ),
           ];
+
+  static SellerEntity makeSellerEntity() => SellerEntity(
+        SellersId: faker.randomGenerator.integer(100),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        Name: faker.randomGenerator.string(10),
+        PersonalizedCode: faker.randomGenerator.string(10),
+      );
 }

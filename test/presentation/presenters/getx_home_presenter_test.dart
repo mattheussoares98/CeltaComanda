@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
@@ -40,6 +41,7 @@ void main() {
   late SaleRequestTempEntity saleRequestTempEntity;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late int? peoples;
+  late SellerEntity sallerEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -81,6 +83,7 @@ void main() {
     localCommandData.mockUpdate();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
+    loadSellers.mockLoadSellers(sallerEntity);
   }
 
   void initEntitys() {
@@ -114,6 +117,8 @@ void main() {
                 Comments: e.Comments,
               )).toList(),
     );
+
+    sallerEntity = EntityFactory.makeSellerEntity();
   }
 
   setUp(() {
@@ -797,6 +802,8 @@ void main() {
       verify(() => loadSellers.load()).called(1);
     });
     test("Should emit correct values on success", () async {
+      expectLater(
+          sut.sellersStream, emits(SellersViewModel.fromEntity(sallerEntity)));
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 

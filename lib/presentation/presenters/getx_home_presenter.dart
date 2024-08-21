@@ -145,6 +145,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           commandNumber: commandNumber!,
         );
         _peoples = saleRequest.Peoples;
+
+        final sellersEntity = await loadSellers.load();
+        _sellers =
+            sellersEntity.map((e) => SellersViewModel.fromEntity(e)).toList();
+
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(homePresenter);
       }
@@ -296,22 +301,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   void updateCommandNumber(String? value) {
     _commandNumber = value;
-  }
-
-  @override
-  Future<void> getSellers() async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      final entity = await loadSellers.load();
-
-      _sellers = entity.map((e) => SellersViewModel.fromEntity(e)).toList();
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
   }
 
   String? _commandNumber;

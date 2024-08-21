@@ -55,5 +55,4 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required int personalizedCode,
     required String password,
   });
-  Future<void> getSellers();
 }

@@ -41,7 +41,7 @@ void main() {
   late SaleRequestTempEntity saleRequestTempEntity;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late int? peoples;
-  late SellerEntity sallerEntity;
+  late List<SellerEntity> sallerEntitys;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -83,7 +83,7 @@ void main() {
     localCommandData.mockUpdate();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
-    loadSellers.mockLoadSellers(sallerEntity);
+    loadSellers.mockLoadSellers(sallerEntitys);
   }
 
   void initEntitys() {
@@ -118,7 +118,10 @@ void main() {
               )).toList(),
     );
 
-    sallerEntity = EntityFactory.makeSellerEntity();
+    sallerEntitys = [
+      EntityFactory.makeSellerEntity(),
+      EntityFactory.makeSellerEntity(),
+    ];
   }
 
   setUp(() {
@@ -803,7 +806,10 @@ void main() {
     });
     test("Should emit correct values on success", () async {
       expectLater(
-          sut.sellersStream, emits(SellersViewModel.fromEntity(sallerEntity)));
+          sut.sellersStream,
+          emits(sallerEntitys
+              .map((e) => SellersViewModel.fromEntity(e))
+              .toList()));
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 

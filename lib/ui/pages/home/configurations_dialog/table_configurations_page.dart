@@ -54,6 +54,19 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     }
   }
 
+  Future<void> loadSellers(HomePresenter homePresenter) async {
+    Future.delayed(Duration.zero, () async {
+      await homePresenter.getSellers();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    loadSellers(homePresenter);
+  }
+
   @override
   void dispose() {
     super.dispose();

@@ -7,8 +7,8 @@ import 'package:mocktail/mocktail.dart';
 class LoadSellersSpy extends Mock implements LoadSellers {
   When mocLoadSellersCall() => when(() => this.load());
 
-  void mockLoadSellers(SellerEntity entity) {
-    this.mocLoadSellersCall().thenAnswer((_) async => entity);
+  void mockLoadSellers(List<SellerEntity> entitys) {
+    this.mocLoadSellersCall().thenAnswer((_) async => entitys);
   }
 
   void mockLoadSellersError() {

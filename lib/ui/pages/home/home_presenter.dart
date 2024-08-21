@@ -6,7 +6,7 @@ import '../../helpers/helpers.dart';
 abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<SellersViewModel?> get sellersStream;
+  Stream<List<SellersViewModel>?> get sellersStream;
 
   bool get isFixedCommandNumber;
   bool get isGeneratingVersionToRede;

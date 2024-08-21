@@ -7,8 +7,10 @@ import '../../pages.dart';
 
 class NameImagePriceComboxAndComplement extends StatelessWidget {
   final ProductsViewModel productsViewModel;
+  final double itemHeight;
   const NameImagePriceComboxAndComplement({
     required this.productsViewModel,
+    required this.itemHeight,
     super.key,
   });
 
@@ -25,6 +27,7 @@ class NameImagePriceComboxAndComplement extends StatelessWidget {
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        itemHeight: itemHeight,
       );
     } else {
       return _portraitNameImagePluAndCombox(
@@ -44,6 +47,7 @@ Widget _landScapeNameImagePluAndCombox({
   required MenuPresenter menuPresenter,
   required ExpansibleGroupFromProductPresenter
       expansibleGroupFromProductPresenter,
+  required double itemHeight,
 }) {
   return Row(
     children: [
@@ -62,8 +66,8 @@ Widget _landScapeNameImagePluAndCombox({
           child: ImageWidget(
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
-            height: 400,
-            width: 400,
+            height: itemHeight,
+            width: itemHeight * 1.15,
             selectedProduct: productsViewModel,
           ),
         ),

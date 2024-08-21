@@ -47,36 +47,40 @@ class _ProductItemState extends State<ProductItem> {
         menuPresenter.goToInsertProductPage(widget.productsViewModel);
       },
       child: Padding(
-          padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),
-          child: Container(
-            height: getItemHeight(),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  blurRadius: 3,
-                  color: Color(0x411D2429),
-                  offset: Offset(
-                    2,
-                    -2,
-                  ),
+        padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),
+        child: Container(
+          height: getItemHeight(),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 3,
+                color: Color(0x411D2429),
+                offset: Offset(
+                  2,
+                  -2,
                 ),
-                BoxShadow(
-                  blurRadius: 3,
-                  color: Color(0x411D2429),
-                  offset: Offset(
-                    -2,
-                    2,
-                  ),
-                )
-              ],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: NameImagePriceComboxAndComplement(
+              ),
+              BoxShadow(
+                blurRadius: 3,
+                color: Color(0x411D2429),
+                offset: Offset(
+                  -2,
+                  2,
+                ),
+              )
+            ],
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return NameImagePriceComboxAndComplement(
               productsViewModel: widget.productsViewModel,
-            ),
-          )),
+              itemHeight: constraints.maxHeight,
+            );
+          }),
+        ),
+      ),
     );
   }
 }

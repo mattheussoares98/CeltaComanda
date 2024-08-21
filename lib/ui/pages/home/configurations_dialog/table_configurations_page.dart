@@ -162,7 +162,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                             padding:
                                 EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
                             child: Text(
-                              R.string.updateTableNumber,
+                              R.string.updateConfigurations,
                               style: TextStyle(
                                 fontSize: getStringSize(context),
                               ),

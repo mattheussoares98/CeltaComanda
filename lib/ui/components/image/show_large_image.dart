@@ -72,7 +72,10 @@ Widget _complementAndInsertProductButton({
           if (productComplement != null)
             Expanded(
               flex: 2,
-              child: _productComplement(context, productComplement),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: _productComplement(context, productComplement),
+              ),
             ),
           if (showInsertButton)
             Expanded(

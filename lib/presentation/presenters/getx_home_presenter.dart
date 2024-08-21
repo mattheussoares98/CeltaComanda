@@ -329,4 +329,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> getSellers() async {
     // TODO: implement loadSellers
   }
+
+  final _sellers = Rx<SellersViewModel?>(null);
+  @override
+  Stream<SellersViewModel?> get sellersStream => _sellers.stream;
+  set sellers(SellersViewModel? value) => _sellers.value = value;
 }

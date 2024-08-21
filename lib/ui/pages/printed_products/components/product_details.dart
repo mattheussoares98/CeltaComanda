@@ -50,7 +50,7 @@ class ProductDetails extends StatelessWidget {
                 child: ImageWidget(
                   ean: product.EanCode,
                   plu: product.PriceLookupCode,
-                  isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
+                  selectedProduct: product,
                 ),
               ),
             ),

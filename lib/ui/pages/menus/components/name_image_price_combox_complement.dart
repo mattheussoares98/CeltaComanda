@@ -64,8 +64,7 @@ Widget _landScapeNameImagePluAndCombox({
             plu: productsViewModel.PriceLookupCode,
             height: 400,
             width: 400,
-            isAlcoholic:
-                productsViewModel.IsAlcoholicProduct.toString() == "true",
+            selectedProduct: productsViewModel,
           ),
         ),
       ),
@@ -113,8 +112,7 @@ Widget _portraitNameImagePluAndCombox({
             plu: productsViewModel.PriceLookupCode,
             height: double.infinity,
             width: double.infinity,
-            isAlcoholic:
-                productsViewModel.IsAlcoholicProduct.toString() == "true",
+            selectedProduct: productsViewModel,
           ),
         ),
       ),

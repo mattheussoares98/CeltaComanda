@@ -109,6 +109,7 @@ class EnUs implements Translation {
   String get loadMenu => 'Load menu';
   String get login => 'Login';
   String get name => 'Name';
+  String get neww => 'New';
   String get no => 'No';
   String get obligatory => 'Mandatory';
   String get obligatoryComments => 'Mandatory comments';

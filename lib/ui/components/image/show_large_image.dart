@@ -40,9 +40,7 @@ void showLargeImage({
                       plu: plu,
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      isAlcoholic: selectedProduct != null &&
-                          selectedProduct.IsAlcoholicProduct.toString() ==
-                              "true",
+                      selectedProduct: selectedProduct,
                     ),
                   ),
                 ],

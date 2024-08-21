@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../ui/helpers/helpers.dart';
+import '../../pages/pages.dart';
 import '../components.dart';
 
 class ImageWidget extends StatefulWidget {
@@ -11,16 +12,16 @@ class ImageWidget extends StatefulWidget {
   final double width;
   final double? beginAnimation;
   final double? endAnimation;
-  final bool isAlcoholic;
+  final ProductsViewModel? selectedProduct;
 
   const ImageWidget({
     this.height = 65,
     this.width = 65,
     required this.ean,
     required this.plu,
-    required this.isAlcoholic,
     this.beginAnimation = 1,
     this.endAnimation = 0.7,
+    required this.selectedProduct,
     super.key,
   });
 
@@ -64,25 +65,35 @@ class _ImageWidgetState extends State<ImageWidget>
       children: [
         Expanded(
           flex: hasMinWidth(context) ? 4 : 2,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _animation.value,
-                  child: CachedImage(
-                    ean: widget.ean,
-                    plu: widget.plu,
-                    height: widget.height,
-                    width: widget.width,
-                  ),
-                );
-              },
-            ),
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animation.value,
+                      child: CachedImage(
+                        ean: widget.ean,
+                        plu: widget.plu,
+                        height: widget.height,
+                        width: widget.width,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              if (widget.selectedProduct?.ProductComplement
+                      .toString()
+                      .toLowerCase()
+                      .contains("(novo)") ==
+                  true)
+                const NewProduct()
+            ],
           ),
         ),
-        if (widget.isAlcoholic)
+        if (widget.selectedProduct?.IsAlcoholicProduct == "true")
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0),

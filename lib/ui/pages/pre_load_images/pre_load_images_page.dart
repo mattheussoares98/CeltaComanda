@@ -87,7 +87,7 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
                 return ImageWidget(
                   ean: null,
                   plu: plu,
-                  isAlcoholic: false,
+                  selectedProduct: null,
                   height: 1,
                   width: 1,
                 );
@@ -109,7 +109,7 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
                 return ImageWidget(
                   ean: ean,
                   plu: "",
-                  isAlcoholic: false,
+                  selectedProduct: null,
                   height: 1,
                   width: 1,
                 );

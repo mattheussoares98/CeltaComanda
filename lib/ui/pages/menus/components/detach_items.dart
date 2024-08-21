@@ -56,7 +56,7 @@ class DetachItems extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 beginAnimation: 1,
                 endAnimation: 0.7,
-                isAlcoholic: product.IsAlcoholicProduct.toString() == "true",
+                selectedProduct: product,
               ),
               Container(
                 width: double.infinity,

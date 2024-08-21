@@ -111,6 +111,7 @@ class PtBr implements Translation {
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get name => 'Nome';
+  String get neww => 'Novo';
   String get no => 'Não';
   String get obligatory => 'Obrigatório';
   String get obligatoryComments => 'Comentários obrigatórios';

@@ -89,9 +89,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                     plu: widget.cartProduct.Product.PriceLookupCode,
                     height: 100,
                     width: 100,
-                    isAlcoholic: widget.cartProduct.Product.IsAlcoholicProduct
-                            .toString() ==
-                        "true",
+                    selectedProduct: widget.cartProduct.Product,
                   ),
                 ),
               ),

@@ -91,6 +91,7 @@ abstract class Translation {
   String get loadMenu;
   String get login;
   String get name;
+  String get neww;
   String get no;
   String get obligatory;
   String get obligatoryComments;

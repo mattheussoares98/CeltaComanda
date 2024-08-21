@@ -789,4 +789,12 @@ void main() {
       expect(isValid, true);
     });
   });
+
+  group("Get sellers", () {
+    test("Should call loadSellers", () async {
+      await sut.getSellers();
+
+      verify(() => loadSellers.load()).called(1);
+    });
+  });
 }

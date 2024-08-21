@@ -298,6 +298,17 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _commandNumber = value;
   }
 
+  @override
+  Future<void> getSellers() async {
+    try {
+      await loadSellers.load();
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
   String? _commandNumber;
   @override
   String? get commandNumber => _commandNumber;
@@ -324,11 +335,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   bool get isGeneratingVersionToRede => true;
-
-  @override
-  Future<void> getSellers() async {
-    // TODO: implement loadSellers
-  }
 
   final _sellers = Rx<SellersViewModel?>(null);
   @override

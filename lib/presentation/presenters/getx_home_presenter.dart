@@ -300,6 +300,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> getSellers() async {
+    isLoading = true;
+    mainError = null;
+
     try {
       await loadSellers.load();
     } catch (e) {

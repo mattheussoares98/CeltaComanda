@@ -796,5 +796,11 @@ void main() {
 
       verify(() => loadSellers.load()).called(1);
     });
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getSellers();
+    });
   });
 }

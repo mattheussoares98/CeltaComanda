@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
@@ -508,6 +509,58 @@ void main() {
 
       expect(sut.peoples, saleRequestTempEntity.Peoples);
     });
+
+    test("Should call loadSellers", () async {
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => loadSellers.load()).called(1);
+    });
+
+    test("Should update sellers correctly", () async {
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.sellers,
+          sallerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
+    });
+
+    test("Should emit correct values on throws", () async {
+      loadSellers.mockLoadSellersError();
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
   });
 
   group("Update command data", () {
@@ -796,32 +849,4 @@ void main() {
       expect(isValid, true);
     });
   });
-
-  // group("Get sellers", () {
-  //   test("Should call loadSellers", () async {
-  //     await sut.getSellers();
-
-  //     verify(() => loadSellers.load()).called(1);
-  //   });
-  //   test("Should emit correct values on success", () async {
-  //     expectLater(sut.mainErrorStream, emits(null));
-  //     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-  //     await sut.getSellers();
-  //   });
-  //   test("Should update sellers correctly", () async {
-  //     await sut.getSellers();
-
-  //     expect(sut.sellers,
-  //         sallerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
-  //   });
-  //   test("Should emit correct values on throws", () async {
-  //     loadSellers.mockLoadSellersError();
-  //     expectLater(
-  //         sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-  //     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-  //     await sut.getSellers();
-  //   });
-  // });
 }

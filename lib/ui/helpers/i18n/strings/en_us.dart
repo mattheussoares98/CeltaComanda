@@ -135,6 +135,7 @@ class EnUs implements Translation {
   String get table => 'Table';
   String get total => 'Total';
   String get turnBack => 'Go back';
+  String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>
       'Update table and number of people';

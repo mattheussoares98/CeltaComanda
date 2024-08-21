@@ -119,6 +119,7 @@ abstract class Translation {
   String get table;
   String get total;
   String get turnBack;
+  String get updateConfigurations;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;
   String get updateTableNumber;

@@ -137,6 +137,7 @@ class PtBr implements Translation {
   String get table => 'Mesa';
   String get total => 'Total';
   String get turnBack => 'Voltar';
+  String get updateConfigurations => "Alterar configurações";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";

@@ -110,6 +110,7 @@ class EnUs implements Translation {
   String get obligatoryComments => 'Mandatory comments';
   String get optional => 'Optional';
   String get password => 'Password';
+  String get pay => 'Pay';
   String get peopleQuantity => 'Number of people';
   String get price => 'Price';
   String get productsAndComments => 'Products and comments';

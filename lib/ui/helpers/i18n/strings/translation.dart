@@ -94,6 +94,7 @@ abstract class Translation {
   String get obligatoryComments;
   String get optional;
   String get password;
+  String get pay;
   String get peopleQuantity;
   String get price;
   String get productsAndComments;

@@ -112,6 +112,7 @@ class PtBr implements Translation {
   String get obligatoryComments => 'Comentários obrigatórios';
   String get optional => 'Opcional';
   String get password => 'Senha';
+  String get pay => 'Pagar';
   String get peopleQuantity => 'Quantidade de pessoas';
   String get price => 'Preço';
   String get productsAndComments => 'Produtos e comentários';

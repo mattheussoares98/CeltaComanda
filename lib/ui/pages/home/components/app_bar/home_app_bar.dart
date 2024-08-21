@@ -49,7 +49,7 @@ PreferredSize homeAppBar({
               onPress: homePresenter.goToPaymentPage,
               icon: Icons.paypal_rounded,
               isPrice: true,
-              buttonName: "Pagar",
+              buttonName: R.string.pay,
               quantityString:
                   printedProductsPresenter.printedProducts?.TotalLiquid ??
                       "0".toDouble().toString(),

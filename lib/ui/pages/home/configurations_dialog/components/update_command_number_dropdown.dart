@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
-class UpdatePeopleNumbersDropdown extends StatelessWidget {
-  final bool isUpdatingPeopleNumbers;
-  final Function(int value) updatePeopleNumbers;
-  const UpdatePeopleNumbersDropdown({
-    required this.isUpdatingPeopleNumbers,
-    required this.updatePeopleNumbers,
+class UpdateCommandNumberDropdown extends StatelessWidget {
+  final bool isUpdatingCommandNumber;
+  final Function(int value) updateCommandNumber;
+  const UpdateCommandNumberDropdown({
+    required this.isUpdatingCommandNumber,
+    required this.updateCommandNumber,
     super.key,
   });
 
@@ -17,23 +17,25 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
+    updateCommandNumber(homePresenter.commandNumber?.toInt() ?? 0);
+
     return DropdownButtonFormField<int>(
-      value: homePresenter.peoples,
+      value: homePresenter.commandNumber?.toInt(),
       validator: (value) {
-        if (!isUpdatingPeopleNumbers) {
+        if (!isUpdatingCommandNumber) {
           return null;
         } else if (value == null) {
-          return R.string.msgSelectPeopleNumbers;
+          return R.string.msgSelectCommand;
         }
 
         return null;
       },
       decoration: InputDecoration(
-        hintText: R.string.peopleQuantity,
-        labelText: R.string.peopleQuantity,
+        hintText: R.string.msgTableNumber,
+        labelText: R.string.msgTableNumber,
       ),
       items: List<int>.generate(
-        50,
+        100,
         (int index) => index++,
         growable: true,
       )
@@ -41,7 +43,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
             (e) => DropdownMenuItem(
               value: e + 1,
               onTap: () {
-                updatePeopleNumbers(e + 1);
+                updateCommandNumber(e + 1);
               },
               child: Text(
                 (e + 1).toString(),
@@ -50,7 +52,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
           )
           .toList(),
       onChanged: (value) {
-        updatePeopleNumbers(value ?? 0 + 1);
+        updateCommandNumber(value ?? 0 + 1);
       },
     );
   }

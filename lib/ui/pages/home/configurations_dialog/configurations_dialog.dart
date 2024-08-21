@@ -1,2 +1,2 @@
-export './components/components.dart';
+export 'components/components.dart';
 export 'table_configurations_page.dart';

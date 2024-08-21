@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../components/components.dart';
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import '../../../../components/components.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
 class LogoutButton extends StatelessWidget {
   final Function() changeIsUpdatingCommandNumber;

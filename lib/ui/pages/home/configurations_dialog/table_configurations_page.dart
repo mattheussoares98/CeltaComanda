@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/components/components.dart';
-import '../../../../ui/helpers/helpers.dart';
-import '../pages.dart';
+import '../../../../../ui/components/components.dart';
+import '../../../../../ui/helpers/helpers.dart';
+import '../../pages.dart';
+import 'configurations_dialog.dart';
 
 class TableConfigurationsPage extends StatefulWidget {
   const TableConfigurationsPage({super.key});

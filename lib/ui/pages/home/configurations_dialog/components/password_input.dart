@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/usecases/usecases.dart';
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import '../../../../../data/usecases/usecases.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
 class PasswordInput extends StatelessWidget {
   final FocusNode passwordFocusNode;

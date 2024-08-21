@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../helpers/helpers.dart';
+import '../../../../helpers/helpers.dart';
 
 class UserPersonalizedCodeInput extends StatelessWidget {
   const UserPersonalizedCodeInput({

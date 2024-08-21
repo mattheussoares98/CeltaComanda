@@ -31,6 +31,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
 
   void goToCartPage();
   void goToPrintedProductsPage();
+  void goToPaymentPage();
 
   void onChangePage({
     required MenuPresenter menuPresenter,

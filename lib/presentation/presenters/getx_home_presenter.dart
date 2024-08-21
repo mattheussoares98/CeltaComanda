@@ -46,6 +46,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
+  Future<void> goToPaymentPage() async {
+    navigateTo.navigate(pageRoute: PageRoutes.payment);
+  }
+
+  @override
   Future<void> clearEnterpriseData() async {
     final emptyEntity = EnterpriseEntity(
       enterpriseName:

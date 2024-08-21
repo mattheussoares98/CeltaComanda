@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
 class AppBarButton extends StatelessWidget {
   final Function() onPress;
@@ -19,6 +21,8 @@ class AppBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     if (!isPrice) {
       return Stack(
         children: [
@@ -64,54 +68,57 @@ class AppBarButton extends StatelessWidget {
         ],
       );
     } else {
-      return Container(
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Icon(icon, color: Colors.white),
-                    SizedBox(width: hasMinWidth(context) ? 3 : 0),
-                    Center(
-                      child: hasMinWidth(context)
-                          ? Text(buttonName.toUpperCase(),
-                              style: const TextStyle(color: Colors.white))
-                          : null,
-                    ),
-                  ],
+      return InkWell(
+        onTap: homePresenter.goToPaymentPage,
+        child: Container(
+          color: Colors.black,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Icon(icon, color: Colors.white),
+                      SizedBox(width: hasMinWidth(context) ? 3 : 0),
+                      Center(
+                        child: hasMinWidth(context)
+                            ? Text(buttonName.toUpperCase(),
+                                style: const TextStyle(color: Colors.white))
+                            : null,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      color: Colors.black,
-                      child: InkWell(
-                        onTap: onPress,
-                        child: FittedBox(
-                          child: Text(
-                            quantityString
-                                .toDouble()
-                                .toString()
-                                .toBrazilianNumber()
-                                .addBrazilianCoin(),
-                            style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
-                              fontWeight: FontWeight.bold,
+                const SizedBox(height: 2),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        color: Colors.black,
+                        child: InkWell(
+                          onTap: onPress,
+                          child: FittedBox(
+                            child: Text(
+                              quantityString
+                                  .toDouble()
+                                  .toString()
+                                  .toBrazilianNumber()
+                                  .addBrazilianCoin(),
+                              style: TextStyle(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );

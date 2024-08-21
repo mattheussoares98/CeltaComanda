@@ -35,7 +35,8 @@ class _PaymentPageState extends State<PaymentPage>
         Provider.of(context, listen: true);
     HomePresenter homePresenter = Provider.of(context, listen: true);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -53,6 +54,12 @@ class _PaymentPageState extends State<PaymentPage>
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       ),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: Navigator.of(context).pop,
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: printedProductsPresenter.printedProducts == null ||
               printedProductsPresenter.printedProducts!.TotalLiquid
                       .toDouble() ==
@@ -68,7 +75,8 @@ class _PaymentPageState extends State<PaymentPage>
                   cartPresenter: cartPresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   menuPresenter: menuPresenter,
-                  expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                  expansibleGroupFromProductPresenter:
+                      expansibleGroupFromProductPresenter,
                 );
               },
             )

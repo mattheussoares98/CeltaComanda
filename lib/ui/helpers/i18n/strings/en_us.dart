@@ -34,6 +34,7 @@ class EnUs implements Translation {
   String get msgSearchCommandToPay => 'Look up a command to make the payment';
   String get msgSelectCommand => 'Select the command';
   String get msgSelectPeopleNumbers => 'Select the number of people';
+  String get msgSelectSeller => 'Select the seller';
   String get msgSuccessToCancelProducts => 'Product cancellation allowed';
   String get msgTableNumber => 'Table number';
   String get msgUpdatedTableAndPeopleNumberSuccess =>
@@ -126,6 +127,7 @@ class EnUs implements Translation {
   String get selectPaymentOption => 'Select a payment option';
   String get selectProduct => 'Select a product!';
   String get selectQuantity => 'Enter the quantity';
+  String get seller => 'Seller';
   String get sendEvaluation => 'Send evaluation';
   String get sendRequest => 'Send request';
   String get send => 'Send';

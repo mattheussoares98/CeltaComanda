@@ -15,7 +15,8 @@ class PtBr implements Translation {
   String get msgEvaluateEnvironment => "Avalie o ambiente";
   String get msgEvaluateService => "Avalie o atendimento";
   String get msgEvaluateCostBenefit => "Avalie o custo benefício";
-  String get msgIfLogoutClearCart => 'Se você fizer o logout, o carrinho será limpo';
+  String get msgIfLogoutClearCart =>
+      'Se você fizer o logout, o carrinho será limpo';
   String get msgInsertCommandNumber => "Informe o número da comanda";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
@@ -37,6 +38,7 @@ class PtBr implements Translation {
       'Consulte alguma comanda para efetuar o pagamento dela';
   String get msgSelectCommand => 'Selecione a comanda';
   String get msgSelectPeopleNumbers => 'Selecione a quantidade de pessoas';
+  String get msgSelectSeller => 'Selecione o vendedor';
   String get msgSuccessToCancelProducts => 'Cancelamento de produtos liberado';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableAndPeopleNumberSuccess =>
@@ -128,6 +130,7 @@ class PtBr implements Translation {
   String get selectPaymentOption => "Selecione uma opção de pagamento";
   String get selectProduct => "Selecione um produto!";
   String get selectQuantity => "Informe a quantidade";
+  String get seller => "Vendedor";
   String get sendEvaluation => 'Enviar avaliação';
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';

@@ -25,6 +25,7 @@ abstract class Translation {
   String get msgSearchCommandToPay;
   String get msgSelectCommand;
   String get msgSelectPeopleNumbers;
+  String get msgSelectSeller;
   String get msgSuccessToCancelProducts;
   String get msgTableNumber;
   String get msgUpdatedTableAndPeopleNumberSuccess;
@@ -109,6 +110,7 @@ abstract class Translation {
   String get selectPaymentOption;
   String get selectProduct;
   String get selectQuantity;
+  String get seller;
   String get sendEvaluation;
   String get sendRequest;
   String get send;

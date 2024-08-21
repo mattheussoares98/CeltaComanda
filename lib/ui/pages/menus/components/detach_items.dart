@@ -52,10 +52,8 @@ class DetachItems extends StatelessWidget {
               ImageWidget(
                 ean: product.EanCode,
                 plu: product.PriceLookupCode,
-                width: MediaQuery.of(context).size.width * 0.66,
+                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                beginAnimation: 1,
-                endAnimation: 0.7,
                 selectedProduct: product,
               ),
               Container(

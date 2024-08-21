@@ -23,8 +23,6 @@ class ImageAndComplement extends StatelessWidget {
             ean: selectedProduct.EanCode,
             plu: selectedProduct.PriceLookupCode,
             selectedProduct: selectedProduct,
-            beginAnimation: 1.5,
-            endAnimation: 1,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
@@ -43,8 +41,6 @@ class ImageAndComplement extends StatelessWidget {
               ean: selectedProduct.EanCode,
               plu: selectedProduct.PriceLookupCode,
               selectedProduct: selectedProduct,
-              beginAnimation: 1.2,
-              endAnimation: 0.8,
             ),
           ),
           Expanded(

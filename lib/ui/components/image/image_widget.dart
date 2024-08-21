@@ -10,8 +10,6 @@ class ImageWidget extends StatefulWidget {
   final String plu; //precisa o ean ou plu pra carregar a imagem do concentrador
   final double height;
   final double width;
-  final double? beginAnimation;
-  final double? endAnimation;
   final ProductsViewModel? selectedProduct;
 
   const ImageWidget({
@@ -19,8 +17,6 @@ class ImageWidget extends StatefulWidget {
     this.width = 65,
     required this.ean,
     required this.plu,
-    this.beginAnimation = 1,
-    this.endAnimation = 0.7,
     required this.selectedProduct,
     super.key,
   });
@@ -47,9 +43,7 @@ class _ImageWidgetState extends State<ImageWidget>
       curve: Curves.easeInOut, // Escolha a curva desejada aqui
     );
 
-    _animation =
-        Tween<double>(begin: widget.beginAnimation!, end: widget.endAnimation!)
-            .animate(curvedAnimation);
+    _animation = Tween<double>(begin: 1, end: 1.2).animate(curvedAnimation);
   }
 
   @override

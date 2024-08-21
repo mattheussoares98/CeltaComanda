@@ -37,8 +37,8 @@ class EnUs implements Translation {
   String get msgSelectSeller => 'Select the seller';
   String get msgSuccessToCancelProducts => 'Product cancellation allowed';
   String get msgTableNumber => 'Table number';
-  String get msgUpdatedTableAndPeopleNumberSuccess =>
-      'Table number and number of people updated successfully';
+  String get msgUpdatedTableConfigurationsSuccess =>
+      'Configurations updated successfully';
   String get msgUpdatedTableSuccess => "Table number updated successfully";
   String get msgUnexpectedError =>
       'Something went wrong. Please try again later.';

@@ -28,7 +28,7 @@ abstract class Translation {
   String get msgSelectSeller;
   String get msgSuccessToCancelProducts;
   String get msgTableNumber;
-  String get msgUpdatedTableAndPeopleNumberSuccess;
+  String get msgUpdatedTableConfigurationsSuccess;
   String get msgUnexpectedError;
   String get msgUseOnlyWhenIsFixedTableNumber;
   String get msgVeryShortField;

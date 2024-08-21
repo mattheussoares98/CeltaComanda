@@ -20,82 +20,17 @@ class GetxPaymentPresenter extends GetxController
   });
 
   @override
-  Future<void> payWithCredit({
+  Future<void> doPayment({
     required double longAmountValue,
     required int portionQuantity,
+    required PaymentMode paymentMode,
   }) async {
     mainError = null;
     isLoading = true;
     try {
       await pay.pay(
-        paymentMode: PaymentMode
-            .credit, //no MainActivity faz o tratamento para se for o PaymentMode.credit não acionar a opção de credito parcelado, senão gera uma exceção
-        params: PayParams(
-          longAmountValue: (longAmountValue * 100).toInt(),
-          portionQuantity: portionQuantity,
-        ),
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
-  Future<void> payWithCreditPortion({
-    required double longAmountValue,
-    required int portionQuantity,
-  }) async {
-    mainError = null;
-    isLoading = true;
-    try {
-      await pay.pay(
-        paymentMode: PaymentMode.creditPortion,
-        params: PayParams(
-          longAmountValue: (longAmountValue * 100).toInt(),
-          portionQuantity: portionQuantity,
-        ),
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
-  Future<void> payWithDebit({
-    required double longAmountValue,
-    required int portionQuantity,
-  }) async {
-    mainError = null;
-    isLoading = true;
-    try {
-      await pay.pay(
-        paymentMode: PaymentMode.debit,
-        params: PayParams(
-          longAmountValue: (longAmountValue * 100).toInt(),
-          portionQuantity: portionQuantity,
-        ),
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
-  Future<void> payWithPix({
-    required double longAmountValue,
-    required int portionQuantity,
-  }) async {
-    mainError = null;
-    isLoading = true;
-    try {
-      await pay.pay(
-        paymentMode: PaymentMode.pix,
+        paymentMode:
+            paymentMode, //no MainActivity faz o tratamento para se for o PaymentMode.credit não acionar a opção de credito parcelado, senão gera uma exceção
         params: PayParams(
           longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
@@ -113,7 +48,8 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required MenuPresenter menuPresenter,
   }) async {
     mainError = null;
@@ -123,7 +59,8 @@ class GetxPaymentPresenter extends GetxController
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
       );
     } on DomainError catch (e) {

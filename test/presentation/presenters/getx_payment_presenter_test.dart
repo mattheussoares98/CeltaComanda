@@ -24,7 +24,8 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
   late MenuPresenterSpy menuPresenter;
-  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy
+      expansibleGroupFromProductPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -51,7 +52,8 @@ void main() {
     cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     menuPresenter = MenuPresenterSpy();
-    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
+    expansibleGroupFromProductPresenter =
+        ExpansibleGroupFromProductPresenterSpy();
   }
 
   initEntitys() {
@@ -84,7 +86,8 @@ void main() {
       const PayParams(longAmountValue: 0, portionQuantity: 0),
     );
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(PaymentMode.credit);
     registerFallbackValue(PaymentMode.startRedeSdk);
     registerFallbackValue(HomePresenterSpy());
@@ -94,167 +97,12 @@ void main() {
     registerFallbackValue(MenuPresenterSpy());
   });
 
-  group("Credit payment", () {
-    test('Should call payWithCredit with correct values', () async {
-      await sut.payWithCredit(
+  group("Do payment", () {
+    test('Should call payment correctly with pix', () async {
+      await sut.doPayment(
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
-      );
-
-      verify(() => pay.pay(
-            paymentMode: PaymentMode.credit,
-            params: PayParams(
-              longAmountValue: (longAmountValue * 100).toInt(),
-              portionQuantity: portionQuantity,
-            ),
-          )).called(1);
-    });
-    test('Should convert amountValue correctly', () async {
-      await sut.payWithCredit(
-        longAmountValue: 280.20,
-        portionQuantity: portionQuantity,
-      );
-
-      verify(() => pay.pay(
-            paymentMode: PaymentMode.credit,
-            params: PayParams(
-              longAmountValue: 28020,
-              portionQuantity: portionQuantity,
-            ),
-          )).called(1);
-    });
-    test('Should emit correct values on success', () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.payWithCredit(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-    });
-    test('Should emit correct values on payWithCredit throws', () async {
-      pay.mockPayError();
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.payWithCredit(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-    });
-  });
-
-  group("CreditPortion payment", () {
-    test('Should call payWithCreditPortion with correct values', () async {
-      await sut.payWithCreditPortion(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-
-      verify(() => pay.pay(
-            paymentMode: PaymentMode.creditPortion,
-            params: PayParams(
-              longAmountValue: (longAmountValue * 100).toInt(),
-              portionQuantity: portionQuantity,
-            ),
-          )).called(1);
-    });
-    test('Should convert amountValue correctly', () async {
-      await sut.payWithCreditPortion(
-        longAmountValue: 280.250,
-        portionQuantity: portionQuantity,
-      );
-
-      verify(() => pay.pay(
-            paymentMode: PaymentMode.creditPortion,
-            params: PayParams(
-              longAmountValue: 28025,
-              portionQuantity: portionQuantity,
-            ),
-          )).called(1);
-    });
-    test('Should emit correct values on success', () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.payWithCreditPortion(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-    });
-    test('Should emit correct values on payWithCreditPortion throws', () async {
-      pay.mockPayError();
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.payWithCreditPortion(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-    });
-  });
-
-  group("Debit payment", () {
-    test('Should call payWithDebit with correct values', () async {
-      await sut.payWithDebit(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-
-      verify(() => pay.pay(
-            paymentMode: PaymentMode.debit,
-            params: PayParams(
-              longAmountValue: (longAmountValue * 100).toInt(),
-              portionQuantity: portionQuantity,
-            ),
-          )).called(1);
-    });
-    test('Should convert amountValue correctly', () async {
-      await sut.payWithDebit(
-        longAmountValue: 28025.00,
-        portionQuantity: portionQuantity,
-      );
-
-      verify(() => pay.pay(
-            paymentMode: PaymentMode.debit,
-            params: PayParams(
-              longAmountValue: 2802500,
-              portionQuantity: portionQuantity,
-            ),
-          )).called(1);
-    });
-    test('Should emit correct values on success', () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.payWithDebit(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-    });
-    test('Should emit correct values on payWithDebit throws', () async {
-      pay.mockPayError();
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      await sut.payWithDebit(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-      );
-    });
-  });
-
-  group("Pix payment", () {
-    test('Should call payWithPix with correct values', () async {
-      await sut.payWithPix(
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
       );
 
       verify(() => pay.pay(
@@ -265,10 +113,41 @@ void main() {
             ),
           )).called(1);
     });
+    test('Should call payment correctly with debit', () async {
+      await sut.doPayment(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.debit,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.debit,
+            params: PayParams(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
+    test('Should call payment correctly with credit', () async {
+      await sut.doPayment(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.credit,
+      );
+
+      verify(() => pay.pay(
+            paymentMode: PaymentMode.credit,
+            params: PayParams(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
     test('Should convert amountValue correctly', () async {
-      await sut.payWithPix(
+      await sut.doPayment(
         longAmountValue: 280.001,
         portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
       );
 
       verify(() => pay.pay(
@@ -283,9 +162,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.payWithPix(
+      await sut.doPayment(
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
       );
     });
     test('Should emit correct values on payWithPix throws', () async {
@@ -295,9 +175,10 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.payWithPix(
+      await sut.doPayment(
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
       );
     });
   });
@@ -350,7 +231,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.getTotalValue(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -366,7 +248,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.getTotalValue(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -390,7 +273,8 @@ void main() {
       homePresenter.commandNumberMock = "001";
 
       await sut.getTotalValue(
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,

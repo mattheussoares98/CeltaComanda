@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../domain/helpers/helpers.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../../components/components.dart';
@@ -111,11 +112,12 @@ class _PaymentPageState extends State<PaymentPage>
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          await paymentPresenter.payWithPix(
+                          await paymentPresenter.doPayment(
                             longAmountValue: printedProductsPresenter
                                 .printedProducts!.TotalLiquid
                                 .toDouble(),
                             portionQuantity: 1,
+                            paymentMode: PaymentMode.pix,
                           );
                         },
                         child: Text(
@@ -147,11 +149,12 @@ class _PaymentPageState extends State<PaymentPage>
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () async {
-                          await paymentPresenter.payWithDebit(
+                          await paymentPresenter.doPayment(
                             longAmountValue: printedProductsPresenter
                                 .printedProducts!.TotalLiquid
                                 .toDouble(),
                             portionQuantity: 1,
+                            paymentMode: PaymentMode.debit,
                           );
                         },
                         child: Text(
@@ -165,11 +168,12 @@ class _PaymentPageState extends State<PaymentPage>
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () async {
-                          await paymentPresenter.payWithCredit(
+                          await paymentPresenter.doPayment(
                             longAmountValue: printedProductsPresenter
                                 .printedProducts!.TotalLiquid
                                 .toDouble(),
                             portionQuantity: 1,
+                            paymentMode: PaymentMode.credit,
                           );
                         },
                         child: Text(

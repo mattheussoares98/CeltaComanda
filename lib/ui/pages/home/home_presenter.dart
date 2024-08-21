@@ -6,12 +6,13 @@ import '../../helpers/helpers.dart';
 abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<SellersViewModel>?> get sellersStream;
 
   bool get isFixedCommandNumber;
   bool get isGeneratingVersionToRede;
   String? get commandNumber;
   int? get peoples;
+  List<SellersViewModel> get sellers;
+
   void updateCommandNumber(String? value);
   Future<void> updateIsFixedCommandNumber();
   Future<bool> updateCommandData({

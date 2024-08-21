@@ -805,15 +805,16 @@ void main() {
       verify(() => loadSellers.load()).called(1);
     });
     test("Should emit correct values on success", () async {
-      expectLater(
-          sut.sellersStream,
-          emits(sallerEntitys
-              .map((e) => SellersViewModel.fromEntity(e))
-              .toList()));
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.getSellers();
+    });
+    test("Should update sellers correctly", () async {
+      await sut.getSellers();
+      
+      expect(sut.sellers,
+          sallerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
     });
     test("Should emit correct values on throws", () async {
       loadSellers.mockLoadSellersError();

@@ -306,8 +306,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     try {
       final entity = await loadSellers.load();
 
-      _sellers.value =
-          entity.map((e) => SellersViewModel.fromEntity(e)).toList();
+      _sellers = entity.map((e) => SellersViewModel.fromEntity(e)).toList();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -342,8 +341,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToRede => true;
 
-  final _sellers = Rx<List<SellersViewModel>?>(null);
+  List<SellersViewModel> _sellers = [];
   @override
-  Stream<List<SellersViewModel>?> get sellersStream => _sellers.stream;
-  set sellers(List<SellersViewModel>? value) => _sellers.value = value;
+  List<SellersViewModel> get sellers => _sellers;
 }

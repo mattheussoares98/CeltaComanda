@@ -31,6 +31,7 @@ void main() {
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late OpenOrBlockadeSpy openOrBlockade;
+  late PaidInformationsSpy paidInformations;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -42,6 +43,7 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     openOrBlockade = OpenOrBlockadeSpy();
+    paidInformations = PaidInformationsSpy();
   }
 
   initPresenters() {
@@ -50,6 +52,7 @@ void main() {
       loadPrintedProducts: loadPrintedProducts,
       barcodeScanner: barcodeScanner,
       openOrBlockade: openOrBlockade,
+      paidInformations: paidInformations,
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();

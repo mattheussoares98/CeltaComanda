@@ -221,9 +221,12 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required String? newCommandValue,
     required HomePresenter homePresenter,
   }) {
-    homePresenter.updateCommandNumber(newCommandValue);
+    final commandWithPadLeft = newCommandValue?.padLeft(3, "0");
+
+    homePresenter.updateCommandNumber(commandWithPadLeft);
+
     _commandData.value = CommandViewModel(
-      commandNumber: newCommandValue,
+      commandNumber: commandWithPadLeft,
       isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
     );
   }

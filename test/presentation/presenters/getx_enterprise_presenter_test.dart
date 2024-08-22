@@ -68,7 +68,8 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
@@ -369,6 +370,23 @@ void main() {
         commandEntity: commandEntity,
         homePresenter: homePresenter,
       );
+    });
+
+    test("Should update command number with pad left if number is less than 3",
+        () async {
+      expectLater(
+          sut.commandDataStream,
+          emits(
+            const CommandViewModel(
+                commandNumber: "001", isFixedCommandNumber: "false"),
+          ));
+
+      sut.updateCommandNumber(
+        homePresenter: homePresenter,
+        newCommandValue: "1",
+      );
+
+      verify(() => homePresenter.updateCommandNumber("001") ).called(1);
     });
   });
 }

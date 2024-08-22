@@ -7,4 +7,5 @@ PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       pay: makeRedePay(),
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
       barcodeScanner: makeCameraBarcodeScanner(),
+      openOrBlockade: makeRemoteOpenOrBlockad(),
     );

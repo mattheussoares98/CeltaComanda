@@ -3,10 +3,10 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteOpenOrBlockad implements OpenOrBlockad {
+class RemoteOpenOrBlockade implements OpenOrBlockade {
   final HttpClient httpAdapter;
 
-  RemoteOpenOrBlockad({required this.httpAdapter});
+  RemoteOpenOrBlockade({required this.httpAdapter});
   @override
   Future<bool> blockOrLiberate({
     required String commandNumber,

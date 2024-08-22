@@ -12,11 +12,13 @@ class GetxPaymentPresenter extends GetxController
   final Pay pay;
   final LoadPrintedProducts loadPrintedProducts;
   final BarcodeScanner barcodeScanner;
+  final OpenOrBlockade openOrBlockade;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.loadPrintedProducts,
     required this.barcodeScanner,
+    required this.openOrBlockade,
   });
 
   @override

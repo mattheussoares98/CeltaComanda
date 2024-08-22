@@ -142,7 +142,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                         setState(() {
                           _isDoingLogout = false;
                         });
-                    
+
                         await _updateCommandData(
                           homePresenter,
                           printedProductsPresenter,
@@ -151,29 +151,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                     ),
                   ),
                   SizedBox(width: hasMinWidth(context) ? 10 : 1),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const ReserveTable();
-                            });
-                      },
-                      child: FittedBox(
-                        child: Padding(
-                          padding:
-                              EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
-                          child: Text(
-                            R.string.reserveTable,
-                            style: TextStyle(
-                              fontSize: getStringSize(context),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  const Expanded(
+                    child: ReserveTableButton(),
                   ),
                 ],
               ),

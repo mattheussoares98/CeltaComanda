@@ -29,9 +29,18 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      bool isValid = await commandInformations.isValidDatetime(
+        commandNumber: commandNumber,
+      );
+
+      bool alreadyPaid = await paidInformations.getAlreadyPaid();
+
+      if (!isValid || alreadyPaid) {
+        throw DomainError.blockedCommand;
+      }
+
       await pay.pay(
-        paymentMode:
-            paymentMode, //no MainActivity faz o tratamento para se for o PaymentMode.credit não acionar a opção de credito parcelado, senão gera uma exceção
+        paymentMode: paymentMode,
         params: PayParams(
           longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
@@ -42,10 +51,13 @@ class GetxPaymentPresenter extends GetxController
         commandNumber: commandNumber,
         block: true,
       );
+
+      await paidInformations.updateAlreadyPaid(false);
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.openOrBlockade:
+        case DomainError.blockedCommand:
           await paidInformations.updateAlreadyPaid(true);
+          mainError = UIError.blockedCommand;
         default:
           mainError = UIError.unexpected;
       }

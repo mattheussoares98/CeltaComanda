@@ -76,6 +76,7 @@ void main() {
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     barcodeScanner.mockBarcodeScanner(commandNumber);
     homePresenter.mockLoadCommandData();
+    paidInformations.mockGetAlreadyPaid(false);
   }
 
   setUp(() {
@@ -177,7 +178,7 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
     });
-    test('Should emit correct values on payWithPix throws', () async {
+    test('Should emit correct values on throws unexpected', () async {
       pay.mockPayError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -191,9 +192,23 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
     });
+    test('Should emit correct values on throws blockedCommand', () async {
+      pay.mockPayError(DomainError.blockedCommand);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.blockedCommand]));
+
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+    });
 
     test('Should update already paid when block or libarate throws', () async {
-      pay.mockPayError(DomainError.openOrBlockade);
+      pay.mockPayError(DomainError.blockedCommand);
 
       await sut.doPayment(
         commandNumber: homePresenter.commandNumberMock!,
@@ -204,8 +219,37 @@ void main() {
 
       verify(() => paidInformations.updateAlreadyPaid(true)).called(1);
     });
-    test('Should update already paid when block or libarate throws', () async {
-      pay.mockPayError(DomainError.unexpected);
+
+    test('Should call isValidDatetime', () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(
+        () => commandInformations.isValidDatetime(
+            commandNumber: homePresenter.commandNumberMock!),
+      ).called(1);
+    });
+    test('Should emit correct values on is invalid datetime', () async {
+      commandInformations.mockIsValidDateTime(false);
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.blockedCommand]),
+      );
+
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+    });
+    test('Should not call to do payment when is invalid datetime', () async {
+      commandInformations.mockIsValidDateTime(false);
 
       await sut.doPayment(
         commandNumber: homePresenter.commandNumberMock!,
@@ -214,7 +258,45 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
 
-      verifyNever(() => paidInformations.updateAlreadyPaid(true));
+      verifyNever(() => pay.pay(
+            paymentMode: PaymentMode.pix,
+            params: PayParams(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+            ),
+          ));
+    });
+    test('Should update AlreadyPaid to false when pay succeeds', () async {
+      paidInformations.mockUpdateAlreadyPaid(false);
+
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(() => paidInformations.updateAlreadyPaid(false));
+    });
+    test(
+        'Should not call do payment when paidInformations.getAlreadyPaid returns true',
+        () async {
+      paidInformations.mockGetAlreadyPaid(true);
+      
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verifyNever(() => pay.pay(
+            paymentMode: PaymentMode.pix,
+            params: PayParams(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+            ),
+          ));
     });
   });
 

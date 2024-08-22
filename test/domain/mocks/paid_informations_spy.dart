@@ -10,24 +10,23 @@ class PaidInformationsSpy extends Mock implements PaidInformations {
     this.mockUpdateAlreadyPaid(true);
   }
 
-  When mockGetPaidInformationsCall() => when(() => this.getAlreadyPaid());
+  When mockGetAlreadyPaidCall() => when(() => this.getAlreadyPaid());
 
   void mockGetAlreadyPaid(bool paid) {
-    this.mockGetPaidInformationsCall().thenAnswer((_) async => paid);
+    this.mockGetAlreadyPaidCall().thenAnswer((_) async => paid);
   }
 
   void mockGetAlreadyPaidError(DomainError error) {
-    this.mockGetPaidInformationsCall().thenThrow(error);
+    this.mockGetAlreadyPaidCall().thenThrow(error);
   }
 
-  When mockUpdateAlreadyPaidCall(bool newValue) =>
-      when(() => this.updateAlreadyPaid(newValue));
+  When mockUpdateAlreadyPaidCall() => when(() => this.updateAlreadyPaid(any()));
 
   void mockUpdateAlreadyPaid(bool newValue) {
-    this.mockUpdateAlreadyPaidCall(newValue).thenAnswer((_) async => _);
+    this.mockUpdateAlreadyPaidCall().thenAnswer((_) async => newValue);
   }
 
   void mockUpdateAlreadyPaidError(DomainError error) {
-    this.mockUpdateAlreadyPaidCall(false).thenThrow(error);
+    this.mockUpdateAlreadyPaidCall().thenThrow(error);
   }
 }

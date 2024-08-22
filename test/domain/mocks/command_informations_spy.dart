@@ -9,6 +9,7 @@ class CommandInformationsSpy extends Mock implements CommandInformations {
   CommandInformationsSpy() {
     this.mockTicketIsPermitted(null);
     this.mockOpenOrBlockade(true);
+    this.mockIsValidDateTime(true);
   }
   When mockTicketIsPermittedsCall() => when(() => this.ticketIsPermitted(
         url: any(named: "url"),
@@ -25,16 +26,28 @@ class CommandInformationsSpy extends Mock implements CommandInformations {
         .thenThrow(DomainError.commandNotAvailable);
   }
 
-  When mockOpenOrBlockadeSpyCall() => when(() => this.openOrBlockade(
+  When mockOpenOrBlockadeCall() => when(() => this.openOrBlockade(
         commandNumber: any(named: "commandNumber"),
         block: any(named: "block"),
       ));
 
   void mockOpenOrBlockade(bool isBlockade) {
-    this.mockOpenOrBlockadeSpyCall().thenAnswer((_) async => isBlockade);
+    this.mockOpenOrBlockadeCall().thenAnswer((_) async => isBlockade);
   }
 
   void mockErrorOpenOrBlockade(DomainError error) {
-    this.mockOpenOrBlockadeSpyCall().thenThrow(error);
+    this.mockOpenOrBlockadeCall().thenThrow(error);
+  }
+
+  When mockIsValidDateTimeCall() => when(() => this.isValidDatetime(
+        commandNumber: any(named: "commandNumber"),
+      ));
+
+  void mockIsValidDateTime(bool isValid) {
+    this.mockIsValidDateTimeCall().thenAnswer((_) async => isValid);
+  }
+
+  void mockErrorIsValidDateTime(DomainError error) {
+    this.mockOpenOrBlockadeCall().thenThrow(error);
   }
 }

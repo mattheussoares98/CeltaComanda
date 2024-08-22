@@ -23,14 +23,13 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   int? _selectedCommandNumber;
   int? _selectedPeopleNumbers;
   SellersViewModel? _selectedSeller;
-  bool _isUpdatingCommandNumber = false;
-  bool _isUpdatingPeopleNumbers = false;
-  bool _isUpdatingSellers = false;
+  bool _isDoingLogout = true;
 
-  Future<void> _updateCommandNumber(
+  Future<void> _updateCommandData(
     HomePresenter homePresenter,
     PrintedProductsPresenter printedProductsPresenter,
   ) async {
+    setState(() {});
     if (_key.currentState?.validate() != true) {
       return;
     }
@@ -85,21 +84,21 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
             children: [
               const SizedBox(height: 10),
               UpdateCommandNumberDropdown(
-                isUpdatingCommandNumber: _isUpdatingCommandNumber,
+                validate: !_isDoingLogout,
                 updateCommandNumber: (selectedCommandNumber) {
                   _selectedCommandNumber = selectedCommandNumber;
                 },
               ),
               const SizedBox(height: 10),
               UpdatePeopleNumbersDropdown(
-                isUpdatingPeopleNumbers: _isUpdatingPeopleNumbers,
+                validate: !_isDoingLogout,
                 updatePeopleNumbers: (selectedPeopleNumbers) {
                   _selectedPeopleNumbers = selectedPeopleNumbers;
                 },
               ),
               const SizedBox(height: 10),
               UpdateSellerDropdown(
-                isUpdatingSeller: _isUpdatingSellers,
+                validate: !_isDoingLogout,
                 updateSelectedSeller: (selectedSeller) {
                   _selectedSeller = selectedSeller;
                 },
@@ -113,13 +112,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               PasswordInput(
                 passwordFocusNode: _passwordFocusNode,
                 passwordController: _passwordController,
-                updateCommandNumber: () async {
-                  setState(() {
-                    _isUpdatingCommandNumber = true;
-                    _isUpdatingPeopleNumbers = true;
-                    _isUpdatingSellers = true;
-                  });
-                  await _updateCommandNumber(
+                updateCommandData: () async {
+                  await _updateCommandData(
                     homePresenter,
                     printedProductsPresenter,
                   );
@@ -133,8 +127,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                       userPassword: _passwordController,
                       userPersonalizedCode: _personalizedCodeController,
                       validationKey: _key,
-                      changeIsUpdatingCommandNumber: () {
-                        _isUpdatingCommandNumber = false;
+                      updateIsDoingLogout: () {
+                        setState(() {
+                          _isDoingLogout = true;
+                        });
                       },
                     ),
                   ),
@@ -146,11 +142,12 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                         onPressed: () async {
                           FocusScope.of(context).unfocus();
                           setState(() {
-                            _isUpdatingCommandNumber = true;
-                            _isUpdatingPeopleNumbers = true;
-                            _isUpdatingSellers = true;
+                            _isDoingLogout = false;
                           });
-                          await _updateCommandNumber(
+
+                          await Future.delayed(Duration.zero);
+
+                          await _updateCommandData(
                             homePresenter,
                             printedProductsPresenter,
                           );

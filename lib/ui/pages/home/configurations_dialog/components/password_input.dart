@@ -8,12 +8,12 @@ import '../../../pages.dart';
 class PasswordInput extends StatelessWidget {
   final FocusNode passwordFocusNode;
   final TextEditingController passwordController;
-  final Future Function() updateCommandNumber;
+  final Future Function() updateCommandData;
 
   const PasswordInput({
     required this.passwordFocusNode,
     required this.passwordController,
-    required this.updateCommandNumber,
+    required this.updateCommandData,
     super.key,
   });
 
@@ -33,7 +33,7 @@ class PasswordInput extends StatelessWidget {
         return null;
       },
       onFieldSubmitted: (_) async {
-        await updateCommandNumber();
+        await updateCommandData();
       },
       decoration: InputDecoration(
         suffixIcon: homePresenter.isGeneratingVersionToRede

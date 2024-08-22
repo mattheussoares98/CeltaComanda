@@ -6,12 +6,12 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class LogoutButton extends StatelessWidget {
-  final Function() changeIsUpdatingCommandNumber;
+  final Function() updateIsDoingLogout;
   final GlobalKey<FormState> validationKey;
   final TextEditingController userPersonalizedCode;
   final TextEditingController userPassword;
   const LogoutButton({
-    required this.changeIsUpdatingCommandNumber,
+    required this.updateIsDoingLogout,
     required this.validationKey,
     required this.userPassword,
     required this.userPersonalizedCode,
@@ -40,7 +40,7 @@ class LogoutButton extends StatelessWidget {
       ),
       onPressed: () async {
         FocusScope.of(context).unfocus();
-        changeIsUpdatingCommandNumber();
+        updateIsDoingLogout();
 
         if (validationKey.currentState?.validate() != true) {
           return;

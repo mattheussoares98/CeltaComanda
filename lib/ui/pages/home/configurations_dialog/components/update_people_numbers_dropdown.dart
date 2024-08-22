@@ -5,10 +5,10 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class UpdatePeopleNumbersDropdown extends StatelessWidget {
-  final bool isUpdatingPeopleNumbers;
+  final bool validate;
   final Function(int value) updatePeopleNumbers;
   const UpdatePeopleNumbersDropdown({
-    required this.isUpdatingPeopleNumbers,
+    required this.validate,
     required this.updatePeopleNumbers,
     super.key,
   });
@@ -20,7 +20,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
     return DropdownButtonFormField<int>(
       value: homePresenter.peoples,
       validator: (value) {
-        if (!isUpdatingPeopleNumbers) {
+        if (!validate) {
           return null;
         } else if (value == null) {
           return R.string.msgSelectPeopleNumbers;

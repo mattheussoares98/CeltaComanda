@@ -557,6 +557,44 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
+    test("Should call isValidDateTime when is fixed command number", () async {
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(
+        () => commandInformations.isValidDatetime(
+          commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
+    });
+    test("Should call throw blockedCommand when is invalid datetime", () async {
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.blockedCommand]),
+      );
+
+      commandInformations.mockIsValidDateTime(false);
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+      sut.updateIsFixedCommandNumber();
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
   });
 
   group("Update command data", () {

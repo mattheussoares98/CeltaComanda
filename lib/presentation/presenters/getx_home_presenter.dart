@@ -150,10 +150,19 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(homePresenter);
+
+        final isValid = await commandInformations.isValidDatetime(
+            commandNumber: commandNumber!);
+        if (!isValid) {
+          throw DomainError.blockedCommand;
+        }
       }
       notifyListeners();
     } on DomainError catch (error) {
       switch (error) {
+        case DomainError.blockedCommand:
+          mainError = UIError.blockedCommand;
+          break;
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
           break;

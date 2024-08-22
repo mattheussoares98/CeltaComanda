@@ -921,4 +921,16 @@ void main() {
       expect(isValid, true);
     });
   });
+
+  group("Open or blockade command number", () {
+    test("Should emit correct values", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.openOrBlockadeCommand(
+        commandNumber: newFixedCommandNumber,
+        isOpen: true,
+      );
+    });
+  });
 }

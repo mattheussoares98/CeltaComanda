@@ -316,7 +316,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> openOrBlockadeCommand({
     required int commandNumber,
     required bool isOpen,
-  }) async {}
+  }) async {
+    mainError = null;
+    isLoading = true;
+    try {} catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 
   @override
   void updateCommandNumber(String? value) {

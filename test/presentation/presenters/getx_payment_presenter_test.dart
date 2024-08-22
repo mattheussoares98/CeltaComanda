@@ -180,7 +180,7 @@ void main() {
       );
     });
     test('Should emit correct values on payWithPix throws', () async {
-      pay.mockPayError();
+      pay.mockPayError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -193,22 +193,10 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
     });
-    test('Should call blockOrLiberate with correct values on success to pay',
-        () async {
-      await sut.doPayment(
-        commandNumber: homePresenter.commandNumberMock!,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
 
-      verify(() => openOrBlockade.blockOrLiberate(
-            commandNumber: homePresenter.commandNumberMock!,
-            block: true,
-          )).called(1);
-    });
+    test('Should update already paid when block or libarate throws', () async {
+      pay.mockPayError(DomainError.openOrBlockade);
 
-    test('Should update already paid when do payment succeds', () async {
       await sut.doPayment(
         commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,

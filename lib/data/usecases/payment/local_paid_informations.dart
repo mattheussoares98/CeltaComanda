@@ -35,7 +35,7 @@ class LocalPaidInformations implements PaidInformations {
 
       await hiveStorage.put(CacheKeys.paidInformations.name, paidEncoded);
     } catch (e) {
-      throw DomainError.unexpected;
+      throw DomainError.openOrBlockade;
     }
   }
 }

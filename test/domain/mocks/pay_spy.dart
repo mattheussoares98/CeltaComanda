@@ -14,5 +14,5 @@ class PaySpy extends Mock implements Pay {
         params: any(named: "params"),
       ));
   void mockPay() => this.mockPaytCall().thenAnswer((_) async => _);
-  void mockPayError() => this.mockPaytCall().thenThrow(DomainError.unexpected);
+  void mockPayError(DomainError error) => this.mockPaytCall().thenThrow(error);
 }

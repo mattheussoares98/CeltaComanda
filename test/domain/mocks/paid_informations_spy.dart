@@ -7,6 +7,7 @@ import 'package:mocktail/mocktail.dart';
 class PaidInformationsSpy extends Mock implements PaidInformations {
   PaidInformationsSpy() {
     this.mockGetAlreadyPaid(true);
+    this.mockUpdateAlreadyPaid(true);
   }
 
   When mockGetPaidInformationsCall() => when(() => this.getAlreadyPaid());

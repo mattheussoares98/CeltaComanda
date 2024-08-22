@@ -42,14 +42,17 @@ class GetxPaymentPresenter extends GetxController
         ),
       );
 
-      await paidInformations.updateAlreadyPaid(true);
-
       await openOrBlockade.blockOrLiberate(
         commandNumber: commandNumber,
         block: true,
       );
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.openOrBlockade:
+          await paidInformations.updateAlreadyPaid(true);
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

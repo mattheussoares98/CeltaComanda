@@ -206,6 +206,18 @@ void main() {
 
       verify(() => paidInformations.updateAlreadyPaid(true)).called(1);
     });
+    test('Should update already paid when block or libarate throws', () async {
+      pay.mockPayError(DomainError.unexpected);
+
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verifyNever(() => paidInformations.updateAlreadyPaid(true));
+    });
   });
 
   group("Get total value", () {

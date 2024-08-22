@@ -5,6 +5,7 @@ enum CacheKeys {
   enterprise,
   images,
   hiveBoxName,
+  paidInformations,
   printRequest,
   updatedSaleRequestTemp,
 }

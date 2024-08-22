@@ -12,7 +12,7 @@ import '../../ui/pages/pages.dart';
 class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
-  final TicketIsPermitted ticketIsPermitted;
+  final CommandInformations commandInformations;
   final LoadExpansibleGroups loadExpansibleGroups;
   final LocalCommandData localCommandData;
   final UserValidations userValidations;
@@ -24,7 +24,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
-    required this.ticketIsPermitted,
+    required this.commandInformations,
     required this.localCommandData,
     required this.userValidations,
     required this.updateSaleRequestTemp,
@@ -190,7 +190,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      await ticketIsPermitted.verify(
+      await commandInformations.ticketIsPermitted(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: newFixedCommandNumber.toString(),
       );

@@ -12,14 +12,14 @@ class GetxPaymentPresenter extends GetxController
   final Pay pay;
   final LoadPrintedProducts loadPrintedProducts;
   final BarcodeScanner barcodeScanner;
-  final OpenOrBlockade openOrBlockade;
+  final CommandInformations commandInformations;
   final PaidInformations paidInformations;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.loadPrintedProducts,
     required this.barcodeScanner,
-    required this.openOrBlockade,
+    required this.commandInformations,
     required this.paidInformations,
   });
 
@@ -42,7 +42,7 @@ class GetxPaymentPresenter extends GetxController
         ),
       );
 
-      await openOrBlockade.blockOrLiberate(
+      await commandInformations.openOrBlockade(
         commandNumber: commandNumber,
         block: true,
       );

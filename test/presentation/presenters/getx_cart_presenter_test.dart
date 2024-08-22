@@ -25,7 +25,7 @@ void main() {
   late UpdateProductQuantitySpy updateProductQuantity;
   late UpdateProductCommentSpy updateProductComment;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
-  late TicketIsPermittedSpy ticketIsPermitted;
+  late CommandInformationsSpy ticketIsPermitted;
   late AddPrintRequestSpy addPrintRequest;
   late LocalPrintRequestSpy localPrintRequest;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -52,7 +52,7 @@ void main() {
     updateProductQuantity = UpdateProductQuantitySpy();
     updateProductComment = UpdateProductCommentSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
-    ticketIsPermitted = TicketIsPermittedSpy();
+    ticketIsPermitted = CommandInformationsSpy();
     addPrintRequest = AddPrintRequestSpy();
     localPrintRequest = LocalPrintRequestSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
@@ -71,7 +71,7 @@ void main() {
       updateProductQuantity: updateProductQuantity,
       updateProductComment: updateProductComment,
       finishSaleRequestTemp: finishSaleRequestTemp,
-      ticketIsPermitted: ticketIsPermitted,
+      commandInformations: ticketIsPermitted,
       addPrintRequest: addPrintRequest,
       localPrintRequest: localPrintRequest,
       updateSaleRequestTemp: updateSaleRequestTemp,

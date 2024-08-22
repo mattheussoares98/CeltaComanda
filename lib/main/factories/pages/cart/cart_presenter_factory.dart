@@ -2,13 +2,12 @@ import '../../factories.dart';
 import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 
-CartPresenter makeGetxCartPresenter() =>
-    GetxCartPresenter(
+CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateProductQuantity: makeRemoteUpdateProductQuantity(),
       updateProductComment: makeRemoteUpdateProductComment(),
       finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
-      ticketIsPermitted: makeRemoteticketIsPermitted(),
+      commandInformations: makeRemoteCommandInformations(),
       addPrintRequest: makeRemoteAddPrintRequest(),
       localPrintRequest: makeLocalPrintRequest(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),

@@ -25,7 +25,7 @@ void main() {
   late LoadPrintedProductsSpy loadPrintedProducts;
   late RemovePrintedProductSpy removePrintedProduct;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
-  late TicketIsPermittedSpy ticketIsPermitted;
+  late CommandInformationsSpy ticketIsPermitted;
   late BarcodeScannerSpy barcodeScanner;
 
   late PrintedEntity printedEntity;
@@ -46,7 +46,7 @@ void main() {
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
-      ticketIsPermitted: ticketIsPermitted,
+      commandInformations: ticketIsPermitted,
       barcodeScanner: barcodeScanner,
     );
   }
@@ -56,7 +56,7 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     removePrintedProduct = RemovePrintedProductSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
-    ticketIsPermitted = TicketIsPermittedSpy();
+    ticketIsPermitted = CommandInformationsSpy();
     barcodeScanner = BarcodeScannerSpy();
   }
 

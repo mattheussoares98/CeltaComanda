@@ -15,7 +15,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final UpdateProductQuantity updateProductQuantity;
   final UpdateProductComment updateProductComment;
   final FinishSaleRequestTemp finishSaleRequestTemp;
-  final TicketIsPermitted ticketIsPermitted;
+  final CommandInformations commandInformations;
   final AddPrintRequest addPrintRequest;
   final LocalPrintRequest localPrintRequest;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -28,7 +28,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required this.updateProductQuantity,
     required this.updateProductComment,
     required this.finishSaleRequestTemp,
-    required this.ticketIsPermitted,
+    required this.commandInformations,
     required this.addPrintRequest,
     required this.localPrintRequest,
     required this.updateSaleRequestTemp,

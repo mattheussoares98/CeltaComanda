@@ -30,7 +30,7 @@ void main() {
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late NavigateToSpy navigateTo;
-  late TicketIsPermittedSpy ticketIsPermitted;
+  late CommandInformationsSpy ticketIsPermitted;
   late SearchProductByCodeSpy searchProductByCode;
   late BarcodeScannerSpy barcodeScanner;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -50,7 +50,7 @@ void main() {
 
   void initUseCases() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
-    ticketIsPermitted = TicketIsPermittedSpy();
+    ticketIsPermitted = CommandInformationsSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
     searchProductByCode = SearchProductByCodeSpy();
@@ -68,7 +68,7 @@ void main() {
     sut = GetxMenuPresenter(
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
-      ticketIsPermitted: ticketIsPermitted,
+      commandInformations: ticketIsPermitted,
       searchProductByCode: searchProductByCode,
       barcodeScanner: barcodeScanner,
       updateSaleRequestTemp: updateSaleRequestTemp,

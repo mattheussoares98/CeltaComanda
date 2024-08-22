@@ -8,6 +8,6 @@ EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
       localEntepriseData: makeLocalEnterpriseData(),
       loadEnterpriseData: makeRemoteLoadEnterpriseData(),
       navigateTo: makeNavigateTo(),
-      ticketIsPermitted: makeRemoteticketIsPermitted(),
+      commandInformations: makeRemoteCommandInformations(),
       localCommandData: makeLocalUseFixedCommandNumber(),
     );

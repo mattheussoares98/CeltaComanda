@@ -6,7 +6,7 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       localEnterpriseData: makeLocalEnterpriseData(),
       navigateTo: makeNavigateTo(),
-      ticketIsPermitted: makeRemoteticketIsPermitted(),
+      commandInformations: makeRemoteCommandInformations(),
       localCommandData: makeLocalUseFixedCommandNumber(),
       userValidations: makeRemoteUserValidations(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),

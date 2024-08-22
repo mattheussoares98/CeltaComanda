@@ -1,7 +1,8 @@
-import '../../../../data/usecases/ticket/remote_open_or_blockade.dart';
+import '../../../../data/usecases/usecases.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../../../main/factories/factories.dart';
 
-OpenOrBlockade makeRemoteOpenOrBlockad() => RemoteOpenOrBlockade(
+CommandInformations makeRemoteCommandInformations() =>
+    RemoteCommandInformations(
       httpAdapter: makeHttpAdapter(),
     );

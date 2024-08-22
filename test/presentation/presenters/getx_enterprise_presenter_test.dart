@@ -23,7 +23,7 @@ void main() {
   late LocalEnterpriseDataSpy localEnterpriseData;
   late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
-  late TicketIsPermittedSpy ticketIsPermitted;
+  late CommandInformationsSpy ticketIsPermitted;
   late LoadCommandDataSpy loadCommandData;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
@@ -34,7 +34,7 @@ void main() {
     loadCommandData = LoadCommandDataSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
-    ticketIsPermitted = TicketIsPermittedSpy();
+    ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
 
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -56,7 +56,7 @@ void main() {
       localEntepriseData: localEnterpriseData,
       loadEnterpriseData: remoteLoadEnterpriseData,
       navigateTo: navigateTo,
-      ticketIsPermitted: ticketIsPermitted,
+      commandInformations: ticketIsPermitted,
       localCommandData: loadCommandData,
     );
 
@@ -88,7 +88,7 @@ void main() {
   });
 
   test("Should emit correct events on validation throws", () async {
-    ticketIsPermitted.mockError();
+    ticketIsPermitted.mockErrorTicketIsPermitted();
 
     expectLater(
         sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
@@ -101,7 +101,7 @@ void main() {
   });
 
   test("Should not change page if validation throws", () async {
-    ticketIsPermitted.mockError();
+    ticketIsPermitted.mockErrorTicketIsPermitted();
 
     verifyNever(
       () => navigateTo.navigate(
@@ -334,7 +334,7 @@ void main() {
         newCommandValue: newCommandNumber,
       );
 
-      verify(() => homePresenter.updateCommandNumber(newCommandNumber))
+      verify(() => homePresenter.updateCommandNumber(newCommandNumber.padLeft(3, "0")))
           .called(1);
     });
 

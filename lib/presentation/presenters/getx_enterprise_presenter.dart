@@ -17,7 +17,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
-  final TicketIsPermitted ticketIsPermitted;
+  final CommandInformations commandInformations;
   final LocalCommandData localCommandData;
 
   GetxEnterpriseValidationPresenter({
@@ -25,7 +25,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.localEntepriseData,
     required this.loadEnterpriseData,
     required this.navigateTo,
-    required this.ticketIsPermitted,
+    required this.commandInformations,
     required this.localCommandData,
   });
 
@@ -122,7 +122,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         await loadRemoteEnterpriseData();
       }
 
-      await ticketIsPermitted.verify(
+      await commandInformations.ticketIsPermitted(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandEntity.commandNumber == null ||
                 commandEntity.commandNumber?.isEmpty == true

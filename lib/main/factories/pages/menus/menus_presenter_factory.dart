@@ -6,7 +6,7 @@ MenuPresenter makeGetxMenuPresenter() =>
     GetxMenuPresenter(
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       navigateTo: makeNavigateTo(),
-      ticketIsPermitted: makeRemoteticketIsPermitted(),
+      commandInformations: makeRemoteCommandInformations(),
       searchProductByCode: makeRemoteSearchProductByCode(),
       barcodeScanner: makeCameraBarcodeScanner(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),

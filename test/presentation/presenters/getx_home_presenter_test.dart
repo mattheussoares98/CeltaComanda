@@ -27,7 +27,7 @@ void main() {
   late NavigateToSpy navigateTo;
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late TicketIsPermittedSpy ticketIsPermitted;
+  late CommandInformationsSpy ticketIsPermitted;
   late LoadCommandDataSpy localCommandData;
   late UserValidationsSpy userValidations;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
@@ -56,7 +56,7 @@ void main() {
       loadExpansibleGroups: loadExpansibleGroups,
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
-      ticketIsPermitted: ticketIsPermitted,
+      commandInformations: ticketIsPermitted,
       localCommandData: localCommandData,
       userValidations: userValidations,
       loadSaleRequestTemp: loadSaleRequestTemp,
@@ -68,7 +68,7 @@ void main() {
   void initUsecases() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
-    ticketIsPermitted = TicketIsPermittedSpy();
+    ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
     localCommandData = LoadCommandDataSpy();
     userValidations = UserValidationsSpy();
@@ -598,7 +598,7 @@ void main() {
       );
 
       verify(
-        () => ticketIsPermitted.verify(
+        () => ticketIsPermitted.ticketIsPermitted(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           commandNumber: newFixedCommandNumber.toString(),
         ),
@@ -641,7 +641,7 @@ void main() {
       ).called(1);
     });
     test("Should emit correct values on ticket is permitted throws", () async {
-      ticketIsPermitted.mockError();
+      ticketIsPermitted.mockErrorTicketIsPermitted();
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
@@ -722,7 +722,7 @@ void main() {
           sut.commandNumber, newFixedCommandNumber.toString().padLeft(3, '0'));
     });
     test("Should return false if update fixed command number throws", () async {
-      ticketIsPermitted.mockError();
+      ticketIsPermitted.mockErrorTicketIsPermitted();
 
       final value = await sut.updateCommandData(
         peoples: peoples,

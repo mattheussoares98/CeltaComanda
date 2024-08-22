@@ -16,7 +16,7 @@ class GetxMenuPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements MenuPresenter {
   final NavigateTo navigateTo;
-  final TicketIsPermitted ticketIsPermitted;
+  final CommandInformations commandInformations;
   final SearchProductByCode searchProductByCode;
   final LoadExpansibleGroups loadExpansibleGroups;
   final BarcodeScanner barcodeScanner;
@@ -27,7 +27,7 @@ class GetxMenuPresenter extends GetxController
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
     required this.navigateTo,
-    required this.ticketIsPermitted,
+    required this.commandInformations,
     required this.searchProductByCode,
     required this.barcodeScanner,
     required this.updateSaleRequestTemp,
@@ -165,7 +165,7 @@ class GetxMenuPresenter extends GetxController
     clear();
 
     try {
-      await ticketIsPermitted.verify(
+      await commandInformations.ticketIsPermitted(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber,
       );

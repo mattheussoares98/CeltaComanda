@@ -29,7 +29,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     HomePresenter homePresenter,
     PrintedProductsPresenter printedProductsPresenter,
   ) async {
-    setState(() {});
+    FocusScope.of(context).unfocus();
+
     if (_key.currentState?.validate() != true) {
       return;
     }
@@ -136,35 +137,17 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   ),
                   SizedBox(width: hasMinWidth(context) ? 10 : 1),
                   Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
-                          setState(() {
-                            _isDoingLogout = false;
-                          });
-
-                          await Future.delayed(Duration.zero);
-
-                          await _updateCommandData(
-                            homePresenter,
-                            printedProductsPresenter,
-                          );
-                        },
-                        child: FittedBox(
-                          child: Padding(
-                            padding:
-                                EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
-                            child: Text(
-                              R.string.updateConfigurations,
-                              style: TextStyle(
-                                fontSize: getStringSize(context),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    child: UpdateConfigurationsButton(
+                      updateCommand: () async {
+                        setState(() {
+                          _isDoingLogout = false;
+                        });
+                    
+                        await _updateCommandData(
+                          homePresenter,
+                          printedProductsPresenter,
+                        );
+                      },
                     ),
                   ),
                   SizedBox(width: hasMinWidth(context) ? 10 : 1),

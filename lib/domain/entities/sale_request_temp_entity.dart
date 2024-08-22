@@ -13,6 +13,7 @@ class SaleRequestTempEntity extends Equatable {
   final int DeliveryControl;
   final int? Peoples;
   final String? Comments;
+  final String? SellerCode;
 
   const SaleRequestTempEntity({
     required this.Products,
@@ -23,6 +24,7 @@ class SaleRequestTempEntity extends Equatable {
     required this.DeliveryControl,
     required this.Comments,
     required this.Peoples,
+    required this.SellerCode,
   });
 
   @override
@@ -35,5 +37,6 @@ class SaleRequestTempEntity extends Equatable {
         DeliveryControl,
         Comments,
         Peoples,
+        SellerCode,
       ];
 }

@@ -39,6 +39,7 @@ void main() {
   late SaleRequestTempEntity saleRequestTempEntity;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late int? peoples;
+  late String? sellerCode;
   late List<SellerEntity> sallerEntitys;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,9 +95,11 @@ void main() {
     );
 
     peoples = faker.randomGenerator.integer(100);
+    sellerCode = faker.randomGenerator.integer(100).toString();
     updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
-      Comments: saleRequestTempEntity.Comments,
       Peoples: peoples,
+      SellerCode: sellerCode,
+      Comments: saleRequestTempEntity.Comments,
       DeliveryControl: saleRequestTempEntity.DeliveryControl,
       EnterpriseId: saleRequestTempEntity.EnterpriseId,
       PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
@@ -600,6 +603,7 @@ void main() {
   group("Update command data", () {
     test("Should call printedProductsPresenter.load", () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -614,6 +618,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -623,6 +628,7 @@ void main() {
     });
     test("Should call is valid datetime with correct values", () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -639,6 +645,7 @@ void main() {
     test("Should validate user and password to change command number",
         () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -656,6 +663,7 @@ void main() {
     });
     test("Should update local command data", () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -682,6 +690,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -693,6 +702,7 @@ void main() {
       commandInformations.mockIsValidDateTime(false);
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -720,6 +730,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -737,6 +748,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -755,6 +767,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -764,6 +777,7 @@ void main() {
     });
     test("Should update command number", () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -778,6 +792,7 @@ void main() {
       commandInformations.mockErrorIsValidDateTime();
 
       final value = await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -789,6 +804,7 @@ void main() {
     });
     test("Should return true if update fixed command number success", () async {
       final value = await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -800,6 +816,7 @@ void main() {
     });
     test("Should call loadSaleRequestTemp", () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -818,6 +835,7 @@ void main() {
     });
     test("Should call updateSaleRequestTemp", () async {
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,
@@ -836,6 +854,7 @@ void main() {
       expect(sut.peoples, null);
 
       await sut.updateCommandData(
+        sellerCode: sellerCode,
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
         newFixedCommandNumber: newFixedCommandNumber,

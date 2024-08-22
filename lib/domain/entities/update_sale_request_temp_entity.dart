@@ -12,6 +12,7 @@ class UpdateSaleRequestTempEntity extends Equatable {
   final int SaleRequestTempId;
   final double TotalLiquid;
   final int? Peoples;
+  final String? SellerCode;
   final List<UpdateSaleRequestTempProductEntity> Products;
 
   const UpdateSaleRequestTempEntity({
@@ -23,6 +24,7 @@ class UpdateSaleRequestTempEntity extends Equatable {
     required this.SaleRequestTempId,
     required this.TotalLiquid,
     required this.Products,
+    required this.SellerCode,
   });
 
   @override
@@ -35,5 +37,6 @@ class UpdateSaleRequestTempEntity extends Equatable {
         TotalLiquid,
         Products,
         Peoples,
+        SellerCode,
       ];
 }

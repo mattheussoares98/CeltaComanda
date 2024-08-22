@@ -190,6 +190,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required int newFixedCommandNumber,
     required int userPersonalizedCode,
     required String password,
+    required String? sellerCode,
     required int? peoples,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
@@ -234,8 +235,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       await updateSaleRequestTemp.update(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         entity: UpdateSaleRequestTempEntity(
-          Comments: saleRequestTempEntity.Comments,
           Peoples: peoples,
+          SellerCode: sellerCode,
+          Comments: saleRequestTempEntity.Comments,
           DeliveryControl: saleRequestTempEntity.DeliveryControl,
           EnterpriseId: saleRequestTempEntity.EnterpriseId,
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,

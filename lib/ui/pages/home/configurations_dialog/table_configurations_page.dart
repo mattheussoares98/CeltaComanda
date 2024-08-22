@@ -43,6 +43,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         password: _passwordController.text,
         printedProductsPresenter: printedProductsPresenter,
         peoples: _selectedPeopleNumbers,
+        sellerCode: _selectedSeller?.SellersId.toString(),
       );
 
       if (updated) {

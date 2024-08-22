@@ -436,6 +436,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: products,
         Comments: _saleRequestTemp?.Comments,
+        SellerCode: _saleRequestTemp?.SellerCode,
         Peoples: _saleRequestTemp!.Peoples.toInt(),
       );
 
@@ -466,6 +467,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           DeliveryControl: tableNumber ?? 0,
           Comments: saleRequestTempResult.Comments,
           Peoples: saleRequestTempResult.Peoples,
+          SellerCode: saleRequestTempResult.SellerCode,
         ),
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );

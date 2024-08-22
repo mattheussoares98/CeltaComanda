@@ -155,6 +155,7 @@ void main() {
       Products: cartSaleRequestTempProductsEntity,
       Comments: saleRequestTempEntity.Comments,
       Peoples: saleRequestTempEntity.Peoples,
+      SellerCode: saleRequestTempEntity.SellerCode,
     );
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
@@ -1010,8 +1011,9 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
       final teste = UpdateSaleRequestTempEntity(
-        Comments: updateSaleRequestTempEntity.Comments,
         Peoples: updateSaleRequestTempEntity.Peoples,
+        SellerCode: updateSaleRequestTempEntity.SellerCode,
+        Comments: updateSaleRequestTempEntity.Comments,
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
@@ -1065,8 +1067,9 @@ void main() {
       );
 
       final entity = UpdateSaleRequestTempEntity(
-        Comments: updateSaleRequestTempEntity.Comments,
         Peoples: updateSaleRequestTempEntity.Peoples,
+        SellerCode: updateSaleRequestTempEntity.SellerCode,
+        Comments: updateSaleRequestTempEntity.Comments,
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
@@ -1517,6 +1520,7 @@ void main() {
               EnterpriseId: saleRequestTempEntity.EnterpriseId,
               TotalLiquid: saleRequestTempEntity.TotalLiquid,
               Comments: saleRequestTempEntity.Comments,
+              SellerCode: saleRequestTempEntity.SellerCode,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
@@ -1538,6 +1542,7 @@ void main() {
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: SaleRequestTempEntity(
               Peoples: updateSaleRequestTempEntity.Peoples,
+              SellerCode: updateSaleRequestTempEntity.SellerCode,
               DeliveryControl: tableNumber,
               Products: saleRequestTempEntity.Products,
               SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,

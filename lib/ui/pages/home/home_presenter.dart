@@ -21,6 +21,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required String password,
     required int? peoples,
     required PrintedProductsPresenter printedProductsPresenter,
+    required String? sellerCode,
   });
 
   Future<void> clearEnterpriseData();

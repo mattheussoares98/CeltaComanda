@@ -22,23 +22,28 @@ class UpdateMenuButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton.icon(
-            label: Text(R.string.updateMenu),
-            icon: Icon(
-              Icons.refresh_outlined,
-              color: Theme.of(context).colorScheme.primary,
+          Expanded(
+            child: TextButton.icon(
+              label: Text(
+                R.string.updateMenu,
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              ),
+              icon: Icon(
+                Icons.refresh_outlined,
+                color: Theme.of(context).primaryColorDark,
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await homePresenter.loadCommandData(
+                  menuPresenter: menuPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  cartPresenter: cartPresenter,
+                  expansibleGroupFromProductPresenter:
+                      expansibleGroupFromProductPresenter,
+                  homePresenter: homePresenter,
+                );
+              },
             ),
-            onPressed: () async {
-              Navigator.of(context).pop();
-              await homePresenter.loadCommandData(
-                menuPresenter: menuPresenter,
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                expansibleGroupFromProductPresenter:
-                    expansibleGroupFromProductPresenter,
-                homePresenter: homePresenter,
-              );
-            },
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

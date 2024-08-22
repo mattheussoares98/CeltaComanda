@@ -11,18 +11,15 @@ class UpdateConfigurationsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
-      child: ElevatedButton(
-        onPressed: updateCommand,
-        child: FittedBox(
-          child: Padding(
-            padding: EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
-            child: Text(
-              R.string.updateConfigurations,
-              style: TextStyle(
-                fontSize: getStringSize(context),
-              ),
+    return ElevatedButton(
+      onPressed: updateCommand,
+      child: FittedBox(
+        child: Padding(
+          padding: EdgeInsets.all(hasMinWidth(context) ? 8.0 : 0),
+          child: Text(
+            R.string.updateConfigurations,
+            style: TextStyle(
+              fontSize: getStringSize(context),
             ),
           ),
         ),

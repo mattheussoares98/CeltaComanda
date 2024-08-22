@@ -72,7 +72,32 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-   
+
+    final List<Widget> buttons = [
+      LogoutButton(
+        userPassword: _passwordController,
+        userPersonalizedCode: _personalizedCodeController,
+        validationKey: _key,
+        updateIsDoingLogout: () {
+          setState(() {
+            _isDoingLogout = true;
+          });
+        },
+      ),
+      UpdateConfigurationsButton(
+        updateCommand: () async {
+          setState(() {
+            _isDoingLogout = false;
+          });
+
+          await _updateCommandData(
+            homePresenter,
+            printedProductsPresenter,
+          );
+        },
+      ),
+      const ReserveTableButton(),
+    ];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -117,41 +142,21 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   );
                 },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: LogoutButton(
-                      userPassword: _passwordController,
-                      userPersonalizedCode: _personalizedCodeController,
-                      validationKey: _key,
-                      updateIsDoingLogout: () {
-                        setState(() {
-                          _isDoingLogout = true;
-                        });
-                      },
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: hasMinWidth(context) ? 3 : 2,
+                    childAspectRatio: 5,
+                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 5,
                   ),
-                  SizedBox(width: hasMinWidth(context) ? 10 : 1),
-                  Expanded(
-                    child: UpdateConfigurationsButton(
-                      updateCommand: () async {
-                        setState(() {
-                          _isDoingLogout = false;
-                        });
-
-                        await _updateCommandData(
-                          homePresenter,
-                          printedProductsPresenter,
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(width: hasMinWidth(context) ? 10 : 1),
-                  const Expanded(
-                    child: ReserveTableButton(),
-                  ),
-                ],
+                  itemCount: buttons.length,
+                  itemBuilder: (context, index) {
+                    return buttons[index];
+                  },
+                ),
               ),
               const UpdateMenuButton()
             ],

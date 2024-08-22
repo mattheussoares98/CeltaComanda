@@ -6,7 +6,6 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
-import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 import '../../ui/mocks/mocks.dart';
 
@@ -25,7 +24,6 @@ void main() {
       expansibleGroupFromProductPresenter;
 
   late NavigateToSpy navigateTo;
-  late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late CommandInformationsSpy ticketIsPermitted;
   late LoadCommandDataSpy localCommandData;
@@ -53,7 +51,6 @@ void main() {
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
     sut = GetxHomePresenter(
-      loadExpansibleGroups: loadExpansibleGroups,
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
       commandInformations: ticketIsPermitted,
@@ -66,7 +63,6 @@ void main() {
   }
 
   void initUsecases() {
-    loadExpansibleGroups = LoadExpansibleGroupsSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();

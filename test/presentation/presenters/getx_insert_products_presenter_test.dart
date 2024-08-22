@@ -6,7 +6,6 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
-import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:get/get.dart';
@@ -25,7 +24,6 @@ void main() {
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
 
-  late GetProductCompositionSpy getProductComposition;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late ValidateComboxSpy validateCombox;
@@ -80,7 +78,6 @@ void main() {
 
   void initPresenters() {
     sut = GetxInsertProductsPresenter(
-      getProductComposition: getProductComposition,
       updateSaleRequestTemp: updateSaleRequestTemp,
       validateCombox: validateCombox,
     );
@@ -91,18 +88,12 @@ void main() {
   }
 
   void initUsecases() {
-    getProductComposition = GetProductCompositionSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     validateCombox = ValidateComboxSpy();
   }
 
   void initMocks() {
-    getProductComposition.mockGetFathers(optionalFathers);
-    getProductComposition.mockGetChildsOfFather(optionalFathers
-        .map((element) => ProductCompositionViewModel.fromEntityWithChilds(
-            element, optionalFathers))
-        .toList());
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     expansibleGroupFromProductPresenter.mockProductHasComment(true);
     expansibleGroupFromProductPresenter.mockProductHasObligatoryOptions(true);

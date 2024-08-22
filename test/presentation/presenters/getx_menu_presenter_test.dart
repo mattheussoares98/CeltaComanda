@@ -33,7 +33,6 @@ void main() {
   late CommandInformationsSpy ticketIsPermitted;
   late SearchProductByCodeSpy searchProductByCode;
   late BarcodeScannerSpy barcodeScanner;
-  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadProductsSpy loadProducts;
   late GetProductCompositionSpy getProductComposition;
 
@@ -55,7 +54,6 @@ void main() {
     navigateTo = NavigateToSpy();
     searchProductByCode = SearchProductByCodeSpy();
     barcodeScanner = BarcodeScannerSpy();
-    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadProducts = LoadProductsSpy();
     getProductComposition = GetProductCompositionSpy();
   }
@@ -71,7 +69,6 @@ void main() {
       commandInformations: ticketIsPermitted,
       searchProductByCode: searchProductByCode,
       barcodeScanner: barcodeScanner,
-      updateSaleRequestTemp: updateSaleRequestTemp,
       loadProducts: loadProducts,
       getProductComposition: getProductComposition,
     );

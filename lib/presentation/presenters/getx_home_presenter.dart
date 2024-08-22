@@ -13,7 +13,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
   final CommandInformations commandInformations;
-  final LoadExpansibleGroups loadExpansibleGroups;
   final LocalCommandData localCommandData;
   final UserValidations userValidations;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -21,7 +20,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LoadSellers loadSellers;
 
   GetxHomePresenter({
-    required this.loadExpansibleGroups,
     required this.navigateTo,
     required this.localEnterpriseData,
     required this.commandInformations,

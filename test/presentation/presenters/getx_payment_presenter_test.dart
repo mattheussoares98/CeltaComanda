@@ -49,8 +49,6 @@ void main() {
   initPresenters() {
     sut = GetxPaymentPresenter(
       pay: pay,
-      loadPrintedProducts: loadPrintedProducts,
-      barcodeScanner: barcodeScanner,
       commandInformations: commandInformations,
       paidInformations: paidInformations,
     );

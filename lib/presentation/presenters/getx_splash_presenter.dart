@@ -6,12 +6,10 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
-  final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
 
   GetxSplashPresenter({
-    required this.loadSaleRequestTemp,
     required this.navigateTo,
     required this.loadEnterpriseData,
   });
@@ -22,11 +20,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
     try {
       EnterpriseDataBuilder.enterpriseDataEntity =
           await loadEnterpriseData.load();
-      // navigateTo.navigate(
-      //   pageRoute: PageRoutes.enterpriseValidation,
-      //   clear: true,
-      // );
-      // return;
+
       if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation,

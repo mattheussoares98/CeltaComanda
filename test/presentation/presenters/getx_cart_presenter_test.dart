@@ -22,10 +22,7 @@ void main() {
       expansibleGroupFromProductPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late UpdateProductQuantitySpy updateProductQuantity;
-  late UpdateProductCommentSpy updateProductComment;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
-  late CommandInformationsSpy ticketIsPermitted;
   late AddPrintRequestSpy addPrintRequest;
   late LocalPrintRequestSpy localPrintRequest;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -49,10 +46,7 @@ void main() {
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
-    updateProductQuantity = UpdateProductQuantitySpy();
-    updateProductComment = UpdateProductCommentSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
-    ticketIsPermitted = CommandInformationsSpy();
     addPrintRequest = AddPrintRequestSpy();
     localPrintRequest = LocalPrintRequestSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
@@ -68,10 +62,7 @@ void main() {
 
     sut = GetxCartPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
-      updateProductQuantity: updateProductQuantity,
-      updateProductComment: updateProductComment,
       finishSaleRequestTemp: finishSaleRequestTemp,
-      commandInformations: ticketIsPermitted,
       addPrintRequest: addPrintRequest,
       localPrintRequest: localPrintRequest,
       updateSaleRequestTemp: updateSaleRequestTemp,

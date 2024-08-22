@@ -20,7 +20,6 @@ class GetxMenuPresenter extends GetxController
   final SearchProductByCode searchProductByCode;
   final LoadExpansibleGroups loadExpansibleGroups;
   final BarcodeScanner barcodeScanner;
-  final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadProducts loadProducts;
   final GetProductComposition getProductComposition;
 
@@ -30,7 +29,6 @@ class GetxMenuPresenter extends GetxController
     required this.commandInformations,
     required this.searchProductByCode,
     required this.barcodeScanner,
-    required this.updateSaleRequestTemp,
     required this.loadProducts,
     required this.getProductComposition,
   });

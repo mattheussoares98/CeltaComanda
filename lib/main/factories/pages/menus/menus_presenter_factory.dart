@@ -9,7 +9,6 @@ MenuPresenter makeGetxMenuPresenter() =>
       commandInformations: makeRemoteCommandInformations(),
       searchProductByCode: makeRemoteSearchProductByCode(),
       barcodeScanner: makeCameraBarcodeScanner(),
-      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
       loadProducts: makeRemoteLoadProducts(),
       getProductComposition: makeRemoteGetProductComposition(),
     );

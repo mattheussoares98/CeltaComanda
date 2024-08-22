@@ -12,10 +12,7 @@ import '../../ui/pages/pages.dart';
 
 class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
-  final UpdateProductQuantity updateProductQuantity;
-  final UpdateProductComment updateProductComment;
   final FinishSaleRequestTemp finishSaleRequestTemp;
-  final CommandInformations commandInformations;
   final AddPrintRequest addPrintRequest;
   final LocalPrintRequest localPrintRequest;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -25,10 +22,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   GetxCartPresenter({
     required this.loadSaleRequestTemp,
-    required this.updateProductQuantity,
-    required this.updateProductComment,
     required this.finishSaleRequestTemp,
-    required this.commandInformations,
     required this.addPrintRequest,
     required this.localPrintRequest,
     required this.updateSaleRequestTemp,

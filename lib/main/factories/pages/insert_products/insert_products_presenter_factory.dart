@@ -4,7 +4,6 @@ import '../../../../ui/pages/pages.dart';
 
 InsertProductPresenter makeGetxInsertProductsPresenter() =>
     GetxInsertProductsPresenter(
-      getProductComposition: makeRemoteGetProductComposition(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
         validateCombox: makeLocalValidateCombox(),
     );

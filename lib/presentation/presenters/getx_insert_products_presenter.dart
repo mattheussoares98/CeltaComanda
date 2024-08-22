@@ -19,12 +19,10 @@ class GetxInsertProductsPresenter extends GetxController
         TotalProductsQuantityManager,
         UIErrorManager
     implements InsertProductPresenter {
-  final GetProductComposition getProductComposition;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final ValidateCombox validateCombox;
 
   GetxInsertProductsPresenter({
-    required this.getProductComposition,
     required this.updateSaleRequestTemp,
     required this.validateCombox,
   });

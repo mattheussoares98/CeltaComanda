@@ -15,8 +15,6 @@ import 'package:flutter/widgets.dart';
 void main() {
   late GetxSplashPresenter sut;
   late NavigateToSpy navigateTo;
-  late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late SaleRequestTempEntity apiSaleRequestEntity;
   late LocalEnterpriseDataSpy loadEnterpriseData;
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -25,14 +23,10 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
-    loadSaleRequestTemp = LoadSaleRequestTempSpy();
-    apiSaleRequestEntity = EntityFactory.makeApiSaleRequestEntity();
-    loadSaleRequestTemp.mockLoadSaleRequestTemp(apiSaleRequestEntity);
     loadEnterpriseData = LocalEnterpriseDataSpy();
     loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
-      loadSaleRequestTemp: loadSaleRequestTemp,
       loadEnterpriseData: loadEnterpriseData,
     );
   });

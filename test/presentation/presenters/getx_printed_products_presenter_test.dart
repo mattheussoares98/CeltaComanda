@@ -18,14 +18,14 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late MenuPresenterSpy menuPresenter;
   late HomePresenterSpy homePresenter;
-  late ExpansibleGroupFromProductPresenterSpy expansibleGroupFromProductPresenter;
+  late ExpansibleGroupFromProductPresenterSpy
+      expansibleGroupFromProductPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late UserValidationsSpy userValidations;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late RemovePrintedProductSpy removePrintedProduct;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
-  late CommandInformationsSpy ticketIsPermitted;
   late BarcodeScannerSpy barcodeScanner;
 
   late PrintedEntity printedEntity;
@@ -39,15 +39,14 @@ void main() {
     cartPresenter = CartPresenterSpy();
     menuPresenter = MenuPresenterSpy();
     homePresenter = HomePresenterSpy();
-    expansibleGroupFromProductPresenter = ExpansibleGroupFromProductPresenterSpy();
+    expansibleGroupFromProductPresenter =
+        ExpansibleGroupFromProductPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
 
     sut = GetxPrintedProductsPresenter(
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
-      commandInformations: ticketIsPermitted,
-      barcodeScanner: barcodeScanner,
     );
   }
 
@@ -56,7 +55,6 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     removePrintedProduct = RemovePrintedProductSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
-    ticketIsPermitted = CommandInformationsSpy();
     barcodeScanner = BarcodeScannerSpy();
   }
 
@@ -96,7 +94,8 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
@@ -421,7 +420,8 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -441,7 +441,8 @@ void main() {
     test("ShouldCall removeProduct on call sut.removeProduct", () async {
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -460,7 +461,8 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -476,7 +478,8 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -490,7 +493,8 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -512,7 +516,8 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
@@ -528,7 +533,8 @@ void main() {
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,

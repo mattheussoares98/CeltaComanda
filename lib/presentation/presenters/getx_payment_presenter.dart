@@ -10,15 +10,11 @@ class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements PaymentPresenter {
   final Pay pay;
-  final LoadPrintedProducts loadPrintedProducts;
-  final BarcodeScanner barcodeScanner;
   final CommandInformations commandInformations;
   final PaidInformations paidInformations;
 
   GetxPaymentPresenter({
     required this.pay,
-    required this.loadPrintedProducts,
-    required this.barcodeScanner,
     required this.commandInformations,
     required this.paidInformations,
   });

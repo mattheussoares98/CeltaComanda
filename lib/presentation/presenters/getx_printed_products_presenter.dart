@@ -14,15 +14,11 @@ class GetxPrintedProductsPresenter
   final UserValidations userValidations;
   final LoadPrintedProducts loadPrintedProducts;
   final RemovePrintedProduct removePrintedProduct;
-  final CommandInformations commandInformations;
-  final BarcodeScanner barcodeScanner;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
     required this.removePrintedProduct,
-    required this.commandInformations,
-    required this.barcodeScanner,
   });
 
   @override

@@ -188,10 +188,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      await commandInformations.ticketIsPermitted(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: newFixedCommandNumber.toString(),
+      final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
+
+      bool isValid = await commandInformations.isValidDatetime(
+        commandNumber: commandNumber,
       );
+
+      if (!isValid) {
+        throw DomainError.blockedCommand;
+      }
 
       bool isValidPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -202,8 +207,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (isValidPassword != true) {
         throw DomainError.invalidCredentialsOrAccessDenied;
       }
-
-      final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
 
       updateCommandNumber(commandNumber);
       await localCommandData.update(
@@ -249,6 +252,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       return true;
     } on DomainError catch (e) {
       switch (e) {
+        case DomainError.blockedCommand:
+          mainError = UIError.blockedCommand;
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
         case DomainError.invalidCredentialsOrAccessDenied:

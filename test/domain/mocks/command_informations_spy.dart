@@ -47,7 +47,7 @@ class CommandInformationsSpy extends Mock implements CommandInformations {
     this.mockIsValidDateTimeCall().thenAnswer((_) async => isValid);
   }
 
-  void mockErrorIsValidDateTime(DomainError error) {
-    this.mockOpenOrBlockadeCall().thenThrow(error);
+  void mockErrorIsValidDateTime() {
+    this.mockIsValidDateTimeCall().thenThrow(DomainError.blockedCommand);
   }
 }

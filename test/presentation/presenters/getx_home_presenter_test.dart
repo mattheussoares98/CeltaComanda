@@ -25,12 +25,12 @@ void main() {
 
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late CommandInformationsSpy ticketIsPermitted;
   late LoadCommandDataSpy localCommandData;
   late UserValidationsSpy userValidations;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSellersSpy loadSellers;
+  late CommandInformationsSpy commandInformations;
 
   late CommandEntity commandEntity;
   late int newFixedCommandNumber;
@@ -53,7 +53,7 @@ void main() {
     sut = GetxHomePresenter(
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
-      commandInformations: ticketIsPermitted,
+      commandInformations: commandInformations,
       localCommandData: localCommandData,
       userValidations: userValidations,
       loadSaleRequestTemp: loadSaleRequestTemp,
@@ -64,13 +64,13 @@ void main() {
 
   void initUsecases() {
     localEnterpriseData = LocalEnterpriseDataSpy();
-    ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
     localCommandData = LoadCommandDataSpy();
     userValidations = UserValidationsSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSellers = LoadSellersSpy();
+    commandInformations = CommandInformationsSpy();
   }
 
   void initMocks() {
@@ -583,8 +583,7 @@ void main() {
         password: password,
       );
     });
-    test("Should validate ticket is permitted to validate command number",
-        () async {
+    test("Should call is valid datetime with correct values", () async {
       await sut.updateCommandData(
         peoples: peoples,
         printedProductsPresenter: printedProductsPresenter,
@@ -594,9 +593,8 @@ void main() {
       );
 
       verify(
-        () => ticketIsPermitted.ticketIsPermitted(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          commandNumber: newFixedCommandNumber.toString(),
+        () => commandInformations.isValidDatetime(
+          commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });
@@ -636,11 +634,13 @@ void main() {
         ),
       ).called(1);
     });
-    test("Should emit correct values on ticket is permitted throws", () async {
-      ticketIsPermitted.mockErrorTicketIsPermitted();
+    test("Should emit correct values on validate time throws", () async {
+      commandInformations.mockErrorIsValidDateTime();
 
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.blockedCommand]),
+      );
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateCommandData(
@@ -649,6 +649,25 @@ void main() {
         newFixedCommandNumber: newFixedCommandNumber,
         userPersonalizedCode: userPersonalizedCode,
         password: password,
+      );
+    });
+    test("Should never call userValidations if is invalid datetime", () async {
+      commandInformations.mockIsValidDateTime(false);
+
+      await sut.updateCommandData(
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verifyNever(
+        () => userValidations.isValidPassword(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          personalizedCode: userPersonalizedCode,
+          password: password,
+        ),
       );
     });
     test(
@@ -718,7 +737,7 @@ void main() {
           sut.commandNumber, newFixedCommandNumber.toString().padLeft(3, '0'));
     });
     test("Should return false if update fixed command number throws", () async {
-      ticketIsPermitted.mockErrorTicketIsPermitted();
+      commandInformations.mockErrorIsValidDateTime();
 
       final value = await sut.updateCommandData(
         peoples: peoples,

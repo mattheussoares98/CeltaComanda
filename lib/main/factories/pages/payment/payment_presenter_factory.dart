@@ -9,5 +9,4 @@ PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       barcodeScanner: makeCameraBarcodeScanner(),
       openOrBlockade: makeRemoteOpenOrBlockad(),
       paidInformations: makeLocalPaidInformations(),
-      ticketIsPermitted: makeRemoteticketIsPermitted(),
     );

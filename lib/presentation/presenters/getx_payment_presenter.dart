@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -15,7 +14,6 @@ class GetxPaymentPresenter extends GetxController
   final BarcodeScanner barcodeScanner;
   final OpenOrBlockade openOrBlockade;
   final PaidInformations paidInformations;
-  final TicketIsPermitted ticketIsPermitted;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -23,7 +21,6 @@ class GetxPaymentPresenter extends GetxController
     required this.barcodeScanner,
     required this.openOrBlockade,
     required this.paidInformations,
-    required this.ticketIsPermitted,
   });
 
   @override
@@ -36,11 +33,6 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      await ticketIsPermitted.verify(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandNumber,
-      );
-
       await pay.pay(
         paymentMode:
             paymentMode, //no MainActivity faz o tratamento para se for o PaymentMode.credit não acionar a opção de credito parcelado, senão gera uma exceção

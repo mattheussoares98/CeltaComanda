@@ -11,7 +11,6 @@ export 'local_enterprise_data_spy.dart';
 export './local_print_request_spy.dart';
 export 'use_fixed_command_number.dart';
 export './navigate_to_spy.dart';
-export './paid_informations_spy.dart';
 export './pay_spy.dart';
 export './remote_enterprise_data_spy.dart';
 export './remove_printed_product_spy.dart';

@@ -6,5 +6,4 @@ import '../../factories.dart';
 PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       pay: makeRedePay(),
       commandInformations: makeRemoteCommandInformations(),
-      paidInformations: makeLocalPaidInformations(),
     );

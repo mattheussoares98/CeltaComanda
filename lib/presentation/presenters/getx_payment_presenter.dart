@@ -11,12 +11,10 @@ class GetxPaymentPresenter extends GetxController
     implements PaymentPresenter {
   final Pay pay;
   final CommandInformations commandInformations;
-  final PaidInformations paidInformations;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.commandInformations,
-    required this.paidInformations,
   });
 
   @override
@@ -33,9 +31,7 @@ class GetxPaymentPresenter extends GetxController
         commandNumber: commandNumber,
       );
 
-      bool alreadyPaid = await paidInformations.getAlreadyPaid();
-
-      if (!isValid || alreadyPaid) {
+      if (!isValid) {
         throw DomainError.blockedCommand;
       }
 
@@ -52,11 +48,9 @@ class GetxPaymentPresenter extends GetxController
         block: true,
       );
 
-      await paidInformations.updateAlreadyPaid(false);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:
-          await paidInformations.updateAlreadyPaid(true);
           mainError = UIError.blockedCommand;
         default:
           mainError = UIError.unexpected;

@@ -31,7 +31,6 @@ void main() {
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
-  late PaidInformationsSpy paidInformations;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -43,14 +42,12 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
-    paidInformations = PaidInformationsSpy();
   }
 
   initPresenters() {
     sut = GetxPaymentPresenter(
       pay: pay,
       commandInformations: commandInformations,
-      paidInformations: paidInformations,
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();
@@ -76,7 +73,6 @@ void main() {
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     barcodeScanner.mockBarcodeScanner(commandNumber);
     homePresenter.mockLoadCommandData();
-    paidInformations.mockGetAlreadyPaid(false);
   }
 
   setUp(() {
@@ -207,19 +203,6 @@ void main() {
       );
     });
 
-    test('Should update already paid when block or libarate throws', () async {
-      pay.mockPayError(DomainError.blockedCommand);
-
-      await sut.doPayment(
-        commandNumber: homePresenter.commandNumberMock!,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verify(() => paidInformations.updateAlreadyPaid(true)).called(1);
-    });
-
     test('Should call isValidDatetime', () async {
       await sut.doPayment(
         commandNumber: homePresenter.commandNumberMock!,
@@ -251,38 +234,6 @@ void main() {
     test('Should not call to do payment when is invalid datetime', () async {
       commandInformations.mockIsValidDateTime(false);
 
-      await sut.doPayment(
-        commandNumber: homePresenter.commandNumberMock!,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verifyNever(() => pay.pay(
-            paymentMode: PaymentMode.pix,
-            params: PayParams(
-              longAmountValue: (longAmountValue * 100).toInt(),
-              portionQuantity: portionQuantity,
-            ),
-          ));
-    });
-    test('Should update AlreadyPaid to false when pay succeeds', () async {
-      paidInformations.mockUpdateAlreadyPaid(false);
-
-      await sut.doPayment(
-        commandNumber: homePresenter.commandNumberMock!,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verify(() => paidInformations.updateAlreadyPaid(false));
-    });
-    test(
-        'Should not call do payment when paidInformations.getAlreadyPaid returns true',
-        () async {
-      paidInformations.mockGetAlreadyPaid(true);
-      
       await sut.doPayment(
         commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,

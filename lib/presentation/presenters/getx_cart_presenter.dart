@@ -386,6 +386,14 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       homePresenter.updateCommandNumber(informedCommandNumber);
 
+      bool isValid = await commandInformations.isValidDatetime(
+        commandNumber: informedCommandNumber,
+      );
+
+      if (!isValid) {
+        throw DomainError.blockedCommand;
+      }
+
       SaleRequestTempEntity saleRequestTempResult =
           await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -475,6 +483,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           mainError = UIError.commandNotAvailable;
         case DomainError.barcodeNotRead:
           mainError = UIError.barcodeNotRead;
+        case DomainError.blockedCommand:
+          mainError = UIError.blockedCommand;
         default:
           mainError = UIError.unexpected;
       }

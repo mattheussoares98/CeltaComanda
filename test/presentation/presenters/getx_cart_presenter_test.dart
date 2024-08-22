@@ -1582,6 +1582,43 @@ void main() {
         homePresenter: homePresenter,
       );
     });
+    test("Should emit correct values on is invalid datetime", () async {
+      commandInformations.mockIsValidDateTime(false);
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.blockedCommand]),
+      );
+
+      await sut.saveProducts(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should not call loadSaleRequestTemp when is invalid datetime",
+        () async {
+      commandInformations.mockIsValidDateTime(false);
+
+      await sut.saveProducts(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+
+      verifyNever(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: commandNumber,
+        ),
+      );
+    });
   });
 
   group("Confirmed combox products", () {

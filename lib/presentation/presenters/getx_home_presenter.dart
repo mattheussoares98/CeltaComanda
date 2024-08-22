@@ -157,7 +157,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           throw DomainError.blockedCommand;
         }
       }
-      notifyListeners();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.blockedCommand:
@@ -172,6 +171,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
     } finally {
       isLoading = false;
+      notifyListeners();
     }
   }
 

@@ -14,6 +14,7 @@ class GetxPaymentPresenter extends GetxController
   final BarcodeScanner barcodeScanner;
   final OpenOrBlockade openOrBlockade;
   final PaidInformations paidInformations;
+  final TicketIsPermitted ticketIsPermitted;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -21,6 +22,7 @@ class GetxPaymentPresenter extends GetxController
     required this.barcodeScanner,
     required this.openOrBlockade,
     required this.paidInformations,
+    required this.ticketIsPermitted,
   });
 
   @override

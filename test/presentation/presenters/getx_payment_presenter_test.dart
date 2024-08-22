@@ -32,6 +32,7 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
   late OpenOrBlockadeSpy openOrBlockade;
   late PaidInformationsSpy paidInformations;
+  late TicketIsPermittedSpy ticketIsPermitted;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -44,6 +45,7 @@ void main() {
     barcodeScanner = BarcodeScannerSpy();
     openOrBlockade = OpenOrBlockadeSpy();
     paidInformations = PaidInformationsSpy();
+    ticketIsPermitted = TicketIsPermittedSpy();
   }
 
   initPresenters() {
@@ -53,6 +55,7 @@ void main() {
       barcodeScanner: barcodeScanner,
       openOrBlockade: openOrBlockade,
       paidInformations: paidInformations,
+      ticketIsPermitted: ticketIsPermitted,
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();

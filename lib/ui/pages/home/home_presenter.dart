@@ -56,4 +56,9 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required int personalizedCode,
     required String password,
   });
+
+  Future<void> openOrBlockadeCommand({
+    required int commandNumber,
+    required bool isOpen,
+  });
 }

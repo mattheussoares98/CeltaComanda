@@ -313,6 +313,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
+  Future<void> openOrBlockadeCommand({
+    required int commandNumber,
+    required bool isOpen,
+  }) async {}
+
+  @override
   void updateCommandNumber(String? value) {
     _commandNumber = value;
   }

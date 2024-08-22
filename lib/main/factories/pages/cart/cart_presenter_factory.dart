@@ -11,4 +11,5 @@ CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       confirmedCartProducts: makeLocalConfirmedCartProducts(),
       cartInformations: makeLocalCartInformations(),
       barcodeScanner: makeCameraBarcodeScanner(),
+      commandInformations: makeRemoteCommandInformations(),
     );

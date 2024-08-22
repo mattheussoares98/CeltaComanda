@@ -29,6 +29,7 @@ void main() {
   late ConfirmedCartProductsSpy confirmedCartProducts;
   late CartInformationsSpy cartInformations;
   late BarcodeScannerSpy barcodeScanner;
+  late CommandInformationsSpy commandInformations;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
@@ -53,6 +54,7 @@ void main() {
     confirmedCartProducts = ConfirmedCartProductsSpy();
     cartInformations = CartInformationsSpy();
     barcodeScanner = BarcodeScannerSpy();
+    commandInformations = CommandInformationsSpy();
   }
 
   void initPresenters() {
@@ -69,6 +71,7 @@ void main() {
       confirmedCartProducts: confirmedCartProducts,
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
+      commandInformations: commandInformations,
     );
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();

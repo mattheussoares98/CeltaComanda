@@ -42,6 +42,8 @@ class GetxPaymentPresenter extends GetxController
         ),
       );
 
+      await paidInformations.updateAlreadyPaid(true);
+
       await openOrBlockade.blockOrLiberate(
         commandNumber: commandNumber,
         block: true,

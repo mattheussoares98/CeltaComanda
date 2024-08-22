@@ -207,6 +207,17 @@ void main() {
             block: true,
           )).called(1);
     });
+
+    test('Should update already paid when do payment succeds', () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(() => paidInformations.updateAlreadyPaid(true)).called(1);
+    });
   });
 
   group("Get total value", () {

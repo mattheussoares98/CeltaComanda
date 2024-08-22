@@ -30,7 +30,12 @@ class AppBarButton extends StatelessWidget {
               mainAxisAlignment:
                   isPrice ? MainAxisAlignment.end : MainAxisAlignment.start,
               children: [
-                Icon(icon),
+                Flexible(
+                  child: Icon(
+                    icon,
+                    size: hasMinWidth(context) ? 30 : 17,
+                  ),
+                ),
                 Center(
                   child: hasMinWidth(context)
                       ? Padding(
@@ -70,14 +75,17 @@ class AppBarButton extends StatelessWidget {
           color: Colors.black,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: hasMinWidth(context) ? 16 : 5, vertical: 1),
+              horizontal: hasMinWidth(context) ? 16 : 5,
+              vertical: 1,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(icon, color: Colors.white),
+                      Flexible(child: Icon(icon, color: Colors.white)),
                       SizedBox(width: hasMinWidth(context) ? 3 : 0),
                       Center(
                         child: hasMinWidth(context)
@@ -89,29 +97,23 @@ class AppBarButton extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 2),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Container(
-                        color: Colors.black,
-                        child: InkWell(
-                          onTap: onPress,
-                          child: FittedBox(
-                            child: Text(
-                              quantityString
-                                  .toDouble()
-                                  .toString()
-                                  .toBrazilianNumber()
-                                  .addBrazilianCoin(),
-                              style: TextStyle(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                Container(
+                  color: Colors.black,
+                  child: InkWell(
+                    onTap: onPress,
+                    child: FittedBox(
+                      child: Text(
+                        quantityString
+                            .toDouble()
+                            .toString()
+                            .toBrazilianNumber()
+                            .addBrazilianCoin(),
+                        style: TextStyle(
+                          color: Theme.of(context).secondaryHeaderColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],

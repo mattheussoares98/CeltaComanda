@@ -47,7 +47,8 @@ class _HomePageState extends State<HomePage>
             Provider.of(context, listen: false);
         CartPresenter cartPresenter = Provider.of(context, listen: false);
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
-        ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        ExpansibleGroupFromProductPresenter
+            expansibleGroupFromProductPresenter =
             Provider.of(context, listen: false);
 
         WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -57,7 +58,8 @@ class _HomePageState extends State<HomePage>
               menuPresenter: menuPresenter,
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
-              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
               homePresenter: homePresenter,
             );
             // setState(() {});
@@ -146,13 +148,15 @@ class _HomePageState extends State<HomePage>
         child: Scaffold(
           drawerEnableOpenDragGesture: false,
           //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
-          drawer: drawer(
-            context: context,
-            menuPresenter: menuPresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            cartPresenter: cartPresenter,
-            homePresenter: homePresenter,
-          ),
+          drawer: homePresenter.isFixedCommandNumber
+              ? null
+              : drawer(
+                  context: context,
+                  menuPresenter: menuPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  cartPresenter: cartPresenter,
+                  homePresenter: homePresenter,
+                ),
           appBar: homeAppBar(
             printedProductsPresenter: printedProductsPresenter,
             homePresenter: homePresenter,

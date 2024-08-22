@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
-import '../../configurations_dialog/configurations_dialog.dart';
 
 class TitleAppbar extends StatelessWidget {
   const TitleAppbar({

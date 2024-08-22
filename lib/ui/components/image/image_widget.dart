@@ -83,7 +83,7 @@ class _ImageWidgetState extends State<ImageWidget>
                       .toLowerCase()
                       .contains("(novo)") ==
                   true)
-                const NewProduct()
+                NewProductBadge(height: widget.height * 0.25)
             ],
           ),
         ),

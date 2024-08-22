@@ -25,4 +25,17 @@ class LocalPaidInformations implements PaidInformations {
       throw DomainError.unexpected;
     }
   }
+
+  @override
+  Future<void> updateAlreadyPaid(bool newValue) async {
+    try {
+      await hiveStorage.delete(CacheKeys.paidInformations.name);
+
+      final paidEncoded = jsonEncode(newValue);
+
+      await hiveStorage.put(CacheKeys.paidInformations.name, paidEncoded);
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
+  }
 }

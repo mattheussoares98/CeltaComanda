@@ -190,6 +190,20 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
     });
+    test('Should call blockOrLiberate with correct values on success to pay',
+        () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(() => openOrBlockade.blockOrLiberate(
+            commandNumber: homePresenter.commandNumberMock!,
+            block: true,
+          )).called(1);
+    });
   });
 
   group("Get total value", () {

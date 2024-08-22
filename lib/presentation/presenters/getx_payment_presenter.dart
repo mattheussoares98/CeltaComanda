@@ -39,6 +39,11 @@ class GetxPaymentPresenter extends GetxController
           portionQuantity: portionQuantity,
         ),
       );
+
+      await openOrBlockade.blockOrLiberate(
+        commandNumber: commandNumber,
+        block: true,
+      );
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

@@ -1,8 +1,8 @@
 import '../../../../data/usecases/usecases.dart';
 import '../../../../domain/usecases/usecases.dart';
-import '../../../../main/factories/factories.dart';
+import '../../factories.dart';
 
-TicketIsPermitted makeRemoteticketIsPermitted() =>
-    RemoteTicketIsPermitted(
+SearchProductByCode makeRemoteSearchProductByCode() =>
+    RemoteSearchProductByCode(
       httpAdapter: makeHttpAdapter(),
     );

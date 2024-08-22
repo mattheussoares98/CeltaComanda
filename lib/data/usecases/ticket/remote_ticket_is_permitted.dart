@@ -1,4 +1,4 @@
-import '../../../data/models/ticket_is_permitted_model.dart';
+import '../../models/ticket_is_permitted_model.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';

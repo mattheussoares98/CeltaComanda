@@ -1,3 +1,3 @@
 abstract class IsValidDatetime {
-  Future<bool> verify();
+  Future<bool> verify({required String commandNumber});
 }

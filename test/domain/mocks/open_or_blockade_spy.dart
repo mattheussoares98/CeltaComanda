@@ -6,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 
 class OpenOrBlockadeSpy extends Mock implements OpenOrBlockade {
   OpenOrBlockadeSpy() {
-    this.mockOpenOrBlockadeSpy();
+    this.mockOpenOrBlockade(true);
   }
 
   When mockOpenOrBlockadeSpyCall() => when(() => this.blockOrLiberate(
@@ -14,8 +14,8 @@ class OpenOrBlockadeSpy extends Mock implements OpenOrBlockade {
         block: any(named: "block"),
       ));
 
-  void mockOpenOrBlockadeSpy() {
-    this.mockOpenOrBlockadeSpyCall().thenAnswer((_) async => _);
+  void mockOpenOrBlockade(bool isBlockade) {
+    this.mockOpenOrBlockadeSpyCall().thenAnswer((_) async => isBlockade);
   }
 
   void mockError(DomainError error) {

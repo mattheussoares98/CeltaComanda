@@ -221,6 +221,39 @@ void main() {
 
       verifyNever(() => paidInformations.updateAlreadyPaid(true));
     });
+    test(
+        'Should call ticketIsPermitted when try do payment to avoid do payment when ticket is unavailable',
+        () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(() => ticketIsPermitted.verify(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            commandNumber: homePresenter.commandNumberMock!,
+          )).called(1);
+    });
+    test('Should not call doPayment when ticketIsPermitted throws', () async {
+      ticketIsPermitted.mockError();
+
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verifyNever(() => pay.pay(
+            paymentMode: PaymentMode.pix,
+            params: PayParams(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+            ),
+          ));
+    });
   });
 
   group("Get total value", () {

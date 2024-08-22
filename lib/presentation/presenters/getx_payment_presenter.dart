@@ -26,6 +26,7 @@ class GetxPaymentPresenter extends GetxController
     required double longAmountValue,
     required int portionQuantity,
     required PaymentMode paymentMode,
+    required String commandNumber,
   }) async {
     mainError = null;
     isLoading = true;

@@ -103,6 +103,7 @@ void main() {
   group("Do payment", () {
     test('Should call payment correctly with pix', () async {
       await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -118,6 +119,7 @@ void main() {
     });
     test('Should call payment correctly with debit', () async {
       await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.debit,
@@ -133,6 +135,7 @@ void main() {
     });
     test('Should call payment correctly with credit', () async {
       await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.credit,
@@ -148,6 +151,7 @@ void main() {
     });
     test('Should convert amountValue correctly', () async {
       await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: 280.001,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -166,6 +170,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -179,6 +184,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,

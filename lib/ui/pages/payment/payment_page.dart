@@ -118,6 +118,8 @@ class _PaymentPageState extends State<PaymentPage>
                                 .toDouble(),
                             portionQuantity: 1,
                             paymentMode: PaymentMode.pix,
+                            commandNumber:
+                                homePresenter.commandNumber.toString(),
                           );
                         },
                         child: Text(
@@ -128,34 +130,17 @@ class _PaymentPageState extends State<PaymentPage>
                           ),
                         ),
                       ),
-                      // const SizedBox(height: 10),
-                      // ElevatedButton(
-                      //   onPressed: () async {
-                      //     await paymentPresenter.payWithCreditPortion(
-                      //       longAmountValue: printedProductsPresenter
-                      //           .printedProducts!.TotalLiquid
-                      //           .toDouble(),
-                      //       portionQuantity: 2,
-                      //     );
-                      //   },
-                      //   child: Text(
-                      //     "Crédito parcelado 2x",
-                      //     style: TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: getStringSize(context),
-                      //     ),
-                      //   ),
-                      // ),
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () async {
                           await paymentPresenter.doPayment(
-                            longAmountValue: printedProductsPresenter
-                                .printedProducts!.TotalLiquid
-                                .toDouble(),
-                            portionQuantity: 1,
-                            paymentMode: PaymentMode.debit,
-                          );
+                              longAmountValue: printedProductsPresenter
+                                  .printedProducts!.TotalLiquid
+                                  .toDouble(),
+                              portionQuantity: 1,
+                              paymentMode: PaymentMode.debit,
+                              commandNumber:
+                                  homePresenter.commandNumber.toString());
                         },
                         child: Text(
                           R.string.debit.toUpperCase(),
@@ -174,6 +159,8 @@ class _PaymentPageState extends State<PaymentPage>
                                 .toDouble(),
                             portionQuantity: 1,
                             paymentMode: PaymentMode.credit,
+                            commandNumber:
+                                homePresenter.commandNumber.toString(),
                           );
                         },
                         child: Text(

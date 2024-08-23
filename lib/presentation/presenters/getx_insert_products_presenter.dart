@@ -490,7 +490,7 @@ class GetxInsertProductsPresenter extends GetxController
   @override
   double calculateProductTotalLiquid(ProductsViewModel product) {
     if (product.childsComposition == null) {
-      return product.SaleRetailPraticed.toDouble();
+      return product.SaleRetailPraticed.toDouble() * product.productQuantity;
     } else {
       double total = 0;
       for (var child in product.childsComposition!) {

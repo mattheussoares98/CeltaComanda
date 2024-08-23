@@ -1512,6 +1512,7 @@ void main() {
     test("Sould return SaleRetailPraticedPrice when dont have childcomposition",
         () async {
       selectedProduct.childsComposition = null;
+      selectedProduct.productQuantity = 10;
 
       await sut.updateSelectedProduct(
         product: selectedProduct,
@@ -1521,7 +1522,8 @@ void main() {
 
       expect(
         sut.calculateProductTotalLiquid(selectedProduct),
-        selectedProduct.SaleRetailPraticed.toDouble(),
+        selectedProduct.SaleRetailPraticed.toDouble() *
+            selectedProduct.productQuantity,
       );
     });
   });

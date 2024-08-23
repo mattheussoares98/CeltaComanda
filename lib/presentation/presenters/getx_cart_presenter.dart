@@ -280,6 +280,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         }
 
         final newQuantity = newCartList[index].Quantity.toDouble() - 1;
+        newCartList[index].Product.productQuantity =
+            newCartList[index].Product.productQuantity - 1;
+
         final productWithNewQuantity = CartProductsViewModel(
           Comments: newCartList[index].Comments,
           Product: newCartList[index].Product,
@@ -340,6 +343,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       final newCartList = [..._cartProducts];
 
       final newQuantity = newCartList[index].Quantity.toDouble() + 1;
+
+      newCartList[index].Product.productQuantity =
+          newCartList[index].Product.productQuantity + 1;
 
       final productWithNewQuantity = CartProductsViewModel(
         Comments: newCartList[index].Comments,

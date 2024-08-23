@@ -12,6 +12,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return DropdownButtonFormField<int>(
+      isExpanded: true,
       value: homePresenter.commandNumber?.toInt(),
       validator: (value) {
         if (value == null) {

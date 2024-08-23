@@ -12,6 +12,7 @@ class UpdateSellerDropdown extends StatelessWidget {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return DropdownButtonFormField<SellersViewModel>(
+      isExpanded: true,
       value: homePresenter.selectedSeller,
       validator: (value) {
         if (value == null) {

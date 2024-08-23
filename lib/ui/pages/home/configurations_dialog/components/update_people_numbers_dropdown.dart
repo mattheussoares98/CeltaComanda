@@ -12,6 +12,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return DropdownButtonFormField<int>(
+      isExpanded: true,
       value: homePresenter.selectedPeoples,
       validator: (value) {
         if (value == null) {

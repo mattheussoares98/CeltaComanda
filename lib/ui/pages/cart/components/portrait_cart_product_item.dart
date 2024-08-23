@@ -30,8 +30,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    InsertProductPresenter insertProductPresenter =
-        Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
@@ -136,8 +134,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.35,
                 child: PriceAndUpdateProductQuantity(
-                  totalLiquid: insertProductPresenter
-                      .calculateProductPrice(widget.cartProduct.Product),
+                  product: widget.cartProduct.Product,
                   onPressedReduceQuantity:
                       widget.cartProduct.Quantity.toDouble() <= 1
                           ? null

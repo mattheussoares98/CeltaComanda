@@ -30,8 +30,6 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    InsertProductPresenter insertProductPresenter =
-        Provider.of(context, listen: false);
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
@@ -128,8 +126,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                 ),
               ),
               PriceAndUpdateProductQuantity(
-                totalLiquid: insertProductPresenter
-                    .calculateProductPrice(widget.cartProduct.Product),
+                product: widget.cartProduct.Product,
                 onPressedReduceQuantity:
                     widget.cartProduct.Quantity.toDouble() <= 1
                         ? null

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/helpers.dart';
+import '../pages/pages.dart';
 
 class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
   final int productQuantity;
-  final double totalLiquid;
+  final ProductsViewModel product;
   const PriceAndUpdateProductQuantity({
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
     required this.productQuantity,
-    required this.totalLiquid,
+    required this.product,
     super.key,
   });
 
@@ -24,6 +26,12 @@ class _PriceAndUpdateProductQuantityState
     extends State<PriceAndUpdateProductQuantity> {
   @override
   Widget build(BuildContext context) {
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
+
+    double totalLiquid =
+        insertProductPresenter.calculateProductPrice(widget.product);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -66,10 +74,12 @@ class _PriceAndUpdateProductQuantityState
         ),
         FittedBox(
           child: Text(
-            widget.totalLiquid
-                .toString()
-                .toBrazilianNumber()
-                .addBrazilianCoin(),
+            widget.product.childsComposition == null
+                ? (totalLiquid * widget.productQuantity)
+                    .toString()
+                    .toBrazilianNumber()
+                    .addBrazilianCoin()
+                : totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,

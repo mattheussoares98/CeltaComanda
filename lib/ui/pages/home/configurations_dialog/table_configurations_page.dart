@@ -20,10 +20,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   final _keyUserAndPassword = GlobalKey<FormState>();
   final _keyDropdowns = GlobalKey<FormState>();
 
-  int? _selectedCommandNumber;
-  int? _selectedPeopleNumbers;
-  SellersViewModel? _selectedSeller;
-
   Future<void> _updateCommandData(
     HomePresenter homePresenter,
     PrintedProductsPresenter printedProductsPresenter,
@@ -35,31 +31,23 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       return;
     }
 
-    if (_selectedCommandNumber == null && homePresenter.commandNumber != null) {
-      _selectedCommandNumber = homePresenter.commandNumber!.toInt();
-    }
+    final updated = await homePresenter.updateCommandData(
+      newFixedCommandNumber: homePresenter.selectedCommand!,
+      userPersonalizedCode: _personalizedCodeController.text.toInt(),
+      password: _passwordController.text,
+      printedProductsPresenter: printedProductsPresenter,
+      peoples: homePresenter.selectedPeoples,
+      sellerCode: homePresenter.selectedSeller?.SellersId.toString(),
+    );
 
-    if (_selectedCommandNumber != null &&
-        _selectedPeopleNumbers != null &&
-        _selectedSeller != null) {
-      final updated = await homePresenter.updateCommandData(
-        newFixedCommandNumber: _selectedCommandNumber!,
-        userPersonalizedCode: _personalizedCodeController.text.toInt(),
-        password: _passwordController.text,
-        printedProductsPresenter: printedProductsPresenter,
-        peoples: _selectedPeopleNumbers,
-        sellerCode: _selectedSeller?.SellersId.toString(),
-      );
-
-      if (updated) {
-        Future.delayed(Duration.zero, () {
-          showAlertMessage(
-            context,
-            R.string.msgUpdatedTableConfigurationsSuccess,
-          );
-          Navigator.of(context).pop();
-        });
-      }
+    if (updated) {
+      Future.delayed(Duration.zero, () {
+        showAlertMessage(
+          context,
+          R.string.msgUpdatedTableConfigurationsSuccess,
+        );
+        Navigator.of(context).pop();
+      });
     }
   }
 
@@ -71,25 +59,19 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       return;
     }
 
-    if (_selectedCommandNumber == null && homePresenter.commandNumber != null) {
-      _selectedCommandNumber = homePresenter.commandNumber!.toInt();
-    }
+    final updated = await homePresenter.openOrBlockadeCommand(
+      commandNumber: homePresenter.commandNumber!.toInt(),
+      isOpen: liberate,
+    );
 
-    if (_selectedCommandNumber != null) {
-      final updated = await homePresenter.openOrBlockadeCommand(
-        commandNumber: _selectedCommandNumber!,
-        isOpen: liberate,
-      );
-
-      if (updated) {
-        Future.delayed(Duration.zero, () {
-          showAlertMessage(
-            context,
-            liberate ? "helper to liberate" : "helper to block",
-            backgroundColor: Theme.of(context).secondaryHeaderColor,
-          );
-        });
-      }
+    if (updated) {
+      Future.delayed(Duration.zero, () {
+        showAlertMessage(
+          context,
+          liberate ? "helper to liberate" : "helper to block",
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+        );
+      });
     }
   }
 
@@ -149,19 +131,19 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   const SizedBox(height: 10),
                   UpdateCommandNumberDropdown(
                     updateCommandNumber: (selectedCommandNumber) {
-                      _selectedCommandNumber = selectedCommandNumber;
+                      // _selectedCommandNumber = selectedCommandNumber;
                     },
                   ),
                   const SizedBox(height: 10),
                   UpdatePeopleNumbersDropdown(
                     updatePeopleNumbers: (selectedPeopleNumbers) {
-                      _selectedPeopleNumbers = selectedPeopleNumbers;
+                      // _selectedPeopleNumbers = selectedPeopleNumbers;
                     },
                   ),
                   const SizedBox(height: 10),
                   UpdateSellerDropdown(
                     updateSelectedSeller: (selectedSeller) {
-                      _selectedSeller = selectedSeller;
+                      // _selectedSeller = selectedSeller;
                     },
                   ),
                 ],

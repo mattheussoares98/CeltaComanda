@@ -506,7 +506,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.peoples, saleRequestTempEntity.Peoples);
+      expect(sut.selectedCommand, saleRequestTempEntity.Peoples);
     });
 
     test("Should call loadSellers", () async {
@@ -851,7 +851,7 @@ void main() {
       ).called(1);
     });
     test("Should update peoples number", () async {
-      expect(sut.peoples, null);
+      expect(sut.selectedCommand, null);
 
       await sut.updateCommandData(
         sellerCode: sellerCode,
@@ -862,7 +862,7 @@ void main() {
         password: password,
       );
 
-      expect(sut.peoples, peoples);
+      expect(sut.selectedCommand, peoples);
     });
   });
 

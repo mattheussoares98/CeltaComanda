@@ -343,10 +343,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   String? get commandNumber => _commandNumber;
 
-  int? _peoples;
-  @override
-  int? get peoples => _peoples;
-
   final _isLoading = false.obs;
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
@@ -369,4 +365,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   List<SellersViewModel> _sellers = [];
   @override
   List<SellersViewModel> get sellers => _sellers;
+
+  @override
+  SellersViewModel? selectedSeller;
+
+  int? _peoples;
+  @override
+  int? get selectedCommand => 0;
+
+  @override
+  int? get selectedPeoples => _peoples;
 }

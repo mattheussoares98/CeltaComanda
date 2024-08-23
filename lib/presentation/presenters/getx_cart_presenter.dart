@@ -171,7 +171,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       final newCartList = [..._cartProducts];
 
-      newCartList.add(CartProductsViewModel.fromEntity(productWithNewComment));
+      final cartProductViewModel =
+          CartProductsViewModel.fromEntity(productWithNewComment);
+
+      cartProductViewModel.Product.productQuantity =
+          productWithNewComment.Quantity;
+
+      newCartList.add(cartProductViewModel);
 
       await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;

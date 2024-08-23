@@ -350,11 +350,14 @@ class GetxInsertProductsPresenter extends GetxController
         mainError = UIError.maximumQuantityAchieved;
       } else {
         totalProductsQuantity = totalProductsQuantity + 1;
+        selectedProductValue!.productQuantity =
+            totalProductsQuantity.toDouble();
       }
     } else if (totalProductsQuantity <= 1) {
       return;
     } else {
       totalProductsQuantity = totalProductsQuantity - 1;
+      selectedProductValue!.productQuantity = totalProductsQuantity.toDouble();
     }
 
     if (selectedProductValue != null) {

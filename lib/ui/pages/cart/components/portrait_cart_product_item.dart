@@ -145,7 +145,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                   onPressedAddQuantity: () async {
                     await cartPresenter.addCartProductQuantity(widget.index);
                   },
-                  productQuantity: widget.cartProduct.Quantity.toInt(),
                 ),
               ),
             ],

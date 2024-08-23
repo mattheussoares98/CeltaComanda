@@ -7,12 +7,10 @@ import '../pages/pages.dart';
 class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
-  final int productQuantity;
   final ProductsViewModel product;
   const PriceAndUpdateProductQuantity({
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
-    required this.productQuantity,
     required this.product,
     super.key,
   });
@@ -54,7 +52,7 @@ class _PriceAndUpdateProductQuantityState
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
                     child: Text(
-                      widget.productQuantity.toString().toBrazilianNumber(),
+                      widget.product.productQuantity.toString().toBrazilianNumber(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -75,7 +73,7 @@ class _PriceAndUpdateProductQuantityState
         FittedBox(
           child: Text(
             widget.product.childsComposition == null
-                ? (totalLiquid * widget.productQuantity)
+                ? (totalLiquid * widget.product.productQuantity)
                     .toString()
                     .toBrazilianNumber()
                     .addBrazilianCoin()

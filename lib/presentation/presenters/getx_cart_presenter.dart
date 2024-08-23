@@ -90,7 +90,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     double totalCartProductsPrice = 0;
 
     for (var products in _cartProducts) {
-      totalCartProductsPrice += calculateProductPrice(products.Product) *
+      totalCartProductsPrice /*  += calculateProductPrice(products.Product) */ *
           products.Quantity.toDouble();
     }
     return totalCartProductsPrice
@@ -560,46 +560,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateProductCompositionIncrementValue(
-      ProductCompositionViewModel product) {
-    if (product.IncrementValue.toString().toDouble() > 0) {
-      //se houver acréscimo no produto pai, retorna ele
-      return product.IncrementValue.toString().toDouble();
-    } else if (product.childs?.isEmpty == false &&
-        product.indexOfSelectedChild != null) {
-      //se houver filho selecionado e o filho tiver acréscimo, retorna o acréscimo do filho
-      final selectedChild = product.childs![product.indexOfSelectedChild!];
-
-      if (selectedChild.IncrementValue.toString().toDouble() > 0) {
-        return selectedChild.IncrementValue.toString().toDouble();
-      }
-      return 0;
-    } else {
-      return 0;
-    }
-  }
-
-  @override
-  double calculateProductCompositionTotalLiquid(
-      ProductCompositionViewModel product) {
-    return calculateProductCompositionPrice(product) *
-        product.Quantity.toString().toDouble();
-  }
-
-  @override
-  double calculateProductCompositionPrice(ProductCompositionViewModel product) {
-    if (product.IsOptionalItem == "true") {
-      return calculateProductCompositionIncrementValue(product);
-    } else if (product.OfferPrice.toString().toDouble() > 0) {
-      return product.OfferPrice.toString().toDouble() +
-          calculateProductCompositionIncrementValue(product);
-    } else {
-      return product.SalePrice.toString().toDouble() +
-          calculateProductCompositionIncrementValue(product);
-    }
-  }
-
-  @override
   Future<void> clearCart() async {
     isLoading = true;
     mainError = null;
@@ -612,19 +572,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
-    }
-  }
-
-  @override
-  double calculateProductPrice(ProductsViewModel product) {
-    if (product.childsComposition == null) {
-      return product.SaleRetailPraticed.toDouble();
-    } else {
-      double total = 0;
-      for (var child in product.childsComposition!) {
-        total += calculateProductCompositionPrice(child);
-      }
-      return total;
     }
   }
 }

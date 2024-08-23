@@ -49,13 +49,6 @@ abstract class CartPresenter implements ChangeNotifier {
     required InsertProductPresenter insertProductPresenter,
   });
 
-  double calculateProductCompositionTotalLiquid(
-      ProductCompositionViewModel product);
-  double calculateProductCompositionIncrementValue(
-      ProductCompositionViewModel product);
-  double calculateProductCompositionPrice(ProductCompositionViewModel product);
-  double calculateProductPrice(ProductsViewModel product);
-
   CartProductEntity productWithSelectedsComments({
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,

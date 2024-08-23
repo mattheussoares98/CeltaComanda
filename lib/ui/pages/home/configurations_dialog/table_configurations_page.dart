@@ -110,13 +110,13 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: true);
         },
-        child: Text(R.string.msgReleasesCommand),
+        child: FittedBox(child: Text(R.string.msgReleasesCommand)),
       ),
       ElevatedButton(
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: false);
         },
-        child: Text(R.string.msgBlockedCommand),
+        child: FittedBox(child: Text(R.string.msgBlockedCommand)),
       ),
     ];
 

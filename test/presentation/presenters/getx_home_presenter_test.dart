@@ -40,7 +40,7 @@ void main() {
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late int? peoples;
   late String? sellerCode;
-  late List<SellerEntity> sallerEntitys;
+  late List<SellerEntity> sellerEntitys;
   late SellersViewModel selectedSeller;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,7 +81,7 @@ void main() {
     localCommandData.mockUpdate();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
-    loadSellers.mockLoadSellers(sallerEntitys);
+    loadSellers.mockLoadSellers(sellerEntitys);
   }
 
   void initEntitys() {
@@ -118,7 +118,7 @@ void main() {
               )).toList(),
     );
 
-    sallerEntitys = [
+    sellerEntitys = [
       EntityFactory.makeSellerEntity(),
       EntityFactory.makeSellerEntity(),
     ];
@@ -508,7 +508,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.selectedCommand, saleRequestTempEntity.Peoples);
+      expect(sut.selectedPeoples, saleRequestTempEntity.Peoples);
     });
 
     test("Should call loadSellers", () async {
@@ -541,7 +541,26 @@ void main() {
       );
 
       expect(sut.sellers,
-          sallerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
+          sellerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
+    });
+    test("Should update selected seller correctly", () async {
+      await sut.updateIsFixedCommandNumber();
+      sut.updateCommandNumber(newFixedCommandNumber.toString());
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(
+        sut.selectedSeller,
+        sellerEntitys.firstWhereOrNull(
+            (e) => e.SellersId.toString() == saleRequestTempEntity.SellerCode),
+      );
     });
 
     test("Should emit correct values on throws", () async {
@@ -853,7 +872,7 @@ void main() {
       ).called(1);
     });
     test("Should update peoples number", () async {
-      expect(sut.selectedCommand, null);
+      expect(sut.selectedPeoples, null);
 
       await sut.updateCommandData(
         sellerCode: sellerCode,
@@ -864,7 +883,7 @@ void main() {
         password: password,
       );
 
-      expect(sut.selectedCommand, peoples);
+      expect(sut.selectedPeoples, peoples);
     });
   });
 

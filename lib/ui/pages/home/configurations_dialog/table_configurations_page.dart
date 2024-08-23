@@ -97,6 +97,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         },
       ),
       const ReserveTableButton(),
+      ElevatedButton(
+        onPressed: () async {},
+        child: const Text("Liberar comanda"),
+      ),
     ];
 
     return Scaffold(

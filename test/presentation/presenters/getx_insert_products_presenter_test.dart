@@ -1492,4 +1492,37 @@ void main() {
       expect(sut.totalProductsQuantity, 1);
     });
   });
+
+  group("Calculate product price", () {
+    test("Sould return product composition price when have childcomposition",
+        () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(
+        sut.calculateProductPrice(selectedProduct),
+        sut.calculateProductCompositionTotalLiquid(
+          product: selectedProduct.childsComposition![0],
+        ),
+      );
+    });
+    test("Sould return SaleRetailPraticedPrice when dont have childcomposition",
+        () async {
+      selectedProduct.childsComposition = null;
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(
+        sut.calculateProductPrice(selectedProduct),
+        selectedProduct.SaleRetailPraticed.toDouble(),
+      );
+    });
+  });
 }

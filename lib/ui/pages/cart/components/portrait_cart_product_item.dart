@@ -137,7 +137,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                 width: MediaQuery.of(context).size.width * 0.35,
                 child: PriceAndUpdateProductQuantity(
                   totalLiquid: insertProductPresenter
-                      .getProductPrice(widget.cartProduct.Product),
+                      .calculateProductPrice(widget.cartProduct.Product),
                   onPressedReduceQuantity:
                       widget.cartProduct.Quantity.toDouble() <= 1
                           ? null

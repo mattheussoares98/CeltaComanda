@@ -129,7 +129,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
               ),
               PriceAndUpdateProductQuantity(
                 totalLiquid: insertProductPresenter
-                    .getProductPrice(widget.cartProduct.Product),
+                    .calculateProductPrice(widget.cartProduct.Product),
                 onPressedReduceQuantity:
                     widget.cartProduct.Quantity.toDouble() <= 1
                         ? null

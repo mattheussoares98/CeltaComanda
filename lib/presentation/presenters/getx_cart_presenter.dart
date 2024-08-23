@@ -92,7 +92,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     for (var products in _cartProducts) {
       final productPrice =
-          insertProductPresenter.getProductPrice(products.Product);
+          insertProductPresenter.calculateProductPrice(products.Product);
 
       totalCartProductsPrice += productPrice;
     }

@@ -4,6 +4,7 @@ import './translation.dart';
 
 class PtBr implements Translation {
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
+  String get msgBlockedCommand => 'Comanda bloqueada';
   String get msgEmailInUse => 'O email já está em uso.';
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
@@ -39,6 +40,7 @@ class PtBr implements Translation {
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';
+  String get msgReleasesCommand => "Comanda liberada";
   String get msgSearchCommandToPay =>
       'Consulte alguma comanda para efetuar o pagamento dela';
   String get msgSelectCommand => 'Selecione a comanda';

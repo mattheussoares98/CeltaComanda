@@ -1,5 +1,6 @@
 abstract class Translation {
   String get msgBarcodeNotRead;
+  String get msgBlockedCommand;
   String get msgEmailInUse;
   String get msgClearCartOnLogout;
   String get msgCloseApplication;
@@ -19,6 +20,7 @@ abstract class Translation {
   String get msgInvalidCredentialsOrAccessDenied;
   String get msgInvalidField;
   String get msgInvalidNumber;
+  String get msgReleasesCommand;
   String get msgLowBatteryChargeDevice;
   String get msgMaximumQuantityAchieved;
   String get msgObligatoryFixedCommandNumber;

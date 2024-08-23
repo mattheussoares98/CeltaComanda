@@ -4,6 +4,7 @@ import './translation.dart';
 
 class EnUs implements Translation {
   String get msgBarcodeNotRead => 'Barcode not read';
+  String get msgBlockedCommand => 'Command blocked';
   String get msgEmailInUse => 'Email already in use';
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
   String get msgCloseApplication => 'Close application';
@@ -36,6 +37,7 @@ class EnUs implements Translation {
   String get msgProductNotFound => 'The product was not found';
   String get msgRequestSentSuccessfully => 'The request was sent successfully';
   String get msgRequiredField => 'Required field';
+  String get msgReleasesCommand => "Command released";
   String get msgSearchCommandToPay => 'Look up a command to make the payment';
   String get msgSelectCommand => 'Select the command';
   String get msgSelectPeopleNumbers => 'Select the number of people';

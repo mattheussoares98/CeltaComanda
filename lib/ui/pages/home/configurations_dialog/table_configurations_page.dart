@@ -123,13 +123,13 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: true);
         },
-        child: const Text("Liberar comanda"),
+        child: Text(R.string.msgReleasesCommand),
       ),
       ElevatedButton(
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: false);
         },
-        child: const Text("Bloquear comanda"),
+        child: Text(R.string.msgBlockedCommand),
       ),
     ];
 

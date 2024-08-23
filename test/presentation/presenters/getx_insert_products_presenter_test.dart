@@ -1503,7 +1503,7 @@ void main() {
       );
 
       expect(
-        sut.calculateProductPrice(selectedProduct),
+        sut.calculateProductTotalLiquid(selectedProduct),
         sut.calculateProductCompositionTotalLiquid(
           product: selectedProduct.childsComposition![0],
         ),
@@ -1520,7 +1520,7 @@ void main() {
       );
 
       expect(
-        sut.calculateProductPrice(selectedProduct),
+        sut.calculateProductTotalLiquid(selectedProduct),
         selectedProduct.SaleRetailPraticed.toDouble(),
       );
     });

@@ -488,7 +488,7 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  double calculateProductPrice(ProductsViewModel product) {
+  double calculateProductTotalLiquid(ProductsViewModel product) {
     if (product.childsComposition == null) {
       return product.SaleRetailPraticed.toDouble();
     } else {

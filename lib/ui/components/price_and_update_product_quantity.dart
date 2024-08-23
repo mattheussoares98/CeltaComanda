@@ -30,7 +30,7 @@ class _PriceAndUpdateProductQuantityState
         Provider.of(context, listen: false);
 
     double totalLiquid =
-        insertProductPresenter.calculateProductPrice(widget.product);
+        insertProductPresenter.calculateProductTotalLiquid(widget.product);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

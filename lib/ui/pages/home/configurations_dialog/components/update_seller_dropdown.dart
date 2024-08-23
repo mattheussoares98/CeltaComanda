@@ -5,18 +5,14 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class UpdateSellerDropdown extends StatelessWidget {
-  final Function(SellersViewModel? value) updateSelectedSeller;
-  const UpdateSellerDropdown({
-    required this.updateSelectedSeller,
-    super.key,
-  });
+  const UpdateSellerDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return DropdownButtonFormField<SellersViewModel>(
-      // value: homePresenter.peoples,
+      value: homePresenter.selectedSeller,
       validator: (value) {
         if (value == null) {
           return R.string.msgSelectSeller;
@@ -32,16 +28,15 @@ class UpdateSellerDropdown extends StatelessWidget {
           .map((e) => DropdownMenuItem(
                 value: e,
                 onTap: () {
-                  updateSelectedSeller(e);
+                  homePresenter.updateSelectedSeller(e);
                 },
                 child: Text(
                   e.Name.toString(),
                 ),
               ))
           .toList(),
-
       onChanged: (value) {
-        updateSelectedSeller(value);
+        homePresenter.updateSelectedSeller(value);
       },
     );
   }

@@ -142,11 +142,16 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: commandNumber!,
         );
-        _peoples = saleRequest.Peoples;
 
         final sellersEntity = await loadSellers.load();
         _sellers =
             sellersEntity.map((e) => SellersViewModel.fromEntity(e)).toList();
+
+        updateSelectedPeoples(saleRequest.Peoples);
+        updateSelectedSeller(
+          _sellers.firstWhereOrNull(
+              (e) => e.SellersId.toString() == saleRequest.SellerCode),
+        );
 
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(homePresenter);
@@ -370,12 +375,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   SellersViewModel? get selectedSeller => _selectedSeller;
 
-  int? _peoples;
-
   int? _selectedCommand;
   @override
   int? get selectedCommand => _selectedCommand;
 
+  int? _peoples;
   @override
   int? get selectedPeoples => _peoples;
 

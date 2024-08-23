@@ -126,26 +126,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
           children: [
             Form(
               key: _keyDropdowns,
-              child: Column(
+              child: const Column(
                 children: [
-                  const SizedBox(height: 10),
-                  UpdateCommandNumberDropdown(
-                    updateCommandNumber: (selectedCommandNumber) {
-                      // _selectedCommandNumber = selectedCommandNumber;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  UpdatePeopleNumbersDropdown(
-                    updatePeopleNumbers: (selectedPeopleNumbers) {
-                      // _selectedPeopleNumbers = selectedPeopleNumbers;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  UpdateSellerDropdown(
-                    updateSelectedSeller: (selectedSeller) {
-                      // _selectedSeller = selectedSeller;
-                    },
-                  ),
+                  SizedBox(height: 10),
+                  UpdateCommandNumberDropdown(),
+                  SizedBox(height: 10),
+                  UpdatePeopleNumbersDropdown(),
+                  SizedBox(height: 10),
+                  UpdateSellerDropdown(),
                 ],
               ),
             ),

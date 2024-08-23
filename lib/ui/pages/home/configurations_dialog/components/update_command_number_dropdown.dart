@@ -5,11 +5,7 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class UpdateCommandNumberDropdown extends StatelessWidget {
-  final Function(int value) updateCommandNumber;
-  const UpdateCommandNumberDropdown({
-    required this.updateCommandNumber,
-    super.key,
-  });
+  const UpdateCommandNumberDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +33,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
             (e) => DropdownMenuItem(
               value: e + 1,
               onTap: () {
-                updateCommandNumber(e + 1);
+                homePresenter.updateSelectedCommand(e + 1);
               },
               child: Text(
                 (e + 1).toString(),
@@ -46,7 +42,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
           )
           .toList(),
       onChanged: (value) {
-        updateCommandNumber(value ?? 0 + 1);
+        homePresenter.updateSelectedCommand(value ?? 0 + 1);
       },
     );
   }

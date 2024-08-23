@@ -5,18 +5,14 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class UpdatePeopleNumbersDropdown extends StatelessWidget {
-  final Function(int value) updatePeopleNumbers;
-  const UpdatePeopleNumbersDropdown({
-    required this.updatePeopleNumbers,
-    super.key,
-  });
+  const UpdatePeopleNumbersDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return DropdownButtonFormField<int>(
-      value: homePresenter.selectedCommand,
+      value: homePresenter.selectedPeoples,
       validator: (value) {
         if (value == null) {
           return R.string.msgSelectPeopleNumbers;
@@ -37,7 +33,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
             (e) => DropdownMenuItem(
               value: e + 1,
               onTap: () {
-                updatePeopleNumbers(e + 1);
+                homePresenter.updateSelectedPeoples(e + 1);
               },
               child: Text(
                 (e + 1).toString(),
@@ -46,7 +42,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
           )
           .toList(),
       onChanged: (value) {
-        updatePeopleNumbers(value ?? 0 + 1);
+        homePresenter.updateSelectedPeoples(value ?? 0 + 1);
       },
     );
   }

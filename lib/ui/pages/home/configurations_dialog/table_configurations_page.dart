@@ -101,6 +101,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         onPressed: () async {},
         child: const Text("Liberar comanda"),
       ),
+      ElevatedButton(
+        onPressed: () async {},
+        child: const Text("Bloquear comanda"),
+      ),
     ];
 
     return Scaffold(

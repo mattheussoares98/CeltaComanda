@@ -25,12 +25,16 @@ class UpdateMenuButton extends StatelessWidget {
           Expanded(
             child: TextButton.icon(
               label: Text(
-                R.string.updateMenu,
+                MediaQuery.of(context).size.width > 250
+                    ? R.string.updateMenu
+                    : "",
                 style: TextStyle(color: Theme.of(context).primaryColorDark),
               ),
-              icon: Icon(
-                Icons.refresh_outlined,
-                color: Theme.of(context).primaryColorDark,
+              icon: Flexible(
+                child: Icon(
+                  Icons.refresh_outlined,
+                  color: Theme.of(context).primaryColorDark,
+                ),
               ),
               onPressed: () async {
                 Navigator.of(context).pop();
@@ -45,21 +49,25 @@ class UpdateMenuButton extends StatelessWidget {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  R.string.close.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: getStringSize(context),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Flexible(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      R.string.close.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: getStringSize(context),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

@@ -959,5 +959,26 @@ void main() {
             isOpen: isOpen,
           )).called(1);
     });
+    test("Should return true on success", () async {
+      bool isOpen = faker.randomGenerator.boolean();
+
+      final value = await sut.openOrBlockadeCommand(
+        commandNumber: newFixedCommandNumber,
+        isOpen: isOpen,
+      );
+
+      expect(value, true);
+    });
+    test("Should return false on error", () async {
+      commandInformations.mockErrorOpenOrBlockade(DomainError.unexpected);
+      bool isOpen = faker.randomGenerator.boolean();
+
+      final value = await sut.openOrBlockadeCommand(
+        commandNumber: newFixedCommandNumber,
+        isOpen: isOpen,
+      );
+
+      expect(value, false);
+    });
   });
 }

@@ -313,7 +313,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> openOrBlockadeCommand({
+  Future<bool> openOrBlockadeCommand({
     required int commandNumber,
     required bool isOpen,
   }) async {
@@ -324,8 +324,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         commandNumber: commandNumber.toString().padLeft(3, "0"),
         isOpen: isOpen,
       );
+
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
     } finally {
       isLoading = false;
     }

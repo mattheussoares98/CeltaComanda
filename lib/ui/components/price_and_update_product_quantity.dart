@@ -52,7 +52,9 @@ class _PriceAndUpdateProductQuantityState
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
                     child: Text(
-                      widget.product.productQuantity.toString().toBrazilianNumber(),
+                      widget.product.productQuantity
+                          .toString()
+                          .toBrazilianNumber(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -72,12 +74,7 @@ class _PriceAndUpdateProductQuantityState
         ),
         FittedBox(
           child: Text(
-            widget.product.childsComposition == null
-                ? (totalLiquid * widget.product.productQuantity)
-                    .toString()
-                    .toBrazilianNumber()
-                    .addBrazilianCoin()
-                : totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
+            totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,

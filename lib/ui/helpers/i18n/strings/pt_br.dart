@@ -77,6 +77,7 @@ class PtBr implements Translation {
   String get addMoreItens => "Adicionar mais itens";
   String get alwaysUseSameTable => "Usar sempre a mesma mesa";
   String get avaliate => 'Avaliar';
+  String get blockCommand => 'Bloquear comanda';
   String get cart => "Carrinho";
   String get cancel => "Cancelar";
   String get cashCredit => "Crédito à vista";
@@ -111,6 +112,7 @@ class PtBr implements Translation {
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
+  String get liberateCommand => 'Liberar comanda';
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get name => 'Nome';

@@ -75,6 +75,7 @@ class EnUs implements Translation {
   String get addMoreItens => 'Add more items';
   String get alwaysUseSameTable => 'Always use the same table';
   String get avaliate => 'Evaluate';
+  String get blockCommand => 'Block command';
   String get cart => 'Cart';
   String get cancel => 'Cancel';
   String get cashCredit => 'Cash credit';
@@ -109,6 +110,7 @@ class EnUs implements Translation {
   String get ifWantSelectProducts => 'If desired, select a product';
   String get jump => 'Skip';
   String get liberateCancelProducts => 'Allow item cancellation';
+  String get liberateCommand => 'Liberate command';
   String get loadMenu => 'Load menu';
   String get login => 'Login';
   String get name => 'Name';

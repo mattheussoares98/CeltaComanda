@@ -68,7 +68,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       Future.delayed(Duration.zero, () {
         showAlertMessage(
           context,
-          liberate ? "helper to liberate" : "helper to block",
+          liberate ? R.string.msgReleasesCommand : R.string.msgBlockedCommand,
           backgroundColor: Theme.of(context).secondaryHeaderColor,
         );
       });
@@ -110,13 +110,13 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: true);
         },
-        child: FittedBox(child: Text(R.string.msgReleasesCommand)),
+        child: FittedBox(child: Text(R.string.liberateCommand)),
       ),
       ElevatedButton(
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: false);
         },
-        child: FittedBox(child: Text(R.string.msgBlockedCommand)),
+        child: FittedBox(child: Text(R.string.blockCommand)),
       ),
     ];
 

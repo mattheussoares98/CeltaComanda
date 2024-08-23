@@ -58,6 +58,28 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     }
   }
 
+  Future<void> openOrBlock({
+    required HomePresenter homePresenter,
+    required bool liberate,
+  }) async {
+    if (_selectedCommandNumber != null) {
+      final updated = await homePresenter.openOrBlockadeCommand(
+        commandNumber: _selectedCommandNumber!,
+        isOpen: liberate,
+      );
+
+      if (updated) {
+        Future.delayed(Duration.zero, () {
+          showAlertMessage(
+            context,
+            liberate ? "helper to liberate" : "helper to block",
+            backgroundColor: Theme.of(context).secondaryHeaderColor,
+          );
+        });
+      }
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -98,11 +120,15 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       ),
       const ReserveTableButton(),
       ElevatedButton(
-        onPressed: () async {},
+        onPressed: () async {
+          await openOrBlock(homePresenter: homePresenter, liberate: true);
+        },
         child: const Text("Liberar comanda"),
       ),
       ElevatedButton(
-        onPressed: () async {},
+        onPressed: () async {
+          await openOrBlock(homePresenter: homePresenter, liberate: false);
+        },
         child: const Text("Bloquear comanda"),
       ),
     ];

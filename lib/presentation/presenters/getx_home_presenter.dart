@@ -366,13 +366,31 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   List<SellersViewModel> get sellers => _sellers;
 
+  SellersViewModel? _selectedSeller;
   @override
-  SellersViewModel? selectedSeller;
+  SellersViewModel? get selectedSeller => _selectedSeller;
 
   int? _peoples;
+
+  int? _selectedCommand;
   @override
-  int? get selectedCommand => 0;
+  int? get selectedCommand => _selectedCommand;
 
   @override
   int? get selectedPeoples => _peoples;
+
+  @override
+  void updateSelectedCommand(int value) {
+    _selectedCommand = value;
+  }
+
+  @override
+  void updateSelectedPeoples(int? value) {
+    _peoples = value;
+  }
+
+  @override
+  void updateSelectedSeller(SellersViewModel? seller) {
+    _selectedSeller = seller;
+  }
 }

@@ -12,7 +12,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   String? get commandNumber;
   int? get selectedPeoples;
   int? get selectedCommand;
-  SellersViewModel? selectedSeller;
+  SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
 
   void updateCommandNumber(String? value);
@@ -63,4 +63,8 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required int commandNumber,
     required bool isOpen,
   });
+
+  void updateSelectedPeoples(int? value);
+  void updateSelectedCommand(int value);
+  void updateSelectedSeller(SellersViewModel? seller);
 }

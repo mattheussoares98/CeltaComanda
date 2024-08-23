@@ -923,8 +923,22 @@ void main() {
   });
 
   group("Open or blockade command number", () {
-    test("Should emit correct values", () async {
+    test("Should emit correct values on success", () async {
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.openOrBlockadeCommand(
+        commandNumber: newFixedCommandNumber,
+        isOpen: true,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      commandInformations.mockErrorOpenOrBlockade(DomainError.unexpected);
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.openOrBlockadeCommand(

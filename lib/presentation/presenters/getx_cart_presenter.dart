@@ -86,12 +86,15 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  String get totalSaleRequestTempPrice {
+  String getTotalSaleRequestTempPrice(
+      InsertProductPresenter insertProductPresenter) {
     double totalCartProductsPrice = 0;
 
     for (var products in _cartProducts) {
-      totalCartProductsPrice /*  += calculateProductPrice(products.Product) */ *
-          products.Quantity.toDouble();
+      final productPrice =
+          insertProductPresenter.getProductPrice(products.Product);
+
+      totalCartProductsPrice += productPrice;
     }
     return totalCartProductsPrice
         .toString()

@@ -9,7 +9,9 @@ abstract class CartPresenter implements ChangeNotifier {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   int? get indexOfSelectedProduct;
-  String get totalSaleRequestTempPrice;
+  String getTotalSaleRequestTempPrice(
+    InsertProductPresenter insertProductPresenter,
+  );
 
   Future<void> loadSaleRequest(String commandNumber);
 

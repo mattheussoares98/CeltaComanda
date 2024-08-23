@@ -6,18 +6,12 @@ class PriceAndUpdateProductQuantity extends StatefulWidget {
   final void Function()? onPressedReduceQuantity;
   final void Function()? onPressedAddQuantity;
   final int productQuantity;
-  final double price;
   final double totalLiquid;
-  final bool showUpdateProductQuantity;
-  final bool showItemPrice;
   const PriceAndUpdateProductQuantity({
     required this.onPressedReduceQuantity,
     required this.onPressedAddQuantity,
     required this.productQuantity,
-    required this.price,
     required this.totalLiquid,
-    required this.showUpdateProductQuantity,
-    required this.showItemPrice,
     super.key,
   });
 

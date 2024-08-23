@@ -173,7 +173,8 @@ class SaveSaleRequestButton extends StatelessWidget {
             SizedBox(width: hasMinWidth(context) ? 100 : 5),
             FittedBox(
               child: Text(
-                cartPresenter.totalSaleRequestTempPrice,
+                cartPresenter
+                    .getTotalSaleRequestTempPrice(insertProductPresenter),
                 style: TextStyle(
                   fontSize: getStringSize(context),
                 ),

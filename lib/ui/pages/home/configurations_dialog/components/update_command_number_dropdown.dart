@@ -5,10 +5,8 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class UpdateCommandNumberDropdown extends StatelessWidget {
-  final bool validate;
   final Function(int value) updateCommandNumber;
   const UpdateCommandNumberDropdown({
-    required this.validate,
     required this.updateCommandNumber,
     super.key,
   });
@@ -20,9 +18,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
     return DropdownButtonFormField<int>(
       value: homePresenter.commandNumber?.toInt(),
       validator: (value) {
-        if (!validate) {
-          return null;
-        } else if (value == null) {
+        if (value == null) {
           return R.string.msgSelectCommand;
         }
 

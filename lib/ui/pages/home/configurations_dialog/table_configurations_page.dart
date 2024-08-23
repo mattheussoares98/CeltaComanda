@@ -17,12 +17,12 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   final _personalizedCodeController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();
-  final _key = GlobalKey<FormState>();
+  final _keyUserAndPassword = GlobalKey<FormState>();
+  final _keyDropdowns = GlobalKey<FormState>();
 
   int? _selectedCommandNumber;
   int? _selectedPeopleNumbers;
   SellersViewModel? _selectedSeller;
-  bool _isDoingLogout = true;
 
   Future<void> _updateCommandData(
     HomePresenter homePresenter,
@@ -30,8 +30,13 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   ) async {
     FocusScope.of(context).unfocus();
 
-    if (_key.currentState?.validate() != true) {
+    if (_keyDropdowns.currentState?.validate() != true ||
+        _keyUserAndPassword.currentState?.validate() != true) {
       return;
+    }
+
+    if (_selectedCommandNumber == null && homePresenter.commandNumber != null) {
+      _selectedCommandNumber = homePresenter.commandNumber!.toInt();
     }
 
     if (_selectedCommandNumber != null &&
@@ -62,6 +67,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     required HomePresenter homePresenter,
     required bool liberate,
   }) async {
+    if (_keyUserAndPassword.currentState?.validate() != true) {
+      return;
+    }
+
+    if (_selectedCommandNumber == null && homePresenter.commandNumber != null) {
+      _selectedCommandNumber = homePresenter.commandNumber!.toInt();
+    }
+
     if (_selectedCommandNumber != null) {
       final updated = await homePresenter.openOrBlockadeCommand(
         commandNumber: _selectedCommandNumber!,
@@ -99,19 +112,11 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       LogoutButton(
         userPassword: _passwordController,
         userPersonalizedCode: _personalizedCodeController,
-        validationKey: _key,
-        updateIsDoingLogout: () {
-          setState(() {
-            _isDoingLogout = true;
-          });
-        },
+        validationKey: _keyUserAndPassword,
+        resetDropdownsErrors: () => _keyDropdowns.currentState?.reset(),
       ),
       UpdateConfigurationsButton(
         updateCommand: () async {
-          setState(() {
-            _isDoingLogout = false;
-          });
-
           await _updateCommandData(
             homePresenter,
             printedProductsPresenter,
@@ -135,66 +140,74 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Form(
-          key: _key,
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              UpdateCommandNumberDropdown(
-                validate: !_isDoingLogout,
-                updateCommandNumber: (selectedCommandNumber) {
-                  _selectedCommandNumber = selectedCommandNumber;
-                },
-              ),
-              const SizedBox(height: 10),
-              UpdatePeopleNumbersDropdown(
-                validate: !_isDoingLogout,
-                updatePeopleNumbers: (selectedPeopleNumbers) {
-                  _selectedPeopleNumbers = selectedPeopleNumbers;
-                },
-              ),
-              const SizedBox(height: 10),
-              UpdateSellerDropdown(
-                validate: !_isDoingLogout,
-                updateSelectedSeller: (selectedSeller) {
-                  _selectedSeller = selectedSeller;
-                },
-              ),
-              const SizedBox(height: 10),
-              UserPersonalizedCodeInput(
-                passwordFocusNode: _passwordFocusNode,
-                userController: _personalizedCodeController,
-              ),
-              const SizedBox(height: 10),
-              PasswordInput(
-                passwordFocusNode: _passwordFocusNode,
-                passwordController: _passwordController,
-                updateCommandData: () async {
-                  await _updateCommandData(
-                    homePresenter,
-                    printedProductsPresenter,
-                  );
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: hasMinWidth(context) ? 3 : 2,
-                    childAspectRatio: 5,
-                    mainAxisSpacing: 5,
-                    crossAxisSpacing: 5,
+        child: Column(
+          children: [
+            Form(
+              key: _keyDropdowns,
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  UpdateCommandNumberDropdown(
+                    updateCommandNumber: (selectedCommandNumber) {
+                      _selectedCommandNumber = selectedCommandNumber;
+                    },
                   ),
-                  itemCount: buttons.length,
-                  itemBuilder: (context, index) {
-                    return buttons[index];
-                  },
-                ),
+                  const SizedBox(height: 10),
+                  UpdatePeopleNumbersDropdown(
+                    updatePeopleNumbers: (selectedPeopleNumbers) {
+                      _selectedPeopleNumbers = selectedPeopleNumbers;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  UpdateSellerDropdown(
+                    updateSelectedSeller: (selectedSeller) {
+                      _selectedSeller = selectedSeller;
+                    },
+                  ),
+                ],
               ),
-              const UpdateMenuButton()
-            ],
-          ),
+            ),
+            const SizedBox(height: 10),
+            Form(
+              key: _keyUserAndPassword,
+              child: Column(
+                children: [
+                  UserPersonalizedCodeInput(
+                    passwordFocusNode: _passwordFocusNode,
+                    userController: _personalizedCodeController,
+                  ),
+                  const SizedBox(height: 10),
+                  PasswordInput(
+                    passwordFocusNode: _passwordFocusNode,
+                    passwordController: _passwordController,
+                    updateCommandData: () async {
+                      await _updateCommandData(
+                        homePresenter,
+                        printedProductsPresenter,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: hasMinWidth(context) ? 3 : 2,
+                  childAspectRatio: 5,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                ),
+                itemCount: buttons.length,
+                itemBuilder: (context, index) {
+                  return buttons[index];
+                },
+              ),
+            ),
+            const UpdateMenuButton()
+          ],
         ),
       ),
     );

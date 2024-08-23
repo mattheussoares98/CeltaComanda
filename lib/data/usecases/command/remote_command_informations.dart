@@ -32,12 +32,12 @@ class RemoteCommandInformations implements CommandInformations {
   @override
   Future<bool> openOrBlockade({
     required String commandNumber,
-    required bool block,
+    required bool isOpen,
   }) async {
     try {
       final ticketIsPermitted = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APITicketAC/OpenOrBlockade?_personalizedCode=$commandNumber&isOpen=$block",
+            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APITicketAC/OpenOrBlockade?_personalizedCode=$commandNumber&isOpen=$isOpen",
         method: "post",
       );
 

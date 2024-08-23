@@ -319,7 +319,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }) async {
     mainError = null;
     isLoading = true;
-    try {} catch (e) {
+    try {
+      await commandInformations.openOrBlockade(
+        commandNumber: commandNumber.toString().padLeft(3, "0"),
+        isOpen: isOpen,
+      );
+    } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;

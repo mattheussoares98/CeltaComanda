@@ -45,7 +45,7 @@ class GetxPaymentPresenter extends GetxController
 
       await commandInformations.openOrBlockade(
         commandNumber: commandNumber,
-        block: true,
+        isOpen: true,
       );
 
     } on DomainError catch (e) {

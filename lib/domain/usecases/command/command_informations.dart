@@ -8,6 +8,6 @@ abstract class CommandInformations {
 
   Future<bool> openOrBlockade({
     required String commandNumber,
-    required bool block,
+    required bool isOpen,
   });
 }

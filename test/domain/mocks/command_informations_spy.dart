@@ -28,7 +28,7 @@ class CommandInformationsSpy extends Mock implements CommandInformations {
 
   When mockOpenOrBlockadeCall() => when(() => this.openOrBlockade(
         commandNumber: any(named: "commandNumber"),
-        block: any(named: "block"),
+        isOpen: any(named: "isOpen"),
       ));
 
   void mockOpenOrBlockade(bool isBlockade) {

@@ -932,5 +932,18 @@ void main() {
         isOpen: true,
       );
     });
+    test("Should call with correct values", () async {
+      bool isOpen = faker.randomGenerator.boolean();
+
+      await sut.openOrBlockadeCommand(
+        commandNumber: newFixedCommandNumber,
+        isOpen: isOpen,
+      );
+
+      verify(() => commandInformations.openOrBlockade(
+            commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
+            isOpen: isOpen,
+          )).called(1);
+    });
   });
 }

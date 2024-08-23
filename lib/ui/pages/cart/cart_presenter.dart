@@ -21,7 +21,8 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> addProductInCart({
     required CartProductEntity product,
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   });
   Future<void> removeProductFromCart(int index);
   Future<void> updateCommentOfProductCart({
@@ -34,8 +35,10 @@ abstract class CartPresenter implements ChangeNotifier {
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     String? commandNumber,
+    required InsertProductPresenter insertProductPresenter,
   });
   Future<void> getLocalCartProductsData();
   Future<void> clearCart();
@@ -43,6 +46,7 @@ abstract class CartPresenter implements ChangeNotifier {
   List<UpdateSaleRequestTempProductEntity>
       convertProductsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,
+    required InsertProductPresenter insertProductPresenter,
   });
 
   double calculateProductCompositionTotalLiquid(
@@ -53,7 +57,8 @@ abstract class CartPresenter implements ChangeNotifier {
   double calculateProductPrice(ProductsViewModel product);
 
   CartProductEntity productWithSelectedsComments({
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required CartProductEntity product,
   });
 }

@@ -21,10 +21,13 @@ void writeCommandNumber({
   MenuPresenter menuPresenter = Provider.of(context, listen: false);
   CartPresenter cartPresenter = Provider.of(context, listen: false);
   HomePresenter homePresenter = Provider.of(context, listen: false);
-  ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
+  ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+      Provider.of(context, listen: false);
   PrintedProductsPresenter printedProductsPresenter =
       Provider.of(context, listen: false);
   PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+  InsertProductPresenter insertProductPresenter =
+      Provider.of(context, listen: false);
   FocusNode focusNode = FocusNode();
 
   notificationDialog(
@@ -74,7 +77,9 @@ void writeCommandNumber({
                     onWriteCommand: action,
                     focusNode: focusNode,
                     paymentPresenter: paymentPresenter,
-                    expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                    expansibleGroupFromProductPresenter:
+                        expansibleGroupFromProductPresenter,
+                    insertProductPresenter: insertProductPresenter,
                   );
                 } else {
                   focusNode.requestFocus();
@@ -89,6 +94,7 @@ void writeCommandNumber({
     closeDialogOnConfirmPress: false,
     onPress: () async {
       await _onPress(
+        insertProductPresenter: insertProductPresenter,
         context: context,
         cartPresenter: cartPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -99,7 +105,8 @@ void writeCommandNumber({
         onWriteCommand: action,
         focusNode: focusNode,
         paymentPresenter: paymentPresenter,
-        expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
     },
   );
@@ -116,7 +123,9 @@ Future<void> _onPress({
   required OnWriteCommand onWriteCommand,
   required FocusNode focusNode,
   required PaymentPresenter paymentPresenter,
-  required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  required ExpansibleGroupFromProductPresenter
+      expansibleGroupFromProductPresenter,
+  required InsertProductPresenter insertProductPresenter,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 
@@ -128,6 +137,7 @@ Future<void> _onPress({
 
   if (onWriteCommand == OnWriteCommand.saveProducts) {
     bool isUpdated = await cartPresenter.saveProducts(
+      insertProductPresenter: insertProductPresenter,
       printedProductsPresenter: printedProductsPresenter,
       tableNumber: 0,
       commandNumber: commandNumber,

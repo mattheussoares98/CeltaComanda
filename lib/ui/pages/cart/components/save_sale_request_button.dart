@@ -17,10 +17,12 @@ class SaveSaleRequestButton extends StatelessWidget {
   _addProducts({
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required BuildContext context,
     required HomePresenter homePresenter,
     required int? tableNumber,
+    required InsertProductPresenter insertProductPresenter,
     String? commandNumber,
   }) async {
     bool isUpdated = await cartPresenter.saveProducts(
@@ -29,6 +31,7 @@ class SaveSaleRequestButton extends StatelessWidget {
       commandNumber: commandNumber,
       homePresenter: homePresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+      insertProductPresenter: insertProductPresenter,
     );
 
     if (isUpdated) {
@@ -46,7 +49,10 @@ class SaveSaleRequestButton extends StatelessWidget {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: true);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -73,12 +79,14 @@ class SaveSaleRequestButton extends StatelessWidget {
             confirmMessage: R.string.send,
             onPress: () async {
               await _addProducts(
+                insertProductPresenter: insertProductPresenter,
                 cartPresenter: cartPresenter,
                 context: context,
                 printedProductsPresenter: printedProductsPresenter,
                 tableNumber: null,
                 homePresenter: homePresenter,
-                expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
               );
             },
           );
@@ -91,12 +99,14 @@ class SaveSaleRequestButton extends StatelessWidget {
             closeDialogOnConfirmPress: false,
             onCancelPress: () async {
               await _addProducts(
+                insertProductPresenter: insertProductPresenter,
                 cartPresenter: cartPresenter,
                 context: context,
                 printedProductsPresenter: printedProductsPresenter,
                 tableNumber: null,
                 homePresenter: homePresenter,
-                expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
               );
             },
             onPress: () async {
@@ -105,12 +115,14 @@ class SaveSaleRequestButton extends StatelessWidget {
               if (isValid == true) {
                 Navigator.of(context).pop();
                 await _addProducts(
+                  insertProductPresenter: insertProductPresenter,
                   cartPresenter: cartPresenter,
                   context: context,
                   printedProductsPresenter: printedProductsPresenter,
                   tableNumber: int.tryParse(tableNumberController.text),
                   homePresenter: homePresenter,
-                  expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                  expansibleGroupFromProductPresenter:
+                      expansibleGroupFromProductPresenter,
                 );
               }
             },

@@ -20,6 +20,7 @@ void main() {
   late HomePresenterSpy homePresenter;
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
+  late InsertProductsPresenterSpy insertProductPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
@@ -61,6 +62,7 @@ void main() {
     menuPresenter = MenuPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     homePresenter = HomePresenterSpy();
+    insertProductPresenter = InsertProductsPresenterSpy();
 
     sut = GetxCartPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
@@ -185,6 +187,16 @@ void main() {
     registerFallbackValue(EntityFactory.makePrintRequestEntity());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(EntityFactory.makeProductCompositionViewModel(
+      quantity: faker.randomGenerator.decimal(),
+      salePrice: faker.randomGenerator.decimal(),
+      offerPrice: faker.randomGenerator.decimal(),
+      fatherIncrement: faker.randomGenerator.decimal(),
+      childIncrement: faker.randomGenerator.decimal(),
+      indexOfSelectedChild: faker.randomGenerator.integer(10),
+      isOptionalItem: faker.randomGenerator.boolean(),
+      insertChilds: faker.randomGenerator.boolean(),
+    ));
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
@@ -400,6 +412,7 @@ void main() {
     test("Should call cartInformations.clear when saveProducts succeeds",
         () async {
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -556,6 +569,7 @@ void main() {
   group("Add PrintRequest", () {
     test("Should call addPrintRequest when save products", () async {
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -574,6 +588,7 @@ void main() {
       localPrintRequest.mockGetMergedPrinted(printRequestEntity);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -604,6 +619,7 @@ void main() {
         "Should call correct printRequests when finish success and dont have printRequestEntity in local data",
         () async {
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -626,6 +642,7 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -649,6 +666,7 @@ void main() {
       addPrintRequest.mockRemoteAddError();
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -667,6 +685,7 @@ void main() {
       localPrintRequest.mockGetMergedPrintedError();
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
@@ -987,6 +1006,7 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1055,9 +1075,11 @@ void main() {
       final products =
           sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        insertProductPresenter: insertProductPresenter,
       );
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1091,6 +1113,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1108,6 +1131,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1125,6 +1149,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1141,6 +1166,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1152,6 +1178,7 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1190,6 +1217,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1202,6 +1230,7 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1242,6 +1271,7 @@ void main() {
 
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1256,6 +1286,7 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1294,6 +1325,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1306,6 +1338,7 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1341,6 +1374,7 @@ void main() {
         "Should call verify is confirmed cart products when call saveCartProducts",
         () async {
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1354,6 +1388,7 @@ void main() {
         "Should call udpate confirmedCartProducts with true value when saveCartProducts succeeds",
         () async {
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1370,6 +1405,7 @@ void main() {
       updateSaleRequestTemp
           .mockUpdateSaleRequestTempError(DomainError.unexpected);
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1383,6 +1419,7 @@ void main() {
         "Should call udpate confirmedCartProducts with false value when finishSaleRequestTemp succeeds",
         () async {
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1398,6 +1435,7 @@ void main() {
       finishSaleRequestTemp.mockFinishSaleRequestTempError();
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1412,6 +1450,7 @@ void main() {
         () async {
       confirmedCartProducts.mockIsConfirmed(true);
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1429,6 +1468,7 @@ void main() {
         () async {
       confirmedCartProducts.mockIsConfirmed(false);
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1450,6 +1490,7 @@ void main() {
       );
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1461,6 +1502,7 @@ void main() {
     });
     test("Should return true on saveProducts succeeds", () async {
       final isUpdated = await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1474,6 +1516,7 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       final isUpdated = await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1488,6 +1531,7 @@ void main() {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
       final isUpdated = await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1503,6 +1547,7 @@ void main() {
       sut.cartProducts.add(cartProductViewModel);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1532,6 +1577,7 @@ void main() {
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1561,6 +1607,7 @@ void main() {
       expect(homePresenter.isFixedCommandNumber, true);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1580,6 +1627,7 @@ void main() {
       expect(homePresenter.commandNumber, fixedCommandNumber);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1596,6 +1644,7 @@ void main() {
       );
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1608,6 +1657,7 @@ void main() {
       commandInformations.mockIsValidDateTime(false);
 
       await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1823,6 +1873,7 @@ void main() {
       final entity =
           sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
         saleRequestTempId: fakeSaleRequestTempId,
+        insertProductPresenter: insertProductPresenter,
       ); //converto o combo pra uma lista de produtos da forma que usa pra adicionar na comanda
 
       expect(entity, [
@@ -1832,10 +1883,12 @@ void main() {
           ProductPriceLookUpCode: firstProduct.PluChild!,
           Quantity: firstProduct.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: fakeSaleRequestTempId,
-          TotalLiquid: sut.calculateProductCompositionPrice(firstProduct) *
-              firstProduct.Quantity!.toDouble() *
-              totalComboxQuantity,
-          Value: sut.calculateProductCompositionPrice(firstProduct),
+          TotalLiquid:
+              insertProductPresenter.calculateProductCompositionTotalLiquid(
+                      product: firstProduct) *
+                  firstProduct.Quantity!.toDouble(),
+          Value: insertProductPresenter
+              .calculateProductCompositionPrice(firstProduct),
           Comments: firstProduct.commentFather,
         ),
         UpdateSaleRequestTempProductEntity(
@@ -1844,10 +1897,12 @@ void main() {
           ProductPriceLookUpCode: secondProduct.PluChild!,
           Quantity: secondProduct.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: fakeSaleRequestTempId,
-          TotalLiquid: sut.calculateProductCompositionPrice(secondProduct) *
-              secondProduct.Quantity!.toDouble() *
-              totalComboxQuantity,
-          Value: sut.calculateProductCompositionPrice(secondProduct),
+          TotalLiquid:
+              insertProductPresenter.calculateProductCompositionTotalLiquid(
+                      product: firstProduct) *
+                  firstProduct.Quantity!.toDouble(),
+          Value: insertProductPresenter
+              .calculateProductCompositionPrice(firstProduct),
           Comments: secondProduct.commentFather,
         ),
       ]);

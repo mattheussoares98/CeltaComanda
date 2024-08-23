@@ -369,6 +369,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     String? commandNumber,
+    required InsertProductPresenter insertProductPresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -423,6 +424,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       final selectedComboxProducts =
           convertProductsCompositionToUpdateSaleRequestTempProductEntity(
         saleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+        insertProductPresenter: insertProductPresenter,
       );
 
       products.addAll(selectedComboxProducts);
@@ -518,6 +520,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   List<UpdateSaleRequestTempProductEntity>
       convertProductsCompositionToUpdateSaleRequestTempProductEntity({
     required int saleRequestTempId,
+    required InsertProductPresenter insertProductPresenter,
   }) {
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
     for (var product in _cartProducts) {
@@ -543,8 +546,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
                   : child.childs![child.indexOfSelectedChild!].PluChild!,
           Quantity: child.Quantity!.toDouble(),
           SaleRequestTempId: saleRequestTempId,
-          TotalLiquid: calculateProductCompositionTotalLiquid(child),
-          Value: calculateProductCompositionPrice(child),
+          TotalLiquid: insertProductPresenter
+              .calculateProductCompositionTotalLiquid(product: child),
+          Value: insertProductPresenter.calculateProductCompositionPrice(child),
           Comments: child.commentFather,
         );
 

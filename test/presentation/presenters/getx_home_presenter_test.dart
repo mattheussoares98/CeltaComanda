@@ -41,6 +41,7 @@ void main() {
   late int? peoples;
   late String? sellerCode;
   late List<SellerEntity> sallerEntitys;
+  late SellersViewModel selectedSeller;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -121,6 +122,7 @@ void main() {
       EntityFactory.makeSellerEntity(),
       EntityFactory.makeSellerEntity(),
     ];
+    selectedSeller = EntityFactory.makeSellersViewModel();
   }
 
   setUp(() {
@@ -979,6 +981,40 @@ void main() {
       );
 
       expect(value, false);
+    });
+  });
+
+  group("Update selected peoples", () {
+    test("Should update to null correctly", () {
+      sut.updateSelectedPeoples(null);
+
+      expect(sut.selectedPeoples, null);
+    });
+    test("Should update to correctly", () {
+      final newValue = faker.randomGenerator.integer(100);
+      sut.updateSelectedPeoples(newValue);
+
+      expect(sut.selectedPeoples, newValue);
+    });
+  });
+  group("Update selected seller", () {
+    test("Should update to null correctly", () {
+      sut.updateSelectedSeller(null);
+
+      expect(sut.selectedSeller, null);
+    });
+    test("Should update to correctly", () {
+      sut.updateSelectedSeller(selectedSeller);
+
+      expect(sut.selectedSeller, selectedSeller);
+    });
+  });
+  group("Update selected command", () {
+    test("Should update to correctly", () {
+      final newValue = faker.randomGenerator.integer(100);
+      sut.updateSelectedCommand(newValue);
+
+      expect(sut.selectedCommand, newValue);
     });
   });
 }

@@ -786,4 +786,11 @@ class EntityFactory {
         Name: faker.randomGenerator.string(10),
         PersonalizedCode: faker.randomGenerator.string(10),
       );
+
+  static SellersViewModel makeSellersViewModel() => SellersViewModel(
+        SellersId: faker.randomGenerator.integer(100),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        PersonalizedCode: faker.randomGenerator.integer(100).toString(),
+        Name: faker.randomGenerator.string(10),
+      );
 }

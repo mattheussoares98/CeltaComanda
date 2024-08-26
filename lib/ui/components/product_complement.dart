@@ -11,7 +11,7 @@ class ProductComplement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (productComplement?.isEmpty == true) {
+    if (productComplement == null || productComplement?.isEmpty == true) {
       return const SizedBox();
     }
     RegExp optionalRegex = RegExp(r'\(op\|[^|]*\|op\)');

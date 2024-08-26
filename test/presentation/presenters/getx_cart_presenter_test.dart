@@ -383,6 +383,25 @@ void main() {
       );
     });
 
+    test(
+        "Should emit error to add quantity when new quantity is more than maximum quantity",
+        () async {
+      final cartProductEntity = EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 2,
+        minimumProductQuantity: 1,
+        generateChilds: false,
+      );
+      sut.cartProducts.add(CartProductsViewModel.fromEntity(cartProductEntity));
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.maximumQuantityAchieved]),
+      );
+
+      await sut.addCartProductQuantity(0);
+      await sut.addCartProductQuantity(0);
+    });
+
     test("Should addCartProductQuantity when cartInformations.update succeeds",
         () async {
       sut.cartProducts.add(cartProductViewModel);

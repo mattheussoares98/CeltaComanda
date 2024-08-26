@@ -350,6 +350,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       final newQuantity = newCartList[index].Quantity.toDouble() + 1;
 
+      final maxQuantity =
+          newCartList[index].Product.MaximumQuantityForSale?.toDouble() ?? 99;
+
+      if (maxQuantity > 1 && newQuantity > maxQuantity) {
+        throw DomainError.maximumQuantityAchieved;
+      }
+
       newCartList[index].Product.productQuantity = newQuantity;
 
       final productWithNewQuantity = CartProductsViewModel(
@@ -366,8 +373,15 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.maximumQuantityAchieved:
+          mainError = UIError.maximumQuantityAchieved;
+          break;
+        default:
+          mainError = UIError.unexpected;
+          break;
+      }
     } finally {
       isLoading = false;
     }

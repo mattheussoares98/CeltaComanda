@@ -418,6 +418,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
+      sut.cartProducts.add(cartProductViewModel);
       await sut.addCartProductQuantity(0);
     });
     test("Should emit correct values on addCartProductQuantity throws",
@@ -427,6 +428,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       cartInformations.mockSaveError();
+      sut.cartProducts.add(cartProductViewModel);
       await sut.addCartProductQuantity(0);
     });
 

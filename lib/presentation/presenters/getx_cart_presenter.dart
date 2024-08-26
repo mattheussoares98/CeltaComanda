@@ -318,6 +318,16 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     mainError = null;
 
     try {
+      final maxQuantity =
+          _cartProducts[index].Product.MaximumQuantityForSale?.toDouble() == 0
+              ? 99.00
+              : _cartProducts[index].Product.MaximumQuantityForSale!.toDouble();
+      final newQuantity = _cartProducts[index].Quantity.toDouble() + 1;
+
+      if (maxQuantity > 1 && newQuantity > maxQuantity) {
+        throw DomainError.maximumQuantityAchieved;
+      }
+
       if (_cartProducts[index].Product.childsComposition != null) {
         _cartProducts[index].Product.childsComposition =
             _cartProducts[index].Product.childsComposition!.map((e) {
@@ -347,15 +357,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       }
 
       final newCartList = [..._cartProducts];
-
-      final newQuantity = newCartList[index].Quantity.toDouble() + 1;
-
-      final maxQuantity =
-          newCartList[index].Product.MaximumQuantityForSale?.toDouble() ?? 99;
-
-      if (maxQuantity > 1 && newQuantity > maxQuantity) {
-        throw DomainError.maximumQuantityAchieved;
-      }
 
       newCartList[index].Product.productQuantity = newQuantity;
 

@@ -77,6 +77,7 @@ class _ProductItemState extends State<ProductItem> {
             return NameImagePriceComboxAndComplement(
               productsViewModel: widget.productsViewModel,
               itemHeight: constraints.maxHeight,
+              itemWidth: constraints.maxWidth,
             );
           }),
         ),

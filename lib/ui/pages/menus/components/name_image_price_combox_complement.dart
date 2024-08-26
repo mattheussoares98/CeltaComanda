@@ -8,9 +8,11 @@ import '../../pages.dart';
 class NameImagePriceComboxAndComplement extends StatelessWidget {
   final ProductsViewModel productsViewModel;
   final double itemHeight;
+  final double itemWidth;
   const NameImagePriceComboxAndComplement({
     required this.productsViewModel,
     required this.itemHeight,
+    required this.itemWidth,
     super.key,
   });
 
@@ -28,9 +30,12 @@ class NameImagePriceComboxAndComplement extends StatelessWidget {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         itemHeight: itemHeight,
+        itemWidth: itemWidth,
       );
     } else {
       return _portraitNameImagePluAndCombox(
+        itemHeight: itemHeight,
+        itemWidth: itemWidth,
         context: context,
         productsViewModel: productsViewModel,
         menuPresenter: menuPresenter,
@@ -48,6 +53,7 @@ Widget _landScapeNameImagePluAndCombox({
   required ExpansibleGroupFromProductPresenter
       expansibleGroupFromProductPresenter,
   required double itemHeight,
+  required double itemWidth,
 }) {
   return Row(
     children: [
@@ -67,7 +73,7 @@ Widget _landScapeNameImagePluAndCombox({
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
             height: itemHeight,
-            width: itemHeight * 1.15,
+            width: itemWidth * 1.15,
             selectedProduct: productsViewModel,
           ),
         ),
@@ -94,6 +100,8 @@ Widget _portraitNameImagePluAndCombox({
   required MenuPresenter menuPresenter,
   required ExpansibleGroupFromProductPresenter
       expansibleGroupFromProductPresenter,
+  required double itemHeight,
+  required double itemWidth,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,8 +122,8 @@ Widget _portraitNameImagePluAndCombox({
           child: ImageWidget(
             ean: productsViewModel.EanCode,
             plu: productsViewModel.PriceLookupCode,
-            height: double.infinity,
-            width: double.infinity,
+            height: itemHeight,
+            width: itemWidth * 1.15,
             selectedProduct: productsViewModel,
           ),
         ),

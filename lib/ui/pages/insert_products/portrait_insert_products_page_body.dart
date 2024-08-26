@@ -35,6 +35,16 @@ class _PortraitInsertProductsPageBodyState
     _scrollController.dispose();
   }
 
+  void _animateToEnd(int secondsToWait) {
+    Future.delayed(Duration(seconds: secondsToWait), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
@@ -45,17 +55,15 @@ class _PortraitInsertProductsPageBodyState
           .selectedOptions.keys.first;
     }
 
+    _animateToEnd(1);
+
     return SingleChildScrollView(
       controller: _scrollController,
       child: StreamBuilder<bool>(
           stream: insertProductPresenter.doScrollStream,
           builder: (context, snapshot) {
             if (snapshot.data == true) {
-              _scrollController.animateTo(
-                _scrollController.position.maxScrollExtent,
-                duration: const Duration(seconds: 1),
-                curve: Curves.easeOut,
-              );
+              _animateToEnd(0);
             }
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

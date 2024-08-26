@@ -232,14 +232,14 @@ class GetxMenuPresenter extends GetxController
         }
       }
 
-      _loadedMenu.add({
-        ExpansibleGroupsViewModel(
-          Name: R.string.avaliate,
-          ExpansibleGroupId: "0",
-          ExpansibleGroupType: "0",
-          OrderClassification: "0",
-        ): []
-      });
+      // _loadedMenu.add({
+      //   ExpansibleGroupsViewModel(
+      //     Name: R.string.avaliate,
+      //     ExpansibleGroupId: "0",
+      //     ExpansibleGroupType: "0",
+      //     OrderClassification: "0",
+      //   ): []
+      // });
       await expansibleGroupFromProductPresenter
           .loadCommentsAndObligatoryOptions(allProducts);
       _menu.subject.add(_loadedMenu);

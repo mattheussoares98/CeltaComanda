@@ -105,7 +105,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
           );
         },
       ),
-      const ReserveTableButton(),
+      if (!homePresenter.isGeneratingVersionToRede) const ReserveTableButton(),
       ElevatedButton(
         onPressed: () async {
           await openOrBlock(homePresenter: homePresenter, liberate: true);

@@ -82,7 +82,7 @@ class App extends StatelessWidget {
           navigatorKey: NavigatorKey.navigatorKey,
           title: 'Celta restaurante',
           debugShowCheckedModeBanner: false,
-          theme: makeAppTheme(),
+          theme: makeAppTheme(context),
           navigatorObservers: [routeObserver],
           initialRoute: PageRoutes.splash,
           getPages: [

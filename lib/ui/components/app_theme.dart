@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-ThemeData makeAppTheme() {
+import '../../../ui/helpers/helpers.dart';
+
+ThemeData makeAppTheme(BuildContext context) {
   const primaryColor = Colors.black54;
   const primaryColorDark = Colors.black87;
   const primaryColorLight = Colors.black38;
@@ -64,13 +66,19 @@ ThemeData makeAppTheme() {
       colorScheme: const ColorScheme.light(primary: primaryColor),
       buttonColor: primaryColor,
       splashColor: primaryColorLight,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        vertical: hasMinWidth(context) ? 10 : 2,
+        horizontal: hasMinWidth(context) ? 20 : 5,
+      ),
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)));
 
   final elevatedButtonTheme = ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    padding: EdgeInsets.symmetric(
+      vertical: hasMinWidth(context) ? 10 : 2,
+      horizontal: hasMinWidth(context) ? 20 : 5,
+    ),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     backgroundColor: primaryColorDark,
     foregroundColor: Colors.white,

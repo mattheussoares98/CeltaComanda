@@ -235,6 +235,12 @@ void main() {
     test(
         'Should change totalComboxQuantity correctly when updateValue and to 1 when call LoadProductComposition',
         () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
       sut.updateTotalProductsQuantity(true);
       expect(sut.totalProductsQuantity, 2);
       sut.updateTotalProductsQuantity(true);
@@ -395,7 +401,13 @@ void main() {
       expect(selectedProduct.childsComposition![0].commentFather, null);
     });
 
-    test("Should update combox quantity to 1", () {
+    test("Should update combox quantity to 1", () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
       sut.updateTotalProductsQuantity(true);
       expect(sut.totalProductsQuantity, 2);
 
@@ -1448,6 +1460,12 @@ void main() {
 
   group("Update total products quantity", () {
     test("Should add quantity if is adding", () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
       expect(sut.totalProductsQuantity, 1);
 
       sut.updateTotalProductsQuantity(true);
@@ -1484,6 +1502,12 @@ void main() {
       expect(sut.totalProductsQuantity, 1);
     });
     test("Should reduce quantity if atual quantity is more than 2", () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
       expect(sut.totalProductsQuantity, 1);
 
       sut.updateTotalProductsQuantity(true);

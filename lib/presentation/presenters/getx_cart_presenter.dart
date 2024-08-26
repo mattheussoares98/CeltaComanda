@@ -350,8 +350,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       final newQuantity = newCartList[index].Quantity.toDouble() + 1;
 
-      newCartList[index].Product.productQuantity =
-          newCartList[index].Product.productQuantity + 1;
+      newCartList[index].Product.productQuantity = newQuantity;
 
       final productWithNewQuantity = CartProductsViewModel(
         Comments: newCartList[index].Comments,
@@ -559,7 +558,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
               child.childs?.isEmpty == true || child.childs == null
                   ? child.PluChild!
                   : child.childs![child.indexOfSelectedChild!].PluChild!,
-          Quantity: child.Quantity!.toDouble(),
+          Quantity: child.Quantity!.toDouble() * product.Quantity.toDouble(),
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: insertProductPresenter
               .calculateProductCompositionTotalLiquid(product: child),

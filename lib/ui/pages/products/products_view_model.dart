@@ -217,8 +217,11 @@ class ProductsViewModel extends Equatable {
         MaximumQuantityForSale,
       ];
 
-  factory ProductsViewModel.fromEntity(ProductEntity entity) =>
+  factory ProductsViewModel.fromEntity(ProductEntity entity,
+          [double? productQuantity]) =>
       ProductsViewModel(
+        productQuantity:
+            productQuantity != null ? productQuantity.toDouble() : 1.0,
         IsPromoCombox: entity.IsPromoCombox.toString(),
         PriceLookupCode: entity.PriceLookupCode,
         MaximumQuantityForSale: entity.MaximumQuantityForSale.toString(),

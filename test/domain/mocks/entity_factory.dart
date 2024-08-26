@@ -215,6 +215,7 @@ class EntityFactory {
     bool? insertChildsComposition,
     bool? isOptionalChilds,
     int? maximumProductQuantity,
+    double? productQuantity,
   }) {
     return ProductsViewModel(
       MaximumQuantityForSale: maximumProductQuantity != null
@@ -229,45 +230,46 @@ class EntityFactory {
       PriceLookupCode: faker.randomGenerator.string(10),
       ProductsId: faker.randomGenerator.integer(10).toString(),
       InternalCodeOnERP: faker.randomGenerator.integer(10).toString(),
-      InternalCodeOfProductOnERP: faker.randomGenerator.string(10),
-      EenterpriseId: faker.randomGenerator.string(10),
-      PackingQuantity: faker.randomGenerator.string(10),
-      OfferRetailPrice: faker.randomGenerator.string(10),
-      WholeSalePrice: faker.randomGenerator.string(10),
-      WholeOfferPrice: faker.randomGenerator.string(10),
-      OfferECommercePrice: faker.randomGenerator.string(10),
-      SaleECommercePrice: faker.randomGenerator.string(10),
-      LiquidCost: faker.randomGenerator.string(10),
-      LiquidCostMiddle: faker.randomGenerator.string(10),
-      LiquidCostReal: faker.randomGenerator.string(10),
-      RepositionCost: faker.randomGenerator.string(10),
-      RepositionCostMiddle: faker.randomGenerator.string(10),
-      RepositionCostReal: faker.randomGenerator.string(10),
-      IcmsAliquot: faker.randomGenerator.string(10),
-      IcmsIVAMargin: faker.randomGenerator.string(10),
-      IcmsReductionMargin: faker.randomGenerator.string(10),
-      IcmsStave: faker.randomGenerator.string(10),
-      PercImpNBPTState: faker.randomGenerator.string(10),
-      PercImpNBPTMunicipal: faker.randomGenerator.string(10),
-      CofinsType: faker.randomGenerator.string(10),
-      PisType: faker.randomGenerator.string(10),
-      ProductIsFatherComposition: faker.randomGenerator.string(10),
-      QuantityMinimumWholeSale: faker.randomGenerator.string(10),
-      QuantityMinimumWholeSaleByClass: faker.randomGenerator.string(10),
-      BalanceTare: faker.randomGenerator.string(10),
-      FamilyCode: faker.randomGenerator.string(10),
-      DepartmentCode: faker.randomGenerator.string(10),
-      SectionCode: faker.randomGenerator.string(10),
-      GroupCode: faker.randomGenerator.string(10),
-      SubGroupCode: faker.randomGenerator.string(10),
-      StockQuantity: faker.randomGenerator.string(10),
-      AllowFractionate: faker.randomGenerator.string(10),
-      IsBalance: faker.randomGenerator.string(10),
-      CanBeWeightyInPdv: faker.randomGenerator.string(10),
-      QuantityInBalance: faker.randomGenerator.string(10),
-      AllowQuantityInPdv: faker.randomGenerator.string(10),
-      GoesForFastTable: faker.randomGenerator.string(10),
-      IsAlcoholicProduct: faker.randomGenerator.string(10),
+      InternalCodeOfProductOnERP: faker.randomGenerator.integer(10).toString(),
+      EenterpriseId: faker.randomGenerator.integer(10).toString(),
+      PackingQuantity: faker.randomGenerator.decimal().toString(),
+      OfferRetailPrice: faker.randomGenerator.decimal().toString(),
+      WholeSalePrice: faker.randomGenerator.decimal().toString(),
+      WholeOfferPrice: faker.randomGenerator.decimal().toString(),
+      OfferECommercePrice: faker.randomGenerator.decimal().toString(),
+      SaleECommercePrice: faker.randomGenerator.decimal().toString(),
+      LiquidCost: faker.randomGenerator.decimal().toString(),
+      LiquidCostMiddle: faker.randomGenerator.decimal().toString(),
+      LiquidCostReal: faker.randomGenerator.decimal().toString(),
+      RepositionCost: faker.randomGenerator.decimal().toString(),
+      RepositionCostMiddle: faker.randomGenerator.decimal().toString(),
+      RepositionCostReal: faker.randomGenerator.decimal().toString(),
+      IcmsAliquot: faker.randomGenerator.decimal().toString(),
+      IcmsIVAMargin: faker.randomGenerator.decimal().toString(),
+      IcmsReductionMargin: faker.randomGenerator.decimal().toString(),
+      IcmsStave: faker.randomGenerator.decimal().toString(),
+      PercImpNBPTState: faker.randomGenerator.decimal().toString(),
+      PercImpNBPTMunicipal: faker.randomGenerator.decimal().toString(),
+      CofinsType: faker.randomGenerator.integer(100).toString(),
+      PisType: faker.randomGenerator.integer(100).toString(),
+      ProductIsFatherComposition: faker.randomGenerator.integer(100).toString(),
+      QuantityMinimumWholeSale: faker.randomGenerator.decimal().toString(),
+      QuantityMinimumWholeSaleByClass:
+          faker.randomGenerator.decimal().toString(),
+      BalanceTare: faker.randomGenerator.decimal().toString(),
+      FamilyCode: faker.randomGenerator.integer(100).toString(),
+      DepartmentCode: faker.randomGenerator.integer(100).toString(),
+      SectionCode: faker.randomGenerator.integer(100).toString(),
+      GroupCode: faker.randomGenerator.integer(100).toString(),
+      SubGroupCode: faker.randomGenerator.integer(100).toString(),
+      StockQuantity: faker.randomGenerator.decimal().toString(),
+      AllowFractionate: faker.randomGenerator.boolean().toString(),
+      IsBalance: faker.randomGenerator.boolean().toString(),
+      CanBeWeightyInPdv: faker.randomGenerator.boolean().toString(),
+      QuantityInBalance: faker.randomGenerator.boolean().toString(),
+      AllowQuantityInPdv: faker.randomGenerator.boolean().toString(),
+      GoesForFastTable: faker.randomGenerator.boolean().toString(),
+      IsAlcoholicProduct: faker.randomGenerator.boolean().toString(),
       SaleRetailPrice: faker.randomGenerator.string(10),
       PercImpNBPTNational: faker.randomGenerator.string(10),
       CofinsPercentage: faker.randomGenerator.string(10),
@@ -285,6 +287,7 @@ class EntityFactory {
       PersonalizedCode: faker.randomGenerator.string(10),
       NameComplete: faker.randomGenerator.string(10),
       NameReduced: faker.randomGenerator.string(10),
+      productQuantity: productQuantity ?? 1.0,
       childsComposition: insertChildsComposition == true
           ? [
               makeProductCompositionViewModel(
@@ -739,17 +742,25 @@ class EntityFactory {
     required int maximumProductQuantity,
     required int minimumProductQuantity,
     bool? generateChilds,
-  }) =>
-      CartProductEntity(
-        Product: makeProductsEntitys(generateChilds: generateChilds)[0],
-        Comments: null,
-        TotalLiquid: faker.randomGenerator.decimal(),
-        Quantity: faker.randomGenerator
-            .integer(maximumProductQuantity, min: minimumProductQuantity)
-            .toDouble(),
-        Value: faker.randomGenerator.decimal(),
-        ProductPriceLookUpCode: faker.randomGenerator.string(20),
-      );
+  }) {
+    double productQuantity = faker.randomGenerator
+        .integer(maximumProductQuantity, min: minimumProductQuantity)
+        .toDouble();
+
+    return CartProductEntity(
+      Product: makeProductsViewModel(
+        insertChildsComposition: generateChilds,
+        isOptionalChilds: true,
+        maximumProductQuantity: maximumProductQuantity,
+        productQuantity: productQuantity,
+      ).toEntity(),
+      Comments: null,
+      TotalLiquid: faker.randomGenerator.decimal(),
+      Quantity: productQuantity,
+      Value: faker.randomGenerator.decimal(),
+      ProductPriceLookUpCode: faker.randomGenerator.string(20),
+    );
+  }
 
   static ExpansibleGroupFromProductViewModel
       makeExpansibleGroupFromProductViewModel({bool? selected = false}) =>

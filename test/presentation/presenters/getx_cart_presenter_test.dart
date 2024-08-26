@@ -210,7 +210,9 @@ void main() {
   });
 
   group("CartInformations", () {
-    test("Should call updateCartInformations on addProductInCart", () async {
+    test(
+        "Should call updateCartInformations on addProductInCart with correct quantity",
+        () async {
       await sut.addProductInCart(
         product: cartProductEntity,
         menuPresenter: menuPresenter,
@@ -747,20 +749,20 @@ void main() {
 
     test("Should update comment correctly", () async {
       sut.cartProducts.add(cartProductViewModel);
-
       final newComment = faker.randomGenerator.string(20);
+
       await sut.updateCommentOfProductCart(index: 0, newComment: newComment);
 
-      expect(sut.cartProducts, [
-        CartProductsViewModel(
-          Comments: newComment,
-          Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
-          TotalLiquid: cartProductEntity.TotalLiquid.toString(),
-          Quantity: cartProductEntity.Quantity.toString(),
-          Value: cartProductEntity.Value.toString(),
-          ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
-        )
-      ]);
+      final cartProductWithNewComment = CartProductsViewModel(
+        Comments: newComment,
+        Product: cartProductViewModel.Product,
+        TotalLiquid: cartProductViewModel.TotalLiquid,
+        Quantity: cartProductViewModel.Quantity,
+        Value: cartProductViewModel.Value,
+        ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+      );
+
+      expect(sut.cartProducts, [cartProductWithNewComment]);
     });
     test("Should NOT update comment when new comment is equal", () async {
       sut.cartProducts.add(cartProductViewModel);
@@ -931,7 +933,7 @@ void main() {
       expect(sut.cartProducts.length, 2);
     });
 
-    test("Should update comment correctly", () async {
+    test("Should add product with correct comment in cart", () async {
       expansibleGroupFromProductPresenter.mockGetConcatenateSelectedComments(
           "${commentViewModel.GroupName}\n${commentViewModel.GroupName}");
 
@@ -946,7 +948,7 @@ void main() {
         CartProductsViewModel(
           Comments:
               "${commentViewModel.GroupName}\n${commentViewModel.GroupName}",
-          Product: ProductsViewModel.fromEntity(cartProductEntity.Product),
+          Product: cartProductViewModel.Product,
           TotalLiquid: cartProductEntity.TotalLiquid.toString(),
           Quantity: cartProductEntity.Quantity.toString(),
           Value: cartProductEntity.Value.toString(),
@@ -1690,8 +1692,8 @@ void main() {
       //combos, por isso essa variável
       cartProductViewModel.Product.childsComposition =
           productsSelectedsInCombox;
-      final firstProduct = cartProductViewModel.Product.childsComposition![0];
-      final secondProduct = cartProductViewModel.Product.childsComposition![1];
+      final firstChild = cartProductViewModel.Product.childsComposition![0];
+      final secondChild = cartProductViewModel.Product.childsComposition![1];
 
       await sut.addProductInCart(
         product: cartProductViewModel.toEntity(),
@@ -1715,31 +1717,29 @@ void main() {
       expect(entity, [
         UpdateSaleRequestTempProductEntity(
           ProductInternalCodeOnErp:
-              firstProduct.InternalCodeOnERPCodeFather!.toInt(),
-          ProductPriceLookUpCode: firstProduct.PluChild!,
-          Quantity: firstProduct.Quantity!.toDouble() * totalComboxQuantity,
+              firstChild.InternalCodeOnERPCodeFather!.toInt(),
+          ProductPriceLookUpCode: firstChild.PluChild!,
+          Quantity: firstChild.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: fakeSaleRequestTempId,
-          TotalLiquid:
-              insertProductPresenter.calculateProductCompositionTotalLiquid(
-                      product: firstProduct) *
-                  firstProduct.Quantity!.toDouble(),
+          TotalLiquid: insertProductPresenter
+                  .calculateProductCompositionTotalLiquid(product: firstChild) *
+              firstChild.Quantity!.toDouble(),
           Value: insertProductPresenter
-              .calculateProductCompositionPrice(firstProduct),
-          Comments: firstProduct.commentFather,
+              .calculateProductCompositionPrice(firstChild),
+          Comments: firstChild.commentFather,
         ),
         UpdateSaleRequestTempProductEntity(
           ProductInternalCodeOnErp:
-              secondProduct.InternalCodeOnERPCodeFather!.toInt(),
-          ProductPriceLookUpCode: secondProduct.PluChild!,
-          Quantity: secondProduct.Quantity!.toDouble() * totalComboxQuantity,
+              secondChild.InternalCodeOnERPCodeFather!.toInt(),
+          ProductPriceLookUpCode: secondChild.PluChild!,
+          Quantity: secondChild.Quantity!.toDouble() * totalComboxQuantity,
           SaleRequestTempId: fakeSaleRequestTempId,
-          TotalLiquid:
-              insertProductPresenter.calculateProductCompositionTotalLiquid(
-                      product: firstProduct) *
-                  firstProduct.Quantity!.toDouble(),
+          TotalLiquid: insertProductPresenter
+                  .calculateProductCompositionTotalLiquid(product: firstChild) *
+              firstChild.Quantity!.toDouble(),
           Value: insertProductPresenter
-              .calculateProductCompositionPrice(firstProduct),
-          Comments: secondProduct.commentFather,
+              .calculateProductCompositionPrice(firstChild),
+          Comments: secondChild.commentFather,
         ),
       ]);
     });

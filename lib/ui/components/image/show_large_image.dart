@@ -74,7 +74,7 @@ Widget _complementAndInsertProductButton({
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: _productComplement(context, productComplement),
+                child: ProductComplement(productComplement: productComplement),
               ),
             ),
           if (showInsertButton)
@@ -92,32 +92,11 @@ Widget _complementAndInsertProductButton({
         if (productComplement != null)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: _productComplement(context, productComplement),
+            child: ProductComplement(productComplement: productComplement),
           ),
         if (showInsertButton)
           OpenInsertProductPage(selectedProduct: selectedProduct),
       ],
     );
   }
-}
-
-Widget _productComplement(BuildContext context, String productComplement) {
-  return SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(
-            productComplement,
-            style: TextStyle(
-              fontSize: hasMinWidth(context) ? 20 : 12,
-              color: Theme.of(context).primaryColorLight,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }

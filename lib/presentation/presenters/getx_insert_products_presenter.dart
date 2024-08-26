@@ -343,9 +343,11 @@ class GetxInsertProductsPresenter extends GetxController
   void updateTotalProductsQuantity(bool isAddingQuantity) {
     if (isAddingQuantity) {
       final maxQuantity =
-          selectedProductValue?.MaximumQuantityForSale?.toDouble() ?? 99;
+          selectedProductValue?.MaximumQuantityForSale?.toDouble() == 0
+              ? 99.00
+              : selectedProductValue?.MaximumQuantityForSale!.toDouble();
 
-      if (maxQuantity > 1 && totalProductsQuantity + 1 > maxQuantity) {
+      if (maxQuantity! > 1 && totalProductsQuantity + 1 > maxQuantity) {
         mainError = null;
         mainError = UIError.maximumQuantityAchieved;
       } else {

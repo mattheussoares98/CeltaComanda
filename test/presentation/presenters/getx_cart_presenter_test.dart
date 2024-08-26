@@ -1687,9 +1687,6 @@ void main() {
       //crio uma lista com 3 produtos. Sendo um opcional e sem índice de filho
       //selecionado. Por isso ele precisa ser ignorado e leva em consideração
       //somente os dois primeiros
-      double totalComboxQuantity = cartProductViewModel.Product.productQuantity;
-      //o preço total do produto precisa ser multiplicado pela quantidade de
-      //combos, por isso essa variável
       cartProductViewModel.Product.childsComposition =
           productsSelectedsInCombox;
       final firstChild = cartProductViewModel.Product.childsComposition![0];
@@ -1719,7 +1716,7 @@ void main() {
           ProductInternalCodeOnErp:
               firstChild.InternalCodeOnERPCodeFather!.toInt(),
           ProductPriceLookUpCode: firstChild.PluChild!,
-          Quantity: firstChild.Quantity!.toDouble() * totalComboxQuantity,
+          Quantity: firstChild.Quantity!.toDouble(),
           SaleRequestTempId: fakeSaleRequestTempId,
           TotalLiquid: insertProductPresenter
                   .calculateProductCompositionTotalLiquid(product: firstChild) *
@@ -1732,7 +1729,7 @@ void main() {
           ProductInternalCodeOnErp:
               secondChild.InternalCodeOnERPCodeFather!.toInt(),
           ProductPriceLookUpCode: secondChild.PluChild!,
-          Quantity: secondChild.Quantity!.toDouble() * totalComboxQuantity,
+          Quantity: secondChild.Quantity!.toDouble(),
           SaleRequestTempId: fakeSaleRequestTempId,
           TotalLiquid: insertProductPresenter
                   .calculateProductCompositionTotalLiquid(product: firstChild) *

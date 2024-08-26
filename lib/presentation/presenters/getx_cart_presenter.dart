@@ -558,7 +558,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
               child.childs?.isEmpty == true || child.childs == null
                   ? child.PluChild!
                   : child.childs![child.indexOfSelectedChild!].PluChild!,
-          Quantity: child.Quantity!.toDouble() * product.Quantity.toDouble(),
+          Quantity: child.Quantity!.toDouble(),
           SaleRequestTempId: saleRequestTempId,
           TotalLiquid: insertProductPresenter
               .calculateProductCompositionTotalLiquid(product: child),

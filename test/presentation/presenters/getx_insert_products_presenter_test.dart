@@ -1482,7 +1482,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expectLater(sut.mainErrorStream, emits(UIError.maximumQuantityAchieved));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.maximumQuantityAchieved]));
 
       sut.updateTotalProductsQuantity(true);
       expect(sut.totalProductsQuantity, 2);

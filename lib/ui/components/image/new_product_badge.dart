@@ -5,10 +5,8 @@ import '../../helpers/helpers.dart';
 
 class NewProductBadge extends StatelessWidget {
   final double height;
-  final double width;
   const NewProductBadge({
     required this.height,
-    required this.width,
     super.key,
   });
 
@@ -19,7 +17,7 @@ class NewProductBadge extends StatelessWidget {
       left: 0,
       child: Container(
         height: height,
-        width: width,
+        width: height,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(10),
@@ -27,8 +25,7 @@ class NewProductBadge extends StatelessWidget {
           color: Colors.red.withOpacity(0.7),
         ),
         child: Padding(
-          padding:
-              EdgeInsets.all(width > height ? height * 0.25 : width * 0.25),
+          padding: EdgeInsets.all(height * 0.25),
           child: Transform.rotate(
             angle: -math.pi / 4,
             child: FittedBox(

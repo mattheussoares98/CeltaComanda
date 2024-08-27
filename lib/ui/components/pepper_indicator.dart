@@ -18,6 +18,7 @@ class PepperIndicator extends StatelessWidget {
       return _pepperImage();
     } else if (lowerCaseComplement.contains("(pp)") == true) {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _pepperImage(),
           _pepperImage(),
@@ -25,6 +26,7 @@ class PepperIndicator extends StatelessWidget {
       );
     } else if (lowerCaseComplement.contains("(ppp)") == true) {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _pepperImage(),
           _pepperImage(),

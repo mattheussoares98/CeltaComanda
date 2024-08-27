@@ -75,11 +75,9 @@ class App extends StatelessWidget with HideNavigationBarManager {
         behavior: HitTestBehavior.translucent,
         onTap: () {
           UserInteraction.restartTimes();
-          hideNavigationBar(makeGetxHomePresenter());
         },
         onPanDown: (_) {
           UserInteraction.restartTimes();
-          hideNavigationBar(makeGetxHomePresenter());
         },
         child: GetMaterialApp(
           navigatorKey: NavigatorKey.navigatorKey,

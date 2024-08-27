@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with LoadingManager, UIErrorManager, HideNavigationBarManager {
+    with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
@@ -100,14 +100,6 @@ class _HomePageState extends State<HomePage>
 
     if (_batteryState == state) return;
     _batteryState = state;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    hideNavigationBar(homePresenter);
   }
 
   @override

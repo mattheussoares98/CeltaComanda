@@ -99,12 +99,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         Provider.of(context, listen: false);
 
     final List<Widget> buttons = [
-      LogoutButton(
-        userPassword: _passwordController,
-        userPersonalizedCode: _personalizedCodeController,
-        validationKey: _keyUserAndPassword,
-        resetDropdownsErrors: () => _keyDropdowns.currentState?.reset(),
-      ),
       UpdateConfigurationsButton(
         updateCommand: () async {
           await _updateCommandData(
@@ -125,6 +119,12 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
           await openOrBlock(homePresenter: homePresenter, liberate: false);
         },
         child: FittedBox(child: Text(R.string.blockCommand)),
+      ),
+      LogoutButton(
+        userPassword: _passwordController,
+        userPersonalizedCode: _personalizedCodeController,
+        validationKey: _keyUserAndPassword,
+        resetDropdownsErrors: () => _keyDropdowns.currentState?.reset(),
       ),
     ];
 

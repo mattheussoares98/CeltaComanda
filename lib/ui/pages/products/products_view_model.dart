@@ -462,7 +462,6 @@ class ProductsViewModel extends Equatable {
 
   Map<String, dynamic> toJson() => {
         "ProductsId": ProductsId,
-        "MaximumQuantityForSale": MaximumQuantityForSale,
         "InternalCodeOnERP": InternalCodeOnERP,
         "InternalCodeOfProductOnERP": InternalCodeOfProductOnERP,
         "EenterpriseId": EenterpriseId,
@@ -524,21 +523,16 @@ class ProductsViewModel extends Equatable {
         "Name": Name,
         "NameComplete": NameComplete,
         "NameReduced": NameReduced,
+        "ProductComplement": ProductComplement,
         "PackingAbbreviation": PackingAbbreviation,
         "IsPromoCombox": IsPromoCombox,
-        "productQuantity": productQuantity,
+        "MaximumQuantityForSale": MaximumQuantityForSale,
         "childsComposition": childsComposition,
+        "productQuantity": productQuantity,
       };
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
-        IsPromoCombox: json["IsPromoCombox"],
-        MaximumQuantityForSale: json["MaximumQuantityForSale"],
-        ProductComplement: json["ProductComplement"],
         ProductsId: json["ProductsId"],
-        SaleRetailPraticed: json["SaleRetailPraticed"],
-        PriceLookupCode: json["PriceLookupCode"],
-        Name: json["Name"],
-        PackingAbbreviation: json["PackingAbbreviation"],
         InternalCodeOnERP: json["InternalCodeOnERP"],
         InternalCodeOfProductOnERP: json["InternalCodeOfProductOnERP"],
         EenterpriseId: json["EenterpriseId"],
@@ -582,6 +576,7 @@ class ProductsViewModel extends Equatable {
         IsAlcoholicProduct: json["IsAlcoholicProduct"],
         SaleRetailPrice: json["SaleRetailPrice"],
         PercImpNBPTNational: json["PercImpNBPTNational"],
+        SaleRetailPraticed: json["SaleRetailPraticed"],
         CofinsPercentage: json["CofinsPercentage"],
         PisPercentage: json["PisPercentage"],
         CFOP: json["CFOP"],
@@ -594,10 +589,16 @@ class ProductsViewModel extends Equatable {
         DateOfLastChanged: json["DateOfLastChanged"],
         GroupName: json["GroupName"],
         SaleRetailPraticedString: json["SaleRetailPraticedString"],
+        PriceLookupCode: json["PriceLookupCode"],
         PersonalizedCode: json["PersonalizedCode"],
         EanCode: json["EanCode"],
+        Name: json["Name"],
         NameComplete: json["NameComplete"],
         NameReduced: json["NameReduced"],
+        ProductComplement: json["ProductComplement"],
+        PackingAbbreviation: json["PackingAbbreviation"],
+        IsPromoCombox: json["IsPromoCombox"],
+        MaximumQuantityForSale: json["MaximumQuantityForSale"],
         productQuantity: json["productQuantity"],
         childsComposition: json["childsComposition"]
             ?.map<ProductCompositionViewModel>(

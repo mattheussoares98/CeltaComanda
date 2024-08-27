@@ -60,7 +60,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     }
 
     final updated = await homePresenter.openOrBlockadeCommand(
-      commandNumber: homePresenter.commandNumber!.toInt(),
+      commandNumber: homePresenter.selectedCommand!.toInt(),
       isOpen: liberate,
     );
 
@@ -73,6 +73,14 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         );
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
+    homePresenter.updateSelectedCommand(homePresenter.commandNumber!.toInt());
   }
 
   @override

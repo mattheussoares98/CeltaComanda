@@ -85,6 +85,7 @@ class _ImageWidgetState extends State<ImageWidget>
                   true)
                 NewProductBadge(
                   height: widget.height * 0.25,
+                  width: widget.width * 0.25,
                 )
             ],
           ),

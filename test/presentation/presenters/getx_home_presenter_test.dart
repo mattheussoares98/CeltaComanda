@@ -32,7 +32,8 @@ void main() {
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
 
-  late CommandEntity commandEntity;
+  late CommandEntity fixedCommandEntity;
+  late CommandEntity notFixedCommandEntity;
   late int newFixedCommandNumber;
   late int userPersonalizedCode;
   late String password;
@@ -77,7 +78,7 @@ void main() {
 
   void initMocks() {
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
-    localCommandData.mockLoad(commandEntity);
+    localCommandData.mockLoad(fixedCommandEntity);
     localCommandData.mockUpdate();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
@@ -87,7 +88,8 @@ void main() {
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    commandEntity = EntityFactory.makeCommandEntity();
+    fixedCommandEntity = EntityFactory.makeCommandEntity(true);
+    notFixedCommandEntity = EntityFactory.makeCommandEntity(false);
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     userPersonalizedCode = faker.randomGenerator.integer(999);
     password = faker.guid.guid();
@@ -137,7 +139,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
-    registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makeCommandEntity(true));
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
@@ -251,10 +253,17 @@ void main() {
     });
   });
 
-  group("getLocalCommandData", () {
+  group("load command data", () {
     test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
         () async {
-      await sut.getLocalCommandData();
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
 
       verify(() => localCommandData.load()).called(1);
     });
@@ -263,7 +272,14 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.getLocalCommandData();
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
     });
     test("Should update sut.isFixedCommandNumber correctly", () async {
       const fixed = CommandEntity(
@@ -276,11 +292,25 @@ void main() {
       );
 
       localCommandData.mockLoad(fixed);
-      await sut.getLocalCommandData();
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       expect(sut.isFixedCommandNumber, true);
 
       localCommandData.mockLoad(notFixed);
-      await sut.getLocalCommandData();
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       expect(sut.isFixedCommandNumber, false);
     });
     test("Should update sut.commandNumber correctly", () async {
@@ -295,16 +325,28 @@ void main() {
       );
 
       localCommandData.mockLoad(entity1);
-      await sut.getLocalCommandData();
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       expect(sut.commandNumber, entity1.commandNumber.toString());
 
       localCommandData.mockLoad(entity2);
-      await sut.getLocalCommandData();
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       expect(sut.commandNumber, entity2.commandNumber.toString());
     });
-  });
 
-  group("load command data", () {
     test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
         () async {
       await sut.loadCommandData(
@@ -324,8 +366,7 @@ void main() {
     test(
         "Should not call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is not fixed command number",
         () async {
-      expect(sut.isFixedCommandNumber, false);
-      sut.updateCommandNumber("001");
+      localCommandData.mockLoad(notFixedCommandEntity);
 
       await sut.loadCommandData(
         homePresenter: sut,
@@ -336,15 +377,15 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verifyNever(
-          () => cartPresenter.loadSaleRequest(sut.commandNumber ?? "001"));
+      verifyNever(() => cartPresenter.loadSaleRequest(
+            fixedCommandEntity.commandNumber.toString(),
+          ));
       verifyNever(() => printedProductsPresenter.loadPrinted(sut));
     });
     test(
         "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
         () async {
-      sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber("001");
+      await sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
         homePresenter: sut,
@@ -355,14 +396,15 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verify(() => cartPresenter.loadSaleRequest(sut.commandNumber!)).called(1);
+      verify(() => cartPresenter.loadSaleRequest(
+            fixedCommandEntity.commandNumber.toString(),
+          )).called(1);
       verify(() => printedProductsPresenter.loadPrinted(sut)).called(1);
     });
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
         () async {
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber("001");
       cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.mainErrorStream, emits(UIError.unexpected));
@@ -381,7 +423,6 @@ void main() {
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.commandNotAvailable",
         () async {
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber("001");
       cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
@@ -401,7 +442,6 @@ void main() {
         "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.unexpected",
         () async {
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber("001");
       printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
 
       expectLater(sut.mainErrorStream, emits(UIError.unexpected));
@@ -420,7 +460,6 @@ void main() {
         "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.commandNotAvailable",
         () async {
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber("001");
       printedProductsPresenter
           .mockLoadPrintedError(DomainError.commandNotAvailable);
 
@@ -475,7 +514,6 @@ void main() {
     });
     test("Should call loadSaleRequestTemp", () async {
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         homePresenter: sut,
@@ -491,7 +529,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: newFixedCommandNumber.toString(),
+          commandNumber: fixedCommandEntity.commandNumber.toString(),
         ),
       ).called(1);
     });
@@ -528,8 +566,8 @@ void main() {
     });
 
     test("Should update sellers correctly", () async {
+      expect(sut.isFixedCommandNumber, false);
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         homePresenter: sut,
@@ -583,7 +621,6 @@ void main() {
     });
     test("Should call isValidDateTime when is fixed command number", () async {
       await sut.updateIsFixedCommandNumber();
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         homePresenter: sut,
@@ -596,7 +633,7 @@ void main() {
 
       verify(
         () => commandInformations.isValidDatetime(
-          commandNumber: newFixedCommandNumber.toString(),
+          commandNumber: fixedCommandEntity.commandNumber.toString(),
         ),
       ).called(1);
     });

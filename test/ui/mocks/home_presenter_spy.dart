@@ -22,7 +22,6 @@ class HomePresenterSpy extends Mock implements HomePresenter {
     when(() => this.isGeneratingVersionToRede)
         .thenAnswer((_) => isGeneratingVersionToRedeMock);
     when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
-    when(() => this.getLocalCommandData()).thenAnswer((_) async => _);
     when(() => this.updateIsFixedCommandNumber()).thenAnswer((_) async => _);
   }
 
@@ -44,7 +43,8 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         menuPresenter: any(named: "menuPresenter"),
         printedProductsPresenter: any(named: "printedProductsPresenter"),
         cartPresenter: any(named: "cartPresenter"),
-        expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
+        expansibleGroupFromProductPresenter:
+            any(named: "expansibleGroupFromProductPresenter"),
         homePresenter: any(named: "homePresenter"),
       ));
 

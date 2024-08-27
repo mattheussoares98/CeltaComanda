@@ -75,28 +75,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> getLocalCommandData() async {
-    try {
-      isLoading = true;
-      mainError = null;
-
-      CommandEntity? loadedCommand = await localCommandData.load();
-
-      if (loadedCommand == null) {
-        throw Exception();
-      }
-
-      _isFixedCommandNumber = loadedCommand.isFixedCommandNumber;
-      _commandNumber = loadedCommand.commandNumber;
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  @override
   Future<void> updateIsFixedCommandNumber() async {
     isLoading = true;
     mainError = null;
@@ -130,6 +108,13 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
+      CommandEntity? loadedCommand = await localCommandData.load();
+
+      if (loadedCommand != null) {
+        _isFixedCommandNumber = loadedCommand.isFixedCommandNumber;
+        _commandNumber = loadedCommand.commandNumber;
+      }
+
       await menuPresenter.getGroupsAndProducts(
         commandNumber: commandNumber ?? "001",
         expansibleGroupFromProductPresenter:

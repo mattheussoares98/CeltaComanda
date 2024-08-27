@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage>
 
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           if (mounted) {
-            await homePresenter.getLocalCommandData();
             await homePresenter.loadCommandData(
               menuPresenter: menuPresenter,
               printedProductsPresenter: printedProductsPresenter,

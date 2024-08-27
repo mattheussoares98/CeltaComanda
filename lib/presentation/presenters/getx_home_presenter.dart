@@ -92,6 +92,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
+      notifyListeners();
     }
   }
 

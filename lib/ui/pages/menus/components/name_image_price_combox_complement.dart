@@ -173,8 +173,8 @@ Widget _namePriceComboxAndComplement(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            pepperIndicator(
-              productsViewModel.ProductComplement,
+            PepperIndicator(
+              product: productsViewModel,
             ),
             Expanded(
               child: Text(

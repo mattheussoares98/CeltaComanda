@@ -1,27 +1,39 @@
 import 'package:flutter/material.dart';
 
-Widget pepperIndicator(String? productComplement) {
-  String lowerCaseComplement = productComplement.toString().toLowerCase();
+import '../../../ui/pages/pages.dart';
 
-  if (lowerCaseComplement.contains("(p)") == true) {
-    return _pepperImage();
-  } else if (lowerCaseComplement.contains("(pp)") == true) {
-    return Row(
-      children: [
-        _pepperImage(),
-        _pepperImage(),
-      ],
-    );
-  } else if (lowerCaseComplement.contains("(ppp)") == true) {
-    return Row(
-      children: [
-        _pepperImage(),
-        _pepperImage(),
-        _pepperImage(),
-      ],
-    );
-  } else {
-    return const SizedBox();
+class PepperIndicator extends StatelessWidget {
+  final ProductsViewModel product;
+  const PepperIndicator({
+    required this.product,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String lowerCaseComplement =
+        product.ProductComplement.toString().toLowerCase();
+
+    if (lowerCaseComplement.contains("(p)") == true) {
+      return _pepperImage();
+    } else if (lowerCaseComplement.contains("(pp)") == true) {
+      return Row(
+        children: [
+          _pepperImage(),
+          _pepperImage(),
+        ],
+      );
+    } else if (lowerCaseComplement.contains("(ppp)") == true) {
+      return Row(
+        children: [
+          _pepperImage(),
+          _pepperImage(),
+          _pepperImage(),
+        ],
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }
 

@@ -14,42 +14,32 @@ class ImageAndComplement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (hasMinWidth(context)) {
-      return Column(
-        children: [
-          ImageWidget(
-            height: 160,
-            width: 160,
+    return Row(
+      children: [
+        Flexible(
+          child: ImageWidget(
+            height: hasMinWidth(context) ? 160 : 100,
+            width: hasMinWidth(context) ? 160 : 100,
             ean: selectedProduct.EanCode,
             plu: selectedProduct.PriceLookupCode,
             selectedProduct: selectedProduct,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(3, 0, 3, 5),
-            child: ProductComplement(
-                productComplement: selectedProduct.ProductComplement),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 2,
+          child: Column(
+           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ProductComplement(
+                productComplement: selectedProduct.ProductComplement,
+              ),
+              const SizedBox(height: 5),
+              PepperIndicator(product: selectedProduct),
+            ],
           ),
-        ],
-      );
-    } else {
-      return Row(
-        children: [
-          Flexible(
-            child: ImageWidget(
-              height: 100,
-              width: 100,
-              ean: selectedProduct.EanCode,
-              plu: selectedProduct.PriceLookupCode,
-              selectedProduct: selectedProduct,
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: ProductComplement(
-                productComplement: selectedProduct.ProductComplement),
-          )
-        ],
-      );
-    }
+        )
+      ],
+    );
   }
 }

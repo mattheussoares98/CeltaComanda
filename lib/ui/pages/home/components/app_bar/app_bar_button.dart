@@ -20,15 +20,13 @@ class AppBarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!isPrice) {
-      return Stack(
-        children: [
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(shape: const RoundedRectangleBorder()),
-            onPressed: onPress,
-            child: Row(
-              mainAxisAlignment:
-                  isPrice ? MainAxisAlignment.end : MainAxisAlignment.start,
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(shape: const RoundedRectangleBorder()),
+        onPressed: onPress,
+        child: Stack(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
                   child: Icon(
@@ -46,27 +44,27 @@ class AppBarButton extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          Positioned(
-            top: 2,
-            left: 5,
-            child: InkWell(
-              onTap: onPress,
-              child: CircleAvatar(
-                backgroundColor: Colors.black,
-                maxRadius: 8,
-                minRadius: 8,
-                child: Center(
-                  child: FittedBox(
-                    child: Text(
-                      quantityString,
+            Positioned(
+              top: 2,
+              left: 5,
+              child: InkWell(
+                onTap: onPress,
+                child: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  maxRadius: 8,
+                  minRadius: 8,
+                  child: Center(
+                    child: FittedBox(
+                      child: Text(
+                        quantityString,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     } else {
       return InkWell(

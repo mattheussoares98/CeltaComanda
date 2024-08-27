@@ -74,9 +74,13 @@ class App extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onTap: () {
           UserInteraction.restartTimes();
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
+              overlays: []);
         },
         onPanDown: (_) {
           UserInteraction.restartTimes();
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
+              overlays: []);
         },
         child: GetMaterialApp(
           navigatorKey: NavigatorKey.navigatorKey,

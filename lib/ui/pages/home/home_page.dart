@@ -103,6 +103,16 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _setFullScreen();
+  }
+
+  void _setFullScreen() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
+  }
+
+  @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(
         context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no AppBar

@@ -34,38 +34,30 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  bool _isLoaded = false;
+  Future<void> _loadAllData() async {
+    Future.delayed(Duration.zero, () async {
+      HomePresenter homePresenter = Provider.of(context, listen: false);
+      PrintedProductsPresenter printedProductsPresenter =
+          Provider.of(context, listen: false);
+      CartPresenter cartPresenter = Provider.of(context, listen: false);
+      MenuPresenter menuPresenter = Provider.of(context, listen: false);
+      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+          Provider.of(context, listen: false);
 
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    if (!_isLoaded) {
-      _isLoaded = true;
-      Future.delayed(Duration.zero, () async {
-        HomePresenter homePresenter = Provider.of(context, listen: false);
-        PrintedProductsPresenter printedProductsPresenter =
-            Provider.of(context, listen: false);
-        CartPresenter cartPresenter = Provider.of(context, listen: false);
-        MenuPresenter menuPresenter = Provider.of(context, listen: false);
-        ExpansibleGroupFromProductPresenter
-            expansibleGroupFromProductPresenter =
-            Provider.of(context, listen: false);
-
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          if (mounted) {
-            await homePresenter.loadCommandData(
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-              homePresenter: homePresenter,
-            );
-            // setState(() {});
-          }
-        });
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (mounted) {
+          await homePresenter.loadCommandData(
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: cartPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            homePresenter: homePresenter,
+          );
+          // setState(() {});
+        }
       });
-    }
+    });
   }
 
   final Battery _battery = Battery();
@@ -79,6 +71,7 @@ class _HomePageState extends State<HomePage>
     _battery.batteryState.then(_updateBatteryState);
     _batteryStateSubscription =
         _battery.onBatteryStateChanged.listen(_updateBatteryState);
+    _loadAllData();
   }
 
   int _lastUpdatedBatteryLevel = 0;

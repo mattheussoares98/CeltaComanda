@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with LoadingManager, UIErrorManager {
+    with LoadingManager, UIErrorManager, HideNavigationBarManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
 
@@ -105,11 +105,9 @@ class _HomePageState extends State<HomePage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _setFullScreen();
-  }
 
-  void _setFullScreen() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    hideNavigationBar(homePresenter);
   }
 
   @override

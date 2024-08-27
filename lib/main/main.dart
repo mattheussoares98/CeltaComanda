@@ -12,6 +12,7 @@ import '../../main/builders/builders.dart';
 import '../infra/helpers/helperts.dart';
 import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
+import '../ui/mixins/mixins.dart';
 import '../firebase_options.dart';
 import 'factories/factories.dart';
 
@@ -35,7 +36,7 @@ void main() async {
   runApp(const App());
 }
 
-class App extends StatelessWidget {
+class App extends StatelessWidget with HideNavigationBarManager {
   const App({super.key});
 
   @override
@@ -74,13 +75,11 @@ class App extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onTap: () {
           UserInteraction.restartTimes();
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
-              overlays: []);
+          hideNavigationBar(makeGetxHomePresenter());
         },
         onPanDown: (_) {
           UserInteraction.restartTimes();
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
-              overlays: []);
+          hideNavigationBar(makeGetxHomePresenter());
         },
         child: GetMaterialApp(
           navigatorKey: NavigatorKey.navigatorKey,

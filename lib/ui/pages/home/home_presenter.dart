@@ -9,6 +9,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
 
   bool get isFixedCommandNumber;
   bool get isGeneratingVersionToRede;
+  bool get isGeneratingVersionToTablet;
   String? get commandNumber;
   int? get selectedPeoples;
   int? get selectedCommand;

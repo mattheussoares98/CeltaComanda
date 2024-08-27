@@ -122,6 +122,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                       SizedBox(
                         child: Comment(comment: widget.cartProduct.Comments!),
                       ),
+                    PepperIndicator(product: widget.cartProduct.Product),
                   ],
                 ),
               ),

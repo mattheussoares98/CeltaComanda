@@ -26,23 +26,33 @@ class _PortraitInsertProductsPageBodyState
     extends State<PortraitInsertProductsPageBody> {
   final double buttonHeight = 50;
 
-  final _scrollController = ScrollController();
+  ScrollController? _scrollController;
   SelectedOptionType? atualOption;
+  bool _isDisposed = false;
 
   @override
   void dispose() {
     super.dispose();
-    _scrollController.dispose();
+    _scrollController?.dispose();
+    _isDisposed = true;
   }
 
   void _animateToEnd(int secondsToWait) {
     Future.delayed(Duration(seconds: secondsToWait), () {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeOut,
-      );
+      if (_scrollController != null && !_isDisposed) {
+        _scrollController!.animateTo(
+          _scrollController!.position.maxScrollExtent,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeOut,
+        );
+      }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
   }
 
   @override

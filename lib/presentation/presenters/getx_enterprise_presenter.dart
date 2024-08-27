@@ -158,10 +158,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
       {bool? updateEnterpriseNameController = false}) {
     enterpriseNameController.text = value;
 
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName: enterpriseNameController.text,
-    );
-
     _enterpriseError.value = _validateField('enterpriseName');
     _validateForm();
     if (updateEnterpriseNameController == true) {

@@ -192,6 +192,7 @@ void main() {
                   EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
               enterpriseId: null,
               url: null,
+              concentradorUrl: null,
             ),
           )).called(1);
     });

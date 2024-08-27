@@ -59,6 +59,8 @@ void main() {
     loadEnterpriseData.mockLoad(EnterpriseEntity(
       enterpriseName: "enterpriseName",
       enterpriseId: faker.randomGenerator.integer(100),
+      concentradorUrl: faker.internet.httpUrl(),
+      url: faker.internet.httpUrl(),
     ));
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);

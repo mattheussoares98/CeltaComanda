@@ -28,6 +28,7 @@ void main() {
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
+  late EnterpriseEntity enterpriseEntity;
 
   setUp(() {
     validation = ValidationSpy();
@@ -37,8 +38,8 @@ void main() {
     ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
 
-    EnterpriseDataBuilder.enterpriseDataEntity =
-        EntityFactory.makeEnterpriseData();
+    enterpriseEntity = EntityFactory.makeEnterpriseData();
+    EnterpriseDataBuilder.enterpriseDataEntity = enterpriseEntity;
     ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
     commandEntity = EntityFactory.makeCommandEntity();
 
@@ -140,7 +141,7 @@ void main() {
     );
 
     verify(() => localEnterpriseData
-        .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
+        .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(2);
   });
 
   test('Should emit UnexpectedError if SaveEnterpriseData fails', () async {
@@ -242,11 +243,7 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    expect(
-        EnterpriseDataBuilder.enterpriseDataEntity,
-        EnterpriseEntity(
-          enterpriseName: sut.enterpriseNameController.text,
-        ));
+    expect(EnterpriseDataBuilder.enterpriseDataEntity, enterpriseEntity);
   });
 
   test("Should go to HomePage cleaning atual route", () async {
@@ -334,8 +331,8 @@ void main() {
         newCommandValue: newCommandNumber,
       );
 
-      verify(() => homePresenter.updateCommandNumber(newCommandNumber.padLeft(3, "0")))
-          .called(1);
+      verify(() => homePresenter
+          .updateCommandNumber(newCommandNumber.padLeft(3, "0"))).called(1);
     });
 
     test(
@@ -386,7 +383,7 @@ void main() {
         newCommandValue: "1",
       );
 
-      verify(() => homePresenter.updateCommandNumber("001") ).called(1);
+      verify(() => homePresenter.updateCommandNumber("001")).called(1);
     });
   });
 }

@@ -7,11 +7,11 @@ import 'package:faker/faker.dart';
 
 class EntityFactory {
   static EnterpriseEntity makeEnterpriseData() {
-    final String url = faker.internet.httpUrl();
     return EnterpriseEntity(
-      url: url,
+      url: faker.internet.httpUrl(),
       enterpriseId: faker.randomGenerator.integer(3),
       enterpriseName: faker.company.name(),
+      concentradorUrl: faker.internet.httpUrl(),
     );
   }
 

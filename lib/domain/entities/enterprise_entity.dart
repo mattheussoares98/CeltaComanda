@@ -8,9 +8,9 @@ class EnterpriseEntity extends Equatable {
 
   const EnterpriseEntity({
     required this.enterpriseName,
-    this.url,
-    this.enterpriseId,
-    this.concentradorUrl,
+    required this.url,
+    required this.enterpriseId,
+    required this.concentradorUrl,
   });
 
   @override

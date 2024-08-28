@@ -128,14 +128,16 @@ class _HomePageState extends State<HomePage>
       child: PopScope(
         canPop: false,
         onPopInvoked: (didPop) {
-          notificationDialog(
-            context: context,
-            titleMessage: R.string.msgCloseApplication,
-            content: Text(R.string.msgWantCloseApplication),
-            onPress: () async {
-              SystemNavigator.pop();
-            },
-          );
+          if (!homePresenter.isGeneratingVersionToTablet) {
+            notificationDialog(
+              context: context,
+              titleMessage: R.string.msgCloseApplication,
+              content: Text(R.string.msgWantCloseApplication),
+              onPress: () async {
+                SystemNavigator.pop();
+              },
+            );
+          }
         },
         child: Scaffold(
           drawerEnableOpenDragGesture: false,

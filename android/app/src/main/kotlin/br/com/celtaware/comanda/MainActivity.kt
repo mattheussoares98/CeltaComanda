@@ -1,4 +1,5 @@
 package br.com.celtaware.comanda
+import br.com.celtaware.comanda.utils.AppUtils
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -185,27 +186,15 @@ class MainActivity : FlutterActivity() {
         super.onPause()
         Log.d("MainActivity", "onResume chamado")
         // Tenta trazer a tarefa para o primeiro plano
-        bringAppToFront()
+        AppUtils.bringAppToFront(this)
     }
 
     override fun onStop() {
         super.onStop()
         Log.d("MainActivity", "onResume chamado")
         // Tenta trazer a tarefa para o primeiro plano
-        bringAppToFront()
+        AppUtils.bringAppToFront(this)
     }
 
-    private fun bringAppToFront() {
-        try {
-            val intent = packageManager.getLaunchIntentForPackage(packageName)
-            if (intent != null) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-                startActivity(intent)
-            } else {
-                Log.e("MainActivity", "Intent para o pacote não encontrada")
-            }
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Erro ao tentar trazer o aplicativo para o primeiro plano", e)
-        }
-    }
+
 }

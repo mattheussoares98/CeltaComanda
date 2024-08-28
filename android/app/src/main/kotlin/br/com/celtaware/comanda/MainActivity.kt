@@ -181,4 +181,31 @@ class MainActivity : FlutterActivity() {
             }
         }
     }
+    override fun onPause() {
+        super.onPause()
+        Log.d("MainActivity", "onResume chamado")
+        // Tenta trazer a tarefa para o primeiro plano
+        bringAppToFront()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("MainActivity", "onResume chamado")
+        // Tenta trazer a tarefa para o primeiro plano
+        bringAppToFront()
+    }
+
+    private fun bringAppToFront() {
+        try {
+            val intent = packageManager.getLaunchIntentForPackage(packageName)
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                startActivity(intent)
+            } else {
+                Log.e("MainActivity", "Intent para o pacote não encontrada")
+            }
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Erro ao tentar trazer o aplicativo para o primeiro plano", e)
+        }
+    }
 }

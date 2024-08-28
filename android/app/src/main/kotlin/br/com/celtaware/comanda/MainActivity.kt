@@ -1,22 +1,22 @@
 package br.com.celtaware.comanda
-import br.com.celtaware.comanda.utils.AppUtils
-import br.com.celtaware.comanda.utils.OrientationUtils
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.app.Activity
 import android.os.Bundle
-import android.widget.Toast
 import android.util.Log
+import android.widget.Toast
+import br.com.celtaware.comanda.utils.AppUtils
+import br.com.celtaware.comanda.utils.OrientationUtils
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import org.koin.android.ext.android.inject
+import rede.smartrede.sdk.FlexTipoPagamento
+import rede.smartrede.sdk.PaymentStatus
 import rede.smartrede.sdk.RedePaymentValidationError
 import rede.smartrede.sdk.RedePayments
-import rede.smartrede.sdk.FlexTipoPagamento
 import rede.smartrede.sdk.api.IRedeSdk
-import rede.smartrede.sdk.PaymentStatus
 
 class MainActivity : FlutterActivity() {
     private val redeSdk: IRedeSdk by inject()
@@ -28,13 +28,6 @@ class MainActivity : FlutterActivity() {
         // Definindo um valor específico para PAYMENT_REQUEST_CODE
         private var PAYMENT_REQUEST_CODE: Int = 1
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        OrientationUtils.doOrientation(this)
-    }
-
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -151,6 +144,14 @@ class MainActivity : FlutterActivity() {
             }
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        OrientationUtils.doOrientation(this)
+    }
+    
+    //Tudo isso abaixo intercepta pra não conseguir fechar o app, por isso precisa comentar tudo quando for gerar versão pra play store
     override fun onPause() {
         super.onPause()
         Log.d("MainActivity", "onResume chamado")
@@ -163,5 +164,12 @@ class MainActivity : FlutterActivity() {
         Log.d("MainActivity", "onResume chamado")
         // Tenta trazer a tarefa para o primeiro plano
         AppUtils.bringAppToFront(this)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (Intent.ACTION_MAIN == intent.action) {
+            Log.i("MyLauncher", "onNewIntent: HOME Key")
+        }
     }
 }

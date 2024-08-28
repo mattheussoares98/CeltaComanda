@@ -120,6 +120,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         },
         child: FittedBox(child: Text(R.string.blockCommand)),
       ),
+      const CloseApplicationButton(),
       LogoutButton(
         userPassword: _passwordController,
         userPersonalizedCode: _personalizedCodeController,
@@ -174,7 +175,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: hasMinWidth(context) ? 3 : 2,
-                  childAspectRatio: 5,
+                  childAspectRatio: hasMinWidth(context) ? 5 : 3,
                   mainAxisSpacing: 5,
                   crossAxisSpacing: 5,
                 ),
@@ -185,7 +186,6 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
               ),
             ),
             const UpdateMenuButton(),
-            const CloseApplicationButton(),
           ],
         ),
       ),

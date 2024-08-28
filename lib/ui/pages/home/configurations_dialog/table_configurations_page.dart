@@ -184,7 +184,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 },
               ),
             ),
-            const UpdateMenuButton()
+            const UpdateMenuButton(),
+            const CloseApplicationButton(),
           ],
         ),
       ),

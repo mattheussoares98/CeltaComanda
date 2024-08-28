@@ -17,12 +17,14 @@ import rede.smartrede.sdk.PaymentStatus
 import rede.smartrede.sdk.RedePaymentValidationError
 import rede.smartrede.sdk.RedePayments
 import rede.smartrede.sdk.api.IRedeSdk
+import kotlin.system.exitProcess
 
 class MainActivity : FlutterActivity() {
     private val redeSdk: IRedeSdk by inject()
     private val redePayments: RedePayments by inject()
 
     private val channel = "rede_channel"
+    private val closeAppChannel = "close_channel"
 
     companion object {
         // Definindo um valor específico para PAYMENT_REQUEST_CODE
@@ -31,6 +33,18 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            closeAppChannel
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "close" -> {
+                    moveTaskToBack(true);
+                    exitProcess(-1)
+                }
+                else -> result.notImplemented()
+            }
+        }
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             channel
@@ -150,7 +164,7 @@ class MainActivity : FlutterActivity() {
 
         OrientationUtils.doOrientation(this)
     }
-    
+
     //Tudo isso abaixo intercepta pra não conseguir fechar o app, por isso precisa comentar tudo quando for gerar versão pra play store
     override fun onPause() {
         super.onPause()

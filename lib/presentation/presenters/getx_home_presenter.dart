@@ -307,18 +307,36 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<bool> openOrBlockadeCommand({
     required int commandNumber,
     required bool isOpen,
+    required int userCode,
+    required String password,
   }) async {
     mainError = null;
     isLoading = true;
     try {
+      bool isValidPassword = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: userCode.toInt(),
+        password: password,
+      );
+
+      if (isValidPassword != true) {
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
+
       await commandInformations.openOrBlockade(
         commandNumber: commandNumber.toString().padLeft(3, "0"),
         isOpen: isOpen,
       );
 
       return true;
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
       return false;
     } finally {
       isLoading = false;

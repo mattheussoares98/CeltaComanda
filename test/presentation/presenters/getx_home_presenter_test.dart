@@ -36,13 +36,14 @@ void main() {
   late CommandEntity notFixedCommandEntity;
   late int newFixedCommandNumber;
   late int userPersonalizedCode;
-  late String password;
   late SaleRequestTempEntity saleRequestTempEntity;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late int? peoples;
   late String? sellerCode;
   late List<SellerEntity> sellerEntitys;
   late SellersViewModel selectedSeller;
+  late int userCode;
+  late String password;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -125,6 +126,8 @@ void main() {
       EntityFactory.makeSellerEntity(),
     ];
     selectedSeller = EntityFactory.makeSellersViewModel();
+
+    userCode = faker.randomGenerator.integer(100);
   }
 
   setUp(() {
@@ -987,6 +990,8 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: true,
       );
@@ -1001,6 +1006,8 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: true,
       );
@@ -1009,6 +1016,8 @@ void main() {
       bool isOpen = faker.randomGenerator.boolean();
 
       await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
       );
@@ -1022,6 +1031,8 @@ void main() {
       bool isOpen = faker.randomGenerator.boolean();
 
       final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
       );
@@ -1033,8 +1044,62 @@ void main() {
       bool isOpen = faker.randomGenerator.boolean();
 
       final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
+      );
+
+      expect(value, false);
+    });
+    test("Should call userValidations", () async {
+      await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
+      );
+
+      verify(() => userValidations.isValidPassword(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            personalizedCode: userCode,
+            password: password,
+          )).called(1);
+    });
+    test("Should emit correct error on invalid credentials", () async {
+      userValidations.mockIsValidPasswordError(
+          DomainError.invalidCredentialsOrAccessDenied);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]),
+      );
+
+      final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
+      );
+
+      expect(value, false);
+    });
+
+    test("Should emit correct error on throws", () async {
+      userValidations.mockIsValidPasswordError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
       );
 
       expect(value, false);

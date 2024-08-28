@@ -14,7 +14,7 @@ class TableConfigurationsPage extends StatefulWidget {
 }
 
 class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
-  final _personalizedCodeController = TextEditingController();
+  final _userCode = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();
   final _keyUserAndPassword = GlobalKey<FormState>();
@@ -33,7 +33,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
     final updated = await homePresenter.updateCommandData(
       newFixedCommandNumber: homePresenter.selectedCommand!,
-      userPersonalizedCode: _personalizedCodeController.text.toInt(),
+      userPersonalizedCode: _userCode.text.toInt(),
       password: _passwordController.text,
       printedProductsPresenter: printedProductsPresenter,
       peoples: homePresenter.selectedPeoples,
@@ -62,6 +62,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     final updated = await homePresenter.openOrBlockadeCommand(
       commandNumber: homePresenter.selectedCommand!.toInt(),
       isOpen: liberate,
+      password: _passwordController.text,
+      userCode: _userCode.text.toInt(),
     );
 
     if (updated) {
@@ -87,7 +89,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   void dispose() {
     super.dispose();
 
-    _personalizedCodeController.dispose();
+    _userCode.dispose();
     _passwordController.dispose();
     _passwordFocusNode.dispose();
   }
@@ -123,7 +125,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       const CloseApplicationButton(),
       LogoutButton(
         userPassword: _passwordController,
-        userPersonalizedCode: _personalizedCodeController,
+        userPersonalizedCode: _userCode,
         validationKey: _keyUserAndPassword,
         resetDropdownsErrors: () => _keyDropdowns.currentState?.reset(),
       ),
@@ -153,7 +155,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 children: [
                   UserPersonalizedCodeInput(
                     passwordFocusNode: _passwordFocusNode,
-                    userController: _personalizedCodeController,
+                    userController: _userCode,
                   ),
                   const SizedBox(height: 10),
                   PasswordInput(

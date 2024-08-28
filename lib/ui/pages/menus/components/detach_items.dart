@@ -29,6 +29,7 @@ class DetachItems extends StatelessWidget {
         autoPlayInterval: const Duration(seconds: 7),
         autoPlayAnimationDuration: const Duration(milliseconds: 1500),
         autoPlayCurve: Curves.fastOutSlowIn,
+        scrollDirection: hasMinWidth(context) ? Axis.horizontal : Axis.vertical,
       ),
       items: products.map((product) {
         return InkWell(

@@ -48,15 +48,9 @@ class MainActivity : FlutterActivity() {
                 val longAmountValue = (it["longAmountValue"] as? Int)?.toLong() ?: 0L
                 val portionQuantity = it["portionQuantity"] as? Int ?: 0
                 when (call.method) {
-                    "startRedeSdk" -> {
-                        // A inicialização do SDK agora é feita na classe App
-
-                    }
-
                     "credit" -> {
                         collectPayment(result, FlexTipoPagamento.CREDITO_A_VISTA, longAmountValue)
                     }
-
                     "creditPortion" -> {
                         collectPayment(
                             result,
@@ -66,15 +60,12 @@ class MainActivity : FlutterActivity() {
                             portionQuantity
                         )
                     }
-
                     "debit" -> {
                         collectPayment(result, FlexTipoPagamento.DEBITO, longAmountValue)
                     }
-
                     "pix" -> {
                         collectPayment(result, FlexTipoPagamento.PIX, longAmountValue)
                     }
-
                     else -> result.notImplemented()
                 }
             } ?: result.error(
@@ -173,6 +164,4 @@ class MainActivity : FlutterActivity() {
         // Tenta trazer a tarefa para o primeiro plano
         AppUtils.bringAppToFront(this)
     }
-
-
 }

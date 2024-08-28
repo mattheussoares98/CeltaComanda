@@ -1,14 +1,13 @@
 package br.com.celtaware.comanda
 import br.com.celtaware.comanda.utils.AppUtils
+import br.com.celtaware.comanda.utils.OrientationUtils
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import android.util.Log
-import android.util.DisplayMetrics
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -33,28 +32,7 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Obtém as dimensões da tela
-        val displayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getRealMetrics(displayMetrics)
-        val widthPixels = displayMetrics.widthPixels
-        val heightPixels = displayMetrics.heightPixels
-
-        // Calcula a densidade da tela
-        val density = displayMetrics.densityDpi
-
-        // Converte pixels para dp (density-independent pixels)
-        val widthDp = widthPixels / (density / DisplayMetrics.DENSITY_DEFAULT)
-        val heightDp = heightPixels / (density / DisplayMetrics.DENSITY_DEFAULT)
-
-       // Calcula a área em dp
-        val areaDp = widthDp * heightDp
-
-        // Define a orientação com base na área da tela e na orientação atual
-        if (areaDp > 400000) { // Ajuste o valor conforme necessário
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-        } else {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+        OrientationUtils.doOrientation(this)
     }
 
 

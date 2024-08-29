@@ -14,12 +14,12 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late LocalEnterpriseData sut;
   late HiveStorageSpy cacheStorage;
-  late Map data;
+  late Map enterpriseJsonData;
 
   setUp(() {
-    data = CacheFactory.makeEnterpriseData();
+    enterpriseJsonData = CacheFactory.makeEnterpriseData();
     cacheStorage = HiveStorageSpy();
-    cacheStorage.mockGet(data);
+    cacheStorage.mockGet(enterpriseJsonData);
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });
 
@@ -36,16 +36,20 @@ void main() {
       expect(
         enterpriseDataEntity,
         EnterpriseEntity(
-          url: data['url'].toString().toLowerCase().removeWhiteSpaces(),
-          enterpriseName: data['enterpriseName']
+          url: enterpriseJsonData['url']
               .toString()
               .toLowerCase()
               .removeWhiteSpaces(),
-          enterpriseId: data["enterpriseId"],
-          concentradorUrl: data["concentradorUrl"]
+          enterpriseName: enterpriseJsonData['enterpriseName']
               .toString()
               .toLowerCase()
               .removeWhiteSpaces(),
+          enterpriseId: enterpriseJsonData["enterpriseId"],
+          concentradorUrl: enterpriseJsonData["concentradorUrl"]
+              .toString()
+              .toLowerCase()
+              .removeWhiteSpaces(),
+          persistApp: enterpriseJsonData["persistApp"],
         ),
       );
     });

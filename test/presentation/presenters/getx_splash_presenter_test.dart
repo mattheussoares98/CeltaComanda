@@ -61,6 +61,7 @@ void main() {
       enterpriseId: faker.randomGenerator.integer(100),
       concentradorUrl: faker.internet.httpUrl(),
       url: faker.internet.httpUrl(),
+      persistApp: faker.randomGenerator.boolean(),
     ));
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);

@@ -196,6 +196,7 @@ void main() {
               enterpriseId: null,
               url: null,
               concentradorUrl: null,
+              persistApp: null,
             ),
           )).called(1);
     });

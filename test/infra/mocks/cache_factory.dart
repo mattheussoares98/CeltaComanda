@@ -6,6 +6,7 @@ class CacheFactory {
         'concentradorUrl': faker.internet.httpUrl(),
         'enterpriseName': faker.company.name(),
         'enterpriseId': faker.randomGenerator.integer(2),
+        'persistApp': faker.randomGenerator.boolean(),
       };
 
   static Map makeInvalidEnterpriseData() => {

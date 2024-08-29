@@ -12,6 +12,7 @@ class EntityFactory {
       enterpriseId: faker.randomGenerator.integer(3),
       enterpriseName: faker.company.name(),
       concentradorUrl: faker.internet.httpUrl(),
+      persistApp: faker.randomGenerator.boolean(),
     );
   }
 

@@ -81,6 +81,7 @@ class EnUs implements Translation {
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
   String get clearCart => 'Clear cart';
+  String get closeApplication => 'Close APP';
   String get close => 'Close';
   String get combox => 'Combo';
   String get commandNotAvailable => 'Command not available';

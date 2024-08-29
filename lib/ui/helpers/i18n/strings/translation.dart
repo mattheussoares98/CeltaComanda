@@ -65,6 +65,7 @@ abstract class Translation {
   String get cellPhone;
   String get clearCart;
   String get close;
+  String get closeApplication;
   String get combox;
   String get commandNotAvailable;
   String get command;

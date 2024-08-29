@@ -83,6 +83,7 @@ class PtBr implements Translation {
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
   String get clearCart => "Limpar carrinho";
+  String get closeApplication => "Fechar APP";
   String get close => "Fechar";
   String get combox => "Combo";
   String get commandNotAvailable => "Comanda não disponível";

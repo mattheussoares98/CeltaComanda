@@ -8,13 +8,13 @@ class CloseApplicationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        const platform = MethodChannel('close_channel');
+        const platform = MethodChannel('persistent_channel');
 
         try {
           Future.delayed(Duration.zero, () async {
             SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
                 overlays: []);
-            final result = await platform.invokeMethod("close");
+            final result = await platform.invokeMethod("closeApp");
             debugPrint(result);
           });
         } catch (e) {

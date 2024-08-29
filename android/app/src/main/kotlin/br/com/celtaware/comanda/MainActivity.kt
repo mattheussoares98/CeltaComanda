@@ -16,31 +16,31 @@ import rede.smartrede.sdk.FlexTipoPagamento
 import rede.smartrede.sdk.PaymentStatus
 import rede.smartrede.sdk.RedePaymentValidationError
 import rede.smartrede.sdk.RedePayments
-import rede.smartrede.sdk.api.IRedeSdk
 import kotlin.system.exitProcess
 
 class MainActivity : FlutterActivity() {
-    private val redeSdk: IRedeSdk by inject()
     private val redePayments: RedePayments by inject()
 
     private val channel = "rede_channel"
-    private val closeAppChannel = "close_channel"
+    private val persistentChannel = "persistent_channel"
 
     companion object {
-        // Definindo um valor específico para PAYMENT_REQUEST_CODE
         private var PAYMENT_REQUEST_CODE: Int = 1
+        private var persistApp: Boolean = false
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            closeAppChannel
+            persistentChannel
         ).setMethodCallHandler { call, result ->
             when (call.method) {
-                "close" -> {
+                "closeApp" -> {
                     moveTaskToBack(true);
                     exitProcess(-1)
+                }   "persistApp" -> {
+                     persistApp = true
                 }
                 else -> result.notImplemented()
             }
@@ -126,11 +126,7 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun showToast(message: String) {
-        runOnUiThread {
-            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-        }
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -159,31 +155,41 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         OrientationUtils.doOrientation(this)
     }
 
-    //Tudo isso abaixo intercepta pra não conseguir fechar o app, por isso precisa comentar tudo quando for gerar versão pra play store
+
     override fun onPause() {
         super.onPause()
         Log.d("MainActivity", "onResume chamado")
-        // Tenta trazer a tarefa para o primeiro plano
-        AppUtils.bringAppToFront(this)
+        if(persistApp) {
+            AppUtils.bringAppToFront(this)
+        }
     }
 
     override fun onStop() {
         super.onStop()
         Log.d("MainActivity", "onResume chamado")
-        // Tenta trazer a tarefa para o primeiro plano
-        AppUtils.bringAppToFront(this)
+        if(persistApp) {
+            AppUtils.bringAppToFront(this)
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (Intent.ACTION_MAIN == intent.action) {
-            Log.i("MyLauncher", "onNewIntent: HOME Key")
+        if(persistApp) {
+            if (Intent.ACTION_MAIN == intent.action) {
+                Log.i("MyLauncher", "onNewIntent: HOME Key")
+            }
         }
     }
 }

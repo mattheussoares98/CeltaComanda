@@ -59,120 +59,98 @@ class _PrintedItemState extends State<PrintedItem> {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
-      child: Column(
+      child: ListView.builder(
+        itemCount: widget.printed.Products.length,
+        itemBuilder: (context, index) {
+          return Builder(builder: (context) {
+            final product = widget.printed.Products[index];
+            return Container(
+              width: (MediaQuery.of(context).size.width /
+                      getItensPerLine(context)) -
+                  rightMargin,
+              margin: const EdgeInsets.all(1),
+              padding: EdgeInsets.only(right: rightMargin),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border:
+                    Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 10,
+                    color: Color(0x33000000),
+                    offset: Offset(-3, -1),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  ProductDetails(
+                    product: product.Products,
+                    onPressedRemoveProduct: () async {
+                      notificationDialog(
+                        context: context,
+                        titleMessage: R.string.removeProduct,
+                        content: Text(
+                          R.string.wantRemoveRequestedProduct,
+                          textAlign: TextAlign.center,
+                        ),
+                        onPress: () async {
+                          await _removeProduct(
+                            printedProductsPresenter: printedProductsPresenter,
+                            menuPresenter: menuPresenter,
+                            cartPresenter: cartPresenter,
+                            homePresenter: homePresenter,
+                            saleRequestProductId: product.SaleRequestProductId,
+                            expansibleGroupFromProductPresenter:
+                                expansibleGroupFromProductPresenter,
+                          );
+                        },
+                      );
+                    },
+                    validateUserAndCancelProducts: () {
+                      validateUserAndCancelProductDialog(
+                          context: context,
+                          formKey: widget.formKey,
+                          personalizedCodeController:
+                              widget.personalizedCodeController,
+                          passwordController: widget.passwordController,
+                          printedProductsPresenter: printedProductsPresenter,
+                          callSetState: () {
+                            setState(() {});
+                          });
+                    },
+                    quantity: product.Quantity,
+                    value: (product.TotalLiquid.toDouble() /
+                            product.Quantity.toDouble())
+                        .toString()
+                        .toBrazilianNumber(),
+                    totalLiquid: product.TotalLiquid,
+                    comments: product.Comments,
+                  ),
+                  // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
+                  // Text(
+                  //     "SaleRequestProductId ${product.SaleRequestProductId}"),
+                  // Text("Quantity ${product.Quantity}"),
+                  // Text("UserId ${product.UserId}"),
+                  // Text("IsCancelled ${product.IsCancelled}"),
+                  // Text("IsDelivered ${product.IsDelivered}"),
+                  // Text("IsPrinted ${product.IsPrinted}"),
+                  // Text("ProductionStatus ${product.ProductionStatus}"),
+                  // Text(
+                  //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
+                  // Text("SaleRequestId ${product.SaleRequestId}"),
+                ],
+              ),
+            );
+          });
+        },
+      ),
+      /* Column(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount:
-                    (widget.printed.Products.length / getItensPerLine(context))
-                        .ceil(),
-                itemBuilder: (context, index) {
-                  return IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        //essa lógica doida foi o chatGPT que gerou. Usando um gridView não estava dando certo
-                        for (int i = index * getItensPerLine(context);
-                            i < (index + 1) * getItensPerLine(context);
-                            i++)
-                          if (i < widget.printed.Products.length)
-                            Builder(builder: (context) {
-                              final product = widget.printed.Products[i];
-                              return Container(
-                                width: (MediaQuery.of(context).size.width /
-                                        getItensPerLine(context)) -
-                                    rightMargin,
-                                margin: const EdgeInsets.all(1),
-                                padding: EdgeInsets.only(right: rightMargin),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(
-                                      color: const Color.fromARGB(
-                                          255, 220, 218, 218)),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      blurRadius: 10,
-                                      color: Color(0x33000000),
-                                      offset: Offset(-3, -1),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Column(
-                                  children: [
-                                    ProductDetails(
-                                      product: product.Products,
-                                      onPressedRemoveProduct: () async {
-                                        notificationDialog(
-                                          context: context,
-                                          titleMessage: R.string.removeProduct,
-                                          content: Text(
-                                            R.string.wantRemoveRequestedProduct,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          onPress: () async {
-                                            await _removeProduct(
-                                              printedProductsPresenter:
-                                                  printedProductsPresenter,
-                                              menuPresenter: menuPresenter,
-                                              cartPresenter: cartPresenter,
-                                              homePresenter: homePresenter,
-                                              saleRequestProductId:
-                                                  product.SaleRequestProductId,
-                                              expansibleGroupFromProductPresenter:
-                                                  expansibleGroupFromProductPresenter,
-                                            );
-                                          },
-                                        );
-                                      },
-                                      validateUserAndCancelProducts: () {
-                                        validateUserAndCancelProductDialog(
-                                            context: context,
-                                            formKey: widget.formKey,
-                                            personalizedCodeController: widget
-                                                .personalizedCodeController,
-                                            passwordController:
-                                                widget.passwordController,
-                                            printedProductsPresenter:
-                                                printedProductsPresenter,
-                                            callSetState: () {
-                                              setState(() {});
-                                            });
-                                      },
-                                      quantity: product.Quantity,
-                                      value: (product.TotalLiquid.toDouble() /
-                                              product.Quantity.toDouble())
-                                          .toString()
-                                          .toBrazilianNumber(),
-                                      totalLiquid: product.TotalLiquid,
-                                      comments: product.Comments,
-                                    ),
-                                    // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
-                                    // Text(
-                                    //     "SaleRequestProductId ${product.SaleRequestProductId}"),
-                                    // Text("Quantity ${product.Quantity}"),
-                                    // Text("UserId ${product.UserId}"),
-                                    // Text("IsCancelled ${product.IsCancelled}"),
-                                    // Text("IsDelivered ${product.IsDelivered}"),
-                                    // Text("IsPrinted ${product.IsPrinted}"),
-                                    // Text("ProductionStatus ${product.ProductionStatus}"),
-                                    // Text(
-                                    //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
-                                    // Text("SaleRequestId ${product.SaleRequestId}"),
-                                  ],
-                                ),
-                              );
-                            })
-                      ],
-                    ),
-                  );
-                },
-              ),
-
               // Text("Comanda: ${printed.PersonalizedCode}"),
               // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
               // Text("DateOfCreation: ${printed.DateOfCreation}"),
@@ -188,7 +166,7 @@ class _PrintedItemState extends State<PrintedItem> {
             ],
           ),
         ],
-      ),
+      ), */
     );
   }
 }

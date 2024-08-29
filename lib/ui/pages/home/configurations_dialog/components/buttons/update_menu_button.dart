@@ -23,7 +23,7 @@ class UpdateMenuButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 3,
+            flex: 2,
             child: TextButton.icon(
               label: FittedBox(
                 child: Text(

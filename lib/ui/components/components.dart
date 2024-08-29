@@ -15,6 +15,5 @@ export './pepper_indicator.dart';
 export './price_and_update_product_quantity.dart';
 export './product_complement.dart';
 export './reload_screen.dart';
-export './request_summary.dart';
 export './search_command_icon.dart';
 export './search_data_by_command_number.dart';

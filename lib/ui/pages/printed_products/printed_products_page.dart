@@ -77,32 +77,27 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         ),
         body: SizedBox(
           height: double.infinity,
-          child: Stack(
-            alignment: Alignment.topCenter,
+          child: Column(
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: totalPriceContainerHeight),
-                child: SingleChildScrollView(
-                  child: printedProductsPresenter.printedProducts != null
-                      ? PrintedItem(
-                          printed: printedProductsPresenter.printedProducts!,
-                          formKey: formKey,
-                          passwordController: passwordController,
-                          personalizedCodeController:
-                              personalizedCodeController,
-                        )
-                      : SearchDataByCommandNumber(
-                          homePresenter: homePresenter,
-                          emptyMessage: homePresenter.commandNumber == null
-                              ? R.string.msgConsultCommandToViewProducts
-                              : R.string.msgCommandDontHaveProducts,
-                          loadCommandData: () async {
-                            await printedProductsPresenter
-                                .loadPrinted(homePresenter);
-                          },
-                        ),
-                ),
+              Expanded(
+                child: printedProductsPresenter.printedProducts != null
+                    ? PrintedItem(
+                        printed: printedProductsPresenter.printedProducts!,
+                        formKey: formKey,
+                        passwordController: passwordController,
+                        personalizedCodeController:
+                            personalizedCodeController,
+                      )
+                    : SearchDataByCommandNumber(
+                        homePresenter: homePresenter,
+                        emptyMessage: homePresenter.commandNumber == null
+                            ? R.string.msgConsultCommandToViewProducts
+                            : R.string.msgCommandDontHaveProducts,
+                        loadCommandData: () async {
+                          await printedProductsPresenter
+                              .loadPrinted(homePresenter);
+                        },
+                      ),
               ),
               if (printedProductsPresenter.printedProducts != null)
                 const RequestSummary(

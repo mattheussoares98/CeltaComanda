@@ -156,6 +156,13 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false}) {
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      enterpriseName: value,
+      url: null,
+      enterpriseId: null,
+      concentradorUrl: null,
+      persistApp: null,
+    );
     enterpriseNameController.text = value;
 
     _enterpriseError.value = _validateField('enterpriseName');

@@ -27,8 +27,7 @@ class RemoteLoadEnterpriseData implements LoadEnterpriseData {
       final querySnapshot = await firebaseStorage.get(
         collection: FirebaseCollections.clients.name,
         fieldToSearch: FirebaseKeys.enterpriseName.name,
-        valueToSearch: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseName
+        valueToSearch: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName
             .toLowerCase()
             .removeWhiteSpaces(),
       );

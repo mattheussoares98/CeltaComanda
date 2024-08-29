@@ -385,5 +385,24 @@ void main() {
 
       verify(() => homePresenter.updateCommandNumber("001")).called(1);
     });
+
+    test(
+        "Should update EnterpriseDataBuilder.enterpriseName when validateEnterpriseInput",
+        () async {
+      String enterpriseName = faker.randomGenerator.string(20);
+
+      sut.validateEnterpriseInput(enterpriseName);
+
+      expect(
+        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseEntity(
+          enterpriseName: enterpriseName,
+          url: null,
+          enterpriseId: null,
+          concentradorUrl: null,
+          persistApp: null,
+        ),
+      );
+    });
   });
 }

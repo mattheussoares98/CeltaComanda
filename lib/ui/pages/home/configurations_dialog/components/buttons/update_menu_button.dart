@@ -19,60 +19,34 @@ class UpdateMenuButton extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: TextButton.icon(
-              label: FittedBox(
-                child: Text(
-                  MediaQuery.of(context).size.width > 250
-                      ? R.string.updateMenu
-                      : "",
-                  style: TextStyle(color: Theme.of(context).primaryColorDark),
-                ),
-              ),
-              icon: Flexible(
-                child: Icon(
-                  Icons.refresh_outlined,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-              onPressed: () async {
-                Navigator.of(context).pop();
-                await homePresenter.loadCommandData(
-                  menuPresenter: menuPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  cartPresenter: cartPresenter,
-                  expansibleGroupFromProductPresenter:
-                      expansibleGroupFromProductPresenter,
-                  homePresenter: homePresenter,
-                );
-              },
+      child: TextButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.refresh_outlined,
+              color: Theme.of(context).primaryColorDark,
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Flexible(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      R.string.close.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: getStringSize(context),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            const SizedBox(width: 5),
+            Text(
+              MediaQuery.of(context).size.width > 250
+                  ? R.string.updateMenu
+                  : "",
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
             ),
-          ),
-        ],
+          ],
+        ),
+        onPressed: () async {
+          Navigator.of(context).pop();
+          await homePresenter.loadCommandData(
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: cartPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            homePresenter: homePresenter,
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
@@ -10,25 +11,9 @@ class TitleAppbar extends StatelessWidget {
   });
 
   void doOnTapOrLongPress(BuildContext context) {
-    showDialog(
+    AnimatedAlertDialog.open(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          iconPadding: const EdgeInsets.all(8),
-          titlePadding: const EdgeInsets.all(8),
-          buttonPadding: const EdgeInsets.all(8),
-          actionsPadding: const EdgeInsets.all(8),
-          insetPadding: const EdgeInsets.all(20),
-          contentPadding: const EdgeInsets.all(10),
-          content: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: const TableConfigurationsPage(),
-          ),
-        );
-      },
+      page: const TableConfigurationsPage(),
     );
   }
 

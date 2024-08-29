@@ -6,15 +6,12 @@ import '../../../../../helpers/helpers.dart';
 import '../../../../pages.dart';
 
 class LogoutButton extends StatelessWidget {
-  final GlobalKey<FormState> validationKey;
-  final TextEditingController userPersonalizedCode;
-  final TextEditingController userPassword;
-  final Function() resetDropdownsErrors;
+  final void Function()? resetDropdownsErrors;
+  final Future<bool> Function(HomePresenter homePresenter)
+      validateUserCredentials;
   const LogoutButton({
-    required this.validationKey,
-    required this.userPassword,
-    required this.userPersonalizedCode,
     required this.resetDropdownsErrors,
+    required this.validateUserCredentials,
     super.key,
   });
 
@@ -39,20 +36,13 @@ class LogoutButton extends StatelessWidget {
         ),
       ),
       onPressed: () async {
-        resetDropdownsErrors();
-        FocusScope.of(context).unfocus();
-
-        if (validationKey.currentState?.validate() != true) {
-          return;
+        if (resetDropdownsErrors != null) {
+          resetDropdownsErrors!();
         }
 
-        bool isValidUserAndPassword =
-            await homePresenter.isValidUserAndPassword(
-          personalizedCode: userPersonalizedCode.text.toInt(),
-          password: userPassword.text,
-        );
+        bool isValidCredentials = await validateUserCredentials(homePresenter);
 
-        if (isValidUserAndPassword) {
+        if (isValidCredentials) {
           if (cartPresenter.cartProducts.isNotEmpty) {
             Future.delayed(Duration.zero, () {
               notificationDialog(
@@ -60,14 +50,12 @@ class LogoutButton extends StatelessWidget {
                   titleMessage: R.string.clearCart,
                   content: Text(R.string.msgClearCartOnLogout),
                   onPress: () async {
-                    if (isValidUserAndPassword) {
-                      cartPresenter.clearCart();
-                      await homePresenter.goToSplashPage(
-                        printedProductsPresenter: printedProductsPresenter,
-                        cartPresenter: cartPresenter,
-                        menuPresenter: menuPresenter,
-                      );
-                    }
+                    cartPresenter.clearCart();
+                    await homePresenter.goToSplashPage(
+                      printedProductsPresenter: printedProductsPresenter,
+                      cartPresenter: cartPresenter,
+                      menuPresenter: menuPresenter,
+                    );
                   });
             });
           } else {

@@ -14,7 +14,7 @@ class TableConfigurationsPage extends StatefulWidget {
 }
 
 class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
-  final _userCode = TextEditingController();
+  final _userCodeController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();
   final _keyUserAndPassword = GlobalKey<FormState>();
@@ -33,7 +33,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
 
     final updated = await homePresenter.updateCommandData(
       newFixedCommandNumber: homePresenter.selectedCommand!,
-      userPersonalizedCode: _userCode.text.toInt(),
+      userPersonalizedCode: _userCodeController.text.toInt(),
       password: _passwordController.text,
       printedProductsPresenter: printedProductsPresenter,
       peoples: homePresenter.selectedPeoples,
@@ -63,7 +63,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       commandNumber: homePresenter.selectedCommand!.toInt(),
       isOpen: liberate,
       password: _passwordController.text,
-      userCode: _userCode.text.toInt(),
+      userCode: _userCodeController.text.toInt(),
     );
 
     if (updated) {
@@ -89,9 +89,24 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   void dispose() {
     super.dispose();
 
-    _userCode.dispose();
+    _userCodeController.dispose();
     _passwordController.dispose();
     _passwordFocusNode.dispose();
+  }
+
+  Future<bool> validateUserCredentials(HomePresenter homePresenter) async {
+    FocusScope.of(context).unfocus();
+
+    if (_keyUserAndPassword.currentState?.validate() != true) {
+      return false;
+    }
+
+    bool isValidUserAndPassword = await homePresenter.isValidUserAndPassword(
+      personalizedCode: _userCodeController.text.toInt(),
+      password: _passwordController.text,
+    );
+
+    return isValidUserAndPassword;
   }
 
   @override
@@ -124,10 +139,8 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
       ),
       const CloseApplicationButton(),
       LogoutButton(
-        userPassword: _passwordController,
-        userPersonalizedCode: _userCode,
-        validationKey: _keyUserAndPassword,
-        resetDropdownsErrors: () => _keyDropdowns.currentState?.reset(),
+        validateUserCredentials: validateUserCredentials,
+        resetDropdownsErrors: _keyDropdowns.currentState?.reset,
       ),
     ];
 
@@ -155,7 +168,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                 children: [
                   UserPersonalizedCodeInput(
                     passwordFocusNode: _passwordFocusNode,
-                    userController: _userCode,
+                    userController: _userCodeController,
                   ),
                   const SizedBox(height: 10),
                   PasswordInput(

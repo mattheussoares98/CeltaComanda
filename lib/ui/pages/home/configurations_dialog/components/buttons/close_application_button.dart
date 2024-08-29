@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../../helpers/helpers.dart';
+import '../../../../../mixins/mixins.dart';
 
-class CloseApplicationButton extends StatelessWidget {
+class CloseApplicationButton extends StatelessWidget with BehaviorManager {
   final Future<bool> Function() validateUserCredentials;
-  const CloseApplicationButton({
+  CloseApplicationButton({
     required this.validateUserCredentials,
     super.key,
   });
@@ -15,16 +15,7 @@ class CloseApplicationButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () async {
         if (await validateUserCredentials()) {
-          const platform = MethodChannel('persistent_channel');
-
-          try {
-            Future.delayed(Duration.zero, () async {
-              final result = await platform.invokeMethod("closeApp");
-              debugPrint(result);
-            });
-          } catch (e) {
-            debugPrint(e.toString());
-          }
+          await closeApp();
         }
       },
       child: Text(R.string.closeApplication),

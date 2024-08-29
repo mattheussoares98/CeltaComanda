@@ -137,7 +137,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
         },
         child: FittedBox(child: Text(R.string.blockCommand)),
       ),
-      const CloseApplicationButton(),
+      CloseApplicationButton(validateUserCredentials: validateUserCredentials),
       LogoutButton(
         validateUserCredentials: validateUserCredentials,
         resetDropdownsErrors: _keyDropdowns.currentState?.reset,

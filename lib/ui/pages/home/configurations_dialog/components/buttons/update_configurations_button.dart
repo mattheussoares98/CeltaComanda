@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../helpers/helpers.dart';
+import '../../../../../helpers/helpers.dart';
 
 class UpdateConfigurationsButton extends StatelessWidget {
   final Function() updateCommand;

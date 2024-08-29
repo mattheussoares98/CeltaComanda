@@ -3,23 +3,21 @@ import 'package:flutter/material.dart';
 import '../../../../helpers/helpers.dart';
 
 class UserPersonalizedCodeInput extends StatelessWidget {
+  final FocusNode passwordFocusNode;
+  final TextEditingController userController;
   const UserPersonalizedCodeInput({
     super.key,
-    required FocusNode passwordFocusNode,
-    required TextEditingController userController,
-  })  : _passwordFocusNode = passwordFocusNode,
-        _userController = userController;
-
-  final FocusNode _passwordFocusNode;
-  final TextEditingController _userController;
+    required this.passwordFocusNode,
+    required this.userController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onFieldSubmitted: (_) {
-        _passwordFocusNode.requestFocus();
+        passwordFocusNode.requestFocus();
       },
-      controller: _userController,
+      controller: userController,
       validator: (value) {
         if (value?.isEmpty == true) {
           return R.string.msgWriteUserCode;

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../helpers/helpers.dart';
-import '../../../../pages.dart';
 
 class CloseApplicationButton extends StatelessWidget {
-  final Future<bool> Function(HomePresenter homePresenter)
-      validateUserCredentials;
+  final Future<bool> Function() validateUserCredentials;
   const CloseApplicationButton({
     required this.validateUserCredentials,
     super.key,
@@ -15,11 +12,9 @@ class CloseApplicationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
     return ElevatedButton(
       onPressed: () async {
-        if (await validateUserCredentials(homePresenter)) {
+        if (await validateUserCredentials()) {
           const platform = MethodChannel('persistent_channel');
 
           try {

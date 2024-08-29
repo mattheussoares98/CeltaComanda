@@ -23,12 +23,15 @@ class UpdateMenuButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
+            flex: 3,
             child: TextButton.icon(
-              label: Text(
-                MediaQuery.of(context).size.width > 250
-                    ? R.string.updateMenu
-                    : "",
-                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              label: FittedBox(
+                child: Text(
+                  MediaQuery.of(context).size.width > 250
+                      ? R.string.updateMenu
+                      : "",
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                ),
               ),
               icon: Flexible(
                 child: Icon(

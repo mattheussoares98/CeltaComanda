@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../helpers/helpers.dart';
-import '../../../../pages.dart';
 
 class UpdateConfigurationsButton extends StatelessWidget {
-  final Future<void> Function(HomePresenter, PrintedProductsPresenter)
-      updateCommand;
+  final Future<void> Function() updateCommand;
   const UpdateConfigurationsButton({
     required this.updateCommand,
     super.key,
@@ -14,13 +11,9 @@ class UpdateConfigurationsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-
     return ElevatedButton(
       onPressed: () async {
-        await updateCommand(homePresenter, printedProductsPresenter);
+        await updateCommand();
       },
       child: FittedBox(
         child: Padding(

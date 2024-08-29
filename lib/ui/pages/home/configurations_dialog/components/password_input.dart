@@ -8,13 +8,10 @@ import '../../../pages.dart';
 class PasswordInput extends StatelessWidget {
   final FocusNode passwordFocusNode;
   final TextEditingController passwordController;
-  final Future<void> Function(HomePresenter homePresenter,
-      PrintedProductsPresenter printedProductsPresenter) updateCommandData;
 
   const PasswordInput({
     required this.passwordFocusNode,
     required this.passwordController,
-    required this.updateCommandData,
     super.key,
   });
 
@@ -22,8 +19,6 @@ class PasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     CameraBarcodeScanner cameraBarcodeScanner = CameraBarcodeScanner();
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
 
     return TextFormField(
       focusNode: passwordFocusNode,
@@ -34,9 +29,6 @@ class PasswordInput extends StatelessWidget {
           return R.string.msgWritePassword;
         }
         return null;
-      },
-      onFieldSubmitted: (_) async {
-        await updateCommandData(homePresenter, printedProductsPresenter);
       },
       decoration: InputDecoration(
         suffixIcon: homePresenter.isGeneratingVersionToRede

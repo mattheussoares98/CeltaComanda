@@ -7,8 +7,7 @@ import '../../../../pages.dart';
 
 class LogoutButton extends StatelessWidget {
   final void Function()? resetDropdownsErrors;
-  final Future<bool> Function(HomePresenter homePresenter)
-      validateUserCredentials;
+  final Future<bool> Function() validateUserCredentials;
   const LogoutButton({
     required this.resetDropdownsErrors,
     required this.validateUserCredentials,
@@ -40,7 +39,7 @@ class LogoutButton extends StatelessWidget {
           resetDropdownsErrors!();
         }
 
-        bool isValidCredentials = await validateUserCredentials(homePresenter);
+        bool isValidCredentials = await validateUserCredentials();
 
         if (isValidCredentials) {
           if (cartPresenter.cartProducts.isNotEmpty) {

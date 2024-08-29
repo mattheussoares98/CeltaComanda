@@ -112,17 +112,10 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
 
     final List<Widget> buttons = [
       UpdateConfigurationsButton(
-        updateCommand: () async {
-          await _updateCommandData(
-            homePresenter,
-            printedProductsPresenter,
-          );
-        },
+        updateCommand: _updateCommandData,
       ),
       if (!homePresenter.isGeneratingVersionToRede) const ReserveTableButton(),
       ElevatedButton(
@@ -174,12 +167,7 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
                   PasswordInput(
                     passwordFocusNode: _passwordFocusNode,
                     passwordController: _passwordController,
-                    updateCommandData: () async {
-                      await _updateCommandData(
-                        homePresenter,
-                        printedProductsPresenter,
-                      );
-                    },
+                    updateCommandData: _updateCommandData,
                   ),
                 ],
               ),

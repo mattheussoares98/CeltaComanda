@@ -11,4 +11,5 @@ MenuPresenter makeGetxMenuPresenter() =>
       barcodeScanner: makeCameraBarcodeScanner(),
       loadProducts: makeRemoteLoadProducts(),
       getProductComposition: makeRemoteGetProductComposition(),
+      loadSuggestionSale: makeRemoteLoadSuggestionSale(),
     );

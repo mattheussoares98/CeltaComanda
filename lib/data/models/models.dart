@@ -11,6 +11,7 @@ export './sale_request_model.dart';
 export './sale_request_temp_model.dart';
 export './sale_request_temp_products_model.dart';
 export './seller_model.dart';
+export './suggestion_sale_model.dart';
 export './ticket_is_permitted_model.dart';
 export './update_sale_request_temp_model.dart';
 export './update_sale_request_temp_products_model.dart';

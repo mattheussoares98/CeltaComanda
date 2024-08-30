@@ -136,7 +136,7 @@ class GetxInsertProductsPresenter extends GetxController
   }) async {
     totalProductsQuantity = 1;
 
-    selectedComboxProduct = product;
+    selectedProduct = product;
 
     List<InsertProductsViewModel> insertViewModel = [];
 

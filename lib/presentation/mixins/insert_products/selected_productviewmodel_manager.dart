@@ -8,7 +8,7 @@ mixin SelectedProductviewmodelManager on GetxController {
 
   Stream<ProductsViewModel?> get selectedProductStream =>
       _selectedProduct.stream;
-  set selectedComboxProduct(ProductsViewModel? product) {
+  set selectedProduct(ProductsViewModel? product) {
     _selectedProduct.value = product;
   }
 }

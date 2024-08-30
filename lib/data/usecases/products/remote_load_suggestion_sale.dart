@@ -4,6 +4,7 @@ import '../../../domain/usecases/products/products.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../models/models.dart';
 
 class RemoteLoadSuggestionSale implements LoadSuggestionSale {
   final HttpClient httpAdapter;
@@ -21,7 +22,7 @@ class RemoteLoadSuggestionSale implements LoadSuggestionSale {
       if (response == null) throw Error();
 
       return response.map<SuggestionSaleEntity>((element) {
-        // return ProductModel.fromJson(element).toEntity();
+        return SuggestionSaleModel.fromJson(element).toEntity();
       }).toList();
     } catch (error) {
       throw DomainError.unexpected;

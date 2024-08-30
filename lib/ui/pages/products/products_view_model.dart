@@ -74,6 +74,7 @@ class ProductsViewModel extends Equatable {
   final String IsPromoCombox;
   final String? MaximumQuantityForSale;
   List<ProductCompositionViewModel>? childsComposition;
+  List<SuggestionSaleEntity>? suggestions;
   double productQuantity;
 
   ProductsViewModel({
@@ -145,6 +146,7 @@ class ProductsViewModel extends Equatable {
     required this.NameReduced,
     this.productQuantity = 1,
     required this.childsComposition,
+    required this.suggestions,
   });
 
   @override
@@ -220,6 +222,7 @@ class ProductsViewModel extends Equatable {
   factory ProductsViewModel.fromEntity(ProductEntity entity,
           [double? productQuantity]) =>
       ProductsViewModel(
+        suggestions: null,
         productQuantity:
             productQuantity != null ? productQuantity.toDouble() : 1.0,
         IsPromoCombox: entity.IsPromoCombox.toString(),
@@ -461,6 +464,7 @@ class ProductsViewModel extends Equatable {
       );
 
   Map<String, dynamic> toJson() => {
+        "suggestions": suggestions,
         "ProductsId": ProductsId,
         "InternalCodeOnERP": InternalCodeOnERP,
         "InternalCodeOfProductOnERP": InternalCodeOfProductOnERP,
@@ -532,6 +536,7 @@ class ProductsViewModel extends Equatable {
       };
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
+        suggestions: json["suggestions"],
         ProductsId: json["ProductsId"],
         InternalCodeOnERP: json["InternalCodeOnERP"],
         InternalCodeOfProductOnERP: json["InternalCodeOfProductOnERP"],

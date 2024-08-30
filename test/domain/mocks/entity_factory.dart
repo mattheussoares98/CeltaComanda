@@ -219,6 +219,7 @@ class EntityFactory {
     double? productQuantity,
   }) {
     return ProductsViewModel(
+      suggestions: null,
       MaximumQuantityForSale: maximumProductQuantity != null
           ? maximumProductQuantity.toString()
           : faker.randomGenerator.decimal().toString(),

@@ -41,6 +41,7 @@ class MainActivity : FlutterActivity() {
                     exitProcess(-1)
                 }   "persistApp" -> {
                      persistApp = true
+                     result.success("success to change persistApp")
                 }
                 else -> result.notImplemented()
             }
@@ -170,7 +171,6 @@ class MainActivity : FlutterActivity() {
 
     override fun onPause() {
         super.onPause()
-        Log.d("MainActivity", "onResume chamado")
         if(persistApp) {
             AppUtils.bringAppToFront(this)
         }
@@ -178,7 +178,6 @@ class MainActivity : FlutterActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.d("MainActivity", "onResume chamado")
         if(persistApp) {
             AppUtils.bringAppToFront(this)
         }
@@ -186,10 +185,8 @@ class MainActivity : FlutterActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if(persistApp) {
-            if (Intent.ACTION_MAIN == intent.action) {
+            if (Intent.ACTION_MAIN == intent.action && persistApp) {
                 Log.i("MyLauncher", "onNewIntent: HOME Key")
-            }
         }
     }
 }

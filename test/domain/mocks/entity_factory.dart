@@ -808,4 +808,12 @@ class EntityFactory {
         PersonalizedCode: faker.randomGenerator.integer(100).toString(),
         Name: faker.randomGenerator.string(10),
       );
+
+  static List<SuggestionSaleEntity> makeSuggestionsSaleEntitys() => [
+        SuggestionSaleEntity(
+          ProductPackingCode: faker.randomGenerator.integer(100),
+          ProductPackingCodeSuggestionForSale:
+              faker.randomGenerator.integer(100),
+        )
+      ];
 }

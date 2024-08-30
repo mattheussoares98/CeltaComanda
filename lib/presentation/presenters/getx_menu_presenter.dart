@@ -244,6 +244,9 @@ class GetxMenuPresenter extends GetxController
       // });
       await expansibleGroupFromProductPresenter
           .loadCommentsAndObligatoryOptions(allProducts);
+
+      final suggestions = await loadSuggestionSale.load();
+      
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);
     } on DomainError catch (error) {

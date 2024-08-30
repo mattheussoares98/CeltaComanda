@@ -8,8 +8,8 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadSuggestionSaleSpy extends Mock implements LoadSuggestionSale {
   When mockLoadCall() => when(() => this.load());
-  void mockLoad(EnterpriseEntity entity) =>
-      this.mockLoadCall().thenAnswer((_) async => entity);
+  void mockLoad(List<SuggestionSaleEntity> suggestions) =>
+      this.mockLoadCall().thenAnswer((_) async => suggestions);
 
   void mockLoadError() => this.mockLoadCall().thenThrow(DomainError.unexpected);
 }

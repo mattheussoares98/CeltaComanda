@@ -27,6 +27,7 @@ void main() {
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
   late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       menuListWithoutPromoCombox;
+  late List<SuggestionSaleEntity> suggestions;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -128,6 +129,8 @@ void main() {
     productsCompositionsViewModel = productsCompositionsEntitys
         .map((e) => ProductCompositionViewModel.fromEntity(e))
         .toList();
+
+    suggestions = EntityFactory.makeSuggestionsSaleEntitys();
   }
 
   void mockSuccess() {
@@ -137,6 +140,7 @@ void main() {
     loadProducts.mockLoadProducts(products);
     getProductComposition.mockGetFathers(productsCompositionsEntitys);
     getProductComposition.mockGetChildsOfFather(productsCompositionsViewModel);
+    loadSuggestionSale.mockLoad(suggestions);
   }
 
   setUp(() {
@@ -314,6 +318,16 @@ void main() {
               .expand((lista) =>
                   lista) // Expande cada lista individual de produtos em um Iterable
               .toList())).called(1);
+    });
+
+    test("Should call load suggestion sale", () async {
+      await sut.getGroupsAndProducts(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      verify(() => loadSuggestionSale.load()).called(1);
     });
   });
 

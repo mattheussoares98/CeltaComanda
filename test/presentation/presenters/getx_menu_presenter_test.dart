@@ -329,6 +329,25 @@ void main() {
 
       verify(() => loadSuggestionSale.load()).called(1);
     });
+
+    test("Should update suggestions correctly", () async {
+      final mockedSuggestion = SuggestionSaleEntity(
+        ProductPackingCode: products[0].InternalCodeOnERP!,
+        ProductPackingCodeSuggestionForSale: faker.randomGenerator.integer(100),
+      );
+      loadSuggestionSale.mockLoad([mockedSuggestion]);
+
+      await sut.getGroupsAndProducts(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      expect(
+        sut.loadedMenu[0].entries.first.value.first.suggestions,
+        [mockedSuggestion],
+      );
+    });
   });
 
   group("Get expansible groups on get groups and products", () {

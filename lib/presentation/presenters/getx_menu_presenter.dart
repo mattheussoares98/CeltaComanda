@@ -246,7 +246,9 @@ class GetxMenuPresenter extends GetxController
           .loadCommentsAndObligatoryOptions(allProducts);
 
       final suggestions = await loadSuggestionSale.load();
-      
+
+      _updateSuggestions(suggestions);
+
       _menu.subject.add(_loadedMenu);
       _showPreLoadImages.subject.add(true);
     } on DomainError catch (error) {
@@ -261,6 +263,24 @@ class GetxMenuPresenter extends GetxController
       Future.delayed(const Duration(seconds: 10), () {
         showPreLoadImage = false;
       });
+    }
+  }
+
+  void _updateSuggestions(List<SuggestionSaleEntity> suggestions) {
+    for (var suggestion in suggestions) {
+      for (var menu in _loadedMenu) {
+        for (var products in menu.values) {
+          int indexOfProduct = products.indexWhere((e) =>
+              e.InternalCodeOnERP == suggestion.ProductPackingCode.toString());
+
+          if (indexOfProduct != -1) {
+            if (products[indexOfProduct].suggestions == null) {
+              products[indexOfProduct].suggestions = [];
+            }
+            products[indexOfProduct].suggestions!.add(suggestion);
+          }
+        }
+      }
     }
   }
 

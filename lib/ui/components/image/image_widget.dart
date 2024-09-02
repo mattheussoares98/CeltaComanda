@@ -86,20 +86,15 @@ class _ImageWidgetState extends State<ImageWidget>
                 NewProductBadge(
                   height: widget.height * 0.25,
                   width: widget.width * 0.25,
-                )
+                ),
+              if (widget.selectedProduct?.IsAlcoholicProduct == "true")
+                AlcoholicBadge(
+                  height: widget.height * 0.25,
+                  width: widget.width * 0.25,
+                ),
             ],
           ),
         ),
-        if (widget.selectedProduct?.IsAlcoholicProduct == "true")
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Image.asset(
-                "lib/ui/assets/images/prohibed_for_minors.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
       ],
     );
   }

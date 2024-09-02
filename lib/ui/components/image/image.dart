@@ -1,3 +1,4 @@
+export './alcoholic_badge.dart';
 export './cached_image.dart';
 export './image_widget.dart';
 export 'new_product_badge.dart';

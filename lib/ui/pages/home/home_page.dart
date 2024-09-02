@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage>
     with LoadingManager, UIErrorManager, BehaviorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  ProductsViewModel? _lastShowedSuggestionProduct;
 
   @override
   void dispose() {
@@ -159,7 +160,28 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             menuPresenter: menuPresenter,
           ),
-          body: MenuPage(homePresenter.isFixedCommandNumber),
+          body: StreamBuilder<ProductsViewModel?>(
+              stream: menuPresenter.atualSuggestionProductStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.data != _lastShowedSuggestionProduct) {
+                  _lastShowedSuggestionProduct = snapshot.data;
+                  Future.delayed(Duration.zero, () {
+                    notificationDialog(
+                        canPop: false,
+                        context: context,
+                        titleMessage: "Adicionar?",
+                        content: Text(snapshot.data!.Name),
+                        onCancelPress: () async {
+                          menuPresenter.advanceIndexOfAtualSuggestion();
+                        },
+                        onPress: () async {
+                          menuPresenter.goToInsertProductPage(snapshot.data!);
+                        });
+                  });
+                }
+                return MenuPage(homePresenter.isFixedCommandNumber);
+              }),
         ),
       ),
     );

@@ -293,6 +293,7 @@ class GetxMenuPresenter extends GetxController
   @override
   void updateSuggestionsProducts(ProductsViewModel selectedProduct) {
     _suggestionsProductsViewModel.clear();
+    _indexOfAtualSuggestion = -1;
 
     if (selectedProduct.suggestions?.isNotEmpty == true &&
         (_indexOfAtualSuggestion + 1) < selectedProduct.suggestions!.length) {
@@ -339,7 +340,6 @@ class GetxMenuPresenter extends GetxController
       pageRoute: PageRoutes.insertProducts,
       arguments: product,
     );
-    _indexOfAtualSuggestion = -1;
   }
 
   final _doScrollGroupsStream = false.obs;

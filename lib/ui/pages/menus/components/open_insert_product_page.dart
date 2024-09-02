@@ -57,6 +57,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
               expansibleGroupFromProductPresenter,
         );
         menuPresenter.goToInsertProductPage(widget.selectedProduct);
+        menuPresenter.updateSuggestionsProducts(widget.selectedProduct);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

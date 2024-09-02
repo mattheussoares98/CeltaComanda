@@ -19,7 +19,8 @@ abstract class MenuPresenter implements Listenable {
 
   Future<void> getGroupsAndProducts({
     required String commandNumber,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
   });
   Future<void> searchProduct(String value);
   Future<void> readBarcodeAndSearchProduct();
@@ -27,4 +28,8 @@ abstract class MenuPresenter implements Listenable {
   void goToInsertProductPage(ProductsViewModel product);
   void clear();
   void updateIndexOfSelectedGroup(int index);
+
+  void showNextSuggestion(ProductsViewModel selectedProduct);
+  int get indexOfAtualSuggestion;
+  Stream<ProductsViewModel?> get atualSuggestionProductStream;
 }

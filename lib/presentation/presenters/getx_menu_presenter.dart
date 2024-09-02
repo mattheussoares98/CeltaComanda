@@ -290,6 +290,34 @@ class GetxMenuPresenter extends GetxController
     doScroll = true;
   }
 
+  @override
+  void showNextSuggestion(ProductsViewModel selectedProduct) {
+    if (selectedProduct.suggestions?.isNotEmpty == true &&
+        (_indexOfAtualSuggestion + 1) < selectedProduct.suggestions!.length) {
+      List<ProductsViewModel> suggestionProducts = [];
+
+      for (var suggestion in selectedProduct.suggestions!) {
+        for (var menu in _loadedMenu) {
+          for (var products in menu.values) {
+            int indexOfProduct = products.indexWhere((e) =>
+                e.InternalCodeOnERP ==
+                suggestion.ProductPackingCodeSuggestionForSale.toString());
+
+            if (indexOfProduct != -1) {
+              if (!suggestionProducts.contains(products[indexOfProduct])) {
+                suggestionProducts.add(products[indexOfProduct]);
+              }
+            }
+          }
+        }
+      }
+      _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
+
+      _atualSuggestionProduct.value =
+          suggestionProducts[_indexOfAtualSuggestion];
+    }
+  }
+
   ProductsViewModel? _searchedProduct;
   @override
   ProductsViewModel? get searchedProduct => _searchedProduct;
@@ -318,4 +346,15 @@ class GetxMenuPresenter extends GetxController
       _doScrollGroupsStream.subject.add(true);
     });
   }
+
+  int _indexOfAtualSuggestion = -1;
+  @override
+  int get indexOfAtualSuggestion => _indexOfAtualSuggestion;
+
+  final _atualSuggestionProduct = Rx<ProductsViewModel?>(null);
+  @override
+  Stream<ProductsViewModel?> get atualSuggestionProductStream =>
+      _atualSuggestionProduct.stream;
+  set atualSuggestionProduct(ProductsViewModel? value) =>
+      _atualSuggestionProduct.value = value;
 }

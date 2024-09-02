@@ -28,6 +28,7 @@ void main() {
   late List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       menuListWithoutPromoCombox;
   late List<SuggestionSaleEntity> suggestions;
+  late List<ProductsViewModel> suggestionsProductsViewModel;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -131,6 +132,9 @@ void main() {
         .toList();
 
     suggestions = EntityFactory.makeSuggestionsSaleEntitys();
+    suggestionsProductsViewModel = [
+      ...products.map((e) => ProductsViewModel.fromEntity(e)),
+    ];
   }
 
   void mockSuccess() {
@@ -622,6 +626,47 @@ void main() {
       expectLater(sut.doScrollGroupsStream, emits(true));
 
       sut.updateIndexOfSelectedGroup(1);
+    });
+  });
+
+  group("Show next suggestion", () {
+    test("Should emit correct value", () async {
+      final mockedSuggestions = [
+        SuggestionSaleEntity(
+          ProductPackingCode: products[0].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
+        ),
+        SuggestionSaleEntity(
+          ProductPackingCode: products[1].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
+        ),
+      ];
+
+      await sut.getGroupsAndProducts(
+        commandNumber: "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expectLater(
+        sut.atualSuggestionProductStream,
+        emitsInOrder([
+          suggestionsProductsViewModel[0],
+          suggestionsProductsViewModel[1],
+        ]),
+      );
+
+      final loadedProducts = sut.loadedMenu.first.entries.first.value;
+      loadedProducts[0].suggestions = mockedSuggestions;
+
+      sut.showNextSuggestion(loadedProducts[0]);
+      expect(sut.indexOfAtualSuggestion, 0);
+      sut.showNextSuggestion(loadedProducts[0]);
+      expect(sut.indexOfAtualSuggestion, 1);
+      sut.showNextSuggestion(loadedProducts[0]);
+      expect(sut.indexOfAtualSuggestion, 1);
     });
   });
 }

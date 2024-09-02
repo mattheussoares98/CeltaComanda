@@ -312,12 +312,6 @@ class GetxMenuPresenter extends GetxController
           }
         }
       }
-
-      if (_indexOfAtualSuggestion != -1) {
-        _suggestionsProductsViewModel
-            .add(_suggestionsProductsViewModel[_indexOfAtualSuggestion]);
-      }
-      _indexOfAtualSuggestion = 0;
     }
   }
 
@@ -325,6 +319,8 @@ class GetxMenuPresenter extends GetxController
   void advanceIndexOfAtualSuggestion() {
     if (_indexOfAtualSuggestion + 1 < _suggestionsProductsViewModel.length) {
       _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
+      atualSuggestionProduct =
+          _suggestionsProductsViewModel[_indexOfAtualSuggestion];
     }
   }
 
@@ -372,5 +368,5 @@ class GetxMenuPresenter extends GetxController
   Stream<ProductsViewModel?> get atualSuggestionProductStream =>
       _atualSuggestionProduct.stream;
   set atualSuggestionProduct(ProductsViewModel? product) =>
-      _atualSuggestionProduct.value = product;
+      _atualSuggestionProduct.subject.add(product);
 }

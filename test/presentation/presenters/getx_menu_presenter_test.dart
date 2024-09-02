@@ -692,7 +692,7 @@ void main() {
       sut.updateSuggestionsProducts(loadedProducts[0]);
 
       expect(sut.suggestionsProductsViewModel, suggestionsProductsViewModel);
-      expect(sut.indexOfAtualSuggestion, 0);
+      expect(sut.indexOfAtualSuggestion, -1);
     });
   });
 
@@ -721,12 +721,46 @@ void main() {
       sut.updateSuggestionsProducts(loadedProducts[0]);
       expect(sut.suggestionsProductsViewModel, suggestionsProductsViewModel);
 
-      expect(sut.indexOfAtualSuggestion, 0);
+      expect(sut.indexOfAtualSuggestion, -1);
       sut.advanceIndexOfAtualSuggestion();
-      expect(sut.indexOfAtualSuggestion, 1);
+      expect(sut.indexOfAtualSuggestion, 0);
 
       sut.advanceIndexOfAtualSuggestion();
       expect(sut.indexOfAtualSuggestion, 1);
+      
+      sut.advanceIndexOfAtualSuggestion();
+      expect(sut.indexOfAtualSuggestion, 1);
+    });
+    test("Should update atual suggestion product correctly", () async {
+      final mockedSuggestions = [
+        SuggestionSaleEntity(
+          ProductPackingCode: products[0].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
+        ),
+        SuggestionSaleEntity(
+          ProductPackingCode: products[1].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
+        ),
+      ];
+
+      await sut.getGroupsAndProducts(
+        commandNumber: "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      final loadedProducts = sut.loadedMenu.first.entries.first.value;
+      loadedProducts[0].suggestions = mockedSuggestions;
+      sut.updateSuggestionsProducts(loadedProducts[0]);
+
+      expectLater(
+        sut.atualSuggestionProductStream,
+        emitsInOrder([loadedProducts[0], loadedProducts[1]]),
+      );
+
+      sut.advanceIndexOfAtualSuggestion();
+      sut.advanceIndexOfAtualSuggestion();
     });
   });
 }

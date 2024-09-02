@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../main/builders/builders.dart';
-import '../../../main/factories/factories.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/mixins/mixins.dart';
 import '../../../ui/pages/pages.dart';
@@ -23,6 +22,7 @@ class _HomePageState extends State<HomePage>
     with LoadingManager, UIErrorManager, BehaviorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? productSubscription;
 
   @override
   void dispose() {
@@ -115,9 +115,27 @@ class _HomePageState extends State<HomePage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    productSubscription?.cancel();
     loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, homePresenter.mainErrorStream);
+
+    productSubscription =
+        menuPresenter.atualSuggestionProductStream.listen((product) {
+      if (product != null) {
+        Future.delayed(Duration.zero, () {
+          notificationDialog(
+            context: context,
+            titleMessage: "Adicionar?",
+            content: Text(product.Name),
+            onCancelPress: () async {},
+            onPress: () async {
+              menuPresenter.goToInsertProductPage(product);
+            },
+          );
+        });
+      }
+    });
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -160,7 +178,7 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             menuPresenter: menuPresenter,
           ),
-          body: makeMenusPage(homePresenter.isFixedCommandNumber),
+          body: MenuPage(homePresenter.isFixedCommandNumber),
         ),
       ),
     );

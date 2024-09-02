@@ -313,8 +313,8 @@ class GetxMenuPresenter extends GetxController
       }
       _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
 
-      _atualSuggestionProduct.value =
-          suggestionProducts[_indexOfAtualSuggestion];
+      _atualSuggestionProduct.subject
+          .add(suggestionProducts[_indexOfAtualSuggestion]);
     }
   }
 

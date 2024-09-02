@@ -86,7 +86,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         page: const CartPage(),
       );
     });
-    menuPresenter.showNextSuggestion(widget.selectedProduct);
   }
 
   Future<void> _advanceOrAddInCart({

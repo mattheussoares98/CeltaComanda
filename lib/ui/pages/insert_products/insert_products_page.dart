@@ -1,12 +1,13 @@
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../pages.dart';
+import '../../../ui/components/components.dart';
+import '../../../ui/helpers/sizes/sizes.dart';
 import '../../mixins/mixins.dart';
+import '../pages.dart';
 
 class InsertProductsPage extends StatefulWidget {
   const InsertProductsPage({super.key});
@@ -94,7 +95,30 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         );
         expansibleGroupFromProductPresenter.unselectAllComments();
         expansibleGroupFromProductPresenter.unselectAllObligatoryOptions();
-        menuPresenter.updateSuggestionsProducts(selectedProduct!);
+        if (menuPresenter.indexOfAtualSuggestion != -1) {
+          final atualSuggestion = menuPresenter.suggestionsProductsViewModel[
+              menuPresenter.indexOfAtualSuggestion];
+
+          Future.delayed(Duration.zero, () {
+            notificationDialog(
+              context: context,
+              titleMessage: "Adicionar?",
+              content: Text(
+                atualSuggestion.Name,
+              ),
+              onCancelPress: () async {
+                menuPresenter.advanceIndexOfAtualSuggestion();
+              },
+              onPress: () async {
+                menuPresenter.goToInsertProductPage(
+                  menuPresenter.suggestionsProductsViewModel[
+                      menuPresenter.indexOfAtualSuggestion],
+                );
+                menuPresenter.advanceIndexOfAtualSuggestion();
+              },
+            );
+          });
+        }
       },
       child: StreamBuilder<List<InsertProductsViewModel>?>(
           stream: insertProductPresenter.insertProductsViewModelStream,

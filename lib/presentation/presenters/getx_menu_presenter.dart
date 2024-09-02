@@ -317,7 +317,13 @@ class GetxMenuPresenter extends GetxController
         _suggestionsProductsViewModel
             .add(_suggestionsProductsViewModel[_indexOfAtualSuggestion]);
       }
+      _indexOfAtualSuggestion = 0;
     }
+  }
+
+  @override
+  void advanceIndexOfAtualSuggestion() {
+    _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
   }
 
   ProductsViewModel? _searchedProduct;

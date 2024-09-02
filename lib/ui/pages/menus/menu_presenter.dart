@@ -30,6 +30,7 @@ abstract class MenuPresenter implements Listenable {
   void updateIndexOfSelectedGroup(int index);
 
   void updateSuggestionsProducts(ProductsViewModel selectedProduct);
+  void advanceIndexOfAtualSuggestion();
   int get indexOfAtualSuggestion;
   List<ProductsViewModel> get suggestionsProductsViewModel;
 }

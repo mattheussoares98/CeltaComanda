@@ -45,6 +45,7 @@ class _ProductItemState extends State<ProductItem> {
               expansibleGroupFromProductPresenter,
         );
         menuPresenter.goToInsertProductPage(widget.productsViewModel);
+        menuPresenter.updateSuggestionsProducts(widget.productsViewModel);
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),

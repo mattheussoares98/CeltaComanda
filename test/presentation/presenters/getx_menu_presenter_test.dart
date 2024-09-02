@@ -665,7 +665,7 @@ void main() {
     });
   });
 
-  group("Show next suggestion", () {
+  group("Update suggestion products", () {
     test("Should emit correct value", () async {
       final mockedSuggestions = [
         SuggestionSaleEntity(
@@ -692,6 +692,19 @@ void main() {
       sut.updateSuggestionsProducts(loadedProducts[0]);
 
       expect(sut.suggestionsProductsViewModel, suggestionsProductsViewModel);
+      expect(sut.indexOfAtualSuggestion, 0);
+    });
+  });
+
+  group("Advance index of atual suggestion", () {
+    test("Should advance index", () {
+      expect(sut.indexOfAtualSuggestion, -1);
+
+      sut.advanceIndexOfAtualSuggestion();
+      expect(sut.indexOfAtualSuggestion, 0);
+
+      sut.advanceIndexOfAtualSuggestion();
+      expect(sut.indexOfAtualSuggestion, 1);
     });
   });
 }

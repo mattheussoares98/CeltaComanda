@@ -65,7 +65,8 @@ class _AdvanceButtonState extends State<AdvanceButton> {
 
     await cartPresenter.addProductInCart(
       product: CartProductEntity(
-        Product: widget.selectedProduct.toEntityWithSelectedChilds(insertProductsPresenter.totalProductsQuantity),
+        Product: widget.selectedProduct.toEntityWithSelectedChilds(
+            insertProductsPresenter.totalProductsQuantity),
         Comments: expansibleGroupFromProductPresenter
             .getConcatenateSelectedCommentsAndObligatoryOptions(
                 widget.selectedProduct.InternalCodeOnERP!.toInt()),
@@ -85,6 +86,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         page: const CartPage(),
       );
     });
+    menuPresenter.showNextSuggestion(widget.selectedProduct);
   }
 
   Future<void> _advanceOrAddInCart({

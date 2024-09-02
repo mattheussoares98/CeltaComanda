@@ -99,7 +99,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                         child:
                             Comment(comment: widget.cartProduct.Comments ?? ""),
                       ),
-                    PepperIndicator(product: widget.cartProduct.Product),
                   ],
                 ),
               ),

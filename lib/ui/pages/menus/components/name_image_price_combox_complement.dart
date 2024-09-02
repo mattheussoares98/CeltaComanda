@@ -173,9 +173,6 @@ Widget _namePriceComboxAndComplement(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            PepperIndicator(
-              product: productsViewModel,
-            ),
             Expanded(
               child: Text(
                 productsViewModel.SaleRetailPraticed.addBrazilianCoin(),

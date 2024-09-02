@@ -35,7 +35,6 @@ class ImageAndComplement extends StatelessWidget {
                 productComplement: selectedProduct.ProductComplement,
               ),
               const SizedBox(height: 5),
-              PepperIndicator(product: selectedProduct),
             ],
           ),
         )

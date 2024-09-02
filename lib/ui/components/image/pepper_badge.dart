@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+
+import '../../../ui/pages/pages.dart';
+
+class PepperBadge extends StatelessWidget {
+  final ProductsViewModel product;
+  final double width;
+  final double height;
+  const PepperBadge({
+    required this.product,
+    required this.width,
+    required this.height,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (_getPepperQuantity(product.ProductComplement.toString()) == 0) {
+      return const SizedBox();
+    }
+
+    return Positioned(
+      right: 10,
+      top: 10,
+      child: CircleAvatar(
+        minRadius: _getSize(height: height, width: width),
+        maxRadius: _getSize(height: height, width: width),
+        backgroundColor: Colors.grey.withOpacity(0.3),
+        child: FittedBox(
+          child: Row(
+            children: List.generate(
+              _getPepperQuantity(product.ProductComplement.toString()),
+              (_) => _pepperImage(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+double _getSize({
+  required double height,
+  required double width,
+}) {
+  if (width > height) {
+    return height * 0.5;
+  } else {
+    return width * 0.5;
+  }
+}
+
+int _getPepperQuantity(String complement) {
+  String lowerCaseComplement = complement.toLowerCase();
+
+  if (lowerCaseComplement.contains("(p)")) {
+    return 1;
+  } else if (lowerCaseComplement.contains("(pp)")) {
+    return 2;
+  } else if (lowerCaseComplement.contains("(ppp)")) {
+    return 3;
+  } else {
+    return 0;
+  }
+}
+
+Widget _pepperImage() {
+  return Image.asset(
+    "lib/ui/assets/images/pepper.png",
+    fit: BoxFit.cover,
+  );
+}

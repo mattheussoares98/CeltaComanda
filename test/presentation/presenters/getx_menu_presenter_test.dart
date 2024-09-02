@@ -598,7 +598,7 @@ void main() {
   });
 
   group("Navigation", () {
-    test('Should go to ComboxPage', () async {
+    test('Should go to InsertProductsPage', () async {
       await sut.searchProduct(productEan);
 
       sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
@@ -609,6 +609,42 @@ void main() {
           arguments: ProductsViewModel.fromEntity(productEntity),
         ),
       ).called(1);
+    });
+    test('Should update index of atual suggestion when navigate', () async {
+      final mockedSuggestions = [
+        SuggestionSaleEntity(
+          ProductPackingCode: products[0].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
+        ),
+        SuggestionSaleEntity(
+          ProductPackingCode: products[1].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
+        ),
+      ];
+
+      await sut.getGroupsAndProducts(
+        commandNumber: "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final loadedProducts = sut.loadedMenu.first.entries.first.value;
+      loadedProducts[0].suggestions = mockedSuggestions;
+
+      sut.showNextSuggestion(loadedProducts[0]);
+
+      sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
+
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.insertProducts,
+          arguments: ProductsViewModel.fromEntity(productEntity),
+        ),
+      ).called(1);
+
+      expect(sut.indexOfAtualSuggestion, -1);
     });
   });
 

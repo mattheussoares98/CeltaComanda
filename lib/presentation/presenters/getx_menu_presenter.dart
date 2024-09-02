@@ -333,6 +333,7 @@ class GetxMenuPresenter extends GetxController
       pageRoute: PageRoutes.insertProducts,
       arguments: product,
     );
+    _indexOfAtualSuggestion = -1;
   }
 
   final _doScrollGroupsStream = false.obs;

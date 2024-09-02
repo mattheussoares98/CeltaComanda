@@ -167,17 +167,11 @@ class _HomePageState extends State<HomePage>
                     snapshot.data != _lastShowedSuggestionProduct) {
                   _lastShowedSuggestionProduct = snapshot.data;
                   Future.delayed(Duration.zero, () {
-                    notificationDialog(
-                        canPop: false,
-                        context: context,
-                        titleMessage: "Adicionar?",
-                        content: Text(snapshot.data!.Name),
-                        onCancelPress: () async {
-                          menuPresenter.advanceIndexOfAtualSuggestion();
-                        },
-                        onPress: () async {
-                          menuPresenter.goToInsertProductPage(snapshot.data!);
-                        });
+                    showSuggestionDialog(
+                      context,
+                      snapshot.data!,
+                      menuPresenter,
+                    );
                   });
                 }
                 return MenuPage(homePresenter.isFixedCommandNumber);

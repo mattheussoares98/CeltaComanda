@@ -366,4 +366,11 @@ class GetxMenuPresenter extends GetxController
   @override
   List<ProductsViewModel> get suggestionsProductsViewModel =>
       _suggestionsProductsViewModel;
+
+  final _atualSuggestionProduct = Rx<ProductsViewModel?>(null);
+  @override
+  Stream<ProductsViewModel?> get atualSuggestionProductStream =>
+      _atualSuggestionProduct.stream;
+  set atualSuggestionProduct(ProductsViewModel? product) =>
+      _atualSuggestionProduct.value = product;
 }

@@ -633,7 +633,7 @@ void main() {
       final loadedProducts = sut.loadedMenu.first.entries.first.value;
       loadedProducts[0].suggestions = mockedSuggestions;
 
-      sut.showNextSuggestion(loadedProducts[0]);
+      sut.updateSuggestionsProducts(loadedProducts[0]);
 
       sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
 
@@ -686,23 +686,12 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expectLater(
-        sut.atualSuggestionProductStream,
-        emitsInOrder([
-          suggestionsProductsViewModel[0],
-          suggestionsProductsViewModel[1],
-        ]),
-      );
-
       final loadedProducts = sut.loadedMenu.first.entries.first.value;
       loadedProducts[0].suggestions = mockedSuggestions;
 
-      sut.showNextSuggestion(loadedProducts[0]);
-      expect(sut.indexOfAtualSuggestion, 0);
-      sut.showNextSuggestion(loadedProducts[0]);
-      expect(sut.indexOfAtualSuggestion, 1);
-      sut.showNextSuggestion(loadedProducts[0]);
-      expect(sut.indexOfAtualSuggestion, 1);
+      sut.updateSuggestionsProducts(loadedProducts[0]);
+
+      expect(sut.suggestionsProductsViewModel, suggestionsProductsViewModel);
     });
   });
 }

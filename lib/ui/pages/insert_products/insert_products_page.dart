@@ -94,7 +94,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         );
         expansibleGroupFromProductPresenter.unselectAllComments();
         expansibleGroupFromProductPresenter.unselectAllObligatoryOptions();
-        menuPresenter.showNextSuggestion(selectedProduct!);
+        menuPresenter.updateSuggestionsProducts(selectedProduct!);
       },
       child: StreamBuilder<List<InsertProductsViewModel>?>(
           stream: insertProductPresenter.insertProductsViewModelStream,

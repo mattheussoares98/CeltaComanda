@@ -291,11 +291,11 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  void showNextSuggestion(ProductsViewModel selectedProduct) {
+  void updateSuggestionsProducts(ProductsViewModel selectedProduct) {
+    _suggestionsProductsViewModel.clear();
+
     if (selectedProduct.suggestions?.isNotEmpty == true &&
         (_indexOfAtualSuggestion + 1) < selectedProduct.suggestions!.length) {
-      List<ProductsViewModel> suggestionProducts = [];
-
       for (var suggestion in selectedProduct.suggestions!) {
         for (var menu in _loadedMenu) {
           for (var products in menu.values) {
@@ -304,17 +304,19 @@ class GetxMenuPresenter extends GetxController
                 suggestion.ProductPackingCodeSuggestionForSale.toString());
 
             if (indexOfProduct != -1) {
-              if (!suggestionProducts.contains(products[indexOfProduct])) {
-                suggestionProducts.add(products[indexOfProduct]);
+              if (!_suggestionsProductsViewModel
+                  .contains(products[indexOfProduct])) {
+                _suggestionsProductsViewModel.add(products[indexOfProduct]);
               }
             }
           }
         }
       }
-      _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
 
-      _atualSuggestionProduct.subject
-          .add(suggestionProducts[_indexOfAtualSuggestion]);
+      if (_indexOfAtualSuggestion != -1) {
+        _suggestionsProductsViewModel
+            .add(_suggestionsProductsViewModel[_indexOfAtualSuggestion]);
+      }
     }
   }
 
@@ -352,10 +354,8 @@ class GetxMenuPresenter extends GetxController
   @override
   int get indexOfAtualSuggestion => _indexOfAtualSuggestion;
 
-  final _atualSuggestionProduct = Rx<ProductsViewModel?>(null);
+  final List<ProductsViewModel> _suggestionsProductsViewModel = [];
   @override
-  Stream<ProductsViewModel?> get atualSuggestionProductStream =>
-      _atualSuggestionProduct.stream;
-  set atualSuggestionProduct(ProductsViewModel? value) =>
-      _atualSuggestionProduct.value = value;
+  List<ProductsViewModel> get suggestionsProductsViewModel =>
+      _suggestionsProductsViewModel;
 }

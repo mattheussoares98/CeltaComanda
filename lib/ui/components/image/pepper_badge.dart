@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../ui/pages/pages.dart';
 
 class PepperBadge extends StatelessWidget {
-  final ProductsViewModel product;
+  final ProductsViewModel? product;
   final double width;
   final double height;
   const PepperBadge({
@@ -15,7 +15,7 @@ class PepperBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_getPepperQuantity(product.ProductComplement.toString()) == 0) {
+    if (_getPepperQuantity(product?.ProductComplement.toString()) == 0) {
       return const SizedBox();
     }
 
@@ -26,12 +26,10 @@ class PepperBadge extends StatelessWidget {
         minRadius: _getSize(height: height, width: width),
         maxRadius: _getSize(height: height, width: width),
         backgroundColor: Colors.grey.withOpacity(0.3),
-        child: FittedBox(
-          child: Row(
-            children: List.generate(
-              _getPepperQuantity(product.ProductComplement.toString()),
-              (_) => _pepperImage(),
-            ),
+        child: Row(
+          children: List.generate(
+            _getPepperQuantity(product?.ProductComplement),
+            (_) => Flexible(child: _pepperImage()),
           ),
         ),
       ),
@@ -50,14 +48,14 @@ double _getSize({
   }
 }
 
-int _getPepperQuantity(String complement) {
-  String lowerCaseComplement = complement.toLowerCase();
+int _getPepperQuantity(String? complement) {
+  String? lowerCaseComplement = complement?.toString().toLowerCase();
 
-  if (lowerCaseComplement.contains("(p)")) {
+  if (lowerCaseComplement?.contains("(p)") == true) {
     return 1;
-  } else if (lowerCaseComplement.contains("(pp)")) {
+  } else if (lowerCaseComplement?.contains("(pp)") == true) {
     return 2;
-  } else if (lowerCaseComplement.contains("(ppp)")) {
+  } else if (lowerCaseComplement?.contains("(ppp)") == true) {
     return 3;
   } else {
     return 0;

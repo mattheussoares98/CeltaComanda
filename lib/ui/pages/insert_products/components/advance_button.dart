@@ -86,6 +86,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         page: const CartPage(),
       );
     });
+    menuPresenter.advanceIndexOfAtualSuggestion();
   }
 
   Future<void> _advanceOrAddInCart({

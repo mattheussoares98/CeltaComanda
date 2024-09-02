@@ -93,7 +93,7 @@ class _ImageWidgetState extends State<ImageWidget>
                   width: widget.width * 0.25,
                 ),
               PepperBadge(
-                product: widget.selectedProduct!,
+                product: widget.selectedProduct,
                 height: widget.height * 0.25,
                 width: widget.width * 0.25,
               ),

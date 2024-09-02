@@ -75,7 +75,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -94,7 +93,6 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         );
         expansibleGroupFromProductPresenter.unselectAllComments();
         expansibleGroupFromProductPresenter.unselectAllObligatoryOptions();
-        menuPresenter.advanceIndexOfAtualSuggestion();
       },
       child: StreamBuilder<List<InsertProductsViewModel>?>(
           stream: insertProductPresenter.insertProductsViewModelStream,

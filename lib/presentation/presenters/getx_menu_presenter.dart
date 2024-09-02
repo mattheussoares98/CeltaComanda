@@ -323,7 +323,9 @@ class GetxMenuPresenter extends GetxController
 
   @override
   void advanceIndexOfAtualSuggestion() {
-    _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
+    if (_indexOfAtualSuggestion + 1 < _suggestionsProductsViewModel.length) {
+      _indexOfAtualSuggestion = _indexOfAtualSuggestion + 1;
+    }
   }
 
   ProductsViewModel? _searchedProduct;

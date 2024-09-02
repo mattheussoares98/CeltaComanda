@@ -697,11 +697,33 @@ void main() {
   });
 
   group("Advance index of atual suggestion", () {
-    test("Should advance index", () {
-      expect(sut.indexOfAtualSuggestion, -1);
+    test("Should advance index correctly", () async {
+      final mockedSuggestions = [
+        SuggestionSaleEntity(
+          ProductPackingCode: products[0].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
+        ),
+        SuggestionSaleEntity(
+          ProductPackingCode: products[1].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
+        ),
+      ];
 
-      sut.advanceIndexOfAtualSuggestion();
+      await sut.getGroupsAndProducts(
+        commandNumber: "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      final loadedProducts = sut.loadedMenu.first.entries.first.value;
+      loadedProducts[0].suggestions = mockedSuggestions;
+      sut.updateSuggestionsProducts(loadedProducts[0]);
+      expect(sut.suggestionsProductsViewModel, suggestionsProductsViewModel);
+
       expect(sut.indexOfAtualSuggestion, 0);
+      sut.advanceIndexOfAtualSuggestion();
+      expect(sut.indexOfAtualSuggestion, 1);
 
       sut.advanceIndexOfAtualSuggestion();
       expect(sut.indexOfAtualSuggestion, 1);

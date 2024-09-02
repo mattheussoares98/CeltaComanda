@@ -75,6 +75,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -114,6 +115,17 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                           appBar: AppBar(
                             title: FittedBox(
                               child: Text(selectedProduct!.Name),
+                            ),
+                            leading: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                if (menuPresenter.indexOfAtualSuggestion >= 0) {
+                                  menuPresenter.advanceIndexOfAtualSuggestion();
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back,
+                              ),
                             ),
                           ),
                           body: hasMinWidth(context)

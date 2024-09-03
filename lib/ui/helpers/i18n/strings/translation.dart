@@ -132,7 +132,9 @@ abstract class Translation {
   String get surveys;
   String get surveyResult;
   String get table;
+  String get time;
   String get total;
+  String get totalByPerson;
   String get turnBack;
   String get updateConfigurations;
   String get updateMenu;

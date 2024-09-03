@@ -1,8 +1,5 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 
-import '../../../../ui/components/components.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -25,149 +22,102 @@ class PrintedItem extends StatefulWidget {
 }
 
 class _PrintedItemState extends State<PrintedItem> {
-  Future<void> _removeProduct({
-    required PrintedProductsPresenter printedProductsPresenter,
-    required MenuPresenter menuPresenter,
-    required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required String saleRequestProductId,
-  }) async {
-    await printedProductsPresenter.removeProduct(
-      saleRequestProductId: saleRequestProductId,
-      menuPresenter: menuPresenter,
-      cartPresenter: cartPresenter,
-      homePresenter: homePresenter,
-      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-      printedProductsPresenter: printedProductsPresenter,
-    );
-    setState(() {});
-  }
-
   final double rightMargin = 2;
+
+  Widget columnTitle(String name, [int flex = 1]) {
+    return Expanded(
+      flex: flex,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 2),
+        child: Text(
+          name,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
-      child: ListView.builder(
-        itemCount: widget.printed.Products.length,
-        itemBuilder: (context, index) {
-          return Builder(builder: (context) {
-            final product = widget.printed.Products[index];
-            return Container(
-              width: (MediaQuery.of(context).size.width /
-                      getItensPerLine(context)) -
-                  rightMargin,
-              margin: const EdgeInsets.all(1),
-              padding: EdgeInsets.only(right: rightMargin),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border:
-                    Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Color(0x33000000),
-                    offset: Offset(-3, -1),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                children: [
-                  ProductDetails(
-                    printed: widget.printed,
-                    product: product.Products,
-                    onPressedRemoveProduct: () async {
-                      notificationDialog(
-                        context: context,
-                        titleMessage: R.string.removeProduct,
-                        content: Text(
-                          R.string.wantRemoveRequestedProduct,
-                          textAlign: TextAlign.center,
-                        ),
-                        onPress: () async {
-                          await _removeProduct(
-                            printedProductsPresenter: printedProductsPresenter,
-                            menuPresenter: menuPresenter,
-                            cartPresenter: cartPresenter,
-                            homePresenter: homePresenter,
-                            saleRequestProductId: product.SaleRequestProductId,
-                            expansibleGroupFromProductPresenter:
-                                expansibleGroupFromProductPresenter,
-                          );
-                        },
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: Row(
+                    children: [
+                      columnTitle(R.string.time),
+                      columnTitle(R.string.productsAndComments, 3),
+                      columnTitle(R.string.quantityAbbreviated),
+                      if (hasMinWidth(context)) columnTitle(R.string.price),
+                      columnTitle(R.string.total),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  thickness: 0.3,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: widget.printed.Products.length,
+                    itemBuilder: (context, index) {
+                      final product = widget.printed.Products[index];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            width: (MediaQuery.of(context).size.width /
+                                    getItensPerLine(context)) -
+                                rightMargin,
+                            margin: const EdgeInsets.only(
+                                bottom: 4, right: 2, left: 2),
+                            padding: const EdgeInsets.all(8),
+                            child: ProductDetails(
+                              printed: widget.printed,
+                              product: product.Products,
+                              quantity: product.Quantity,
+                              value: (product.TotalLiquid.toDouble() /
+                                      product.Quantity.toDouble())
+                                  .toString()
+                                  .toBrazilianNumber(),
+                              totalLiquid: product.TotalLiquid,
+                              comments: product.Comments,
+                            ),
+                          ),
+                          const Divider(
+                            height: 1,
+                            thickness: 0.1,
+                          ),
+                          if (!hasMinWidth(context) &&
+                              index == widget.printed.Products.length - 1)
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: UpdateTotalByPerson(),
+                            ),
+                        ],
                       );
                     },
-                    validateUserAndCancelProducts: () {
-                      validateUserAndCancelProductDialog(
-                          context: context,
-                          formKey: widget.formKey,
-                          personalizedCodeController:
-                              widget.personalizedCodeController,
-                          passwordController: widget.passwordController,
-                          printedProductsPresenter: printedProductsPresenter,
-                          callSetState: () {
-                            setState(() {});
-                          });
-                    },
-                    quantity: product.Quantity,
-                    value: (product.TotalLiquid.toDouble() /
-                            product.Quantity.toDouble())
-                        .toString()
-                        .toBrazilianNumber(),
-                    totalLiquid: product.TotalLiquid,
-                    comments: product.Comments,
                   ),
-                  // Text("DateHourOfCreation ${product.DateHourOfCreation}"),
-                  // Text(
-                  //     "SaleRequestProductId ${product.SaleRequestProductId}"),
-                  // Text("Quantity ${product.Quantity}"),
-                  // Text("UserId ${product.UserId}"),
-                  // Text("IsCancelled ${product.IsCancelled}"),
-                  // Text("IsDelivered ${product.IsDelivered}"),
-                  // Text("IsPrinted ${product.IsPrinted}"),
-                  // Text("ProductionStatus ${product.ProductionStatus}"),
-                  // Text(
-                  //     "ProductInternalCodeOnErp ${product.ProductInternalCodeOnErp}"),
-                  // Text("SaleRequestId ${product.SaleRequestId}"),
+                ),
+              ],
+            ),
+          ),
+          if (hasMinWidth(context))
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  UpdateTotalByPerson(),
                 ],
               ),
-            );
-          });
-        },
-      ),
-      /* Column(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Text("Comanda: ${printed.PersonalizedCode}"),
-              // Text("DateHourOfCreation: ${printed.DateHourOfCreation}"),
-              // Text("DateOfCreation: ${printed.DateOfCreation}"),
-              // Text("DeliveryControl: ${printed.DeliveryControl}"),
-              // Text("EnterpriseId: ${printed.EnterpriseId}"),
-              // Text("FlagOrigin: ${printed.FlagOrigin}"),
-              // Text("FlagStatus: ${printed.FlagStatus}"),
-              // Text("IsCancelled: ${printed.IsCancelled}"),
-              // Text("IsUsing: ${printed.IsUsing}"),
-              // Text("Peoples: ${printed.Peoples}"),
-              // Text("RequestType: ${printed.RequestType}"),
-              // Text("SaleRequestId: ${printed.SaleRequestId}"),
-            ],
-          ),
+            ),
         ],
-      ), */
+      ),
     );
   }
 }

@@ -150,7 +150,9 @@ class EnUs implements Translation {
   String get surveys => 'Surveys';
   String get surveyResult => 'Survey result';
   String get table => 'Table';
+  String get time => 'Time';
   String get total => 'Total';
+  String get totalByPerson => 'Total by person';
   String get turnBack => 'Go back';
   String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
@@ -5,8 +6,6 @@ import '../../pages.dart';
 class ProductDetails extends StatelessWidget {
   final ProductsViewModel product;
   final PrintedViewModel printed;
-  final void Function()? onPressedRemoveProduct;
-  final void Function()? validateUserAndCancelProducts;
   final String quantity;
   final String value;
   final String totalLiquid;
@@ -15,56 +14,37 @@ class ProductDetails extends StatelessWidget {
   const ProductDetails({
     required this.product,
     required this.printed,
-    required this.onPressedRemoveProduct,
     required this.quantity,
     required this.value,
     required this.totalLiquid,
-    required this.validateUserAndCancelProducts,
     required this.comments,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            // Expanded(
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       showLargeImage(
-            //         context: context,
-            //         ean: product.EanCode,
-            //         productComplement: product.ProductComplement,
-            //         plu: product.PriceLookupCode,
-            //         menuPresenter: menuPresenter,
-            //         productName: product.Name,
-            //         selectedProduct: product,
-            //       );
-            //     },
-            //     child: ImageWidget(
-            //       ean: product.EanCode,
-            //       plu: product.PriceLookupCode,
-            //       selectedProduct: product,
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              child: RequestedAt(printed: printed),
-            ),
-            Expanded(
-              flex: 2,
-              child: NameAndComment(product: product, comments: comments),
-            ),
-            Expanded(
-              child: QuantityAndPrice(
-                quantity: quantity,
-                totalLiquid: totalLiquid,
-              ),
-            ),
-          ],
+    Widget rowValue(String value) {
+      return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 2),
+          child: Text(value, textAlign: TextAlign.center),
         ),
+      );
+    }
+
+    return Row(
+      children: [
+        Expanded(
+          child: RequestedAt(printed: printed),
+        ),
+        const SizedBox(width: 2),
+        Expanded(
+          flex: 3,
+          child: NameAndComment(product: product, comments: comments),
+        ),
+        if (hasMinWidth(context)) rowValue(value),
+        rowValue(quantity),
+        rowValue(totalLiquid),
       ],
     );
   }

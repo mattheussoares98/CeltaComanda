@@ -26,10 +26,7 @@ class NameAndComment extends StatelessWidget {
           ),
         ),
         if (comments != null)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Comment(comment: "($comments)"),
-          ),
+          Comment(comment: "($comments)"),
       ],
     );
   }

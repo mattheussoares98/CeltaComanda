@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui/helpers/helpers.dart';
+import '../../components/components.dart';
 import '../pages.dart';
 
 class LandscapeInsertProductsPageBody extends StatefulWidget {
@@ -99,7 +100,16 @@ class _LandscapeInsertProductsPageBodyState
                     ),
                   ),
                 if (atualOption == SelectedOptionType.quantity)
-                  const Expanded(child: UpdateQuantity()),
+                  Expanded(
+                      child: UpdateQuantity(
+                    quantity: insertProductPresenter.totalProductsQuantity,
+                    reduceQuantity: () {
+                      insertProductPresenter.updateTotalProductsQuantity(false);
+                    },
+                    addQuantity: () {
+                      insertProductPresenter.updateTotalProductsQuantity(true);
+                    },
+                  )),
                 if (atualOption == SelectedOptionType.fatherComposition)
                   Expanded(
                     child: ChildsRadios(

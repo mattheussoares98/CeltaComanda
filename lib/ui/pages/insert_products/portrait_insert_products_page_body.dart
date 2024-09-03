@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/helpers/helpers.dart';
+import '../../components/components.dart';
 import '../pages.dart';
 
 class PortraitInsertProductsPageBody extends StatefulWidget {
@@ -177,7 +178,17 @@ class _PortraitInsertProductsPageBodyState
                         ),
                       ),
                     if (atualOption == SelectedOptionType.quantity)
-                      const UpdateQuantity(),
+                      UpdateQuantity(
+                        quantity: insertProductPresenter.totalProductsQuantity,
+                        reduceQuantity: () {
+                          insertProductPresenter
+                              .updateTotalProductsQuantity(false);
+                        },
+                        addQuantity: () {
+                          insertProductPresenter
+                              .updateTotalProductsQuantity(true);
+                        },
+                      ),
                   ],
                 ),
               ],

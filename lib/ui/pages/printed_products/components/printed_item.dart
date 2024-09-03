@@ -86,6 +86,7 @@ class _PrintedItemState extends State<PrintedItem> {
               child: Column(
                 children: [
                   ProductDetails(
+                    printed: widget.printed,
                     product: product.Products,
                     onPressedRemoveProduct: () async {
                       notificationDialog(

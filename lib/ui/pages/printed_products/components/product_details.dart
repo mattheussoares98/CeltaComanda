@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
   final ProductsViewModel product;
+  final PrintedViewModel printed;
   final void Function()? onPressedRemoveProduct;
   final void Function()? validateUserAndCancelProducts;
   final String quantity;
@@ -17,6 +16,7 @@ class ProductDetails extends StatelessWidget {
 
   const ProductDetails({
     required this.product,
+    required this.printed,
     required this.onPressedRemoveProduct,
     required this.quantity,
     required this.value,
@@ -28,41 +28,77 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-
     return Column(
       children: [
         Row(
           children: [
+            // Expanded(
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       showLargeImage(
+            //         context: context,
+            //         ean: product.EanCode,
+            //         productComplement: product.ProductComplement,
+            //         plu: product.PriceLookupCode,
+            //         menuPresenter: menuPresenter,
+            //         productName: product.Name,
+            //         selectedProduct: product,
+            //       );
+            //     },
+            //     child: ImageWidget(
+            //       ean: product.EanCode,
+            //       plu: product.PriceLookupCode,
+            //       selectedProduct: product,
+            //     ),
+            //   ),
+            // ),
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  showLargeImage(
-                    context: context,
-                    ean: product.EanCode,
-                    productComplement: product.ProductComplement,
-                    plu: product.PriceLookupCode,
-                    menuPresenter: menuPresenter,
-                    productName: product.Name,
-                    selectedProduct: product,
-                  );
-                },
-                child: ImageWidget(
-                  ean: product.EanCode,
-                  plu: product.PriceLookupCode,
-                  selectedProduct: product,
+              child: Padding(
+                padding: EdgeInsets.all(hasMinWidth(context) ? 5 : 3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      child: Text(
+                        "Solicitado às",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: getStringSize(context) * 0.8,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    FittedBox(
+                      child: Text(
+                        "${DateTime.parse(printed.DateHourOfCreation).hour}:${DateTime.parse(printed.DateHourOfCreation).minute}:${DateTime.parse(printed.DateHourOfCreation).second}",
+                        style: TextStyle(
+                          fontSize: getStringSize(context) * 0.8,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
             Expanded(
               flex: 2,
-              child: Text(
-                product.Name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context),
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    product.Name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
+                  if (comments != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Comment(comment: "($comments)"),
+                    ),
+                ],
               ),
             ),
             Expanded(
@@ -74,7 +110,7 @@ class ProductDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "$quantity ",
+                          "${R.string.quantityAbbreviated} $quantity ",
                           style: TextStyle(
                             fontSize: getStringSize(context) * 0.8,
                             fontWeight: FontWeight.w300,
@@ -109,11 +145,6 @@ class ProductDetails extends StatelessWidget {
             ),
           ],
         ),
-        if (comments != null)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Comment(comment: comments!),
-          ),
       ],
     );
   }

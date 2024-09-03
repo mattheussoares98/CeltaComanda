@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import br.com.celtaware.comanda.utils.AppUtils
 import br.com.celtaware.comanda.utils.OrientationUtils
+import br.com.celtaware.comanda.utils.PersistentChannelManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -20,40 +21,21 @@ import kotlin.system.exitProcess
 
 class MainActivity : FlutterActivity() {
     private val redePayments: RedePayments by inject()
+    private lateinit var persistentChannelManager: PersistentChannelManager
 
     private val channel = "rede_channel"
-    private val persistentChannel = "persistent_channel"
-
-    companion object {
-        private var PAYMENT_REQUEST_CODE: Int = 1
-        private var persistApp: Boolean = false
+    private companion object {
+        private const val PAYMENT_REQUEST_CODE = 1
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            persistentChannel
-        ).setMethodCallHandler { call, result ->
-            when (call.method) {
-                "closeApp" -> {
-                    moveTaskToBack(true);
-                    exitProcess(-1)
-                }   "persistApp" -> {
-                     persistApp = true
-                     result.success("success to change persistApp to true")
-                }   "notPersistApp" -> {
-                    persistApp = false
-                    result.success("success to change persistApp to false")
-                }
-                else -> result.notImplemented()
-            }
-        }
+        persistentChannelManager = PersistentChannelManager(flutterEngine)
+
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             channel
         ).setMethodCallHandler { call, result ->
-            // Verificando se os argumentos são do tipo esperado
             val argumentsWithFlutter = call.arguments as? Map<*, *>
             argumentsWithFlutter?.let {
                 val longAmountValue = (it["longAmountValue"] as? Int)?.toLong() ?: 0L
@@ -113,11 +95,11 @@ class MainActivity : FlutterActivity() {
                 builtIntent.extras?.get("rede.smartrede.sdk.INTENT_EXTRAS_SDK_VERSION_NAME")
             val calledAppId =
                 builtIntent.extras?.get("rede.smartrede.sdk.INTENT_EXTRAS_APPLICATION_ID")
-            android.util.Log.d("", "## called sdk with $payment")
-            android.util.Log.d("", "## called sdk with $appVersion")
-            android.util.Log.d("", "## called sdk with $sdkVersion")
-            android.util.Log.d("", "## called sdk with $calledAppId")
-            android.util.Log.w("Pagamentos", "collect payment called with success")
+            Log.d("", "## called sdk with $payment")
+            Log.d("", "## called sdk with $appVersion")
+            Log.d("", "## called sdk with $sdkVersion")
+            Log.d("", "## called sdk with $calledAppId")
+            Log.w("Pagamentos", "collect payment called with success")
         } catch (ex: ActivityNotFoundException) {
             Log.e("Pagamentos", "Aplicativo Pagamentos não encontrado", ex)
             result.error("ActivityNotFoundException", "Aplicativo Pagamentos não encontrado", null)
@@ -130,8 +112,6 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PAYMENT_REQUEST_CODE) {
@@ -143,7 +123,6 @@ class MainActivity : FlutterActivity() {
                             PaymentStatus.AUTHORIZED -> showToast("Pagamento Autorizado")
                             PaymentStatus.FAILED -> showToast("Pagamento Falhou")
                             PaymentStatus.DECLINED -> showToast("Pagamento Recusado")
-                            // Adicionando tratamento para outros status de pagamento
                             else -> Log.w(
                                 "Pagamentos",
                                 "Status de pagamento desconhecido: ${payment?.status}"
@@ -151,9 +130,7 @@ class MainActivity : FlutterActivity() {
                         }
                     }
                 }
-
                 Activity.RESULT_CANCELED -> showToast("Pagamento Cancelado")
-                // Adicionando tratamento para outros códigos de resultado
                 else -> Log.w("Pagamentos", "Código de resultado desconhecido: $resultCode")
             }
         }
@@ -171,25 +148,24 @@ class MainActivity : FlutterActivity() {
         OrientationUtils.doOrientation(this)
     }
 
-
     override fun onPause() {
         super.onPause()
-        if(persistApp) {
+        if (persistentChannelManager.isPersistApp()) {
             AppUtils.bringAppToFront(this)
         }
     }
 
     override fun onStop() {
         super.onStop()
-        if(persistApp) {
+        if (persistentChannelManager.isPersistApp()) {
             AppUtils.bringAppToFront(this)
         }
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-            if (Intent.ACTION_MAIN == intent.action && persistApp) {
-                Log.i("MyLauncher", "onNewIntent: HOME Key")
+        if (Intent.ACTION_MAIN == intent.action && persistentChannelManager.isPersistApp()) {
+            Log.i("MyLauncher", "onNewIntent: HOME Key")
         }
     }
 }

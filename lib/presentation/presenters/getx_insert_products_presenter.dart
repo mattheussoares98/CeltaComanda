@@ -101,7 +101,7 @@ class GetxInsertProductsPresenter extends GetxController
         insertViewModel.add(InsertProductsViewModel(
           selectedOptions: {
             SelectedOptionType.optionalExpansibleGroup:
-                expansibleGroupFromProductPresenter.loadedObligatoryOptions
+                expansibleGroupFromProductPresenter.loadedComments
                     .where(
                       (e) =>
                           e.ProductInternalCodeOnErp ==

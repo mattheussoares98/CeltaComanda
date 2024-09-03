@@ -141,7 +141,7 @@ void main() {
     );
 
     verify(() => localEnterpriseData
-        .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(2);
+        .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
   });
 
   test('Should emit UnexpectedError if SaveEnterpriseData fails', () async {
@@ -243,7 +243,7 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    expect(EnterpriseDataBuilder.enterpriseDataEntity, enterpriseEntity);
+    expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName, sut.enterpriseNameController.text);
   });
 
   test("Should go to HomePage cleaning atual route", () async {

@@ -56,6 +56,8 @@ class _HomePageState extends State<HomePage>
           );
           if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true) {
             await persistApp();
+          } else {
+            await notPersistApp();
           }
         }
       });

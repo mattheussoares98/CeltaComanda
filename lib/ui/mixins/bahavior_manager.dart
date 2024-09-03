@@ -14,6 +14,16 @@ mixin BehaviorManager {
     }
   }
 
+  Future<void> notPersistApp() async {
+    try {
+      final result = await _platform.invokeMethod("notPersistApp");
+
+      debugPrint((result));
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   Future<void> closeApp() async {
     try {
       Future.delayed(Duration.zero, () async {

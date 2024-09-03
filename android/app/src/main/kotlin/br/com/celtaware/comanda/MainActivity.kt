@@ -41,7 +41,10 @@ class MainActivity : FlutterActivity() {
                     exitProcess(-1)
                 }   "persistApp" -> {
                      persistApp = true
-                     result.success("success to change persistApp")
+                     result.success("success to change persistApp to true")
+                }   "notPersistApp" -> {
+                    persistApp = false
+                    result.success("success to change persistApp to false")
                 }
                 else -> result.notImplemented()
             }

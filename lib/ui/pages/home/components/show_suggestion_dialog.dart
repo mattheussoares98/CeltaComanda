@@ -23,7 +23,7 @@ void showSuggestionDialog(
   notificationDialog(
       canPop: false,
       context: context,
-      titleMessage: "Deseja dicionar?",
+      titleMessage: R.string.doYouWantToAdd,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -51,7 +51,7 @@ void showSuggestionDialog(
             ),
           ),
           Text(
-              "Por ${product.SaleRetailPraticed.toDouble().toString().toBrazilianNumber().addBrazilianCoin()}",
+              "${R.string.per} ${product.SaleRetailPraticed.toDouble().toString().toBrazilianNumber().addBrazilianCoin()}",
               style: TextStyle(
                 color: Theme.of(context).secondaryHeaderColor,
               )),

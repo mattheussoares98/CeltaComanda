@@ -99,6 +99,7 @@ class PtBr implements Translation {
   String get debit => "Débito";
   String get detach => "Destaques";
   String get doLogout => "Fazer logout";
+  String get doYouWantToAdd => "Deseja adicionar?";
   String get drink => "Bebida";
   String get eanOrPlu => "EAN ou PLU";
   String get email => "E-mail";
@@ -125,6 +126,7 @@ class PtBr implements Translation {
   String get password => 'Senha';
   String get pay => 'Pagar';
   String get peopleQuantity => 'Quantidade de pessoas';
+  String get per => 'Por';
   String get price => 'Preço';
   String get productsAndComments => 'Produtos e comentários';
   String get quantity => 'Quantidade';
@@ -132,6 +134,7 @@ class PtBr implements Translation {
   String get reload => 'Recarregar';
   String get removeProduct => 'Remover produto';
   String get requested => 'Solicitados';
+  String get requestedAt => 'Solicitado às';
   String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';

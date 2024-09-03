@@ -60,7 +60,7 @@ class ProductDetails extends StatelessWidget {
                   children: [
                     FittedBox(
                       child: Text(
-                        "Solicitado às",
+                        R.string.requestedAt,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: getStringSize(context) * 0.8,

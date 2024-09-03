@@ -97,6 +97,7 @@ class EnUs implements Translation {
   String get debit => 'Debit';
   String get detach => 'Highlights';
   String get doLogout => 'Log out';
+  String get doYouWantToAdd => 'Do you want add?';
   String get drink => 'Drink';
   String get eanOrPlu => 'EAN or PLU';
   String get email => 'Email';
@@ -123,6 +124,7 @@ class EnUs implements Translation {
   String get password => 'Password';
   String get pay => 'Pay';
   String get peopleQuantity => 'Number of people';
+  String get per => 'Per';
   String get price => 'Price';
   String get productsAndComments => 'Products and comments';
   String get quantity => 'Quantity';
@@ -130,6 +132,7 @@ class EnUs implements Translation {
   String get reload => 'Reload';
   String get removeProduct => 'Remove product';
   String get requested => 'Requested';
+  String get requestedAt => 'Requested at';
   String get requestSentSuccessfully => 'The request was sent successfully';
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';

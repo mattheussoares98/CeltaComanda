@@ -79,6 +79,7 @@ abstract class Translation {
   String get debit;
   String get detach;
   String get doLogout;
+  String get doYouWantToAdd;
   String get drink;
   String get eanOrPlu;
   String get email;
@@ -105,6 +106,7 @@ abstract class Translation {
   String get password;
   String get pay;
   String get peopleQuantity;
+  String get per;
   String get price;
   String get productsAndComments;
   String get quantity;
@@ -112,6 +114,7 @@ abstract class Translation {
   String get reload;
   String get removeProduct;
   String get requested;
+  String get requestedAt;
   String get reserved;
   String get reserveTable;
   String get searchProduct;

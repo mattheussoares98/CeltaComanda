@@ -53,33 +53,7 @@ class ProductDetails extends StatelessWidget {
             //   ),
             // ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(hasMinWidth(context) ? 5 : 3),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FittedBox(
-                      child: Text(
-                        R.string.requestedAt,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: getStringSize(context) * 0.8,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                    FittedBox(
-                      child: Text(
-                        "${DateTime.parse(printed.DateHourOfCreation).hour}:${DateTime.parse(printed.DateHourOfCreation).minute}:${DateTime.parse(printed.DateHourOfCreation).second}",
-                        style: TextStyle(
-                          fontSize: getStringSize(context) * 0.8,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: RequestedAt(printed: printed),
             ),
             Expanded(
               flex: 2,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -59,45 +58,9 @@ class ProductDetails extends StatelessWidget {
               child: NameAndComment(product: product, comments: comments),
             ),
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  FittedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "${R.string.quantityAbbreviated} $quantity ",
-                          style: TextStyle(
-                            fontSize: getStringSize(context) * 0.8,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        // InkWell(
-                        //   onTap: printedProductsPresenter.canCancelProducts
-                        //       ? onPressedRemoveProduct
-                        //       : validateUserAndCancelProducts,
-                        //   child: Icon(
-                        //     Icons.delete,
-                        //     color: printedProductsPresenter.canCancelProducts
-                        //         ? Colors.red
-                        //         : Colors.grey,
-                        //     size: 30,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                  FittedBox(
-                    child: Text(
-                      totalLiquid.addBrazilianCoin(),
-                      style: TextStyle(
-                        fontSize: getStringSize(context) * 0.8,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+              child: QuantityAndPrice(
+                quantity: quantity,
+                totalLiquid: totalLiquid,
               ),
             ),
           ],

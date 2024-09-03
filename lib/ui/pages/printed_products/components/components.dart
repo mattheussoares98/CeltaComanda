@@ -2,6 +2,7 @@ export 'cancel_products_password_input.dart';
 export './name_and_comment.dart';
 export 'printed_item.dart';
 export './product_details.dart';
+export './quantity_and_price.dart';
 export './request_summary.dart';
 export './requested_at.dart';
 export './user_input.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -57,23 +56,7 @@ class ProductDetails extends StatelessWidget {
             ),
             Expanded(
               flex: 2,
-              child: Column(
-                children: [
-                  Text(
-                    product.Name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getStringSize(context),
-                    ),
-                  ),
-                  if (comments != null)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Comment(comment: "($comments)"),
-                    ),
-                ],
-              ),
+              child: NameAndComment(product: product, comments: comments),
             ),
             Expanded(
               child: Column(

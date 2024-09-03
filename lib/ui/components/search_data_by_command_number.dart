@@ -55,7 +55,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
               color: Theme.of(context).primaryColorDark,
             ),
             label: Text(
-              "Consultar dados da comanda",
+              R.string.searchCommandData,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: hasMinWidth(context) ? 30 : 23,

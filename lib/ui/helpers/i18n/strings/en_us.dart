@@ -136,6 +136,7 @@ class EnUs implements Translation {
   String get requestSentSuccessfully => 'The request was sent successfully';
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';
+  String get searchCommandData => 'Search command data';
   String get searchProduct => 'Search product';
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';

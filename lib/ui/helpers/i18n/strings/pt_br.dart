@@ -138,6 +138,7 @@ class PtBr implements Translation {
   String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
+  String get searchCommandData => "Consultar dados da comanda";
   String get searchProduct => "Consultar produto";
   String get selectOneComment => "Selecione um comentário";
   String get selectedProductsAndComments =>

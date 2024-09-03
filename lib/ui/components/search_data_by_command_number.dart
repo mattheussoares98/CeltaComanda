@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../ui/helpers/helpers.dart';
-import '../../ui/helpers/sizes/sizes.dart';
 import '../pages/pages.dart';
 
 class SearchDataByCommandNumber extends StatelessWidget {
@@ -30,7 +29,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
         children: [
           if (homePresenter.commandNumber != null)
             Text(
-              "Comanda ${homePresenter.commandNumber?.replaceAll(RegExp(r'0'), '')}",
+              "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,

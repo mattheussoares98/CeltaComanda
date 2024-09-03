@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../ui/pages/pages.dart';
+import '../../../helpers/helpers.dart';
 
 class RequestSummary extends StatelessWidget {
   final double totalPriceContainerHeight;
@@ -39,7 +40,7 @@ class RequestSummary extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              'Total',
+              R.string.total,
               textAlign: TextAlign.end,
               style: Theme.of(context).textTheme.titleLarge,
             ),

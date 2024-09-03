@@ -42,6 +42,16 @@ class _ChildsRadiosState extends State<ChildsRadios> {
           child = widget.selectedFather.childs![i];
         } else {
           child = widget.selectedFather;
+          Future.delayed(Duration.zero, () {
+            _updateSelectedIndex(
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
+              insertProductsPresenter: insertProductsPresenter,
+              value: i,
+              selectedFather: widget.selectedFather,
+              selectedProduct: widget.selectedProduct,
+            );
+          });
         }
 
         return InkWell(

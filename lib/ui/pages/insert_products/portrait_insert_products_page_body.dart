@@ -178,16 +178,22 @@ class _PortraitInsertProductsPageBodyState
                         ),
                       ),
                     if (atualOption == SelectedOptionType.quantity)
-                      UpdateQuantity(
-                        quantity: insertProductPresenter.totalProductsQuantity,
-                        reduceQuantity: () {
-                          insertProductPresenter
-                              .updateTotalProductsQuantity(false);
-                        },
-                        addQuantity: () {
-                          insertProductPresenter
-                              .updateTotalProductsQuantity(true);
-                        },
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1,
+                        ),
+                        child: UpdateQuantity(
+                          quantity:
+                              insertProductPresenter.totalProductsQuantity,
+                          reduceQuantity: () {
+                            insertProductPresenter
+                                .updateTotalProductsQuantity(false);
+                          },
+                          addQuantity: () {
+                            insertProductPresenter
+                                .updateTotalProductsQuantity(true);
+                          },
+                        ),
                       ),
                   ],
                 ),

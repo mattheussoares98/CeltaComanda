@@ -32,6 +32,7 @@ class _PrintedItemState extends State<PrintedItem> {
         child: Text(
           name,
           textAlign: TextAlign.center,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );

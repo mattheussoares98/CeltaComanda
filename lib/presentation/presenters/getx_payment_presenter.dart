@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -48,6 +49,12 @@ class GetxPaymentPresenter extends GetxController
       await commandInformations.openOrBlockade(
         commandNumber: commandNumber,
         isOpen: true,
+      );
+
+      await finishSaleRequestConcentrador.finish(
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        pdvNumber: 100,
+        commandNumber: commandNumber.toInt(),
       );
     } on DomainError catch (e) {
       switch (e) {

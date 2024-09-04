@@ -252,6 +252,21 @@ void main() {
             ),
           ));
     });
+    test('Should call finishSaleRequestConcentrador', () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(() => finishSaleRequestConcentrador.finish(
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            pdvNumber: 100,
+            commandNumber: homePresenter.commandNumberMock!.toInt(),
+          )).called(1);
+    });
   });
 
   group("Get total value", () {

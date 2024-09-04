@@ -1,3 +1,4 @@
+export 'app_manager/app_manager.dart';
 export './barcode/barcode.dart';
 export './cart/cart.dart';
 export './command/command.dart';

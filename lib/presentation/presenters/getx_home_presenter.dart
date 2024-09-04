@@ -111,11 +111,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true) {
-        await persistent.makePersistent();
-      } else {
-        await persistent.makeNotPersistent();
-      }
       CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand != null) {

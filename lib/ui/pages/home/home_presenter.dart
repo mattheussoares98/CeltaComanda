@@ -71,4 +71,5 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   void updateSelectedSeller(SellersViewModel? seller);
 
   Future<void> closeApp();
+  void changeIsGeneratingVersionToRede(bool value);
 }

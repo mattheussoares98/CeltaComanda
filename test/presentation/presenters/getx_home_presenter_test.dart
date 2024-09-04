@@ -675,6 +675,82 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
+
+    test(
+        "Should make persist when Enterprise.persist is true and is not generating version to rede",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: true,
+      );
+
+      sut.changeIsGeneratingVersionToRede(false);
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => persistent.makePersistent()).called(1);
+    });
+
+    test(
+        "Should make NOT persist when is generating version to rede and Enterprise.persist is true",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: true,
+      );
+
+      sut.changeIsGeneratingVersionToRede(true);
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
+    test("Should make NOT persist Enterprise.persist is false", () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: false,
+      );
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
   });
 
   group("Update command data", () {

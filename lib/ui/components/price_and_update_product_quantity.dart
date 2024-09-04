@@ -40,7 +40,7 @@ class _PriceAndUpdateProductQuantityState
               color: Colors.grey[300],
             ),
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -58,7 +58,7 @@ class _PriceAndUpdateProductQuantityState
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: hasMinWidth(context) ? 20 : 15,
+                        fontSize: getStringSize(context),
                       ),
                     ),
                   ),

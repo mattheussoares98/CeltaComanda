@@ -35,7 +35,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
-      padding: EdgeInsets.all(hasMinWidth(context) ? 8 : 3),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: const Color.fromARGB(255, 220, 218, 218)),
@@ -56,14 +56,11 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                 onTap: () async {
                   await cartPresenter.removeProductFromCart(widget.index);
                 },
-                child: SizedBox(
-                  width: 20,
-                  child: Center(
-                    child: Icon(
-                      Icons.delete,
-                      size: 30,
-                      color: Theme.of(context).primaryColorLight,
-                    ),
+                child: Center(
+                  child: Icon(
+                    Icons.delete,
+                    size: 30,
+                    color: Theme.of(context).primaryColorLight,
                   ),
                 ),
               ),
@@ -95,10 +92,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                       product: widget.cartProduct.Product,
                       indexOfChild: 0,
                     ))
-                      SizedBox(
-                        child:
-                            Comment(comment: widget.cartProduct.Comments ?? ""),
-                      ),
+                      Comment(comment: widget.cartProduct.Comments ?? ""),
                   ],
                 ),
               ),

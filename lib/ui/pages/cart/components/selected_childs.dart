@@ -12,7 +12,7 @@ class SelectedChilds extends StatelessWidget {
     super.key,
   });
 
-  static const _productAndCommentFlex = 3;
+  static const _productAndCommentFlex = 2;
   static const _quantityFlex = 1;
   static const _priceFlex = 1;
 
@@ -100,7 +100,7 @@ class SelectedChilds extends StatelessWidget {
                               childName,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: getStringSize(context) * 0.9,
+                                fontSize: getStringSize(context),
                               ),
                             ),
                             if (child.commentFather != null)

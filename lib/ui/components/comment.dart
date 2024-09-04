@@ -16,7 +16,7 @@ class Comment extends StatelessWidget {
       style: TextStyle(
         color: Theme.of(context).primaryColorLight,
         fontStyle: FontStyle.italic,
-        fontSize: getStringSize(context) * 0.7,
+        fontSize: getStringSize(context),
         fontWeight: FontWeight.bold,
       ),
     );

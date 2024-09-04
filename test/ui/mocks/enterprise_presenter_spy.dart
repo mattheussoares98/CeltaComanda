@@ -34,7 +34,7 @@ class EnterpriseValidationPresenterSpy extends Mock
           commandEntity: any(named: "commandEntity"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((any) async => any);
-    when(() => this.goToHomePage()).thenAnswer((_) => Get.offNamed(
+    when(() => this.goToHomePage()).thenAnswer((_) async => Get.offNamed(
           PageRoutes.menus,
         ));
     when(() => this.updateEnterpriseController(any()))

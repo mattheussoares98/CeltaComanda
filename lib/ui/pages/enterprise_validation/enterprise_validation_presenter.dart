@@ -26,7 +26,7 @@ abstract class EnterpriseValidationPresenter implements Listenable {
   Future<void> loadRemoteEnterpriseData();
   Future<void> loadLocalData();
 
-  void goToHomePage();
+  Future<void> goToHomePage();
 
   Future<void> updateUseFixedCommandNumber(HomePresenter homePresenter);
   void updateCommandNumber({

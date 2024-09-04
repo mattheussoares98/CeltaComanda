@@ -19,6 +19,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final NavigateTo navigateTo;
   final CommandInformations commandInformations;
   final LocalCommandData localCommandData;
+  final Persistent persistent;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -27,6 +28,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.navigateTo,
     required this.commandInformations,
     required this.localCommandData,
+    required this.persistent,
   });
 
   @override
@@ -193,8 +195,13 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  void goToHomePage() {
+  Future<void> goToHomePage() async {
     navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
+    if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true) {
+      await persistent.makePersistent();
+    } else {
+      await persistent.makeNotPersistent();
+    }
   }
 
   @override

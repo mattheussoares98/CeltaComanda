@@ -25,6 +25,7 @@ void main() {
   late NavigateToSpy navigateTo;
   late CommandInformationsSpy ticketIsPermitted;
   late LoadCommandDataSpy loadCommandData;
+  late PersistentSpy persistent;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -37,6 +38,7 @@ void main() {
     remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
     ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
+    persistent = PersistentSpy();
 
     enterpriseEntity = EntityFactory.makeEnterpriseData();
     EnterpriseDataBuilder.enterpriseDataEntity = enterpriseEntity;
@@ -59,6 +61,7 @@ void main() {
       navigateTo: navigateTo,
       commandInformations: ticketIsPermitted,
       localCommandData: loadCommandData,
+      persistent: persistent,
     );
 
     sut.enterpriseNameController.text =
@@ -243,7 +246,8 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName, sut.enterpriseNameController.text);
+    expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName,
+        sut.enterpriseNameController.text);
   });
 
   test("Should go to HomePage cleaning atual route", () async {
@@ -255,6 +259,38 @@ void main() {
         clear: true,
       ),
     ).called(1);
+  });
+  test(
+      "Should make persist app when go to home page and enterprise.persist app is true",
+      () async {
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+      concentradorUrl:
+          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+      persistApp: true,
+    );
+    await sut.goToHomePage();
+
+    verify(() => persistent.makePersistent()).called(1);
+  });
+  test(
+      "Should make NOT persist app when go to home page and enterprise.persist app is false",
+      () async {
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+      concentradorUrl:
+          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+      persistApp: false,
+    );
+    await sut.goToHomePage();
+
+    verify(() => persistent.makeNotPersistent()).called(1);
   });
 
   test("Should call loadCommandData on loadLocalData", () async {

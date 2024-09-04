@@ -267,6 +267,22 @@ void main() {
             commandNumber: homePresenter.commandNumberMock!.toInt(),
           )).called(1);
     });
+    test('Should emit correct values on error to finishSaleRequestConcentrador',
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      finishSaleRequestConcentrador.mockFinishError();
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+    });
   });
 
   group("Get total value", () {

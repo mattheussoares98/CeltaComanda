@@ -16,6 +16,6 @@ class FinishSaleRequestConcentradorSpy extends Mock
         commandNumber: any(named: "commandNumber"),
       ));
   void _mockFinish() => this._mockFinishCall().thenAnswer((any) async => any);
-  void mockFinishError(DomainError error) =>
-      this._mockFinishCall().thenThrow(error);
+  void mockFinishError() =>
+      this._mockFinishCall().thenThrow(DomainError.unexpected);
 }

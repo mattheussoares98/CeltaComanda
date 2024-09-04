@@ -377,9 +377,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   bool get isFixedCommandNumber => _isFixedCommandNumber;
 
   @override
-  bool get isGeneratingVersionToRede => false;
+  bool get isGeneratingVersionToRede => true;
   @override
-  bool get isGeneratingVersionToTablet => true;
+  bool get isGeneratingVersionToTablet => false;
 
   List<SellersViewModel> _sellers = [];
   @override

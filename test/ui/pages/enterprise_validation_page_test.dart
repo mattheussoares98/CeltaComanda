@@ -61,7 +61,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.goToHomePage();
+    await presenter.goToHomePage(homePresenter);
 
     expect(currentRoute, PageRoutes.menus);
   });

@@ -251,7 +251,7 @@ void main() {
   });
 
   test("Should go to HomePage cleaning atual route", () async {
-    sut.goToHomePage();
+    await sut.goToHomePage(homePresenter);
 
     verify(
       () => navigateTo.navigate(
@@ -272,9 +272,26 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
       persistApp: true,
     );
-    await sut.goToHomePage();
+    await sut.goToHomePage(homePresenter);
 
     verify(() => persistent.makePersistent()).called(1);
+  });
+  test(
+      "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
+      () async {
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+      concentradorUrl:
+          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+      persistApp: true,
+    );
+    homePresenter.isGeneratingVersionToRedeMock = true;
+    await sut.goToHomePage(homePresenter);
+
+    verify(() => persistent.makeNotPersistent()).called(1);
   });
   test(
       "Should make NOT persist app when go to home page and enterprise.persist app is false",
@@ -288,7 +305,7 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
       persistApp: false,
     );
-    await sut.goToHomePage();
+    await sut.goToHomePage(homePresenter);
 
     verify(() => persistent.makeNotPersistent()).called(1);
   });

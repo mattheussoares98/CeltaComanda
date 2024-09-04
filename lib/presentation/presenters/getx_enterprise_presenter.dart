@@ -135,7 +135,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       await localCommandData.update(commandEntity);
 
       isLoading = false;
-      goToHomePage();
+      await goToHomePage(homePresenter);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -195,9 +195,10 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  Future<void> goToHomePage() async {
+  Future<void> goToHomePage(HomePresenter homePresenter) async {
     navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
-    if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true) {
+    if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
+        !homePresenter.isGeneratingVersionToRede) {
       await persistent.makePersistent();
     } else {
       await persistent.makeNotPersistent();

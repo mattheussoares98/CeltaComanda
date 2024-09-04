@@ -22,14 +22,14 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   TextEditingController searchProductControllerMock = TextEditingController();
 
   MenuPresenterSpy() {
-    mockLoadCall().thenAnswer((_) async => _);
+    mockLoadCall().thenAnswer((any) async => any);
     when(() => this.loadedMenu).thenAnswer((_) => expansibleGroupsController);
     when(() => this.menuStream).thenAnswer((_) => menuController.stream);
     when(() => this.showPreLoadImagesStream)
         .thenAnswer((_) => showPreLoadImageController.stream);
-    when(() => this.clear()).thenAnswer((_) async => _);
+    when(() => this.clear()).thenAnswer((any) async => any);
     when(() => this.updateIndexOfSelectedGroup(any()))
-        .thenAnswer((_) async => _);
+        .thenAnswer((any) async => any);
 
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);

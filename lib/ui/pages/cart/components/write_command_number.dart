@@ -146,7 +146,7 @@ Future<void> _onPress({
     );
 
     if (isUpdated) {
-      Future.delayed(Duration.zero, () {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         showAlertMessage(
           context,
           R.string.msgRequestSentSuccessfully,

@@ -15,7 +15,7 @@ class UpdateProductQuantitySpy extends Mock implements UpdateProductQuantity {
       ));
 
   void mockAddProductQuantity() {
-    this.mockAddProductQuantityCall().thenAnswer((_) async => _);
+    this.mockAddProductQuantityCall().thenAnswer((any) async => any);
   }
 
   void mockAddProductQuantityError() {
@@ -28,7 +28,7 @@ class UpdateProductQuantitySpy extends Mock implements UpdateProductQuantity {
       ));
 
   void mockSubtractProductQuantity() {
-    this.mockSubtractProductQuantityCall().thenAnswer((_) async => _);
+    this.mockSubtractProductQuantityCall().thenAnswer((any) async => any);
   }
 
   void mockSubtractProductQuantityError() {
@@ -41,7 +41,7 @@ class UpdateProductQuantitySpy extends Mock implements UpdateProductQuantity {
       ));
 
   void mockDeleteProduct() {
-    this.mockDeleteProductCall().thenAnswer((_) async => _);
+    this.mockDeleteProductCall().thenAnswer((any) async => any);
   }
 
   void mockDeleteProductError() {

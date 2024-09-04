@@ -23,13 +23,13 @@ class ExpansibleGroupFromProductPresenterSpy extends Mock
     when(() => this.loadedComments).thenAnswer((_) => loadedCommentsController);
     when(() => this.loadedObligatoryOptions)
         .thenAnswer((_) => loadedObligatoryOptionsController);
-    when(() => this.changeCommentIsSelected(any())).thenAnswer((_) async => _);
+    when(() => this.changeCommentIsSelected(any())).thenAnswer((any) async => any);
     when(() => this.productHasComment(
           product: any(named: "product"),
           indexOfChild: any(named: "indexOfChild"),
         )).thenAnswer((_) => false);
     when(() => this.loadCommentsAndObligatoryOptions(any()))
-        .thenAnswer((_) async => _);
+        .thenAnswer((any) async => any);
   }
 
   void mockGetConcatenateSelectedComments(String? comment) {

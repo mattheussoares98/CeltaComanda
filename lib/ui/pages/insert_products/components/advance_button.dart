@@ -79,7 +79,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       menuPresenter: menuPresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Navigator.of(context).popUntil((route) => route.isFirst);
       AnimatedAlertDialog.open(
         context: context,

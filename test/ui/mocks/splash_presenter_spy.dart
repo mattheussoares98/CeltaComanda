@@ -9,7 +9,7 @@ class SplashPresenterSpy extends Mock
   SplashPresenterSpy() {
     when(() => this
             .checkApiSaleRequest(durationInSeconds: any(named: 'durationInSeconds')))
-        .thenAnswer((_) async => _);
+        .thenAnswer((any) async => any);
   }
 
   // void mockLoadAccount(CrossIdEntity? crossIdEntity) {

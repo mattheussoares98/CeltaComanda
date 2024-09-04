@@ -35,7 +35,7 @@ class SaveSaleRequestButton extends StatelessWidget {
     );
 
     if (isUpdated) {
-      await Future.delayed(Duration.zero, () {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         Navigator.of(NavigatorKey.navigatorKey.currentState!.context).pop();
         showAlertMessage(
           context,

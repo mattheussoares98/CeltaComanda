@@ -20,13 +20,13 @@ class FirebaseStorageSpy extends Mock implements FirebaseStorage {
   void mockGetError() => this.mockGetCall().thenThrow(Exception());
 
   When mockUpdateCall() => when(() => this.addNewPrintRequest(any()));
-  void mockUpdate() => this.mockUpdateCall().thenAnswer((_) async => _);
+  void mockUpdate() => this.mockUpdateCall().thenAnswer((any) async => any);
   void mockUpdateError() => this.mockUpdateCall().thenThrow(Exception());
 
   // When mockAddCall() => when(() => this.add(
   //       enterpriseEntity: any(named: "enterpriseEntity"),
   //       collection: any(named: "collection"),
   //     ));
-  // void mockAdd() => this.mockAddCall().thenAnswer((_) async => _);
+  // void mockAdd() => this.mockAddCall().thenAnswer((any) async => any);
   // void mockAddError() => this.mockAddCall().thenThrow(Exception());
 }

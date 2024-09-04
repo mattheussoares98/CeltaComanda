@@ -32,14 +32,14 @@ class InsertProductsPresenterSpy extends Mock
           father: any(named: "father"),
           index: any(named: "index"),
           expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
-        )).thenAnswer((_) => _);
+        )).thenAnswer((any) => any);
     when(() => this.calculateProductCompositionPrice(any()))
         .thenAnswer((_) => 0);
     when(() => this.calculateProductCompositionIncrementValue(any()))
         .thenAnswer((_) => 0);
     when(() => this.calculateProductCompositionTotalLiquid(
         product: any(named: "product"))).thenAnswer((_) => 0);
-    when(() => this.updateTotalProductsQuantity(any())).thenAnswer((_) => _);
+    when(() => this.updateTotalProductsQuantity(any())).thenAnswer((any) => any);
     when(() => this.updateSaleRequest(
           homePresenter: any(named: "homePresenter"),
           cartPresenter: any(named: "cartPresenter"),
@@ -49,8 +49,8 @@ class InsertProductsPresenterSpy extends Mock
           product: any(named: "product"),
           expansibleGroupFromProductPresenter:
               any(named: "expansibleGroupFromProductPresenter"),
-        )).thenAnswer((_) async => _);
-    when(() => this.updateTotalLiquid(any())).thenAnswer((_) async => _);
+        )).thenAnswer((any) async => any);
+    when(() => this.updateTotalLiquid(any())).thenAnswer((any) async => any);
   }
 
   void emitLoading([bool show = true]) => isLoadingController.add(show);

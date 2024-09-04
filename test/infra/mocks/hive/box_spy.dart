@@ -11,12 +11,12 @@ class BoxSpy extends Mock implements Box {
 
   When mockPutCall() => when(() => this.put(any(), any()));
   void mockPut(String key, String value) =>
-      this.mockPutCall().thenAnswer((_) async => _);
+      this.mockPutCall().thenAnswer((any) async => any);
   void mockPutError() => when(() => this.mockPutCall().thenThrow(Exception()));
 
   When mockDeleteCall() => when(() => this.delete(any()));
   void mockDelete(String key) =>
-      this.mockDeleteCall().thenAnswer((_) async => _);
+      this.mockDeleteCall().thenAnswer((any) async => any);
   void mockDeleteError() =>
       when(() => this.mockDeleteCall().thenThrow(Exception()));
 }

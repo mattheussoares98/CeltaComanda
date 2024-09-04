@@ -23,7 +23,7 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   void _requestFocusToFormField() {
-    Future.delayed(const Duration(milliseconds: 100), () {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       FocusScope.of(context).requestFocus(focusNode);
     });
   }

@@ -36,15 +36,16 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _loadAllData() async {
     Future.delayed(Duration.zero, () async {
-      HomePresenter homePresenter = Provider.of(context, listen: false);
-      PrintedProductsPresenter printedProductsPresenter =
-          Provider.of(context, listen: false);
-      CartPresenter cartPresenter = Provider.of(context, listen: false);
-      MenuPresenter menuPresenter = Provider.of(context, listen: false);
-      ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-          Provider.of(context, listen: false);
-
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+        PrintedProductsPresenter printedProductsPresenter =
+            Provider.of(context, listen: false);
+        CartPresenter cartPresenter = Provider.of(context, listen: false);
+        MenuPresenter menuPresenter = Provider.of(context, listen: false);
+        ExpansibleGroupFromProductPresenter
+            expansibleGroupFromProductPresenter =
+            Provider.of(context, listen: false);
+
         if (mounted) {
           await homePresenter.loadCommandData(
             menuPresenter: menuPresenter,
@@ -88,8 +89,7 @@ class _HomePageState extends State<HomePage>
     }
 
     _lastUpdatedBatteryLevel = atualBatteryLevel;
-
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       showAlertMessage(
         context,
         "$atualBatteryLevel%. ${R.string.msgLowBatteryChargeDevice}",
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage>
       },
       child: PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, _) {
           if (!homePresenter.isGeneratingVersionToTablet) {
             notificationDialog(
               context: context,
@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage>
                 if (snapshot.hasData &&
                     snapshot.data != _lastShowedSuggestionProduct) {
                   _lastShowedSuggestionProduct = snapshot.data;
-                  Future.delayed(Duration.zero, () {
+                  WidgetsBinding.instance.addPostFrameCallback((_) async {
                     showSuggestionDialog(
                       context,
                       snapshot.data!,

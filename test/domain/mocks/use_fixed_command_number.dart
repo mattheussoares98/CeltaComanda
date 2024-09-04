@@ -8,7 +8,7 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadCommandDataSpy extends Mock implements LocalCommandData {
   When mockUpdateAll() => when(() => this.update(any()));
-  void mockUpdate() => this.mockUpdateAll().thenAnswer((_) async => _);
+  void mockUpdate() => this.mockUpdateAll().thenAnswer((any) async => any);
   void mockUpdateError() =>
       this.mockUpdateAll().thenThrow(DomainError.unexpected);
 

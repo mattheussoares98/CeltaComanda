@@ -16,10 +16,10 @@ class HiveStorageSpy extends Mock implements HiveStorage {
   void mockGetError() => this.mockGetCall().thenThrow(Exception());
 
   When mockDeleteCall() => when(() => this.delete(any()));
-  void mockDelete() => this.mockDeleteCall().thenAnswer((_) async => _);
+  void mockDelete() => this.mockDeleteCall().thenAnswer((any) async => any);
   void mockDeleteError() => this.mockDeleteCall().thenThrow(Exception());
 
   When mockSaveCall() => when(() => this.put(any(), any()));
-  void mockSave() => this.mockSaveCall().thenAnswer((_) async => _);
+  void mockSave() => this.mockSaveCall().thenAnswer((any) async => any);
   void mockSaveError() => this.mockSaveCall().thenThrow(Exception());
 }

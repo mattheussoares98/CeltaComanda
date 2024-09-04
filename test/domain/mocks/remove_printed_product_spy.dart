@@ -14,7 +14,7 @@ class RemovePrintedProductSpy extends Mock implements RemovePrintedProduct {
       ));
 
   void mockRemovePrintedProduct() {
-    this.mockRemovePrintedProductsCall().thenAnswer((_) async => _);
+    this.mockRemovePrintedProductsCall().thenAnswer((any) async => any);
   }
 
   void mockError(DomainError error) {

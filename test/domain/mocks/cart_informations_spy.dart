@@ -22,7 +22,7 @@ class CartInformationsSpy extends Mock implements CartInformations {
 
   When mockClearCartCall() => when(() => this.clearCartProducts());
   void mockClearCart() {
-    this.mockClearCartCall().thenAnswer((_) async => _);
+    this.mockClearCartCall().thenAnswer((any) async => any);
   }
 
   void mockClearError() {

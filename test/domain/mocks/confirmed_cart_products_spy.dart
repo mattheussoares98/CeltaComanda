@@ -18,7 +18,7 @@ class ConfirmedCartProductsSpy extends Mock implements ConfirmedCartProducts {
 
   When mockUpdateValueCall() => when(() => this.updateValue(any()));
   void mockUpdateValue() =>
-      this.mockUpdateValueCall().thenAnswer((_) async => _);
+      this.mockUpdateValueCall().thenAnswer((any) async => any);
   void mockUpdateValueError() =>
       this.mockUpdateValueCall().thenThrow(DomainError.unexpected);
 }

@@ -16,10 +16,10 @@ class LocalPrintRequestSpy extends Mock implements LocalPrintRequest {
       this.mockGetMergedPrintedCall().thenThrow(Exception());
 
   When mockAddCall() => when(() => this.add(any()));
-  void mockAdd() => this.mockAddCall().thenAnswer((_) async => _);
+  void mockAdd() => this.mockAddCall().thenAnswer((any) async => any);
   void mockAddError() => this.mockAddCall().thenThrow(Exception());
 
   When mockClearCall() => when(() => this.clear());
-  void mockClear() => this.mockClearCall().thenAnswer((_) async => _);
+  void mockClear() => this.mockClearCall().thenAnswer((any) async => any);
   void mockClearError() => this.mockClearCall().thenThrow(Exception());
 }

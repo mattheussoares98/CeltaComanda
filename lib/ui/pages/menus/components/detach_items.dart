@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
 import '../../../../ui/components/components.dart';
+import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../pages.dart';
 
 class DetachItems extends StatelessWidget {

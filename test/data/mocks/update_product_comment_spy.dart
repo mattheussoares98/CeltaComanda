@@ -16,7 +16,7 @@ class UpdateProductCommentSpy extends Mock implements UpdateProductComment {
       ));
 
   void mockUpdateProductComment() =>
-      this.mockUpdateProductCommentCall().thenAnswer((_) async => _);
+      this.mockUpdateProductCommentCall().thenAnswer((any) async => any);
 
   void mockUpdateProductCommentError(DomainError error) =>
       this.mockUpdateProductCommentCall().thenThrow(error);

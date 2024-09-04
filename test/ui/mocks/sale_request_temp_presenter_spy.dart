@@ -17,14 +17,14 @@ class CartPresenterSpy extends Mock implements CartPresenter {
   CartPresenterSpy() {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
-    when(() => this.getLocalCartProductsData()).thenAnswer((_) async => _);
+    when(() => this.getLocalCartProductsData()).thenAnswer((any) async => any);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
 
-    when(() => this.loadSaleRequest(any())).thenAnswer((_) async => _);
-    when(() => this.clear()).thenAnswer((_) async => _);
+    when(() => this.loadSaleRequest(any())).thenAnswer((any) async => any);
+    when(() => this.clear()).thenAnswer((any) async => any);
   }
 
   void mockLoadSaleRequestTempError(DomainError error) {

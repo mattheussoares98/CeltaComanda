@@ -61,7 +61,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         context, printedProductsPresenter.alertMessageStream);
 
     return PopScope(
-      onPopInvoked: (_) {
+      onPopInvokedWithResult: (didPop, _) {
         printedProductsPresenter.doOnClosePage();
       },
       child: Scaffold(
@@ -85,8 +85,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         printed: printedProductsPresenter.printedProducts!,
                         formKey: formKey,
                         passwordController: passwordController,
-                        personalizedCodeController:
-                            personalizedCodeController,
+                        personalizedCodeController: personalizedCodeController,
                       )
                     : SearchDataByCommandNumber(
                         homePresenter: homePresenter,

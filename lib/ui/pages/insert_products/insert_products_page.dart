@@ -86,7 +86,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
         handleMainError(context, insertProductPresenter.mainErrorStream);
 
     return PopScope(
-      onPopInvoked: (_) {
+      onPopInvokedWithResult: (didPop, _) {
         insertProductPresenter.clearData(
           product: selectedProduct!,
           expansibleGroupFromProductPresenter:

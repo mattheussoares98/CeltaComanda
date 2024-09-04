@@ -28,21 +28,21 @@ class EnterpriseValidationPresenterSpy extends Mock
     when(() => this.enterpriseNameController)
         .thenReturn(enterpriseNameTextEditingController);
 
-    when(() => this.loadLocalData()).thenAnswer((_) async => _);
-    when(() => this.loadRemoteEnterpriseData()).thenAnswer((_) async => _);
+    when(() => this.loadLocalData()).thenAnswer((any) async => any);
+    when(() => this.loadRemoteEnterpriseData()).thenAnswer((any) async => any);
     when(() => this.getEnterpriseAndValidateApiIsAvailable(
           commandEntity: any(named: "commandEntity"),
           homePresenter: any(named: "homePresenter"),
-        )).thenAnswer((_) async => _);
+        )).thenAnswer((any) async => any);
     when(() => this.goToHomePage()).thenAnswer((_) => Get.offNamed(
           PageRoutes.menus,
         ));
     when(() => this.updateEnterpriseController(any()))
-        .thenAnswer((_) async => _);
+        .thenAnswer((any) async => any);
     when(() => this.validateEnterpriseInput(any(),
             updateEnterpriseNameController:
                 any(named: "updateEnterpriseNameController")))
-        .thenAnswer((_) async => _);
+        .thenAnswer((any) async => any);
 
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);

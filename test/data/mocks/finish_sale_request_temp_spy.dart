@@ -15,7 +15,7 @@ class FinishSaleRequestTempSpy extends Mock implements FinishSaleRequestTemp {
       ));
 
   void mockFinishSaleRequestTemp() =>
-      this.mockFinishSaleRequestTempCall().thenAnswer((_) async => _);
+      this.mockFinishSaleRequestTempCall().thenAnswer((any) async => any);
 
   void mockFinishSaleRequestTempError() =>
       this.mockFinishSaleRequestTempCall().thenThrow(DomainError.unexpected);

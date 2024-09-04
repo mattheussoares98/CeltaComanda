@@ -153,7 +153,7 @@ Future<void> _updateCommand({
   );
 
   if (updated) {
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       FocusScope.of(context).unfocus();
       showAlertMessage(
         context,
@@ -183,7 +183,7 @@ Future<void> _openOrBlock({
   );
 
   if (updated) {
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       FocusScope.of(context).unfocus();
       showAlertMessage(
         context,

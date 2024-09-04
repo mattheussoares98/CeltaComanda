@@ -43,7 +43,7 @@ class LogoutButton extends StatelessWidget {
 
         if (isValidCredentials) {
           if (cartPresenter.cartProducts.isNotEmpty) {
-            Future.delayed(Duration.zero, () {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
               notificationDialog(
                   context: context,
                   titleMessage: R.string.clearCart,

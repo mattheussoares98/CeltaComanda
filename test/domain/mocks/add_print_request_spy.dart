@@ -10,7 +10,7 @@ class AddPrintRequestSpy extends Mock implements AddPrintRequest {
 
   When mockAddPrintRequestCall() => when(() => add(any()));
   void mockRemoteAdd() =>
-      this.mockAddPrintRequestCall().thenAnswer((_) async => _);
+      this.mockAddPrintRequestCall().thenAnswer((any) async => any);
   void mockRemoteAddError() =>
       this.mockAddPrintRequestCall().thenThrow(Exception());
 }

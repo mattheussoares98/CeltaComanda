@@ -5,8 +5,8 @@ import 'package:mocktail/mocktail.dart';
 
 class PersistentSpy extends Mock implements Persistent {
   PersistentSpy() {
-    when(() => this.makePersistent()).thenAnswer((_) async => _);
-    when(() => this.makeNotPersistent()).thenAnswer((_) async => _);
-    when(() => this.closeApp()).thenAnswer((_) async => _);
+    when(() => this.makePersistent()).thenAnswer((any) async => any);
+    when(() => this.makeNotPersistent()).thenAnswer((any) async => any);
+    when(() => this.closeApp()).thenAnswer((any) async => any);
   }
 }

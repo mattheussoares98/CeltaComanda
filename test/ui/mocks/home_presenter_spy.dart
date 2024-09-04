@@ -21,8 +21,8 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         .thenAnswer((_) => isFixedCommandNumberMock);
     when(() => this.isGeneratingVersionToRede)
         .thenAnswer((_) => isGeneratingVersionToRedeMock);
-    when(() => this.updateCommandNumber(any())).thenAnswer((_) async => _);
-    when(() => this.updateIsFixedCommandNumber()).thenAnswer((_) async => _);
+    when(() => this.updateCommandNumber(any())).thenAnswer((any) async => any);
+    when(() => this.updateIsFixedCommandNumber()).thenAnswer((any) async => any);
   }
 
   void mockGoToSplashPage() {
@@ -36,7 +36,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   }
 
   void mockLoadCommandData() {
-    mockLoadCommandDataCall().thenAnswer((_) async => _);
+    mockLoadCommandDataCall().thenAnswer((any) async => any);
   }
 
   When mockLoadCommandDataCall() => when(() => this.loadCommandData(

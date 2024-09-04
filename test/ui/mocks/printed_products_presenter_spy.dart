@@ -21,7 +21,7 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
     when(() => this.canCancelProducts)
         .thenAnswer((_) => canCancelProductsController);
-    when(() => this.updateCanCancelProducts(any())).thenAnswer((_) => _);
+    when(() => this.updateCanCancelProducts(any())).thenAnswer((any) => any);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
@@ -29,12 +29,12 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.alertMessageStream)
         .thenAnswer((_) => alertMessageController.stream);
 
-    mockLoadPrintedCall().thenAnswer((_) async => _);
-    when(() => this.clear()).thenAnswer((_) async => _);
+    mockLoadPrintedCall().thenAnswer((any) async => any);
+    when(() => this.clear()).thenAnswer((any) async => any);
     when(() => this.validateUserAndPermissionToCancelProducts(
           personalizedCode: any(named: "personalizedCode"),
           password: any(named: "password"),
-        )).thenAnswer((_) async => _);
+        )).thenAnswer((any) async => any);
   }
 
   void mockRemoveProduct() {
@@ -45,7 +45,7 @@ class PrintedProductsPresenterSpy extends Mock
           expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           homePresenter: any(named: "homePresenter"),
-        )).thenAnswer((_) async => _);
+        )).thenAnswer((any) async => any);
   }
 
   When mockLoadPrintedCall() => when(() => this.loadPrinted(any()));

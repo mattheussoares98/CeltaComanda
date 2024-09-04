@@ -44,8 +44,8 @@ Future<void> notificationDialog({
                           if (onCancelPress != null) {
                             await onCancelPress();
                           }
-
-                          Future.delayed(Duration.zero, () {
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) async {
                             Navigator.of(context).pop();
                           });
                         },

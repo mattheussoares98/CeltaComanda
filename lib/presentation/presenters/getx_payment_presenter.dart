@@ -11,10 +11,12 @@ class GetxPaymentPresenter extends GetxController
     implements PaymentPresenter {
   final Pay pay;
   final CommandInformations commandInformations;
+  final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.commandInformations,
+    required this.finishSaleRequestConcentrador,
   });
 
   @override

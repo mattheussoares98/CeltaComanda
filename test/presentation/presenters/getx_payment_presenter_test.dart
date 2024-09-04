@@ -31,6 +31,7 @@ void main() {
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
+  late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -42,12 +43,14 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
+    finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
   }
 
   initPresenters() {
     sut = GetxPaymentPresenter(
       pay: pay,
       commandInformations: commandInformations,
+      finishSaleRequestConcentrador: finishSaleRequestConcentrador,
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();

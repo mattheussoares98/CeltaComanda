@@ -31,7 +31,7 @@ class CachedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String url =
-        "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${ean ?? plu}.PNG";
+        "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${(ean == null || ean?.isEmpty == true) ? plu : ean}.PNG";
 
     if (_failedUrls.contains(url)) {
       return _defaultImage(

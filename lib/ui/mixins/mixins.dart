@@ -1,5 +1,4 @@
 export './alert_message_manager.dart';
-export './bahavior_manager.dart';
 export './hide_navigation_bar_manager.dart';
 export './keyboard_manager.dart';
 export './loading_manager.dart';

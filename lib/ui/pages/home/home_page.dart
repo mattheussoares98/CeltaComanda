@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with LoadingManager, UIErrorManager, BehaviorManager {
+    with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   ProductsViewModel? _lastShowedSuggestionProduct;
@@ -54,11 +54,6 @@ class _HomePageState extends State<HomePage>
                 expansibleGroupFromProductPresenter,
             homePresenter: homePresenter,
           );
-          if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true) {
-            await persistApp();
-          } else {
-            await notPersistApp();
-          }
         }
       });
     });

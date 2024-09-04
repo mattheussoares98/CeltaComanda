@@ -25,7 +25,7 @@ class MainActivity : FlutterActivity() {
 
     private val channel = "rede_channel"
     private companion object {
-        private const val PAYMENT_REQUEST_CODE = 1
+        private var PAYMENT_REQUEST_CODE: Int = 1
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {

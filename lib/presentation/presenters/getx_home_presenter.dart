@@ -45,6 +45,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     printedProductsPresenter.clear();
     cartPresenter.clear();
     await clearEnterpriseData();
+    await persistent.makeNotPersistent();
   }
 
   @override

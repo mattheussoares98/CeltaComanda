@@ -171,7 +171,17 @@ void main() {
             clear: true,
           )).called(1);
     });
-    test('Should go to SplashPage', () async {
+
+    test('Should make not persist app when go to splash page', () async {
+      await sut.goToSplashPage(
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+      );
+
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
+    test('Should go to CartPage', () async {
       sut.goToCartPage();
 
       verify(() => navigateTo.navigate(
@@ -179,6 +189,7 @@ void main() {
             clear: false,
           )).called(1);
     });
+
     test('Should go to PaymentPage', () async {
       sut.goToPaymentPage();
 

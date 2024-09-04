@@ -54,7 +54,8 @@ class _MenuPageState extends State<MenuPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
@@ -89,13 +90,14 @@ class _MenuPageState extends State<MenuPage>
                               printedProductsPresenter:
                                   printedProductsPresenter,
                               cartPresenter: cartPresenter,
-                              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-                              homePresenter: homePresenter,
+                              expansibleGroupFromProductPresenter:
+                                  expansibleGroupFromProductPresenter,
                             );
                           } else {
                             await menuPresenter.getGroupsAndProducts(
                               commandNumber: "001",
-                              expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+                              expansibleGroupFromProductPresenter:
+                                  expansibleGroupFromProductPresenter,
                             );
                           }
                         },

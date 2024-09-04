@@ -47,7 +47,6 @@ class GetxPaymentPresenter extends GetxController
         commandNumber: commandNumber,
         isOpen: true,
       );
-
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:
@@ -78,7 +77,6 @@ class GetxPaymentPresenter extends GetxController
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
       );
     } on DomainError catch (e) {
       switch (e) {

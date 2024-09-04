@@ -44,7 +44,6 @@ class UpdateMenuButton extends StatelessWidget {
             cartPresenter: cartPresenter,
             expansibleGroupFromProductPresenter:
                 expansibleGroupFromProductPresenter,
-            homePresenter: homePresenter,
           );
         },
       ),

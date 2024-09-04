@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             expansibleGroupFromProductPresenter:
                 expansibleGroupFromProductPresenter,
-            homePresenter: homePresenter,
           );
         }
       });

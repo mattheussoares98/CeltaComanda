@@ -49,7 +49,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Future<void> loadCommandData({
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,

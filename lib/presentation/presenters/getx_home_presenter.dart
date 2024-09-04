@@ -103,7 +103,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> loadCommandData({
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required HomePresenter homePresenter,
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
@@ -151,7 +150,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
 
         await cartPresenter.loadSaleRequest(commandNumber!);
-        await printedProductsPresenter.loadPrinted(homePresenter);
+        await printedProductsPresenter.loadPrinted(this);
 
         final isValid = await commandInformations.isValidDatetime(
             commandNumber: commandNumber!);

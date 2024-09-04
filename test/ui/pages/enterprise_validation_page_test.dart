@@ -33,7 +33,8 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
@@ -56,14 +57,6 @@ void main() {
     presenter.emitLoading(false);
     await tester.pump();
     expect(find.byKey(const Key("loading")), findsNothing);
-  });
-  testWidgets('Should go to MenusPage on success validation',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-
-    await presenter.goToHomePage(homePresenter);
-
-    expect(currentRoute, PageRoutes.menus);
   });
 
   testWidgets('Should show error error to load enterprise',

@@ -30,7 +30,8 @@ class PrintedProductsPresenterSpy extends Mock
         .thenAnswer((_) => alertMessageController.stream);
 
     mockLoadPrintedCall().thenAnswer((any) async => any);
-    when(() => this.clear()).thenAnswer((any) async => any);
+    when(() => this.clear()).thenAnswer((any) => any);
+    when(() => this.doOnClosePage()).thenAnswer((any) => any);
     when(() => this.validateUserAndPermissionToCancelProducts(
           personalizedCode: any(named: "personalizedCode"),
           password: any(named: "password"),
@@ -42,7 +43,8 @@ class PrintedProductsPresenterSpy extends Mock
           saleRequestProductId: any(named: "saleRequestProductId"),
           menuPresenter: any(named: "menuPresenter"),
           cartPresenter: any(named: "cartPresenter"),
-          expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
+          expansibleGroupFromProductPresenter:
+              any(named: "expansibleGroupFromProductPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((any) async => any);

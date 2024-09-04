@@ -276,7 +276,6 @@ void main() {
     test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
         () async {
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -292,7 +291,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -312,7 +310,6 @@ void main() {
 
       localCommandData.mockLoad(fixed);
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -323,7 +320,6 @@ void main() {
 
       localCommandData.mockLoad(notFixed);
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -345,7 +341,6 @@ void main() {
 
       localCommandData.mockLoad(entity1);
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -356,7 +351,6 @@ void main() {
 
       localCommandData.mockLoad(entity2);
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -369,7 +363,6 @@ void main() {
     test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
         () async {
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -383,12 +376,11 @@ void main() {
               expansibleGroupFromProductPresenter)).called(1);
     });
     test(
-        "Should not call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is not fixed command number",
+        "Should not call cartPresenter.loadSaleRequest and loadSaleRequestTemp when is not fixed command number",
         () async {
       localCommandData.mockLoad(notFixedCommandEntity);
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -399,7 +391,14 @@ void main() {
       verifyNever(() => cartPresenter.loadSaleRequest(
             fixedCommandEntity.commandNumber.toString(),
           ));
-      verifyNever(() => printedProductsPresenter.loadPrinted(sut));
+      verifyNever(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: notFixedCommandEntity.commandNumber!,
+        ),
+      );
     });
     test(
         "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
@@ -407,7 +406,6 @@ void main() {
       await sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -430,7 +428,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -449,7 +446,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -467,7 +463,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -486,7 +481,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -505,7 +499,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -523,7 +516,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -535,7 +527,6 @@ void main() {
       await sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -557,7 +548,6 @@ void main() {
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -573,7 +563,6 @@ void main() {
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -589,7 +578,6 @@ void main() {
       await sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -605,7 +593,6 @@ void main() {
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -630,7 +617,6 @@ void main() {
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -642,7 +628,6 @@ void main() {
       await sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -667,7 +652,6 @@ void main() {
       sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -692,7 +676,6 @@ void main() {
       sut.changeIsGeneratingVersionToRede(false);
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -719,7 +702,6 @@ void main() {
       sut.changeIsGeneratingVersionToRede(true);
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
@@ -741,7 +723,6 @@ void main() {
       );
 
       await sut.loadCommandData(
-        homePresenter: sut,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,

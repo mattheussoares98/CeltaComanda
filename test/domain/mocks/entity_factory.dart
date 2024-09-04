@@ -778,9 +778,7 @@ class EntityFactory {
   static CommandEntity makeCommandEntity([bool? isFixedCommandNumber]) =>
       CommandEntity(
         commandNumber: faker.randomGenerator.integer(100).toString(),
-        isFixedCommandNumber: isFixedCommandNumber == true
-            ? true
-            : faker.randomGenerator.boolean(),
+        isFixedCommandNumber: isFixedCommandNumber == true,
       );
 
   static List<ExpansibleGroupFromProductsCompleteEntity>

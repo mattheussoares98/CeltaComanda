@@ -46,7 +46,6 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         cartPresenter: any(named: "cartPresenter"),
         expansibleGroupFromProductPresenter:
             any(named: "expansibleGroupFromProductPresenter"),
-        homePresenter: any(named: "homePresenter"),
       ));
 
   void mockLoadCommandDataError() {

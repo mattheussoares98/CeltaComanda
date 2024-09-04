@@ -4,23 +4,20 @@ import 'package:provider/provider.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class ChildsRadios extends StatefulWidget {
+class ChildsRadios extends StatelessWidget {
   final ProductsViewModel selectedProduct;
   final ProductCompositionViewModel selectedFather;
   final Function() callSetState;
 
-  const ChildsRadios({
+  ChildsRadios({
     required this.selectedProduct,
     required this.selectedFather,
     required this.callSetState,
     super.key,
   });
 
-  @override
-  State<ChildsRadios> createState() => _ChildsRadiosState();
-}
+  final Map<int, bool> _alreadyUpdated = {};
 
-class _ChildsRadiosState extends State<ChildsRadios> {
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
@@ -31,26 +28,32 @@ class _ChildsRadiosState extends State<ChildsRadios> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.selectedFather.childs?.isEmpty == true
+      itemCount: selectedFather.childs?.isEmpty == true
           ? 1
-          : widget.selectedFather.childs!.length,
+          : selectedFather.childs!.length,
       itemBuilder: (context, i) {
+        _alreadyUpdated.putIfAbsent(i, () => false);
+
         ProductCompositionViewModel child;
-        bool hasChilds = widget.selectedFather.childs?.isNotEmpty == true;
+        bool hasChilds = selectedFather.childs?.isNotEmpty == true;
 
         if (hasChilds) {
-          child = widget.selectedFather.childs![i];
+          child = selectedFather.childs![i];
         } else {
-          child = widget.selectedFather;
+          child = selectedFather;
           Future.delayed(Duration.zero, () {
-            _updateSelectedIndex(
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-              insertProductsPresenter: insertProductsPresenter,
-              value: i,
-              selectedFather: widget.selectedFather,
-              selectedProduct: widget.selectedProduct,
-            );
+            if (child.IsOptionalItem == "false" &&
+                _alreadyUpdated[i] == false) {
+              _alreadyUpdated[i] = true;
+              _updateSelectedIndex(
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
+                insertProductsPresenter: insertProductsPresenter,
+                value: i,
+                selectedFather: selectedFather,
+                selectedProduct: selectedProduct,
+              );
+            }
           });
         }
 
@@ -61,10 +64,10 @@ class _ChildsRadiosState extends State<ChildsRadios> {
                   expansibleGroupFromProductPresenter,
               insertProductsPresenter: insertProductsPresenter,
               value: i,
-              selectedFather: widget.selectedFather,
-              selectedProduct: widget.selectedProduct,
+              selectedFather: selectedFather,
+              selectedProduct: selectedProduct,
             );
-            widget.callSetState();
+            callSetState();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -72,19 +75,19 @@ class _ChildsRadiosState extends State<ChildsRadios> {
               const SizedBox(width: 5),
               Radio<int>(
                 value: i,
-                groupValue: widget.selectedFather.indexOfSelectedChild,
+                groupValue: selectedFather.indexOfSelectedChild,
                 visualDensity: VisualDensity.compact,
-                toggleable: widget.selectedFather.IsOptionalItem == "true",
+                toggleable: selectedFather.IsOptionalItem == "true",
                 onChanged: (int? value) {
                   _updateSelectedIndex(
                     expansibleGroupFromProductPresenter:
                         expansibleGroupFromProductPresenter,
                     insertProductsPresenter: insertProductsPresenter,
                     value: value,
-                    selectedFather: widget.selectedFather,
-                    selectedProduct: widget.selectedProduct,
+                    selectedFather: selectedFather,
+                    selectedProduct: selectedProduct,
                   );
-                  widget.callSetState();
+                  callSetState();
                 },
               ),
               if (child.ChildName != null)

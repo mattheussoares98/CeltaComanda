@@ -14,7 +14,7 @@ void showLargeImage({
   required MenuPresenter menuPresenter,
   String? productName,
 }) {
-  AnimatedAlertDialog.open(
+  PersonalizedDialogPage.open(
       context: context,
       page: Padding(
         padding: const EdgeInsets.all(8.0),

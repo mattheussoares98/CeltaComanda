@@ -11,7 +11,7 @@ class TitleAppbar extends StatelessWidget {
   });
 
   void doOnTapOrLongPress(BuildContext context) {
-    AnimatedAlertDialog.open(
+    PersonalizedDialogPage.open(
       context: context,
       page: const TableConfigurationsPage(),
     );

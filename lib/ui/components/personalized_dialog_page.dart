@@ -1,9 +1,8 @@
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 
-import 'components.dart';
+import '../../../ui/helpers/sizes/sizes.dart';
 
-class AnimatedAlertDialog {
+class PersonalizedDialogPage {
   static bool isOpen = false;
 
   static Future<void> open({
@@ -23,7 +22,7 @@ class AnimatedAlertDialog {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Expanded(
-                flex: hasMinWidth(context) ? 1 : 2,
+                flex: 1,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pop();
@@ -34,13 +33,13 @@ class AnimatedAlertDialog {
                     color: Colors.transparent,
                     child: const Align(
                       alignment: Alignment.topCenter,
-                      child: ClosePageIconButton(),
+                      child: _ClosePageIconButton(),
                     ),
                   ),
                 ),
               ),
               Expanded(
-                flex: 9,
+                flex: hasMinWidth(context) ? 9 : 11,
                 child: AnimatedDialog(page: page, actions: actions),
               ),
             ],
@@ -110,6 +109,29 @@ class AnimatedDialogState extends State<AnimatedDialog>
         content: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: widget.page,
+        ),
+      ),
+    );
+  }
+}
+
+class _ClosePageIconButton extends StatelessWidget {
+  const _ClosePageIconButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      icon: const CircleAvatar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        child: FittedBox(
+          child: Icon(
+            Icons.close,
+            size: 40,
+          ),
         ),
       ),
     );

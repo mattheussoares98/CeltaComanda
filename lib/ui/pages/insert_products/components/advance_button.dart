@@ -81,7 +81,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      AnimatedAlertDialog.open(
+      PersonalizedDialogPage.open(
         context: context,
         page: const CartPage(),
       );

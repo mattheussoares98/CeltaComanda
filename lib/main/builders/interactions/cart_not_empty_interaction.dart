@@ -20,7 +20,7 @@ class CartNotEmptyInteraction {
 
   static void restartTime() {
     _alertMessageIsOpen = false;
-    if (!AnimatedAlertDialog.isOpen && _alertMessageIsOpen == false) {
+    if (!PersonalizedDialogPage.isOpen && _alertMessageIsOpen == false) {
       _timer.cancel();
       _timer = Timer.periodic(_duration, (_) => _showCartNotEmptyMessage());
     }
@@ -29,7 +29,7 @@ class CartNotEmptyInteraction {
   static bool _alertMessageIsOpen = false;
 
   static Future<void> _showCartNotEmptyMessage() async {
-    if (AnimatedAlertDialog.isOpen ||
+    if (PersonalizedDialogPage.isOpen ||
         _alertMessageIsOpen ||
         cartPresenter.cartProducts.isEmpty) {
       return;
@@ -41,7 +41,7 @@ class CartNotEmptyInteraction {
       (route) => route.isFirst,
     );
 
-    await AnimatedAlertDialog.open(
+    await PersonalizedDialogPage.open(
       context: NavigatorKey.navigatorKey.currentState!.context,
       actions: [
         Padding(
@@ -52,7 +52,7 @@ class CartNotEmptyInteraction {
               onPressed: () async {
                 Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
                     .pop();
-                await AnimatedAlertDialog.open(
+                await PersonalizedDialogPage.open(
                     context: NavigatorKey.navigatorKey.currentState!.context,
                     page: const CartPage());
                 restartTime();

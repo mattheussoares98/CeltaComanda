@@ -69,4 +69,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   void updateSelectedPeoples(int? value);
   void updateSelectedCommand(int value);
   void updateSelectedSeller(SellersViewModel? seller);
+
+  Future<void> closeApp();
 }

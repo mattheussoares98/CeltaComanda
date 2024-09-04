@@ -18,6 +18,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadSellers loadSellers;
+  final Persistent persistent;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -28,6 +29,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.updateSaleRequestTemp,
     required this.loadSaleRequestTemp,
     required this.loadSellers,
+    required this.persistent,
   });
 
   @override
@@ -109,6 +111,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
+      if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true) {
+        await persistent.makePersistent();
+      } else {
+        await persistent.makeNotPersistent();
+      }
       CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand != null) {
@@ -403,5 +410,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   void updateSelectedSeller(SellersViewModel? seller) {
     _selectedSeller = seller;
+  }
+
+  @override
+  Future<void> closeApp() async {
+    await persistent.closeApp();
   }
 }

@@ -31,6 +31,7 @@ void main() {
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
+  late PersistentSpy persistent;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -63,6 +64,7 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSellers: loadSellers,
+      persistent: persistent,
     );
   }
 
@@ -75,6 +77,7 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSellers = LoadSellersSpy();
     commandInformations = CommandInformationsSpy();
+    persistent = PersistentSpy();
   }
 
   void initMocks() {
@@ -661,6 +664,55 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
+
+    test(
+        "Should call persist app when persistApp property of enterprise is true",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: true,
+      );
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => persistent.makePersistent()).called(1);
+    });
+    test(
+        "Should call NOT persist app when persistApp property of enterprise is true",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: false,
+      );
+
+      await sut.loadCommandData(
+        homePresenter: sut,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
   });
 
   group("Update command data", () {
@@ -1138,6 +1190,14 @@ void main() {
       sut.updateSelectedCommand(newValue);
 
       expect(sut.selectedCommand, newValue);
+    });
+  });
+
+  group("Close APP", () {
+    test("Should call persistent.closeApp", () async {
+      await sut.closeApp();
+
+      verify(() => persistent.closeApp()).called(1);
     });
   });
 }

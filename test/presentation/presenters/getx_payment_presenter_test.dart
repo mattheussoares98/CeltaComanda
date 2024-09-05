@@ -312,6 +312,16 @@ void main() {
       verify(() => alreadyPaid.update(true)).called(1);
       verifyNever(() => alreadyPaid.update(false));
     });
+    test('Should update commandAlreadyPaid to false in success', () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      expect(sut.commandAlreadyPaid, false);
+    });
   });
 
   group("Get total value", () {

@@ -62,6 +62,7 @@ class GetxPaymentPresenter extends GetxController
       );
 
       await alreadyPaid.update(false);
+      _commandAlreadyPaid = false;
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:

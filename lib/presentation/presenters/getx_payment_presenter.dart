@@ -117,7 +117,7 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> tryPayAgain(int commandNumber) async {
+  Future<bool> tryPayAgain(int commandNumber) async {
     mainError = null;
     isLoading = true;
     try {
@@ -128,8 +128,10 @@ class GetxPaymentPresenter extends GetxController
       );
 
       await alreadyPaid.update(false);
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
     } finally {
       isLoading = false;
     }

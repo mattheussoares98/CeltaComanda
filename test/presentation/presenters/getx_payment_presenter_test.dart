@@ -468,5 +468,18 @@ void main() {
 
       verify(() => alreadyPaid.update(false)).called(1);
     });
+    test("Should return true on success", () async {
+      final value =
+          await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+
+      expect(value, true);
+    });
+    test("Should return false on error", () async {
+      finishSaleRequestConcentrador.mockFinishError();
+      final value =
+          await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+
+      expect(value, false);
+    });
   });
 }

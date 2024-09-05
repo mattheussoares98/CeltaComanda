@@ -26,5 +26,5 @@ abstract class PaymentPresenter implements Listenable {
 
   Future<bool> getAlreadyPaid();
 
-  Future<void> tryPayAgain(int commandNumber);
+  Future<bool> tryPayAgain(int commandNumber);
 }

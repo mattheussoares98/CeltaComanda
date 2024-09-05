@@ -13,7 +13,8 @@ abstract class PaymentPresenter implements Listenable {
     required double longAmountValue,
     required int portionQuantity,
     required PaymentMode paymentMode,
-    required String commandNumber,
+    required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   });
 
   Future<void> getTotalValue({

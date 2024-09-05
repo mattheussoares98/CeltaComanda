@@ -27,13 +27,14 @@ class GetxPaymentPresenter extends GetxController
     required double longAmountValue,
     required int portionQuantity,
     required PaymentMode paymentMode,
-    required String commandNumber,
+    required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     mainError = null;
     isLoading = true;
     try {
       bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: commandNumber,
+        commandNumber: homePresenter.commandNumber!,
       );
 
       if (!isValid) {
@@ -52,18 +53,20 @@ class GetxPaymentPresenter extends GetxController
       _commandAlreadyPaid = true;
 
       await commandInformations.openOrBlockade(
-        commandNumber: commandNumber,
+        commandNumber: homePresenter.commandNumber!,
         isOpen: true,
       );
 
       await finishSaleRequestConcentrador.finish(
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         pdvNumber: 100,
-        commandNumber: commandNumber.toInt(),
+        commandNumber: homePresenter.commandNumber!.toInt(),
       );
 
       await alreadyPaid.update(false);
       _commandAlreadyPaid = false;
+
+      await printedProductsPresenter.loadPrinted(homePresenter);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:

@@ -51,7 +51,8 @@ class PaymentButtons extends StatelessWidget {
                         .toDouble(),
                     portionQuantity: 1,
                     paymentMode: PaymentMode.pix,
-                    commandNumber: homePresenter.commandNumber.toString(),
+                    homePresenter: homePresenter,
+                    printedProductsPresenter: printedProductsPresenter,
                   );
                 },
                 child: Text(
@@ -66,12 +67,14 @@ class PaymentButtons extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   await paymentPresenter.doPayment(
-                      longAmountValue: printedProductsPresenter
-                          .printedProducts!.TotalLiquid
-                          .toDouble(),
-                      portionQuantity: 1,
-                      paymentMode: PaymentMode.debit,
-                      commandNumber: homePresenter.commandNumber.toString());
+                    longAmountValue: printedProductsPresenter
+                        .printedProducts!.TotalLiquid
+                        .toDouble(),
+                    portionQuantity: 1,
+                    paymentMode: PaymentMode.debit,
+                    homePresenter: homePresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                  );
                 },
                 child: Text(
                   R.string.debit.toUpperCase(),
@@ -90,7 +93,8 @@ class PaymentButtons extends StatelessWidget {
                         .toDouble(),
                     portionQuantity: 1,
                     paymentMode: PaymentMode.credit,
-                    commandNumber: homePresenter.commandNumber.toString(),
+                    homePresenter: homePresenter,
+                    printedProductsPresenter: printedProductsPresenter,
                   );
                 },
                 child: Text(

@@ -124,28 +124,30 @@ class _PortraitInsertProductsPageBodyState
                               ),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AdvanceButton(
-                                totalPrice: widget.totalLiquid,
-                                quantity: insertProductPresenter
-                                    .totalProductsQuantity,
-                                selectedProduct: widget.selectedProduct,
-                                leftSelectedIndex: widget.indexOfAtualOption,
-                                atualOption: atualOption,
-                              ),
-                              Text(
-                                widget.totalLiquid
-                                    .toString()
-                                    .toBrazilianNumber()
-                                    .addBrazilianCoin(),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: getStringSize(context) * 1.5,
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AdvanceButton(
+                                  totalPrice: widget.totalLiquid,
+                                  quantity: insertProductPresenter
+                                      .totalProductsQuantity,
+                                  selectedProduct: widget.selectedProduct,
+                                  leftSelectedIndex: widget.indexOfAtualOption,
+                                  atualOption: atualOption,
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  widget.totalLiquid
+                                      .toString()
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: getStringSize(context) * 1.5,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -182,17 +184,19 @@ class _PortraitInsertProductsPageBodyState
                         padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1,
                         ),
-                        child: UpdateQuantity(
-                          quantity:
-                              insertProductPresenter.totalProductsQuantity,
-                          reduceQuantity: () {
-                            insertProductPresenter
-                                .updateTotalProductsQuantity(false);
-                          },
-                          addQuantity: () {
-                            insertProductPresenter
-                                .updateTotalProductsQuantity(true);
-                          },
+                        child: FittedBox(
+                          child: UpdateQuantity(
+                            quantity:
+                                insertProductPresenter.totalProductsQuantity,
+                            reduceQuantity: () {
+                              insertProductPresenter
+                                  .updateTotalProductsQuantity(false);
+                            },
+                            addQuantity: () {
+                              insertProductPresenter
+                                  .updateTotalProductsQuantity(true);
+                            },
+                          ),
                         ),
                       ),
                   ],

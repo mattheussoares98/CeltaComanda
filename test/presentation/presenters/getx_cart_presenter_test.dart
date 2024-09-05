@@ -31,6 +31,7 @@ void main() {
   late CartInformationsSpy cartInformations;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
+  late AlreadyPaidSpy alreadyPaid;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
@@ -56,6 +57,7 @@ void main() {
     cartInformations = CartInformationsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
+    alreadyPaid = AlreadyPaidSpy();
   }
 
   void initPresenters() {
@@ -74,6 +76,7 @@ void main() {
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
       commandInformations: commandInformations,
+      alreadyPaid: alreadyPaid,
     );
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();

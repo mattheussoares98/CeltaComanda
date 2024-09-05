@@ -12,4 +12,5 @@ CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       cartInformations: makeLocalCartInformations(),
       barcodeScanner: makeCameraBarcodeScanner(),
       commandInformations: makeRemoteCommandInformations(),
+      alreadyPaid: makeLocalAlreadyPaid(),
     );

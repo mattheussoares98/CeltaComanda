@@ -1700,6 +1700,20 @@ void main() {
         ),
       );
     });
+
+    test("Should call alreadyPaid on saveProducts", () async {
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
+      );
+
+      verify(() => alreadyPaid.verify()).called(1);
+    });
   });
 
   group("Confirmed combox products", () {

@@ -408,6 +408,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     addNewPrintRequestInFirebase();
 
     try {
+      bool value = await alreadyPaid.verify();
+
       String informedCommandNumber;
 
       if (homePresenter.isFixedCommandNumber) {

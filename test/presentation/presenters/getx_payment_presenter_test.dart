@@ -436,4 +436,37 @@ void main() {
       expect(result, false);
     });
   });
+
+  group("try pay again", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.tryPaiAgain(commandNumber.toInt());
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      finishSaleRequestConcentrador.mockFinishError();
+      await sut.tryPaiAgain(commandNumber.toInt());
+    });
+    test("Should call finishSaleRequestConcentrador with correct values",
+        () async {
+      await sut.tryPaiAgain(homePresenter.commandNumberMock!.toInt());
+
+      verify(() => finishSaleRequestConcentrador.finish(
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            pdvNumber: 100,
+            commandNumber: homePresenter.commandNumberMock!.toInt(),
+          )).called(1);
+    });
+    test("Should update already paid to false in success", () async {
+      await sut.tryPaiAgain(homePresenter.commandNumberMock!.toInt());
+
+      verify(() => alreadyPaid.update(false)).called(1);
+    });
+  });
 }

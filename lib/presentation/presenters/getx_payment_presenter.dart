@@ -115,4 +115,23 @@ class GetxPaymentPresenter extends GetxController
       return false;
     }
   }
+
+  @override
+  Future<void> tryPaiAgain(int commandNumber) async {
+    mainError = null;
+    isLoading = true;
+    try {
+      await finishSaleRequestConcentrador.finish(
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        pdvNumber: 100,
+        commandNumber: commandNumber.toInt(),
+      );
+
+      await alreadyPaid.update(false);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

@@ -84,9 +84,13 @@ class _PaymentPageState extends State<PaymentPage>
           if (!getShowSearchCommand(printedProductsPresenter))
             const PaymentButtons(),
           if (_alreadyPaid)
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: LiquidateSaleRequest(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: LiquidateSaleRequest(
+                updateAlreadyPaidToTrue: () async {
+                  await _getAlreadyPaid(paymentPresenter);
+                },
+              ),
             ),
           if (getShowSearchCommand(printedProductsPresenter) && !_alreadyPaid)
             SearchDataByCommandNumber(

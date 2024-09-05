@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/payment/payment.dart';
 import '../../../infra/helpers/helperts.dart';
@@ -17,9 +15,7 @@ class LocalAlreadyPaid implements AlreadyPaid {
       if (value == null) {
         return false;
       } else {
-        final bool alreadyPaid = jsonDecode(value);
-
-        return alreadyPaid;
+        return value;
       }
     } catch (e) {
       throw DomainError.unexpected;

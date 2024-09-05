@@ -37,6 +37,7 @@ class _PaymentPageState extends State<PaymentPage>
 
   Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {
     _alreadyPaid = await paymentPresenter.getAlreadyPaid();
+    setState(() {});
   }
 
   bool getShowSearchCommand(PrintedProductsPresenter printedProductsPresenter) {
@@ -78,11 +79,16 @@ class _PaymentPageState extends State<PaymentPage>
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (!getShowSearchCommand(printedProductsPresenter))
             const PaymentButtons(),
-          if (_alreadyPaid) const LiquidateSaleRequest(),
-          if (getShowSearchCommand(printedProductsPresenter))
+          if (_alreadyPaid)
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: LiquidateSaleRequest(),
+            ),
+          if (getShowSearchCommand(printedProductsPresenter) && !_alreadyPaid)
             SearchDataByCommandNumber(
               homePresenter: homePresenter,
               emptyMessage: homePresenter.commandNumber != null

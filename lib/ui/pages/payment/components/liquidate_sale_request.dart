@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 class LiquidateSaleRequest extends StatelessWidget {
@@ -7,12 +8,23 @@ class LiquidateSaleRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextButton(
-          onPressed: () async {},
-          child: const Text("Liquidar pedido"),
+        Text(
+          "Essa comanda foi paga mas deu erro pra finalizar o pedido dela. Clique no botão para tentar finalizar novamente",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: getStringSize(context),
+          ),
         ),
-        const Text(
-            "Essa comanda foi paga mas deu erro pra finalizar o pedido dela. Clique no botão para tentar finalizar novamente"),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () async {},
+          child: Text(
+            "Liquidar pedido",
+            style: TextStyle(
+              fontSize: getStringSize(context) * 1.4,
+            ),
+          ),
+        ),
       ],
     );
   }

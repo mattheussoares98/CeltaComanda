@@ -340,6 +340,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         isOpen: isOpen,
       );
 
+      await alreadyPaid.update(false);
+
       return true;
     } on DomainError catch (e) {
       switch (e) {

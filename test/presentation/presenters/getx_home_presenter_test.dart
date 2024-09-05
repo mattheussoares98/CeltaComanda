@@ -1179,6 +1179,16 @@ void main() {
 
       expect(value, false);
     });
+    test("Should update already paid to false", () async {
+      await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
+      );
+
+      verify(() => alreadyPaid.update(false)).called(1);
+    });
   });
 
   group("Update selected peoples", () {

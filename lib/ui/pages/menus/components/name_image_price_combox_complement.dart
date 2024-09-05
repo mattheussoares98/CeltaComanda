@@ -33,14 +33,8 @@ class NameImagePriceComboxAndComplement extends StatelessWidget {
         itemWidth: itemWidth,
       );
     } else {
-      return _portraitNameImagePluAndCombox(
-        itemHeight: itemHeight,
-        itemWidth: itemWidth,
-        context: context,
+      return PortraitNameImagePriceComboxComplement(
         productsViewModel: productsViewModel,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
       );
     }
   }
@@ -89,48 +83,6 @@ Widget _landScapeNameImagePluAndCombox({
                     _namePriceComboxAndComplement(productsViewModel, context)),
           ],
         ),
-      ),
-    ],
-  );
-}
-
-Widget _portraitNameImagePluAndCombox({
-  required BuildContext context,
-  required ProductsViewModel productsViewModel,
-  required MenuPresenter menuPresenter,
-  required ExpansibleGroupFromProductPresenter
-      expansibleGroupFromProductPresenter,
-  required double itemHeight,
-  required double itemWidth,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      Expanded(
-        flex: 2,
-        child: GestureDetector(
-          onTap: () {
-            _onTapImage(
-              context: context,
-              productsViewModel: productsViewModel,
-              menuPresenter: menuPresenter,
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-            );
-          },
-          child: ImageWidget(
-            ean: productsViewModel.EanCode,
-            plu: productsViewModel.PriceLookupCode,
-            height: itemHeight,
-            width: itemWidth * 1.15,
-            selectedProduct: productsViewModel,
-          ),
-        ),
-      ),
-      Expanded(
-        flex: 3,
-        child: _namePriceComboxAndComplement(productsViewModel, context),
       ),
     ],
   );

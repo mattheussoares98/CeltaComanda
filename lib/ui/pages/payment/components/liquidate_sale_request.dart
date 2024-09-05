@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import '../../pages.dart';
 
 class LiquidateSaleRequest extends StatelessWidget {
-  final Future<void> Function() updateAlreadyPaidToTrue;
+  final Function() callSetState;
   const LiquidateSaleRequest({
-    required this.updateAlreadyPaidToTrue,
+    required this.callSetState,
     super.key,
   });
 
@@ -28,13 +28,10 @@ class LiquidateSaleRequest extends StatelessWidget {
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () async {
-            final success = await paymentPresenter.tryPayAgain(
+            await paymentPresenter.tryPayAgain(
               homePresenter.commandNumber!.toInt(),
             );
-
-            if (success) {
-              await updateAlreadyPaidToTrue();
-            }
+            callSetState();
           },
           child: Text(
             "Liquidar pedido",

@@ -25,7 +25,7 @@ abstract class PaymentPresenter implements Listenable {
         expansibleGroupFromProductPresenter,
   });
 
-  Future<bool> getAlreadyPaid();
+  Future<void> getAndUpdateAlreadyPaidCommand();
 
-  Future<bool> tryPayAgain(int commandNumber);
+  Future<void> tryPayAgain(int commandNumber);
 }

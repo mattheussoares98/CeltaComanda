@@ -448,16 +448,20 @@ void main() {
   });
 
   group("Get already paid", () {
-    test("Should return true", () async {
-      final result = await sut.getAlreadyPaid();
+    test(
+        "Should update commandAlreadyPaid to true if getAndUpdateAlreadyPaidCommand return true",
+        () async {
+      await sut.getAndUpdateAlreadyPaidCommand();
 
-      expect(result, true);
+      expect(sut.commandAlreadyPaid, true);
     });
-    test("Should return false", () async {
+    test(
+        "Should update commandAlreadyPaid to false if getAndUpdateAlreadyPaidCommand return false",
+        () async {
       alreadyPaid.mockVerify(false);
-      final result = await sut.getAlreadyPaid();
+      await sut.getAndUpdateAlreadyPaidCommand();
 
-      expect(result, false);
+      expect(sut.commandAlreadyPaid, false);
     });
   });
 
@@ -492,23 +496,18 @@ void main() {
 
       verify(() => alreadyPaid.update(false)).called(1);
     });
-    test("Should return true on success", () async {
-      final value =
-          await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
 
-      expect(value, true);
-    });
-    test("Should return false on error", () async {
-      finishSaleRequestConcentrador.mockFinishError();
-      final value =
-          await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
-
-      expect(value, false);
-    });
-    test("Should update _commandAlreadyPaid to false in success", () async {
+    test("Should update commandAlreadyPaid to false in success", () async {
       await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
 
       expect(sut.commandAlreadyPaid, false);
+    });
+
+    test("Should update commandAlreadyPaid to true in error", () async {
+      finishSaleRequestConcentrador.mockFinishError();
+      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+
+      expect(sut.commandAlreadyPaid, true);
     });
   });
 }

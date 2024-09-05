@@ -35,7 +35,7 @@ class _PaymentPageState extends State<PaymentPage>
   }
 
   Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {
-    await paymentPresenter.getAlreadyPaid();
+    await paymentPresenter.getAndUpdateAlreadyPaidCommand();
     setState(() {});
   }
 
@@ -86,8 +86,8 @@ class _PaymentPageState extends State<PaymentPage>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: LiquidateSaleRequest(
-                updateAlreadyPaidToTrue: () async {
-                  await _getAlreadyPaid(paymentPresenter);
+                callSetState: () {
+                  // setState(() {});
                 },
               ),
             ),

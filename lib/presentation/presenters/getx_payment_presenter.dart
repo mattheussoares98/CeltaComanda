@@ -109,17 +109,16 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<bool> getAlreadyPaid() async {
+  Future<void> getAndUpdateAlreadyPaidCommand() async {
     try {
-      return await alreadyPaid.verify();
+      _commandAlreadyPaid = await alreadyPaid.verify();
     } catch (e) {
       mainError = UIError.unexpected;
-      return false;
     }
   }
 
   @override
-  Future<bool> tryPayAgain(int commandNumber) async {
+  Future<void> tryPayAgain(int commandNumber) async {
     mainError = null;
     isLoading = true;
     try {
@@ -131,10 +130,9 @@ class GetxPaymentPresenter extends GetxController
 
       await alreadyPaid.update(false);
       _commandAlreadyPaid = false;
-      return true;
     } catch (e) {
       mainError = UIError.unexpected;
-      return false;
+      _commandAlreadyPaid = true;
     } finally {
       isLoading = false;
     }

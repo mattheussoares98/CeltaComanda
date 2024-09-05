@@ -18,9 +18,12 @@ class RemoteFinishSaleRequestConcentrador
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
+      String pdvNumberWithThreeNumbers = pdvNumber.toString().padLeft(3, "0");
+      String commandNumberWithThreeNumbers = commandNumber.toString().padLeft(3, "0");
+
       final response = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&pdvnumber=$pdvNumber&personalizedCode=$commandNumber",
+            "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&pdvnumber=$pdvNumberWithThreeNumbers&personalizedCode=$commandNumberWithThreeNumbers",
         method: "put",
         headers: headers,
       );

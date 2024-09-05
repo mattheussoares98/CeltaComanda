@@ -39,11 +39,6 @@ class _PaymentPageState extends State<PaymentPage>
     setState(() {});
   }
 
-  bool getShowSearchCommand(PrintedProductsPresenter printedProductsPresenter) {
-    return printedProductsPresenter.printedProducts == null ||
-        printedProductsPresenter.printedProducts!.TotalLiquid.toDouble() == 0;
-  }
-
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
@@ -80,19 +75,23 @@ class _PaymentPageState extends State<PaymentPage>
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (!getShowSearchCommand(printedProductsPresenter))
+          if (printedProductsPresenter.printedProducts != null &&
+              !paymentPresenter.commandAlreadyPaid)
             const PaymentButtons(),
           if (paymentPresenter.commandAlreadyPaid)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: LiquidateSaleRequest(
                 callSetState: () {
-                  // setState(() {});
+                  setState(() {});
                 },
               ),
             ),
-          if (getShowSearchCommand(printedProductsPresenter) &&
-              !paymentPresenter.commandAlreadyPaid)
+          if (printedProductsPresenter.printedProducts == null ||
+              printedProductsPresenter.printedProducts!.TotalLiquid
+                          .toDouble() ==
+                      0 &&
+                  !paymentPresenter.commandAlreadyPaid)
             SearchDataByCommandNumber(
               homePresenter: homePresenter,
               emptyMessage: homePresenter.commandNumber != null

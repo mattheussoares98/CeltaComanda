@@ -49,6 +49,7 @@ class GetxPaymentPresenter extends GetxController
       );
 
       await alreadyPaid.update(true);
+      _commandAlreadyPaid = true;
 
       await commandInformations.openOrBlockade(
         commandNumber: commandNumber,

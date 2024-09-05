@@ -322,6 +322,20 @@ void main() {
 
       expect(sut.commandAlreadyPaid, false);
     });
+    test(
+        'Should update commandAlreadyPaid to true in error to finishSaleRequestConcentrador',
+        () async {
+      finishSaleRequestConcentrador.mockFinishError();
+
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      expect(sut.commandAlreadyPaid, true);
+    });
   });
 
   group("Get total value", () {

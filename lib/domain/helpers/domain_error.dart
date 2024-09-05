@@ -3,6 +3,7 @@ enum DomainError {
   addComment,
   barcodeNotRead,
   blockedCommand,
+  commandAlreadyPaid,
   commandNotAvailable,
   enterpriseOrUrlNotFound,
   invalidCombox,

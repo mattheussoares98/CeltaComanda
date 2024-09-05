@@ -48,6 +48,8 @@ class GetxPaymentPresenter extends GetxController
         ),
       );
 
+      await alreadyPaid.update(true);
+
       await commandInformations.openOrBlockade(
         commandNumber: commandNumber,
         isOpen: true,
@@ -58,6 +60,8 @@ class GetxPaymentPresenter extends GetxController
         pdvNumber: 100,
         commandNumber: commandNumber.toInt(),
       );
+
+      await alreadyPaid.update(false);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:

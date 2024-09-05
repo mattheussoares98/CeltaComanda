@@ -286,6 +286,17 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
     });
+    test('Should call alreadyPaid.update correctly in success', () async {
+      await sut.doPayment(
+        commandNumber: homePresenter.commandNumberMock!,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verify(() => alreadyPaid.update(true)).called(1);
+      verify(() => alreadyPaid.update(false)).called(1);
+    });
   });
 
   group("Get total value", () {

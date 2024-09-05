@@ -114,7 +114,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
     try {
       if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
-          !_isGeneratingVersionToRede) {
+          !_isGeneratingVersionToTablet) {
         await persistent.makePersistent();
       } else {
         await persistent.makeNotPersistent();
@@ -385,9 +385,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToRede => true;
 
-  bool _isGeneratingVersionToRede = false;
+  bool _isGeneratingVersionToTablet = false;
   @override
-  bool get isGeneratingVersionToTablet => _isGeneratingVersionToRede;
+  bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 
   List<SellersViewModel> _sellers = [];
   @override
@@ -427,6 +427,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   void changeIsGeneratingVersionToRede(bool value) {
-    _isGeneratingVersionToRede = value;
+    _isGeneratingVersionToTablet = value;
   }
 }

@@ -7,4 +7,5 @@ PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       pay: makeRedePay(),
       commandInformations: makeRemoteCommandInformations(),
       finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
+      alreadyPaid: makeLocalAlreadyPaid(),
     );

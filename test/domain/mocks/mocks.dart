@@ -1,4 +1,5 @@
 export './add_print_request_spy.dart';
+export './already_paid_spy.dart';
 export './barcode_scanner_spy.dart';
 export 'cart_informations_spy.dart';
 export './clear_sale_request_temp_spy.dart';

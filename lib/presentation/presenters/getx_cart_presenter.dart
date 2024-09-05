@@ -408,7 +408,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     addNewPrintRequestInFirebase();
 
     try {
-      bool value = await alreadyPaid.verify();
+      bool paid = await alreadyPaid.verify();
+
+      if (paid) {
+        throw DomainError.commandAlreadyPaid;
+      }
 
       String informedCommandNumber;
 
@@ -518,6 +522,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       switch (e) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
+        case DomainError.commandAlreadyPaid:
+          mainError = UIError.commandAlreadyPaid;
         case DomainError.barcodeNotRead:
           mainError = UIError.barcodeNotRead;
         case DomainError.blockedCommand:

@@ -176,6 +176,7 @@ void main() {
     cartInformations.mockSaveCart([cartProductViewModel]);
     cartInformations.mockGetCart([cartProductViewModel]);
     barcodeScanner.mockBarcodeScanner(commandNumber);
+    alreadyPaid.mockVerify(false);
   }
 
   setUp(() {
@@ -1713,6 +1714,26 @@ void main() {
       );
 
       verify(() => alreadyPaid.verify()).called(1);
+    });
+
+    test("Should emit correct values on command already paid", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.commandAlreadyPaid]),
+      );
+
+      alreadyPaid.mockVerify(true);
+
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock,
+      );
     });
   });
 

@@ -422,4 +422,18 @@ void main() {
       //     )).called(1);
     });
   });
+
+  group("Get already paid", () {
+    test("Should return true", () async {
+      final result = await sut.getAlreadyPaid();
+
+      expect(result, true);
+    });
+    test("Should return false", () async {
+      alreadyPaid.mockVerify(false);
+      final result = await sut.getAlreadyPaid();
+
+      expect(result, false);
+    });
+  });
 }

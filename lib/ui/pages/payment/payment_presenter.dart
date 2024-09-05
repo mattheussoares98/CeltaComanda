@@ -23,4 +23,6 @@ abstract class PaymentPresenter implements Listenable {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   });
+
+  Future<bool> getAlreadyPaid();
 }

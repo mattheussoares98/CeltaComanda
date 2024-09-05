@@ -105,4 +105,14 @@ class GetxPaymentPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<bool> getAlreadyPaid() async {
+    try {
+      return await alreadyPaid.verify();
+    } catch (e) {
+      mainError = UIError.unexpected;
+      return false;
+    }
+  }
 }

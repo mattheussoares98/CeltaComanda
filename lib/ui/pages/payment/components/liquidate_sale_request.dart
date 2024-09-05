@@ -14,6 +14,8 @@ class LiquidateSaleRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
@@ -29,7 +31,8 @@ class LiquidateSaleRequest extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             await paymentPresenter.tryPayAgain(
-              homePresenter.commandNumber!.toInt(),
+              printedProductsPresenter: printedProductsPresenter,
+              homePresenter: homePresenter,
             );
             callSetState();
           },

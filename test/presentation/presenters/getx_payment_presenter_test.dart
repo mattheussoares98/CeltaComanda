@@ -470,7 +470,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.tryPayAgain(commandNumber.toInt());
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -478,11 +481,17 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       finishSaleRequestConcentrador.mockFinishError();
-      await sut.tryPayAgain(commandNumber.toInt());
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
     });
     test("Should call finishSaleRequestConcentrador with correct values",
         () async {
-      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
 
       verify(() => finishSaleRequestConcentrador.finish(
             enterpriseId:
@@ -492,22 +501,41 @@ void main() {
           )).called(1);
     });
     test("Should update already paid to false in success", () async {
-      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
 
       verify(() => alreadyPaid.update(false)).called(1);
     });
 
     test("Should update commandAlreadyPaid to false in success", () async {
-      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
 
       expect(sut.commandAlreadyPaid, false);
     });
 
     test("Should update commandAlreadyPaid to true in error", () async {
       finishSaleRequestConcentrador.mockFinishError();
-      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
 
       expect(sut.commandAlreadyPaid, true);
+    });
+
+    test("Should load printed products in success", () async {
+      await sut.tryPayAgain(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
+          .called(1);
     });
   });
 }

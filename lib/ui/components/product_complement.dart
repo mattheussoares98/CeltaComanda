@@ -1,6 +1,5 @@
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:flutter/material.dart';
-
-import '../helpers/helpers.dart';
 
 class ProductComplement extends StatelessWidget {
   final String? productComplement;
@@ -27,21 +26,12 @@ class ProductComplement extends StatelessWidget {
         .replaceAll(RegExp(r'\(ppp\)'), '')
         .replaceAll(RegExp(r'\(novo\)'), '');
 
-    return Padding(
-      padding: const EdgeInsets.all(2),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Text(
-          complement,
-          maxLines: hasMinWidth(context) ? 4 : 3,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: getStringSize(context),
-            color: Theme.of(context).primaryColorDark,
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w300,
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: HtmlWidget(complement),
         ),
       ),
     );

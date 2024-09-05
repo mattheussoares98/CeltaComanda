@@ -481,5 +481,10 @@ void main() {
 
       expect(value, false);
     });
+    test("Should update _commandAlreadyPaid to false in success", () async {
+      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
+
+      expect(sut.commandAlreadyPaid, false);
+    });
   });
 }

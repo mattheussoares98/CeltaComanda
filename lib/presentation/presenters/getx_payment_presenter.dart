@@ -128,6 +128,7 @@ class GetxPaymentPresenter extends GetxController
       );
 
       await alreadyPaid.update(false);
+      _commandAlreadyPaid = false;
       return true;
     } catch (e) {
       mainError = UIError.unexpected;
@@ -137,7 +138,7 @@ class GetxPaymentPresenter extends GetxController
     }
   }
 
-  final bool _commandAlreadyPaid = false;
+  bool _commandAlreadyPaid = false;
   @override
   bool get commandAlreadyPaid => _commandAlreadyPaid;
 }

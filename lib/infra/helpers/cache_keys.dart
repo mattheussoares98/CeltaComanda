@@ -1,4 +1,5 @@
 enum CacheKeys {
+  alreadyPaid,
   cartProducts,
   commandData,
   comments,

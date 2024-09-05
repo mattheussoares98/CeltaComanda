@@ -442,7 +442,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.tryPaiAgain(commandNumber.toInt());
+      await sut.tryPayAgain(commandNumber.toInt());
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -450,11 +450,11 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       finishSaleRequestConcentrador.mockFinishError();
-      await sut.tryPaiAgain(commandNumber.toInt());
+      await sut.tryPayAgain(commandNumber.toInt());
     });
     test("Should call finishSaleRequestConcentrador with correct values",
         () async {
-      await sut.tryPaiAgain(homePresenter.commandNumberMock!.toInt());
+      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
 
       verify(() => finishSaleRequestConcentrador.finish(
             enterpriseId:
@@ -464,7 +464,7 @@ void main() {
           )).called(1);
     });
     test("Should update already paid to false in success", () async {
-      await sut.tryPaiAgain(homePresenter.commandNumberMock!.toInt());
+      await sut.tryPayAgain(homePresenter.commandNumberMock!.toInt());
 
       verify(() => alreadyPaid.update(false)).called(1);
     });

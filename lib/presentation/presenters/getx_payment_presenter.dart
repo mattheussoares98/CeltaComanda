@@ -117,7 +117,7 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> tryPaiAgain(int commandNumber) async {
+  Future<void> tryPayAgain(int commandNumber) async {
     mainError = null;
     isLoading = true;
     try {

@@ -32,6 +32,7 @@ void main() {
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
   late PersistentSpy persistent;
+  late AlreadyPaidSpy alreadyPaid;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -65,6 +66,7 @@ void main() {
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSellers: loadSellers,
       persistent: persistent,
+      alreadyPaid: alreadyPaid,
     );
   }
 
@@ -78,6 +80,7 @@ void main() {
     loadSellers = LoadSellersSpy();
     commandInformations = CommandInformationsSpy();
     persistent = PersistentSpy();
+    alreadyPaid = AlreadyPaidSpy();
   }
 
   void initMocks() {

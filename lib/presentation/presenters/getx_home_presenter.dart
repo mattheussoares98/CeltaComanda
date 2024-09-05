@@ -19,6 +19,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadSellers loadSellers;
   final Persistent persistent;
+  final AlreadyPaid alreadyPaid;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -30,6 +31,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.loadSaleRequestTemp,
     required this.loadSellers,
     required this.persistent,
+    required this.alreadyPaid,
   });
 
   @override

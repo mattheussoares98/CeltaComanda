@@ -19,14 +19,12 @@ class UpdateQuantity extends StatelessWidget {
       required bool isAddingQuantity,
       required void Function()? updateQuantity,
     }) {
-      return Expanded(
-        child: InkWell(
-          onTap: updateQuantity,
-          child: CircleAvatar(
-            maxRadius: 40,
-            backgroundColor: Theme.of(context).primaryColorLight,
-            child: Icon(isAddingQuantity ? Icons.add : Icons.remove),
-          ),
+      return InkWell(
+        onTap: updateQuantity,
+        child: CircleAvatar(
+          maxRadius: 40,
+          backgroundColor: Theme.of(context).primaryColorLight,
+          child: Icon(isAddingQuantity ? Icons.add : Icons.remove),
         ),
       );
     }
@@ -38,23 +36,18 @@ class UpdateQuantity extends StatelessWidget {
           isAddingQuantity: false,
           updateQuantity: quantity <= 1 ? null : reduceQuantity,
         ),
-        Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: FittedBox(
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColorDark,
-                maxRadius: 70,
-                child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Text(
-                    quantity.toString().toBrazilianNumber(0),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
-                    ),
-                  ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: CircleAvatar(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            maxRadius: 70,
+            child: Padding(
+              padding: const EdgeInsets.all(3),
+              child: Text(
+                quantity.toString().toBrazilianNumber(0),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 50,
                 ),
               ),
             ),

@@ -49,10 +49,7 @@ class _UpdateTotalByPersonState extends State<UpdateTotalByPerson> {
           style: TextStyle(fontSize: getStringSize(context)),
         ),
         const SizedBox(height: 10),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.1,
-          ),
+        FittedBox(
           child: UpdateQuantity(
             quantity: selectedPeoples,
             reduceQuantity: () {

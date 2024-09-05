@@ -45,6 +45,7 @@ class _PrintedItemState extends State<PrintedItem> {
       child: Row(
         children: [
           Expanded(
+            flex: 2,
             child: Column(
               children: [
                 Padding(
@@ -97,7 +98,9 @@ class _PrintedItemState extends State<PrintedItem> {
                               index == widget.printed.Products.length - 1)
                             const Padding(
                               padding: EdgeInsets.only(top: 10),
-                              child: UpdateTotalByPerson(),
+                              child: SizedBox(
+                                child: UpdateTotalByPerson(),
+                              ),
                             ),
                         ],
                       );
@@ -108,8 +111,7 @@ class _PrintedItemState extends State<PrintedItem> {
             ),
           ),
           if (hasMinWidth(context))
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 3),
+            const Flexible(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

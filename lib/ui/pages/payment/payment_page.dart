@@ -19,7 +19,6 @@ class _PaymentPageState extends State<PaymentPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  bool _alreadyPaid = false;
 
   @override
   void dispose() {
@@ -36,7 +35,7 @@ class _PaymentPageState extends State<PaymentPage>
   }
 
   Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {
-    _alreadyPaid = await paymentPresenter.getAlreadyPaid();
+    await paymentPresenter.getAlreadyPaid();
     setState(() {});
   }
 
@@ -83,7 +82,7 @@ class _PaymentPageState extends State<PaymentPage>
         children: [
           if (!getShowSearchCommand(printedProductsPresenter))
             const PaymentButtons(),
-          if (_alreadyPaid)
+          if (paymentPresenter.commandAlreadyPaid)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: LiquidateSaleRequest(
@@ -92,7 +91,8 @@ class _PaymentPageState extends State<PaymentPage>
                 },
               ),
             ),
-          if (getShowSearchCommand(printedProductsPresenter) && !_alreadyPaid)
+          if (getShowSearchCommand(printedProductsPresenter) &&
+              !paymentPresenter.commandAlreadyPaid)
             SearchDataByCommandNumber(
               homePresenter: homePresenter,
               emptyMessage: homePresenter.commandNumber != null

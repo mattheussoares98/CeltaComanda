@@ -136,4 +136,8 @@ class GetxPaymentPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  final bool _commandAlreadyPaid = false;
+  @override
+  bool get commandAlreadyPaid => _commandAlreadyPaid;
 }

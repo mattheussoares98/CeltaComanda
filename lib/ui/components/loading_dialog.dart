@@ -26,7 +26,9 @@ void showLoading(BuildContext context) {
               const SizedBox(height: 10),
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: LinearProgressIndicator(),
+                child: LinearProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                ),
               ),
             ],
           ),

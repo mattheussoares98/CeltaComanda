@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../domain/helpers/helpers.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../../components/components.dart';
@@ -20,12 +19,29 @@ class _PaymentPageState extends State<PaymentPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  bool _alreadyPaid = false;
 
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    _getAlreadyPaid(paymentPresenter);
+  }
+
+  Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {
+    _alreadyPaid = await paymentPresenter.getAlreadyPaid();
+  }
+
+  bool getShowSearchCommand(PrintedProductsPresenter printedProductsPresenter) {
+    return printedProductsPresenter.printedProducts == null ||
+        printedProductsPresenter.printedProducts!.TotalLiquid.toDouble() == 0;
   }
 
   @override
@@ -61,11 +77,13 @@ class _PaymentPageState extends State<PaymentPage>
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: printedProductsPresenter.printedProducts == null ||
-              printedProductsPresenter.printedProducts!.TotalLiquid
-                      .toDouble() ==
-                  0
-          ? SearchDataByCommandNumber(
+      body: Column(
+        children: [
+          if (!getShowSearchCommand(printedProductsPresenter))
+            const PaymentButtons(),
+          if (_alreadyPaid) const LiquidateSaleRequest(),
+          if (getShowSearchCommand(printedProductsPresenter))
+            SearchDataByCommandNumber(
               homePresenter: homePresenter,
               emptyMessage: homePresenter.commandNumber != null
                   ? R.string.msgCommandDontHaveOpenValues
@@ -80,102 +98,9 @@ class _PaymentPageState extends State<PaymentPage>
                       expansibleGroupFromProductPresenter,
                 );
               },
-            )
-          : Center(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "${R.string.total}: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
-                            .addBrazilianCoin(),
-                        style: TextStyle(
-                          fontSize: getStringSize(context) * 2,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 20,
-                        ),
-                        child: Text(
-                          R.string.selectPaymentOption,
-                          style: TextStyle(
-                            // color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.italic,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await paymentPresenter.doPayment(
-                            longAmountValue: printedProductsPresenter
-                                .printedProducts!.TotalLiquid
-                                .toDouble(),
-                            portionQuantity: 1,
-                            paymentMode: PaymentMode.pix,
-                            commandNumber:
-                                homePresenter.commandNumber.toString(),
-                          );
-                        },
-                        child: Text(
-                          "PIX",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await paymentPresenter.doPayment(
-                              longAmountValue: printedProductsPresenter
-                                  .printedProducts!.TotalLiquid
-                                  .toDouble(),
-                              portionQuantity: 1,
-                              paymentMode: PaymentMode.debit,
-                              commandNumber:
-                                  homePresenter.commandNumber.toString());
-                        },
-                        child: Text(
-                          R.string.debit.toUpperCase(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await paymentPresenter.doPayment(
-                            longAmountValue: printedProductsPresenter
-                                .printedProducts!.TotalLiquid
-                                .toDouble(),
-                            portionQuantity: 1,
-                            paymentMode: PaymentMode.credit,
-                            commandNumber:
-                                homePresenter.commandNumber.toString(),
-                          );
-                        },
-                        child: Text(
-                          R.string.cashCredit.toUpperCase(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
+        ],
+      ),
     );
   }
 }

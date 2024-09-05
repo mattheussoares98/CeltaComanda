@@ -1,2 +1,2 @@
-export './liquidate_sale_request.dart';
+export 'liquidate_command.dart';
 export './payment_buttons.dart';

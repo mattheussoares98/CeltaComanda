@@ -121,7 +121,7 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> tryPayAgain({
+  Future<void> liquidateCommand({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {

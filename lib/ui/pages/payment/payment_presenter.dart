@@ -28,7 +28,7 @@ abstract class PaymentPresenter implements Listenable {
 
   Future<void> getAndUpdateAlreadyPaidCommand();
 
-  Future<void> tryPayAgain({
+  Future<void> liquidateCommand({
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   });

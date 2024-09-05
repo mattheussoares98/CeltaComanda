@@ -45,7 +45,7 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
       ).thenAnswer((any) async => any);
 
   void mockTryPayAgain() => when(
-        () => this.tryPayAgain(
+        () => this.liquidateCommand(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           homePresenter: any(named: "homePresenter"),
         ),

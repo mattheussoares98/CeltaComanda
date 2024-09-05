@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
-class LiquidateSaleRequest extends StatelessWidget {
+class LiquidadeCommand extends StatelessWidget {
   final Function() callSetState;
-  const LiquidateSaleRequest({
+  const LiquidadeCommand({
     required this.callSetState,
     super.key,
   });
@@ -30,7 +30,7 @@ class LiquidateSaleRequest extends StatelessWidget {
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () async {
-            await paymentPresenter.tryPayAgain(
+            await paymentPresenter.liquidateCommand(
               printedProductsPresenter: printedProductsPresenter,
               homePresenter: homePresenter,
             );

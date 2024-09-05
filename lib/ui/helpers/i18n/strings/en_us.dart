@@ -8,6 +8,7 @@ class EnUs implements Translation {
   String get msgEmailInUse => 'Email already in use';
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
   String get msgCloseApplication => 'Close application';
+  String get msgCommandAlreadyPaid => 'This command already paid but an error was ocurred to liquidate. Liberate or liquidate this command';
   String get msgCommandBlocked => 'This command is blocked';
   String get msgCommandDontHaveOpenValues => 'This command has no open values';
   String get msgCommandDontHaveProducts =>
@@ -113,6 +114,7 @@ class EnUs implements Translation {
   String get jump => 'Skip';
   String get liberateCancelProducts => 'Allow item cancellation';
   String get liberateCommand => 'Liberate command';
+  String get liquidateCommand => 'Liquidate command';
   String get loadMenu => 'Load menu';
   String get login => 'Login';
   String get name => 'Name';

@@ -4,6 +4,7 @@ abstract class Translation {
   String get msgEmailInUse;
   String get msgClearCartOnLogout;
   String get msgCloseApplication;
+  String get msgCommandAlreadyPaid;
   String get msgCommandBlocked;
   String get msgCommandDontHaveOpenValues;
   String get msgCommandDontHaveProducts;
@@ -95,6 +96,7 @@ abstract class Translation {
   String get jump;
   String get liberateCancelProducts;
   String get liberateCommand;
+  String get liquidateCommand;
   String get loadMenu;
   String get login;
   String get name;

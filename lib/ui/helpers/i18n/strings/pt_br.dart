@@ -9,6 +9,8 @@ class PtBr implements Translation {
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgCloseApplication => "Fechar aplicativo";
+  String get msgCommandAlreadyPaid =>
+      "Essa comanda já foi paga mas houve um erro para liquidar ela. Liquide ou libere a comanda";
   String get msgCommandBlocked => "Essa comanda está bloqueada!";
   String get msgCommandDontHaveOpenValues =>
       "Essa comanda não possui valores em aberto";
@@ -115,6 +117,7 @@ class PtBr implements Translation {
   String get jump => 'Pular';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
   String get liberateCommand => 'Liberar comanda';
+  String get liquidateCommand => 'Liquidar comanda';
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get name => 'Nome';

@@ -21,7 +21,7 @@ class LiquidateSaleRequest extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "Essa comanda foi paga mas deu erro pra finalizar o pedido dela. Clique no botão para tentar finalizar novamente",
+          R.string.msgCommandAlreadyPaid,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: getStringSize(context),
@@ -37,7 +37,7 @@ class LiquidateSaleRequest extends StatelessWidget {
             callSetState();
           },
           child: Text(
-            "Liquidar pedido",
+            R.string.liquidateCommand,
             style: TextStyle(
               fontSize: getStringSize(context) * 1.4,
             ),

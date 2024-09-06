@@ -72,43 +72,45 @@ class _PaymentPageState extends State<PaymentPage>
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (printedProductsPresenter.printedProducts != null &&
-              !paymentPresenter.commandAlreadyPaid)
-            const PaymentButtons(),
-          if (paymentPresenter.commandAlreadyPaid)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: LiquidadeCommand(
-                callSetState: () {
-                  setState(() {});
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (printedProductsPresenter.printedProducts != null &&
+                !paymentPresenter.commandAlreadyPaid)
+              const PaymentButtons(),
+            if (paymentPresenter.commandAlreadyPaid)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: LiquidadeCommand(
+                  callSetState: () {
+                    setState(() {});
+                  },
+                ),
+              ),
+            if (printedProductsPresenter.printedProducts == null ||
+                printedProductsPresenter.printedProducts!.TotalLiquid
+                            .toDouble() ==
+                        0 &&
+                    !paymentPresenter.commandAlreadyPaid)
+              SearchDataByCommandNumber(
+                homePresenter: homePresenter,
+                emptyMessage: homePresenter.commandNumber != null
+                    ? R.string.msgCommandDontHaveOpenValues
+                    : R.string.msgSearchCommandToPay,
+                loadCommandData: () async {
+                  await paymentPresenter.getTotalValue(
+                    homePresenter: homePresenter,
+                    cartPresenter: cartPresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    menuPresenter: menuPresenter,
+                    expansibleGroupFromProductPresenter:
+                        expansibleGroupFromProductPresenter,
+                  );
                 },
               ),
-            ),
-          if (printedProductsPresenter.printedProducts == null ||
-              printedProductsPresenter.printedProducts!.TotalLiquid
-                          .toDouble() ==
-                      0 &&
-                  !paymentPresenter.commandAlreadyPaid)
-            SearchDataByCommandNumber(
-              homePresenter: homePresenter,
-              emptyMessage: homePresenter.commandNumber != null
-                  ? R.string.msgCommandDontHaveOpenValues
-                  : R.string.msgSearchCommandToPay,
-              loadCommandData: () async {
-                await paymentPresenter.getTotalValue(
-                  homePresenter: homePresenter,
-                  cartPresenter: cartPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  menuPresenter: menuPresenter,
-                  expansibleGroupFromProductPresenter:
-                      expansibleGroupFromProductPresenter,
-                );
-              },
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

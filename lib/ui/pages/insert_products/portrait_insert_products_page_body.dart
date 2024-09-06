@@ -99,20 +99,6 @@ class _PortraitInsertProductsPageBodyState
                               padding: const EdgeInsets.only(right: 5),
                               child: Column(
                                 children: [
-                                  if (atualOption ==
-                                      SelectedOptionType.fatherComposition)
-                                    Text(
-                                      insertProductPresenter
-                                          .getLastSelectedFather(
-                                              widget.indexOfAtualOption)!
-                                          .ChildName!,
-                                      style: TextStyle(
-                                        fontSize: getStringSize(context) * 1.4,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .secondaryHeaderColor,
-                                      ),
-                                    ),
                                   if (widget.insertProductsViewModel != null)
                                     TitleText(
                                       selectedProduct: widget.selectedProduct,

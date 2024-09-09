@@ -37,14 +37,17 @@ class _LandscapeInsertProductsPageBodyState
           .selectedOptions.keys.first;
     }
 
+    double width = MediaQuery.of(context).size.width * 0.55;
+
     return Row(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.55,
+          width: width,
           child: Column(
             children: [
               ImageAndComplement(
                 selectedProduct: widget.selectedProduct,
+                width: width / 2,
               ),
               if (widget.insertProductsViewModel != null)
                 Expanded(

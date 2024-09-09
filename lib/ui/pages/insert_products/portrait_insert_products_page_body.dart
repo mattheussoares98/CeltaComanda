@@ -81,7 +81,10 @@ class _PortraitInsertProductsPageBodyState
               children: [
                 Column(
                   children: [
-                    ImageAndComplement(selectedProduct: widget.selectedProduct),
+                    ImageAndComplement(
+                      selectedProduct: widget.selectedProduct,
+                      width: 100,
+                    ),
                     if (widget.insertProductsViewModel != null)
                       OptionItems(
                         selectedProduct: widget.selectedProduct,

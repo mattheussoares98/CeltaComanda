@@ -40,7 +40,7 @@ class _LandscapeInsertProductsPageBodyState
     return Row(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.55,
           child: Column(
             children: [
               ImageAndComplement(

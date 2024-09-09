@@ -18,8 +18,8 @@ class ImageAndComplement extends StatelessWidget {
       children: [
         Flexible(
           child: ImageWidget(
-            height: hasMinWidth(context) ? 160 : 100,
-            width: hasMinWidth(context) ? 160 : 100,
+            height: hasMinWidth(context) ? 200 : 100,
+            width: hasMinWidth(context) ? 200 : 100,
             ean: selectedProduct.EanCode,
             plu: selectedProduct.PriceLookupCode,
             selectedProduct: selectedProduct,

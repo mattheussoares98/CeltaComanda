@@ -112,19 +112,24 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               expansibleGroupFromProductPresenter,
                         );
                         return Scaffold(
-                          appBar: AppBar(
-                            title: FittedBox(
-                              child: Text(selectedProduct!.Name),
-                            ),
-                            leading: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                if (menuPresenter.indexOfAtualSuggestion >= 0) {
-                                  menuPresenter.advanceIndexOfAtualSuggestion();
-                                }
-                              },
-                              icon: const Icon(
-                                Icons.arrow_back,
+                          appBar: PreferredSize(
+                            preferredSize: const Size.fromHeight(40),
+                            child: AppBar(
+                              title: FittedBox(
+                                child: Text(selectedProduct!.Name),
+                              ),
+                              leading: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  if (menuPresenter.indexOfAtualSuggestion >=
+                                      0) {
+                                    menuPresenter
+                                        .advanceIndexOfAtualSuggestion();
+                                  }
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                ),
                               ),
                             ),
                           ),

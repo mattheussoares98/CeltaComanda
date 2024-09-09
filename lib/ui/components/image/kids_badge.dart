@@ -15,7 +15,7 @@ class KidsBadge extends StatelessWidget {
       bottom: 0,
       right: 10,
       child: Image.asset(
-        "lib/ui/assets/images/kids2.png",
+        "lib/ui/assets/images/kids.png",
         fit: BoxFit.contain,
         height: width > height ? height : width,
         width: width > height ? height : width,

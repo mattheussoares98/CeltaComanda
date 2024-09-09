@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../pages.dart';
 
 class ProductDetails extends StatelessWidget {
-  final ProductsViewModel product;
+  final PrintedProductsViewModel product;
   final PrintedViewModel printed;
   final String quantity;
   final String value;
@@ -35,7 +35,7 @@ class ProductDetails extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: RequestedAt(printed: printed),
+          child: RequestedAt(printedProduct: product),
         ),
         const SizedBox(width: 2),
         Expanded(

@@ -5,7 +5,7 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class NameAndComment extends StatelessWidget {
-  final ProductsViewModel product;
+  final PrintedProductsViewModel product;
   final String? comments;
   const NameAndComment({
     required this.product,
@@ -18,7 +18,7 @@ class NameAndComment extends StatelessWidget {
     return Column(
       children: [
         Text(
-          product.Name,
+          product.Products.Name,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,

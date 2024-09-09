@@ -80,7 +80,7 @@ class _PrintedItemState extends State<PrintedItem> {
                             padding: const EdgeInsets.all(8),
                             child: ProductDetails(
                               printed: widget.printed,
-                              product: product.Products,
+                              product: product,
                               quantity: product.Quantity,
                               value: (product.TotalLiquid.toDouble() /
                                       product.Quantity.toDouble())

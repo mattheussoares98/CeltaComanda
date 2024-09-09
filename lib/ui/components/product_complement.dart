@@ -24,6 +24,7 @@ class ProductComplement extends StatelessWidget {
         .replaceAll(RegExp(r'\(p\)'), '')
         .replaceAll(RegExp(r'\(pp\)'), '')
         .replaceAll(RegExp(r'\(ppp\)'), '')
+        .replaceAll(RegExp(r'\(kids\)'), '')
         .replaceAll(RegExp(r'\(novo\)'), '');
 
     return SingleChildScrollView(

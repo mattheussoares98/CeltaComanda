@@ -87,6 +87,15 @@ class _ImageWidgetState extends State<ImageWidget>
                   height: widget.height * 0.25,
                   width: widget.width * 0.25,
                 ),
+              if (widget.selectedProduct?.ProductComplement
+                      .toString()
+                      .toLowerCase()
+                      .contains("(kids)") ==
+                  true)
+                KidsBadge(
+                  height: widget.height * 0.4,
+                  width: widget.width * 0.4,
+                ),
               if (widget.selectedProduct?.IsAlcoholicProduct == "true")
                 AlcoholicBadge(
                   height: widget.height * 0.25,

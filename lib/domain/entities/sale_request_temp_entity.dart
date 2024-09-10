@@ -10,7 +10,7 @@ class SaleRequestTempEntity extends Equatable {
   final String PersonalizedCode;
   final int EnterpriseId;
   final double TotalLiquid;
-  final int DeliveryControl;
+  final int? DeliveryControl;
   final int? Peoples;
   final String? Comments;
   final String? SellerCode;

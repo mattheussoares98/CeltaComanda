@@ -503,7 +503,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           PersonalizedCode: saleRequestTempResult.PersonalizedCode,
           EnterpriseId: saleRequestTempResult.EnterpriseId,
           TotalLiquid: saleRequestTempResult.TotalLiquid,
-          DeliveryControl: tableNumber ?? 0,
+          DeliveryControl: tableNumber,
           Comments: saleRequestTempResult.Comments,
           Peoples: saleRequestTempResult.Peoples,
           SellerCode: saleRequestTempResult.SellerCode,

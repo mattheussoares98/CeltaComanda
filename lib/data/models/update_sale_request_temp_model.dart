@@ -5,7 +5,7 @@ import '../../domain/entities/entities.dart';
 
 class UpdateSaleRequestTempModel {
   final String? Comments;
-  final int DeliveryControl;
+  final int? DeliveryControl;
   final int EnterpriseId;
   final String PersonalizedCode;
   final int SaleRequestTempId;

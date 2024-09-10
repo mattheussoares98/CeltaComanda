@@ -14,7 +14,7 @@ class SaleRequestTempViewModel extends Equatable {
   final String DeliveryControl;
   final String? Comments;
   final String SaleRequestTempId;
-  final String Peoples;
+  final String? Peoples;
   final String? SellerCode;
 
   @override
@@ -52,7 +52,7 @@ class SaleRequestTempViewModel extends Equatable {
         TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).toBrazilianNumber(),
         DeliveryControl: entity.DeliveryControl.toString(),
         Comments: entity.Comments,
-        Peoples: entity.Peoples.toString(),
+        Peoples: entity.Peoples?.toString(),
         SaleRequestTempId: entity.SaleRequestTempId.toString(),
         SellerCode: entity.SellerCode,
       );
@@ -65,7 +65,7 @@ class SaleRequestTempViewModel extends Equatable {
         DeliveryControl: DeliveryControl.toInt(),
         TotalLiquid: TotalLiquid.toDouble(),
         Comments: Comments,
-        Peoples: Peoples.toInt(),
+        Peoples: Peoples?.toInt(),
         SellerCode: SellerCode,
       );
 

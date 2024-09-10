@@ -476,7 +476,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Products: products,
         Comments: _saleRequestTemp?.Comments,
         SellerCode: _saleRequestTemp?.SellerCode,
-        Peoples: _saleRequestTemp!.Peoples.toInt(),
+        Peoples: _saleRequestTemp?.Peoples?.toInt(),
       );
 
       bool? cartProductsAlreadyConfirmed =

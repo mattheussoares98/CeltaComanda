@@ -1508,6 +1508,24 @@ void main() {
             entity: updateSaleRequestTempEntity,
           )).called(1);
     });
+    test(
+        "Should call updateSaleRequestTemp when confirmedCartProducts return null",
+        () async {
+      confirmedCartProducts.mockIsConfirmed(null);
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: updateSaleRequestTempEntity,
+          )).called(1);
+    });
     test("Should clear cartProducts on saveProducts succeeds", () async {
       sut.addProductInCart(
         product: cartProductEntity,
@@ -1569,7 +1587,7 @@ void main() {
       expect(isUpdated, false);
     });
 
-    test("Should save DeliveryControl with 0 when tableNumber is null",
+    test("Should save DeliveryControl with correct value",
         () async {
       sut.cartProducts.add(cartProductViewModel);
 
@@ -1585,7 +1603,7 @@ void main() {
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: SaleRequestTempEntity(
               Peoples: updateSaleRequestTempEntity.Peoples,
-              DeliveryControl: 0,
+              DeliveryControl: null,
               Products: saleRequestTempEntity.Products,
               SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
               PersonalizedCode: saleRequestTempEntity.PersonalizedCode,

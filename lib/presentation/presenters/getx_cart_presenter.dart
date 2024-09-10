@@ -482,7 +482,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       bool? cartProductsAlreadyConfirmed =
           await confirmedCartProducts.isConfirmed();
 
-      if (cartProductsAlreadyConfirmed == false) {
+      if (cartProductsAlreadyConfirmed != true) {
         await updateSaleRequestTemp.update(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           entity: entity,

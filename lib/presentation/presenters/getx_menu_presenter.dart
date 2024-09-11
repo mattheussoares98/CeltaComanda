@@ -203,18 +203,16 @@ class GetxMenuPresenter extends GetxController
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
           );
 
-          List<ProductCompositionViewModel> childs =
-              await getProductComposition.getChildsOfFather(
+          final childs = await getProductComposition.getChildsOfFather(
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
             fathers: fathers,
           );
 
-          if (fathers.toString() ==
-              childs.map((e) => e.toEntity()).toList().toString()) {
+          if (fathers == childs) {
             product.childsComposition = [
               ProductCompositionViewModel(
-                ProductCompositionId: childs[0].ProductCompositionId,
-                EnterpriseId: childs[0].EnterpriseId,
+                ProductCompositionId: childs[0].ProductCompositionId.toString(),
+                EnterpriseId: childs[0].EnterpriseId.toString(),
                 InternalCodeOnERPCodeFather: product.InternalCodeOnERP,
                 InternalCodeOnERPCodeChild: product.InternalCodeOnERP,
                 PluChild: product.PriceLookupCode,
@@ -222,14 +220,19 @@ class GetxMenuPresenter extends GetxController
                 Quantity: "1",
                 SalePrice: product.SaleRetailPraticed,
                 OfferPrice: product.OfferRetailPrice,
-                IncrementValue: childs[0].IncrementValue,
-                IsOptionalItem: childs[0].IsOptionalItem,
+                IncrementValue: childs[0].IncrementValue.toString(),
+                IsOptionalItem: childs[0].IsOptionalItem.toString(),
                 ProductOptions: "",
-                childs: [...childs],
+                childs: [
+                  ...childs
+                      .map((e) => ProductCompositionViewModel.fromEntity(e))
+                ],
               )
             ];
           } else {
-            product.childsComposition = childs;
+            product.childsComposition = childs
+                .map((e) => ProductCompositionViewModel.fromEntity(e))
+                .toList();
           }
         }
       }

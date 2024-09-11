@@ -28,7 +28,8 @@ class ChildsRadios extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: selectedFather.childs?.isEmpty == true
+      itemCount: selectedFather.childs == null ||
+              selectedFather.childs?.isEmpty == true
           ? 1
           : selectedFather.childs!.length,
       itemBuilder: (context, i) {

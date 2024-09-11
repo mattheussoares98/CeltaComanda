@@ -40,12 +40,12 @@ class RemoteGetProductComposition extends GetProductComposition {
   }
 
   @override
-  Future<List<ProductCompositionViewModel>> getChildsOfFather({
+  Future<List<ProductCompositionEntity>> getChildsOfFather({
     required int internalCodeOnErp,
     required List<ProductCompositionEntity> fathers,
   }) async {
     try {
-      List<ProductCompositionViewModel> childs = [];
+      List<ProductCompositionEntity> childs = [];
 
       for (var father in fathers) {
         final childrenOfFather = await getFathers(
@@ -58,7 +58,7 @@ class RemoteGetProductComposition extends GetProductComposition {
           childrenOfFather,
         );
 
-        childs.add(fatherWithChildrens);
+        childs.add(fatherWithChildrens.toEntity());
       }
 
       return childs;

@@ -45,7 +45,6 @@ void main() {
   late ProductsViewModel productsViewModel;
   late List<ProductEntity> products;
   late List<ProductEntity> productsEntityThatIsPromoCombox;
-  late List<ProductCompositionViewModel> productsCompositionsViewModel;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -127,10 +126,6 @@ void main() {
       isOptionalItem: true,
     );
 
-    productsCompositionsViewModel = productsCompositionsEntitys
-        .map((e) => ProductCompositionViewModel.fromEntity(e))
-        .toList();
-
     suggestions = EntityFactory.makeSuggestionsSaleEntitys();
     suggestionsProductsViewModel = [
       ...products.map((e) => ProductsViewModel.fromEntity(e)),
@@ -143,7 +138,7 @@ void main() {
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
     getProductComposition.mockGetFathers(productsCompositionsEntitys);
-    getProductComposition.mockGetChildsOfFather(productsCompositionsViewModel);
+    getProductComposition.mockGetChildsOfFather(productsCompositionsEntitys);
     loadSuggestionSale.mockLoad(suggestions);
   }
 
@@ -727,7 +722,7 @@ void main() {
 
       sut.advanceIndexOfAtualSuggestion();
       expect(sut.indexOfAtualSuggestion, 1);
-      
+
       sut.advanceIndexOfAtualSuggestion();
       expect(sut.indexOfAtualSuggestion, 1);
     });

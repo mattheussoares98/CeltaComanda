@@ -7,6 +7,5 @@ export './load_menu_button.dart';
 export 'open_insert_product_page.dart';
 export './portrait_name_image_price_combox_complement.dart';
 export 'landscape_name_image_price_combox_complement.dart';
-export './product_item.dart';
 export './products_items.dart';
 export './search_product.dart';

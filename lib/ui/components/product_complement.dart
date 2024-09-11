@@ -28,12 +28,16 @@ class ProductComplement extends StatelessWidget {
         .replaceAll(RegExp(r'\(novo\)'), '');
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(2),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: HtmlWidget(complement),
-        ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(2),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: HtmlWidget(complement),
+            ),
+          ),
+        ],
       ),
     );
   }

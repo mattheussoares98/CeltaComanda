@@ -22,7 +22,7 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
 
     return Row(
       children: [
-        Expanded(
+        Flexible(
           flex: 2,
           child: GestureDetector(
             onTap: () {
@@ -50,56 +50,63 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
           flex: 4,
           child: Column(
             children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      productsViewModel.Name,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: getStringSize(context) *
-                            (hasMinWidth(context) ? 1.5 : 1.2),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColorLight,
-                      fontWeight: FontWeight.bold,
-                      fontSize: getStringSize(context) * 1.2,
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
+              Padding(
+                padding: const EdgeInsets.all(8),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    if (productsViewModel.IsPromoCombox == "true")
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: FittedBox(
-                          child: Text(
-                            "(${R.string.combox})",
-                            textAlign: TextAlign.center,
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Text(
+                            productsViewModel.Name,
+                            textAlign: TextAlign.start,
                             style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
                               fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              fontSize: getStringSize(context) * 1.2,
+                              fontSize: getStringSize(context),
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
-                        ),
+                          if (productsViewModel.IsPromoCombox == "true")
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 30),
+                              child: FittedBox(
+                                child: Text(
+                                  "(${R.string.combox})",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: getStringSize(context),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
+                    ),
+                    Text(
+                      productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: getStringSize(context),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              ProductComplement(
-                productComplement: productsViewModel.ProductComplement,
+              Expanded(
+                child: Center(
+                  child: ProductComplement(
+                    productComplement: productsViewModel.ProductComplement,
+                  ),
+                ),
               ),
             ],
           ),

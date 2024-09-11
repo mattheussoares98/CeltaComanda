@@ -90,40 +90,23 @@ class OptionItem extends StatelessWidget {
         color: itemColor,
         margin: const EdgeInsets.only(bottom: 1),
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: RichText(
-                text: TextSpan(
-                  text: getOptionItemTitle(atualOption),
-                  children: lastSelectedFather == null ||
-                          atualOption == SelectedOptionType.fatherComposition ||
-                          atualOption == SelectedOptionType.quantity
-                      ? null
-                      : <TextSpan>[
-                          TextSpan(
-                            text: " (${R.string.comment.toUpperCase()})",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.yellow,
-                            ),
-                          ),
-                        ],
-                ),
-              ),
-            ),
-            FittedBox(
-              child: Text(
-                getIsOptionalOrObligatory(),
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  color: Colors.yellow,
-                  fontSize: getStringSize(context) * 0.7,
-                ),
-              ),
-            ),
-          ],
+        child: RichText(
+          text: TextSpan(
+            text: getOptionItemTitle(atualOption),
+            children: lastSelectedFather == null ||
+                    atualOption == SelectedOptionType.fatherComposition ||
+                    atualOption == SelectedOptionType.quantity
+                ? null
+                : <TextSpan>[
+                    TextSpan(
+                      text: " (${R.string.comment.toUpperCase()})",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                  ],
+          ),
         ),
       ),
     );

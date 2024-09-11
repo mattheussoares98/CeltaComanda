@@ -49,65 +49,57 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
         Expanded(
           flex: 4,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
                       productsViewModel.Name,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: getStringSize(context) *
                             (hasMinWidth(context) ? 1.5 : 1.2),
                       ),
                     ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              productsViewModel.SaleRetailPraticed
-                                  .addBrazilianCoin(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColorLight,
-                                fontWeight: FontWeight.bold,
-                                fontSize: getStringSize(context) * 1.2,
-                              ),
+                  ),
+                  Text(
+                    productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorLight,
+                      fontWeight: FontWeight.bold,
+                      fontSize: getStringSize(context) * 1.2,
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    if (productsViewModel.IsPromoCombox == "true")
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: FittedBox(
+                          child: Text(
+                            "(${R.string.combox})",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Theme.of(context).secondaryHeaderColor,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              fontSize: getStringSize(context) * 1.2,
                             ),
                           ),
-                          if (productsViewModel.IsPromoCombox == "true")
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: FittedBox(
-                                child: Text(
-                                  "(${R.string.combox})",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: getStringSize(context) * 1.2,
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
+                        ),
                       ),
-                    ),
-                    ProductComplement(
-                      productComplement: productsViewModel.ProductComplement,
-                    ),
                   ],
                 ),
+              ),
+              ProductComplement(
+                productComplement: productsViewModel.ProductComplement,
               ),
             ],
           ),

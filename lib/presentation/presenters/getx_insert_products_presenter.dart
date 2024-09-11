@@ -530,7 +530,7 @@ class GetxInsertProductsPresenter extends GetxController
     int? index =
         _insertProductsViewModel.value?.indexOf(atualInsertProductViewModel);
 
-    if (selectedProductValue?.childsComposition == null) {
+    if (selectedProductValue?.childsComposition?.isEmpty == true) {
       return null;
     } else if (atualInsertProductViewModel.selectedOptions.keys.first ==
         SelectedOptionType.fatherComposition) {

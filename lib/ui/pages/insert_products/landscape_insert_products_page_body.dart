@@ -53,7 +53,7 @@ class _LandscapeInsertProductsPageBodyState
                 Expanded(
                   child: OptionItems(
                     selectedProduct: widget.selectedProduct,
-                    indexOfAtualOption: widget.indexOfAtualOption,
+                    insertProductIndex: widget.indexOfAtualOption,
                     insertProductsViewModel: widget.insertProductsViewModel!,
                   ),
                 ),

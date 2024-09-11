@@ -5,13 +5,13 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class OptionItem extends StatelessWidget {
-  final int atualIndex;
-  final Color itemColor;
+  final int optionIndex;
+  final int insertProductIndex;
   final InsertProductsViewModel insertProductViewModel;
   final ProductCompositionViewModel? lastSelectedFather;
   const OptionItem({
-    required this.atualIndex,
-    required this.itemColor,
+    required this.optionIndex,
+    required this.insertProductIndex,
     required this.insertProductViewModel,
     required this.lastSelectedFather,
     super.key,
@@ -68,6 +68,16 @@ class OptionItem extends StatelessWidget {
     }
   }
 
+  Color getItemColor(bool canAdvanceIndex, BuildContext context) {
+    if (!canAdvanceIndex && insertProductIndex == optionIndex) {
+      return Theme.of(context).primaryColor;
+    } else if (canAdvanceIndex && insertProductIndex == optionIndex) {
+      return Theme.of(context).primaryColorDark;
+    } else {
+      return Theme.of(context).primaryColorLight;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
@@ -80,35 +90,39 @@ class OptionItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         insertProductPresenter.updateOptionIndex(
-          newIndex: atualIndex,
+          newIndex: optionIndex,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
       },
-      child: Container(
-        height: 42,
-        color: itemColor,
-        margin: const EdgeInsets.only(bottom: 1),
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: RichText(
-          text: TextSpan(
-            text: getOptionItemTitle(atualOption),
-            children: lastSelectedFather == null ||
-                    atualOption == SelectedOptionType.fatherComposition ||
-                    atualOption == SelectedOptionType.quantity
-                ? null
-                : <TextSpan>[
-                    TextSpan(
-                      text: " (${R.string.comment.toUpperCase()})",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.yellow,
-                      ),
-                    ),
-                  ],
-          ),
-        ),
-      ),
+      child: StreamBuilder<bool>(
+          stream: insertProductPresenter.canAdvanceIndexStream,
+          builder: (context, snapshot) {
+            return Container(
+              height: 42,
+              color: getItemColor(snapshot.data == true, context),
+              margin: const EdgeInsets.only(bottom: 1),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: RichText(
+                text: TextSpan(
+                  text: getOptionItemTitle(atualOption),
+                  children: lastSelectedFather == null ||
+                          atualOption == SelectedOptionType.fatherComposition ||
+                          atualOption == SelectedOptionType.quantity
+                      ? null
+                      : <TextSpan>[
+                          TextSpan(
+                            text: " (${R.string.comment.toUpperCase()})",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.yellow,
+                            ),
+                          ),
+                        ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }

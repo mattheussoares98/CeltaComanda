@@ -88,7 +88,7 @@ class _PortraitInsertProductsPageBodyState
                     if (widget.insertProductsViewModel != null)
                       OptionItems(
                         selectedProduct: widget.selectedProduct,
-                        indexOfAtualOption: widget.indexOfAtualOption,
+                        insertProductIndex: widget.indexOfAtualOption,
                         insertProductsViewModel:
                             widget.insertProductsViewModel!,
                       ),

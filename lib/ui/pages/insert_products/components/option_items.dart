@@ -5,11 +5,11 @@ import '../../pages.dart';
 
 class OptionItems extends StatefulWidget {
   final ProductsViewModel selectedProduct;
-  final int indexOfAtualOption;
+  final int insertProductIndex;
   final List<InsertProductsViewModel> insertProductsViewModel;
   const OptionItems({
     required this.selectedProduct,
-    required this.indexOfAtualOption,
+    required this.insertProductIndex,
     required this.insertProductsViewModel,
     super.key,
   });
@@ -22,9 +22,9 @@ class _OptionItemsState extends State<OptionItems> {
   final _scrollController = ScrollController();
 
   Color getItemColor(int index, BuildContext context) {
-    if (index < widget.indexOfAtualOption) {
+    if (index < widget.insertProductIndex) {
       return Theme.of(context).primaryColorDark;
-    } else if (index == widget.indexOfAtualOption) {
+    } else if (index == widget.insertProductIndex) {
       return Theme.of(context).secondaryHeaderColor;
     } else {
       return Theme.of(context).primaryColor;
@@ -36,7 +36,7 @@ class _OptionItemsState extends State<OptionItems> {
     required ScrollController scrollController,
     required double viewportHeight,
   }) {
-    final proportion = ((40 / 2) * widget.indexOfAtualOption) / viewportHeight;
+    final proportion = ((40 / 2) * widget.insertProductIndex) / viewportHeight;
 
     final double targetPosition = viewportHeight * proportion;
 
@@ -71,8 +71,9 @@ class _OptionItemsState extends State<OptionItems> {
         itemExtent: 42,
         shrinkWrap: true,
         itemCount: widget.insertProductsViewModel.length,
-        itemBuilder: (context, index) {
-          final insertProductViewModel = widget.insertProductsViewModel[index];
+        itemBuilder: (context, optionIndex) {
+          final insertProductViewModel =
+              widget.insertProductsViewModel[optionIndex];
 
           return StreamBuilder<bool>(
               stream: insertProductPresenter.doScrollStream,
@@ -81,7 +82,7 @@ class _OptionItemsState extends State<OptionItems> {
                   // Verifique se a função ainda não foi chamada
                   if (!_doScrollExecuted) {
                     doScroll(
-                      index: index,
+                      index: optionIndex,
                       scrollController: _scrollController,
                       viewportHeight: MediaQuery.of(context).size.height,
                     );
@@ -93,10 +94,10 @@ class _OptionItemsState extends State<OptionItems> {
                 }
                 return OptionItem(
                   insertProductViewModel: insertProductViewModel,
-                  atualIndex: index,
-                  itemColor: getItemColor(index, context),
+                  optionIndex: optionIndex,
+                  insertProductIndex: widget.insertProductIndex,
                   lastSelectedFather:
-                      insertProductPresenter.getLastSelectedFather(index),
+                      insertProductPresenter.getLastSelectedFather(optionIndex),
                 );
               });
         },

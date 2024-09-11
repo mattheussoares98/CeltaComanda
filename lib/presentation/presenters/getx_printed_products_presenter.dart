@@ -69,7 +69,7 @@ class GetxPrintedProductsPresenter
       if (printedProducts?.Products.isEmpty == false) {
         _printedProducts = PrintedViewModel.fromEntity(printedProducts!);
         _printedProducts!.Products
-            .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
+            .sort((a, b) => a.DateHourOfCreation.compareTo(b.DateHourOfCreation));
       }
     } catch (error) {
       switch (error) {

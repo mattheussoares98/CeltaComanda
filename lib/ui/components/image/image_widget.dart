@@ -4,13 +4,17 @@ import '../../../ui/helpers/helpers.dart';
 import '../../pages/pages.dart';
 import '../components.dart';
 
+enum AnimationOrientation { horizontal, vertical }
+
 class ImageWidget extends StatefulWidget {
   final String?
-      ean; //precisa o ean ou plu pra carregar a imagem do concentrador
-  final String plu; //precisa o ean ou plu pra carregar a imagem do concentrador
+      ean; // precisa o ean ou plu pra carregar a imagem do concentrador
+  final String
+      plu; // precisa o ean ou plu pra carregar a imagem do concentrador
   final double height;
   final double width;
   final ProductsViewModel? selectedProduct;
+  final AnimationOrientation orientation;
 
   const ImageWidget({
     this.height = 65,
@@ -18,6 +22,7 @@ class ImageWidget extends StatefulWidget {
     required this.ean,
     required this.plu,
     required this.selectedProduct,
+    this.orientation = AnimationOrientation.horizontal,
     super.key,
   });
 
@@ -40,10 +45,10 @@ class _ImageWidgetState extends State<ImageWidget>
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeInOut, // Escolha a curva desejada aqui
+      curve: Curves.easeInOut,
     );
 
-    _animation = Tween<double>(begin: 1, end: 1.2).animate(curvedAnimation);
+    _animation = Tween<double>(begin: -25, end: 25).animate(curvedAnimation);
   }
 
   @override
@@ -66,8 +71,11 @@ class _ImageWidgetState extends State<ImageWidget>
                 child: AnimatedBuilder(
                   animation: _animation,
                   builder: (context, child) {
-                    return Transform.scale(
-                      scale: _animation.value,
+                    return Transform.translate(
+                      offset:
+                          widget.orientation == AnimationOrientation.vertical
+                              ? Offset(0, _animation.value)
+                              : Offset(_animation.value, 0),
                       child: CachedImage(
                         ean: widget.ean,
                         plu: widget.plu,

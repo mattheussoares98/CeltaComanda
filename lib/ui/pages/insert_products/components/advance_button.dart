@@ -29,6 +29,9 @@ class _AdvanceButtonState extends State<AdvanceButton> {
   String _getButtonText() {
     if (widget.atualOption == SelectedOptionType.quantity) {
       return R.string.insertInCart.toUpperCase();
+    } else if (widget.atualOption ==
+        SelectedOptionType.optionalExpansibleGroup) {
+      return R.string.jump;
     } else {
       return R.string.advance.toUpperCase();
     }

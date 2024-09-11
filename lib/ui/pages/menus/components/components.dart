@@ -3,6 +3,7 @@ export './detach_items.dart';
 export './group_item.dart';
 export './group_items.dart';
 export './groups_and_products.dart';
+export './load_menu_button.dart';
 export 'open_insert_product_page.dart';
 export './portrait_name_image_price_combox_complement.dart';
 export 'name_image_price_combox_complement.dart';

@@ -75,11 +75,17 @@ class _ProductItemState extends State<ProductItem> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: LayoutBuilder(builder: (context, constraints) {
-            return NameImagePriceComboxAndComplement(
-              productsViewModel: widget.productsViewModel,
-              itemHeight: constraints.maxHeight,
-              itemWidth: constraints.maxWidth,
-            );
+            if (hasMinWidth(context)) {
+              return LandscapeNameImagePriceComboxAndComplement(
+                productsViewModel: widget.productsViewModel,
+                itemHeight: constraints.maxHeight,
+                itemWidth: constraints.maxWidth,
+              );
+            } else {
+              return PortraitNameImagePriceComboxComplement(
+                productsViewModel: widget.productsViewModel,
+              );
+            }
           }),
         ),
       ),

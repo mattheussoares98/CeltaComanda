@@ -51,51 +51,42 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      child: Row(
-                        children: [
-                          Text(
-                            productsViewModel.Name,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: getStringSize(context),
-                              color: Theme.of(context).primaryColor,
-                            ),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          text: productsViewModel.Name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                            color: Theme.of(context).primaryColor,
                           ),
-                          if (productsViewModel.IsPromoCombox == "true")
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 30),
-                              child: FittedBox(
-                                child: Text(
-                                  "(${R.string.combox})",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: getStringSize(context),
-                                  ),
-                                ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "   (${R.string.combox})",
+                              style: TextStyle(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                                fontSize: getStringSize(context),
                               ),
                             ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                    Text(
-                      productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: getStringSize(context),
-                        color: Theme.of(context).primaryColor,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: getStringSize(context),
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
                   ],

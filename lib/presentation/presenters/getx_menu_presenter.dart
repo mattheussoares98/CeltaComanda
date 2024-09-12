@@ -208,11 +208,12 @@ class GetxMenuPresenter extends GetxController
             fathers: fathers,
           );
 
-          if (fathers == childs) {
+          if (fathers.toString() == childs.toString()) {
             product.childsComposition = [
               ProductCompositionViewModel(
-                ProductCompositionId: childs[0].ProductCompositionId.toString(),
-                EnterpriseId: childs[0].EnterpriseId.toString(),
+                ProductCompositionId:
+                    childs[0].ProductCompositionId?.toString(),
+                EnterpriseId: childs[0].EnterpriseId?.toString(),
                 InternalCodeOnERPCodeFather: product.InternalCodeOnERP,
                 InternalCodeOnERPCodeChild: product.InternalCodeOnERP,
                 PluChild: product.PriceLookupCode,
@@ -220,8 +221,8 @@ class GetxMenuPresenter extends GetxController
                 Quantity: "1",
                 SalePrice: product.SaleRetailPraticed,
                 OfferPrice: product.OfferRetailPrice,
-                IncrementValue: childs[0].IncrementValue.toString(),
-                IsOptionalItem: childs[0].IsOptionalItem.toString(),
+                IncrementValue: childs[0].IncrementValue?.toString(),
+                IsOptionalItem: childs[0].IsOptionalItem?.toString(),
                 ProductOptions: "",
                 childs: [
                   ...childs

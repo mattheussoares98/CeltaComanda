@@ -5,15 +5,9 @@ import 'dart:convert';
 import '../../data/http/http.dart';
 
 class HttpAdapter implements HttpClient {
-  static final HttpAdapter _instance = HttpAdapter._internal(Client());
-
   final Client client;
 
-  factory HttpAdapter(Client client) {
-    return _instance;
-  }
-
-  HttpAdapter._internal(this.client);
+  HttpAdapter(this.client);
 
   @override
   Future<dynamic> request({

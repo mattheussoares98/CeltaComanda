@@ -124,6 +124,9 @@ class _PortraitInsertProductsPageBodyState
                                   selectedProduct: widget.selectedProduct,
                                   leftSelectedIndex: widget.indexOfAtualOption,
                                   atualOption: atualOption,
+                                  insertProductsViewModel:
+                                      widget.insertProductsViewModel![
+                                          widget.indexOfAtualOption],
                                 ),
                                 Text(
                                   widget.totalLiquid

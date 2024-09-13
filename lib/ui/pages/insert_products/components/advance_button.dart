@@ -12,12 +12,14 @@ class AdvanceButton extends StatefulWidget {
   final int quantity;
   final double totalPrice;
   final SelectedOptionType? atualOption;
+  final InsertProductsViewModel insertProductsViewModel;
   const AdvanceButton({
     required this.selectedProduct,
     required this.leftSelectedIndex,
     required this.quantity,
     required this.totalPrice,
     required this.atualOption,
+    required this.insertProductsViewModel,
     super.key,
   });
 
@@ -31,7 +33,13 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       return R.string.insertInCart.toUpperCase();
     } else if (widget.atualOption ==
         SelectedOptionType.optionalExpansibleGroup) {
-      return R.string.jump;
+      final teste = widget.insertProductsViewModel.selectedOptions.values.first;
+      final selectedLength = teste.where((e) => e.selected == true).length;
+      if (selectedLength > 0) {
+        return R.string.advance;
+      } else {
+        return R.string.jump;
+      }
     } else {
       return R.string.advance.toUpperCase();
     }

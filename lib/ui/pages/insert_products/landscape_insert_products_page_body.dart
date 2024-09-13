@@ -162,6 +162,8 @@ class _LandScapeInsertProductsPageBodyState
                   selectedProduct: widget.selectedProduct,
                   leftSelectedIndex: widget.indexOfAtualOption,
                   atualOption: atualOption,
+                  insertProductsViewModel: widget
+                      .insertProductsViewModel![widget.indexOfAtualOption],
                 ),
                 const SizedBox(height: 10),
               ],

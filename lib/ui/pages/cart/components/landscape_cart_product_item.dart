@@ -67,10 +67,10 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                   ),
                 ),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 5),
               SizedBox(
                 height: 100,
-                width: 100,
+                width: 150,
                 child: GestureDetector(
                   onTap: () {
                     showLargeImage(
@@ -87,9 +87,9 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                   child: ImageWidget(
                     ean: widget.cartProduct.Product.EanCode,
                     plu: widget.cartProduct.Product.PriceLookupCode,
-                    height: 100,
-                    width: 100,
                     selectedProduct: widget.cartProduct.Product,
+                    height: 100,
+                    width: 150,
                   ),
                 ),
               ),

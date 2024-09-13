@@ -5,12 +5,12 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../components/components.dart';
 import '../pages.dart';
 
-class LandscapeInsertProductsPageBody extends StatefulWidget {
+class LandScapeInsertProductsPageBody extends StatefulWidget {
   final List<InsertProductsViewModel>? insertProductsViewModel;
   final ProductsViewModel selectedProduct;
   final double totalLiquid;
   final int indexOfAtualOption;
-  const LandscapeInsertProductsPageBody({
+  const LandScapeInsertProductsPageBody({
     required this.insertProductsViewModel,
     required this.selectedProduct,
     required this.totalLiquid,
@@ -19,50 +19,82 @@ class LandscapeInsertProductsPageBody extends StatefulWidget {
   });
 
   @override
-  State<LandscapeInsertProductsPageBody> createState() =>
-      _LandscapeInsertProductsPageBodyState();
+  State<LandScapeInsertProductsPageBody> createState() =>
+      _LandScapeInsertProductsPageBodyState();
 }
 
-class _LandscapeInsertProductsPageBodyState
-    extends State<LandscapeInsertProductsPageBody> {
+class _LandScapeInsertProductsPageBodyState
+    extends State<LandScapeInsertProductsPageBody> {
   SelectedOptionType? atualOption;
 
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     if (widget.insertProductsViewModel != null) {
       atualOption = widget.insertProductsViewModel![widget.indexOfAtualOption]
           .selectedOptions.keys.first;
     }
 
-    double width = MediaQuery.of(context).size.width * 0.55;
+    double leftSize = MediaQuery.of(context).size.width * 0.55;
 
     return Row(
       children: [
         SizedBox(
-          width: width,
+          width: leftSize,
           child: Column(
             children: [
-              ImageAndComplement(
-                selectedProduct: widget.selectedProduct,
-                width: width / 2,
+              GestureDetector(
+                onTap: () {
+                  showLargeImage(
+                    context: context,
+                    ean: widget.selectedProduct.EanCode,
+                    plu: widget.selectedProduct.PriceLookupCode,
+                    productComplement: widget.selectedProduct.ProductComplement,
+                    menuPresenter: menuPresenter,
+                    productName: widget.selectedProduct.Name,
+                    selectedProduct: widget.selectedProduct,
+                    showInsertButton: false,
+                  );
+                },
+                child: ImageWidget(
+                  ean: widget.selectedProduct.EanCode,
+                  plu: widget.selectedProduct.PriceLookupCode,
+                  width: leftSize,
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  selectedProduct: widget.selectedProduct,
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: ProductComplement(
+                  productComplement: widget.selectedProduct.ProductComplement,
+                ),
               ),
               if (widget.insertProductsViewModel != null)
                 Expanded(
-                  child: OptionItems(
-                    selectedProduct: widget.selectedProduct,
-                    insertProductIndex: widget.indexOfAtualOption,
-                    insertProductsViewModel: widget.insertProductsViewModel!,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: OptionItems(
+                          selectedProduct: widget.selectedProduct,
+                          insertProductIndex: widget.indexOfAtualOption,
+                          insertProductsViewModel:
+                              widget.insertProductsViewModel!,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 1),
+                        child: TotalPrice(
+                          totalLiquid: widget.totalLiquid,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.only(top: 1),
-                child: TotalPrice(
-                  totalLiquid: widget.totalLiquid,
-                ),
-              ),
             ],
           ),
         ),

@@ -36,7 +36,7 @@ class _OptionItemsState extends State<OptionItems> {
     required ScrollController scrollController,
     required double viewportHeight,
   }) {
-    final proportion = ((40 / 2) * widget.insertProductIndex) / viewportHeight;
+    final proportion = ((42 / 1.5) * widget.insertProductIndex) / viewportHeight;
 
     final double targetPosition = viewportHeight * proportion;
 

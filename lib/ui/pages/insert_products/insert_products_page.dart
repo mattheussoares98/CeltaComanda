@@ -134,7 +134,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                             ),
                           ),
                           body: hasMinWidth(context)
-                              ? LandscapeInsertProductsPageBody(
+                              ? LandScapeInsertProductsPageBody(
                                   selectedProduct: selectedProduct!,
                                   totalLiquid: totalLiquid,
                                   indexOfAtualOption: indexOfAtualOption,

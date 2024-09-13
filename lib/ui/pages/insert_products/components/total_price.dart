@@ -14,26 +14,31 @@ class TotalPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 42,
       color: Theme.of(context).primaryColor,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(3.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              R.string.total,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: getStringSize(context) * 1.2,
+            FittedBox(
+              child: Text(
+                R.string.total,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: getStringSize(context) * 1.2,
+                ),
               ),
             ),
-            Text(
-              totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: getStringSize(context) * 1.2,
+            FittedBox(
+              child: Text(
+                totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: getStringSize(context) * 1.2,
+                ),
               ),
             ),
           ],

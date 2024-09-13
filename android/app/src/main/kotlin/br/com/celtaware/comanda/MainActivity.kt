@@ -21,6 +21,7 @@ import rede.smartrede.sdk.RedePayments
 class MainActivity : FlutterActivity() {
     private val redePayments: RedePayments by inject()
     private lateinit var persistentChannelManager: PersistentChannelManager
+    private var engine: FlutterEngine? = null
 
     private val channel = "rede_channel"
     private companion object {
@@ -28,6 +29,7 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        engine = flutterEngine
         super.configureFlutterEngine(flutterEngine)
         persistentChannelManager = PersistentChannelManager(flutterEngine)
 
@@ -119,20 +121,23 @@ class MainActivity : FlutterActivity() {
                     data?.let { intentData ->
                         val payment = RedePayments.getPaymentFromIntent(intentData)
                         when (payment?.status) {
-                            PaymentStatus.AUTHORIZED -> showToast("Pagamento Autorizado")
-                            PaymentStatus.FAILED -> showToast("Pagamento Falhou")
-                            PaymentStatus.DECLINED -> showToast("Pagamento Recusado")
-                            else -> Log.w(
-                                "Pagamentos",
+                            PaymentStatus.AUTHORIZED -> sendMessageToFlutter("Pagamento Autorizado")
+                            PaymentStatus.FAILED -> sendMessageToFlutter("Pagamento Falhou")
+                            PaymentStatus.DECLINED -> sendMessageToFlutter("Pagamento Recusado")
+                            else -> sendMessageToFlutter(
                                 "Status de pagamento desconhecido: ${payment?.status}"
                             )
                         }
                     }
                 }
-                Activity.RESULT_CANCELED -> showToast("Pagamento Cancelado")
+                Activity.RESULT_CANCELED -> sendMessageToFlutter("Pagamento cancelado")
                 else -> Log.w("Pagamentos", "Código de resultado desconhecido: $resultCode")
             }
         }
+    }
+
+    private fun sendMessageToFlutter(message: String) {
+        engine?.dartExecutor?.let { MethodChannel(it.binaryMessenger, channel).invokeMethod("paymentResult", message) }
     }
 
     private fun showToast(message: String) {

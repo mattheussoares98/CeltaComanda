@@ -55,4 +55,57 @@ class ProductCompositionEntity extends Equatable {
         childsComposition,
         indexOfSelectedChild,
       ];
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ProductCompositionEntity &&
+        other.ProductCompositionId == ProductCompositionId &&
+        other.EnterpriseId == EnterpriseId &&
+        other.InternalCodeOnERPCodeFather == InternalCodeOnERPCodeFather &&
+        other.InternalCodeOnERPCodeChild == InternalCodeOnERPCodeChild &&
+        other.PluChild == PluChild &&
+        other.ChildName == ChildName &&
+        other.Quantity == Quantity &&
+        other.SalePrice == SalePrice &&
+        other.OfferPrice == OfferPrice &&
+        other.IncrementValue == IncrementValue &&
+        other.IsOptionalItem == IsOptionalItem &&
+        other.ProductOptions == ProductOptions &&
+        other.comment == comment &&
+        other.indexOfSelectedChild == indexOfSelectedChild &&
+        listEquals(other.childsComposition, childsComposition);
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      ProductCompositionId,
+      EnterpriseId,
+      InternalCodeOnERPCodeFather,
+      InternalCodeOnERPCodeChild,
+      PluChild,
+      ChildName,
+      Quantity,
+      SalePrice,
+      OfferPrice,
+      IncrementValue,
+      IsOptionalItem,
+      ProductOptions,
+      comment,
+      indexOfSelectedChild,
+      childsComposition,
+    );
+  }
+
+  static bool listEquals(List? list1, List? list2) {
+    if (list1 == null && list2 == null) return true;
+    if (list1 == null || list2 == null) return false;
+    if (list1.length != list2.length) return false;
+    for (int i = 0; i < list1.length; i++) {
+      if (list1[i] != list2[i]) return false;
+    }
+    return true;
+  }
 }

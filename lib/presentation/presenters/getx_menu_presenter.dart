@@ -208,7 +208,7 @@ class GetxMenuPresenter extends GetxController
             fathers: fathers,
           );
 
-          if (fathers.toString() == childs.toString()) {
+          if (ProductCompositionEntity.listEquals(fathers, childs)) {
             product.childsComposition = [
               ProductCompositionViewModel(
                 ProductCompositionId:

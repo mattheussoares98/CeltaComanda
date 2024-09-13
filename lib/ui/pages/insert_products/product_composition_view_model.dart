@@ -63,20 +63,20 @@ class ProductCompositionViewModel extends Equatable {
   factory ProductCompositionViewModel.fromEntity(
           ProductCompositionEntity entity) =>
       ProductCompositionViewModel(
-        ProductCompositionId: entity.ProductCompositionId.toString(),
-        EnterpriseId: entity.EnterpriseId.toString(),
+        ProductCompositionId: entity.ProductCompositionId?.toString(),
+        EnterpriseId: entity.EnterpriseId?.toString(),
         InternalCodeOnERPCodeFather:
-            entity.InternalCodeOnERPCodeFather.toString(),
+            entity.InternalCodeOnERPCodeFather?.toString(),
         InternalCodeOnERPCodeChild:
-            entity.InternalCodeOnERPCodeChild.toString(),
-        PluChild: entity.PluChild.toString(),
-        ChildName: entity.ChildName.toString(),
+            entity.InternalCodeOnERPCodeChild?.toString(),
+        PluChild: entity.PluChild?.toString(),
+        ChildName: entity.ChildName?.toString(),
         Quantity: entity.Quantity?.toDouble().toString(),
         SalePrice: entity.SalePrice?.toDouble().toString(),
         OfferPrice: entity.OfferPrice?.toDouble().toString(),
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
-        IsOptionalItem: entity.IsOptionalItem.toString(),
-        ProductOptions: entity.ProductOptions.toString(),
+        IsOptionalItem: entity.IsOptionalItem?.toString(),
+        ProductOptions: entity.ProductOptions?.toString(),
         commentFather: entity.comment,
         indexOfSelectedChild: entity.indexOfSelectedChild,
         childs: entity.childsComposition
@@ -89,20 +89,20 @@ class ProductCompositionViewModel extends Equatable {
     List<ProductCompositionEntity> childs,
   ) =>
       ProductCompositionViewModel(
-        ProductCompositionId: entity.ProductCompositionId.toString(),
-        EnterpriseId: entity.EnterpriseId.toString(),
+        ProductCompositionId: entity.ProductCompositionId?.toString(),
+        EnterpriseId: entity.EnterpriseId?.toString(),
         InternalCodeOnERPCodeFather:
-            entity.InternalCodeOnERPCodeFather.toString(),
+            entity.InternalCodeOnERPCodeFather?.toString(),
         InternalCodeOnERPCodeChild:
-            entity.InternalCodeOnERPCodeChild.toString(),
-        PluChild: entity.PluChild.toString(),
-        ChildName: entity.ChildName.toString(),
+            entity.InternalCodeOnERPCodeChild?.toString(),
+        PluChild: entity.PluChild?.toString(),
+        ChildName: entity.ChildName?.toString(),
         Quantity: entity.Quantity?.toDouble().toString(),
         SalePrice: entity.SalePrice?.toDouble().toString(),
         OfferPrice: entity.OfferPrice?.toDouble().toString(),
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
-        IsOptionalItem: entity.IsOptionalItem.toString(),
-        ProductOptions: entity.ProductOptions.toString(),
+        IsOptionalItem: entity.IsOptionalItem?.toString(),
+        ProductOptions: entity.ProductOptions?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
         childs: childs
             .map((element) => ProductCompositionViewModel.fromEntity(element))

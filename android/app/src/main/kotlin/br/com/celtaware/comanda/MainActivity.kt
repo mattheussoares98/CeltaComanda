@@ -17,7 +17,6 @@ import rede.smartrede.sdk.FlexTipoPagamento
 import rede.smartrede.sdk.PaymentStatus
 import rede.smartrede.sdk.RedePaymentValidationError
 import rede.smartrede.sdk.RedePayments
-import kotlin.system.exitProcess
 
 class MainActivity : FlutterActivity() {
     private val redePayments: RedePayments by inject()

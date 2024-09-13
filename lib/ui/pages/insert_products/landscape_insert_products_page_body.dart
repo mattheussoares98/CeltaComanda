@@ -156,15 +156,16 @@ class _LandScapeInsertProductsPageBodyState
                       },
                     ),
                   ),
-                AdvanceButton(
-                  totalPrice: widget.totalLiquid,
-                  quantity: insertProductPresenter.totalProductsQuantity,
-                  selectedProduct: widget.selectedProduct,
-                  leftSelectedIndex: widget.indexOfAtualOption,
-                  atualOption: atualOption,
-                  insertProductsViewModel: widget
-                      .insertProductsViewModel![widget.indexOfAtualOption],
-                ),
+                if (widget.insertProductsViewModel != null)
+                  AdvanceButton(
+                    totalPrice: widget.totalLiquid,
+                    quantity: insertProductPresenter.totalProductsQuantity,
+                    selectedProduct: widget.selectedProduct,
+                    leftSelectedIndex: widget.indexOfAtualOption,
+                    atualOption: atualOption,
+                    insertProductsViewModel: widget
+                        .insertProductsViewModel![widget.indexOfAtualOption],
+                  ),
                 const SizedBox(height: 10),
               ],
             ),

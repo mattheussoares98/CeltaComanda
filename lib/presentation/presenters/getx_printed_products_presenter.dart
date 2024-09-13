@@ -27,7 +27,8 @@ class GetxPrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     isLoading = true;
@@ -68,8 +69,9 @@ class GetxPrintedProductsPresenter
       _printedProducts = null;
       if (printedProducts?.Products.isEmpty == false) {
         _printedProducts = PrintedViewModel.fromEntity(printedProducts!);
-        _printedProducts!.Products
-            .sort((a, b) => a.DateHourOfCreation.compareTo(b.DateHourOfCreation));
+        _printedProducts!.Products.sort((a, b) =>
+            DateTime.parse(a.DateHourOfCreation)
+                .compareTo(DateTime.parse(b.DateHourOfCreation)));
       }
     } catch (error) {
       switch (error) {

@@ -29,22 +29,12 @@ void showLargeImage({
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            Expanded(
-              flex: 4,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: ImageWidget(
-                      ean: ean,
-                      plu: plu,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      selectedProduct: selectedProduct,
-                    ),
-                  ),
-                ],
-              ),
+            ImageWidget(
+              ean: ean,
+              plu: plu,
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: MediaQuery.of(context).size.width,
+              selectedProduct: selectedProduct,
             ),
             if (selectedProduct != null)
               _complementAndInsertProductButton(

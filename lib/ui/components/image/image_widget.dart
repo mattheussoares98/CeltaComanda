@@ -101,8 +101,8 @@ class _ImageWidgetState extends State<ImageWidget>
                       .contains("(kids)") ==
                   true)
                 KidsBadge(
-                  height: widget.height * 0.4,
-                  width: widget.width * 0.4,
+                  height: widget.height * 0.25,
+                  width: widget.width * 0.25,
                 ),
               if (widget.selectedProduct?.IsAlcoholicProduct == "true")
                 AlcoholicBadge(

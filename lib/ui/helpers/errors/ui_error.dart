@@ -13,8 +13,13 @@ enum UIError {
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   invalidField,
+  liquidadeCommandError,
   maximumQuantityAchieved,
   obligatoryFixedCommandNumber,
+  paymentCanceled,
+  paymentDeclined,
+  paymentUnexpectedError,
+  paymentFailed,
   productNotFound,
   requiredField,
   shortField,
@@ -46,10 +51,20 @@ extension UIErrorExtension on UIError {
         return R.string.msgInvalidCredentials;
       case UIError.invalidCredentialsOrAccessDenied:
         return R.string.msgInvalidCredentialsOrAccessDenied;
+      case UIError.liquidadeCommandError:
+        return R.string.msgLiquidadeCommandError;
       case UIError.maximumQuantityAchieved:
         return R.string.msgMaximumQuantityAchieved;
       case UIError.obligatoryFixedCommandNumber:
         return R.string.msgObligatoryFixedCommandNumber;
+      case UIError.paymentCanceled:
+        return R.string.msgPaymentCanceled;
+      case UIError.paymentDeclined:
+        return R.string.msgPaymentDeclined;
+      case UIError.paymentUnexpectedError:
+        return R.string.msgPaymentUnexpectedError;
+      case UIError.paymentFailed:
+        return R.string.msgPaymentFailed;
       case UIError.productNotFound:
         return R.string.msgProductNotFound;
       case UIError.requiredField:

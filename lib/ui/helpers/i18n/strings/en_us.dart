@@ -8,7 +8,8 @@ class EnUs implements Translation {
   String get msgEmailInUse => 'Email already in use';
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
   String get msgCloseApplication => 'Close application';
-  String get msgCommandAlreadyPaid => 'This command already paid but an error was ocurred to liquidate. Liberate or liquidate this command';
+  String get msgCommandAlreadyPaid =>
+      'This command already paid but an error was ocurred to liquidate. Liberate or liquidate this command';
   String get msgCommandBlocked => 'This command is blocked';
   String get msgCommandDontHaveOpenValues => 'This command has no open values';
   String get msgCommandDontHaveProducts =>
@@ -29,12 +30,18 @@ class EnUs implements Translation {
       'Invalid credentials or user not authorized';
   String get msgInvalidField => 'Invalid field';
   String get msgInvalidNumber => 'Invalid number';
+  String get msgLiquidadeCommandError =>
+      "One error was ocurred to cancel liquidate the command";
   String get msgLowBatteryChargeDevice =>
       'Charge the device. It is running low on battery';
   String get msgMaximumQuantityAchieved => "Maximum quantity achivied";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
+  String get msgPaymentCanceled => 'Payment canceled';
+  String get msgPaymentDeclined => 'Payment declined';
+  String get msgPaymentUnexpectedError => 'One error was ocurred in the payment';
   String get msgPaymentEmpty => 'The command has no open values';
+  String get msgPaymentFailed => 'Payment failed';
   String get msgProductNotFound => 'The product was not found';
   String get msgRequestSentSuccessfully => 'The request was sent successfully';
   String get msgRequiredField => 'Required field';

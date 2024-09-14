@@ -141,18 +141,23 @@ class GetxPaymentPresenter extends GetxController
     PrintedProductsPresenter printedProductsPresenter,
   ) {
     _channel.setMethodCallHandler((MethodCall call) async {
-      switch (call.method) {
-        case 'Pagamento Autorizado':
+      if (call.method == "Pagamento Autorizado") {
+        try {
           await liquidateCommand(
             homePresenter: homePresenter,
             printedProductsPresenter: printedProductsPresenter,
           );
-          break;
-        case "Pagamento Falhou":
-        case "Pagamento Recusado":
-        case "Pagamento cancelado":
-        default:
-          mainError = UIError.unexpected;
+        } catch (e) {
+          mainError = UIError.liquidadeCommandError;
+        }
+      } else if (call.method == "Pagamento Falhou") {
+        mainError = UIError.paymentFailed;
+      } else if (call.method == "Pagamento cancelado") {
+        mainError = UIError.paymentCanceled;
+      } else if (call.method == "Pagamento Recusado") {
+        mainError = UIError.paymentDeclined;
+      } else {
+        mainError = UIError.paymentUnexpectedError;
       }
     });
   }

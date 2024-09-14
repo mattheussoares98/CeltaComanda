@@ -33,12 +33,18 @@ class PtBr implements Translation {
       'Credenciais inválidas ou usuário sem permissão';
   String get msgInvalidField => 'Campo inválido';
   String get msgInvalidNumber => "Número inválido";
+  String get msgLiquidadeCommandError => "Ocorreu um erro não esperado para liquidar a comanda";
   String get msgLowBatteryChargeDevice =>
       "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
+  String get msgPaymentCanceled => "Pagamento cancelado";
+  String get msgPaymentDeclined => "Pagamento recusado";
+  String get msgPaymentUnexpectedError =>
+      'Ocorreu algum erro durante a finalização do pagamento';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';
+  String get msgPaymentFailed => 'Falha ao efetuar o pagamento';
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';

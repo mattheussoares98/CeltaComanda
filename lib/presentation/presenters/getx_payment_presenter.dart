@@ -128,6 +128,9 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      await alreadyPaid.update(true);
+      _commandAlreadyPaid = true;
+
       await finishSaleRequestConcentrador.finish(
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         pdvNumber: 100,

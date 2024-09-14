@@ -529,12 +529,14 @@ void main() {
             commandNumber: homePresenter.commandNumberMock!.toInt(),
           )).called(1);
     });
-    test("Should update already paid to false in success", () async {
+    test("Should update already paid to true and then to false in success",
+        () async {
       await sut.liquidateCommand(
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
       );
 
+      verify(() => alreadyPaid.update(true)).called(1);
       verify(() => alreadyPaid.update(false)).called(1);
     });
 

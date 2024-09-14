@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -132,4 +133,32 @@ class GetxPaymentPresenter extends GetxController
   bool _commandAlreadyPaid = false;
   @override
   bool get commandAlreadyPaid => _commandAlreadyPaid;
+
+  final _channel = const MethodChannel('rede_channel');
+  @override
+  void initPaymentResultHandler(
+    HomePresenter homePresenter,
+    PrintedProductsPresenter printedProductsPresenter,
+  ) {
+    _channel.setMethodCallHandler((MethodCall call) async {
+      switch (call.method) {
+        case 'Pagamento Autorizado':
+          await liquidateCommand(
+            homePresenter: homePresenter,
+            printedProductsPresenter: printedProductsPresenter,
+          );
+          break;
+        case "Pagamento Falhou":
+        case "Pagamento Recusado":
+        case "Pagamento cancelado":
+        default:
+          mainError = UIError.unexpected;
+      }
+    });
+  }
+
+  @override
+  void disposePaymentResultHandler() {
+    _channel.setMethodCallHandler(null);
+  }
 }

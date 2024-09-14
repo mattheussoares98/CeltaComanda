@@ -31,4 +31,11 @@ abstract class PaymentPresenter implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
   });
+
+  void initPaymentResultHandler(
+    HomePresenter homePresenter,
+    PrintedProductsPresenter printedProductsPresenter,
+  );
+
+  void disposePaymentResultHandler();
 }

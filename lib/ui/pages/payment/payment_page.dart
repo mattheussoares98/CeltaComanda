@@ -19,19 +19,29 @@ class _PaymentPageState extends State<PaymentPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  PaymentPresenter? paymentPresenter;
 
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    paymentPresenter?.disposePaymentResultHandler();
   }
 
   @override
   void initState() {
     super.initState();
-    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-    _getAlreadyPaid(paymentPresenter);
+    paymentPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    _getAlreadyPaid(paymentPresenter!);
+
+    paymentPresenter?.initPaymentResultHandler(
+      homePresenter,
+      printedProductsPresenter,
+    );
   }
 
   Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {

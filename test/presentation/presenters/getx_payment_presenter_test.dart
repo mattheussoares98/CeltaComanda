@@ -539,6 +539,19 @@ void main() {
       verify(() => alreadyPaid.update(true)).called(1);
       verify(() => alreadyPaid.update(false)).called(1);
     });
+    test("Should already paid is true if finishSaleRequestConcentrador throws",
+        () async {
+      finishSaleRequestConcentrador.mockFinishError();
+
+      await sut.liquidateCommand(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => alreadyPaid.update(true)).called(1);
+      verifyNever(() => alreadyPaid.update(false));
+      expect(sut.commandAlreadyPaid, true);
+    });
 
     test("Should update commandAlreadyPaid to false in success", () async {
       await sut.liquidateCommand(

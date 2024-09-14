@@ -117,17 +117,19 @@ class _PortraitInsertProductsPageBodyState
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AdvanceButton(
-                                  totalPrice: widget.totalLiquid,
-                                  quantity: insertProductPresenter
-                                      .totalProductsQuantity,
-                                  selectedProduct: widget.selectedProduct,
-                                  leftSelectedIndex: widget.indexOfAtualOption,
-                                  atualOption: atualOption,
-                                  insertProductsViewModel:
-                                      widget.insertProductsViewModel![
-                                          widget.indexOfAtualOption],
-                                ),
+                                if (widget.insertProductsViewModel != null)
+                                  AdvanceButton(
+                                    totalPrice: widget.totalLiquid,
+                                    quantity: insertProductPresenter
+                                        .totalProductsQuantity,
+                                    selectedProduct: widget.selectedProduct,
+                                    leftSelectedIndex:
+                                        widget.indexOfAtualOption,
+                                    atualOption: atualOption,
+                                    insertProductsViewModel:
+                                        widget.insertProductsViewModel![
+                                            widget.indexOfAtualOption],
+                                  ),
                                 Text(
                                   widget.totalLiquid
                                       .toString()

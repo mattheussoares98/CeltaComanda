@@ -24,12 +24,11 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
   }
 
   void mockDoPayment() => when(
-        () => this.doPayment(
+        () => this.callPayment(
           longAmountValue: any(named: "longAmountValue"),
           portionQuantity: any(named: "portionQuantity"),
           paymentMode: any(named: "paymentMode"),
           homePresenter: any(named: "homePresenter"),
-          printedProductsPresenter: any(named: "printedProductsPresenter"),
         ),
       ).thenAnswer((any) async => any);
 

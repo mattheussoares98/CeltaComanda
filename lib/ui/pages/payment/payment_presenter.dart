@@ -9,12 +9,11 @@ abstract class PaymentPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   bool get commandAlreadyPaid;
 
-  Future<void> doPayment({
+  Future<void> callPayment({
     required double longAmountValue,
     required int portionQuantity,
     required PaymentMode paymentMode,
     required HomePresenter homePresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
   });
 
   Future<void> getTotalValue({

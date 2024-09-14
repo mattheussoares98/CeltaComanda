@@ -104,11 +104,10 @@ void main() {
     registerFallbackValue(MenuPresenterSpy());
   });
 
-  group("Do payment", () {
+  group("Call payment", () {
     test('Should call payment correctly with pix', () async {
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -123,9 +122,8 @@ void main() {
           )).called(1);
     });
     test('Should call payment correctly with debit', () async {
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.debit,
@@ -140,9 +138,8 @@ void main() {
           )).called(1);
     });
     test('Should call payment correctly with credit', () async {
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.credit,
@@ -157,9 +154,8 @@ void main() {
           )).called(1);
     });
     test('Should convert amountValue correctly', () async {
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: 280.001,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -177,9 +173,8 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -192,9 +187,8 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -207,9 +201,8 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.blockedCommand]));
 
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -217,9 +210,8 @@ void main() {
     });
 
     test('Should call isValidDatetime', () async {
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -238,9 +230,8 @@ void main() {
         emitsInOrder([null, UIError.blockedCommand]),
       );
 
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -249,9 +240,8 @@ void main() {
     test('Should not call to do payment when is invalid datetime', () async {
       commandInformations.mockIsValidDateTime(false);
 
-      await sut.doPayment(
+      await sut.callPayment(
         homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
@@ -264,106 +254,6 @@ void main() {
               portionQuantity: portionQuantity,
             ),
           ));
-    });
-    test('Should call finishSaleRequestConcentrador', () async {
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verify(() => finishSaleRequestConcentrador.finish(
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            pdvNumber: 100,
-            commandNumber: homePresenter.commandNumberMock!.toInt(),
-          )).called(1);
-    });
-    test('Should emit correct values on error to finishSaleRequestConcentrador',
-        () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-
-      finishSaleRequestConcentrador.mockFinishError();
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-    });
-    test('Should call alreadyPaid.update correctly in success', () async {
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verify(() => alreadyPaid.update(true)).called(1);
-      verify(() => alreadyPaid.update(false)).called(1);
-    });
-    test(
-        'Should not call alreadyPaid.update to false when dont finish saleRequest in concentrador',
-        () async {
-      finishSaleRequestConcentrador.mockFinishError();
-
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verify(() => alreadyPaid.update(true)).called(1);
-      verifyNever(() => alreadyPaid.update(false));
-    });
-    test('Should update commandAlreadyPaid to false in success', () async {
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      expect(sut.commandAlreadyPaid, false);
-    });
-    test(
-        'Should update commandAlreadyPaid to true in error to finishSaleRequestConcentrador',
-        () async {
-      finishSaleRequestConcentrador.mockFinishError();
-
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      expect(sut.commandAlreadyPaid, true);
-    });
-    test('Should call printedProductsPresenter.loadPrinted on success',
-        () async {
-      await sut.doPayment(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        longAmountValue: longAmountValue,
-        portionQuantity: portionQuantity,
-        paymentMode: PaymentMode.pix,
-      );
-
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
-          .called(1);
     });
   });
 

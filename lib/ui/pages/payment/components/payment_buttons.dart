@@ -45,14 +45,13 @@ class PaymentButtons extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await paymentPresenter.doPayment(
+                  await paymentPresenter.callPayment(
                     longAmountValue: printedProductsPresenter
                         .printedProducts!.TotalLiquid
                         .toDouble(),
                     portionQuantity: 1,
                     paymentMode: PaymentMode.pix,
                     homePresenter: homePresenter,
-                    printedProductsPresenter: printedProductsPresenter,
                   );
                 },
                 child: Text(
@@ -66,14 +65,13 @@ class PaymentButtons extends StatelessWidget {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () async {
-                  await paymentPresenter.doPayment(
+                  await paymentPresenter.callPayment(
                     longAmountValue: printedProductsPresenter
                         .printedProducts!.TotalLiquid
                         .toDouble(),
                     portionQuantity: 1,
                     paymentMode: PaymentMode.debit,
                     homePresenter: homePresenter,
-                    printedProductsPresenter: printedProductsPresenter,
                   );
                 },
                 child: Text(
@@ -87,14 +85,13 @@ class PaymentButtons extends StatelessWidget {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () async {
-                  await paymentPresenter.doPayment(
+                  await paymentPresenter.callPayment(
                     longAmountValue: printedProductsPresenter
                         .printedProducts!.TotalLiquid
                         .toDouble(),
                     portionQuantity: 1,
                     paymentMode: PaymentMode.credit,
                     homePresenter: homePresenter,
-                    printedProductsPresenter: printedProductsPresenter,
                   );
                 },
                 child: Text(

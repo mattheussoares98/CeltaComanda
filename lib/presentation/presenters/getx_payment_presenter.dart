@@ -23,12 +23,11 @@ class GetxPaymentPresenter extends GetxController
   });
 
   @override
-  Future<void> doPayment({
+  Future<void> callPayment({
     required double longAmountValue,
     required int portionQuantity,
     required PaymentMode paymentMode,
     required HomePresenter homePresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     mainError = null;
     isLoading = true;
@@ -48,25 +47,6 @@ class GetxPaymentPresenter extends GetxController
           portionQuantity: portionQuantity,
         ),
       );
-
-      await alreadyPaid.update(true);
-      _commandAlreadyPaid = true;
-
-      await commandInformations.openOrBlockade(
-        commandNumber: homePresenter.commandNumber!,
-        isOpen: true,
-      );
-
-      await finishSaleRequestConcentrador.finish(
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        pdvNumber: 100,
-        commandNumber: homePresenter.commandNumber!.toInt(),
-      );
-
-      await alreadyPaid.update(false);
-      _commandAlreadyPaid = false;
-
-      await printedProductsPresenter.loadPrinted(homePresenter);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:

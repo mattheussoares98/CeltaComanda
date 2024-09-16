@@ -40,138 +40,154 @@ class _LandScapeInsertProductsPageBodyState
 
     double leftSize = MediaQuery.of(context).size.width * 0.55;
 
-    return Row(
-      children: [
-        SizedBox(
-          width: leftSize,
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  showLargeImage(
-                    context: context,
-                    ean: widget.selectedProduct.EanCode,
-                    plu: widget.selectedProduct.PriceLookupCode,
-                    productComplement: widget.selectedProduct.ProductComplement,
-                    menuPresenter: menuPresenter,
-                    productName: widget.selectedProduct.Name,
-                    selectedProduct: widget.selectedProduct,
-                    showInsertButton: false,
-                  );
-                },
-                child: ImageWidget(
-                  ean: widget.selectedProduct.EanCode,
-                  plu: widget.selectedProduct.PriceLookupCode,
-                  width: leftSize,
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  selectedProduct: widget.selectedProduct,
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: ProductComplement(
-                  productComplement: widget.selectedProduct.ProductComplement,
-                ),
-              ),
-              if (widget.insertProductsViewModel != null)
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: OptionItems(
-                          selectedProduct: widget.selectedProduct,
-                          insertProductIndex: widget.indexOfAtualOption,
-                          insertProductsViewModel:
-                              widget.insertProductsViewModel!,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 1),
-                        child: TotalPrice(
-                          totalLiquid: widget.totalLiquid,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5.0),
+    return LayoutBuilder(builder: (context, constraints) {
+      double screenHeight = constraints.maxHeight;
+      double imageHeight = screenHeight * 0.25;
+      double maxListViewHeight = screenHeight *
+          (widget.selectedProduct.ProductComplement == null ? 0.75 : 0.3);
+
+      return Row(
+        children: [
+          SizedBox(
+            width: leftSize,
             child: Column(
               children: [
-                if (atualOption == SelectedOptionType.fatherComposition)
-                  Text(
-                    insertProductPresenter
-                        .getLastSelectedFather(widget.indexOfAtualOption)!
-                        .ChildName!,
-                    style: TextStyle(
-                      fontSize: getStringSize(context) * 1.4,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).secondaryHeaderColor,
-                    ),
-                  ),
-                if (widget.insertProductsViewModel != null)
-                  TitleText(
-                    selectedProduct: widget.selectedProduct,
-                    insertProductsViewModel: widget
-                        .insertProductsViewModel![widget.indexOfAtualOption],
-                  ),
-                if (atualOption == SelectedOptionType.optionalExpansibleGroup)
-                  Expanded(
-                    child: OptionalGroups(
-                      selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfAtualOption,
-                    ),
-                  ),
-                if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
-                  Expanded(
-                    child: ObligatoryGroups(
-                      selectedProduct: widget.selectedProduct,
-                      selectedLeftIndex: widget.indexOfAtualOption,
-                    ),
-                  ),
-                if (atualOption == SelectedOptionType.quantity)
-                  Expanded(
-                      child: UpdateQuantity(
-                    quantity: insertProductPresenter.totalProductsQuantity,
-                    reduceQuantity: () {
-                      insertProductPresenter.updateTotalProductsQuantity(false);
+                SizedBox(
+                  height: imageHeight,
+                  child: GestureDetector(
+                    onTap: () {
+                      showLargeImage(
+                        context: context,
+                        ean: widget.selectedProduct.EanCode,
+                        plu: widget.selectedProduct.PriceLookupCode,
+                        productComplement:
+                            widget.selectedProduct.ProductComplement,
+                        menuPresenter: menuPresenter,
+                        productName: widget.selectedProduct.Name,
+                        selectedProduct: widget.selectedProduct,
+                        showInsertButton: false,
+                      );
                     },
-                    addQuantity: () {
-                      insertProductPresenter.updateTotalProductsQuantity(true);
-                    },
-                  )),
-                if (atualOption == SelectedOptionType.fatherComposition)
-                  Expanded(
-                    child: ChildsRadios(
+                    child: ImageWidget(
+                      ean: widget.selectedProduct.EanCode,
+                      plu: widget.selectedProduct.PriceLookupCode,
+                      width: leftSize,
+                      height: imageHeight,
                       selectedProduct: widget.selectedProduct,
-                      selectedFather: insertProductPresenter
-                          .getLastSelectedFather(widget.indexOfAtualOption)!,
-                      callSetState: () {
-                        setState(() {});
-                      },
                     ),
                   ),
-                if (widget.insertProductsViewModel != null)
-                  AdvanceButton(
-                    totalPrice: widget.totalLiquid,
-                    quantity: insertProductPresenter.totalProductsQuantity,
-                    selectedProduct: widget.selectedProduct,
-                    leftSelectedIndex: widget.indexOfAtualOption,
-                    atualOption: atualOption,
-                    insertProductsViewModel: widget
-                        .insertProductsViewModel![widget.indexOfAtualOption],
+                ),
+                Expanded(
+                  child: ProductComplement(
+                    productComplement: widget.selectedProduct.ProductComplement,
                   ),
-                const SizedBox(height: 10),
+                ),
+                if (widget.insertProductsViewModel != null)
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: maxListViewHeight,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          child: OptionItems(
+                            selectedProduct: widget.selectedProduct,
+                            insertProductIndex: widget.indexOfAtualOption,
+                            insertProductsViewModel:
+                                widget.insertProductsViewModel!,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 1),
+                          child: TotalPrice(
+                            totalLiquid: widget.totalLiquid,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
-        ),
-      ],
-    );
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Column(
+                children: [
+                  if (atualOption == SelectedOptionType.fatherComposition)
+                    Text(
+                      insertProductPresenter
+                          .getLastSelectedFather(widget.indexOfAtualOption)!
+                          .ChildName!,
+                      style: TextStyle(
+                        fontSize: getStringSize(context) * 1.4,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).secondaryHeaderColor,
+                      ),
+                    ),
+                  if (widget.insertProductsViewModel != null)
+                    TitleText(
+                      selectedProduct: widget.selectedProduct,
+                      insertProductsViewModel: widget
+                          .insertProductsViewModel![widget.indexOfAtualOption],
+                    ),
+                  if (atualOption == SelectedOptionType.optionalExpansibleGroup)
+                    Expanded(
+                      child: OptionalGroups(
+                        selectedProduct: widget.selectedProduct,
+                        selectedLeftIndex: widget.indexOfAtualOption,
+                      ),
+                    ),
+                  if (atualOption ==
+                      SelectedOptionType.obligatoryExpansibleGroup)
+                    Expanded(
+                      child: ObligatoryGroups(
+                        selectedProduct: widget.selectedProduct,
+                        selectedLeftIndex: widget.indexOfAtualOption,
+                      ),
+                    ),
+                  if (atualOption == SelectedOptionType.quantity)
+                    Expanded(
+                        child: UpdateQuantity(
+                      quantity: insertProductPresenter.totalProductsQuantity,
+                      reduceQuantity: () {
+                        insertProductPresenter
+                            .updateTotalProductsQuantity(false);
+                      },
+                      addQuantity: () {
+                        insertProductPresenter
+                            .updateTotalProductsQuantity(true);
+                      },
+                    )),
+                  if (atualOption == SelectedOptionType.fatherComposition)
+                    Expanded(
+                      child: ChildsRadios(
+                        selectedProduct: widget.selectedProduct,
+                        selectedFather: insertProductPresenter
+                            .getLastSelectedFather(widget.indexOfAtualOption)!,
+                        callSetState: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  if (widget.insertProductsViewModel != null)
+                    AdvanceButton(
+                      totalPrice: widget.totalLiquid,
+                      quantity: insertProductPresenter.totalProductsQuantity,
+                      selectedProduct: widget.selectedProduct,
+                      leftSelectedIndex: widget.indexOfAtualOption,
+                      atualOption: atualOption,
+                      insertProductsViewModel: widget
+                          .insertProductsViewModel![widget.indexOfAtualOption],
+                    ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

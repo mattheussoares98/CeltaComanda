@@ -81,6 +81,7 @@ class GroupsAndProducts extends StatelessWidget {
               child: ProductsItems(
                 products: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].entries.first.value,
+                scrollController: scrollController,
               ),
             ),
         ],

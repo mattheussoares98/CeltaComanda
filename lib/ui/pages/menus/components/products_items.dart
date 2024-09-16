@@ -6,9 +6,11 @@ import '../../pages.dart';
 
 class ProductsItems extends StatelessWidget {
   final List<ProductsViewModel> products;
+  final ScrollController scrollController;
 
   const ProductsItems({
     required this.products,
+    required this.scrollController,
     super.key,
   });
 
@@ -21,6 +23,7 @@ class ProductsItems extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return ListView.builder(
+        controller: scrollController,
         itemCount: products.length,
         itemBuilder: (context, i) {
           final product = products[i];

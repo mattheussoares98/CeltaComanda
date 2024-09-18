@@ -64,15 +64,16 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           children: <TextSpan>[
-                            TextSpan(
-                              text: "   (${R.string.combox})",
-                              style: TextStyle(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                fontSize: getStringSize(context),
+                            if (productsViewModel.IsPromoCombox == "true")
+                              TextSpan(
+                                text: "   (${R.string.combox})",
+                                style: TextStyle(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: getStringSize(context),
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),

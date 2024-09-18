@@ -25,6 +25,9 @@ class ProductsItems extends StatelessWidget {
     return ListView.builder(
         controller: scrollController,
         itemCount: products.length,
+        itemExtent: (MediaQuery.of(context).size.height -
+                AppBar().preferredSize.height) /
+            3.5,
         itemBuilder: (context, i) {
           final product = products[i];
 
@@ -41,9 +44,6 @@ class ProductsItems extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),
               child: Container(
-                height: (MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height) /
-                    3.5,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,

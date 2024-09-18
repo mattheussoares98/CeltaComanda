@@ -32,16 +32,21 @@ class _PaymentPageState extends State<PaymentPage>
   @override
   void initState() {
     super.initState();
-    paymentPresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    _getAlreadyPaid(paymentPresenter!);
 
-    paymentPresenter?.initPaymentResultHandler(
-      homePresenter,
-      printedProductsPresenter,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        paymentPresenter = Provider.of(context, listen: false);
+        PrintedProductsPresenter printedProductsPresenter =
+            Provider.of(context, listen: false);
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+        _getAlreadyPaid(paymentPresenter!);
+
+        paymentPresenter?.initPaymentResultHandler(
+          homePresenter,
+          printedProductsPresenter,
+        );
+      }
+    });
   }
 
   Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {

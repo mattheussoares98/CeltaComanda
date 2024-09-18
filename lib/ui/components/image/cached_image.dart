@@ -43,8 +43,8 @@ class CachedImage extends StatelessWidget {
 
     return CachedNetworkImage(
       fit: BoxFit.contain,
-      memCacheHeight: 887,
-      memCacheWidth: 887,
+      // memCacheHeight: 887,
+      // memCacheWidth: 887,
       cacheManager: _customCacheManager,
       key: ValueKey<String>(url),
       imageUrl: url,

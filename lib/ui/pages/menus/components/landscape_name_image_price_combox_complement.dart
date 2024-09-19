@@ -9,10 +9,12 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
   final ProductsViewModel productsViewModel;
   final double itemHeight;
   final double itemWidth;
+  final Function() onTapInsertInCart;
   const LandscapeNameImagePriceComboxAndComplement({
     required this.productsViewModel,
     required this.itemHeight,
     required this.itemWidth,
+    required this.onTapInsertInCart,
     super.key,
   });
 
@@ -99,6 +101,20 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
                     productComplement: productsViewModel.ProductComplement,
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 2, 8, 8),
+                    child: ElevatedButton(
+                      onPressed: onTapInsertInCart,
+                      child: Text(
+                        R.string.insertInCart,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

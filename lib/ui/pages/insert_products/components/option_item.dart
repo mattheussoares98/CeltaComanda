@@ -124,23 +124,40 @@ class OptionItem extends StatelessWidget {
               color: getItemColor(snapshot.data == true, context),
               margin: const EdgeInsets.only(bottom: 1),
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: RichText(
-                text: TextSpan(
-                  text: getOptionItemTitle(atualOption),
-                  children: lastSelectedFather == null ||
-                          atualOption == SelectedOptionType.fatherComposition ||
-                          atualOption == SelectedOptionType.quantity
-                      ? null
-                      : <TextSpan>[
-                          TextSpan(
-                            text: " (${R.string.comment.toUpperCase()})",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.yellow,
-                            ),
-                          ),
-                        ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      text: getOptionItemTitle(atualOption),
+                      children: lastSelectedFather == null ||
+                              atualOption ==
+                                  SelectedOptionType.fatherComposition ||
+                              atualOption == SelectedOptionType.quantity
+                          ? null
+                          : <TextSpan>[
+                              TextSpan(
+                                text: " (${R.string.comment.toUpperCase()})",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.yellow,
+                                ),
+                              ),
+                            ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                    child: FittedBox(
+                      child: Text(
+                        getSelectedGroups(
+                          expansibleGroupFromProductPresenter,
+                        ),
+                        style: TextStyle(color: Colors.grey[200]),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }),

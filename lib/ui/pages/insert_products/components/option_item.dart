@@ -78,6 +78,27 @@ class OptionItem extends StatelessWidget {
     }
   }
 
+  String getSelectedGroups(
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) {
+    if (insertProductViewModel.selectedOptions.keys.first ==
+            SelectedOptionType.obligatoryExpansibleGroup ||
+        insertProductViewModel.selectedOptions.keys.first ==
+            SelectedOptionType.optionalExpansibleGroup) {
+      final groups = insertProductViewModel.selectedOptions.values.first
+          as List<ExpansibleGroupFromProductViewModel>;
+
+      String selecteds =
+          groups.where((e) => e.selected).map((e) => e.GroupName).toString();
+
+      return selecteds
+          .replaceAll(RegExp(r'\('), '')
+          .replaceAll(RegExp(r'\)'), '');
+    } else {
+      return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =

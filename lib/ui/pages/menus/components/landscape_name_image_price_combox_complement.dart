@@ -53,7 +53,7 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: Row(
                   children: [
                     Expanded(

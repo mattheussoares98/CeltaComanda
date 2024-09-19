@@ -9,7 +9,7 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
   final ProductsViewModel productsViewModel;
   final double itemHeight;
   final double itemWidth;
-  final Function() onTapInsertInCart;
+  final Future<void> Function() onTapInsertInCart;
   const LandscapeNameImagePriceComboxAndComplement({
     required this.productsViewModel,
     required this.itemHeight,
@@ -108,7 +108,9 @@ class LandscapeNameImagePriceComboxAndComplement extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 2, 8, 8),
                     child: ElevatedButton(
-                      onPressed: onTapInsertInCart,
+                      onPressed: () async {
+                        await onTapInsertInCart();
+                      },
                       child: Text(
                         R.string.insertInCart,
                       ),

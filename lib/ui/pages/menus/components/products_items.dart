@@ -14,6 +14,21 @@ class ProductsItems extends StatelessWidget {
     super.key,
   });
 
+  Future<void> onTapInsertInCart({
+    required InsertProductPresenter insertProductsPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required ProductsViewModel product,
+    required MenuPresenter menuPresenter,
+  }) async {
+    await insertProductsPresenter.updateSelectedProduct(
+      product: product,
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+    );
+    menuPresenter.goToInsertProductPage(product);
+    menuPresenter.updateSuggestionsProducts(product);
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -33,13 +48,13 @@ class ProductsItems extends StatelessWidget {
 
           return GestureDetector(
             onTap: () async {
-              await insertProductsPresenter.updateSelectedProduct(
-                product: product,
+              await onTapInsertInCart(
+                insertProductsPresenter: insertProductsPresenter,
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
+                product: product,
+                menuPresenter: menuPresenter,
               );
-              menuPresenter.goToInsertProductPage(product);
-              menuPresenter.updateSuggestionsProducts(product);
             },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(4, 2, 2, 3),
@@ -73,6 +88,15 @@ class ProductsItems extends StatelessWidget {
                       productsViewModel: product,
                       itemHeight: constraints.maxHeight,
                       itemWidth: constraints.maxWidth,
+                      onTapInsertInCart: () async {
+                        await onTapInsertInCart(
+                          insertProductsPresenter: insertProductsPresenter,
+                          expansibleGroupFromProductPresenter:
+                              expansibleGroupFromProductPresenter,
+                          product: product,
+                          menuPresenter: menuPresenter,
+                        );
+                      },
                     );
                   } else {
                     return PortraitNameImagePriceComboxComplement(

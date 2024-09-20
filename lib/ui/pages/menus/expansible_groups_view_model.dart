@@ -33,7 +33,7 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
         ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
         OrderClassification: entity.OrderClassification.toString(),
-        subgroups: entity.subgroups,
+        subgroups: null,
       );
 
   ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(
@@ -41,6 +41,5 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupId: int.tryParse(ExpansibleGroupId) ?? 0,
         ExpansibleGroupType: int.tryParse(ExpansibleGroupType) ?? 0,
         OrderClassification: int.tryParse(OrderClassification) ?? 0,
-        subgroups: subgroups,
       );
 }

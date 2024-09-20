@@ -92,7 +92,7 @@ void main() {
               ExpansibleGroupId: e.ExpansibleGroupId.toString(),
               ExpansibleGroupType: e.ExpansibleGroupType.toString(),
               OrderClassification: e.OrderClassification.toString(),
-              subgroups: e.subgroups,
+              subgroups: null,
             ))
         .toList();
     productEan = faker.randomGenerator.integer(13).toString();
@@ -353,7 +353,32 @@ void main() {
     });
 
     test("Should update ExpansibleGroup correctly when has | separator",
-        () async {});
+        () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        [
+          ExpansibleGroupEntity(
+            Name: "teste|primeiro",
+            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupType: faker.randomGenerator.integer(100),
+            OrderClassification: faker.randomGenerator.integer(100),
+          ),
+          ExpansibleGroupEntity(
+            Name: "teste|segundo",
+            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupType: faker.randomGenerator.integer(100),
+            OrderClassification: faker.randomGenerator.integer(100),
+          ),
+        ],
+      );
+
+      await sut.getGroupsAndProducts(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.loadedMenu[0].keys.first.subgroups, ["primeiro", "segundo"]);
+    });
   });
 
   group("Get expansible groups on get groups and products", () {

@@ -7,14 +7,12 @@ class ExpansibleGroupEntity extends Equatable {
   final int ExpansibleGroupId;
   final int ExpansibleGroupType;
   final int OrderClassification;
-  final List<String>? subgroups;
 
   const ExpansibleGroupEntity({
     required this.Name,
     required this.ExpansibleGroupId,
     required this.ExpansibleGroupType,
     required this.OrderClassification,
-    required this.subgroups,
   });
 
   @override
@@ -23,6 +21,5 @@ class ExpansibleGroupEntity extends Equatable {
         ExpansibleGroupId,
         ExpansibleGroupType,
         OrderClassification,
-        subgroups,
       ];
 }

@@ -35,7 +35,8 @@ class CartProductsViewModel extends Equatable {
 
   factory CartProductsViewModel.fromEntity(CartProductEntity entity) =>
       CartProductsViewModel(
-        Product: ProductsViewModel.fromEntity(entity.Product, entity.Quantity),
+        Product: ProductsViewModel.fromEntity(entity.Product,
+            productQuantity: entity.Quantity),
         Comments: entity.Comments,
         TotalLiquid: entity.TotalLiquid.toString(),
         Quantity: entity.Quantity.toString(),

@@ -76,8 +76,10 @@ class ProductsViewModel extends Equatable {
   List<ProductCompositionViewModel>? childsComposition;
   List<SuggestionSaleEntity>? suggestions;
   double productQuantity;
+  String? subgroupName;
 
   ProductsViewModel({
+    required this.subgroupName,
     required this.MaximumQuantityForSale,
     required this.IsPromoCombox,
     required this.ProductComplement,
@@ -219,9 +221,13 @@ class ProductsViewModel extends Equatable {
         MaximumQuantityForSale,
       ];
 
-  factory ProductsViewModel.fromEntity(ProductEntity entity,
-          [double? productQuantity]) =>
+  factory ProductsViewModel.fromEntity(
+    ProductEntity entity, {
+    double? productQuantity,
+    String? subgroupName,
+  }) =>
       ProductsViewModel(
+        subgroupName: subgroupName,
         suggestions: null,
         productQuantity:
             productQuantity != null ? productQuantity.toDouble() : 1.0,
@@ -536,6 +542,7 @@ class ProductsViewModel extends Equatable {
       };
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
+        subgroupName: null,
         suggestions: json["suggestions"],
         ProductsId: json["ProductsId"],
         InternalCodeOnERP: json["InternalCodeOnERP"],

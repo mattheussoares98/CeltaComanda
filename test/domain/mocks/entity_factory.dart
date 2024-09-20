@@ -217,8 +217,10 @@ class EntityFactory {
     bool? isOptionalChilds,
     int? maximumProductQuantity,
     double? productQuantity,
+    String? subgroupName,
   }) {
     return ProductsViewModel(
+      subgroupName: subgroupName,
       suggestions: null,
       MaximumQuantityForSale: maximumProductQuantity != null
           ? maximumProductQuantity.toString()

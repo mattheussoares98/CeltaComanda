@@ -181,8 +181,11 @@ class GetxMenuPresenter extends GetxController
 
           if (products != null) {
             _loadedMenu.add({
-              ExpansibleGroupsViewModel.fromEntity(expansibleGroup):
-                  products.map((e) => ProductsViewModel.fromEntity(e)).toList()
+              ExpansibleGroupsViewModel.fromEntity(
+                entity: expansibleGroup,
+                groupName:
+                    getExpansibleGroupNameWithoutPipes(expansibleGroup.Name),
+              ): products.map((e) => ProductsViewModel.fromEntity(e)).toList()
             });
           } else {
             throw DomainError.unexpected;

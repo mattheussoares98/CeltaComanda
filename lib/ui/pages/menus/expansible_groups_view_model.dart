@@ -27,9 +27,12 @@ class ExpansibleGroupsViewModel extends Equatable {
     required this.subgroups,
   });
 
-  factory ExpansibleGroupsViewModel.fromEntity(ExpansibleGroupEntity entity) =>
+  factory ExpansibleGroupsViewModel.fromEntity({
+    required ExpansibleGroupEntity entity,
+    required String groupName,
+  }) =>
       ExpansibleGroupsViewModel(
-        Name: entity.Name,
+        Name: groupName,
         ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
         ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
         OrderClassification: entity.OrderClassification.toString(),

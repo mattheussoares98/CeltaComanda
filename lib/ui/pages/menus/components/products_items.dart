@@ -6,11 +6,13 @@ import '../../pages.dart';
 
 class ProductsItems extends StatelessWidget {
   final List<ProductsViewModel> products;
-  final ScrollController scrollController;
+  final ScrollController productsScrollController;
+  final double itemExtent;
 
   const ProductsItems({
     required this.products,
-    required this.scrollController,
+    required this.productsScrollController,
+    required this.itemExtent,
     super.key,
   });
 
@@ -38,11 +40,9 @@ class ProductsItems extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return ListView.builder(
-        controller: scrollController,
+        controller: productsScrollController,
         itemCount: products.length,
-        itemExtent: (MediaQuery.of(context).size.height -
-                AppBar().preferredSize.height) /
-            3.5,
+        itemExtent: itemExtent,
         itemBuilder: (context, i) {
           final product = products[i];
 

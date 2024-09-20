@@ -26,16 +26,16 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
 
   Future<void> _scrollUp({
     required MenuPresenter menuPresenter,
-    required ScrollController scrollController,
+    required ScrollController productsScrollController,
   }) async {
-    if (!scrollController.hasClients) return;
+    if (!productsScrollController.hasClients) return;
 
-    final currentPosition = scrollController.position.pixels;
-    final minScrollExtent = scrollController.position.minScrollExtent;
+    final currentPosition = productsScrollController.position.pixels;
+    final minScrollExtent = productsScrollController.position.minScrollExtent;
 
     if (currentPosition >= minScrollExtent) {
-      await scrollController.animateTo(
-        scrollController.position.minScrollExtent,
+      await productsScrollController.animateTo(
+        productsScrollController.position.minScrollExtent,
         duration: Duration(
             milliseconds: menuPresenter
                     .loadedMenu[selectedIndex ?? 0].values.first.length *
@@ -45,10 +45,16 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
     }
   }
 
+  double getProductItemExtent(BuildContext context) {
+    return (MediaQuery.of(context).size.height -
+            AppBar().preferredSize.height) /
+        3.5;
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    final scrollController = ScrollController();
+    final productsScrollController = ScrollController();
 
     return Expanded(
       child: Row(
@@ -64,7 +70,7 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
               scrollUpItemsList: () {
                 _scrollUp(
                   menuPresenter: menuPresenter,
-                  scrollController: scrollController,
+                  productsScrollController: productsScrollController,
                 );
               },
             ),
@@ -82,13 +88,18 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
               child: Row(
                 children: [
                   if (hasMinWidth(context))
-                    Subgroups(selectedIndex: selectedIndex),
+                    Subgroups(
+                      selectedIndex: selectedIndex,
+                      productsScrollController: productsScrollController,
+                      productItemExtent: getProductItemExtent(context),
+                    ),
                   Expanded(
                     flex: 4,
                     child: ProductsItems(
                       products: menuPresenter
                           .loadedMenu[selectedIndex ?? 0].values.first,
-                      scrollController: scrollController,
+                      productsScrollController: productsScrollController,
+                      itemExtent: getProductItemExtent(context),
                     ),
                   ),
                 ],

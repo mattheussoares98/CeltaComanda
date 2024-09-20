@@ -800,4 +800,71 @@ void main() {
       expect(name2, "namee");
     });
   });
+
+  group("Already contains expansible group in menu", () {
+    test("Should return true if already contains", () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        [
+          ExpansibleGroupEntity(
+            Name: "Name",
+            ExpansibleGroupId: faker.randomGenerator.integer(999),
+            ExpansibleGroupType: faker.randomGenerator.integer(999),
+            OrderClassification: faker.randomGenerator.integer(999),
+          ),
+        ],
+      );
+
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandNumberMock!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final value = sut.alreadyContainsExpansibleGroupName("Name");
+      expect(value, true);
+    });
+    test("Should return true if already contains separating by pipes",
+        () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        [
+          ExpansibleGroupEntity(
+            Name: "Name|any",
+            ExpansibleGroupId: faker.randomGenerator.integer(999),
+            ExpansibleGroupType: faker.randomGenerator.integer(999),
+            OrderClassification: faker.randomGenerator.integer(999),
+          ),
+        ],
+      );
+
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandNumberMock!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final value = sut.alreadyContainsExpansibleGroupName("Name");
+      expect(value, true);
+    });
+    test("Should return false if dont have", () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        [
+          ExpansibleGroupEntity(
+            Name: "Name",
+            ExpansibleGroupId: faker.randomGenerator.integer(999),
+            ExpansibleGroupType: faker.randomGenerator.integer(999),
+            OrderClassification: faker.randomGenerator.integer(999),
+          ),
+        ],
+      );
+
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandNumberMock!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final value = sut.alreadyContainsExpansibleGroupName("any");
+      expect(value, false);
+    });
+  });
 }

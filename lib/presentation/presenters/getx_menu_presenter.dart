@@ -388,4 +388,18 @@ class GetxMenuPresenter extends GetxController
       return expansibleGroupName;
     }
   }
+
+  @override
+  bool alreadyContainsExpansibleGroupName(String expansibleGroupName) {
+    for (var item in _loadedMenu) {
+      for (var group in item.keys) {
+        if (group.Name ==
+            getExpansibleGroupNameWithoutPipes(expansibleGroupName)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
 }

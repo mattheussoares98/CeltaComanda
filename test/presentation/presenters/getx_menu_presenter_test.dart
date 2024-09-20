@@ -92,7 +92,7 @@ void main() {
               ExpansibleGroupId: e.ExpansibleGroupId.toString(),
               ExpansibleGroupType: e.ExpansibleGroupType.toString(),
               OrderClassification: e.OrderClassification.toString(),
-              subgroups: null,
+              subgroups: const [],
             ))
         .toList();
     productEan = faker.randomGenerator.integer(13).toString();
@@ -120,7 +120,7 @@ void main() {
           ExpansibleGroupId: "0",
           ExpansibleGroupType: "0",
           OrderClassification: "0",
-          subgroups: null,
+          subgroups: const [],
         ): []
       });
 
@@ -271,14 +271,14 @@ void main() {
         ExpansibleGroupId: "0",
         ExpansibleGroupType: "0",
         OrderClassification: "0",
-        subgroups: null,
+        subgroups: const [],
       );
       final detachGroup = ExpansibleGroupsViewModel(
         Name: R.string.detach.toLowerCase(),
         ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
         ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
         OrderClassification: faker.randomGenerator.integer(10).toString(),
-        subgroups: null,
+        subgroups: const [],
       );
       final groups = [
         detachGroup,
@@ -378,6 +378,34 @@ void main() {
       );
 
       expect(sut.loadedMenu[0].keys.first.subgroups, ["primeiro", "segundo"]);
+    });
+
+    test("Should return correct _loadedMenu.length when groups has subgroups",
+        () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        [
+          ExpansibleGroupEntity(
+            Name: "teste|primeiro",
+            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupType: faker.randomGenerator.integer(100),
+            OrderClassification: faker.randomGenerator.integer(100),
+          ),
+          ExpansibleGroupEntity(
+            Name: "teste|segundo",
+            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupType: faker.randomGenerator.integer(100),
+            OrderClassification: faker.randomGenerator.integer(100),
+          ),
+        ],
+      );
+
+      await sut.getGroupsAndProducts(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.loadedMenu.length, 1);
     });
   });
 

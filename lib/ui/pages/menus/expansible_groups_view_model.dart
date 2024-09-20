@@ -8,7 +8,7 @@ class ExpansibleGroupsViewModel extends Equatable {
   final String ExpansibleGroupId;
   final String ExpansibleGroupType;
   final String OrderClassification;
-  final List<String>? subgroups;
+  final List<String?> subgroups;
 
   @override
   List get props => [
@@ -30,13 +30,14 @@ class ExpansibleGroupsViewModel extends Equatable {
   factory ExpansibleGroupsViewModel.fromEntity({
     required ExpansibleGroupEntity entity,
     required String groupName,
+    required String? subgroupName,
   }) =>
       ExpansibleGroupsViewModel(
         Name: groupName,
         ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
         ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
         OrderClassification: entity.OrderClassification.toString(),
-        subgroups: null,
+        subgroups: [subgroupName],
       );
 
   ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(

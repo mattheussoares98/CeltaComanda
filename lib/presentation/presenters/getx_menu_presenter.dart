@@ -180,13 +180,7 @@ class GetxMenuPresenter extends GetxController
               await loadProducts.load(expansibleGroup.ExpansibleGroupId);
 
           if (products != null) {
-            _loadedMenu.add({
-              ExpansibleGroupsViewModel.fromEntity(
-                entity: expansibleGroup,
-                groupName:
-                    getExpansibleGroupNameWithoutPipes(expansibleGroup.Name),
-              ): products.map((e) => ProductsViewModel.fromEntity(e)).toList()
-            });
+            _addOrUpdateGroupAndProducts(products, expansibleGroup);
           } else {
             throw DomainError.unexpected;
           }
@@ -270,6 +264,37 @@ class GetxMenuPresenter extends GetxController
       Future.delayed(const Duration(seconds: 10), () {
         showPreLoadImage = false;
       });
+    }
+  }
+
+  void _addOrUpdateGroupAndProducts(
+    List<ProductEntity>? products,
+    ExpansibleGroupEntity expansibleGroup,
+  ) {
+    final expansibleGroupViewModel = ExpansibleGroupsViewModel.fromEntity(
+      entity: expansibleGroup,
+      groupName: getExpansibleGroupNameWithoutPipes(expansibleGroup.Name),
+      subgroupName: getSubgroup(expansibleGroup),
+    );
+
+    final productsViewModel =
+        products!.map((e) => ProductsViewModel.fromEntity(e)).toList();
+
+    if (getAlreadyContainsExpansibleGroupName(expansibleGroup.Name)) {
+      int indexOfSameGroup = _loadedMenu.indexWhere((e) =>
+          e.keys.first.Name ==
+          getExpansibleGroupNameWithoutPipes(expansibleGroup.Name));
+
+      if (indexOfSameGroup != -1) {
+        _loadedMenu[indexOfSameGroup]
+            .keys
+            .first
+            .subgroups
+            .add(getSubgroup(expansibleGroup));
+        _loadedMenu[indexOfSameGroup].values.first.addAll(productsViewModel);
+      }
+    } else {
+      _loadedMenu.add({expansibleGroupViewModel: productsViewModel});
     }
   }
 

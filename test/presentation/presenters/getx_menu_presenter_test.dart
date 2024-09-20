@@ -790,4 +790,14 @@ void main() {
       sut.advanceIndexOfAtualSuggestion();
     });
   });
+
+  group("Get expansible group name without pipes", () {
+    test("Should return the correct name", () {
+      final name1 = sut.getExpansibleGroupNameWithoutPipes("name|any1|any2");
+      expect(name1, "name");
+
+      final name2 = sut.getExpansibleGroupNameWithoutPipes("namee|any1|any2");
+      expect(name2, "namee");
+    });
+  });
 }

@@ -373,4 +373,16 @@ class GetxMenuPresenter extends GetxController
       _atualSuggestionProduct.stream;
   set atualSuggestionProduct(ProductsViewModel? product) =>
       _atualSuggestionProduct.subject.add(product);
+
+  @override
+  String getExpansibleGroupNameWithoutPipes(String expansibleGroupName) {
+    RegExp regex = RegExp(r'^.*?(?=\|)');
+    Match? match = regex.firstMatch(expansibleGroupName);
+
+    if (match != null) {
+      return match.group(0)!;
+    } else {
+      return expansibleGroupName;
+    }
+  }
 }

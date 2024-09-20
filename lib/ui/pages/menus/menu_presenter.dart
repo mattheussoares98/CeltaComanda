@@ -34,4 +34,6 @@ abstract class MenuPresenter implements Listenable {
   int get indexOfAtualSuggestion;
   List<ProductsViewModel> get suggestionsProductsViewModel;
   Stream<ProductsViewModel?> get atualSuggestionProductStream;
+
+  String getExpansibleGroupNameWithoutPipes(String expansibleGroupName);
 }

@@ -19,22 +19,24 @@ class Subgroups extends StatelessWidget {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    // Future<void> _scrollToFirstProductOfSubgroup(
-    //   ScrollController productsScrollController,
-    //   String subgroupName,
-    // ) async {
-    //   if (!productsScrollController.hasClients) return;
+    Future<void> scrollToFirstProductOfSubgroup(
+      ScrollController productsScrollController,
+      String subgroupName,
+    ) async {
+      if (!productsScrollController.hasClients) return;
 
-    //   for (var item in menuPresenter.loadedMenu) {
-    //     // item.entries.first.value.indexWhere((e) => e.subGroup)
-    //   }
+      Map<ExpansibleGroupsViewModel, List<ProductsViewModel>> selectedItem =
+          menuPresenter.loadedMenu[selectedIndex ?? 0];
 
-    //   // productsScrollController.animateTo(
-    //   //   productItemExtent * indexOfSubgroup,
-    //   //   duration: const Duration(milliseconds: 300),
-    //   //   curve: Curves.easeInOut,
-    //   // );
-    // }
+      int index = selectedItem.values.first
+          .indexWhere((e) => e.subgroupName == subgroupName);
+
+      productsScrollController.animateTo(
+        productItemExtent * index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
 
     return Builder(builder: (context) {
       final subgroups =
@@ -49,8 +51,15 @@ class Subgroups extends StatelessWidget {
           itemCount: subgroups.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
+            final subgroupName = subgroups[index]!;
+
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                scrollToFirstProductOfSubgroup(
+                  productsScrollController,
+                  subgroupName,
+                );
+              },
               child: Container(
                 color: Theme.of(context).primaryColorLight,
                 height: (MediaQuery.of(context).size.height -

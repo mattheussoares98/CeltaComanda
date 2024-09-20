@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -36,5 +37,6 @@ abstract class MenuPresenter implements Listenable {
   Stream<ProductsViewModel?> get atualSuggestionProductStream;
 
   String getExpansibleGroupNameWithoutPipes(String expansibleGroupName);
-  bool alreadyContainsExpansibleGroupName(String expansibleGroupName);
+  bool getAlreadyContainsExpansibleGroupName(String expansibleGroupName);
+  String? getSubgroup(ExpansibleGroupEntity expansibleGroupEntity);
 }

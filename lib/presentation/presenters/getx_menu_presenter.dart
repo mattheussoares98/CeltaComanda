@@ -332,6 +332,52 @@ class GetxMenuPresenter extends GetxController
     }
   }
 
+  @override
+  void goToInsertProductPage(ProductsViewModel product) {
+    navigateTo.navigate(
+      pageRoute: PageRoutes.insertProducts,
+      arguments: product,
+    );
+  }
+
+  @override
+  String getExpansibleGroupNameWithoutPipes(String expansibleGroupName) {
+    RegExp regex = RegExp(r'^.*?(?=\|)');
+    Match? match = regex.firstMatch(expansibleGroupName);
+
+    if (match != null) {
+      return match.group(0)!;
+    } else {
+      return expansibleGroupName;
+    }
+  }
+
+  @override
+  bool getAlreadyContainsExpansibleGroupName(String expansibleGroupName) {
+    for (var item in _loadedMenu) {
+      for (var group in item.keys) {
+        if (group.Name ==
+            getExpansibleGroupNameWithoutPipes(expansibleGroupName)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  @override
+  String? getSubgroup(ExpansibleGroupEntity expansibleGroupEntity) {
+    RegExp regExp = RegExp(r'^[^|]*\|(.+)');
+    Match? match = regExp.firstMatch(expansibleGroupEntity.Name);
+
+    if (match != null) {
+      return match.group(1)!;
+    } else {
+      return null;
+    }
+  }
+
   ProductsViewModel? _searchedProduct;
   @override
   ProductsViewModel? get searchedProduct => _searchedProduct;
@@ -340,14 +386,6 @@ class GetxMenuPresenter extends GetxController
   @override
   Stream<bool> get showPreLoadImagesStream => _showPreLoadImages.stream;
   set showPreLoadImage(bool value) => _showPreLoadImages.subject.add(value);
-
-  @override
-  void goToInsertProductPage(ProductsViewModel product) {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.insertProducts,
-      arguments: product,
-    );
-  }
 
   final _doScrollGroupsStream = false.obs;
   @override
@@ -376,30 +414,4 @@ class GetxMenuPresenter extends GetxController
       _atualSuggestionProduct.stream;
   set atualSuggestionProduct(ProductsViewModel? product) =>
       _atualSuggestionProduct.subject.add(product);
-
-  @override
-  String getExpansibleGroupNameWithoutPipes(String expansibleGroupName) {
-    RegExp regex = RegExp(r'^.*?(?=\|)');
-    Match? match = regex.firstMatch(expansibleGroupName);
-
-    if (match != null) {
-      return match.group(0)!;
-    } else {
-      return expansibleGroupName;
-    }
-  }
-
-  @override
-  bool alreadyContainsExpansibleGroupName(String expansibleGroupName) {
-    for (var item in _loadedMenu) {
-      for (var group in item.keys) {
-        if (group.Name ==
-            getExpansibleGroupNameWithoutPipes(expansibleGroupName)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
 }

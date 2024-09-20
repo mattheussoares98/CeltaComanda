@@ -820,7 +820,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      final value = sut.alreadyContainsExpansibleGroupName("Name");
+      final value = sut.getAlreadyContainsExpansibleGroupName("Name");
       expect(value, true);
     });
     test("Should return true if already contains separating by pipes",
@@ -842,7 +842,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      final value = sut.alreadyContainsExpansibleGroupName("Name");
+      final value = sut.getAlreadyContainsExpansibleGroupName("Name");
       expect(value, true);
     });
     test("Should return false if dont have", () async {
@@ -863,8 +863,33 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      final value = sut.alreadyContainsExpansibleGroupName("any");
+      final value = sut.getAlreadyContainsExpansibleGroupName("any");
       expect(value, false);
+    });
+  });
+
+  group("Get subgroup", () {
+    test("Should return subgroup if expansible group entity has a pipe",
+        () async {
+      final entity = ExpansibleGroupEntity(
+        Name: "Name|subgroup",
+        ExpansibleGroupId: faker.randomGenerator.integer(100),
+        ExpansibleGroupType: faker.randomGenerator.integer(100),
+        OrderClassification: faker.randomGenerator.integer(100),
+      );
+
+      expect(sut.getSubgroup(entity), "subgroup");
+    });
+    test("Should return null if expansible group name dont have pipe",
+        () async {
+      final entity = ExpansibleGroupEntity(
+        Name: "Name subgroup",
+        ExpansibleGroupId: faker.randomGenerator.integer(100),
+        ExpansibleGroupType: faker.randomGenerator.integer(100),
+        OrderClassification: faker.randomGenerator.integer(100),
+      );
+
+      expect(sut.getSubgroup(entity), null);
     });
   });
 }

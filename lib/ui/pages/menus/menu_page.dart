@@ -81,7 +81,7 @@ class _MenuPageState extends State<MenuPage>
                             children: [
                               if (showPreLoadImageSnapshot.data == true)
                                 const PreLoadImagesPage(),
-                              GroupsAndProducts(
+                              GroupsSubgroupsAndProducts(
                                 selectedIndex: selectedGroupIndex.data,
                               ),
                             ],

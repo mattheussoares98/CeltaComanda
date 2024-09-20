@@ -1,12 +1,13 @@
+import 'package:clean_celta_mobile/ui/pages/menus/components/subgroups.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
-class GroupsAndProducts extends StatelessWidget {
+class GroupsSubgroupsAndProducts extends StatelessWidget {
   final int? selectedIndex;
-  const GroupsAndProducts({
+  const GroupsSubgroupsAndProducts({
     required this.selectedIndex,
     super.key,
   });
@@ -78,10 +79,19 @@ class GroupsAndProducts extends StatelessWidget {
           if (!isDetachSelected(menuPresenter))
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
-              child: ProductsItems(
-                products:
-                    menuPresenter.loadedMenu[selectedIndex ?? 0].values.first,
-                scrollController: scrollController,
+              child: Row(
+                children: [
+                  if (hasMinWidth(context))
+                    Subgroups(selectedIndex: selectedIndex),
+                  Expanded(
+                    flex: 4,
+                    child: ProductsItems(
+                      products: menuPresenter
+                          .loadedMenu[selectedIndex ?? 0].values.first,
+                      scrollController: scrollController,
+                    ),
+                  ),
+                ],
               ),
             ),
         ],

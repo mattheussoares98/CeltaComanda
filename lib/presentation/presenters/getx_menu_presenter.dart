@@ -277,8 +277,12 @@ class GetxMenuPresenter extends GetxController
       subgroupName: getSubgroup(expansibleGroup),
     );
 
-    final productsViewModel =
-        products!.map((e) => ProductsViewModel.fromEntity(e)).toList();
+    final productsViewModel = products!
+        .map((e) => ProductsViewModel.fromEntity(
+              e,
+              subgroupName: getSubgroup(expansibleGroup),
+            ))
+        .toList();
 
     if (getAlreadyContainsExpansibleGroupName(expansibleGroup.Name)) {
       int indexOfSameGroup = _loadedMenu.indexWhere((e) =>

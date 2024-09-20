@@ -407,6 +407,27 @@ void main() {
 
       expect(sut.loadedMenu.length, 1);
     });
+
+    test("Should update product.subgroupName correctly", () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        [
+          ExpansibleGroupEntity(
+            Name: "teste|primeiro",
+            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupType: faker.randomGenerator.integer(100),
+            OrderClassification: faker.randomGenerator.integer(100),
+          ),
+        ],
+      );
+
+      await sut.getGroupsAndProducts(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.loadedMenu.first.values.first.first.subgroupName, "primeiro");
+    });
   });
 
   group("Get expansible groups on get groups and products", () {

@@ -37,7 +37,7 @@ class GroupsAndProducts extends StatelessWidget {
         scrollController.position.minScrollExtent,
         duration: Duration(
             milliseconds: menuPresenter
-                    .loadedMenu[selectedIndex ?? 0].entries.first.value.length *
+                    .loadedMenu[selectedIndex ?? 0].values.first.length *
                 50),
         curve: Curves.fastEaseInToSlowEaseOut,
       );
@@ -79,8 +79,8 @@ class GroupsAndProducts extends StatelessWidget {
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
               child: ProductsItems(
-                products: menuPresenter
-                    .loadedMenu[selectedIndex ?? 0].entries.first.value,
+                products:
+                    menuPresenter.loadedMenu[selectedIndex ?? 0].values.first,
                 scrollController: scrollController,
               ),
             ),

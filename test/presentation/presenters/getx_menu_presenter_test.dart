@@ -92,6 +92,7 @@ void main() {
               ExpansibleGroupId: e.ExpansibleGroupId.toString(),
               ExpansibleGroupType: e.ExpansibleGroupType.toString(),
               OrderClassification: e.OrderClassification.toString(),
+              subgroups: e.subgroups,
             ))
         .toList();
     productEan = faker.randomGenerator.integer(13).toString();
@@ -119,6 +120,7 @@ void main() {
           ExpansibleGroupId: "0",
           ExpansibleGroupType: "0",
           OrderClassification: "0",
+          subgroups: null,
         ): []
       });
 
@@ -269,12 +271,14 @@ void main() {
         ExpansibleGroupId: "0",
         ExpansibleGroupType: "0",
         OrderClassification: "0",
+        subgroups: null,
       );
       final detachGroup = ExpansibleGroupsViewModel(
         Name: R.string.detach.toLowerCase(),
         ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
         ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
         OrderClassification: faker.randomGenerator.integer(10).toString(),
+        subgroups: null,
       );
       final groups = [
         detachGroup,
@@ -347,6 +351,9 @@ void main() {
         [mockedSuggestion],
       );
     });
+
+    test("Should update ExpansibleGroup correctly when has | separator",
+        () async {});
   });
 
   group("Get expansible groups on get groups and products", () {

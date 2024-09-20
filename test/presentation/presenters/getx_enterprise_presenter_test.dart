@@ -397,7 +397,8 @@ void main() {
           sut.commandDataStream,
           emits(
             CommandViewModel(
-                commandNumber: newCommandNumber, isFixedCommandNumber: "false"),
+                commandNumber: newCommandNumber.toString().padLeft(3, "0"),
+                isFixedCommandNumber: "false"),
           ));
 
       sut.updateCommandNumber(

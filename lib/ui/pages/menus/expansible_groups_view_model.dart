@@ -8,16 +8,23 @@ class ExpansibleGroupsViewModel extends Equatable {
   final String ExpansibleGroupId;
   final String ExpansibleGroupType;
   final String OrderClassification;
+  final List<String>? subgroups;
 
   @override
-  List get props =>
-      [Name, ExpansibleGroupId, ExpansibleGroupType, OrderClassification];
+  List get props => [
+        Name,
+        ExpansibleGroupId,
+        ExpansibleGroupType,
+        OrderClassification,
+        subgroups,
+      ];
 
   const ExpansibleGroupsViewModel({
     required this.Name,
     required this.ExpansibleGroupId,
     required this.ExpansibleGroupType,
     required this.OrderClassification,
+    required this.subgroups,
   });
 
   factory ExpansibleGroupsViewModel.fromEntity(ExpansibleGroupEntity entity) =>
@@ -26,6 +33,7 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
         ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
         OrderClassification: entity.OrderClassification.toString(),
+        subgroups: entity.subgroups,
       );
 
   ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(
@@ -33,5 +41,6 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupId: int.tryParse(ExpansibleGroupId) ?? 0,
         ExpansibleGroupType: int.tryParse(ExpansibleGroupType) ?? 0,
         OrderClassification: int.tryParse(OrderClassification) ?? 0,
+        subgroups: subgroups,
       );
 }

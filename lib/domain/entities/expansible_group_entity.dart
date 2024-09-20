@@ -7,15 +7,22 @@ class ExpansibleGroupEntity extends Equatable {
   final int ExpansibleGroupId;
   final int ExpansibleGroupType;
   final int OrderClassification;
+  final List<String>? subgroups;
 
   const ExpansibleGroupEntity({
     required this.Name,
     required this.ExpansibleGroupId,
     required this.ExpansibleGroupType,
     required this.OrderClassification,
+    required this.subgroups,
   });
 
   @override
-  List<Object?> get props =>
-      [Name, ExpansibleGroupId, ExpansibleGroupType, OrderClassification];
+  List<Object?> get props => [
+        Name,
+        ExpansibleGroupId,
+        ExpansibleGroupType,
+        OrderClassification,
+        subgroups,
+      ];
 }

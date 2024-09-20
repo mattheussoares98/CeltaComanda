@@ -171,12 +171,14 @@ class EntityFactory {
         ExpansibleGroupId: faker.randomGenerator.integer(999),
         ExpansibleGroupType: faker.randomGenerator.integer(999),
         OrderClassification: faker.randomGenerator.integer(999),
+        subgroups: null,
       ),
       ExpansibleGroupEntity(
         Name: faker.randomGenerator.string(30),
         ExpansibleGroupId: faker.randomGenerator.integer(999),
         ExpansibleGroupType: faker.randomGenerator.integer(999),
         OrderClassification: faker.randomGenerator.integer(999),
+        subgroups: null,
       ),
     ];
   }

@@ -82,6 +82,7 @@ class Subgroups extends StatelessWidget {
                 child: Center(
                   child: Text(
                     subgroups[index]!,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: getStringSize(context),

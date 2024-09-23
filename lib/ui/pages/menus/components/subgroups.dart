@@ -8,16 +8,29 @@ class Subgroups extends StatelessWidget {
   final int? selectedIndex;
   final ScrollController productsScrollController;
   final double productItemExtent;
+  final int firstVisibleProductIndex;
   const Subgroups({
     super.key,
     required this.selectedIndex,
     required this.productsScrollController,
     required this.productItemExtent,
+    required this.firstVisibleProductIndex,
   });
 
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
+    Color getSubgroupColor(String subgroupName) {
+      final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
+          .elementAt(firstVisibleProductIndex);
+
+      if (subgroupName == element.subgroupName) {
+        return Theme.of(context).primaryColorDark;
+      } else {
+        return Theme.of(context).primaryColorLight;
+      }
+    }
 
     Future<void> scrollToFirstProductOfSubgroup(
       ScrollController productsScrollController,
@@ -61,7 +74,7 @@ class Subgroups extends StatelessWidget {
                 );
               },
               child: Container(
-                color: Theme.of(context).primaryColorLight,
+                color: getSubgroupColor(subgroupName),
                 height: (MediaQuery.of(context).size.height -
                         AppBar().preferredSize.height) /
                     subgroups.length,

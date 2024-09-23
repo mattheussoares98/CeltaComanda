@@ -5,18 +5,28 @@ import 'package:provider/provider.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
-class GroupsSubgroupsAndProducts extends StatelessWidget {
+class GroupsSubgroupsAndProducts extends StatefulWidget {
   final int? selectedIndex;
   const GroupsSubgroupsAndProducts({
     required this.selectedIndex,
     super.key,
   });
 
+  @override
+  State<GroupsSubgroupsAndProducts> createState() =>
+      _GroupsSubgroupsAndProductsState();
+}
+
+class _GroupsSubgroupsAndProductsState
+    extends State<GroupsSubgroupsAndProducts> {
+  final productsScrollController = ScrollController();
+  int firstVisibleProductIndex = 0;
+
   bool isDetachSelected(MenuPresenter menuPresenter) {
     for (var menu in menuPresenter.loadedMenu) {
       for (var group in menu.keys) {
         if (group.Name.toLowerCase() == R.string.detach.toLowerCase() &&
-            (selectedIndex == 0 || selectedIndex == null)) {
+            (widget.selectedIndex == 0 || widget.selectedIndex == null)) {
           return true;
         }
       }
@@ -38,7 +48,7 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
         productsScrollController.position.minScrollExtent,
         duration: Duration(
             milliseconds: menuPresenter
-                    .loadedMenu[selectedIndex ?? 0].values.first.length *
+                    .loadedMenu[widget.selectedIndex ?? 0].values.first.length *
                 50),
         curve: Curves.fastEaseInToSlowEaseOut,
       );
@@ -52,9 +62,25 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    productsScrollController.addListener(_checkFirstVisibleItem);
+  }
+
+  void _checkFirstVisibleItem() {
+    if (productsScrollController.hasClients) {
+      setState(() {
+        firstVisibleProductIndex =
+            (productsScrollController.offset / getProductItemExtent(context))
+                .floor();
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    final productsScrollController = ScrollController();
 
     return Expanded(
       child: Row(
@@ -66,7 +92,7 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
               expansibleGroupsViewModel: menuPresenter.loadedMenu
                   .map((element) => element.keys.first)
                   .toList(),
-              selectedIndex: selectedIndex ?? 0,
+              selectedIndex: widget.selectedIndex ?? 0,
               scrollUpItemsList: () {
                 _scrollUp(
                   menuPresenter: menuPresenter,
@@ -89,15 +115,16 @@ class GroupsSubgroupsAndProducts extends StatelessWidget {
                 children: [
                   if (hasMinWidth(context))
                     Subgroups(
-                      selectedIndex: selectedIndex,
+                      selectedIndex: widget.selectedIndex,
                       productsScrollController: productsScrollController,
                       productItemExtent: getProductItemExtent(context),
+                      firstVisibleProductIndex: firstVisibleProductIndex,
                     ),
                   Expanded(
                     flex: 4,
                     child: ProductsItems(
                       products: menuPresenter
-                          .loadedMenu[selectedIndex ?? 0].values.first,
+                          .loadedMenu[widget.selectedIndex ?? 0].values.first,
                       productsScrollController: productsScrollController,
                       itemExtent: getProductItemExtent(context),
                     ),

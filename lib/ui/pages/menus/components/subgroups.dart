@@ -22,6 +22,10 @@ class Subgroups extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     Color getSubgroupColor(String subgroupName) {
+      if (firstVisibleProductIndex >=
+          menuPresenter.loadedMenu[selectedIndex ?? 0].values.first.length) {
+        return Theme.of(context).primaryColorLight;
+      }
       final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
           .elementAt(firstVisibleProductIndex);
 

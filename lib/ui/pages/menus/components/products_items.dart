@@ -101,6 +101,8 @@ class ProductsItems extends StatelessWidget {
                   } else {
                     return PortraitProductItem(
                       productsViewModel: product,
+                      itemHeight: constraints.maxHeight,
+                      itemWidth: constraints.maxWidth,
                     );
                   }
                 }),

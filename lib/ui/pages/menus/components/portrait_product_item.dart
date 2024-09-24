@@ -7,8 +7,12 @@ import '../../pages.dart';
 
 class PortraitProductItem extends StatelessWidget {
   final ProductsViewModel productsViewModel;
+  final double itemHeight;
+  final double itemWidth;
   const PortraitProductItem({
     required this.productsViewModel,
+    required this.itemHeight,
+    required this.itemWidth,
     super.key,
   });
 
@@ -16,70 +20,69 @@ class PortraitProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 3, 3, 3),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                height: 70,
-                width: 100,
-                child: GestureDetector(
-                  onTap: () {
-                    showLargeImage(
-                      context: context,
-                      ean: productsViewModel.EanCode,
-                      plu: productsViewModel.PriceLookupCode,
-                      productComplement: productsViewModel.ProductComplement,
-                      showInsertButton: true,
-                      selectedProduct: productsViewModel,
-                      menuPresenter: menuPresenter,
-                      productName: productsViewModel.Name,
-                    );
-                  },
-                  child: ImageWidget(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Flexible(
+              flex: 40,
+              child: GestureDetector(
+                onTap: () {
+                  showLargeImage(
+                    context: context,
                     ean: productsViewModel.EanCode,
                     plu: productsViewModel.PriceLookupCode,
+                    productComplement: productsViewModel.ProductComplement,
+                    showInsertButton: true,
                     selectedProduct: productsViewModel,
-                    height: 70,
-                    width: 100,
-                  ),
+                    menuPresenter: menuPresenter,
+                    productName: productsViewModel.Name,
+                  );
+                },
+                child: ImageWidget(
+                  ean: productsViewModel.EanCode,
+                  plu: productsViewModel.PriceLookupCode,
+                  height: itemHeight,
+                  width: itemWidth,
+                  selectedProduct: productsViewModel,
                 ),
               ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 2),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text: productsViewModel.Name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: getStringSize(context),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            children: <TextSpan>[
-                              if (productsViewModel.IsPromoCombox == "true")
-                                TextSpan(
-                                  text: "   (${R.string.combox})",
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: getStringSize(context),
-                                  ),
-                                ),
-                            ],
+            ),
+            Flexible(
+              flex: 60,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 2),
+                child: Column(
+                  children: [
+                    Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: productsViewModel.Name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                            color: Theme.of(context).primaryColor,
                           ),
+                          children: <TextSpan>[
+                            if (productsViewModel.IsPromoCombox == "true")
+                              TextSpan(
+                                text: "   (${R.string.combox})",
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).secondaryHeaderColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: getStringSize(context),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                      Text(
+                    ),
+                    FittedBox(
+                      child: Text(
                         productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -88,20 +91,20 @@ class PortraitProductItem extends StatelessWidget {
                           fontSize: getStringSize(context) * 1.2,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          if (productsViewModel.ProductComplement?.isNotEmpty == true)
-            Flexible(
-              child: ProductComplement(
-                productComplement: productsViewModel.ProductComplement,
-              ),
             ),
-        ],
-      ),
+          ],
+        ),
+        if (productsViewModel.ProductComplement?.isNotEmpty == true)
+          Flexible(
+            child: ProductComplement(
+              productComplement: productsViewModel.ProductComplement,
+            ),
+          ),
+      ],
     );
   }
 }

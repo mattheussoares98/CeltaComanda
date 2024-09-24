@@ -83,7 +83,7 @@ class AppBarButton extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FittedBox(child: Icon(icon, color: Colors.white)),
+                      Flexible(child: Icon(icon, color: Colors.white)),
                       SizedBox(width: hasMinWidth(context) ? 3 : 0),
                       Center(
                         child: hasMinWidth(context)

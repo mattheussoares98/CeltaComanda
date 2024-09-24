@@ -58,6 +58,7 @@ class PortraitProductItem extends StatelessWidget {
                     Center(
                       child: RichText(
                         textAlign: TextAlign.center,
+                        maxLines: 6,
                         text: TextSpan(
                           text: productsViewModel.Name,
                           style: TextStyle(

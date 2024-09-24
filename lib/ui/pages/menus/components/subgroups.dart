@@ -24,9 +24,12 @@ class Subgroups extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     ScrollController subgroupScrollController = ScrollController();
 
+    bool firstIndexIsGreaterThanAtualProductsLength() =>
+        firstVisibleProductIndex >=
+        menuPresenter.loadedMenu[selectedIndex ?? 0].values.first.length;
+
     Color getSubgroupColor(String subgroupName) {
-      if (firstVisibleProductIndex >=
-          menuPresenter.loadedMenu[selectedIndex ?? 0].values.first.length) {
+      if (firstIndexIsGreaterThanAtualProductsLength()) {
         return Theme.of(context).primaryColorLight;
       }
       final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
@@ -43,7 +46,8 @@ class Subgroups extends StatelessWidget {
       ScrollController productsScrollController,
       String subgroupName,
     ) async {
-      if (!productsScrollController.hasClients) return;
+      if (!productsScrollController.hasClients ||
+          firstIndexIsGreaterThanAtualProductsLength()) return;
 
       Map<ExpansibleGroupsViewModel, List<ProductsViewModel>> selectedItem =
           menuPresenter.loadedMenu[selectedIndex ?? 0];
@@ -59,7 +63,9 @@ class Subgroups extends StatelessWidget {
     }
 
     Future<void> scrollSubgroup(List<String?> subgroups, int index) async {
-      if (!productsScrollController.hasClients || hasMinWidth(context)) return;
+      if (!productsScrollController.hasClients ||
+          hasMinWidth(context) ||
+          firstIndexIsGreaterThanAtualProductsLength()) return;
 
       final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
           .elementAt(firstVisibleProductIndex);

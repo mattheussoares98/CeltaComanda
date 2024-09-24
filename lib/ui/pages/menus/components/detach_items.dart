@@ -56,6 +56,9 @@ class DetachItems extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 selectedProduct: product,
+                orientation: hasMinWidth(context)
+                    ? AnimationOrientation.horizontal
+                    : AnimationOrientation.vertical,
               ),
               Container(
                 width: double.infinity,

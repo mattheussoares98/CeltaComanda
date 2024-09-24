@@ -42,7 +42,7 @@ class ProductsItems extends StatelessWidget {
     return ListView.builder(
         controller: productsScrollController,
         itemCount: products.length,
-        itemExtent: itemExtent,
+        itemExtent: hasMinWidth(context) ? itemExtent : null,
         itemBuilder: (context, i) {
           final product = products[i];
 

@@ -84,7 +84,7 @@ class ProductsItems extends StatelessWidget {
                 ),
                 child: LayoutBuilder(builder: (context, constraints) {
                   if (hasMinWidth(context)) {
-                    return LandscapeNameImagePriceComboxAndComplement(
+                    return LandscapeProductItem(
                       productsViewModel: product,
                       itemHeight: constraints.maxHeight,
                       itemWidth: constraints.maxWidth,
@@ -99,7 +99,7 @@ class ProductsItems extends StatelessWidget {
                       },
                     );
                   } else {
-                    return PortraitNameImagePriceComboxComplement(
+                    return PortraitProductItem(
                       productsViewModel: product,
                     );
                   }

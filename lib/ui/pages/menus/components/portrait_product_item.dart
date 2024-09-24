@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class PortraitNameImagePriceComboxComplement extends StatelessWidget {
+class PortraitProductItem extends StatelessWidget {
   final ProductsViewModel productsViewModel;
-  const PortraitNameImagePriceComboxComplement({
+  const PortraitProductItem({
     required this.productsViewModel,
     super.key,
   });

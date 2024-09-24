@@ -20,6 +20,7 @@ class Subgroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ScrollController subgroupScrollController = ScrollController();
 
     Color getSubgroupColor(String subgroupName) {
       if (firstVisibleProductIndex >=
@@ -55,6 +56,21 @@ class Subgroups extends StatelessWidget {
       );
     }
 
+    Future<void> scrollSubgroup(List<String?> subgroups, int index) async {
+      if (!productsScrollController.hasClients || hasMinWidth(context)) return;
+
+      final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
+          .elementAt(firstVisibleProductIndex);
+
+      if (element.subgroupName != subgroups[index]) return;
+
+      subgroupScrollController.animateTo(
+        MediaQuery.of(context).size.width * 0.2 * index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+
     return Builder(builder: (context) {
       final subgroups =
           menuPresenter.loadedMenu[selectedIndex ?? 0].keys.first.subgroups;
@@ -64,33 +80,53 @@ class Subgroups extends StatelessWidget {
       }
       return Expanded(
         child: ListView.builder(
+          controller: subgroupScrollController,
           shrinkWrap: true,
+          scrollDirection:
+              hasMinWidth(context) ? Axis.vertical : Axis.horizontal,
           itemCount: subgroups.length,
-          physics: const NeverScrollableScrollPhysics(),
+          itemExtent: hasMinWidth(context)
+              ? null
+              : MediaQuery.of(context).size.width * 0.35,
+          physics: hasMinWidth(context)
+              ? const NeverScrollableScrollPhysics()
+              : null,
           itemBuilder: (context, index) {
             final subgroupName = subgroups[index]!;
+            Future.delayed(Duration.zero, () {
+              scrollSubgroup(subgroups, index);
+            });
 
-            return InkWell(
-              onTap: () {
-                scrollToFirstProductOfSubgroup(
-                  productsScrollController,
-                  subgroupName,
-                );
-              },
-              child: Container(
-                color: getSubgroupColor(subgroupName),
-                height: (MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height) /
-                    subgroups.length,
-                margin: const EdgeInsets.only(bottom: 2),
-                child: Center(
-                  child: Text(
-                    subgroups[index]!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: getStringSize(context),
-                      fontWeight: FontWeight.bold,
+            return Padding(
+              padding: const EdgeInsets.only(right: 3, top: 3, left: 3),
+              child: InkWell(
+                onTap: () {
+                  scrollToFirstProductOfSubgroup(
+                    productsScrollController,
+                    subgroupName,
+                  );
+                },
+                child: Container(
+                  height: (MediaQuery.of(context).size.height -
+                          AppBar().preferredSize.height) /
+                      subgroups.length,
+                  margin: const EdgeInsets.only(bottom: 2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: getSubgroupColor(subgroupName),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Text(
+                        subgroups[index]!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: getStringSize(context),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),

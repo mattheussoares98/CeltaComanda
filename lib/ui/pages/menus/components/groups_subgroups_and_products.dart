@@ -111,9 +111,9 @@ class _GroupsSubgroupsAndProductsState
           if (!isDetachSelected(menuPresenter))
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
-              child: Row(
+              child: Column(
                 children: [
-                  if (hasMinWidth(context))
+                  if (!hasMinWidth(context))
                     Subgroups(
                       selectedIndex: widget.selectedIndex,
                       productsScrollController: productsScrollController,
@@ -121,12 +121,28 @@ class _GroupsSubgroupsAndProductsState
                       firstVisibleProductIndex: firstVisibleProductIndex,
                     ),
                   Expanded(
-                    flex: 4,
-                    child: ProductsItems(
-                      products: menuPresenter
-                          .loadedMenu[widget.selectedIndex ?? 0].values.first,
-                      productsScrollController: productsScrollController,
-                      itemExtent: getProductItemExtent(context),
+                    flex: 9,
+                    child: Row(
+                      children: [
+                        if (hasMinWidth(context))
+                          Subgroups(
+                            selectedIndex: widget.selectedIndex,
+                            productsScrollController: productsScrollController,
+                            productItemExtent: getProductItemExtent(context),
+                            firstVisibleProductIndex: firstVisibleProductIndex,
+                          ),
+                        Expanded(
+                          flex: 4,
+                          child: ProductsItems(
+                            products: menuPresenter
+                                .loadedMenu[widget.selectedIndex ?? 0]
+                                .values
+                                .first,
+                            productsScrollController: productsScrollController,
+                            itemExtent: getProductItemExtent(context),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

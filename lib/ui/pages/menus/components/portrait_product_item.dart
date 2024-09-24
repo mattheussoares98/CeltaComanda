@@ -19,6 +19,7 @@ class PortraitProductItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 3, 3, 3),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             children: [
@@ -94,8 +95,10 @@ class PortraitProductItem extends StatelessWidget {
             ],
           ),
           if (productsViewModel.ProductComplement?.isNotEmpty == true)
-            ProductComplement(
-              productComplement: productsViewModel.ProductComplement,
+            Flexible(
+              child: ProductComplement(
+                productComplement: productsViewModel.ProductComplement,
+              ),
             ),
         ],
       ),

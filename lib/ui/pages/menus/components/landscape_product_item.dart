@@ -26,25 +26,29 @@ class LandscapeProductItem extends StatelessWidget {
       children: [
         Flexible(
           flex: 2,
-          child: GestureDetector(
-            onTap: () {
-              showLargeImage(
-                context: context,
+          child: SizedBox(
+            height: itemHeight,
+            width: itemWidth * 1.15,
+            child: GestureDetector(
+              onTap: () {
+                showLargeImage(
+                  context: context,
+                  ean: productsViewModel.EanCode,
+                  plu: productsViewModel.PriceLookupCode,
+                  productComplement: productsViewModel.ProductComplement,
+                  showInsertButton: true,
+                  selectedProduct: productsViewModel,
+                  menuPresenter: menuPresenter,
+                  productName: productsViewModel.Name,
+                );
+              },
+              child: ImageWidget(
                 ean: productsViewModel.EanCode,
                 plu: productsViewModel.PriceLookupCode,
-                productComplement: productsViewModel.ProductComplement,
-                showInsertButton: true,
+                height: itemHeight,
+                width: itemWidth * 1.15,
                 selectedProduct: productsViewModel,
-                menuPresenter: menuPresenter,
-                productName: productsViewModel.Name,
-              );
-            },
-            child: ImageWidget(
-              ean: productsViewModel.EanCode,
-              plu: productsViewModel.PriceLookupCode,
-              height: itemHeight,
-              width: itemWidth * 1.15,
-              selectedProduct: productsViewModel,
+              ),
             ),
           ),
         ),

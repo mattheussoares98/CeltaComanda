@@ -9,12 +9,14 @@ class Subgroups extends StatelessWidget {
   final ScrollController productsScrollController;
   final double productItemExtent;
   final int firstVisibleProductIndex;
+  final int groupItemsFlex;
   const Subgroups({
     super.key,
     required this.selectedIndex,
     required this.productsScrollController,
     required this.productItemExtent,
     required this.firstVisibleProductIndex,
+    required this.groupItemsFlex,
   });
 
   @override
@@ -65,7 +67,7 @@ class Subgroups extends StatelessWidget {
       if (element.subgroupName != subgroups[index]) return;
 
       subgroupScrollController.animateTo(
-        MediaQuery.of(context).size.width * 0.2 * index,
+        MediaQuery.of(context).size.width * 0.35 * (index - 0.5),
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
@@ -86,46 +88,39 @@ class Subgroups extends StatelessWidget {
               hasMinWidth(context) ? Axis.vertical : Axis.horizontal,
           itemCount: subgroups.length,
           itemExtent: hasMinWidth(context)
-              ? null
+              ? (MediaQuery.of(context).size.height -
+                      AppBar().preferredSize.height) /
+                  subgroups.length
               : MediaQuery.of(context).size.width * 0.35,
-          physics: hasMinWidth(context)
-              ? const NeverScrollableScrollPhysics()
-              : null,
           itemBuilder: (context, index) {
             final subgroupName = subgroups[index]!;
             Future.delayed(Duration.zero, () {
               scrollSubgroup(subgroups, index);
             });
 
-            return Padding(
-              padding: const EdgeInsets.only(right: 3, top: 3, left: 3),
-              child: InkWell(
-                onTap: () {
-                  scrollToFirstProductOfSubgroup(
-                    productsScrollController,
-                    subgroupName,
-                  );
-                },
-                child: Container(
-                  height: (MediaQuery.of(context).size.height -
-                          AppBar().preferredSize.height) /
-                      subgroups.length,
-                  margin: const EdgeInsets.only(bottom: 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: getSubgroupColor(subgroupName),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: Text(
-                        subgroups[index]!,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: getStringSize(context),
-                          fontWeight: FontWeight.bold,
-                        ),
+            return InkWell(
+              onTap: () {
+                scrollToFirstProductOfSubgroup(
+                  productsScrollController,
+                  subgroupName,
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: getSubgroupColor(subgroupName),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: Text(
+                      subgroups[index]!,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: getStringSize(context),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

@@ -78,6 +78,8 @@ class _GroupsSubgroupsAndProductsState
     }
   }
 
+  int getGroupItemFlex() => hasMinWidth(context) ? 10 : 25;
+
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -87,7 +89,7 @@ class _GroupsSubgroupsAndProductsState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            flex: hasMinWidth(context) ? 10 : 25,
+            flex: getGroupItemFlex(),
             child: GroupItems(
               expansibleGroupsViewModel: menuPresenter.loadedMenu
                   .map((element) => element.keys.first)
@@ -115,6 +117,7 @@ class _GroupsSubgroupsAndProductsState
                 children: [
                   if (!hasMinWidth(context))
                     Subgroups(
+                      groupItemsFlex: getGroupItemFlex(),
                       selectedIndex: widget.selectedIndex,
                       productsScrollController: productsScrollController,
                       productItemExtent: getProductItemExtent(context),
@@ -126,6 +129,7 @@ class _GroupsSubgroupsAndProductsState
                       children: [
                         if (hasMinWidth(context))
                           Subgroups(
+                            groupItemsFlex: getGroupItemFlex(),
                             selectedIndex: widget.selectedIndex,
                             productsScrollController: productsScrollController,
                             productItemExtent: getProductItemExtent(context),

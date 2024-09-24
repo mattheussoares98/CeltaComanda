@@ -24,15 +24,15 @@ class PortraitCartProductItem extends StatefulWidget {
 }
 
 class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
-  double rightMargin = 2;
-
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
 
     return Container(
-      margin: EdgeInsets.only(bottom: 5, right: rightMargin),
+      margin: const EdgeInsets.only(bottom: 5, right: 2, left: 2),
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -86,6 +86,11 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                         fontSize: getStringSize(context),
                       ),
                     ),
+                    if (expansibleGroupFromProductPresenter.productHasComment(
+                      product: widget.cartProduct.Product,
+                      indexOfChild: 0,
+                    ))
+                      Comment(comment: widget.cartProduct.Comments ?? ""),
                   ],
                 ),
               ),

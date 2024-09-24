@@ -30,8 +30,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, right: rightMargin),
@@ -88,11 +86,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                         fontSize: getStringSize(context),
                       ),
                     ),
-                    if (expansibleGroupFromProductPresenter.productHasComment(
-                      product: widget.cartProduct.Product,
-                      indexOfChild: 0,
-                    ))
-                      Comment(comment: widget.cartProduct.Comments ?? ""),
                   ],
                 ),
               ),
@@ -102,25 +95,28 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    showLargeImage(
-                      context: context,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 3),
+                  child: GestureDetector(
+                    onTap: () {
+                      showLargeImage(
+                        context: context,
+                        ean: widget.cartProduct.Product.EanCode,
+                        plu: widget.cartProduct.Product.PriceLookupCode,
+                        productComplement:
+                            widget.cartProduct.Product.ProductComplement,
+                        menuPresenter: menuPresenter,
+                        productName: widget.cartProduct.Product.Name,
+                        selectedProduct: widget.cartProduct.Product,
+                      );
+                    },
+                    child: ImageWidget(
                       ean: widget.cartProduct.Product.EanCode,
                       plu: widget.cartProduct.Product.PriceLookupCode,
-                      productComplement:
-                          widget.cartProduct.Product.ProductComplement,
-                      menuPresenter: menuPresenter,
-                      productName: widget.cartProduct.Product.Name,
+                      height: 70,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       selectedProduct: widget.cartProduct.Product,
-                    );
-                  },
-                  child: ImageWidget(
-                    ean: widget.cartProduct.Product.EanCode,
-                    plu: widget.cartProduct.Product.PriceLookupCode,
-                    height: 70,
-                    width: 70,
-                    selectedProduct: widget.cartProduct.Product,
+                    ),
                   ),
                 ),
               ),

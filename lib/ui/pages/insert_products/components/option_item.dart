@@ -25,8 +25,6 @@ class OptionItem extends StatelessWidget {
     dynamic optionValue =
         insertProductViewModel.selectedOptions.entries.first.value;
 
-    // product,
-
     if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
       return R.string.obligatory;
     } else if (atualOption == SelectedOptionType.quantity) {
@@ -48,8 +46,6 @@ class OptionItem extends StatelessWidget {
   String getOptionItemTitle(SelectedOptionType atualOption) {
     dynamic optionValue =
         insertProductViewModel.selectedOptions.entries.first.value;
-
-    // product,
 
     if (atualOption == SelectedOptionType.obligatoryExpansibleGroup) {
       if (lastSelectedFather != null) {
@@ -129,25 +125,19 @@ class OptionItem extends StatelessWidget {
               child: Row(
                 children: [
                   if (hasMinWidth(context))
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        minRadius: 20,
-                        maxRadius: 20,
-                        child: Text(
-                          (optionIndex + 1).toString(),
-                          style: const TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
+                    StepNumber(stepNumber: optionIndex + 1),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         RichText(
+                          textAlign: TextAlign.center,
                           text: TextSpan(
                             text: getOptionItemTitle(atualOption),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: getStringSize(context),
+                            ),
                             children: lastSelectedFather == null ||
                                     atualOption ==
                                         SelectedOptionType.fatherComposition ||
@@ -157,9 +147,10 @@ class OptionItem extends StatelessWidget {
                                     TextSpan(
                                       text:
                                           " (${R.string.comment.toUpperCase()})",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.yellow,
+                                        fontSize: getStringSize(context),
                                       ),
                                     ),
                                   ],

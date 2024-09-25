@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,21 +33,18 @@ class _OptionItemsState extends State<OptionItems> {
   }
 
   void doScroll({
-    required int index,
     required ScrollController scrollController,
-    required double viewportHeight,
+    required double itemExtent,
   }) {
-    final proportion = ((42 / 1.5) * widget.insertProductIndex) / viewportHeight;
-
-    final double targetPosition = viewportHeight * proportion;
-
-    final double scrollOffset =
-        targetPosition.clamp(0.0, scrollController.position.maxScrollExtent);
+    if (!scrollController.hasClients) {
+      return;
+    }
+    final target = itemExtent * (widget.insertProductIndex - 0.4);
 
     scrollController.animateTo(
-      scrollOffset,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+      target,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.linear,
     );
   }
 
@@ -62,13 +60,14 @@ class _OptionItemsState extends State<OptionItems> {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
+    final double itemExtent = hasMinWidth(context) ? 82 : 42;
 
     return Container(
-      height: widget.insertProductsViewModel.length * 42,
+      height: widget.insertProductsViewModel.length * itemExtent,
       color: Theme.of(context).primaryColor,
       child: ListView.builder(
         controller: _scrollController,
-        itemExtent: 42,
+        itemExtent: itemExtent,
         shrinkWrap: true,
         itemCount: widget.insertProductsViewModel.length,
         itemBuilder: (context, optionIndex) {
@@ -79,12 +78,10 @@ class _OptionItemsState extends State<OptionItems> {
               stream: insertProductPresenter.doScrollStream,
               builder: (context, snapshot) {
                 if (snapshot.data == true) {
-                  // Verifique se a função ainda não foi chamada
                   if (!_doScrollExecuted) {
                     doScroll(
-                      index: optionIndex,
+                      itemExtent: itemExtent,
                       scrollController: _scrollController,
-                      viewportHeight: MediaQuery.of(context).size.height,
                     );
                     _doScrollExecuted = true;
                   }
@@ -98,6 +95,7 @@ class _OptionItemsState extends State<OptionItems> {
                   insertProductIndex: widget.insertProductIndex,
                   lastSelectedFather:
                       insertProductPresenter.getLastSelectedFather(optionIndex),
+                  itemExtent: itemExtent,
                 );
               });
         },

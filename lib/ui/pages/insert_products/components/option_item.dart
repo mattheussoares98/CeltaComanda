@@ -9,11 +9,13 @@ class OptionItem extends StatelessWidget {
   final int insertProductIndex;
   final InsertProductsViewModel insertProductViewModel;
   final ProductCompositionViewModel? lastSelectedFather;
+  final double itemExtent;
   const OptionItem({
     required this.optionIndex,
     required this.insertProductIndex,
     required this.insertProductViewModel,
     required this.lastSelectedFather,
+    required this.itemExtent,
     super.key,
   });
 
@@ -120,7 +122,7 @@ class OptionItem extends StatelessWidget {
           stream: insertProductPresenter.canAdvanceIndexStream,
           builder: (context, snapshot) {
             return Container(
-              height: 42,
+              height: itemExtent,
               color: getItemColor(snapshot.data == true, context),
               margin: const EdgeInsets.only(bottom: 1),
               padding: const EdgeInsets.symmetric(horizontal: 5),

@@ -126,37 +126,57 @@ class OptionItem extends StatelessWidget {
               color: getItemColor(snapshot.data == true, context),
               margin: const EdgeInsets.only(bottom: 1),
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Row(
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      text: getOptionItemTitle(atualOption),
-                      children: lastSelectedFather == null ||
-                              atualOption ==
-                                  SelectedOptionType.fatherComposition ||
-                              atualOption == SelectedOptionType.quantity
-                          ? null
-                          : <TextSpan>[
-                              TextSpan(
-                                text: " (${R.string.comment.toUpperCase()})",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.yellow,
-                                ),
-                              ),
-                            ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                    child: FittedBox(
-                      child: Text(
-                        getSelectedGroups(
-                          expansibleGroupFromProductPresenter,
+                  if (hasMinWidth(context))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        minRadius: 20,
+                        maxRadius: 20,
+                        child: Text(
+                          (optionIndex + 1).toString(),
+                          style: const TextStyle(color: Colors.black),
                         ),
-                        style: TextStyle(color: Colors.grey[200]),
                       ),
+                    ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: getOptionItemTitle(atualOption),
+                            children: lastSelectedFather == null ||
+                                    atualOption ==
+                                        SelectedOptionType.fatherComposition ||
+                                    atualOption == SelectedOptionType.quantity
+                                ? null
+                                : <TextSpan>[
+                                    TextSpan(
+                                      text:
+                                          " (${R.string.comment.toUpperCase()})",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.yellow,
+                                      ),
+                                    ),
+                                  ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                          child: FittedBox(
+                            child: Text(
+                              getSelectedGroups(
+                                expansibleGroupFromProductPresenter,
+                              ),
+                              style: TextStyle(color: Colors.grey[200]),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

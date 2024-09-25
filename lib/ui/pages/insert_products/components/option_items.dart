@@ -39,7 +39,7 @@ class _OptionItemsState extends State<OptionItems> {
     if (!scrollController.hasClients) {
       return;
     }
-    final target = itemExtent * (widget.insertProductIndex - 0.4);
+    final target = itemExtent * (widget.insertProductIndex - 0.33);
 
     scrollController.animateTo(
       target,

@@ -79,10 +79,10 @@ class OptionItem extends StatelessWidget {
   String getSelectedGroups(
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) {
-    if (insertProductViewModel.selectedOptions.keys.first ==
-            SelectedOptionType.obligatoryExpansibleGroup ||
-        insertProductViewModel.selectedOptions.keys.first ==
-            SelectedOptionType.optionalExpansibleGroup) {
+    final keyType = insertProductViewModel.selectedOptions.keys.first;
+
+    if (keyType == SelectedOptionType.obligatoryExpansibleGroup ||
+        keyType == SelectedOptionType.optionalExpansibleGroup) {
       final groups = insertProductViewModel.selectedOptions.values.first
           as List<ExpansibleGroupFromProductViewModel>;
 
@@ -92,9 +92,17 @@ class OptionItem extends StatelessWidget {
       return selecteds
           .replaceAll(RegExp(r'\('), '')
           .replaceAll(RegExp(r'\)'), '');
-    } else {
-      return "";
+    } else if (keyType == SelectedOptionType.fatherComposition) {
+      final product = insertProductViewModel.selectedOptions.values.first
+          as ProductCompositionViewModel;
+
+      if (product.childs != null && product.indexOfSelectedChild != null) {
+        return product.childs![product.indexOfSelectedChild!].ChildName!;
+      } else if (product.indexOfSelectedChild != null) {
+        return product.ChildName!;
+      }
     }
+    return "";
   }
 
   @override

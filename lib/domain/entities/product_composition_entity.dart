@@ -103,6 +103,7 @@ class ProductCompositionEntity extends Equatable {
     if (list1 == null && list2 == null) return true;
     if (list1 == null || list2 == null) return false;
     if (list1.length != list2.length) return false;
+    if (list1.isEmpty && list2.isEmpty) return false;
     for (int i = 0; i < list1.length; i++) {
       if (list1[i] != list2[i]) return false;
     }

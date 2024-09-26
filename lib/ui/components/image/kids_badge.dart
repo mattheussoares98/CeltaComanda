@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../helpers/sizes/sizes.dart';
+
 class KidsBadge extends StatelessWidget {
   final double height;
   final double width;
@@ -13,7 +15,7 @@ class KidsBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 0,
-      right: 10,
+      right: hasMinWidth(context) ? width * 0.4 : 10,
       child: Image.asset(
         "lib/ui/assets/images/kids.png",
         fit: BoxFit.contain,

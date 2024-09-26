@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../ui/pages/pages.dart';
+import '../../helpers/sizes/sizes.dart';
 
 class PepperBadge extends StatelessWidget {
   final ProductsViewModel? product;
@@ -20,8 +21,8 @@ class PepperBadge extends StatelessWidget {
     }
 
     return Positioned(
-      right: 10,
-      top: 10,
+      right: hasMinWidth(context) ? width * 0.4 : 10,
+      top: 5,
       child: CircleAvatar(
         minRadius: _getSize(height: height, width: width),
         maxRadius: _getSize(height: height, width: width),

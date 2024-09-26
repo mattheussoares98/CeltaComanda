@@ -353,6 +353,22 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
+
+    test("Should emit correct values on doScrollStream", () async {
+      expectLater(sut.doScrollStream, emitsInOrder([true, false]));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      sut.updateOptionIndex(
+        newIndex: 0,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
   });
 
   group("clearSelectedComboxData", () {
@@ -1021,7 +1037,7 @@ void main() {
     });
   });
 
-  group("Advance Father index when childComposition is not null", () {
+  group("Advance Father index", () {
     test("Should advance index if atual option is optionalExpansibleGroup",
         () async {
       selectedProduct.childsComposition = null;
@@ -1066,6 +1082,19 @@ void main() {
       );
 
       expectLater(sut.selectedLeftIndexStream, emits(1));
+
+      sut.advanceOptionIndex(expansibleGroupFromProductPresenter);
+    });
+
+    test("Should emit correct values doScrollStream when advanceOptionIndex",
+        () async {
+      expectLater(sut.doScrollStream, emitsInOrder([true, false]));
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
 
       sut.advanceOptionIndex(expansibleGroupFromProductPresenter);
     });
@@ -1482,7 +1511,8 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.maximumQuantityAchieved]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.maximumQuantityAchieved]));
 
       sut.updateTotalProductsQuantity(true);
       expect(sut.totalProductsQuantity, 2);

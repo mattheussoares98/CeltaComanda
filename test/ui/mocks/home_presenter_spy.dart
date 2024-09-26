@@ -14,6 +14,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   String? commandNumberMock;
   bool isFixedCommandNumberMock = false;
   bool isGeneratingVersionToRedeMock = false;
+  bool isGeneratingVersionToTabletMock = false;
 
   HomePresenterSpy() {
     when(() => this.commandNumber).thenAnswer((_) => commandNumberMock);
@@ -21,6 +22,8 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         .thenAnswer((_) => isFixedCommandNumberMock);
     when(() => this.isGeneratingVersionToRede)
         .thenAnswer((_) => isGeneratingVersionToRedeMock);
+    when(() => this.isGeneratingVersionToTablet)
+        .thenAnswer((_) => isGeneratingVersionToTabletMock);
     when(() => this.updateCommandNumber(any())).thenAnswer((any) async => any);
     when(() => this.updateIsFixedCommandNumber())
         .thenAnswer((any) async => any);

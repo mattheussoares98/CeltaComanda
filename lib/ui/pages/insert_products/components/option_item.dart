@@ -128,45 +128,71 @@ class OptionItem extends StatelessWidget {
                     StepNumber(stepNumber: optionIndex + 1),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text: getOptionItemTitle(atualOption),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: getStringSize(context),
+                        SizedBox(
+                          height: itemExtent * 0.4,
+                          child: FittedBox(
+                            child: RichText(
+                              text: TextSpan(
+                                text: getOptionItemTitle(atualOption),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: getStringSize(context),
+                                ),
+                                children: lastSelectedFather == null ||
+                                        atualOption ==
+                                            SelectedOptionType
+                                                .fatherComposition ||
+                                        atualOption ==
+                                            SelectedOptionType.quantity
+                                    ? null
+                                    : <TextSpan>[
+                                        TextSpan(
+                                          text:
+                                              " (${R.string.comment.toUpperCase()})",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.yellow,
+                                            fontSize: getStringSize(context),
+                                          ),
+                                        ),
+                                      ],
+                              ),
                             ),
-                            children: lastSelectedFather == null ||
-                                    atualOption ==
-                                        SelectedOptionType.fatherComposition ||
-                                    atualOption == SelectedOptionType.quantity
-                                ? null
-                                : <TextSpan>[
-                                    TextSpan(
-                                      text:
-                                          " (${R.string.comment.toUpperCase()})",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.yellow,
-                                        fontSize: getStringSize(context),
-                                      ),
-                                    ),
-                                  ],
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                          child: FittedBox(
+                        if (hasMinWidth(context))
+                          SizedBox(
+                            height: itemExtent * 0.55,
                             child: Text(
                               getSelectedGroups(
-                                expansibleGroupFromProductPresenter,
+                                  expansibleGroupFromProductPresenter),
+                              style: TextStyle(
+                                color: Colors.grey[200],
+                                fontSize: getStringSize(context) * 0.7,
                               ),
-                              style: TextStyle(color: Colors.grey[200]),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
+                        if (!hasMinWidth(context))
+                          SizedBox(
+                            height: itemExtent * 0.55,
+                            width: double.infinity,
+                            child: FittedBox(
+                              child: Text(
+                                getSelectedGroups(
+                                    expansibleGroupFromProductPresenter),
+                                style: TextStyle(
+                                  color: Colors.grey[200],
+                                  fontSize: getStringSize(context) * 0.7,
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),

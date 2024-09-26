@@ -43,8 +43,7 @@ class _LandScapeInsertProductsPageBodyState
     return LayoutBuilder(builder: (context, constraints) {
       double screenHeight = constraints.maxHeight;
       double imageHeight = screenHeight * 0.25;
-      double maxListViewHeight = screenHeight *
-          (widget.selectedProduct.ProductComplement == null ? 0.75 : 0.3);
+      double maxListViewHeight = screenHeight * 0.3;
 
       return Row(
         children: [

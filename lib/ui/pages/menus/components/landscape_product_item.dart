@@ -28,7 +28,7 @@ class LandscapeProductItem extends StatelessWidget {
           flex: 2,
           child: SizedBox(
             height: itemHeight,
-            width: itemWidth * 1.15,
+            width: itemHeight * 1.5,
             child: GestureDetector(
               onTap: () {
                 showLargeImage(
@@ -42,12 +42,25 @@ class LandscapeProductItem extends StatelessWidget {
                   productName: productsViewModel.Name,
                 );
               },
-              child: ImageWidget(
-                ean: productsViewModel.EanCode,
-                plu: productsViewModel.PriceLookupCode,
-                height: itemHeight,
-                width: itemWidth * 1.15,
-                selectedProduct: productsViewModel,
+              child: Stack(
+                children: [
+                  ImageWidget(
+                    ean: productsViewModel.EanCode,
+                    plu: productsViewModel.PriceLookupCode,
+                    height: itemHeight,
+                    width: itemHeight * 1.5,
+                    selectedProduct: productsViewModel,
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      height: itemHeight,
+                      width: itemHeight * 0.13,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

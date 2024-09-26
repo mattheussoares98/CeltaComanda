@@ -48,7 +48,7 @@ class _ImageWidgetState extends State<ImageWidget>
       curve: Curves.easeInOut,
     );
 
-    _animation = Tween<double>(begin: -25, end: 25).animate(curvedAnimation);
+    _animation = Tween<double>(begin: 0, end: -20).animate(curvedAnimation);
   }
 
   @override

@@ -1581,4 +1581,61 @@ void main() {
       );
     });
   });
+
+  group("Update total liquid", () {
+    test("Should return correct price if childs is not empty", () async {
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      double totalChildsPrice = selectedProduct.childsComposition!
+          .map((e) =>
+              sut.calculateProductCompositionPrice(e) * e.Quantity!.toDouble())
+          .first;
+
+      sut.calculateProductCompositionPrice(
+          selectedProduct.childsComposition!.first);
+
+      expectLater(
+        sut.totalPriceStream,
+        emits(totalChildsPrice),
+      );
+
+      sut.updateTotalLiquid(selectedProduct);
+    });
+    test("Should return correct price if childs empty", () async {
+      selectedProduct.childsComposition = [];
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expectLater(
+        sut.totalPriceStream,
+        emits(selectedProduct.SaleRetailPraticed.toDouble()),
+      );
+
+      sut.updateTotalLiquid(selectedProduct);
+    });
+    test("Should return correct price if childs null", () async {
+      selectedProduct.childsComposition = null;
+
+      await sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expectLater(
+        sut.totalPriceStream,
+        emits(selectedProduct.SaleRetailPraticed.toDouble()),
+      );
+
+      sut.updateTotalLiquid(selectedProduct);
+    });
+  });
 }

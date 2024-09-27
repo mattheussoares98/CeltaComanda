@@ -218,6 +218,7 @@ class EntityFactory {
     int? maximumProductQuantity,
     double? productQuantity,
     String? subgroupName,
+    bool? insertOfferPrice = true,
   }) {
     return ProductsViewModel(
       subgroupName: subgroupName,
@@ -237,7 +238,9 @@ class EntityFactory {
       InternalCodeOfProductOnERP: faker.randomGenerator.integer(10).toString(),
       EenterpriseId: faker.randomGenerator.integer(10).toString(),
       PackingQuantity: faker.randomGenerator.decimal().toString(),
-      OfferRetailPrice: faker.randomGenerator.decimal().toString(),
+      OfferRetailPrice: insertOfferPrice == true
+          ? faker.randomGenerator.decimal().toString()
+          : null,
       WholeSalePrice: faker.randomGenerator.decimal().toString(),
       WholeOfferPrice: faker.randomGenerator.decimal().toString(),
       OfferECommercePrice: faker.randomGenerator.decimal().toString(),

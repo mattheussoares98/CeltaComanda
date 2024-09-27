@@ -186,7 +186,8 @@ class GetxInsertProductsPresenter extends GetxController
 
   @override
   void updateTotalLiquid(ProductsViewModel product) {
-    if (product.childsComposition == null) {
+    if (product.childsComposition == null ||
+        product.childsComposition!.isEmpty) {
       totalPrice =
           product.SaleRetailPraticed.toDouble() * totalProductsQuantity;
     } else {

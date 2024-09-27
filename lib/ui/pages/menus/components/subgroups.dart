@@ -99,7 +99,7 @@ class Subgroups extends StatelessWidget {
                   subgroups.length
               : MediaQuery.of(context).size.width * 0.35,
           itemBuilder: (context, index) {
-            final subgroupName = subgroups[index]!;
+            final subgroupName = subgroups[index].toString();
             Future.delayed(Duration.zero, () {
               scrollSubgroup(subgroups, index);
             });
@@ -121,7 +121,7 @@ class Subgroups extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: Text(
-                      subgroups[index]!,
+                      subgroups[index].toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

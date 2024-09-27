@@ -271,9 +271,10 @@ class GetxMenuPresenter extends GetxController
     List<ProductEntity>? products,
     ExpansibleGroupEntity expansibleGroup,
   ) {
+    final groupName = getExpansibleGroupNameWithoutPipes(expansibleGroup.Name);
     final expansibleGroupViewModel = ExpansibleGroupsViewModel.fromEntity(
       entity: expansibleGroup,
-      groupName: getExpansibleGroupNameWithoutPipes(expansibleGroup.Name),
+      groupName: groupName,
       subgroupName: getSubgroup(expansibleGroup),
     );
 
@@ -284,10 +285,9 @@ class GetxMenuPresenter extends GetxController
             ))
         .toList();
 
-    if (getAlreadyContainsExpansibleGroupName(expansibleGroup.Name)) {
-      int indexOfSameGroup = _loadedMenu.indexWhere((e) =>
-          e.keys.first.Name ==
-          getExpansibleGroupNameWithoutPipes(expansibleGroup.Name));
+    if (getAlreadyContainsExpansibleGroupName(groupName)) {
+      int indexOfSameGroup =
+          _loadedMenu.indexWhere((e) => e.keys.first.Name == groupName);
 
       if (indexOfSameGroup != -1) {
         _loadedMenu[indexOfSameGroup]

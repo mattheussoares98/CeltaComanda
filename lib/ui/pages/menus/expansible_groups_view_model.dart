@@ -37,7 +37,7 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupId: entity.ExpansibleGroupId.toString(),
         ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
         OrderClassification: entity.OrderClassification.toString(),
-        subgroups: [subgroupName],
+        subgroups: subgroupName == null ? [] : [subgroupName],
       );
 
   ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(

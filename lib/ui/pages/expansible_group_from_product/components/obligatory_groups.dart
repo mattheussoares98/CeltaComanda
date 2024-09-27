@@ -52,7 +52,6 @@ class _CommentsState extends State<ObligatoryGroups> {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       itemCount: getObligatoryOptions(
         expansibleGroupFromProductPresenter,
         insertProductPresenter,
@@ -64,23 +63,13 @@ class _CommentsState extends State<ObligatoryGroups> {
         )[index];
 
         return Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.all(3),
           child: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(2, 2),
-                  color: Color.fromARGB(255, 209, 208, 208),
-                  blurRadius: 8,
-                ),
-                BoxShadow(
-                  offset: Offset(-2, -2),
-                  color: Color.fromARGB(255, 209, 208, 208),
-                  blurRadius: 8,
-                ),
-              ],
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: obligatoryOption.selected
+                  ? Theme.of(context).primaryColorLight.withAlpha(60)
+                  : Theme.of(context).primaryColorLight.withAlpha(15),
             ),
             child: InkWell(
               onTap: () {

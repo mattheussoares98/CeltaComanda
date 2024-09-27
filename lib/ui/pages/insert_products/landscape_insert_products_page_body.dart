@@ -42,7 +42,8 @@ class _LandScapeInsertProductsPageBodyState
 
     return LayoutBuilder(builder: (context, constraints) {
       double screenHeight = constraints.maxHeight;
-      double imageHeight = screenHeight * 0.25;
+      double imageHeight = screenHeight *
+          (widget.selectedProduct.ProductComplement == null ? 0.6 : 0.4);
       double maxListViewHeight = screenHeight * 0.3;
 
       return Row(
@@ -52,7 +53,6 @@ class _LandScapeInsertProductsPageBodyState
             child: Column(
               children: [
                 SizedBox(
-                  height: imageHeight,
                   child: GestureDetector(
                     onTap: () {
                       showLargeImage(

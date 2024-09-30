@@ -1,5 +1,7 @@
+export './app_manager/app_manager.dart';
 export './barcode/barcode.dart';
 export 'command/command_number.dart';
+export './enterprise_concentrador/enterprise_concentrador.dart';
 export './enterprise_data/enterprise_data.dart';
 export './expansible_groups/expansible_groups.dart';
 export './navigation/navigation.dart';

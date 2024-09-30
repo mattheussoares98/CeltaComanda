@@ -20,6 +20,8 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final CommandInformations commandInformations;
   final LocalCommandData localCommandData;
   final Persistent persistent;
+  final LoadEnterpriseConcentradorParameters
+      loadEnterpriseConcentradorParameters;
 
   GetxEnterpriseValidationPresenter({
     required this.validation,
@@ -29,6 +31,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
     required this.commandInformations,
     required this.localCommandData,
     required this.persistent,
+    required this.loadEnterpriseConcentradorParameters,
   });
 
   @override

@@ -26,6 +26,8 @@ void main() {
   late CommandInformationsSpy ticketIsPermitted;
   late LocalCommandDataSpy loadCommandData;
   late PersistentSpy persistent;
+  late LoadEnterpriseConcentradorParametersSpy
+      loadEnterpriseConcentradorParameters;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -39,6 +41,8 @@ void main() {
     ticketIsPermitted = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
     persistent = PersistentSpy();
+    loadEnterpriseConcentradorParameters =
+        LoadEnterpriseConcentradorParametersSpy();
 
     enterpriseEntity = EntityFactory.makeEnterpriseData();
     EnterpriseDataBuilder.enterpriseDataEntity = enterpriseEntity;
@@ -62,6 +66,8 @@ void main() {
       commandInformations: ticketIsPermitted,
       localCommandData: loadCommandData,
       persistent: persistent,
+      loadEnterpriseConcentradorParameters:
+          loadEnterpriseConcentradorParameters,
     );
 
     sut.enterpriseNameController.text =

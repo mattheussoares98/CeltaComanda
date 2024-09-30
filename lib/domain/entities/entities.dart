@@ -1,5 +1,7 @@
 export './cart_product_entity.dart';
 export './command_entity.dart';
+export './enterprise_concentrador_entity.dart';
+export './enterprise_concentrador_parameters_entity.dart';
 export './enterprise_entity.dart';
 export './expansible_group_entity.dart';
 export 'expansible_group_from_product_complete_entity.dart';

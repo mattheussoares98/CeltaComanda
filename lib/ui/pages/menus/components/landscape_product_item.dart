@@ -24,44 +24,41 @@ class LandscapeProductItem extends StatelessWidget {
 
     return Row(
       children: [
-        Flexible(
-          flex: 2,
-          child: SizedBox(
-            height: itemHeight,
-            width: itemHeight * 1.5,
-            child: GestureDetector(
-              onTap: () {
-                showLargeImage(
-                  context: context,
+        SizedBox(
+          height: itemHeight,
+          width: itemHeight * 1.5,
+          child: GestureDetector(
+            onTap: () {
+              showLargeImage(
+                context: context,
+                ean: productsViewModel.EanCode,
+                plu: productsViewModel.PriceLookupCode,
+                productComplement: productsViewModel.ProductComplement,
+                showInsertButton: true,
+                selectedProduct: productsViewModel,
+                menuPresenter: menuPresenter,
+                productName: productsViewModel.Name,
+              );
+            },
+            child: Stack(
+              children: [
+                ImageWidget(
                   ean: productsViewModel.EanCode,
                   plu: productsViewModel.PriceLookupCode,
-                  productComplement: productsViewModel.ProductComplement,
-                  showInsertButton: true,
+                  height: itemHeight,
+                  width: itemHeight * 1.5,
                   selectedProduct: productsViewModel,
-                  menuPresenter: menuPresenter,
-                  productName: productsViewModel.Name,
-                );
-              },
-              child: Stack(
-                children: [
-                  ImageWidget(
-                    ean: productsViewModel.EanCode,
-                    plu: productsViewModel.PriceLookupCode,
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Container(
                     height: itemHeight,
-                    width: itemHeight * 1.5,
-                    selectedProduct: productsViewModel,
+                    width: itemHeight * 0.13,
+                    color: Colors.white,
                   ),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      height: itemHeight,
-                      width: itemHeight * 0.13,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

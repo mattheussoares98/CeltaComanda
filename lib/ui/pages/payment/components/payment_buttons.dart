@@ -107,7 +107,9 @@ class PaymentButtons extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      paymentPresenter.goToCovenantPage();
+                    },
                     child: Text(
                       "Convênio".toUpperCase(),
                       style: _buttonStyle(context),

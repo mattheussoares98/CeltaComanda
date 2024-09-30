@@ -170,5 +170,7 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  void goToCovenantPage() {}
+  void goToCovenantPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.covenant);
+  }
 }

@@ -1,5 +1,6 @@
 class PageRoutes {
   static const String cart = "/sale_request_temp";
+  static const String covenant = "/covenant";
   static const String enterpriseValidation = "/enterprise_validation";
   static const String home = "/home";
   static const String menus = "/menus";

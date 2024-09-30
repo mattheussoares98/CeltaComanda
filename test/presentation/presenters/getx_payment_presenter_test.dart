@@ -475,4 +475,14 @@ void main() {
           .called(1);
     });
   });
+
+  group("Navigate to covenant page", () {
+    test("Should call navigateTo correctly", () {
+      sut.goToCovenantPage();
+
+      verify(
+        () => navigateTo.navigate(pageRoute: PageRoutes.covenant),
+      ).called(1);
+    });
+  });
 }

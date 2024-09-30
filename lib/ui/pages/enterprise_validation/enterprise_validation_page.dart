@@ -26,7 +26,8 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     super.didChangeDependencies();
     if (!_isLoaded) {
       _isLoaded = true;
-      await widget.presenter.loadLocalData();
+      HomePresenter homePresenter = Provider.of(context, listen: false);
+      await widget.presenter.loadLocalData(homePresenter);
 
       if (widget.presenter.enterpriseNameController.text.isNotEmpty) {
         widget.presenter.validateEnterpriseInput(

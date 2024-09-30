@@ -220,7 +220,7 @@ void main() {
   });
 
   test("Should change controllers with cacheEnterpriseData", () async {
-    await sut.loadLocalData();
+    await sut.loadLocalData(homePresenter);
 
     expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
         sut.enterpriseNameController.text);
@@ -311,7 +311,7 @@ void main() {
   });
 
   test("Should call loadCommandData on loadLocalData", () async {
-    await sut.loadLocalData();
+    await sut.loadLocalData(homePresenter);
 
     verify(() => loadCommandData.load()).called(1);
   });
@@ -322,7 +322,7 @@ void main() {
         emits(CommandViewModel.fromEntity(commandEntity)));
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.loadLocalData();
+    await sut.loadLocalData(homePresenter);
   });
 
   test("Should emit correct events on loadCommandData throws", () async {
@@ -337,7 +337,7 @@ void main() {
               commandNumber: null, isFixedCommandNumber: null),
         ));
 
-    await sut.loadLocalData();
+    await sut.loadLocalData(homePresenter);
   });
 
   group("Fixed command number", () {
@@ -474,6 +474,23 @@ void main() {
           persistApp: null,
         ),
       );
+    });
+
+    test(
+        "Should update homePresenter.isFixedCommandNumber when load command data",
+        () async {
+      await sut.loadLocalData(homePresenter);
+      expect(homePresenter.isFixedCommandNumber, false);
+
+      loadCommandData.mockLoad(
+        CommandEntity(
+          commandNumber: faker.randomGenerator.integer(100).toString(),
+          isFixedCommandNumber: true,
+        ),
+      );
+
+      await sut.loadLocalData(homePresenter);
+      verify(() => homePresenter.updateIsFixedCommandNumber()).called(1);
     });
   });
 }

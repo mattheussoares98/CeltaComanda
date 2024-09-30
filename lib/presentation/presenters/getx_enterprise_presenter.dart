@@ -43,7 +43,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   Stream<CommandViewModel?> get commandDataStream => _commandData.stream;
 
   @override
-  Future<void> loadLocalData() async {
+  Future<void> loadLocalData(HomePresenter homePresenter) async {
     EnterpriseDataBuilder.enterpriseDataEntity =
         await localEntepriseData.load();
 
@@ -63,6 +63,11 @@ class GetxEnterpriseValidationPresenter extends GetxController
       }
 
       _commandData.value = CommandViewModel.fromEntity(commandEntity);
+
+      if (commandEntity.isFixedCommandNumber !=
+          homePresenter.isFixedCommandNumber) {
+        await homePresenter.updateIsFixedCommandNumber();
+      }
     } catch (e) {
       _commandData.value = const CommandViewModel(
         commandNumber: null,

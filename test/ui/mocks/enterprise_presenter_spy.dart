@@ -28,7 +28,7 @@ class EnterpriseValidationPresenterSpy extends Mock
     when(() => this.enterpriseNameController)
         .thenReturn(enterpriseNameTextEditingController);
 
-    when(() => this.loadLocalData()).thenAnswer((any) async => any);
+    when(() => this.loadLocalData(any())).thenAnswer((any) async => any);
     when(() => this.loadRemoteEnterpriseData()).thenAnswer((any) async => any);
     when(() => this.getEnterpriseAndValidateApiIsAvailable(
           commandEntity: any(named: "commandEntity"),

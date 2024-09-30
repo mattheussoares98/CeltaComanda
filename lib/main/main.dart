@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/factories/pages/covenant/covenant_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

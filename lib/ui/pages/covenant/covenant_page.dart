@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../pages.dart';
+
 class CovenantPage extends StatelessWidget {
-  const CovenantPage({super.key});
+  final CovenantPresenter covenantPresenter;
+  const CovenantPage({
+    required this.covenantPresenter,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

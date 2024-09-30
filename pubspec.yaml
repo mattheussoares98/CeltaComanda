@@ -49,6 +49,7 @@ dependencies:
   wakelock_plus: ^1.2.5
   battery_plus: ^6.0.2
   flutter_widget_from_html: ^0.15.2
+  xml2json: ^6.2.4
 
 dev_dependencies:
   flutter_test:

@@ -22,7 +22,7 @@ class CachedImage extends StatelessWidget {
   static final _customCacheManager = CacheManager(
     Config(
       CacheKeys.images.name,
-      maxNrOfCacheObjects: 100,
+      maxNrOfCacheObjects: 1000,
       stalePeriod: const Duration(days: 1),
     ),
   );

@@ -33,6 +33,7 @@ void main() {
   late CommandInformationsSpy commandInformations;
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
   late AlreadyPaidSpy alreadyPaid;
+  late NavigateToSpy navigateTo;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -46,6 +47,7 @@ void main() {
     commandInformations = CommandInformationsSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
     alreadyPaid = AlreadyPaidSpy();
+    navigateTo = NavigateToSpy();
   }
 
   initPresenters() {
@@ -54,6 +56,7 @@ void main() {
       commandInformations: commandInformations,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       alreadyPaid: alreadyPaid,
+      navigateTo: navigateTo,
     );
     homePresenter = HomePresenterSpy();
     cartPresenter = CartPresenterSpy();

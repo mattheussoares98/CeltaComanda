@@ -15,12 +15,14 @@ class GetxPaymentPresenter extends GetxController
   final CommandInformations commandInformations;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final AlreadyPaid alreadyPaid;
+  final NavigateTo navigateTo;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
     required this.alreadyPaid,
+    required this.navigateTo,
   });
 
   @override

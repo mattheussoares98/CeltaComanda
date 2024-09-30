@@ -181,25 +181,6 @@ void main() {
     );
   });
 
-  test('Should error if enterprise not exists in firebase', () {
-    remoteLoadEnterpriseData.mockRemoteLoadError();
-    // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
-    //     updateEnterpriseNameController: true);
-
-    final error = sut.loadRemoteEnterpriseData();
-
-    expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
-  });
-
-  test('Should throw enterpriseNotFound when remoteEnterpriseData returns null',
-      () {
-    remoteLoadEnterpriseData.mockRemoteLoad(null);
-
-    final error = sut.loadRemoteEnterpriseData();
-
-    expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
-  });
-
   test('Should go to ExpansibleGroupsPage on success', () async {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
@@ -211,18 +192,6 @@ void main() {
 
     verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
         .called(1);
-  });
-
-  test("Should call LoadRemoteData on loadData", () async {
-    await sut.loadRemoteEnterpriseData();
-
-    verify(() => remoteLoadEnterpriseData.load()).called(1);
-  });
-  test("Should change controllers with remoteEnterpriseData", () async {
-    await sut.loadRemoteEnterpriseData();
-
-    expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        sut.enterpriseNameController.text);
   });
 
   test("Should change controllers with cacheEnterpriseData", () async {
@@ -505,6 +474,48 @@ void main() {
 
       await sut.loadLocalData(homePresenter);
       verify(() => homePresenter.updateIsFixedCommandNumber()).called(1);
+    });
+  });
+
+  group("Load remote enterprise data", () {
+    test('Should error if enterprise not exists in firebase', () {
+      remoteLoadEnterpriseData.mockRemoteLoadError();
+      // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
+      //     updateEnterpriseNameController: true);
+
+      final error = sut.loadRemoteEnterpriseData();
+
+      expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
+    });
+
+    test(
+        'Should throw enterpriseNotFound when remoteEnterpriseData returns null',
+        () {
+      remoteLoadEnterpriseData.mockRemoteLoad(null);
+
+      final error = sut.loadRemoteEnterpriseData();
+
+      expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
+    });
+
+    test("Should call LoadRemoteData on loadData", () async {
+      await sut.loadRemoteEnterpriseData();
+
+      verify(() => remoteLoadEnterpriseData.load()).called(1);
+    });
+    test("Should change controllers with remoteEnterpriseData", () async {
+      await sut.loadRemoteEnterpriseData();
+
+      expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+          sut.enterpriseNameController.text);
+    });
+    test("Should call loadEnterpriseConcentradorParameters", () async {
+      await sut.loadRemoteEnterpriseData();
+
+      verify(
+        () => loadEnterpriseConcentradorParameters
+            .load(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!),
+      ).called(1);
     });
   });
 }

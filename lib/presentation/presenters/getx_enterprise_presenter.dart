@@ -104,6 +104,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
       if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
         throw DomainError.enterpriseOrUrlNotFound;
       }
+
+      await loadEnterpriseConcentradorParameters
+          .load(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!);
     } catch (e) {
       throw DomainError.enterpriseOrUrlNotFound;
     } finally {

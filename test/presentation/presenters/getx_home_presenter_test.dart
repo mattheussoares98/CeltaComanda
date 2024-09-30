@@ -215,6 +215,7 @@ void main() {
               concentradorUrl: null,
               persistApp: null,
               urlCCS: null,
+              useCovenant: null,
             ),
           )).called(1);
     });
@@ -675,6 +676,7 @@ void main() {
         concentradorUrl:
             EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
         urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
         persistApp: true,
       );
 
@@ -702,6 +704,7 @@ void main() {
         concentradorUrl:
             EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
         urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
         persistApp: true,
       );
 
@@ -726,6 +729,7 @@ void main() {
         concentradorUrl:
             EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
         urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
         persistApp: false,
       );
 

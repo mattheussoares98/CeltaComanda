@@ -7,6 +7,7 @@ class EnterpriseEntity extends Equatable {
   final String? concentradorUrl;
   final bool? persistApp;
   final String? urlCCS;
+  final bool? useCovenant;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -15,6 +16,7 @@ class EnterpriseEntity extends Equatable {
     required this.concentradorUrl,
     required this.persistApp,
     required this.urlCCS,
+    required this.useCovenant,
   });
 
   @override
@@ -25,5 +27,6 @@ class EnterpriseEntity extends Equatable {
         concentradorUrl,
         persistApp,
         urlCCS,
+        useCovenant,
       ];
 }

@@ -63,6 +63,7 @@ void main() {
       urlCCS: faker.internet.httpUrl(),
       url: faker.internet.httpUrl(),
       persistApp: faker.randomGenerator.boolean(),
+      useCovenant: faker.randomGenerator.boolean(),
     ));
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);

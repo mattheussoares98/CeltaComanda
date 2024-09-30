@@ -8,6 +8,7 @@ class CacheFactory {
         'enterpriseName': faker.company.name(),
         'enterpriseId': faker.randomGenerator.integer(2),
         'persistApp': faker.randomGenerator.boolean(),
+        'useCovenant': faker.randomGenerator.boolean(),
       };
 
   static Map makeInvalidEnterpriseData() => {

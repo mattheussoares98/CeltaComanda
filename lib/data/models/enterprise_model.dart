@@ -8,6 +8,7 @@ class EnterpriseValidationModel {
   final String? concentradorUrl;
   final bool? persistApp;
   final String? urlCCS;
+  final bool? useCovenant;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -16,6 +17,7 @@ class EnterpriseValidationModel {
     required this.concentradorUrl,
     required this.persistApp,
     required this.urlCCS,
+    required this.useCovenant,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -34,6 +36,7 @@ class EnterpriseValidationModel {
       concentradorUrl: json["concentradorUrl"],
       persistApp: json["persistApp"],
       urlCCS: json["urlCCS"],
+      useCovenant: json["useCovenant"],
     );
   }
 
@@ -45,6 +48,7 @@ class EnterpriseValidationModel {
         concentradorUrl: entity.concentradorUrl,
         persistApp: entity.persistApp,
         urlCCS: entity.urlCCS,
+        useCovenant: entity.useCovenant,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -54,6 +58,7 @@ class EnterpriseValidationModel {
         enterpriseId: enterpriseId,
         concentradorUrl: concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         persistApp: persistApp,
+        useCovenant: useCovenant,
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +68,6 @@ class EnterpriseValidationModel {
         'concentradorUrl': concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         'persistApp': persistApp,
         'urlCCS': urlCCS,
+        'useCovenant': useCovenant,
       };
 }

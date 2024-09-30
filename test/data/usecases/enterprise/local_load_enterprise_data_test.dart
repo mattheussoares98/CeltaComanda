@@ -54,6 +54,7 @@ void main() {
               .toLowerCase()
               .removeWhiteSpaces(),
           persistApp: enterpriseJsonData["persistApp"],
+          useCovenant: enterpriseJsonData["useCovenant"],
         ),
       );
     });

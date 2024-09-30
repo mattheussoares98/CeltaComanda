@@ -54,8 +54,8 @@ class _PrintedItemState extends State<PrintedItem> {
                     children: [
                       columnTitle(R.string.time),
                       columnTitle(R.string.productsAndComments, 3),
-                      columnTitle(R.string.quantityAbbreviated),
                       if (hasMinWidth(context)) columnTitle(R.string.price),
+                      columnTitle(R.string.quantityAbbreviated),
                       columnTitle(R.string.total),
                     ],
                   ),

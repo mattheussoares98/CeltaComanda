@@ -97,7 +97,7 @@ class _PaymentPageState extends State<PaymentPage>
             if (paymentPresenter.commandAlreadyPaid)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: LiquidadeCommand(
+                child: LiquidateCommand(
                   callSetState: () {
                     setState(() {});
                   },

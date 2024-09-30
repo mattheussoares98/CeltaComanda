@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../../pages.dart';
 
-class LiquidadeCommand extends StatelessWidget {
+class LiquidateCommand extends StatelessWidget {
   final Function() callSetState;
-  const LiquidadeCommand({
+  const LiquidateCommand({
     required this.callSetState,
     super.key,
   });

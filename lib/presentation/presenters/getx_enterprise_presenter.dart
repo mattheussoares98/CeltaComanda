@@ -166,7 +166,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
       concentradorUrl: null,
       persistApp: null,
     );
-    enterpriseNameController.text = value;
 
     _enterpriseError.value = _validateField('enterpriseName');
     _validateForm();

@@ -105,19 +105,6 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                         fontSize: getStringSize(context),
                       ),
                     ),
-                    if (widget.cartProduct.Product.childsComposition != null)
-                      FittedBox(
-                        child: Text(
-                          "(${R.string.combox})",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Theme.of(context).secondaryHeaderColor,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
                     if (widget.cartProduct.Comments != null)
                       SizedBox(
                         child: Comment(comment: widget.cartProduct.Comments!),

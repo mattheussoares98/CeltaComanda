@@ -65,19 +65,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
               Expanded(
                 child: Column(
                   children: [
-                    if (widget.cartProduct.Product.childsComposition != null)
-                      FittedBox(
-                        child: Text(
-                          "(${R.string.combox})",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Theme.of(context).secondaryHeaderColor,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
                     Text(
                       widget.cartProduct.Product.Name,
                       textAlign: TextAlign.center,

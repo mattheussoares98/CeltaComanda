@@ -83,7 +83,7 @@ class Subgroups extends StatelessWidget {
       final subgroups =
           menuPresenter.loadedMenu[selectedIndex ?? 0].keys.first.subgroups;
 
-      if (subgroups.length == 1) {
+      if (subgroups.isEmpty) {
         return const SizedBox();
       }
       return Expanded(

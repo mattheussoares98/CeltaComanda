@@ -56,29 +56,14 @@ class PortraitProductItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Center(
-                      child: RichText(
+                      child: Text(
+                        productsViewModel.Name,
                         textAlign: TextAlign.center,
                         maxLines: 6,
-                        text: TextSpan(
-                          text: productsViewModel.Name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          children: <TextSpan>[
-                            if (productsViewModel.IsPromoCombox == "true")
-                              TextSpan(
-                                text: "   (${R.string.combox})",
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: getStringSize(context),
-                                ),
-                              ),
-                          ],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: getStringSize(context),
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),

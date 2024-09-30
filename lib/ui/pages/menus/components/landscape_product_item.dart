@@ -74,26 +74,12 @@ class LandscapeProductItem extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          text: productsViewModel.Name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          children: <TextSpan>[
-                            if (productsViewModel.IsPromoCombox == "true")
-                              TextSpan(
-                                text: "   (${R.string.combox})",
-                                style: TextStyle(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: getStringSize(context),
-                                ),
-                              ),
-                          ],
+                      child: Text(
+                        productsViewModel.Name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: getStringSize(context),
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),

@@ -271,6 +271,7 @@ void main() {
       concentradorUrl:
           EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
       persistApp: true,
+      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -287,6 +288,7 @@ void main() {
       concentradorUrl:
           EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
       persistApp: true,
+      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
     await sut.goToHomePage(homePresenter);
@@ -304,6 +306,7 @@ void main() {
       concentradorUrl:
           EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
       persistApp: false,
+      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -472,6 +475,7 @@ void main() {
           enterpriseId: null,
           concentradorUrl: null,
           persistApp: null,
+          urlCCS: null,
         ),
       );
     });

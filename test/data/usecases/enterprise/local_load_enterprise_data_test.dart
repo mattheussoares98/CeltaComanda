@@ -49,6 +49,10 @@ void main() {
               .toString()
               .toLowerCase()
               .removeWhiteSpaces(),
+          urlCCS: enterpriseJsonData["urlCCS"]
+              .toString()
+              .toLowerCase()
+              .removeWhiteSpaces(),
           persistApp: enterpriseJsonData["persistApp"],
         ),
       );

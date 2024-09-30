@@ -6,6 +6,7 @@ class EnterpriseEntity extends Equatable {
   final int? enterpriseId;
   final String? concentradorUrl;
   final bool? persistApp;
+  final String? urlCCS;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -13,8 +14,16 @@ class EnterpriseEntity extends Equatable {
     required this.enterpriseId,
     required this.concentradorUrl,
     required this.persistApp,
+    required this.urlCCS,
   });
 
   @override
-  List get props => [url, enterpriseName, enterpriseId, concentradorUrl, persistApp];
+  List get props => [
+        url,
+        enterpriseName,
+        enterpriseId,
+        concentradorUrl,
+        persistApp,
+        urlCCS,
+      ];
 }

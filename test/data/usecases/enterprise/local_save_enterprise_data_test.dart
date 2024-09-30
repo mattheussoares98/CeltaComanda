@@ -19,10 +19,11 @@ void main() {
     cacheStorage = HiveStorageSpy();
     enterpriseData = EnterpriseEntity(
       url: faker.internet.httpUrl(),
-     enterpriseName: faker.company.name(),
-     enterpriseId: faker.randomGenerator.integer(3),
-     concentradorUrl: faker.internet.httpUrl(),
-     persistApp: faker.randomGenerator.boolean(),
+      urlCCS: faker.internet.httpUrl(),
+      enterpriseName: faker.company.name(),
+      enterpriseId: faker.randomGenerator.integer(3),
+      concentradorUrl: faker.internet.httpUrl(),
+      persistApp: faker.randomGenerator.boolean(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });
@@ -36,7 +37,8 @@ void main() {
         ));
   });
 
-  test('Should throw UnexpectedError if LocalSaveEnterpriseData throws', () async {
+  test('Should throw UnexpectedError if LocalSaveEnterpriseData throws',
+      () async {
     cacheStorage.mockSaveError();
 
     final future = sut.add(enterpriseData);

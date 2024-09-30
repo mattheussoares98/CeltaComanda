@@ -60,6 +60,7 @@ void main() {
       enterpriseName: "enterpriseName",
       enterpriseId: faker.randomGenerator.integer(100),
       concentradorUrl: faker.internet.httpUrl(),
+      urlCCS: faker.internet.httpUrl(),
       url: faker.internet.httpUrl(),
       persistApp: faker.randomGenerator.boolean(),
     ));

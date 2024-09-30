@@ -7,6 +7,7 @@ class EnterpriseValidationModel {
   final int? enterpriseId;
   final String? concentradorUrl;
   final bool? persistApp;
+  final String? urlCCS;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -14,6 +15,7 @@ class EnterpriseValidationModel {
     required this.enterpriseId,
     required this.concentradorUrl,
     required this.persistApp,
+    required this.urlCCS,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -31,6 +33,7 @@ class EnterpriseValidationModel {
       enterpriseId: json["enterpriseId"],
       concentradorUrl: json["concentradorUrl"],
       persistApp: json["persistApp"],
+      urlCCS: json["urlCCS"],
     );
   }
 
@@ -41,11 +44,13 @@ class EnterpriseValidationModel {
         enterpriseId: entity.enterpriseId,
         concentradorUrl: entity.concentradorUrl,
         persistApp: entity.persistApp,
+        urlCCS: entity.urlCCS,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
         enterpriseName: enterpriseName.toLowerCase().removeWhiteSpaces(),
         url: url?.toLowerCase().removeWhiteSpaces(),
+        urlCCS: urlCCS?.toLowerCase().removeWhiteSpaces(),
         enterpriseId: enterpriseId,
         concentradorUrl: concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         persistApp: persistApp,
@@ -57,5 +62,6 @@ class EnterpriseValidationModel {
         'url': url?.toLowerCase().removeWhiteSpaces(),
         'concentradorUrl': concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         'persistApp': persistApp,
+        'urlCCS': urlCCS,
       };
 }

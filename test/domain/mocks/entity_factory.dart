@@ -9,6 +9,7 @@ class EntityFactory {
   static EnterpriseEntity makeEnterpriseData() {
     return EnterpriseEntity(
       url: faker.internet.httpUrl(),
+      urlCCS: faker.internet.httpUrl(),
       enterpriseId: faker.randomGenerator.integer(3),
       enterpriseName: faker.company.name(),
       concentradorUrl: faker.internet.httpUrl(),

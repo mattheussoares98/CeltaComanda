@@ -116,7 +116,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       if ((homePresenter.isGeneratingVersionToRede ||
               homePresenter.isGeneratingVersionToTablet) &&
-          homePresenter.isFixedCommandNumber == false) {
+          !commandEntity.isFixedCommandNumber) {
         throw DomainError.obligatoryFixedCommandNumber;
       }
 

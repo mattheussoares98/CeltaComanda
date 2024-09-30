@@ -38,4 +38,6 @@ abstract class PaymentPresenter implements Listenable {
   );
 
   void disposePaymentResultHandler();
+
+  void goToCovenantPage();
 }

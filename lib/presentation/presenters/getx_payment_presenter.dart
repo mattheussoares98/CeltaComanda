@@ -166,4 +166,7 @@ class GetxPaymentPresenter extends GetxController
   void disposePaymentResultHandler() {
     _channel.setMethodCallHandler(null);
   }
+
+  @override
+  void goToCovenantPage() {}
 }

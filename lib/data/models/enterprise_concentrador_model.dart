@@ -156,4 +156,35 @@ class EnterpriseConcentradorModel {
         saleInECommerce: entity.saleInECommerce,
         enterpriseString: entity.enterpriseString,
       );
+
+  EnterpriseConcentradorEntity toEntity() => EnterpriseConcentradorEntity(
+        enterpriseId: enterpriseId,
+        cnpj: cnpj,
+        formatedCnpj: formatedCnpj,
+        inscriptionState: inscriptionState,
+        passwordMonth: passwordMonth,
+        fantasyName: fantasyName,
+        socialName: socialName,
+        addressName: addressName,
+        addressDistrict: addressDistrict,
+        addressCity: addressCity,
+        addressIBGECityCode: addressIBGECityCode,
+        addressZip: addressZip,
+        addressState: addressState,
+        nFCeIdentificationCode: nFCeIdentificationCode,
+        nFCeSecurityCode: nFCeSecurityCode,
+        urlSefazConsultNfce: urlSefazConsultNfce,
+        urlSefazConsultQRCodeNfce: urlSefazConsultQRCodeNfce,
+        addressFull: addressFull,
+        enterpriseCode: enterpriseCode,
+        personalizedCode: personalizedCode,
+        telephone: telephone,
+        federalSimpleType: federalSimpleType,
+        considerIcmsForCalculateBaseOfPisCofins:
+            considerIcmsForCalculateBaseOfPisCofins,
+        saleInRetail: saleInRetail,
+        saleInWholeSale: saleInWholeSale,
+        saleInECommerce: saleInECommerce,
+        enterpriseString: enterpriseString,
+      );
 }

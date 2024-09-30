@@ -1,3 +1,5 @@
+import '../../entities/entities.dart';
+
 abstract class LoadEnterpriseConcentradorParameters {
-  Future<void> load(int enterpriseId);
+  Future<EnterpriseConcentradorParametersEntity> load(int enterpriseId);
 }

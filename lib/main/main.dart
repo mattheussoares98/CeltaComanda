@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/pages/covenant/covenant_page_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -88,9 +89,9 @@ class App extends StatelessWidget with HideNavigationBarManager {
           initialRoute: PageRoutes.splash,
           getPages: [
             GetPage(
-              name: PageRoutes.splash,
-              page: makeSplashPage,
-              transition: Transition.fade,
+              name: PageRoutes.covenant,
+              page: makeCovenantPage,
+              transition: Transition.fadeIn,
             ),
             GetPage(
               name: PageRoutes.enterpriseValidation,
@@ -120,6 +121,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
                 );
               },
               transition: Transition.fadeIn,
+            ),
+            GetPage(
+              name: PageRoutes.splash,
+              page: makeSplashPage,
+              transition: Transition.fade,
             ),
           ],
         ),

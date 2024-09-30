@@ -1,0 +1,1 @@
+export './covenant_page.dart';

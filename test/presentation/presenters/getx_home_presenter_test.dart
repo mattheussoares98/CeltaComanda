@@ -25,7 +25,7 @@ void main() {
 
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy localEnterpriseData;
-  late LoadCommandDataSpy localCommandData;
+  late LocalCommandDataSpy localCommandData;
   late UserValidationsSpy userValidations;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -73,7 +73,7 @@ void main() {
   void initUsecases() {
     localEnterpriseData = LocalEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
-    localCommandData = LoadCommandDataSpy();
+    localCommandData = LocalCommandDataSpy();
     userValidations = UserValidationsSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();

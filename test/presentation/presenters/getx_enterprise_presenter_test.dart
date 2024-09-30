@@ -24,7 +24,7 @@ void main() {
   late RemoteEnterpriseDataSpy remoteLoadEnterpriseData;
   late NavigateToSpy navigateTo;
   late CommandInformationsSpy ticketIsPermitted;
-  late LoadCommandDataSpy loadCommandData;
+  late LocalCommandDataSpy loadCommandData;
   late PersistentSpy persistent;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
@@ -33,7 +33,7 @@ void main() {
 
   setUp(() {
     validation = ValidationSpy();
-    loadCommandData = LoadCommandDataSpy();
+    loadCommandData = LocalCommandDataSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     remoteLoadEnterpriseData = RemoteEnterpriseDataSpy();
     ticketIsPermitted = CommandInformationsSpy();

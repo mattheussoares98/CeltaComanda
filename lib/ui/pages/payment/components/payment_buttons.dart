@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../domain/helpers/helpers.dart';
+import '../../../../main/builders/builders.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -22,8 +23,7 @@ class PaymentButtons extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${R.string.total}: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()}"
-                    .addBrazilianCoin(),
+                "${R.string.total}: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()} R\$",
                 style: TextStyle(
                   fontSize: getStringSize(context) * 2,
                   fontWeight: FontWeight.bold,
@@ -43,65 +43,77 @@ class PaymentButtons extends StatelessWidget {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  await paymentPresenter.callPayment(
-                    longAmountValue: printedProductsPresenter
-                        .printedProducts!.TotalLiquid
-                        .toDouble(),
-                    portionQuantity: 1,
-                    paymentMode: PaymentMode.pix,
-                    homePresenter: homePresenter,
-                  );
-                },
-                child: Text(
-                  "PIX",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
+              if (homePresenter.isGeneratingVersionToRede)
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await paymentPresenter.callPayment(
+                          longAmountValue: printedProductsPresenter
+                              .printedProducts!.TotalLiquid
+                              .toDouble(),
+                          portionQuantity: 1,
+                          paymentMode: PaymentMode.pix,
+                          homePresenter: homePresenter,
+                        );
+                      },
+                      child: Text(
+                        "PIX",
+                        style: _buttonStyle(context),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await paymentPresenter.callPayment(
+                            longAmountValue: printedProductsPresenter
+                                .printedProducts!.TotalLiquid
+                                .toDouble(),
+                            portionQuantity: 1,
+                            paymentMode: PaymentMode.debit,
+                            homePresenter: homePresenter,
+                          );
+                        },
+                        child: Text(
+                          R.string.debit.toUpperCase(),
+                          style: _buttonStyle(context),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await paymentPresenter.callPayment(
+                            longAmountValue: printedProductsPresenter
+                                .printedProducts!.TotalLiquid
+                                .toDouble(),
+                            portionQuantity: 1,
+                            paymentMode: PaymentMode.credit,
+                            homePresenter: homePresenter,
+                          );
+                        },
+                        child: Text(
+                          R.string.cashCredit.toUpperCase(),
+                          style: _buttonStyle(context),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              if (EnterpriseDataBuilder.enterpriseDataEntity?.useCovenant ==
+                  true)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Convênio".toUpperCase(),
+                      style: _buttonStyle(context),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  await paymentPresenter.callPayment(
-                    longAmountValue: printedProductsPresenter
-                        .printedProducts!.TotalLiquid
-                        .toDouble(),
-                    portionQuantity: 1,
-                    paymentMode: PaymentMode.debit,
-                    homePresenter: homePresenter,
-                  );
-                },
-                child: Text(
-                  R.string.debit.toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  await paymentPresenter.callPayment(
-                    longAmountValue: printedProductsPresenter
-                        .printedProducts!.TotalLiquid
-                        .toDouble(),
-                    portionQuantity: 1,
-                    paymentMode: PaymentMode.credit,
-                    homePresenter: homePresenter,
-                  );
-                },
-                child: Text(
-                  R.string.cashCredit.toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -109,3 +121,8 @@ class PaymentButtons extends StatelessWidget {
     );
   }
 }
+
+TextStyle _buttonStyle(BuildContext context) => TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: getStringSize(context),
+    );

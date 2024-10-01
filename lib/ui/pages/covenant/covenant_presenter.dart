@@ -8,4 +8,5 @@ abstract class CovenantPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
 
   Future<void> getCustomer(String value);
+  void validateCustomerField(String value);
 }

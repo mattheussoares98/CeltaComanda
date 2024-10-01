@@ -147,4 +147,21 @@ void main() {
       ).called(1);
     });
   });
+
+  group("Validate customer field", () {
+    test("Should emit correct values if is valid", () {
+      expectLater(sut.customerErrorStream, emits(null));
+
+      sut.validateCustomerField(faker.randomGenerator.string(100));
+      sut.validateCustomerField(faker.randomGenerator.integer(100).toString());
+    });
+    test("Should emit correct values if is empty", () {
+      expectLater(
+        sut.customerErrorStream,
+        emitsInOrder([null, UIError.invalidField]),
+      );
+
+      sut.validateCustomerField("");
+    });
+  });
 }

@@ -63,5 +63,14 @@ class GetxCovenantPresenter extends GetxController
   final _customerError = Rx<UIError?>(null);
   @override
   Stream<UIError?> get customerErrorStream => _customerError.stream;
-  set customerError(UIError value) => _customerError.value = value;
+  set customerError(UIError? value) => _customerError.value = value;
+
+  @override
+  void validateCustomerField(String value) {
+    customerError = null;
+
+    if (value.isEmpty) {
+      customerError = UIError.invalidField;
+    }
+  }
 }

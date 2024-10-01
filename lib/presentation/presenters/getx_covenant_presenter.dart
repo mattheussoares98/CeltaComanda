@@ -9,10 +9,7 @@ class GetxCovenantPresenter extends GetxController
   GetxCovenantPresenter();
 
   @override
-  Future<void> getCustomer({
-    required String value,
-    required int searchTypeInt,
-  }) async {
+  Future<void> getCustomer(String value) async {
     try {
       // /* final jsonData =  */ await soapAdapter.post(
       //   parameters: {

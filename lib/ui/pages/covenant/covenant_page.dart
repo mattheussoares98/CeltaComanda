@@ -13,8 +13,8 @@ class CovenantPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(
-        child: Text("Convênio"),
+      body: Center(
+        child: GetCustomer(covenantPresenter: covenantPresenter),
       ),
     );
   }

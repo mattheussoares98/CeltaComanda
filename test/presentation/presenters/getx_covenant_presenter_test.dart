@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -54,6 +55,21 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
+      await sut.getCustomer(faker.randomGenerator.string(10));
+    });
+    test("Should emit correct values on not found customer", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.notFound]));
+
+      loadCustomer.mockLoadCustomer(null);
+      await sut.getCustomer(faker.randomGenerator.string(10));
+    });
+    test("Should emit correct values on throws", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      loadCustomer.mockLoadCustomerError();
       await sut.getCustomer(faker.randomGenerator.string(10));
     });
     test(

@@ -1,5 +1,6 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
@@ -49,9 +50,11 @@ class GetxCovenantPresenter extends GetxController
         );
       }
 
-      print(result);
+      if (result == null) {
+        mainError = UIError.notFound;
+      }
     } catch (e) {
-      print(e);
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }

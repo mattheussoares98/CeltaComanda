@@ -83,4 +83,11 @@ class GetxCovenantPresenter extends GetxController
       customerError = ValidationError.requiredField;
     }
   }
+
+  final _customerViewModelStream = Rx<CustomerViewModel?>(null);
+  @override
+  Stream<CustomerViewModel?> get customerViewModelStream =>
+      _customerViewModelStream.stream;
+  set customerViewModel(CustomerViewModel? customer) =>
+      _customerViewModelStream.subject.add(customer);
 }

@@ -16,38 +16,41 @@ class GetCustomer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ValidationError?>(
-        stream: covenantPresenter.customerErrorStream,
-        builder: (context, snapshot) {
-          return Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  decoration: formFieldDecoration(
-                    context: context,
-                    hintText: R.string.customer,
-                    labelText: R.string.customer,
-                    errorText: snapshot.data?.description,
-                    suffixIcon: Icon(Icons.search,
-                        color: Theme.of(context).primaryColor),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: StreamBuilder<ValidationError?>(
+          stream: covenantPresenter.customerErrorStream,
+          builder: (context, snapshot) {
+            return Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    decoration: formFieldDecoration(
+                      context: context,
+                      hintText: R.string.customer,
+                      labelText: R.string.customer,
+                      errorText: snapshot.data?.description,
+                      suffixIcon: Icon(Icons.search,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: textController,
+                    onFieldSubmitted: (_) async {
+                      await covenantPresenter.getCustomer(textController.text);
+                    },
+                    onChanged: (value) => covenantPresenter
+                        .validateCustomerField(textController.text),
                   ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: textController,
-                  onFieldSubmitted: (_) async {
+                ),
+                TextButton(
+                  onPressed: () async {
                     await covenantPresenter.getCustomer(textController.text);
                   },
-                  onChanged: (value) => covenantPresenter
-                      .validateCustomerField(textController.text),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await covenantPresenter.getCustomer(textController.text);
-                },
-                child: Text(R.string.getCustomer),
-              )
-            ],
-          );
-        });
+                  child: Text(R.string.getCustomer),
+                )
+              ],
+            );
+          }),
+    );
   }
 }

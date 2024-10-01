@@ -46,14 +46,17 @@ class _CovenantPageState extends State<CovenantPage>
       appBar: AppBar(title: Text(R.string.covenant)),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GetCustomer(
-              covenantPresenter: widget.covenantPresenter,
-              textController: textController,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GetCustomer(
+                covenantPresenter: widget.covenantPresenter,
+                textController: textController,
+              ),
+              Customers(covenantPresenter: widget.covenantPresenter),
+            ],
+          ),
         ),
       ),
     );

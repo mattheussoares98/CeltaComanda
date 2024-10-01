@@ -50,7 +50,7 @@ void main() {
     mockSuccess();
   });
 
-  group("Load customer", () {
+  group("Get customer", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
@@ -145,6 +145,26 @@ void main() {
           searchTypeInt: 4,
         ),
       ).called(1);
+    });
+    test("Should not get customer if value is empty", () async {
+      await sut.getCustomer("");
+
+      verifyNever(() => loadCustomer.load(
+            value: "",
+            searchTypeInt: 1,
+          ));
+      verifyNever(() => loadCustomer.load(
+            value: "",
+            searchTypeInt: 2,
+          ));
+      verifyNever(() => loadCustomer.load(
+            value: "",
+            searchTypeInt: 3,
+          ));
+      verifyNever(() => loadCustomer.load(
+            value: "",
+            searchTypeInt: 4,
+          ));
     });
   });
 

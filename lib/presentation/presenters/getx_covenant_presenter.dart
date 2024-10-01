@@ -27,7 +27,9 @@ class GetxCovenantPresenter extends GetxController
 // 2=ExactCode
 // 3=ApproximateName
 // 4=PersonalizedCode
-      if (valueInInt == null) {
+      if (value.isEmpty) {
+        return;
+      } else if (valueInInt == null) {
         result = await loadCustomer.load(
           value: value,
           searchTypeInt: 3,

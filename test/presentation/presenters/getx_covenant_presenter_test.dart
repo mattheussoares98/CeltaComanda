@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -171,6 +172,16 @@ void main() {
             value: "",
             searchTypeInt: 4,
           ));
+    });
+    test("Should emit correct value on customerViewModelStream", () async {
+      expectLater(
+          sut.customersViewModelStream,
+          emitsInOrder([
+            null,
+            customers.map((e) => CustomerViewModel.fromEntity(e)).toList()
+          ]));
+
+      await sut.getCustomer("any");
     });
   });
 

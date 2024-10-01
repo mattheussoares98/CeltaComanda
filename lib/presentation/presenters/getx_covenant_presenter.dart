@@ -22,6 +22,7 @@ class GetxCovenantPresenter extends GetxController
   Future<void> getCustomer(String value) async {
     mainError = null;
     isLoading = true;
+    customersViewModel = null;
     try {
       int? valueInInt = int.tryParse(value);
 
@@ -58,6 +59,9 @@ class GetxCovenantPresenter extends GetxController
 
       if (result == null) {
         mainError = UIError.notFound;
+      } else {
+        customersViewModel =
+            result.map((e) => CustomerViewModel.fromEntity(e)).toList();
       }
     } catch (e) {
       mainError = UIError.unexpected;
@@ -84,10 +88,10 @@ class GetxCovenantPresenter extends GetxController
     }
   }
 
-  final _customerViewModelStream = Rx<CustomerViewModel?>(null);
+  final _customersViewModelStream = Rx<List<CustomerViewModel>?>(null);
   @override
-  Stream<CustomerViewModel?> get customerViewModelStream =>
-      _customerViewModelStream.stream;
-  set customerViewModel(CustomerViewModel? customer) =>
-      _customerViewModelStream.subject.add(customer);
+  Stream<List<CustomerViewModel>?> get customersViewModelStream =>
+      _customersViewModelStream.stream;
+  set customersViewModel(List<CustomerViewModel>? customer) =>
+      _customersViewModelStream.subject.add(customer);
 }

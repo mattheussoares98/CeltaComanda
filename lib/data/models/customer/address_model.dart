@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import '../../../domain/entities/entities.dart';
 
-class AddressModel {
+class AddressModel extends Equatable {
   final String Zip;
   final String Address;
   final String Number;
@@ -23,6 +25,18 @@ class AddressModel {
     required this.Reference,
   });
 
+  @override
+  List<Object?> get props => [
+        Zip,
+        Address,
+        Number,
+        District,
+        City,
+        State,
+        Complement,
+        Reference,
+      ];
+
   factory AddressModel.fromJson(Map json) => AddressModel(
         Zip: json["Zip"],
         Address: json["Address"],
@@ -32,6 +46,16 @@ class AddressModel {
         State: json["State"],
         Complement: json["Complement"],
         Reference: json["Reference"],
+      );
+  factory AddressModel.fromEntity(AddressEntity entity) => AddressModel(
+        Zip: entity.Zip,
+        Address: entity.Address,
+        Number: entity.Number,
+        District: entity.District,
+        City: entity.City,
+        State: entity.State,
+        Complement: entity.Complement,
+        Reference: entity.Reference,
       );
 
   Map<String, dynamic> toJson() => {

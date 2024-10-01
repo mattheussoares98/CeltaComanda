@@ -26,7 +26,8 @@ void main() {
       concentradorUrl: faker.internet.httpUrl(),
       persistApp: faker.randomGenerator.boolean(),
       useCovenant: faker.randomGenerator.boolean(),
-      enterpriseConcentradorParametersEntity: EntityFactory.makeEnterpriseConcentradorParametersEntity(),
+      enterpriseConcentradorParametersEntity:
+          EntityFactory.makeEnterpriseConcentradorParametersEntity(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

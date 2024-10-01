@@ -6,6 +6,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 
 import 'package:get/get.dart';
@@ -14,7 +15,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../domain/mocks/validate_combox_spy.dart';
 import '../../ui/mocks/mocks.dart';
 
 void main() {

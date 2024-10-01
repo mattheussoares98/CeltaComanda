@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
+import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
@@ -183,7 +184,7 @@ void main() {
     test("Should emit correct values if is empty", () {
       expectLater(
         sut.customerErrorStream,
-        emitsInOrder([null, UIError.invalidField]),
+        emitsInOrder([null, ValidationError.requiredField]),
       );
 
       sut.validateCustomerField("");

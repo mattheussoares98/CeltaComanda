@@ -66,17 +66,21 @@ class GetxCovenantPresenter extends GetxController
     }
   }
 
-  final _customerError = Rx<UIError?>(null);
+  final _customerError = Rx<ValidationError?>(null);
   @override
-  Stream<UIError?> get customerErrorStream => _customerError.stream;
-  set customerError(UIError? value) => _customerError.value = value;
+  Stream<ValidationError?> get customerErrorStream => _customerError.stream;
+  set customerError(ValidationError? value) => _customerError.value = value;
 
   @override
   void validateCustomerField(String value) {
     customerError = null;
+    const field = "customer";
+
+    final formData = {field: value};
+    customerError = validation.validate(field: field, input: formData);
 
     if (value.isEmpty) {
-      customerError = UIError.invalidField;
+      customerError = ValidationError.requiredField;
     }
   }
 }

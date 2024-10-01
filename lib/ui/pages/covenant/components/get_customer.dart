@@ -1,6 +1,7 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../presentation/protocols/protocols.dart';
+import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -15,7 +16,7 @@ class GetCustomer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<UIError?>(
+    return StreamBuilder<ValidationError?>(
         stream: covenantPresenter.customerErrorStream,
         builder: (context, snapshot) {
           return Row(

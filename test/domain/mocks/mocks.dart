@@ -6,6 +6,7 @@ export './clear_sale_request_temp_spy.dart';
 export './confirmed_cart_products_spy.dart';
 export './entity_factory.dart';
 export './finish_sale_request_concentrador.dart';
+export './load_customer_spy.dart';
 export './load_enterprise_concentrador_parameters_spy.dart';
 export './load_sale_request_printed_products_spy.dart';
 export 'load_sale_request_temp_spy.dart';

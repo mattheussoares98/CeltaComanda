@@ -22,15 +22,16 @@ abstract class Translation {
   String get msgInvalidField;
   String get msgInvalidNumber;
   String get msgLiquidadeCommandError;
-  String get msgReleasesCommand;
   String get msgLowBatteryChargeDevice;
   String get msgMaximumQuantityAchieved;
+  String get msgNotFound;
   String get msgObligatoryFixedCommandNumber;
   String get msgPaymentCanceled;
   String get msgPaymentDeclined;
   String get msgPaymentUnexpectedError;
   String get msgPaymentFailed;
   String get msgProductNotFound;
+  String get msgReleasesCommand;
   String get msgRequestSentSuccessfully;
   String get msgRequiredField;
   String get msgSearchCommandToPay;

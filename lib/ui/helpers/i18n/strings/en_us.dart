@@ -35,11 +35,13 @@ class EnUs implements Translation {
   String get msgLowBatteryChargeDevice =>
       'Charge the device. It is running low on battery';
   String get msgMaximumQuantityAchieved => "Maximum quantity achivied";
+  String get msgNotFound => "Value not found";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
   String get msgPaymentCanceled => 'Payment canceled';
   String get msgPaymentDeclined => 'Payment declined';
-  String get msgPaymentUnexpectedError => 'One error was ocurred in the payment';
+  String get msgPaymentUnexpectedError =>
+      'One error was ocurred in the payment';
   String get msgPaymentEmpty => 'The command has no open values';
   String get msgPaymentFailed => 'Payment failed';
   String get msgProductNotFound => 'The product was not found';

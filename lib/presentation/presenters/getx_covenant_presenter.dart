@@ -16,7 +16,22 @@ class GetxCovenantPresenter extends GetxController
   Future<void> getCustomer(String value) async {
     mainError = null;
     isLoading = true;
-    try {} catch (e) {
+    try {
+      int? valueInInt = int.tryParse(value);
+
+      if (valueInInt == null) {
+        await loadCustomer.load(
+          value: value,
+          searchTypeInt: 3,
+        );
+      } else {
+        
+      }
+// 1=ExactCnpjCpfNumber
+// 2=ExactCode
+// 3=ApproximateName
+// 4=PersonalizedCode
+    } catch (e) {
       e;
     } finally {
       isLoading = false;

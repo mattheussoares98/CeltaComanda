@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
+import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class CovenantPage extends StatefulWidget {
@@ -14,18 +17,31 @@ class CovenantPage extends StatefulWidget {
   State<CovenantPage> createState() => _CovenantPageState();
 }
 
-class _CovenantPageState extends State<CovenantPage> {
+class _CovenantPageState extends State<CovenantPage>
+    with LoadingManager, UIErrorManager {
   final textController = TextEditingController();
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
 
   @override
   void dispose() {
     super.dispose();
 
     textController.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    loadingSubscription =
+        handleLoading(context, widget.covenantPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, widget.covenantPresenter.mainErrorStream);
+
     return Scaffold(
       appBar: AppBar(title: Text(R.string.covenant)),
       body: Padding(

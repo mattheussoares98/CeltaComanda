@@ -1,3 +1,4 @@
+export './customer/customer.dart';
 export './cart_product_entity.dart';
 export './command_entity.dart';
 export './enterprise_concentrador_entity.dart';

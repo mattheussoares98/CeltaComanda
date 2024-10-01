@@ -105,8 +105,8 @@ class PtBr implements Translation {
   String get confirmPassword => 'Confirmar senha';
   String get confirm => 'Confirmar';
   String get costBenefit => 'Custo benefício';
-  String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
   String get covenant => "Convênio";
+  String get customer => "Cliente";
   String get debit => "Débito";
   String get detach => "Destaques";
   String get doLogout => "Fazer logout";
@@ -119,6 +119,7 @@ class PtBr implements Translation {
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get environment => 'Ambiente';
   String get exit => 'Sair';
+  String get getCustomer => 'Pesquisar cliente';
   String get insertInCart => 'Inserir no carrinho';
   String get insert => 'Inserir';
   String get ifWantSelectComments => 'Se desejar, selecione comentários';
@@ -163,6 +164,7 @@ class PtBr implements Translation {
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';
   String get service => 'Atendimento';
+  String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get table => 'Mesa';

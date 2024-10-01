@@ -104,6 +104,7 @@ class EnUs implements Translation {
   String get confirm => 'Confirm';
   String get costBenefit => 'Cost-benefit';
   String get covenant => 'Covenant';
+  String get customer => 'Customer';
   String get debit => 'Debit';
   String get detach => 'Highlights';
   String get doLogout => 'Log out';
@@ -116,6 +117,7 @@ class EnUs implements Translation {
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';
   String get exit => 'Exit';
+  String get getCustomer => 'Get customer';
   String get insertInCart => 'Add to cart';
   String get insert => 'Insert';
   String get ifWantSelectComments => 'If desired, select comments';

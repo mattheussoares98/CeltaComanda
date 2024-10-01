@@ -84,6 +84,7 @@ abstract class Translation {
   String get confirmPassword;
   String get costBenefit;
   String get covenant;
+  String get customer;
   String get debit;
   String get detach;
   String get doLogout;
@@ -96,6 +97,7 @@ abstract class Translation {
   String get enterprise;
   String get environment;
   String get exit;
+  String get getCustomer;
   String get insertInCart;
   String get insert;
   String get ifWantSelectComments;

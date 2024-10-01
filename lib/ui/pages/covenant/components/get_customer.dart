@@ -22,7 +22,7 @@ class GetCustomer extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: R.string.enterprise,
+                    labelText: R.string.customer,
                     suffixIcon: Icon(Icons.search,
                         color: Theme.of(context).primaryColor),
                     errorText: snapshot.data?.description,
@@ -37,7 +37,7 @@ class GetCustomer extends StatelessWidget {
                 onPressed: () async {
                   await covenantPresenter.getCustomer(textController.text);
                 },
-                child: const Text("Get customer create helper"),
+                child: Text(R.string.getCustomer),
               )
             ],
           );

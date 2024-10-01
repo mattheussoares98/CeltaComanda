@@ -19,12 +19,12 @@ abstract class EnterpriseValidationPresenter implements Listenable {
       {bool? updateEnterpriseNameController = false});
   void updateEnterpriseController(String value);
 
-  Future<void> getEnterpriseAndValidateApiIsAvailable({
+  Future<void> validateApiAndGoToHomePage({
     required CommandEntity commandEntity,
     required HomePresenter homePresenter,
   });
-  Future<void> loadRemoteEnterpriseData();
-  Future<void> loadLocalData(HomePresenter homePresenter);
+  Future<void> getFirebaseAndConcentradorEnterpriseParameters();
+  Future<void> getLocalData(HomePresenter homePresenter);
 
   Future<void> goToHomePage(HomePresenter homePresenter);
 

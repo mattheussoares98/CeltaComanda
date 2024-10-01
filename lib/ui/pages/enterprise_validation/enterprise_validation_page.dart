@@ -27,7 +27,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     if (!_isLoaded) {
       _isLoaded = true;
       HomePresenter homePresenter = Provider.of(context, listen: false);
-      await widget.presenter.loadLocalData(homePresenter);
+      await widget.presenter.getLocalData(homePresenter);
 
       if (widget.presenter.enterpriseNameController.text.isNotEmpty) {
         widget.presenter.validateEnterpriseInput(
@@ -47,13 +47,13 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
       }
 
       await enterpriseValidationPresenter
-          .getEnterpriseAndValidateApiIsAvailable(
+          .validateApiAndGoToHomePage(
         commandEntity: commandViewModel.toEntity(),
         homePresenter: homePresenter,
       );
     } else {
       await enterpriseValidationPresenter
-          .getEnterpriseAndValidateApiIsAvailable(
+          .validateApiAndGoToHomePage(
         commandEntity: commandViewModel.toEntity(),
         homePresenter: homePresenter,
       );

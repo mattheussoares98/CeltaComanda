@@ -64,7 +64,7 @@ void main() {
     await loadPage(tester);
     presenter.mockLoadRemoteDataError();
 
-    await presenter.getEnterpriseAndValidateApiIsAvailable(
+    await presenter.validateApiAndGoToHomePage(
       commandEntity: EntityFactory.makeCommandEntity(),
       homePresenter: homePresenter,
     );

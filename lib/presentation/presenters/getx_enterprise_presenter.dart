@@ -46,7 +46,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   Stream<CommandViewModel?> get commandDataStream => _commandData.stream;
 
   @override
-  Future<void> loadLocalData(HomePresenter homePresenter) async {
+  Future<void> getLocalData(HomePresenter homePresenter) async {
     EnterpriseDataBuilder.enterpriseDataEntity =
         await localEntepriseData.load();
 
@@ -82,7 +82,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   }
 
   @override
-  Future<void> loadRemoteEnterpriseData() async {
+  Future<void> getFirebaseAndConcentradorEnterpriseParameters() async {
     try {
       final remoteData = await loadEnterpriseData.load();
 
@@ -108,14 +108,14 @@ class GetxEnterpriseValidationPresenter extends GetxController
       await loadEnterpriseConcentradorParameters
           .load(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!);
     } catch (e) {
-      throw DomainError.enterpriseOrUrlNotFound;
+      rethrow;
     } finally {
       isUpdatedEnterpriseName = false;
     }
   }
 
   @override
-  Future<void> getEnterpriseAndValidateApiIsAvailable({
+  Future<void> validateApiAndGoToHomePage({
     required CommandEntity commandEntity,
     required HomePresenter homePresenter,
   }) async {
@@ -133,7 +133,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       if (isUpdatedEnterpriseName ||
           EnterpriseDataBuilder.enterpriseDataEntity!.url == null) {
-        await loadRemoteEnterpriseData();
+        await getFirebaseAndConcentradorEnterpriseParameters();
       }
 
       await commandInformations.ticketIsPermitted(

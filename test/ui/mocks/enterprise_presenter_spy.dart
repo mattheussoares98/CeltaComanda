@@ -28,9 +28,9 @@ class EnterpriseValidationPresenterSpy extends Mock
     when(() => this.enterpriseNameController)
         .thenReturn(enterpriseNameTextEditingController);
 
-    when(() => this.loadLocalData(any())).thenAnswer((any) async => any);
-    when(() => this.loadRemoteEnterpriseData()).thenAnswer((any) async => any);
-    when(() => this.getEnterpriseAndValidateApiIsAvailable(
+    when(() => this.getLocalData(any())).thenAnswer((any) async => any);
+    when(() => this.getFirebaseAndConcentradorEnterpriseParameters()).thenAnswer((any) async => any);
+    when(() => this.validateApiAndGoToHomePage(
           commandEntity: any(named: "commandEntity"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((any) async => any);
@@ -62,12 +62,12 @@ class EnterpriseValidationPresenterSpy extends Mock
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
   void mockLoadRemoteData(EnterpriseEntity? enterpriseEntity) {
-    when(() => this.loadRemoteEnterpriseData())
+    when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
         .thenAnswer((_) async => enterpriseEntity);
   }
 
   void mockLoadRemoteDataError() {
-    when(() => this.loadRemoteEnterpriseData())
+    when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
         .thenThrow((_) async => DomainError.enterpriseOrUrlNotFound);
   }
 

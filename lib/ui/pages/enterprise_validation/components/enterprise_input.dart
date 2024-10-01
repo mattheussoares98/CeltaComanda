@@ -30,7 +30,7 @@ class EnterpriseInput extends StatelessWidget {
             controller: presenter.enterpriseNameController,
             onFieldSubmitted: (_) async {
               if (presenter.enterpriseNameController.text.isNotEmpty) {
-                await presenter.getEnterpriseAndValidateApiIsAvailable(
+                await presenter.validateApiAndGoToHomePage(
                   commandEntity: commandVideModel.toEntity(),
                   homePresenter: homePresenter,
                 );

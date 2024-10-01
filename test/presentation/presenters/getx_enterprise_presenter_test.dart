@@ -104,7 +104,7 @@ void main() {
         sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(
+    await sut.validateApiAndGoToHomePage(
       commandEntity: commandEntity,
       homePresenter: homePresenter,
     );
@@ -144,7 +144,7 @@ void main() {
       updateEnterpriseNameController: true,
     );
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(
+    await sut.validateApiAndGoToHomePage(
       commandEntity: commandEntity,
       homePresenter: homePresenter,
     );
@@ -161,7 +161,7 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(
+    await sut.validateApiAndGoToHomePage(
       commandEntity: commandEntity,
       homePresenter: homePresenter,
     );
@@ -175,7 +175,7 @@ void main() {
     expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(
+    await sut.validateApiAndGoToHomePage(
       commandEntity: commandEntity,
       homePresenter: homePresenter,
     );
@@ -185,7 +185,7 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text,
         updateEnterpriseNameController: true);
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(
+    await sut.validateApiAndGoToHomePage(
       commandEntity: commandEntity,
       homePresenter: homePresenter,
     );
@@ -195,7 +195,7 @@ void main() {
   });
 
   test("Should change controllers with cacheEnterpriseData", () async {
-    await sut.loadLocalData(homePresenter);
+    await sut.getLocalData(homePresenter);
 
     expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
         sut.enterpriseNameController.text);
@@ -205,7 +205,7 @@ void main() {
     sut.validateEnterpriseInput(sut.enterpriseNameController.text);
     sut.isUpdatedEnterpriseName = true;
 
-    await sut.getEnterpriseAndValidateApiIsAvailable(
+    await sut.validateApiAndGoToHomePage(
       commandEntity: commandEntity,
       homePresenter: homePresenter,
     );
@@ -292,7 +292,7 @@ void main() {
   });
 
   test("Should call loadCommandData on loadLocalData", () async {
-    await sut.loadLocalData(homePresenter);
+    await sut.getLocalData(homePresenter);
 
     verify(() => loadCommandData.load()).called(1);
   });
@@ -303,7 +303,7 @@ void main() {
         emits(CommandViewModel.fromEntity(commandEntity)));
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    await sut.loadLocalData(homePresenter);
+    await sut.getLocalData(homePresenter);
   });
 
   test("Should emit correct events on loadCommandData throws", () async {
@@ -318,7 +318,7 @@ void main() {
               commandNumber: null, isFixedCommandNumber: null),
         ));
 
-    await sut.loadLocalData(homePresenter);
+    await sut.getLocalData(homePresenter);
   });
 
   group("Fixed command number", () {
@@ -337,13 +337,13 @@ void main() {
     test(
         "Should update correctly locally useFixedCommandNumber on validateApiSaleRequest",
         () async {
-      await sut.getEnterpriseAndValidateApiIsAvailable(
+      await sut.validateApiAndGoToHomePage(
         commandEntity: commandEntity,
         homePresenter: homePresenter,
       );
       verify(() => loadCommandData.update(commandEntity)).called(1);
 
-      await sut.getEnterpriseAndValidateApiIsAvailable(
+      await sut.validateApiAndGoToHomePage(
         commandEntity: commandEntity,
         homePresenter: homePresenter,
       );
@@ -398,7 +398,7 @@ void main() {
       homePresenter.isGeneratingVersionToRedeMock = true;
       homePresenter.isFixedCommandNumberMock = false;
 
-      await sut.getEnterpriseAndValidateApiIsAvailable(
+      await sut.validateApiAndGoToHomePage(
         commandEntity: commandEntity,
         homePresenter: homePresenter,
       );
@@ -415,7 +415,7 @@ void main() {
       homePresenter.isGeneratingVersionToTabletMock = true;
       homePresenter.isFixedCommandNumberMock = false;
 
-      await sut.getEnterpriseAndValidateApiIsAvailable(
+      await sut.validateApiAndGoToHomePage(
         commandEntity: commandEntity,
         homePresenter: homePresenter,
       );
@@ -462,7 +462,7 @@ void main() {
     test(
         "Should update homePresenter.isFixedCommandNumber when load command data",
         () async {
-      await sut.loadLocalData(homePresenter);
+      await sut.getLocalData(homePresenter);
       expect(homePresenter.isFixedCommandNumber, false);
 
       loadCommandData.mockLoad(
@@ -472,7 +472,7 @@ void main() {
         ),
       );
 
-      await sut.loadLocalData(homePresenter);
+      await sut.getLocalData(homePresenter);
       verify(() => homePresenter.updateIsFixedCommandNumber()).called(1);
     });
   });
@@ -483,7 +483,7 @@ void main() {
       // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
       //     updateEnterpriseNameController: true);
 
-      final error = sut.loadRemoteEnterpriseData();
+      final error = sut.getFirebaseAndConcentradorEnterpriseParameters();
 
       expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
     });
@@ -493,29 +493,47 @@ void main() {
         () {
       remoteLoadEnterpriseData.mockRemoteLoad(null);
 
-      final error = sut.loadRemoteEnterpriseData();
+      final error = sut.getFirebaseAndConcentradorEnterpriseParameters();
 
       expect(error, throwsA(DomainError.enterpriseOrUrlNotFound));
     });
 
     test("Should call LoadRemoteData on loadData", () async {
-      await sut.loadRemoteEnterpriseData();
+      await sut.getFirebaseAndConcentradorEnterpriseParameters();
 
       verify(() => remoteLoadEnterpriseData.load()).called(1);
     });
     test("Should change controllers with remoteEnterpriseData", () async {
-      await sut.loadRemoteEnterpriseData();
+      await sut.getFirebaseAndConcentradorEnterpriseParameters();
 
       expect(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
           sut.enterpriseNameController.text);
     });
     test("Should call loadEnterpriseConcentradorParameters", () async {
-      await sut.loadRemoteEnterpriseData();
+      await sut.getFirebaseAndConcentradorEnterpriseParameters();
 
       verify(
         () => loadEnterpriseConcentradorParameters
             .load(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!),
       ).called(1);
+    });
+    test("Should emit error if has error to load enterprise concentrador",
+        () async {
+      loadEnterpriseConcentradorParameters.mockLoadEnterpriseError();
+      sut.validateEnterpriseInput(
+        sut.enterpriseNameController.text,
+        updateEnterpriseNameController: true,
+      );
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      await sut.validateApiAndGoToHomePage(
+        commandEntity: commandEntity,
+        homePresenter: homePresenter,
+      );
     });
   });
 }

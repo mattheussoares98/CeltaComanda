@@ -13,10 +13,13 @@ import 'package:get/get.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
+import '../mocks/mocks.dart';
+
 void main() {
   late GetxCovenantPresenter sut;
 
   late LoadCustomerSpy loadCustomer;
+  late ValidationSpy validation;
 
   late List<CustomerEntity> customers;
 
@@ -25,6 +28,7 @@ void main() {
 
   void initUseCases() {
     loadCustomer = LoadCustomerSpy();
+    validation = ValidationSpy();
   }
 
   void initPresenters() {}
@@ -36,6 +40,7 @@ void main() {
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
+      validation: validation,
     );
   }
 

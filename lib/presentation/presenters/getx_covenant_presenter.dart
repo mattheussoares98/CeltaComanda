@@ -6,12 +6,16 @@ import '../mixins/mixins.dart';
 
 import 'package:get/get.dart';
 
+import '../protocols/protocols.dart';
+
 class GetxCovenantPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements CovenantPresenter {
+  final Validation validation;
   final LoadCustomer loadCustomer;
   GetxCovenantPresenter({
     required this.loadCustomer,
+    required this.validation,
   });
 
   @override

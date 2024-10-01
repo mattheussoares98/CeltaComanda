@@ -103,7 +103,7 @@ class EnUs implements Translation {
   String get confirmPassword => 'Confirm password';
   String get confirm => 'Confirm';
   String get costBenefit => 'Cost-benefit';
-  String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
+  String get covenant => 'Covenant';
   String get debit => 'Debit';
   String get detach => 'Highlights';
   String get doLogout => 'Log out';
@@ -159,6 +159,7 @@ class EnUs implements Translation {
   String get sendRequest => 'Send request';
   String get send => 'Send';
   String get service => 'Service';
+  String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
   String get surveys => 'Surveys';
   String get surveyResult => 'Survey result';
   String get table => 'Table';

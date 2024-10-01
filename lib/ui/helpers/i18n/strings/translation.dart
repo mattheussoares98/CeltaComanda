@@ -83,6 +83,7 @@ abstract class Translation {
   String get confirm;
   String get confirmPassword;
   String get costBenefit;
+  String get covenant;
   String get debit;
   String get detach;
   String get doLogout;

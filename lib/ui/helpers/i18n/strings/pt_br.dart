@@ -33,7 +33,8 @@ class PtBr implements Translation {
       'Credenciais inválidas ou usuário sem permissão';
   String get msgInvalidField => 'Campo inválido';
   String get msgInvalidNumber => "Número inválido";
-  String get msgLiquidadeCommandError => "Ocorreu um erro não esperado para liquidar a comanda";
+  String get msgLiquidadeCommandError =>
+      "Ocorreu um erro não esperado para liquidar a comanda";
   String get msgLowBatteryChargeDevice =>
       "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
@@ -105,6 +106,7 @@ class PtBr implements Translation {
   String get confirm => 'Confirmar';
   String get costBenefit => 'Custo benefício';
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
+  String get covenant => "Convênio";
   String get debit => "Débito";
   String get detach => "Destaques";
   String get doLogout => "Fazer logout";

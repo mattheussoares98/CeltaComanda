@@ -111,7 +111,7 @@ class PaymentButtons extends StatelessWidget {
                       paymentPresenter.goToCovenantPage();
                     },
                     child: Text(
-                      "Convênio".toUpperCase(),
+                      R.string.covenant.toUpperCase(),
                       style: _buttonStyle(context),
                     ),
                   ),

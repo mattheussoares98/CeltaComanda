@@ -16,7 +16,7 @@ class GetCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UIError?>(
-        stream: covenantPresenter.mainErrorStream,
+        stream: covenantPresenter.customerErrorStream,
         builder: (context, snapshot) {
           return Row(
             children: [

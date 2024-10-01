@@ -59,4 +59,9 @@ class GetxCovenantPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  final _customerError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get customerErrorStream => _customerError.stream;
+  set customerError(UIError value) => _customerError.value = value;
 }

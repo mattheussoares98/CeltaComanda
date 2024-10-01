@@ -3,9 +3,9 @@ import '../../../../validation/protocols/protocols.dart';
 import '../../../builders/builders.dart';
 import '../../../composites/composites.dart';
 
-Validation makeCovenantValidation() =>
-    ValidationComposite(_makeCovenantValidations());
+Validation makeCustomerValidation() =>
+    ValidationComposite(_makeCustomerValidations());
 
-List<FieldValidation> _makeCovenantValidations() => [
-      ...ValidationBuilder.field("covenant").required().build(),
+List<FieldValidation> _makeCustomerValidations() => [
+      ...ValidationBuilder.field("customer").required().build(),
     ];

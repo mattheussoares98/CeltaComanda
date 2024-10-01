@@ -1,5 +1,7 @@
 class EnterpriseConcentradorEntity {
   int? enterpriseId;
+  int? enterpriseCode;
+  int? federalSimpleType;
   String? cnpj;
   String? formatedCnpj;
   String? inscriptionState;
@@ -17,18 +19,18 @@ class EnterpriseConcentradorEntity {
   String? urlSefazConsultNfce;
   String? urlSefazConsultQRCodeNfce;
   String? addressFull;
-  int? enterpriseCode;
   String? personalizedCode;
   String? telephone;
-  int? federalSimpleType;
+  String? enterpriseString;
   bool? considerIcmsForCalculateBaseOfPisCofins;
   bool? saleInRetail;
   bool? saleInWholeSale;
   bool? saleInECommerce;
-  String? enterpriseString;
 
   EnterpriseConcentradorEntity({
     required this.enterpriseId,
+    required this.enterpriseCode,
+    required this.federalSimpleType,
     required this.cnpj,
     required this.formatedCnpj,
     required this.inscriptionState,
@@ -46,14 +48,12 @@ class EnterpriseConcentradorEntity {
     required this.urlSefazConsultNfce,
     required this.urlSefazConsultQRCodeNfce,
     required this.addressFull,
-    required this.enterpriseCode,
     required this.personalizedCode,
     required this.telephone,
-    required this.federalSimpleType,
+    required this.enterpriseString,
     required this.considerIcmsForCalculateBaseOfPisCofins,
     required this.saleInRetail,
     required this.saleInWholeSale,
     required this.saleInECommerce,
-    required this.enterpriseString,
   });
 }

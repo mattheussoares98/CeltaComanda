@@ -32,6 +32,8 @@ void main() {
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
   late EnterpriseEntity enterpriseEntity;
+  late EnterpriseConcentradorParametersEntity
+      enterpriseConcentradorParametersEntity;
 
   setUp(() {
     validation = ValidationSpy();
@@ -48,6 +50,8 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity = enterpriseEntity;
     ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
     commandEntity = EntityFactory.makeCommandEntity();
+    enterpriseConcentradorParametersEntity =
+        EntityFactory.makeEnterpriseConcentradorParametersEntity();
 
     localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
     localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
@@ -56,6 +60,8 @@ void main() {
     ticketIsPermitted.mockTicketIsPermitted(ticketIsPermittedEntity);
     loadCommandData.mockUpdate();
     loadCommandData.mockLoad(commandEntity);
+    loadEnterpriseConcentradorParameters
+        .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
 
     homePresenter = HomePresenterSpy();
     sut = GetxEnterpriseValidationPresenter(
@@ -478,10 +484,9 @@ void main() {
   });
 
   group("Load remote enterprise data", () {
-    test('Should error if enterprise not exists in firebase', () {
-      remoteLoadEnterpriseData.mockRemoteLoadError();
-      // sut.validateEnterpriseInput(sut.enterpriseNameController.text,
-      //     updateEnterpriseNameController: true);
+    test('Should error if enterprise not exists in firebase', () async {
+      remoteLoadEnterpriseData
+          .mockRemoteLoadError(DomainError.enterpriseOrUrlNotFound);
 
       final error = sut.getFirebaseAndConcentradorEnterpriseParameters();
 

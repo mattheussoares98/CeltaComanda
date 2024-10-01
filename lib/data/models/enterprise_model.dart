@@ -42,7 +42,11 @@ class EnterpriseValidationModel {
       urlCCS: json["urlCCS"],
       useCovenant: json["useCovenant"],
       enterpriseConcentradorParametersEntity:
-          json["enterpriseConcentradorParametersEntity"],
+          json["enterpriseConcentradorParametersEntity"] == null
+              ? null
+              : EnterpriseConcentradorParametersModel.fromJson(
+                      json["enterpriseConcentradorParametersEntity"])
+                  .toEntity(),
     );
   }
 

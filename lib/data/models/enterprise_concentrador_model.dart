@@ -59,7 +59,7 @@ class EnterpriseConcentradorModel {
     required this.enterpriseString,
   });
 
-  factory EnterpriseConcentradorModel.fromJson(Map<String, dynamic> json) =>
+  factory EnterpriseConcentradorModel.fromJson(Map json) =>
       EnterpriseConcentradorModel(
         enterpriseId: json['EnterpriseId'],
         cnpj: json['Cnpj'],

@@ -242,7 +242,7 @@ class EnterpriseConcentradorParametersModel {
     required this.parkingControlIPPort,
   });
 
-  EnterpriseConcentradorParametersModel.fromJson(Map<String, dynamic> json) {
+  EnterpriseConcentradorParametersModel.fromJson(Map json) {
     parametersId = json['ParametersId'];
     useBalanceOnPdv = json['UseBalanceOnPdv'];
     balanceLabelProductCodeSize = json['BalanceLabelProductCodeSize'];

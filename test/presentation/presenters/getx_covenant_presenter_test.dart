@@ -66,7 +66,7 @@ void main() {
       verify(
         () => loadCustomer.load(
           value: valueToSearch,
-          searchTypeInt: 3,
+          searchTypeInt: 3, //ApproximatedName
         ),
       ).called(1);
     });
@@ -79,7 +79,7 @@ void main() {
       verify(
         () => loadCustomer.load(
           value: valueToSearch,
-          searchTypeInt: 1,
+          searchTypeInt: 1, //ExactCnpjCpfNumber
         ),
       ).called(1);
     });
@@ -92,7 +92,41 @@ void main() {
       verify(
         () => loadCustomer.load(
           value: valueToSearch,
-          searchTypeInt: 1,
+          searchTypeInt: 1, //ExactCnpjCpfNumber
+        ),
+      ).called(1);
+    });
+    test(
+        "Should call loadCustomer with searchType 2 when is number and dont found cpf",
+        () async {
+      loadCustomer.mockLoadCustomer(null);
+
+      final valueToSearch =
+          faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
+
+      await sut.getCustomer(valueToSearch);
+
+      verify(
+        () => loadCustomer.load(
+          value: valueToSearch,
+          searchTypeInt: 2, //ExactCode
+        ),
+      ).called(1);
+    });
+    test(
+        "Should call loadCustomer with searchType 4 when is number and dont found cpf and exactcode",
+        () async {
+      loadCustomer.mockLoadCustomer(null);
+
+      final valueToSearch =
+          faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
+
+      await sut.getCustomer(valueToSearch);
+
+      verify(
+        () => loadCustomer.load(
+          value: valueToSearch,
+          searchTypeInt: 4,
         ),
       ).called(1);
     });

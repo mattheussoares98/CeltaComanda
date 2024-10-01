@@ -22,6 +22,10 @@ class GetxCovenantPresenter extends GetxController
 
       List<CustomerEntity>? result;
 
+// 1=ExactCnpjCpfNumber
+// 2=ExactCode
+// 3=ApproximateName
+// 4=PersonalizedCode
       if (valueInInt == null) {
         result = await loadCustomer.load(
           value: value,
@@ -35,11 +39,15 @@ class GetxCovenantPresenter extends GetxController
             searchTypeInt: 1,
           );
         }
+        result ??= await loadCustomer.load(
+          value: value,
+          searchTypeInt: 2,
+        );
+        result ??= await loadCustomer.load(
+          value: value,
+          searchTypeInt: 4,
+        );
       }
-// 1=ExactCnpjCpfNumber
-// 2=ExactCode
-// 3=ApproximateName
-// 4=PersonalizedCode
 
       print(result);
     } catch (e) {

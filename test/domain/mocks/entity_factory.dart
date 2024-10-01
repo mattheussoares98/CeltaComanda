@@ -1017,7 +1017,7 @@ class EntityFactory {
             _makeAdressEntity(),
             _makeAdressEntity(),
           ],
-          Covenants: [],
+          Covenants: const [],
         ),
       ];
 

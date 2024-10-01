@@ -216,6 +216,7 @@ void main() {
               persistApp: null,
               urlCCS: null,
               useCovenant: null,
+              enterpriseConcentradorParametersEntity: null,
             ),
           )).called(1);
     });
@@ -678,6 +679,8 @@ void main() {
         urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
         useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
         persistApp: true,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -706,6 +709,8 @@ void main() {
         urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
         useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
         persistApp: true,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -731,6 +736,8 @@ void main() {
         urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
         useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
         persistApp: false,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       );
 
       await sut.loadCommandData(

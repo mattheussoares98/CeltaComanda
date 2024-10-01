@@ -4,6 +4,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 
+import '../../../domain/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
 
 import 'package:faker/faker.dart';
@@ -25,6 +26,7 @@ void main() {
       concentradorUrl: faker.internet.httpUrl(),
       persistApp: faker.randomGenerator.boolean(),
       useCovenant: faker.randomGenerator.boolean(),
+      enterpriseConcentradorParametersEntity: EntityFactory.makeEnterpriseConcentradorParametersEntity(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

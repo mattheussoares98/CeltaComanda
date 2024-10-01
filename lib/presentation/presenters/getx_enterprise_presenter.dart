@@ -84,10 +84,22 @@ class GetxEnterpriseValidationPresenter extends GetxController
   @override
   Future<void> getFirebaseAndConcentradorEnterpriseParameters() async {
     try {
-      final remoteData = await loadEnterpriseData.load();
+      final firebaseData = await loadEnterpriseData.load();
 
-      if (remoteData != null) {
-        EnterpriseDataBuilder.enterpriseDataEntity = remoteData;
+      if (firebaseData != null) {
+        final concentradorData = await loadEnterpriseConcentradorParameters
+            .load(firebaseData.enterpriseId!);
+
+        EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+          enterpriseName: firebaseData.enterpriseName,
+          url: firebaseData.url,
+          enterpriseId: firebaseData.enterpriseId,
+          concentradorUrl: firebaseData.concentradorUrl,
+          persistApp: firebaseData.persistApp,
+          urlCCS: firebaseData.urlCCS,
+          useCovenant: firebaseData.useCovenant,
+          enterpriseConcentradorParametersEntity: concentradorData,
+        );
       } else {
         throw DomainError.enterpriseOrUrlNotFound;
       }
@@ -104,9 +116,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
       if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
         throw DomainError.enterpriseOrUrlNotFound;
       }
-
-      await loadEnterpriseConcentradorParameters
-          .load(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!);
     } catch (e) {
       rethrow;
     } finally {
@@ -178,6 +187,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       persistApp: null,
       urlCCS: null,
       useCovenant: null,
+      enterpriseConcentradorParametersEntity: null,
     );
 
     _enterpriseError.value = _validateField('enterpriseName');

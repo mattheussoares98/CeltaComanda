@@ -55,6 +55,8 @@ void main() {
               .removeWhiteSpaces(),
           persistApp: enterpriseJsonData["persistApp"],
           useCovenant: enterpriseJsonData["useCovenant"],
+          enterpriseConcentradorParametersEntity:
+              enterpriseJsonData["enterpriseConcentradorParametersEntity"],
         ),
       );
     });

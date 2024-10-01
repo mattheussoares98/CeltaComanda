@@ -15,6 +15,8 @@ class EntityFactory {
       concentradorUrl: faker.internet.httpUrl(),
       persistApp: faker.randomGenerator.boolean(),
       useCovenant: faker.randomGenerator.boolean(),
+      enterpriseConcentradorParametersEntity:
+          makeEnterpriseConcentradorParametersEntity(),
     );
   }
 

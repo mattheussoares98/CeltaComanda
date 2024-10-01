@@ -64,6 +64,8 @@ void main() {
       url: faker.internet.httpUrl(),
       persistApp: faker.randomGenerator.boolean(),
       useCovenant: faker.randomGenerator.boolean(),
+      enterpriseConcentradorParametersEntity:
+          EntityFactory.makeEnterpriseConcentradorParametersEntity(),
     ));
 
     await sut.checkApiSaleRequest(durationInSeconds: 0);

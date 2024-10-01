@@ -254,6 +254,8 @@ void main() {
       persistApp: true,
       urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -272,6 +274,8 @@ void main() {
       persistApp: true,
       urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
     await sut.goToHomePage(homePresenter);
@@ -291,6 +295,8 @@ void main() {
       persistApp: false,
       urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -461,6 +467,7 @@ void main() {
           persistApp: null,
           urlCCS: null,
           useCovenant: null,
+          enterpriseConcentradorParametersEntity: null,
         ),
       );
     });

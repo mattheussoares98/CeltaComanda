@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'entities.dart';
+
 class EnterpriseEntity extends Equatable {
   final String enterpriseName;
   final String? url;
@@ -8,6 +10,8 @@ class EnterpriseEntity extends Equatable {
   final bool? persistApp;
   final String? urlCCS;
   final bool? useCovenant;
+  final EnterpriseConcentradorParametersEntity?
+      enterpriseConcentradorParametersEntity;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -17,6 +21,7 @@ class EnterpriseEntity extends Equatable {
     required this.persistApp,
     required this.urlCCS,
     required this.useCovenant,
+    required this.enterpriseConcentradorParametersEntity,
   });
 
   @override
@@ -28,5 +33,6 @@ class EnterpriseEntity extends Equatable {
         persistApp,
         urlCCS,
         useCovenant,
+        enterpriseConcentradorParametersEntity,
       ];
 }

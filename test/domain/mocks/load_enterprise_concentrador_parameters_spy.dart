@@ -7,7 +7,10 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadEnterpriseConcentradorParametersSpy extends Mock
     implements LoadEnterpriseConcentradorParameters {
-  When _mockLoadEnterpriseCall() => when(() => this.load(any()));
+  When _mockLoadEnterpriseCall() => when(() => this.load(
+        enterpriseId: any(named: "enterpriseId"),
+        concentradorUrl: any(named: "concentradorUrl"),
+      ));
 
   mockLoadEnterprise(EnterpriseConcentradorParametersEntity entity) {
     _mockLoadEnterpriseCall().thenAnswer((any) async => entity);

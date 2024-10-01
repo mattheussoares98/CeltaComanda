@@ -1,9 +1,7 @@
-import 'package:clean_celta_mobile/data/models/enterprise_concentrador_parameters_model.dart';
-
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
 class RemoteLoadEnterpriseConcentradorParameters
@@ -13,13 +11,16 @@ class RemoteLoadEnterpriseConcentradorParameters
   RemoteLoadEnterpriseConcentradorParameters({required this.httpAdapter});
 
   @override
-  Future<EnterpriseConcentradorParametersEntity> load(int enterpriseId) async {
+  Future<EnterpriseConcentradorParametersEntity> load({
+    required int enterpriseId,
+    required String concentradorUrl,
+  }) async {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
       final response = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APIEnterpriseParameters/GetByEnterpriseId?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}",
+            "$concentradorUrl/api/APIEnterpriseParameters/GetByEnterpriseId?enterpriseId=$enterpriseId",
         method: "get",
         headers: headers,
       );

@@ -525,8 +525,12 @@ void main() {
       await sut.getFirebaseAndConcentradorEnterpriseParameters();
 
       verify(
-        () => loadEnterpriseConcentradorParameters
-            .load(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!),
+        () => loadEnterpriseConcentradorParameters.load(
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          concentradorUrl:
+              EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!,
+        ),
       ).called(1);
     });
     test("Should emit error if has error to load enterprise concentrador",

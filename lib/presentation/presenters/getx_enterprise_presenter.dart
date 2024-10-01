@@ -87,8 +87,11 @@ class GetxEnterpriseValidationPresenter extends GetxController
       final firebaseData = await loadEnterpriseData.load();
 
       if (firebaseData != null) {
-        final concentradorData = await loadEnterpriseConcentradorParameters
-            .load(firebaseData.enterpriseId!);
+        final concentradorData =
+            await loadEnterpriseConcentradorParameters.load(
+          concentradorUrl: firebaseData.concentradorUrl!,
+          enterpriseId: firebaseData.enterpriseId!,
+        );
 
         EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
           enterpriseName: firebaseData.enterpriseName,

@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import 'customer.dart';
 
-class CustomerEntity {
+class CustomerEntity extends Equatable {
   final int Code;
   final String PersonalizedCode;
   final String Name;
@@ -32,4 +34,21 @@ class CustomerEntity {
     required this.Addresses,
     required this.Covenants,
   });
+
+  @override
+  List<Object?> get props => [
+        Code,
+        PersonalizedCode,
+        Name,
+        ReducedName,
+        CpfCnpjNumber,
+        RegistrationNumber,
+        DateOfBirth,
+        SexType,
+        PersonType,
+        Emails,
+        Telephones,
+        Addresses,
+        Covenants,
+      ];
 }

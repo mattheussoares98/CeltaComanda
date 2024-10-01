@@ -993,4 +993,47 @@ class EntityFactory {
         saleInWholeSale: faker.randomGenerator.boolean(),
         saleInECommerce: faker.randomGenerator.boolean(),
       );
+
+  static List<CustomerEntity> makeCustomersEntitys() => [
+        CustomerEntity(
+          Code: faker.randomGenerator.integer(100),
+          PersonalizedCode: faker.randomGenerator.string(100),
+          Name: faker.randomGenerator.string(100),
+          ReducedName: faker.randomGenerator.string(100),
+          CpfCnpjNumber: faker.randomGenerator.string(100),
+          RegistrationNumber: faker.randomGenerator.string(100),
+          DateOfBirth: faker.randomGenerator.string(100),
+          SexType: faker.randomGenerator.string(100),
+          PersonType: faker.randomGenerator.string(100),
+          Emails: [
+            faker.randomGenerator.string(100),
+            faker.randomGenerator.string(100),
+          ],
+          Telephones: [
+            _makeTelephoneEntity(),
+            _makeTelephoneEntity(),
+          ],
+          Addresses: [
+            _makeAdressEntity(),
+            _makeAdressEntity(),
+          ],
+          Covenants: [],
+        ),
+      ];
+
+  static _makeTelephoneEntity() => TelephoneEntity(
+        AreaCode: faker.randomGenerator.string(100),
+        PhoneNumber: faker.randomGenerator.string(100),
+      );
+
+  static _makeAdressEntity() => AddressEntity(
+        Zip: faker.randomGenerator.string(100),
+        Address: faker.randomGenerator.string(100),
+        Number: faker.randomGenerator.string(100),
+        District: faker.randomGenerator.string(100),
+        City: faker.randomGenerator.string(100),
+        State: faker.randomGenerator.string(100),
+        Complement: faker.randomGenerator.string(100),
+        Reference: faker.randomGenerator.string(100),
+      );
 }

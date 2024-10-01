@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class AddressEntity {
+import 'package:equatable/equatable.dart';
+
+class AddressEntity extends Equatable {
   final String Zip;
   final String Address;
   final String Number;
@@ -20,4 +22,16 @@ class AddressEntity {
     required this.Complement,
     required this.Reference,
   });
+
+  @override
+  List<Object?> get props => [
+        Zip,
+        Address,
+        Number,
+        District,
+        City,
+        State,
+        Complement,
+        Reference,
+      ];
 }

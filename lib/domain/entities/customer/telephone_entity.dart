@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class TelephoneEntity {
+import 'package:equatable/equatable.dart';
+
+class TelephoneEntity extends Equatable {
   final String AreaCode;
   final String PhoneNumber;
 
@@ -8,4 +10,10 @@ class TelephoneEntity {
     required this.AreaCode,
     required this.PhoneNumber,
   });
+
+  @override
+  List<Object?> get props => [
+        AreaCode,
+        PhoneNumber,
+      ];
 }

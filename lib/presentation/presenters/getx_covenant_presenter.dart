@@ -27,7 +27,15 @@ class GetxCovenantPresenter extends GetxController
           value: value,
           searchTypeInt: 3,
         );
-      } else {}
+      } else {
+        if (valueInInt.toString().length == 11 ||
+            valueInInt.toString().length == 14) {
+          result = await loadCustomer.load(
+            value: value,
+            searchTypeInt: 1,
+          );
+        }
+      }
 // 1=ExactCnpjCpfNumber
 // 2=ExactCode
 // 3=ApproximateName

@@ -4,6 +4,7 @@ import 'package:xml2json/xml2json.dart';
 
 import '../../data/http/http.dart';
 import '../../domain/helpers/helpers.dart';
+import '../../main/builders/builders.dart';
 
 class SoapAdapter implements SoapRequest {
   @override
@@ -43,7 +44,7 @@ class SoapAdapter implements SoapRequest {
 
       final response = await http.post(
         Uri.parse(
-            '${"EnterpriseDataBuilder.enterpriseDataEntity.urlCCS"}/$serviceASMX'),
+            '${EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS}/$serviceASMX'),
         headers: soapHeaders,
         body: envelope,
       );
@@ -64,8 +65,14 @@ class SoapAdapter implements SoapRequest {
             if (parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
                     [typeOfResult] !=
                 null) {
-              responseInMap = parsedJson["soap:Envelope"]["soap:Body"]
-                  [typeOfResponse][typeOfResult];
+              responseInMap = parsedJson["soap:Envelope"];
+              responseInMap = parsedJson["soap:Envelope"]["soap:Body"];
+              responseInMap =
+                  parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse];
+              responseInMap = {
+                typeOfResult: parsedJson["soap:Envelope"]["soap:Body"]
+                    [typeOfResponse][typeOfResult]
+              };
             }
 
             if (_validateResultHasPatternNewDataSet(

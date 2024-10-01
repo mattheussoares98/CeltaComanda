@@ -15,7 +15,15 @@ class RemoteLoadCustomer implements LoadCustomer {
     required int searchTypeInt,
   }) async {
     try {
-      /* final jsonData =  */ await soapAdapter.post(
+      if (EnterpriseDataBuilder
+              .enterpriseDataEntity!
+              .enterpriseConcentradorParametersEntity!
+              .celtaBSCrossIdentity!
+              .isEmpty ==
+          true) {
+        throw DomainError.unexpected;
+      }
+      final jsonData = await soapAdapter.post(
         parameters: {
           "filters": json.encode({
             "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!

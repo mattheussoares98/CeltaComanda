@@ -13,7 +13,7 @@ class GetCustomer extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () async {
-        await covenantPresenter.getCustomer("39367504837");
+        await covenantPresenter.getCustomer("mattheus");
       },
       child: const Text("Get customer"),
     );

@@ -6,5 +6,8 @@ abstract class CovenantPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> getCustomer();
+  Future<void> getCustomer({
+    required String value,
+    required int searchTypeInt,
+  });
 }

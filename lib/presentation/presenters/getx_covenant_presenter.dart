@@ -9,5 +9,29 @@ class GetxCovenantPresenter extends GetxController
   GetxCovenantPresenter();
 
   @override
-  Future<void> getCustomer() async {}
+  Future<void> getCustomer({
+    required String value,
+    required int searchTypeInt,
+  }) async {
+    try {
+      // /* final jsonData =  */ await soapAdapter.post(
+      //   parameters: {
+      //     "filters": json.encode({
+      //       "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
+      //           .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
+      //       "customerData": value,
+      //       "customerDataType": searchTypeInt,
+      //       "enterpriseCode":
+      //           EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+      //     }),
+      //   },
+      //   typeOfResponse: "GetCustomerJsonResponse",
+      //   soapAction: "GetCustomerJson",
+      //   serviceASMX: "CeltaCustomerService.asmx",
+      //   typeOfResult: "GetCustomerJsonResult",
+      // );
+    } catch (e) {
+      e;
+    }
+  }
 }

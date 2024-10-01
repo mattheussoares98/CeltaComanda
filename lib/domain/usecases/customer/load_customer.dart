@@ -1,3 +1,6 @@
 abstract class LoadCustomer {
-  Future<void> load(String value);
+  Future<void> load({
+    required String value,
+    required int searchTypeInt,
+  });
 }

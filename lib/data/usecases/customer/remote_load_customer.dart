@@ -2,22 +2,28 @@ import 'dart:convert';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/http/http.dart';
+import '../../../main/builders/builders.dart';
+import '../../http/http.dart';
 
 class RemoteLoadCustomer implements LoadCustomer {
-  final SoapAdapter soapAdapter;
+  final SoapRequest soapAdapter;
   RemoteLoadCustomer({required this.soapAdapter});
 
   @override
-  Future<void> load(String value) async {
+  Future<void> load({
+    required String value,
+    required int searchTypeInt,
+  }) async {
     try {
-      await soapAdapter.post(
+      /* final jsonData =  */ await soapAdapter.post(
         parameters: {
           "filters": json.encode({
-            // "crossIdentity": UserData.crossIdentity,
-            // "customerData": value,
-            // "customerDataType": searchTypeInt,
-            // "enterpriseCode": enterpriseCode,
+            "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
+                .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
+            "customerData": value,
+            "customerDataType": searchTypeInt,
+            "enterpriseCode":
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           }),
         },
         typeOfResponse: "GetCustomerJsonResponse",

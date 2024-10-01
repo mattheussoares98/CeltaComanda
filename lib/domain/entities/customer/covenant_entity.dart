@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class CovenantEntity extends Equatable {
   final int Code;
-  final int PersonalizedCode;
+  final String PersonalizedCode;
   final String Name;
 
   const CovenantEntity({

@@ -17,7 +17,7 @@ class CustomerEntity extends Equatable {
   final List<String> Emails;
   final List<TelephoneEntity> Telephones;
   final List<AddressEntity> Addresses;
-  final dynamic Covenants;
+  final List<CovenantEntity> Covenants;
 
   const CustomerEntity({
     required this.Code,

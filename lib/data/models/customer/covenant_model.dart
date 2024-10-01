@@ -4,7 +4,7 @@ import '../../../domain/entities/entities.dart';
 
 class CovenantModel {
   final int Code;
-  final int PersonalizedCode;
+  final String PersonalizedCode;
   final String Name;
 
   const CovenantModel({

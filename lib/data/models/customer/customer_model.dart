@@ -16,7 +16,7 @@ class CustomerModel {
   final List<String> Emails;
   final List<TelephoneModel> Telephones;
   final List<AddressModel> Addresses;
-  final dynamic Covenants;
+  final List<CovenantModel> Covenants;
 
   const CustomerModel({
     required this.Code,
@@ -51,7 +51,9 @@ class CustomerModel {
         Addresses: json["Addresses"]
             .map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList(),
-        Covenants: json["Covenants"],
+        Covenants: json["Covenants"]
+            .map<CovenantModel>((e) => CovenantModel.fromJson(e))
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -83,6 +85,6 @@ class CustomerModel {
         Emails: Emails,
         Telephones: Telephones.map((e) => e.toEntity()).toList(),
         Addresses: Addresses.map((e) => e.toEntity()).toList(),
-        Covenants: Covenants,
+        Covenants: Covenants.map((e) => e.toEntity()).toList(),
       );
 }

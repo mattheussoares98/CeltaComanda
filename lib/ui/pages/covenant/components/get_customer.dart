@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 import '../../../helpers/helpers.dart';
@@ -21,11 +22,13 @@ class GetCustomer extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: formFieldDecoration(
+                    context: context,
+                    hintText: R.string.customer,
                     labelText: R.string.customer,
+                    errorText: snapshot.data?.description,
                     suffixIcon: Icon(Icons.search,
                         color: Theme.of(context).primaryColor),
-                    errorText: snapshot.data?.description,
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: textController,

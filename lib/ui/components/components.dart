@@ -3,6 +3,7 @@ export "./app_theme.dart";
 export './comment.dart';
 export './drawer.dart';
 export './error_message.dart';
+export './form_field_decoration.dart';
 export './headline1.dart';
 export './image/image.dart';
 export './login_header.dart';

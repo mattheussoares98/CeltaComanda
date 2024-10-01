@@ -1,5 +1,6 @@
 import '../../ui/helpers/helpers.dart';
 import '../../domain/entities/entities.dart';
+import 'models.dart';
 
 class EnterpriseValidationModel {
   final String enterpriseName;
@@ -79,6 +80,10 @@ class EnterpriseValidationModel {
         'urlCCS': urlCCS,
         'useCovenant': useCovenant,
         'enterpriseConcentradorParametersEntity':
-            enterpriseConcentradorParametersEntity,
+            enterpriseConcentradorParametersEntity != null
+                ? EnterpriseConcentradorParametersModel.fromEntity(
+                        enterpriseConcentradorParametersEntity!)
+                    .toJson()
+                : null,
       };
 }

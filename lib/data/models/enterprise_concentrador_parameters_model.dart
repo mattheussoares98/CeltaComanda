@@ -313,7 +313,7 @@ class EnterpriseConcentradorParametersModel {
     showPortionsNumberWithGride = json['ShowPortionsNumberWithGride'];
     celtaBSUrlCCS = json['CeltaBSUrlCCS'];
     celtaBSUrlBSF = json['CeltaBSUrlBSF'];
-    celtaBSCrossIdentity = json['CeltaBSCrossIdentity'];
+    celtaBSCrossIdentity = _getCrossId(json['CeltaBSCrossIdentity']);
     mercaFacilDiscountsTokenApi = json['MercaFacilDiscountsTokenApi'];
     mercaFacilDiscountsIsEnabled = json['MercaFacilDiscountsIsEnabled'];
     bonifiQUser = json['BonifiQUser'];
@@ -805,4 +805,11 @@ class EnterpriseConcentradorParametersModel {
         parkingControlIPAddress: parkingControlIPAddress,
         parkingControlIPPort: parkingControlIPPort,
       );
+
+  String _getCrossId(String html) {
+    RegExp regExp = RegExp(r'<string>(.*?)<\/string>', dotAll: true);
+    Match? match = regExp.firstMatch(html);
+
+    return match?.group(1) ?? '';
+  }
 }

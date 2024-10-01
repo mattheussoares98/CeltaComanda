@@ -24,9 +24,7 @@ class GetxCovenantPresenter extends GetxController
           value: value,
           searchTypeInt: 3,
         );
-      } else {
-        
-      }
+      } else {}
 // 1=ExactCnpjCpfNumber
 // 2=ExactCode
 // 3=ApproximateName

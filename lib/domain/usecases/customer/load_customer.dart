@@ -1,5 +1,7 @@
+import '../../entities/entities.dart';
+
 abstract class LoadCustomer {
-  Future<void> load({
+  Future<List<CustomerEntity>> load({
     required String value,
     required int searchTypeInt,
   });

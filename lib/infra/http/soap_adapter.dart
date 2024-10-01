@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 
@@ -92,16 +93,18 @@ class SoapAdapter implements SoapRequest {
             responseInMap = parsedJson["soap:Envelope"]["soap:Body"]
                 [typeOfResponse]["status"];
           } else {
-            throw parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
-                ["status"];
+            debugPrint(parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
+                ["status"]);
+
+            throw DomainError.notFound;
           }
         }
       } else {
-        throw Exception();
+        throw DomainError.unexpected;
       }
       return responseInMap;
     } catch (e) {
-      throw DomainError.unexpected;
+      rethrow;
     }
   }
 }

@@ -1,16 +1,18 @@
 import 'dart:convert';
 
+import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../models/customer/customer.dart';
 
 class RemoteLoadCustomer implements LoadCustomer {
   final SoapRequest soapAdapter;
   RemoteLoadCustomer({required this.soapAdapter});
 
   @override
-  Future<void> load({
+  Future<List<CustomerEntity>> load({
     required String value,
     required int searchTypeInt,
   }) async {
@@ -39,8 +41,17 @@ class RemoteLoadCustomer implements LoadCustomer {
         serviceASMX: "CeltaCustomerService.asmx",
         typeOfResult: "GetCustomerJsonResult",
       );
+
+      final List decoded = json.decode(jsonData["GetCustomerJsonResult"]);
+
+      return decoded.map((e) => CustomerModel.fromJson(e).toEntity()).toList();
     } catch (e) {
-      throw DomainError.unexpected;
+      switch (e) {
+        case DomainError.notFound:
+          throw DomainError.notFound;
+        default:
+          throw DomainError.unexpected;
+      }
     }
   }
 }

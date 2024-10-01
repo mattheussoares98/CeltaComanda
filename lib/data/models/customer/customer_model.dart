@@ -44,9 +44,13 @@ class CustomerModel {
         DateOfBirth: json["DateOfBirth"],
         SexType: json["SexType"],
         PersonType: json["PersonType"],
-        Emails: json["Emails"],
-        Telephones: json["Telephones"],
-        Addresses: json["Addresses"],
+        Emails: json["Emails"].map<String>((e) => e.toString()).toList(),
+        Telephones: json["Telephones"]
+            .map<TelephoneModel>((e) => TelephoneModel.fromJson(e))
+            .toList(),
+        Addresses: json["Addresses"]
+            .map<AddressModel>((e) => AddressModel.fromJson(e))
+            .toList(),
         Covenants: json["Covenants"],
       );
 

@@ -10,6 +10,7 @@ enum DomainError {
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   maximumQuantityAchieved,
+  notFound,
   obligatoryFixedCommandNumber,
   productNotFound,
   unexpected,

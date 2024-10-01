@@ -32,8 +32,11 @@ class GetCustomer extends StatelessWidget {
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: textController,
-                  onFieldSubmitted: (_) async {},
-                  onChanged: (value) {},
+                  onFieldSubmitted: (_) async {
+                    await covenantPresenter.getCustomer(textController.text);
+                  },
+                  onChanged: (value) => covenantPresenter
+                      .validateCustomerField(textController.text),
                 ),
               ),
               TextButton(

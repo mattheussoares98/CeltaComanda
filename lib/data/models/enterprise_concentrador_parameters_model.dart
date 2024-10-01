@@ -807,6 +807,9 @@ class EnterpriseConcentradorParametersModel {
       );
 
   String _getCrossId(String html) {
+    if (!html.contains("<string>")) {
+      return html;
+    }
     RegExp regExp = RegExp(r'<string>(.*?)<\/string>', dotAll: true);
     Match? match = regExp.firstMatch(html);
 

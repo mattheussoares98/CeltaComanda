@@ -1,3 +1,4 @@
+import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -19,8 +20,10 @@ class GetxCovenantPresenter extends GetxController
     try {
       int? valueInInt = int.tryParse(value);
 
+      List<CustomerEntity>? result;
+
       if (valueInInt == null) {
-        await loadCustomer.load(
+        result = await loadCustomer.load(
           value: value,
           searchTypeInt: 3,
         );
@@ -29,8 +32,10 @@ class GetxCovenantPresenter extends GetxController
 // 2=ExactCode
 // 3=ApproximateName
 // 4=PersonalizedCode
+
+      print(result);
     } catch (e) {
-      e;
+      print(e);
     } finally {
       isLoading = false;
     }

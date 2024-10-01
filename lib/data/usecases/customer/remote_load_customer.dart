@@ -12,7 +12,7 @@ class RemoteLoadCustomer implements LoadCustomer {
   RemoteLoadCustomer({required this.soapAdapter});
 
   @override
-  Future<List<CustomerEntity>> load({
+  Future<List<CustomerEntity>?> load({
     required String value,
     required int searchTypeInt,
   }) async {
@@ -46,12 +46,7 @@ class RemoteLoadCustomer implements LoadCustomer {
 
       return decoded.map((e) => CustomerModel.fromJson(e).toEntity()).toList();
     } catch (e) {
-      switch (e) {
-        case DomainError.notFound:
-          throw DomainError.notFound;
-        default:
-          throw DomainError.unexpected;
-      }
+      return null;
     }
   }
 }

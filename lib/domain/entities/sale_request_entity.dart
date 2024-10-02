@@ -3,7 +3,7 @@
 import 'entities.dart';
 
 class SaleRequestEntity {
-  final List<ProductEntity> Products;
+  final List<SaleRequestProductEntity> Products;
   final String DateOfCreation;
   final String DateHourOfCreation;
   final String RequestType;

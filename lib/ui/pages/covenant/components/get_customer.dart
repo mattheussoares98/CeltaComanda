@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../presentation/protocols/protocols.dart';
 import '../../../../ui/components/components.dart';
@@ -7,15 +8,16 @@ import '../../pages.dart';
 
 class GetCustomer extends StatelessWidget {
   final TextEditingController textController;
-  final CovenantPresenter covenantPresenter;
+
   const GetCustomer({
-    required this.covenantPresenter,
     required this.textController,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: StreamBuilder<ValidationError?>(

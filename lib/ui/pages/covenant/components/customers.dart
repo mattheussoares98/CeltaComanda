@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class Customers extends StatelessWidget {
-  final CovenantPresenter covenantPresenter;
   const Customers({
-    required this.covenantPresenter,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+
     return StreamBuilder<List<CustomerViewModel>?>(
         stream: covenantPresenter.customersViewModelStream,
         builder: (context, snapshot) {

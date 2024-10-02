@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
@@ -42,20 +43,22 @@ class _CovenantPageState extends State<CovenantPage>
     mainErrorSubscription =
         handleMainError(context, widget.covenantPresenter.mainErrorStream);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(R.string.covenant)),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GetCustomer(
-                covenantPresenter: widget.covenantPresenter,
-                textController: textController,
-              ),
-              Customers(covenantPresenter: widget.covenantPresenter),
-            ],
+    return ListenableProvider(
+      create: (_) => widget.covenantPresenter,
+      child: Scaffold(
+        appBar: AppBar(title: Text(R.string.covenant)),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GetCustomer(
+                  textController: textController,
+                ),
+                const Customers(),
+              ],
+            ),
           ),
         ),
       ),

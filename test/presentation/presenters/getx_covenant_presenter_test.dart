@@ -22,6 +22,7 @@ void main() {
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -32,6 +33,7 @@ void main() {
   void initUseCases() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
   }
 
   void initPresenters() {}
@@ -46,6 +48,7 @@ void main() {
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
+      loadSaleRequestTemp: loadSaleRequestTemp,
     );
   }
 

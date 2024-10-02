@@ -13,9 +13,11 @@ class GetxCovenantPresenter extends GetxController
     implements CovenantPresenter {
   final Validation validation;
   final LoadCustomer loadCustomer;
+  final LoadSaleRequestTemp loadSaleRequestTemp;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
+    required this.loadSaleRequestTemp,
   });
 
   @override
@@ -104,5 +106,12 @@ class GetxCovenantPresenter extends GetxController
     _selectedCovenant = {
       customer.Code: newValue,
     };
+  }
+
+  @override
+  Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp(
+    HomePresenter homePresenter,
+  ) async {
+    
   }
 }

@@ -95,6 +95,7 @@ class PtBr implements Translation {
   String get clearCart => "Limpar carrinho";
   String get closeApplication => "Fechar APP";
   String get close => "Fechar";
+  String get code => "Código";
   String get combox => "Combo";
   String get commandNotAvailable => "Comanda não disponível";
   String get command => "Comanda";
@@ -140,6 +141,7 @@ class PtBr implements Translation {
   String get pay => 'Pagar';
   String get peopleQuantity => 'Quantidade de pessoas';
   String get per => 'Por';
+  String get personalizedCode => 'Código personalizado';
   String get price => 'Preço';
   String get productsAndComments => 'Produtos e comentários';
   String get quantity => 'Quantidade';
@@ -184,5 +186,6 @@ class PtBr implements Translation {
   String get wait => 'Aguarde...';
   String get wantRemoveRequestedProduct =>
       'Deseja realmente remover o produto dos produtos solicitados?';
+  String get withoutCovenant => "Sem convênio";
   String get yes => "Sim";
 }

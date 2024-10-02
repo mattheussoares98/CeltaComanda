@@ -73,6 +73,7 @@ abstract class Translation {
   String get clearCart;
   String get close;
   String get closeApplication;
+  String get code;
   String get combox;
   String get commandNotAvailable;
   String get command;
@@ -118,6 +119,7 @@ abstract class Translation {
   String get pay;
   String get peopleQuantity;
   String get per;
+  String get personalizedCode;
   String get price;
   String get productsAndComments;
   String get quantity;
@@ -158,5 +160,6 @@ abstract class Translation {
   String get validateEnterprise;
   String get wait;
   String get wantRemoveRequestedProduct;
+  String get withoutCovenant;
   String get yes;
 }

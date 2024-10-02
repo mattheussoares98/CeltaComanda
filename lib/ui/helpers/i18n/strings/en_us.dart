@@ -93,7 +93,8 @@ class EnUs implements Translation {
   String get clearCart => 'Clear cart';
   String get closeApplication => 'Close APP';
   String get close => 'Close';
-  String get combox => 'Combo';
+  String get code => 'Code';
+  String get combox => 'Combox';
   String get commandNotAvailable => 'Command not available';
   String get command => 'Command';
   String get commentsOfProduct => 'Product comments';
@@ -138,6 +139,7 @@ class EnUs implements Translation {
   String get pay => 'Pay';
   String get peopleQuantity => 'Number of people';
   String get per => 'Per';
+  String get personalizedCode => 'Personalized code';
   String get price => 'Price';
   String get productsAndComments => 'Products and comments';
   String get quantity => 'Quantity';
@@ -182,4 +184,5 @@ class EnUs implements Translation {
   String get wantRemoveRequestedProduct =>
       'Do you really want to remove the product from the requested products?';
   String get yes => "yes";
+  String get withoutCovenant => "Without covenant";
 }

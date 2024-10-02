@@ -42,10 +42,10 @@ class Customers extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Code: ${customer.Code}",
+                                "${R.string.code}: ${customer.Code}",
                               ),
                               Text(
-                                  "PersonalizedCode: ${customer.PersonalizedCode}"),
+                                  "${R.string.personalizedCode}: ${customer.PersonalizedCode}"),
                             ],
                           ),
                           Expanded(
@@ -62,7 +62,7 @@ class Customers extends StatelessWidget {
                         Text(customer.Covenants.toString()),
                       if (customer.Covenants.isEmpty)
                         Text(
-                          "SEM CONVÊNIO ADICIONAR HELPER",
+                          R.string.withoutCovenant.toUpperCase(),
                           style: TextStyle(
                             fontSize: getStringSize(context),
                             color: Colors.red,

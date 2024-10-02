@@ -1044,4 +1044,46 @@ class EntityFactory {
         Complement: faker.randomGenerator.string(100),
         Reference: faker.randomGenerator.string(100),
       );
+
+  static makeSaleRequestEntity() => SaleRequestEntity(
+        Products: [makeSaleRequestProductEntity()],
+        DateOfCreation: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        RequestType: faker.randomGenerator.string(10),
+        SellerCode: faker.randomGenerator.string(10),
+        FlagStatus: faker.randomGenerator.string(10),
+        Comments: faker.randomGenerator.string(10),
+        PersonalizedCode: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.boolean(),
+        IsUsing: faker.randomGenerator.boolean(),
+        TotalLiquid: faker.randomGenerator.decimal(),
+        CovenantCode: faker.randomGenerator.integer(100),
+        CustomerCode: faker.randomGenerator.integer(100),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        Peoples: faker.randomGenerator.integer(100),
+        FlagOrigin: faker.randomGenerator.integer(100),
+        DeliveryControl: faker.randomGenerator.integer(100),
+        SaleRequestId: faker.randomGenerator.integer(100),
+      );
+
+  static SaleRequestProductEntity makeSaleRequestProductEntity() =>
+      SaleRequestProductEntity(
+        Product: makeProductsEntitys()[0],
+        SaleMovementProductCompositionId: faker.randomGenerator.string(10),
+        ProductPriceLookUpCode: faker.randomGenerator.string(10),
+        QuantityString: faker.randomGenerator.string(10),
+        Comments: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.boolean(),
+        IsDelivered: faker.randomGenerator.boolean(),
+        IsPrinted: faker.randomGenerator.boolean(),
+        SaleRequestProductId: faker.randomGenerator.integer(100),
+        UserId: faker.randomGenerator.integer(100),
+        ProductionStatus: faker.randomGenerator.integer(100),
+        ProductInternalCodeOnErp: faker.randomGenerator.integer(100),
+        SaleRequestId: faker.randomGenerator.integer(100),
+        Value: faker.randomGenerator.decimal(),
+        Quantity: faker.randomGenerator.decimal(),
+        TotalLiquid: faker.randomGenerator.decimal(),
+      );
 }

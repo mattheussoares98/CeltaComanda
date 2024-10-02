@@ -120,7 +120,12 @@ class GetxCovenantPresenter extends GetxController
       final result = await loadSaleRequest.load(
         commandNumber: homePresenter.commandNumber!.toInt(),
       );
-    
+
+      await finishSaleRequestConcentrador.finish(
+        pdvNumber: 100,
+        commandNumber: homePresenter.commandNumber!.toInt(),
+        finalizationIdentification: 7,
+      );
       print(result);
     } catch (e) {
       mainError = UIError.unexpected;

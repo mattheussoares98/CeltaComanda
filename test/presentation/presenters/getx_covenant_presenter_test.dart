@@ -1,5 +1,4 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
@@ -25,8 +24,6 @@ void main() {
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
-  late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -37,8 +34,6 @@ void main() {
   void initUseCases() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
-    loadSaleRequestTemp = LoadSaleRequestTempSpy();
-    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
   }
 
   void initPresenters() {
@@ -57,8 +52,6 @@ void main() {
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
-      loadSaleRequestTemp: loadSaleRequestTemp,
-      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   }
 
@@ -246,21 +239,8 @@ void main() {
         emitsInOrder([null, UIError.unexpected]),
       );
 
-      loadSaleRequestTemp.mockError(DomainError.unexpected);
-
       await sut
           .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
-    });
-    test("Should call loadSaleRequestTemp with correct values", () async {
-      await sut
-          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
-
-      verify(() => loadSaleRequestTemp.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-            commandNumber: homePresenter.commandNumberMock.toString(),
-          )).called(1);
     });
   });
 }

@@ -1,5 +1,5 @@
 import '../../../../data/usecases/usecases.dart';
-import '../../../../main/factories/cache/cache.dart';
+import '../../cache/cache.dart';
 
 LocalPrintRequest makeLocalPrintRequest() => LocalPrintRequest(
       hiveStorage: makeHiveAdapter(),

@@ -13,9 +13,11 @@ class GetxCovenantPresenter extends GetxController
     implements CovenantPresenter {
   final Validation validation;
   final LoadCustomer loadCustomer;
+  final LoadSaleRequest loadSaleRequest;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
+    required this.loadSaleRequest,
   });
 
   @override

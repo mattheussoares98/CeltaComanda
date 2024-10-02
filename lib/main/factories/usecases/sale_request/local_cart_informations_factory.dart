@@ -1,8 +1,7 @@
 import '../../../../data/usecases/usecases.dart';
 import '../../../../domain/usecases/usecases.dart';
-import '../../../../main/factories/cache/cache.dart';
+import '../../cache/cache.dart';
 
-ConfirmedCartProducts makeLocalConfirmedCartProducts() =>
-    LocalConfirmedCartProducts(
+CartInformations makeLocalCartInformations() => LocalCartInformations(
       hiveStorage: makeHiveAdapter(),
     );

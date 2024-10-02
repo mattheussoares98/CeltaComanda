@@ -94,4 +94,15 @@ class GetxCovenantPresenter extends GetxController
       _customersViewModelStream.stream;
   set customersViewModel(List<CustomerViewModel>? customer) =>
       _customersViewModelStream.subject.add(customer);
+
+  Map<String, String?> _selectedCovenant = {};
+  @override
+  Map<String, String?> get selectedCovenant => _selectedCovenant;
+
+  @override
+  void updateSelectedCovenant(CustomerViewModel customer, String? newValue) {
+    _selectedCovenant = {
+      customer.Code: newValue,
+    };
+  }
 }

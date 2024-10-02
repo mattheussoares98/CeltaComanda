@@ -23,7 +23,8 @@ void main() {
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
 
-  late List<CustomerEntity> customers;
+  late List<CustomerEntity> customersEntitys;
+  late List<CustomerViewModel> customersViewModel;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -38,7 +39,9 @@ void main() {
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    customers = EntityFactory.makeCustomersEntitys();
+    customersEntitys = EntityFactory.makeCustomersEntitys();
+    customersViewModel =
+        customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
@@ -47,7 +50,7 @@ void main() {
   }
 
   void mockSuccess() {
-    loadCustomer.mockLoadCustomer(customers);
+    loadCustomer.mockLoadCustomer(customersEntitys);
   }
 
   setUp(() {
@@ -178,7 +181,9 @@ void main() {
           sut.customersViewModelStream,
           emitsInOrder([
             null,
-            customers.map((e) => CustomerViewModel.fromEntity(e)).toList()
+            customersEntitys
+                .map((e) => CustomerViewModel.fromEntity(e))
+                .toList()
           ]));
 
       await sut.getCustomer("any");
@@ -199,6 +204,17 @@ void main() {
       );
 
       sut.validateCustomerField("");
+    });
+  });
+
+  group("Update selected covenant", () {
+    test("Should update selected covenant correctly", () {
+      String newValue = faker.randomGenerator.string(10);
+      sut.updateSelectedCovenant(customersViewModel[0], newValue);
+
+      expect(sut.selectedCovenant, {
+        customersViewModel[0].Code: newValue,
+      });
     });
   });
 }

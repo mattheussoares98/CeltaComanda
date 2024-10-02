@@ -9,7 +9,9 @@ abstract class CovenantPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<ValidationError?> get customerErrorStream;
   Stream<List<CustomerViewModel>?> get customersViewModelStream;
+  Map<String, String?> get selectedCovenant;
 
   Future<void> getCustomer(String value);
   void validateCustomerField(String value);
+  void updateSelectedCovenant(CustomerViewModel customer, String? newValue);
 }

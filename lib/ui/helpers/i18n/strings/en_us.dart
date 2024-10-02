@@ -105,6 +105,7 @@ class EnUs implements Translation {
   String get confirm => 'Confirm';
   String get costBenefit => 'Cost-benefit';
   String get covenant => 'Covenant';
+  String get covenants => 'Covenants';
   String get customer => 'Customer';
   String get debit => 'Debit';
   String get detach => 'Highlights';

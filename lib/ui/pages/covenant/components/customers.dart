@@ -1,6 +1,6 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class Customers extends StatelessWidget {
@@ -43,23 +43,35 @@ class Customers extends StatelessWidget {
                             children: [
                               Text(
                                 "${R.string.code}: ${customer.Code}",
+                                style: TextStyle(
+                                  fontSize: getStringSize(context),
+                                ),
                               ),
                               Text(
-                                  "${R.string.personalizedCode}: ${customer.PersonalizedCode}"),
+                                "${R.string.personalizedCode}: ${customer.PersonalizedCode}",
+                                style: TextStyle(
+                                  fontSize: getStringSize(context),
+                                ),
+                              ),
                             ],
                           ),
                           Expanded(
                             child: Text(
                               customer.Name,
                               textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: getStringSize(context),
+                              ),
                             ),
                           ),
                         ],
                       ),
                       Text(
-                          'CPF/CNPJ ${customer.CpfCnpjNumber.substring(0, 4)}...${customer.CpfCnpjNumber.substring(customer.CpfCnpjNumber.length - 4)}'),
-                      if (customer.Covenants.isNotEmpty)
-                        Text(customer.Covenants.toString()),
+                        'CPF/CNPJ: ${customer.CpfCnpjNumber.substring(0, 4)}...${customer.CpfCnpjNumber.substring(customer.CpfCnpjNumber.length - 4)}',
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                        ),
+                      ),
                       if (customer.Covenants.isEmpty)
                         Text(
                           R.string.withoutCovenant.toUpperCase(),
@@ -68,6 +80,8 @@ class Customers extends StatelessWidget {
                             color: Colors.red,
                           ),
                         ),
+                      if (customer.Covenants.isNotEmpty)
+                        Covenants(customer: customer),
                     ],
                   ),
                 );

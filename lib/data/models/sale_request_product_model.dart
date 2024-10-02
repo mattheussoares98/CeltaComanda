@@ -1,0 +1,101 @@
+// ignore_for_file: non_constant_identifier_names
+
+import '../../domain/entities/entities.dart';
+
+class SaleRequestProductModel {
+  final String? SaleMovementProductCompositionId;
+  final String? ProductPriceLookUpCode;
+  final String? QuantityString;
+  final String? Comments;
+  final String? DateHourOfCreation;
+  final bool? IsCancelled;
+  final bool? IsDelivered;
+  final bool? IsPrinted;
+  final int? SaleRequestProductId;
+  final int? UserId;
+  final int? ProductionStatus;
+  final int? ProductInternalCodeOnErp;
+  final int? SaleRequestId;
+  final double? Value;
+  final double? Quantity;
+  final double? TotalLiquid;
+
+  const SaleRequestProductModel({
+    required this.SaleMovementProductCompositionId,
+    required this.ProductPriceLookUpCode,
+    required this.QuantityString,
+    required this.Comments,
+    required this.DateHourOfCreation,
+    required this.IsCancelled,
+    required this.IsDelivered,
+    required this.IsPrinted,
+    required this.SaleRequestProductId,
+    required this.UserId,
+    required this.ProductionStatus,
+    required this.ProductInternalCodeOnErp,
+    required this.SaleRequestId,
+    required this.Value,
+    required this.Quantity,
+    required this.TotalLiquid,
+  });
+
+  factory SaleRequestProductModel.fromJson(Map json) => SaleRequestProductModel(
+        SaleMovementProductCompositionId:
+            json["SaleMovementProductCompositionId"],
+        ProductPriceLookUpCode: json["ProductPriceLookUpCode"],
+        QuantityString: json["QuantityString"],
+        Comments: json["Comments"],
+        DateHourOfCreation: json["DateHourOfCreation"],
+        IsCancelled: json["IsCancelled"],
+        IsDelivered: json["IsDelivered"],
+        IsPrinted: json["IsPrinted"],
+        SaleRequestProductId: json["SaleRequestProductId"],
+        UserId: json["UserId"],
+        ProductionStatus: json["ProductionStatus"],
+        ProductInternalCodeOnErp: json["ProductInternalCodeOnErp"],
+        SaleRequestId: json["SaleRequestId"],
+        Value: json["Value"],
+        Quantity: json["Quantity"],
+        TotalLiquid: json["TotalLiquid"],
+      );
+
+  factory SaleRequestProductModel.fromEntity(SaleRequestProductEntity entity) =>
+      SaleRequestProductModel(
+        SaleMovementProductCompositionId:
+            entity.SaleMovementProductCompositionId,
+        ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
+        QuantityString: entity.QuantityString,
+        Comments: entity.Comments,
+        DateHourOfCreation: entity.DateHourOfCreation,
+        IsCancelled: entity.IsCancelled,
+        IsDelivered: entity.IsDelivered,
+        IsPrinted: entity.IsPrinted,
+        SaleRequestProductId: entity.SaleRequestProductId,
+        UserId: entity.UserId,
+        ProductionStatus: entity.ProductionStatus,
+        ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp,
+        SaleRequestId: entity.SaleRequestId,
+        Value: entity.Value,
+        Quantity: entity.Quantity,
+        TotalLiquid: entity.TotalLiquid,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "SaleMovementProductCompositionId": SaleMovementProductCompositionId,
+        "ProductPriceLookUpCode": ProductPriceLookUpCode,
+        "QuantityString": QuantityString,
+        "Comments": Comments,
+        "DateHourOfCreation": DateHourOfCreation,
+        "IsCancelled": IsCancelled,
+        "IsDelivered": IsDelivered,
+        "IsPrinted": IsPrinted,
+        "SaleRequestProductId": SaleRequestProductId,
+        "UserId": UserId,
+        "ProductionStatus": ProductionStatus,
+        "ProductInternalCodeOnErp": ProductInternalCodeOnErp,
+        "SaleRequestId": SaleRequestId,
+        "Value": Value,
+        "Quantity": Quantity,
+        "TotalLiquid": TotalLiquid,
+      };
+}

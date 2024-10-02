@@ -10,6 +10,7 @@ export './printed_products_model.dart';
 export './product_composition_model.dart';
 export './product_model.dart';
 export './sale_request_model.dart';
+export './sale_request_product_model.dart';
 export './sale_request_temp_model.dart';
 export './sale_request_temp_products_model.dart';
 export './seller_model.dart';

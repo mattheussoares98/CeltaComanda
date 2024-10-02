@@ -17,6 +17,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage>
     with LoadingManager, UIErrorManager {
+  StreamSubscription? printedLoadingSubscription;
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   PaymentPresenter? paymentPresenter;
@@ -56,20 +57,23 @@ class _PaymentPageState extends State<PaymentPage>
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: true);
-    HomePresenter homePresenter = Provider.of(context, listen: true);
+        Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
+    printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
     loadingSubscription =
         handleLoading(context, paymentPresenter.isLoadingStream);
+    printedLoadingSubscription =
+        handleLoading(context, printedProductsPresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, paymentPresenter.mainErrorStream);
 
@@ -86,6 +90,14 @@ class _PaymentPageState extends State<PaymentPage>
           onPressed: Navigator.of(context).pop,
           icon: const Icon(Icons.arrow_back),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await printedProductsPresenter.loadPrinted(homePresenter);
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

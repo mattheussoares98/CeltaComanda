@@ -4,40 +4,50 @@ import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
 class SaleRequestModel {
-  final List<SaleRequestTempProductEntity> Products;
-  final int SaleRequestTempId;
+  final List<ProductModel> Products;
+  final String DateOfCreation;
+  final String DateHourOfCreation;
+  final String RequestType;
+  final String SellerCode;
+  final String FlagStatus;
+  final String Comments;
   final String PersonalizedCode;
-  final int EnterpriseId;
+  final bool IsCancelled;
+  final bool IsUsing;
   final double TotalLiquid;
-  final int? DeliveryControl;
-  final int? Peoples;
-  final String? Comments;
-  final String? SellerCode;
-  final int? CustomerCode;
   final int? CovenantCode;
+  final int? CustomerCode;
+  final int EnterpriseId;
+  final int Peoples;
+  final int FlagOrigin;
+  final int DeliveryControl;
+  final int SaleRequestId;
 
   SaleRequestModel({
     required this.Products,
-    required this.SaleRequestTempId,
-    required this.PersonalizedCode,
-    required this.EnterpriseId,
-    required this.TotalLiquid,
-    required this.DeliveryControl,
-    required this.Peoples,
-    required this.Comments,
+    required this.DateOfCreation,
+    required this.DateHourOfCreation,
+    required this.RequestType,
     required this.SellerCode,
-    required this.CustomerCode,
+    required this.FlagStatus,
+    required this.Comments,
+    required this.PersonalizedCode,
+    required this.IsCancelled,
+    required this.IsUsing,
+    required this.TotalLiquid,
     required this.CovenantCode,
+    required this.CustomerCode,
+    required this.EnterpriseId,
+    required this.Peoples,
+    required this.FlagOrigin,
+    required this.DeliveryControl,
+    required this.SaleRequestId,
   });
 
   factory SaleRequestModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
-      "Products",
-      "SaleRequestTempId",
+      "SaleRequestId",
       "PersonalizedCode",
-      "EnterpriseId",
-      "TotalLiquid",
-      "DeliveryControl",
     ])) {
       throw Exception();
     }
@@ -46,59 +56,88 @@ class SaleRequestModel {
           .map<SaleRequestTempProductEntity>(
               (e) => SaleRequestTempProductsModel.fromJson(e).toEntity())
           .toList(),
-      SaleRequestTempId: json["SaleRequestTempId"],
-      PersonalizedCode: json["PersonalizedCode"],
-      EnterpriseId: json["EnterpriseId"],
-      TotalLiquid: json["TotalLiquid"],
-      DeliveryControl: json["DeliveryControl"],
-      Comments: json["Comments"],
-      Peoples: json["Peoples"],
+      DateOfCreation: json["DateOfCreation"],
+      DateHourOfCreation: json["DateHourOfCreation"],
+      RequestType: json["RequestType"],
       SellerCode: json["SellerCode"],
-      CustomerCode: json["CustomerCode"],
+      FlagStatus: json["FlagStatus"],
+      Comments: json["Comments"],
+      PersonalizedCode: json["PersonalizedCode"],
+      IsCancelled: json["IsCancelled"],
+      IsUsing: json["IsUsing"],
+      TotalLiquid: json["TotalLiquid"],
       CovenantCode: json["CovenantCode"],
+      CustomerCode: json["CustomerCode"],
+      EnterpriseId: json["EnterpriseId"],
+      Peoples: json["Peoples"],
+      FlagOrigin: json["FlagOrigin"],
+      DeliveryControl: json["DeliveryControl"],
+      SaleRequestId: json["SaleRequestId"],
     );
   }
 
-  factory SaleRequestModel.fromEntity(SaleRequestTempEntity entity) =>
-      SaleRequestModel(
-        Products: entity.Products,
-        SaleRequestTempId: entity.SaleRequestTempId,
-        PersonalizedCode: entity.PersonalizedCode,
-        EnterpriseId: entity.EnterpriseId,
-        TotalLiquid: entity.TotalLiquid,
-        DeliveryControl: entity.DeliveryControl,
-        Comments: entity.Comments,
-        Peoples: entity.Peoples,
-        SellerCode: entity.SellerCode,
-        CustomerCode: entity.CustomerCode,
-        CovenantCode: entity.CovenantCode,
-      );
-
-  SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
-        Products: Products,
-        SaleRequestTempId: SaleRequestTempId,
-        PersonalizedCode: PersonalizedCode,
-        EnterpriseId: EnterpriseId,
-        TotalLiquid: TotalLiquid,
-        DeliveryControl: DeliveryControl,
-        Comments: Comments,
-        Peoples: Peoples,
-        SellerCode: SellerCode,
-        CustomerCode: CustomerCode,
-        CovenantCode: CovenantCode,
-      );
-
   Map<String, dynamic> toJson() => {
         "Products": Products,
-        "SaleRequestTempId": SaleRequestTempId,
-        "PersonalizedCode": PersonalizedCode,
-        "EnterpriseId": EnterpriseId,
-        "TotalLiquid": TotalLiquid,
-        "DeliveryControl": DeliveryControl,
-        "Comments": Comments,
-        "Peoples": Peoples,
+        "DateOfCreation": DateOfCreation,
+        "DateHourOfCreation": DateHourOfCreation,
+        "RequestType": RequestType,
         "SellerCode": SellerCode,
-        "CustomerCode": CustomerCode,
+        "FlagStatus": FlagStatus,
+        "Comments": Comments,
+        "PersonalizedCode": PersonalizedCode,
+        "IsCancelled": IsCancelled,
+        "IsUsing": IsUsing,
+        "TotalLiquid": TotalLiquid,
         "CovenantCode": CovenantCode,
+        "CustomerCode": CustomerCode,
+        "EnterpriseId": EnterpriseId,
+        "Peoples": Peoples,
+        "FlagOrigin": FlagOrigin,
+        "DeliveryControl": DeliveryControl,
+        "SaleRequestId": SaleRequestId,
       };
+
+  factory SaleRequestModel.fromEntity(SaleRequestEntity entity) =>
+      SaleRequestModel(
+        Products:
+            entity.Products.map((e) => ProductModel.fromEntity(e)).toList(),
+        DateOfCreation: entity.DateOfCreation,
+        DateHourOfCreation: entity.DateHourOfCreation,
+        RequestType: entity.RequestType,
+        SellerCode: entity.SellerCode,
+        FlagStatus: entity.FlagStatus,
+        Comments: entity.Comments,
+        PersonalizedCode: entity.PersonalizedCode,
+        IsCancelled: entity.IsCancelled,
+        IsUsing: entity.IsUsing,
+        TotalLiquid: entity.TotalLiquid,
+        CovenantCode: entity.CovenantCode,
+        CustomerCode: entity.CustomerCode,
+        EnterpriseId: entity.EnterpriseId,
+        Peoples: entity.Peoples,
+        FlagOrigin: entity.FlagOrigin,
+        DeliveryControl: entity.DeliveryControl,
+        SaleRequestId: entity.SaleRequestId,
+      );
+
+  SaleRequestEntity toEntity() => SaleRequestEntity(
+        Products: Products.map((e) => e.toEntity()).toList(),
+        DateOfCreation: DateOfCreation,
+        DateHourOfCreation: DateHourOfCreation,
+        RequestType: RequestType,
+        SellerCode: SellerCode,
+        FlagStatus: FlagStatus,
+        Comments: Comments,
+        PersonalizedCode: PersonalizedCode,
+        IsCancelled: IsCancelled,
+        IsUsing: IsUsing,
+        TotalLiquid: TotalLiquid,
+        CovenantCode: CovenantCode,
+        CustomerCode: CustomerCode,
+        EnterpriseId: EnterpriseId,
+        Peoples: Peoples,
+        FlagOrigin: FlagOrigin,
+        DeliveryControl: DeliveryControl,
+        SaleRequestId: SaleRequestId,
+      );
 }

@@ -14,7 +14,8 @@ abstract class CovenantPresenter implements Listenable {
   Future<void> getCustomer(String value);
   void validateCustomerField(String value);
   void updateSelectedCovenant(CustomerViewModel customer, String? newValue);
-  Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp(
-    HomePresenter homePresenter,
-  );
+  Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp({
+    required HomePresenter homePresenter,
+    required void Function() closePagesUntilHomePage,
+  });
 }

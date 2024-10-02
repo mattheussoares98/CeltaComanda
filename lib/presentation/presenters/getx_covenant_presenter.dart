@@ -111,9 +111,10 @@ class GetxCovenantPresenter extends GetxController
   }
 
   @override
-  Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp(
-    HomePresenter homePresenter,
-  ) async {
+  Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp({
+    required HomePresenter homePresenter,
+    required void Function() closePagesUntilHomePage,
+  }) async {
     mainError = null;
     isLoading = true;
     try {
@@ -126,6 +127,8 @@ class GetxCovenantPresenter extends GetxController
         commandNumber: homePresenter.commandNumber!.toInt(),
         finalizationIdentification: 7,
       );
+
+      closePagesUntilHomePage();
       print(result);
     } catch (e) {
       mainError = UIError.unexpected;

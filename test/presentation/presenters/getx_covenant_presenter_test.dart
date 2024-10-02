@@ -241,8 +241,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut
-          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+      );
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -251,12 +253,18 @@ void main() {
         emitsInOrder([null, UIError.unexpected]),
       );
 
-      await sut
-          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+      loadSaleRequest.mockError();
+
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+      );
     });
     test("Should call loadSaleRequest with correct values", () async {
-      await sut
-          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+      );
 
       verify(
         () => loadSaleRequest.load(
@@ -264,8 +272,10 @@ void main() {
       ).called(1);
     });
     test("Should call load sale request", () async {
-      await sut
-          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+      );
 
       verify(
         () => loadSaleRequest.load(
@@ -275,8 +285,10 @@ void main() {
     });
     test("Should call finish sale request concentrador with correct values",
         () async {
-      await sut
-          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+      );
 
       verify(
         () => finishSaleRequestConcentrador.finish(

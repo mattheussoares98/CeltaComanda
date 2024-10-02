@@ -74,7 +74,8 @@ class Covenants extends StatelessWidget {
                   ? () async {
                       await covenantPresenter
                           .updateCustomerAndCovenantAndFinishSaleRequestTemp(
-                        homePresenter,
+                        homePresenter: homePresenter,
+                        closePagesUntilHomePage: () {},
                       );
                     }
                   : null,

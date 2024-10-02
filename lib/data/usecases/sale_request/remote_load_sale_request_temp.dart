@@ -25,7 +25,7 @@ class RemoteLoadSaleRequestTemp implements LoadSaleRequestTemp {
       );
       if (saleRequestTemp == null) throw Error();
 
-      return SaleRequestModel.fromJson(saleRequestTemp).toEntity();
+      return SaleRequestTempModel.fromJson(saleRequestTemp).toEntity();
     } catch (error) {
       throw DomainError.unexpected;
     }

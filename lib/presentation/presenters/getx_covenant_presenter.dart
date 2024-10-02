@@ -1,5 +1,6 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -114,7 +115,13 @@ class GetxCovenantPresenter extends GetxController
   ) async {
     mainError = null;
     isLoading = true;
-    try {} catch (e) {
+    try {
+      final saleRequestTempEntity = await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: homePresenter.commandNumber ?? "",
+      );
+    } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;

@@ -48,6 +48,8 @@ void main() {
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
+    homePresenter.commandNumberMock =
+        faker.randomGenerator.integer(100).toString().padLeft(3, "0");
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
@@ -232,6 +234,17 @@ void main() {
 
       await sut
           .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+    });
+    test("Should call loadSaleRequestTemp with correct values", () async {
+      await sut
+          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+
+      verify(() => loadSaleRequestTemp.load(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            commandNumber: homePresenter.commandNumberMock.toString(),
+          )).called(1);
     });
   });
 }

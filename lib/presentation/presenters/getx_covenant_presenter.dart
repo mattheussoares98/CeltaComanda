@@ -114,7 +114,11 @@ class GetxCovenantPresenter extends GetxController
   ) async {
     mainError = null;
     isLoading = true;
-    try {} catch (e) {
+    try {
+      await loadSaleRequest.load(
+        commandNumber: homePresenter.commandNumber!.toInt(),
+      );
+    } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;

@@ -245,5 +245,14 @@ void main() {
       await sut
           .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
     });
+    test("Should call loadSaleRequest with correct values", () async {
+      await sut
+          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
+
+      verify(
+        () => loadSaleRequest.load(
+            commandNumber: homePresenter.commandNumberMock!.toInt()),
+      ).called(1);
+    });
   });
 }

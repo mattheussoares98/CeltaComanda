@@ -10,6 +10,7 @@ class SaleRequestEntity {
   final String SellerCode;
   final String FlagStatus;
   final String Comments;
+  final String PersonalizedCode;
   final bool IsCancelled;
   final bool IsUsing;
   final double TotalLiquid;
@@ -19,6 +20,7 @@ class SaleRequestEntity {
   final int Peoples;
   final int FlagOrigin;
   final int DeliveryControl;
+  final int SaleRequestId;
 
   SaleRequestEntity({
     required this.Products,
@@ -28,6 +30,7 @@ class SaleRequestEntity {
     required this.SellerCode,
     required this.FlagStatus,
     required this.Comments,
+    required this.PersonalizedCode,
     required this.IsCancelled,
     required this.IsUsing,
     required this.TotalLiquid,
@@ -37,5 +40,6 @@ class SaleRequestEntity {
     required this.Peoples,
     required this.FlagOrigin,
     required this.DeliveryControl,
+    required this.SaleRequestId,
   });
 }

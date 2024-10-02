@@ -57,6 +57,8 @@ void main() {
         SaleRequestTempId:
             cartPresenter.saleRequestTempMock!.SaleRequestTempId.toInt(),
         TotalLiquid: totalLiquid,
+        CustomerCode: cartPresenter.saleRequestTempMock!.CustomerCode?.toInt(),
+        CovenantCode: cartPresenter.saleRequestTempMock!.CovenantCode?.toInt(),
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: 1,

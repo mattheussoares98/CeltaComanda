@@ -477,6 +477,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Comments: _saleRequestTemp?.Comments,
         SellerCode: _saleRequestTemp?.SellerCode,
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
+        CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
+        CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -507,6 +509,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           Comments: saleRequestTempResult.Comments,
           Peoples: saleRequestTempResult.Peoples,
           SellerCode: saleRequestTempResult.SellerCode,
+          CustomerCode: saleRequestTempResult.CustomerCode,
+          CovenantCode: saleRequestTempResult.CovenantCode,
         ),
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );

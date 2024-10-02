@@ -316,6 +316,8 @@ class GetxInsertProductsPresenter extends GetxController
         Peoples: cartPresenter.saleRequestTemp!.Peoples?.toInt(),
         Comments: cartPresenter.saleRequestTemp!.Comments,
         SellerCode: cartPresenter.saleRequestTemp!.SellerCode,
+        CovenantCode: cartPresenter.saleRequestTemp!.CovenantCode?.toInt(),
+        CustomerCode: cartPresenter.saleRequestTemp!.CustomerCode?.toInt(),
       );
 
       await updateSaleRequestTemp.update(

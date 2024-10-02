@@ -161,6 +161,8 @@ void main() {
       Comments: saleRequestTempEntity.Comments,
       Peoples: saleRequestTempEntity.Peoples,
       SellerCode: saleRequestTempEntity.SellerCode,
+      CustomerCode: saleRequestTempEntity.CustomerCode,
+      CovenantCode: saleRequestTempEntity.CovenantCode,
     );
 
     cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
@@ -1065,6 +1067,8 @@ void main() {
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        CovenantCode: updateSaleRequestTempEntity.CovenantCode,
+        CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
         Products: [
           UpdateSaleRequestTempProductEntity(
@@ -1123,6 +1127,8 @@ void main() {
         EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
         PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        CustomerCode: updateSaleRequestTempEntity.CustomerCode,
+        CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         TotalLiquid: products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: [...products],
@@ -1587,8 +1593,7 @@ void main() {
       expect(isUpdated, false);
     });
 
-    test("Should save DeliveryControl with correct value",
-        () async {
+    test("Should save DeliveryControl with correct value", () async {
       sut.cartProducts.add(cartProductViewModel);
 
       await sut.saveProducts(
@@ -1611,6 +1616,8 @@ void main() {
               TotalLiquid: saleRequestTempEntity.TotalLiquid,
               Comments: saleRequestTempEntity.Comments,
               SellerCode: saleRequestTempEntity.SellerCode,
+              CustomerCode: saleRequestTempEntity.CustomerCode,
+              CovenantCode: saleRequestTempEntity.CovenantCode,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
@@ -1641,6 +1648,8 @@ void main() {
               EnterpriseId: saleRequestTempEntity.EnterpriseId,
               TotalLiquid: saleRequestTempEntity.TotalLiquid,
               Comments: saleRequestTempEntity.Comments,
+              CustomerCode: saleRequestTempEntity.CustomerCode,
+              CovenantCode: saleRequestTempEntity.CovenantCode,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);

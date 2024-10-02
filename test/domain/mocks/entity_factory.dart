@@ -211,6 +211,8 @@ class EntityFactory {
           .toList(),
       PersonalizedCode: faker.randomGenerator.string(10),
       EnterpriseId: faker.randomGenerator.integer(3).toString(),
+      CustomerCode: faker.randomGenerator.integer(100).toString(),
+      CovenantCode: faker.randomGenerator.integer(100).toString(),
       DeliveryControl: faker.randomGenerator.integer(3).toString(),
       TotalLiquid: faker.randomGenerator.decimal(min: 0.01).toString(),
     );
@@ -528,6 +530,8 @@ class EntityFactory {
       EnterpriseId: faker.randomGenerator.integer(3),
       TotalLiquid: faker.randomGenerator.decimal(),
       DeliveryControl: faker.randomGenerator.integer(5),
+      CovenantCode: faker.randomGenerator.integer(5),
+      CustomerCode: faker.randomGenerator.integer(5),
       Comments: faker.randomGenerator.string(50),
     );
   }
@@ -602,6 +606,8 @@ class EntityFactory {
       Products: products,
       Comments: faker.randomGenerator.string(10),
       Peoples: faker.randomGenerator.integer(100),
+      CovenantCode: faker.randomGenerator.integer(100),
+      CustomerCode: faker.randomGenerator.integer(100),
     );
   }
 
@@ -632,6 +638,8 @@ class EntityFactory {
         PersonalizedCode: faker.randomGenerator.integer(3).toString(),
         TotalLiquid: faker.randomGenerator.decimal(),
         Comments: faker.randomGenerator.string(10),
+        CustomerCode: faker.randomGenerator.integer(3),
+        CovenantCode: faker.randomGenerator.integer(3),
       );
 
   static SaleRequestTempProductEntity makeSaleRequestTempProductEntity() =>

@@ -13,6 +13,8 @@ class UpdateSaleRequestTempModel {
   final String? SellerCode;
   final double TotalLiquid;
   final List<UpdateSaleRequestTempProductEntity> Products;
+  final int? CustomerCode;
+  final int? CovenantCode;
 
   UpdateSaleRequestTempModel({
     required this.DeliveryControl,
@@ -24,6 +26,8 @@ class UpdateSaleRequestTempModel {
     required this.Comments,
     required this.Peoples,
     required this.SellerCode,
+    required this.CustomerCode,
+    required this.CovenantCode,
   });
 
   factory UpdateSaleRequestTempModel.fromJson(Map json) {
@@ -50,6 +54,8 @@ class UpdateSaleRequestTempModel {
       Comments: json["Comments"],
       Peoples: json["Peoples"],
       SellerCode: json["SellerCode"],
+      CovenantCode: json["CovenantCode"],
+      CustomerCode: json["CustomerCode"],
     );
   }
 
@@ -65,6 +71,8 @@ class UpdateSaleRequestTempModel {
         Comments: entity.Comments,
         Peoples: entity.Peoples,
         SellerCode: entity.SellerCode,
+        CustomerCode: entity.CustomerCode,
+        CovenantCode: entity.CovenantCode,
       );
 
   UpdateSaleRequestTempEntity toEntity() => UpdateSaleRequestTempEntity(
@@ -77,6 +85,8 @@ class UpdateSaleRequestTempModel {
         Comments: Comments,
         Peoples: Peoples,
         SellerCode: SellerCode,
+        CustomerCode: CustomerCode,
+        CovenantCode: CovenantCode,
       );
 
   Map<dynamic, dynamic> toJson() => {
@@ -90,5 +100,7 @@ class UpdateSaleRequestTempModel {
         "Comments": Comments,
         "Peoples": Peoples,
         "SellerCode": SellerCode,
+        "CustomerCode": CustomerCode,
+        "CovenantCode": CovenantCode,
       };
 }

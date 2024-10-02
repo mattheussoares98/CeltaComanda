@@ -14,10 +14,12 @@ class GetxCovenantPresenter extends GetxController
   final Validation validation;
   final LoadCustomer loadCustomer;
   final LoadSaleRequest loadSaleRequest;
+  final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
     required this.loadSaleRequest,
+    required this.finishSaleRequestConcentrador,
   });
 
   @override
@@ -118,7 +120,7 @@ class GetxCovenantPresenter extends GetxController
       final result = await loadSaleRequest.load(
         commandNumber: homePresenter.commandNumber!.toInt(),
       );
-
+    
       print(result);
     } catch (e) {
       mainError = UIError.unexpected;

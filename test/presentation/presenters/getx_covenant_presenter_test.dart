@@ -25,6 +25,7 @@ void main() {
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
   late LoadSaleRequestSpy loadSaleRequest;
+  late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -36,6 +37,7 @@ void main() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
     loadSaleRequest = LoadSaleRequestSpy();
+    finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
   }
 
   void initPresenters() {
@@ -55,6 +57,7 @@ void main() {
       loadCustomer: loadCustomer,
       validation: validation,
       loadSaleRequest: loadSaleRequest,
+      finishSaleRequestConcentrador: finishSaleRequestConcentrador,
     );
   }
 

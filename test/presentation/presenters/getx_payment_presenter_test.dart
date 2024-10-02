@@ -100,7 +100,6 @@ void main() {
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(PaymentMode.credit);
-    registerFallbackValue(PaymentMode.startRedeSdk);
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
@@ -417,10 +416,9 @@ void main() {
       );
 
       verify(() => finishSaleRequestConcentrador.finish(
-            enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
             pdvNumber: 100,
             commandNumber: homePresenter.commandNumberMock!.toInt(),
+            finalizationIdentification: 1,
           )).called(1);
     });
     test("Should update already paid to true and then to false in success",

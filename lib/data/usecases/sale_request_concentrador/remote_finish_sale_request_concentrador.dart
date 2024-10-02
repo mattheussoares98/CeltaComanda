@@ -11,19 +11,25 @@ class RemoteFinishSaleRequestConcentrador
 
   @override
   Future<void> finish({
-    required int enterpriseId,
     required int pdvNumber,
     required int commandNumber,
+    required int? finalizationIdentification,
   }) async {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
       String pdvNumberWithThreeNumbers = pdvNumber.toString().padLeft(3, "0");
-      String commandNumberWithThreeNumbers = commandNumber.toString().padLeft(3, "0");
+      String commandNumberWithThreeNumbers =
+          commandNumber.toString().padLeft(3, "0");
 
       final response = await httpAdapter.request(
-        url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&pdvnumber=$pdvNumberWithThreeNumbers&personalizedCode=$commandNumberWithThreeNumbers",
+        url: '''${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}
+            /api/APISaleRequest/Finish?
+            enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}
+            &pdvnumber=$pdvNumberWithThreeNumbers
+            &personalizedCode=$commandNumberWithThreeNumbers
+            &finalizationIdentification=$finalizationIdentification
+            ''',
         method: "put",
         headers: headers,
       );

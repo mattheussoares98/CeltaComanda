@@ -11,9 +11,9 @@ class FinishSaleRequestConcentradorSpy extends Mock
   }
 
   When _mockFinishCall() => when(() => this.finish(
-        enterpriseId: any(named: "enterpriseId"),
         pdvNumber: any(named: "pdvNumber"),
         commandNumber: any(named: "commandNumber"),
+        finalizationIdentification: any(named: "finalizationIdentification"),
       ));
   void _mockFinish() => this._mockFinishCall().thenAnswer((any) async => any);
   void mockFinishError() =>

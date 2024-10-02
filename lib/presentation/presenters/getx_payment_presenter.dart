@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -115,9 +114,20 @@ class GetxPaymentPresenter extends GetxController
       _commandAlreadyPaid = true;
 
       await finishSaleRequestConcentrador.finish(
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),
+        finalizationIdentification: 1,
+        //finalizations
+        // Money = 1,
+        // Check = 2,
+        // PIX = 3,
+        // PurchaseVale = 4,
+        // DebitCard = 5,
+        // CreditCard = 6,
+        // Covenant = 7,
+        // POS = 8,
+        // Portion = 9,
+        // FinancialCredits = 10
       );
 
       await alreadyPaid.update(false);

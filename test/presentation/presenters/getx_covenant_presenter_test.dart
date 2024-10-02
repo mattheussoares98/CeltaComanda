@@ -26,6 +26,7 @@ void main() {
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -37,6 +38,7 @@ void main() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
   }
 
   void initPresenters() {
@@ -56,6 +58,7 @@ void main() {
       loadCustomer: loadCustomer,
       validation: validation,
       loadSaleRequestTemp: loadSaleRequestTemp,
+      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   }
 

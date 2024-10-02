@@ -16,6 +16,7 @@ class Covenants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -70,7 +71,12 @@ class Covenants extends StatelessWidget {
         ElevatedButton(
           onPressed:
               covenantPresenter.selectedCovenant.containsKey(customer.Code)
-                  ? () async {}
+                  ? () async {
+                      await covenantPresenter
+                          .updateCustomerAndCovenantAndFinishSaleRequestTemp(
+                        homePresenter,
+                      );
+                    }
                   : null,
           child: Text(
             R.string.liquidateCommand.toUpperCase(),

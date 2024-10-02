@@ -15,10 +15,12 @@ class GetxCovenantPresenter extends GetxController
   final Validation validation;
   final LoadCustomer loadCustomer;
   final LoadSaleRequestTemp loadSaleRequestTemp;
+  final UpdateSaleRequestTemp updateSaleRequestTemp;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
     required this.loadSaleRequestTemp,
+    required this.updateSaleRequestTemp,
   });
 
   @override
@@ -121,6 +123,25 @@ class GetxCovenantPresenter extends GetxController
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
         commandNumber: homePresenter.commandNumber ?? "",
       );
+
+      await updateSaleRequestTemp.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        entity: UpdateSaleRequestTempEntity(
+          Comments: saleRequestTempEntity.Comments,
+          Peoples: saleRequestTempEntity.Peoples,
+          DeliveryControl: saleRequestTempEntity.DeliveryControl,
+          EnterpriseId: saleRequestTempEntity.EnterpriseId,
+          PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+          SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
+          TotalLiquid: saleRequestTempEntity.TotalLiquid,
+          Products: const [],
+          SellerCode: saleRequestTempEntity.SellerCode,
+          CustomerCode: saleRequestTempEntity.CustomerCode,
+          CovenantCode: saleRequestTempEntity.CovenantCode,
+        ),
+      );
+
+      print(saleRequestTempEntity);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

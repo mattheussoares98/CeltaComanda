@@ -15,10 +15,12 @@ import 'package:get/get.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../ui/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
   late GetxCovenantPresenter sut;
+  late HomePresenterSpy homePresenter;
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
@@ -36,7 +38,9 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
   }
 
-  void initPresenters() {}
+  void initPresenters() {
+    homePresenter = HomePresenterSpy();
+  }
 
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -218,6 +222,16 @@ void main() {
       expect(sut.selectedCovenant, {
         customersViewModel[0].Code: newValue,
       });
+    });
+  });
+
+  group("Update customer and covenant and finish sale request temp", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut
+          .updateCustomerAndCovenantAndFinishSaleRequestTemp(homePresenter);
     });
   });
 }

@@ -112,6 +112,12 @@ class GetxCovenantPresenter extends GetxController
   Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp(
     HomePresenter homePresenter,
   ) async {
-    
+    mainError = null;
+    isLoading = true;
+    try {} catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 }

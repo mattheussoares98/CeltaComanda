@@ -1,32 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class Covenants extends StatefulWidget {
+class Covenants extends StatelessWidget {
   final CustomerViewModel customer;
+  final void Function() callSetState;
   const Covenants({
     required this.customer,
+    required this.callSetState,
     super.key,
   });
 
   @override
-  State<Covenants> createState() => _CovenantsState();
-}
-
-class _CovenantsState extends State<Covenants> {
-  Map<String, String> selectedCovenant = {};
-
-  void _updateSelectedCovenant(CustomerViewModel customer, String? newValue) {
-    setState(() {
-      selectedCovenant = {
-        customer.Code: newValue.toString(),
-      };
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+
     return Column(
       children: [
         Row(
@@ -55,9 +45,9 @@ class _CovenantsState extends State<Covenants> {
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: widget.customer.Covenants.length,
+          itemCount: customer.Covenants.length,
           itemBuilder: (context, index) {
-            final covenant = widget.customer.Covenants[index];
+            final covenant = customer.Covenants[index];
 
             return RadioListTile<String>(
               dense: true,
@@ -68,18 +58,20 @@ class _CovenantsState extends State<Covenants> {
                   fontSize: getStringSize(context),
                 ),
               ),
-              value: covenant.Code.toString(), // Assume each covenant has an Id
-              groupValue: selectedCovenant[widget.customer.Code],
+              value: covenant.Code.toString(),
+              groupValue: covenantPresenter.selectedCovenant[customer.Code],
               onChanged: (value) {
-                _updateSelectedCovenant(widget.customer, value);
+                covenantPresenter.updateSelectedCovenant(customer, value);
+                callSetState();
               },
             );
           },
         ),
         ElevatedButton(
-          onPressed: selectedCovenant.containsKey(widget.customer.Code)
-              ? () async {}
-              : null,
+          onPressed:
+              covenantPresenter.selectedCovenant.containsKey(customer.Code)
+                  ? () async {}
+                  : null,
           child: Text(
             R.string.liquidateCommand.toUpperCase(),
           ),

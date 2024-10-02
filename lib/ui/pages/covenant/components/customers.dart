@@ -4,11 +4,16 @@ import 'package:provider/provider.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class Customers extends StatelessWidget {
+class Customers extends StatefulWidget {
   const Customers({
     super.key,
   });
 
+  @override
+  State<Customers> createState() => _CustomersState();
+}
+
+class _CustomersState extends State<Customers> {
   @override
   Widget build(BuildContext context) {
     CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
@@ -82,7 +87,12 @@ class Customers extends StatelessWidget {
                           ),
                         ),
                       if (customer.Covenants.isNotEmpty)
-                        Covenants(customer: customer),
+                        Covenants(
+                          customer: customer,
+                          callSetState: () {
+                            setState(() {});
+                          },
+                        ),
                     ],
                   ),
                 );

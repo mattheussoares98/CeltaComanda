@@ -1,6 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'product_entity.dart';
+
 class SaleRequestProductEntity {
+  final ProductEntity Product;
   final String SaleMovementProductCompositionId;
   final String ProductPriceLookUpCode;
   final String QuantityString;
@@ -19,6 +22,7 @@ class SaleRequestProductEntity {
   final double TotalLiquid;
 
   const SaleRequestProductEntity({
+    required this.Product,
     required this.SaleMovementProductCompositionId,
     required this.ProductPriceLookUpCode,
     required this.QuantityString,

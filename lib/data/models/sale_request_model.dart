@@ -4,7 +4,7 @@ import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
 class SaleRequestModel {
-  final List<ProductModel>? Products;
+  final List<SaleRequestProductModel>? Products;
   final String? DateOfCreation;
   final String? DateHourOfCreation;
   final String? RequestType;
@@ -44,32 +44,36 @@ class SaleRequestModel {
     required this.SaleRequestId,
   });
 
-  factory SaleRequestModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll([
+  factory SaleRequestModel.fromJson(Map data) {
+    if (!data.keys.toSet().containsAll([
       "SaleRequestId",
       "PersonalizedCode",
     ])) {
       throw Exception();
     }
+
     return SaleRequestModel(
-      Products: [],
-      DateOfCreation: json["DateOfCreation"],
-      DateHourOfCreation: json["DateHourOfCreation"],
-      RequestType: json["RequestType"],
-      SellerCode: json["SellerCode"],
-      FlagStatus: json["FlagStatus"],
-      Comments: json["Comments"],
-      PersonalizedCode: json["PersonalizedCode"],
-      IsCancelled: json["IsCancelled"],
-      IsUsing: json["IsUsing"],
-      TotalLiquid: json["TotalLiquid"],
-      CovenantCode: json["CovenantCode"],
-      CustomerCode: json["CustomerCode"],
-      EnterpriseId: json["EnterpriseId"],
-      Peoples: json["Peoples"],
-      FlagOrigin: json["FlagOrigin"],
-      DeliveryControl: json["DeliveryControl"],
-      SaleRequestId: json["SaleRequestId"],
+      Products: data["Products"]
+          .map((e) => SaleRequestProductModel.fromJson(e))
+          .toList()
+          .cast<SaleRequestProductModel>(),
+      DateOfCreation: data["DateOfCreation"],
+      DateHourOfCreation: data["DateHourOfCreation"],
+      RequestType: data["RequestType"],
+      SellerCode: data["SellerCode"],
+      FlagStatus: data["FlagStatus"],
+      Comments: data["Comments"],
+      PersonalizedCode: data["PersonalizedCode"],
+      IsCancelled: data["IsCancelled"],
+      IsUsing: data["IsUsing"],
+      TotalLiquid: data["TotalLiquid"],
+      CovenantCode: data["CovenantCode"],
+      CustomerCode: data["CustomerCode"],
+      EnterpriseId: data["EnterpriseId"],
+      Peoples: data["Peoples"],
+      FlagOrigin: data["FlagOrigin"],
+      DeliveryControl: data["DeliveryControl"],
+      SaleRequestId: data["SaleRequestId"],
     );
   }
 
@@ -96,7 +100,9 @@ class SaleRequestModel {
 
   factory SaleRequestModel.fromEntity(SaleRequestEntity entity) =>
       SaleRequestModel(
-        Products: [],
+        Products:
+            entity.Products.map((e) => SaleRequestProductModel.fromEntity(e))
+                .toList(),
         DateOfCreation: entity.DateOfCreation,
         DateHourOfCreation: entity.DateHourOfCreation,
         RequestType: entity.RequestType,

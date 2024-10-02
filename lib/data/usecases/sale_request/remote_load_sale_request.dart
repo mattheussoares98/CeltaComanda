@@ -2,6 +2,7 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../models/models.dart';
 
 class RemoteLoadSaleRequest implements LoadSaleRequest {
   final HttpClient httpAdapter;
@@ -11,7 +12,7 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
   });
 
   @override
-  Future<void> load({
+  Future<SaleRequestModel> load({
     required int commandNumber,
   }) async {
     try {
@@ -22,7 +23,7 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
       );
       if (saleRequestTemp == null) throw Error();
 
-      // return SaleRequestModel.fromJson(saleRequestTemp).toEntity();
+      return SaleRequestModel.fromJson(saleRequestTemp);
     } catch (error) {
       throw DomainError.unexpected;
     }

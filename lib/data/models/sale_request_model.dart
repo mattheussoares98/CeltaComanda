@@ -4,24 +4,24 @@ import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
 class SaleRequestModel {
-  final List<ProductModel> Products;
-  final String DateOfCreation;
-  final String DateHourOfCreation;
-  final String RequestType;
-  final String SellerCode;
-  final String FlagStatus;
-  final String Comments;
-  final String PersonalizedCode;
-  final bool IsCancelled;
-  final bool IsUsing;
-  final double TotalLiquid;
+  final List<ProductModel>? Products;
+  final String? DateOfCreation;
+  final String? DateHourOfCreation;
+  final String? RequestType;
+  final String? SellerCode;
+  final String? FlagStatus;
+  final String? Comments;
+  final String? PersonalizedCode;
+  final bool? IsCancelled;
+  final bool? IsUsing;
+  final double? TotalLiquid;
   final int? CovenantCode;
   final int? CustomerCode;
-  final int EnterpriseId;
-  final int Peoples;
-  final int FlagOrigin;
-  final int DeliveryControl;
-  final int SaleRequestId;
+  final int? EnterpriseId;
+  final int? Peoples;
+  final int? FlagOrigin;
+  final int? DeliveryControl;
+  final int? SaleRequestId;
 
   SaleRequestModel({
     required this.Products,
@@ -52,10 +52,7 @@ class SaleRequestModel {
       throw Exception();
     }
     return SaleRequestModel(
-      Products: json["Products"]
-          .map<SaleRequestTempProductEntity>(
-              (e) => SaleRequestTempProductsModel.fromJson(e).toEntity())
-          .toList(),
+      Products: [],
       DateOfCreation: json["DateOfCreation"],
       DateHourOfCreation: json["DateHourOfCreation"],
       RequestType: json["RequestType"],
@@ -99,8 +96,7 @@ class SaleRequestModel {
 
   factory SaleRequestModel.fromEntity(SaleRequestEntity entity) =>
       SaleRequestModel(
-        Products:
-            entity.Products.map((e) => ProductModel.fromEntity(e)).toList(),
+        Products: [],
         DateOfCreation: entity.DateOfCreation,
         DateHourOfCreation: entity.DateHourOfCreation,
         RequestType: entity.RequestType,
@@ -118,26 +114,5 @@ class SaleRequestModel {
         FlagOrigin: entity.FlagOrigin,
         DeliveryControl: entity.DeliveryControl,
         SaleRequestId: entity.SaleRequestId,
-      );
-
-  SaleRequestEntity toEntity() => SaleRequestEntity(
-        Products: Products.map((e) => e.toEntity()).toList(),
-        DateOfCreation: DateOfCreation,
-        DateHourOfCreation: DateHourOfCreation,
-        RequestType: RequestType,
-        SellerCode: SellerCode,
-        FlagStatus: FlagStatus,
-        Comments: Comments,
-        PersonalizedCode: PersonalizedCode,
-        IsCancelled: IsCancelled,
-        IsUsing: IsUsing,
-        TotalLiquid: TotalLiquid,
-        CovenantCode: CovenantCode,
-        CustomerCode: CustomerCode,
-        EnterpriseId: EnterpriseId,
-        Peoples: Peoples,
-        FlagOrigin: FlagOrigin,
-        DeliveryControl: DeliveryControl,
-        SaleRequestId: SaleRequestId,
       );
 }

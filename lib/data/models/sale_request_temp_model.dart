@@ -46,7 +46,8 @@ class SaleRequestTempModel {
 
     return SaleRequestTempModel(
       Products: json["Products"]
-          .map((e) => SaleRequestTempProductsModel.fromJson(e).toEntity())
+          .map<SaleRequestTempProductEntity>(
+              (e) => SaleRequestTempProductsModel.fromJson(e).toEntity())
           .toList(),
       SaleRequestTempId: json["SaleRequestTempId"],
       PersonalizedCode: json["PersonalizedCode"],

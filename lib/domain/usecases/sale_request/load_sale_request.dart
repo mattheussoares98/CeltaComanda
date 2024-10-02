@@ -1,3 +1,5 @@
+import '../../../data/models/models.dart';
+
 abstract class LoadSaleRequest {
-  Future<void> load({required int commandNumber});
+  Future<SaleRequestModel> load({required int commandNumber});
 }

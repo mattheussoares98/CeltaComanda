@@ -66,7 +66,7 @@ void main() {
       loadCustomer: loadCustomer,
       validation: validation,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
-      authorizeCovenantLimitUseByCode: covenantLimit,
+      covenantLimit: covenantLimit,
     );
   }
 
@@ -245,15 +245,16 @@ void main() {
     });
   });
 
-  group("Update customer and covenant and finish sale request temp", () {
+  group("Finish sale request by covenant", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+      await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
       );
     });
     test("Should emit correct values on error", () async {
@@ -265,10 +266,11 @@ void main() {
 
       finishSaleRequestConcentrador.mockError();
 
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+      await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
       );
     });
 
@@ -279,10 +281,11 @@ void main() {
         faker.randomGenerator.integer(100).toString(),
       );
 
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+      await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
       );
 
       verify(
@@ -299,10 +302,11 @@ void main() {
         faker.randomGenerator.integer(100).toString(),
       );
 
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+      await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
       );
 
       verify(
@@ -313,10 +317,11 @@ void main() {
       String covenantCode = faker.randomGenerator.integer(100).toString();
       sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+      await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
       );
 
       verify(
@@ -329,6 +334,33 @@ void main() {
               printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
         ),
       ).called(1);
+    });
+    test(
+        "Should not finish sale request concentrador when soap response returns error type",
+        () async {
+      String covenantCode = faker.randomGenerator.integer(100).toString();
+      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+
+      covenantLimit
+          .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(SoapResponse(
+        response: faker.randomGenerator.string(10),
+        responseType: SoapResponseType.error,
+      ));
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+      );
+
+      verifyNever(
+        () => finishSaleRequestConcentrador.finish(
+          pdvNumber: 100,
+          commandNumber: homePresenter.commandNumberMock!.toInt(),
+          finalizationIdentification: 7,
+        ),
+      );
     });
   });
 }

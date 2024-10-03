@@ -75,10 +75,16 @@ class Covenants extends StatelessWidget {
           onPressed: covenantPresenter.selectedCovenant
                   .containsKey(customer.Code)
               ? () async {
-                  await covenantPresenter
-                      .updateCustomerAndCovenantAndFinishSaleRequestTemp(
+                  await covenantPresenter.finishSaleRequestByCovenant(
                     homePresenter: homePresenter,
                     printedProductsPresenter: printedProductsPresenter,
+                    showErrorMessageReturnedByBs: (error) {
+                      showAlertMessage(
+                        context,
+                        error,
+                        backgroundColor: Colors.red,
+                      );
+                    },
                     closePagesUntilHomePage: () {
                       Navigator.of(context).popUntil(
                         (route) => route.isFirst,

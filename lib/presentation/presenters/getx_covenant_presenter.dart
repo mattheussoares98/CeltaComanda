@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/main/builders/builders.dart';
 
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../infra/helpers/helperts.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -16,12 +17,12 @@ class GetxCovenantPresenter extends GetxController
   final Validation validation;
   final LoadCustomer loadCustomer;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
-  final CovenantLimit authorizeCovenantLimitUseByCode;
+  final CovenantLimit covenantLimit;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
     required this.finishSaleRequestConcentrador,
-    required this.authorizeCovenantLimitUseByCode,
+    required this.covenantLimit,
   });
 
   @override
@@ -106,22 +107,25 @@ class GetxCovenantPresenter extends GetxController
   Map<String, String?> get selectedCovenant => _selectedCovenant;
 
   @override
-  void updateSelectedCovenant(CustomerViewModel customer, String? covenantCode) {
+  void updateSelectedCovenant(
+      CustomerViewModel customer, String? covenantCode) {
     _selectedCovenant = {
       customer.Code: covenantCode,
     };
   }
 
   @override
-  Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp({
+  Future<void> finishSaleRequestByCovenant({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() closePagesUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   }) async {
     mainError = null;
     isLoading = true;
     try {
-      await authorizeCovenantLimitUseByCode.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
+      SoapResponse soapResponse = await covenantLimit
+          .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
         customerCode: _selectedCovenant.keys.first.toInt(),
@@ -129,15 +133,19 @@ class GetxCovenantPresenter extends GetxController
         value: printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
       );
 
-      await finishSaleRequestConcentrador.finish(
-        pdvNumber: 100,
-        commandNumber: homePresenter.commandNumber!.toInt(),
-        finalizationIdentification: 7,
-      );
+      if (soapResponse.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(soapResponse.response);
+      } else {
+        await finishSaleRequestConcentrador.finish(
+          pdvNumber: 100,
+          commandNumber: homePresenter.commandNumber!.toInt(),
+          finalizationIdentification: 7,
+        );
 
-      await printedProductsPresenter.loadPrinted(homePresenter);
+        await printedProductsPresenter.loadPrinted(homePresenter);
 
-      closePagesUntilHomePage();
+        closePagesUntilHomePage();
+      }
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

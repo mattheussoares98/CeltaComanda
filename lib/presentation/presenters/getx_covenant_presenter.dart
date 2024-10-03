@@ -18,11 +18,13 @@ class GetxCovenantPresenter extends GetxController
   final LoadCustomer loadCustomer;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final CovenantLimit covenantLimit;
+  final CovenantAuthorizationIsPendant covenantAuthorizationIsPendant;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
     required this.finishSaleRequestConcentrador,
     required this.covenantLimit,
+    required this.covenantAuthorizationIsPendant,
   });
 
   @override

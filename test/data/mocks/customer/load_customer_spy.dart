@@ -15,7 +15,7 @@ class LoadCustomerSpy extends Mock implements LoadCustomer {
     _mockLoadCustomerCall().thenAnswer((any) async => result);
   }
 
-  void mockLoadCustomerError() {
+  void mockError() {
     _mockLoadCustomerCall().thenThrow(DomainError.unexpected);
   }
 }

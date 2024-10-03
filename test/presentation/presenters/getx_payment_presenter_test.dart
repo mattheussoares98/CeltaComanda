@@ -402,7 +402,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      finishSaleRequestConcentrador.mockFinishError();
+      finishSaleRequestConcentrador.mockError();
       await sut.liquidateCommand(
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -433,7 +433,7 @@ void main() {
     });
     test("Should already paid is true if finishSaleRequestConcentrador throws",
         () async {
-      finishSaleRequestConcentrador.mockFinishError();
+      finishSaleRequestConcentrador.mockError();
 
       await sut.liquidateCommand(
         homePresenter: homePresenter,
@@ -455,7 +455,7 @@ void main() {
     });
 
     test("Should update commandAlreadyPaid to true in error", () async {
-      finishSaleRequestConcentrador.mockFinishError();
+      finishSaleRequestConcentrador.mockError();
       await sut.liquidateCommand(
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,

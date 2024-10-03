@@ -13,12 +13,10 @@ class GetxCovenantPresenter extends GetxController
     implements CovenantPresenter {
   final Validation validation;
   final LoadCustomer loadCustomer;
-  final LoadSaleRequest loadSaleRequest;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
-    required this.loadSaleRequest,
     required this.finishSaleRequestConcentrador,
   });
 
@@ -119,10 +117,6 @@ class GetxCovenantPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      final result = await loadSaleRequest.load(
-        commandNumber: homePresenter.commandNumber!.toInt(),
-      );
-
       await finishSaleRequestConcentrador.finish(
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),
@@ -132,7 +126,6 @@ class GetxCovenantPresenter extends GetxController
       await printedProductsPresenter.loadPrinted(homePresenter);
 
       closePagesUntilHomePage();
-      print(result);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

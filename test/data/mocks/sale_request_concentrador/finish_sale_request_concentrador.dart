@@ -16,6 +16,6 @@ class FinishSaleRequestConcentradorSpy extends Mock
         finalizationIdentification: any(named: "finalizationIdentification"),
       ));
   void _mockFinish() => this._mockFinishCall().thenAnswer((any) async => any);
-  void mockFinishError() =>
+  void mockError() =>
       this._mockFinishCall().thenThrow(DomainError.unexpected);
 }

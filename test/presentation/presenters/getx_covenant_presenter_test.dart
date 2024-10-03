@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
@@ -26,13 +25,10 @@ void main() {
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
-  late LoadSaleRequestSpy loadSaleRequest;
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
-  late SaleRequestEntity saleRequestEntity;
-  late SaleRequestModel saleRequestModel;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -40,7 +36,6 @@ void main() {
   void initUseCases() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
-    loadSaleRequest = LoadSaleRequestSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
   }
 
@@ -57,20 +52,16 @@ void main() {
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(100).toString().padLeft(3, "0");
-    saleRequestEntity = EntityFactory.makeSaleRequestEntity();
-    saleRequestModel = SaleRequestModel.fromEntity(saleRequestEntity);
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
-      loadSaleRequest: loadSaleRequest,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
     );
   }
 
   void mockSuccess() {
     loadCustomer.mockLoadCustomer(customersEntitys);
-    loadSaleRequest.mockLoadSaleRequest(saleRequestModel);
   }
 
   setUp(() {
@@ -103,7 +94,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      loadCustomer.mockLoadCustomerError();
+      loadCustomer.mockError();
       await sut.getCustomer(faker.randomGenerator.string(10));
     });
     test(
@@ -260,7 +251,7 @@ void main() {
         emitsInOrder([null, UIError.unexpected]),
       );
 
-      loadSaleRequest.mockError();
+      finishSaleRequestConcentrador.mockError();
 
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
@@ -268,31 +259,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
     });
-    test("Should call loadSaleRequest with correct values", () async {
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-      );
 
-      verify(
-        () => loadSaleRequest.load(
-            commandNumber: homePresenter.commandNumberMock!.toInt()),
-      ).called(1);
-    });
-    test("Should call load sale request", () async {
-      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      verify(
-        () => loadSaleRequest.load(
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
-        ),
-      ).called(1);
-    });
     test("Should call finish sale request concentrador with correct values",
         () async {
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(

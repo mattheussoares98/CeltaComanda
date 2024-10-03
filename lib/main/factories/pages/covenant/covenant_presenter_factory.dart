@@ -8,4 +8,6 @@ CovenantPresenter makeGetxCovenantPresenter() => GetxCovenantPresenter(
       loadCustomer: makeRemoteLoadCustomer(),
       validation: makeCustomerValidation(),
       finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
+      authorizeCovenantLimitUseByCode:
+          makeRemoteAuthorizeCovenantLimitUseByCode(),
     );

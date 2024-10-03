@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
@@ -14,10 +16,12 @@ class GetxCovenantPresenter extends GetxController
   final Validation validation;
   final LoadCustomer loadCustomer;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
+  final AuthorizeCovenantLimitUseByCode authorizeCovenantLimitUseByCode;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
     required this.finishSaleRequestConcentrador,
+    required this.authorizeCovenantLimitUseByCode,
   });
 
   @override
@@ -102,9 +106,9 @@ class GetxCovenantPresenter extends GetxController
   Map<String, String?> get selectedCovenant => _selectedCovenant;
 
   @override
-  void updateSelectedCovenant(CustomerViewModel customer, String? newValue) {
+  void updateSelectedCovenant(CustomerViewModel customer, String? covenantCode) {
     _selectedCovenant = {
-      customer.Code: newValue,
+      customer.Code: covenantCode,
     };
   }
 
@@ -117,6 +121,14 @@ class GetxCovenantPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      await authorizeCovenantLimitUseByCode.authorize(
+        crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+            .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
+        customerCode: _selectedCovenant.keys.first.toInt(),
+        covenantCode: _selectedCovenant.values.first!.toInt(),
+        value: printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
+      );
+
       await finishSaleRequestConcentrador.finish(
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),

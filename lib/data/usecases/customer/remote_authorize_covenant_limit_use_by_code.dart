@@ -10,21 +10,24 @@ class RemoteAuthorizeCovenantLimitUseByCode
 
   @override
   Future<void> authorize({
-    required String crossIdentity,
+    required String? crossIdentity,
     required int covenantCode,
     required int customerCode,
     required double value,
   }) async {
     try {
-      if (EnterpriseDataBuilder
-              .enterpriseDataEntity!
-              .enterpriseConcentradorParametersEntity!
-              .celtaBSCrossIdentity!
-              .isEmpty ==
-          true) {
+      if (EnterpriseDataBuilder.enterpriseDataEntity!
+                  .enterpriseConcentradorParametersEntity ==
+              null ||
+          EnterpriseDataBuilder
+                  .enterpriseDataEntity!
+                  .enterpriseConcentradorParametersEntity!
+                  .celtaBSCrossIdentity ==
+              null) {
         throw DomainError.unexpected;
       }
-      final jsonData = await soapAdapter.post(
+
+      final result = await soapAdapter.post(
         parameters: {
           "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
@@ -35,10 +38,8 @@ class RemoteAuthorizeCovenantLimitUseByCode
         typeOfResponse: "AuthorizeConveneLimitUseByCodeResponse",
         soapAction: "AuthorizeConveneLimitUseByCode",
         serviceASMX: "CeltaLimitService.asmx",
-        typeOfResult: null,
+        typeOfResult: "authorizedCode",
       );
-
-      print(jsonData);
     } catch (e) {
       throw DomainError.unexpected;
     }

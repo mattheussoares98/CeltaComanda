@@ -26,6 +26,7 @@ void main() {
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
+  late AuthorizeCovenantLimitUseByCodeSpy authorizeCovenantLimitUseByCode;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -37,6 +38,7 @@ void main() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
+    authorizeCovenantLimitUseByCode = AuthorizeCovenantLimitUseByCodeSpy();
   }
 
   void initPresenters() {
@@ -57,6 +59,7 @@ void main() {
       loadCustomer: loadCustomer,
       validation: validation,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
+      authorizeCovenantLimitUseByCode: authorizeCovenantLimitUseByCode,
     );
   }
 
@@ -285,6 +288,27 @@ void main() {
 
       verify(
         () => printedProductsPresenter.loadPrinted(homePresenter),
+      ).called(1);
+    });
+    test("Should call authorize covenant limit use by code", () async {
+      String covenantCode = faker.randomGenerator.integer(100).toString();
+      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(
+        () => authorizeCovenantLimitUseByCode.authorize(
+          crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+              .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
+          covenantCode: covenantCode.toInt(),
+          customerCode: customersViewModel[0].Code.toInt(),
+          value:
+              printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
+        ),
       ).called(1);
     });
   });

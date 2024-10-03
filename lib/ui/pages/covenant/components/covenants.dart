@@ -18,6 +18,8 @@ class Covenants extends StatelessWidget {
   Widget build(BuildContext context) {
     CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -76,6 +78,7 @@ class Covenants extends StatelessWidget {
                   await covenantPresenter
                       .updateCustomerAndCovenantAndFinishSaleRequestTemp(
                     homePresenter: homePresenter,
+                    printedProductsPresenter: printedProductsPresenter,
                     closePagesUntilHomePage: () {
                       Navigator.of(context).popUntil(
                         (route) => route.isFirst,

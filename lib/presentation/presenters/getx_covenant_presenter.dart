@@ -113,6 +113,7 @@ class GetxCovenantPresenter extends GetxController
   @override
   Future<void> updateCustomerAndCovenantAndFinishSaleRequestTemp({
     required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
     required void Function() closePagesUntilHomePage,
   }) async {
     mainError = null;
@@ -127,6 +128,8 @@ class GetxCovenantPresenter extends GetxController
         commandNumber: homePresenter.commandNumber!.toInt(),
         finalizationIdentification: 7,
       );
+
+      await printedProductsPresenter.loadPrinted(homePresenter);
 
       closePagesUntilHomePage();
       print(result);

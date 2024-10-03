@@ -57,10 +57,9 @@ class _PaymentPageState extends State<PaymentPage>
 
   @override
   Widget build(BuildContext context) {
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =

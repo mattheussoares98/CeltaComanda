@@ -22,6 +22,7 @@ import '../mocks/mocks.dart';
 void main() {
   late GetxCovenantPresenter sut;
   late HomePresenterSpy homePresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
@@ -45,6 +46,7 @@ void main() {
 
   void initPresenters() {
     homePresenter = HomePresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
   }
 
   void initEntitys() {
@@ -78,6 +80,10 @@ void main() {
     mockSuccess();
   });
 
+  setUpAll(() {
+    registerFallbackValue(HomePresenterSpy());
+  });
+
   group("Get customer", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -103,7 +109,7 @@ void main() {
     test(
         "Should call loadCustomer with searchType 3 when cant convert value to int",
         () async {
-      final valueToSearch = faker.randomGenerator.string(10);
+      final valueToSearch = faker.randomGenerator.string(100);
 
       await sut.getCustomer(valueToSearch);
 
@@ -244,6 +250,7 @@ void main() {
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
       );
     });
     test("Should emit correct values on error", () async {
@@ -258,12 +265,14 @@ void main() {
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
       );
     });
     test("Should call loadSaleRequest with correct values", () async {
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
       );
 
       verify(
@@ -275,6 +284,7 @@ void main() {
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
       );
 
       verify(
@@ -288,6 +298,7 @@ void main() {
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
       );
 
       verify(
@@ -296,6 +307,17 @@ void main() {
           commandNumber: homePresenter.commandNumberMock!.toInt(),
           finalizationIdentification: 7,
         ),
+      ).called(1);
+    });
+    test("Should call load printed on success", () async {
+      await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(
+        () => printedProductsPresenter.loadPrinted(homePresenter),
       ).called(1);
     });
   });

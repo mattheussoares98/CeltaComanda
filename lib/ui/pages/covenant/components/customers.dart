@@ -53,12 +53,20 @@ class _CustomersState extends State<Customers> {
                                   fontSize: getStringSize(context),
                                 ),
                               ),
-                              Text(
-                                "${R.string.personalizedCode}: ${customer.PersonalizedCode}",
-                                style: TextStyle(
-                                  fontSize: getStringSize(context),
+                              if (customer.CpfCnpjNumber.length >= 11)
+                                Text(
+                                  'CPF/CNPJ: ${customer.CpfCnpjNumber.substring(0, 4)}...${customer.CpfCnpjNumber.substring(customer.CpfCnpjNumber.length - 4)}',
+                                  style: TextStyle(
+                                    fontSize: getStringSize(context),
+                                  ),
                                 ),
-                              ),
+                              if (customer.CpfCnpjNumber.length < 11)
+                                Text(
+                                  'CPF/CNPJ: ${customer.CpfCnpjNumber}',
+                                  style: TextStyle(
+                                    fontSize: getStringSize(context),
+                                  ),
+                                ),
                             ],
                           ),
                           Expanded(
@@ -72,20 +80,28 @@ class _CustomersState extends State<Customers> {
                           ),
                         ],
                       ),
-                      Text(
-                        'CPF/CNPJ: ${customer.CpfCnpjNumber.substring(0, 4)}...${customer.CpfCnpjNumber.substring(customer.CpfCnpjNumber.length - 4)}',
-                        style: TextStyle(
-                          fontSize: getStringSize(context),
-                        ),
-                      ),
-                      if (customer.Covenants.isEmpty)
-                        Text(
-                          R.string.withoutCovenant.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: getStringSize(context),
-                            color: Colors.red,
+                      Row(
+                        children: [
+                          Text(
+                            "${R.string.personalizedCode}: ${customer.PersonalizedCode}",
+                            style: TextStyle(
+                              fontSize: getStringSize(context),
+                            ),
                           ),
-                        ),
+                          if (customer.Covenants.isEmpty)
+                            Expanded(
+                              child: Text(
+                                R.string.withoutCovenant.toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: getStringSize(context),
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                       if (customer.Covenants.isNotEmpty)
                         Covenants(
                           customer: customer,

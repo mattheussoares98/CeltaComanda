@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
@@ -26,10 +27,12 @@ void main() {
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
-  late AuthorizeCovenantLimitUseByCodeSpy authorizeCovenantLimitUseByCode;
+  late CovenantLimitSpy covenantLimit;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
+
+  late SoapResponse soapResponse;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -38,7 +41,7 @@ void main() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
-    authorizeCovenantLimitUseByCode = AuthorizeCovenantLimitUseByCodeSpy();
+    covenantLimit = CovenantLimitSpy();
   }
 
   void initPresenters() {
@@ -54,17 +57,23 @@ void main() {
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(100).toString().padLeft(3, "0");
+    soapResponse = SoapResponse(
+      response: faker.randomGenerator.string(10),
+      responseType: SoapResponseType.success,
+    );
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
-      authorizeCovenantLimitUseByCode: authorizeCovenantLimitUseByCode,
+      authorizeCovenantLimitUseByCode: covenantLimit,
     );
   }
 
   void mockSuccess() {
     loadCustomer.mockLoadCustomer(customersEntitys);
+    covenantLimit
+        .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(soapResponse);
   }
 
   setUp(() {
@@ -311,7 +320,7 @@ void main() {
       );
 
       verify(
-        () => authorizeCovenantLimitUseByCode.authorize(
+        () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
           crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),

@@ -1,15 +1,15 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helperts.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
-class RemoteAuthorizeCovenantLimitUseByCode
-    implements AuthorizeCovenantLimitUseByCode {
+class RemoteCovenantLimit implements CovenantLimit {
   final SoapRequest soapAdapter;
-  RemoteAuthorizeCovenantLimitUseByCode({required this.soapAdapter});
+  RemoteCovenantLimit({required this.soapAdapter});
 
   @override
-  Future<void> authorize({
+  Future<SoapResponse> authorizeCovenantLimitUseByCodeAndGetAuthorizeCode({
     required String? crossIdentity,
     required int covenantCode,
     required int customerCode,
@@ -40,6 +40,8 @@ class RemoteAuthorizeCovenantLimitUseByCode
         serviceASMX: "CeltaLimitService.asmx",
         typeOfResult: "authorizedCode",
       );
+
+      return soapResponse;
     } catch (e) {
       throw DomainError.unexpected;
     }

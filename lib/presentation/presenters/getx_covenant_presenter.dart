@@ -16,7 +16,7 @@ class GetxCovenantPresenter extends GetxController
   final Validation validation;
   final LoadCustomer loadCustomer;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
-  final AuthorizeCovenantLimitUseByCode authorizeCovenantLimitUseByCode;
+  final CovenantLimit authorizeCovenantLimitUseByCode;
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
@@ -121,7 +121,7 @@ class GetxCovenantPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      await authorizeCovenantLimitUseByCode.authorize(
+      await authorizeCovenantLimitUseByCode.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
         customerCode: _selectedCovenant.keys.first.toInt(),

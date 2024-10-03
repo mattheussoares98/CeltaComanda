@@ -3,6 +3,7 @@ enum CacheKeys {
   cartProducts,
   commandData,
   comments,
+  covenantAuthorizationPendant,
   enterprise,
   images,
   hiveBoxName,

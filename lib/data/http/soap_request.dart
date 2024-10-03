@@ -1,5 +1,5 @@
 abstract class SoapRequest {
-  Future<Map<String, dynamic>> post({
+  Future<String> post({
     required Map<String, dynamic> parameters,
     required String typeOfResponse,
     required String? typeOfResult,

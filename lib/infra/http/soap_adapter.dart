@@ -9,14 +9,14 @@ import '../../main/builders/builders.dart';
 
 class SoapAdapter implements SoapRequest {
   @override
-  Future<Map<String, dynamic>> post({
+  Future<String> post({
     required Map<String, dynamic> parameters,
     required String typeOfResponse,
     required String? typeOfResult,
     required String soapAction,
     required String serviceASMX,
   }) async {
-    late Map<String, dynamic> responseInMap;
+    late String responseInString;
 
     try {
       final soapHeaders = {
@@ -66,14 +66,8 @@ class SoapAdapter implements SoapRequest {
             if (parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
                     [typeOfResult] !=
                 null) {
-              responseInMap = parsedJson["soap:Envelope"];
-              responseInMap = parsedJson["soap:Envelope"]["soap:Body"];
-              responseInMap =
-                  parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse];
-              responseInMap = {
-                typeOfResult: parsedJson["soap:Envelope"]["soap:Body"]
-                    [typeOfResponse][typeOfResult]
-              };
+              responseInString = parsedJson["soap:Envelope"]["soap:Body"]
+                  [typeOfResponse][typeOfResult];
             }
 
             if (_validateResultHasPatternNewDataSet(
@@ -81,7 +75,7 @@ class SoapAdapter implements SoapRequest {
               typeOfResponse: typeOfResponse,
               typeOfResult: typeOfResult,
             )) {
-              responseInMap = parsedJson["soap:Envelope"]["soap:Body"]
+              responseInString = parsedJson["soap:Envelope"]["soap:Body"]
                       [typeOfResponse][typeOfResult]["diffgr:diffgram"]
                   ["NewDataSet"];
             }
@@ -90,8 +84,8 @@ class SoapAdapter implements SoapRequest {
           if (parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
               .toString()
               .contains("sucesso")) {
-            responseInMap = parsedJson["soap:Envelope"]["soap:Body"]
-                [typeOfResponse]["status"];
+            responseInString = parsedJson["soap:Envelope"]["soap:Body"]
+                [typeOfResponse]["status"][typeOfResult];
           } else {
             debugPrint(parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
                 ["status"]);
@@ -102,7 +96,7 @@ class SoapAdapter implements SoapRequest {
       } else {
         throw DomainError.unexpected;
       }
-      return responseInMap;
+      return responseInString;
     } catch (e) {
       rethrow;
     }

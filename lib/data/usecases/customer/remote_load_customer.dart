@@ -42,7 +42,7 @@ class RemoteLoadCustomer implements LoadCustomer {
         typeOfResult: "GetCustomerJsonResult",
       );
 
-      final List decoded = json.decode(jsonData["GetCustomerJsonResult"]);
+      final List decoded = json.decode(jsonData);
 
       return decoded.map((e) => CustomerModel.fromJson(e).toEntity()).toList();
     } catch (e) {

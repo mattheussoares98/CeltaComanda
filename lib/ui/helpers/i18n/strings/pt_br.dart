@@ -97,8 +97,8 @@ class PtBr implements Translation {
   String get close => "Fechar";
   String get code => "Código";
   String get combox => "Combo";
-  String get commandNotAvailable => "Comanda não disponível";
   String get command => "Comanda";
+  String get commandNotAvailable => "Comanda não disponível";
   String get commentsOfProduct => "Comentários do produto";
   String get comments => "Comentários";
   String get comment => "Comentário";
@@ -130,6 +130,7 @@ class PtBr implements Translation {
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
   String get liberateCommand => 'Liberar comanda';
   String get liquidateCommand => 'Liquidar comanda';
+  String get liquidateCommandSucceeds => "Comanda liquidada com sucesso";
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get name => 'Nome';

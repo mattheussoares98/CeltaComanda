@@ -128,6 +128,7 @@ class EnUs implements Translation {
   String get liberateCancelProducts => 'Allow item cancellation';
   String get liberateCommand => 'Liberate command';
   String get liquidateCommand => 'Liquidate command';
+  String get liquidateCommandSucceeds => 'Command successfully liquidated';
   String get loadMenu => 'Load menu';
   String get login => 'Login';
   String get name => 'Name';

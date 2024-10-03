@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -69,16 +70,25 @@ class Covenants extends StatelessWidget {
           },
         ),
         ElevatedButton(
-          onPressed:
-              covenantPresenter.selectedCovenant.containsKey(customer.Code)
-                  ? () async {
-                      await covenantPresenter
-                          .updateCustomerAndCovenantAndFinishSaleRequestTemp(
-                        homePresenter: homePresenter,
-                        closePagesUntilHomePage: () {},
+          onPressed: covenantPresenter.selectedCovenant
+                  .containsKey(customer.Code)
+              ? () async {
+                  await covenantPresenter
+                      .updateCustomerAndCovenantAndFinishSaleRequestTemp(
+                    homePresenter: homePresenter,
+                    closePagesUntilHomePage: () {
+                      Navigator.of(context).popUntil(
+                        (route) => route.isFirst,
                       );
-                    }
-                  : null,
+                      showAlertMessage(
+                        context,
+                        R.string.liquidateCommandSucceeds,
+                        backgroundColor: Theme.of(context).secondaryHeaderColor,
+                      );
+                    },
+                  );
+                }
+              : null,
           child: Text(
             R.string.liquidateCommand.toUpperCase(),
           ),

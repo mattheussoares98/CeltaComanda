@@ -20,4 +20,5 @@ abstract class CovenantPresenter implements Listenable {
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   });
+  Future<bool> getCovenantAuthorizationIsPendant();
 }

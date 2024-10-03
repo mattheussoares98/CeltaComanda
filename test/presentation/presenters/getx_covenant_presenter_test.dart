@@ -366,4 +366,49 @@ void main() {
       );
     });
   });
+
+  group("Get covenant authorization is pendant", () {
+    test("Should call covenantAuthorizationIsPendant.get", () async {
+      await sut.getCovenantAuthorizationIsPendant();
+
+      verify(() => covenantAuthorizationIsPendant.get()).called(1);
+    });
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.getCovenantAuthorizationIsPendant();
+    });
+    test("Should emit correct values on throws", () async {
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      covenantAuthorizationIsPendant.mockGetError();
+
+      await sut.getCovenantAuthorizationIsPendant();
+    });
+
+    test("Should return correct value if usecase return true", () async {
+      final value = await sut.getCovenantAuthorizationIsPendant();
+
+      expect(value, true);
+    });
+    test("Should return correct value if usecase throw", () async {
+      covenantAuthorizationIsPendant.mockGetError();
+
+      final value = await sut.getCovenantAuthorizationIsPendant();
+
+      expect(value, false);
+    });
+    test("Should return correct value if usecase return false", () async {
+      covenantAuthorizationIsPendant.mockGet(false);
+
+      final value = await sut.getCovenantAuthorizationIsPendant();
+
+      expect(value, false);
+    });
+  });
 }

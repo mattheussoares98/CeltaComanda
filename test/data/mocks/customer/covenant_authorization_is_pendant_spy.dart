@@ -10,11 +10,21 @@ class CovenantAuthorizationIsPendantSpy extends Mock
     mockUpdate(true);
   }
 
+  When _mockGetCall() => when(() => this.get());
+  void mockGetError() {
+    _mockGetCall().thenThrow(Exception());
+  }
+
   void mockGet(bool value) {
-    when(() => this.get()).thenAnswer((any) async => value);
+    _mockGetCall().thenAnswer((any) async => value);
+  }
+
+  When _mockUpdateCall(bool value) => when(() => this.update(value));
+  void mockUpdateError() {
+    _mockUpdateCall(any()).thenThrow(Exception());
   }
 
   void mockUpdate(bool value) {
-    when(() => this.update(value)).thenAnswer((any) async => any);
+    _mockUpdateCall(value).thenAnswer((any) async => any);
   }
 }

@@ -19,6 +19,7 @@ class GetxCovenantPresenter extends GetxController
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final CovenantLimit covenantLimit;
   final CovenantAuthorizationIsPendant covenantAuthorizationIsPendant;
+
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
@@ -150,6 +151,21 @@ class GetxCovenantPresenter extends GetxController
       }
     } catch (e) {
       mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<bool> getCovenantAuthorizationIsPendant() async {
+    mainError = null;
+    isLoading = true;
+    try {
+      final value = await covenantAuthorizationIsPendant.get();
+      return value;
+    } catch (e) {
+      mainError = UIError.unexpected;
+      return false;
     } finally {
       isLoading = false;
     }

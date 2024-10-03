@@ -25,7 +25,7 @@ class RemoteLoadCustomer implements LoadCustomer {
           true) {
         throw DomainError.unexpected;
       }
-      final jsonData = await soapAdapter.post(
+      final soapResponse = await soapAdapter.post(
         parameters: {
           "filters": json.encode({
             "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
@@ -42,7 +42,7 @@ class RemoteLoadCustomer implements LoadCustomer {
         typeOfResult: "GetCustomerJsonResult",
       );
 
-      final List decoded = json.decode(jsonData);
+      final List decoded = json.decode(soapResponse.response);
 
       return decoded.map((e) => CustomerModel.fromJson(e).toEntity()).toList();
     } catch (e) {

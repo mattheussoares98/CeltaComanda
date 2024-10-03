@@ -1,5 +1,7 @@
+import '../../infra/helpers/helperts.dart';
+
 abstract class SoapRequest {
-  Future<String> post({
+  Future<SoapResponse> post({
     required Map<String, dynamic> parameters,
     required String typeOfResponse,
     required String? typeOfResult,

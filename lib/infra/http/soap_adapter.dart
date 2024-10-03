@@ -1,22 +1,22 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 
 import '../../data/http/http.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
+import '../helpers/helperts.dart';
 
 class SoapAdapter implements SoapRequest {
   @override
-  Future<String> post({
+  Future<SoapResponse> post({
     required Map<String, dynamic> parameters,
     required String typeOfResponse,
     required String? typeOfResult,
     required String soapAction,
     required String serviceASMX,
   }) async {
-    late String responseInString;
+    late SoapResponse soapResponse;
 
     try {
       final soapHeaders = {
@@ -66,8 +66,11 @@ class SoapAdapter implements SoapRequest {
             if (parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
                     [typeOfResult] !=
                 null) {
-              responseInString = parsedJson["soap:Envelope"]["soap:Body"]
-                  [typeOfResponse][typeOfResult];
+              soapResponse = SoapResponse(
+                response: parsedJson["soap:Envelope"]["soap:Body"]
+                    [typeOfResponse][typeOfResult],
+                responseType: SoapResponseType.success,
+              );
             }
 
             if (_validateResultHasPatternNewDataSet(
@@ -75,28 +78,35 @@ class SoapAdapter implements SoapRequest {
               typeOfResponse: typeOfResponse,
               typeOfResult: typeOfResult,
             )) {
-              responseInString = parsedJson["soap:Envelope"]["soap:Body"]
-                      [typeOfResponse][typeOfResult]["diffgr:diffgram"]
-                  ["NewDataSet"];
+              soapResponse = SoapResponse(
+                response: parsedJson["soap:Envelope"]["soap:Body"]
+                        [typeOfResponse][typeOfResult]["diffgr:diffgram"]
+                    ["NewDataSet"],
+                responseType: SoapResponseType.success,
+              );
             }
           }
         } else {
           if (parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
               .toString()
               .contains("sucesso")) {
-            responseInString = parsedJson["soap:Envelope"]["soap:Body"]
-                [typeOfResponse]["status"][typeOfResult];
+            soapResponse = SoapResponse(
+              response: parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
+                  ["status"][typeOfResult],
+              responseType: SoapResponseType.success,
+            );
           } else {
-            debugPrint(parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
-                ["status"]);
-
-            throw DomainError.notFound;
+            soapResponse = SoapResponse(
+              response: parsedJson["soap:Envelope"]["soap:Body"][typeOfResponse]
+                  ["status"],
+              responseType: SoapResponseType.error,
+            );
           }
         }
       } else {
         throw DomainError.unexpected;
       }
-      return responseInString;
+      return soapResponse;
     } catch (e) {
       rethrow;
     }

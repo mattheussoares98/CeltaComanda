@@ -27,7 +27,7 @@ class RemoteAuthorizeCovenantLimitUseByCode
         throw DomainError.unexpected;
       }
 
-      final result = await soapAdapter.post(
+      final soapResponse = await soapAdapter.post(
         parameters: {
           "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,

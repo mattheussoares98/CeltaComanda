@@ -6,6 +6,9 @@ import 'package:mocktail/mocktail.dart';
 
 class AuthorizeCovenantLimitUseByCodeSpy extends Mock
     implements AuthorizeCovenantLimitUseByCode {
+  AuthorizeCovenantLimitUseByCodeSpy() {
+    mockAuthorize();
+  }
   When _mockAuthorizeCall() => when(() => this.authorize(
         crossIdentity: any(named: "crossIdentity"),
         covenantCode: any(named: "covenantCode"),

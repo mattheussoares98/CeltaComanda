@@ -265,6 +265,11 @@ void main() {
 
     test("Should call finish sale request concentrador with correct values",
         () async {
+      sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
@@ -280,6 +285,11 @@ void main() {
       ).called(1);
     });
     test("Should call load printed on success", () async {
+      sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
       await sut.updateCustomerAndCovenantAndFinishSaleRequestTemp(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},

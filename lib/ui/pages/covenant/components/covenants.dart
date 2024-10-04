@@ -142,31 +142,12 @@ class _CovenantsState extends State<Covenants> {
           onPressed: covenantPresenter.selectedCovenant
                   .containsKey(widget.customer.Code)
               ? () async {
-                  bool authorizationIsPendant = await covenantPresenter
-                      .getCovenantAuthorizationIsPendant();
-
-                  if (authorizationIsPendant) {
-                    notificationDialog(
-                        context: context,
-                        titleMessage: "Pendant helper",
-                        content: const Text(
-                            "Add helper with message indicating that authorization is pendant"),
-                        onPress: () async {
-                          await _finishSaleRequestByCovenant(
-                            covenantPresenter: covenantPresenter,
-                            homePresenter: homePresenter,
-                            printedProductsPresenter: printedProductsPresenter,
-                            context: context,
-                          );
-                        });
-                  } else {
-                    await _finishSaleRequestByCovenant(
-                      covenantPresenter: covenantPresenter,
-                      homePresenter: homePresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      context: context,
-                    );
-                  }
+                  await _finishSaleRequestByCovenant(
+                    covenantPresenter: covenantPresenter,
+                    homePresenter: homePresenter,
+                    printedProductsPresenter: printedProductsPresenter,
+                    context: context,
+                  );
                 }
               : null,
           child: Text(

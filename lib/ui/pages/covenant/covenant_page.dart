@@ -31,12 +31,21 @@ class _CovenantPageState extends State<CovenantPage>
     textController.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        await widget.covenantPresenter.updateSelectedCovenant(null, "");
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    widget.covenantPresenter.updateSelectedCovenant(null, "");
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        await widget.covenantPresenter.updateSelectedCovenant(null, "");
+      }
+    });
   }
 
   @override

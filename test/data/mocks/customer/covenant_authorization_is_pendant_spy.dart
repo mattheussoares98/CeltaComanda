@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -7,7 +8,6 @@ class CovenantAuthorizationIsPendantSpy extends Mock
     implements CovenantAuthorizationIsPendant {
   CovenantAuthorizationIsPendantSpy() {
     this.mockGet(true);
-    this.mockUpdate(true);
   }
 
   When _mockGetCall() => when(() => this.get());
@@ -24,7 +24,7 @@ class CovenantAuthorizationIsPendantSpy extends Mock
     this._mockUpdateCall().thenThrow(Exception());
   }
 
-  void mockUpdate(bool value) {
+  void mockUpdate(AuthorizationPendingModel model) {
     this._mockUpdateCall().thenAnswer((any) async => any);
   }
 }

@@ -1,4 +1,6 @@
-class AuthorizationPendingModel {
+import 'package:equatable/equatable.dart';
+
+class AuthorizationPendingModel extends Equatable {
   final String code;
   final bool isPending;
 
@@ -6,6 +8,9 @@ class AuthorizationPendingModel {
     required this.code,
     required this.isPending,
   });
+
+  @override
+  List<Object?> get props => [code, isPending];
 
   Map<String, dynamic> toJson() => {
         "code": code,

@@ -3,6 +3,7 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helperts.dart';
 
 import '../../database/database.dart';
+import '../../models/customer/customer.dart';
 
 class LocalCovenantAuthorizationIsPendant
     implements CovenantAuthorizationIsPendant {
@@ -22,12 +23,12 @@ class LocalCovenantAuthorizationIsPendant
   }
 
   @override
-  Future<void> update(bool newValue) async {
+  Future<void> update(AuthorizationPendingModel? model) async {
     try {
       await hiveStorage.delete(CacheKeys.covenantAuthorizationPendant.name);
       await hiveStorage.put(
         CacheKeys.covenantAuthorizationPendant.name,
-        newValue,
+        model?.toJson(),
       );
     } catch (e) {
       throw DomainError.unexpected;

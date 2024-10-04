@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -235,7 +236,7 @@ void main() {
         () async {
       await sut.getCustomer("any");
 
-      verify(() => covenantAuthorizationIsPendant.update(false)).called(1);
+      verify(() => covenantAuthorizationIsPendant.update(null)).called(1);
     });
   });
 
@@ -273,7 +274,7 @@ void main() {
       );
 
       verify(
-        () => covenantAuthorizationIsPendant.update(false),
+        () => covenantAuthorizationIsPendant.update(null),
       ).called(1);
     });
     test("Should emit correct values", () async {
@@ -286,7 +287,7 @@ void main() {
       );
 
       verify(
-        () => covenantAuthorizationIsPendant.update(false),
+        () => covenantAuthorizationIsPendant.update(null),
       ).called(1);
     });
 
@@ -434,6 +435,14 @@ void main() {
     test(
         "Should call covenantAuthorizationIsPendant.update with true value on success",
         () async {
+      final code = faker.randomGenerator.string(10);
+
+      covenantAuthorizationIsPendant.mockUpdate(
+        AuthorizationPendingModel(
+          code: code,
+          isPending: true,
+        ),
+      );
       await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
@@ -447,7 +456,12 @@ void main() {
       );
 
       verify(
-        () => covenantAuthorizationIsPendant.update(true),
+        () => covenantAuthorizationIsPendant.update(
+          AuthorizationPendingModel(
+            code: code,
+            isPending: true,
+          ),
+        ),
       ).called(1);
     });
     test(
@@ -466,7 +480,7 @@ void main() {
       );
 
       verify(
-        () => covenantAuthorizationIsPendant.update(false),
+        () => covenantAuthorizationIsPendant.update(null),
       ).called(2);
     });
     test(
@@ -487,7 +501,7 @@ void main() {
       );
 
       verify(
-        () => covenantAuthorizationIsPendant.update(false),
+        () => covenantAuthorizationIsPendant.update(null),
       ).called(1);
     });
   });

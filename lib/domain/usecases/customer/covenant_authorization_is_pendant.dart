@@ -1,4 +1,6 @@
+import '../../../data/models/models.dart';
+
 abstract class CovenantAuthorizationIsPendant {
   Future<bool> get();
-  Future<void> update(bool newValue);
+  Future<void> update(AuthorizationPendingModel? model);
 }

@@ -1,9 +1,8 @@
-import 'package:clean_celta_mobile/data/models/concentrator_finalization_model.dart';
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../infra/helpers/helperts.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -37,7 +36,7 @@ class GetxCovenantPresenter extends GetxController
     _selectedCovenant = {};
 
     try {
-      await covenantAuthorizationIsPendant.update(false);
+      await covenantAuthorizationIsPendant.update(null);
 
       int? valueInInt = int.tryParse(value);
 
@@ -122,7 +121,7 @@ class GetxCovenantPresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      await covenantAuthorizationIsPendant.update(false);
+      await covenantAuthorizationIsPendant.update(null);
 
       if (customer == null) {
         _selectedCovenant = {};
@@ -160,7 +159,12 @@ class GetxCovenantPresenter extends GetxController
       if (soapResponse.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(soapResponse.response);
       } else {
-        await covenantAuthorizationIsPendant.update(true);
+        await covenantAuthorizationIsPendant.update(
+          AuthorizationPendingModel(
+            code: soapResponse.response,
+            isPending: true,
+          ),
+        );
 
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
@@ -177,7 +181,7 @@ class GetxCovenantPresenter extends GetxController
             ),
           ],
         );
-        await covenantAuthorizationIsPendant.update(false);
+        await covenantAuthorizationIsPendant.update(null);
 
         await printedProductsPresenter.loadPrinted(homePresenter);
 

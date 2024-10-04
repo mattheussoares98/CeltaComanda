@@ -6,25 +6,25 @@ import 'package:mocktail/mocktail.dart';
 class CovenantAuthorizationIsPendantSpy extends Mock
     implements CovenantAuthorizationIsPendant {
   CovenantAuthorizationIsPendantSpy() {
-    mockGet(true);
-    mockUpdate(true);
+    this.mockGet(true);
+    this.mockUpdate(true);
   }
 
   When _mockGetCall() => when(() => this.get());
   void mockGetError() {
-    _mockGetCall().thenThrow(Exception());
+    this._mockGetCall().thenThrow(Exception());
   }
 
   void mockGet(bool value) {
-    _mockGetCall().thenAnswer((any) async => value);
+    this._mockGetCall().thenAnswer((any) async => value);
   }
 
-  When _mockUpdateCall(bool value) => when(() => this.update(value));
+  When _mockUpdateCall() => when(() => this.update(any()));
   void mockUpdateError() {
-    _mockUpdateCall(false).thenThrow(Exception());
+    this._mockUpdateCall().thenThrow(Exception());
   }
 
   void mockUpdate(bool value) {
-    _mockUpdateCall(value).thenAnswer((any) async => any);
+    this._mockUpdateCall().thenAnswer((any) async => any);
   }
 }

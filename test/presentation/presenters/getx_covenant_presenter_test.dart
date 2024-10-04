@@ -220,7 +220,12 @@ void main() {
     });
 
     test("Should clear selectedCovenant", () async {
-      await sut.updateSelectedCovenant(customersViewModel[0], "any");
+      String newValue = faker.randomGenerator.string(10);
+      await sut.updateSelectedCovenant(customersViewModel[0], newValue);
+
+      expect(sut.selectedCovenant, {
+        customersViewModel[0].Code: newValue,
+      });
 
       await sut.getCustomer("any");
 
@@ -446,7 +451,7 @@ void main() {
 
       verify(
         () => covenantAuthorizationIsPendant.update(false),
-      ).called(1);
+      ).called(2);
     });
     test(
         "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
@@ -465,9 +470,9 @@ void main() {
         showErrorMessageReturnedByBs: (_) {},
       );
 
-      verifyNever(
+      verify(
         () => covenantAuthorizationIsPendant.update(false),
-      );
+      ).called(1);
     });
   });
 

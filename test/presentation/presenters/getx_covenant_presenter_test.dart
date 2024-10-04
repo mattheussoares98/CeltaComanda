@@ -231,6 +231,12 @@ void main() {
 
       expect(sut.selectedCovenant, {});
     });
+    test("Should call covenantAuthorizationIsPendant.update with false value",
+        () async {
+      await sut.getCustomer("any");
+
+      verify(() => covenantAuthorizationIsPendant.update(false)).called(1);
+    });
   });
 
   group("Validate customer field", () {

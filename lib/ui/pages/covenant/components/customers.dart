@@ -5,7 +5,9 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class Customers extends StatefulWidget {
+  final TextEditingController textController;
   const Customers({
+    required this.textController,
     super.key,
   });
 
@@ -29,6 +31,7 @@ class _CustomersState extends State<Customers> {
               shrinkWrap: true,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
+                widget.textController.clear();
                 final customer = snapshot.data![index];
                 return Container(
                   margin: const EdgeInsets.only(top: 6),

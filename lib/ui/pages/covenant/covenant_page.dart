@@ -73,10 +73,8 @@ class _CovenantPageState extends State<CovenantPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GetCustomer(
-                    textController: textController,
-                  ),
-                  const Customers(),
+                  GetCustomer(textController: textController),
+                  Customers(textController: textController),
                 ],
               ),
             ),

@@ -164,7 +164,7 @@ class GetxCovenantPresenter extends GetxController
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumber!.toInt(),
-          finalizationIdentification: 7,
+          finalizations: null,
         );
         await covenantAuthorizationIsPendant.update(false);
 

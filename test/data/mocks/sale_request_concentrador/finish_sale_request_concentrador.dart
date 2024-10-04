@@ -13,9 +13,8 @@ class FinishSaleRequestConcentradorSpy extends Mock
   When _mockFinishCall() => when(() => this.finish(
         pdvNumber: any(named: "pdvNumber"),
         commandNumber: any(named: "commandNumber"),
-        finalizationIdentification: any(named: "finalizationIdentification"),
+        finalizations: any(named: "finalizations"),
       ));
   void _mockFinish() => this._mockFinishCall().thenAnswer((any) async => any);
-  void mockError() =>
-      this._mockFinishCall().thenThrow(DomainError.unexpected);
+  void mockError() => this._mockFinishCall().thenThrow(DomainError.unexpected);
 }

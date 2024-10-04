@@ -361,7 +361,7 @@ void main() {
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumberMock!.toInt(),
-          finalizationIdentification: 7,
+          finalizations: null,
         ),
       ).called(1);
     });
@@ -427,7 +427,7 @@ void main() {
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumberMock!.toInt(),
-          finalizationIdentification: 7,
+          finalizations: null,
         ),
       );
     });

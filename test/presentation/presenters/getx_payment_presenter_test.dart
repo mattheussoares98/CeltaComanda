@@ -418,7 +418,7 @@ void main() {
       verify(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
             commandNumber: homePresenter.commandNumberMock!.toInt(),
-            finalizationIdentification: 1,
+            finalizations: null,
           )).called(1);
     });
     test("Should update already paid to true and then to false in success",

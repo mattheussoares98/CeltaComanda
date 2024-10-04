@@ -116,7 +116,7 @@ class GetxPaymentPresenter extends GetxController
       await finishSaleRequestConcentrador.finish(
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),
-        finalizationIdentification: 1,
+        finalizations: null,
         //finalizations
         // Money = 1,
         // Check = 2,

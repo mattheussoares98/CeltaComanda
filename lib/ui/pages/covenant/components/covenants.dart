@@ -68,70 +68,80 @@ class _CovenantsState extends State<Covenants> {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
-        bool isPendant =
-            await covenantPresenter.getCovenantAuthorizationIsPendant();
+    return Column(
+      children: [
+        Row(
+          children: [
+            const Expanded(
+              child: Divider(
+                thickness: 0.2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                R.string.covenants,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: getStringSize(context),
+                ),
+              ),
+            ),
+            const Expanded(
+              child: Divider(
+                thickness: 0.2,
+              ),
+            ),
+          ],
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: widget.customer.Covenants.length,
+          itemBuilder: (context, index) {
+            final covenant = widget.customer.Covenants[index];
 
-        if (isPendant) {
-          notificationDialog(
-              context: context,
-              titleMessage: "Pendant helper",
-              content: const Text(
-                  "Add helper with message indicating that authorization is pendant"),
-              onPress: () async {
-                Navigator.of(context).pop();
-              });
-        } else {
-          Navigator.of(context).pop();
-        }
-      },
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Expanded(
-                child: Divider(
-                  thickness: 0.2,
+            return RadioListTile<String>(
+              dense: true,
+              visualDensity: VisualDensity.compact,
+              title: Text(
+                covenant.Name,
+                style: TextStyle(
+                  fontSize: getStringSize(context),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  R.string.covenants,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
-                  ),
-                ),
-              ),
-              const Expanded(
-                child: Divider(
-                  thickness: 0.2,
-                ),
-              ),
-            ],
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.customer.Covenants.length,
-            itemBuilder: (context, index) {
-              final covenant = widget.customer.Covenants[index];
+              value: covenant.Code.toString(),
+              groupValue:
+                  covenantPresenter.selectedCovenant[widget.customer.Code],
+              onChanged: (value) async {
+                bool authorizationIsPendant =
+                    await covenantPresenter.getCovenantAuthorizationIsPendant();
 
-              return RadioListTile<String>(
-                dense: true,
-                visualDensity: VisualDensity.compact,
-                title: Text(
-                  covenant.Name,
-                  style: TextStyle(
-                    fontSize: getStringSize(context),
-                  ),
-                ),
-                value: covenant.Code.toString(),
-                groupValue:
-                    covenantPresenter.selectedCovenant[widget.customer.Code],
-                onChanged: (value) async {
+                if (authorizationIsPendant) {
+                  notificationDialog(
+                      context: context,
+                      titleMessage: "Pendant helper",
+                      content: const Text(
+                          "Add helper with message indicating that authorization is pendant"),
+                      onPress: () async {
+                        await _updateSelectedCovenant(
+                          covenantPresenter: covenantPresenter,
+                          value: value,
+                        );
+                      });
+                } else {
+                  await _updateSelectedCovenant(
+                    covenantPresenter: covenantPresenter,
+                    value: value,
+                  );
+                }
+              },
+            );
+          },
+        ),
+        ElevatedButton(
+          onPressed: covenantPresenter.selectedCovenant
+                  .containsKey(widget.customer.Code)
+              ? () async {
                   bool authorizationIsPendant = await covenantPresenter
                       .getCovenantAuthorizationIsPendant();
 
@@ -142,59 +152,28 @@ class _CovenantsState extends State<Covenants> {
                         content: const Text(
                             "Add helper with message indicating that authorization is pendant"),
                         onPress: () async {
-                          await _updateSelectedCovenant(
+                          await _finishSaleRequestByCovenant(
                             covenantPresenter: covenantPresenter,
-                            value: value,
+                            homePresenter: homePresenter,
+                            printedProductsPresenter: printedProductsPresenter,
+                            context: context,
                           );
                         });
                   } else {
-                    await _updateSelectedCovenant(
+                    await _finishSaleRequestByCovenant(
                       covenantPresenter: covenantPresenter,
-                      value: value,
+                      homePresenter: homePresenter,
+                      printedProductsPresenter: printedProductsPresenter,
+                      context: context,
                     );
                   }
-                },
-              );
-            },
+                }
+              : null,
+          child: Text(
+            R.string.liquidateCommand.toUpperCase(),
           ),
-          ElevatedButton(
-            onPressed: covenantPresenter.selectedCovenant
-                    .containsKey(widget.customer.Code)
-                ? () async {
-                    bool authorizationIsPendant = await covenantPresenter
-                        .getCovenantAuthorizationIsPendant();
-
-                    if (authorizationIsPendant) {
-                      notificationDialog(
-                          context: context,
-                          titleMessage: "Pendant helper",
-                          content: const Text(
-                              "Add helper with message indicating that authorization is pendant"),
-                          onPress: () async {
-                            await _finishSaleRequestByCovenant(
-                              covenantPresenter: covenantPresenter,
-                              homePresenter: homePresenter,
-                              printedProductsPresenter:
-                                  printedProductsPresenter,
-                              context: context,
-                            );
-                          });
-                    } else {
-                      await _finishSaleRequestByCovenant(
-                        covenantPresenter: covenantPresenter,
-                        homePresenter: homePresenter,
-                        printedProductsPresenter: printedProductsPresenter,
-                        context: context,
-                      );
-                    }
-                  }
-                : null,
-            child: Text(
-              R.string.liquidateCommand.toUpperCase(),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

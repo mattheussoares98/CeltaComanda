@@ -33,6 +33,8 @@ class GetxCovenantPresenter extends GetxController
     mainError = null;
     isLoading = true;
     customersViewModel = null;
+    // _selectedCovenant = {};
+
     try {
       int? valueInInt = int.tryParse(value);
 

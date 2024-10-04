@@ -218,6 +218,14 @@ void main() {
 
       await sut.getCustomer("any");
     });
+
+    test("Should clear selectedCovenant", () async {
+      await sut.updateSelectedCovenant(customersViewModel[0], "any");
+
+      await sut.getCustomer("any");
+
+      expect(sut.selectedCovenant, {});
+    });
   });
 
   group("Validate customer field", () {

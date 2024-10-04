@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,27 @@ class GetCustomer extends StatelessWidget {
     required this.textController,
     super.key,
   });
+
+  Future<void> getCustomer(
+    CovenantPresenter covenantPresenter,
+    BuildContext context,
+  ) async {
+    bool authorizationIsPendant =
+        await covenantPresenter.getCovenantAuthorizationIsPendant();
+
+    if (authorizationIsPendant) {
+      notificationDialog(
+          context: context,
+          titleMessage: "Pendant helper",
+          content: const Text(
+              "Add helper with message indicating that authorization is pendant"),
+          onPress: () async {
+            await covenantPresenter.getCustomer(textController.text);
+          });
+    } else {
+      await covenantPresenter.getCustomer(textController.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +61,7 @@ class GetCustomer extends StatelessWidget {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: textController,
                     onFieldSubmitted: (_) async {
-                      await covenantPresenter.getCustomer(textController.text);
+                      await getCustomer(covenantPresenter, context);
                     },
                     onChanged: (value) => covenantPresenter
                         .validateCustomerField(textController.text),
@@ -46,7 +69,7 @@ class GetCustomer extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () async {
-                    await covenantPresenter.getCustomer(textController.text);
+                    await getCustomer(covenantPresenter, context);
                   },
                   child: Text(R.string.getCustomer),
                 )

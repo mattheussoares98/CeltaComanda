@@ -37,7 +37,7 @@ class GetxCovenantPresenter extends GetxController
 
     try {
       await covenantAuthorizationIsPendant.update(false);
-      
+
       int? valueInInt = int.tryParse(value);
 
       List<CustomerEntity>? result;
@@ -115,7 +115,7 @@ class GetxCovenantPresenter extends GetxController
 
   @override
   Future<void> updateSelectedCovenant(
-    CustomerViewModel customer,
+    CustomerViewModel? customer,
     String? covenantCode,
   ) async {
     isLoading = true;
@@ -123,9 +123,13 @@ class GetxCovenantPresenter extends GetxController
     try {
       await covenantAuthorizationIsPendant.update(false);
 
-      _selectedCovenant = {
-        customer.Code: covenantCode,
-      };
+      if (customer == null) {
+        _selectedCovenant = {};
+      } else {
+        _selectedCovenant = {
+          customer.Code: covenantCode,
+        };
+      }
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

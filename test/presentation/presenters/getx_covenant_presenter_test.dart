@@ -302,6 +302,16 @@ void main() {
 
       expect(sut.selectedCovenant, {});
     });
+
+    test("Should clear selectedCovenant when customer is null", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+      await sut.updateSelectedCovenant(null, faker.randomGenerator.string(10));
+
+      expect(sut.selectedCovenant, {});
+    });
   });
 
   group("Finish sale request by covenant", () {

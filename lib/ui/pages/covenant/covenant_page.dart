@@ -25,17 +25,13 @@ class _CovenantPageState extends State<CovenantPage>
   StreamSubscription? mainErrorSubscription;
 
   @override
-  void dispose() {
+  void dispose() async {
     super.dispose();
 
     textController.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (mounted) {
-        await widget.covenantPresenter.updateSelectedCovenant(null, "");
-      }
-    });
+    await widget.covenantPresenter.updateSelectedCovenant(null, "");
   }
 
   @override

@@ -365,6 +365,65 @@ void main() {
         ),
       );
     });
+    test(
+        "Should call covenantAuthorizationIsPendant.update with true value on success",
+        () async {
+      sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+      );
+
+      verify(
+        () => covenantAuthorizationIsPendant.update(true),
+      ).called(1);
+    });
+    test(
+        "Should call covenantAuthorizationIsPendant.update with false value on success",
+        () async {
+      sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+      );
+
+      verify(
+        () => covenantAuthorizationIsPendant.update(false),
+      ).called(1);
+    });
+    test(
+        "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
+        () async {
+      sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      finishSaleRequestConcentrador.mockError();
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+      );
+
+      verifyNever(
+        () => covenantAuthorizationIsPendant.update(false),
+      );
+    });
   });
 
   group("Get covenant authorization is pendant", () {

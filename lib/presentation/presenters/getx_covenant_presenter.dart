@@ -139,11 +139,14 @@ class GetxCovenantPresenter extends GetxController
       if (soapResponse.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(soapResponse.response);
       } else {
+        await covenantAuthorizationIsPendant.update(true);
+
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumber!.toInt(),
           finalizationIdentification: 7,
         );
+        await covenantAuthorizationIsPendant.update(false);
 
         await printedProductsPresenter.loadPrinted(homePresenter);
 

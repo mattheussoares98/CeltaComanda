@@ -16,11 +16,16 @@ class CovenantPresenterSpy extends Mock implements CovenantPresenter {
   Map<String, String?> selectedCovenantController = {};
 
   CovenantPresenterSpy() {
-    when(() => this.mainErrorStream).thenReturn(mainErrorController.stream);
-    when(() => this.isLoadingStream).thenReturn(isLoadingController.stream);
+    when(() => this.mainErrorStream)
+        .thenAnswer((any) => mainErrorController.stream);
+    when(() => this.isLoadingStream)
+        .thenAnswer((any) => isLoadingController.stream);
     when(() => this.customerErrorStream)
-        .thenReturn(customerErrorStreamController.stream);
-    when(() => this.selectedCovenant).thenReturn(selectedCovenantController);
+        .thenAnswer((any) => customerErrorStreamController.stream);
+    when(() => this.customersViewModelStream)
+        .thenAnswer((any) => customersViewModelStreamController.stream);
+    when(() => this.selectedCovenant)
+        .thenAnswer((any) => selectedCovenantController);
 
     when(() => this.getCustomer(any())).thenAnswer((any) async => any);
     when(() => this.validateCustomerField(any())).thenAnswer((any) => any);

@@ -34,6 +34,12 @@ class _CovenantPageState extends State<CovenantPage>
   }
 
   @override
+  void initState() {
+    super.initState();
+    widget.covenantPresenter.updateSelectedCovenant(null, "");
+  }
+
+  @override
   Widget build(BuildContext context) {
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();

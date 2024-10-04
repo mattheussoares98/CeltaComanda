@@ -48,6 +48,10 @@ Widget makePage(
       name: PageRoutes.insertProducts,
       page: () => const InsertProductsPage(),
     ),
+    GetPage(
+      name: PageRoutes.covenant,
+      page: () => CovenantPage(covenantPresenter: CovenantPresenterSpy()),
+    ),
   ];
 
   final index = allPages.indexWhere((element) => element.name == path);
@@ -86,6 +90,9 @@ Widget makePage(
       ),
       ListenableProvider<ExpansibleGroupFromProductPresenter>(
         create: (_) => ExpansibleGroupFromProductPresenterSpy(),
+      ),
+      ListenableProvider<CovenantPresenter>(
+        create: (_) => CovenantPresenterSpy(),
       ),
     ],
     child: GetMaterialApp(

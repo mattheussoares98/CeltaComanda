@@ -21,7 +21,7 @@ class CovenantAuthorizationIsPendantSpy extends Mock
 
   When _mockUpdateCall(bool value) => when(() => this.update(value));
   void mockUpdateError() {
-    _mockUpdateCall(any()).thenThrow(Exception());
+    _mockUpdateCall(false).thenThrow(Exception());
   }
 
   void mockUpdate(bool value) {

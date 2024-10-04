@@ -238,13 +238,50 @@ void main() {
   });
 
   group("Update selected covenant", () {
-    test("Should update selected covenant correctly", () {
+    test("Should update selected covenant correctly", () async {
       String newValue = faker.randomGenerator.string(10);
-      sut.updateSelectedCovenant(customersViewModel[0], newValue);
+      await sut.updateSelectedCovenant(customersViewModel[0], newValue);
 
       expect(sut.selectedCovenant, {
         customersViewModel[0].Code: newValue,
       });
+    });
+    test("Should call covenantAuthorizationIsPendant.update with false value",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      verify(
+        () => covenantAuthorizationIsPendant.update(false),
+      ).called(1);
+    });
+    test("Should emit correct values", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      verify(
+        () => covenantAuthorizationIsPendant.update(false),
+      ).called(1);
+    });
+
+    test(
+        "Should not update selectedCovenant when covenantAuthorizationIsPendant throws",
+        () async {
+      covenantAuthorizationIsPendant.mockUpdateError();
+
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      expect(sut.selectedCovenant, {});
     });
   });
 
@@ -279,7 +316,7 @@ void main() {
 
     test("Should call finish sale request concentrador with correct values",
         () async {
-      sut.updateSelectedCovenant(
+      await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -300,7 +337,7 @@ void main() {
       ).called(1);
     });
     test("Should call load printed on success", () async {
-      sut.updateSelectedCovenant(
+      await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -318,7 +355,7 @@ void main() {
     });
     test("Should call authorize covenant limit use by code", () async {
       String covenantCode = faker.randomGenerator.integer(100).toString();
-      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
@@ -342,7 +379,7 @@ void main() {
         "Should not finish sale request concentrador when soap response returns error type",
         () async {
       String covenantCode = faker.randomGenerator.integer(100).toString();
-      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       covenantLimit
           .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(SoapResponse(
@@ -368,7 +405,7 @@ void main() {
     test(
         "Should call covenantAuthorizationIsPendant.update with true value on success",
         () async {
-      sut.updateSelectedCovenant(
+      await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -387,7 +424,7 @@ void main() {
     test(
         "Should call covenantAuthorizationIsPendant.update with false value on success",
         () async {
-      sut.updateSelectedCovenant(
+      await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -406,7 +443,7 @@ void main() {
     test(
         "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
         () async {
-      sut.updateSelectedCovenant(
+      await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );

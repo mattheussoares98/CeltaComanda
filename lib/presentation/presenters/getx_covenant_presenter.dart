@@ -110,11 +110,23 @@ class GetxCovenantPresenter extends GetxController
   Map<String, String?> get selectedCovenant => _selectedCovenant;
 
   @override
-  void updateSelectedCovenant(
-      CustomerViewModel customer, String? covenantCode) {
-    _selectedCovenant = {
-      customer.Code: covenantCode,
-    };
+  Future<void> updateSelectedCovenant(
+    CustomerViewModel customer,
+    String? covenantCode,
+  ) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      await covenantAuthorizationIsPendant.update(false);
+
+      _selectedCovenant = {
+        customer.Code: covenantCode,
+      };
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override
@@ -140,7 +152,7 @@ class GetxCovenantPresenter extends GetxController
         showErrorMessageReturnedByBs(soapResponse.response);
       } else {
         await covenantAuthorizationIsPendant.update(true);
-
+        throw Exception();
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumber!.toInt(),

@@ -13,7 +13,7 @@ class HttpAdapter implements HttpClient {
   Future<dynamic> request({
     required String url,
     required String method,
-    Map? body,
+    dynamic body,
     Map? headers,
   }) async {
     final defaultHeaders = headers?.cast<String, String>() ?? {}

@@ -23,15 +23,18 @@ class RemoteFinishSaleRequestConcentrador
       String commandNumberWithThreeNumbers =
           commandNumber.toString().padLeft(3, "0");
 
-      String url =
-          '${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&pdvnumber=$pdvNumberWithThreeNumbers&personalizedCode=$commandNumberWithThreeNumbers';
+      List<Map<String, dynamic>?> body = [];
+
       if (finalizations != null) {
-        url = "$url&finalizations=$finalizations";
+        body = finalizations.map((e) => e.toJson()).toList();
       }
+
       final response = await httpAdapter.request(
-        url: url,
+        url:
+            '${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&pdvnumber=$pdvNumberWithThreeNumbers&personalizedCode=$commandNumberWithThreeNumbers',
         method: "put",
         headers: headers,
+        body: body.isEmpty ? null : body,
       );
       if (response == null) {
         throw Error();

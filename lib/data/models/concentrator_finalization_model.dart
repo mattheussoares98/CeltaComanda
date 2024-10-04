@@ -48,6 +48,28 @@ class ConcentratorFinalizationModel {
     this.TEFModalityDescription,
     this.TEFPlanCardCode,
   });
+
+  Map<String, dynamic> toJson() => {
+        "FinalizationId": FinalizationId,
+        "Value": Value,
+        "ValueLiquid": ValueLiquid,
+        "PortionQuantity": PortionQuantity,
+        "SaleMovementFinalizationId": SaleMovementFinalizationId,
+        "PayBackValue": PayBackValue,
+        "AuthorizationCode": AuthorizationCode,
+        "FinalizationPdvId": FinalizationPdvId,
+        "TEFNSUSitef": TEFNSUSitef,
+        "TEFNSUHost": TEFNSUHost,
+        "TEFAuthorizationCode": TEFAuthorizationCode,
+        "TEFBinCode": TEFBinCode,
+        "TEFCardLastNumbers": TEFCardLastNumbers,
+        "TEFNetWorkCode": TEFNetWorkCode,
+        "TEFFlagCode": TEFFlagCode,
+        "TEFFlagDescription": TEFFlagDescription,
+        "TEFModalityPaymentCode": TEFModalityPaymentCode,
+        "TEFModalityDescription": TEFModalityDescription,
+        "TEFPlanCardCode": TEFPlanCardCode,
+      };
 }
 
 enum FinalizationIdentification {

@@ -6,7 +6,7 @@ class ConcentratorFinalizationModel {
 //  final IList<ModelSaleMovementFinalizationCheck> Checks ;
 //  final IList<ModelSaleMovementFinalizationPortion> Portions ;
 
-  final FinalizationIdentification FinalizationId;
+  final int FinalizationId;
   final int PortionQuantity;
   final double Value;
   final double ValueLiquid;
@@ -86,7 +86,7 @@ enum FinalizationIdentification {
 }
 
 extension FinalizationIdentificationExtension on FinalizationIdentification {
-  int get description {
+  int get finalizationId {
     switch (this) {
       case FinalizationIdentification.money:
         return 1;

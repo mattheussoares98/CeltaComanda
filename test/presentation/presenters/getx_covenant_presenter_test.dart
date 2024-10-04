@@ -398,7 +398,7 @@ void main() {
           crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
-          customerCode: customersViewModel[0].Code.toInt(),
+          customerCode: customersViewModel[0].Code!.toInt(),
           value:
               printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
         ),

@@ -4,19 +4,19 @@ import '../../../domain/entities/entities.dart';
 import 'customer.dart';
 
 class CustomerModel {
-  final int Code;
-  final String PersonalizedCode;
-  final String Name;
-  final String ReducedName;
-  final String CpfCnpjNumber;
-  final String RegistrationNumber;
-  final String DateOfBirth;
-  final String SexType;
-  final String PersonType;
-  final List<String> Emails;
-  final List<TelephoneModel> Telephones;
-  final List<AddressModel> Addresses;
-  final List<CovenantModel> Covenants;
+  final int? Code;
+  final String? PersonalizedCode;
+  final String? Name;
+  final String? ReducedName;
+  final String? CpfCnpjNumber;
+  final String? RegistrationNumber;
+  final String? DateOfBirth;
+  final String? SexType;
+  final String? PersonType;
+  final List<String>? Emails;
+  final List<TelephoneModel>? Telephones;
+  final List<AddressModel>? Addresses;
+  final List<CovenantModel>? Covenants;
 
   const CustomerModel({
     required this.Code,
@@ -52,7 +52,7 @@ class CustomerModel {
             .map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList(),
         Covenants: json["Covenants"]
-            .map<CovenantModel>((e) => CovenantModel.fromJson(e))
+            ?.map<CovenantModel>((e) => CovenantModel.fromJson(e))
             .toList(),
       );
 
@@ -83,8 +83,8 @@ class CustomerModel {
         SexType: SexType,
         PersonType: PersonType,
         Emails: Emails,
-        Telephones: Telephones.map((e) => e.toEntity()).toList(),
-        Addresses: Addresses.map((e) => e.toEntity()).toList(),
-        Covenants: Covenants.map((e) => e.toEntity()).toList(),
+        Telephones: Telephones?.map((e) => e.toEntity()).toList(),
+        Addresses: Addresses?.map((e) => e.toEntity()).toList(),
+        Covenants: Covenants?.map((e) => e.toEntity()).toList(),
       );
 }

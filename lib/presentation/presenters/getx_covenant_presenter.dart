@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/concentrator_finalization_model.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 
 import '../../domain/entities/entities.dart';
@@ -127,7 +128,7 @@ class GetxCovenantPresenter extends GetxController
         _selectedCovenant = {};
       } else {
         _selectedCovenant = {
-          customer.Code: covenantCode,
+          customer.Code!: covenantCode,
         };
       }
     } catch (e) {
@@ -164,7 +165,17 @@ class GetxCovenantPresenter extends GetxController
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumber!.toInt(),
-          finalizations: null,
+          finalizations: [
+            ConcentratorFinalizationModel(
+              FinalizationId:
+                  FinalizationIdentification.covenant.finalizationId,
+              Value: printedProductsPresenter.printedProducts!.TotalLiquid
+                  .toDouble(),
+              ValueLiquid: printedProductsPresenter.printedProducts!.TotalLiquid
+                  .toDouble(),
+              PortionQuantity: 1,
+            ),
+          ],
         );
         await covenantAuthorizationIsPendant.update(false);
 

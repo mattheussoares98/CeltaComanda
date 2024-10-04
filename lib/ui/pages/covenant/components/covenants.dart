@@ -96,15 +96,15 @@ class _CovenantsState extends State<Covenants> {
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: widget.customer.Covenants.length,
+          itemCount: widget.customer.Covenants?.length,
           itemBuilder: (context, index) {
-            final covenant = widget.customer.Covenants[index];
+            final covenant = widget.customer.Covenants?[index];
 
             return RadioListTile<String>(
               dense: true,
               visualDensity: VisualDensity.compact,
               title: Text(
-                covenant.Name,
+                covenant!.Name,
                 style: TextStyle(
                   fontSize: getStringSize(context),
                 ),

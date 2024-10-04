@@ -6,19 +6,19 @@ import '../../../data/models/customer/customer.dart';
 import '../../../domain/entities/entities.dart';
 
 class CustomerViewModel extends Equatable {
-  final String Code;
-  final String PersonalizedCode;
-  final String Name;
-  final String ReducedName;
-  final String CpfCnpjNumber;
-  final String RegistrationNumber;
-  final String DateOfBirth;
-  final String SexType;
-  final String PersonType;
-  final List<String> Emails;
-  final List<TelephoneModel> Telephones;
-  final List<AddressModel> Addresses;
-  final List<CovenantModel> Covenants;
+  final String? Code;
+  final String? PersonalizedCode;
+  final String? Name;
+  final String? ReducedName;
+  final String? CpfCnpjNumber;
+  final String? RegistrationNumber;
+  final String? DateOfBirth;
+  final String? SexType;
+  final String? PersonType;
+  final List<String>? Emails;
+  final List<TelephoneModel>? Telephones;
+  final List<AddressModel>? Addresses;
+  final List<CovenantModel>? Covenants;
 
   const CustomerViewModel({
     required this.Code,
@@ -102,11 +102,11 @@ class CustomerViewModel extends Equatable {
         SexType: entity.SexType,
         PersonType: entity.PersonType,
         Emails: entity.Emails,
-        Telephones:
-            entity.Telephones.map((e) => TelephoneModel.fromEntity(e)).toList(),
+        Telephones: entity.Telephones?.map((e) => TelephoneModel.fromEntity(e))
+            .toList(),
         Addresses:
-            entity.Addresses.map((e) => AddressModel.fromEntity(e)).toList(),
+            entity.Addresses?.map((e) => AddressModel.fromEntity(e)).toList(),
         Covenants:
-            entity.Covenants.map((e) => CovenantModel.fromEntity(e)).toList(),
+            entity.Covenants?.map((e) => CovenantModel.fromEntity(e)).toList(),
       );
 }

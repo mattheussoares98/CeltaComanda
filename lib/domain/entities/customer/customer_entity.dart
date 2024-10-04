@@ -5,19 +5,19 @@ import 'package:equatable/equatable.dart';
 import 'customer.dart';
 
 class CustomerEntity extends Equatable {
-  final int Code;
-  final String PersonalizedCode;
-  final String Name;
-  final String ReducedName;
-  final String CpfCnpjNumber;
-  final String RegistrationNumber;
-  final String DateOfBirth;
-  final String SexType;
-  final String PersonType;
-  final List<String> Emails;
-  final List<TelephoneEntity> Telephones;
-  final List<AddressEntity> Addresses;
-  final List<CovenantEntity> Covenants;
+  final int? Code;
+  final String? PersonalizedCode;
+  final String? Name;
+  final String? ReducedName;
+  final String? CpfCnpjNumber;
+  final String? RegistrationNumber;
+  final String? DateOfBirth;
+  final String? SexType;
+  final String? PersonType;
+  final List<String>? Emails;
+  final List<TelephoneEntity>? Telephones;
+  final List<AddressEntity>? Addresses;
+  final List<CovenantEntity>? Covenants;
 
   const CustomerEntity({
     required this.Code,

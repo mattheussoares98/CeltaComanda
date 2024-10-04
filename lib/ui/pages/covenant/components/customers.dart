@@ -31,8 +31,10 @@ class _CustomersState extends State<Customers> {
               shrinkWrap: true,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                widget.textController.clear();
                 final customer = snapshot.data![index];
+                Future.delayed(Duration.zero, () {
+                  widget.textController.clear();
+                });
                 return Container(
                   margin: const EdgeInsets.only(top: 6),
                   padding: const EdgeInsets.all(5),
@@ -56,14 +58,14 @@ class _CustomersState extends State<Customers> {
                                   fontSize: getStringSize(context),
                                 ),
                               ),
-                              if (customer.CpfCnpjNumber.length >= 11)
+                              if (customer.CpfCnpjNumber!.length >= 11)
                                 Text(
-                                  'CPF/CNPJ: ${customer.CpfCnpjNumber.substring(0, 4)}...${customer.CpfCnpjNumber.substring(customer.CpfCnpjNumber.length - 4)}',
+                                  'CPF/CNPJ: ${customer.CpfCnpjNumber!.substring(0, 4)}...${customer.CpfCnpjNumber!.substring(customer.CpfCnpjNumber!.length - 4)}',
                                   style: TextStyle(
                                     fontSize: getStringSize(context),
                                   ),
                                 ),
-                              if (customer.CpfCnpjNumber.length < 11)
+                              if (customer.CpfCnpjNumber!.length < 11)
                                 Text(
                                   'CPF/CNPJ: ${customer.CpfCnpjNumber}',
                                   style: TextStyle(
@@ -74,7 +76,7 @@ class _CustomersState extends State<Customers> {
                           ),
                           Expanded(
                             child: Text(
-                              customer.Name,
+                              customer.Name!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: getStringSize(context),
@@ -91,7 +93,8 @@ class _CustomersState extends State<Customers> {
                               fontSize: getStringSize(context),
                             ),
                           ),
-                          if (customer.Covenants.isEmpty)
+                          if (customer.Covenants == null ||
+                              customer.Covenants!.isEmpty)
                             Expanded(
                               child: Text(
                                 R.string.withoutCovenant.toUpperCase(),
@@ -105,7 +108,8 @@ class _CustomersState extends State<Customers> {
                             ),
                         ],
                       ),
-                      if (customer.Covenants.isNotEmpty)
+                      if (customer.Covenants != null &&
+                          customer.Covenants!.isNotEmpty)
                         Covenants(
                           customer: customer,
                           callSetState: () {

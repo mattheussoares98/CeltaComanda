@@ -281,6 +281,7 @@ void main() {
         subgroups: const [],
       );
       final groups = [
+        avaliationGroup,
         detachGroup,
       ];
 
@@ -295,6 +296,56 @@ void main() {
             [],
             [
               {detachGroup: []},
+              {avaliationGroup: []},
+            ]
+          ]));
+
+      await sut.getGroupsAndProducts(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+    });
+    test('Should put "promotion" in second group list', () async {
+      final avaliationGroup = ExpansibleGroupsViewModel(
+        Name: R.string.avaliate,
+        ExpansibleGroupId: "0",
+        ExpansibleGroupType: "0",
+        OrderClassification: "0",
+        subgroups: const [],
+      );
+      final promotionGroup = ExpansibleGroupsViewModel(
+        Name: R.string.promotionWithoutPoints,
+        ExpansibleGroupId: "0",
+        ExpansibleGroupType: "0",
+        OrderClassification: "0",
+        subgroups: const [],
+      );
+      final detachGroup = ExpansibleGroupsViewModel(
+        Name: R.string.detach.toLowerCase(),
+        ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+        ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
+        OrderClassification: faker.randomGenerator.integer(10).toString(),
+        subgroups: const [],
+      );
+      final groups = [
+        promotionGroup,
+        avaliationGroup,
+        detachGroup,
+      ];
+
+      loadExpansibleGroups.mockLoadExpansibleGroups(
+        groups.map((element) => element.toEntity()).toList(),
+      );
+      loadProducts.mockLoadProducts([]);
+
+      expectLater(
+          sut.menuStream,
+          emitsInOrder([
+            [],
+            [
+              {detachGroup: []},
+              {promotionGroup: []},
               {avaliationGroup: []},
             ]
           ]));

@@ -192,6 +192,12 @@ class GetxCovenantPresenter extends GetxController
                   .toDouble(),
               PortionQuantity: 1,
               AuthorizationCode: soapResponse.response,
+              AuthorizationType: 2,
+              //Customer = 1,
+              //Convene = 2,
+              //DevolutionCredit = 3,
+              //FinancialCredit = 4,
+              //FidelityCredit = 5
             ),
           ],
         );

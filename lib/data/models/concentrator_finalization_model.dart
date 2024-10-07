@@ -4,10 +4,10 @@ import 'package:equatable/equatable.dart';
 
 class ConcentratorFinalizationModel extends Equatable {
 //  final ModelSaleMovement SaleMovement ;
-//  final FinancialAuthorizationType? AuthorizationType ;
 //  final IList<ModelSaleMovementFinalizationCheck> Checks ;
 //  final IList<ModelSaleMovementFinalizationPortion> Portions ;
 
+  final int? AuthorizationType;
   final int FinalizationId;
   final int PortionQuantity;
   final double Value;
@@ -34,6 +34,7 @@ class ConcentratorFinalizationModel extends Equatable {
     required this.Value,
     required this.ValueLiquid,
     required this.PortionQuantity,
+    this.AuthorizationType,
     this.SaleMovementFinalizationId,
     this.PayBackValue,
     this.AuthorizationCode,
@@ -54,6 +55,7 @@ class ConcentratorFinalizationModel extends Equatable {
   @override
   List<Object?> get props => [
         FinalizationId,
+        AuthorizationType,
         Value,
         ValueLiquid,
         PortionQuantity,
@@ -76,6 +78,7 @@ class ConcentratorFinalizationModel extends Equatable {
 
   Map<String, dynamic> toJson() => {
         "FinalizationId": FinalizationId,
+        "AuthorizationType": AuthorizationType,
         "Value": Value,
         "ValueLiquid": ValueLiquid,
         "PortionQuantity": PortionQuantity,

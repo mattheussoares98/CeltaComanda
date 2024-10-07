@@ -3,6 +3,7 @@
 import './translation.dart';
 
 class EnUs implements Translation {
+  String get msgAuthorizationIsPendant => "Pendant authotization";
   String get msgBarcodeNotRead => 'Barcode not read';
   String get msgBlockedCommand => 'Command blocked';
   String get msgEmailInUse => 'Email already in use';
@@ -44,6 +45,8 @@ class EnUs implements Translation {
       'One error was ocurred in the payment';
   String get msgPaymentEmpty => 'The command has no open values';
   String get msgPaymentFailed => 'Payment failed';
+  String get msgPendantAuthorizationNotification =>
+      "The authorization is pending of confirmation. If you do this action, the authorization will continue to affect the customer's balance. The ideal is to try to liquidate the command again. Did you want do this action and don't cancel the possibility of liquidation?";
   String get msgProductNotFound => 'The product was not found';
   String get msgRequestSentSuccessfully => 'The request was sent successfully';
   String get msgRequiredField => 'Required field';

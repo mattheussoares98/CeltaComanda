@@ -117,9 +117,9 @@ class _CovenantsState extends State<Covenants> {
                     true) {
                   notificationDialog(
                       context: context,
-                      titleMessage: "Pendant helper",
-                      content: const Text(
-                          "Add helper with message indicating that authorization is pendant"),
+                      titleMessage: R.string.msgAuthorizationIsPendant,
+                      content:
+                          Text(R.string.msgPendantAuthorizationNotification),
                       onPress: () async {
                         await _updateSelectedCovenant(
                           covenantPresenter: covenantPresenter,

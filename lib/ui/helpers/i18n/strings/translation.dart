@@ -1,4 +1,5 @@
 abstract class Translation {
+  String get msgAuthorizationIsPendant;
   String get msgBarcodeNotRead;
   String get msgBlockedCommand;
   String get msgEmailInUse;
@@ -30,6 +31,7 @@ abstract class Translation {
   String get msgPaymentDeclined;
   String get msgPaymentUnexpectedError;
   String get msgPaymentFailed;
+  String get msgPendantAuthorizationNotification;
   String get msgProductNotFound;
   String get msgReleasesCommand;
   String get msgRequestSentSuccessfully;

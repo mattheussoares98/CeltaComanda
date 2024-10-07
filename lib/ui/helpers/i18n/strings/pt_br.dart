@@ -3,6 +3,7 @@
 import './translation.dart';
 
 class PtBr implements Translation {
+  String get msgAuthorizationIsPendant => "Autorização pendente";
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgBlockedCommand => 'Comanda bloqueada';
   String get msgEmailInUse => 'O email já está em uso.';
@@ -47,6 +48,8 @@ class PtBr implements Translation {
       'Ocorreu algum erro durante a finalização do pagamento';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';
   String get msgPaymentFailed => 'Falha ao efetuar o pagamento';
+  String get msgPendantAuthorizationNotification =>
+      'A autorização está pendente para confirmar. Se você fizer essa ação, o saldo do cliente continuará comprometido pois já foi gerado uma pendência do saldo dele. O ideal é tentar liquidar a comanda novamente. Deseja realmente fazer essa ação e cancelar a possibilidade de liquidação?';
   String get msgProductNotFound => 'O produto não foi encontrado';
   String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';

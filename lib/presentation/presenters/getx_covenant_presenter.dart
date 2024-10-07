@@ -168,6 +168,13 @@ class GetxCovenantPresenter extends GetxController
           ),
         );
 
+        await updateSaleRequest.update(
+          SaleRequestModel(
+            CustomerCode: _selectedCovenant.keys.first.toInt(),
+            CovenantCode: _selectedCovenant.values.first!.toInt(),
+          ),
+        );
+
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumber!.toInt(),

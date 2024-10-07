@@ -99,6 +99,9 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(
+      EntityFactory.makeSaleRequestModel(covenantCode: 1, customerCode: 1),
+    );
   });
 
   group("Get customer", () {
@@ -512,6 +515,27 @@ void main() {
       verify(
         () => covenantAuthorizationIsPendant.update(null),
       ).called(1);
+    });
+
+    test(
+        "Should call updateSaleRequest with correct customerCode and covenantCode",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+      );
+
+      verify(() => updateSaleRequest.update(SaleRequestModel(
+            CovenantCode: sut.selectedCovenant.values.first!.toInt(),
+            CustomerCode: sut.selectedCovenant.keys.first.toInt(),
+          ))).called(1);
     });
   });
 

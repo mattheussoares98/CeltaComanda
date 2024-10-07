@@ -1,9 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
-class SaleRequestModel {
+class SaleRequestModel extends Equatable {
   final List<SaleRequestProductModel>? Products;
   final String? DateOfCreation;
   final String? DateHourOfCreation;
@@ -23,26 +25,48 @@ class SaleRequestModel {
   final int? DeliveryControl;
   final int? SaleRequestId;
 
-  SaleRequestModel({
-    required this.Products,
-    required this.DateOfCreation,
-    required this.DateHourOfCreation,
-    required this.RequestType,
-    required this.SellerCode,
-    required this.FlagStatus,
-    required this.Comments,
-    required this.PersonalizedCode,
-    required this.IsCancelled,
-    required this.IsUsing,
-    required this.TotalLiquid,
+  const SaleRequestModel({
+    this.Products,
+    this.DateOfCreation,
+    this.DateHourOfCreation,
+    this.RequestType,
+    this.SellerCode,
+    this.FlagStatus,
+    this.Comments,
+    this.PersonalizedCode,
+    this.IsCancelled,
+    this.IsUsing,
+    this.TotalLiquid,
     required this.CovenantCode,
     required this.CustomerCode,
-    required this.EnterpriseId,
-    required this.Peoples,
-    required this.FlagOrigin,
-    required this.DeliveryControl,
-    required this.SaleRequestId,
+    this.EnterpriseId,
+    this.Peoples,
+    this.FlagOrigin,
+    this.DeliveryControl,
+    this.SaleRequestId,
   });
+
+  @override
+  List<Object?> get props => [
+        Products,
+        DateOfCreation,
+        DateHourOfCreation,
+        RequestType,
+        SellerCode,
+        FlagStatus,
+        Comments,
+        PersonalizedCode,
+        IsCancelled,
+        IsUsing,
+        TotalLiquid,
+        CovenantCode,
+        CustomerCode,
+        EnterpriseId,
+        Peoples,
+        FlagOrigin,
+        DeliveryControl,
+        SaleRequestId,
+      ];
 
   factory SaleRequestModel.fromJson(Map data) {
     if (!data.keys.toSet().containsAll([

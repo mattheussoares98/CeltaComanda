@@ -1086,4 +1086,31 @@ class EntityFactory {
         Quantity: faker.randomGenerator.decimal(),
         TotalLiquid: faker.randomGenerator.decimal(),
       );
+
+  static makeSaleRequestModel({
+    required int covenantCode,
+    required int customerCode,
+  }) =>
+      SaleRequestModel(
+        CovenantCode: covenantCode,
+        CustomerCode: customerCode,
+        Products: [
+          SaleRequestProductModel.fromEntity(makeSaleRequestProductEntity()),
+        ],
+        DateOfCreation: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        RequestType: faker.randomGenerator.string(10),
+        SellerCode: faker.randomGenerator.string(10),
+        FlagStatus: faker.randomGenerator.string(10),
+        Comments: faker.randomGenerator.string(10),
+        PersonalizedCode: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.boolean(),
+        IsUsing: faker.randomGenerator.boolean(),
+        TotalLiquid: faker.randomGenerator.decimal(),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        Peoples: faker.randomGenerator.integer(100),
+        FlagOrigin: faker.randomGenerator.integer(100),
+        DeliveryControl: faker.randomGenerator.integer(100),
+        SaleRequestId: faker.randomGenerator.integer(100),
+      );
 }

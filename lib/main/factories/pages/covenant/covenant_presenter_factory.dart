@@ -10,4 +10,5 @@ CovenantPresenter makeGetxCovenantPresenter() => GetxCovenantPresenter(
       finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
       covenantLimit: makeRemoteAuthorizeCovenantLimitUseByCode(),
       covenantAuthorizationIsPendant: makeLocalCovenantAuthorizationIsPendant(),
+      updateSaleRequest: makeRemoteUpdateSaleRequest(),
     );

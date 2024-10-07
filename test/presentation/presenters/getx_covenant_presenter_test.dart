@@ -30,6 +30,7 @@ void main() {
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
   late CovenantLimitSpy covenantLimit;
   late CovenantAuthorizationIsPendantSpy covenantAuthorizationIsPendant;
+  late UpdateSaleRequestSpy updateSaleRequest;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -51,6 +52,7 @@ void main() {
   void initPresenters() {
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
+    updateSaleRequest = UpdateSaleRequestSpy();
   }
 
   void initEntitys() {
@@ -76,6 +78,7 @@ void main() {
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       covenantLimit: covenantLimit,
       covenantAuthorizationIsPendant: covenantAuthorizationIsPendant,
+      updateSaleRequest: updateSaleRequest,
     );
   }
 

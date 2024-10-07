@@ -12,14 +12,20 @@ class RemoteUpdateSaleRequest implements UpdateSaleRequest {
   });
 
   @override
-  Future<void> update(SaleRequestModel model) async {
+  Future<void> update({
+    required SaleRequestModel model,
+    required String commandNumberWithThreeNumbers,
+    required int saleRequestId,
+  }) async {
     try {
       final body = model.toJson();
+      body["PersonalizedCode"] = commandNumberWithThreeNumbers;
+      body["SaleRequestId"] = saleRequestId;
 
       final response = await httpAdapter.request(
         url:
             "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/UpdateSaleRequest",
-        method: "post",
+        method: "put",
         body: body,
       );
 

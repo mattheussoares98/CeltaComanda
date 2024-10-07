@@ -476,7 +476,7 @@ class EntityFactory {
       IsCancelled: faker.randomGenerator.string(10),
       IsUsing: faker.randomGenerator.string(10),
       Peoples: faker.randomGenerator.string(10),
-      SaleRequestId: faker.randomGenerator.string(10),
+      SaleRequestId: faker.randomGenerator.integer(100).toString(),
       FlagOrigin: faker.randomGenerator.string(10),
     );
   }

@@ -532,10 +532,17 @@ void main() {
         showErrorMessageReturnedByBs: (_) {},
       );
 
-      verify(() => updateSaleRequest.update(SaleRequestModel(
-            CovenantCode: sut.selectedCovenant.values.first!.toInt(),
-            CustomerCode: sut.selectedCovenant.keys.first.toInt(),
-          ))).called(1);
+      verify(() => updateSaleRequest.update(
+            model: SaleRequestModel(
+              CovenantCode: sut.selectedCovenant.values.first!.toInt(),
+              CustomerCode: sut.selectedCovenant.keys.first.toInt(),
+            ),
+            commandNumberWithThreeNumbers:
+                homePresenter.commandNumberMock!.padLeft(3, "0"),
+            saleRequestId: printedProductsPresenter
+                .printedProductsMock.SaleRequestId
+                .toInt(),
+          )).called(1);
     });
   });
 

@@ -8,7 +8,12 @@ class UpdateSaleRequestSpy extends Mock implements UpdateSaleRequest {
   UpdateSaleRequestSpy() {
     this.mockUpdateSaleRequest();
   }
-  When mocUpdateSaleRequestCall() => when(() => this.update(any()));
+  When mocUpdateSaleRequestCall() => when(() => this.update(
+        model: any(named: "model"),
+        commandNumberWithThreeNumbers:
+            any(named: "commandNumberWithThreeNumbers"),
+        saleRequestId: any(named: "saleRequestId"),
+      ));
 
   void mockUpdateSaleRequest() {
     this.mocUpdateSaleRequestCall().thenAnswer((any) async => any);

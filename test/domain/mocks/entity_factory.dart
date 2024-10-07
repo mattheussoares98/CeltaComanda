@@ -466,7 +466,7 @@ class EntityFactory {
     return PrintedViewModel(
       Products: makePrintedProductsViewModel(),
       PersonalizedCode: faker.randomGenerator.string(10),
-      TotalLiquid: faker.randomGenerator.string(10),
+      TotalLiquid: faker.randomGenerator.decimal().toString(),
       DeliveryControl: faker.randomGenerator.string(10),
       DateOfCreation: faker.randomGenerator.string(10),
       DateHourOfCreation: faker.randomGenerator.string(10),

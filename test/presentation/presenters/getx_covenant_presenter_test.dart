@@ -33,6 +33,7 @@ void main() {
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
+  late AuthorizationPendingModel authorizationPendingModel;
 
   late SoapResponse soapResponse;
 
@@ -64,6 +65,10 @@ void main() {
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
     );
+    authorizationPendingModel = AuthorizationPendingModel(
+      code: soapResponse.response,
+      isPending: true,
+    );
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
@@ -78,6 +83,8 @@ void main() {
     loadCustomer.mockLoadCustomer(customersEntitys);
     covenantLimit
         .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(soapResponse);
+    covenantAuthorizationIsPendant.mockGet(authorizationPendingModel);
+    covenantAuthorizationIsPendant.mockUpdate();
   }
 
   setUp(() {
@@ -362,7 +369,18 @@ void main() {
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumberMock!.toInt(),
-          finalizations: null,
+          finalizations: [
+            ConcentratorFinalizationModel(
+              FinalizationId:
+                  FinalizationIdentification.covenant.finalizationId,
+              Value: printedProductsPresenter.printedProductsMock.TotalLiquid
+                  .toDouble(),
+              ValueLiquid: printedProductsPresenter
+                  .printedProductsMock.TotalLiquid
+                  .toDouble(),
+              PortionQuantity: 1,
+            )
+          ],
         ),
       ).called(1);
     });
@@ -400,8 +418,8 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value:
-              printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
+          value: printedProductsPresenter.printedProductsMock.TotalLiquid
+              .toDouble(),
         ),
       ).called(1);
     });
@@ -435,14 +453,6 @@ void main() {
     test(
         "Should call covenantAuthorizationIsPendant.update with true value on success",
         () async {
-      final code = faker.randomGenerator.string(10);
-
-      covenantAuthorizationIsPendant.mockUpdate(
-        AuthorizationPendingModel(
-          code: code,
-          isPending: true,
-        ),
-      );
       await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
@@ -456,12 +466,7 @@ void main() {
       );
 
       verify(
-        () => covenantAuthorizationIsPendant.update(
-          AuthorizationPendingModel(
-            code: code,
-            isPending: true,
-          ),
-        ),
+        () => covenantAuthorizationIsPendant.update(authorizationPendingModel),
       ).called(1);
     });
     test(
@@ -533,21 +538,25 @@ void main() {
     test("Should return correct value if usecase return true", () async {
       final value = await sut.getAuthorizationPendantModel();
 
-      expect(value, true);
+      expect(value, authorizationPendingModel);
     });
     test("Should return correct value if usecase throw", () async {
       covenantAuthorizationIsPendant.mockGetError();
 
       final value = await sut.getAuthorizationPendantModel();
 
-      expect(value, false);
+      expect(value, null);
     });
     test("Should return correct value if usecase return false", () async {
-      covenantAuthorizationIsPendant.mockGet(false);
+      final authorization = AuthorizationPendingModel(
+        code: faker.randomGenerator.string(10),
+        isPending: false,
+      );
+      covenantAuthorizationIsPendant.mockGet(authorization);
 
       final value = await sut.getAuthorizationPendantModel();
 
-      expect(value, false);
+      expect(value, authorization);
     });
   });
 }

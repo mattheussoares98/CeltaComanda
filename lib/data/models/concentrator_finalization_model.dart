@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class ConcentratorFinalizationModel {
+import 'package:equatable/equatable.dart';
+
+class ConcentratorFinalizationModel extends Equatable {
 //  final ModelSaleMovement SaleMovement ;
 //  final FinancialAuthorizationType? AuthorizationType ;
 //  final IList<ModelSaleMovementFinalizationCheck> Checks ;
@@ -48,6 +50,29 @@ class ConcentratorFinalizationModel {
     this.TEFModalityDescription,
     this.TEFPlanCardCode,
   });
+
+  @override
+  List<Object?> get props => [
+        FinalizationId,
+        Value,
+        ValueLiquid,
+        PortionQuantity,
+        SaleMovementFinalizationId,
+        PayBackValue,
+        AuthorizationCode,
+        FinalizationPdvId,
+        TEFNSUSitef,
+        TEFNSUHost,
+        TEFAuthorizationCode,
+        TEFBinCode,
+        TEFCardLastNumbers,
+        TEFNetWorkCode,
+        TEFFlagCode,
+        TEFFlagDescription,
+        TEFModalityPaymentCode,
+        TEFModalityDescription,
+        TEFPlanCardCode,
+      ];
 
   Map<String, dynamic> toJson() => {
         "FinalizationId": FinalizationId,

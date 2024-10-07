@@ -12,11 +12,11 @@ class LocalCovenantAuthorizationIsPendant
   LocalCovenantAuthorizationIsPendant({required this.hiveStorage});
 
   @override
-  Future<bool> get() async {
+  Future<AuthorizationPendingModel?> get() async {
     try {
       final value =
           await hiveStorage.get(CacheKeys.covenantAuthorizationPendant.name);
-      return value ?? false;
+      return value;
     } catch (e) {
       throw DomainError.unexpected;
     }

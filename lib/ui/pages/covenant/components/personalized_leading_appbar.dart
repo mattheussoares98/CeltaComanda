@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../data/models/models.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
@@ -15,10 +16,10 @@ class PersonalizedLeadingAppbar extends StatelessWidget {
 
     return IconButton(
       onPressed: () async {
-        bool isPendant =
-            await covenantPresenter.getCovenantAuthorizationIsPendant();
+        AuthorizationPendingModel? authorizationPendatModel =
+            await covenantPresenter.getAuthorizationPendantModel();
 
-        if (isPendant) {
+        if (authorizationPendatModel?.isPending == true) {
           notificationDialog(
             context: context,
             titleMessage: "Pendant helper",

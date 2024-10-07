@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/models.dart';
 import '../../../presentation/protocols/protocols.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
@@ -23,5 +24,5 @@ abstract class CovenantPresenter implements Listenable {
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   });
-  Future<bool> getCovenantAuthorizationIsPendant();
+  Future<AuthorizationPendingModel?> getAuthorizationPendantModel();
 }

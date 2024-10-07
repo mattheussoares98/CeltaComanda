@@ -195,7 +195,7 @@ class GetxCovenantPresenter extends GetxController
   }
 
   @override
-  Future<bool> getCovenantAuthorizationIsPendant() async {
+  Future<AuthorizationPendingModel?> getAuthorizationPendantModel() async {
     mainError = null;
     isLoading = true;
     try {
@@ -203,7 +203,7 @@ class GetxCovenantPresenter extends GetxController
       return value;
     } catch (e) {
       mainError = UIError.unexpected;
-      return false;
+      return null;
     } finally {
       isLoading = false;
     }

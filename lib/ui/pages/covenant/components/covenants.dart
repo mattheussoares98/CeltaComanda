@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../data/models/models.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -113,10 +114,10 @@ class _CovenantsState extends State<Covenants> {
               groupValue:
                   covenantPresenter.selectedCovenant[widget.customer.Code],
               onChanged: (value) async {
-                bool authorizationIsPendant =
-                    await covenantPresenter.getCovenantAuthorizationIsPendant();
+                AuthorizationPendingModel? authorizationPendantModel =
+                    await covenantPresenter.getAuthorizationPendantModel();
 
-                if (authorizationIsPendant) {
+                if (authorizationPendantModel?.isPending == true) {
                   notificationDialog(
                       context: context,
                       titleMessage: "Pendant helper",

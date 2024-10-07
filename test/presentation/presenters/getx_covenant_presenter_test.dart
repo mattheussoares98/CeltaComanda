@@ -508,7 +508,7 @@ void main() {
 
   group("Get covenant authorization is pendant", () {
     test("Should call covenantAuthorizationIsPendant.get", () async {
-      await sut.getCovenantAuthorizationIsPendant();
+      await sut.getAuthorizationPendantModel();
 
       verify(() => covenantAuthorizationIsPendant.get()).called(1);
     });
@@ -516,7 +516,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.getCovenantAuthorizationIsPendant();
+      await sut.getAuthorizationPendantModel();
     });
     test("Should emit correct values on throws", () async {
       expectLater(
@@ -527,25 +527,25 @@ void main() {
 
       covenantAuthorizationIsPendant.mockGetError();
 
-      await sut.getCovenantAuthorizationIsPendant();
+      await sut.getAuthorizationPendantModel();
     });
 
     test("Should return correct value if usecase return true", () async {
-      final value = await sut.getCovenantAuthorizationIsPendant();
+      final value = await sut.getAuthorizationPendantModel();
 
       expect(value, true);
     });
     test("Should return correct value if usecase throw", () async {
       covenantAuthorizationIsPendant.mockGetError();
 
-      final value = await sut.getCovenantAuthorizationIsPendant();
+      final value = await sut.getAuthorizationPendantModel();
 
       expect(value, false);
     });
     test("Should return correct value if usecase return false", () async {
       covenantAuthorizationIsPendant.mockGet(false);
 
-      final value = await sut.getCovenantAuthorizationIsPendant();
+      final value = await sut.getAuthorizationPendantModel();
 
       expect(value, false);
     });

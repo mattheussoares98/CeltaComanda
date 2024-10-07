@@ -44,7 +44,7 @@ class CovenantPresenterSpy extends Mock implements CovenantPresenter {
   }
 
   When _mockGetCovenantAuthorizationIsPendantCall() =>
-      when(() => this.getCovenantAuthorizationIsPendant());
+      when(() => this.getAuthorizationPendantModel());
 
   mockGetCovenantAuthorizationIsPendant(bool value) {
     _mockGetCovenantAuthorizationIsPendantCall()

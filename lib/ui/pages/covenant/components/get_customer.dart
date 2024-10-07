@@ -23,9 +23,8 @@ class GetCustomer extends StatelessWidget {
     if (covenantPresenter.authorizationPendingModel?.isPending == true) {
       notificationDialog(
           context: context,
-          titleMessage: "Pendant helper",
-          content: const Text(
-              "Add helper with message indicating that authorization is pendant"),
+          titleMessage: R.string.msgAuthorizationIsPendant,
+          content: Text(R.string.msgPendantAuthorizationNotification),
           onPress: () async {
             await covenantPresenter.getCustomer(textController.text);
           });
@@ -52,8 +51,12 @@ class GetCustomer extends StatelessWidget {
                       hintText: R.string.customer,
                       labelText: R.string.customer,
                       errorText: snapshot.data?.description,
-                      suffixIcon: Icon(Icons.search,
-                          color: Theme.of(context).primaryColor),
+                      suffixIcon: IconButton(
+                          onPressed: () async {
+                            await getCustomer(covenantPresenter, context);
+                          },
+                          icon: Icon(Icons.search,
+                              color: Theme.of(context).primaryColor)),
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: textController,

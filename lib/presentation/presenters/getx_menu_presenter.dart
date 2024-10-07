@@ -139,11 +139,13 @@ class GetxMenuPresenter extends GetxController
               value) =>
       _menu.value = value;
 
-  List<ExpansibleGroupEntity> _putDetachGroupInFirstGroupList(
+  List<ExpansibleGroupEntity> _putExpansibleGroupInFirst(
     List<ExpansibleGroupEntity> expansibleGroups,
+    String expansibleGroupName,
   ) {
     ExpansibleGroupEntity? detachGroup = expansibleGroups.firstWhereOrNull(
-        (e) => e.Name.toLowerCase() == R.string.detach.toLowerCase());
+        (e) =>
+            e.Name.toLowerCase().contains(expansibleGroupName.toLowerCase()));
 
     if (detachGroup == null) {
       return expansibleGroups;
@@ -173,7 +175,14 @@ class GetxMenuPresenter extends GetxController
       var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
-        expansibleGroups = _putDetachGroupInFirstGroupList(expansibleGroups);
+        expansibleGroups = _putExpansibleGroupInFirst(
+          expansibleGroups,
+          R.string.promotionWithoutPoints,
+        );
+        expansibleGroups = _putExpansibleGroupInFirst(
+          expansibleGroups,
+          R.string.detach,
+        );
 
         for (var expansibleGroup in expansibleGroups) {
           final products =

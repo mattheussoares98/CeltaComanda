@@ -147,6 +147,7 @@ class EnUs implements Translation {
   String get personalizedCode => 'Personalized code';
   String get price => 'Price';
   String get productsAndComments => 'Products and comments';
+  String get promotionWithoutPoints => 'Promotion without points';
   String get quantity => 'Quantity';
   String get quantityAbbreviated => 'Qty';
   String get reload => 'Reload';

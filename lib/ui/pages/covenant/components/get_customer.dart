@@ -46,6 +46,7 @@ class GetCustomer extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFormField(
+                    autofocus: true,
                     decoration: formFieldDecoration(
                       context: context,
                       hintText: R.string.customer,

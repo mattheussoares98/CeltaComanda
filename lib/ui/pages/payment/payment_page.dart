@@ -27,6 +27,7 @@ class _PaymentPageState extends State<PaymentPage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    printedLoadingSubscription?.cancel();
     paymentPresenter?.disposePaymentResultHandler();
   }
 

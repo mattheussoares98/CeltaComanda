@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class PersonalizedLeadingAppbar extends StatelessWidget {
@@ -18,10 +19,9 @@ class PersonalizedLeadingAppbar extends StatelessWidget {
         if (covenantPresenter.authorizationPendingModel?.isPending == true) {
           notificationDialog(
             context: context,
-            titleMessage: "Pendant helper",
+            titleMessage: R.string.msgAuthorizationIsPendant,
             closeDialogOnConfirmPress: true,
-            content: const Text(
-                "Add helper with message indicating that authorization is pendant"),
+            content: Text(R.string.msgPendantAuthorizationNotification),
             onPress: () async {
               Navigator.of(context).pop();
             },

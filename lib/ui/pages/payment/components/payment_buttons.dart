@@ -102,7 +102,8 @@ class PaymentButtons extends StatelessWidget {
                   ],
                 ),
               if (EnterpriseDataBuilder.enterpriseDataEntity?.useCovenant ==
-                  true)
+                      true &&
+                  !homePresenter.isGeneratingVersionToRede)
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(

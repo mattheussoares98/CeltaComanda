@@ -16,6 +16,9 @@ class LocalCovenantAuthorizationIsPendant
     try {
       final value =
           await hiveStorage.get(CacheKeys.covenantAuthorizationPendant.name);
+      if (value != null) {
+        return AuthorizationPendingModel.fromJson(value);
+      }
       return value;
     } catch (e) {
       throw DomainError.unexpected;

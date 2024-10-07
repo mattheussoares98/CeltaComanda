@@ -3,16 +3,24 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/helpers/helpers.dart';
-import '../../../components/components.dart';
-import '../../pages.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../../components/components.dart';
+import '../../../pages.dart';
 
-class SaveSaleRequestButton extends StatelessWidget {
+class SaveSaleRequestButton extends StatefulWidget {
   final double buttonHeight;
   const SaveSaleRequestButton({
     required this.buttonHeight,
     super.key,
   });
+
+  @override
+  State<SaveSaleRequestButton> createState() => _SaveSaleRequestButtonState();
+}
+
+class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
+  TextEditingController tableNumberController = TextEditingController();
+  GlobalKey<FormState> tableKey = GlobalKey<FormState>();
 
   _addProducts({
     required CartPresenter cartPresenter,
@@ -46,6 +54,12 @@ class SaveSaleRequestButton extends StatelessWidget {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    tableNumberController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: true);
     HomePresenter homePresenter = Provider.of(context, listen: false);
@@ -56,13 +70,10 @@ class SaveSaleRequestButton extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
-    TextEditingController tableNumberController = TextEditingController();
-    GlobalKey<FormState> tableKey = GlobalKey<FormState>();
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(double.infinity, buttonHeight),
-        maximumSize: Size(double.infinity, buttonHeight),
+        minimumSize: Size(double.infinity, widget.buttonHeight),
+        maximumSize: Size(double.infinity, widget.buttonHeight),
       ),
       onPressed: () async {
         if (homePresenter.isFixedCommandNumber) {
@@ -97,18 +108,11 @@ class SaveSaleRequestButton extends StatelessWidget {
             cancelMessage: R.string.jump,
             confirmMessage: R.string.confirmFlag,
             closeDialogOnConfirmPress: false,
-            onCancelPress: () async {
-              await _addProducts(
-                insertProductPresenter: insertProductPresenter,
-                cartPresenter: cartPresenter,
-                context: context,
-                printedProductsPresenter: printedProductsPresenter,
-                tableNumber: null,
-                homePresenter: homePresenter,
-                expansibleGroupFromProductPresenter:
-                    expansibleGroupFromProductPresenter,
-              );
-            },
+            content: InsertTableNumber(
+              tableKey: tableKey,
+              tableNumberController: tableNumberController,
+            ),
+            onCancelPress: () async => Navigator.of(context).pop,
             onPress: () async {
               bool? isValid = tableKey.currentState?.validate();
 
@@ -126,34 +130,6 @@ class SaveSaleRequestButton extends StatelessWidget {
                 );
               }
             },
-            content: Row(
-              children: [
-                const Expanded(child: SizedBox()),
-                Expanded(
-                  child: Form(
-                    key: tableKey,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    child: TextFormField(
-                      autofocus: true,
-                      controller: tableNumberController,
-                      keyboardType: TextInputType.number,
-                      maxLength: 4,
-                      textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
-                        counterText: "",
-                      ),
-                      validator: (value) {
-                        if (int.tryParse(value!) == null) {
-                          return R.string.msgInvalidNumber;
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                const Expanded(child: SizedBox()),
-              ],
-            ),
           );
         }
       },

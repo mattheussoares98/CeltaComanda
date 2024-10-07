@@ -137,8 +137,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
 
-      if ((homePresenter.isGeneratingVersionToRede ||
-              homePresenter.isGeneratingVersionToTablet) &&
+      if (homePresenter.isGeneratingVersionToRede &&
           !commandEntity.isFixedCommandNumber) {
         throw DomainError.obligatoryFixedCommandNumber;
       }

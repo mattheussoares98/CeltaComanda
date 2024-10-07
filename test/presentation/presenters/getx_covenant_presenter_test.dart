@@ -240,6 +240,16 @@ void main() {
 
       expect(sut.authorizationPendingModel, null);
     });
+
+    test("Should call validate customer field", () async {
+      final searchValue = faker.randomGenerator.string(10);
+      await sut.getCustomer(searchValue);
+
+      verify(() => validation.validate(
+            field: "customer",
+            input: {"customer": searchValue},
+          )).called(1);
+    });
   });
 
   group("Validate customer field", () {
@@ -256,6 +266,15 @@ void main() {
       );
 
       sut.validateCustomerField("");
+    });
+    test("Should call validation correctly", () {
+      final searchValue = faker.randomGenerator.string(10);
+      sut.validateCustomerField(searchValue);
+
+      verify(() => validation.validate(
+            field: "customer",
+            input: {"customer": searchValue},
+          )).called(1);
     });
   });
 

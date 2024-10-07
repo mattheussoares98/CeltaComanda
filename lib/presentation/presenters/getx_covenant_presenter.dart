@@ -36,6 +36,8 @@ class GetxCovenantPresenter extends GetxController
     _selectedCovenant = {};
 
     try {
+      validateCustomerField(value);
+
       _authorizationPendingModel = null;
 
       int? valueInInt = int.tryParse(value);

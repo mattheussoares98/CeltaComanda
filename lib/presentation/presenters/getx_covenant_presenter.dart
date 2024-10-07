@@ -178,6 +178,7 @@ class GetxCovenantPresenter extends GetxController
               ValueLiquid: printedProductsPresenter.printedProducts!.TotalLiquid
                   .toDouble(),
               PortionQuantity: 1,
+              AuthorizationCode: soapResponse.response,
             ),
           ],
         );

@@ -379,6 +379,7 @@ void main() {
                   .printedProductsMock.TotalLiquid
                   .toDouble(),
               PortionQuantity: 1,
+              AuthorizationCode: soapResponse.response,
             )
           ],
         ),

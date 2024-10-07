@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../main/builders/builders.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -45,7 +46,8 @@ PreferredSize homeAppBar({
             ),
       backgroundColor: const Color(0xFFF1F5F8),
       actions: [
-        if (homePresenter.isGeneratingVersionToRede)
+        if (homePresenter.isGeneratingVersionToRede ||
+            EnterpriseDataBuilder.enterpriseDataEntity?.useCovenant == true)
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.2,
             child: Padding(

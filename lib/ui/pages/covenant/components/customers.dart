@@ -49,30 +49,32 @@ class _CustomersState extends State<Customers> {
                     children: [
                       Row(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${R.string.code}: ${customer.Code}",
-                                style: TextStyle(
-                                  fontSize: getStringSize(context),
-                                ),
-                              ),
-                              if (customer.CpfCnpjNumber!.length >= 11)
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Text(
-                                  'CPF/CNPJ: ${customer.CpfCnpjNumber!.substring(0, 4)}...${customer.CpfCnpjNumber!.substring(customer.CpfCnpjNumber!.length - 4)}',
+                                  "${R.string.code}: ${customer.Code}",
                                   style: TextStyle(
                                     fontSize: getStringSize(context),
                                   ),
                                 ),
-                              if (customer.CpfCnpjNumber!.length < 11)
-                                Text(
-                                  'CPF/CNPJ: ${customer.CpfCnpjNumber}',
-                                  style: TextStyle(
-                                    fontSize: getStringSize(context),
+                                if (customer.CpfCnpjNumber!.length >= 11)
+                                  Text(
+                                    'CPF/CNPJ: ${customer.CpfCnpjNumber!.substring(0, 4)}...${customer.CpfCnpjNumber!.substring(customer.CpfCnpjNumber!.length - 4)}',
+                                    style: TextStyle(
+                                      fontSize: getStringSize(context),
+                                    ),
                                   ),
-                                ),
-                            ],
+                                if (customer.CpfCnpjNumber!.length < 11)
+                                  Text(
+                                    'CPF/CNPJ: ${customer.CpfCnpjNumber}',
+                                    style: TextStyle(
+                                      fontSize: getStringSize(context),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                           Expanded(
                             child: Text(
@@ -80,34 +82,29 @@ class _CustomersState extends State<Customers> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: getStringSize(context),
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "${R.string.personalizedCode}: ${customer.PersonalizedCode}",
-                            style: TextStyle(
-                              fontSize: getStringSize(context),
-                            ),
-                          ),
-                          if (customer.Covenants == null ||
-                              customer.Covenants!.isEmpty)
-                            Expanded(
-                              child: Text(
-                                R.string.withoutCovenant.toUpperCase(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: getStringSize(context),
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                        ],
+                      Text(
+                        "${R.string.personalizedCode}: ${customer.PersonalizedCode}",
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                        ),
                       ),
+                      if (customer.Covenants == null ||
+                          customer.Covenants!.isEmpty)
+                        Text(
+                          R.string.withoutCovenant.toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: getStringSize(context),
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       if (customer.Covenants != null &&
                           customer.Covenants!.isNotEmpty)
                         Covenants(

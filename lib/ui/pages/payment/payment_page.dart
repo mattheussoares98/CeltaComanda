@@ -114,11 +114,8 @@ class _PaymentPageState extends State<PaymentPage>
                   },
                 ),
               ),
-            if (printedProductsPresenter.printedProducts == null ||
-                printedProductsPresenter.printedProducts!.TotalLiquid
-                            .toDouble() ==
-                        0 &&
-                    !paymentPresenter.commandAlreadyPaid)
+            if (printedProductsPresenter.printedProducts == null &&
+                !paymentPresenter.commandAlreadyPaid)
               SearchDataByCommandNumber(
                 homePresenter: homePresenter,
                 emptyMessage: homePresenter.commandNumber != null

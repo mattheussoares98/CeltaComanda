@@ -16,7 +16,7 @@ class LocalCovenantAuthorizationIsPendant
     try {
       final value =
           await hiveStorage.get(CacheKeys.covenantAuthorizationPendant.name);
-      return value;
+      return value ?? false;
     } catch (e) {
       throw DomainError.unexpected;
     }

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/models/models.dart';
 import '../../../../presentation/protocols/protocols.dart';
 import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
@@ -21,10 +20,7 @@ class GetCustomer extends StatelessWidget {
     CovenantPresenter covenantPresenter,
     BuildContext context,
   ) async {
-    AuthorizationPendingModel? authorizationPendantModel =
-        await covenantPresenter.getAuthorizationPendantModel();
-
-    if (authorizationPendantModel?.isPending == true) {
+    if (covenantPresenter.authorizationPendingModel?.isPending == true) {
       notificationDialog(
           context: context,
           titleMessage: "Pendant helper",

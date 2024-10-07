@@ -9,6 +9,5 @@ CovenantPresenter makeGetxCovenantPresenter() => GetxCovenantPresenter(
       validation: makeCustomerValidation(),
       finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
       covenantLimit: makeRemoteAuthorizeCovenantLimitUseByCode(),
-      covenantAuthorizationIsPendant: makeLocalCovenantAuthorizationIsPendant(),
       updateSaleRequest: makeRemoteUpdateSaleRequest(),
     );

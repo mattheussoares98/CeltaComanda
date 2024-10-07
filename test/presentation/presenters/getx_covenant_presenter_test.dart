@@ -29,12 +29,10 @@ void main() {
   late ValidationSpy validation;
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
   late CovenantLimitSpy covenantLimit;
-  late CovenantAuthorizationIsPendantSpy covenantAuthorizationIsPendant;
   late UpdateSaleRequestSpy updateSaleRequest;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
-  late AuthorizationPendingModel authorizationPendingModel;
 
   late SoapResponse soapResponse;
 
@@ -46,7 +44,6 @@ void main() {
     validation = ValidationSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
     covenantLimit = CovenantLimitSpy();
-    covenantAuthorizationIsPendant = CovenantAuthorizationIsPendantSpy();
   }
 
   void initPresenters() {
@@ -67,17 +64,12 @@ void main() {
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
     );
-    authorizationPendingModel = AuthorizationPendingModel(
-      code: soapResponse.response,
-      isPending: true,
-    );
 
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       covenantLimit: covenantLimit,
-      covenantAuthorizationIsPendant: covenantAuthorizationIsPendant,
       updateSaleRequest: updateSaleRequest,
     );
   }
@@ -86,8 +78,6 @@ void main() {
     loadCustomer.mockLoadCustomer(customersEntitys);
     covenantLimit
         .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(soapResponse);
-    covenantAuthorizationIsPendant.mockGet(authorizationPendingModel);
-    covenantAuthorizationIsPendant.mockUpdate();
   }
 
   setUp(() {
@@ -245,11 +235,10 @@ void main() {
 
       expect(sut.selectedCovenant, {});
     });
-    test("Should call covenantAuthorizationIsPendant.update with false value",
-        () async {
+    test("Should clear authorizationPendingModel", () async {
       await sut.getCustomer("any");
 
-      verify(() => covenantAuthorizationIsPendant.update(null)).called(1);
+      expect(sut.authorizationPendingModel, null);
     });
   });
 
@@ -279,42 +268,13 @@ void main() {
         customersViewModel[0].Code: newValue,
       });
     });
-    test("Should call covenantAuthorizationIsPendant.update with false value",
-        () async {
+    test("Should clear authorizationPendingModel", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.string(10),
       );
 
-      verify(
-        () => covenantAuthorizationIsPendant.update(null),
-      ).called(1);
-    });
-    test("Should emit correct values", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.string(10),
-      );
-
-      verify(
-        () => covenantAuthorizationIsPendant.update(null),
-      ).called(1);
-    });
-
-    test(
-        "Should not update selectedCovenant when covenantAuthorizationIsPendant throws",
-        () async {
-      covenantAuthorizationIsPendant.mockUpdateError();
-
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.string(10),
-      );
-
-      expect(sut.selectedCovenant, {});
+      expect(sut.authorizationPendingModel, null);
     });
 
     test("Should clear selectedCovenant when customer is null", () async {
@@ -463,9 +423,7 @@ void main() {
         ),
       );
     });
-    test(
-        "Should call covenantAuthorizationIsPendant.update with true value on success",
-        () async {
+    test("Should clear authorizationPendingModel on success", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
@@ -478,29 +436,9 @@ void main() {
         showErrorMessageReturnedByBs: (_) {},
       );
 
-      verify(
-        () => covenantAuthorizationIsPendant.update(authorizationPendingModel),
-      ).called(1);
+      expect(sut.authorizationPendingModel, null);
     });
-    test(
-        "Should call covenantAuthorizationIsPendant.update with false value on success",
-        () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
 
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-      );
-
-      verify(
-        () => covenantAuthorizationIsPendant.update(null),
-      ).called(2);
-    });
     test(
         "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
         () async {
@@ -518,9 +456,10 @@ void main() {
         showErrorMessageReturnedByBs: (_) {},
       );
 
-      verify(
-        () => covenantAuthorizationIsPendant.update(null),
-      ).called(1);
+      expect(
+        sut.authorizationPendingModel,
+        AuthorizationPendingModel(code: soapResponse.response, isPending: true),
+      );
     });
 
     test(
@@ -549,55 +488,6 @@ void main() {
                 .printedProductsMock.SaleRequestId
                 .toInt(),
           )).called(1);
-    });
-  });
-
-  group("Get covenant authorization is pendant", () {
-    test("Should call covenantAuthorizationIsPendant.get", () async {
-      await sut.getAuthorizationPendantModel();
-
-      verify(() => covenantAuthorizationIsPendant.get()).called(1);
-    });
-    test("Should emit correct values on success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.getAuthorizationPendantModel();
-    });
-    test("Should emit correct values on throws", () async {
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      covenantAuthorizationIsPendant.mockGetError();
-
-      await sut.getAuthorizationPendantModel();
-    });
-
-    test("Should return correct value if usecase return true", () async {
-      final value = await sut.getAuthorizationPendantModel();
-
-      expect(value, authorizationPendingModel);
-    });
-    test("Should return correct value if usecase throw", () async {
-      covenantAuthorizationIsPendant.mockGetError();
-
-      final value = await sut.getAuthorizationPendantModel();
-
-      expect(value, null);
-    });
-    test("Should return correct value if usecase return false", () async {
-      final authorization = AuthorizationPendingModel(
-        code: faker.randomGenerator.string(10),
-        isPending: false,
-      );
-      covenantAuthorizationIsPendant.mockGet(authorization);
-
-      final value = await sut.getAuthorizationPendantModel();
-
-      expect(value, authorization);
     });
   });
 }

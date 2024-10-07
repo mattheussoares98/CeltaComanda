@@ -11,6 +11,7 @@ abstract class CovenantPresenter implements Listenable {
   Stream<ValidationError?> get customerErrorStream;
   Stream<List<CustomerViewModel>?> get customersViewModelStream;
   Map<String, String?> get selectedCovenant;
+  AuthorizationPendingModel? get authorizationPendingModel;
 
   Future<void> getCustomer(String value);
   void validateCustomerField(String value);
@@ -24,5 +25,4 @@ abstract class CovenantPresenter implements Listenable {
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   });
-  Future<AuthorizationPendingModel?> getAuthorizationPendantModel();
 }

@@ -18,7 +18,6 @@ class GetxCovenantPresenter extends GetxController
   final LoadCustomer loadCustomer;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final CovenantLimit covenantLimit;
-  final CovenantAuthorizationIsPendant covenantAuthorizationIsPendant;
   final UpdateSaleRequest updateSaleRequest;
 
   GetxCovenantPresenter({
@@ -26,7 +25,6 @@ class GetxCovenantPresenter extends GetxController
     required this.validation,
     required this.finishSaleRequestConcentrador,
     required this.covenantLimit,
-    required this.covenantAuthorizationIsPendant,
     required this.updateSaleRequest,
   });
 
@@ -38,7 +36,7 @@ class GetxCovenantPresenter extends GetxController
     _selectedCovenant = {};
 
     try {
-      await covenantAuthorizationIsPendant.update(null);
+      _authorizationPendingModel = null;
 
       int? valueInInt = int.tryParse(value);
 
@@ -120,22 +118,14 @@ class GetxCovenantPresenter extends GetxController
     CustomerViewModel? customer,
     String? covenantCode,
   ) async {
-    isLoading = true;
-    mainError = null;
-    try {
-      await covenantAuthorizationIsPendant.update(null);
+    _authorizationPendingModel = null;
 
-      if (customer == null) {
-        _selectedCovenant = {};
-      } else {
-        _selectedCovenant = {
-          customer.Code!: covenantCode,
-        };
-      }
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
+    if (customer == null) {
+      _selectedCovenant = {};
+    } else {
+      _selectedCovenant = {
+        customer.Code!: covenantCode,
+      };
     }
   }
 
@@ -161,11 +151,9 @@ class GetxCovenantPresenter extends GetxController
       if (soapResponse.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(soapResponse.response);
       } else {
-        await covenantAuthorizationIsPendant.update(
-          AuthorizationPendingModel(
-            code: soapResponse.response,
-            isPending: true,
-          ),
+        _authorizationPendingModel = AuthorizationPendingModel(
+          code: soapResponse.response,
+          isPending: true,
         );
 
         await updateSaleRequest.update(
@@ -201,7 +189,7 @@ class GetxCovenantPresenter extends GetxController
             ),
           ],
         );
-        await covenantAuthorizationIsPendant.update(null);
+        _authorizationPendingModel = null;
 
         await printedProductsPresenter.loadPrinted(homePresenter);
 
@@ -214,18 +202,9 @@ class GetxCovenantPresenter extends GetxController
     }
   }
 
+  AuthorizationPendingModel? _authorizationPendingModel;
+
   @override
-  Future<AuthorizationPendingModel?> getAuthorizationPendantModel() async {
-    mainError = null;
-    isLoading = true;
-    try {
-      final value = await covenantAuthorizationIsPendant.get();
-      return value;
-    } catch (e) {
-      mainError = UIError.unexpected;
-      return null;
-    } finally {
-      isLoading = false;
-    }
-  }
+  AuthorizationPendingModel? get authorizationPendingModel =>
+      _authorizationPendingModel;
 }

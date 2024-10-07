@@ -38,16 +38,5 @@ class CovenantPresenterSpy extends Mock implements CovenantPresenter {
           showErrorMessageReturnedByBs:
               any(named: "showErrorMessageReturnedByBs"),
         )).thenAnswer((any) async => any);
-
-    _mockGetCovenantAuthorizationIsPendantCall()
-        .thenAnswer((any) async => true);
-  }
-
-  When _mockGetCovenantAuthorizationIsPendantCall() =>
-      when(() => this.getAuthorizationPendantModel());
-
-  mockGetCovenantAuthorizationIsPendant(bool value) {
-    _mockGetCovenantAuthorizationIsPendantCall()
-        .thenAnswer((any) async => value);
   }
 }

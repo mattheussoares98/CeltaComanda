@@ -415,8 +415,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       }
       if (!homePresenter.isFixedCommandNumber && commandNumber == null) {
         throw DomainError.commandNumberObligatory;
-      } else if (!homePresenter.isFixedCommandNumber && commandNumber != null) {
-        homePresenter.updateCommandNumber(commandNumber);
       }
 
       bool isValid = await commandInformations.isValidDatetime(

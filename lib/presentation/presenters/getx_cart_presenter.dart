@@ -418,7 +418,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       }
 
       bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: commandNumber ?? homePresenter.commandNumber!,
       );
 
       if (!isValid) {
@@ -429,7 +429,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: commandNumber ?? homePresenter.commandNumber!,
       );
 
       _saleRequestTemp =
@@ -488,7 +488,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       saleRequestTempResult = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: commandNumber ?? homePresenter.commandNumber!,
       );
 
       await finishSaleRequestTemp.finish(

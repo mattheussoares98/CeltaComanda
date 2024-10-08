@@ -145,11 +145,12 @@ class GetxCovenantPresenter extends GetxController
     isLoading = true;
     try {
       if (customerPassword != null && customerPassword.isNotEmpty) {
-        final isValid = await checkPasswordByCustomerCode.validate(
+        final passwordResponse = await checkPasswordByCustomerCode.validate(
           customerCode: _selectedCovenant.keys.first.toInt(),
           password: customerPassword,
         );
-        if (!isValid) {
+        if (passwordResponse.responseType == SoapResponseType.error) {
+          showErrorMessageReturnedByBs(passwordResponse.response);
           return;
         }
       }

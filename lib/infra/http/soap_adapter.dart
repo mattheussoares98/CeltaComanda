@@ -68,7 +68,8 @@ class SoapAdapter implements SoapRequest {
                 null) {
               soapResponse = SoapResponse(
                 response: parsedJson["soap:Envelope"]["soap:Body"]
-                    [typeOfResponse][typeOfResult],
+                        [typeOfResponse][typeOfResult]
+                    .toString(),
                 responseType: SoapResponseType.success,
               );
             }
@@ -80,8 +81,9 @@ class SoapAdapter implements SoapRequest {
             )) {
               soapResponse = SoapResponse(
                 response: parsedJson["soap:Envelope"]["soap:Body"]
-                        [typeOfResponse][typeOfResult]["diffgr:diffgram"]
-                    ["NewDataSet"],
+                            [typeOfResponse][typeOfResult]["diffgr:diffgram"]
+                        ["NewDataSet"]
+                    .toString(),
                 responseType: SoapResponseType.success,
               );
             }

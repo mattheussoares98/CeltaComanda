@@ -1,3 +1,8 @@
+import '../../../infra/helpers/helperts.dart';
+
 abstract class CheckPasswordByCustomerCode {
-  Future<bool> validate({required int customerCode, required String password});
+  Future<SoapResponse> validate({
+    required int customerCode,
+    required String password,
+  });
 }

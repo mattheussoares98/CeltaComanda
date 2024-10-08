@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helperts.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
@@ -10,7 +9,7 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
   RemoteCheckPasswordByCustomerCode({required this.soapAdapter});
 
   @override
-  Future<bool> validate({
+  Future<SoapResponse> validate({
     required int customerCode,
     required String password,
   }) async {
@@ -37,8 +36,7 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
         typeOfResult: "CheckPasswordByCustomerCodeResult",
       );
 
-      debugPrint(soapResponse.response);
-      return true;
+      return soapResponse;
     } catch (e) {
       throw DomainError.unexpected;
     }

@@ -160,6 +160,7 @@ class _CovenantsState extends State<Covenants> {
                       context: context,
                     );
                   } else {
+                    passwordController.clear();
                     notificationDialog(
                         context: context,
                         titleMessage: R.string.password,
@@ -177,7 +178,7 @@ class _CovenantsState extends State<Covenants> {
                               context: context,
                               hintText: R.string.password,
                               labelText: R.string.password,
-                              errorText: R.string.msgWritePassword,
+                              errorText: null,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {

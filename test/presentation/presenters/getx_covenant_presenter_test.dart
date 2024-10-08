@@ -81,6 +81,7 @@ void main() {
     loadCustomer.mockLoadCustomer(customersEntitys);
     covenantLimit
         .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(soapResponse);
+    checkPasswordByCustomerCode.mockCheck(soapResponse);
   }
 
   setUp(() {
@@ -567,7 +568,13 @@ void main() {
       String covenantCode = faker.randomGenerator.integer(100).toString();
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
-      checkPasswordByCustomerCode.mockCheck(false);
+      final errorSoapResponse = SoapResponse(
+        response: faker.randomGenerator.string(10),
+        responseType: SoapResponseType.error,
+      );
+
+      checkPasswordByCustomerCode.mockCheck(errorSoapResponse);
+
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},

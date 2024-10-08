@@ -2,20 +2,18 @@
 
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:mocktail/mocktail.dart';
 
 class CheckPasswordByCustomerCodeSpy extends Mock
     implements CheckPasswordByCustomerCode {
-  CheckPasswordByCustomerCodeSpy() {
-    mockCheck(true);
-  }
   When _mockCheckCall() => when(() => this.validate(
         customerCode: any(named: "customerCode"),
         password: any(named: "password"),
       ));
 
-  void mockCheck(bool isValid) {
-    _mockCheckCall().thenAnswer((any) async => isValid);
+  void mockCheck(SoapResponse response) {
+    _mockCheckCall().thenAnswer((any) async => response);
   }
 
   void mockError() {

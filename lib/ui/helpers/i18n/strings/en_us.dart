@@ -100,6 +100,7 @@ class EnUs implements Translation {
   String get combox => 'Combox';
   String get commandNotAvailable => 'Command not available';
   String get command => 'Command';
+  String get commandNumber => 'Command number';
   String get commentsOfProduct => 'Product comments';
   String get comments => 'Comments';
   String get comment => 'Comment';

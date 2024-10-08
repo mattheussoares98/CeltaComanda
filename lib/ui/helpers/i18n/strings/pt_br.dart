@@ -101,6 +101,7 @@ class PtBr implements Translation {
   String get code => "Código";
   String get combox => "Combo";
   String get command => "Comanda";
+  String get commandNumber => "Número da comanda";
   String get commandNotAvailable => "Comanda não disponível";
   String get commentsOfProduct => "Comentários do produto";
   String get comments => "Comentários";

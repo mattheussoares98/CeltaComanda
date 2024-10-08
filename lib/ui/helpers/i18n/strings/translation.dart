@@ -80,6 +80,7 @@ abstract class Translation {
   String get liquidateCommandSucceeds;
   String get commandNotAvailable;
   String get command;
+  String get commandNumber;
   String get commentsOfProduct;
   String get comments;
   String get comment;

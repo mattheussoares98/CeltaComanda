@@ -5,6 +5,7 @@ enum DomainError {
   blockedCommand,
   commandAlreadyPaid,
   commandNotAvailable,
+  commandNumberObligatory,
   enterpriseOrUrlNotFound,
   invalidCombox,
   invalidCredentials,

@@ -405,7 +405,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     isLoading = true;
     mainError = null;
     clear();
-    addNewPrintRequestInFirebase();
+    await addNewPrintRequestInFirebase();
 
     try {
       bool paid = await alreadyPaid.verify();
@@ -413,19 +413,14 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       if (paid) {
         throw DomainError.commandAlreadyPaid;
       }
-
-      String informedCommandNumber;
-
-      if (homePresenter.isFixedCommandNumber) {
-        informedCommandNumber = homePresenter.commandNumber ?? "";
-      } else {
-        informedCommandNumber = await barcodeScanner.read();
+      if (!homePresenter.isFixedCommandNumber && commandNumber == null) {
+        throw DomainError.commandNumberObligatory;
+      } else if (!homePresenter.isFixedCommandNumber && commandNumber != null) {
+        homePresenter.updateCommandNumber(commandNumber);
       }
 
-      homePresenter.updateCommandNumber(informedCommandNumber);
-
       bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: informedCommandNumber,
+        commandNumber: homePresenter.commandNumber!,
       );
 
       if (!isValid) {
@@ -436,7 +431,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: informedCommandNumber,
+        commandNumber: homePresenter.commandNumber!,
       );
 
       _saleRequestTemp =
@@ -495,7 +490,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       saleRequestTempResult = await loadSaleRequestTemp.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: informedCommandNumber,
+        commandNumber: homePresenter.commandNumber!,
       );
 
       await finishSaleRequestTemp.finish(
@@ -524,10 +519,12 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       return true;
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
         case DomainError.commandAlreadyPaid:
           mainError = UIError.commandAlreadyPaid;
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+        case DomainError.commandNumberObligatory:
+          mainError = UIError.commandNumberObligatory;
         case DomainError.barcodeNotRead:
           mainError = UIError.barcodeNotRead;
         case DomainError.blockedCommand:

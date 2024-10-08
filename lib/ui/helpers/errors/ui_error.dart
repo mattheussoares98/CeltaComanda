@@ -7,6 +7,7 @@ enum UIError {
   blockedCommand,
   commandAlreadyPaid,
   commandNotAvailable,
+  commandNumberObligatory,
   emailInUse,
   enterpriseOrUrlNotFound,
   invalidCombox,
@@ -42,6 +43,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgCommandAlreadyPaid;
       case UIError.commandNotAvailable:
         return R.string.commandNotAvailable;
+      case UIError.commandNumberObligatory:
+        return R.string.msgObligatoryFixedCommandNumber;
       case UIError.emailInUse:
         return R.string.msgEmailInUse;
       case UIError.enterpriseOrUrlNotFound:

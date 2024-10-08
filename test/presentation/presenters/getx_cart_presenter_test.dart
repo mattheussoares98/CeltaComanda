@@ -1155,42 +1155,42 @@ void main() {
         commandNumber: homePresenter.commandNumberMock,
       );
     });
-    test("Should emit correct values on BarcodeScanner throws unexpected",
-        () async {
-      barcodeScanner.mockError(DomainError.unexpected);
+    // test("Should emit correct values on BarcodeScanner throws unexpected",
+    //     () async {
+    //   barcodeScanner.mockError(DomainError.unexpected);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    //   expectLater(
+    //       sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
-      );
-    });
-    test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
-        () async {
-      barcodeScanner.mockError(DomainError.barcodeNotRead);
+    //   await sut.saveProducts(
+    //     insertProductPresenter: insertProductPresenter,
+    //     expansibleGroupFromProductPresenter:
+    //         expansibleGroupFromProductPresenter,
+    //     printedProductsPresenter: printedProductsPresenter,
+    //     tableNumber: tableNumber,
+    //     homePresenter: homePresenter,
+    //     commandNumber: homePresenter.commandNumberMock,
+    //   );
+    // });
+    // test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
+    //     () async {
+    //   barcodeScanner.mockError(DomainError.barcodeNotRead);
 
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
+    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    //   expectLater(
+    //       sut.mainErrorStream, emitsInOrder([null, UIError.barcodeNotRead]));
 
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
-      );
-    });
+    //   await sut.saveProducts(
+    //     insertProductPresenter: insertProductPresenter,
+    //     expansibleGroupFromProductPresenter:
+    //         expansibleGroupFromProductPresenter,
+    //     printedProductsPresenter: printedProductsPresenter,
+    //     tableNumber: tableNumber,
+    //     homePresenter: homePresenter,
+    //     commandNumber: homePresenter.commandNumberMock,
+    //   );
+    // });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
@@ -1761,6 +1761,45 @@ void main() {
         homePresenter: homePresenter,
         commandNumber: homePresenter.commandNumberMock,
       );
+    });
+    test(
+        "Should emit error when dont is fixed command number and dont write command number in save products",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.commandNumberObligatory]),
+      );
+
+      homePresenter.isFixedCommandNumberMock = false;
+
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+      );
+    });
+    test(
+        "Should update command number when is not fixed and write commandNumber parameter in saveProducts",
+        () async {
+      homePresenter.isFixedCommandNumberMock = false;
+      String newCommandNumber = faker.randomGenerator.integer(100).toString();
+
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: newCommandNumber,
+      );
+
+      verify(() => homePresenter.updateCommandNumber(newCommandNumber))
+          .called(1);
     });
   });
 

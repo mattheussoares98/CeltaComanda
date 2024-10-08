@@ -37,6 +37,7 @@ class CovenantPresenterSpy extends Mock implements CovenantPresenter {
           closePagesUntilHomePage: any(named: "closePagesUntilHomePage"),
           showErrorMessageReturnedByBs:
               any(named: "showErrorMessageReturnedByBs"),
+          customerPassword: any(named: "customerPassword"),
         )).thenAnswer((any) async => any);
   }
 }

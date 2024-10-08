@@ -24,5 +24,6 @@ abstract class CovenantPresenter implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required String? customerPassword,
   });
 }

@@ -6,6 +6,9 @@ import 'package:mocktail/mocktail.dart';
 
 class CheckPasswordByCustomerCodeSpy extends Mock
     implements CheckPasswordByCustomerCode {
+  CheckPasswordByCustomerCodeSpy() {
+    mockCheck(true);
+  }
   When _mockCheckCall() => when(() => this.validate(
         customerCode: any(named: "customerCode"),
         password: any(named: "password"),

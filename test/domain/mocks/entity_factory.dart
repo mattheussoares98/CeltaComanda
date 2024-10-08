@@ -1002,7 +1002,10 @@ class EntityFactory {
         saleInECommerce: faker.randomGenerator.boolean(),
       );
 
-  static List<CustomerEntity> makeCustomersEntitys() => [
+  static List<CustomerEntity> makeCustomersEntitys({
+    bool? hasPasswod = true,
+  }) =>
+      [
         CustomerEntity(
           Code: faker.randomGenerator.integer(100),
           PersonalizedCode: faker.randomGenerator.string(100),
@@ -1013,7 +1016,8 @@ class EntityFactory {
           DateOfBirth: faker.randomGenerator.string(100),
           SexType: faker.randomGenerator.string(100),
           PersonType: faker.randomGenerator.string(100),
-          Password: faker.randomGenerator.string(10),
+          Password:
+              hasPasswod == true ? faker.randomGenerator.string(10) : null,
           Emails: [
             faker.randomGenerator.string(100),
             faker.randomGenerator.string(100),

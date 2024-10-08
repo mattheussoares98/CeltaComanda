@@ -320,6 +320,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
     });
     test("Should emit correct values on error", () async {
@@ -336,6 +337,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
     });
 
@@ -351,6 +353,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       verify(
@@ -390,6 +393,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       verify(
@@ -405,6 +409,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       verify(
@@ -435,6 +440,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       verifyNever(
@@ -456,6 +462,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       expect(sut.authorizationPendingModel, null);
@@ -476,6 +483,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       expect(
@@ -497,6 +505,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
       );
 
       verify(() => updateSaleRequest.update(
@@ -510,6 +519,73 @@ void main() {
                 .printedProductsMock.SaleRequestId
                 .toInt(),
           )).called(1);
+    });
+
+    test("Should call checkPasswordByCustomerCode", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
+      );
+
+      verify(() => checkPasswordByCustomerCode.validate(
+            customerCode: customersViewModel[0].Code!.toInt(),
+            password: customersViewModel[0].Password!,
+          )).called(1);
+    });
+    test(
+        "Should not call checkPasswordByCustomerCode if customerPassword is empty",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: "",
+      );
+
+      verifyNever(() => checkPasswordByCustomerCode.validate(
+            customerCode: customersViewModel[0].Code!.toInt(),
+            password: "",
+          ));
+    });
+    test(
+        "Should not call covenantLimit validation if selectedCustomer has invalid password",
+        () async {
+      String covenantCode = faker.randomGenerator.integer(100).toString();
+      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+
+      checkPasswordByCustomerCode.mockCheck(false);
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].Password,
+      );
+
+      verifyNever(
+        () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
+          crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+              .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
+          covenantCode: covenantCode.toInt(),
+          customerCode: customersViewModel[0].Code!.toInt(),
+          value: printedProductsPresenter.printedProductsMock.TotalLiquid
+              .toDouble(),
+        ),
+      );
     });
   });
 }

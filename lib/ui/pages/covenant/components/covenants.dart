@@ -26,8 +26,10 @@ class _CovenantsState extends State<Covenants> {
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
+    required String? customerPassword,
   }) async {
     await covenantPresenter.finishSaleRequestByCovenant(
+      customerPassword: customerPassword,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
       showErrorMessageReturnedByBs: (error) {
@@ -145,6 +147,7 @@ class _CovenantsState extends State<Covenants> {
                     homePresenter: homePresenter,
                     printedProductsPresenter: printedProductsPresenter,
                     context: context,
+                    customerPassword: null,
                   );
                 }
               : null,

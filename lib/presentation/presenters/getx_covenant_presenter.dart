@@ -139,10 +139,21 @@ class GetxCovenantPresenter extends GetxController
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required String? customerPassword,
   }) async {
     mainError = null;
     isLoading = true;
     try {
+      if (customerPassword != null && customerPassword.isNotEmpty) {
+        final isValid = await checkPasswordByCustomerCode.validate(
+          customerCode: _selectedCovenant.keys.first.toInt(),
+          password: customerPassword,
+        );
+        if (!isValid) {
+          return;
+        }
+      }
+
       SoapResponse soapResponse = await covenantLimit
           .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!

@@ -10,7 +10,7 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
   RemoteCheckPasswordByCustomerCode({required this.soapAdapter});
 
   @override
-  Future<bool> isValid({
+  Future<bool> validate({
     required int customerCode,
     required String password,
   }) async {

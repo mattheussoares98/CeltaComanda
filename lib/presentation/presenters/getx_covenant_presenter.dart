@@ -19,6 +19,7 @@ class GetxCovenantPresenter extends GetxController
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final CovenantLimit covenantLimit;
   final UpdateSaleRequest updateSaleRequest;
+  final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
 
   GetxCovenantPresenter({
     required this.loadCustomer,
@@ -26,6 +27,7 @@ class GetxCovenantPresenter extends GetxController
     required this.finishSaleRequestConcentrador,
     required this.covenantLimit,
     required this.updateSaleRequest,
+    required this.checkPasswordByCustomerCode,
   });
 
   @override

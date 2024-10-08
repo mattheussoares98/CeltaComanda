@@ -30,6 +30,7 @@ void main() {
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
   late CovenantLimitSpy covenantLimit;
   late UpdateSaleRequestSpy updateSaleRequest;
+  late CheckPasswordByCustomerCodeSpy checkPasswordByCustomerCode;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -44,6 +45,7 @@ void main() {
     validation = ValidationSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
     covenantLimit = CovenantLimitSpy();
+    checkPasswordByCustomerCode = CheckPasswordByCustomerCodeSpy();
   }
 
   void initPresenters() {
@@ -71,6 +73,7 @@ void main() {
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       covenantLimit: covenantLimit,
       updateSaleRequest: updateSaleRequest,
+      checkPasswordByCustomerCode: checkPasswordByCustomerCode,
     );
   }
 

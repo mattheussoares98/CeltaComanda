@@ -32,17 +32,6 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
         ),
       ).thenAnswer((any) async => any);
 
-  void mockGetTotalValue() => when(
-        () => this.getTotalValue(
-          homePresenter: any(named: "homePresenter"),
-          cartPresenter: any(named: "cartPresenter"),
-          printedProductsPresenter: any(named: "printedProductsPresenter"),
-          menuPresenter: any(named: "menuPresenter"),
-          expansibleGroupFromProductPresenter:
-              any(named: "expansibleGroupFromProductPresenter"),
-        ),
-      ).thenAnswer((any) async => any);
-
   void mockTryPayAgain() => when(
         () => this.liquidateCommand(
           printedProductsPresenter: any(named: "printedProductsPresenter"),

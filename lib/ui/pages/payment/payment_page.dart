@@ -63,8 +63,6 @@ class _PaymentPageState extends State<PaymentPage>
     HomePresenter homePresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
 
     printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
@@ -123,14 +121,7 @@ class _PaymentPageState extends State<PaymentPage>
                     ? R.string.msgCommandDontHaveOpenValues
                     : R.string.msgSearchCommandToPay,
                 loadCommandData: () async {
-                  await paymentPresenter.getTotalValue(
-                    homePresenter: homePresenter,
-                    cartPresenter: cartPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    menuPresenter: menuPresenter,
-                    expansibleGroupFromProductPresenter:
-                        expansibleGroupFromProductPresenter,
-                  );
+                  await printedProductsPresenter.loadPrinted(homePresenter);
                 },
               ),
           ],

@@ -22,11 +22,7 @@ void main() {
 
   late GetxPaymentPresenter sut;
   late HomePresenterSpy homePresenter;
-  late CartPresenterSpy cartPresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
-  late MenuPresenterSpy menuPresenter;
-  late ExpansibleGroupFromProductPresenterSpy
-      expansibleGroupFromProductPresenter;
 
   late PaySpy pay;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -60,11 +56,7 @@ void main() {
       navigateTo: navigateTo,
     );
     homePresenter = HomePresenterSpy();
-    cartPresenter = CartPresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
-    menuPresenter = MenuPresenterSpy();
-    expansibleGroupFromProductPresenter =
-        ExpansibleGroupFromProductPresenterSpy();
   }
 
   initEntitys() {
@@ -303,37 +295,6 @@ void main() {
     //   );
     // });
 
-    test("Should emit correct values on loadPrintedProducts throws", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.getTotalValue(
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-    });
-
-    test("Should emit correct values on loadPrintedProducts returns null",
-        () async {
-      loadPrintedProducts.mockLoadPrintedProducts(null);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.getTotalValue(
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-    });
-
     // test("Should update command number on GetTotalValue", () async {
     //   await sut.getTotalValue(
     //     homePresenter: homePresenter,
@@ -344,29 +305,6 @@ void main() {
 
     //   verify(() => homePresenter.updateCommandNumber(commandNumber)).called(1);
     // });
-
-    test("Should load printed products on getTotalValue", () async {
-      loadPrintedProducts.mockLoadPrintedProducts(null);
-      homePresenter.commandNumberMock = "001";
-
-      await sut.getTotalValue(
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        menuPresenter: menuPresenter,
-      );
-
-      // verify(() => printedProductsPresenter.loadCommandData(
-      //       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-      //       cartPresenter: cartPresenter,
-      //       menuPresenter: menuPresenter,
-      //       homePresenter: homePresenter,
-      //       clearPermissionToCancelProducts: false,
-      //       isRemovingProduct: false,
-      //     )).called(1);
-    });
   });
 
   group("Get already paid", () {

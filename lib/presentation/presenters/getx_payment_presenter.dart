@@ -62,38 +62,6 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> getTotalValue({
-    required HomePresenter homePresenter,
-    required CartPresenter cartPresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required MenuPresenter menuPresenter,
-  }) async {
-    mainError = null;
-    isLoading = true;
-    try {
-      await homePresenter.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.barcodeNotRead:
-          mainError = UIError.barcodeNotRead;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
   Future<void> getAndUpdateAlreadyPaidCommand() async {
     try {
       _commandAlreadyPaid = await alreadyPaid.verify();

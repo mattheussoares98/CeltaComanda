@@ -16,15 +16,6 @@ abstract class PaymentPresenter implements Listenable {
     required HomePresenter homePresenter,
   });
 
-  Future<void> getTotalValue({
-    required HomePresenter homePresenter,
-    required CartPresenter cartPresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-  });
-
   Future<void> getAndUpdateAlreadyPaidCommand();
 
   Future<void> liquidateCommand({

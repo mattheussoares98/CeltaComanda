@@ -161,12 +161,6 @@ Future<void> _onPress({
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
   } else {
-    await paymentPresenter.getTotalValue(
-      homePresenter: homePresenter,
-      cartPresenter: cartPresenter,
-      menuPresenter: menuPresenter,
-      printedProductsPresenter: printedProductsPresenter,
-      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-    );
+    await printedProductsPresenter.loadPrinted(homePresenter);
   }
 }

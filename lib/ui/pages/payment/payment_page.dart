@@ -110,27 +110,29 @@ class _PaymentPageState extends State<PaymentPage>
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (printedProductsPresenter.printedProducts != null &&
-                !paymentPresenter.commandAlreadyPaid)
-              const PaymentButtons(),
-            if (paymentPresenter.commandAlreadyPaid)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: LiquidateCommand(
-                  callSetState: () {
-                    setState(() {});
-                  },
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (printedProductsPresenter.printedProducts != null &&
+                  !paymentPresenter.commandAlreadyPaid)
+                const PaymentButtons(),
+              if (paymentPresenter.commandAlreadyPaid)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: LiquidateCommand(
+                    callSetState: () {
+                      setState(() {});
+                    },
+                  ),
                 ),
-              ),
-            if (printedProductsPresenter.printedProducts == null &&
-                    !paymentPresenter.commandAlreadyPaid ||
-                !homePresenter.isFixedCommandNumber)
-              const SearchDataByCommandNumber(),
-          ],
+              if (printedProductsPresenter.printedProducts == null &&
+                      !paymentPresenter.commandAlreadyPaid ||
+                  !homePresenter.isFixedCommandNumber)
+                const SearchDataByCommandNumber(),
+            ],
+          ),
         ),
       ),
     );

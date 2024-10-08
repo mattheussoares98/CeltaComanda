@@ -364,7 +364,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   void updateCommandNumber(String? value) {
-    _commandNumber = value;
+    if (value == null) {
+      _commandNumber = value;
+    } else {
+      _commandNumber = value.padLeft(3, "0");
+    }
   }
 
   String? _commandNumber;

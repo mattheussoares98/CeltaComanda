@@ -1250,4 +1250,17 @@ void main() {
       verify(() => persistent.closeApp()).called(1);
     });
   });
+
+  group("Update command number", () {
+    test("Should update command number correctly", () {
+      sut.updateCommandNumber("99");
+      expect(sut.commandNumber, "099");
+
+      sut.updateCommandNumber(null);
+      expect(sut.commandNumber, null);
+
+      sut.updateCommandNumber("1");
+      expect(sut.commandNumber, "001");
+    });
+  });
 }

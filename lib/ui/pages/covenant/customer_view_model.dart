@@ -15,7 +15,7 @@ class CustomerViewModel extends Equatable {
   final String? DateOfBirth;
   final String? SexType;
   final String? PersonType;
-  final String? Password;
+  final String? HasPassword;
   final List<String>? Emails;
   final List<TelephoneModel>? Telephones;
   final List<AddressModel>? Addresses;
@@ -31,7 +31,7 @@ class CustomerViewModel extends Equatable {
     required this.DateOfBirth,
     required this.SexType,
     required this.PersonType,
-    required this.Password,
+    required this.HasPassword,
     required this.Emails,
     required this.Telephones,
     required this.Addresses,
@@ -48,7 +48,7 @@ class CustomerViewModel extends Equatable {
         DateOfBirth,
         SexType,
         PersonType,
-        Password,
+        HasPassword,
         Emails,
         Telephones,
         Addresses,
@@ -65,7 +65,7 @@ class CustomerViewModel extends Equatable {
         DateOfBirth: json["DateOfBirth"],
         SexType: json["SexType"],
         PersonType: json["PersonType"],
-        Password: json["Password"],
+        HasPassword: json["HasPassword"],
         Emails: json["Emails"].map<String>((e) => e.toString()).toList(),
         Telephones: json["Telephones"]
             .map<TelephoneModel>((e) => TelephoneModel.fromJson(e))
@@ -88,7 +88,7 @@ class CustomerViewModel extends Equatable {
         "DateOfBirth": DateOfBirth,
         "SexType": SexType,
         "PersonType": PersonType,
-        "Password": Password,
+        "HasPassword": HasPassword,
         "Emails": Emails,
         "Telephones": Telephones,
         "Addresses": Addresses,
@@ -107,7 +107,7 @@ class CustomerViewModel extends Equatable {
         SexType: entity.SexType,
         PersonType: entity.PersonType,
         Emails: entity.Emails,
-        Password: entity.Password,
+        HasPassword: entity.HasPassword == true ? "true" : "false",
         Telephones: entity.Telephones?.map((e) => TelephoneModel.fromEntity(e))
             .toList(),
         Addresses:

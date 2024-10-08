@@ -321,7 +321,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
     });
     test("Should emit correct values on error", () async {
@@ -338,7 +338,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
     });
 
@@ -354,7 +354,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verify(
@@ -394,7 +394,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verify(
@@ -410,7 +410,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verify(
@@ -441,7 +441,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verifyNever(
@@ -463,7 +463,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       expect(sut.authorizationPendingModel, null);
@@ -484,7 +484,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       expect(
@@ -506,7 +506,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verify(() => updateSaleRequest.update(
@@ -533,12 +533,12 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verify(() => checkPasswordByCustomerCode.validate(
             customerCode: customersViewModel[0].Code!.toInt(),
-            password: customersViewModel[0].Password!,
+            password: customersViewModel[0].HasPassword!,
           )).called(1);
     });
     test(
@@ -580,7 +580,7 @@ void main() {
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].Password,
+        customerPassword: customersViewModel[0].HasPassword,
       );
 
       verifyNever(

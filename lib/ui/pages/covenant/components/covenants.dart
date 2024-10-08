@@ -151,8 +151,7 @@ class _CovenantsState extends State<Covenants> {
           onPressed: covenantPresenter.selectedCovenant
                   .containsKey(widget.customer.Code)
               ? () async {
-                  if (widget.customer.Password == null ||
-                      widget.customer.Password!.isEmpty) {
+                  if (widget.customer.HasPassword == "false") {
                     await _finishSaleRequestByCovenant(
                       covenantPresenter: covenantPresenter,
                       homePresenter: homePresenter,

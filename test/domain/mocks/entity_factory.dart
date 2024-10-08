@@ -1016,8 +1016,8 @@ class EntityFactory {
           DateOfBirth: faker.randomGenerator.string(100),
           SexType: faker.randomGenerator.string(100),
           PersonType: faker.randomGenerator.string(100),
-          Password:
-              hasPasswod == true ? faker.randomGenerator.string(10) : null,
+          HasPassword:
+              hasPasswod == true ? faker.randomGenerator.boolean() : null,
           Emails: [
             faker.randomGenerator.string(100),
             faker.randomGenerator.string(100),

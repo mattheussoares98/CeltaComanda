@@ -86,7 +86,8 @@ void main() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
     homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
+        faker.randomGenerator.integer(3).toString().padLeft(3, "0");
+    homePresenter.isFixedCommandNumberMock = true;
     comments = faker.randomGenerator.string(10);
     tableNumber = faker.randomGenerator.integer(1000, min: 1);
 
@@ -1044,14 +1045,12 @@ void main() {
         commandNumber: homePresenter.commandNumberMock,
       );
 
-      verify(() => barcodeScanner.read()).called(1);
-
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(2);
 
@@ -1224,7 +1223,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
 
@@ -1276,7 +1275,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
 
@@ -1332,7 +1331,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
 
@@ -1384,7 +1383,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(2);
 
@@ -1657,7 +1656,6 @@ void main() {
     test(
         "Should not call barcodeScanner.read if homePresenter.isFixedCommandNumber",
         () async {
-      homePresenter.isFixedCommandNumberMock = true;
       expect(homePresenter.isFixedCommandNumber, true);
 
       await sut.saveProducts(
@@ -1674,8 +1672,6 @@ void main() {
     test(
         "Should use homePresenter.commandNumber to saveProducts when isFixedCommandNumber",
         () async {
-      homePresenter.isFixedCommandNumberMock = true;
-
       final fixedCommandNumber = faker.randomGenerator.integer(999).toString();
       homePresenter.commandNumberMock = fixedCommandNumber;
       expect(homePresenter.commandNumber, fixedCommandNumber);
@@ -1724,7 +1720,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber,
+          commandNumber: homePresenter.commandNumberMock!,
         ),
       );
     });

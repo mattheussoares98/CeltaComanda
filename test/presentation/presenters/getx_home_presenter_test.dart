@@ -269,7 +269,7 @@ void main() {
       await sut.updateIsFixedCommandNumber();
     });
     test("Should call localCommandData.udpate", () async {
-      final commandNumber = faker.randomGenerator.integer(100).toString();
+      final commandNumber = faker.randomGenerator.integer(100).toString().padLeft(3, "0");
       sut.updateCommandNumber(commandNumber);
 
       await sut.updateIsFixedCommandNumber();

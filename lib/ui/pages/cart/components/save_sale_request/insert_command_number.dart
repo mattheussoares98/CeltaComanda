@@ -1,13 +1,14 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../helpers/helpers.dart';
 
-class InsertTableNumber extends StatelessWidget {
-  final GlobalKey<FormState> tableKey;
-  final TextEditingController tableNumberController;
-  const InsertTableNumber({
-    required this.tableKey,
-    required this.tableNumberController,
+class InsertCommandNumber extends StatelessWidget {
+  final GlobalKey<FormState> commandNumberKey;
+  final TextEditingController commandNumberController;
+  const InsertCommandNumber({
+    required this.commandNumberKey,
+    required this.commandNumberController,
     super.key,
   });
 
@@ -18,16 +19,20 @@ class InsertTableNumber extends StatelessWidget {
         const Expanded(child: SizedBox()),
         Expanded(
           child: Form(
-            key: tableKey,
+            key: commandNumberKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: TextFormField(
               autofocus: true,
-              controller: tableNumberController,
+              controller: commandNumberController,
               keyboardType: TextInputType.number,
-              maxLength: 4,
+              maxLength: 3,
               textAlign: TextAlign.center,
-              decoration: const InputDecoration(
-                counterText: "",
+              decoration: formFieldDecoration(
+                showCounterText: false,
+                context: context,
+                hintText: R.string.commandNumber,
+                labelText: R.string.commandNumber,
+                errorText: null,
               ),
               validator: (value) {
                 if (int.tryParse(value!) == null) {

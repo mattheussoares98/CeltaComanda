@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +21,8 @@ class SaveSaleRequestButton extends StatefulWidget {
 }
 
 class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
-  TextEditingController tableNumberController = TextEditingController();
-  GlobalKey<FormState> tableKey = GlobalKey<FormState>();
+  TextEditingController commandNumberController = TextEditingController();
+  GlobalKey<FormState> commandNumberKey = GlobalKey<FormState>();
 
   _addProducts({
     required CartPresenter cartPresenter,
@@ -56,7 +58,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
   @override
   void dispose() {
     super.dispose();
-    tableNumberController.dispose();
+    commandNumberController.dispose();
   }
 
   @override
@@ -76,6 +78,8 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
         maximumSize: Size(double.infinity, widget.buttonHeight),
       ),
       onPressed: () async {
+        commandNumberController.clear();
+
         if (homePresenter.isFixedCommandNumber) {
           notificationDialog(
             context: context,
@@ -104,29 +108,28 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
         } else {
           notificationDialog(
             context: context,
-            titleMessage: R.string.addFlagOrTable,
-            cancelMessage: R.string.jump,
-            confirmMessage: R.string.confirmFlag,
+            confirmMessage: R.string.send,
+            cancelMessage: R.string.cancel,
+            titleMessage: R.string.msgWriteCommandNumber,
             closeDialogOnConfirmPress: false,
-            content: InsertTableNumber(
-              tableKey: tableKey,
-              tableNumberController: tableNumberController,
+            content: InsertCommandNumber(
+              commandNumberKey: commandNumberKey,
+              commandNumberController: commandNumberController,
             ),
-            onCancelPress: () async => Navigator.of(context).pop,
             onPress: () async {
-              bool? isValid = tableKey.currentState?.validate();
+              bool? isValid = commandNumberKey.currentState?.validate();
 
               if (isValid == true) {
-                Navigator.of(context).pop();
                 await _addProducts(
                   insertProductPresenter: insertProductPresenter,
                   cartPresenter: cartPresenter,
                   context: context,
                   printedProductsPresenter: printedProductsPresenter,
-                  tableNumber: int.tryParse(tableNumberController.text),
+                  tableNumber: null,
                   homePresenter: homePresenter,
                   expansibleGroupFromProductPresenter:
                       expansibleGroupFromProductPresenter,
+                  commandNumber: commandNumberController.text.padLeft(3, "0"),
                 );
               }
             },

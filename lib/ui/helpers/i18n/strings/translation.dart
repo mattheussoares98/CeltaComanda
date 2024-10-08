@@ -138,6 +138,7 @@ abstract class Translation {
   String get reserved;
   String get reserveTable;
   String get searchCommandData;
+  String get searchDataOfOtherCommandNumber;
   String get searchProduct;
   String get selectOneComment;
   String get selectedProductsAndComments;

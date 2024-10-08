@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../main/builders/builders.dart';
 import 'components.dart';
 import '../helpers/helpers.dart';
 import '../pages/pages.dart';
@@ -145,6 +146,8 @@ Future<void> _onPress({
 
     if (isUpdated) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Navigator.of(NavigatorKey.navigatorKey.currentState?.context ?? context)
+            .pop();
         showAlertMessage(
           context,
           R.string.msgRequestSentSuccessfully,
@@ -159,6 +162,7 @@ Future<void> _onPress({
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
   } else {
+    homePresenter.updateCommandNumber(commandNumber);
     await printedProductsPresenter.loadPrinted(homePresenter);
   }
 }

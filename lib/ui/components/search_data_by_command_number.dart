@@ -1,66 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../ui/helpers/helpers.dart';
 import '../pages/pages.dart';
 
 class SearchDataByCommandNumber extends StatelessWidget {
-  final HomePresenter homePresenter;
-  final Future Function() loadCommandData;
-  final String emptyMessage;
   const SearchDataByCommandNumber({
-    required this.homePresenter,
-    required this.loadCommandData,
-    required this.emptyMessage,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final appBarHeight = AppBar().preferredSize.height;
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    final usableScreenHeight = screenHeight - appBarHeight - statusBarHeight;
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: true);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return SizedBox(
-      height: usableScreenHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (homePresenter.commandNumber != null)
+          if (printedProductsPresenter.printedProducts == null)
             Text(
-              "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: hasMinWidth(context) ? 40 : 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          Text(
-            emptyMessage,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: hasMinWidth(context) ? 30 : 23,
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
-          TextButton.icon(
-            onPressed: () async {
-              await loadCommandData();
-            },
-            icon: Icon(
-              Icons.search,
-              size: hasMinWidth(context) ? 40 : 25,
-              color: Theme.of(context).primaryColorDark,
-            ),
-            label: Text(
-              R.string.searchCommandData,
+              R.string.msgCommandDontHaveOpenValues,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: hasMinWidth(context) ? 30 : 23,
-                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColorLight,
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: TextButton.icon(
+              onPressed: () async {
+                if (homePresenter.isFixedCommandNumber) {
+                  await printedProductsPresenter.loadPrinted(homePresenter);
+                } else {
+                  writeCommandNumber(
+                    context: context,
+                    onWriteCommandAction: OnWriteCommand.getPaymentAmmount,
+                  );
+                }
+              },
+              icon: Icon(
+                Icons.search,
+                size: hasMinWidth(context) ? 40 : 25,
                 color: Theme.of(context).primaryColorDark,
+              ),
+              label: Text(
+                homePresenter.isFixedCommandNumber
+                    ? R.string.searchCommandData
+                    : R.string.searchDataOfOtherCommandNumber,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 30 : 23,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColorDark,
+                ),
               ),
             ),
           ),

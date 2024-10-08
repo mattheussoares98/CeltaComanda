@@ -88,6 +88,7 @@ class _PaymentPageState extends State<PaymentPage>
           onPressed: Navigator.of(context).pop,
           icon: const Icon(Icons.arrow_back),
         ),
+        title: Text(R.string.pay),
         actions: [
           IconButton(
             onPressed: () async {
@@ -101,6 +102,16 @@ class _PaymentPageState extends State<PaymentPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (homePresenter.commandNumber != null)
+              Text(
+                "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: getStringSize(context) * 2,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             if (printedProductsPresenter.printedProducts != null &&
                 !paymentPresenter.commandAlreadyPaid)
               const PaymentButtons(),
@@ -114,16 +125,9 @@ class _PaymentPageState extends State<PaymentPage>
                 ),
               ),
             if (printedProductsPresenter.printedProducts == null &&
-                !paymentPresenter.commandAlreadyPaid)
-              SearchDataByCommandNumber(
-                homePresenter: homePresenter,
-                emptyMessage: homePresenter.commandNumber != null
-                    ? R.string.msgCommandDontHaveOpenValues
-                    : R.string.msgSearchCommandToPay,
-                loadCommandData: () async {
-                  await printedProductsPresenter.loadPrinted(homePresenter);
-                },
-              ),
+                    !paymentPresenter.commandAlreadyPaid ||
+                !homePresenter.isFixedCommandNumber)
+              const SearchDataByCommandNumber(),
           ],
         ),
       ),

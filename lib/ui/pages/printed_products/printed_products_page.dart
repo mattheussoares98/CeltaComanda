@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
-import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -87,16 +86,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                         passwordController: passwordController,
                         personalizedCodeController: personalizedCodeController,
                       )
-                    : SearchDataByCommandNumber(
-                        homePresenter: homePresenter,
-                        emptyMessage: homePresenter.commandNumber == null
-                            ? R.string.msgConsultCommandToViewProducts
-                            : R.string.msgCommandDontHaveProducts,
-                        loadCommandData: () async {
-                          await printedProductsPresenter
-                              .loadPrinted(homePresenter);
-                        },
-                      ),
+                    : const SearchDataByCommandNumber(),
               ),
               if (printedProductsPresenter.printedProducts != null)
                 const RequestSummary(

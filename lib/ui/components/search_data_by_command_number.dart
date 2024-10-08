@@ -38,7 +38,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
                 } else {
                   writeCommandNumber(
                     context: context,
-                    onWriteCommandAction: OnWriteCommand.getPaymentAmmount,
+                    onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
                   );
                 }
               },

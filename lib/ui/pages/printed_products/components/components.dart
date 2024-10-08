@@ -4,6 +4,7 @@ export 'printed_item.dart';
 export './product_details.dart';
 export './request_summary.dart';
 export './requested_at.dart';
+export './search_data_of_other_command_number.dart';
 export './update_total_by_person.dart';
 export './user_input.dart';
 export 'validate_user_and_cancel_product.dart';

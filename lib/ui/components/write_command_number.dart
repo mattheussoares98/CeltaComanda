@@ -10,7 +10,7 @@ import '../pages/pages.dart';
 enum OnWriteCommand {
   saveProducts,
   loadCommandData,
-  getPaymentAmmount,
+  loadPrintedProducts,
 }
 
 void writeCommandNumber({

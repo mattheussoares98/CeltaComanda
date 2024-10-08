@@ -40,39 +40,66 @@ class _UpdateTotalByPersonState extends State<UpdateTotalByPerson> {
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    return Column(
-      children: [
-        Text(
-          R.string.peopleQuantity,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: getStringSize(context)),
-        ),
-        const SizedBox(height: 10),
-        FittedBox(
-          child: UpdateQuantity(
-            quantity: selectedPeoples,
-            reduceQuantity: () {
-              setState(() {
-                selectedPeoples--;
-                _updateTotalPerPerson(printedProductsPresenter);
-              });
-            },
-            addQuantity: () {
-              setState(() {
-                selectedPeoples++;
-                _updateTotalPerPerson(printedProductsPresenter);
-              });
-            },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: Column(
+        children: [
+          Text(
+            R.string.peopleQuantity,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: getStringSize(context)),
           ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          "${R.string.totalByPerson}: ${totalPerPerson.toString().toBrazilianNumber().addBrazilianCoin()}",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: getStringSize(context)),
-        )
-      ],
+          const SizedBox(height: 10),
+          FittedBox(
+            child: UpdateQuantity(
+              quantity: selectedPeoples,
+              reduceQuantity: () {
+                setState(() {
+                  selectedPeoples--;
+                  _updateTotalPerPerson(printedProductsPresenter);
+                });
+              },
+              addQuantity: () {
+                setState(() {
+                  selectedPeoples++;
+                  _updateTotalPerPerson(printedProductsPresenter);
+                });
+              },
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "${R.string.totalByPerson}: ${totalPerPerson.toString().toBrazilianNumber().addBrazilianCoin()}",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: getStringSize(context)),
+          ),
+          if (!homePresenter.isFixedCommandNumber)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  writeCommandNumber(
+                    context: context,
+                    onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: FittedBox(
+                    child: Text(
+                      R.string.searchDataOfOtherCommandNumber,
+                      style: TextStyle(
+                        fontSize: getStringSize(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
+import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -65,12 +66,25 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
       },
       child: Scaffold(
         appBar: AppBar(
+          title: Text(R.string.requested),
           actions: [
             IconButton(
               onPressed: () async {
                 await printedProductsPresenter.loadPrinted(homePresenter);
               },
-              icon: const Icon(Icons.refresh),
+              icon: Row(
+                children: [
+                  if (homePresenter.commandNumber != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
+                        style: TextStyle(fontSize: getStringSize(context)),
+                      ),
+                    ),
+                  const Icon(Icons.refresh),
+                ],
+              ),
             ),
           ],
         ),

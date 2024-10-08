@@ -2,9 +2,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import 'components.dart';
+import '../helpers/helpers.dart';
+import '../pages/pages.dart';
 
 enum OnWriteCommand {
   saveProducts,
@@ -14,7 +14,7 @@ enum OnWriteCommand {
 
 void writeCommandNumber({
   required BuildContext context,
-  required OnWriteCommand action,
+  required OnWriteCommand onWriteCommandAction,
 }) {
   GlobalKey<FormState> commandKey = GlobalKey<FormState>();
   TextEditingController commandNumberController = TextEditingController();
@@ -56,9 +56,7 @@ void writeCommandNumber({
               validator: (value) {
                 if (value?.isEmpty == true) {
                   return R.string.msgWriteCommandNumber;
-                } else if (value!.length < 3) {
-                  return R.string.msgWriteThreeNumbers;
-                } else if (int.tryParse(value) == null) {
+                } else if (int.tryParse(value!) == null) {
                   return R.string.msgInvalidNumber;
                 }
                 return null;
@@ -74,7 +72,7 @@ void writeCommandNumber({
                     menuPresenter: menuPresenter,
                     commandNumber: commandNumberController.text,
                     commandKey: commandKey,
-                    onWriteCommand: action,
+                    onWriteCommand: onWriteCommandAction,
                     focusNode: focusNode,
                     paymentPresenter: paymentPresenter,
                     expansibleGroupFromProductPresenter:
@@ -102,7 +100,7 @@ void writeCommandNumber({
         menuPresenter: menuPresenter,
         commandNumber: commandNumberController.text,
         commandKey: commandKey,
-        onWriteCommand: action,
+        onWriteCommand: onWriteCommandAction,
         focusNode: focusNode,
         paymentPresenter: paymentPresenter,
         expansibleGroupFromProductPresenter:

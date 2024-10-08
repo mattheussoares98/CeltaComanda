@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../helpers/helpers.dart';
-import '../../../../components/components.dart';
-import '../../../pages.dart';
+import '../../../helpers/helpers.dart';
+import '../../../components/components.dart';
+import '../../pages.dart';
 
 class SaveSaleRequestButton extends StatefulWidget {
   final double buttonHeight;
@@ -106,33 +106,9 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
             },
           );
         } else {
-          notificationDialog(
+          writeCommandNumber(
             context: context,
-            confirmMessage: R.string.send,
-            cancelMessage: R.string.cancel,
-            titleMessage: R.string.msgWriteCommandNumber,
-            closeDialogOnConfirmPress: false,
-            content: InsertCommandNumber(
-              commandNumberKey: commandNumberKey,
-              commandNumberController: commandNumberController,
-            ),
-            onPress: () async {
-              bool? isValid = commandNumberKey.currentState?.validate();
-
-              if (isValid == true) {
-                await _addProducts(
-                  insertProductPresenter: insertProductPresenter,
-                  cartPresenter: cartPresenter,
-                  context: context,
-                  printedProductsPresenter: printedProductsPresenter,
-                  tableNumber: null,
-                  homePresenter: homePresenter,
-                  expansibleGroupFromProductPresenter:
-                      expansibleGroupFromProductPresenter,
-                  commandNumber: commandNumberController.text.padLeft(3, "0"),
-                );
-              }
-            },
+            onWriteCommandAction: OnWriteCommand.saveProducts,
           );
         }
       },

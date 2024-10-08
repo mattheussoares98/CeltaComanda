@@ -1782,7 +1782,9 @@ void main() {
         homePresenter: homePresenter,
       );
     });
-    test("Should not update command number when save products", () async {
+    test(
+        "Should update command number when is not fixed command number and write command number",
+        () async {
       homePresenter.isFixedCommandNumberMock = false;
       String newCommandNumber = faker.randomGenerator.integer(100).toString();
 
@@ -1796,7 +1798,8 @@ void main() {
         commandNumber: newCommandNumber,
       );
 
-      verifyNever(() => homePresenter.updateCommandNumber(newCommandNumber));
+      verify(() => homePresenter
+          .updateCommandNumber(newCommandNumber.padLeft(3, "0"))).called(1);
     });
   });
 

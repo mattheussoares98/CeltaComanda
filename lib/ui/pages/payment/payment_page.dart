@@ -94,7 +94,19 @@ class _PaymentPageState extends State<PaymentPage>
             onPressed: () async {
               await printedProductsPresenter.loadPrinted(homePresenter);
             },
-            icon: const Icon(Icons.refresh),
+            icon: Row(
+              children: [
+                if (homePresenter.commandNumber != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Text(
+                      "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
+                      style: TextStyle(fontSize: getStringSize(context)),
+                    ),
+                  ),
+                const Icon(Icons.refresh),
+              ],
+            ),
           ),
         ],
       ),
@@ -102,16 +114,6 @@ class _PaymentPageState extends State<PaymentPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (homePresenter.commandNumber != null)
-              Text(
-                "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: getStringSize(context) * 2,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             if (printedProductsPresenter.printedProducts != null &&
                 !paymentPresenter.commandAlreadyPaid)
               const PaymentButtons(),

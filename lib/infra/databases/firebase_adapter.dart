@@ -38,7 +38,7 @@ class FirebaseAdapter implements FirebaseStorage {
       var adicionarData = FieldValue.arrayUnion(entity.dates);
 
       await docRef.set({
-        'timesUsed': incremento,
+        'printRequest': incremento,
         'dates': adicionarData,
       }, SetOptions(merge: true));
     } catch (e) {

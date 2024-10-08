@@ -24,30 +24,31 @@ class TitleAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (homePresenter.commandNumber != null)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onDoubleTap: () {
-                  doOnTapOrLongPress(context);
-                },
-                onLongPress: () {
-                  doOnTapOrLongPress(context);
-                },
-                child: Text(
-                  "${R.string.table} ${homePresenter.commandNumber?.toInt()}",
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 23 : 15,
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic,
-                  ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onDoubleTap: () {
+                doOnTapOrLongPress(context);
+              },
+              onLongPress: () {
+                doOnTapOrLongPress(context);
+              },
+              child: Text(
+                homePresenter.isFixedCommandNumber
+                    ? "${R.string.table} ${homePresenter.commandNumber?.toInt()}"
+                    : R.string.configurations,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: hasMinWidth(context) ? 23 : 15,
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ),
           ),
+        ),
       ],
     );
   }

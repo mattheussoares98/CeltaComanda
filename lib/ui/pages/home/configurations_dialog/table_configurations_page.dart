@@ -24,7 +24,9 @@ class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
     super.initState();
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    homePresenter.updateSelectedCommand(homePresenter.commandNumber!.toInt());
+    if (homePresenter.commandNumber != null) {
+      homePresenter.updateSelectedCommand(homePresenter.commandNumber!.toInt());
+    }
   }
 
   @override

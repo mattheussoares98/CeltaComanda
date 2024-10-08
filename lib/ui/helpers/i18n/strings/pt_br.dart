@@ -106,6 +106,7 @@ class PtBr implements Translation {
   String get commentsOfProduct => "Comentários do produto";
   String get comments => "Comentários";
   String get comment => "Comentário";
+  String get configurations => "Configurações";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
   String get confirm => 'Confirmar';

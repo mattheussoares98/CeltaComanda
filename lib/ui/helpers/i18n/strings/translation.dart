@@ -77,13 +77,13 @@ abstract class Translation {
   String get closeApplication;
   String get code;
   String get combox;
-  String get liquidateCommandSucceeds;
   String get commandNotAvailable;
   String get command;
   String get commandNumber;
   String get commentsOfProduct;
   String get comments;
   String get comment;
+  String get configurations;
   String get confirmFlag;
   String get confirm;
   String get confirmPassword;
@@ -112,6 +112,7 @@ abstract class Translation {
   String get liberateCancelProducts;
   String get liberateCommand;
   String get liquidateCommand;
+  String get liquidateCommandSucceeds;
   String get loadMenu;
   String get login;
   String get name;

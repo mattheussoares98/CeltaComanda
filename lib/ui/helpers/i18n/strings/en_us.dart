@@ -104,6 +104,7 @@ class EnUs implements Translation {
   String get commentsOfProduct => 'Product comments';
   String get comments => 'Comments';
   String get comment => 'Comment';
+  String get configurations => 'Configurations';
   String get confirmFlag => 'Confirm flag';
   String get confirmPassword => 'Confirm password';
   String get confirm => 'Confirm';

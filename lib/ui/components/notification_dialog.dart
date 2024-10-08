@@ -13,8 +13,6 @@ Future<void> notificationDialog({
   String? confirmMessage,
   bool canPop = true,
 }) async {
-  cancelMessage = R.string.no;
-  confirmMessage = R.string.yes;
   await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -37,28 +35,26 @@ Future<void> notificationDialog({
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (cancelMessage != null)
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () async {
-                          if (onCancelPress != null) {
-                            await onCancelPress();
-                          }
-                          WidgetsBinding.instance
-                              .addPostFrameCallback((_) async {
-                            Navigator.of(context).pop();
-                          });
-                        },
-                        child: Text(
-                          cancelMessage,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () async {
+                        if (onCancelPress != null) {
+                          await onCancelPress();
+                        }
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
+                          Navigator.of(context).pop();
+                        });
+                      },
+                      child: Text(
+                        cancelMessage ?? R.string.no,
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
+                  ),
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -75,11 +71,13 @@ Future<void> notificationDialog({
                         await onPress();
                       },
                       child: FittedBox(
-                        child: Text(confirmMessage!,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        child: Text(
+                          confirmMessage ?? R.string.yes,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),

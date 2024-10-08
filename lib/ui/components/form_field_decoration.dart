@@ -6,12 +6,14 @@ InputDecoration formFieldDecoration({
   required String labelText,
   required String? errorText,
   Widget? suffixIcon,
+  bool? showCounterText = true,
 }) =>
     InputDecoration(
       labelText: labelText,
       suffixIcon: suffixIcon,
       errorText: errorText,
       hintText: hintText,
+      counterText: showCounterText == false ? "" : null,
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(

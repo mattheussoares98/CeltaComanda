@@ -21,15 +21,17 @@ class Covenants extends StatefulWidget {
 }
 
 class _CovenantsState extends State<Covenants> {
+  final passwordKey = GlobalKey<FormState>();
+  final passwordController = TextEditingController();
+
   Future<void> _finishSaleRequestByCovenant({
     required CovenantPresenter covenantPresenter,
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
-    required String? customerPassword,
   }) async {
     await covenantPresenter.finishSaleRequestByCovenant(
-      customerPassword: customerPassword,
+      customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
       showErrorMessageReturnedByBs: (error) {
@@ -61,6 +63,13 @@ class _CovenantsState extends State<Covenants> {
       value,
     );
     widget.callSetState();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+
+    passwordController.dispose();
   }
 
   @override
@@ -142,13 +151,55 @@ class _CovenantsState extends State<Covenants> {
           onPressed: covenantPresenter.selectedCovenant
                   .containsKey(widget.customer.Code)
               ? () async {
-                  await _finishSaleRequestByCovenant(
-                    covenantPresenter: covenantPresenter,
-                    homePresenter: homePresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    context: context,
-                    customerPassword: null,
-                  );
+                  if (widget.customer.Password == null ||
+                      widget.customer.Password!.isEmpty) {
+                    await _finishSaleRequestByCovenant(
+                      covenantPresenter: covenantPresenter,
+                      homePresenter: homePresenter,
+                      printedProductsPresenter: printedProductsPresenter,
+                      context: context,
+                    );
+                  } else {
+                    notificationDialog(
+                        context: context,
+                        titleMessage: R.string.password,
+                        cancelMessage: R.string.cancel,
+                        confirmMessage: R.string.confirm,
+                        content: Form(
+                          key: passwordKey,
+                          child: TextFormField(
+                            controller: passwordController,
+                            autofocus: true,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            obscureText: true,
+                            decoration: formFieldDecoration(
+                              context: context,
+                              hintText: R.string.password,
+                              labelText: R.string.password,
+                              errorText: R.string.msgWritePassword,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return R.string.msgWritePassword;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        onPress: () async {
+                          bool? isValid = passwordKey.currentState?.validate();
+                          if (isValid == true) {
+                            await _finishSaleRequestByCovenant(
+                              covenantPresenter: covenantPresenter,
+                              homePresenter: homePresenter,
+                              printedProductsPresenter:
+                                  printedProductsPresenter,
+                              context: context,
+                            );
+                          }
+                        });
+                  }
                 }
               : null,
           child: Text(

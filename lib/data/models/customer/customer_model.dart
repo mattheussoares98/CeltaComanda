@@ -13,6 +13,7 @@ class CustomerModel {
   final String? DateOfBirth;
   final String? SexType;
   final String? PersonType;
+  final String? Password;
   final List<String>? Emails;
   final List<TelephoneModel>? Telephones;
   final List<AddressModel>? Addresses;
@@ -28,6 +29,7 @@ class CustomerModel {
     required this.DateOfBirth,
     required this.SexType,
     required this.PersonType,
+    required this.Password,
     required this.Emails,
     required this.Telephones,
     required this.Addresses,
@@ -44,6 +46,7 @@ class CustomerModel {
         DateOfBirth: json["DateOfBirth"],
         SexType: json["SexType"],
         PersonType: json["PersonType"],
+        Password: json["Password"],
         Emails: json["Emails"].map<String>((e) => e.toString()).toList(),
         Telephones: json["Telephones"]
             .map<TelephoneModel>((e) => TelephoneModel.fromJson(e))
@@ -66,6 +69,7 @@ class CustomerModel {
         "DateOfBirth": DateOfBirth,
         "SexType": SexType,
         "PersonType": PersonType,
+        "Password": Password,
         "Emails": Emails,
         "Telephones": Telephones,
         "Addresses": Addresses,
@@ -82,6 +86,7 @@ class CustomerModel {
         DateOfBirth: DateOfBirth,
         SexType: SexType,
         PersonType: PersonType,
+        Password: Password,
         Emails: Emails,
         Telephones: Telephones?.map((e) => e.toEntity()).toList(),
         Addresses: Addresses?.map((e) => e.toEntity()).toList(),

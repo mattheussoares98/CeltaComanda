@@ -14,6 +14,7 @@ class CustomerEntity extends Equatable {
   final String? DateOfBirth;
   final String? SexType;
   final String? PersonType;
+  final String? Password;
   final List<String>? Emails;
   final List<TelephoneEntity>? Telephones;
   final List<AddressEntity>? Addresses;
@@ -29,6 +30,7 @@ class CustomerEntity extends Equatable {
     required this.DateOfBirth,
     required this.SexType,
     required this.PersonType,
+    required this.Password,
     required this.Emails,
     required this.Telephones,
     required this.Addresses,
@@ -46,6 +48,7 @@ class CustomerEntity extends Equatable {
         DateOfBirth,
         SexType,
         PersonType,
+        Password,
         Emails,
         Telephones,
         Addresses,

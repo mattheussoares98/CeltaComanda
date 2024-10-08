@@ -1013,6 +1013,7 @@ class EntityFactory {
           DateOfBirth: faker.randomGenerator.string(100),
           SexType: faker.randomGenerator.string(100),
           PersonType: faker.randomGenerator.string(100),
+          Password: faker.randomGenerator.string(10),
           Emails: [
             faker.randomGenerator.string(100),
             faker.randomGenerator.string(100),

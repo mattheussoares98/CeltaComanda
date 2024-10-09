@@ -7,6 +7,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
+import rede.smartrede.commons.contract.ITerminalFunctions
 
 class App : Application() {
     override fun onCreate() {
@@ -22,5 +23,6 @@ class App : Application() {
         single { IRedeSdk.newInstance(androidContext()) }
         single { get<IRedeSdk>().getRedePayments(androidContext()) }
         single { get<IRedeSdk>().getTerminalFunctions() }
+        single { get<ITerminalFunctions>().getConnectorPrinter() }
     }
 }

@@ -9,10 +9,12 @@ import br.com.celtaware.comanda.utils.PersistentChannelManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import org.koin.android.ext.android.inject
+import rede.smartrede.commons.contract.ITerminalFunctions
 import rede.smartrede.sdk.RedePayments
 
 class MainActivity : FlutterActivity() {
     private val redePayments: RedePayments by inject()
+    private val terminalFunctions: ITerminalFunctions by inject()
     private lateinit var persistentChannelManager: PersistentChannelManager
     private lateinit var paymentHandler: PaymentHandler
     private var engine: FlutterEngine? = null

@@ -1,4 +1,4 @@
-package br.com.celtaware.comanda.Printer
+package br.com.celtaware.comanda.printer
 
 import android.graphics.Bitmap
 import org.apache.commons.lang3.StringUtils

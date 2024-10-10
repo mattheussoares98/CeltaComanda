@@ -1,4 +1,4 @@
-package br.com.celtaware.comanda.Printer
+package br.com.celtaware.comanda.printer
 
 enum class Alignment {
     Left,

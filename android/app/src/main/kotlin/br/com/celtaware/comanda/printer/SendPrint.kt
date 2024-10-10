@@ -1,4 +1,4 @@
-package br.com.celtaware.comanda.Printer
+package br.com.celtaware.comanda.printer
 
 import android.util.Log
 import br.com.positivo.printermodule.PrintAttributes.KEY_ALIGN
@@ -10,7 +10,6 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import rede.smartrede.commons.callback.IPrinterCallback
 import rede.smartrede.commons.contract.IConnectorPrinter
-import rede.smartrede.sdk.FlexTipoPagamento
 
 class SendPrint(
     private val connectorPrinter: IConnectorPrinter,

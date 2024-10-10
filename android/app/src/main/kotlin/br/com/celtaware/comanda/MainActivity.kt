@@ -3,6 +3,7 @@ package br.com.celtaware.comanda
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import br.com.celtaware.comanda.rede_channel.PaymentHandler
 import br.com.celtaware.comanda.utils.AppUtils
 import br.com.celtaware.comanda.utils.OrientationUtils
 import br.com.celtaware.comanda.utils.PersistentChannelManager

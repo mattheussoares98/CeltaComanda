@@ -1,4 +1,4 @@
-package br.com.celtaware.comanda
+package br.com.celtaware.comanda.rede_channel
 
 import android.app.Activity
 import android.content.ActivityNotFoundException

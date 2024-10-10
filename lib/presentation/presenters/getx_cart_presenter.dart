@@ -449,6 +449,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             TotalLiquid: element.TotalLiquid.toDouble(),
             Value: element.Value.toDouble(),
             Comments: element.Comments,
+            ProductIsFatherComposition:
+                element.Product.ProductIsFatherComposition == "true",
+            SaleRequestProductIdOfFather: null,
           );
         },
       ).toList();
@@ -574,6 +577,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
         final updateSaleRequestTempProductEntity =
             UpdateSaleRequestTempProductEntity(
+          ProductIsFatherComposition: false,
+          SaleRequestProductIdOfFather:
+              product.Product.InternalCodeOnERP?.toInt(),
           ProductInternalCodeOnErp:
               child.childs?.isEmpty == true || child.childs == null
                   ? child.InternalCodeOnERPCodeChild!.toInt()

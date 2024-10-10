@@ -260,6 +260,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               TotalLiquid: e.TotalLiquid,
               Value: e.Value,
               Comments: e.Comments,
+              SaleRequestProductIdOfFather: e.SaleRequestProductIdOfFather,
+              ProductIsFatherComposition: e.ProductIsFatherComposition,
             ),
           ).toList(),
         ),

@@ -13,6 +13,8 @@ class SaleRequestTempProductEntity {
   final double Value;
   final String ProductPriceLookUpCode;
   final String? Comments;
+  final int? SaleRequestProductIdOfFather;
+  final bool? ProductIsFatherComposition;
 
   SaleRequestTempProductEntity({
     required this.Product,
@@ -24,6 +26,8 @@ class SaleRequestTempProductEntity {
     required this.Quantity,
     required this.Value,
     required this.ProductPriceLookUpCode,
-    this.Comments,
+    required this.SaleRequestProductIdOfFather,
+    required this.ProductIsFatherComposition,
+    required this.Comments,
   });
 }

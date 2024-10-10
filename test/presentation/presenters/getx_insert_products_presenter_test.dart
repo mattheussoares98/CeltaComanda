@@ -70,6 +70,9 @@ void main() {
             TotalLiquid: totalLiquid,
             Value: productValue,
             Comments: "",
+            SaleRequestProductIdOfFather: productCompositionViewModel
+                .InternalCodeOnERPCodeFather?.toInt(),
+            ProductIsFatherComposition: false,
           ),
         ]);
 

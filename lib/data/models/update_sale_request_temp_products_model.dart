@@ -10,6 +10,8 @@ class UpdateSaleRequestTempProductsModel {
   final double TotalLiquid;
   final double Value;
   final String? Comments;
+  final int? SaleRequestProductIdOfFather;
+  final bool? ProductIsFatherComposition;
 
   UpdateSaleRequestTempProductsModel({
     required this.ProductInternalCodeOnErp,
@@ -19,6 +21,8 @@ class UpdateSaleRequestTempProductsModel {
     required this.TotalLiquid,
     required this.Value,
     required this.Comments,
+    required this.SaleRequestProductIdOfFather,
+    required this.ProductIsFatherComposition,
   });
 
   factory UpdateSaleRequestTempProductsModel.fromJson(Map json) {
@@ -43,6 +47,8 @@ class UpdateSaleRequestTempProductsModel {
       TotalLiquid: json["TotalLiquid"],
       Value: json["Value"],
       Comments: json["Comments"],
+      SaleRequestProductIdOfFather: json["SaleRequestProductIdOfFather"],
+      ProductIsFatherComposition: json["ProductIsFatherComposition"],
     );
   }
 
@@ -56,6 +62,8 @@ class UpdateSaleRequestTempProductsModel {
         TotalLiquid: entity.TotalLiquid,
         Value: entity.Value,
         Comments: entity.Comments,
+        SaleRequestProductIdOfFather: entity.SaleRequestProductIdOfFather,
+        ProductIsFatherComposition: entity.ProductIsFatherComposition,
       );
 
   UpdateSaleRequestTempProductEntity toEntity() =>
@@ -67,6 +75,8 @@ class UpdateSaleRequestTempProductsModel {
         TotalLiquid: TotalLiquid,
         Value: Value,
         Comments: Comments,
+        SaleRequestProductIdOfFather: SaleRequestProductIdOfFather,
+        ProductIsFatherComposition: ProductIsFatherComposition,
       );
 
   Map<dynamic, dynamic> toJson() => {
@@ -77,5 +87,7 @@ class UpdateSaleRequestTempProductsModel {
         "TotalLiquid": TotalLiquid,
         "Value": Value,
         "Comments": Comments,
+        "SaleRequestProductIdOfFather": SaleRequestProductIdOfFather,
+        "ProductIsFatherComposition": ProductIsFatherComposition,
       };
 }

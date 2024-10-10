@@ -35,12 +35,12 @@ void main() {
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
-  late CartProductEntity cartProductEntity;
+  late CartProductEntity cartProductEntityWithChilds;
   late String commandNumber;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late List<UpdateSaleRequestTempProductEntity>
       cartSaleRequestTempProductsEntity;
-  late CartProductsViewModel cartProductViewModel;
+  late CartProductsViewModel cartProductViewModelWithChilds;
   late CartProductEntity cartProductWithOneQuantity;
   late List<ProductCompositionViewModel> productsSelectedsInCombox;
   late int tableNumber;
@@ -93,7 +93,7 @@ void main() {
 
     saleRequestTempEntity =
         EntityFactory.makeSaleRequestTempEntity(tableNumber);
-    cartProductEntity = EntityFactory.makeCartProductEntity(
+    cartProductEntityWithChilds = EntityFactory.makeCartProductEntity(
       generateChilds: true,
       maximumProductQuantity: 200,
       minimumProductQuantity: 2,
@@ -107,14 +107,18 @@ void main() {
 
     cartSaleRequestTempProductsEntity = sut.cartProducts
         .map((element) => UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                element.toEntity().Product.InternalCodeOnERP!.toInt(),
-            ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
-            Quantity: element.Quantity.toDouble(),
-            SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId.toInt(),
-            TotalLiquid: element.TotalLiquid.toDouble(),
-            Value: element.Value.toDouble(),
-            Comments: element.Comments))
+              ProductInternalCodeOnErp:
+                  element.toEntity().Product.InternalCodeOnERP!.toInt(),
+              ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
+              Quantity: element.Quantity.toDouble(),
+              SaleRequestTempId:
+                  saleRequestTempEntity.SaleRequestTempId.toInt(),
+              TotalLiquid: element.TotalLiquid.toDouble(),
+              Value: element.Value.toDouble(),
+              Comments: element.Comments,
+              SaleRequestProductIdOfFather: null,
+              ProductIsFatherComposition: null,
+            ))
         .toList();
 
     productsSelectedsInCombox = [
@@ -166,7 +170,8 @@ void main() {
       CovenantCode: saleRequestTempEntity.CovenantCode,
     );
 
-    cartProductViewModel = CartProductsViewModel.fromEntity(cartProductEntity);
+    cartProductViewModelWithChilds =
+        CartProductsViewModel.fromEntity(cartProductEntityWithChilds);
 
     commentViewModel =
         EntityFactory.makeExpansibleGroupFromProductViewModel(selected: true);
@@ -176,8 +181,8 @@ void main() {
   void initMockSuccess() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     localPrintRequest.mockGetMergedPrinted(null);
-    cartInformations.mockSaveCart([cartProductViewModel]);
-    cartInformations.mockGetCart([cartProductViewModel]);
+    cartInformations.mockSaveCart([cartProductViewModelWithChilds]);
+    cartInformations.mockGetCart([cartProductViewModelWithChilds]);
     barcodeScanner.mockBarcodeScanner(commandNumber);
     alreadyPaid.mockVerify(false);
   }
@@ -221,14 +226,15 @@ void main() {
         "Should call updateCartInformations on addProductInCart with correct quantity",
         () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
 
       verify(
-        () => cartInformations.updateCartProducts([cartProductViewModel]),
+        () => cartInformations
+            .updateCartProducts([cartProductViewModelWithChilds]),
       ).called(1);
     });
 
@@ -237,7 +243,7 @@ void main() {
       cartInformations.mockSaveError();
 
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -250,7 +256,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -263,7 +269,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -274,7 +280,7 @@ void main() {
         "Should call cartInformations.update when removeProductFromCart succeeds",
         () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -285,11 +291,12 @@ void main() {
         () => cartInformations.updateCartProducts([
           CartProductsViewModel(
             Comments: null,
-            Product: cartProductViewModel.Product,
-            TotalLiquid: cartProductViewModel.TotalLiquid,
-            Quantity: cartProductViewModel.Quantity,
-            Value: cartProductViewModel.Value,
-            ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+            Product: cartProductViewModelWithChilds.Product,
+            TotalLiquid: cartProductViewModelWithChilds.TotalLiquid,
+            Quantity: cartProductViewModelWithChilds.Quantity,
+            Value: cartProductViewModelWithChilds.Value,
+            ProductPriceLookUpCode:
+                cartProductViewModelWithChilds.ProductPriceLookUpCode,
           )
         ]),
       ).called(1);
@@ -297,12 +304,12 @@ void main() {
     test(
         "Should NOT remove product from cart when cartInformations.update throws",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       cartInformations.mockSaveError();
       await sut.removeProductFromCart(0);
 
-      expect(sut.cartProducts, [cartProductViewModel]);
+      expect(sut.cartProducts, [cartProductViewModelWithChilds]);
     });
 
     test("Should emit correct events on removeProductFromCart success",
@@ -310,7 +317,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.removeProductFromCart(0);
     });
@@ -321,14 +328,14 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.removeProductFromCart(0);
     });
     test(
         "Should not remove product from cart when quantity is 1 and cartInformations.update throws",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
@@ -338,26 +345,26 @@ void main() {
     test(
         "Should not reduce productQuantity when cartInformations.update throws",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       cartInformations.mockSaveError();
       await sut.reduceCartProductQuantity(0);
 
       expect(
         sut.cartProducts.first.Quantity.toDouble(),
-        cartProductEntity.Quantity,
+        cartProductEntityWithChilds.Quantity,
       );
     });
 
     test("Should reduce productQuantity when cartInformations.update succeeds",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.reduceCartProductQuantity(0);
 
       expect(
         sut.cartProducts.first.Quantity.toDouble(),
-        cartProductEntity.Quantity - 1,
+        cartProductEntityWithChilds.Quantity - 1,
       );
     });
     test("Should emit correct values on reduceCartProductQuantity succeeds",
@@ -379,14 +386,14 @@ void main() {
     test(
         "Should not addCartProductQuantity when cartInformations.update throws",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       cartInformations.mockSaveError();
       await sut.addCartProductQuantity(0);
 
       expect(
         sut.cartProducts.first.Quantity.toDouble(),
-        cartProductEntity.Quantity,
+        cartProductEntityWithChilds.Quantity,
       );
     });
 
@@ -411,13 +418,13 @@ void main() {
 
     test("Should addCartProductQuantity when cartInformations.update succeeds",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.addCartProductQuantity(0);
 
       expect(
         sut.cartProducts.first.Quantity.toDouble(),
-        cartProductEntity.Quantity + 1,
+        cartProductEntityWithChilds.Quantity + 1,
       );
     });
     test("Should emit correct values on addCartProductQuantity succeeds",
@@ -425,7 +432,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       await sut.addCartProductQuantity(0);
     });
     test("Should emit correct values on addCartProductQuantity throws",
@@ -435,7 +442,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       cartInformations.mockSaveError();
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       await sut.addCartProductQuantity(0);
     });
 
@@ -467,7 +474,7 @@ void main() {
         () async {
       await sut.getLocalCartProductsData();
 
-      expect(sut.cartProducts, [cartProductViewModel]);
+      expect(sut.cartProducts, [cartProductViewModelWithChilds]);
     });
 
     test("Should not update cartProducts if localData returns null", () async {
@@ -496,7 +503,7 @@ void main() {
 
     test("Should call cartInformations.update on update cart comment",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       final newComment = faker.randomGenerator.string(10);
       await sut.updateCommentOfProductCart(
@@ -506,12 +513,13 @@ void main() {
 
       final updatedProduct = [
         CartProductsViewModel(
-          Product: cartProductViewModel.Product,
+          Product: cartProductViewModelWithChilds.Product,
           Comments: newComment,
-          TotalLiquid: cartProductViewModel.TotalLiquid,
-          Quantity: cartProductViewModel.Quantity,
-          Value: cartProductViewModel.Value,
-          ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+          TotalLiquid: cartProductViewModelWithChilds.TotalLiquid,
+          Quantity: cartProductViewModelWithChilds.Quantity,
+          Value: cartProductViewModelWithChilds.Value,
+          ProductPriceLookUpCode:
+              cartProductViewModelWithChilds.ProductPriceLookUpCode,
         )
       ];
 
@@ -522,21 +530,21 @@ void main() {
     test("Should not update comment on cartInformations.update throws",
         () async {
       cartInformations.mockSaveError();
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.updateCommentOfProductCart(
         index: 0,
         newComment: comments,
       );
 
-      expect(sut.cartProducts, [cartProductViewModel]);
+      expect(sut.cartProducts, [cartProductViewModelWithChilds]);
     });
     test("Should emit correct events on updateCartProductComment success",
         () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       await sut.updateCommentOfProductCart(
         index: 0,
         newComment: comments,
@@ -550,7 +558,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       await sut.updateCommentOfProductCart(
         index: 0,
         newComment: comments,
@@ -734,13 +742,13 @@ void main() {
       expect(sut.cartProducts, []);
 
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.cartProducts, [cartProductViewModel]);
+      expect(sut.cartProducts, [cartProductViewModelWithChilds]);
     });
     test("Should remove correct product from cart", () async {
       expect(sut.cartProducts, []);
@@ -750,7 +758,7 @@ void main() {
       );
 
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -763,7 +771,7 @@ void main() {
       );
 
       expect(sut.cartProducts, [
-        cartProductViewModel, //0
+        cartProductViewModelWithChilds, //0
         CartProductsViewModel.fromEntity(cartProduct1), //1
       ]);
 
@@ -776,35 +784,36 @@ void main() {
     });
 
     test("Should update comment correctly", () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       final newComment = faker.randomGenerator.string(20);
 
       await sut.updateCommentOfProductCart(index: 0, newComment: newComment);
 
       final cartProductWithNewComment = CartProductsViewModel(
         Comments: newComment,
-        Product: cartProductViewModel.Product,
-        TotalLiquid: cartProductViewModel.TotalLiquid,
-        Quantity: cartProductViewModel.Quantity,
-        Value: cartProductViewModel.Value,
-        ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
+        Product: cartProductViewModelWithChilds.Product,
+        TotalLiquid: cartProductViewModelWithChilds.TotalLiquid,
+        Quantity: cartProductViewModelWithChilds.Quantity,
+        Value: cartProductViewModelWithChilds.Value,
+        ProductPriceLookUpCode:
+            cartProductViewModelWithChilds.ProductPriceLookUpCode,
       );
 
       expect(sut.cartProducts, [cartProductWithNewComment]);
     });
     test("Should NOT update comment when new comment is equal", () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.updateCommentOfProductCart(
         index: 0,
-        newComment: cartProductViewModel.Comments,
+        newComment: cartProductViewModelWithChilds.Comments,
       );
 
-      verifyNever(
-          () => cartInformations.updateCartProducts([cartProductViewModel]));
+      verifyNever(() => cartInformations
+          .updateCartProducts([cartProductViewModelWithChilds]));
     });
     test("Should update comment with null value if comment is empty", () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.updateCommentOfProductCart(
         index: 0,
@@ -814,13 +823,13 @@ void main() {
       verify(() => cartInformations.updateCartProducts(
             [
               CartProductsViewModel(
-                Product: cartProductViewModel.Product,
+                Product: cartProductViewModelWithChilds.Product,
                 Comments: null,
-                TotalLiquid: cartProductViewModel.TotalLiquid,
-                Quantity: cartProductViewModel.Quantity,
-                Value: cartProductViewModel.Value,
+                TotalLiquid: cartProductViewModelWithChilds.TotalLiquid,
+                Quantity: cartProductViewModelWithChilds.Quantity,
+                Value: cartProductViewModelWithChilds.Value,
                 ProductPriceLookUpCode:
-                    cartProductViewModel.ProductPriceLookUpCode,
+                    cartProductViewModelWithChilds.ProductPriceLookUpCode,
               ),
             ],
           )).called(1);
@@ -828,7 +837,7 @@ void main() {
 
     test("Should reduce quantity correctly", () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -842,7 +851,7 @@ void main() {
 
       await sut.reduceCartProductQuantity(0);
       expect(sut.cartProducts[0].Quantity,
-          (cartProductEntity.Quantity - 1).toString());
+          (cartProductEntityWithChilds.Quantity - 1).toString());
 
       await sut.reduceCartProductQuantity(1);
       expect(sut.cartProducts.length, 1);
@@ -850,24 +859,26 @@ void main() {
 
     test("Should update totalLiquid correctly when reduce quantity", () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
       expect(sut.cartProducts[0].TotalLiquid,
-          cartProductEntity.TotalLiquid.toString());
+          cartProductEntityWithChilds.TotalLiquid.toString());
 
       await sut.reduceCartProductQuantity(0);
       expect(
         sut.cartProducts[0].TotalLiquid,
-        (cartProductEntity.Value * (cartProductEntity.Quantity - 1)).toString(),
+        (cartProductEntityWithChilds.Value *
+                (cartProductEntityWithChilds.Quantity - 1))
+            .toString(),
       );
     });
 
     test("Should add quantity correctly", () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -876,29 +887,31 @@ void main() {
       await sut.addCartProductQuantity(0);
 
       expect(sut.cartProducts[0].Quantity,
-          (cartProductEntity.Quantity + 1).toString());
+          (cartProductEntityWithChilds.Quantity + 1).toString());
     });
 
     test("Should update totalLiquid correctly when add quantity", () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
       expect(sut.cartProducts[0].TotalLiquid,
-          cartProductEntity.TotalLiquid.toString());
+          cartProductEntityWithChilds.TotalLiquid.toString());
 
       await sut.addCartProductQuantity(0);
       expect(
         sut.cartProducts[0].TotalLiquid,
-        (cartProductEntity.Value * (cartProductEntity.Quantity + 1)).toString(),
+        (cartProductEntityWithChilds.Value *
+                (cartProductEntityWithChilds.Quantity + 1))
+            .toString(),
       );
     });
 
     test("Should clear indexOfSelectedProduct when add a product", () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -915,7 +928,7 @@ void main() {
 //o comentário que é adicionado, é o que retorna nessa função do
 //expansibleGroupFromProductPresenter, por isso precisa mockar o retorno da função
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -924,7 +937,7 @@ void main() {
       expansibleGroupFromProductPresenter
           .mockGetConcatenateSelectedComments(faker.randomGenerator.string(10));
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -937,19 +950,20 @@ void main() {
         "Should add new product in cart if already contains equal PLU in cart but the value is differente",
         () async {
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
 
       final productWithNewComment = CartProductEntity(
-        Product: cartProductEntity.Product,
-        Comments: cartProductEntity.Comments,
-        TotalLiquid: cartProductEntity.TotalLiquid,
-        Quantity: cartProductEntity.Quantity,
+        Product: cartProductEntityWithChilds.Product,
+        Comments: cartProductEntityWithChilds.Comments,
+        TotalLiquid: cartProductEntityWithChilds.TotalLiquid,
+        Quantity: cartProductEntityWithChilds.Quantity,
         Value: 726871278512785348193219.0,
-        ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+        ProductPriceLookUpCode:
+            cartProductEntityWithChilds.ProductPriceLookUpCode,
       );
       await sut.addProductInCart(
         product: productWithNewComment,
@@ -966,7 +980,7 @@ void main() {
           "${commentViewModel.GroupName}\n${commentViewModel.GroupName}");
 
       await sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -976,18 +990,19 @@ void main() {
         CartProductsViewModel(
           Comments:
               "${commentViewModel.GroupName}\n${commentViewModel.GroupName}",
-          Product: cartProductViewModel.Product,
-          TotalLiquid: cartProductEntity.TotalLiquid.toString(),
-          Quantity: cartProductEntity.Quantity.toString(),
-          Value: cartProductEntity.Value.toString(),
-          ProductPriceLookUpCode: cartProductEntity.ProductPriceLookUpCode,
+          Product: cartProductViewModelWithChilds.Product,
+          TotalLiquid: cartProductEntityWithChilds.TotalLiquid.toString(),
+          Quantity: cartProductEntityWithChilds.Quantity.toString(),
+          Value: cartProductEntityWithChilds.Value.toString(),
+          ProductPriceLookUpCode:
+              cartProductEntityWithChilds.ProductPriceLookUpCode,
         ),
       ]);
     });
 
     test("Should clear cartProducts on call clearCartAndConfirmedCombox",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       await sut.clearCart();
 
       expect(sut.cartProducts, []);
@@ -1030,9 +1045,9 @@ void main() {
   group("Save cart products in saleRequesTemp", () {
     test("Should call correct functions on save products in SaleRequestTemp",
         () async {
-      cartProductViewModel.Product.childsComposition = null;
+      cartProductViewModelWithChilds.Product.childsComposition = null;
 
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
@@ -1068,24 +1083,29 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
-        TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
+        TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
         Products: [
           UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                cartProductViewModel.Product.InternalCodeOnERP!.toInt(),
-            ProductPriceLookUpCode: cartProductViewModel.ProductPriceLookUpCode,
-            Quantity: cartProductViewModel.Quantity.toDouble(),
+            ProductInternalCodeOnErp: cartProductViewModelWithChilds
+                .Product.InternalCodeOnERP!
+                .toInt(),
+            ProductPriceLookUpCode:
+                cartProductViewModelWithChilds.ProductPriceLookUpCode,
+            Quantity: cartProductViewModelWithChilds.Quantity.toDouble(),
             SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
-            TotalLiquid: cartProductViewModel.TotalLiquid.toDouble(),
-            Value: cartProductViewModel.Value.toDouble(),
-            Comments: cartProductViewModel.Comments,
+            TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+            Value: cartProductViewModelWithChilds.Value.toDouble(),
+            Comments: cartProductViewModelWithChilds.Comments,
+            SaleRequestProductIdOfFather: null,
+            ProductIsFatherComposition: false,
           )
         ],
       );
 
       verify(() => updateSaleRequestTemp.update(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          entity: teste)).called(1);
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            entity: teste,
+          )).called(1);
 
       verify(() => finishSaleRequestTemp.finish(
             saleRequestTempEntity: saleRequestTempEntity,
@@ -1097,10 +1117,11 @@ void main() {
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
         () async {
-      for (var child in cartProductViewModel.Product.childsComposition!) {
+      for (var child
+          in cartProductViewModelWithChilds.Product.childsComposition!) {
         child.indexOfSelectedChild = 0;
       }
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       final products =
           sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
@@ -1533,7 +1554,7 @@ void main() {
     });
     test("Should clear cartProducts on saveProducts succeeds", () async {
       sut.addProductInCart(
-        product: cartProductEntity,
+        product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1593,7 +1614,7 @@ void main() {
     });
 
     test("Should save DeliveryControl with correct value", () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1624,7 +1645,7 @@ void main() {
     test(
         "Should save DeliveryControl with correct tableNumber when is differente than 0",
         () async {
-      sut.cartProducts.add(cartProductViewModel);
+      sut.cartProducts.add(cartProductViewModelWithChilds);
       confirmedCartProducts.mockIsConfirmed(false);
 
       await sut.saveProducts(
@@ -1808,13 +1829,15 @@ void main() {
       //crio uma lista com 3 produtos. Sendo um opcional e sem índice de filho
       //selecionado. Por isso ele precisa ser ignorado e leva em consideração
       //somente os dois primeiros
-      cartProductViewModel.Product.childsComposition =
+      cartProductViewModelWithChilds.Product.childsComposition =
           productsSelectedsInCombox;
-      final firstChild = cartProductViewModel.Product.childsComposition![0];
-      final secondChild = cartProductViewModel.Product.childsComposition![1];
+      final firstChild =
+          cartProductViewModelWithChilds.Product.childsComposition![0];
+      final secondChild =
+          cartProductViewModelWithChilds.Product.childsComposition![1];
 
       await sut.addProductInCart(
-        product: cartProductViewModel.toEntity(),
+        product: cartProductViewModelWithChilds.toEntity(),
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1845,6 +1868,9 @@ void main() {
           Value: insertProductPresenter
               .calculateProductCompositionPrice(firstChild),
           Comments: firstChild.commentFather,
+          SaleRequestProductIdOfFather:
+              cartProductViewModelWithChilds.Product.InternalCodeOnERP?.toInt(),
+          ProductIsFatherComposition: false,
         ),
         UpdateSaleRequestTempProductEntity(
           ProductInternalCodeOnErp:
@@ -1858,6 +1884,9 @@ void main() {
           Value: insertProductPresenter
               .calculateProductCompositionPrice(firstChild),
           Comments: secondChild.commentFather,
+          SaleRequestProductIdOfFather:
+              cartProductViewModelWithChilds.Product.InternalCodeOnERP?.toInt(),
+          ProductIsFatherComposition: false,
         ),
       ]);
     });

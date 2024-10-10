@@ -127,6 +127,8 @@ void main() {
                 TotalLiquid: e.TotalLiquid,
                 Value: e.Value,
                 Comments: e.Comments,
+                SaleRequestProductIdOfFather: e.SaleRequestProductIdOfFather,
+                ProductIsFatherComposition: e.ProductIsFatherComposition,
               )).toList(),
     );
 
@@ -269,7 +271,8 @@ void main() {
       await sut.updateIsFixedCommandNumber();
     });
     test("Should call localCommandData.udpate", () async {
-      final commandNumber = faker.randomGenerator.integer(100).toString().padLeft(3, "0");
+      final commandNumber =
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0");
       sut.updateCommandNumber(commandNumber);
 
       await sut.updateIsFixedCommandNumber();

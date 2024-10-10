@@ -261,6 +261,9 @@ class GetxInsertProductsPresenter extends GetxController
 
         final updateSaleRequestTempProductEntity =
             UpdateSaleRequestTempProductEntity(
+          SaleRequestProductIdOfFather:
+              product.InternalCodeOnERPCodeFather?.toInt(),
+          ProductIsFatherComposition: false,
           ProductInternalCodeOnErp:
               selectedChild.InternalCodeOnERPCodeChild.toString().toInt(),
           ProductPriceLookUpCode: selectedChild.PluChild!,

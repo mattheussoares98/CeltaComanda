@@ -207,6 +207,8 @@ class EntityFactory {
                 Value: faker.randomGenerator.decimal().toString(),
                 ProductPriceLookUpCode:
                     faker.randomGenerator.integer(10).toString(),
+                SaleRequestProductIdOfFather: null,
+                ProductIsFatherComposition: null,
               ))
           .toList(),
       PersonalizedCode: faker.randomGenerator.string(10),
@@ -590,6 +592,8 @@ class EntityFactory {
             TotalLiquid: faker.randomGenerator.decimal().toString(),
             Quantity: faker.randomGenerator.decimal().toString(),
             Value: faker.randomGenerator.decimal().toString(),
+            SaleRequestProductIdOfFather: null,
+            ProductIsFatherComposition: null,
           );
 
   static UpdateSaleRequestTempEntity makeUpdateSaleRequestTempEntity() {
@@ -624,6 +628,8 @@ class EntityFactory {
       TotalLiquid: quantity * value,
       Value: value,
       Comments: faker.randomGenerator.string(10),
+      SaleRequestProductIdOfFather: null,
+      ProductIsFatherComposition: null,
     );
   }
 
@@ -654,6 +660,8 @@ class EntityFactory {
         Value: faker.randomGenerator.decimal(),
         ProductPriceLookUpCode: faker.randomGenerator.integer(5).toString(),
         Comments: faker.randomGenerator.string(10),
+        SaleRequestProductIdOfFather: null,
+        ProductIsFatherComposition: null,
       );
 
   static TicketIsPermittedEntity makeTicketIsPermittedEntity() =>

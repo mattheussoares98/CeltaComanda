@@ -17,6 +17,8 @@ class SaleRequestTempProductsViewModel extends Equatable {
   final String Quantity;
   final String Value;
   final String ProductPriceLookUpCode;
+  final int? SaleRequestProductIdOfFather;
+  final bool? ProductIsFatherComposition;
 
   @override
   List get props => [
@@ -30,6 +32,8 @@ class SaleRequestTempProductsViewModel extends Equatable {
         Quantity,
         Value,
         ProductPriceLookUpCode,
+        SaleRequestProductIdOfFather,
+        ProductIsFatherComposition,
       ];
 
   const SaleRequestTempProductsViewModel({
@@ -43,6 +47,8 @@ class SaleRequestTempProductsViewModel extends Equatable {
     required this.Quantity,
     required this.Value,
     required this.ProductPriceLookUpCode,
+    required this.SaleRequestProductIdOfFather,
+    required this.ProductIsFatherComposition,
   });
 
   factory SaleRequestTempProductsViewModel.fromEntity(
@@ -58,6 +64,8 @@ class SaleRequestTempProductsViewModel extends Equatable {
         Value: entity.Value.toStringAsFixed(2).toBrazilianNumber(),
         Comments: entity.Comments,
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
+        SaleRequestProductIdOfFather: entity.SaleRequestProductIdOfFather,
+        ProductIsFatherComposition: entity.ProductIsFatherComposition,
       );
 
   SaleRequestTempProductEntity toEntity() => SaleRequestTempProductEntity(
@@ -71,5 +79,7 @@ class SaleRequestTempProductsViewModel extends Equatable {
         Value: Value.toDouble(),
         ProductPriceLookUpCode: ProductPriceLookUpCode,
         Comments: Comments,
+        SaleRequestProductIdOfFather: SaleRequestProductIdOfFather,
+        ProductIsFatherComposition: ProductIsFatherComposition,
       );
 }

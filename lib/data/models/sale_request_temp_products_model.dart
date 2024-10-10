@@ -14,6 +14,8 @@ class SaleRequestTempProductsModel {
   final double Quantity;
   final double Value;
   final String ProductPriceLookUpCode;
+  final int? SaleRequestProductIdOfFather;
+  final bool? ProductIsFatherComposition;
 
   SaleRequestTempProductsModel({
     required this.Product,
@@ -26,6 +28,8 @@ class SaleRequestTempProductsModel {
     required this.Quantity,
     required this.Value,
     required this.ProductPriceLookUpCode,
+    required this.SaleRequestProductIdOfFather,
+    required this.ProductIsFatherComposition,
   });
 
   factory SaleRequestTempProductsModel.fromJson(Map<String, dynamic> json) {
@@ -57,6 +61,8 @@ class SaleRequestTempProductsModel {
       Quantity: json["Quantity"],
       Value: json["Value"],
       ProductPriceLookUpCode: json["ProductPriceLookUpCode"],
+      SaleRequestProductIdOfFather: json["SaleRequestProductIdOfFather"],
+      ProductIsFatherComposition: json["ProductIsFatherComposition"],
     );
   }
 
@@ -73,6 +79,8 @@ class SaleRequestTempProductsModel {
       Quantity: entity.Quantity,
       Value: entity.Value,
       ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
+      SaleRequestProductIdOfFather: entity.SaleRequestProductIdOfFather,
+      ProductIsFatherComposition: entity.ProductIsFatherComposition,
     );
   }
 
@@ -87,6 +95,8 @@ class SaleRequestTempProductsModel {
         "Quantity": Quantity,
         "Value": Value,
         "ProductPriceLookUpCode": ProductPriceLookUpCode,
+        "SaleRequestProductIdOfFather": SaleRequestProductIdOfFather,
+        "ProductIsFatherComposition": ProductIsFatherComposition,
       };
 
   SaleRequestTempProductEntity toEntity() => SaleRequestTempProductEntity(
@@ -100,5 +110,7 @@ class SaleRequestTempProductsModel {
         Value: Value,
         ProductPriceLookUpCode: ProductPriceLookUpCode,
         Comments: Comments,
+        SaleRequestProductIdOfFather: SaleRequestProductIdOfFather,
+        ProductIsFatherComposition: ProductIsFatherComposition,
       );
 }

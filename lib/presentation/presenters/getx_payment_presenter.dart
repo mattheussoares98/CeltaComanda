@@ -117,12 +117,18 @@ class GetxPaymentPresenter extends GetxController
   @override
   bool get commandAlreadyPaid => _commandAlreadyPaid;
 
-  final _channel = MethodChannel(Channels.rede.name);
+  late MethodChannel _channel;
   @override
   void initPaymentResultHandler(
     HomePresenter homePresenter,
     PrintedProductsPresenter printedProductsPresenter,
   ) {
+    _channel = MethodChannel(
+      homePresenter.isGeneratingVersionToRede
+          ? Channels.rede.name
+          : Channels.getnet.name,
+    );
+
     _channel.setMethodCallHandler((MethodCall call) async {
       if (call.arguments == "Pagamento Autorizado") {
         try {

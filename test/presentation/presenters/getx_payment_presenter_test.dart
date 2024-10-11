@@ -68,6 +68,7 @@ void main() {
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(999).toString();
     commandNumber = faker.randomGenerator.integer(999).toString();
+    homePresenter.isGeneratingVersionToRedeMock = true;
   }
 
   mockSuccess() {
@@ -97,6 +98,9 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(Channels.getnet);
+    registerFallbackValue(Channels.persistent);
+    registerFallbackValue(Channels.rede);
   });
 
   group("Call payment", () {
@@ -109,6 +113,7 @@ void main() {
       );
 
       verify(() => pay.pay(
+            channel: Channels.rede,
             paymentMode: PaymentMode.pix,
             params: PayParams(
               longAmountValue: (longAmountValue * 100).toInt(),
@@ -125,6 +130,7 @@ void main() {
       );
 
       verify(() => pay.pay(
+            channel: Channels.rede,
             paymentMode: PaymentMode.debit,
             params: PayParams(
               longAmountValue: (longAmountValue * 100).toInt(),
@@ -141,6 +147,7 @@ void main() {
       );
 
       verify(() => pay.pay(
+            channel: Channels.rede,
             paymentMode: PaymentMode.credit,
             params: PayParams(
               longAmountValue: (longAmountValue * 100).toInt(),
@@ -157,6 +164,7 @@ void main() {
       );
 
       verify(() => pay.pay(
+            channel: Channels.rede,
             paymentMode: PaymentMode.pix,
             params: PayParams(
               longAmountValue: 28000,
@@ -243,6 +251,7 @@ void main() {
       );
 
       verifyNever(() => pay.pay(
+            channel: Channels.rede,
             paymentMode: PaymentMode.pix,
             params: PayParams(
               longAmountValue: (longAmountValue * 100).toInt(),

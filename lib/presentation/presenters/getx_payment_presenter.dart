@@ -44,6 +44,9 @@ class GetxPaymentPresenter extends GetxController
 
       await pay.pay(
         paymentMode: paymentMode,
+        channel: homePresenter.isGeneratingVersionToRede
+            ? Channels.rede
+            : Channels.getnet,
         params: PayParams(
           longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,

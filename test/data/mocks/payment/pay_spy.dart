@@ -12,6 +12,7 @@ class PaySpy extends Mock implements Pay {
   When mockPaytCall() => when(() => this.pay(
         paymentMode: any(named: "paymentMode"),
         params: any(named: "params"),
+        channel: any(named: "channel"),
       ));
   void mockPay() => this.mockPaytCall().thenAnswer((any) async => any);
   void mockPayError(DomainError error) => this.mockPaytCall().thenThrow(error);

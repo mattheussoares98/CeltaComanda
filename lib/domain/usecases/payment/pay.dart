@@ -6,6 +6,7 @@ abstract class Pay {
   Future<void> pay({
     required PaymentMode paymentMode,
     required PayParams params,
+    required Channels channel,
   });
 }
 

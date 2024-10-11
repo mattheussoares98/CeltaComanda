@@ -3,18 +3,19 @@ import 'package:flutter/services.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
-class RedePay implements Pay {
+class PosPay implements Pay {
   @override
   Future<void> pay({
     required PaymentMode paymentMode,
     required PayParams params,
+    required Channels channel,
   }) async {
-    final platform = MethodChannel(Channels.rede.name);
+    final platform = MethodChannel(channel.name);
 
     try {
       final result = await platform.invokeMethod(
         paymentMode.name,
-        RedePayParams.fromDomain(params).toJson(),
+        PosPayParams.fromDomain(params).toJson(),
       );
 
       // ignore: avoid_print
@@ -25,16 +26,16 @@ class RedePay implements Pay {
   }
 }
 
-class RedePayParams {
+class PosPayParams {
   final int longAmountValue;
   final int portionQuantity;
 
-  RedePayParams({
+  PosPayParams({
     required this.longAmountValue,
     required this.portionQuantity,
   });
 
-  factory RedePayParams.fromDomain(PayParams params) => RedePayParams(
+  factory PosPayParams.fromDomain(PayParams params) => PosPayParams(
         longAmountValue: params.longAmountValue,
         portionQuantity: params.portionQuantity,
       );

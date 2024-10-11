@@ -10,6 +10,7 @@ import android.util.Log
 import com.getnet.posdigital.PosDigital
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import kotlin.reflect.jvm.internal.impl.types.DynamicType
 
 
 class GetNetPayment(
@@ -95,6 +96,7 @@ class GetNetPayment(
                 bundle.putInt("installments", portionQuantity)
             }
             bundle.putString("amount", longAmountValue)
+//            bundle.putBoolean("printMerchantPreference", true)
             bundle.putString(
                 "callerId", "criar um identificador único pra chamar aqui, até 50 caracteres"
             )
@@ -118,32 +120,39 @@ class GetNetPayment(
 
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (RESULT_OK == resultCode && REQUEST_CODE == requestCode) {
-            val result = HashMap<String, String?>()
+            val result = HashMap<String?, String?>()
 
-            result["result"] = data?.getStringExtra("result") as String
-            result["resultDetails"] = data.getStringExtra("resultDetails")
-            result["amount"] = data.getStringExtra("amount")
-            result["callerId"] = data.getStringExtra("callerId")
-            result["nsu"] = data.getStringExtra("nsu")
-            result["nsuLastSuccesfullMessage"] = data.getStringExtra("nsuLastSuccesfullMessage")
-            result["cvNumber"] = data.getStringExtra("cvNumber")
-            result["type"] = data.getStringExtra("type")
-            result["brand"] = data.getStringExtra("brand")
-            result["inputType"] = data.getStringExtra("inputType")
-            result["installments"] = data.getStringExtra("installments")
-            result["nsuLocal"] = data.getStringExtra("nsuLocal")
-            result["authorizationCode"] = data.getStringExtra("authorizationCode")
-            result["cardBin"] = data.getStringExtra("cardBin")
-            result["cardLastDigits"] = data.getStringExtra("cardLastDigits")
-            result["extraScreensResult"] = data.getStringExtra("extraScreensResult")
-            result["cardholderName"] = data.getStringExtra("cardholderName")
-            result["automationSlip"] = data.getStringExtra("automationSlip")
-            result["printMerchantPreference"] = data.getStringExtra("printMerchantPreference")
-            result["gmtDateTime"] = data.getStringExtra("gmtDateTime")
-            result["orderId"] = data.getStringExtra("orderId")
-            result["pixPayloadResponse"] = data.getStringExtra("pixPayloadResponse")
+            try {
+                result["result"] = data?.getStringExtra("result")
+                result["resultDetails"] = data?.getStringExtra("resultDetails")
+                result["amount"] = data?.getStringExtra("amount")
+                result["callerId"] = data?.getStringExtra("callerId")
+                result["nsu"] = data?.getStringExtra("nsu")
+                result["nsuLastSuccesfullMessage"] =
+                    data?.getStringExtra("nsuLastSuccesfullMessage")
+                result["cvNumber"] = data?.getStringExtra("cvNumber")
+                result["type"] = data?.getStringExtra("type")
+                result["brand"] = data?.getStringExtra("brand")
+                result["inputType"] = data?.getStringExtra("inputType")
+                result["installments"] = data?.getStringExtra("installments")
+                result["nsuLocal"] = data?.getStringExtra("nsuLocal")
+                result["authorizationCode"] = data?.getStringExtra("authorizationCode")
+                result["cardBin"] = data?.getStringExtra("cardBin")
+                result["cardLastDigits"] = data?.getStringExtra("cardLastDigits")
+                result["extraScreensResult"] = data?.getStringExtra("extraScreensResult")
+                result["cardholderName"] = data?.getStringExtra("cardholderName")
+                result["automationSlip"] = data?.getStringExtra("automationSlip")
+//            result["printMerchantPreference"] =
+//                data?.getBooleanExtra("printMerchantPreference")
+                result["gmtDateTime"] = data?.getStringExtra("gmtDateTime")
+                result["orderId"] = data?.getStringExtra("orderId")
+                result["pixPayloadResponse"] = data?.getStringExtra("pixPayloadResponse")
+            } catch (e: Exception) {
+                println(e.message)
+            }
 
-            sendMessageToFlutter("Resultado: $result")
+
+            sendMessageToFlutter(result)
         }
     }
 
@@ -158,7 +167,7 @@ class GetNetPayment(
     }
 
 
-    private fun sendMessageToFlutter(message: String) {
+    private fun sendMessageToFlutter(message: Any) {
         val methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
         methodChannel.invokeMethod("paymentResult", message)
     }

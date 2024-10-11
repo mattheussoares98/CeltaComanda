@@ -11,7 +11,7 @@ import rede.smartrede.sdk.PaymentStatus
 import rede.smartrede.sdk.RedePaymentValidationError
 import rede.smartrede.sdk.RedePayments
 
-class PaymentHandler(
+class RedePayment(
     private val activity: Activity,
     private val redePayments: RedePayments,
     private val flutterEngine: FlutterEngine,
@@ -22,7 +22,7 @@ class PaymentHandler(
         private const val PAYMENT_REQUEST_CODE: Int = 1
     }
 
-    fun setupMethodChannel(flutterEngine: FlutterEngine) {
+    fun setupMethodChannel() {
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             channel
@@ -35,18 +35,32 @@ class PaymentHandler(
                     "credit" -> {
                         collectPayment(result, FlexTipoPagamento.CREDITO_A_VISTA, longAmountValue)
                     }
+
                     "creditPortion" -> {
-                        collectPayment(result, FlexTipoPagamento.CREDITO_PARCELADO, longAmountValue, true, portionQuantity)
+                        collectPayment(
+                            result,
+                            FlexTipoPagamento.CREDITO_PARCELADO,
+                            longAmountValue,
+                            true,
+                            portionQuantity
+                        )
                     }
+
                     "debit" -> {
                         collectPayment(result, FlexTipoPagamento.DEBITO, longAmountValue)
                     }
+
                     "pix" -> {
                         collectPayment(result, FlexTipoPagamento.PIX, longAmountValue)
                     }
+
                     else -> result.notImplemented()
                 }
-            } ?: result.error("INVALID_ARGUMENTS", "Os argumentos fornecidos não são válidos.", null)
+            } ?: result.error(
+                "INVALID_ARGUMENTS",
+                "Os argumentos fornecidos não são válidos.",
+                null
+            )
         }
     }
 
@@ -58,7 +72,8 @@ class PaymentHandler(
         portionQuantity: Int = 1
     ) {
         try {
-            val collectPaymentIntent = redePayments.intentForPaymentBuilder(tipoPagamento, longAmountValue)
+            val collectPaymentIntent =
+                redePayments.intentForPaymentBuilder(tipoPagamento, longAmountValue)
             if (setInstallments) {
                 collectPaymentIntent.setInstallments(portionQuantity)
             }
@@ -95,6 +110,7 @@ class PaymentHandler(
                         }
                     }
                 }
+
                 Activity.RESULT_CANCELED -> sendMessageToFlutter("Pagamento cancelado")
                 else -> Log.w("Pagamentos", "Código de resultado desconhecido: $resultCode")
             }

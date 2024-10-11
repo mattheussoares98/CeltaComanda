@@ -1,26 +1,27 @@
 package br.com.celtaware.comanda.getnet_channel
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 
-class GetNetPayment : FlutterActivity() {
+class GetNetPayment(
+    private val activity: Activity,
+    private val flutterEngine: FlutterEngine,
+) {
     private val REQUEST_CODE = 10001
     private val channel: String = "getnet"
-    lateinit private var localFlutterEngine: FlutterEngine
 
 
-    fun setupMethodChannel(flutterEngine: FlutterEngine) {
-        localFlutterEngine = flutterEngine
-
+    fun setupMethodChannel() {
         MethodChannel(
-            localFlutterEngine.dartExecutor.binaryMessenger, channel
+            flutterEngine.dartExecutor.binaryMessenger, channel
         ).setMethodCallHandler { call, result ->
             val argumentsWithFlutter = call.arguments as? Map<*, *>
             argumentsWithFlutter?.let {
@@ -95,41 +96,42 @@ class GetNetPayment : FlutterActivity() {
         }
     }
 
+    fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+                val result = HashMap<String, String?>()
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            val result = HashMap<String, String?>()
+                result["result"] = data?.getStringExtra("result") as String
+                result["resultDetails"] = data.getStringExtra("resultDetails")
+                result["amount"] = data.getStringExtra("amount")
+                result["callerId"] = data.getStringExtra("callerId")
+                result["nsu"] = data.getStringExtra("nsu")
+                result["nsuLastSuccesfullMessage"] = data.getStringExtra("nsuLastSuccesfullMessage")
+                result["cvNumber"] = data.getStringExtra("cvNumber")
+                result["type"] = data.getStringExtra("type")
+                result["brand"] = data.getStringExtra("brand")
+                result["inputType"] = data.getStringExtra("inputType")
+                result["installments"] = data.getStringExtra("installments")
+                result["nsuLocal"] = data.getStringExtra("nsuLocal")
+                result["authorizationCode"] = data.getStringExtra("authorizationCode")
+                result["cardBin"] = data.getStringExtra("cardBin")
+                result["cardLastDigits"] = data.getStringExtra("cardLastDigits")
+                result["extraScreensResult"] = data.getStringExtra("extraScreensResult")
+                result["cardholderName"] = data.getStringExtra("cardholderName")
+                result["automationSlip"] = data.getStringExtra("automationSlip")
+                result["printMerchantPreference"] = data.getStringExtra("printMerchantPreference")
+                result["gmtDateTime"] = data.getStringExtra("gmtDateTime")
+                result["orderId"] = data.getStringExtra("orderId")
+                result["pixPayloadResponse"] = data.getStringExtra("pixPayloadResponse")
 
-            result["result"] = data?.getStringExtra("result") as String
-            result["resultDetails"] = data.getStringExtra("resultDetails")
-            result["amount"] = data.getStringExtra("amount")
-            result["callerId"] = data.getStringExtra("callerId")
-            result["nsu"] = data.getStringExtra("nsu")
-            result["nsuLastSuccesfullMessage"] = data.getStringExtra("nsuLastSuccesfullMessage")
-            result["cvNumber"] = data.getStringExtra("cvNumber")
-            result["type"] = data.getStringExtra("type")
-            result["brand"] = data.getStringExtra("brand")
-            result["inputType"] = data.getStringExtra("inputType")
-            result["installments"] = data.getStringExtra("installments")
-            result["nsuLocal"] = data.getStringExtra("nsuLocal")
-            result["authorizationCode"] = data.getStringExtra("authorizationCode")
-            result["cardBin"] = data.getStringExtra("cardBin")
-            result["cardLastDigits"] = data.getStringExtra("cardLastDigits")
-            result["extraScreensResult"] = data.getStringExtra("extraScreensResult")
-            result["cardholderName"] = data.getStringExtra("cardholderName")
-            result["automationSlip"] = data.getStringExtra("automationSlip")
-            result["printMerchantPreference"] = data.getStringExtra("printMerchantPreference")
-            result["gmtDateTime"] = data.getStringExtra("gmtDateTime")
-            result["orderId"] = data.getStringExtra("orderId")
-            result["pixPayloadResponse"] = data.getStringExtra("pixPayloadResponse")
-
-            sendMessageToFlutter("Resultado: $result")
+                sendMessageToFlutter("Resultado: $result")
+            }
         }
     }
 
+
     private fun sendMessageToFlutter(message: String) {
-        val methodChannel = MethodChannel(localFlutterEngine.dartExecutor.binaryMessenger, channel)
+        val methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
         methodChannel.invokeMethod("paymentResult", message)
     }
 }

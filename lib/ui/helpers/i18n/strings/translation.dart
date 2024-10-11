@@ -166,6 +166,7 @@ abstract class Translation {
   String get userCode;
   String get user;
   String get validateEnterprise;
+  String get voucher;
   String get wait;
   String get wantRemoveRequestedProduct;
   String get withoutCovenant;

@@ -190,6 +190,7 @@ class EnUs implements Translation {
   String get user => 'User';
   String get url => 'Enterprise or URL';
   String get validateEnterprise => 'Validate enterprise';
+  String get voucher => 'Voucher';
   String get wait => 'Please wait...';
   String get wantRemoveRequestedProduct =>
       'Do you really want to remove the product from the requested products?';

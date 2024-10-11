@@ -104,8 +104,10 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.2.0')
     implementation 'com.google.firebase:firebase-analytics'
-
-    //abaixo são as dependências do sdk da rede. Precisa comentar ele e o MainActivity quando for gerar o appbundle pra play store
+    
+    //adding getnet library
+    implementation files('libs/libposdigital-1.8.1-13-release.aar')
+    //below, are the rede sdk dependencies
     implementation files('libs/smartrede-sdk-l400-4.0.6.release.aar')
     implementation 'com.google.guava:guava:33.3.0-android'
     implementation 'com.google.code.gson:gson:2.11.0'

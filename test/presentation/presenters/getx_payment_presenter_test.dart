@@ -155,6 +155,23 @@ void main() {
             ),
           )).called(1);
     });
+    test('Should call payment correctly with voucher', () async {
+      await sut.callPayment(
+        homePresenter: homePresenter,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.voucher,
+      );
+
+      verify(() => pay.pay(
+            channel: Channels.rede,
+            paymentMode: PaymentMode.voucher,
+            params: PayParams(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+            ),
+          )).called(1);
+    });
     test('Should convert amountValue correctly', () async {
       await sut.callPayment(
         homePresenter: homePresenter,

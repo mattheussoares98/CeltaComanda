@@ -3,4 +3,5 @@ enum PaymentMode {
   creditPortion,
   debit,
   pix,
+  voucher,
 }

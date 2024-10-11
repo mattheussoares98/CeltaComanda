@@ -1,9 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -24,17 +21,6 @@ class _CovenantsState extends State<Covenants> {
   final passwordKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
 
-  Future<void> _updateSelectedCovenant({
-    required CovenantPresenter covenantPresenter,
-    required String? value,
-  }) async {
-    await covenantPresenter.updateSelectedCovenant(
-      widget.customer,
-      value,
-    );
-    widget.callSetState();
-  }
-
   @override
   dispose() {
     super.dispose();
@@ -44,8 +30,6 @@ class _CovenantsState extends State<Covenants> {
 
   @override
   Widget build(BuildContext context) {
-    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
-
     return Column(
       children: [
         Row(
@@ -75,42 +59,14 @@ class _CovenantsState extends State<Covenants> {
         ListView.builder(
           shrinkWrap: true,
           itemCount: widget.customer.Covenants?.length,
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final covenant = widget.customer.Covenants?[index];
 
-            return RadioListTile<String>(
-              dense: true,
-              visualDensity: VisualDensity.compact,
-              title: Text(
-                covenant!.Name,
-                style: TextStyle(
-                  fontSize: getStringSize(context),
-                ),
-              ),
-              value: covenant.Code.toString(),
-              groupValue:
-                  covenantPresenter.selectedCovenant[widget.customer.Code],
-              onChanged: (value) async {
-                if (covenantPresenter.authorizationPendingModel?.isPending ==
-                    true) {
-                  notificationDialog(
-                      context: context,
-                      titleMessage: R.string.msgAuthorizationIsPendant,
-                      content:
-                          Text(R.string.msgPendantAuthorizationNotification),
-                      onPress: () async {
-                        await _updateSelectedCovenant(
-                          covenantPresenter: covenantPresenter,
-                          value: value,
-                        );
-                      });
-                } else {
-                  await _updateSelectedCovenant(
-                    covenantPresenter: covenantPresenter,
-                    value: value,
-                  );
-                }
-              },
+            return CovenantRadioListTile(
+              customer: widget.customer,
+              callSetState: widget.callSetState,
+              covenant: covenant,
             );
           },
         ),

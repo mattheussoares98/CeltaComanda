@@ -30,6 +30,7 @@ class _CustomersState extends State<Customers> {
           return ListView.builder(
               shrinkWrap: true,
               itemCount: snapshot.data!.length,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final customer = snapshot.data![index];
                 Future.delayed(Duration.zero, () {

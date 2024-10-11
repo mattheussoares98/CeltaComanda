@@ -9,7 +9,7 @@ class RedePay implements Pay {
     required PaymentMode paymentMode,
     required PayParams params,
   }) async {
-    const platform = MethodChannel('rede_channel');
+    final platform = MethodChannel(Channels.rede.name);
 
     try {
       final result = await platform.invokeMethod(

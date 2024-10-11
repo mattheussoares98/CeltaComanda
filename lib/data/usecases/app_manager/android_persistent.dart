@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class AndroidPersistent implements Persistent {
-  final _platform = const MethodChannel('persistent_channel');
+  final _platform = MethodChannel(Channels.persistent.name);
 
   @override
   Future<void> closeApp() async {

@@ -6,7 +6,7 @@ import kotlin.system.exitProcess
 
 class PersistentChannelManager(private val flutterEngine: FlutterEngine) {
 
-    private val channelName = "persistent_channel"
+    private val channelName = "persistent"
     private var persistApp: Boolean = false
 
     init {

@@ -114,7 +114,7 @@ class GetxPaymentPresenter extends GetxController
   @override
   bool get commandAlreadyPaid => _commandAlreadyPaid;
 
-  final _channel = const MethodChannel('rede_channel');
+  final _channel = MethodChannel(Channels.rede.name);
   @override
   void initPaymentResultHandler(
     HomePresenter homePresenter,

@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class GetNetPayment : FlutterActivity() {
     private val REQUEST_CODE = 10001
-    private val channel: String = "getnet_channel"
+    private val channel: String = "getnet"
     lateinit private var localFlutterEngine: FlutterEngine
 
 

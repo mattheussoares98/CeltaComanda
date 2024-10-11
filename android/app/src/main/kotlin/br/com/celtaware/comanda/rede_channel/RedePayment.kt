@@ -16,7 +16,7 @@ class PaymentHandler(
     private val redePayments: RedePayments,
     private val flutterEngine: FlutterEngine,
 ) {
-    private val channel: String = "rede_channel"
+    private val channel: String = "rede"
 
     companion object {
         private const val PAYMENT_REQUEST_CODE: Int = 1

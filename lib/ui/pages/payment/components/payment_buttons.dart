@@ -39,7 +39,8 @@ class PaymentButtons extends StatelessWidget {
             ),
           ),
         ),
-        if (homePresenter.isGeneratingVersionToRede)
+        if (homePresenter.isGeneratingVersionToRede ||
+            homePresenter.isGeneratingVersionToGetNet)
           Column(
             children: [
               ElevatedButton(

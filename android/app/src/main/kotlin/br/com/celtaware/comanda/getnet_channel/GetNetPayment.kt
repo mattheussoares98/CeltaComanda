@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import com.getnet.posdigital.PosDigital
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
@@ -20,6 +21,7 @@ class GetNetPayment(
 
 
     fun setupMethodChannel() {
+        PosDigital.register(applicationContext, bindCallback)
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger, channel
         ).setMethodCallHandler { call, result ->

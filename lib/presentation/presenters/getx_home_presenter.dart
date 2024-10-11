@@ -395,6 +395,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   bool get isGeneratingVersionToRede => false;
+  @override
+  bool get isGeneratingVersionToGetNet => false;
 
   bool _isGeneratingVersionToTablet = false;
   @override

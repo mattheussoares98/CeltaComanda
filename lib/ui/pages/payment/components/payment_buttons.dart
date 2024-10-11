@@ -96,6 +96,26 @@ class PaymentButtons extends StatelessWidget {
                   ),
                 ),
               ),
+              if (homePresenter.isGeneratingVersionToGetNet)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await paymentPresenter.callPayment(
+                        longAmountValue: printedProductsPresenter
+                            .printedProducts!.TotalLiquid
+                            .toDouble(),
+                        portionQuantity: 1,
+                        paymentMode: PaymentMode.voucher,
+                        homePresenter: homePresenter,
+                      );
+                    },
+                    child: Text(
+                      R.string.voucher.toUpperCase(),
+                      style: _buttonStyle(context),
+                    ),
+                  ),
+                ),
             ],
           ),
         if (EnterpriseDataBuilder.enterpriseDataEntity?.useCovenant == true)

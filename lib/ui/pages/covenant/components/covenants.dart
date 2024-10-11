@@ -24,36 +24,6 @@ class _CovenantsState extends State<Covenants> {
   final passwordKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
 
-  Future<void> _finishSaleRequestByCovenant({
-    required CovenantPresenter covenantPresenter,
-    required HomePresenter homePresenter,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required BuildContext context,
-  }) async {
-    await covenantPresenter.finishSaleRequestByCovenant(
-      customerPassword: passwordController.text,
-      homePresenter: homePresenter,
-      printedProductsPresenter: printedProductsPresenter,
-      showErrorMessageReturnedByBs: (error) {
-        showAlertMessage(
-          context,
-          error,
-          backgroundColor: Colors.red,
-        );
-      },
-      closePagesUntilHomePage: () {
-        Navigator.of(context).popUntil(
-          (route) => route.isFirst,
-        );
-        showAlertMessage(
-          context,
-          R.string.liquidateCommandSucceeds,
-          backgroundColor: Theme.of(context).secondaryHeaderColor,
-        );
-      },
-    );
-  }
-
   Future<void> _updateSelectedCovenant({
     required CovenantPresenter covenantPresenter,
     required String? value,
@@ -75,9 +45,6 @@ class _CovenantsState extends State<Covenants> {
   @override
   Widget build(BuildContext context) {
     CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -147,64 +114,10 @@ class _CovenantsState extends State<Covenants> {
             );
           },
         ),
-        ElevatedButton(
-          onPressed: covenantPresenter.selectedCovenant
-                  .containsKey(widget.customer.Code)
-              ? () async {
-                  if (widget.customer.HasPassword == "false") {
-                    await _finishSaleRequestByCovenant(
-                      covenantPresenter: covenantPresenter,
-                      homePresenter: homePresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      context: context,
-                    );
-                  } else {
-                    passwordController.clear();
-                    notificationDialog(
-                        context: context,
-                        titleMessage: R.string.password,
-                        cancelMessage: R.string.cancel,
-                        confirmMessage: R.string.confirm,
-                        content: Form(
-                          key: passwordKey,
-                          child: TextFormField(
-                            controller: passwordController,
-                            autofocus: true,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            obscureText: true,
-                            decoration: formFieldDecoration(
-                              context: context,
-                              hintText: R.string.password,
-                              labelText: R.string.password,
-                              errorText: null,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return R.string.msgWritePassword;
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        onPress: () async {
-                          bool? isValid = passwordKey.currentState?.validate();
-                          if (isValid == true) {
-                            await _finishSaleRequestByCovenant(
-                              covenantPresenter: covenantPresenter,
-                              homePresenter: homePresenter,
-                              printedProductsPresenter:
-                                  printedProductsPresenter,
-                              context: context,
-                            );
-                          }
-                        });
-                  }
-                }
-              : null,
-          child: Text(
-            R.string.liquidateCommand.toUpperCase(),
-          ),
+        ConfirmPayment(
+          customer: widget.customer,
+          passwordController: passwordController,
+          passwordKey: passwordKey,
         ),
       ],
     );

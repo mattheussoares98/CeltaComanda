@@ -99,6 +99,7 @@ class PtBr implements Translation {
   String get closeApplication => "Fechar APP";
   String get close => "Fechar";
   String get code => "Código";
+  String get codeNameOrCpf => "Código, nome ou CPF";
   String get combox => "Combo";
   String get command => "Comanda";
   String get commandNumber => "Número da comanda";

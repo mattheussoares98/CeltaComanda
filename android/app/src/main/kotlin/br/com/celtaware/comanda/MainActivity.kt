@@ -34,7 +34,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        redePaymentHandler.handleActivityResult(requestCode, resultCode, data)
+        redePaymentHandler.handleActivityResult(requestCode, resultCode, data)
         getnetPayment.handleActivityResult(requestCode, resultCode, data)
     }
 
@@ -63,5 +63,10 @@ class MainActivity : FlutterActivity() {
         if (Intent.ACTION_MAIN == intent.action && persistentChannelManager.isPersistApp()) {
             Log.i("MyLauncher", "onNewIntent: HOME Key")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getnetPayment.onDestroy()
     }
 }

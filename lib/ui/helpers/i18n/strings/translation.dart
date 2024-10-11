@@ -76,6 +76,7 @@ abstract class Translation {
   String get close;
   String get closeApplication;
   String get code;
+  String get codeNameOrCpf;
   String get combox;
   String get commandNotAvailable;
   String get command;

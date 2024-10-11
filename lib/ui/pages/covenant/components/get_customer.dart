@@ -49,8 +49,8 @@ class GetCustomer extends StatelessWidget {
                     autofocus: true,
                     decoration: formFieldDecoration(
                       context: context,
-                      hintText: R.string.customer,
-                      labelText: R.string.customer,
+                      hintText: R.string.codeNameOrCpf,
+                      labelText: R.string.codeNameOrCpf,
                       errorText: snapshot.data?.description,
                       suffixIcon: IconButton(
                           onPressed: () async {

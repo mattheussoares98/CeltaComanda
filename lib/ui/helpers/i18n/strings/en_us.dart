@@ -97,6 +97,7 @@ class EnUs implements Translation {
   String get closeApplication => 'Close APP';
   String get close => 'Close';
   String get code => 'Code';
+  String get codeNameOrCpf => 'Code, name or CPF';
   String get combox => 'Combox';
   String get commandNotAvailable => 'Command not available';
   String get command => 'Command';

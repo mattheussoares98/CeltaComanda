@@ -16,12 +16,30 @@ class GetNetPayment(
     private val activity: Activity,
     private val flutterEngine: FlutterEngine,
 ) {
-    private val REQUEST_CODE = 10001
+    private var REQUEST_CODE = 10001
     private val channel: String = "getnet"
 
 
+    private val bindCallback: PosDigital.BindCallback
+        get() = object : PosDigital.BindCallback {
+            override fun onError(e: Exception) {
+                if (PosDigital.getInstance().isInitiated)
+                    PosDigital.unregister(activity.applicationContext)
+
+                connectPosDigitalService()
+            }
+
+            override fun onConnected() {}
+            override fun onDisconnected() {}
+        }
+
+    private fun connectPosDigitalService() {
+        PosDigital.register(activity.applicationContext, bindCallback)
+    }
+
+
     fun setupMethodChannel() {
-        PosDigital.register(applicationContext, bindCallback)
+        connectPosDigitalService()
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger, channel
         ).setMethodCallHandler { call, result ->
@@ -99,35 +117,43 @@ class GetNetPayment(
     }
 
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-                val result = HashMap<String, String?>()
+        if (RESULT_OK == resultCode && REQUEST_CODE == requestCode) {
+            val result = HashMap<String, String?>()
 
-                result["result"] = data?.getStringExtra("result") as String
-                result["resultDetails"] = data.getStringExtra("resultDetails")
-                result["amount"] = data.getStringExtra("amount")
-                result["callerId"] = data.getStringExtra("callerId")
-                result["nsu"] = data.getStringExtra("nsu")
-                result["nsuLastSuccesfullMessage"] = data.getStringExtra("nsuLastSuccesfullMessage")
-                result["cvNumber"] = data.getStringExtra("cvNumber")
-                result["type"] = data.getStringExtra("type")
-                result["brand"] = data.getStringExtra("brand")
-                result["inputType"] = data.getStringExtra("inputType")
-                result["installments"] = data.getStringExtra("installments")
-                result["nsuLocal"] = data.getStringExtra("nsuLocal")
-                result["authorizationCode"] = data.getStringExtra("authorizationCode")
-                result["cardBin"] = data.getStringExtra("cardBin")
-                result["cardLastDigits"] = data.getStringExtra("cardLastDigits")
-                result["extraScreensResult"] = data.getStringExtra("extraScreensResult")
-                result["cardholderName"] = data.getStringExtra("cardholderName")
-                result["automationSlip"] = data.getStringExtra("automationSlip")
-                result["printMerchantPreference"] = data.getStringExtra("printMerchantPreference")
-                result["gmtDateTime"] = data.getStringExtra("gmtDateTime")
-                result["orderId"] = data.getStringExtra("orderId")
-                result["pixPayloadResponse"] = data.getStringExtra("pixPayloadResponse")
+            result["result"] = data?.getStringExtra("result") as String
+            result["resultDetails"] = data.getStringExtra("resultDetails")
+            result["amount"] = data.getStringExtra("amount")
+            result["callerId"] = data.getStringExtra("callerId")
+            result["nsu"] = data.getStringExtra("nsu")
+            result["nsuLastSuccesfullMessage"] = data.getStringExtra("nsuLastSuccesfullMessage")
+            result["cvNumber"] = data.getStringExtra("cvNumber")
+            result["type"] = data.getStringExtra("type")
+            result["brand"] = data.getStringExtra("brand")
+            result["inputType"] = data.getStringExtra("inputType")
+            result["installments"] = data.getStringExtra("installments")
+            result["nsuLocal"] = data.getStringExtra("nsuLocal")
+            result["authorizationCode"] = data.getStringExtra("authorizationCode")
+            result["cardBin"] = data.getStringExtra("cardBin")
+            result["cardLastDigits"] = data.getStringExtra("cardLastDigits")
+            result["extraScreensResult"] = data.getStringExtra("extraScreensResult")
+            result["cardholderName"] = data.getStringExtra("cardholderName")
+            result["automationSlip"] = data.getStringExtra("automationSlip")
+            result["printMerchantPreference"] = data.getStringExtra("printMerchantPreference")
+            result["gmtDateTime"] = data.getStringExtra("gmtDateTime")
+            result["orderId"] = data.getStringExtra("orderId")
+            result["pixPayloadResponse"] = data.getStringExtra("pixPayloadResponse")
 
-                sendMessageToFlutter("Resultado: $result")
-            }
+            sendMessageToFlutter("Resultado: $result")
+        }
+    }
+
+    fun onDestroy() {
+        val tag = javaClass.name
+        try {
+            if (PosDigital.getInstance().isInitiated)
+                PosDigital.unregister(activity.applicationContext)
+        } catch (e: Exception) {
+            Log.e(tag, "Erro de exception no Destroy da Activity")
         }
     }
 

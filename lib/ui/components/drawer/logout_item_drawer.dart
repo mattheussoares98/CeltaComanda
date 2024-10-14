@@ -32,12 +32,18 @@ class LogoutItemDrawer extends StatelessWidget {
                 );
               });
         } else {
-          await _logout(
-            homePresenter: homePresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            cartPresenter: cartPresenter,
-            menuPresenter: menuPresenter,
-          );
+          notificationDialog(
+              context: context,
+              titleMessage: R.string.doLogout,
+              content: null,
+              onPress: () async {
+                await _logout(
+                  homePresenter: homePresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  cartPresenter: cartPresenter,
+                  menuPresenter: menuPresenter,
+                );
+              });
         }
       },
       leading: Icon(

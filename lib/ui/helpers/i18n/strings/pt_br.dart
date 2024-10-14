@@ -93,6 +93,7 @@ class PtBr implements Translation {
   String get avaliate => 'Avaliar';
   String get blockCommand => 'Bloquear comanda';
   String get cart => "Carrinho";
+  String get call => "Ligar";
   String get cancel => "Cancelar";
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
@@ -175,6 +176,7 @@ class PtBr implements Translation {
   String get selectQuantity => "Informe a quantidade";
   String get seller => "Vendedor";
   String get sendEvaluation => 'Enviar avaliação';
+  String get sendMessage => 'Enviar mensagem';
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';
   String get service => 'Atendimento';

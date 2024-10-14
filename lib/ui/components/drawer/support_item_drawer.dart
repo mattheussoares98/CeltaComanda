@@ -30,7 +30,7 @@ class SupportItemDrawer extends StatelessWidget {
                     }
                   },
                   label: Text(
-                    "Ligar",
+                    R.string.call,
                     style: TextStyle(
                       fontSize: getStringSize(context),
                       color: Colors.green,
@@ -50,7 +50,7 @@ class SupportItemDrawer extends StatelessWidget {
                     }
                   },
                   label: Text(
-                    "Mandar mensagem",
+                    R.string.sendMessage,
                     style: TextStyle(
                       fontSize: getStringSize(context),
                       color: Colors.green,

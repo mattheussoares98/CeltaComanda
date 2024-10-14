@@ -91,6 +91,7 @@ class EnUs implements Translation {
   String get avaliate => 'Evaluate';
   String get blockCommand => 'Block command';
   String get cart => 'Cart';
+  String get call => 'Call';
   String get cancel => 'Cancel';
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
@@ -172,6 +173,7 @@ class EnUs implements Translation {
   String get selectQuantity => 'Enter the quantity';
   String get seller => 'Seller';
   String get sendEvaluation => 'Send evaluation';
+  String get sendMessage => 'Send message';
   String get sendRequest => 'Send request';
   String get send => 'Send';
   String get service => 'Service';

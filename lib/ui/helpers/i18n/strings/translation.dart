@@ -69,6 +69,7 @@ abstract class Translation {
   String get addMoreItens;
   String get avaliate;
   String get blockCommand;
+  String get call;
   String get cancel;
   String get cart;
   String get cashCredit;
@@ -149,6 +150,7 @@ abstract class Translation {
   String get selectQuantity;
   String get seller;
   String get sendEvaluation;
+  String get sendMessage;
   String get sendRequest;
   String get send;
   String get service;

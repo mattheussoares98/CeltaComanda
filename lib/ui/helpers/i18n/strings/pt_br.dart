@@ -44,6 +44,7 @@ class PtBr implements Translation {
       'O número da comanda é obrigatório';
   String get msgPaymentCanceled => "Pagamento cancelado";
   String get msgPaymentDeclined => "Pagamento recusado";
+  String get msgPaymentPendant => "Transação pendente";
   String get msgPaymentUnexpectedError =>
       'Ocorreu algum erro durante a finalização do pagamento';
   String get msgPaymentEmpty => 'A comanda não possui valores em aberto';

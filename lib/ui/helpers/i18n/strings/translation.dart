@@ -29,6 +29,7 @@ abstract class Translation {
   String get msgObligatoryFixedCommandNumber;
   String get msgPaymentCanceled;
   String get msgPaymentDeclined;
+  String get msgPaymentPendant;
   String get msgPaymentUnexpectedError;
   String get msgPaymentFailed;
   String get msgPendantAuthorizationNotification;

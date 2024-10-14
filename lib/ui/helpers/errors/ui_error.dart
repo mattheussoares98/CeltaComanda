@@ -20,6 +20,7 @@ enum UIError {
   obligatoryFixedCommandNumber,
   paymentCanceled,
   paymentDeclined,
+  paymentPendant,
   paymentUnexpectedError,
   paymentFailed,
   productNotFound,
@@ -67,6 +68,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgPaymentCanceled;
       case UIError.paymentDeclined:
         return R.string.msgPaymentDeclined;
+      case UIError.paymentPendant:
+        return R.string.msgPaymentPendant;
       case UIError.paymentUnexpectedError:
         return R.string.msgPaymentUnexpectedError;
       case UIError.paymentFailed:

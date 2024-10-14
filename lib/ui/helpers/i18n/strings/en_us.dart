@@ -41,6 +41,7 @@ class EnUs implements Translation {
       'The command number is mandatory';
   String get msgPaymentCanceled => 'Payment canceled';
   String get msgPaymentDeclined => 'Payment declined';
+  String get msgPaymentPendant => "Payment pendant";
   String get msgPaymentUnexpectedError =>
       'One error was ocurred in the payment';
   String get msgPaymentEmpty => 'The command has no open values';

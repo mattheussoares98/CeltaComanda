@@ -166,7 +166,7 @@ class GetxPaymentPresenter extends GetxController
       } else if (response.result == "4") {
         mainError = UIError.paymentUnexpectedError;
       } else if (response.result == "5") {
-        //create UIError.pendant
+        mainError = UIError.paymentPendant;
       } else {
         mainError = UIError.paymentUnexpectedError;
       }

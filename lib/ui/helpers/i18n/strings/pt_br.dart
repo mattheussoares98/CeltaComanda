@@ -179,6 +179,7 @@ class PtBr implements Translation {
   String get send => 'Enviar';
   String get service => 'Atendimento';
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
+  String get support => 'Suporte';
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get table => 'Mesa';

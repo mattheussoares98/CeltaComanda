@@ -153,6 +153,7 @@ abstract class Translation {
   String get send;
   String get service;
   String get suggestionCriticalOrPraise;
+  String get support;
   String get surveys;
   String get surveyResult;
   String get table;

@@ -42,6 +42,33 @@ Widget drawer({
             context: context,
             onTap: () async {
               Navigator.of(context).pop();
+              notificationDialog(
+                context: context,
+                titleMessage: "",
+                showCancelAndConfirmMessage: false,
+                showLargeDialog: false,
+                content: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton.icon(
+                        onPressed: () async {},
+                        label: const Text("Ligar"),
+                        icon: const Icon(Icons.phone_forwarded_rounded),
+                        iconAlignment: IconAlignment.end,
+                      ),
+                      TextButton.icon(
+                        onPressed: () async {},
+                        label: const Text("Mandar mensagem"),
+                        icon: const Icon(Icons.message),
+                        iconAlignment: IconAlignment.end,
+                      ),
+                    ],
+                  ),
+                ),
+                onPress: () async {},
+              );
             },
             text: R.string.support,
             leading: Icon(

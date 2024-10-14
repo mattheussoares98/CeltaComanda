@@ -12,6 +12,8 @@ Future<void> notificationDialog({
   String? cancelMessage,
   String? confirmMessage,
   bool canPop = true,
+  bool? showCancelAndConfirmMessage = true,
+  bool? showLargeDialog = true,
 }) async {
   await showDialog(
       context: context,
@@ -32,57 +34,59 @@ Future<void> notificationDialog({
             ),
             content: content,
             actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () async {
-                        if (onCancelPress != null) {
-                          await onCancelPress();
-                        }
-                        WidgetsBinding.instance.addPostFrameCallback((_) async {
-                          Navigator.of(context).pop();
-                        });
-                      },
-                      child: Text(
-                        cancelMessage ?? R.string.no,
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (closeDialogOnConfirmPress == true) {
-                          Navigator.of(context).pop();
-                        }
-                        await onPress();
-                      },
-                      child: FittedBox(
+              if (showCancelAndConfirmMessage == true)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () async {
+                          if (onCancelPress != null) {
+                            await onCancelPress();
+                          }
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) async {
+                            Navigator.of(context).pop();
+                          });
+                        },
                         child: Text(
-                          confirmMessage ?? R.string.yes,
+                          cancelMessage ?? R.string.no,
                           style: const TextStyle(
+                            color: Colors.red,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (closeDialogOnConfirmPress == true) {
+                            Navigator.of(context).pop();
+                          }
+                          await onPress();
+                        },
+                        child: FittedBox(
+                          child: Text(
+                            confirmMessage ?? R.string.yes,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
             ],
           ),
         );

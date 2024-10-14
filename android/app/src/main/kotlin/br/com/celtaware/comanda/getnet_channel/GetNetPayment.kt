@@ -10,6 +10,8 @@ import android.util.Log
 import com.getnet.posdigital.PosDigital
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.util.Calendar
+import java.util.Date
 import kotlin.reflect.jvm.internal.impl.types.DynamicType
 
 
@@ -91,14 +93,19 @@ class GetNetPayment(
         try {
             val bundle = Bundle()
             bundle.putString("paymentType", paymentType)
-            if (isCredit) {
+            if (isCredit && portionQuantity > 1) {
                 bundle.putString("creditType", "creditIssuer")
                 bundle.putInt("installments", portionQuantity)
             }
             bundle.putString("amount", longAmountValue)
 //            bundle.putBoolean("printMerchantPreference", true)
+
+            val currentDate = Calendar.getInstance().timeInMillis
+            val date = Date(currentDate)
+
+
             bundle.putString(
-                "callerId", "criar um identificador único pra chamar aqui, até 50 caracteres"
+                "callerId", "$date-$currentDate"
             )
             bundle.putString("currencyCode", "986") //R$
 

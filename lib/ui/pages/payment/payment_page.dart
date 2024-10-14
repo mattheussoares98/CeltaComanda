@@ -59,9 +59,7 @@ class _PaymentPageState extends State<PaymentPage>
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
     printedLoadingSubscription?.cancel();
@@ -76,13 +74,6 @@ class _PaymentPageState extends State<PaymentPage>
         handleMainError(context, paymentPresenter.mainErrorStream);
 
     return Scaffold(
-      drawer: drawer(
-        context: context,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      ),
       appBar: AppBar(
         leading: IconButton(
           onPressed: Navigator.of(context).pop,

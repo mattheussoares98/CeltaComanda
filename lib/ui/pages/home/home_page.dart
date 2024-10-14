@@ -142,13 +142,7 @@ class _HomePageState extends State<HomePage>
           //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
           drawer: homePresenter.isGeneratingVersionToRede ||
                   homePresenter.isGeneratingVersionToGetNet
-              ? drawer(
-                  context: context,
-                  menuPresenter: menuPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  cartPresenter: cartPresenter,
-                  homePresenter: homePresenter,
-                )
+              ? const DrawerItems()
               : null,
           appBar: homeAppBar(
             printedProductsPresenter: printedProductsPresenter,

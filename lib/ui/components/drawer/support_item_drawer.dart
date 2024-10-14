@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../helpers/helpers.dart';
 import '../components.dart';
@@ -22,7 +23,12 @@ class SupportItemDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton.icon(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    Uri url = Uri.parse("tel:+55-11-3125-6767");
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                  },
                   label: Text(
                     "Ligar",
                     style: TextStyle(
@@ -37,7 +43,12 @@ class SupportItemDrawer extends StatelessWidget {
                   iconAlignment: IconAlignment.end,
                 ),
                 TextButton.icon(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    Uri url = Uri.parse("https://wa.me/+551131256767");
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                  },
                   label: Text(
                     "Mandar mensagem",
                     style: TextStyle(

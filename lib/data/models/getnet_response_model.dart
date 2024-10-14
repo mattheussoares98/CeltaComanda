@@ -1,4 +1,4 @@
-class GetNetModel {
+class GetNetResponseModel {
   final String? amount;
   final String? authorizationCode;
   final String? orderId;
@@ -21,7 +21,7 @@ class GetNetModel {
   final String? nsuLastSuccesfullMessage;
   final String? cardLastDigits;
 
-  const GetNetModel({
+  const GetNetResponseModel({
     required this.amount,
     required this.authorizationCode,
     required this.orderId,
@@ -45,7 +45,7 @@ class GetNetModel {
     required this.cardLastDigits,
   });
 
-  factory GetNetModel.fromJson(Map json) => GetNetModel(
+  factory GetNetResponseModel.fromJson(Map json) => GetNetResponseModel(
         amount: json["amount"],
         authorizationCode: json["authorizationCode"],
         orderId: json["orderId"],

@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../data/models/models.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../presentation/mixins/mixins.dart';
@@ -123,32 +124,80 @@ class GetxPaymentPresenter extends GetxController
     HomePresenter homePresenter,
     PrintedProductsPresenter printedProductsPresenter,
   ) {
-    _channel = MethodChannel(
-      homePresenter.isGeneratingVersionToRede
-          ? Channels.rede.name
-          : Channels.getnet.name,
-    );
+    if (homePresenter.isGeneratingVersionToGetNet) {
+      _channel = MethodChannel(Channels.getnet.name);
+    } else if (homePresenter.isGeneratingVersionToRede) {
+      _channel = MethodChannel(Channels.rede.name);
+    } else {
+      return;
+    }
 
     _channel.setMethodCallHandler((MethodCall call) async {
-      if (call.arguments == "Pagamento Autorizado") {
-        try {
-          await liquidateCommand(
-            homePresenter: homePresenter,
-            printedProductsPresenter: printedProductsPresenter,
-          );
-        } catch (e) {
-          mainError = UIError.liquidadeCommandError;
-        }
-      } else if (call.arguments == "Pagamento Falhou") {
-        mainError = UIError.paymentFailed;
-      } else if (call.arguments == "Pagamento cancelado") {
-        mainError = UIError.paymentCanceled;
-      } else if (call.arguments == "Pagamento Recusado") {
+      if (homePresenter.isGeneratingVersionToRede) {
+        await _treatRedeResponse(homePresenter, printedProductsPresenter, call);
+      } else {
+        await _treatGetNetResponse(
+          homePresenter,
+          printedProductsPresenter,
+          call,
+        );
+      }
+    });
+  }
+
+  Future<void> _treatGetNetResponse(
+    HomePresenter homePresenter,
+    PrintedProductsPresenter printedProductsPresenter,
+    MethodCall call,
+  ) async {
+    try {
+      final response = GetNetResponseModel.fromJson(call.arguments);
+      if (response.result == "0") {
+        await liquidateCommand(
+          homePresenter: homePresenter,
+          printedProductsPresenter: printedProductsPresenter,
+        );
+      } else if (response.result == "1") {
         mainError = UIError.paymentDeclined;
+      } else if (response.result == "2") {
+        mainError = UIError.paymentCanceled;
+      } else if (response.result == "3") {
+        mainError = UIError.paymentFailed;
+      } else if (response.result == "4") {
+        mainError = UIError.paymentUnexpectedError;
+      } else if (response.result == "5") {
+        //create UIError.pendant
       } else {
         mainError = UIError.paymentUnexpectedError;
       }
-    });
+    } catch (e) {
+      mainError = UIError.unexpected;
+    }
+  }
+
+  Future<void> _treatRedeResponse(
+    HomePresenter homePresenter,
+    PrintedProductsPresenter printedProductsPresenter,
+    MethodCall call,
+  ) async {
+    if (call.arguments == "Pagamento Autorizado") {
+      try {
+        await liquidateCommand(
+          homePresenter: homePresenter,
+          printedProductsPresenter: printedProductsPresenter,
+        );
+      } catch (e) {
+        mainError = UIError.liquidadeCommandError;
+      }
+    } else if (call.arguments == "Pagamento Falhou") {
+      mainError = UIError.paymentFailed;
+    } else if (call.arguments == "Pagamento cancelado") {
+      mainError = UIError.paymentCanceled;
+    } else if (call.arguments == "Pagamento Recusado") {
+      mainError = UIError.paymentDeclined;
+    } else {
+      mainError = UIError.paymentUnexpectedError;
+    }
   }
 
   @override

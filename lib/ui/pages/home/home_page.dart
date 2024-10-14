@@ -140,15 +140,16 @@ class _HomePageState extends State<HomePage>
         child: Scaffold(
           drawerEnableOpenDragGesture: false,
           //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
-          drawer: homePresenter.isFixedCommandNumber
-              ? null
-              : drawer(
+          drawer: homePresenter.isGeneratingVersionToRede ||
+                  homePresenter.isGeneratingVersionToGetNet
+              ? drawer(
                   context: context,
                   menuPresenter: menuPresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   cartPresenter: cartPresenter,
                   homePresenter: homePresenter,
-                ),
+                )
+              : null,
           appBar: homeAppBar(
             printedProductsPresenter: printedProductsPresenter,
             homePresenter: homePresenter,

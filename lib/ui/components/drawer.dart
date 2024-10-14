@@ -39,6 +39,32 @@ Widget drawer({
             ),
           ),
           _drawerItem(
+            context: context,
+            onTap: () async {
+              Navigator.of(context).pop();
+            },
+            text: R.string.support,
+            leading: Icon(
+              Icons.phone,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          _drawerItem(
+            context: context,
+            onTap: () async {
+              Navigator.of(context).pop();
+              PersonalizedDialogPage.open(
+                context: context,
+                page: const TableConfigurationsPage(),
+              );
+            },
+            text: R.string.configurations,
+            leading: Icon(
+              Icons.settings,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          _drawerItem(
             key: const Key("logout"),
             context: context,
             onTap: () async {
@@ -81,7 +107,7 @@ Widget _drawerItem({
   required Function()? onTap,
   required String text,
   required Widget leading,
-  required Key key,
+  Key? key,
 }) {
   return GestureDetector(
     key: key,

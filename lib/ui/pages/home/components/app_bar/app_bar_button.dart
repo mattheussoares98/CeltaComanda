@@ -73,7 +73,7 @@ class AppBarButton extends StatelessWidget {
           color: Colors.black,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: hasMinWidth(context) ? 16 : 5,
+              horizontal: hasMinWidth(context) ? 16 : 1,
               vertical: 1,
             ),
             child: Column(

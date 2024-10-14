@@ -16,40 +16,13 @@ PreferredSize homeAppBar({
     preferredSize: Size.fromHeight(hasMinWidth(context) ? 60 : 40),
     child: AppBar(
       title: const TitleAppbar(),
-      leading: !hasMinWidth(context)
-          ? null
-          : FittedBox(
-              child: Row(
-                children: [
-                  if (!homePresenter.isFixedCommandNumber)
-                    IconButton(
-                      onPressed: () {
-                        notificationDialog(
-                            context: context,
-                            titleMessage: R.string.doLogout,
-                            content: Text(R.string.msgWantDoLogout),
-                            onPress: () async {
-                              await homePresenter.goToSplashPage(
-                                printedProductsPresenter:
-                                    printedProductsPresenter,
-                                cartPresenter: cartPresenter,
-                                menuPresenter: menuPresenter,
-                              );
-                              await cartPresenter.clearCart();
-                            });
-                      },
-                      icon: const Icon(Icons.logout),
-                    ),
-                  const EnterpriseLogoImage(),
-                ],
-              ),
-            ),
       backgroundColor: const Color(0xFFF1F5F8),
       actions: [
         if (homePresenter.isGeneratingVersionToRede ||
             EnterpriseDataBuilder.enterpriseDataEntity?.useCovenant == true)
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.2,
+            width: MediaQuery.of(context).size.width *
+                (hasMinWidth(context) ? 0.2 : 0.16),
             child: Padding(
               padding: const EdgeInsets.only(right: 1),
               child: AppBarButton(
@@ -64,7 +37,8 @@ PreferredSize homeAppBar({
             ),
           ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.2,
+          width: MediaQuery.of(context).size.width *
+              (hasMinWidth(context) ? 0.2 : 0.16),
           child: Padding(
             padding: const EdgeInsets.only(right: 1),
             child: AppBarButton(
@@ -79,7 +53,8 @@ PreferredSize homeAppBar({
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.2,
+          width: MediaQuery.of(context).size.width *
+              (hasMinWidth(context) ? 0.2 : 0.16),
           child: AppBarButton(
             onPress: () {
               PersonalizedDialogPage.open(

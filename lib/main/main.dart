@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,8 +24,16 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky); //hide the buttons of navigation
 
-  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-  Hive.init(appDocumentDir.path);
+  String? path;
+
+  if (kIsWeb) {
+    path = CacheKeys.hiveBoxName.name;
+  } else {
+    final appDocumentDir =
+        await path_provider.getApplicationDocumentsDirectory();
+    path = appDocumentDir.path;
+  }
+  Hive.init(path);
   await Hive.openBox(CacheKeys.hiveBoxName.name);
 
   await Firebase.initializeApp(

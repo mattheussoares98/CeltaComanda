@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import '../../data/models/models.dart';
-import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../infra/helpers/helperts.dart';
 import '../../main/builders/builders.dart';
@@ -31,7 +32,10 @@ class GetxCovenantPresenter extends GetxController
   });
 
   @override
-  Future<void> getCustomer(String value) async {
+  Future<void> getCustomer({
+    required String value,
+    required void Function(String error) showErrorMessageReturnedByBs,
+  }) async {
     mainError = null;
     isLoading = true;
     customersViewModel = null;
@@ -44,7 +48,7 @@ class GetxCovenantPresenter extends GetxController
 
       int? valueInInt = int.tryParse(value);
 
-      List<CustomerEntity>? result;
+      SoapResponse? soapResponse;
 
 // 1=ExactCnpjCpfNumber
 // 2=ExactCode
@@ -53,33 +57,40 @@ class GetxCovenantPresenter extends GetxController
       if (value.isEmpty) {
         return;
       } else if (valueInInt == null) {
-        result = await loadCustomer.load(
+        soapResponse = await loadCustomer.load(
           value: value,
           searchTypeInt: 3,
         );
       } else {
         if (valueInInt.toString().length == 11 ||
             valueInInt.toString().length == 14) {
-          result = await loadCustomer.load(
+          soapResponse = await loadCustomer.load(
             value: value,
             searchTypeInt: 1,
           );
         }
-        result ??= await loadCustomer.load(
-          value: value,
-          searchTypeInt: 2,
-        );
-        result ??= await loadCustomer.load(
-          value: value,
-          searchTypeInt: 4,
-        );
+        if (soapResponse?.responseType == SoapResponseType.error) {
+          soapResponse = await loadCustomer.load(
+            value: value,
+            searchTypeInt: 2,
+          );
+        }
+        if (soapResponse?.responseType == SoapResponseType.error) {
+          soapResponse = await loadCustomer.load(
+            value: value,
+            searchTypeInt: 4,
+          );
+        }
       }
 
-      if (result == null) {
-        mainError = UIError.notFound;
+      if (soapResponse?.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(soapResponse!.response);
       } else {
-        customersViewModel =
-            result.map((e) => CustomerViewModel.fromEntity(e)).toList();
+        customersViewModel = json
+            .decode(soapResponse!.response)
+            .map((e) => CustomerViewModel.fromJson(e))
+            .toList()
+            .cast<CustomerViewModel>();
       }
     } catch (e) {
       mainError = UIError.unexpected;

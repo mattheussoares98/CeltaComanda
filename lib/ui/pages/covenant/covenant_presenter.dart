@@ -13,7 +13,10 @@ abstract class CovenantPresenter implements Listenable {
   Map<String, String?> get selectedCovenant;
   AuthorizationPendingModel? get authorizationPendingModel;
 
-  Future<void> getCustomer(String value);
+  Future<void> getCustomer({
+    required String value,
+    required void Function(String error) showErrorMessageReturnedByBs,
+  });
   void validateCustomerField(String value);
   Future<void> updateSelectedCovenant(
     CustomerViewModel? customer,

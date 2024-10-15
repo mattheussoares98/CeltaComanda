@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/models/customer/customer.dart';
@@ -56,25 +57,25 @@ class CustomerViewModel extends Equatable {
       ];
 
   factory CustomerViewModel.fromJson(Map json) => CustomerViewModel(
-        Code: json["Code"],
-        PersonalizedCode: json["PersonalizedCode"],
-        Name: json["Name"],
-        ReducedName: json["ReducedName"],
-        CpfCnpjNumber: json["CpfCnpjNumber"],
-        RegistrationNumber: json["RegistrationNumber"],
-        DateOfBirth: json["DateOfBirth"],
-        SexType: json["SexType"],
-        PersonType: json["PersonType"],
-        HasPassword: json["HasPassword"],
+        Code: json["Code"]?.toString(),
+        PersonalizedCode: json["PersonalizedCode"]?.toString(),
+        Name: json["Name"]?.toString(),
+        ReducedName: json["ReducedName"]?.toString(),
+        CpfCnpjNumber: json["CpfCnpjNumber"]?.toString(),
+        RegistrationNumber: json["RegistrationNumber"]?.toString(),
+        DateOfBirth: json["DateOfBirth"]?.toString(),
+        SexType: json["SexType"]?.toString(),
+        PersonType: json["PersonType"]?.toString(),
+        HasPassword: json["HasPassword"]?.toString(),
         Emails: json["Emails"].map<String>((e) => e.toString()).toList(),
         Telephones: json["Telephones"]
-            .map<TelephoneModel>((e) => TelephoneModel.fromJson(e))
+            ?.map<TelephoneModel>((e) => TelephoneModel.fromJson(e))
             .toList(),
         Addresses: json["Addresses"]
-            .map<AddressModel>((e) => AddressModel.fromJson(e))
+            ?.map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList(),
         Covenants: json["Covenants"]
-            .map<CovenantModel>((e) => CovenantModel.fromJson(e))
+            ?.map<CovenantModel>((e) => CovenantModel.fromJson(e))
             .toList(),
       );
 
@@ -114,5 +115,22 @@ class CustomerViewModel extends Equatable {
             entity.Addresses?.map((e) => AddressModel.fromEntity(e)).toList(),
         Covenants:
             entity.Covenants?.map((e) => CovenantModel.fromEntity(e)).toList(),
+      );
+
+  CustomerEntity toEntity() => CustomerEntity(
+        Code: Code!.toInt(),
+        PersonalizedCode: PersonalizedCode,
+        Name: Name,
+        ReducedName: ReducedName,
+        CpfCnpjNumber: CpfCnpjNumber,
+        RegistrationNumber: RegistrationNumber,
+        DateOfBirth: DateOfBirth,
+        SexType: SexType,
+        PersonType: PersonType,
+        HasPassword: HasPassword == "true",
+        Emails: Emails,
+        Telephones: Telephones?.map((e) => e.toEntity()).toList(),
+        Addresses: Addresses?.map((e) => e.toEntity()).toList(),
+        Covenants: Covenants?.map((e) => e.toEntity()).toList(),
       );
 }

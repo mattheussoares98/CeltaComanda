@@ -1019,7 +1019,7 @@ class EntityFactory {
           PersonalizedCode: faker.randomGenerator.string(100),
           Name: faker.randomGenerator.string(100),
           ReducedName: faker.randomGenerator.string(100),
-          CpfCnpjNumber: faker.randomGenerator.string(100),
+          CpfCnpjNumber: faker.randomGenerator.integer(100).toString(),
           RegistrationNumber: faker.randomGenerator.string(100),
           DateOfBirth: faker.randomGenerator.string(100),
           SexType: faker.randomGenerator.string(100),

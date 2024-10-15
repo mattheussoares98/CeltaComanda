@@ -1,7 +1,7 @@
-import '../../entities/entities.dart';
+import '../../../infra/helpers/helperts.dart';
 
 abstract class LoadCustomer {
-  Future<List<CustomerEntity>?> load({
+  Future<SoapResponse> load({
     required String value,
     required int searchTypeInt,
   });

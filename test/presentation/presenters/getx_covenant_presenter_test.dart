@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
@@ -78,7 +80,14 @@ void main() {
   }
 
   void mockSuccess() {
-    loadCustomer.mockLoadCustomer(customersEntitys);
+    loadCustomer.mockLoadCustomer(
+      SoapResponse(
+        response: json.encode(customersEntitys
+            .map((e) => CustomerViewModel.fromEntity(e).toJson())
+            .toList()),
+        responseType: SoapResponseType.success,
+      ),
+    );
     covenantLimit
         .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(soapResponse);
     checkPasswordByCustomerCode.mockCheck(soapResponse);
@@ -103,14 +112,22 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.getCustomer(faker.randomGenerator.string(10));
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {},
+          value: faker.randomGenerator.string(10));
     });
     test("Should emit correct values on not found customer", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.notFound]));
 
-      loadCustomer.mockLoadCustomer(null);
-      await sut.getCustomer(faker.randomGenerator.string(10));
+      loadCustomer.mockLoadCustomer(
+        const SoapResponse(
+          response: "response",
+          responseType: SoapResponseType.success,
+        ),
+      );
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {},
+          value: faker.randomGenerator.string(10));
     });
     test("Should emit correct values on throws", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -118,14 +135,17 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       loadCustomer.mockError();
-      await sut.getCustomer(faker.randomGenerator.string(10));
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {},
+          value: faker.randomGenerator.string(10));
     });
     test(
         "Should call loadCustomer with searchType 3 when cant convert value to int",
         () async {
       final valueToSearch = faker.randomGenerator.string(100);
 
-      await sut.getCustomer(valueToSearch);
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -138,7 +158,8 @@ void main() {
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000).toInt().toString();
 
-      await sut.getCustomer(valueToSearch);
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -151,7 +172,8 @@ void main() {
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
 
-      await sut.getCustomer(valueToSearch);
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -163,12 +185,18 @@ void main() {
     test(
         "Should call loadCustomer with searchType 2 when is number and dont found cpf",
         () async {
-      loadCustomer.mockLoadCustomer(null);
+      loadCustomer.mockLoadCustomer(
+        const SoapResponse(
+          response: "response",
+          responseType: SoapResponseType.error,
+        ),
+      );
 
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
 
-      await sut.getCustomer(valueToSearch);
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -180,12 +208,18 @@ void main() {
     test(
         "Should call loadCustomer with searchType 4 when is number and dont found cpf and exactcode",
         () async {
-      loadCustomer.mockLoadCustomer(null);
+      loadCustomer.mockLoadCustomer(
+        const SoapResponse(
+          response: "response",
+          responseType: SoapResponseType.error,
+        ),
+      );
 
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
 
-      await sut.getCustomer(valueToSearch);
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -195,7 +229,7 @@ void main() {
       ).called(1);
     });
     test("Should not get customer if value is empty", () async {
-      await sut.getCustomer("");
+      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "");
 
       verifyNever(() => loadCustomer.load(
             value: "",
@@ -224,7 +258,7 @@ void main() {
                 .toList()
           ]));
 
-      await sut.getCustomer("any");
+      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "any");
     });
 
     test("Should clear selectedCovenant", () async {
@@ -235,19 +269,20 @@ void main() {
         customersViewModel[0].Code: newValue,
       });
 
-      await sut.getCustomer("any");
+      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "any");
 
       expect(sut.selectedCovenant, {});
     });
     test("Should clear authorizationPendingModel", () async {
-      await sut.getCustomer("any");
+      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "any");
 
       expect(sut.authorizationPendingModel, null);
     });
 
     test("Should call validate customer field", () async {
       final searchValue = faker.randomGenerator.string(10);
-      await sut.getCustomer(searchValue);
+      await sut.getCustomer(
+          showErrorMessageReturnedByBs: (_) {}, value: searchValue);
 
       verify(() => validation.validate(
             field: "customer",

@@ -118,7 +118,7 @@ class GetxPaymentPresenter extends GetxController
   @override
   bool get commandAlreadyPaid => _commandAlreadyPaid;
 
-  late MethodChannel _channel;
+  MethodChannel? _channel;
   @override
   void initPaymentResultHandler(
     HomePresenter homePresenter,
@@ -132,7 +132,7 @@ class GetxPaymentPresenter extends GetxController
       return;
     }
 
-    _channel.setMethodCallHandler((MethodCall call) async {
+    _channel?.setMethodCallHandler((MethodCall call) async {
       if (homePresenter.isGeneratingVersionToRede) {
         await _treatRedeResponse(homePresenter, printedProductsPresenter, call);
       } else {
@@ -202,7 +202,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   void disposePaymentResultHandler() {
-    _channel.setMethodCallHandler(null);
+    _channel?.setMethodCallHandler(null);
   }
 
   @override

@@ -8,10 +8,8 @@ import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../pages.dart';
 
 class DetachItems extends StatelessWidget {
-  final List<ProductsViewModel> products;
   final bool? popOnImageClick;
   const DetachItems({
-    required this.products,
     this.popOnImageClick = false,
     super.key,
   });
@@ -31,7 +29,7 @@ class DetachItems extends StatelessWidget {
         autoPlayCurve: Curves.fastOutSlowIn,
         scrollDirection: hasMinWidth(context) ? Axis.horizontal : Axis.vertical,
       ),
-      items: products.map((product) {
+      items: menuPresenter.loadedMenu[0].entries.first.value.map((product) {
         return InkWell(
           onTap: () {
             if (popOnImageClick == true) {

@@ -106,9 +106,7 @@ class _GroupsSubgroupsAndProductsState
           if (isDetachSelected(menuPresenter))
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
-              child: DetachItems(
-                products: menuPresenter.loadedMenu[0].entries.first.value,
-              ),
+              child: const DetachItems(),
             ),
           if (!isDetachSelected(menuPresenter))
             Expanded(

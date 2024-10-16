@@ -156,6 +156,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(this);
+        _lastTimeUpdatedMenu = DateTime.now();
 
         final isValid = await commandInformations.isValidDatetime(
             commandNumber: commandNumber!);
@@ -163,7 +164,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           throw DomainError.blockedCommand;
         }
       }
-      _lastTimeUpdatedMenu = DateTime.now();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.blockedCommand:
@@ -397,7 +397,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToRede => false;
   @override
-  bool get isGeneratingVersionToGetNet => true;
+  bool get isGeneratingVersionToGetNet => false;
 
   bool _isGeneratingVersionToTablet = true;
   @override

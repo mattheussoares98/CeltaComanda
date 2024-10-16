@@ -442,4 +442,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   void changeIsGeneratingVersionToRede(bool value) {
     _isGeneratingVersionToTablet = value;
   }
+
+  DateTime _lastTimeUpdatedMenu = DateTime.now();
+  @override
+  DateTime get lastTimeUpdatedMenu => _lastTimeUpdatedMenu;
 }

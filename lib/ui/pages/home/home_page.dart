@@ -1,4 +1,5 @@
 import 'package:battery_plus/battery_plus.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -100,8 +101,14 @@ class _HomePageState extends State<HomePage>
     _batteryState = state;
   }
 
+  final docRef = FirebaseFirestore.instance
+      .collection('clients')
+      .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+
   @override
   Widget build(BuildContext context) {
+    final clientsStream = docRef.snapshots();
+
     CartPresenter cartPresenter = Provider.of(
         context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no AppBar
     PrintedProductsPresenter printedProductsPresenter = Provider.of(
@@ -151,21 +158,28 @@ class _HomePageState extends State<HomePage>
             cartPresenter: cartPresenter,
             menuPresenter: menuPresenter,
           ),
-          body: StreamBuilder<ProductsViewModel?>(
-              stream: menuPresenter.atualSuggestionProductStream,
+          body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              stream: clientsStream,
               builder: (context, snapshot) {
-                if (snapshot.hasData &&
-                    snapshot.data != _lastShowedSuggestionProduct) {
-                  _lastShowedSuggestionProduct = snapshot.data;
-                  WidgetsBinding.instance.addPostFrameCallback((_) async {
-                    showSuggestionDialog(
-                      context,
-                      snapshot.data!,
-                      menuPresenter,
-                    );
-                  });
+                if (snapshot.hasData) {
+                  final data = snapshot.data!.data();
                 }
-                return MenuPage(homePresenter.isFixedCommandNumber);
+                return StreamBuilder<ProductsViewModel?>(
+                    stream: menuPresenter.atualSuggestionProductStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.data != _lastShowedSuggestionProduct) {
+                        _lastShowedSuggestionProduct = snapshot.data;
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
+                          showSuggestionDialog(
+                            context,
+                            snapshot.data!,
+                            menuPresenter,
+                          );
+                        });
+                      }
+                      return MenuPage(homePresenter.isFixedCommandNumber);
+                    });
               }),
         ),
       ),

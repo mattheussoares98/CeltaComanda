@@ -163,6 +163,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           throw DomainError.blockedCommand;
         }
       }
+      _lastTimeUpdatedMenu = DateTime.now();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.blockedCommand:
@@ -443,7 +444,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _isGeneratingVersionToTablet = value;
   }
 
-  DateTime _lastTimeUpdatedMenu = DateTime.now();
+  DateTime? _lastTimeUpdatedMenu;
   @override
-  DateTime get lastTimeUpdatedMenu => _lastTimeUpdatedMenu;
+  DateTime? get lastTimeUpdatedMenu => _lastTimeUpdatedMenu;
 }

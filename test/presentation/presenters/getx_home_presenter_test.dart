@@ -756,6 +756,19 @@ void main() {
 
       verify(() => persistent.makeNotPersistent()).called(1);
     });
+    test("Should update last time updated menu", () async {
+      expect(sut.lastTimeUpdatedMenu, null);
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.lastTimeUpdatedMenu, isNotNull);
+    });
   });
 
   group("Update command data", () {

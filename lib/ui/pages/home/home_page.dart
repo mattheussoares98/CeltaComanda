@@ -107,12 +107,16 @@ class _HomePageState extends State<HomePage>
             Future.delayed(Duration.zero, () async {
               final data = snapshot.data!.data();
 
-              DateTime date = DateTime.parse(data!["lastTimeUpdatedMenu"]);
+              DateTime date;
+              if (data != null && data.containsKey("lastTimeUpdatedMenu")) {
+                date = DateTime.parse(data["lastTimeUpdatedMenu"]);
+              } else {
+                date = DateTime.now();
+              }
 
               if (homePresenter.lastTimeUpdatedMenu == null ||
-                  homePresenter.lastTimeUpdatedMenu!.isBefore(date) &&
-                      homePresenter.lastTimeUpdatedMenu!.difference(date) >
-                          const Duration(minutes: 5)) {
+                  (homePresenter.lastTimeUpdatedMenu!.isBefore(date) &&
+                      homePresenter.lastTimeUpdatedMenu!.difference(date).abs() >const Duration(minutes: 5))) {
                 _isUpdatingMenu = true;
                 await homePresenter.loadCommandData(
                   menuPresenter: menuPresenter,

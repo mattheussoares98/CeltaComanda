@@ -110,7 +110,9 @@ class _HomePageState extends State<HomePage>
               DateTime date = DateTime.parse(data!["lastTimeUpdatedMenu"]);
 
               if (homePresenter.lastTimeUpdatedMenu == null ||
-                  homePresenter.lastTimeUpdatedMenu!.isBefore(date)) {
+                  homePresenter.lastTimeUpdatedMenu!.isBefore(date) &&
+                      homePresenter.lastTimeUpdatedMenu!.difference(date) >
+                          const Duration(minutes: 5)) {
                 _isUpdatingMenu = true;
                 await homePresenter.loadCommandData(
                   menuPresenter: menuPresenter,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../pages/pages.dart';
 import '../components.dart';
 
 class DrawerItems extends StatelessWidget implements PreferredSizeWidget {
@@ -7,6 +9,8 @@ class DrawerItems extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       child: Drawer(
@@ -19,7 +23,8 @@ class DrawerItems extends StatelessWidget implements PreferredSizeWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const SupportItemDrawer(),
+            if (homePresenter.isGeneratingVersionToGetNet)
+              const SupportItemDrawer(),
             const TableConfigurationsItemDrawer(),
             const LogoutItemDrawer(),
           ],

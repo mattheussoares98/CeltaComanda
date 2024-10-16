@@ -179,6 +179,7 @@ class EnUs implements Translation {
   String get service => 'Service';
   String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
   String get support => 'Support';
+  String get supportContact => 'Support contact';
   String get surveys => 'Surveys';
   String get surveyResult => 'Survey result';
   String get table => 'Table';

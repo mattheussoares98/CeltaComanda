@@ -42,11 +42,10 @@ dependencies:
   firebase_core: ^3.4.0
   platform_plus: ^4.7.0
   # flutter_barcode_scanner: ^2.0.0
-  ai_barcode_scanner: ^5.2.1
+  ai_barcode_scanner: ^6.0.1
   cached_network_image: ^3.3.1
   flutter_cache_manager: ^3.3.2
   carousel_slider: ^5.0.0
-  wakelock_plus: ^1.2.5
   battery_plus: ^6.0.2
   flutter_widget_from_html: ^0.15.2
   xml2json: ^6.2.4
@@ -57,8 +56,8 @@ dev_dependencies:
   mocktail: ^1.0.3
   faker: ^2.1.0
   network_image_mock: ^2.1.1
-  flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_lints: ^5.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"

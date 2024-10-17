@@ -17,6 +17,7 @@ class EntityFactory {
       useCovenant: faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:
           makeEnterpriseConcentradorParametersEntity(),
+      updateMenuCount: faker.randomGenerator.integer(100),
     );
   }
 

@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage>
               }
 
               if (menuPresenter.loadedMenu.isEmpty ||
-                  updateMenuCount > homePresenter.updateMenuCount) {
+                  updateMenuCount != homePresenter.updateMenuCount) {
                 _isUpdatingMenu = true;
                 await homePresenter.loadCommandData(
                   menuPresenter: menuPresenter,

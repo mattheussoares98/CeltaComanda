@@ -57,6 +57,7 @@ void main() {
           useCovenant: enterpriseJsonData["useCovenant"],
           enterpriseConcentradorParametersEntity:
               enterpriseJsonData["enterpriseConcentradorParametersEntity"],
+          updateMenuCount: enterpriseJsonData["updateMenuCount"],
         ),
       );
     });

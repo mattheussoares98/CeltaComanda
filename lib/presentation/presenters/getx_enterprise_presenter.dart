@@ -102,6 +102,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
           urlCCS: firebaseData.urlCCS,
           useCovenant: firebaseData.useCovenant,
           enterpriseConcentradorParametersEntity: concentradorData,
+          updateMenuCount: firebaseData.updateMenuCount,
         );
       } else {
         throw DomainError.enterpriseOrUrlNotFound;
@@ -190,6 +191,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       urlCCS: null,
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
+      updateMenuCount: null,
     );
 
     _enterpriseError.value = _validateField('enterpriseName');

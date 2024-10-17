@@ -222,6 +222,7 @@ void main() {
               urlCCS: null,
               useCovenant: null,
               enterpriseConcentradorParametersEntity: null,
+              updateMenuCount: null,
             ),
           )).called(1);
     });
@@ -687,6 +688,8 @@ void main() {
         persistApp: true,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenuCount:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -717,6 +720,8 @@ void main() {
         persistApp: true,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenuCount:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -744,6 +749,8 @@ void main() {
         persistApp: false,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenuCount:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
       );
 
       await sut.loadCommandData(
@@ -756,8 +763,8 @@ void main() {
 
       verify(() => persistent.makeNotPersistent()).called(1);
     });
-    test("Should update last time updated menu", () async {
-      expect(sut.updateMenuCount, null);
+    test("Should update updateMenuCount when pass a value", () async {
+      final value = faker.randomGenerator.integer(100);
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -765,9 +772,22 @@ void main() {
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        updateMenuCount: value,
       );
 
-      expect(sut.updateMenuCount, isNotNull);
+      expect(sut.updateMenuCount, value);
+    });
+    test("Should not update updateMenuCount when dont pass a value", () async {
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        updateMenuCount: null,
+      );
+
+      expect(sut.updateMenuCount, 0);
     });
   });
 

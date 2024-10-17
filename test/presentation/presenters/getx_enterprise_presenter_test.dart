@@ -257,6 +257,8 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+      updateMenuCount:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -277,6 +279,8 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+      updateMenuCount:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
     await sut.goToHomePage(homePresenter);
@@ -298,6 +302,8 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+      updateMenuCount:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -452,6 +458,7 @@ void main() {
           urlCCS: null,
           useCovenant: null,
           enterpriseConcentradorParametersEntity: null,
+          updateMenuCount: null,
         ),
       );
     });

@@ -28,6 +28,7 @@ void main() {
       useCovenant: faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:
           EntityFactory.makeEnterpriseConcentradorParametersEntity(),
+      updateMenuCount: faker.randomGenerator.integer(100),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

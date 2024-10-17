@@ -23,6 +23,7 @@
   },
   "hosting": {
     "public": "build/web",
+    "site": "comandaconfigurations",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -12,7 +12,6 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import java.util.Calendar
 import java.util.Date
-import kotlin.reflect.jvm.internal.impl.types.DynamicType
 
 
 class GetNetPayment(

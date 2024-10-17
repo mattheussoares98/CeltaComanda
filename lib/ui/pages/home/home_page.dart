@@ -112,8 +112,8 @@ class _HomePageState extends State<HomePage>
                 updateMenuCount = data["updateMenuCount"];
               }
 
-              if (menuPresenter.loadedMenu.isEmpty ||
-                  updateMenuCount != homePresenter.updateMenuCount) {
+              if (updateMenuCount != homePresenter.updateMenuCount &&
+                  EnterpriseDataBuilder.enterpriseDataEntity?.url != null) {
                 _isUpdatingMenu = true;
                 await homePresenter.loadCommandData(
                   menuPresenter: menuPresenter,

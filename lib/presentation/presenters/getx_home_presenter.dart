@@ -42,6 +42,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }) async {
     navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
 
+    _updateMenuCount = -1;
     _commandNumber = null;
     menuPresenter.clear();
     printedProductsPresenter.clear();
@@ -449,7 +450,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _isGeneratingVersionToTablet = value;
   }
 
-  int _updateMenuCount = 0;
+  int _updateMenuCount = -1;
   @override
   int get updateMenuCount => _updateMenuCount;
 }

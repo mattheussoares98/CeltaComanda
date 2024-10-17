@@ -205,6 +205,16 @@ void main() {
             pageRoute: PageRoutes.payment,
           )).called(1);
     });
+
+    test('Should update updateMenuCount', () async {
+      await sut.goToSplashPage(
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        menuPresenter: menuPresenter,
+      );
+
+      expect(sut.updateMenuCount, -1);
+    });
   });
 
   group("ClearEnterpriseData", () {

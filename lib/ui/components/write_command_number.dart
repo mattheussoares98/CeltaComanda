@@ -160,6 +160,7 @@ Future<void> _onPress({
       printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+      updateMenuCount: null,
     );
   } else {
     homePresenter.updateCommandNumber(commandNumber);

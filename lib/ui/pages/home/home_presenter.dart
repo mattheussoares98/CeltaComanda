@@ -16,7 +16,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
-  DateTime? get lastTimeUpdatedMenu;
+  int get updateMenuCount;
 
   void updateCommandNumber(String? value);
   Future<void> updateIsFixedCommandNumber();
@@ -54,6 +54,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required int? updateMenuCount,
   });
   Future<bool> isValidUserAndPassword({
     required int personalizedCode,

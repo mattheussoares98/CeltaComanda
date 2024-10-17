@@ -107,16 +107,13 @@ class _HomePageState extends State<HomePage>
             Future.delayed(Duration.zero, () async {
               final data = snapshot.data!.data();
 
-              DateTime date;
-              if (data != null && data.containsKey("lastTimeUpdatedMenu")) {
-                date = DateTime.parse(data["lastTimeUpdatedMenu"]);
-              } else {
-                date = DateTime.now();
+              int updateMenuCount = 0;
+              if (data != null && data.containsKey("updateMenuCount")) {
+                updateMenuCount = data["updateMenuCount"];
               }
 
-              if (homePresenter.lastTimeUpdatedMenu == null ||
-                  (homePresenter.lastTimeUpdatedMenu!.isBefore(date) &&
-                      homePresenter.lastTimeUpdatedMenu!.difference(date).abs() >const Duration(minutes: 5))) {
+              if (menuPresenter.loadedMenu.isEmpty ||
+                  updateMenuCount > homePresenter.updateMenuCount) {
                 _isUpdatingMenu = true;
                 await homePresenter.loadCommandData(
                   menuPresenter: menuPresenter,
@@ -124,16 +121,10 @@ class _HomePageState extends State<HomePage>
                   cartPresenter: cartPresenter,
                   expansibleGroupFromProductPresenter:
                       expansibleGroupFromProductPresenter,
+                  updateMenuCount: updateMenuCount,
                 );
                 _isUpdatingMenu = false;
               }
-
-              // await docRef.set(
-              //   {
-              //     "lastTimeUpdatedMenu": DateTime.now().toIso8601String(),
-              //   },
-              //   SetOptions(merge: true),
-              // );
             });
           }
 

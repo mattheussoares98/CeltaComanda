@@ -31,6 +31,7 @@ class LoadMenuButton extends StatelessWidget {
                 cartPresenter: cartPresenter,
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
+                updateMenuCount: null,
               );
             } else {
               await menuPresenter.getGroupsAndProducts(

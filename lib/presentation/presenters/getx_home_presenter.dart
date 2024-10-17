@@ -111,6 +111,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    int? updateMenuCount,
   }) async {
     isLoading = true;
     mainError = null;
@@ -136,6 +137,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
             expansibleGroupFromProductPresenter,
       );
 
+      if (updateMenuCount != null) {
+        _updateMenuCount = updateMenuCount;
+      }
+
       if (isFixedCommandNumber && commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
@@ -156,7 +161,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
         await cartPresenter.loadSaleRequest(commandNumber!);
         await printedProductsPresenter.loadPrinted(this);
-        _lastTimeUpdatedMenu = DateTime.now();
 
         final isValid = await commandInformations.isValidDatetime(
             commandNumber: commandNumber!);
@@ -444,7 +448,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _isGeneratingVersionToTablet = value;
   }
 
-  DateTime? _lastTimeUpdatedMenu;
+  int _updateMenuCount = 0;
   @override
-  DateTime? get lastTimeUpdatedMenu => _lastTimeUpdatedMenu;
+  int get updateMenuCount => _updateMenuCount;
 }

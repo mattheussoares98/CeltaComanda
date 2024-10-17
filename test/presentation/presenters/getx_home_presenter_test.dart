@@ -757,7 +757,7 @@ void main() {
       verify(() => persistent.makeNotPersistent()).called(1);
     });
     test("Should update last time updated menu", () async {
-      expect(sut.lastTimeUpdatedMenu, null);
+      expect(sut.updateMenuCount, null);
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -767,7 +767,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      expect(sut.lastTimeUpdatedMenu, isNotNull);
+      expect(sut.updateMenuCount, isNotNull);
     });
   });
 

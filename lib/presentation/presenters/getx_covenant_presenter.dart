@@ -32,9 +32,10 @@ class GetxCovenantPresenter extends GetxController
   });
 
   @override
-  Future<void> getCustomer({
+  Future<void> getCustomerByNameCodeOrCpf({
     required String value,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required bool searchByPersonalizedCode,
   }) async {
     mainError = null;
     isLoading = true;
@@ -61,6 +62,11 @@ class GetxCovenantPresenter extends GetxController
           value: value,
           searchTypeInt: 3,
         );
+      } else if (searchByPersonalizedCode) {
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 4,
+        );
       } else {
         if (valueInInt.toString().length == 11 ||
             valueInInt.toString().length == 14) {
@@ -73,12 +79,6 @@ class GetxCovenantPresenter extends GetxController
           soapResponse = await loadCustomer.load(
             value: value,
             searchTypeInt: 2,
-          );
-        }
-        if (soapResponse?.responseType == SoapResponseType.error) {
-          soapResponse = await loadCustomer.load(
-            value: value,
-            searchTypeInt: 4,
           );
         }
       }

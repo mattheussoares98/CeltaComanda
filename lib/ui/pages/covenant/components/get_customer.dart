@@ -26,14 +26,16 @@ class GetCustomer extends StatelessWidget {
           titleMessage: R.string.msgAuthorizationIsPendant,
           content: Text(R.string.msgPendantAuthorizationNotification),
           onPress: () async {
-            await covenantPresenter.getCustomer(
+            await covenantPresenter.getCustomerByNameCodeOrCpf(
                 value: textController.text,
+                searchByPersonalizedCode: false,
                 showErrorMessageReturnedByBs: (value) {
                   showAlertMessage(context, value, backgroundColor: Colors.red);
                 });
           });
     } else {
-      await covenantPresenter.getCustomer(
+      await covenantPresenter.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
           value: textController.text,
           showErrorMessageReturnedByBs: (value) {
             showAlertMessage(context, value, backgroundColor: Colors.red);

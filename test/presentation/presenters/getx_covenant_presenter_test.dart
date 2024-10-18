@@ -112,7 +112,8 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.getCustomer(
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
           showErrorMessageReturnedByBs: (_) {},
           value: faker.randomGenerator.string(10));
     });
@@ -125,7 +126,8 @@ void main() {
           responseType: SoapResponseType.success,
         ),
       );
-      await sut.getCustomer(
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
           showErrorMessageReturnedByBs: (_) {},
           value: faker.randomGenerator.string(10));
     });
@@ -135,7 +137,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       loadCustomer.mockError();
-      await sut.getCustomer(
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
           showErrorMessageReturnedByBs: (_) {},
           value: faker.randomGenerator.string(10));
     });
@@ -144,8 +147,10 @@ void main() {
         () async {
       final valueToSearch = faker.randomGenerator.string(100);
 
-      await sut.getCustomer(
-          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -158,8 +163,10 @@ void main() {
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000).toInt().toString();
 
-      await sut.getCustomer(
-          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -172,8 +179,10 @@ void main() {
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
 
-      await sut.getCustomer(
-          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -195,8 +204,10 @@ void main() {
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
 
-      await sut.getCustomer(
-          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -206,20 +217,15 @@ void main() {
       ).called(1);
     });
     test(
-        "Should call loadCustomer with searchType 4 when is number and dont found cpf and exactcode",
+        "Should call loadCustomer with searchType 4 when searchByPersonalizedCode",
         () async {
-      loadCustomer.mockLoadCustomer(
-        const SoapResponse(
-          response: "response",
-          responseType: SoapResponseType.error,
-        ),
-      );
-
       final valueToSearch =
           faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
 
-      await sut.getCustomer(
-          showErrorMessageReturnedByBs: (_) {}, value: valueToSearch);
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: true,
+          showErrorMessageReturnedByBs: (_) {},
+          value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
@@ -229,7 +235,10 @@ void main() {
       ).called(1);
     });
     test("Should not get customer if value is empty", () async {
-      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "");
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: "");
 
       verifyNever(() => loadCustomer.load(
             value: "",
@@ -258,7 +267,10 @@ void main() {
                 .toList()
           ]));
 
-      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "any");
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: "any");
     });
 
     test("Should clear selectedCovenant", () async {
@@ -269,20 +281,28 @@ void main() {
         customersViewModel[0].Code: newValue,
       });
 
-      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "any");
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: "any");
 
       expect(sut.selectedCovenant, {});
     });
     test("Should clear authorizationPendingModel", () async {
-      await sut.getCustomer(showErrorMessageReturnedByBs: (_) {}, value: "any");
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: "any");
 
       expect(sut.authorizationPendingModel, null);
     });
 
     test("Should call validate customer field", () async {
       final searchValue = faker.randomGenerator.string(10);
-      await sut.getCustomer(
-          showErrorMessageReturnedByBs: (_) {}, value: searchValue);
+      await sut.getCustomerByNameCodeOrCpf(
+          searchByPersonalizedCode: false,
+          showErrorMessageReturnedByBs: (_) {},
+          value: searchValue);
 
       verify(() => validation.validate(
             field: "customer",

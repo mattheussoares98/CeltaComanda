@@ -27,8 +27,9 @@ class CovenantPresenterSpy extends Mock implements CovenantPresenter {
     when(() => this.selectedCovenant)
         .thenAnswer((any) => selectedCovenantController);
 
-    when(() => this.getCustomer(
+    when(() => this.getCustomerByNameCodeOrCpf(
           value: any(named: "value"),
+          searchByPersonalizedCode: any(named: "searchByPersonalizedCode"),
           showErrorMessageReturnedByBs:
               any(named: "showErrorMessageReturnedByBs"),
         )).thenAnswer((any) async => any);

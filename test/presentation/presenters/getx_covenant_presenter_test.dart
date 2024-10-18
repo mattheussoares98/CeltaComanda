@@ -192,7 +192,7 @@ void main() {
       ).called(1);
     });
     test(
-        "Should call loadCustomer with searchType 2 when is number and dont found cpf",
+        "Should call loadCustomer with searchType 2 when is number and dont is cpf",
         () async {
       loadCustomer.mockLoadCustomer(
         const SoapResponse(
@@ -201,8 +201,7 @@ void main() {
         ),
       );
 
-      final valueToSearch =
-          faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
+      final valueToSearch = faker.randomGenerator.decimal().toInt().toString();
 
       await sut.getCustomerByNameCodeOrCpf(
           searchByPersonalizedCode: false,

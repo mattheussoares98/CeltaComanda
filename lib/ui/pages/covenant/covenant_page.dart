@@ -76,22 +76,32 @@ class _CovenantPageState extends State<CovenantPage>
                     child: StreamBuilder<ValidationError?>(
                       stream: widget.covenantPresenter.customerErrorStream,
                       builder: (context, snapshot) {
-                        return Column(
-                          children: [
-                            GetCustomerField(
-                              textController: textController,
-                              errorText: snapshot.data?.description,
-                              searchByPersonalizedCode: _selectedOption == 1,
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).primaryColorLight,
                             ),
-                            SearchTypeRadios(
-                              updateSelectedOption: (value) {
-                                setState(() {
-                                  _selectedOption = value;
-                                });
-                              },
-                              selectedOption: _selectedOption,
-                            ),
-                          ],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            children: [
+                              GetCustomerField(
+                                textController: textController,
+                                errorText: snapshot.data?.description,
+                                searchByPersonalizedCode: _selectedOption == 1,
+                              ),
+                              const SizedBox(height: 5),
+                              SearchTypeRadios(
+                                updateSelectedOption: (value) {
+                                  setState(() {
+                                    _selectedOption = value;
+                                  });
+                                },
+                                selectedOption: _selectedOption,
+                              ),
+                            ],
+                          ),
                         );
                       },
                     ),

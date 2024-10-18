@@ -34,8 +34,11 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
                 Expanded(
                   child: RadioListTile<int>(
                     title: Text(R.string.internalcodeNameOrCpf,
-                        style: TextStyle(fontSize: getStringSize(context))),
-                    dense: true,
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                          color: Theme.of(context).primaryColor,
+                        )),
+                    contentPadding: EdgeInsets.all(0),
                     value: 0,
                     groupValue: widget.selectedOption,
                     onChanged: widget.updateSelectedOption,
@@ -44,7 +47,10 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
                 Expanded(
                   child: RadioListTile<int>(
                     title: Text(R.string.personalizedCode,
-                        style: TextStyle(fontSize: getStringSize(context))),
+                        style: TextStyle(
+                          fontSize: getStringSize(context),
+                          color: Theme.of(context).primaryColor,
+                        )),
                     dense: true,
                     value: 1,
                     groupValue: widget.selectedOption,

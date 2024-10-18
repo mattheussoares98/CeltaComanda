@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../presentation/protocols/protocols.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -23,6 +24,7 @@ class _CovenantPageState extends State<CovenantPage>
   final textController = TextEditingController();
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  int? _selectedOption = 0;
 
   @override
   void dispose() async {
@@ -69,7 +71,31 @@ class _CovenantPageState extends State<CovenantPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GetCustomer(textController: textController),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: StreamBuilder<ValidationError?>(
+                      stream: widget.covenantPresenter.customerErrorStream,
+                      builder: (context, snapshot) {
+                        return Column(
+                          children: [
+                            GetCustomerField(
+                              textController: textController,
+                              errorText: snapshot.data?.description,
+                              searchByPersonalizedCode: _selectedOption == 1,
+                            ),
+                            SearchTypeRadios(
+                              updateSelectedOption: (value) {
+                                setState(() {
+                                  _selectedOption = value;
+                                });
+                              },
+                              selectedOption: _selectedOption,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                   Customers(textController: textController),
                 ],
               ),

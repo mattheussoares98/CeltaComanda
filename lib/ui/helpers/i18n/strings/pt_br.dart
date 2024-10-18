@@ -101,7 +101,7 @@ class PtBr implements Translation {
   String get closeApplication => "Fechar APP";
   String get close => "Fechar";
   String get code => "Código";
-  String get codeNameOrCpf => "Código, nome ou CPF";
+  String get internalcodeNameOrCpf => "Código interno, nome ou CPF";
   String get combox => "Combo";
   String get command => "Comanda";
   String get commandNumber => "Número da comanda";
@@ -168,6 +168,7 @@ class PtBr implements Translation {
       "Consultar dados de outra comanda";
   String get searchCommandData => "Consultar dados da comanda";
   String get searchProduct => "Consultar produto";
+  String get searchType => "Tipo de pesquisa";
   String get selectOneComment => "Selecione um comentário";
   String get selectedProductsAndComments =>
       'Produtos selecionados e comentários';

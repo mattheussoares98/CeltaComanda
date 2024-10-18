@@ -67,27 +67,24 @@ class GetxCovenantPresenter extends GetxController
           value: value,
           searchTypeInt: 4,
         );
+      } else if (valueInInt.toString().length == 11 ||
+          valueInInt.toString().length == 14) {
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 1,
+        );
       } else {
-        if (valueInInt.toString().length == 11 ||
-            valueInInt.toString().length == 14) {
-          soapResponse = await loadCustomer.load(
-            value: value,
-            searchTypeInt: 1,
-          );
-        }
-        if (soapResponse?.responseType == SoapResponseType.error) {
-          soapResponse = await loadCustomer.load(
-            value: value,
-            searchTypeInt: 2,
-          );
-        }
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 2,
+        );
       }
 
-      if (soapResponse?.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse!.response);
+      if (soapResponse.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(soapResponse.response);
       } else {
         customersViewModel = json
-            .decode(soapResponse!.response)
+            .decode(soapResponse.response)
             .map((e) => CustomerViewModel.fromJson(e))
             .toList()
             .cast<CustomerViewModel>();

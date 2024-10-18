@@ -99,7 +99,7 @@ class EnUs implements Translation {
   String get closeApplication => 'Close APP';
   String get close => 'Close';
   String get code => 'Code';
-  String get codeNameOrCpf => 'Code, name or CPF';
+  String get internalcodeNameOrCpf => 'Internal code, name or CPF';
   String get combox => 'Combox';
   String get commandNotAvailable => 'Command not available';
   String get command => 'Command';
@@ -166,6 +166,7 @@ class EnUs implements Translation {
       'Search data of other command number';
   String get searchCommandData => 'Search command data';
   String get searchProduct => 'Search product';
+  String get searchType => 'Search type';
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';
   String get selectPaymentOption => 'Select a payment option';

@@ -78,7 +78,7 @@ abstract class Translation {
   String get close;
   String get closeApplication;
   String get code;
-  String get codeNameOrCpf;
+  String get internalcodeNameOrCpf;
   String get combox;
   String get commandNotAvailable;
   String get command;
@@ -143,6 +143,7 @@ abstract class Translation {
   String get searchCommandData;
   String get searchDataOfOtherCommandNumber;
   String get searchProduct;
+  String get searchType;
   String get selectOneComment;
   String get selectedProductsAndComments;
   String get selectPaymentOption;

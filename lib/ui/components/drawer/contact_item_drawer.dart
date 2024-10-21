@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../helpers/helpers.dart';
 import '../components.dart';
 
-class SupportItemDrawer extends StatelessWidget {
-  const SupportItemDrawer({super.key});
+class ContactItemDrawer extends StatelessWidget {
+  const ContactItemDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

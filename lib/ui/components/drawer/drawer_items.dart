@@ -24,7 +24,7 @@ class DrawerItems extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             if (homePresenter.isGeneratingVersionToGetNet)
-              const SupportItemDrawer(),
+              const ContactItemDrawer(),
             const TableConfigurationsItemDrawer(),
             const LogoutItemDrawer(),
           ],

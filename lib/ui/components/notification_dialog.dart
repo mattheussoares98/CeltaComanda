@@ -14,6 +14,7 @@ Future<void> notificationDialog({
   bool canPop = true,
   bool? showCancelAndConfirmMessage = true,
   bool? showLargeDialog = true,
+  bool? showCloseAction = false,
 }) async {
   await showDialog(
       context: context,
@@ -86,7 +87,18 @@ Future<void> notificationDialog({
                       ),
                     ),
                   ],
-                )
+                ),
+              if (showCloseAction == true)
+                TextButton(
+                  onPressed: () {
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: Text(
+                    R.string.close,
+                  ),
+                ),
             ],
           ),
         );

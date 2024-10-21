@@ -1,5 +1,8 @@
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../pages/pages.dart';
 
 class ProductComplement extends StatelessWidget {
   final String? productComplement;
@@ -10,6 +13,8 @@ class ProductComplement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     if (productComplement == null || productComplement?.isEmpty == true) {
       return const SizedBox();
     }
@@ -34,11 +39,26 @@ class ProductComplement extends StatelessWidget {
             padding: const EdgeInsets.all(2),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: HtmlWidget(complement),
+              child: homePresenter.isGeneratingVersionToGetNet
+                  ? HtmlWidget(complement)
+                  : Text(_parseHtmlString(complement)),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+String _parseHtmlString(String complement) {
+  final document = RegExp(r'<[^>]*>').allMatches(complement);
+  String parsedString = complement;
+  for (final match in document) {
+    parsedString = parsedString.replaceAll(match.group(0)!, '');
+  }
+
+  parsedString = parsedString.replaceAll(RegExp(r'&#xd;&#xa;'), '\n');
+  parsedString = parsedString.replaceAll(RegExp(r'&#.*?;'), '');
+
+  return parsedString;
 }

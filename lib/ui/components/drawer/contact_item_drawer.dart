@@ -19,6 +19,7 @@ class ContactItemDrawer extends StatelessWidget {
           titleMessage: R.string.contactUs,
           showCancelAndConfirmMessage: false,
           showLargeDialog: false,
+          showCloseAction: true,
           content: SizedBox(
             height: MediaQuery.of(context).size.height * 0.25,
             child: Row(

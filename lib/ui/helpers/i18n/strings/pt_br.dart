@@ -112,6 +112,7 @@ class PtBr implements Translation {
   String get configurations => "Configurações";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
+  String get contactUs => 'Fale conosco';
   String get confirm => 'Confirmar';
   String get costBenefit => 'Custo benefício';
   String get covenant => "Convênio";

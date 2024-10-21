@@ -13,7 +13,7 @@ class ContactItemDrawer extends StatelessWidget {
         Navigator.of(context).pop();
         notificationDialog(
           context: context,
-          titleMessage: R.string.supportContact,
+          titleMessage: R.string.contactUs,
           showCancelAndConfirmMessage: false,
           showLargeDialog: false,
           content: SizedBox(
@@ -23,7 +23,7 @@ class ContactItemDrawer extends StatelessWidget {
           onPress: () async {},
         );
       },
-      name: R.string.support,
+      name: R.string.contactUs,
       leading: Icon(
         Icons.phone,
         color: Theme.of(context).colorScheme.primary,

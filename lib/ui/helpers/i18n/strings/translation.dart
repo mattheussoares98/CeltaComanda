@@ -26,6 +26,7 @@ abstract class Translation {
   String get msgLowBatteryChargeDevice;
   String get msgMaximumQuantityAchieved;
   String get msgNotFound;
+  String get msgNumberCopiedSuccessfully;
   String get msgObligatoryFixedCommandNumber;
   String get msgPaymentCanceled;
   String get msgPaymentDeclined;

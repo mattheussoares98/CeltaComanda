@@ -32,7 +32,10 @@ class ContactItemDrawer extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: phoneNumber));
-                    showAlertMessage(context, "R.string.success");
+                    showAlertMessage(
+                      context,
+                      R.string.msgNumberCopiedSuccessfully,
+                    );
                   },
                   icon: const Icon(Icons.copy),
                 ),

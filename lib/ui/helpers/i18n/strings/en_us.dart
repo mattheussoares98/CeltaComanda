@@ -37,6 +37,7 @@ class EnUs implements Translation {
       'Charge the device. It is running low on battery';
   String get msgMaximumQuantityAchieved => "Maximum quantity achivied";
   String get msgNotFound => "Value not found";
+  String get msgNumberCopiedSuccessfully => "Number copied successfully";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
   String get msgPaymentCanceled => 'Payment canceled';

@@ -27,7 +27,7 @@ PreferredSize homeAppBar({
               padding: const EdgeInsets.only(right: 1),
               child: AppBarButton(
                 onPress: homePresenter.goToPaymentPage,
-                icon: Icons.paypal_rounded,
+                icon: Icons.monetization_on,
                 isPrice: true,
                 buttonName: R.string.pay,
                 quantityString:

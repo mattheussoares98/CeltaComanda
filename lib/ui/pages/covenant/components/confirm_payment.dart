@@ -90,6 +90,19 @@ class ConfirmPayment extends StatelessWidget {
                           }
                           return null;
                         },
+                        onFieldSubmitted: (_) async {
+                          bool? isValid = passwordKey.currentState?.validate();
+                          if (isValid == true) {
+                            Navigator.of(context).pop();
+                            await _finishSaleRequestByCovenant(
+                              covenantPresenter: covenantPresenter,
+                              homePresenter: homePresenter,
+                              printedProductsPresenter:
+                                  printedProductsPresenter,
+                              context: context,
+                            );
+                          }
+                        },
                       ),
                     ),
                     onPress: () async {

@@ -83,7 +83,7 @@ class AppBarButton extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Flexible(child: Icon(icon, color: Colors.white)),
+                      FittedBox(child: Icon(icon, color: Colors.white)),
                       SizedBox(width: hasMinWidth(context) ? 3 : 0),
                       Center(
                         child: hasMinWidth(context)
@@ -94,21 +94,23 @@ class AppBarButton extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 2),
-                Container(
-                  color: Colors.black,
-                  child: InkWell(
-                    onTap: onPress,
-                    child: FittedBox(
-                      child: Text(
-                        quantityString
-                            .toDouble()
-                            .toString()
-                            .toBrazilianNumber()
-                            .addBrazilianCoin(),
-                        style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor,
-                          fontWeight: FontWeight.bold,
+                // const SizedBox(height: 2),
+                Flexible(
+                  child: Container(
+                    color: Colors.black,
+                    child: InkWell(
+                      onTap: onPress,
+                      child: FittedBox(
+                        child: Text(
+                          quantityString
+                              .toDouble()
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          style: TextStyle(
+                            color: Theme.of(context).secondaryHeaderColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),

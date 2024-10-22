@@ -19,9 +19,9 @@ class CovenantModel extends Equatable {
   List<Object?> get props => [Code, PersonalizedCode, Name];
 
   factory CovenantModel.fromJson(Map json) => CovenantModel(
-        Code: json["Code"],
-        PersonalizedCode: json["PersonalizedCode"],
-        Name: json["Name"],
+        Code: json["Covenant"]["Code"],
+        PersonalizedCode: json["Covenant"]["PersonalizedCode"],
+        Name: json["Covenant"]["Name"],
       );
 
   factory CovenantModel.fromEntity(CovenantEntity entity) => CovenantModel(

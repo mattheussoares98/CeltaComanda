@@ -20,7 +20,7 @@ class CustomerViewModel extends Equatable {
   final List<String>? Emails;
   final List<TelephoneModel>? Telephones;
   final List<AddressModel>? Addresses;
-  final List<CovenantModel>? Covenants;
+  final List<CovenantModel>? CustomerCovenants;
 
   const CustomerViewModel({
     required this.Code,
@@ -36,7 +36,7 @@ class CustomerViewModel extends Equatable {
     required this.Emails,
     required this.Telephones,
     required this.Addresses,
-    required this.Covenants,
+    required this.CustomerCovenants,
   });
   @override
   List<Object?> get props => [
@@ -53,7 +53,7 @@ class CustomerViewModel extends Equatable {
         Emails,
         Telephones,
         Addresses,
-        Covenants,
+        CustomerCovenants,
       ];
 
   factory CustomerViewModel.fromJson(Map json) => CustomerViewModel(
@@ -74,7 +74,7 @@ class CustomerViewModel extends Equatable {
         Addresses: json["Addresses"]
             ?.map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList(),
-        Covenants: json["Covenants"]
+        CustomerCovenants: json["CustomerCovenants"]
             ?.map<CovenantModel>((e) => CovenantModel.fromJson(e))
             .toList(),
       );
@@ -93,7 +93,7 @@ class CustomerViewModel extends Equatable {
         "Emails": Emails,
         "Telephones": Telephones,
         "Addresses": Addresses,
-        "Covenants": Covenants,
+        "CustomerCovenants": CustomerCovenants,
       };
 
   factory CustomerViewModel.fromEntity(CustomerEntity entity) =>
@@ -113,8 +113,9 @@ class CustomerViewModel extends Equatable {
             .toList(),
         Addresses:
             entity.Addresses?.map((e) => AddressModel.fromEntity(e)).toList(),
-        Covenants:
-            entity.Covenants?.map((e) => CovenantModel.fromEntity(e)).toList(),
+        CustomerCovenants:
+            entity.CustomerCovenants?.map((e) => CovenantModel.fromEntity(e))
+                .toList(),
       );
 
   CustomerEntity toEntity() => CustomerEntity(
@@ -131,6 +132,6 @@ class CustomerViewModel extends Equatable {
         Emails: Emails,
         Telephones: Telephones?.map((e) => e.toEntity()).toList(),
         Addresses: Addresses?.map((e) => e.toEntity()).toList(),
-        Covenants: Covenants?.map((e) => e.toEntity()).toList(),
+        CustomerCovenants: CustomerCovenants?.map((e) => e.toEntity()).toList(),
       );
 }

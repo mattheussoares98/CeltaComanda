@@ -58,10 +58,10 @@ class _CovenantsState extends State<Covenants> {
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: widget.customer.Covenants?.length,
+          itemCount: widget.customer.CustomerCovenants?.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final covenant = widget.customer.Covenants?[index];
+            final covenant = widget.customer.CustomerCovenants?[index];
 
             return CovenantRadioListTile(
               customer: widget.customer,

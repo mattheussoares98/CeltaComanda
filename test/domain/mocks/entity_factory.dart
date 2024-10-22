@@ -1039,7 +1039,7 @@ class EntityFactory {
             _makeAdressEntity(),
             _makeAdressEntity(),
           ],
-          Covenants: const [],
+          CustomerCovenants: const [],
         ),
       ];
 

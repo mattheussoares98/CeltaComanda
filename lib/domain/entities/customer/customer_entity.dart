@@ -18,7 +18,7 @@ class CustomerEntity extends Equatable {
   final List<String>? Emails;
   final List<TelephoneEntity>? Telephones;
   final List<AddressEntity>? Addresses;
-  final List<CovenantEntity>? Covenants;
+  final List<CovenantEntity>? CustomerCovenants;
 
   const CustomerEntity({
     required this.Code,
@@ -34,7 +34,7 @@ class CustomerEntity extends Equatable {
     required this.Emails,
     required this.Telephones,
     required this.Addresses,
-    required this.Covenants,
+    required this.CustomerCovenants,
   });
 
   @override
@@ -52,6 +52,6 @@ class CustomerEntity extends Equatable {
         Emails,
         Telephones,
         Addresses,
-        Covenants,
+        CustomerCovenants,
       ];
 }

@@ -95,8 +95,8 @@ class _CustomersState extends State<Customers> {
                           fontSize: getStringSize(context),
                         ),
                       ),
-                      if (customer.Covenants == null ||
-                          customer.Covenants!.isEmpty)
+                      if (customer.CustomerCovenants == null ||
+                          customer.CustomerCovenants!.isEmpty)
                         Text(
                           R.string.withoutCovenant.toUpperCase(),
                           textAlign: TextAlign.center,
@@ -106,8 +106,8 @@ class _CustomersState extends State<Customers> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      if (customer.Covenants != null &&
-                          customer.Covenants!.isNotEmpty)
+                      if (customer.CustomerCovenants != null &&
+                          customer.CustomerCovenants!.isNotEmpty)
                         Covenants(
                           customer: customer,
                           callSetState: () {

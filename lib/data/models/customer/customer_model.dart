@@ -90,6 +90,6 @@ class CustomerModel {
         Emails: Emails,
         Telephones: Telephones?.map((e) => e.toEntity()).toList(),
         Addresses: Addresses?.map((e) => e.toEntity()).toList(),
-        Covenants: Covenants?.map((e) => e.toEntity()).toList(),
+        CustomerCovenants: Covenants?.map((e) => e.toEntity()).toList(),
       );
 }

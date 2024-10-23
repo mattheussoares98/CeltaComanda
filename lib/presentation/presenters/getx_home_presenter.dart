@@ -40,15 +40,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
   }) async {
-    navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
-
+    await clearEnterpriseData();
     _updateMenuCount = -1;
     _commandNumber = null;
     menuPresenter.clear();
     printedProductsPresenter.clear();
     cartPresenter.clear();
-    await clearEnterpriseData();
     await persistent.makeNotPersistent();
+
+    navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }
 
   @override

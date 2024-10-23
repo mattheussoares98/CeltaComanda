@@ -7,7 +7,7 @@ class ListenFirebaseStreamAndCallFunction extends StatelessWidget {
   final String doc;
   final Widget child;
   final String keyToListen;
-  final int valueToCompareAndCallFunctionIfIsDifferent;
+  final int? valueToCompareAndCallFunctionIfIsDifferent;
   final Future<void> Function(Map<String, dynamic> data) function;
   const ListenFirebaseStreamAndCallFunction({
     required this.collection,
@@ -35,6 +35,7 @@ class ListenFirebaseStreamAndCallFunction extends StatelessWidget {
 
             if (data != null &&
                 data.containsKey(keyToListen) &&
+                valueToCompareAndCallFunctionIfIsDifferent != null &&
                 valueToCompareAndCallFunctionIfIsDifferent !=
                     data[keyToListen]) {
               _isUpdatingMenu = true;

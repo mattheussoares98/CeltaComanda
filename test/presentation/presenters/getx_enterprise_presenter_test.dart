@@ -543,4 +543,36 @@ void main() {
       );
     });
   });
+
+  group("Update enterprise entity", () {
+    test("Should update EnterpriseDataBuilder correctly", () async {
+      final newEnterprise = EntityFactory.makeEnterpriseData();
+
+      await sut.updateEnterpriseEntity(
+        enterprise: newEnterprise,
+        updateEnterpriseCount: faker.randomGenerator.integer(100),
+      );
+
+      expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
+    });
+    test("Should update updateEnterpriseCount correctly", () async {
+      final updateEnterpriseCount = faker.randomGenerator.integer(100);
+      await sut.updateEnterpriseEntity(
+        enterprise: enterpriseEntity,
+        updateEnterpriseCount: updateEnterpriseCount,
+      );
+
+      expect(sut.updateEnterpriseCount, updateEnterpriseCount);
+    });
+    test("Should update local data", () async {
+      final newEnterprise = EntityFactory.makeEnterpriseData();
+
+      await sut.updateEnterpriseEntity(
+        enterprise: newEnterprise,
+        updateEnterpriseCount: faker.randomGenerator.integer(100),
+      );
+
+      verify(() => localEnterpriseData.add(newEnterprise)).called(1);
+    });
+  });
 }

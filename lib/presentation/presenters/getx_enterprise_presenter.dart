@@ -268,4 +268,23 @@ class GetxEnterpriseValidationPresenter extends GetxController
       isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
     );
   }
+
+  int _updateEnterpriseCount = -1;
+  @override
+  int get updateEnterpriseCount => _updateEnterpriseCount;
+
+  @override
+  Future<void> updateEnterpriseEntity({
+    required EnterpriseEntity enterprise,
+    required int updateEnterpriseCount,
+  }) async {
+    EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+    _updateEnterpriseCount = updateEnterpriseCount;
+
+    try {
+      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
+    } catch (e) {
+      return;
+    }
+  }
 }

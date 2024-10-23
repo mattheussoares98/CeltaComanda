@@ -1,5 +1,4 @@
 import 'package:battery_plus/battery_plus.dart';
-import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -100,12 +99,8 @@ class _HomePageState extends State<HomePage>
       keyToListen: "updateEnterpriseCount",
       valueToCompareAndCallFunctionIfIsDifferent:
           enterpriseValidationPresenter.updateEnterpriseCount,
-      function: (data) async {
-        await enterpriseValidationPresenter.updateEnterpriseEntity(
-          enterprise: EnterpriseValidationModel.fromJson(data).toEntity(),
-          updateEnterpriseCount:
-              enterpriseValidationPresenter.updateEnterpriseCount,
-        );
+      function: (Map<String, dynamic> data) async {
+        await enterpriseValidationPresenter.updateEnterpriseEntity(data);
       },
       child: ListenFirebaseStreamAndCallFunction(
         collection: "clients",

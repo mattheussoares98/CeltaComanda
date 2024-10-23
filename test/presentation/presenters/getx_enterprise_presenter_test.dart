@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -556,28 +557,22 @@ void main() {
       final newEnterprise = EntityFactory.makeEnterpriseData();
 
       await sut.updateEnterpriseEntity(
-        enterprise: newEnterprise,
-        updateEnterpriseCount: faker.randomGenerator.integer(100),
-      );
+          EnterpriseValidationModel.fromEntity(newEnterprise).toJson());
 
       expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
     });
     test("Should update updateEnterpriseCount correctly", () async {
-      final updateEnterpriseCount = faker.randomGenerator.integer(100);
+      final newEnterprise = EntityFactory.makeEnterpriseData();
       await sut.updateEnterpriseEntity(
-        enterprise: enterpriseEntity,
-        updateEnterpriseCount: updateEnterpriseCount,
-      );
+          EnterpriseValidationModel.fromEntity(newEnterprise).toJson());
 
-      expect(sut.updateEnterpriseCount, updateEnterpriseCount);
+      expect(sut.updateEnterpriseCount, newEnterprise.updateEnterpriseCount);
     });
     test("Should update local data", () async {
       final newEnterprise = EntityFactory.makeEnterpriseData();
 
       await sut.updateEnterpriseEntity(
-        enterprise: newEnterprise,
-        updateEnterpriseCount: faker.randomGenerator.integer(100),
-      );
+          EnterpriseValidationModel.fromEntity(newEnterprise).toJson());
 
       verify(() => localEnterpriseData.add(newEnterprise)).called(1);
     });

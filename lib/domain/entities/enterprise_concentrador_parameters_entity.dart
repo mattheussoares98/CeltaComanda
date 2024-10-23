@@ -1,126 +1,128 @@
+import 'package:equatable/equatable.dart';
+
 import 'entities.dart';
 
-class EnterpriseConcentradorParametersEntity {
-  EnterpriseConcentradorEntity? enterprise;
-  bool? useBalanceOnPdv;
-  bool? balanceLabelProductCodeWithCheckerDigit;
-  bool? allowDiscountOnOffer;
-  bool? allowDiscountOnWholeSale;
-  bool? allowManualDiscountOnAutomaticDiscount;
-  bool? useDiscountLiquidFromSaleNegotiation;
-  bool? acceptCheckCustomerNotKnow;
-  bool? useFinalizationCheckLikePortion;
-  bool? allowParcelling;
-  bool? openCashDrawerOnlyForMoney;
-  bool? showValuesOnBleeding;
-  bool? showOnlyCardValuesOnBleeding;
-  bool? showPOSValuesOnBleeding;
-  bool? limitValueToBleedByCashierBalanceValues;
-  bool? blockadeCashierOnLimitBleedingExceed;
-  bool? considerBottomCashierValueOnBleeding;
-  bool? askSaleIsTravel;
-  bool? useDeliveryControl;
-  bool? useDeliveryControlFastTable;
-  bool? useDeliveryControlAskFlagNumber;
-  bool? requestCustomerToDeliveryType;
-  bool? useGiftControl;
-  bool? separateDeliveryControlPayments;
-  bool? controlCashDrawerOpened;
-  bool? allowCancelAllItensOnCoupon;
-  bool? blockadeSaleRequestTaxPayerInterState;
-  bool? blockadeSaleRequestNotPrint;
-  bool? obligatoryCovenantWhenCustomer;
-  bool? printProductCancelledAfterSale;
-  bool? paymentFinalizationSelectMoneyAutomatically;
-  bool? fillAutomaticallyCPFCNPJWithCustomerData;
-  bool? showPortionsNumberWithGride;
-  bool? mercaFacilDiscountsIsEnabled;
-  bool? bonifiQIsEnabled;
-  bool? cresceVendasIsEnabled;
-  bool? useCupomPrintSimplify;
-  bool? useCupomPrintAllProductName;
-  bool? printDiscountProductsOnCoupon;
-  bool? allowNFCeEmission;
-  bool? productSearchPluCodeWithDigit;
-  bool? disableSearchDotProductDigit;
-  bool? disableSearchPluForProductEan;
-  bool? showStockValueOnProductConsult;
-  bool? allowMaxQtdItemExceedAuthorization;
-  bool? sATSharingBlockadeForTEF;
-  bool? sATSharingBlockadeForCustomerIdentifier;
-  bool? requestSalePriceTypeOnInitialSale;
-  bool? showWholeSalePriceOnProductConsult;
-  bool? showCustomerAddress;
-  bool? showCustomerTelephone;
-  bool? activePromotionChampionMarks;
-  bool? tEFRequestOriginParceling;
-  bool? useControlCashierClose;
-  bool? use24HsCashierMovement;
-  bool? xavierCardIsEnabled;
-  bool? vidaMaisCardIsEnabled;
-  int? parametersId;
-  int? balanceLabelProductCodeSize;
-  int? balanceLabelValueOrQuantityType;
-  int? roundingType;
-  int? internalCustomerCode;
-  int? allowCancelOnlyLastSale;
-  int? printCouponModel;
-  int? printCouponTEFOrder;
-  int? useMotiveCancellationType;
-  int? useMotiveJustificationTypeOnBleeding;
-  int? useMotiveJustificationTypeOnSaleDiscount;
-  int? discountTypeAllowed;
-  int? digitalWalletShowQRCodePayment;
-  int? consumerCPFCNPJRequestType;
-  int? saleRequestSellerRequestType;
-  int? saleRequestOrigin;
-  int? finalizationPOSRequestNSUType;
-  int? parcelMaxPortionsNumber;
-  int? pdvAspectViwModelType;
-  int? saleProductMaxQtdItem;
-  int? urlSATSharingTotalCouponGroup;
-  int? daysToMaintainHistory;
-  int? bleedingPrintNumber;
-  int? printNumberForPOSVoucher;
-  int? printNumberForCovenantVoucher;
-  int? printNumberForCreditDevolutionVoucher;
-  int? printNumberForExchangeInformation;
-  int? printNumberForDeliveryVoucher;
-  int? userAuthenticationModelType;
-  int? parkingControlType;
-  int? parkingControlIPPort;
-  String? balanceMask;
-  String? celtaBSUrlCCS;
-  String? celtaBSUrlBSF;
-  String? celtaBSCrossIdentity;
-  String? saleMsgInitial;
-  dynamic productInternalCodeToDonation;
-  dynamic sitefMsgVisor;
-  dynamic sitefIPNumber;
-  dynamic sitefEnterpriseCode;
-  dynamic sitefCustomerCode;
-  dynamic sitefCliSitefAdditionalDataIni;
-  dynamic mercaFacilDiscountsTokenApi;
-  dynamic bonifiQUser;
-  dynamic bonifiQPassword;
-  dynamic cresceVendasUser;
-  dynamic cresceVendasPassword;
-  dynamic cupomMsgBottom;
-  dynamic cupomMsgExchangeInformation;
-  dynamic pathToGenerateXmlSATNFCe;
-  dynamic saleProductBalanceMaxQtdItem;
-  dynamic imageMarketingSecondsForIdleTime;
-  dynamic imageMarketingSecondsForShowEachImage;
-  dynamic xavierCardUrl;
-  dynamic xavierCardEnterpriseCode;
-  dynamic xavierCardUserCode;
-  dynamic xavierCardUserPassword;
-  dynamic vidaMaisCardUserCode;
-  dynamic vidaMaisCardUserPassword;
-  dynamic vidaMaisCardSellerCode;
-  dynamic parkingControlIPAddress;
+class EnterpriseConcentradorParametersEntity extends Equatable {
+  final EnterpriseConcentradorEntity? enterprise;
+  final bool? useBalanceOnPdv;
+  final bool? balanceLabelProductCodeWithCheckerDigit;
+  final bool? allowDiscountOnOffer;
+  final bool? allowDiscountOnWholeSale;
+  final bool? allowManualDiscountOnAutomaticDiscount;
+  final bool? useDiscountLiquidFromSaleNegotiation;
+  final bool? acceptCheckCustomerNotKnow;
+  final bool? useFinalizationCheckLikePortion;
+  final bool? allowParcelling;
+  final bool? openCashDrawerOnlyForMoney;
+  final bool? showValuesOnBleeding;
+  final bool? showOnlyCardValuesOnBleeding;
+  final bool? showPOSValuesOnBleeding;
+  final bool? limitValueToBleedByCashierBalanceValues;
+  final bool? blockadeCashierOnLimitBleedingExceed;
+  final bool? considerBottomCashierValueOnBleeding;
+  final bool? askSaleIsTravel;
+  final bool? useDeliveryControl;
+  final bool? useDeliveryControlFastTable;
+  final bool? useDeliveryControlAskFlagNumber;
+  final bool? requestCustomerToDeliveryType;
+  final bool? useGiftControl;
+  final bool? separateDeliveryControlPayments;
+  final bool? controlCashDrawerOpened;
+  final bool? allowCancelAllItensOnCoupon;
+  final bool? blockadeSaleRequestTaxPayerInterState;
+  final bool? blockadeSaleRequestNotPrint;
+  final bool? obligatoryCovenantWhenCustomer;
+  final bool? printProductCancelledAfterSale;
+  final bool? paymentFinalizationSelectMoneyAutomatically;
+  final bool? fillAutomaticallyCPFCNPJWithCustomerData;
+  final bool? showPortionsNumberWithGride;
+  final bool? mercaFacilDiscountsIsEnabled;
+  final bool? bonifiQIsEnabled;
+  final bool? cresceVendasIsEnabled;
+  final bool? useCupomPrintSimplify;
+  final bool? useCupomPrintAllProductName;
+  final bool? printDiscountProductsOnCoupon;
+  final bool? allowNFCeEmission;
+  final bool? productSearchPluCodeWithDigit;
+  final bool? disableSearchDotProductDigit;
+  final bool? disableSearchPluForProductEan;
+  final bool? showStockValueOnProductConsult;
+  final bool? allowMaxQtdItemExceedAuthorization;
+  final bool? sATSharingBlockadeForTEF;
+  final bool? sATSharingBlockadeForCustomerIdentifier;
+  final bool? requestSalePriceTypeOnInitialSale;
+  final bool? showWholeSalePriceOnProductConsult;
+  final bool? showCustomerAddress;
+  final bool? showCustomerTelephone;
+  final bool? activePromotionChampionMarks;
+  final bool? tEFRequestOriginParceling;
+  final bool? useControlCashierClose;
+  final bool? use24HsCashierMovement;
+  final bool? xavierCardIsEnabled;
+  final bool? vidaMaisCardIsEnabled;
+  final int? parametersId;
+  final int? balanceLabelProductCodeSize;
+  final int? balanceLabelValueOrQuantityType;
+  final int? roundingType;
+  final int? internalCustomerCode;
+  final int? allowCancelOnlyLastSale;
+  final int? printCouponModel;
+  final int? printCouponTEFOrder;
+  final int? useMotiveCancellationType;
+  final int? useMotiveJustificationTypeOnBleeding;
+  final int? useMotiveJustificationTypeOnSaleDiscount;
+  final int? discountTypeAllowed;
+  final int? digitalWalletShowQRCodePayment;
+  final int? consumerCPFCNPJRequestType;
+  final int? saleRequestSellerRequestType;
+  final int? saleRequestOrigin;
+  final int? finalizationPOSRequestNSUType;
+  final int? parcelMaxPortionsNumber;
+  final int? pdvAspectViwModelType;
+  final int? saleProductMaxQtdItem;
+  final int? urlSATSharingTotalCouponGroup;
+  final int? daysToMaintainHistory;
+  final int? bleedingPrintNumber;
+  final int? printNumberForPOSVoucher;
+  final int? printNumberForCovenantVoucher;
+  final int? printNumberForCreditDevolutionVoucher;
+  final int? printNumberForExchangeInformation;
+  final int? printNumberForDeliveryVoucher;
+  final int? userAuthenticationModelType;
+  final int? parkingControlType;
+  final int? parkingControlIPPort;
+  final String? balanceMask;
+  final String? celtaBSUrlCCS;
+  final String? celtaBSUrlBSF;
+  final String? celtaBSCrossIdentity;
+  final String? saleMsgInitial;
+  final dynamic productInternalCodeToDonation;
+  final dynamic sitefMsgVisor;
+  final dynamic sitefIPNumber;
+  final dynamic sitefEnterpriseCode;
+  final dynamic sitefCustomerCode;
+  final dynamic sitefCliSitefAdditionalDataIni;
+  final dynamic mercaFacilDiscountsTokenApi;
+  final dynamic bonifiQUser;
+  final dynamic bonifiQPassword;
+  final dynamic cresceVendasUser;
+  final dynamic cresceVendasPassword;
+  final dynamic cupomMsgBottom;
+  final dynamic cupomMsgExchangeInformation;
+  final dynamic pathToGenerateXmlSATNFCe;
+  final dynamic saleProductBalanceMaxQtdItem;
+  final dynamic imageMarketingSecondsForIdleTime;
+  final dynamic imageMarketingSecondsForShowEachImage;
+  final dynamic xavierCardUrl;
+  final dynamic xavierCardEnterpriseCode;
+  final dynamic xavierCardUserCode;
+  final dynamic xavierCardUserPassword;
+  final dynamic vidaMaisCardUserCode;
+  final dynamic vidaMaisCardUserPassword;
+  final dynamic vidaMaisCardSellerCode;
+  final dynamic parkingControlIPAddress;
 
-  EnterpriseConcentradorParametersEntity({
+  const EnterpriseConcentradorParametersEntity({
     required this.enterprise,
     required this.useBalanceOnPdv,
     required this.balanceLabelProductCodeWithCheckerDigit,
@@ -240,4 +242,126 @@ class EnterpriseConcentradorParametersEntity {
     required this.vidaMaisCardSellerCode,
     required this.parkingControlIPAddress,
   });
+
+  @override
+  List<Object?> get props => [
+        enterprise,
+        useBalanceOnPdv,
+        balanceLabelProductCodeWithCheckerDigit,
+        allowDiscountOnOffer,
+        allowDiscountOnWholeSale,
+        allowManualDiscountOnAutomaticDiscount,
+        useDiscountLiquidFromSaleNegotiation,
+        acceptCheckCustomerNotKnow,
+        useFinalizationCheckLikePortion,
+        allowParcelling,
+        openCashDrawerOnlyForMoney,
+        showValuesOnBleeding,
+        showOnlyCardValuesOnBleeding,
+        showPOSValuesOnBleeding,
+        limitValueToBleedByCashierBalanceValues,
+        blockadeCashierOnLimitBleedingExceed,
+        considerBottomCashierValueOnBleeding,
+        askSaleIsTravel,
+        useDeliveryControl,
+        useDeliveryControlFastTable,
+        useDeliveryControlAskFlagNumber,
+        requestCustomerToDeliveryType,
+        useGiftControl,
+        separateDeliveryControlPayments,
+        controlCashDrawerOpened,
+        allowCancelAllItensOnCoupon,
+        blockadeSaleRequestTaxPayerInterState,
+        blockadeSaleRequestNotPrint,
+        obligatoryCovenantWhenCustomer,
+        printProductCancelledAfterSale,
+        paymentFinalizationSelectMoneyAutomatically,
+        fillAutomaticallyCPFCNPJWithCustomerData,
+        showPortionsNumberWithGride,
+        mercaFacilDiscountsIsEnabled,
+        bonifiQIsEnabled,
+        cresceVendasIsEnabled,
+        useCupomPrintSimplify,
+        useCupomPrintAllProductName,
+        printDiscountProductsOnCoupon,
+        allowNFCeEmission,
+        productSearchPluCodeWithDigit,
+        disableSearchDotProductDigit,
+        disableSearchPluForProductEan,
+        showStockValueOnProductConsult,
+        allowMaxQtdItemExceedAuthorization,
+        sATSharingBlockadeForTEF,
+        sATSharingBlockadeForCustomerIdentifier,
+        requestSalePriceTypeOnInitialSale,
+        showWholeSalePriceOnProductConsult,
+        showCustomerAddress,
+        showCustomerTelephone,
+        activePromotionChampionMarks,
+        tEFRequestOriginParceling,
+        useControlCashierClose,
+        use24HsCashierMovement,
+        xavierCardIsEnabled,
+        vidaMaisCardIsEnabled,
+        parametersId,
+        balanceLabelProductCodeSize,
+        balanceLabelValueOrQuantityType,
+        roundingType,
+        internalCustomerCode,
+        allowCancelOnlyLastSale,
+        printCouponModel,
+        printCouponTEFOrder,
+        useMotiveCancellationType,
+        useMotiveJustificationTypeOnBleeding,
+        useMotiveJustificationTypeOnSaleDiscount,
+        discountTypeAllowed,
+        digitalWalletShowQRCodePayment,
+        consumerCPFCNPJRequestType,
+        saleRequestSellerRequestType,
+        saleRequestOrigin,
+        finalizationPOSRequestNSUType,
+        parcelMaxPortionsNumber,
+        pdvAspectViwModelType,
+        saleProductMaxQtdItem,
+        urlSATSharingTotalCouponGroup,
+        daysToMaintainHistory,
+        bleedingPrintNumber,
+        printNumberForPOSVoucher,
+        printNumberForCovenantVoucher,
+        printNumberForCreditDevolutionVoucher,
+        printNumberForExchangeInformation,
+        printNumberForDeliveryVoucher,
+        userAuthenticationModelType,
+        parkingControlType,
+        parkingControlIPPort,
+        balanceMask,
+        celtaBSUrlCCS,
+        celtaBSUrlBSF,
+        celtaBSCrossIdentity,
+        saleMsgInitial,
+        productInternalCodeToDonation,
+        sitefMsgVisor,
+        sitefIPNumber,
+        sitefEnterpriseCode,
+        sitefCustomerCode,
+        sitefCliSitefAdditionalDataIni,
+        mercaFacilDiscountsTokenApi,
+        bonifiQUser,
+        bonifiQPassword,
+        cresceVendasUser,
+        cresceVendasPassword,
+        cupomMsgBottom,
+        cupomMsgExchangeInformation,
+        pathToGenerateXmlSATNFCe,
+        saleProductBalanceMaxQtdItem,
+        imageMarketingSecondsForIdleTime,
+        imageMarketingSecondsForShowEachImage,
+        xavierCardUrl,
+        xavierCardEnterpriseCode,
+        xavierCardUserCode,
+        xavierCardUserPassword,
+        vidaMaisCardUserCode,
+        vidaMaisCardUserPassword,
+        vidaMaisCardSellerCode,
+        parkingControlIPAddress,
+      ];
 }

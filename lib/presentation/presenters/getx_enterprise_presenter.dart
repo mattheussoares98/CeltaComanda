@@ -1,3 +1,4 @@
+import '../../data/models/models.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -276,14 +277,17 @@ class GetxEnterpriseValidationPresenter extends GetxController
   int get updateEnterpriseCount => _updateEnterpriseCount;
 
   @override
-  Future<void> updateEnterpriseEntity({
-    required EnterpriseEntity enterprise,
-    required int updateEnterpriseCount,
-  }) async {
-    EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
-    _updateEnterpriseCount = updateEnterpriseCount;
-
+  Future<void> updateEnterpriseEntity(
+    Map<String, dynamic> enterpriseData,
+  ) async {
     try {
+      EnterpriseDataBuilder.enterpriseDataEntity =
+          EnterpriseValidationModel.fromJson(enterpriseData).toEntity();
+
+      _updateEnterpriseCount =
+          EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount ??
+              0;
+
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
     } catch (e) {
       return;

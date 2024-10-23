@@ -8,11 +8,11 @@ import 'package:faker/faker.dart';
 class EntityFactory {
   static EnterpriseEntity makeEnterpriseData() {
     return EnterpriseEntity(
-      url: faker.internet.httpUrl(),
+      url: faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
       urlCCS: faker.internet.httpUrl(),
       enterpriseId: faker.randomGenerator.integer(3),
-      enterpriseName: faker.company.name(),
-      concentradorUrl: faker.internet.httpUrl(),
+      enterpriseName: faker.company.name().toLowerCase().removeWhiteSpaces(),
+      concentradorUrl: faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
       persistApp: faker.randomGenerator.boolean(),
       useCovenant: faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:

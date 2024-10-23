@@ -29,6 +29,7 @@ void main() {
       enterpriseConcentradorParametersEntity:
           EntityFactory.makeEnterpriseConcentradorParametersEntity(),
       updateMenuCount: faker.randomGenerator.integer(100),
+      updateEnterpriseCount: faker.randomGenerator.integer(100),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

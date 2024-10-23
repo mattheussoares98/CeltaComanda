@@ -9,9 +9,7 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class EnterpriseValidationPage extends StatefulWidget {
-  final EnterpriseValidationPresenter presenter;
-
-  const EnterpriseValidationPage(this.presenter, {super.key});
+  const EnterpriseValidationPage({super.key});
 
   @override
   State<EnterpriseValidationPage> createState() =>
@@ -27,11 +25,14 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     if (!_isLoaded) {
       _isLoaded = true;
       HomePresenter homePresenter = Provider.of(context, listen: false);
-      await widget.presenter.getLocalData(homePresenter);
+      EnterpriseValidationPresenter enterpriseValidationPresenter =
+          Provider.of(context, listen: false);
+      await enterpriseValidationPresenter.getLocalData(homePresenter);
 
-      if (widget.presenter.enterpriseNameController.text.isNotEmpty) {
-        widget.presenter.validateEnterpriseInput(
-            widget.presenter.enterpriseNameController.text);
+      if (enterpriseValidationPresenter
+          .enterpriseNameController.text.isNotEmpty) {
+        enterpriseValidationPresenter.validateEnterpriseInput(
+            enterpriseValidationPresenter.enterpriseNameController.text);
       }
     }
   }
@@ -46,14 +47,12 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
         return;
       }
 
-      await enterpriseValidationPresenter
-          .validateApiAndGoToHomePage(
+      await enterpriseValidationPresenter.validateApiAndGoToHomePage(
         commandEntity: commandViewModel.toEntity(),
         homePresenter: homePresenter,
       );
     } else {
-      await enterpriseValidationPresenter
-          .validateApiAndGoToHomePage(
+      await enterpriseValidationPresenter.validateApiAndGoToHomePage(
         commandEntity: commandViewModel.toEntity(),
         homePresenter: homePresenter,
       );
@@ -76,14 +75,16 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    EnterpriseValidationPresenter enterpriseValidationPresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
     loadingSubscription =
-        handleLoading(context, widget.presenter.isLoadingStream);
+        handleLoading(context, enterpriseValidationPresenter.isLoadingStream);
     mainErrorSubscription =
-        handleMainError(context, widget.presenter.mainErrorStream);
+        handleMainError(context, enterpriseValidationPresenter.mainErrorStream);
 
     return Scaffold(
       body: GestureDetector(
@@ -97,9 +98,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: ListenableProvider(
-                  create: (_) => widget.presenter,
+                  create: (_) => enterpriseValidationPresenter,
                   child: StreamBuilder<CommandViewModel?>(
-                      stream: widget.presenter.commandDataStream,
+                      stream: enterpriseValidationPresenter.commandDataStream,
                       builder: (context, snapshotCommandData) {
                         if (snapshotCommandData.data == null) {
                           return const SizedBox();
@@ -129,7 +130,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                           commandViewModel:
                                               snapshotCommandData.data!,
                                           enterpriseValidationPresenter:
-                                              widget.presenter,
+                                              enterpriseValidationPresenter,
                                         );
                                       },
                                     ),
@@ -143,7 +144,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                   homePresenter: homePresenter,
                                   commandViewModel: snapshotCommandData.data!,
                                   enterpriseValidationPresenter:
-                                      widget.presenter,
+                                      enterpriseValidationPresenter,
                                 );
                               },
                             ),

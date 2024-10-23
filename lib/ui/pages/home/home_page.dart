@@ -1,4 +1,5 @@
 import 'package:battery_plus/battery_plus.dart';
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -84,6 +85,8 @@ class _HomePageState extends State<HomePage>
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
+    EnterpriseValidationPresenter enterpriseValidationPresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -94,70 +97,85 @@ class _HomePageState extends State<HomePage>
     return ListenFirebaseStreamAndCallFunction(
       collection: "clients",
       doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-      keyToListen: "updateMenuCount",
-      valueToCompareAndCallFunctionIfIsDifferent: homePresenter.updateMenuCount,
-      function: (Map<String, dynamic> data) async {
-        await homePresenter.loadCommandData(
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          updateMenuCount: data["updateMenuCount"],
+      keyToListen: "updateEnterpriseCount",
+      valueToCompareAndCallFunctionIfIsDifferent:
+          enterpriseValidationPresenter.updateEnterpriseCount,
+      function: (data) async {
+        await enterpriseValidationPresenter.updateEnterpriseEntity(
+          enterprise: EnterpriseValidationModel.fromJson(data).toEntity(),
+          updateEnterpriseCount:
+              enterpriseValidationPresenter.updateEnterpriseCount,
         );
       },
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          UserInteraction.restartTimes();
+      child: ListenFirebaseStreamAndCallFunction(
+        collection: "clients",
+        doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        keyToListen: "updateMenuCount",
+        valueToCompareAndCallFunctionIfIsDifferent:
+            homePresenter.updateMenuCount,
+        function: (Map<String, dynamic> data) async {
+          await homePresenter.loadCommandData(
+            menuPresenter: menuPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            cartPresenter: cartPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            updateMenuCount: data["updateMenuCount"],
+          );
         },
-        onPanDown: (_) {
-          UserInteraction.restartTimes();
-        },
-        child: PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, _) {
-            if (!homePresenter.isGeneratingVersionToTablet) {
-              notificationDialog(
-                context: context,
-                titleMessage: R.string.msgCloseApplication,
-                content: Text(R.string.msgWantCloseApplication),
-                onPress: () async {
-                  SystemNavigator.pop();
-                },
-              );
-            }
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            UserInteraction.restartTimes();
           },
-          child: Scaffold(
-            drawerEnableOpenDragGesture: false,
-            //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
-            drawer: homePresenter.isGeneratingVersionToRede ||
-                    homePresenter.isGeneratingVersionToGetNet
-                ? const DrawerItems()
-                : null,
-            appBar: homeAppBar(
-              printedProductsPresenter: printedProductsPresenter,
-              homePresenter: homePresenter,
-              context: context,
-              cartPresenter: cartPresenter,
-              menuPresenter: menuPresenter,
+          onPanDown: (_) {
+            UserInteraction.restartTimes();
+          },
+          child: PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, _) {
+              if (!homePresenter.isGeneratingVersionToTablet) {
+                notificationDialog(
+                  context: context,
+                  titleMessage: R.string.msgCloseApplication,
+                  content: Text(R.string.msgWantCloseApplication),
+                  onPress: () async {
+                    SystemNavigator.pop();
+                  },
+                );
+              }
+            },
+            child: Scaffold(
+              drawerEnableOpenDragGesture: false,
+              //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
+              drawer: homePresenter.isGeneratingVersionToRede ||
+                      homePresenter.isGeneratingVersionToGetNet
+                  ? const DrawerItems()
+                  : null,
+              appBar: homeAppBar(
+                printedProductsPresenter: printedProductsPresenter,
+                homePresenter: homePresenter,
+                context: context,
+                cartPresenter: cartPresenter,
+                menuPresenter: menuPresenter,
+              ),
+              body: StreamBuilder<ProductsViewModel?>(
+                  stream: menuPresenter.atualSuggestionProductStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData &&
+                        snapshot.data != _lastShowedSuggestionProduct) {
+                      _lastShowedSuggestionProduct = snapshot.data;
+                      WidgetsBinding.instance.addPostFrameCallback((_) async {
+                        showSuggestionDialog(
+                          context,
+                          snapshot.data!,
+                          menuPresenter,
+                        );
+                      });
+                    }
+                    return MenuPage(homePresenter.isFixedCommandNumber);
+                  }),
             ),
-            body: StreamBuilder<ProductsViewModel?>(
-                stream: menuPresenter.atualSuggestionProductStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.data != _lastShowedSuggestionProduct) {
-                    _lastShowedSuggestionProduct = snapshot.data;
-                    WidgetsBinding.instance.addPostFrameCallback((_) async {
-                      showSuggestionDialog(
-                        context,
-                        snapshot.data!,
-                        menuPresenter,
-                      );
-                    });
-                  }
-                  return MenuPage(homePresenter.isFixedCommandNumber);
-                }),
           ),
         ),
       ),

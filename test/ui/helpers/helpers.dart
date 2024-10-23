@@ -34,7 +34,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.enterpriseValidation,
-      page: () => EnterpriseValidationPage(EnterpriseValidationPresenterSpy()),
+      page: () => EnterpriseValidationPage(),
     ),
     GetPage(
       name: PageRoutes.printedProducts,

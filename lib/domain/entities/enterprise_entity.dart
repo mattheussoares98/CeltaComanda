@@ -11,6 +11,7 @@ class EnterpriseEntity extends Equatable {
   final String? urlCCS;
   final bool? useCovenant;
   final int? updateMenuCount;
+  final int? updateEnterpriseCount;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
 
@@ -24,6 +25,7 @@ class EnterpriseEntity extends Equatable {
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenuCount,
+    required this.updateEnterpriseCount,
   });
 
   @override
@@ -37,5 +39,6 @@ class EnterpriseEntity extends Equatable {
         useCovenant,
         enterpriseConcentradorParametersEntity,
         updateMenuCount,
+        updateEnterpriseCount,
       ];
 }

@@ -26,7 +26,7 @@ void main() {
     await tester.pumpWidget(
       makePage(
           path: PageRoutes.enterpriseValidation,
-          page: () => EnterpriseValidationPage(presenter)),
+          page: () => EnterpriseValidationPage()),
     );
   }
 

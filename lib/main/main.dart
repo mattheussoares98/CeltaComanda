@@ -71,6 +71,9 @@ class App extends StatelessWidget with HideNavigationBarManager {
           create: (_) => makeGetxMenuPresenter(),
         ),
         ListenableProvider(
+          create: (_) => makeGetxEnterpriseValidationPresenter(),
+        ),
+        ListenableProvider(
           create: (_) => makeGetxInsertProductsPresenter(),
         ),
         ListenableProvider(

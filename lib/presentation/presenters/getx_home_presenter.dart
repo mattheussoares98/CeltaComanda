@@ -69,6 +69,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
       updateMenuCount: null,
+      updateEnterpriseCount: null,
     );
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 

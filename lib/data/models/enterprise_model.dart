@@ -11,6 +11,7 @@ class EnterpriseValidationModel {
   final String? urlCCS;
   final bool? useCovenant;
   final int? updateMenuCount;
+  final int? updateEnterpriseCount;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
 
@@ -24,6 +25,7 @@ class EnterpriseValidationModel {
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenuCount,
+    required this.updateEnterpriseCount,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -44,6 +46,7 @@ class EnterpriseValidationModel {
       urlCCS: json["urlCCS"],
       useCovenant: json["useCovenant"],
       updateMenuCount: json["updateMenuCount"],
+      updateEnterpriseCount: json["updateEnterpriseCount"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null
@@ -63,6 +66,7 @@ class EnterpriseValidationModel {
         urlCCS: entity.urlCCS,
         useCovenant: entity.useCovenant,
         updateMenuCount: entity.updateMenuCount,
+        updateEnterpriseCount: entity.updateEnterpriseCount,
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
       );
@@ -76,6 +80,7 @@ class EnterpriseValidationModel {
         persistApp: persistApp,
         useCovenant: useCovenant,
         updateMenuCount: updateMenuCount,
+        updateEnterpriseCount: updateEnterpriseCount,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
       );
@@ -89,6 +94,7 @@ class EnterpriseValidationModel {
         'urlCCS': urlCCS,
         'useCovenant': useCovenant,
         'updateMenuCount': updateMenuCount,
+        'updateEnterpriseCount': updateEnterpriseCount,
         'enterpriseConcentradorParametersEntity':
             enterpriseConcentradorParametersEntity != null
                 ? EnterpriseConcentradorParametersModel.fromEntity(

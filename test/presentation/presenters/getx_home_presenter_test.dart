@@ -233,6 +233,7 @@ void main() {
               useCovenant: null,
               enterpriseConcentradorParametersEntity: null,
               updateMenuCount: null,
+              updateEnterpriseCount: null,
             ),
           )).called(1);
     });
@@ -700,6 +701,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+        updateEnterpriseCount:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -732,6 +735,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+        updateEnterpriseCount:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -761,6 +766,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+        updateEnterpriseCount:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
       );
 
       await sut.loadCommandData(

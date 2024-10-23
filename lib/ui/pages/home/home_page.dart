@@ -1,5 +1,4 @@
 import 'package:battery_plus/battery_plus.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -75,16 +74,8 @@ class _HomePageState extends State<HomePage>
     _batteryState = state;
   }
 
-  final docRef = FirebaseFirestore.instance
-      .collection('clients')
-      .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
-
-  bool _isUpdatingMenu = false;
-
   @override
   Widget build(BuildContext context) {
-    final clientsStream = docRef.snapshots();
-
     CartPresenter cartPresenter = Provider.of(
         context); //precisa deixar com o listen == true pra atualizar a quantidade corretamente no AppBar
     PrintedProductsPresenter printedProductsPresenter = Provider.of(
@@ -100,89 +91,76 @@ class _HomePageState extends State<HomePage>
     mainErrorSubscription =
         handleMainError(context, homePresenter.mainErrorStream);
 
-    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: clientsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData && !_isUpdatingMenu) {
-            Future.delayed(Duration.zero, () async {
-              final data = snapshot.data!.data();
-
-              int updateMenuCount = 0;
-              if (data != null && data.containsKey("updateMenuCount")) {
-                updateMenuCount = data["updateMenuCount"];
-              }
-
-              if (updateMenuCount != homePresenter.updateMenuCount &&
-                  EnterpriseDataBuilder.enterpriseDataEntity?.url != null) {
-                _isUpdatingMenu = true;
-                await homePresenter.loadCommandData(
-                  menuPresenter: menuPresenter,
-                  printedProductsPresenter: printedProductsPresenter,
-                  cartPresenter: cartPresenter,
-                  expansibleGroupFromProductPresenter:
-                      expansibleGroupFromProductPresenter,
-                  updateMenuCount: updateMenuCount,
-                );
-                _isUpdatingMenu = false;
-              }
-            });
-          }
-
-          return GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              UserInteraction.restartTimes();
-            },
-            onPanDown: (_) {
-              UserInteraction.restartTimes();
-            },
-            child: PopScope(
-              canPop: false,
-              onPopInvokedWithResult: (didPop, _) {
-                if (!homePresenter.isGeneratingVersionToTablet) {
-                  notificationDialog(
-                    context: context,
-                    titleMessage: R.string.msgCloseApplication,
-                    content: Text(R.string.msgWantCloseApplication),
-                    onPress: () async {
-                      SystemNavigator.pop();
-                    },
-                  );
-                }
-              },
-              child: Scaffold(
-                drawerEnableOpenDragGesture: false,
-                //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
-                drawer: homePresenter.isGeneratingVersionToRede ||
-                        homePresenter.isGeneratingVersionToGetNet
-                    ? const DrawerItems()
-                    : null,
-                appBar: homeAppBar(
-                  printedProductsPresenter: printedProductsPresenter,
-                  homePresenter: homePresenter,
-                  context: context,
-                  cartPresenter: cartPresenter,
-                  menuPresenter: menuPresenter,
-                ),
-                body: StreamBuilder<ProductsViewModel?>(
-                    stream: menuPresenter.atualSuggestionProductStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData &&
-                          snapshot.data != _lastShowedSuggestionProduct) {
-                        _lastShowedSuggestionProduct = snapshot.data;
-                        WidgetsBinding.instance.addPostFrameCallback((_) async {
-                          showSuggestionDialog(
-                            context,
-                            snapshot.data!,
-                            menuPresenter,
-                          );
-                        });
-                      }
-                      return MenuPage(homePresenter.isFixedCommandNumber);
-                    }),
-              ),
+    return ListenFirebaseStreamAndCallFunction(
+      collection: "clients",
+      doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      keyToListen: "updateMenuCount",
+      valueToCompareAndCallFunctionIfIsDifferent: homePresenter.updateMenuCount,
+      function: (Map<String, dynamic> data) async {
+        await homePresenter.loadCommandData(
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          updateMenuCount: data["updateMenuCount"],
+        );
+      },
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          UserInteraction.restartTimes();
+        },
+        onPanDown: (_) {
+          UserInteraction.restartTimes();
+        },
+        child: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, _) {
+            if (!homePresenter.isGeneratingVersionToTablet) {
+              notificationDialog(
+                context: context,
+                titleMessage: R.string.msgCloseApplication,
+                content: Text(R.string.msgWantCloseApplication),
+                onPress: () async {
+                  SystemNavigator.pop();
+                },
+              );
+            }
+          },
+          child: Scaffold(
+            drawerEnableOpenDragGesture: false,
+            //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
+            drawer: homePresenter.isGeneratingVersionToRede ||
+                    homePresenter.isGeneratingVersionToGetNet
+                ? const DrawerItems()
+                : null,
+            appBar: homeAppBar(
+              printedProductsPresenter: printedProductsPresenter,
+              homePresenter: homePresenter,
+              context: context,
+              cartPresenter: cartPresenter,
+              menuPresenter: menuPresenter,
             ),
-          );
-        });
+            body: StreamBuilder<ProductsViewModel?>(
+                stream: menuPresenter.atualSuggestionProductStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData &&
+                      snapshot.data != _lastShowedSuggestionProduct) {
+                    _lastShowedSuggestionProduct = snapshot.data;
+                    WidgetsBinding.instance.addPostFrameCallback((_) async {
+                      showSuggestionDialog(
+                        context,
+                        snapshot.data!,
+                        menuPresenter,
+                      );
+                    });
+                  }
+                  return MenuPage(homePresenter.isFixedCommandNumber);
+                }),
+          ),
+        ),
+      ),
+    );
   }
 }

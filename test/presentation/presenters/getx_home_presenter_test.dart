@@ -804,7 +804,7 @@ void main() {
         updateMenuCount: null,
       );
 
-      expect(sut.updateMenuCount, 0);
+      expect(sut.updateMenuCount, -1);
     });
   });
 

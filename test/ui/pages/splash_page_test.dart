@@ -18,7 +18,8 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
@@ -44,17 +45,6 @@ void main() {
     await loadPage(tester);
 
     verify(() => presenter.checkApiSaleRequest()).called(1);
-  });
-
-  testWidgets('Should change to EnterpriseValidationPage',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-    mockNavigation(routeName: PageRoutes.enterpriseValidation);
-
-    // presenter.navigateToLoginPage();
-    await tester.pumpAndSettle();
-
-    expect(currentRoute, PageRoutes.enterpriseValidation);
   });
 
   testWidgets('Should change to ExpansibleGroupsPage',

@@ -15,7 +15,7 @@ import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
 import '../ui/mixins/mixins.dart';
 import '../firebase_options.dart';
-import 'factories/factories.dart';
+import '../main/factories/factories.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

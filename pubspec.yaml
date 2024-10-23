@@ -59,6 +59,14 @@ dev_dependencies:
   network_image_mock: ^2.1.1
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^5.0.0
+  msix: ^3.16.8
+
+msix_config:
+  display_name: Celta Comanda
+  publisher_display_name: Celtaware
+  identity_name: br.com.celtaware.comanda
+  msix_version: 1.0.0.0
+  logo_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
 
 flutter_launcher_icons:
   android: "launcher_icon"

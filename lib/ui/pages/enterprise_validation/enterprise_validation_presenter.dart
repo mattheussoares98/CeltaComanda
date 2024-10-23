@@ -10,7 +10,6 @@ abstract class EnterpriseValidationPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<bool> get isFormValidStream;
   Stream<CommandViewModel?> get commandDataStream;
-  int get updateEnterpriseCount;
 
   bool isUpdatedEnterpriseName = false;
 

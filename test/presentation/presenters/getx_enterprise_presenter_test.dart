@@ -561,13 +561,6 @@ void main() {
 
       expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
     });
-    test("Should update updateEnterpriseCount correctly", () async {
-      final newEnterprise = EntityFactory.makeEnterpriseData();
-      await sut.updateEnterpriseEntity(
-          EnterpriseValidationModel.fromEntity(newEnterprise).toJson());
-
-      expect(sut.updateEnterpriseCount, newEnterprise.updateEnterpriseCount);
-    });
     test("Should update local data", () async {
       final newEnterprise = EntityFactory.makeEnterpriseData();
 

@@ -272,10 +272,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
     );
   }
 
-  int _updateEnterpriseCount = -1;
-  @override
-  int get updateEnterpriseCount => _updateEnterpriseCount;
-
   @override
   Future<void> updateEnterpriseEntity(
     Map<String, dynamic> enterpriseData,
@@ -283,10 +279,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
     try {
       EnterpriseDataBuilder.enterpriseDataEntity =
           EnterpriseValidationModel.fromJson(enterpriseData).toEntity();
-
-      _updateEnterpriseCount =
-          EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount ??
-              0;
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
     } catch (e) {

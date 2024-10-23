@@ -98,7 +98,8 @@ class _HomePageState extends State<HomePage>
       doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
       keyToListen: "updateEnterpriseCount",
       valueToCompareAndCallFunctionIfIsDifferent:
-          enterpriseValidationPresenter.updateEnterpriseCount,
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount ??
+              0,
       function: (Map<String, dynamic> data) async {
         await enterpriseValidationPresenter.updateEnterpriseEntity(data);
       },

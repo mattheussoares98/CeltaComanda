@@ -66,7 +66,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
         throw Exception();
       }
 
-      _commandData.value = CommandViewModel.fromEntity(commandEntity);
+      _commandData.subject.add(CommandViewModel.fromEntity(commandEntity));
 
       if (commandEntity.isFixedCommandNumber !=
           homePresenter.isFixedCommandNumber) {

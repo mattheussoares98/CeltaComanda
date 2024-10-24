@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -18,23 +20,25 @@ class EnterpriseValidationPage extends StatefulWidget {
 
 class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
-  bool _isLoaded = false;
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    if (!_isLoaded) {
-      _isLoaded = true;
-      HomePresenter homePresenter = Provider.of(context, listen: false);
-      EnterpriseValidationPresenter enterpriseValidationPresenter =
-          Provider.of(context, listen: false);
-      await enterpriseValidationPresenter.getLocalData(homePresenter);
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        Future.delayed(Duration.zero, () async {
+          HomePresenter homePresenter = Provider.of(context, listen: false);
+          EnterpriseValidationPresenter enterpriseValidationPresenter =
+              Provider.of(context, listen: false);
+          await enterpriseValidationPresenter.getLocalData(homePresenter);
 
-      if (enterpriseValidationPresenter
-          .enterpriseNameController.text.isNotEmpty) {
-        enterpriseValidationPresenter.validateEnterpriseInput(
-            enterpriseValidationPresenter.enterpriseNameController.text);
+          if (enterpriseValidationPresenter
+              .enterpriseNameController.text.isNotEmpty) {
+            enterpriseValidationPresenter.validateEnterpriseInput(
+                enterpriseValidationPresenter.enterpriseNameController.text);
+          }
+        });
       }
-    }
+    });
   }
 
   Future<void> _validateEnterprise({
@@ -97,61 +101,57 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
               Headline1(text: R.string.validateEnterprise),
               Padding(
                 padding: const EdgeInsets.all(25),
-                child: ListenableProvider(
-                  create: (_) => enterpriseValidationPresenter,
-                  child: StreamBuilder<CommandViewModel?>(
-                      stream: enterpriseValidationPresenter.commandDataStream,
-                      builder: (context, snapshotCommandData) {
-                        if (snapshotCommandData.data == null) {
-                          return const SizedBox();
-                        }
-                        return Column(
-                          children: [
-                            EnterpriseInput(
-                              commandVideModel: snapshotCommandData.data!,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Column(
-                                children: [
-                                  FixedNumberCommandSwitch(
-                                    commandViewModel: snapshotCommandData.data!,
-                                  ),
-                                  if (snapshotCommandData
-                                          .data?.isFixedCommandNumber ==
-                                      "true")
-                                    FixedCommandNumberInput(
-                                      formKey: _formKey,
-                                      commandViewModel:
-                                          snapshotCommandData.data!,
-                                      validateEnterprise: () async {
-                                        await _validateEnterprise(
-                                          homePresenter: homePresenter,
-                                          commandViewModel:
-                                              snapshotCommandData.data!,
-                                          enterpriseValidationPresenter:
-                                              enterpriseValidationPresenter,
-                                        );
-                                      },
-                                    ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            EnterpriseValidateButton(
-                              validateEnterprise: () async {
-                                await _validateEnterprise(
-                                  homePresenter: homePresenter,
+                child: StreamBuilder<CommandViewModel?>(
+                    stream: enterpriseValidationPresenter.commandDataStream,
+                    builder: (context, snapshotCommandData) {
+                      if (snapshotCommandData.data == null) {
+                        return const SizedBox();
+                      }
+                      return Column(
+                        children: [
+                          EnterpriseInput(
+                            commandVideModel: snapshotCommandData.data!,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Column(
+                              children: [
+                                FixedNumberCommandSwitch(
                                   commandViewModel: snapshotCommandData.data!,
-                                  enterpriseValidationPresenter:
-                                      enterpriseValidationPresenter,
-                                );
-                              },
+                                ),
+                                if (snapshotCommandData
+                                        .data?.isFixedCommandNumber ==
+                                    "true")
+                                  FixedCommandNumberInput(
+                                    formKey: _formKey,
+                                    commandViewModel: snapshotCommandData.data!,
+                                    validateEnterprise: () async {
+                                      await _validateEnterprise(
+                                        homePresenter: homePresenter,
+                                        commandViewModel:
+                                            snapshotCommandData.data!,
+                                        enterpriseValidationPresenter:
+                                            enterpriseValidationPresenter,
+                                      );
+                                    },
+                                  ),
+                              ],
                             ),
-                          ],
-                        );
-                      }),
-                ),
+                          ),
+                          const SizedBox(height: 10),
+                          EnterpriseValidateButton(
+                            validateEnterprise: () async {
+                              await _validateEnterprise(
+                                homePresenter: homePresenter,
+                                commandViewModel: snapshotCommandData.data!,
+                                enterpriseValidationPresenter:
+                                    enterpriseValidationPresenter,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    }),
               )
             ],
           ),

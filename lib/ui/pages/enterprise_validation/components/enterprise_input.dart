@@ -14,7 +14,7 @@ class EnterpriseInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<EnterpriseValidationPresenter>(context);
+    EnterpriseValidationPresenter presenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return StreamBuilder<UIError?>(

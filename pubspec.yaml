@@ -63,10 +63,11 @@ dev_dependencies:
 
 msix_config:
   display_name: Celta Comanda
-  publisher_display_name: Celtaware
-  identity_name: br.com.celtaware.comanda
+  publisher_display_name: Celta Ware
+  identity_name: CeltaWare.Celtacomanda
   msix_version: 1.0.0.0
   logo_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
+  publisher: CN=9FD149D3-E81E-4537-8E61-2C8B386258B5
   store: true
 
 flutter_launcher_icons:

@@ -19,7 +19,6 @@ class GetxMenuPresenter extends GetxController
   final CommandInformations commandInformations;
   final SearchProductByCode searchProductByCode;
   final LoadExpansibleGroups loadExpansibleGroups;
-  final BarcodeScanner barcodeScanner;
   final LoadProducts loadProducts;
   final GetProductComposition getProductComposition;
   final LoadSuggestionSale loadSuggestionSale;
@@ -29,7 +28,6 @@ class GetxMenuPresenter extends GetxController
     required this.navigateTo,
     required this.commandInformations,
     required this.searchProductByCode,
-    required this.barcodeScanner,
     required this.loadProducts,
     required this.getProductComposition,
     required this.loadSuggestionSale,
@@ -95,7 +93,7 @@ class GetxMenuPresenter extends GetxController
     searchProductController.text = "";
 
     try {
-      searchProductController.text = await barcodeScanner.read();
+      // searchProductController.text = await barcodeScanner.read();
 
       if (searchProductController.text.isNotEmpty) {
         await searchProduct(searchProductController.text);

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../data/usecases/usecases.dart';
 import '../../../helpers/helpers.dart';
-import '../../pages.dart';
 
 class CancelProductsPasswordInput extends StatelessWidget {
   final FocusNode passwordFocus;
@@ -18,9 +15,6 @@ class CancelProductsPasswordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CameraBarcodeScanner cameraBarcodeScanner = CameraBarcodeScanner();
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
     return TextFormField(
       focusNode: passwordFocus,
       onFieldSubmitted: (_) async {
@@ -42,21 +36,6 @@ class CancelProductsPasswordInput extends StatelessWidget {
         ),
         labelText: "Senha do usuário",
         hintText: "Senha do usuário",
-        suffixIcon: homePresenter.isGeneratingVersionToRede
-            ? null
-            : IconButton(
-                onPressed: () async {
-                  final value = await cameraBarcodeScanner.read();
-                  if (value.isNotEmpty) {
-                    passwordController.text = value;
-                    await validateUserAndPermissionToCancel();
-                  }
-                },
-                icon: const Icon(
-                  Icons.camera_alt,
-                  size: 30,
-                ),
-              ),
       ),
       obscureText: true,
     );

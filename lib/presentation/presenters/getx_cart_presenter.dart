@@ -18,7 +18,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final ConfirmedCartProducts confirmedCartProducts;
   final CartInformations cartInformations;
-  final BarcodeScanner barcodeScanner;
   final CommandInformations commandInformations;
   final AlreadyPaid alreadyPaid;
 
@@ -30,7 +29,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required this.updateSaleRequestTemp,
     required this.confirmedCartProducts,
     required this.cartInformations,
-    required this.barcodeScanner,
     required this.commandInformations,
     required this.alreadyPaid,
   });

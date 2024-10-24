@@ -73,7 +73,6 @@ void main() {
       loadExpansibleGroups: loadExpansibleGroups,
       commandInformations: ticketIsPermitted,
       searchProductByCode: searchProductByCode,
-      barcodeScanner: barcodeScanner,
       loadProducts: loadProducts,
       getProductComposition: getProductComposition,
       loadSuggestionSale: loadSuggestionSale,

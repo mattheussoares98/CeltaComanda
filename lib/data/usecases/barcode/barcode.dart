@@ -1,1 +1,0 @@
-export './camera_barcode_scanner.dart';

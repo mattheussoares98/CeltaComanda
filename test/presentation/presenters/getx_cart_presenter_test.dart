@@ -74,7 +74,6 @@ void main() {
       updateSaleRequestTemp: updateSaleRequestTemp,
       confirmedCartProducts: confirmedCartProducts,
       cartInformations: cartInformations,
-      barcodeScanner: barcodeScanner,
       commandInformations: commandInformations,
       alreadyPaid: alreadyPaid,
     );

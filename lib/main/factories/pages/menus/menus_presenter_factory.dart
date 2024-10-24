@@ -8,7 +8,6 @@ MenuPresenter makeGetxMenuPresenter() =>
       navigateTo: makeNavigateTo(),
       commandInformations: makeRemoteCommandInformations(),
       searchProductByCode: makeRemoteSearchProductByCode(),
-      barcodeScanner: makeCameraBarcodeScanner(),
       loadProducts: makeRemoteLoadProducts(),
       getProductComposition: makeRemoteGetProductComposition(),
       loadSuggestionSale: makeRemoteLoadSuggestionSale(),

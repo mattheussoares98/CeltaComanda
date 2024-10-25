@@ -559,6 +559,8 @@ void main() {
         SaleRequestId: faker.randomGenerator.integer(10),
         FlagOrigin: faker.randomGenerator.integer(10),
         DeliveryControl: faker.randomGenerator.integer(10),
+        IncrementType: faker.randomGenerator.integer(2, min: 1),
+        IncrementValue: faker.randomGenerator.decimal(),
       ));
 
       await sut.loadPrinted(homePresenter);

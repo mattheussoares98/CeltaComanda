@@ -488,6 +488,8 @@ class EntityFactory {
       Peoples: faker.randomGenerator.string(10),
       SaleRequestId: faker.randomGenerator.integer(100).toString(),
       FlagOrigin: faker.randomGenerator.string(10),
+      IncrementType: faker.randomGenerator.integer(2, min: 1).toString(),
+      IncrementValue: faker.randomGenerator.decimal().toString(),
     );
   }
 
@@ -570,6 +572,8 @@ class EntityFactory {
           TotalLiquid: faker.randomGenerator.decimal(),
         ),
       ],
+      IncrementType: faker.randomGenerator.integer(2, min: 1),
+      IncrementValue: faker.randomGenerator.decimal(),
       PersonalizedCode: faker.randomGenerator.string(10),
       DateOfCreation: faker.randomGenerator.string(10),
       FlagStatus: faker.randomGenerator.string(10),

@@ -19,6 +19,8 @@ class PrintedProductsModel {
   final int FlagOrigin;
   final int DeliveryControl;
   final String? Comments;
+  final int? IncrementType;
+  final double? IncrementValue;
 
   PrintedProductsModel({
     required this.Products,
@@ -36,6 +38,8 @@ class PrintedProductsModel {
     required this.FlagOrigin,
     required this.DeliveryControl,
     required this.Comments,
+    required this.IncrementType,
+    required this.IncrementValue,
   });
 
   factory PrintedProductsModel.fromJson(Map json) {
@@ -83,6 +87,8 @@ class PrintedProductsModel {
       FlagOrigin: json["FlagOrigin"],
       DeliveryControl: json["DeliveryControl"],
       Comments: json["Comments"],
+      IncrementType: json["IncrementType"],
+      IncrementValue: json["IncrementValue"],
     );
   }
 
@@ -103,6 +109,8 @@ class PrintedProductsModel {
         FlagOrigin: entity.FlagOrigin,
         DeliveryControl: entity.DeliveryControl,
         Comments: entity.Comments,
+        IncrementType: entity.IncrementType,
+        IncrementValue: entity.IncrementValue,
       );
 
   PrintedEntity toEntity() => PrintedEntity(
@@ -121,6 +129,8 @@ class PrintedProductsModel {
         SaleRequestId: SaleRequestId,
         FlagOrigin: FlagOrigin,
         DeliveryControl: DeliveryControl,
+        IncrementType: IncrementType,
+        IncrementValue: IncrementValue,
       );
 
   Map<String, dynamic> toJson() => {
@@ -139,5 +149,7 @@ class PrintedProductsModel {
         "SaleRequestId": SaleRequestId,
         "FlagOrigin": FlagOrigin,
         "DeliveryControl": DeliveryControl,
+        "IncrementType": IncrementType,
+        "IncrementValue": IncrementValue,
       };
 }

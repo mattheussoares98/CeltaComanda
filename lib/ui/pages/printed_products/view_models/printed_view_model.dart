@@ -23,6 +23,8 @@ class PrintedViewModel extends Equatable {
   final String Peoples;
   final String SaleRequestId;
   final String FlagOrigin;
+  final String IncrementType;
+  final String IncrementValue;
 
   @override
   List get props => [
@@ -49,6 +51,8 @@ class PrintedViewModel extends Equatable {
     required this.Peoples,
     required this.SaleRequestId,
     required this.FlagOrigin,
+    required this.IncrementType,
+    required this.IncrementValue,
   });
 
   factory PrintedViewModel.fromEntity(PrintedEntity entity) => PrintedViewModel(
@@ -69,5 +73,7 @@ class PrintedViewModel extends Equatable {
         Peoples: entity.Peoples.toString(),
         SaleRequestId: entity.SaleRequestId.toString(),
         FlagOrigin: entity.FlagOrigin.toString(),
+        IncrementType: entity.IncrementType.toString(),
+        IncrementValue: entity.IncrementValue.toString(),
       );
 }

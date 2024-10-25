@@ -17,6 +17,8 @@ class PrintedEntity {
   final int SaleRequestId;
   final int FlagOrigin;
   final int DeliveryControl;
+  final int? IncrementType;
+  final double? IncrementValue;
   String? Comments;
 
   PrintedEntity({
@@ -35,5 +37,7 @@ class PrintedEntity {
     required this.SaleRequestId,
     required this.FlagOrigin,
     required this.DeliveryControl,
+    required this.IncrementType,
+    required this.IncrementValue,
   });
 }

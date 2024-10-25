@@ -12,13 +12,15 @@ class EntityFactory {
       urlCCS: faker.internet.httpUrl(),
       enterpriseId: faker.randomGenerator.integer(3),
       enterpriseName: faker.company.name().toLowerCase().removeWhiteSpaces(),
-      concentradorUrl: faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
+      concentradorUrl:
+          faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
       persistApp: faker.randomGenerator.boolean(),
       useCovenant: faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:
           makeEnterpriseConcentradorParametersEntity(),
       updateMenuCount: faker.randomGenerator.integer(100),
       updateEnterpriseCount: faker.randomGenerator.integer(100),
+      serviceChargePercentage: faker.randomGenerator.decimal(),
     );
   }
 

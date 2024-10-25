@@ -11,6 +11,7 @@ class CacheFactory {
         'useCovenant': faker.randomGenerator.boolean(),
         'updateMenuCount': faker.randomGenerator.integer(100),
         'updateEnterpriseCount': faker.randomGenerator.integer(100),
+        'serviceChargePercentage': faker.randomGenerator.decimal(),
       };
 
   static Map makeInvalidEnterpriseData() => {

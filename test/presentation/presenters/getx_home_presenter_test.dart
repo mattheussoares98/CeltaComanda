@@ -234,6 +234,7 @@ void main() {
               enterpriseConcentradorParametersEntity: null,
               updateMenuCount: null,
               updateEnterpriseCount: null,
+              serviceChargePercentage: null,
             ),
           )).called(1);
     });
@@ -703,6 +704,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+        serviceChargePercentage:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentage,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -737,6 +740,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+        serviceChargePercentage:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentage,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -768,6 +773,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+        serviceChargePercentage:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentage,
       );
 
       await sut.loadCommandData(

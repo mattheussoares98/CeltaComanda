@@ -14,6 +14,7 @@ class EnterpriseEntity extends Equatable {
   final int? updateEnterpriseCount;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
+      final double? serviceChargePercentage;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -26,6 +27,7 @@ class EnterpriseEntity extends Equatable {
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenuCount,
     required this.updateEnterpriseCount,
+    required this.serviceChargePercentage,
   });
 
   @override
@@ -40,5 +42,6 @@ class EnterpriseEntity extends Equatable {
         enterpriseConcentradorParametersEntity,
         updateMenuCount,
         updateEnterpriseCount,
+        serviceChargePercentage,
       ];
 }

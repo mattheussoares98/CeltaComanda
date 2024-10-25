@@ -59,6 +59,7 @@ void main() {
               enterpriseJsonData["enterpriseConcentradorParametersEntity"],
           updateMenuCount: enterpriseJsonData["updateMenuCount"],
           updateEnterpriseCount: enterpriseJsonData["updateEnterpriseCount"],
+          serviceChargePercentage: enterpriseJsonData["serviceChargePercentage"],
         ),
       );
     });

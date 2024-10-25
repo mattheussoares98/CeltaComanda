@@ -1638,6 +1638,8 @@ void main() {
               SellerCode: saleRequestTempEntity.SellerCode,
               CustomerCode: saleRequestTempEntity.CustomerCode,
               CovenantCode: saleRequestTempEntity.CovenantCode,
+              IncrementValue: saleRequestTempEntity.IncrementValue,
+              IncrementType: saleRequestTempEntity.IncrementType,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
@@ -1670,6 +1672,8 @@ void main() {
               Comments: saleRequestTempEntity.Comments,
               CustomerCode: saleRequestTempEntity.CustomerCode,
               CovenantCode: saleRequestTempEntity.CovenantCode,
+              IncrementValue: saleRequestTempEntity.IncrementValue,
+              IncrementType: saleRequestTempEntity.IncrementType,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);

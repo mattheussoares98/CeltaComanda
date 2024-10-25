@@ -221,6 +221,8 @@ class EntityFactory {
       CovenantCode: faker.randomGenerator.integer(100).toString(),
       DeliveryControl: faker.randomGenerator.integer(3).toString(),
       TotalLiquid: faker.randomGenerator.decimal(min: 0.01).toString(),
+      IncrementValue: faker.randomGenerator.decimal(min: 0.01).toString(),
+      IncrementType: faker.randomGenerator.integer(2, min: 1).toString(),
     );
   }
 
@@ -539,6 +541,8 @@ class EntityFactory {
       CovenantCode: faker.randomGenerator.integer(5),
       CustomerCode: faker.randomGenerator.integer(5),
       Comments: faker.randomGenerator.string(50),
+      IncrementValue: faker.randomGenerator.decimal(min: 0.01),
+      IncrementType: faker.randomGenerator.integer(2, min: 1),
     );
   }
 
@@ -650,6 +654,8 @@ class EntityFactory {
         Comments: faker.randomGenerator.string(10),
         CustomerCode: faker.randomGenerator.integer(3),
         CovenantCode: faker.randomGenerator.integer(3),
+        IncrementValue: faker.randomGenerator.decimal(min: 0.01),
+        IncrementType: faker.randomGenerator.integer(2, min: 1),
       );
 
   static SaleRequestTempProductEntity makeSaleRequestTempProductEntity() =>
@@ -1081,6 +1087,8 @@ class EntityFactory {
         FlagOrigin: faker.randomGenerator.integer(100),
         DeliveryControl: faker.randomGenerator.integer(100),
         SaleRequestId: faker.randomGenerator.integer(100),
+        IncrementValue: faker.randomGenerator.decimal(),
+        IncrementType: faker.randomGenerator.integer(100),
       );
 
   static SaleRequestProductEntity makeSaleRequestProductEntity() =>
@@ -1129,5 +1137,7 @@ class EntityFactory {
         FlagOrigin: faker.randomGenerator.integer(100),
         DeliveryControl: faker.randomGenerator.integer(100),
         SaleRequestId: faker.randomGenerator.integer(100),
+        IncrementValue: faker.randomGenerator.decimal(),
+        IncrementType: faker.randomGenerator.integer(2, min: 1),
       );
 }

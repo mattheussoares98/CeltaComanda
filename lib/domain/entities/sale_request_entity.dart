@@ -21,6 +21,8 @@ class SaleRequestEntity {
   final int FlagOrigin;
   final int DeliveryControl;
   final int SaleRequestId;
+  final double? IncrementValue;
+  final int? IncrementType; //1 == value && 2 == percentage
 
   SaleRequestEntity({
     required this.Products,
@@ -41,5 +43,7 @@ class SaleRequestEntity {
     required this.FlagOrigin,
     required this.DeliveryControl,
     required this.SaleRequestId,
+    required this.IncrementValue,
+    required this.IncrementType,
   });
 }

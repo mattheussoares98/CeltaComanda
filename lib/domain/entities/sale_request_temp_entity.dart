@@ -16,6 +16,8 @@ class SaleRequestTempEntity extends Equatable {
   final String? SellerCode;
   final int? CustomerCode;
   final int? CovenantCode;
+  final double? IncrementValue;
+  final int? IncrementType; //1 == value && 2 == percentage
 
   const SaleRequestTempEntity({
     required this.Products,
@@ -29,6 +31,8 @@ class SaleRequestTempEntity extends Equatable {
     required this.SellerCode,
     required this.CustomerCode,
     required this.CovenantCode,
+    required this.IncrementValue,
+    required this.IncrementType,
   });
 
   @override
@@ -44,5 +48,7 @@ class SaleRequestTempEntity extends Equatable {
         SellerCode,
         CustomerCode,
         CovenantCode,
+        IncrementValue,
+        IncrementType,
       ];
 }

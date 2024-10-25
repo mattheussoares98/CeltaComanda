@@ -509,6 +509,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           SellerCode: saleRequestTempResult.SellerCode,
           CustomerCode: saleRequestTempResult.CustomerCode,
           CovenantCode: saleRequestTempResult.CovenantCode,
+          IncrementValue: saleRequestTempResult.IncrementValue,
+          IncrementType: saleRequestTempResult.IncrementType,
         ),
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );

@@ -24,6 +24,8 @@ class SaleRequestModel extends Equatable {
   final int? FlagOrigin;
   final int? DeliveryControl;
   final int? SaleRequestId;
+  final double? IncrementValue;
+  final int? IncrementType; //1 == value && 2 == percentage
 
   const SaleRequestModel({
     this.Products,
@@ -39,6 +41,8 @@ class SaleRequestModel extends Equatable {
     this.TotalLiquid,
     required this.CovenantCode,
     required this.CustomerCode,
+    this.IncrementValue,
+    this.IncrementType,
     this.EnterpriseId,
     this.Peoples,
     this.FlagOrigin,
@@ -66,6 +70,8 @@ class SaleRequestModel extends Equatable {
         FlagOrigin,
         DeliveryControl,
         SaleRequestId,
+        IncrementValue,
+        IncrementType,
       ];
 
   factory SaleRequestModel.fromJson(Map data) {
@@ -98,6 +104,8 @@ class SaleRequestModel extends Equatable {
       FlagOrigin: data["FlagOrigin"],
       DeliveryControl: data["DeliveryControl"],
       SaleRequestId: data["SaleRequestId"],
+      IncrementValue: data["IncrementValue"],
+      IncrementType: data["IncrementType"],
     );
   }
 
@@ -120,6 +128,8 @@ class SaleRequestModel extends Equatable {
         "FlagOrigin": FlagOrigin,
         "DeliveryControl": DeliveryControl,
         "SaleRequestId": SaleRequestId,
+        "IncrementValue": IncrementValue,
+        "IncrementType": IncrementType,
       };
 
   factory SaleRequestModel.fromEntity(SaleRequestEntity entity) =>
@@ -144,5 +154,7 @@ class SaleRequestModel extends Equatable {
         FlagOrigin: entity.FlagOrigin,
         DeliveryControl: entity.DeliveryControl,
         SaleRequestId: entity.SaleRequestId,
+        IncrementValue: entity.IncrementValue,
+        IncrementType: entity.IncrementType,
       );
 }

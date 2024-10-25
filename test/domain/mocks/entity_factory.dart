@@ -550,7 +550,9 @@ class EntityFactory {
     );
   }
 
-  static PrintedEntity makePrintedProductsEntity() {
+  static PrintedEntity makePrintedProductsEntity({
+    int? incrementType,
+  }) {
     return PrintedEntity(
       Products: [
         PrintedProductsEntity(
@@ -572,7 +574,7 @@ class EntityFactory {
           TotalLiquid: faker.randomGenerator.decimal(),
         ),
       ],
-      IncrementType: faker.randomGenerator.integer(2, min: 1),
+      IncrementType: incrementType ?? faker.randomGenerator.integer(2, min: 1),
       IncrementValue: faker.randomGenerator.decimal(),
       PersonalizedCode: faker.randomGenerator.string(10),
       DateOfCreation: faker.randomGenerator.string(10),

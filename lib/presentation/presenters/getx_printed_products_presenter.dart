@@ -180,4 +180,24 @@ class GetxPrintedProductsPresenter
   void doOnClosePage() {
     _canCancelProducts = false;
   }
+
+  @override
+  double get totalLiquid {
+    if (_printedProducts == null) {
+      return 0;
+    }
+    double increment = 0;
+
+    if (_printedProducts!.IncrementType.toInt() == 1) {
+      //value
+      increment = _printedProducts!.IncrementValue.toDouble();
+      return _printedProducts!.TotalLiquid.toDouble() + increment;
+    } else if (_printedProducts!.IncrementType.toInt() == 2) {
+      //percentage
+      increment = (_printedProducts!.IncrementValue.toDouble() / 100 + 1);
+
+      return _printedProducts!.TotalLiquid.toDouble() * increment;
+    }
+    return _printedProducts!.TotalLiquid.toDouble();
+  }
 }

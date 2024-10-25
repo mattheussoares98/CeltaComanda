@@ -578,4 +578,52 @@ void main() {
       expect(sut.canCancelProducts, false);
     });
   });
+
+  group("Get total liquid", () {
+    test("Should return 0 if printed products is null", () async {
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+      await sut.loadPrinted(homePresenter);
+
+      expect(sut.totalLiquid, 0);
+    });
+
+    test("Should return correct value if incrementType is 1", () async {
+      final printed = EntityFactory.makePrintedProductsEntity(incrementType: 1);
+
+      loadPrintedProducts.mockLoadPrintedProducts(printed);
+
+      await sut.loadPrinted(homePresenter);
+
+      expect(
+          sut.totalLiquid,
+          printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble() +
+              printed.IncrementValue!);
+    });
+    test("Should return correct value if incrementType is 2", () async {
+      final printed = EntityFactory.makePrintedProductsEntity(incrementType: 2);
+
+      loadPrintedProducts.mockLoadPrintedProducts(printed);
+
+      await sut.loadPrinted(homePresenter);
+
+      expect(
+          sut.totalLiquid,
+          printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble() *
+              (printed.IncrementValue! / 100 + 1));
+    });
+    test("Should return correct value if incrementType is invalid", () async {
+      final printed = EntityFactory.makePrintedProductsEntity(
+        incrementType: faker.randomGenerator.integer(100, min: 3),
+      );
+
+      loadPrintedProducts.mockLoadPrintedProducts(printed);
+
+      await sut.loadPrinted(homePresenter);
+
+      expect(
+        sut.totalLiquid,
+        printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble(),
+      );
+    });
+  });
 }

@@ -11,6 +11,7 @@ abstract class PrintedProductsPresenter
   Stream<bool> get isLoadingStream;
   Stream<String?> get alertMessageStream;
   bool get canCancelProducts;
+  double get totalLiquid;
 
   void updateCanCancelProducts(bool value);
   Future<void> loadPrinted(HomePresenter homePresenter);
@@ -23,7 +24,8 @@ abstract class PrintedProductsPresenter
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   });
 

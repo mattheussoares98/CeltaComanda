@@ -75,9 +75,13 @@ class _PrintedItemState extends State<PrintedItem> {
                             width: (MediaQuery.of(context).size.width /
                                     getItensPerLine(context)) -
                                 rightMargin,
-                            margin: const EdgeInsets.only(
-                                bottom: 4, right: 2, left: 2),
+                            margin: const EdgeInsets.only(right: 2, left: 2),
                             padding: const EdgeInsets.all(8),
+                            color: index % 2 == 0
+                                ? Theme.of(context)
+                                    .primaryColorLight
+                                    .withAlpha(10)
+                                : Colors.transparent,
                             child: ProductDetails(
                               printed: widget.printed,
                               product: product,
@@ -89,10 +93,6 @@ class _PrintedItemState extends State<PrintedItem> {
                               totalLiquid: product.TotalLiquid,
                               comments: product.Comments,
                             ),
-                          ),
-                          const Divider(
-                            height: 1,
-                            thickness: 0.1,
                           ),
                           if (!hasMinWidth(context) &&
                               index == widget.printed.Products.length - 1)

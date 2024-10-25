@@ -157,6 +157,8 @@ abstract class Translation {
   String get sendRequest;
   String get send;
   String get service;
+  String get serviceCharge;
+  String get subtotal;
   String get suggestionCriticalOrPraise;
   String get support;
   String get supportContact;

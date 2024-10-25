@@ -30,10 +30,7 @@ class _UpdateTotalByPersonState extends State<UpdateTotalByPerson> {
 
   void _updateTotalPerPerson(
       PrintedProductsPresenter printedProductsPresenter) {
-    totalPerPerson = printedProductsPresenter.printedProducts!.TotalLiquid
-            .toString()
-            .toDouble() /
-        selectedPeoples;
+    totalPerPerson = printedProductsPresenter.totalLiquid / selectedPeoples;
   }
 
   @override

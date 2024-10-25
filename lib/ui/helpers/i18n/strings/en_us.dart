@@ -180,6 +180,8 @@ class EnUs implements Translation {
   String get sendRequest => 'Send request';
   String get send => 'Send';
   String get service => 'Service';
+  String get serviceCharge => 'Service charge';
+  String get subtotal => 'Subtotal';
   String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
   String get support => 'Support';
   String get supportContact => 'Support contact';

@@ -42,8 +42,6 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    const totalPriceContainerHeight = 50.0;
-
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context,
         listen:
             true); //pra atualizar corretamente quando remove o produto do carrinho
@@ -103,9 +101,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     : const SearchDataByCommandNumber(),
               ),
               if (printedProductsPresenter.printedProducts != null)
-                const RequestSummary(
-                  totalPriceContainerHeight: totalPriceContainerHeight,
-                ),
+                const RequestSummary(),
             ],
           ),
         ),

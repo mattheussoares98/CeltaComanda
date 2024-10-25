@@ -183,6 +183,8 @@ class PtBr implements Translation {
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';
   String get service => 'Atendimento';
+  String get serviceCharge => 'Taxa de serviço';
+  String get subtotal => "Subtotal";
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
   String get support => 'Suporte';
   String get supportContact => 'Contato do suporte';

@@ -6,11 +6,7 @@ import '../../../../../ui/pages/pages.dart';
 import '../../../helpers/helpers.dart';
 
 class RequestSummary extends StatelessWidget {
-  final double totalPriceContainerHeight;
-  const RequestSummary({
-    required this.totalPriceContainerHeight,
-    super.key,
-  });
+  const RequestSummary({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +15,6 @@ class RequestSummary extends StatelessWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: totalPriceContainerHeight,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(bottom: 3),
       decoration: BoxDecoration(
@@ -34,24 +29,94 @@ class RequestSummary extends StatelessWidget {
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: FittedBox(
-        alignment: Alignment.centerRight,
+      child: IntrinsicHeight(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(
-              R.string.total,
-              textAlign: TextAlign.end,
-              style: Theme.of(context).textTheme.titleLarge,
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          R.string.subtotal,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: getStringSize(context)),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          printedProductsPresenter.printedProducts!.TotalLiquid
+                              .toDouble()
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          R.string.serviceCharge,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: getStringSize(context)),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          printedProductsPresenter.serviceChargeValue
+                              .toDouble()
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getStringSize(context),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(width: 30),
-            Text(
-              "${printedProductsPresenter.printedProducts?.TotalLiquid} R\$",
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+            VerticalDivider(
+              color: Theme.of(context).primaryColorLight,
+              thickness: 1,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(
+                    R.string.total,
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    printedProductsPresenter.totalLiquid
+                        .toDouble()
+                        .toString()
+                        .toBrazilianNumber()
+                        .addBrazilianCoin(),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: getStringSize(context),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -12,6 +12,7 @@ abstract class PrintedProductsPresenter
   Stream<String?> get alertMessageStream;
   bool get canCancelProducts;
   double get totalLiquid;
+  double get serviceChargeValue;
 
   void updateCanCancelProducts(bool value);
   Future<void> loadPrinted(HomePresenter homePresenter);

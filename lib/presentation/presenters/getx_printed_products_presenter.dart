@@ -200,4 +200,22 @@ class GetxPrintedProductsPresenter
     }
     return _printedProducts!.TotalLiquid.toDouble();
   }
+
+  @override
+  double get serviceChargeValue {
+    if (_printedProducts == null) {
+      return 0;
+    }
+
+    if (_printedProducts!.IncrementType.toInt() == 1) {
+      //value
+      return _printedProducts!.IncrementValue.toDouble();
+    } else if (_printedProducts!.IncrementType.toInt() == 2) {
+      //percentage
+      return _printedProducts!.TotalLiquid.toDouble() *
+          (_printedProducts!.IncrementValue.toDouble() / 100 + 1);
+    } else {
+      return 0;
+    }
+  }
 }

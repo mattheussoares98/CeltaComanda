@@ -118,6 +118,8 @@ void main() {
       TotalLiquid: saleRequestTempEntity.TotalLiquid,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
+      IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+          IncrementType: 2,
       Products: saleRequestTempEntity.Products.map(
           (e) => UpdateSaleRequestTempProductEntity(
                 ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,

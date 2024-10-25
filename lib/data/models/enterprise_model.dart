@@ -49,7 +49,7 @@ class EnterpriseValidationModel {
       useCovenant: json["useCovenant"],
       updateMenuCount: json["updateMenuCount"],
       updateEnterpriseCount: json["updateEnterpriseCount"],
-      serviceChargePercentage: json["serviceChargePercentage"],
+      serviceChargePercentage: json["serviceChargePercentage"]?.toDouble(),
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null

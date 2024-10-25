@@ -168,6 +168,9 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
+      IncrementValue:
+          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+      IncrementType: 2,
     );
 
     cartProductViewModelWithChilds =
@@ -1084,6 +1087,9 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+        IncrementValue:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+        IncrementType: 2,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1149,6 +1155,9 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
+        IncrementValue:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+        IncrementType: 2,
         TotalLiquid: products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: [...products],

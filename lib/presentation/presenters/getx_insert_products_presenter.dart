@@ -321,6 +321,9 @@ class GetxInsertProductsPresenter extends GetxController
         SellerCode: cartPresenter.saleRequestTemp!.SellerCode,
         CovenantCode: cartPresenter.saleRequestTemp!.CovenantCode?.toInt(),
         CustomerCode: cartPresenter.saleRequestTemp!.CustomerCode?.toInt(),
+        IncrementValue:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+        IncrementType: 2,
       );
 
       await updateSaleRequestTemp.update(

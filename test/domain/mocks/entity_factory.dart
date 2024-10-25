@@ -620,6 +620,8 @@ class EntityFactory {
       Peoples: faker.randomGenerator.integer(100),
       CovenantCode: faker.randomGenerator.integer(100),
       CustomerCode: faker.randomGenerator.integer(100),
+      IncrementValue: faker.randomGenerator.decimal(),
+      IncrementType: 2,
     );
   }
 

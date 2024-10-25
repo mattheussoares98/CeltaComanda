@@ -477,6 +477,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
+        IncrementValue:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+        IncrementType: 2,
       );
 
       bool? cartProductsAlreadyConfirmed =

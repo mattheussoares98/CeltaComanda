@@ -15,6 +15,8 @@ class UpdateSaleRequestTempModel {
   final List<UpdateSaleRequestTempProductEntity> Products;
   final int? CustomerCode;
   final int? CovenantCode;
+  final double? IncrementValue;
+  final int? IncrementType; //1 == value && 2 == percentage
 
   UpdateSaleRequestTempModel({
     required this.DeliveryControl,
@@ -28,6 +30,8 @@ class UpdateSaleRequestTempModel {
     required this.SellerCode,
     required this.CustomerCode,
     required this.CovenantCode,
+    required this.IncrementValue,
+    required this.IncrementType,
   });
 
   factory UpdateSaleRequestTempModel.fromJson(Map json) {
@@ -56,6 +60,8 @@ class UpdateSaleRequestTempModel {
       SellerCode: json["SellerCode"],
       CovenantCode: json["CovenantCode"],
       CustomerCode: json["CustomerCode"],
+      IncrementValue: json["IncrementValue"],
+      IncrementType: json["IncrementType"],
     );
   }
 
@@ -73,6 +79,8 @@ class UpdateSaleRequestTempModel {
         SellerCode: entity.SellerCode,
         CustomerCode: entity.CustomerCode,
         CovenantCode: entity.CovenantCode,
+        IncrementValue: entity.IncrementValue,
+        IncrementType: entity.IncrementType,
       );
 
   UpdateSaleRequestTempEntity toEntity() => UpdateSaleRequestTempEntity(
@@ -87,6 +95,8 @@ class UpdateSaleRequestTempModel {
         SellerCode: SellerCode,
         CustomerCode: CustomerCode,
         CovenantCode: CovenantCode,
+        IncrementValue: IncrementValue,
+        IncrementType: IncrementType,
       );
 
   Map<dynamic, dynamic> toJson() => {
@@ -102,5 +112,7 @@ class UpdateSaleRequestTempModel {
         "SellerCode": SellerCode,
         "CustomerCode": CustomerCode,
         "CovenantCode": CovenantCode,
+        "IncrementValue": IncrementValue,
+        "IncrementType": IncrementType,
       };
 }

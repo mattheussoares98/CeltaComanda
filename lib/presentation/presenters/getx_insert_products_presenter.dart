@@ -322,7 +322,7 @@ class GetxInsertProductsPresenter extends GetxController
         CovenantCode: cartPresenter.saleRequestTemp!.CovenantCode?.toInt(),
         CustomerCode: cartPresenter.saleRequestTemp!.CustomerCode?.toInt(),
         IncrementValue:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
         IncrementType: 2,
       );
 

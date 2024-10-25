@@ -118,7 +118,7 @@ void main() {
       TotalLiquid: saleRequestTempEntity.TotalLiquid,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+      IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
           IncrementType: 2,
       Products: saleRequestTempEntity.Products.map(
           (e) => UpdateSaleRequestTempProductEntity(
@@ -236,7 +236,7 @@ void main() {
               enterpriseConcentradorParametersEntity: null,
               updateMenuCount: null,
               updateEnterpriseCount: null,
-              serviceChargePercentage: null,
+              serviceChargePercentageOrValue: null,
             ),
           )).called(1);
     });
@@ -706,8 +706,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-        serviceChargePercentage:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentage,
+        serviceChargePercentageOrValue:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -742,8 +742,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-        serviceChargePercentage:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentage,
+        serviceChargePercentageOrValue:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -775,8 +775,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-        serviceChargePercentage:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentage,
+        serviceChargePercentageOrValue:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
       );
 
       await sut.loadCommandData(

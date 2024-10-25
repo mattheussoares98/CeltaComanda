@@ -20,7 +20,7 @@ class EntityFactory {
           makeEnterpriseConcentradorParametersEntity(),
       updateMenuCount: faker.randomGenerator.integer(100),
       updateEnterpriseCount: faker.randomGenerator.integer(100),
-      serviceChargePercentage: faker.randomGenerator.decimal(),
+      serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
     );
   }
 

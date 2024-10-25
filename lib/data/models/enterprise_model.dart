@@ -14,7 +14,7 @@ class EnterpriseValidationModel {
   final int? updateEnterpriseCount;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
-  final double? serviceChargePercentage;
+  final double? serviceChargePercentageOrValue;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -27,7 +27,7 @@ class EnterpriseValidationModel {
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenuCount,
     required this.updateEnterpriseCount,
-    required this.serviceChargePercentage,
+    required this.serviceChargePercentageOrValue,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -49,7 +49,7 @@ class EnterpriseValidationModel {
       useCovenant: json["useCovenant"],
       updateMenuCount: json["updateMenuCount"],
       updateEnterpriseCount: json["updateEnterpriseCount"],
-      serviceChargePercentage: json["serviceChargePercentage"]?.toDouble(),
+      serviceChargePercentageOrValue: json["serviceChargePercentageOrValue"]?.toDouble(),
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null
@@ -70,7 +70,7 @@ class EnterpriseValidationModel {
         useCovenant: entity.useCovenant,
         updateMenuCount: entity.updateMenuCount,
         updateEnterpriseCount: entity.updateEnterpriseCount,
-        serviceChargePercentage: entity.serviceChargePercentage,
+        serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
       );
@@ -85,7 +85,7 @@ class EnterpriseValidationModel {
         useCovenant: useCovenant,
         updateMenuCount: updateMenuCount,
         updateEnterpriseCount: updateEnterpriseCount,
-        serviceChargePercentage: serviceChargePercentage,
+        serviceChargePercentageOrValue: serviceChargePercentageOrValue,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
       );
@@ -100,7 +100,7 @@ class EnterpriseValidationModel {
         'useCovenant': useCovenant,
         'updateMenuCount': updateMenuCount,
         'updateEnterpriseCount': updateEnterpriseCount,
-        'serviceChargePercentage': serviceChargePercentage,
+        'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
         'enterpriseConcentradorParametersEntity':
             enterpriseConcentradorParametersEntity != null
                 ? EnterpriseConcentradorParametersModel.fromEntity(

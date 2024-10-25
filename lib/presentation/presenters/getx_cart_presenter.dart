@@ -478,7 +478,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
         IncrementValue:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
         IncrementType: 2,
       );
 

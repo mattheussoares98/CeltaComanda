@@ -70,7 +70,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       enterpriseConcentradorParametersEntity: null,
       updateMenuCount: null,
       updateEnterpriseCount: null,
-      serviceChargePercentage: null,
+      serviceChargePercentageOrValue: null,
     );
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 
@@ -260,7 +260,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           TotalLiquid: saleRequestTempEntity.TotalLiquid,
           CustomerCode: saleRequestTempEntity.CustomerCode,
           CovenantCode: saleRequestTempEntity.CovenantCode,
-          IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+          IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
           IncrementType: 2,
           Products: saleRequestTempEntity.Products.map(
             (e) => UpdateSaleRequestTempProductEntity(

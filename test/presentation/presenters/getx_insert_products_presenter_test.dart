@@ -59,7 +59,7 @@ void main() {
         TotalLiquid: totalLiquid,
         CustomerCode: cartPresenter.saleRequestTempMock!.CustomerCode?.toInt(),
         CovenantCode: cartPresenter.saleRequestTempMock!.CovenantCode?.toInt(),
-        IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentage,
+        IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
           IncrementType: 2,
         Products: [
           UpdateSaleRequestTempProductEntity(

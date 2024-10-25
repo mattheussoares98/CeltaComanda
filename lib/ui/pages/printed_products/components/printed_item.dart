@@ -99,7 +99,7 @@ class _PrintedItemState extends State<PrintedItem> {
                             const Padding(
                               padding: EdgeInsets.only(top: 10),
                               child: SizedBox(
-                                child: UpdateTotalByPerson(),
+                                child: TotalByPerson(),
                               ),
                             ),
                         ],
@@ -112,12 +112,7 @@ class _PrintedItemState extends State<PrintedItem> {
           ),
           if (hasMinWidth(context))
             const Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  UpdateTotalByPerson(),
-                ],
-              ),
+              child: TotalByPerson(),
             ),
         ],
       ),

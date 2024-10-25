@@ -168,9 +168,10 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue:
-          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
-      IncrementType: 2,
+      IncrementValue: EnterpriseDataBuilder
+          .enterpriseDataEntity?.serviceChargePercentageOrValue,
+      IncrementType:
+          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
     );
 
     cartProductViewModelWithChilds =
@@ -1087,9 +1088,10 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
-        IncrementType: 2,
+        IncrementValue: EnterpriseDataBuilder
+            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementType:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1155,9 +1157,10 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
-        IncrementType: 2,
+        IncrementValue: EnterpriseDataBuilder
+            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementType:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
         TotalLiquid: products.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
         Products: [...products],
@@ -1647,8 +1650,10 @@ void main() {
               SellerCode: saleRequestTempEntity.SellerCode,
               CustomerCode: saleRequestTempEntity.CustomerCode,
               CovenantCode: saleRequestTempEntity.CovenantCode,
-              IncrementValue: saleRequestTempEntity.IncrementValue,
-              IncrementType: saleRequestTempEntity.IncrementType,
+              IncrementValue: EnterpriseDataBuilder
+                  .enterpriseDataEntity?.serviceChargePercentageOrValue,
+              IncrementType:
+                  EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);
@@ -1681,8 +1686,10 @@ void main() {
               Comments: saleRequestTempEntity.Comments,
               CustomerCode: saleRequestTempEntity.CustomerCode,
               CovenantCode: saleRequestTempEntity.CovenantCode,
-              IncrementValue: saleRequestTempEntity.IncrementValue,
-              IncrementType: saleRequestTempEntity.IncrementType,
+              IncrementValue: EnterpriseDataBuilder
+                  .enterpriseDataEntity?.serviceChargePercentageOrValue,
+              IncrementType:
+                  EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
             ),
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           )).called(1);

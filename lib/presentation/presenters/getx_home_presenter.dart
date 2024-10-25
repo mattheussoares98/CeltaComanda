@@ -262,7 +262,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           CustomerCode: saleRequestTempEntity.CustomerCode,
           CovenantCode: saleRequestTempEntity.CovenantCode,
           IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
-          IncrementType: 2,
+          IncrementType:
+          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
           Products: saleRequestTempEntity.Products.map(
             (e) => UpdateSaleRequestTempProductEntity(
               ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,

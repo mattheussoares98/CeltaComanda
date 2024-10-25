@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
@@ -622,7 +623,7 @@ class EntityFactory {
       CovenantCode: faker.randomGenerator.integer(100),
       CustomerCode: faker.randomGenerator.integer(100),
       IncrementValue: faker.randomGenerator.decimal(),
-      IncrementType: 2,
+      IncrementType: faker.randomGenerator.integer(2, min: 1),
     );
   }
 
@@ -657,8 +658,10 @@ class EntityFactory {
         Comments: faker.randomGenerator.string(10),
         CustomerCode: faker.randomGenerator.integer(3),
         CovenantCode: faker.randomGenerator.integer(3),
-        IncrementValue: faker.randomGenerator.decimal(min: 0.01),
-        IncrementType: faker.randomGenerator.integer(2, min: 1),
+        IncrementType:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+        IncrementValue: EnterpriseDataBuilder
+            .enterpriseDataEntity?.serviceChargePercentageOrValue,
       );
 
   static SaleRequestTempProductEntity makeSaleRequestTempProductEntity() =>

@@ -1,4 +1,3 @@
-import 'package:battery_plus/battery_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -29,9 +28,6 @@ class _HomePageState extends State<HomePage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    if (_batteryStateSubscription != null) {
-      _batteryStateSubscription!.cancel();
-    }
   }
 
   Future<void> _loadAllData() async {
@@ -60,45 +56,10 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  final Battery _battery = Battery();
-
-  BatteryState? _batteryState;
-  StreamSubscription<BatteryState>? _batteryStateSubscription;
-
   @override
   void initState() {
     super.initState();
-    _battery.batteryState.then(_updateBatteryState);
-    _batteryStateSubscription =
-        _battery.onBatteryStateChanged.listen(_updateBatteryState);
     _loadAllData();
-  }
-
-  int _lastUpdatedBatteryLevel = 0;
-
-  void _updateBatteryState(BatteryState state) async {
-    final int atualBatteryLevel = await _battery.batteryLevel;
-
-    final differenceBetweenLastUpdatedAndAtualBattery =
-        (_lastUpdatedBatteryLevel - atualBatteryLevel).abs();
-
-    if (atualBatteryLevel > 20 ||
-        _batteryState == BatteryState.charging ||
-        differenceBetweenLastUpdatedAndAtualBattery < 5) {
-      return;
-    }
-
-    _lastUpdatedBatteryLevel = atualBatteryLevel;
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      showAlertMessage(
-        context,
-        "$atualBatteryLevel%. ${R.string.msgLowBatteryChargeDevice}",
-        backgroundColor: Colors.red,
-      );
-    });
-
-    if (_batteryState == state) return;
-    _batteryState = state;
   }
 
   @override

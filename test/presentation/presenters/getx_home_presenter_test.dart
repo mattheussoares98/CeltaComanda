@@ -118,8 +118,9 @@ void main() {
       TotalLiquid: saleRequestTempEntity.TotalLiquid,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
-          IncrementType: 2,
+      IncrementValue: EnterpriseDataBuilder
+          .enterpriseDataEntity?.serviceChargePercentageOrValue,
+      IncrementType: 2,
       Products: saleRequestTempEntity.Products.map(
           (e) => UpdateSaleRequestTempProductEntity(
                 ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
@@ -237,6 +238,7 @@ void main() {
               updateMenuCount: null,
               updateEnterpriseCount: null,
               serviceChargePercentageOrValue: null,
+              serviceChargeType: null,
             ),
           )).called(1);
     });
@@ -706,8 +708,10 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-        serviceChargePercentageOrValue:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -742,8 +746,10 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-        serviceChargePercentageOrValue:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -775,8 +781,10 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
         updateEnterpriseCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-        serviceChargePercentageOrValue:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
       );
 
       await sut.loadCommandData(

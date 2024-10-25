@@ -262,8 +262,10 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
       updateEnterpriseCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-      serviceChargePercentageOrValue:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargePercentageOrValue: EnterpriseDataBuilder
+          .enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargeType:
+          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -288,8 +290,10 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
       updateEnterpriseCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-      serviceChargePercentageOrValue:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargePercentageOrValue: EnterpriseDataBuilder
+          .enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargeType:
+          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
     await sut.goToHomePage(homePresenter);
@@ -315,8 +319,10 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
       updateEnterpriseCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
-      serviceChargePercentageOrValue:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargePercentageOrValue: EnterpriseDataBuilder
+          .enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargeType:
+          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -474,6 +480,7 @@ void main() {
           updateMenuCount: null,
           updateEnterpriseCount: null,
           serviceChargePercentageOrValue: null,
+          serviceChargeType: null,
         ),
       );
     });

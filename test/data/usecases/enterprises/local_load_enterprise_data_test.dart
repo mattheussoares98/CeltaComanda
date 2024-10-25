@@ -60,6 +60,7 @@ void main() {
           updateMenuCount: enterpriseJsonData["updateMenuCount"],
           updateEnterpriseCount: enterpriseJsonData["updateEnterpriseCount"],
           serviceChargePercentageOrValue: enterpriseJsonData["serviceChargePercentageOrValue"],
+          serviceChargeType: enterpriseJsonData["serviceChargeType"],
         ),
       );
     });

@@ -105,7 +105,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
           enterpriseConcentradorParametersEntity: concentradorData,
           updateMenuCount: firebaseData.updateMenuCount,
           updateEnterpriseCount: firebaseData.updateEnterpriseCount,
-          serviceChargePercentageOrValue: firebaseData.serviceChargePercentageOrValue,
+          serviceChargePercentageOrValue:
+              firebaseData.serviceChargePercentageOrValue,
+          serviceChargeType: firebaseData.serviceChargeType,
         );
       } else {
         throw DomainError.enterpriseOrUrlNotFound;
@@ -197,6 +199,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
       updateMenuCount: null,
       updateEnterpriseCount: null,
       serviceChargePercentageOrValue: null,
+      serviceChargeType: null,
     );
 
     _enterpriseError.value = _validateField('enterpriseName');

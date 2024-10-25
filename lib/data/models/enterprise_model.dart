@@ -15,6 +15,7 @@ class EnterpriseValidationModel {
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
+  final int? serviceChargeType;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -28,6 +29,7 @@ class EnterpriseValidationModel {
     required this.updateMenuCount,
     required this.updateEnterpriseCount,
     required this.serviceChargePercentageOrValue,
+    required this.serviceChargeType,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -49,7 +51,9 @@ class EnterpriseValidationModel {
       useCovenant: json["useCovenant"],
       updateMenuCount: json["updateMenuCount"],
       updateEnterpriseCount: json["updateEnterpriseCount"],
-      serviceChargePercentageOrValue: json["serviceChargePercentageOrValue"]?.toDouble(),
+      serviceChargePercentageOrValue:
+          json["serviceChargePercentageOrValue"]?.toDouble(),
+      serviceChargeType: json["serviceChargeType"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null
@@ -71,6 +75,7 @@ class EnterpriseValidationModel {
         updateMenuCount: entity.updateMenuCount,
         updateEnterpriseCount: entity.updateEnterpriseCount,
         serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
+        serviceChargeType: entity.serviceChargeType,
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
       );
@@ -86,6 +91,7 @@ class EnterpriseValidationModel {
         updateMenuCount: updateMenuCount,
         updateEnterpriseCount: updateEnterpriseCount,
         serviceChargePercentageOrValue: serviceChargePercentageOrValue,
+        serviceChargeType: serviceChargeType,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
       );
@@ -101,6 +107,7 @@ class EnterpriseValidationModel {
         'updateMenuCount': updateMenuCount,
         'updateEnterpriseCount': updateEnterpriseCount,
         'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
+        'serviceChargeType': serviceChargeType,
         'enterpriseConcentradorParametersEntity':
             enterpriseConcentradorParametersEntity != null
                 ? EnterpriseConcentradorParametersModel.fromEntity(

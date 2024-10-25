@@ -71,6 +71,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       updateMenuCount: null,
       updateEnterpriseCount: null,
       serviceChargePercentageOrValue: null,
+      serviceChargeType: null,
     );
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 

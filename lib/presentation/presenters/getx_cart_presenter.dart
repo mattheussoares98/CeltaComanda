@@ -478,9 +478,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
         IncrementValue: EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+                .enterpriseDataEntity?.serviceChargePercentageOrValue ??
+            0,
         IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType ?? 0,
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -514,9 +515,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           CustomerCode: saleRequestTempResult.CustomerCode,
           CovenantCode: saleRequestTempResult.CovenantCode,
           IncrementValue: EnterpriseDataBuilder
-              .enterpriseDataEntity?.serviceChargePercentageOrValue,
+                  .enterpriseDataEntity?.serviceChargePercentageOrValue ??
+              0,
           IncrementType:
-              EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+              EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType ??
+                  0,
         ),
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );

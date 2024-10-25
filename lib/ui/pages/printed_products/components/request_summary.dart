@@ -37,6 +37,7 @@ class RequestSummary extends StatelessWidget {
               flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -63,32 +64,38 @@ class RequestSummary extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          R.string.serviceCharge,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: getStringSize(context)),
+                  if (printedProductsPresenter.serviceChargeValue > 0)
+                    Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                R.string.serviceCharge,
+                                textAlign: TextAlign.center,
+                                style:
+                                    TextStyle(fontSize: getStringSize(context)),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                printedProductsPresenter.serviceChargeValue
+                                    .toDouble()
+                                    .toString()
+                                    .toBrazilianNumber()
+                                    .addBrazilianCoin(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: getStringSize(context),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          printedProductsPresenter.serviceChargeValue
-                              .toDouble()
-                              .toString()
-                              .toBrazilianNumber()
-                              .addBrazilianCoin(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    )
                 ],
               ),
             ),

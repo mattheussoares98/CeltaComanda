@@ -31,8 +31,7 @@ PreferredSize homeAppBar({
                 isPrice: true,
                 buttonName: R.string.pay,
                 quantityString:
-                    printedProductsPresenter.printedProducts?.TotalLiquid ??
-                        "0".toDouble().toString(),
+                    printedProductsPresenter.totalLiquid.toDouble().toString(),
               ),
             ),
           ),

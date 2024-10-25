@@ -19,7 +19,7 @@ class PaymentButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "${R.string.total}: ${printedProductsPresenter.printedProducts!.TotalLiquid.toDouble().toString().toBrazilianNumber()} R\$",
+          "${R.string.total}: ${printedProductsPresenter.totalLiquid.toDouble().toString().toBrazilianNumber()} R\$",
           style: TextStyle(
             fontSize: getStringSize(context) * 2,
             fontWeight: FontWeight.bold,

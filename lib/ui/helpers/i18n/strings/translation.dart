@@ -138,6 +138,7 @@ abstract class Translation {
   String get quantityAbbreviated;
   String get reload;
   String get removeProduct;
+  String get removeServiceCharge;
   String get requested;
   String get requestedAt;
   String get reserved;

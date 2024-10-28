@@ -50,7 +50,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
   ) {
     notificationDialog(
       context: context,
-      titleMessage: "" + "remover taxa",
+      titleMessage: R.string.removeServiceCharge,
       showCancelAndConfirmMessage: false,
       content: SizedBox(
         height: MediaQuery.of(context).size.height / 3,
@@ -175,7 +175,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "" + "Remover taxa",
+                            R.string.removeServiceCharge,
                             style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,

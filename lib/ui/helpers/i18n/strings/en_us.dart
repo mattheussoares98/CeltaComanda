@@ -159,6 +159,7 @@ class EnUs implements Translation {
   String get quantityAbbreviated => 'Qty';
   String get reload => 'Reload';
   String get removeProduct => 'Remove product';
+  String get removeServiceCharge => 'Remove service';
   String get requested => 'Requested';
   String get requestedAt => 'Requested at';
   String get requestSentSuccessfully => 'The request was sent successfully';

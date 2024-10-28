@@ -150,6 +150,7 @@ class EnUs implements Translation {
   String get optional => 'Optional';
   String get password => 'Password';
   String get pay => 'Pay';
+  String get paymentValue => 'Payment value';
   String get peopleQuantity => 'Number of people';
   String get per => 'Per';
   String get personalizedCode => 'Personalized code';

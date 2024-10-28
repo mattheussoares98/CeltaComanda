@@ -152,6 +152,7 @@ class PtBr implements Translation {
   String get optional => 'Opcional';
   String get password => 'Senha';
   String get pay => 'Pagar';
+  String get paymentValue => 'Valor do pagamento';
   String get peopleQuantity => 'Quantidade de pessoas';
   String get per => 'Por';
   String get personalizedCode => 'Código personalizado';

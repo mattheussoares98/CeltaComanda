@@ -129,6 +129,7 @@ abstract class Translation {
   String get optional;
   String get password;
   String get pay;
+  String get paymentValue;
   String get peopleQuantity;
   String get per;
   String get personalizedCode;

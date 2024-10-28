@@ -16,8 +16,8 @@ class WriteAmoutValueToPay extends StatelessWidget {
         keyboardType: TextInputType.number,
         decoration: formFieldDecoration(
           context: context,
-          hintText: "R.string.paymentValue" + "",
-          labelText: "R.string.paymentValue" + "",
+          hintText: R.string.paymentValue,
+          labelText: R.string.paymentValue,
           errorText: null,
         ),
       ),

@@ -102,7 +102,15 @@ class _PaymentPageState extends State<PaymentPage>
             children: [
               PaymentDetails(),
               if (printedProductsPresenter.printedProducts != null)
-                const PaymentButtons(),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: WriteAmoutValueToPay(),
+                    ),
+                    const PaymentButtons(),
+                  ],
+                ),
               if (paymentPresenter.totalPaidValue ==
                   printedProductsPresenter.totalLiquid)
                 Padding(

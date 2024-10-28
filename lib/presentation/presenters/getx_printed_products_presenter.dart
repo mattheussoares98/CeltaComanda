@@ -207,4 +207,34 @@ class GetxPrintedProductsPresenter
       return 0;
     }
   }
+
+  @override
+  Future<void> removeServiceCharge({
+    required int personalizedCode,
+    required String password,
+    required HomePresenter homePresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      bool isValid = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      if (!isValid) {
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
 }

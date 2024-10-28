@@ -43,4 +43,10 @@ abstract class PrintedProductsPresenter
     required int personalizedCode,
     required String password,
   });
+
+  Future<void> removeServiceCharge({
+    required int personalizedCode,
+    required String password,
+    required HomePresenter homePresenter,
+  });
 }

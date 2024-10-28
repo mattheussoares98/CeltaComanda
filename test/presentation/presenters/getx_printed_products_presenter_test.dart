@@ -626,4 +626,58 @@ void main() {
       );
     });
   });
+
+  group("Remove service charge", () {
+    test("Should emit correct values in success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.removeServiceCharge(
+        personalizedCode: personalizedCode,
+        password: password,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should emit correct values if throws", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      userValidations.mockIsValidPasswordError(DomainError.unexpected);
+
+      await sut.removeServiceCharge(
+        personalizedCode: personalizedCode,
+        password: password,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should emit correct values if password is invalid", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+
+      userValidations.mockIsValidPassword(false);
+
+      await sut.removeServiceCharge(
+        personalizedCode: personalizedCode,
+        password: password,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should call validate user password with correct values", () async {
+      await sut.removeServiceCharge(
+        personalizedCode: personalizedCode,
+        password: password,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => userValidations.isValidPassword(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          personalizedCode: personalizedCode,
+          password: password,
+        ),
+      ).called(1);
+    });
+  });
 }

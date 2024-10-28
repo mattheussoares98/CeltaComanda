@@ -35,38 +35,39 @@ class RequestSummary extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          R.string.subtotal,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: getStringSize(context)),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          printedProductsPresenter.printedProducts!.TotalLiquid
-                              .toDouble()
-                              .toString()
-                              .toBrazilianNumber()
-                              .addBrazilianCoin(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getStringSize(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (printedProductsPresenter.serviceChargeValue > 0)
-                    Column(
+              child: printedProductsPresenter.serviceChargeValue <= 0
+                  ? SizedBox()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                R.string.subtotal,
+                                textAlign: TextAlign.center,
+                                style:
+                                    TextStyle(fontSize: getStringSize(context)),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                printedProductsPresenter
+                                    .printedProducts!.TotalLiquid
+                                    .toDouble()
+                                    .toString()
+                                    .toBrazilianNumber()
+                                    .addBrazilianCoin(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: getStringSize(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 10),
                         Row(
                           children: [
@@ -93,22 +94,21 @@ class RequestSummary extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ),
+                        )
                       ],
-                    )
-                ],
+                    ),
+            ),
+            if (printedProductsPresenter.serviceChargeValue > 0)
+              VerticalDivider(
+                color: Theme.of(context).primaryColorLight,
+                thickness: 1,
               ),
-            ),
-            VerticalDivider(
-              color: Theme.of(context).primaryColorLight,
-              thickness: 1,
-            ),
             Expanded(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     R.string.total,
-                    textAlign: TextAlign.end,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(

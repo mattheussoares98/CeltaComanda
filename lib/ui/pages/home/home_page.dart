@@ -84,6 +84,8 @@ class _HomePageState extends State<HomePage>
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
+    EnterpriseValidationPresenter enterprisePresenter =
+        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -102,6 +104,7 @@ class _HomePageState extends State<HomePage>
           cartPresenter: cartPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
         );
       },
       child: GestureDetector(

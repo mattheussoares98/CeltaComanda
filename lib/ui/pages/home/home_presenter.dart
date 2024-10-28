@@ -83,5 +83,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required EnterpriseValidationPresenter enterprisePresenter,
   });
 }

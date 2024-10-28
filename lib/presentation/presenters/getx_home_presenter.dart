@@ -411,7 +411,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToGetNet => false;
   @override
-  bool get isGeneratingVersionToMicrosoftStore => false;
+  bool get isGeneratingVersionToMicrosoftStore => true;
 
   bool _isGeneratingVersionToTablet = false;
   @override
@@ -474,6 +474,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required EnterpriseValidationPresenter enterprisePresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -494,8 +495,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (enterprise.updateEnterpriseCount !=
           EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount) {
-        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
         _updateEnterpriseCount = enterprise.updateEnterpriseCount;
+        await enterprisePresenter.updateEnterpriseEntity(data);
       }
     } catch (e) {
       mainError = UIError.unexpected;

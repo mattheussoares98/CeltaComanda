@@ -24,6 +24,7 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
+  late EnterpriseValidationPresenterSpy enterprisePresenter;
 
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -58,6 +59,7 @@ void main() {
     menuPresenter = MenuPresenterSpy();
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
+    enterprisePresenter = EnterpriseValidationPresenterSpy();
     sut = GetxHomePresenter(
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
@@ -823,7 +825,7 @@ void main() {
         updateMenuCount: null,
       );
 
-      expect(sut.updateMenuCount, -1);
+      expect(sut.updateMenuCount, null);
     });
   });
 
@@ -1337,7 +1339,7 @@ void main() {
   });
 
   group("Do on remote enterprise changes", () {
-    final remoteEnterprise =
+    final enterpriseJson =
         EnterpriseValidationModel.fromEntity(EntityFactory.makeEnterpriseData())
             .toJson();
     test("Should emit correct values on success", () async {
@@ -1345,12 +1347,13 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.doOnRemoteEnterpriseChanges(
-        data: remoteEnterprise,
+        data: enterpriseJson,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
     });
     test("Should emit correct values on error", () async {
@@ -1361,23 +1364,25 @@ void main() {
       localCommandData.mockLoadError();
 
       await sut.doOnRemoteEnterpriseChanges(
-        data: remoteEnterprise,
+        data: enterpriseJson,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
     });
     test("Should call loadCommandData if enterprise.menucount is different",
         () async {
       await sut.doOnRemoteEnterpriseChanges(
-        data: remoteEnterprise,
+        data: enterpriseJson,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
 
       verify(() => localCommandData.load()).called(1);
@@ -1385,40 +1390,40 @@ void main() {
     test("Should not call loadCommandData if enterprise.menucount is equal",
         () async {
       await sut.doOnRemoteEnterpriseChanges(
-        data: remoteEnterprise,
+        data: enterpriseJson,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
       await sut.doOnRemoteEnterpriseChanges(
-        data: remoteEnterprise,
+        data: enterpriseJson,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
 
       verify(() => localCommandData.load()).called(1);
     });
     test("Should update enterprise if enterpriseCount is different", () async {
-      expect(
-          EnterpriseDataBuilder.enterpriseDataEntity, isNot(remoteEnterprise));
+      expect(EnterpriseDataBuilder.enterpriseDataEntity, isNot(enterpriseJson));
       await sut.doOnRemoteEnterpriseChanges(
-        data: remoteEnterprise,
+        data: enterpriseJson,
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
 
-      expect(
-        EnterpriseDataBuilder.enterpriseDataEntity,
-        EnterpriseValidationModel.fromJson(remoteEnterprise).toEntity(),
-      );
+      verify(() => enterprisePresenter.updateEnterpriseEntity(enterpriseJson))
+          .called(1);
     });
   });
 }

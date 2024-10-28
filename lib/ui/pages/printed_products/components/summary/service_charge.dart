@@ -44,24 +44,22 @@ class _ServiceChargeState extends State<ServiceCharge> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
-    return GestureDetector(
-      onLongPress: () {
-        notificationDialog(
-          context: context,
-          titleMessage: "",
-          showCancelAndConfirmMessage: false,
-          content: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Form(
-              key: formKey,
+  void openRemoveServiceChargeDialog(
+    PrintedProductsPresenter printedProductsPresenter,
+    HomePresenter homePresenter,
+  ) {
+    notificationDialog(
+      context: context,
+      titleMessage: "" + "remover taxa",
+      showCancelAndConfirmMessage: false,
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height / 3,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Form(
+            key: formKey,
+            child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
                     controller: userController,
@@ -124,8 +122,21 @@ class _ServiceChargeState extends State<ServiceCharge> {
               ),
             ),
           ),
-          onPress: () async {},
-        );
+        ),
+      ),
+      onPress: () async {},
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
+    return GestureDetector(
+      onLongPress: () {
+        openRemoveServiceChargeDialog(printedProductsPresenter, homePresenter);
       },
       child: Row(
         children: [
@@ -137,17 +148,49 @@ class _ServiceChargeState extends State<ServiceCharge> {
             ),
           ),
           Expanded(
-            child: Text(
-              printedProductsPresenter.serviceChargeValue
-                  .toDouble()
-                  .toString()
-                  .toBrazilianNumber()
-                  .addBrazilianCoin(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: getStringSize(context),
-              ),
+            child: Column(
+              children: [
+                Text(
+                  printedProductsPresenter.serviceChargeValue
+                      .toDouble()
+                      .toString()
+                      .toBrazilianNumber()
+                      .addBrazilianCoin(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: getStringSize(context),
+                  ),
+                ),
+                if (!homePresenter.isGeneratingVersionToTablet)
+                  InkWell(
+                    onTap: () {
+                      openRemoveServiceChargeDialog(
+                        printedProductsPresenter,
+                        homePresenter,
+                      );
+                    },
+                    child: FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "" + "Remover taxa",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: getStringSize(context),
+                            ),
+                          ),
+                          Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
         ],

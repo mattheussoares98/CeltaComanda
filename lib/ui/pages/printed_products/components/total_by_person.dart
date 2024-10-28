@@ -35,8 +35,8 @@ class _TotalByPersonState extends State<TotalByPerson> {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(
+        context); //need listen to update total by person correctly when remove service charge
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Padding(

@@ -14,8 +14,7 @@ class RequestSummary extends StatelessWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(bottom: 3),
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: const Color.fromARGB(255, 220, 218, 218)),

@@ -411,7 +411,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToGetNet => false;
   @override
-  bool get isGeneratingVersionToMicrosoftStore => true;
+  bool get isGeneratingVersionToMicrosoftStore => false;
 
   bool _isGeneratingVersionToTablet = false;
   @override

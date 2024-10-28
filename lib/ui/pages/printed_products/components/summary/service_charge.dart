@@ -62,6 +62,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
               child: Column(
                 children: [
                   TextFormField(
+                    autofocus: true,
                     controller: userController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     keyboardType: TextInputType.number,
@@ -138,62 +139,65 @@ class _ServiceChargeState extends State<ServiceCharge> {
       onLongPress: () {
         openRemoveServiceChargeDialog(printedProductsPresenter, homePresenter);
       },
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              R.string.serviceCharge,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: getStringSize(context)),
+      child: Container(
+        color: Colors.transparent,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                R.string.serviceCharge,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: getStringSize(context)),
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Text(
-                  printedProductsPresenter.serviceChargeValue
-                      .toDouble()
-                      .toString()
-                      .toBrazilianNumber()
-                      .addBrazilianCoin(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
-                  ),
-                ),
-                if (!homePresenter.isGeneratingVersionToTablet)
-                  InkWell(
-                    onTap: () {
-                      openRemoveServiceChargeDialog(
-                        printedProductsPresenter,
-                        homePresenter,
-                      );
-                    },
-                    child: FittedBox(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            R.string.removeServiceCharge,
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: getStringSize(context),
-                            ),
-                          ),
-                          Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                        ],
-                      ),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(
+                    printedProductsPresenter.serviceChargeValue
+                        .toDouble()
+                        .toString()
+                        .toBrazilianNumber()
+                        .addBrazilianCoin(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: getStringSize(context),
                     ),
                   ),
-              ],
+                  if (!homePresenter.isGeneratingVersionToTablet)
+                    InkWell(
+                      onTap: () {
+                        openRemoveServiceChargeDialog(
+                          printedProductsPresenter,
+                          homePresenter,
+                        );
+                      },
+                      child: FittedBox(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              R.string.removeServiceCharge,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: getStringSize(context),
+                              ),
+                            ),
+                            Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

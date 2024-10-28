@@ -14,11 +14,13 @@ class GetxPrintedProductsPresenter
   final UserValidations userValidations;
   final LoadPrintedProducts loadPrintedProducts;
   final RemovePrintedProduct removePrintedProduct;
+  final UpdateSaleRequest updateSaleRequest;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
     required this.removePrintedProduct,
+    required this.updateSaleRequest,
   });
 
   @override

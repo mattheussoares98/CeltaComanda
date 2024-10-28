@@ -27,6 +27,7 @@ void main() {
   late RemovePrintedProductSpy removePrintedProduct;
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
   late BarcodeScannerSpy barcodeScanner;
+  late UpdateSaleRequestSpy updateSaleRequest;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -47,6 +48,7 @@ void main() {
       userValidations: userValidations,
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
+      updateSaleRequest: updateSaleRequest,
     );
   }
 
@@ -56,6 +58,7 @@ void main() {
     removePrintedProduct = RemovePrintedProductSpy();
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
     barcodeScanner = BarcodeScannerSpy();
+    updateSaleRequest = UpdateSaleRequestSpy();
   }
 
   void initEntitys() {

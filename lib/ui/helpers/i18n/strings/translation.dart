@@ -120,6 +120,7 @@ abstract class Translation {
   String get liquidateCommandSucceeds;
   String get loadMenu;
   String get login;
+  String get missing;
   String get name;
   String get neww;
   String get no;
@@ -169,6 +170,7 @@ abstract class Translation {
   String get time;
   String get total;
   String get totalByPerson;
+  String get totalPaid;
   String get turnBack;
   String get updateConfigurations;
   String get updateMenu;

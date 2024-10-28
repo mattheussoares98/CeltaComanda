@@ -143,6 +143,7 @@ class PtBr implements Translation {
   String get liquidateCommandSucceeds => "Comanda liquidada com sucesso";
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
+  String get missing => 'Faltando';
   String get name => 'Nome';
   String get neww => 'Novo';
   String get no => 'Não';
@@ -194,6 +195,7 @@ class PtBr implements Translation {
   String get table => 'Mesa';
   String get time => 'Horário';
   String get total => 'Total';
+  String get totalPaid => 'Total pago';
   String get totalByPerson => 'Total por pessoa';
   String get turnBack => 'Voltar';
   String get updateConfigurations => "Alterar configurações";

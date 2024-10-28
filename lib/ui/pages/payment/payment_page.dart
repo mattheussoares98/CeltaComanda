@@ -100,17 +100,19 @@ class _PaymentPageState extends State<PaymentPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              PaymentDetails(),
               if (printedProductsPresenter.printedProducts != null)
                 const PaymentButtons(),
-              // if (paymentPresenter.commandAlreadyPaid)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: LiquidateCommand(
-                  callSetState: () {
-                    setState(() {});
-                  },
+              if (paymentPresenter.totalPaidValue ==
+                  printedProductsPresenter.totalLiquid)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: LiquidateCommand(
+                    callSetState: () {
+                      setState(() {});
+                    },
+                  ),
                 ),
-              ),
               if (printedProductsPresenter.printedProducts == null ||
                   !homePresenter.isFixedCommandNumber)
                 const SearchDataByCommandNumber(),

@@ -141,6 +141,7 @@ class EnUs implements Translation {
   String get liquidateCommandSucceeds => 'Command successfully liquidated';
   String get loadMenu => 'Load menu';
   String get login => 'Login';
+  String get missing => 'Missing';
   String get name => 'Name';
   String get neww => 'New';
   String get no => 'No';
@@ -191,6 +192,7 @@ class EnUs implements Translation {
   String get table => 'Table';
   String get time => 'Time';
   String get total => 'Total';
+  String get totalPaid => 'Total paid';
   String get totalByPerson => 'Total by person';
   String get turnBack => 'Go back';
   String get updateConfigurations => 'Update configurations';

@@ -18,27 +18,6 @@ class PaymentButtons extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "${R.string.total}: ${printedProductsPresenter.totalLiquid.toDouble().toString().toBrazilianNumber()} R\$",
-          style: TextStyle(
-            fontSize: getStringSize(context) * 2,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8,
-            vertical: 20,
-          ),
-          child: Text(
-            R.string.selectPaymentOption,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.italic,
-              fontSize: getStringSize(context),
-            ),
-          ),
-        ),
         if (homePresenter.isGeneratingVersionToRede ||
             homePresenter.isGeneratingVersionToGetNet)
           Column(

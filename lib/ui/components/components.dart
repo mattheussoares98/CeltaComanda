@@ -1,5 +1,4 @@
 export './drawer/drawer.dart';
-export './alert_message.dart';
 export "./app_theme.dart";
 export './comment.dart';
 export 'drawer/drawer_items.dart';
@@ -18,4 +17,5 @@ export './product_complement.dart';
 export './reload_screen.dart';
 export './search_command_icon.dart';
 export './search_data_by_command_number.dart';
+export 'snack_bar_message.dart';
 export './update_quantity.dart';

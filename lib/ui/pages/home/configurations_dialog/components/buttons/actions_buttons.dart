@@ -155,7 +155,7 @@ Future<void> _updateCommand({
   if (updated) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       FocusScope.of(context).unfocus();
-      showAlertMessage(
+      snackBarMessage(
         context,
         R.string.msgUpdatedTableConfigurationsSuccess,
       );
@@ -185,7 +185,7 @@ Future<void> _openOrBlock({
   if (updated) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       FocusScope.of(context).unfocus();
-      showAlertMessage(
+      snackBarMessage(
         context,
         liberate ? R.string.msgReleasesCommand : R.string.msgBlockedCommand,
         backgroundColor: Theme.of(context).secondaryHeaderColor,

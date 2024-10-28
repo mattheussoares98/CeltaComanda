@@ -30,7 +30,7 @@ class GetCustomerField extends StatelessWidget {
             value: textController.text,
             searchByPersonalizedCode: searchByPersonalizedCode,
             showErrorMessageReturnedByBs: (value) {
-              showAlertMessage(context, value, backgroundColor: Colors.red);
+              snackBarMessage(context, value, backgroundColor: Colors.red);
             },
           );
         },
@@ -40,7 +40,7 @@ class GetCustomerField extends StatelessWidget {
         searchByPersonalizedCode: searchByPersonalizedCode,
         value: textController.text,
         showErrorMessageReturnedByBs: (value) {
-          showAlertMessage(context, value, backgroundColor: Colors.red);
+          snackBarMessage(context, value, backgroundColor: Colors.red);
         },
       );
     }

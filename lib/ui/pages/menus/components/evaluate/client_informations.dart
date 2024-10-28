@@ -106,37 +106,37 @@ Future<void> _sendAvaliation({
   required BuildContext context,
 }) async {
   if (foodNote == null) {
-    showAlertMessage(
+    snackBarMessage(
       context,
       R.string.msgEvaluateFood,
       backgroundColor: Colors.red,
     );
   } else if (drinkNote == null) {
-    showAlertMessage(
+    snackBarMessage(
       context,
       R.string.msgEvaluateDrink,
       backgroundColor: Colors.red,
     );
   } else if (environmentNote == null) {
-    showAlertMessage(
+    snackBarMessage(
       context,
       R.string.msgEvaluateEnvironment,
       backgroundColor: Colors.red,
     );
   } else if (serviceNote == null) {
-    showAlertMessage(
+    snackBarMessage(
       context,
       R.string.msgEvaluateService,
       backgroundColor: Colors.red,
     );
   } else if (costBenefitNote == null) {
-    showAlertMessage(
+    snackBarMessage(
       context,
       R.string.msgEvaluateCostBenefit,
       backgroundColor: Colors.red,
     );
   } else if (nameController.text.isEmpty) {
-    showAlertMessage(
+    snackBarMessage(
       context,
       R.string.msgWriteName,
       backgroundColor: Colors.red,

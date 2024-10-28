@@ -28,7 +28,7 @@ class ConfirmPayment extends StatelessWidget {
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
       showErrorMessageReturnedByBs: (error) {
-        showAlertMessage(
+        snackBarMessage(
           context,
           error,
           backgroundColor: Colors.red,
@@ -38,7 +38,7 @@ class ConfirmPayment extends StatelessWidget {
         Navigator.of(context).popUntil(
           (route) => route.isFirst,
         );
-        showAlertMessage(
+        snackBarMessage(
           context,
           R.string.liquidateCommandSucceeds,
           backgroundColor: Theme.of(context).secondaryHeaderColor,

@@ -148,7 +148,7 @@ Future<void> _onPress({
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         Navigator.of(NavigatorKey.navigatorKey.currentState?.context ?? context)
             .pop();
-        showAlertMessage(
+        snackBarMessage(
           context,
           R.string.msgRequestSentSuccessfully,
         );

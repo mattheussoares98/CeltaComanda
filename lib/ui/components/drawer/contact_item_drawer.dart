@@ -33,7 +33,7 @@ class ContactItemDrawer extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: phoneNumber));
-                    showAlertMessage(
+                    snackBarMessage(
                       context,
                       R.string.msgNumberCopiedSuccessfully,
                     );

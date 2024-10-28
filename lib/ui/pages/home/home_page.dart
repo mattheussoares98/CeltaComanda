@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage>
 
     _lastUpdatedBatteryLevel = atualBatteryLevel;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      showAlertMessage(
+      snackBarMessage(
         context,
         "$atualBatteryLevel%. ${R.string.msgLowBatteryChargeDevice}",
         backgroundColor: Colors.red,

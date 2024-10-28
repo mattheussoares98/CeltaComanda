@@ -47,7 +47,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
     if (isUpdated) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         Navigator.of(NavigatorKey.navigatorKey.currentState!.context).pop();
-        showAlertMessage(
+        snackBarMessage(
           context,
           R.string.msgRequestSentSuccessfully,
         );

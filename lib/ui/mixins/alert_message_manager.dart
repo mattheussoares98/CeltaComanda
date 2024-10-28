@@ -10,7 +10,7 @@ mixin AlertMessageManager {
       BuildContext context, Stream<String?> stream) {
     final streamSubscription = stream.listen((message) {
       if (message != null) {
-        showAlertMessage(
+        snackBarMessage(
           NavigatorKey.navigatorKey.currentState?.context ?? context,
           message,
         );

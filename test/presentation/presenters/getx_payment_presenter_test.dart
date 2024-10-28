@@ -273,6 +273,16 @@ void main() {
             ),
           ));
     });
+    test('Should update lastRequestedPaymentAmount correctly', () async {
+      await sut.callPayment(
+        homePresenter: homePresenter,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      expect(sut.lastRequestedPaymentAmount, longAmountValue);
+    });
   });
 
   group("Get total value", () {
@@ -330,7 +340,7 @@ void main() {
     // });
   });
 
-  group("try pay again", () {
+  group("Liquidate command", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
@@ -373,6 +383,22 @@ void main() {
 
       verify(() => printedProductsPresenter.loadPrinted(homePresenter))
           .called(1);
+    });
+    test(
+        "Should not call finish in concentrador when paid is less than total liquid ",
+        () async {
+      printedProductsPresenter.totalLiquidController = 1;
+
+      await sut.liquidateCommand(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verifyNever(() => finishSaleRequestConcentrador.finish(
+            pdvNumber: 100,
+            commandNumber: homePresenter.commandNumberMock!.toInt(),
+            finalizations: null,
+          ));
     });
   });
 

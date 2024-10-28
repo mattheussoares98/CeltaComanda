@@ -16,8 +16,10 @@ class PrintedProductsPresenterSpy extends Mock
   final alertMessageController = StreamController<String?>();
   PrintedViewModel printedProductsMock = EntityFactory.makePrintedViewModel();
   bool canCancelProductsController = false;
+  double totalLiquidController = 0;
 
   PrintedProductsPresenterSpy() {
+    when(() => this.totalLiquid).thenAnswer((_) => totalLiquidController);
     when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
     when(() => this.canCancelProducts)
         .thenAnswer((_) => canCancelProductsController);

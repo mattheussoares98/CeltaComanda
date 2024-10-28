@@ -33,6 +33,8 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      _lastRequestedPaymentAmount = longAmountValue;
+
       bool isValid = await commandInformations.isValidDatetime(
         commandNumber: homePresenter.commandNumber!,
       );
@@ -68,6 +70,10 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
+    if (_totalPaidValue < printedProductsPresenter.totalLiquid) {
+      return;
+    }
+
     mainError = null;
     isLoading = true;
     try {
@@ -131,6 +137,8 @@ class GetxPaymentPresenter extends GetxController
     try {
       final response = GetNetResponseModel.fromJson(call.arguments);
       if (response.result == "0") {
+        _totalPaidValue += _lastRequestedPaymentAmount;
+
         await liquidateCommand(
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
@@ -160,6 +168,8 @@ class GetxPaymentPresenter extends GetxController
   ) async {
     if (call.arguments == "Pagamento Autorizado") {
       try {
+        _totalPaidValue += _lastRequestedPaymentAmount;
+
         await liquidateCommand(
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
@@ -187,4 +197,12 @@ class GetxPaymentPresenter extends GetxController
   void goToCovenantPage() {
     navigateTo.navigate(pageRoute: PageRoutes.covenant);
   }
+
+  double _totalPaidValue = 0;
+  @override
+  double get totalPaidValue => _totalPaidValue;
+
+  double _lastRequestedPaymentAmount = 0;
+  @override
+  double get lastRequestedPaymentAmount => _lastRequestedPaymentAmount;
 }

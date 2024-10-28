@@ -48,6 +48,8 @@ class _ServiceChargeState extends State<ServiceCharge> {
     PrintedProductsPresenter printedProductsPresenter,
     HomePresenter homePresenter,
   ) {
+    userController.clear();
+    passwordController.clear();
     notificationDialog(
       context: context,
       titleMessage: R.string.removeServiceCharge,

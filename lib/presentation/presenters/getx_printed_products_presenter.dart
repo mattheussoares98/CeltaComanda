@@ -236,6 +236,7 @@ class GetxPrintedProductsPresenter
           CustomerCode: null,
           IncrementType: 0,
           IncrementValue: 0,
+          TotalLiquid: _printedProducts!.TotalLiquid.toDouble(),
         ),
         commandNumberWithThreeNumbers:
             homePresenter.commandNumber!.padLeft(3, "0"),

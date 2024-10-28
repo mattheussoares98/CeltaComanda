@@ -71,7 +71,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
             ),
             const SizedBox(height: 10),
             Text(
-              "${R.string.totalByPerson}: ${totalPerPerson.toString().toBrazilianNumber().addBrazilianCoin()}",
+              "${R.string.totalByPerson}: ${(printedProductsPresenter.totalLiquid / selectedPeoples).toString().toBrazilianNumber().addBrazilianCoin()}",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: getStringSize(context)),
             ),

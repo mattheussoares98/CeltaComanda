@@ -635,6 +635,7 @@ void main() {
 
   group("Remove service charge", () {
     test("Should emit correct values in success", () async {
+      await sut.loadPrinted(homePresenter);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
@@ -671,6 +672,7 @@ void main() {
       );
     });
     test("Should call validate user password with correct values", () async {
+      await sut.loadPrinted(homePresenter);
       await sut.removeServiceCharge(
         personalizedCode: personalizedCode,
         password: password,
@@ -700,6 +702,7 @@ void main() {
             CustomerCode: null,
             IncrementType: 0,
             IncrementValue: 0,
+            TotalLiquid: sut.printedProducts!.TotalLiquid.toDouble(),
           ),
           commandNumberWithThreeNumbers:
               homePresenter.commandNumberMock!.padLeft(3, "0"),

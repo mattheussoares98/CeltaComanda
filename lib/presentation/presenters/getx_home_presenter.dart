@@ -261,9 +261,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           TotalLiquid: saleRequestTempEntity.TotalLiquid,
           CustomerCode: saleRequestTempEntity.CustomerCode,
           CovenantCode: saleRequestTempEntity.CovenantCode,
-          IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
+          IncrementValue: EnterpriseDataBuilder
+              .enterpriseDataEntity?.serviceChargePercentageOrValue,
           IncrementType:
-          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+              EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
           Products: saleRequestTempEntity.Products.map(
             (e) => UpdateSaleRequestTempProductEntity(
               ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
@@ -461,4 +462,35 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   int _updateMenuCount = -1;
   @override
   int get updateMenuCount => _updateMenuCount;
+
+  @override
+  Future<void> doOnRemoteEnterpriseChanges({
+    required EnterpriseEntity enterprise,
+    required MenuPresenter menuPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required CartPresenter cartPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      if (enterprise.updateMenuCount != null &&
+          _updateMenuCount != enterprise.updateMenuCount) {
+        await loadCommandData(
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          updateMenuCount: enterprise.updateMenuCount,
+        );
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

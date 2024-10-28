@@ -1334,4 +1334,71 @@ void main() {
       expect(sut.commandNumber, "001");
     });
   });
+
+  group("Do on remote enterprise changes", () {
+    final remoteEnterprise = EntityFactory.makeEnterpriseData();
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.doOnRemoteEnterpriseChanges(
+        enterprise: remoteEnterprise,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      localCommandData.mockLoadError();
+
+      await sut.doOnRemoteEnterpriseChanges(
+        enterprise: remoteEnterprise,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test("Should call loadCommandData if enterprise.menucount is different",
+        () async {
+      await sut.doOnRemoteEnterpriseChanges(
+        enterprise: remoteEnterprise,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => localCommandData.load()).called(1);
+    });
+    test("Should not call loadCommandData if enterprise.menucount is equal",
+        () async {
+      await sut.doOnRemoteEnterpriseChanges(
+        enterprise: remoteEnterprise,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      await sut.doOnRemoteEnterpriseChanges(
+        enterprise: remoteEnterprise,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => localCommandData.load()).called(1);
+    });
+  });
 }

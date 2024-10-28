@@ -241,6 +241,8 @@ class GetxPrintedProductsPresenter
             homePresenter.commandNumber!.padLeft(3, "0"),
         saleRequestId: _printedProducts!.SaleRequestId.toInt(),
       );
+
+      await loadPrinted(homePresenter);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.invalidCredentialsOrAccessDenied:

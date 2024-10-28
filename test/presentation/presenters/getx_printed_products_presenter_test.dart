@@ -707,5 +707,22 @@ void main() {
         ),
       ).called(1);
     });
+    test("Should call loadPrinted", () async {
+      await sut.loadPrinted(homePresenter);
+      await sut.removeServiceCharge(
+        personalizedCode: personalizedCode,
+        password: password,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => loadPrintedProducts.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: homePresenter.commandNumberMock!.toInt(),
+        ),
+      ).called(2);
+    });
   });
 }

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -104,6 +105,8 @@ void main() {
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(
+        EntityFactory.makeSaleRequestModel(covenantCode: 0, customerCode: 0));
   });
 
   group("Validate password", () {
@@ -679,6 +682,28 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           personalizedCode: personalizedCode,
           password: password,
+        ),
+      ).called(1);
+    });
+    test("Should call update sale request with correct values", () async {
+      await sut.loadPrinted(homePresenter);
+      await sut.removeServiceCharge(
+        personalizedCode: personalizedCode,
+        password: password,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => updateSaleRequest.update(
+          model: SaleRequestModel(
+            CovenantCode: null,
+            CustomerCode: null,
+            IncrementType: 0,
+            IncrementValue: 0,
+          ),
+          commandNumberWithThreeNumbers:
+              homePresenter.commandNumberMock!.padLeft(3, "0"),
+          saleRequestId: sut.printedProducts!.SaleRequestId.toInt(),
         ),
       ).called(1);
     });

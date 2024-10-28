@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -228,6 +229,18 @@ class GetxPrintedProductsPresenter
       if (!isValid) {
         throw DomainError.invalidCredentialsOrAccessDenied;
       }
+
+      await updateSaleRequest.update(
+        model: SaleRequestModel(
+          CovenantCode: null,
+          CustomerCode: null,
+          IncrementType: 0,
+          IncrementValue: 0,
+        ),
+        commandNumberWithThreeNumbers:
+            homePresenter.commandNumber!.padLeft(3, "0"),
+        saleRequestId: _printedProducts!.SaleRequestId.toInt(),
+      );
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.invalidCredentialsOrAccessDenied:

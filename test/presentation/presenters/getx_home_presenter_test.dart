@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/enterprise_model.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -1336,7 +1337,9 @@ void main() {
   });
 
   group("Do on remote enterprise changes", () {
-    final remoteEnterprise = EntityFactory.makeEnterpriseData();
+    final remoteEnterprise =
+        EnterpriseValidationModel.fromEntity(EntityFactory.makeEnterpriseData())
+            .toJson();
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));

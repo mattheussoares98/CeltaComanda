@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
@@ -77,7 +76,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Future<void> closeApp();
   void changeIsGeneratingVersionToRede(bool value);
   Future<void> doOnRemoteEnterpriseChanges({
-    required EnterpriseEntity enterprise,
+    required Map<String, dynamic> enterprise,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,

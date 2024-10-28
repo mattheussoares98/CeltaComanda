@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -465,7 +466,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> doOnRemoteEnterpriseChanges({
-    required EnterpriseEntity enterprise,
+    required Map<String, dynamic> enterprise,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
@@ -476,15 +477,18 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      if (enterprise.updateMenuCount != null &&
-          _updateMenuCount != enterprise.updateMenuCount) {
+      final enterpriseEntity =
+          EnterpriseValidationModel.fromJson(enterprise).toEntity();
+
+      if (enterpriseEntity.updateMenuCount != null &&
+          _updateMenuCount != enterpriseEntity.updateMenuCount) {
         await loadCommandData(
           menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
           cartPresenter: cartPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
-          updateMenuCount: enterprise.updateMenuCount,
+          updateMenuCount: enterpriseEntity.updateMenuCount,
         );
       }
     } catch (e) {

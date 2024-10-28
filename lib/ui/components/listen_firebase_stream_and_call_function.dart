@@ -6,13 +6,11 @@ class ListenFirebaseStreamAndCallFunction extends StatelessWidget {
   final String collection;
   final String doc;
   final Widget child;
-  final String keyToListen;
   final Future<void> Function(Map<String, dynamic> data) function;
   const ListenFirebaseStreamAndCallFunction({
     required this.collection,
     required this.doc,
     required this.child,
-    required this.keyToListen,
     required this.function,
     super.key,
   });
@@ -31,7 +29,7 @@ class ListenFirebaseStreamAndCallFunction extends StatelessWidget {
           Future.delayed(Duration.zero, () async {
             final data = snapshot.data!.data();
 
-            if (data != null && data.containsKey(keyToListen)) {
+            if (data != null) {
               _isUpdatingMenu = true;
               await function(data);
               _isUpdatingMenu = false;

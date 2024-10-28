@@ -123,6 +123,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
+      _updateMenuCount = updateMenuCount;
+
       if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
           !_isGeneratingVersionToTablet) {
         await persistent.makePersistent();
@@ -142,10 +144,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-
-      if (updateMenuCount != null) {
-        _updateMenuCount = updateMenuCount;
-      }
 
       if (isFixedCommandNumber && commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
@@ -460,13 +458,17 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _isGeneratingVersionToTablet = value;
   }
 
-  int _updateMenuCount = -1;
+  int? _updateMenuCount = -1;
   @override
-  int get updateMenuCount => _updateMenuCount;
+  int? get updateMenuCount => _updateMenuCount;
+
+  int? _updateEnterpriseCount = -1;
+  @override
+  int? get updateEnterpriseCount => _updateEnterpriseCount;
 
   @override
   Future<void> doOnRemoteEnterpriseChanges({
-    required Map<String, dynamic> enterprise,
+    required Map<String, dynamic> data,
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
@@ -477,19 +479,23 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      final enterpriseEntity =
-          EnterpriseValidationModel.fromJson(enterprise).toEntity();
+      final enterprise = EnterpriseValidationModel.fromJson(data).toEntity();
 
-      if (enterpriseEntity.updateMenuCount != null &&
-          _updateMenuCount != enterpriseEntity.updateMenuCount) {
+      if (_updateMenuCount != enterprise.updateMenuCount) {
         await loadCommandData(
           menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
           cartPresenter: cartPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
-          updateMenuCount: enterpriseEntity.updateMenuCount,
+          updateMenuCount: enterprise.updateMenuCount,
         );
+      }
+
+      if (enterprise.updateEnterpriseCount !=
+          EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount) {
+        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+        _updateEnterpriseCount = enterprise.updateEnterpriseCount;
       }
     } catch (e) {
       mainError = UIError.unexpected;

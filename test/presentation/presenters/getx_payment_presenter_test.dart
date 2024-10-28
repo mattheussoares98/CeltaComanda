@@ -29,7 +29,6 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
   late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
-  late AlreadyPaidSpy alreadyPaid;
   late NavigateToSpy navigateTo;
 
   late double longAmountValue;
@@ -43,7 +42,6 @@ void main() {
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
     finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
-    alreadyPaid = AlreadyPaidSpy();
     navigateTo = NavigateToSpy();
   }
 
@@ -52,7 +50,6 @@ void main() {
       pay: pay,
       commandInformations: commandInformations,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
-      alreadyPaid: alreadyPaid,
       navigateTo: navigateTo,
     );
     homePresenter = HomePresenterSpy();
@@ -333,24 +330,6 @@ void main() {
     // });
   });
 
-  group("Get already paid", () {
-    test(
-        "Should update commandAlreadyPaid to true if getAndUpdateAlreadyPaidCommand return true",
-        () async {
-      await sut.getAndUpdateAlreadyPaidCommand();
-
-      expect(sut.commandAlreadyPaid, true);
-    });
-    test(
-        "Should update commandAlreadyPaid to false if getAndUpdateAlreadyPaidCommand return false",
-        () async {
-      alreadyPaid.mockVerify(false);
-      await sut.getAndUpdateAlreadyPaidCommand();
-
-      expect(sut.commandAlreadyPaid, false);
-    });
-  });
-
   group("try pay again", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -384,48 +363,6 @@ void main() {
             commandNumber: homePresenter.commandNumberMock!.toInt(),
             finalizations: null,
           )).called(1);
-    });
-    test("Should update already paid to true and then to false in success",
-        () async {
-      await sut.liquidateCommand(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      verify(() => alreadyPaid.update(true)).called(1);
-      verify(() => alreadyPaid.update(false)).called(1);
-    });
-    test("Should already paid is true if finishSaleRequestConcentrador throws",
-        () async {
-      finishSaleRequestConcentrador.mockError();
-
-      await sut.liquidateCommand(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      verify(() => alreadyPaid.update(true)).called(1);
-      verifyNever(() => alreadyPaid.update(false));
-      expect(sut.commandAlreadyPaid, true);
-    });
-
-    test("Should update commandAlreadyPaid to false in success", () async {
-      await sut.liquidateCommand(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      expect(sut.commandAlreadyPaid, false);
-    });
-
-    test("Should update commandAlreadyPaid to true in error", () async {
-      finishSaleRequestConcentrador.mockError();
-      await sut.liquidateCommand(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      expect(sut.commandAlreadyPaid, true);
     });
 
     test("Should load printed products in success", () async {

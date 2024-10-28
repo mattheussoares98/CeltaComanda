@@ -12,11 +12,6 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
   bool commandAlreadyPaidController = false;
 
   PaymentPresenterSpy() {
-    when(() => this.commandAlreadyPaid)
-        .thenAnswer((_) => commandAlreadyPaidController);
-
-    when(() => this.getAndUpdateAlreadyPaidCommand())
-        .thenAnswer((any) async => any);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

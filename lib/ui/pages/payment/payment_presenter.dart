@@ -7,7 +7,6 @@ import '../pages.dart';
 abstract class PaymentPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  bool get commandAlreadyPaid;
 
   Future<void> callPayment({
     required double longAmountValue,
@@ -15,8 +14,6 @@ abstract class PaymentPresenter implements Listenable {
     required PaymentMode paymentMode,
     required HomePresenter homePresenter,
   });
-
-  Future<void> getAndUpdateAlreadyPaidCommand();
 
   Future<void> liquidateCommand({
     required PrintedProductsPresenter printedProductsPresenter,

@@ -31,7 +31,6 @@ void main() {
   late CartInformationsSpy cartInformations;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
-  late AlreadyPaidSpy alreadyPaid;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
@@ -57,7 +56,6 @@ void main() {
     cartInformations = CartInformationsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
-    alreadyPaid = AlreadyPaidSpy();
   }
 
   void initPresenters() {
@@ -76,7 +74,6 @@ void main() {
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
       commandInformations: commandInformations,
-      alreadyPaid: alreadyPaid,
     );
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
@@ -188,7 +185,6 @@ void main() {
     cartInformations.mockSaveCart([cartProductViewModelWithChilds]);
     cartInformations.mockGetCart([cartProductViewModelWithChilds]);
     barcodeScanner.mockBarcodeScanner(commandNumber);
-    alreadyPaid.mockVerify(false);
   }
 
   setUp(() {
@@ -1766,39 +1762,6 @@ void main() {
       );
     });
 
-    test("Should call alreadyPaid on saveProducts", () async {
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
-      );
-
-      verify(() => alreadyPaid.verify()).called(1);
-    });
-
-    test("Should emit correct values on command already paid", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.commandAlreadyPaid]),
-      );
-
-      alreadyPaid.mockVerify(true);
-
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
-      );
-    });
     test(
         "Should emit error when dont is fixed command number and dont write command number in save products",
         () async {

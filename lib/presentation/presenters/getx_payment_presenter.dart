@@ -14,14 +14,12 @@ class GetxPaymentPresenter extends GetxController
   final Pay pay;
   final CommandInformations commandInformations;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
-  final AlreadyPaid alreadyPaid;
   final NavigateTo navigateTo;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
-    required this.alreadyPaid,
     required this.navigateTo,
   });
 
@@ -66,15 +64,6 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> getAndUpdateAlreadyPaidCommand() async {
-    try {
-      _commandAlreadyPaid = await alreadyPaid.verify();
-    } catch (e) {
-      mainError = UIError.unexpected;
-    }
-  }
-
-  @override
   Future<void> liquidateCommand({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
@@ -82,9 +71,6 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      await alreadyPaid.update(true);
-      _commandAlreadyPaid = true;
-
       await finishSaleRequestConcentrador.finish(
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),
@@ -102,21 +88,13 @@ class GetxPaymentPresenter extends GetxController
         // FinancialCredits = 10
       );
 
-      await alreadyPaid.update(false);
-      _commandAlreadyPaid = false;
-
       await printedProductsPresenter.loadPrinted(homePresenter);
     } catch (e) {
       mainError = UIError.unexpected;
-      _commandAlreadyPaid = true;
     } finally {
       isLoading = false;
     }
   }
-
-  bool _commandAlreadyPaid = false;
-  @override
-  bool get commandAlreadyPaid => _commandAlreadyPaid;
 
   MethodChannel? _channel;
   @override

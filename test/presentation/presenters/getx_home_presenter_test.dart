@@ -35,7 +35,6 @@ void main() {
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
   late PersistentSpy persistent;
-  late AlreadyPaidSpy alreadyPaid;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -70,7 +69,6 @@ void main() {
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSellers: loadSellers,
       persistent: persistent,
-      alreadyPaid: alreadyPaid,
     );
   }
 
@@ -84,7 +82,6 @@ void main() {
     loadSellers = LoadSellersSpy();
     commandInformations = CommandInformationsSpy();
     persistent = PersistentSpy();
-    alreadyPaid = AlreadyPaidSpy();
   }
 
   void initMocks() {
@@ -1270,16 +1267,6 @@ void main() {
       );
 
       expect(value, false);
-    });
-    test("Should update already paid to false", () async {
-      await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
-        commandNumber: newFixedCommandNumber,
-        isOpen: false,
-      );
-
-      verify(() => alreadyPaid.update(false)).called(1);
     });
   });
 

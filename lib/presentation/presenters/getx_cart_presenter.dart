@@ -20,7 +20,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final CartInformations cartInformations;
   final BarcodeScanner barcodeScanner;
   final CommandInformations commandInformations;
-  final AlreadyPaid alreadyPaid;
 
   GetxCartPresenter({
     required this.loadSaleRequestTemp,
@@ -32,7 +31,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required this.cartInformations,
     required this.barcodeScanner,
     required this.commandInformations,
-    required this.alreadyPaid,
   });
 
   @override
@@ -408,11 +406,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     await addNewPrintRequestInFirebase();
 
     try {
-      bool paid = await alreadyPaid.verify();
-
-      if (paid) {
-        throw DomainError.commandAlreadyPaid;
-      }
       if (!homePresenter.isFixedCommandNumber && commandNumber == null) {
         throw DomainError.commandNumberObligatory;
       } else if (!homePresenter.isFixedCommandNumber && commandNumber != null) {

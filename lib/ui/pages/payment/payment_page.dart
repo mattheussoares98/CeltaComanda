@@ -41,7 +41,6 @@ class _PaymentPageState extends State<PaymentPage>
         PrintedProductsPresenter printedProductsPresenter =
             Provider.of(context, listen: false);
         HomePresenter homePresenter = Provider.of(context, listen: false);
-        _getAlreadyPaid(paymentPresenter!);
 
         paymentPresenter?.initPaymentResultHandler(
           homePresenter,
@@ -49,11 +48,6 @@ class _PaymentPageState extends State<PaymentPage>
         );
       }
     });
-  }
-
-  Future<void> _getAlreadyPaid(PaymentPresenter paymentPresenter) async {
-    await paymentPresenter.getAndUpdateAlreadyPaidCommand();
-    setState(() {});
   }
 
   @override
@@ -106,20 +100,18 @@ class _PaymentPageState extends State<PaymentPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (printedProductsPresenter.printedProducts != null &&
-                  !paymentPresenter.commandAlreadyPaid)
+              if (printedProductsPresenter.printedProducts != null)
                 const PaymentButtons(),
-              if (paymentPresenter.commandAlreadyPaid)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: LiquidateCommand(
-                    callSetState: () {
-                      setState(() {});
-                    },
-                  ),
+              // if (paymentPresenter.commandAlreadyPaid)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: LiquidateCommand(
+                  callSetState: () {
+                    setState(() {});
+                  },
                 ),
-              if (printedProductsPresenter.printedProducts == null &&
-                      !paymentPresenter.commandAlreadyPaid ||
+              ),
+              if (printedProductsPresenter.printedProducts == null ||
                   !homePresenter.isFixedCommandNumber)
                 const SearchDataByCommandNumber(),
             ],

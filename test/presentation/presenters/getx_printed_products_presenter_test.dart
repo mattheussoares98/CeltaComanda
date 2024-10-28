@@ -613,9 +613,11 @@ void main() {
       await sut.loadPrinted(homePresenter);
 
       expect(
-          sut.totalLiquid,
-          printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble() *
-              (printed.IncrementValue! / 100 + 1));
+        sut.totalLiquid.toStringAsFixed(2).toDouble(),
+        (printed.TotalLiquid.toDouble() * (printed.IncrementValue! / 100 + 1))
+            .toStringAsFixed(2)
+            .toDouble(),
+      );
     });
     test("Should return correct value if incrementType is invalid", () async {
       final printed = EntityFactory.makePrintedProductsEntity(

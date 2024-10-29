@@ -70,6 +70,8 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
+    _totalPaidValue += _lastRequestedPaymentAmount;
+    updateScreen = true;
     if (_totalPaidValue < printedProductsPresenter.totalLiquid) {
       return;
     }
@@ -137,8 +139,6 @@ class GetxPaymentPresenter extends GetxController
     try {
       final response = GetNetResponseModel.fromJson(call.arguments);
       if (response.result == "0") {
-        _totalPaidValue += _lastRequestedPaymentAmount;
-
         await liquidateCommand(
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
@@ -168,8 +168,6 @@ class GetxPaymentPresenter extends GetxController
   ) async {
     if (call.arguments == "Pagamento Autorizado") {
       try {
-        _totalPaidValue += _lastRequestedPaymentAmount;
-
         await liquidateCommand(
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
@@ -205,4 +203,9 @@ class GetxPaymentPresenter extends GetxController
   double _lastRequestedPaymentAmount = 0;
   @override
   double get lastRequestedPaymentAmount => _lastRequestedPaymentAmount;
+
+  final _updateScreenStream = Rx<bool>(false);
+  @override
+  Stream<bool> get updateScreenStream => _updateScreenStream.stream;
+  set updateScreen(bool value) => _updateScreenStream.subject.add(value);
 }

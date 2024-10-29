@@ -7,6 +7,7 @@ import '../pages.dart';
 abstract class PaymentPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  Stream<bool> get updateScreenStream;
   double get totalPaidValue;
   double get lastRequestedPaymentAmount;
 

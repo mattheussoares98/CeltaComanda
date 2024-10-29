@@ -103,45 +103,56 @@ class _PaymentPageState extends State<PaymentPage>
           ),
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              PaymentDetails(),
-              if (printedProductsPresenter.printedProducts != null)
-                Column(
+      body: StreamBuilder<bool>(
+          stream: paymentPresenter.updateScreenStream,
+          builder: (context, snapshot) {
+            if (snapshot.data == true) {
+              Future.delayed(Duration.zero, () {
+                if (mounted) {
+                  setState(() {});
+                }
+              });
+            }
+            return Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: WriteAmoutValueToPay(
-                        formKey: formKey,
-                        paymentController: paymentController,
-                        paymentFocusNode: paymentFocusNode,
+                    PaymentDetails(),
+                    if (printedProductsPresenter.printedProducts != null)
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: WriteAmoutValueToPay(
+                              formKey: formKey,
+                              paymentController: paymentController,
+                              paymentFocusNode: paymentFocusNode,
+                            ),
+                          ),
+                          PaymentButtons(
+                            paymentController: paymentController,
+                          ),
+                        ],
                       ),
-                    ),
-                    PaymentButtons(
-                      paymentController: paymentController,
-                    ),
+                    if (paymentPresenter.totalPaidValue ==
+                        printedProductsPresenter.totalLiquid)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: LiquidateCommand(
+                          callSetState: () {
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    if (printedProductsPresenter.printedProducts == null ||
+                        !homePresenter.isFixedCommandNumber)
+                      const SearchDataByCommandNumber(),
                   ],
                 ),
-              if (paymentPresenter.totalPaidValue ==
-                  printedProductsPresenter.totalLiquid)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: LiquidateCommand(
-                    callSetState: () {
-                      setState(() {});
-                    },
-                  ),
-                ),
-              if (printedProductsPresenter.printedProducts == null ||
-                  !homePresenter.isFixedCommandNumber)
-                const SearchDataByCommandNumber(),
-            ],
-          ),
-        ),
-      ),
+              ),
+            );
+          }),
     );
   }
 }

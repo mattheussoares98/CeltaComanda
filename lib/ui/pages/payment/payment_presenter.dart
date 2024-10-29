@@ -33,4 +33,8 @@ abstract class PaymentPresenter implements Listenable {
   void disposePaymentResultHandler();
 
   void goToCovenantPage();
+
+  double getTotalPendingValue(
+    PrintedProductsPresenter printedProductsPresenter,
+  );
 }

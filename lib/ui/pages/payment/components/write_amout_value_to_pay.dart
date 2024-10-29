@@ -1,23 +1,27 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../ui/components/components.dart';
+import '../../pages.dart';
 
 class WriteAmoutValueToPay extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController paymentController;
   final FocusNode paymentFocusNode;
-  final double pendingValue;
   const WriteAmoutValueToPay({
     required this.formKey,
     required this.paymentController,
     required this.paymentFocusNode,
-    required this.pendingValue,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+
     return SizedBox(
       width: hasMinWidth(context)
           ? MediaQuery.of(context).size.width * 0.3
@@ -34,7 +38,9 @@ class WriteAmoutValueToPay extends StatelessWidget {
               return R.string.msgWritePaymentValue;
             } else if (value.toDouble() == -1.0) {
               return R.string.msgInvalidNumber;
-            } else if (value.toDouble() > pendingValue) {
+            } else if (value.toDouble() >
+                paymentPresenter
+                    .getTotalPendingValue(printedProductsPresenter)) {
               return R.string.msgInvalidNumber;
             } else if (value.toDouble() < 0.01) {
               return R.string.msgInvalidNumber;

@@ -25,7 +25,6 @@ class _PaymentPageState extends State<PaymentPage>
   final formKey = GlobalKey<FormState>();
   final paymentController = TextEditingController();
   final paymentFocusNode = FocusNode();
-  double pendingValue = 0;
 
   @override
   void dispose() {
@@ -68,12 +67,6 @@ class _PaymentPageState extends State<PaymentPage>
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-    pendingValue =
-        (printedProductsPresenter.totalLiquid - paymentPresenter.totalPaidValue)
-            .toDouble()
-            .toString()
-            .toBrazilianNumber()
-            .toDouble();
 
     printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
@@ -130,7 +123,8 @@ class _PaymentPageState extends State<PaymentPage>
             children: [
               if (printedProductsPresenter.totalLiquid > 0)
                 PaymentDetails(
-                  pendingValue: pendingValue,
+                  pendingValue: paymentPresenter
+                      .getTotalPendingValue(printedProductsPresenter),
                 ),
               if (printedProductsPresenter.printedProducts != null)
                 Column(
@@ -141,7 +135,6 @@ class _PaymentPageState extends State<PaymentPage>
                         formKey: formKey,
                         paymentController: paymentController,
                         paymentFocusNode: paymentFocusNode,
-                        pendingValue: pendingValue,
                       ),
                     ),
                     PaymentButtons(

@@ -231,4 +231,15 @@ class GetxPaymentPresenter extends GetxController
   @override
   List<ConcentratorFinalizationModel> get successfulPayments =>
       _successfulPayments;
+
+  @override
+  double getTotalPendingValue(
+    PrintedProductsPresenter printedProductsPresenter,
+  ) {
+    return (printedProductsPresenter.totalLiquid - totalPaidValue)
+        .toDouble()
+        .toString()
+        .toBrazilianNumber()
+        .toDouble();
+  }
 }

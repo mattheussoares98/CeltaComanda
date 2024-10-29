@@ -20,7 +20,9 @@ extension StringModifier on String {
   double toDouble() {
     try {
       if (isEmpty) {
-        return -1;
+        return -1.0;
+      } else if (contains(".") && contains(",")) {
+        return -1.0;
       }
 
       String string = replaceAll(RegExp(r','), '.');

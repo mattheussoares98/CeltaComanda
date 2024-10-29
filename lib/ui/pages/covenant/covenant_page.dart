@@ -24,7 +24,7 @@ class _CovenantPageState extends State<CovenantPage>
   final textController = TextEditingController();
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  int? _selectedOption = 0;
+  bool _searchByPersonalizedCode = false;
 
   @override
   void dispose() async {
@@ -48,6 +48,10 @@ class _CovenantPageState extends State<CovenantPage>
 
   @override
   Widget build(BuildContext context) {
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
@@ -65,52 +69,81 @@ class _CovenantPageState extends State<CovenantPage>
             title: Text(R.string.covenant),
             leading: const PersonalizedLeadingAppbar(),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: StreamBuilder<ValidationError?>(
-                      stream: widget.covenantPresenter.customerErrorStream,
-                      builder: (context, snapshot) {
-                        return Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
+          body: StreamBuilder<List<CustomerViewModel>?>(
+              stream: widget.covenantPresenter.customersViewModelStream,
+              builder: (context, snapshotCustomers) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: StreamBuilder<ValidationError?>(
+                            stream:
+                                widget.covenantPresenter.customerErrorStream,
+                            builder: (context, snapshotCustomerError) {
+                              return Column(
+                                children: [
+                                  GetCustomerField(
+                                    textController: textController,
+                                    errorText:
+                                        snapshotCustomerError.data?.description,
+                                    searchByPersonalizedCode:
+                                        _searchByPersonalizedCode,
+                                    customers: snapshotCustomers.hasData
+                                        ? snapshotCustomers.data!
+                                        : [],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  CheckboxListTile(
+                                      value: _searchByPersonalizedCode,
+                                      dense: true,
+                                      contentPadding: EdgeInsets.only(left: 4),
+                                      tileColor: Theme.of(context)
+                                          .primaryColorLight
+                                          .withAlpha(30),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      title: FittedBox(
+                                        child: Text(
+                                          R.string.searchByPersonalizedCode,
+                                          style: TextStyle(
+                                            fontSize: getStringSize(context),
+                                          ),
+                                        ),
+                                      ),
+                                      onChanged: (_) {
+                                        setState(() {
+                                          _searchByPersonalizedCode =
+                                              !_searchByPersonalizedCode;
+                                        });
+                                      }),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "${R.string.missing}: ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
+                                      style: TextStyle(
+                                        fontSize: getStringSize(context),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(thickness: 0.3),
+                                ],
+                              );
+                            },
                           ),
-                          child: Column(
-                            children: [
-                              GetCustomerField(
-                                textController: textController,
-                                errorText: snapshot.data?.description,
-                                searchByPersonalizedCode: _selectedOption == 1,
-                              ),
-                              const SizedBox(height: 5),
-                              SearchTypeRadios(
-                                updateSelectedOption: (value) {
-                                  setState(() {
-                                    _selectedOption = value;
-                                  });
-                                },
-                                selectedOption: _selectedOption,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                        ),
+                        Customers(customers: snapshotCustomers.data ?? []),
+                      ],
                     ),
                   ),
-                  Customers(textController: textController),
-                ],
-              ),
-            ),
-          ),
+                );
+              }),
         ),
       ),
     );

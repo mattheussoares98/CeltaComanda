@@ -9,10 +9,12 @@ class GetCustomerField extends StatelessWidget {
   final TextEditingController textController;
   final String? errorText;
   final bool searchByPersonalizedCode;
+  final List<CustomerViewModel> customers;
   const GetCustomerField({
     required this.textController,
     required this.errorText,
     required this.searchByPersonalizedCode,
+    required this.customers,
     super.key,
   });
 
@@ -44,11 +46,16 @@ class GetCustomerField extends StatelessWidget {
         },
       );
     }
+
+    if (customers.isNotEmpty) {
+      textController.clear();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+
     return Row(
       children: [
         Expanded(

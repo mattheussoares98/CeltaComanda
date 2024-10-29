@@ -54,8 +54,8 @@ class _PaymentPageState extends State<PaymentPage>
           printedProductsPresenter,
         );
 
-        paymentController.text = (printedProductsPresenter.totalLiquid -
-                paymentPresenter!.totalPaidValue)
+        paymentController.text = paymentPresenter!
+            .getTotalPendingValue(printedProductsPresenter)
             .toString()
             .toBrazilianNumber();
       }

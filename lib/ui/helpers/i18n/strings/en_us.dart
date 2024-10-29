@@ -168,6 +168,7 @@ class EnUs implements Translation {
   String get requestSentSuccessfully => 'The request was sent successfully';
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';
+  String get searchByPersonalizedCode => "Search by personalized code";
   String get searchDataOfOtherCommandNumber =>
       'Search data of other command number';
   String get searchCommandData => 'Search command data';

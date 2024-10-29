@@ -417,6 +417,17 @@ void main() {
             finalizations: null,
           ));
     });
+    test("Should clear succesful payments", () async {
+      sut.addNewSuccessfulPayment(newFinalization);
+      expect(sut.successfulPayments, [newFinalization]);
+
+      await sut.liquidateCommand(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      expect(sut.successfulPayments, []);
+    });
   });
 
   group("Navigate to covenant page", () {

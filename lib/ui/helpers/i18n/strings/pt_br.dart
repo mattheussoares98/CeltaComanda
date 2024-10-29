@@ -79,6 +79,7 @@ class PtBr implements Translation {
   String get msgWriteName => "Informe o seu nome";
   String get msgWriteOnlyNumbers => "Digite somente números";
   String get msgWritePassword => "Digite a senha";
+  String get msgWritePaymentValue => "Digite o valor a pagar";
   String get msgWriteTableNumber => "Digite o número da mesa";
   String get msgWriteThreeNumbers => "Digite 3 números";
   String get msgWriteUserCode => "Digite o código do usuário";

@@ -56,6 +56,7 @@ abstract class Translation {
   String get msgWriteName;
   String get msgWriteOnlyNumbers;
   String get msgWritePassword;
+  String get msgWritePaymentValue;
   String get msgWriteTableNumber;
   String get msgWriteThreeNumbers;
   String get msgWriteUserCode;

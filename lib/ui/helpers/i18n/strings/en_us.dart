@@ -77,6 +77,7 @@ class EnUs implements Translation {
   String get msgWriteName => 'Enter your name';
   String get msgWriteOnlyNumbers => 'Enter only numbers';
   String get msgWritePassword => 'Enter the password';
+  String get msgWritePaymentValue => 'Write the payment value';
   String get msgWriteTableNumber => 'Enter the table number';
   String get msgWriteThreeNumbers => 'Enter 3 numbers';
   String get msgWriteUserCode => 'Enter the user code';

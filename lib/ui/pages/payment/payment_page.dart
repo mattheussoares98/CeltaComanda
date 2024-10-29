@@ -21,6 +21,9 @@ class _PaymentPageState extends State<PaymentPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   PaymentPresenter? paymentPresenter;
+  final formKey = GlobalKey<FormState>();
+  final paymentController = TextEditingController();
+  final paymentFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -29,6 +32,8 @@ class _PaymentPageState extends State<PaymentPage>
     mainErrorSubscription?.cancel();
     printedLoadingSubscription?.cancel();
     paymentPresenter?.disposePaymentResultHandler();
+    paymentController.dispose();
+    paymentFocusNode.dispose();
   }
 
   @override
@@ -46,6 +51,9 @@ class _PaymentPageState extends State<PaymentPage>
           homePresenter,
           printedProductsPresenter,
         );
+
+        paymentController.text =
+            printedProductsPresenter.totalLiquid.toString().toBrazilianNumber();
       }
     });
   }
@@ -106,9 +114,15 @@ class _PaymentPageState extends State<PaymentPage>
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: WriteAmoutValueToPay(),
+                      child: WriteAmoutValueToPay(
+                        formKey: formKey,
+                        paymentController: paymentController,
+                        paymentFocusNode: paymentFocusNode,
+                      ),
                     ),
-                    const PaymentButtons(),
+                    PaymentButtons(
+                      paymentController: paymentController,
+                    ),
                   ],
                 ),
               if (paymentPresenter.totalPaidValue ==

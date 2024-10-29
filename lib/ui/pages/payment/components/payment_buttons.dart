@@ -7,11 +7,14 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class PaymentButtons extends StatelessWidget {
-  const PaymentButtons({super.key});
+  final TextEditingController paymentController;
+  const PaymentButtons({
+    required this.paymentController,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -25,9 +28,7 @@ class PaymentButtons extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   await paymentPresenter.callPayment(
-                    longAmountValue: printedProductsPresenter
-                        .printedProducts!.TotalLiquid
-                        .toDouble(),
+                    longAmountValue: paymentController.text.toDouble(),
                     portionQuantity: 1,
                     paymentMode: PaymentMode.pix,
                     homePresenter: homePresenter,
@@ -43,9 +44,7 @@ class PaymentButtons extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     await paymentPresenter.callPayment(
-                      longAmountValue: printedProductsPresenter
-                          .printedProducts!.TotalLiquid
-                          .toDouble(),
+                      longAmountValue: paymentController.text.toDouble(),
                       portionQuantity: 1,
                       paymentMode: PaymentMode.debit,
                       homePresenter: homePresenter,
@@ -62,9 +61,7 @@ class PaymentButtons extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     await paymentPresenter.callPayment(
-                      longAmountValue: printedProductsPresenter
-                          .printedProducts!.TotalLiquid
-                          .toDouble(),
+                      longAmountValue: paymentController.text.toDouble(),
                       portionQuantity: 1,
                       paymentMode: PaymentMode.credit,
                       homePresenter: homePresenter,
@@ -82,9 +79,7 @@ class PaymentButtons extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () async {
                       await paymentPresenter.callPayment(
-                        longAmountValue: printedProductsPresenter
-                            .printedProducts!.TotalLiquid
-                            .toDouble(),
+                        longAmountValue: paymentController.text.toDouble(),
                         portionQuantity: 1,
                         paymentMode: PaymentMode.voucher,
                         homePresenter: homePresenter,

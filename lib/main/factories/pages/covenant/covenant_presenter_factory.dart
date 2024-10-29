@@ -7,7 +7,6 @@ import '../../factories.dart';
 CovenantPresenter makeGetxCovenantPresenter() => GetxCovenantPresenter(
       loadCustomer: makeRemoteLoadCustomer(),
       validation: makeCustomerValidation(),
-      finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
       covenantLimit: makeRemoteAuthorizeCovenantLimitUseByCode(),
       updateSaleRequest: makeRemoteUpdateSaleRequest(),
       checkPasswordByCustomerCode: makeRemoteCheckPasswordByCustomerCode(),

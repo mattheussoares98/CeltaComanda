@@ -72,7 +72,6 @@ void main() {
     sut = GetxCovenantPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
-      finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       covenantLimit: covenantLimit,
       updateSaleRequest: updateSaleRequest,
       checkPasswordByCustomerCode: checkPasswordByCustomerCode,

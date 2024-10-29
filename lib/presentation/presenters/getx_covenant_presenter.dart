@@ -17,7 +17,6 @@ class GetxCovenantPresenter extends GetxController
     implements CovenantPresenter {
   final Validation validation;
   final LoadCustomer loadCustomer;
-  final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final CovenantLimit covenantLimit;
   final UpdateSaleRequest updateSaleRequest;
   final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
@@ -25,7 +24,6 @@ class GetxCovenantPresenter extends GetxController
   GetxCovenantPresenter({
     required this.loadCustomer,
     required this.validation,
-    required this.finishSaleRequestConcentrador,
     required this.covenantLimit,
     required this.updateSaleRequest,
     required this.checkPasswordByCustomerCode,
@@ -193,28 +191,6 @@ class GetxCovenantPresenter extends GetxController
 
         //add new finalization in paymentPresent.succesfulFinalizations
 
-        await finishSaleRequestConcentrador.finish(
-          pdvNumber: 100,
-          commandNumber: homePresenter.commandNumber!.toInt(),
-          finalizations: [
-            ConcentratorFinalizationModel(
-              FinalizationId:
-                  FinalizationIdentification.covenant.finalizationId,
-              Value: printedProductsPresenter.printedProducts!.TotalLiquid
-                  .toDouble(),
-              ValueLiquid: printedProductsPresenter.printedProducts!.TotalLiquid
-                  .toDouble(),
-              PortionQuantity: 1,
-              AuthorizationCode: soapResponse.response,
-              AuthorizationType: 2,
-              //Customer = 1,
-              //Convene = 2,
-              //DevolutionCredit = 3,
-              //FinancialCredit = 4,
-              //FidelityCredit = 5
-            ),
-          ],
-        );
         _authorizationPendingModel = null;
 
         await printedProductsPresenter.loadPrinted(homePresenter);

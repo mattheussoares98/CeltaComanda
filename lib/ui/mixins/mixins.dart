@@ -3,3 +3,4 @@ export './hide_navigation_bar_manager.dart';
 export './keyboard_manager.dart';
 export './loading_manager.dart';
 export './ui_error_manager.dart';
+export './update_screen_manager.dart';

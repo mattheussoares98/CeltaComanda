@@ -281,7 +281,7 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
 
-      expect(sut.lastRequestedPaymentAmount, longAmountValue);
+      expect(sut.lastPaymentRequested, longAmountValue);
     });
   });
 
@@ -344,7 +344,7 @@ void main() {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.updateScreenStream, emits(true));
+      expectLater(sut.updateScreenStream, emitsInOrder([true, false]));
 
       await sut.liquidateCommand(
         homePresenter: homePresenter,

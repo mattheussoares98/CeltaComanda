@@ -16,10 +16,11 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage>
-    with LoadingManager, UIErrorManager {
+    with LoadingManager, UIErrorManager, UpdateScreenManager {
   StreamSubscription? printedLoadingSubscription;
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? updateScrrenSubscription;
   PaymentPresenter? paymentPresenter;
   final formKey = GlobalKey<FormState>();
   final paymentController = TextEditingController();
@@ -31,6 +32,7 @@ class _PaymentPageState extends State<PaymentPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     printedLoadingSubscription?.cancel();
+    updateScrrenSubscription?.cancel();
     paymentPresenter?.disposePaymentResultHandler();
     paymentController.dispose();
     paymentFocusNode.dispose();
@@ -69,6 +71,7 @@ class _PaymentPageState extends State<PaymentPage>
     printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    updateScrrenSubscription?.cancel();
 
     loadingSubscription =
         handleLoading(context, paymentPresenter.isLoadingStream);
@@ -76,6 +79,14 @@ class _PaymentPageState extends State<PaymentPage>
         handleLoading(context, printedProductsPresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, paymentPresenter.mainErrorStream);
+    updateScrrenSubscription = handleUpdateScreen(
+      context,
+      paymentPresenter.updateScreenStream,
+      () {
+        paymentController.clear();
+        setState(() {});
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -105,57 +116,45 @@ class _PaymentPageState extends State<PaymentPage>
           ),
         ],
       ),
-      body: StreamBuilder<bool>(
-          stream: paymentPresenter.updateScreenStream,
-          builder: (context, snapshot) {
-            if (snapshot.data == true) {
-              Future.delayed(Duration.zero, () {
-                if (mounted) {
-                  paymentController.clear();
-                  setState(() {});
-                }
-              });
-            }
-            return Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PaymentDetails(),
+              if (printedProductsPresenter.printedProducts != null)
+                Column(
                   children: [
-                    PaymentDetails(),
-                    if (printedProductsPresenter.printedProducts != null)
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: WriteAmoutValueToPay(
-                              formKey: formKey,
-                              paymentController: paymentController,
-                              paymentFocusNode: paymentFocusNode,
-                            ),
-                          ),
-                          PaymentButtons(
-                            paymentController: paymentController,
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: WriteAmoutValueToPay(
+                        formKey: formKey,
+                        paymentController: paymentController,
+                        paymentFocusNode: paymentFocusNode,
                       ),
-                    if (paymentPresenter.totalPaidValue ==
-                        printedProductsPresenter.totalLiquid)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: LiquidateCommand(
-                          callSetState: () {
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    if (printedProductsPresenter.printedProducts == null ||
-                        !homePresenter.isFixedCommandNumber)
-                      const SearchDataByCommandNumber(),
+                    ),
+                    PaymentButtons(
+                      paymentController: paymentController,
+                    ),
                   ],
                 ),
-              ),
-            );
-          }),
+              if (paymentPresenter.totalPaidValue ==
+                  printedProductsPresenter.totalLiquid)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: LiquidateCommand(
+                    callSetState: () {
+                      setState(() {});
+                    },
+                  ),
+                ),
+              if (printedProductsPresenter.printedProducts == null ||
+                  !homePresenter.isFixedCommandNumber)
+                const SearchDataByCommandNumber(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -33,7 +33,12 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      _lastRequestedPaymentAmount = longAmountValue;
+      _lastRequestedPaymentAmount = ConcentratorFinalizationModel(
+        FinalizationId: paymentMode.finalizationId,
+        Value: longAmountValue,
+        ValueLiquid: longAmountValue,
+        PortionQuantity: 1,
+      );
 
       bool isValid = await commandInformations.isValidDatetime(
         commandNumber: homePresenter.commandNumber!,
@@ -70,9 +75,14 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
   }) async {
-    _totalPaidValue += _lastRequestedPaymentAmount;
     updateScreen = true;
-    if (_totalPaidValue < printedProductsPresenter.totalLiquid) {
+
+    if (_lastRequestedPaymentAmount != null) {
+      _successfulPayments.add(_lastRequestedPaymentAmount!);
+    }
+    updateScreen = false;
+
+    if (totalPaidValue < printedProductsPresenter.totalLiquid) {
       return;
     }
 
@@ -196,16 +206,28 @@ class GetxPaymentPresenter extends GetxController
     navigateTo.navigate(pageRoute: PageRoutes.covenant);
   }
 
-  double _totalPaidValue = 0;
   @override
-  double get totalPaidValue => _totalPaidValue;
+  double get totalPaidValue {
+    if (_successfulPayments.isEmpty) {
+      return 0;
+    } else {
+      return _successfulPayments.fold(
+          0.0, (previousValue, element) => previousValue += element.Value);
+    }
+  }
 
-  double _lastRequestedPaymentAmount = 0;
+  ConcentratorFinalizationModel? _lastRequestedPaymentAmount;
   @override
-  double get lastRequestedPaymentAmount => _lastRequestedPaymentAmount;
+  ConcentratorFinalizationModel? get lastPaymentRequested =>
+      _lastRequestedPaymentAmount;
 
   final _updateScreenStream = Rx<bool>(false);
   @override
   Stream<bool> get updateScreenStream => _updateScreenStream.stream;
-  set updateScreen(bool value) => _updateScreenStream.subject.add(value);
+  set updateScreen(bool value) => _updateScreenStream.value = value;
+
+  final List<ConcentratorFinalizationModel> _successfulPayments = [];
+  @override
+  List<ConcentratorFinalizationModel> get successfulPayments =>
+      _successfulPayments;
 }

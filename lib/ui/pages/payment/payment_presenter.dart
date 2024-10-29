@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/models.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
@@ -9,7 +10,8 @@ abstract class PaymentPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<bool> get updateScreenStream;
   double get totalPaidValue;
-  double get lastRequestedPaymentAmount;
+  ConcentratorFinalizationModel? get lastPaymentRequested;
+  List<ConcentratorFinalizationModel> get successfulPayments;
 
   Future<void> callPayment({
     required double longAmountValue,

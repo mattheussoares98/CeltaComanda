@@ -40,8 +40,8 @@ class ProductComplement extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: homePresenter.isGeneratingVersionToGetNet
-                  ? HtmlWidget(complement)
-                  : Text(_parseHtmlString(complement)),
+                  ? Text(_parseHtmlString(complement))
+                  : HtmlWidget(complement),
             ),
           ),
         ],

@@ -95,7 +95,7 @@ class SaleRequestModel extends Equatable {
       Comments: data["Comments"],
       PersonalizedCode: data["PersonalizedCode"],
       IsCancelled: data["IsCancelled"],
-      IsUsing: data["IsUsing"],
+      IsUsing: false,
       TotalLiquid: data["TotalLiquid"],
       CovenantCode: data["CovenantCode"],
       CustomerCode: data["CustomerCode"],

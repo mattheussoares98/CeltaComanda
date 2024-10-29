@@ -80,7 +80,7 @@ class PrintedProductsModel {
       EnterpriseId: json["EnterpriseId"],
       RequestType: json["RequestType"],
       IsCancelled: json["IsCancelled"],
-      IsUsing: json["IsUsing"],
+      IsUsing: false,
       TotalLiquid: json["TotalLiquid"],
       Peoples: json["Peoples"],
       SaleRequestId: json["SaleRequestId"],

@@ -26,6 +26,7 @@ abstract class CovenantPresenter implements Listenable {
   Future<void> finishSaleRequestByCovenant({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
+    required PaymentPresenter paymentPresenter,
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
     required String? customerPassword,

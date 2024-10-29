@@ -26,6 +26,7 @@ void main() {
   late GetxCovenantPresenter sut;
   late HomePresenterSpy homePresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
+  late PaymentPresenterSpy paymentPresenter;
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
@@ -54,6 +55,7 @@ void main() {
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
     updateSaleRequest = UpdateSaleRequestSpy();
+    paymentPresenter = PaymentPresenterSpy();
   }
 
   void initEntitys() {
@@ -101,6 +103,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(EntityFactory.makeConcentratorFinaliztionModel());
     registerFallbackValue(
       EntityFactory.makeSaleRequestModel(covenantCode: 1, customerCode: 1),
     );
@@ -370,6 +373,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -387,6 +391,7 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -403,6 +408,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -443,6 +449,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -459,6 +466,7 @@ void main() {
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -490,6 +498,7 @@ void main() {
       ));
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -512,6 +521,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -533,6 +543,7 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -555,6 +566,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -582,6 +594,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -603,6 +616,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -629,6 +643,7 @@ void main() {
       checkPasswordByCustomerCode.mockCheck(errorSoapResponse);
 
       await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
         homePresenter: homePresenter,
         closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
@@ -644,6 +659,41 @@ void main() {
           customerCode: customersViewModel[0].Code!.toInt(),
           value: printedProductsPresenter.printedProductsMock.TotalLiquid
               .toDouble(),
+        ),
+      );
+    });
+    test("Should add new finalization in paymentFinalization", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        paymentPresenter: paymentPresenter,
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(
+        () => paymentPresenter.addNewSuccessfulPayment(
+          ConcentratorFinalizationModel(
+            FinalizationId: FinalizationIdentification.covenant.finalizationId,
+            Value:
+                paymentPresenter.getTotalPendingValue(printedProductsPresenter),
+            ValueLiquid:
+                paymentPresenter.getTotalPendingValue(printedProductsPresenter),
+            PortionQuantity: 1,
+            AuthorizationCode: soapResponse.response,
+            AuthorizationType: 2,
+            //Customer = 1,
+            //Convene = 2,
+            //DevolutionCredit = 3,
+            //FinancialCredit = 4,
+            //FidelityCredit = 5
+          ),
         ),
       );
     });

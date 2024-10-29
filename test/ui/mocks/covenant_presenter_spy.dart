@@ -38,6 +38,7 @@ class CovenantPresenterSpy extends Mock implements CovenantPresenter {
         .thenAnswer((any) async => any);
     when(() => this.finishSaleRequestByCovenant(
           homePresenter: any(named: "homePresenter"),
+          paymentPresenter: any(named: "paymentPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           closePagesUntilHomePage: any(named: "closePagesUntilHomePage"),
           showErrorMessageReturnedByBs:

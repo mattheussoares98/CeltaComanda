@@ -20,10 +20,12 @@ class ConfirmPayment extends StatelessWidget {
   Future<void> _finishSaleRequestByCovenant({
     required CovenantPresenter covenantPresenter,
     required HomePresenter homePresenter,
+    required PaymentPresenter paymentPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
   }) async {
     await covenantPresenter.finishSaleRequestByCovenant(
+      paymentPresenter: paymentPresenter,
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
@@ -50,6 +52,7 @@ class ConfirmPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
@@ -60,6 +63,7 @@ class ConfirmPayment extends StatelessWidget {
               if (customer.HasPassword == "false") {
                 await _finishSaleRequestByCovenant(
                   covenantPresenter: covenantPresenter,
+                  paymentPresenter: paymentPresenter,
                   homePresenter: homePresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   context: context,
@@ -96,6 +100,7 @@ class ConfirmPayment extends StatelessWidget {
                             Navigator.of(context).pop();
                             await _finishSaleRequestByCovenant(
                               covenantPresenter: covenantPresenter,
+                              paymentPresenter: paymentPresenter,
                               homePresenter: homePresenter,
                               printedProductsPresenter:
                                   printedProductsPresenter,
@@ -110,6 +115,7 @@ class ConfirmPayment extends StatelessWidget {
                       if (isValid == true) {
                         await _finishSaleRequestByCovenant(
                           covenantPresenter: covenantPresenter,
+                          paymentPresenter: paymentPresenter,
                           homePresenter: homePresenter,
                           printedProductsPresenter: printedProductsPresenter,
                           context: context,

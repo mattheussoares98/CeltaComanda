@@ -16,6 +16,7 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
+    mockAddNewSuccessfulPayment();
   }
 
   void mockDoPayment() => when(
@@ -33,4 +34,12 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
           homePresenter: any(named: "homePresenter"),
         ),
       ).thenAnswer((any) async => any);
+
+  void mockAddNewSuccessfulPayment() => when(
+        () => this.addNewSuccessfulPayment(any()),
+      ).thenAnswer((any) => any);
+
+  void mockGetTotalPendingValue(double value) => when(
+        () => this.getTotalPendingValue(any()),
+      ).thenAnswer((any) => value);
 }

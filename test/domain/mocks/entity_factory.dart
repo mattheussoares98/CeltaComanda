@@ -1152,4 +1152,11 @@ class EntityFactory {
         IncrementValue: faker.randomGenerator.decimal(),
         IncrementType: faker.randomGenerator.integer(2, min: 1),
       );
+
+  static makeConcentratorFinaliztionModel() => ConcentratorFinalizationModel(
+        FinalizationId: faker.randomGenerator.integer(100),
+        PortionQuantity: faker.randomGenerator.integer(100),
+        Value: faker.randomGenerator.decimal(),
+        ValueLiquid: faker.randomGenerator.decimal(),
+      );
 }

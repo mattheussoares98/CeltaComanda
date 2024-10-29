@@ -143,6 +143,7 @@ class GetxCovenantPresenter extends GetxController
   Future<void> finishSaleRequestByCovenant({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
+    required PaymentPresenter paymentPresenter,
     required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
     required String? customerPassword,
@@ -189,7 +190,24 @@ class GetxCovenantPresenter extends GetxController
               printedProductsPresenter.printedProducts!.SaleRequestId.toInt(),
         );
 
-        //add new finalization in paymentPresent.succesfulFinalizations
+        paymentPresenter.addNewSuccessfulPayment(
+          ConcentratorFinalizationModel(
+            FinalizationId: FinalizationIdentification.covenant.finalizationId,
+            Value:
+                paymentPresenter.getTotalPendingValue(printedProductsPresenter),
+            ValueLiquid:
+                paymentPresenter.getTotalPendingValue(printedProductsPresenter),
+            PortionQuantity: 1,
+            AuthorizationCode: soapResponse.response,
+            AuthorizationType: 2,
+            //Customer = 1,
+            //Convene = 2,
+            //DevolutionCredit = 3,
+            //FinancialCredit = 4,
+            //FidelityCredit = 5
+          ),
+        );
+        //add new finalization in paymentPresent.succesfulFinalizations and call finish
 
         _authorizationPendingModel = null;
 

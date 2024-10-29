@@ -344,6 +344,7 @@ void main() {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.updateScreenStream, emits(true));
 
       await sut.liquidateCommand(
         homePresenter: homePresenter,

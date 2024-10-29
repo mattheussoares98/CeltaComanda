@@ -52,8 +52,10 @@ class _PaymentPageState extends State<PaymentPage>
           printedProductsPresenter,
         );
 
-        paymentController.text =
-            printedProductsPresenter.totalLiquid.toString().toBrazilianNumber();
+        paymentController.text = (printedProductsPresenter.totalLiquid -
+                paymentPresenter!.totalPaidValue)
+            .toString()
+            .toBrazilianNumber();
       }
     });
   }
@@ -109,6 +111,7 @@ class _PaymentPageState extends State<PaymentPage>
             if (snapshot.data == true) {
               Future.delayed(Duration.zero, () {
                 if (mounted) {
+                  paymentController.clear();
                   setState(() {});
                 }
               });

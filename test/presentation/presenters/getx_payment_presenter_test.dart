@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/payment/payment.dart';
@@ -281,7 +282,15 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
 
-      expect(sut.lastPaymentRequested, longAmountValue);
+      expect(
+        sut.lastPaymentRequested,
+        ConcentratorFinalizationModel(
+          FinalizationId: PaymentMode.pix.finalizationId,
+          Value: longAmountValue,
+          ValueLiquid: longAmountValue,
+          PortionQuantity: 1,
+        ),
+      );
     });
   });
 
@@ -372,7 +381,7 @@ void main() {
       verify(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
             commandNumber: homePresenter.commandNumberMock!.toInt(),
-            finalizations: null,
+            finalizations: sut.successfulPayments,
           )).called(1);
     });
 

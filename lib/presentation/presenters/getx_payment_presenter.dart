@@ -92,7 +92,7 @@ class GetxPaymentPresenter extends GetxController
       await finishSaleRequestConcentrador.finish(
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),
-        finalizations: null,
+        finalizations: _successfulPayments,
         //finalizations
         // Money = 1,
         // Check = 2,
@@ -106,6 +106,7 @@ class GetxPaymentPresenter extends GetxController
         // FinancialCredits = 10
       );
 
+      _successfulPayments.clear();
       await printedProductsPresenter.loadPrinted(homePresenter);
     } catch (e) {
       mainError = UIError.unexpected;

@@ -8,10 +8,28 @@ import '../../pages.dart';
 
 class PaymentButtons extends StatelessWidget {
   final TextEditingController paymentController;
+  final GlobalKey<FormState> formKey;
   const PaymentButtons({
     required this.paymentController,
+    required this.formKey,
     super.key,
   });
+
+  Future<void> callPayment(
+    PaymentPresenter paymentPresenter,
+    HomePresenter homePresenter,
+    PaymentMode paymentMode,
+  ) async {
+    bool? isValid = formKey.currentState?.validate();
+    if (isValid == true) {
+      await paymentPresenter.callPayment(
+        longAmountValue: paymentController.text.toDouble(),
+        portionQuantity: 1,
+        paymentMode: paymentMode,
+        homePresenter: homePresenter,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +45,10 @@ class PaymentButtons extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  await paymentPresenter.callPayment(
-                    longAmountValue: paymentController.text.toDouble(),
-                    portionQuantity: 1,
-                    paymentMode: PaymentMode.pix,
-                    homePresenter: homePresenter,
+                  await callPayment(
+                    paymentPresenter,
+                    homePresenter,
+                    PaymentMode.pix,
                   );
                 },
                 child: Text(
@@ -43,11 +60,10 @@ class PaymentButtons extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await paymentPresenter.callPayment(
-                      longAmountValue: paymentController.text.toDouble(),
-                      portionQuantity: 1,
-                      paymentMode: PaymentMode.debit,
-                      homePresenter: homePresenter,
+                    await callPayment(
+                      paymentPresenter,
+                      homePresenter,
+                      PaymentMode.debit,
                     );
                   },
                   child: Text(
@@ -60,11 +76,10 @@ class PaymentButtons extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await paymentPresenter.callPayment(
-                      longAmountValue: paymentController.text.toDouble(),
-                      portionQuantity: 1,
-                      paymentMode: PaymentMode.credit,
-                      homePresenter: homePresenter,
+                    await callPayment(
+                      paymentPresenter,
+                      homePresenter,
+                      PaymentMode.credit,
                     );
                   },
                   child: Text(
@@ -78,11 +93,10 @@ class PaymentButtons extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
                     onPressed: () async {
-                      await paymentPresenter.callPayment(
-                        longAmountValue: paymentController.text.toDouble(),
-                        portionQuantity: 1,
-                        paymentMode: PaymentMode.voucher,
-                        homePresenter: homePresenter,
+                      await callPayment(
+                        paymentPresenter,
+                        homePresenter,
+                        PaymentMode.voucher,
                       );
                     },
                     child: Text(

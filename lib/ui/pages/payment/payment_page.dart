@@ -25,6 +25,7 @@ class _PaymentPageState extends State<PaymentPage>
   final formKey = GlobalKey<FormState>();
   final paymentController = TextEditingController();
   final paymentFocusNode = FocusNode();
+  double pendingValue = 0;
 
   @override
   void dispose() {
@@ -67,6 +68,12 @@ class _PaymentPageState extends State<PaymentPage>
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    pendingValue =
+        (printedProductsPresenter.totalLiquid - paymentPresenter.totalPaidValue)
+            .toDouble()
+            .toString()
+            .toBrazilianNumber()
+            .toDouble();
 
     printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
@@ -121,7 +128,10 @@ class _PaymentPageState extends State<PaymentPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              PaymentDetails(),
+              if (printedProductsPresenter.totalLiquid > 0)
+                PaymentDetails(
+                  pendingValue: pendingValue,
+                ),
               if (printedProductsPresenter.printedProducts != null)
                 Column(
                   children: [
@@ -131,15 +141,18 @@ class _PaymentPageState extends State<PaymentPage>
                         formKey: formKey,
                         paymentController: paymentController,
                         paymentFocusNode: paymentFocusNode,
+                        pendingValue: pendingValue,
                       ),
                     ),
                     PaymentButtons(
                       paymentController: paymentController,
+                      formKey: formKey,
                     ),
                   ],
                 ),
               if (paymentPresenter.totalPaidValue ==
-                  printedProductsPresenter.totalLiquid)
+                      printedProductsPresenter.totalLiquid &&
+                  printedProductsPresenter.totalLiquid > 0)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: LiquidateCommand(

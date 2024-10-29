@@ -190,8 +190,9 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return _printedProducts!.TotalLiquid.toDouble() +
-        serviceChargeValue.toDouble();
+    return (_printedProducts!.TotalLiquid.toDouble() +
+            serviceChargeValue.toDouble())
+        .toDouble();
   }
 
   @override

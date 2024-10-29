@@ -7,10 +7,12 @@ class WriteAmoutValueToPay extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController paymentController;
   final FocusNode paymentFocusNode;
+  final double pendingValue;
   const WriteAmoutValueToPay({
     required this.formKey,
     required this.paymentController,
     required this.paymentFocusNode,
+    required this.pendingValue,
     super.key,
   });
 
@@ -31,6 +33,10 @@ class WriteAmoutValueToPay extends StatelessWidget {
             if (value == null || value.isEmpty) {
               return R.string.msgWritePaymentValue;
             } else if (value.toDouble() == -1.0) {
+              return R.string.msgInvalidNumber;
+            } else if (value.toDouble() > pendingValue) {
+              return R.string.msgInvalidNumber;
+            } else if (value.toDouble() < 0.01) {
               return R.string.msgInvalidNumber;
             }
             return null;

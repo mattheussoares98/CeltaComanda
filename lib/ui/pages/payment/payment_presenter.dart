@@ -37,4 +37,8 @@ abstract class PaymentPresenter implements Listenable {
   double getTotalPendingValue(
     PrintedProductsPresenter printedProductsPresenter,
   );
+
+  void addNewSuccessfulPayment(
+    ConcentratorFinalizationModel finalizaion,
+  );
 }

@@ -191,6 +191,8 @@ class GetxCovenantPresenter extends GetxController
               printedProductsPresenter.printedProducts!.SaleRequestId.toInt(),
         );
 
+        //add new finalization in paymentPresent.succesfulFinalizations
+
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
           commandNumber: homePresenter.commandNumber!.toInt(),

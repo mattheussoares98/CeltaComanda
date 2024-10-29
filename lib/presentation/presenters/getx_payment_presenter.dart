@@ -78,7 +78,7 @@ class GetxPaymentPresenter extends GetxController
     updateScreen = true;
 
     if (_lastRequestedPaymentAmount != null) {
-      _successfulPayments.add(_lastRequestedPaymentAmount!);
+      addNewSuccessfulPayment(_lastRequestedPaymentAmount!);
     }
     updateScreen = false;
 
@@ -241,5 +241,12 @@ class GetxPaymentPresenter extends GetxController
         .toString()
         .toBrazilianNumber()
         .toDouble();
+  }
+
+  @override
+  void addNewSuccessfulPayment(
+    ConcentratorFinalizationModel finalizaion,
+  ) {
+    _successfulPayments.add(finalizaion);
   }
 }

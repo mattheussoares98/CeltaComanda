@@ -36,6 +36,7 @@ void main() {
   late int portionQuantity;
   late PrintedEntity printedEntity;
   late String commandNumber;
+  late ConcentratorFinalizationModel newFinalization;
 
   initUseCases() {
     pay = PaySpy();
@@ -67,6 +68,12 @@ void main() {
         faker.randomGenerator.integer(999).toString();
     commandNumber = faker.randomGenerator.integer(999).toString();
     homePresenter.isGeneratingVersionToRedeMock = true;
+    newFinalization = ConcentratorFinalizationModel(
+      FinalizationId: faker.randomGenerator.integer(100),
+      Value: faker.randomGenerator.decimal(),
+      ValueLiquid: faker.randomGenerator.decimal(),
+      PortionQuantity: faker.randomGenerator.integer(100),
+    );
   }
 
   mockSuccess() {
@@ -419,6 +426,16 @@ void main() {
       verify(
         () => navigateTo.navigate(pageRoute: PageRoutes.covenant),
       ).called(1);
+    });
+  });
+
+  group("Add new successful payment", () {
+    test("Should add new finalization correctly", () {
+      expect(sut.successfulPayments, []);
+
+      sut.addNewSuccessfulPayment(newFinalization);
+
+      expect(sut.successfulPayments, [newFinalization]);
     });
   });
 }

@@ -1069,5 +1069,22 @@ void main() {
       expect(sut.successfulPayments, []);
       expect(sut.authorizationPendingModel, null);
     });
+    test("Should load printed products", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
+          .called(1);
+    });
   });
 }

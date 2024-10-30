@@ -396,6 +396,8 @@ class GetxPaymentPresenter extends GetxController
         _authorizationPendingModel = null;
         _successfulPayments.clear();
         closePagesUntilHomePage();
+
+        await printedProductsPresenter.loadPrinted(homePresenter);
       }
     } catch (e) {
       mainError = UIError.unexpected;

@@ -18,14 +18,12 @@ class ConfirmPayment extends StatelessWidget {
   });
 
   Future<void> _finishSaleRequestByCovenant({
-    required CovenantPresenter covenantPresenter,
     required HomePresenter homePresenter,
     required PaymentPresenter paymentPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
   }) async {
-    await covenantPresenter.finishSaleRequestByCovenant(
-      paymentPresenter: paymentPresenter,
+    await paymentPresenter.finishSaleRequestByCovenant(
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
@@ -36,33 +34,31 @@ class ConfirmPayment extends StatelessWidget {
           backgroundColor: Colors.red,
         );
       },
-      closePagesUntilHomePage: () {
-        Navigator.of(context).popUntil(
-          (route) => route.isFirst,
-        );
-        snackBarMessage(
-          context,
-          R.string.liquidateCommandSucceeds,
-          backgroundColor: Theme.of(context).secondaryHeaderColor,
-        );
-      },
+      // closePagesUntilHomePage: () {
+      //   Navigator.of(context).popUntil(
+      //     (route) => route.isFirst,
+      //   );
+      //   snackBarMessage(
+      //     context,
+      //     R.string.liquidateCommandSucceeds,
+      //     backgroundColor: Theme.of(context).secondaryHeaderColor,
+      //   );
+      // },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
     return ElevatedButton(
-      onPressed: covenantPresenter.selectedCovenant.containsKey(customer.Code)
+      onPressed: paymentPresenter.selectedCovenant.containsKey(customer.Code)
           ? () async {
               if (customer.HasPassword == "false") {
                 await _finishSaleRequestByCovenant(
-                  covenantPresenter: covenantPresenter,
                   paymentPresenter: paymentPresenter,
                   homePresenter: homePresenter,
                   printedProductsPresenter: printedProductsPresenter,
@@ -99,7 +95,6 @@ class ConfirmPayment extends StatelessWidget {
                           if (isValid == true) {
                             Navigator.of(context).pop();
                             await _finishSaleRequestByCovenant(
-                              covenantPresenter: covenantPresenter,
                               paymentPresenter: paymentPresenter,
                               homePresenter: homePresenter,
                               printedProductsPresenter:
@@ -114,7 +109,6 @@ class ConfirmPayment extends StatelessWidget {
                       bool? isValid = passwordKey.currentState?.validate();
                       if (isValid == true) {
                         await _finishSaleRequestByCovenant(
-                          covenantPresenter: covenantPresenter,
                           paymentPresenter: paymentPresenter,
                           homePresenter: homePresenter,
                           printedProductsPresenter: printedProductsPresenter,

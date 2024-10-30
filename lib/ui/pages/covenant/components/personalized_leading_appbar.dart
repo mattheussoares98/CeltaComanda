@@ -12,11 +12,11 @@ class PersonalizedLeadingAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
     return IconButton(
       onPressed: () async {
-        if (covenantPresenter.authorizationPendingModel?.isPending == true) {
+        if (paymentPresenter.authorizationPendingModel?.isPending == true) {
           notificationDialog(
             context: context,
             titleMessage: R.string.msgAuthorizationIsPendant,

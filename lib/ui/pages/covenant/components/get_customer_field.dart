@@ -19,16 +19,16 @@ class GetCustomerField extends StatelessWidget {
   });
 
   Future<void> getCustomer(
-    CovenantPresenter covenantPresenter,
+    PaymentPresenter paymentPresenter,
     BuildContext context,
   ) async {
-    if (covenantPresenter.authorizationPendingModel?.isPending == true) {
+    if (paymentPresenter.authorizationPendingModel?.isPending == true) {
       notificationDialog(
         context: context,
         titleMessage: R.string.msgAuthorizationIsPendant,
         content: Text(R.string.msgPendantAuthorizationNotification),
         onPress: () async {
-          await covenantPresenter.getCustomerByNameCodeOrCpf(
+          await paymentPresenter.getCustomerByNameCodeOrCpf(
             value: textController.text,
             searchByPersonalizedCode: searchByPersonalizedCode,
             showErrorMessageReturnedByBs: (value) {
@@ -38,7 +38,7 @@ class GetCustomerField extends StatelessWidget {
         },
       );
     } else {
-      await covenantPresenter.getCustomerByNameCodeOrCpf(
+      await paymentPresenter.getCustomerByNameCodeOrCpf(
         searchByPersonalizedCode: searchByPersonalizedCode,
         value: textController.text,
         showErrorMessageReturnedByBs: (value) {
@@ -54,7 +54,7 @@ class GetCustomerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
     return Row(
       children: [
@@ -72,7 +72,7 @@ class GetCustomerField extends StatelessWidget {
               errorText: errorText,
               suffixIcon: IconButton(
                 onPressed: () async {
-                  await getCustomer(covenantPresenter, context);
+                  await getCustomer(paymentPresenter, context);
                 },
                 icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
               ),
@@ -80,15 +80,15 @@ class GetCustomerField extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: textController,
             onFieldSubmitted: (_) async {
-              await getCustomer(covenantPresenter, context);
+              await getCustomer(paymentPresenter, context);
             },
             onChanged: (value) =>
-                covenantPresenter.validateCustomerField(textController.text),
+                paymentPresenter.validateCustomerField(textController.text),
           ),
         ),
         TextButton(
           onPressed: () async {
-            await getCustomer(covenantPresenter, context);
+            await getCustomer(paymentPresenter, context);
           },
           child: Text(R.string.getCustomer),
         ),

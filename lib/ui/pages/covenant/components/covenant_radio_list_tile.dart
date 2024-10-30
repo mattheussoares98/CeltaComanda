@@ -18,10 +18,10 @@ class CovenantRadioListTile extends StatelessWidget {
   });
 
   Future<void> _updateSelectedCovenant({
-    required CovenantPresenter covenantPresenter,
+    required PaymentPresenter paymentPresenter,
     required String? value,
   }) async {
-    await covenantPresenter.updateSelectedCovenant(
+    await paymentPresenter.updateSelectedCovenant(
       customer,
       value,
     );
@@ -30,7 +30,7 @@ class CovenantRadioListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CovenantPresenter covenantPresenter = Provider.of(context, listen: false);
+    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
     return RadioListTile<String>(
       dense: true,
@@ -42,22 +42,22 @@ class CovenantRadioListTile extends StatelessWidget {
         ),
       ),
       value: covenant!.Code.toString(),
-      groupValue: covenantPresenter.selectedCovenant[customer.Code],
+      groupValue: paymentPresenter.selectedCovenant[customer.Code],
       onChanged: (value) async {
-        if (covenantPresenter.authorizationPendingModel?.isPending == true) {
+        if (paymentPresenter.authorizationPendingModel?.isPending == true) {
           notificationDialog(
               context: context,
               titleMessage: R.string.msgAuthorizationIsPendant,
               content: Text(R.string.msgPendantAuthorizationNotification),
               onPress: () async {
                 await _updateSelectedCovenant(
-                  covenantPresenter: covenantPresenter,
+                  paymentPresenter: paymentPresenter,
                   value: value,
                 );
               });
         } else {
           await _updateSelectedCovenant(
-            covenantPresenter: covenantPresenter,
+            paymentPresenter: paymentPresenter,
             value: value,
           );
         }

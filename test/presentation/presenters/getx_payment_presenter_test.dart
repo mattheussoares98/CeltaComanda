@@ -47,7 +47,6 @@ void main() {
   late int portionQuantity;
   late PrintedEntity printedEntity;
   late String commandNumber;
-  late ConcentratorFinalizationModel newFinalization;
   late SoapResponse soapResponse;
 
   late List<CustomerEntity> customersEntitys;
@@ -93,12 +92,6 @@ void main() {
         faker.randomGenerator.integer(999).toString();
     commandNumber = faker.randomGenerator.integer(999).toString();
     homePresenter.isGeneratingVersionToRedeMock = true;
-    newFinalization = ConcentratorFinalizationModel(
-      FinalizationId: faker.randomGenerator.integer(100),
-      Value: faker.randomGenerator.decimal(),
-      ValueLiquid: faker.randomGenerator.decimal(),
-      PortionQuantity: faker.randomGenerator.integer(100),
-    );
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
@@ -465,9 +458,6 @@ void main() {
           ));
     });
     test("Should clear succesful payments", () async {
-      sut.addNewSuccessfulPayment(newFinalization);
-      expect(sut.successfulPayments, [newFinalization]);
-
       await sut.liquidateCommand(
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -484,16 +474,6 @@ void main() {
       verify(
         () => navigateTo.navigate(pageRoute: PageRoutes.covenant),
       ).called(1);
-    });
-  });
-
-  group("Add new successful payment", () {
-    test("Should add new finalization correctly", () {
-      expect(sut.successfulPayments, []);
-
-      sut.addNewSuccessfulPayment(newFinalization);
-
-      expect(sut.successfulPayments, [newFinalization]);
     });
   });
 
@@ -1035,70 +1015,6 @@ void main() {
           customerCode: customersViewModel[0].Code!.toInt(),
           value: printedProductsPresenter.printedProductsMock.TotalLiquid
               .toDouble(),
-        ),
-      );
-    });
-    test("Should add new finalization in paymentFinalization", () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
-
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
-
-      verify(
-        () => sut.addNewSuccessfulPayment(
-          ConcentratorFinalizationModel(
-            FinalizationId: FinalizationIdentification.covenant.finalizationId,
-            Value: sut.getTotalPendingValue(printedProductsPresenter),
-            ValueLiquid: sut.getTotalPendingValue(printedProductsPresenter),
-            PortionQuantity: 1,
-            AuthorizationCode: soapResponse.response,
-            AuthorizationType: 2,
-            //Customer = 1,
-            //Convene = 2,
-            //DevolutionCredit = 3,
-            //FinancialCredit = 4,
-            //FidelityCredit = 5
-          ),
-        ),
-      );
-    });
-    test("Should add new finalization in paymentFinalization", () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
-
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
-
-      verify(
-        () => sut.addNewSuccessfulPayment(
-          ConcentratorFinalizationModel(
-            FinalizationId: FinalizationIdentification.covenant.finalizationId,
-            Value: sut.getTotalPendingValue(printedProductsPresenter),
-            ValueLiquid: sut.getTotalPendingValue(printedProductsPresenter),
-            PortionQuantity: 1,
-            AuthorizationCode: soapResponse.response,
-            AuthorizationType: 2,
-            //Customer = 1,
-            //Convene = 2,
-            //DevolutionCredit = 3,
-            //FinancialCredit = 4,
-            //FidelityCredit = 5
-          ),
         ),
       );
     });

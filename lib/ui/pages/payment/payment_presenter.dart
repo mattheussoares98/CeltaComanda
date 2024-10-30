@@ -43,10 +43,6 @@ abstract class PaymentPresenter implements Listenable {
     PrintedProductsPresenter printedProductsPresenter,
   );
 
-  void addNewSuccessfulPayment(
-    ConcentratorFinalizationModel finalizaion,
-  );
-
   Future<void> getCustomerByNameCodeOrCpf({
     required String value,
     required bool searchByPersonalizedCode,

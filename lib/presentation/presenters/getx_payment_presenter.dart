@@ -93,7 +93,7 @@ class GetxPaymentPresenter extends GetxController
     updateScreen = true;
 
     if (_lastRequestedPaymentAmount != null) {
-      addNewSuccessfulPayment(_lastRequestedPaymentAmount!);
+      _successfulPayments.add(_lastRequestedPaymentAmount!);
     }
     updateScreen = false;
 
@@ -244,13 +244,6 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  void addNewSuccessfulPayment(
-    ConcentratorFinalizationModel finalizaion,
-  ) {
-    _successfulPayments.add(finalizaion);
-  }
-
-  @override
   Future<void> getCustomerByNameCodeOrCpf({
     required String value,
     required void Function(String error) showErrorMessageReturnedByBs,
@@ -395,21 +388,21 @@ class GetxPaymentPresenter extends GetxController
         );
 
         double pendingValue = getTotalPendingValue(printedProductsPresenter);
-        addNewSuccessfulPayment(
-          ConcentratorFinalizationModel(
-            FinalizationId: FinalizationIdentification.covenant.finalizationId,
-            Value: pendingValue,
-            ValueLiquid: pendingValue,
-            PortionQuantity: 1,
-            AuthorizationCode: soapResponse.response,
-            AuthorizationType: 2,
-            //Customer = 1,
-            //Convene = 2,
-            //DevolutionCredit = 3,
-            //FinancialCredit = 4,
-            //FidelityCredit = 5
-          ),
-        );
+
+        _successfulPayments.add(ConcentratorFinalizationModel(
+          FinalizationId: FinalizationIdentification.covenant.finalizationId,
+          Value: pendingValue,
+          ValueLiquid: pendingValue,
+          PortionQuantity: 1,
+          AuthorizationCode: soapResponse.response,
+          AuthorizationType: 2,
+          //Customer = 1,
+          //Convene = 2,
+          //DevolutionCredit = 3,
+          //FinancialCredit = 4,
+          //FidelityCredit = 5
+        ));
+
         //add new finalization in paymentPresent.succesfulFinalizations and call finish
 
         _authorizationPendingModel = null;

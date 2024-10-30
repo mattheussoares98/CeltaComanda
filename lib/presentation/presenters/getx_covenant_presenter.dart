@@ -190,23 +190,6 @@ class GetxCovenantPresenter extends GetxController
               printedProductsPresenter.printedProducts!.SaleRequestId.toInt(),
         );
 
-        paymentPresenter.addNewSuccessfulPayment(
-          ConcentratorFinalizationModel(
-            FinalizationId: FinalizationIdentification.covenant.finalizationId,
-            Value:
-                paymentPresenter.getTotalPendingValue(printedProductsPresenter),
-            ValueLiquid:
-                paymentPresenter.getTotalPendingValue(printedProductsPresenter),
-            PortionQuantity: 1,
-            AuthorizationCode: soapResponse.response,
-            AuthorizationType: 2,
-            //Customer = 1,
-            //Convene = 2,
-            //DevolutionCredit = 3,
-            //FinancialCredit = 4,
-            //FidelityCredit = 5
-          ),
-        );
         //add new finalization in paymentPresent.succesfulFinalizations and call finish
 
         _authorizationPendingModel = null;

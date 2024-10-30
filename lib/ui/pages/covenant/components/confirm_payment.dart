@@ -34,7 +34,7 @@ class ConfirmPayment extends StatelessWidget {
           backgroundColor: Colors.red,
         );
       },
-      closePagesUntilHomePage: () {
+      showSuccessAndCloseUntilHomePage: () {
         Navigator.of(context).popUntil(
           (route) => route.isFirst,
         );

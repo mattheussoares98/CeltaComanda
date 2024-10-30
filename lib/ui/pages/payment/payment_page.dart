@@ -50,8 +50,18 @@ class _PaymentPageState extends State<PaymentPage>
         HomePresenter homePresenter = Provider.of(context, listen: false);
 
         paymentPresenter?.initPaymentResultHandler(
-          homePresenter,
-          printedProductsPresenter,
+          homePresenter: homePresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          showSuccessAndCloseUntilHomePage: () {
+            Navigator.of(context).popUntil(
+              (route) => route.isFirst,
+            );
+            snackBarMessage(
+              context,
+              R.string.liquidateCommandSucceeds,
+              backgroundColor: Theme.of(context).secondaryHeaderColor,
+            );
+          },
         );
 
         paymentController.text = paymentPresenter!

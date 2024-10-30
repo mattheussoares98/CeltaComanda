@@ -28,12 +28,14 @@ abstract class PaymentPresenter implements Listenable {
   Future<void> liquidateCommand({
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
+    required void Function() showSuccessAndCloseUntilHomePage,
   });
 
-  void initPaymentResultHandler(
-    HomePresenter homePresenter,
-    PrintedProductsPresenter printedProductsPresenter,
-  );
+  void initPaymentResultHandler({
+    required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required void Function() showSuccessAndCloseUntilHomePage,
+  });
 
   void disposePaymentResultHandler();
 
@@ -57,7 +59,7 @@ abstract class PaymentPresenter implements Listenable {
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function(String error) showErrorMessageReturnedByBs,
-    required void Function() closePagesUntilHomePage,
+    required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
   });
 }

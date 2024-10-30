@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../pages.dart';
 
 class LiquidateCommand extends StatelessWidget {
@@ -31,9 +32,18 @@ class LiquidateCommand extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             await paymentPresenter.liquidateCommand(
-              printedProductsPresenter: printedProductsPresenter,
-              homePresenter: homePresenter,
-            );
+                printedProductsPresenter: printedProductsPresenter,
+                homePresenter: homePresenter,
+                showSuccessAndCloseUntilHomePage: () {
+                  Navigator.of(context).popUntil(
+                    (route) => route.isFirst,
+                  );
+                  snackBarMessage(
+                    context,
+                    R.string.liquidateCommandSucceeds,
+                    backgroundColor: Theme.of(context).secondaryHeaderColor,
+                  );
+                });
             callSetState();
           },
           child: Text(

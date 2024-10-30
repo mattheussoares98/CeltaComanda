@@ -190,9 +190,14 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return (_printedProducts!.TotalLiquid.toDouble() +
-            serviceChargeValue.toDouble())
-        .toDouble();
+    double value = (_printedProducts!.TotalLiquid.toDouble() +
+        serviceChargeValue.toDouble());
+    // Multiplica por 100 para trabalhar com duas casas decimais
+    int intValue = (value * 100).truncate();
+    // Divide por 100 novamente para obter o valor truncado
+    double truncatedValue = intValue / 100.0;
+    String formattedValue = truncatedValue.toStringAsFixed(2);
+    return formattedValue.toDouble();
   }
 
   @override
@@ -201,16 +206,25 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
+    double value;
+
     if (_printedProducts!.IncrementType.toInt() == 1) {
       //value
-      return _printedProducts!.IncrementValue.toDouble();
+      value = _printedProducts!.IncrementValue.toDouble();
     } else if (_printedProducts!.IncrementType.toInt() == 2) {
       //percentage
-      return _printedProducts!.TotalLiquid.toDouble() *
+      value = _printedProducts!.TotalLiquid.toDouble() *
           (_printedProducts!.IncrementValue.toDouble() / 100);
     } else {
       return 0;
     }
+
+    // Multiplica por 100 para trabalhar com duas casas decimais
+    int intValue = (value * 100).truncate();
+    // Divide por 100 novamente para obter o valor truncado
+    double truncatedValue = intValue / 100.0;
+    String formattedValue = truncatedValue.toStringAsFixed(2);
+    return formattedValue.toDouble();
   }
 
   @override

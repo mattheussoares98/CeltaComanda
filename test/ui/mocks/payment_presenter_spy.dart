@@ -31,6 +31,8 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
         () => this.liquidateCommand(
           printedProductsPresenter: any(named: "printedProductsPresenter"),
           homePresenter: any(named: "homePresenter"),
+          showSuccessAndCloseUntilHomePage:
+              any(named: "showSuccessAndCloseUntilHomePage"),
         ),
       ).thenAnswer((any) async => any);
 

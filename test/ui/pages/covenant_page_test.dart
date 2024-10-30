@@ -28,7 +28,7 @@ void main() {
     await tester.pumpWidget(
       makePage(
         path: PageRoutes.covenant,
-        page: () => CovenantPage(covenantPresenter: presenter),
+        page: () => CovenantPage(),
       ),
     );
   }

@@ -50,7 +50,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.covenant,
-      page: () => CovenantPage(covenantPresenter: CovenantPresenterSpy()),
+      page: () => CovenantPage(),
     ),
   ];
 

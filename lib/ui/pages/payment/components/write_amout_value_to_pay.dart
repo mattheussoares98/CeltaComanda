@@ -44,8 +44,18 @@ class WriteAmoutValueToPay extends StatelessWidget {
               return R.string.msgInvalidNumber;
             } else if (value.toDouble() < 0.01) {
               return R.string.msgInvalidNumber;
-            } else if (value.toDouble().toString().split('.')[1].length > 2) {
+            } else if (value.contains(".") && value.contains(",")) {
               return R.string.msgInvalidNumber;
+            }
+
+            int pointQuantitys = 0;
+            for (var x = 0; x < value.length; x++) {
+              if (value[x] == ".") {
+                pointQuantitys++;
+              }
+              if (pointQuantitys > 1) {
+                return R.string.msgInvalidNumber;
+              }
             }
             return null;
           },

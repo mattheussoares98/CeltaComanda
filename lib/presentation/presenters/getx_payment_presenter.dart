@@ -401,12 +401,6 @@ class GetxPaymentPresenter extends GetxController
           //FinancialCredit = 4,
           //FidelityCredit = 5
         ));
-
-        //add new finalization in paymentPresent.succesfulFinalizations and call finish
-
-        // _authorizationPendingModel = null;
-
-        await printedProductsPresenter.loadPrinted(homePresenter);
       }
     } catch (e) {
       mainError = UIError.unexpected;

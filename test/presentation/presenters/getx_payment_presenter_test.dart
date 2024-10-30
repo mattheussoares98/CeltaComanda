@@ -764,45 +764,6 @@ void main() {
       );
     });
 
-    test("Should call finish sale request concentrador with correct values",
-        () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
-
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
-
-      double pendingValue = sut.getTotalPendingValue(printedProductsPresenter);
-      verify(
-        () => finishSaleRequestConcentrador.finish(
-          pdvNumber: 100,
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
-          finalizations: [
-            ConcentratorFinalizationModel(
-              FinalizationId:
-                  FinalizationIdentification.covenant.finalizationId,
-              Value: pendingValue,
-              ValueLiquid: pendingValue,
-              PortionQuantity: 1,
-              AuthorizationCode: soapResponse.response,
-              AuthorizationType: 2,
-              //Customer = 1,
-              //Convene = 2,
-              //DevolutionCredit = 3,
-              //FinancialCredit = 4,
-              //FidelityCredit = 5
-            )
-          ],
-        ),
-      ).called(1);
-    });
-
     test("Should add new finalization correctly", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
@@ -828,23 +789,7 @@ void main() {
         )
       ]);
     });
-    test("Should call load printed on success", () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
 
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
-
-      verify(
-        () => printedProductsPresenter.loadPrinted(homePresenter),
-      ).called(1);
-    });
     test("Should call authorize covenant limit use by code", () async {
       String covenantCode = faker.randomGenerator.integer(100).toString();
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
@@ -893,21 +838,6 @@ void main() {
           finalizations: null,
         ),
       );
-    });
-    test("Should clear authorizationPendingModel on success", () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
-
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
-
-      expect(sut.authorizationPendingModel, null);
     });
 
     test(

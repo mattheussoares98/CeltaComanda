@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../data/models/models.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../infra/helpers/helperts.dart';
+import '../../main/builders/builders.dart';
 import '../../presentation/mixins/mixins.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../protocols/protocols.dart';
 
 class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
@@ -15,12 +20,22 @@ class GetxPaymentPresenter extends GetxController
   final CommandInformations commandInformations;
   final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
   final NavigateTo navigateTo;
+  final UpdateSaleRequest updateSaleRequest;
+  final LoadCustomer loadCustomer;
+  final Validation validation;
+  final CovenantLimit covenantLimit;
+  final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
 
   GetxPaymentPresenter({
     required this.pay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
     required this.navigateTo,
+    required this.updateSaleRequest,
+    required this.loadCustomer,
+    required this.validation,
+    required this.covenantLimit,
+    required this.checkPasswordByCustomerCode,
   });
 
   @override
@@ -217,21 +232,6 @@ class GetxPaymentPresenter extends GetxController
     }
   }
 
-  ConcentratorFinalizationModel? _lastRequestedPaymentAmount;
-  @override
-  ConcentratorFinalizationModel? get lastPaymentRequested =>
-      _lastRequestedPaymentAmount;
-
-  final _updateScreenStream = Rx<bool>(false);
-  @override
-  Stream<bool> get updateScreenStream => _updateScreenStream.stream;
-  set updateScreen(bool value) => _updateScreenStream.value = value;
-
-  final List<ConcentratorFinalizationModel> _successfulPayments = [];
-  @override
-  List<ConcentratorFinalizationModel> get successfulPayments =>
-      _successfulPayments;
-
   @override
   double getTotalPendingValue(
     PrintedProductsPresenter printedProductsPresenter,
@@ -249,4 +249,216 @@ class GetxPaymentPresenter extends GetxController
   ) {
     _successfulPayments.add(finalizaion);
   }
+
+  @override
+  Future<void> getCustomerByNameCodeOrCpf({
+    required String value,
+    required void Function(String error) showErrorMessageReturnedByBs,
+    required bool searchByPersonalizedCode,
+  }) async {
+    mainError = null;
+    isLoading = true;
+    customersViewModel = null;
+    _selectedCovenant = {};
+
+    try {
+      validateCustomerField(value);
+
+      _authorizationPendingModel = null;
+
+      int? valueInInt = int.tryParse(value);
+
+      SoapResponse? soapResponse;
+
+// 1=ExactCnpjCpfNumber
+// 2=ExactCode
+// 3=ApproximateName
+// 4=PersonalizedCode
+      if (value.isEmpty) {
+        return;
+      } else if (valueInInt == null) {
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 3,
+        );
+      } else if (searchByPersonalizedCode) {
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 4,
+        );
+      } else if (valueInInt.toString().length == 11 ||
+          valueInInt.toString().length == 14) {
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 1,
+        );
+      } else {
+        soapResponse = await loadCustomer.load(
+          value: value,
+          searchTypeInt: 2,
+        );
+      }
+
+      if (soapResponse.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(soapResponse.response);
+      } else {
+        customersViewModel = json
+            .decode(soapResponse.response)
+            .map((e) => CustomerViewModel.fromJson(e))
+            .toList()
+            .cast<CustomerViewModel>();
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  void validateCustomerField(String value) {
+    customerError = null;
+    const field = "customer";
+
+    final formData = {field: value};
+    customerError = validation.validate(field: field, input: formData);
+
+    if (value.isEmpty) {
+      customerError = ValidationError.requiredField;
+    }
+  }
+
+  @override
+  Future<void> updateSelectedCovenant(
+    CustomerViewModel? customer,
+    String? covenantCode,
+  ) async {
+    _authorizationPendingModel = null;
+
+    if (customer == null) {
+      _selectedCovenant = {};
+    } else {
+      _selectedCovenant = {
+        customer.Code!: covenantCode,
+      };
+    }
+  }
+
+  @override
+  Future<void> finishSaleRequestByCovenant({
+    required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required void Function() closePagesUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
+    required String? customerPassword,
+  }) async {
+    mainError = null;
+    isLoading = true;
+    try {
+      if (customerPassword != null && customerPassword.isNotEmpty) {
+        final passwordResponse = await checkPasswordByCustomerCode.validate(
+          customerCode: _selectedCovenant.keys.first.toInt(),
+          password: customerPassword,
+        );
+        if (passwordResponse.responseType == SoapResponseType.error) {
+          showErrorMessageReturnedByBs(passwordResponse.response);
+          return;
+        }
+      }
+
+      SoapResponse soapResponse = await covenantLimit
+          .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
+        crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+            .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
+        customerCode: _selectedCovenant.keys.first.toInt(),
+        covenantCode: _selectedCovenant.values.first!.toInt(),
+        value: printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
+      );
+
+      if (soapResponse.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(soapResponse.response);
+      } else {
+        _authorizationPendingModel = AuthorizationPendingModel(
+          code: soapResponse.response,
+          isPending: true,
+        );
+
+        await updateSaleRequest.update(
+          model: SaleRequestModel(
+            CustomerCode: _selectedCovenant.keys.first.toInt(),
+            CovenantCode: _selectedCovenant.values.first!.toInt(),
+          ),
+          commandNumberWithThreeNumbers:
+              homePresenter.commandNumber!.toString().padLeft(3, "0"),
+          saleRequestId:
+              printedProductsPresenter.printedProducts!.SaleRequestId.toInt(),
+        );
+
+        double pendingValue = getTotalPendingValue(printedProductsPresenter);
+        addNewSuccessfulPayment(
+          ConcentratorFinalizationModel(
+            FinalizationId: FinalizationIdentification.covenant.finalizationId,
+            Value: pendingValue,
+            ValueLiquid: pendingValue,
+            PortionQuantity: 1,
+            AuthorizationCode: soapResponse.response,
+            AuthorizationType: 2,
+            //Customer = 1,
+            //Convene = 2,
+            //DevolutionCredit = 3,
+            //FinancialCredit = 4,
+            //FidelityCredit = 5
+          ),
+        );
+        //add new finalization in paymentPresent.succesfulFinalizations and call finish
+
+        _authorizationPendingModel = null;
+
+        await printedProductsPresenter.loadPrinted(homePresenter);
+
+        closePagesUntilHomePage();
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  ConcentratorFinalizationModel? _lastRequestedPaymentAmount;
+  @override
+  ConcentratorFinalizationModel? get lastPaymentRequested =>
+      _lastRequestedPaymentAmount;
+
+  final _updateScreenStream = Rx<bool>(false);
+  @override
+  Stream<bool> get updateScreenStream => _updateScreenStream.stream;
+  set updateScreen(bool value) => _updateScreenStream.value = value;
+
+  final List<ConcentratorFinalizationModel> _successfulPayments = [];
+  @override
+  List<ConcentratorFinalizationModel> get successfulPayments =>
+      _successfulPayments;
+
+  final _customerError = Rx<ValidationError?>(null);
+  @override
+  Stream<ValidationError?> get customerErrorStream => _customerError.stream;
+  set customerError(ValidationError? value) => _customerError.value = value;
+
+  final _customersViewModelStream = Rx<List<CustomerViewModel>?>(null);
+  @override
+  Stream<List<CustomerViewModel>?> get customersViewModelStream =>
+      _customersViewModelStream.stream;
+  set customersViewModel(List<CustomerViewModel>? customer) =>
+      _customersViewModelStream.subject.add(customer);
+
+  Map<String, String?> _selectedCovenant = {};
+  @override
+  Map<String, String?> get selectedCovenant => _selectedCovenant;
+
+  AuthorizationPendingModel? _authorizationPendingModel;
+
+  @override
+  AuthorizationPendingModel? get authorizationPendingModel =>
+      _authorizationPendingModel;
 }

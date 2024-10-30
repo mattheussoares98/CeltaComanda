@@ -600,10 +600,15 @@ void main() {
 
       await sut.loadPrinted(homePresenter);
 
-      expect(
-          sut.totalLiquid,
-          printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble() +
-              printed.IncrementValue!);
+      double value = (sut.printedProducts!.TotalLiquid.toDouble() +
+          printed.IncrementValue!.toDouble());
+      // Multiplica por 100 para trabalhar com duas casas decimais
+      int intValue = (value * 100).truncate();
+      // Divide por 100 novamente para obter o valor truncado
+      double truncatedValue = intValue / 100.0;
+      String formattedValue = truncatedValue.toStringAsFixed(2);
+
+      expect(sut.totalLiquid, formattedValue.toDouble());
     });
     test("Should return correct value if incrementType is 2", () async {
       final printed = EntityFactory.makePrintedProductsEntity(incrementType: 2);

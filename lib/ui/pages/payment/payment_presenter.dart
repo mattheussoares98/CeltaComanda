@@ -57,6 +57,7 @@ abstract class PaymentPresenter implements Listenable {
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required void Function() closePagesUntilHomePage,
     required String? customerPassword,
   });
 }

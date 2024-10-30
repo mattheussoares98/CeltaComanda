@@ -331,6 +331,7 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required void Function() closePagesUntilHomePage,
     required String? customerPassword,
   }) async {
     mainError = null;
@@ -394,6 +395,7 @@ class GetxPaymentPresenter extends GetxController
 
         _authorizationPendingModel = null;
         _successfulPayments.clear();
+        closePagesUntilHomePage();
       }
     } catch (e) {
       mainError = UIError.unexpected;

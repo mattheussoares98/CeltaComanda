@@ -34,16 +34,16 @@ class ConfirmPayment extends StatelessWidget {
           backgroundColor: Colors.red,
         );
       },
-      // closePagesUntilHomePage: () {
-      //   Navigator.of(context).popUntil(
-      //     (route) => route.isFirst,
-      //   );
-      //   snackBarMessage(
-      //     context,
-      //     R.string.liquidateCommandSucceeds,
-      //     backgroundColor: Theme.of(context).secondaryHeaderColor,
-      //   );
-      // },
+      closePagesUntilHomePage: () {
+        Navigator.of(context).popUntil(
+          (route) => route.isFirst,
+        );
+        snackBarMessage(
+          context,
+          R.string.liquidateCommandSucceeds,
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+        );
+      },
     );
   }
 

@@ -741,6 +741,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -757,6 +758,7 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -771,6 +773,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -795,6 +798,7 @@ void main() {
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -825,6 +829,7 @@ void main() {
       ));
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -851,6 +856,7 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -872,6 +878,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -898,6 +905,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -918,6 +926,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -943,6 +952,7 @@ void main() {
       checkPasswordByCustomerCode.mockCheck(errorSoapResponse);
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -967,6 +977,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -989,6 +1000,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -1005,6 +1017,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -1028,6 +1041,7 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
@@ -1045,6 +1059,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},

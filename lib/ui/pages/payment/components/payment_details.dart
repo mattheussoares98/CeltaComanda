@@ -16,6 +16,7 @@ class PaymentDetails extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
       children: [
@@ -26,20 +27,26 @@ class PaymentDetails extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-          style: TextStyle(
-            fontSize: getStringSize(context) * 2,
-            fontWeight: FontWeight.bold,
+        if (homePresenter.isGeneratingVersionToGetNet ||
+            homePresenter.isGeneratingVersionToRede)
+          Column(
+            children: [
+              Text(
+                "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                style: TextStyle(
+                  fontSize: getStringSize(context) * 2,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "${R.string.missing} ${pendingValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                style: TextStyle(
+                  fontSize: getStringSize(context) * 2,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
-        ),
-        Text(
-          "${R.string.missing} ${pendingValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-          style: TextStyle(
-            fontSize: getStringSize(context) * 2,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 8,

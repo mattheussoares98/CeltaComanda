@@ -148,14 +148,16 @@ class _PaymentPageState extends State<PaymentPage>
                       0)
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: WriteAmoutValueToPay(
-                        formKey: formKey,
-                        paymentController: paymentController,
-                        paymentFocusNode: paymentFocusNode,
+                    if (homePresenter.isGeneratingVersionToGetNet ||
+                        homePresenter.isGeneratingVersionToRede)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: WriteAmoutValueToPay(
+                          formKey: formKey,
+                          paymentController: paymentController,
+                          paymentFocusNode: paymentFocusNode,
+                        ),
                       ),
-                    ),
                     PaymentButtons(
                       paymentController: paymentController,
                       formKey: formKey,

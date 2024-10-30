@@ -225,11 +225,13 @@ class GetxPaymentPresenter extends GetxController
   double getTotalPendingValue(
     PrintedProductsPresenter printedProductsPresenter,
   ) {
-    return (printedProductsPresenter.totalLiquid - totalPaidValue)
-        .toDouble()
-        .toString()
-        .toBrazilianNumber()
-        .toDouble();
+    double value = (printedProductsPresenter.totalLiquid - totalPaidValue);
+    // Multiplica por 100 para trabalhar com duas casas decimais
+    int intValue = (value * 100).truncate();
+    // Divide por 100 novamente para obter o valor truncado
+    double truncatedValue = intValue / 100.0;
+    String formattedValue = truncatedValue.toStringAsFixed(2);
+    return formattedValue.toDouble();
   }
 
   @override

@@ -781,6 +781,7 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
+      double pendingValue = sut.getTotalPendingValue(printedProductsPresenter);
       verify(
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
@@ -789,11 +790,8 @@ void main() {
             ConcentratorFinalizationModel(
               FinalizationId:
                   FinalizationIdentification.covenant.finalizationId,
-              Value: printedProductsPresenter.printedProductsMock.TotalLiquid
-                  .toDouble(),
-              ValueLiquid: printedProductsPresenter
-                  .printedProductsMock.TotalLiquid
-                  .toDouble(),
+              Value: pendingValue,
+              ValueLiquid: pendingValue,
               PortionQuantity: 1,
               AuthorizationCode: soapResponse.response,
               AuthorizationType: 2,
@@ -806,6 +804,33 @@ void main() {
           ],
         ),
       ).called(1);
+    });
+
+    test("Should add new finalization correctly", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      double pendingValue = sut.getTotalPendingValue(printedProductsPresenter);
+      expect(sut.successfulPayments, [
+        ConcentratorFinalizationModel(
+          FinalizationId: FinalizationIdentification.covenant.finalizationId,
+          Value: pendingValue,
+          ValueLiquid: pendingValue,
+          PortionQuantity: 1,
+          AuthorizationCode: soapResponse.response,
+          AuthorizationType: 2,
+        )
+      ]);
     });
     test("Should call load printed on success", () async {
       await sut.updateSelectedCovenant(

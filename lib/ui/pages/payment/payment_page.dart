@@ -93,8 +93,12 @@ class _PaymentPageState extends State<PaymentPage>
       context,
       paymentPresenter.updateScreenStream,
       () {
-        paymentController.clear();
-        setState(() {});
+        Future.delayed(Duration.zero, () {
+          if (mounted) {
+            paymentController.clear();
+            setState(() {});
+          }
+        });
       },
     );
 
@@ -131,12 +135,17 @@ class _PaymentPageState extends State<PaymentPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (printedProductsPresenter.totalLiquid > 0)
+              if (paymentPresenter
+                      .getTotalPendingValue(printedProductsPresenter) >
+                  0)
                 PaymentDetails(
                   pendingValue: paymentPresenter
                       .getTotalPendingValue(printedProductsPresenter),
                 ),
-              if (printedProductsPresenter.printedProducts != null)
+              if (printedProductsPresenter.printedProducts != null &&
+                  paymentPresenter
+                          .getTotalPendingValue(printedProductsPresenter) >
+                      0)
                 Column(
                   children: [
                     Padding(

@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
@@ -35,13 +36,17 @@ class LiquidateCommand extends StatelessWidget {
                 printedProductsPresenter: printedProductsPresenter,
                 homePresenter: homePresenter,
                 showSuccessAndCloseUntilHomePage: () {
-                  Navigator.of(context).popUntil(
+                  final correctContext =
+                      NavigatorKey.navigatorKey.currentState?.context ??
+                          context;
+                  Navigator.of(correctContext).popUntil(
                     (route) => route.isFirst,
                   );
                   snackBarMessage(
-                    context,
+                    correctContext,
                     R.string.liquidateCommandSucceeds,
-                    backgroundColor: Theme.of(context).secondaryHeaderColor,
+                    backgroundColor:
+                        Theme.of(correctContext).secondaryHeaderColor,
                   );
                 });
             callSetState();

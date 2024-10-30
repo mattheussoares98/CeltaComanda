@@ -108,21 +108,9 @@ class GetxPaymentPresenter extends GetxController
         pdvNumber: 100,
         commandNumber: homePresenter.commandNumber!.toInt(),
         finalizations: _successfulPayments,
-        //finalizations
-        // Money = 1,
-        // Check = 2,
-        // PIX = 3,
-        // PurchaseVale = 4,
-        // DebitCard = 5,
-        // CreditCard = 6,
-        // Covenant = 7,
-        // POS = 8,
-        // Portion = 9,
-        // FinancialCredits = 10
       );
 
       _successfulPayments.clear();
-      _authorizationPendingModel = null;
       await printedProductsPresenter.loadPrinted(homePresenter);
     } catch (e) {
       mainError = UIError.unexpected;
@@ -396,12 +384,16 @@ class GetxPaymentPresenter extends GetxController
           PortionQuantity: 1,
           AuthorizationCode: soapResponse.response,
           AuthorizationType: 2,
-          //Customer = 1,
-          //Convene = 2,
-          //DevolutionCredit = 3,
-          //FinancialCredit = 4,
-          //FidelityCredit = 5
         ));
+
+        await finishSaleRequestConcentrador.finish(
+          pdvNumber: 100,
+          commandNumber: homePresenter.commandNumber!.toInt(),
+          finalizations: _successfulPayments,
+        );
+
+        _authorizationPendingModel = null;
+        _successfulPayments.clear();
       }
     } catch (e) {
       mainError = UIError.unexpected;

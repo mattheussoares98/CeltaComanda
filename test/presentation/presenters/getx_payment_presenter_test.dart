@@ -465,34 +465,6 @@ void main() {
 
       expect(sut.successfulPayments, []);
     });
-    test("Should clear authorization pending model", () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.string(10),
-      );
-
-      await sut.finishSaleRequestByCovenant(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
-
-      expect(
-        sut.authorizationPendingModel,
-        AuthorizationPendingModel(
-          code: soapResponse.response,
-          isPending: true,
-        ),
-      );
-
-      await sut.liquidateCommand(
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      expect(sut.authorizationPendingModel, null);
-    });
   });
 
   group("Navigate to covenant page", () {
@@ -1008,6 +980,79 @@ void main() {
           isPending: true,
         ),
       );
+    });
+
+    test("Should clear authorization pending model", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(sut.authorizationPendingModel, null);
+    });
+    test("Should call finishSaleRequestConcentrador with correct values",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(() => finishSaleRequestConcentrador.finish(
+            pdvNumber: 100,
+            commandNumber: homePresenter.commandNumberMock!.toInt(),
+            finalizations: sut.successfulPayments,
+          )).called(1);
+    });
+    test(
+        "Should not clear authorizationPendingModel and succesfullFinalization on throws",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      finishSaleRequestConcentrador.mockError();
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(sut.successfulPayments, isNotEmpty);
+      expect(sut.authorizationPendingModel, isNotNull);
+    });
+    test("Should clear authorizationPendingModel and succesfullFinalization",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(sut.successfulPayments, []);
+      expect(sut.authorizationPendingModel, null);
     });
   });
 }

@@ -21,8 +21,6 @@ extension StringModifier on String {
     try {
       if (isEmpty) {
         return -1.0;
-      } else if (contains(".") && contains(",")) {
-        return -1.0;
       }
 
       String string = replaceAll(RegExp(r','), '.');

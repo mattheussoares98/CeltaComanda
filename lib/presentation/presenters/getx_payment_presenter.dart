@@ -405,7 +405,7 @@ class GetxPaymentPresenter extends GetxController
 
         //add new finalization in paymentPresent.succesfulFinalizations and call finish
 
-        _authorizationPendingModel = null;
+        // _authorizationPendingModel = null;
 
         await printedProductsPresenter.loadPrinted(homePresenter);
 

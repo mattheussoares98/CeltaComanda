@@ -1043,5 +1043,27 @@ void main() {
         ),
       );
     });
+    test("Should update authorization pending model correctly", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        closePagesUntilHomePage: () {},
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(
+        sut.authorizationPendingModel,
+        AuthorizationPendingModel(
+          code: soapResponse.response,
+          isPending: true,
+        ),
+      );
+    });
   });
 }

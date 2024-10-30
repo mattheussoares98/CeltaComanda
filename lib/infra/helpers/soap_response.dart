@@ -1,9 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 enum SoapResponseType {
   success,
   error,
 }
 
-class SoapResponse {
+class SoapResponse extends Equatable {
   final SoapResponseType responseType;
   final String response;
 
@@ -11,4 +13,7 @@ class SoapResponse {
     required this.response,
     required this.responseType,
   });
+
+  @override
+  List<Object?> get props => [response, responseType];
 }

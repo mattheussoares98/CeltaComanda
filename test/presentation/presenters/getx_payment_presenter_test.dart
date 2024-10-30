@@ -465,6 +465,34 @@ void main() {
 
       expect(sut.successfulPayments, []);
     });
+    test("Should clear authorization pending model", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.string(10),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(
+        sut.authorizationPendingModel,
+        AuthorizationPendingModel(
+          code: soapResponse.response,
+          isPending: true,
+        ),
+      );
+
+      await sut.liquidateCommand(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      expect(sut.authorizationPendingModel, null);
+    });
   });
 
   group("Navigate to covenant page", () {

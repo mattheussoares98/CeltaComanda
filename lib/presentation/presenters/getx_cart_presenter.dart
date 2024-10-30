@@ -430,41 +430,19 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       _saleRequestTemp =
           SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
 
-      final products =
-          _cartProducts.where((e) => e.Product.childsComposition == null).map(
-        (element) {
-          return UpdateSaleRequestTempProductEntity(
-            ProductInternalCodeOnErp:
-                element.toEntity().Product.InternalCodeOnERP!.toInt(),
-            ProductPriceLookUpCode: element.toEntity().ProductPriceLookUpCode,
-            Quantity: element.Quantity.toDouble(),
-            SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-            TotalLiquid: element.TotalLiquid.toDouble(),
-            Value: element.Value.toDouble(),
-            Comments: element.Comments,
-            ProductIsFatherComposition:
-                element.Product.ProductIsFatherComposition == "true",
-            SaleRequestProductIdOfFather: null,
-          );
-        },
-      ).toList();
-
-      final selectedComboxProducts =
-          convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+      final productsEntitys = getProductsEntitys(
         saleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
         insertProductPresenter: insertProductPresenter,
       );
-
-      products.addAll(selectedComboxProducts);
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: products.fold(0.0,
+        TotalLiquid: productsEntitys.fold(0.0,
             (previousValue, element) => element.TotalLiquid + previousValue),
-        Products: products,
+        Products: productsEntitys,
         Comments: _saleRequestTemp?.Comments,
         SellerCode: _saleRequestTemp?.SellerCode,
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
@@ -564,14 +542,34 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  List<UpdateSaleRequestTempProductEntity>
-      convertProductsCompositionToUpdateSaleRequestTempProductEntity({
+  List<UpdateSaleRequestTempProductEntity> getProductsEntitys({
     required int saleRequestTempId,
     required InsertProductPresenter insertProductPresenter,
   }) {
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
     for (var product in _cartProducts) {
-      if (product.Product.childsComposition == null) {
+      int? indexOfProductEntity;
+      late UpdateSaleRequestTempProductEntity productEntity;
+
+      productEntity = UpdateSaleRequestTempProductEntity(
+        ProductInternalCodeOnErp:
+            product.toEntity().Product.InternalCodeOnERP!.toInt(),
+        ProductPriceLookUpCode: product.toEntity().ProductPriceLookUpCode,
+        Quantity: product.Quantity.toDouble(),
+        SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+        TotalLiquid: product.TotalLiquid.toDouble(),
+        Value: product.Value.toDouble(),
+        Comments: product.Comments,
+        ProductIsFatherComposition: product.Product.childsComposition != null &&
+            product.Product.childsComposition!.isNotEmpty,
+        SaleRequestProductIdOfFather: null,
+      );
+
+      productsEntitys.add(productEntity);
+      indexOfProductEntity = productsEntitys.indexOf(productEntity);
+
+      if (product.Product.childsComposition == null ||
+          product.Product.childsComposition!.isEmpty) {
         continue;
       }
       for (var child in product.Product.childsComposition!) {
@@ -579,11 +577,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           continue;
         }
 
-        final updateSaleRequestTempProductEntity =
-            UpdateSaleRequestTempProductEntity(
+        final childEntity = UpdateSaleRequestTempProductEntity(
           ProductIsFatherComposition: false,
-          SaleRequestProductIdOfFather:
-              product.Product.InternalCodeOnERP?.toInt(),
+          SaleRequestProductIdOfFather: indexOfProductEntity,
           ProductInternalCodeOnErp:
               child.childs?.isEmpty == true || child.childs == null
                   ? child.InternalCodeOnERPCodeChild!.toInt()
@@ -602,7 +598,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           Comments: child.commentFather,
         );
 
-        productsEntitys.add(updateSaleRequestTempProductEntity);
+        productsEntitys.add(childEntity);
       }
     }
 

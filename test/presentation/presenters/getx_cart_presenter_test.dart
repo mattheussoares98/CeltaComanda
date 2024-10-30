@@ -1128,7 +1128,7 @@ void main() {
       sut.cartProducts.add(cartProductViewModelWithChilds);
 
       final products =
-          sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+          sut.getProductsEntitys(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
       );
@@ -1833,7 +1833,7 @@ void main() {
       //deixo o id randômico pra ter certeza que vai funcionar
 
       final entity =
-          sut.convertProductsCompositionToUpdateSaleRequestTempProductEntity(
+          sut.getProductsEntitys(
         saleRequestTempId: fakeSaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
       ); //converto o combo pra uma lista de produtos da forma que usa pra adicionar na comanda

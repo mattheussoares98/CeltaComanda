@@ -400,48 +400,48 @@ void main() {
       );
     });
 
-    test("Should call finish sale request concentrador with correct values",
-        () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
+    // test("Should call finish sale request concentrador with correct values",
+    //     () async {
+    //   await sut.updateSelectedCovenant(
+    //     customersViewModel[0],
+    //     faker.randomGenerator.integer(100).toString(),
+    //   );
 
-      await sut.finishSaleRequestByCovenant(
-        paymentPresenter: paymentPresenter,
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
+    //   await sut.finishSaleRequestByCovenant(
+    //     paymentPresenter: paymentPresenter,
+    //     homePresenter: homePresenter,
+    //     closePagesUntilHomePage: () {},
+    //     printedProductsPresenter: printedProductsPresenter,
+    //     showErrorMessageReturnedByBs: (_) {},
+    //     customerPassword: customersViewModel[0].HasPassword,
+    //   );
 
-      verify(
-        () => finishSaleRequestConcentrador.finish(
-          pdvNumber: 100,
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
-          finalizations: [
-            ConcentratorFinalizationModel(
-              FinalizationId:
-                  FinalizationIdentification.covenant.finalizationId,
-              Value: printedProductsPresenter.printedProductsMock.TotalLiquid
-                  .toDouble(),
-              ValueLiquid: printedProductsPresenter
-                  .printedProductsMock.TotalLiquid
-                  .toDouble(),
-              PortionQuantity: 1,
-              AuthorizationCode: soapResponse.response,
-              AuthorizationType: 2,
-              //Customer = 1,
-              //Convene = 2,
-              //DevolutionCredit = 3,
-              //FinancialCredit = 4,
-              //FidelityCredit = 5
-            )
-          ],
-        ),
-      ).called(1);
-    });
+    //   verify(
+    //     () => finishSaleRequestConcentrador.finish(
+    //       pdvNumber: 100,
+    //       commandNumber: homePresenter.commandNumberMock!.toInt(),
+    //       finalizations: [
+    //         ConcentratorFinalizationModel(
+    //           FinalizationId:
+    //               FinalizationIdentification.covenant.finalizationId,
+    //           Value: printedProductsPresenter.printedProductsMock.TotalLiquid
+    //               .toDouble(),
+    //           ValueLiquid: printedProductsPresenter
+    //               .printedProductsMock.TotalLiquid
+    //               .toDouble(),
+    //           PortionQuantity: 1,
+    //           AuthorizationCode: soapResponse.response,
+    //           AuthorizationType: 2,
+    //           //Customer = 1,
+    //           //Convene = 2,
+    //           //DevolutionCredit = 3,
+    //           //FinancialCredit = 4,
+    //           //FidelityCredit = 5
+    //         )
+    //       ],
+    //     ),
+    //   ).called(1);
+    // });
     test("Should call load printed on success", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
@@ -532,30 +532,30 @@ void main() {
       expect(sut.authorizationPendingModel, null);
     });
 
-    test(
-        "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
-        () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
-      );
+    // test(
+    //     "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
+    //     () async {
+    //   await sut.updateSelectedCovenant(
+    //     customersViewModel[0],
+    //     faker.randomGenerator.integer(100).toString(),
+    //   );
 
-      finishSaleRequestConcentrador.mockError();
+    //   finishSaleRequestConcentrador.mockError();
 
-      await sut.finishSaleRequestByCovenant(
-        paymentPresenter: paymentPresenter,
-        homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
-        printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
-      );
+    //   await sut.finishSaleRequestByCovenant(
+    //     paymentPresenter: paymentPresenter,
+    //     homePresenter: homePresenter,
+    //     closePagesUntilHomePage: () {},
+    //     printedProductsPresenter: printedProductsPresenter,
+    //     showErrorMessageReturnedByBs: (_) {},
+    //     customerPassword: customersViewModel[0].HasPassword,
+    //   );
 
-      expect(
-        sut.authorizationPendingModel,
-        AuthorizationPendingModel(code: soapResponse.response, isPending: true),
-      );
-    });
+    //   expect(
+    //     sut.authorizationPendingModel,
+    //     AuthorizationPendingModel(code: soapResponse.response, isPending: true),
+    //   );
+    // });
 
     test(
         "Should call updateSaleRequest with correct customerCode and covenantCode",

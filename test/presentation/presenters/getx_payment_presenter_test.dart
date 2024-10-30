@@ -772,6 +772,8 @@ void main() {
         faker.randomGenerator.integer(100).toString(),
       );
 
+      finishSaleRequestConcentrador.mockError();
+
       await sut.finishSaleRequestByCovenant(
         closePagesUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -975,6 +977,8 @@ void main() {
         customersViewModel[0],
         faker.randomGenerator.string(10),
       );
+
+      finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
         closePagesUntilHomePage: () {},

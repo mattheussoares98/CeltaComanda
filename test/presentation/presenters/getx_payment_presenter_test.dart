@@ -742,7 +742,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -759,7 +758,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -775,7 +773,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -814,7 +811,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -840,7 +836,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -856,7 +851,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -887,7 +881,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -909,7 +902,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -930,7 +922,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -952,7 +943,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -979,7 +969,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -1000,7 +989,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: "",
@@ -1026,7 +1014,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,
@@ -1051,7 +1038,6 @@ void main() {
 
       await sut.finishSaleRequestByCovenant(
         homePresenter: homePresenter,
-        closePagesUntilHomePage: () {},
         printedProductsPresenter: printedProductsPresenter,
         showErrorMessageReturnedByBs: (_) {},
         customerPassword: customersViewModel[0].HasPassword,

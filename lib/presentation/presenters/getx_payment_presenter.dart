@@ -341,7 +341,6 @@ class GetxPaymentPresenter extends GetxController
   Future<void> finishSaleRequestByCovenant({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
-    required void Function() closePagesUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
     required String? customerPassword,
   }) async {
@@ -408,8 +407,6 @@ class GetxPaymentPresenter extends GetxController
         // _authorizationPendingModel = null;
 
         await printedProductsPresenter.loadPrinted(homePresenter);
-
-        closePagesUntilHomePage();
       }
     } catch (e) {
       mainError = UIError.unexpected;

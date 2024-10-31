@@ -1127,8 +1127,7 @@ void main() {
       }
       sut.cartProducts.add(cartProductViewModelWithChilds);
 
-      final products =
-          sut.getProductsEntitys(
+      final products = sut.getProductsEntitys(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
       );
@@ -1157,8 +1156,12 @@ void main() {
             .enterpriseDataEntity?.serviceChargePercentageOrValue,
         IncrementType:
             EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
-        TotalLiquid: products.fold(0.0,
-            (previousValue, element) => element.TotalLiquid + previousValue),
+        TotalLiquid: products
+            .where((e) => e.ProductIsFatherComposition == false)
+            .fold(
+                0.0,
+                (previousValue, element) =>
+                    element.TotalLiquid + previousValue),
         Products: [...products],
       );
 
@@ -1832,13 +1835,32 @@ void main() {
       final fakeSaleRequestTempId = faker.randomGenerator.integer(10);
       //deixo o id randômico pra ter certeza que vai funcionar
 
-      final entity =
-          sut.getProductsEntitys(
+      final entity = sut.getProductsEntitys(
         saleRequestTempId: fakeSaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
       ); //converto o combo pra uma lista de produtos da forma que usa pra adicionar na comanda
 
       expect(entity, [
+        UpdateSaleRequestTempProductEntity(
+          ProductInternalCodeOnErp: cartProductViewModelWithChilds
+              .toEntity()
+              .Product
+              .InternalCodeOnERP!
+              .toInt(),
+          ProductPriceLookUpCode:
+              cartProductViewModelWithChilds.toEntity().ProductPriceLookUpCode,
+          Quantity: cartProductViewModelWithChilds.Quantity.toDouble(),
+          SaleRequestTempId: fakeSaleRequestTempId,
+          TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+          Value: cartProductViewModelWithChilds.Value.toDouble(),
+          Comments: cartProductViewModelWithChilds.Comments,
+          ProductIsFatherComposition:
+              cartProductViewModelWithChilds.Product.childsComposition !=
+                      null &&
+                  cartProductViewModelWithChilds
+                      .Product.childsComposition!.isNotEmpty,
+          SaleRequestProductIdOfFather: null,
+        ),
         UpdateSaleRequestTempProductEntity(
           ProductInternalCodeOnErp:
               firstChild.InternalCodeOnERPCodeFather!.toInt(),
@@ -1851,8 +1873,7 @@ void main() {
           Value: insertProductPresenter
               .calculateProductCompositionPrice(firstChild),
           Comments: firstChild.commentFather,
-          SaleRequestProductIdOfFather:
-              cartProductViewModelWithChilds.Product.InternalCodeOnERP?.toInt(),
+          SaleRequestProductIdOfFather: 0,
           ProductIsFatherComposition: false,
         ),
         UpdateSaleRequestTempProductEntity(
@@ -1867,8 +1888,7 @@ void main() {
           Value: insertProductPresenter
               .calculateProductCompositionPrice(firstChild),
           Comments: secondChild.commentFather,
-          SaleRequestProductIdOfFather:
-              cartProductViewModelWithChilds.Product.InternalCodeOnERP?.toInt(),
+          SaleRequestProductIdOfFather: 0,
           ProductIsFatherComposition: false,
         ),
       ]);

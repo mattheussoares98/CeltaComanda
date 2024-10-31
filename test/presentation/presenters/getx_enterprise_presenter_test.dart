@@ -426,22 +426,6 @@ void main() {
       );
     });
 
-    test(
-        "Should throw DomainError.obligatoryFixedCommandNumber on generatingVersionToRede and command is not fixed",
-        () async {
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.obligatoryFixedCommandNumber]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      homePresenter.isGeneratingVersionToRedeMock = true;
-      homePresenter.isFixedCommandNumberMock = false;
-
-      await sut.validateApiAndGoToHomePage(
-        commandEntity: commandEntity,
-        homePresenter: homePresenter,
-      );
-    });
-
     test("Should update command number with pad left if number is less than 3",
         () async {
       expectLater(

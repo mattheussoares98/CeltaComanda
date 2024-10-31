@@ -560,7 +560,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             product.toEntity().Product.InternalCodeOnERP!.toInt(),
         ProductPriceLookUpCode: product.toEntity().ProductPriceLookUpCode,
         Quantity: product.Quantity.toDouble(),
-        SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
+        SaleRequestTempId: saleRequestTempId,
         TotalLiquid: product.TotalLiquid.toDouble(),
         Value: product.Value.toDouble(),
         Comments: product.Comments,

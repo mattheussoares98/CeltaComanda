@@ -50,6 +50,17 @@ dependencies:
   flutter_widget_from_html: ^0.15.2
   xml2json: ^6.2.4
   wakelock_plus: ^1.2.5
+  icons_launcher: ^3.0.0
+
+icons_launcher:
+  image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    windows:
+      enable: true
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +68,6 @@ dev_dependencies:
   mocktail: ^1.0.3
   faker: ^2.1.0
   network_image_mock: ^2.1.1
-  flutter_launcher_icons: ^0.14.1
   flutter_lints: ^5.0.0
   msix: ^3.16.8
 
@@ -69,21 +79,6 @@ msix_config:
   logo_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
   publisher: CN=9FD149D3-E81E-4537-8E61-2C8B386258B5
   store: true
-
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
-  windows:
-    generate: true
-    image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
-    icon_size: 48
-  web:
-    generate: true
-    image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"
-    background_color: "#ff4242"
-    theme_color: "#ff4242"
     
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

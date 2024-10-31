@@ -3,7 +3,7 @@
     <application
         android:label="Celta comanda"
         android:name="br.com.celtaware.comanda.App"
-        android:icon="@mipmap/launcher_icon"
+        android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
         android:enableOnBackInvokedCallback="true">
         <activity

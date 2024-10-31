@@ -143,11 +143,6 @@ class GetxEnterpriseValidationPresenter extends GetxController
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
 
-      if (homePresenter.isGeneratingVersionToRede &&
-          !commandEntity.isFixedCommandNumber) {
-        throw DomainError.obligatoryFixedCommandNumber;
-      }
-
       if (isUpdatedEnterpriseName ||
           EnterpriseDataBuilder.enterpriseDataEntity!.url == null) {
         await getFirebaseAndConcentradorEnterpriseParameters();
@@ -173,9 +168,9 @@ class GetxEnterpriseValidationPresenter extends GetxController
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;
           break;
-        case DomainError.obligatoryFixedCommandNumber:
-          mainError = UIError.obligatoryFixedCommandNumber;
-          break;
+        // case DomainError.obligatoryFixedCommandNumber:
+        //   mainError = UIError.obligatoryFixedCommandNumber;
+        //   break;
         default:
           mainError = UIError.unexpected;
       }

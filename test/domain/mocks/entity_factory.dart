@@ -572,6 +572,7 @@ class EntityFactory {
           Quantity: faker.randomGenerator.decimal(),
           Value: faker.randomGenerator.decimal(),
           TotalLiquid: faker.randomGenerator.decimal(),
+          ProductIsFatherComposition: faker.randomGenerator.boolean(),
         ),
       ],
       IncrementType: incrementType ?? faker.randomGenerator.integer(2, min: 1),

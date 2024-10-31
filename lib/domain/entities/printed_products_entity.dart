@@ -19,6 +19,7 @@ class PrintedProductsEntity {
   final double TotalLiquid;
   final int ProductInternalCodeOnErp;
   final int SaleRequestId;
+  final bool ProductIsFatherComposition;
 
   PrintedProductsEntity({
     required this.Product,
@@ -37,5 +38,6 @@ class PrintedProductsEntity {
     required this.TotalLiquid,
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
+    required this.ProductIsFatherComposition,
   });
 }

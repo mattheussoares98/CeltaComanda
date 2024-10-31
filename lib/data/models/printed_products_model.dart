@@ -71,6 +71,7 @@ class PrintedProductsModel {
                 TotalLiquid: e["TotalLiquid"],
                 ProductInternalCodeOnErp: e["ProductInternalCodeOnErp"],
                 SaleRequestId: e["SaleRequestId"],
+                ProductIsFatherComposition: e["ProductIsFatherComposition"],
               ))
           .toList(),
       PersonalizedCode: json["PersonalizedCode"],

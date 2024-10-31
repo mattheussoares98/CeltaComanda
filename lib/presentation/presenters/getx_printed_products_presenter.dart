@@ -71,6 +71,8 @@ class GetxPrintedProductsPresenter
 
       _printedProducts = null;
       if (printedProducts?.Products.isEmpty == false) {
+        printedProducts?.Products
+            .removeWhere((e) => e.Product.ProductIsFatherComposition == 1);
         _printedProducts = PrintedViewModel.fromEntity(printedProducts!);
         _printedProducts!.Products.sort((a, b) =>
             DateTime.parse(a.DateHourOfCreation)

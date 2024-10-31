@@ -440,8 +440,12 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: productsEntitys.fold(0.0,
-            (previousValue, element) => element.TotalLiquid + previousValue),
+        TotalLiquid: productsEntitys
+            .where((e) => e.ProductIsFatherComposition == false)
+            .fold(
+                0.0,
+                (previousValue, element) =>
+                    element.TotalLiquid + previousValue),
         Products: productsEntitys,
         Comments: _saleRequestTemp?.Comments,
         SellerCode: _saleRequestTemp?.SellerCode,

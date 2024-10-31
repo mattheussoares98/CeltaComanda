@@ -81,10 +81,10 @@ class _AdvanceButtonState extends State<AdvanceButton> {
         Comments: expansibleGroupFromProductPresenter
             .getConcatenateSelectedCommentsAndObligatoryOptions(
                 widget.selectedProduct.InternalCodeOnERP!.toInt()),
-        TotalLiquid: widget.selectedProduct.SaleRetailPraticed.toDouble() *
-            insertProductsPresenter.totalProductsQuantity,
+        TotalLiquid: widget.totalPrice,
         Quantity: insertProductsPresenter.totalProductsQuantity.toDouble(),
-        Value: widget.selectedProduct.SaleRetailPraticed.toDouble(),
+        Value: widget.totalPrice /
+            insertProductsPresenter.totalProductsQuantity.toDouble(),
         ProductPriceLookUpCode: widget.selectedProduct.PriceLookupCode,
       ),
       menuPresenter: menuPresenter,

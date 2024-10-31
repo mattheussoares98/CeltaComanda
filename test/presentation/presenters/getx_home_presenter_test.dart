@@ -1412,5 +1412,64 @@ void main() {
       verify(() => enterprisePresenter.updateEnterpriseEntity(enterpriseJson))
           .called(1);
     });
+
+    test("Should not call functions if enterpriseId is null", () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName: faker.randomGenerator.string(10),
+        url: faker.randomGenerator.string(10),
+        enterpriseId: null,
+        concentradorUrl: faker.randomGenerator.string(10),
+        persistApp: faker.randomGenerator.boolean(),
+        urlCCS: faker.randomGenerator.string(10),
+        useCovenant: faker.randomGenerator.boolean(),
+        enterpriseConcentradorParametersEntity: null,
+        updateMenuCount: faker.randomGenerator.integer(100),
+        updateEnterpriseCount: faker.randomGenerator.integer(100),
+        serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
+        serviceChargeType: faker.randomGenerator.integer(2),
+      );
+
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      verifyNever(() => localCommandData
+          .load()); //first abstract called function when dont return because id or url is null
+    });
+    test("Should not call functions if enterpriseUrl is null", () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName: faker.randomGenerator.string(10),
+        url: null,
+        enterpriseId: faker.randomGenerator.integer(100),
+        concentradorUrl: faker.randomGenerator.string(10),
+        persistApp: faker.randomGenerator.boolean(),
+        urlCCS: faker.randomGenerator.string(10),
+        useCovenant: faker.randomGenerator.boolean(),
+        enterpriseConcentradorParametersEntity: null,
+        updateMenuCount: faker.randomGenerator.integer(100),
+        updateEnterpriseCount: faker.randomGenerator.integer(100),
+        serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
+        serviceChargeType: faker.randomGenerator.integer(2),
+      );
+
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      verifyNever(() => localCommandData
+          .load()); //first abstract called function when dont return because id or url is null
+    });
   });
 }

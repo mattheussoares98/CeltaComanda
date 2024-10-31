@@ -472,6 +472,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         expansibleGroupFromProductPresenter,
     required EnterpriseValidationPresenter enterprisePresenter,
   }) async {
+    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null ||
+        EnterpriseDataBuilder.enterpriseDataEntity?.url == null) {
+      return;
+    }
     isLoading = true;
     mainError = null;
 

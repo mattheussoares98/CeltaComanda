@@ -45,10 +45,10 @@ abstract class CartPresenter implements ChangeNotifier {
   Future<void> getLocalCartProductsData();
   Future<void> clearCart();
 
-  List<UpdateSaleRequestTempProductEntity>
-      getProductsEntitys({
+  List<UpdateSaleRequestTempProductEntity> getProductsEntitys({
     required int saleRequestTempId,
     required InsertProductPresenter insertProductPresenter,
+    required int productsQuantityInSaleRequest,
   });
 
   CartProductEntity productWithSelectedsComments({

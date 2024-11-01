@@ -16,14 +16,14 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
     required int commandNumber,
   }) async {
     try {
-      final saleRequestTemp = await httpAdapter.request(
+      final saleRequest = await httpAdapter.request(
         url:
             "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/Get?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_personalizedCode=$commandNumber&_considerUsing=true",
         method: "get",
       );
-      if (saleRequestTemp == null) throw Error();
+      if (saleRequest == null) throw Error();
 
-      return SaleRequestModel.fromJson(saleRequestTemp);
+      return SaleRequestModel.fromJson(saleRequest);
     } catch (error) {
       throw DomainError.unexpected;
     }

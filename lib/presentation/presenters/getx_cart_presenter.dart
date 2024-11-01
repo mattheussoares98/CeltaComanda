@@ -438,6 +438,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       final productsEntitys = getProductsEntitys(
         saleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
         insertProductPresenter: insertProductPresenter,
+        productsQuantityInSaleRequest: saleRequestModel.Products?.length ?? 0,
       );
 
       final entity = UpdateSaleRequestTempEntity(
@@ -554,10 +555,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   List<UpdateSaleRequestTempProductEntity> getProductsEntitys({
     required int saleRequestTempId,
     required InsertProductPresenter insertProductPresenter,
+    required int productsQuantityInSaleRequest,
   }) {
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
     for (var product in _cartProducts) {
-      int? indexOfProductEntity;
+      int indexOfProductEntity = 0;
       late UpdateSaleRequestTempProductEntity productEntity;
 
       productEntity = UpdateSaleRequestTempProductEntity(
@@ -575,7 +577,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       );
 
       productsEntitys.add(productEntity);
-      indexOfProductEntity = productsEntitys.indexOf(productEntity);
+      indexOfProductEntity += productsEntitys.indexOf(productEntity) +
+          productsQuantityInSaleRequest;
 
       if (product.Product.childsComposition == null ||
           product.Product.childsComposition!.isEmpty) {

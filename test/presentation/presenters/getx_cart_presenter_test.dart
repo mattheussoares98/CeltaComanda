@@ -1139,6 +1139,7 @@ void main() {
       final products = sut.getProductsEntitys(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
+        productsQuantityInSaleRequest: saleRequestModel.Products?.length ?? 0,
       );
 
       await sut.saveProducts(
@@ -1861,6 +1862,7 @@ void main() {
       final entity = sut.getProductsEntitys(
         saleRequestTempId: fakeSaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
+        productsQuantityInSaleRequest: 0,
       ); //converto o combo pra uma lista de produtos da forma que usa pra adicionar na comanda
 
       expect(entity, [

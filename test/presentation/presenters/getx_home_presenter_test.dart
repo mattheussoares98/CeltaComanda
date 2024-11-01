@@ -418,7 +418,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verifyNever(() => cartPresenter.loadSaleRequest(
+      verifyNever(() => cartPresenter.getSaleRequestTemp(
             fixedCommandEntity.commandNumber.toString(),
           ));
       verifyNever(
@@ -443,7 +443,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verify(() => cartPresenter.loadSaleRequest(
+      verify(() => cartPresenter.getSaleRequestTemp(
             fixedCommandEntity.commandNumber.toString(),
           )).called(1);
       verify(() => printedProductsPresenter.loadPrinted(sut)).called(1);

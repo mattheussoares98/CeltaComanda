@@ -569,7 +569,7 @@ void main() {
   group("LoadSaleRequestTemp", () {
     test("Should update SaleRequestTemp correctly on LoadSaleRequestTemp",
         () async {
-      await sut.loadSaleRequest(homePresenter.commandNumberMock!);
+      await sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
 
       expect(sut.saleRequestTemp,
           SaleRequestTempViewModel.fromEntity(saleRequestTempEntity));
@@ -578,7 +578,7 @@ void main() {
     test("Should emits correct events on LoadSaleRequestTemp throws", () async {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
-      final error = sut.loadSaleRequest(homePresenter.commandNumberMock!);
+      final error = sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
 
       expect(error, throwsA(DomainError.unexpected));
     });
@@ -588,13 +588,13 @@ void main() {
         () async {
       loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
-      final error = sut.loadSaleRequest(homePresenter.commandNumberMock!);
+      final error = sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
 
       expect(error, throwsA(DomainError.commandNotAvailable));
     });
 
     test("Should call LoadSaleRequestTemp with correct values", () async {
-      await sut.loadSaleRequest(homePresenter.commandNumberMock!);
+      await sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
 
       verify(() => loadSaleRequestTemp.load(
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,

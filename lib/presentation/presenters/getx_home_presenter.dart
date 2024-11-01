@@ -161,7 +161,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               (e) => e.SellersId.toString() == saleRequest.SellerCode),
         );
 
-        await cartPresenter.loadSaleRequest(commandNumber!);
+        await cartPresenter.getSaleRequestTemp(commandNumber!);
         await printedProductsPresenter.loadPrinted(this);
 
         final isValid = await commandInformations.isValidDatetime(

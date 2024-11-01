@@ -332,7 +332,7 @@ class GetxInsertProductsPresenter extends GetxController
         entity: entity,
       );
 
-      await cartPresenter.loadSaleRequest(homePresenter.commandNumber!);
+      await cartPresenter.getSaleRequestTemp(homePresenter.commandNumber!);
       return true;
     } on DomainError catch (e) {
       switch (e) {

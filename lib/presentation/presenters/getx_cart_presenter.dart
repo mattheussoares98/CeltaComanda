@@ -34,7 +34,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   });
 
   @override
-  Future<void> loadSaleRequest(String commandNumber) async {
+  Future<void> getSaleRequestTemp(String commandNumber) async {
     clear();
 
     try {

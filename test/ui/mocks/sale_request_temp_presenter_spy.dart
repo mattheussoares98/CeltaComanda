@@ -23,12 +23,12 @@ class CartPresenterSpy extends Mock implements CartPresenter {
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
 
-    when(() => this.loadSaleRequest(any())).thenAnswer((any) async => any);
+    when(() => this.getSaleRequestTemp(any())).thenAnswer((any) async => any);
     when(() => this.clear()).thenAnswer((any) async => any);
   }
 
   void mockLoadSaleRequestTempError(DomainError error) {
-    when(() => this.loadSaleRequest(any())).thenThrow(error);
+    when(() => this.getSaleRequestTemp(any())).thenThrow(error);
   }
 
   void addSaleRequestTempViewModel(SaleRequestTempViewModel? data) =>

@@ -793,7 +793,7 @@ void main() {
           ));
 
       verifyNever(() =>
-          cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!));
+          cartPresenter.getSaleRequestTemp(homePresenter.commandNumberMock!));
     });
     test("Should call updateSaleRequestTemp on updateSaleRequest", () async {
       final case1 = EntityFactory.makeProductCompositionViewModel(
@@ -867,7 +867,7 @@ void main() {
       );
 
       verify(() =>
-              cartPresenter.loadSaleRequest(homePresenter.commandNumberMock!))
+              cartPresenter.getSaleRequestTemp(homePresenter.commandNumberMock!))
           .called(1);
     });
     test("Should emit correct values on cartPresenter.load throws unexpected",

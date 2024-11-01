@@ -13,7 +13,7 @@ abstract class CartPresenter implements ChangeNotifier {
     InsertProductPresenter insertProductPresenter,
   );
 
-  Future<void> loadSaleRequest(String commandNumber);
+  Future<void> getSaleRequestTemp(String commandNumber);
 
   void clear();
 

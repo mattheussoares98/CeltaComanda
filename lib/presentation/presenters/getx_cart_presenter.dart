@@ -20,6 +20,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final CartInformations cartInformations;
   final BarcodeScanner barcodeScanner;
   final CommandInformations commandInformations;
+  final LoadSaleRequest loadSaleRequest;
 
   GetxCartPresenter({
     required this.loadSaleRequestTemp,
@@ -31,6 +32,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required this.cartInformations,
     required this.barcodeScanner,
     required this.commandInformations,
+    required this.loadSaleRequest,
   });
 
   @override

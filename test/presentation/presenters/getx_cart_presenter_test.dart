@@ -31,6 +31,7 @@ void main() {
   late CartInformationsSpy cartInformations;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
+  late LoadSaleRequestSpy loadSaleRequest;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
@@ -63,6 +64,7 @@ void main() {
     printedProductsPresenter = PrintedProductsPresenterSpy();
     homePresenter = HomePresenterSpy();
     insertProductPresenter = InsertProductsPresenterSpy();
+    loadSaleRequest = LoadSaleRequestSpy();
 
     sut = GetxCartPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
@@ -74,6 +76,7 @@ void main() {
       cartInformations: cartInformations,
       barcodeScanner: barcodeScanner,
       commandInformations: commandInformations,
+      loadSaleRequest: loadSaleRequest,
     );
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();

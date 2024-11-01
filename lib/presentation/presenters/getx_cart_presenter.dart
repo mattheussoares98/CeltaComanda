@@ -429,6 +429,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         commandNumber: homePresenter.commandNumber!,
       );
 
+      final saleRequestModel = await loadSaleRequest.load(
+          commandNumber: homePresenter.commandNumber!.toInt());
+
       _saleRequestTemp =
           SaleRequestTempViewModel.fromEntity(saleRequestTempResult);
 

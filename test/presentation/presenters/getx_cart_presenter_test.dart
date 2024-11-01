@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -46,6 +47,8 @@ void main() {
   late int tableNumber;
   late ExpansibleGroupFromProductViewModel commentViewModel;
   late PrintRequestEntity printRequestEntity;
+  late SaleRequestEntity saleRequestEntity;
+  late SaleRequestModel saleRequestModel;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -180,6 +183,8 @@ void main() {
     commentViewModel =
         EntityFactory.makeExpansibleGroupFromProductViewModel(selected: true);
     printRequestEntity = EntityFactory.makePrintRequestEntity();
+    saleRequestEntity = EntityFactory.makeSaleRequestEntity();
+    saleRequestModel = SaleRequestModel.fromEntity(saleRequestEntity);
   }
 
   void initMockSuccess() {
@@ -188,6 +193,7 @@ void main() {
     cartInformations.mockSaveCart([cartProductViewModelWithChilds]);
     cartInformations.mockGetCart([cartProductViewModelWithChilds]);
     barcodeScanner.mockBarcodeScanner(commandNumber);
+    loadSaleRequest.mockLoadSaleRequest(saleRequestModel);
   }
 
   setUp(() {
@@ -1045,7 +1051,7 @@ void main() {
     });
   });
 
-  group("Save cart products in saleRequesTemp", () {
+  group("Save products", () {
     test("Should call correct functions on save products in SaleRequestTemp",
         () async {
       cartProductViewModelWithChilds.Product.childsComposition = null;
@@ -1806,6 +1812,20 @@ void main() {
 
       verify(() => homePresenter
           .updateCommandNumber(newCommandNumber.padLeft(3, "0"))).called(1);
+    });
+    test("Should call load sale request", () async {
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumberMock!,
+      );
+
+      verify(() => loadSaleRequest.load(
+          commandNumber: homePresenter.commandNumberMock!.toInt())).called(1);
     });
   });
 

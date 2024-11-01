@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
+import '../pages.dart';
 
 abstract class ConfigurationsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
+  int? get selectedPeoples;
+  int? get selectedCommand;
+  SellersViewModel? get selectedSeller;
+  List<SellersViewModel> get sellers;
+
+  Future<void> goToSplashPage();
+  Future<bool> updateCommandData({
+    required int newFixedCommandNumber,
+    required int userPersonalizedCode,
+    required String password,
+    required int? peoples,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required String? sellerCode,
+  });
+  Future<bool> openOrBlockadeCommand({
+    required int commandNumber,
+    required bool isOpen,
+    required int userCode,
+    required String password,
+  });
+  void updateSelectedPeoples(int? value);
+  void updateSelectedCommand(int value);
+  void updateSelectedSeller(SellersViewModel? seller);
+  Future<bool> isValidUserAndPassword({
+    required int personalizedCode,
+    required String password,
+  });
 }

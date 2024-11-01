@@ -61,10 +61,10 @@ Future<void> _logout({
   required CartPresenter cartPresenter,
   required MenuPresenter menuPresenter,
 }) async {
+  await cartPresenter.clearCart();
   await homePresenter.goToSplashPage(
     printedProductsPresenter: printedProductsPresenter,
     cartPresenter: cartPresenter,
     menuPresenter: menuPresenter,
   );
-  await cartPresenter.clearCart();
 }

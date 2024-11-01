@@ -1,4 +1,5 @@
 export './getx_cart_presenter.dart';
+export './getx_configurations_presenter.dart';
 export './getx_covenant_presenter.dart';
 export 'getx_expansible_group_from_product_presenter.dart';
 export './getx_enterprise_presenter.dart';

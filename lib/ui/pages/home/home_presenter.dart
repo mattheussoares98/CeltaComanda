@@ -85,4 +85,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
         expansibleGroupFromProductPresenter,
     required EnterpriseValidationPresenter enterprisePresenter,
   });
+
+  Future<void> goToConfigurationsPage();
 }

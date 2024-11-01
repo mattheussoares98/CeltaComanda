@@ -1472,4 +1472,12 @@ void main() {
           .load()); //first abstract called function when dont return because id or url is null
     });
   });
+
+  group("Navigate to configurations page", () {
+    test("Should call navigateTo with correct values", () async {
+      await sut.goToConfigurationsPage();
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations));
+    });
+  });
 }

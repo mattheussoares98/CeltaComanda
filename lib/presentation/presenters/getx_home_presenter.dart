@@ -504,4 +504,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> goToConfigurationsPage() async {
+    await navigateTo.navigate(pageRoute: PageRoutes.configurations);
+  }
 }

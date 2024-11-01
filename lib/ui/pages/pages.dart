@@ -1,4 +1,5 @@
 export 'cart/cart.dart';
+export 'configurations/configurations.dart';
 export 'covenant/covenant.dart';
 export './enterprise_validation/enterprise_validation.dart';
 export 'expansible_group_from_product/expansible_group_from_product.dart';

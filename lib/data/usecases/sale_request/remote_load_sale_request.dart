@@ -12,7 +12,7 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
   });
 
   @override
-  Future<SaleRequestModel> load({
+  Future<SaleRequestModel?> load({
     required int commandNumber,
   }) async {
     try {
@@ -21,7 +21,9 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
             "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/Get?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_personalizedCode=$commandNumber&_considerUsing=true",
         method: "get",
       );
-      if (saleRequest == null) throw Error();
+      if (saleRequest == null) {
+        return null;
+      }
 
       return SaleRequestModel.fromJson(saleRequest);
     } catch (error) {

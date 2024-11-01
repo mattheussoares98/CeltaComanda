@@ -438,7 +438,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       final productsEntitys = getProductsEntitys(
         saleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
         insertProductPresenter: insertProductPresenter,
-        productsQuantityInSaleRequest: saleRequestModel.Products?.length ?? 0,
+        productsQuantityInSaleRequest: saleRequestModel?.Products?.length ?? 0,
       );
 
       final entity = UpdateSaleRequestTempEntity(

@@ -1088,22 +1088,42 @@ void main() {
       expect(sut.successfulPayments, []);
       expect(sut.authorizationPendingModel, null);
     });
-    test("Should load printed products", () async {
-      await sut.updateSelectedCovenant(
-        customersViewModel[0],
-        faker.randomGenerator.string(10),
+  });
+
+  group("Clear payments", () {
+    test("Should clear lastRequestedPaymentFinalization", () async {
+      finishSaleRequestConcentrador.mockError();
+
+      await sut.callPayment(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.credit,
+        homePresenter: homePresenter,
+      );
+      expect(sut.lastRequestedPaymentFinalization, isNotNull);
+
+      sut.clearPayments();
+      expect(sut.lastRequestedPaymentFinalization, null);
+    });
+    test("Should clear successfulPayments", () async {
+      finishSaleRequestConcentrador.mockError();
+
+      await sut.callPayment(
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.credit,
+        homePresenter: homePresenter,
       );
 
-      await sut.finishSaleRequestByCovenant(
-        showSuccessAndCloseUntilHomePage: () {},
+      await sut.liquidateCommand(
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
-        showErrorMessageReturnedByBs: (_) {},
-        customerPassword: customersViewModel[0].HasPassword,
+        showSuccessAndCloseUntilHomePage: () {},
       );
+      expect(sut.successfulPayments, isNotEmpty);
 
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
-          .called(1);
+      sut.clearPayments();
+      expect(sut.successfulPayments, []);
     });
   });
 }

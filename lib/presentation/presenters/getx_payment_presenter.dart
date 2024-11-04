@@ -430,6 +430,12 @@ class GetxPaymentPresenter extends GetxController
     }
   }
 
+  @override
+  void clearPayments() {
+    _lastRequestedPaymentFinalization = null;
+    _successfulPayments.clear();
+  }
+
   ConcentratorFinalizationModel? _lastRequestedPaymentFinalization;
   @override
   ConcentratorFinalizationModel? get lastRequestedPaymentFinalization =>

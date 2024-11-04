@@ -511,6 +511,7 @@ class EntityFactory {
         TotalLiquid: faker.randomGenerator.string(10),
         ProductInternalCodeOnErp: faker.randomGenerator.string(10),
         SaleRequestId: faker.randomGenerator.string(10),
+        ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
       ),
       PrintedProductsViewModel(
         Products: makeProductsViewModel(),
@@ -528,6 +529,7 @@ class EntityFactory {
         TotalLiquid: faker.randomGenerator.string(10),
         ProductInternalCodeOnErp: faker.randomGenerator.string(10),
         SaleRequestId: faker.randomGenerator.string(10),
+        ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
       ),
     ];
   }

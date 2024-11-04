@@ -60,14 +60,14 @@ class _PrintedItemState extends State<PrintedItem> {
                     ],
                   ),
                 ),
-                const Divider(
-                  thickness: 0.3,
-                ),
+                const Divider(thickness: 0.3),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: widget.printed.Products.length,
+                    itemCount: widget.printed.Products.where((e) => e.ProductIsFatherComposition != "true").toList()
+                        .length,
                     itemBuilder: (context, index) {
                       final product = widget.printed.Products[index];
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [

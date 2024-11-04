@@ -23,6 +23,7 @@ class PrintedProductsViewModel extends Equatable {
   final String TotalLiquid;
   final String ProductInternalCodeOnErp;
   final String SaleRequestId;
+  final String ProductIsFatherComposition;
 
   @override
   List get props => [];
@@ -43,6 +44,7 @@ class PrintedProductsViewModel extends Equatable {
     required this.TotalLiquid,
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
+    required this.ProductIsFatherComposition,
     this.Comments,
   });
 
@@ -64,5 +66,6 @@ class PrintedProductsViewModel extends Equatable {
         ProductionStatus: entity.ProductionStatus.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
         SaleRequestId: entity.SaleRequestId.toString(),
+        ProductIsFatherComposition: entity.ProductIsFatherComposition.toString(),
       );
 }

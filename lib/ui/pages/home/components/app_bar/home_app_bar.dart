@@ -44,10 +44,12 @@ PreferredSize homeAppBar({
               onPress: homePresenter.goToPrintedProductsPage,
               buttonName: R.string.requested,
               icon: Icons.list,
-              quantityString:
-                  (printedProductsPresenter.printedProducts?.Products.length ??
-                          0)
-                      .toString(),
+              quantityString: (printedProductsPresenter
+                          .printedProducts?.Products
+                          .where((e) => e.ProductIsFatherComposition == "false")
+                          .length ??
+                      0)
+                  .toString(),
             ),
           ),
         ),

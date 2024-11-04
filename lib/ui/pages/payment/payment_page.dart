@@ -102,82 +102,106 @@ class _PaymentPageState extends State<PaymentPage>
       },
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: Navigator.of(context).pop,
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: Text(R.string.pay),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await printedProductsPresenter.loadPrinted(homePresenter);
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (paymentPresenter.successfulPayments.isNotEmpty ||
+            paymentPresenter.totalPaidValue > 0) {
+          notificationDialog(
+            context: context,
+            titleMessage: R.string.msgClearConfirmedPayments,
+            content: Text(
+              R.string.msgConfirmClearTotalPaid,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: getStringSize(context)),
+            ),
+            onPress: () async {
+              paymentPresenter.clearPayments();
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
             },
-            icon: Row(
+          );
+        } else {
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(R.string.pay),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await printedProductsPresenter.loadPrinted(homePresenter);
+              },
+              icon: Row(
+                children: [
+                  if (homePresenter.commandNumber != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
+                        style: TextStyle(fontSize: getStringSize(context)),
+                      ),
+                    ),
+                  const Icon(Icons.refresh),
+                ],
+              ),
+            ),
+          ],
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (homePresenter.commandNumber != null)
+                if (paymentPresenter
+                        .getTotalPendingValue(printedProductsPresenter) >
+                    0)
+                  PaymentDetails(
+                    pendingValue: paymentPresenter
+                        .getTotalPendingValue(printedProductsPresenter),
+                  ),
+                if (printedProductsPresenter.printedProducts != null &&
+                    paymentPresenter
+                            .getTotalPendingValue(printedProductsPresenter) >
+                        0)
+                  Column(
+                    children: [
+                      if (homePresenter.isGeneratingVersionToGetNet ||
+                          homePresenter.isGeneratingVersionToRede)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: WriteAmoutValueToPay(
+                            formKey: formKey,
+                            paymentController: paymentController,
+                            paymentFocusNode: paymentFocusNode,
+                          ),
+                        ),
+                      PaymentButtons(
+                        paymentController: paymentController,
+                        formKey: formKey,
+                      ),
+                    ],
+                  ),
+                if (paymentPresenter.totalPaidValue ==
+                        printedProductsPresenter.totalLiquid &&
+                    printedProductsPresenter.totalLiquid > 0)
                   Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: Text(
-                      "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
-                      style: TextStyle(fontSize: getStringSize(context)),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: LiquidateCommand(
+                      callSetState: () {
+                        setState(() {});
+                      },
                     ),
                   ),
-                const Icon(Icons.refresh),
+                if (printedProductsPresenter.printedProducts == null ||
+                    !homePresenter.isFixedCommandNumber)
+                  const SearchDataByCommandNumber(),
               ],
             ),
-          ),
-        ],
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (paymentPresenter
-                      .getTotalPendingValue(printedProductsPresenter) >
-                  0)
-                PaymentDetails(
-                  pendingValue: paymentPresenter
-                      .getTotalPendingValue(printedProductsPresenter),
-                ),
-              if (printedProductsPresenter.printedProducts != null &&
-                  paymentPresenter.getTotalPendingValue(printedProductsPresenter) >
-                      0)
-                Column(
-                  children: [
-                    if (homePresenter.isGeneratingVersionToGetNet ||
-                        homePresenter.isGeneratingVersionToRede)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: WriteAmoutValueToPay(
-                          formKey: formKey,
-                          paymentController: paymentController,
-                          paymentFocusNode: paymentFocusNode,
-                        ),
-                      ),
-                    PaymentButtons(
-                      paymentController: paymentController,
-                      formKey: formKey,
-                    ),
-                  ],
-                ),
-              if (paymentPresenter.totalPaidValue ==
-                      printedProductsPresenter.totalLiquid &&
-                  printedProductsPresenter.totalLiquid > 0)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: LiquidateCommand(
-                    callSetState: () {
-                      setState(() {});
-                    },
-                  ),
-                ),
-              if (printedProductsPresenter.printedProducts == null ||
-                  !homePresenter.isFixedCommandNumber)
-                const SearchDataByCommandNumber(),
-            ],
           ),
         ),
       ),

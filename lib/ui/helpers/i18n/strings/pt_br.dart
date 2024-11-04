@@ -18,8 +18,8 @@ class PtBr implements Translation {
       "Essa comanda não possui valores em aberto";
   String get msgCommandDontHaveProducts =>
       "Não há produtos solicitados nessa mesa";
-  String get msgConfirmClearConfirmedPayments =>
-      "Ao sair da tela, todas formas de pagamento confirmadas serão limpas";
+  String get msgConfirmClearTotalPaid =>
+      "Ao sair da tela, o total pago será limpo";
   String get msgConsultCommandToViewProducts =>
       "Consulte alguma comanda para visualizar os produtos solicitados";
   String get msgEvaluateFood => "Avalie a comida";

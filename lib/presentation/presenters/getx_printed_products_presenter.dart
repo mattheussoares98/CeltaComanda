@@ -246,14 +246,39 @@ class GetxPrintedProductsPresenter
         throw DomainError.invalidCredentialsOrAccessDenied;
       }
 
+      final model = SaleRequestModel(
+        CovenantCode: null,
+        CustomerCode: null,
+        IncrementType: 0,
+        IncrementValue: 0,
+        TotalLiquid: _printedProducts!.TotalLiquid.toDouble(),
+        EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
+        Products: _printedProducts!.Products
+            .where((e) => e.ProductIsFatherComposition == "false")
+            .toList()
+            .map((e) => SaleRequestProductModel(
+                  SaleMovementProductCompositionId: null,
+                  ProductPriceLookUpCode: e.ProductPriceLookUpCode,
+                  QuantityString: e.QuantityString,
+                  Comments: e.Comments,
+                  DateHourOfCreation: e.DateHourOfCreation,
+                  IsCancelled: e.IsCancelled == "true",
+                  IsDelivered: e.IsDelivered == "true",
+                  IsPrinted: e.IsPrinted == "true",
+                  SaleRequestProductId: e.SaleRequestProductId.toInt(),
+                  UserId: e.UserId.toInt(),
+                  ProductionStatus: e.ProductionStatus.toInt(),
+                  ProductInternalCodeOnErp: e.ProductInternalCodeOnErp.toInt(),
+                  SaleRequestId: e.SaleRequestId.toInt(),
+                  Value: e.Value.toDouble(),
+                  Quantity: e.Quantity.toDouble(),
+                  TotalLiquid: e.TotalLiquid.toDouble(),
+                ))
+            .toList(),
+      );
+
       await updateSaleRequest.update(
-        model: SaleRequestModel(
-          CovenantCode: null,
-          CustomerCode: null,
-          IncrementType: 0,
-          IncrementValue: 0,
-          TotalLiquid: _printedProducts!.TotalLiquid.toDouble(),
-        ),
+        model: model,
         commandNumberWithThreeNumbers:
             homePresenter.commandNumber!.padLeft(3, "0"),
         saleRequestId: _printedProducts!.SaleRequestId.toInt(),

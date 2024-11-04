@@ -33,5 +33,5 @@ abstract class EnterpriseValidationPresenter implements Listenable {
     required String? newCommandValue,
     required HomePresenter homePresenter,
   });
-  Future<void> updateEnterpriseEntity(Map<String, dynamic> enterpriseData);
+  // Future<void> updateEnterpriseEntity(Map<String, dynamic> enterpriseData);
 }

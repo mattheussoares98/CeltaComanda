@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -547,25 +546,6 @@ void main() {
         commandEntity: commandEntity,
         homePresenter: homePresenter,
       );
-    });
-  });
-
-  group("Update enterprise entity", () {
-    test("Should update EnterpriseDataBuilder correctly", () async {
-      final newEnterprise = EntityFactory.makeEnterpriseData();
-
-      await sut.updateEnterpriseEntity(
-          EnterpriseValidationModel.fromEntity(newEnterprise).toJson());
-
-      expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
-    });
-    test("Should update local data", () async {
-      final newEnterprise = EntityFactory.makeEnterpriseData();
-
-      await sut.updateEnterpriseEntity(
-          EnterpriseValidationModel.fromEntity(newEnterprise).toJson());
-
-      verify(() => localEnterpriseData.add(newEnterprise)).called(1);
     });
   });
 }

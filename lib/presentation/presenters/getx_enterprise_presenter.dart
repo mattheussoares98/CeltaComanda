@@ -1,4 +1,3 @@
-import '../../data/models/models.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -270,19 +269,5 @@ class GetxEnterpriseValidationPresenter extends GetxController
       commandNumber: commandWithPadLeft,
       isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
     );
-  }
-
-  @override
-  Future<void> updateEnterpriseEntity(
-    Map<String, dynamic> enterpriseData,
-  ) async {
-    try {
-      EnterpriseDataBuilder.enterpriseDataEntity =
-          EnterpriseValidationModel.fromJson(enterpriseData).toEntity();
-
-      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
-    } catch (e) {
-      return;
-    }
   }
 }

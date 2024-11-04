@@ -496,7 +496,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (enterprise.updateEnterpriseCount !=
           EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount) {
         _updateEnterpriseCount = enterprise.updateEnterpriseCount;
-        await enterprisePresenter.updateEnterpriseEntity(data);
+        await enterprisePresenter.getFirebaseAndConcentradorEnterpriseParameters();
       }
     } catch (e) {
       mainError = UIError.unexpected;

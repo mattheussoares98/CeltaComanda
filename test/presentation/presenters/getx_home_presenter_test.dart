@@ -1397,21 +1397,6 @@ void main() {
 
       verify(() => localCommandData.load()).called(1);
     });
-    test("Should update enterprise if enterpriseCount is different", () async {
-      expect(EnterpriseDataBuilder.enterpriseDataEntity, isNot(enterpriseJson));
-      await sut.doOnRemoteEnterpriseChanges(
-        data: enterpriseJson,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        enterprisePresenter: enterprisePresenter,
-      );
-
-      verify(() => enterprisePresenter.updateEnterpriseEntity(enterpriseJson))
-          .called(1);
-    });
 
     test("Should not call functions if enterpriseId is null", () async {
       EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
@@ -1470,6 +1455,20 @@ void main() {
 
       verifyNever(() => localCommandData
           .load()); //first abstract called function when dont return because id or url is null
+    });
+    test("Should call enterpriseValidationPresenter.", () async {
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      verify(() => enterprisePresenter
+          .getFirebaseAndConcentradorEnterpriseParameters()).called(1);
     });
   });
 

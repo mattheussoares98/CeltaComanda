@@ -372,13 +372,15 @@ class GetxPaymentPresenter extends GetxController
         }
       }
 
+      double pendingValue = getTotalPendingValue(printedProductsPresenter);
+
       SoapResponse soapResponse = await covenantLimit
           .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
         customerCode: _selectedCovenant.keys.first.toInt(),
         covenantCode: _selectedCovenant.values.first!.toInt(),
-        value: printedProductsPresenter.printedProducts!.TotalLiquid.toDouble(),
+        value: pendingValue,
       );
 
       if (soapResponse.responseType == SoapResponseType.error) {
@@ -399,8 +401,6 @@ class GetxPaymentPresenter extends GetxController
           saleRequestId:
               printedProductsPresenter.printedProducts!.SaleRequestId.toInt(),
         );
-
-        double pendingValue = getTotalPendingValue(printedProductsPresenter);
 
         _successfulPayments.add(ConcentratorFinalizationModel(
           FinalizationId: FinalizationIdentification.covenant.finalizationId,

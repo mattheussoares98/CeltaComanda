@@ -330,14 +330,15 @@ void main() {
       );
 
       expect(
-        sut.lastRequestedPaymentFinalization,
-        ConcentratorFinalizationModel(
-          FinalizationId: PaymentMode.pix.finalizationId,
-          Value: longAmountValue,
-          ValueLiquid: longAmountValue,
-          PortionQuantity: 1,
-        ),
+        sut.lastRequestedPaymentFinalization!.FinalizationId,
+        PaymentMode.pix.finalizationId,
       );
+      expect(sut.lastRequestedPaymentFinalization!.Value, longAmountValue);
+      expect(
+        sut.lastRequestedPaymentFinalization!.ValueLiquid,
+        longAmountValue,
+      );
+      expect(sut.lastRequestedPaymentFinalization!.PortionQuantity, 1);
     });
   });
 
@@ -828,8 +829,7 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value: printedProductsPresenter.printedProductsMock.TotalLiquid
-              .toDouble(),
+          value: sut.getTotalPendingValue(printedProductsPresenter),
         ),
       ).called(1);
     });

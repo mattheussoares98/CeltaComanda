@@ -9,6 +9,7 @@ class PtBr implements Translation {
   String get msgEmailInUse => 'O email já está em uso.';
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
+  String get msgClearConfirmedPayments => "Limpar pagamentos confirmados";
   String get msgCloseApplication => "Fechar aplicativo";
   String get msgCommandAlreadyPaid =>
       "Essa comanda já foi paga mas houve um erro para liquidar ela. Liquide ou libere a comanda";

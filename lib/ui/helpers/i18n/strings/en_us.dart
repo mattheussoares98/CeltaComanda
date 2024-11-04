@@ -8,6 +8,7 @@ class EnUs implements Translation {
   String get msgBlockedCommand => 'Command blocked';
   String get msgEmailInUse => 'Email already in use';
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
+  String get msgClearConfirmedPayments => 'Clear all confirmed payments';
   String get msgCloseApplication => 'Close application';
   String get msgCommandAlreadyPaid =>
       'This command already paid but an error was ocurred to liquidate. Liberate or liquidate this command';

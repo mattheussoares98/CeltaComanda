@@ -16,6 +16,7 @@ class EnUs implements Translation {
   String get msgCommandDontHaveOpenValues => 'This command has no open values';
   String get msgCommandDontHaveProducts =>
       "This command has no products inserted";
+  String get msgConfirmClearConfirmedPayments => "If you exit the page, all confirmed payments will be cleared";
   String get msgConsultCommandToViewProducts =>
       "Search command to view products";
   String get msgEvaluateFood => 'Rate the food';

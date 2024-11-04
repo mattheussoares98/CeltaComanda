@@ -10,6 +10,7 @@ abstract class Translation {
   String get msgCommandBlocked;
   String get msgCommandDontHaveOpenValues;
   String get msgCommandDontHaveProducts;
+  String get msgConfirmClearConfirmedPayments;
   String get msgConsultCommandToViewProducts;
   String get msgEvaluateFood;
   String get msgEvaluateDrink;

@@ -330,7 +330,7 @@ void main() {
       );
 
       expect(
-        sut.lastPaymentRequested,
+        sut.lastRequestedPaymentFinalization,
         ConcentratorFinalizationModel(
           FinalizationId: PaymentMode.pix.finalizationId,
           Value: longAmountValue,
@@ -470,6 +470,15 @@ void main() {
       );
 
       expect(sut.successfulPayments, []);
+    });
+    test("Should clear last requested paymento amount", () async {
+      await sut.liquidateCommand(
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      expect(sut.lastRequestedPaymentFinalization, null);
     });
   });
 

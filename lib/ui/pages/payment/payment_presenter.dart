@@ -11,7 +11,7 @@ abstract class PaymentPresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<bool> get updateScreenStream;
   double get totalPaidValue;
-  ConcentratorFinalizationModel? get lastPaymentRequested;
+  ConcentratorFinalizationModel? get lastRequestedPaymentFinalization;
   List<ConcentratorFinalizationModel> get successfulPayments;
   Stream<ValidationError?> get customerErrorStream;
   Stream<List<CustomerViewModel>?> get customersViewModelStream;

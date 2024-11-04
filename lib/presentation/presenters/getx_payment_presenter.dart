@@ -48,7 +48,7 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      _lastRequestedPaymentAmount = ConcentratorFinalizationModel(
+      _lastRequestedPaymentFinalization = ConcentratorFinalizationModel(
         FinalizationId: paymentMode.finalizationId,
         Value: longAmountValue,
         ValueLiquid: longAmountValue,
@@ -93,8 +93,8 @@ class GetxPaymentPresenter extends GetxController
   }) async {
     updateScreen = true;
 
-    if (_lastRequestedPaymentAmount != null) {
-      _successfulPayments.add(_lastRequestedPaymentAmount!);
+    if (_lastRequestedPaymentFinalization != null) {
+      _successfulPayments.add(_lastRequestedPaymentFinalization!);
     }
     updateScreen = false;
 
@@ -113,6 +113,7 @@ class GetxPaymentPresenter extends GetxController
 
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
+      _lastRequestedPaymentFinalization = null;
       await printedProductsPresenter.loadPrinted(homePresenter);
     } catch (e) {
       mainError = UIError.unexpected;
@@ -426,10 +427,10 @@ class GetxPaymentPresenter extends GetxController
     }
   }
 
-  ConcentratorFinalizationModel? _lastRequestedPaymentAmount;
+  ConcentratorFinalizationModel? _lastRequestedPaymentFinalization;
   @override
-  ConcentratorFinalizationModel? get lastPaymentRequested =>
-      _lastRequestedPaymentAmount;
+  ConcentratorFinalizationModel? get lastRequestedPaymentFinalization =>
+      _lastRequestedPaymentFinalization;
 
   final _updateScreenStream = Rx<bool>(false);
   @override

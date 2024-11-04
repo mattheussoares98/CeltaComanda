@@ -28,12 +28,14 @@ class ConcentratorFinalizationModel extends Equatable {
   final String? TEFModalityPaymentCode;
   final String? TEFModalityDescription;
   final String? TEFPlanCardCode;
+  final String? finalizationIdentification;
 
   const ConcentratorFinalizationModel({
     required this.FinalizationId,
     required this.Value,
     required this.ValueLiquid,
     required this.PortionQuantity,
+    this.finalizationIdentification,
     this.AuthorizationType,
     this.SaleMovementFinalizationId,
     this.PayBackValue,
@@ -55,6 +57,7 @@ class ConcentratorFinalizationModel extends Equatable {
   @override
   List<Object?> get props => [
         FinalizationId,
+        finalizationIdentification,
         AuthorizationType,
         Value,
         ValueLiquid,

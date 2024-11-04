@@ -143,8 +143,7 @@ class _PaymentPageState extends State<PaymentPage>
                       .getTotalPendingValue(printedProductsPresenter),
                 ),
               if (printedProductsPresenter.printedProducts != null &&
-                  paymentPresenter
-                          .getTotalPendingValue(printedProductsPresenter) >
+                  paymentPresenter.getTotalPendingValue(printedProductsPresenter) >
                       0)
                 Column(
                   children: [

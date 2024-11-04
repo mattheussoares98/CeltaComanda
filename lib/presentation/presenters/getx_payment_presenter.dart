@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -53,6 +54,7 @@ class GetxPaymentPresenter extends GetxController
         Value: longAmountValue,
         ValueLiquid: longAmountValue,
         PortionQuantity: 1,
+        finalizationIdentification: Random().nextDouble().toString(),
       );
 
       bool isValid = await commandInformations.isValidDatetime(
@@ -93,7 +95,8 @@ class GetxPaymentPresenter extends GetxController
   }) async {
     updateScreen = true;
 
-    if (_lastRequestedPaymentFinalization != null) {
+    if (_lastRequestedPaymentFinalization != null &&
+        !_successfulPayments.contains(_lastRequestedPaymentFinalization)) {
       _successfulPayments.add(_lastRequestedPaymentFinalization!);
     }
     updateScreen = false;

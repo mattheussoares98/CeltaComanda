@@ -619,7 +619,10 @@ void main() {
 
       expect(
         sut.totalLiquid.toStringAsFixed(2).toDouble(),
-        (printed.TotalLiquid.toDouble() * (printed.IncrementValue! / 100 + 1))
+        (((printed.TotalLiquid.toDouble() *
+                        (printed.IncrementValue! / 100 + 1)) *
+                    100) /
+                100)
             .toStringAsFixed(2)
             .toDouble(),
       );
@@ -710,6 +713,8 @@ void main() {
             IncrementType: 0,
             IncrementValue: 0,
             TotalLiquid: sut.printedProducts!.TotalLiquid.toDouble(),
+            EnterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
           ),
           commandNumberWithThreeNumbers:
               homePresenter.commandNumberMock!.padLeft(3, "0"),

@@ -43,7 +43,7 @@ class _PortraitInsertProductsPageBodyState
       if (_scrollController != null && !_isDisposed) {
         _scrollController!.animateTo(
           _scrollController!.position.maxScrollExtent,
-          duration: const Duration(seconds: 1),
+          duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
         );
       }

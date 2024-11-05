@@ -1,4 +1,7 @@
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
@@ -14,6 +17,7 @@ class GetxConfigurationsPresenter extends GetxController
   final CovenantLimit covenantLimit;
   final UpdateSaleRequest updateSaleRequest;
   final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
+  final UserValidations userValidations;
 
   GetxConfigurationsPresenter({
     required this.loadCustomer,
@@ -21,6 +25,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.covenantLimit,
     required this.updateSaleRequest,
     required this.checkPasswordByCustomerCode,
+    required this.userValidations,
   });
 
   @override
@@ -31,7 +36,33 @@ class GetxConfigurationsPresenter extends GetxController
     required int personalizedCode,
     required String password,
   }) async {
-    return false;
+    isLoading = true;
+    mainError = null;
+
+    try {
+      final isValid = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: personalizedCode,
+        password: password,
+      );
+
+      if (!isValid) {
+        throw DomainError.invalidCredentials;
+      }
+
+      return isValid;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.invalidCredentials:
+          mainError = UIError.invalidCredentials;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+      return false;
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override

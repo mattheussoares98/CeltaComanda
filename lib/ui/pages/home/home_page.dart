@@ -132,9 +132,7 @@ class _HomePageState extends State<HomePage>
           child: Scaffold(
             drawerEnableOpenDragGesture: false,
             //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
-            drawer: homePresenter.isGeneratingVersionToRede ||
-                    homePresenter.isGeneratingVersionToGetNet ||
-                    homePresenter.isGeneratingVersionToMicrosoftStore
+            drawer: !homePresenter.isFixedCommandNumber
                 ? const DrawerItems()
                 : null,
             appBar: homeAppBar(

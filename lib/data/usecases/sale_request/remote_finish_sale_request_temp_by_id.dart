@@ -9,11 +9,11 @@ class RemoteFinishSaleRequestTempById implements FinishSaleRequestTempById {
   RemoteFinishSaleRequestTempById({required this.httpAdapter});
 
   @override
-  Future<void> finish(String saleRequestTempId) async {
+  Future<void> finish(int saleRequestTempId) async {
     try {
       await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/FinishTempById?$saleRequestTempId",
+            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/FinishTempById?saleRequestTempId=$saleRequestTempId",
         method: "post",
       );
     } catch (error) {

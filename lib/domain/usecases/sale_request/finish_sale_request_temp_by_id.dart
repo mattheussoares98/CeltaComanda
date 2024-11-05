@@ -1,3 +1,3 @@
 abstract class FinishSaleRequestTempById {
-  Future<void> finish(String saleRequestTempId);
+  Future<void> finish(int saleRequestTempId);
 }

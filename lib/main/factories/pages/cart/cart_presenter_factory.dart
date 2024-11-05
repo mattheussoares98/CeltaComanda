@@ -4,7 +4,7 @@ import '../../../../ui/pages/pages.dart';
 
 CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
-      finishSaleRequestTemp: makeRemoteFinishSaleRequestTemp(),
+      finishSaleRequestTempById: makeRemoteFinishSaleRequestTempById(),
       addPrintRequest: makeRemoteAddPrintRequest(),
       localPrintRequest: makeLocalPrintRequest(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),

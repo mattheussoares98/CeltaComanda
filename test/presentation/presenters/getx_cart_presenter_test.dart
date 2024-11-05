@@ -24,7 +24,7 @@ void main() {
   late InsertProductsPresenterSpy insertProductPresenter;
 
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
-  late FinishSaleRequestTempSpy finishSaleRequestTemp;
+  late FinishSaleRequestTempByIdSpy finishSaleRequestTempById;
   late AddPrintRequestSpy addPrintRequest;
   late LocalPrintRequestSpy localPrintRequest;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
@@ -52,7 +52,7 @@ void main() {
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
-    finishSaleRequestTemp = FinishSaleRequestTempSpy();
+    // finishSaleRequestTemp = FinishSaleRequestTempSpy();
     addPrintRequest = AddPrintRequestSpy();
     localPrintRequest = LocalPrintRequestSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
@@ -60,6 +60,7 @@ void main() {
     cartInformations = CartInformationsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
+    finishSaleRequestTempById = FinishSaleRequestTempByIdSpy();
   }
 
   void initPresenters() {
@@ -71,7 +72,7 @@ void main() {
 
     sut = GetxCartPresenter(
       loadSaleRequestTemp: loadSaleRequestTemp,
-      finishSaleRequestTemp: finishSaleRequestTemp,
+      finishSaleRequestTempById: finishSaleRequestTempById,
       addPrintRequest: addPrintRequest,
       localPrintRequest: localPrintRequest,
       updateSaleRequestTemp: updateSaleRequestTemp,
@@ -686,7 +687,7 @@ void main() {
     });
 
     test("Should call correct printRequests when finish throw", () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+      finishSaleRequestTempById.mockFinishError();
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1076,7 +1077,7 @@ void main() {
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
-      ).called(2);
+      ).called(1);
 
       verify(() => confirmedCartProducts.isConfirmed()).called(1);
       verify(() => confirmedCartProducts.updateValue(true)).called(1);
@@ -1120,9 +1121,8 @@ void main() {
             entity: teste,
           )).called(1);
 
-      verify(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: saleRequestTempEntity,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      verify(() => finishSaleRequestTempById.finish(
+            saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
       verify(() => printedProductsPresenter.loadPrinted(homePresenter))
           .called(1);
@@ -1278,9 +1278,8 @@ void main() {
             entity: updateSaleRequestTempEntity,
           ));
 
-      verifyNever(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: saleRequestTempEntity,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      verifyNever(() => finishSaleRequestTempById.finish(
+            saleRequestTempEntity.SaleRequestTempId,
           ));
     });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {
@@ -1330,9 +1329,8 @@ void main() {
             entity: updateSaleRequestTempEntity,
           ));
 
-      verifyNever(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: saleRequestTempEntity,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      verifyNever(() => finishSaleRequestTempById.finish(
+            saleRequestTempEntity.SaleRequestTempId,
           ));
     });
     test("Should emit correct values updateSaleRequestTemp throws", () async {
@@ -1386,13 +1384,12 @@ void main() {
       verifyNever(() => confirmedCartProducts.updateValue(true));
       verifyNever(() => confirmedCartProducts.updateValue(false));
 
-      verifyNever(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: saleRequestTempEntity,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      verifyNever(() => finishSaleRequestTempById.finish(
+            saleRequestTempEntity.SaleRequestTempId,
           ));
     });
     test("Should emit correct values finishSaleRequestTemp throws", () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+      finishSaleRequestTempById.mockFinishError();
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -1409,7 +1406,7 @@ void main() {
     });
     test("Should call correct functions when finishSaleRequestTemp throws",
         () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+      finishSaleRequestTempById.mockFinishError();
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1427,16 +1424,15 @@ void main() {
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
-      ).called(2);
+      ).called(1);
 
       verify(() => updateSaleRequestTemp.update(
             url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
             entity: updateSaleRequestTempEntity,
           )).called(1);
 
-      verify(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: saleRequestTempEntity,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      verify(() => finishSaleRequestTempById.finish(
+            saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
 
       verify(() => confirmedCartProducts.isConfirmed()).called(1);
@@ -1506,7 +1502,7 @@ void main() {
     test(
         "Should NOT call udpate confirmedCartProducts with false value when finishSaleRequestTemp throws",
         () async {
-      finishSaleRequestTemp.mockFinishSaleRequestTempError();
+      finishSaleRequestTempById.mockFinishError();
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1634,75 +1630,6 @@ void main() {
       expect(isUpdated, false);
     });
 
-    test("Should save DeliveryControl with correct value", () async {
-      sut.cartProducts.add(cartProductViewModelWithChilds);
-
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: null,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: SaleRequestTempEntity(
-              Peoples: updateSaleRequestTempEntity.Peoples,
-              DeliveryControl: null,
-              Products: saleRequestTempEntity.Products,
-              SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
-              PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
-              EnterpriseId: saleRequestTempEntity.EnterpriseId,
-              TotalLiquid: saleRequestTempEntity.TotalLiquid,
-              Comments: saleRequestTempEntity.Comments,
-              SellerCode: saleRequestTempEntity.SellerCode,
-              CustomerCode: saleRequestTempEntity.CustomerCode,
-              CovenantCode: saleRequestTempEntity.CovenantCode,
-              IncrementValue: EnterpriseDataBuilder
-                  .enterpriseDataEntity?.serviceChargePercentageOrValue,
-              IncrementType:
-                  EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
-            ),
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          )).called(1);
-    });
-    test(
-        "Should save DeliveryControl with correct tableNumber when is differente than 0",
-        () async {
-      sut.cartProducts.add(cartProductViewModelWithChilds);
-      confirmedCartProducts.mockIsConfirmed(false);
-
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => finishSaleRequestTemp.finish(
-            saleRequestTempEntity: SaleRequestTempEntity(
-              Peoples: updateSaleRequestTempEntity.Peoples,
-              SellerCode: updateSaleRequestTempEntity.SellerCode,
-              DeliveryControl: tableNumber,
-              Products: saleRequestTempEntity.Products,
-              SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
-              PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
-              EnterpriseId: saleRequestTempEntity.EnterpriseId,
-              TotalLiquid: saleRequestTempEntity.TotalLiquid,
-              Comments: saleRequestTempEntity.Comments,
-              CustomerCode: saleRequestTempEntity.CustomerCode,
-              CovenantCode: saleRequestTempEntity.CovenantCode,
-              IncrementValue: EnterpriseDataBuilder
-                  .enterpriseDataEntity?.serviceChargePercentageOrValue,
-              IncrementType:
-                  EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
-            ),
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          )).called(1);
-    });
     test(
         "Should not call barcodeScanner.read if homePresenter.isFixedCommandNumber",
         () async {

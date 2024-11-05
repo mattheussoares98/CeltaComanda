@@ -12,7 +12,7 @@ import '../../ui/pages/pages.dart';
 
 class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
-  final FinishSaleRequestTemp finishSaleRequestTemp;
+  final FinishSaleRequestTempById finishSaleRequestTempById;
   final AddPrintRequest addPrintRequest;
   final LocalPrintRequest localPrintRequest;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
@@ -24,7 +24,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   GetxCartPresenter({
     required this.loadSaleRequestTemp,
-    required this.finishSaleRequestTemp,
+    required this.finishSaleRequestTempById,
     required this.addPrintRequest,
     required this.localPrintRequest,
     required this.updateSaleRequestTemp,
@@ -476,33 +476,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         await confirmedCartProducts.updateValue(true);
       }
 
-      saleRequestTempResult = await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!,
-      );
-
-      await finishSaleRequestTemp.finish(
-        saleRequestTempEntity: SaleRequestTempEntity(
-          Products: saleRequestTempResult.Products,
-          SaleRequestTempId: saleRequestTempResult.SaleRequestTempId,
-          PersonalizedCode: saleRequestTempResult.PersonalizedCode,
-          EnterpriseId: saleRequestTempResult.EnterpriseId,
-          TotalLiquid: saleRequestTempResult.TotalLiquid,
-          DeliveryControl: tableNumber,
-          Comments: saleRequestTempResult.Comments,
-          Peoples: saleRequestTempResult.Peoples,
-          SellerCode: saleRequestTempResult.SellerCode,
-          CustomerCode: saleRequestTempResult.CustomerCode,
-          CovenantCode: saleRequestTempResult.CovenantCode,
-          IncrementValue: EnterpriseDataBuilder
-                  .enterpriseDataEntity?.serviceChargePercentageOrValue ??
-              0,
-          IncrementType:
-              EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType ??
-                  0,
-        ),
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      await finishSaleRequestTempById.finish(
+        _saleRequestTemp!.SaleRequestTempId.toInt(),
       );
 
       await confirmedCartProducts.updateValue(false);

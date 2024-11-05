@@ -12,8 +12,8 @@ import 'package:mocktail/mocktail.dart';
 
 class EnterpriseDataEntitySpy extends Mock implements EnterpriseEntity {}
 
-class EnterpriseValidationPresenterSpy extends Mock
-    implements EnterpriseValidationPresenter {
+class EnterprisePresenterSpy extends Mock
+    implements EnterprisePresenter {
   final mainErrorController = StreamController<UIError?>();
   final enterpriseErrorController = StreamController<UIError?>();
   final isFormValidController = StreamController<bool>();
@@ -22,7 +22,7 @@ class EnterpriseValidationPresenterSpy extends Mock
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
 
-  EnterpriseValidationPresenterSpy() {
+  EnterprisePresenterSpy() {
     when(() => this.isUpdatedEnterpriseName)
         .thenReturn(isUpdatedEnterpriseNameController);
     when(() => this.enterpriseNameController)

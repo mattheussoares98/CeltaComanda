@@ -24,7 +24,7 @@ void main() {
   late MenuPresenterSpy menuPresenter;
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
-  late EnterpriseValidationPresenterSpy enterprisePresenter;
+  late EnterprisePresenterSpy enterprisePresenter;
 
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -58,7 +58,7 @@ void main() {
     menuPresenter = MenuPresenterSpy();
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
-    enterprisePresenter = EnterpriseValidationPresenterSpy();
+    enterprisePresenter = EnterprisePresenterSpy();
     sut = GetxHomePresenter(
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
@@ -1456,7 +1456,7 @@ void main() {
       verifyNever(() => localCommandData
           .load()); //first abstract called function when dont return because id or url is null
     });
-    test("Should call enterpriseValidationPresenter.", () async {
+    test("Should call enterprisePresenter.", () async {
       await sut.doOnRemoteEnterpriseChanges(
         data: enterpriseJson,
         menuPresenter: menuPresenter,

@@ -11,14 +11,14 @@
 // import 'package:flutter_test/flutter_test.dart';
 
 // void main() {
-//   late EnterpriseValidationPresenterSpy presenter;
+//   late EnterprisePresenterSpy presenter;
 //   late HomePresenterSpy homePresenter;
 //   EnterpriseDataBuilder.enterpriseDataEntity =
 //       EntityFactory.makeEnterpriseData();
 
 //   setUp(() {
 //     homePresenter = HomePresenterSpy();
-//     presenter = EnterpriseValidationPresenterSpy();
+//     presenter = EnterprisePresenterSpy();
 //     presenter.mockLoadRemoteData(EnterpriseDataBuilder.enterpriseDataEntity);
 //   });
 

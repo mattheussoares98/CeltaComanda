@@ -27,14 +27,13 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
       if (mounted) {
         Future.delayed(Duration.zero, () async {
           HomePresenter homePresenter = Provider.of(context, listen: false);
-          EnterpriseValidationPresenter enterpriseValidationPresenter =
+          EnterprisePresenter enterprisePresenter =
               Provider.of(context, listen: false);
-          await enterpriseValidationPresenter.getLocalData(homePresenter);
+          await enterprisePresenter.getLocalData(homePresenter);
 
-          if (enterpriseValidationPresenter
-              .enterpriseNameController.text.isNotEmpty) {
-            enterpriseValidationPresenter.validateEnterpriseInput(
-                enterpriseValidationPresenter.enterpriseNameController.text);
+          if (enterprisePresenter.enterpriseNameController.text.isNotEmpty) {
+            enterprisePresenter.validateEnterpriseInput(
+                enterprisePresenter.enterpriseNameController.text);
           }
         });
       }
@@ -43,7 +42,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
 
   Future<void> _validateEnterprise({
     required CommandViewModel commandViewModel,
-    required EnterpriseValidationPresenter enterpriseValidationPresenter,
+    required EnterprisePresenter enterprisePresenter,
     required HomePresenter homePresenter,
   }) async {
     if (commandViewModel.isFixedCommandNumber == "true") {
@@ -51,12 +50,12 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
         return;
       }
 
-      await enterpriseValidationPresenter.validateApiAndGoToHomePage(
+      await enterprisePresenter.validateApiAndGoToHomePage(
         commandEntity: commandViewModel.toEntity(),
         homePresenter: homePresenter,
       );
     } else {
-      await enterpriseValidationPresenter.validateApiAndGoToHomePage(
+      await enterprisePresenter.validateApiAndGoToHomePage(
         commandEntity: commandViewModel.toEntity(),
         homePresenter: homePresenter,
       );
@@ -79,16 +78,16 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    EnterpriseValidationPresenter enterpriseValidationPresenter =
+    EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
     loadingSubscription =
-        handleLoading(context, enterpriseValidationPresenter.isLoadingStream);
+        handleLoading(context, enterprisePresenter.isLoadingStream);
     mainErrorSubscription =
-        handleMainError(context, enterpriseValidationPresenter.mainErrorStream);
+        handleMainError(context, enterprisePresenter.mainErrorStream);
 
     return Scaffold(
       body: GestureDetector(
@@ -102,7 +101,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: StreamBuilder<CommandViewModel?>(
-                    stream: enterpriseValidationPresenter.commandDataStream,
+                    stream: enterprisePresenter.commandDataStream,
                     builder: (context, snapshotCommandData) {
                       if (snapshotCommandData.data == null) {
                         return const SizedBox();
@@ -130,8 +129,8 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                         homePresenter: homePresenter,
                                         commandViewModel:
                                             snapshotCommandData.data!,
-                                        enterpriseValidationPresenter:
-                                            enterpriseValidationPresenter,
+                                        enterprisePresenter:
+                                            enterprisePresenter,
                                       );
                                     },
                                   ),
@@ -144,8 +143,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                               await _validateEnterprise(
                                 homePresenter: homePresenter,
                                 commandViewModel: snapshotCommandData.data!,
-                                enterpriseValidationPresenter:
-                                    enterpriseValidationPresenter,
+                                enterprisePresenter: enterprisePresenter,
                               );
                             },
                           ),

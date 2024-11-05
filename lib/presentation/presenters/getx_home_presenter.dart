@@ -470,7 +470,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required EnterpriseValidationPresenter enterprisePresenter,
+    required EnterprisePresenter enterprisePresenter,
   }) async {
     if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null ||
         EnterpriseDataBuilder.enterpriseDataEntity?.url == null) {

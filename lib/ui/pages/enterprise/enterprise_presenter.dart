@@ -4,7 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
-abstract class EnterpriseValidationPresenter implements Listenable {
+abstract class EnterprisePresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<UIError?> get enterpriseErrorStream;
   Stream<bool> get isLoadingStream;

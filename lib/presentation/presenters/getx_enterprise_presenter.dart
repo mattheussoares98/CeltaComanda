@@ -10,9 +10,9 @@ import '../mixins/mixins.dart';
 
 import 'package:get/get.dart';
 
-class GetxEnterpriseValidationPresenter extends GetxController
+class GetxEnterprisePresenter extends GetxController
     with TextControllerManager, LoadingManager, FormManager, UIErrorManager
-    implements EnterpriseValidationPresenter {
+    implements EnterprisePresenter {
   final Validation validation;
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
@@ -23,7 +23,7 @@ class GetxEnterpriseValidationPresenter extends GetxController
   final LoadEnterpriseConcentradorParameters
       loadEnterpriseConcentradorParameters;
 
-  GetxEnterpriseValidationPresenter({
+  GetxEnterprisePresenter({
     required this.validation,
     required this.localEntepriseData,
     required this.loadEnterpriseData,

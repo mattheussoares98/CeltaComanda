@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class FixedNumberCommandSwitch extends StatelessWidget {
@@ -15,7 +15,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey tooltipKey = GlobalKey();
-    EnterpriseValidationPresenter enterpriseValidationPresenter =
+    EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -25,8 +25,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
         Switch(
           value: commandViewModel.isFixedCommandNumber == "true",
           onChanged: (_) {
-            enterpriseValidationPresenter
-                .updateUseFixedCommandNumber(homePresenter);
+            enterprisePresenter.updateUseFixedCommandNumber(homePresenter);
           },
         ),
         const SizedBox(width: 10),

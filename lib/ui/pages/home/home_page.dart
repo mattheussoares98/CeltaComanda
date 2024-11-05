@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage>
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
-    EnterpriseValidationPresenter enterprisePresenter =
+    EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();

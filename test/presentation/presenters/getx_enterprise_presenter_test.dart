@@ -17,7 +17,7 @@ import '../../ui/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
-  late GetxEnterpriseValidationPresenter sut;
+  late GetxEnterprisePresenter sut;
   late HomePresenterSpy homePresenter;
 
   late ValidationSpy validation;
@@ -65,7 +65,7 @@ void main() {
         .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
 
     homePresenter = HomePresenterSpy();
-    sut = GetxEnterpriseValidationPresenter(
+    sut = GetxEnterprisePresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,
       loadEnterpriseData: remoteLoadEnterpriseData,

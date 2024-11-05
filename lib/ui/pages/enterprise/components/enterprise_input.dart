@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class EnterpriseInput extends StatelessWidget {
@@ -14,7 +14,7 @@ class EnterpriseInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EnterpriseValidationPresenter presenter = Provider.of(context, listen: false);
+    EnterprisePresenter presenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return StreamBuilder<UIError?>(

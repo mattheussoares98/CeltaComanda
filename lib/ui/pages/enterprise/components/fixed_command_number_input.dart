@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class FixedCommandNumberInput extends StatelessWidget {
@@ -18,7 +18,7 @@ class FixedCommandNumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EnterpriseValidationPresenter enterpriseValidationPresenter =
+    EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
@@ -35,7 +35,7 @@ class FixedCommandNumberInput extends StatelessWidget {
             validateEnterprise();
           }, //implementar
           onChanged: (String? newValue) {
-            enterpriseValidationPresenter.updateCommandNumber(
+            enterprisePresenter.updateCommandNumber(
               newCommandValue: newValue?.isEmpty == true ? null : newValue,
               homePresenter: homePresenter,
             );

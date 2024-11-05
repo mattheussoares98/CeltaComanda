@@ -2,8 +2,8 @@ import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../factories.dart';
 
-EnterpriseValidationPresenter makeGetxEnterpriseValidationPresenter() =>
-    GetxEnterpriseValidationPresenter(
+EnterprisePresenter makeGetxEnterprisePresenter() =>
+    GetxEnterprisePresenter(
       validation: makeEnterpriseValidation(),
       localEntepriseData: makeLocalEnterpriseData(),
       loadEnterpriseData: makeRemoteLoadEnterpriseData(),

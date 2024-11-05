@@ -1,5 +1,5 @@
 import '../../../helpers/helpers.dart';
-import '../enterprise_validation.dart';
+import '../enterprise.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ class EnterpriseValidateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<EnterpriseValidationPresenter>(context);
+    final presenter = Provider.of<EnterprisePresenter>(context);
     return StreamBuilder<bool>(
         stream: presenter.isFormValidStream,
         builder: (context, snapshot) {

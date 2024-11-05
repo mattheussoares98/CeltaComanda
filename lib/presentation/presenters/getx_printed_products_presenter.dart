@@ -192,12 +192,8 @@ class GetxPrintedProductsPresenter
 
     double value = (_printedProducts!.TotalLiquid.toDouble() +
         serviceChargeValue.toDouble());
-    // Multiplica por 100 para trabalhar com duas casas decimais
-    int intValue = (value * 100).truncate();
-    // Divide por 100 novamente para obter o valor truncado
-    double truncatedValue = intValue / 100.0;
-    String formattedValue = truncatedValue.toStringAsFixed(2);
-    return formattedValue.toDouble();
+
+    return value.toStringAsFixed(2).toDouble();
   }
 
   @override
@@ -219,12 +215,7 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    // Multiplica por 100 para trabalhar com duas casas decimais
-    int intValue = (value * 100).truncate();
-    // Divide por 100 novamente para obter o valor truncado
-    double truncatedValue = intValue / 100.0;
-    String formattedValue = truncatedValue.toStringAsFixed(2);
-    return formattedValue.toDouble();
+    return value.toStringAsFixed(2).toDouble();
   }
 
   @override

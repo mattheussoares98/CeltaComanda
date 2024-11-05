@@ -39,8 +39,7 @@ class WriteAmoutValueToPay extends StatelessWidget {
             } else if (value.toDouble() == -1.0) {
               return R.string.msgInvalidNumber;
             } else if (value.toDouble() >
-                paymentPresenter
-                    .getTotalPendingValue(printedProductsPresenter)) {
+                paymentPresenter.getTotalPendingValue(printedProductsPresenter).toStringAsFixed(2).toDouble()) {
               return R.string.msgInvalidNumber;
             } else if (value.toDouble() < 0.01) {
               return R.string.msgInvalidNumber;

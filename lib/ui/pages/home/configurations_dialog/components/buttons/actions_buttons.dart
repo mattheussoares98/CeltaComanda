@@ -149,7 +149,7 @@ Future<void> _updateCommand({
     password: passwordController.text,
     printedProductsPresenter: printedProductsPresenter,
     peoples: homePresenter.selectedPeoples,
-    sellerCode: homePresenter.selectedSeller?.SellersId.toString(),
+    sellerCode: homePresenter.selectedSeller?.PersonalizedCode,
   );
 
   if (updated) {

@@ -260,4 +260,13 @@ void main() {
       expect(value, false);
     });
   });
+
+  group("Update selected command", () {
+    test("Should update to correctly", () {
+      final newValue = faker.randomGenerator.integer(100);
+      sut.updateSelectedCommand(newValue);
+
+      expect(sut.selectedCommand, newValue);
+    });
+  });
 }

@@ -108,7 +108,9 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  void updateSelectedCommand(int value) {}
+  void updateSelectedCommand(int value) {
+    _selectedCommand = value;
+  }
 
   @override
   void updateSelectedPeoples(int? value) {}

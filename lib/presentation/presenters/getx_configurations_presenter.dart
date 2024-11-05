@@ -108,18 +108,6 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<bool> updateCommandData({
-    required int newFixedCommandNumber,
-    required int userPersonalizedCode,
-    required String password,
-    required int? peoples,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required String? sellerCode,
-  }) async {
-    return false;
-  }
-
-  @override
   void updateSelectedCommand(int value) {}
 
   @override

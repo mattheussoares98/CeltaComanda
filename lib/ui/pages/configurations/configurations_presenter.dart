@@ -12,14 +12,6 @@ abstract class ConfigurationsPresenter implements Listenable {
   List<SellersViewModel> get sellers;
 
   Future<void> goToSplashPage();
-  Future<bool> updateCommandData({
-    required int newFixedCommandNumber,
-    required int userPersonalizedCode,
-    required String password,
-    required int? peoples,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required String? sellerCode,
-  });
   Future<bool> openOrBlockadeCommand({
     required int commandNumber,
     required bool isOpen,

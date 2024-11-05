@@ -24,9 +24,12 @@ void main() {
   late UpdateSaleRequestSpy updateSaleRequest;
   late CheckPasswordByCustomerCodeSpy checkPasswordByCustomerCode;
   late UserValidationsSpy userValidations;
+  late CommandInformationsSpy commandInformations;
 
   late int userPersonalizedCode;
   late String password;
+  late int userCode;
+  late int newFixedCommandNumber;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -39,6 +42,7 @@ void main() {
       updateSaleRequest: updateSaleRequest,
       checkPasswordByCustomerCode: checkPasswordByCustomerCode,
       userValidations: userValidations,
+      commandInformations: commandInformations,
     );
   }
 
@@ -49,6 +53,7 @@ void main() {
     updateSaleRequest = UpdateSaleRequestSpy();
     checkPasswordByCustomerCode = CheckPasswordByCustomerCodeSpy();
     userValidations = UserValidationsSpy();
+    commandInformations = CommandInformationsSpy();
   }
 
   void initMocks() {}
@@ -58,6 +63,8 @@ void main() {
         EntityFactory.makeEnterpriseData();
     userPersonalizedCode = faker.randomGenerator.integer(999);
     password = faker.guid.guid();
+    userCode = faker.randomGenerator.integer(100);
+    newFixedCommandNumber = faker.randomGenerator.integer(999);
   }
 
   setUp(() {
@@ -129,6 +136,128 @@ void main() {
       );
 
       expect(isValid, true);
+    });
+  });
+
+  group("Open or blockade command number", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: true,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      commandInformations.mockErrorOpenOrBlockade(DomainError.unexpected);
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: true,
+      );
+    });
+    test("Should call with correct values", () async {
+      bool isOpen = faker.randomGenerator.boolean();
+
+      await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: isOpen,
+      );
+
+      verify(() => commandInformations.openOrBlockade(
+            commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
+            isOpen: isOpen,
+          )).called(1);
+    });
+    test("Should return true on success", () async {
+      bool isOpen = faker.randomGenerator.boolean();
+
+      final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: isOpen,
+      );
+
+      expect(value, true);
+    });
+    test("Should return false on error", () async {
+      commandInformations.mockErrorOpenOrBlockade(DomainError.unexpected);
+      bool isOpen = faker.randomGenerator.boolean();
+
+      final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: isOpen,
+      );
+
+      expect(value, false);
+    });
+    test("Should call userValidations", () async {
+      await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
+      );
+
+      verify(() => userValidations.isValidPassword(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            personalizedCode: userCode,
+            password: password,
+          )).called(1);
+    });
+    test("Should emit correct error on invalid credentials", () async {
+      userValidations.mockIsValidPasswordError(
+          DomainError.invalidCredentialsOrAccessDenied);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]),
+      );
+
+      final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
+      );
+
+      expect(value, false);
+    });
+
+    test("Should emit correct error on throws", () async {
+      userValidations.mockIsValidPasswordError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      final value = await sut.openOrBlockadeCommand(
+        password: password,
+        userCode: userCode,
+        commandNumber: newFixedCommandNumber,
+        isOpen: false,
+      );
+
+      expect(value, false);
     });
   });
 }

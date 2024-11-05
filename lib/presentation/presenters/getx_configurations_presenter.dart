@@ -18,6 +18,7 @@ class GetxConfigurationsPresenter extends GetxController
   final UpdateSaleRequest updateSaleRequest;
   final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
   final UserValidations userValidations;
+  final CommandInformations commandInformations;
 
   GetxConfigurationsPresenter({
     required this.loadCustomer,
@@ -26,6 +27,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.updateSaleRequest,
     required this.checkPasswordByCustomerCode,
     required this.userValidations,
+    required this.commandInformations,
   });
 
   @override
@@ -72,7 +74,37 @@ class GetxConfigurationsPresenter extends GetxController
     required int userCode,
     required String password,
   }) async {
-    return false;
+    mainError = null;
+    isLoading = true;
+    try {
+      bool isValidPassword = await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: userCode.toInt(),
+        password: password,
+      );
+
+      if (isValidPassword != true) {
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
+
+      await commandInformations.openOrBlockade(
+        commandNumber: commandNumber.toString().padLeft(3, "0"),
+        isOpen: isOpen,
+      );
+
+      return true;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+      return false;
+    } finally {
+      isLoading = false;
+    }
   }
 
   @override

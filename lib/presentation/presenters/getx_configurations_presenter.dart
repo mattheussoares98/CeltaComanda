@@ -118,7 +118,9 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  void updateSelectedSeller(SellersViewModel? seller) {}
+  void updateSelectedSeller(SellersViewModel? seller) {
+    _selectedSeller = seller;
+  }
 
   final List<SellersViewModel> _sellers = [];
   @override

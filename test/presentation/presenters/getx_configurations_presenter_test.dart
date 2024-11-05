@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -30,6 +31,7 @@ void main() {
   late String password;
   late int userCode;
   late int newFixedCommandNumber;
+  late SellersViewModel selectedSeller;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -65,6 +67,7 @@ void main() {
     password = faker.guid.guid();
     userCode = faker.randomGenerator.integer(100);
     newFixedCommandNumber = faker.randomGenerator.integer(999);
+    selectedSeller = EntityFactory.makeSellersViewModel();
   }
 
   setUp(() {
@@ -281,6 +284,19 @@ void main() {
       sut.updateSelectedPeoples(newValue);
 
       expect(sut.selectedPeoples, newValue);
+    });
+  });
+
+  group("Update selected seller", () {
+    test("Should update to null correctly", () {
+      sut.updateSelectedSeller(null);
+
+      expect(sut.selectedSeller, null);
+    });
+    test("Should update to correctly", () {
+      sut.updateSelectedSeller(selectedSeller);
+
+      expect(sut.selectedSeller, selectedSeller);
     });
   });
 }

@@ -113,7 +113,9 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  void updateSelectedPeoples(int? value) {}
+  void updateSelectedPeoples(int? value) {
+    _peoples = value;
+  }
 
   @override
   void updateSelectedSeller(SellersViewModel? seller) {}

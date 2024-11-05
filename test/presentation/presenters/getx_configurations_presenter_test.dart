@@ -269,4 +269,18 @@ void main() {
       expect(sut.selectedCommand, newValue);
     });
   });
+
+  group("Update selected peoples", () {
+    test("Should update to null correctly", () {
+      sut.updateSelectedPeoples(null);
+
+      expect(sut.selectedPeoples, null);
+    });
+    test("Should update to correctly", () {
+      final newValue = faker.randomGenerator.integer(100);
+      sut.updateSelectedPeoples(newValue);
+
+      expect(sut.selectedPeoples, newValue);
+    });
+  });
 }

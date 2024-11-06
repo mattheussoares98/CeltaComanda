@@ -58,9 +58,8 @@ class FirebaseAdapter implements FirebaseStorage {
           .doc("loadedDevices");
 
       await docRef.set({
-        'devices': [
-          DeviceInfoModel.fromEntity(entity).toJson(),
-        ],
+        "${entity.id} ${entity.device}":
+            DeviceInfoModel.fromEntity(entity).toJson(),
       }, SetOptions(merge: true));
     } catch (e) {
       throw DomainError.unexpected;

@@ -193,7 +193,7 @@ class GetxPrintedProductsPresenter
     double value = (_printedProducts!.TotalLiquid.toDouble() +
         serviceChargeValue.toDouble());
 
-    return value.toStringAsFixed(2).toDouble();
+    return value.roundAccordingBs().toStringAsFixed(2).toDouble();
   }
 
   @override
@@ -215,7 +215,7 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return value.toStringAsFixed(2).toDouble();
+    return value.roundAccordingBs().toStringAsFixed(2).toDouble();
   }
 
   @override

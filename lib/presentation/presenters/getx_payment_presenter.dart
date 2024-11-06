@@ -234,9 +234,14 @@ class GetxPaymentPresenter extends GetxController
       return 0;
     } else {
       return _successfulPayments.fold(0.0, (previousValue, element) {
-        double previous = previousValue.toStringAsFixed(2).toDouble();
-        double newElement = element.Value.toStringAsFixed(2).toDouble();
-        double result = (previous += newElement).toStringAsFixed(2).toDouble();
+        double previous =
+            previousValue.roundAccordingBs().toStringAsFixed(2).toDouble();
+        double newElement =
+            element.Value.roundAccordingBs().toStringAsFixed(2).toDouble();
+        double result = (previous += newElement)
+            .roundAccordingBs()
+            .toStringAsFixed(2)
+            .toDouble();
         return result;
       });
     }
@@ -246,9 +251,12 @@ class GetxPaymentPresenter extends GetxController
   double getTotalPendingValue(
     PrintedProductsPresenter printedProductsPresenter,
   ) {
-    double totalLiquid =
-        printedProductsPresenter.totalLiquid.toStringAsFixed(2).toDouble();
-    double paid = totalPaidValue.toStringAsFixed(2).toDouble();
+    double totalLiquid = printedProductsPresenter.totalLiquid
+        .roundAccordingBs()
+        .toStringAsFixed(2)
+        .toDouble();
+    double paid =
+        totalPaidValue.roundAccordingBs().toStringAsFixed(2).toDouble();
     double result = totalLiquid - paid;
 
     return result;

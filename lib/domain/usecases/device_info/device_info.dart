@@ -1,1 +1,1 @@
-export './load_device_info.dart';
+export 'add_device_info.dart';

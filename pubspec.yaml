@@ -52,6 +52,7 @@ dependencies:
   wakelock_plus: ^1.2.5
   icons_launcher: ^3.0.0
   device_info_plus: ^11.1.0
+  package_info_plus: ^8.1.0
 
 icons_launcher:
   image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"

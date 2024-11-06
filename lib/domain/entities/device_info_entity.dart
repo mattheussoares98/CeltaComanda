@@ -2,14 +2,16 @@ import 'package:equatable/equatable.dart';
 
 class DeviceInfoEntity extends Equatable {
   final int? commandNumber;
-  final String board;
-  final String brand;
-  final String device;
-  final String display;
-  final String hardware;
-  final String host;
-  final String id;
-  final String model;
+  final String? board;
+  final String? brand;
+  final String? device;
+  final String? display;
+  final String? hardware;
+  final String? host;
+  final String? id;
+  final String? model;
+  final DateTime? lastUpdatedDate;
+  final String? applicationVersion;
 
   const DeviceInfoEntity({
     required this.commandNumber,
@@ -21,6 +23,8 @@ class DeviceInfoEntity extends Equatable {
     required this.host,
     required this.id,
     required this.model,
+    required this.lastUpdatedDate,
+    required this.applicationVersion,
   });
 
   @override
@@ -34,5 +38,7 @@ class DeviceInfoEntity extends Equatable {
         host,
         id,
         model,
+        lastUpdatedDate,
+        applicationVersion,
       ];
 }

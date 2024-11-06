@@ -4,14 +4,16 @@ import '../../domain/entities/entities.dart';
 
 class DeviceInfoModel {
   final int? commandNumber;
-  final String board;
-  final String brand;
-  final String device;
-  final String display;
-  final String hardware;
-  final String host;
-  final String id;
-  final String model;
+  final String? board;
+  final String? brand;
+  final String? device;
+  final String? display;
+  final String? hardware;
+  final String? host;
+  final String? id;
+  final String? model;
+  final String? lastUpdatedDate;
+  final String? applicationVersion;
 
   const DeviceInfoModel({
     required this.commandNumber,
@@ -23,11 +25,18 @@ class DeviceInfoModel {
     required this.host,
     required this.id,
     required this.model,
+    required this.lastUpdatedDate,
+    required this.applicationVersion,
   });
 
-  factory DeviceInfoModel.fromJson(Map json, int? commandNumber) {
+  factory DeviceInfoModel.fromJson({
+    required Map json,
+    required int? commandNumber,
+    required String applicationVersion,
+  }) {
     return DeviceInfoModel(
       commandNumber: commandNumber,
+      applicationVersion: applicationVersion,
       board: json["board"],
       brand: json["brand"],
       device: json["device"],
@@ -36,6 +45,7 @@ class DeviceInfoModel {
       host: json["host"],
       id: json["id"],
       model: json["model"],
+      lastUpdatedDate: json["lastUpdatedDate"],
     );
   }
 
@@ -50,6 +60,8 @@ class DeviceInfoModel {
         host: entity.host,
         id: entity.id,
         model: entity.model,
+        applicationVersion: entity.applicationVersion,
+        lastUpdatedDate: entity.lastUpdatedDate?.toIso8601String(),
       );
 
   DeviceInfoEntity toEntity() => DeviceInfoEntity(
@@ -62,6 +74,9 @@ class DeviceInfoModel {
         host: host,
         id: id,
         model: model,
+        applicationVersion: applicationVersion,
+        lastUpdatedDate:
+            lastUpdatedDate != null ? DateTime.parse(lastUpdatedDate!) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,5 +89,7 @@ class DeviceInfoModel {
         "host": host,
         "id": id,
         "model": model,
+        "lastUpdatedDate": lastUpdatedDate,
+        "applicationVersion": applicationVersion,
       };
 }

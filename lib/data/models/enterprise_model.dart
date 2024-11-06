@@ -112,6 +112,7 @@ class EnterpriseValidationModel {
         'updateMenuCount': updateMenuCount,
         'updateEnterpriseCount': updateEnterpriseCount,
         'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
+        'updateDevicesInformations': updateDevicesInformations,
         'serviceChargeType': serviceChargeType,
         'enterpriseConcentradorParametersEntity':
             enterpriseConcentradorParametersEntity != null

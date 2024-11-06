@@ -1483,6 +1483,25 @@ void main() {
           .getFirebaseAndConcentradorEnterpriseParameters()).called(1);
     });
 
+    test("Should update sut.updateDevicesInformations", () async {
+      expect(sut.updateDevicesInformations, null);
+
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      expect(
+          sut.updateDevicesInformations,
+          EnterpriseValidationModel.fromJson(enterpriseJson)
+              .updateDevicesInformations);
+    });
+
     test("Should call add device info", () async {
       EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
         enterpriseName: faker.randomGenerator.string(10),
@@ -1510,7 +1529,7 @@ void main() {
         enterprisePresenter: enterprisePresenter,
       );
 
-      verify(() => addDeviceInfo.add()).called(1);
+      verify(() => addDeviceInfo.add(sut.commandNumber?.toInt())).called(1);
     });
   });
 

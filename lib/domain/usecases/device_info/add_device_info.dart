@@ -1,3 +1,3 @@
 abstract class AddDeviceInfo {
-  Future<void> add();
+  Future<void> add(int? commandNumber);
 }

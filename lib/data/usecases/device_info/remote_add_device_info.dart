@@ -13,7 +13,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
   });
 
   @override
-  Future<void> add() async {
+  Future<void> add(int? commandNumber) async {
     try {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo? androidInfo;
@@ -21,11 +21,13 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
 
       if (Platform.isAndroid) {
         androidInfo = await deviceInfo.androidInfo;
-        final entity = DeviceInfoModel.fromJson(androidInfo.data).toEntity();
+        final entity = DeviceInfoModel.fromJson(androidInfo.data, commandNumber)
+            .toEntity();
         await firebaseStorage.addDeviceInfo(entity);
       } else if (Platform.isIOS) {
         iosInfo = await deviceInfo.iosInfo;
-        final entity = DeviceInfoModel.fromJson(iosInfo.data).toEntity();
+        final entity =
+            DeviceInfoModel.fromJson(iosInfo.data, commandNumber).toEntity();
         await firebaseStorage.addDeviceInfo(entity);
       }
     } catch (e) {

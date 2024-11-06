@@ -6,7 +6,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class AddDeviceInfoSpy extends Mock implements AddDeviceInfo {
-  When mockDeviceInfoCall() => when(() => this.add());
+  When mockDeviceInfoCall() => when(() => this.add(any()));
 
   void mockDeviceInfo(DeviceInfoEntity entity) {
     this.mockDeviceInfoCall().thenAnswer((_) async => entity);

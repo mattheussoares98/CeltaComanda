@@ -457,14 +457,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     _isGeneratingVersionToTablet = value;
   }
 
-  int? _updateMenuCount = -1;
-  @override
-  int? get updateMenuCount => _updateMenuCount;
-
-  int? _updateEnterpriseCount = -1;
-  @override
-  int? get updateEnterpriseCount => _updateEnterpriseCount;
-
   @override
   Future<void> doOnRemoteEnterpriseChanges({
     required Map<String, dynamic> data,
@@ -503,10 +495,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
             .getFirebaseAndConcentradorEnterpriseParameters();
       }
 
-      if (enterprise.updateDevicesInformations !=
-          EnterpriseDataBuilder
-              .enterpriseDataEntity?.updateDevicesInformations) {
-        await addDeviceInfo.add();
+      if (enterprise.updateDevicesInformations != _updateDevicesInformations) {
+        _updateDevicesInformations = enterprise.updateDevicesInformations;
+        await addDeviceInfo.add(commandNumber?.toInt());
       }
     } catch (e) {
       mainError = UIError.unexpected;
@@ -519,4 +510,16 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> goToConfigurationsPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.configurations);
   }
+
+  int? _updateDevicesInformations;
+  @override
+  int? get updateDevicesInformations => _updateDevicesInformations;
+
+  int? _updateMenuCount = -1;
+  @override
+  int? get updateMenuCount => _updateMenuCount;
+
+  int? _updateEnterpriseCount = -1;
+  @override
+  int? get updateEnterpriseCount => _updateEnterpriseCount;
 }

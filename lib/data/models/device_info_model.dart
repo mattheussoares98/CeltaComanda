@@ -25,9 +25,9 @@ class DeviceInfoModel {
     required this.model,
   });
 
-  factory DeviceInfoModel.fromJson(Map json) {
+  factory DeviceInfoModel.fromJson(Map json, int? commandNumber) {
     return DeviceInfoModel(
-      commandNumber: json["commandNumber"],
+      commandNumber: commandNumber,
       board: json["board"],
       brand: json["brand"],
       device: json["device"],

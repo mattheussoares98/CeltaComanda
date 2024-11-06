@@ -53,7 +53,9 @@ class FirebaseAdapter implements FirebaseStorage {
     try {
       var docRef = firestore
           .collection('clients')
-          .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+          .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName)
+          .collection("devices")
+          .doc("loadedDevices");
 
       await docRef.set({
         'devices': [

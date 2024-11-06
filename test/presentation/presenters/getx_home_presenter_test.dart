@@ -1482,6 +1482,36 @@ void main() {
       verify(() => enterprisePresenter
           .getFirebaseAndConcentradorEnterpriseParameters()).called(1);
     });
+
+    test("Should call add device info", () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName: faker.randomGenerator.string(10),
+        url: faker.internet.httpUrl(),
+        enterpriseId: faker.randomGenerator.integer(100),
+        concentradorUrl: faker.internet.httpUrl(),
+        persistApp: faker.randomGenerator.boolean(),
+        urlCCS: faker.internet.httpUrl(),
+        useCovenant: faker.randomGenerator.boolean(),
+        enterpriseConcentradorParametersEntity: null,
+        updateMenuCount: faker.randomGenerator.integer(100),
+        updateEnterpriseCount: faker.randomGenerator.integer(100),
+        serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
+        serviceChargeType: faker.randomGenerator.integer(2),
+        updateDevicesInformations: faker.randomGenerator.integer(100),
+      );
+
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      verify(() => addDeviceInfo.add()).called(1);
+    });
   });
 
   group("Navigate to configurations page", () {

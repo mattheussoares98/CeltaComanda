@@ -502,6 +502,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await enterprisePresenter
             .getFirebaseAndConcentradorEnterpriseParameters();
       }
+
+      if (enterprise.updateDevicesInformations !=
+          EnterpriseDataBuilder
+              .enterpriseDataEntity?.updateDevicesInformations) {
+        await addDeviceInfo.add();
+      }
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

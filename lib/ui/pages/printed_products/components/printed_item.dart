@@ -63,10 +63,14 @@ class _PrintedItemState extends State<PrintedItem> {
                 const Divider(thickness: 0.3),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: widget.printed.Products.where((e) => e.ProductIsFatherComposition != "true").toList()
+                    itemCount: widget.printed.Products
+                        .where((e) => e.ProductIsFatherComposition != "true")
+                        .toList()
                         .length,
                     itemBuilder: (context, index) {
-                      final product = widget.printed.Products[index];
+                      final product = widget.printed.Products
+                          .where((e) => e.ProductIsFatherComposition != "true")
+                          .toList()[index];
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

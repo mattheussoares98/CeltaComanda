@@ -1,6 +1,8 @@
+import 'package:clean_celta_mobile/domain/entities/device_info_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/database/database.dart';
+import '../../data/models/models.dart';
 import '../../domain/entities/print_request_entity.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
@@ -40,6 +42,23 @@ class FirebaseAdapter implements FirebaseStorage {
       await docRef.set({
         'printRequest': incremento,
         'dates': adicionarData,
+      }, SetOptions(merge: true));
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  @override
+  Future<void> addDeviceInfo(DeviceInfoEntity entity) async {
+    try {
+      var docRef = firestore
+          .collection('clients')
+          .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+
+      await docRef.set({
+        'devices': [
+          DeviceInfoModel.fromEntity(entity).toJson(),
+        ],
       }, SetOptions(merge: true));
     } catch (e) {
       throw DomainError.unexpected;

@@ -35,6 +35,7 @@ void main() {
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
   late PersistentSpy persistent;
+  late LoadDeviceInfoSpy loadDeviceInfo;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -69,6 +70,7 @@ void main() {
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSellers: loadSellers,
       persistent: persistent,
+      loadDeviceInfo: loadDeviceInfo,
     );
   }
 
@@ -82,6 +84,7 @@ void main() {
     loadSellers = LoadSellersSpy();
     commandInformations = CommandInformationsSpy();
     persistent = PersistentSpy();
+    loadDeviceInfo = LoadDeviceInfoSpy();
   }
 
   void initMocks() {

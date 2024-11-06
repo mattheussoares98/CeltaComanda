@@ -4,6 +4,7 @@ export './cart/cart.dart';
 export './command/command.dart';
 export './customer/customer.dart';
 export './database/database.dart';
+export './device_info/device_info.dart';
 export './enterprise/enterprise.dart';
 export './enterprise_concentrador/enterprise_concentrador.dart';
 export './expansible_groups/expansible_groups.dart';

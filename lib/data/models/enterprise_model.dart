@@ -16,6 +16,7 @@ class EnterpriseValidationModel {
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
   final int? serviceChargeType;
+  final int? updateDevicesInformations;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -30,6 +31,7 @@ class EnterpriseValidationModel {
     required this.updateEnterpriseCount,
     required this.serviceChargePercentageOrValue,
     required this.serviceChargeType,
+    required this.updateDevicesInformations,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -54,6 +56,7 @@ class EnterpriseValidationModel {
       serviceChargePercentageOrValue:
           json["serviceChargePercentageOrValue"]?.toDouble(),
       serviceChargeType: json["serviceChargeType"],
+      updateDevicesInformations: json["updateDevicesInformations"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null
@@ -76,6 +79,7 @@ class EnterpriseValidationModel {
         updateEnterpriseCount: entity.updateEnterpriseCount,
         serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
         serviceChargeType: entity.serviceChargeType,
+        updateDevicesInformations: entity.updateDevicesInformations,
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
       );
@@ -92,6 +96,7 @@ class EnterpriseValidationModel {
         updateEnterpriseCount: updateEnterpriseCount,
         serviceChargePercentageOrValue: serviceChargePercentageOrValue,
         serviceChargeType: serviceChargeType,
+        updateDevicesInformations: updateDevicesInformations,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
       );

@@ -71,6 +71,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       updateEnterpriseCount: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
+      updateDevicesInformations: null,
     );
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 
@@ -496,7 +497,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (enterprise.updateEnterpriseCount !=
           EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount) {
         _updateEnterpriseCount = enterprise.updateEnterpriseCount;
-        await enterprisePresenter.getFirebaseAndConcentradorEnterpriseParameters();
+        await enterprisePresenter
+            .getFirebaseAndConcentradorEnterpriseParameters();
       }
     } catch (e) {
       mainError = UIError.unexpected;

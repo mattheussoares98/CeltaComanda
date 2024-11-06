@@ -265,6 +265,8 @@ void main() {
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
           EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateDevicesInformations:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -293,6 +295,8 @@ void main() {
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
           EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateDevicesInformations:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
     await sut.goToHomePage(homePresenter);
@@ -322,6 +326,8 @@ void main() {
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
           EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateDevicesInformations:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -464,6 +470,7 @@ void main() {
           updateEnterpriseCount: null,
           serviceChargePercentageOrValue: null,
           serviceChargeType: null,
+          updateDevicesInformations: null,
         ),
       );
     });

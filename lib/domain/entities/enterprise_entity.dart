@@ -12,6 +12,7 @@ class EnterpriseEntity extends Equatable {
   final bool? useCovenant;
   final int? updateMenuCount;
   final int? updateEnterpriseCount;
+  final int? updateDevicesInformations;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
@@ -30,6 +31,7 @@ class EnterpriseEntity extends Equatable {
     required this.updateEnterpriseCount,
     required this.serviceChargePercentageOrValue,
     required this.serviceChargeType,
+    required this.updateDevicesInformations,
   });
 
   @override
@@ -46,5 +48,6 @@ class EnterpriseEntity extends Equatable {
         updateEnterpriseCount,
         serviceChargePercentageOrValue,
         serviceChargeType,
+        updateDevicesInformations,
       ];
 }

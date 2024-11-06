@@ -240,6 +240,7 @@ void main() {
               updateEnterpriseCount: null,
               serviceChargePercentageOrValue: null,
               serviceChargeType: null,
+              updateDevicesInformations: null,
             ),
           )).called(1);
     });
@@ -713,6 +714,8 @@ void main() {
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
             EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -751,6 +754,8 @@ void main() {
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
             EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -786,6 +791,8 @@ void main() {
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
             EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
       );
 
       await sut.loadCommandData(
@@ -1409,6 +1416,7 @@ void main() {
         useCovenant: faker.randomGenerator.boolean(),
         enterpriseConcentradorParametersEntity: null,
         updateMenuCount: faker.randomGenerator.integer(100),
+        updateDevicesInformations: faker.randomGenerator.integer(100),
         updateEnterpriseCount: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
@@ -1438,6 +1446,7 @@ void main() {
         useCovenant: faker.randomGenerator.boolean(),
         enterpriseConcentradorParametersEntity: null,
         updateMenuCount: faker.randomGenerator.integer(100),
+        updateDevicesInformations: faker.randomGenerator.integer(100),
         updateEnterpriseCount: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),

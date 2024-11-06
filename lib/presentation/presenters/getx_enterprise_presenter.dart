@@ -104,6 +104,7 @@ class GetxEnterprisePresenter extends GetxController
           enterpriseConcentradorParametersEntity: concentradorData,
           updateMenuCount: firebaseData.updateMenuCount,
           updateEnterpriseCount: firebaseData.updateEnterpriseCount,
+          updateDevicesInformations: firebaseData.updateDevicesInformations,
           serviceChargePercentageOrValue:
               firebaseData.serviceChargePercentageOrValue,
           serviceChargeType: firebaseData.serviceChargeType,
@@ -194,6 +195,7 @@ class GetxEnterprisePresenter extends GetxController
       updateEnterpriseCount: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
+      updateDevicesInformations: null,
     );
 
     _enterpriseError.value = _validateField('enterpriseName');

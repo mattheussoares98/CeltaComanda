@@ -2,6 +2,7 @@ export './customer/customer.dart';
 export './cart_product_model.dart';
 export './command_model.dart';
 export './concentrator_finalization_model.dart';
+export './device_info_model.dart';
 export './enterprise_concentrador_model.dart';
 export './enterprise_concentrador_parameters_model.dart';
 export './enterprise_model.dart';

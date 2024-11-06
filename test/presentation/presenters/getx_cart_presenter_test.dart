@@ -1139,7 +1139,6 @@ void main() {
       final products = sut.getProductsEntitys(
         saleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
-        productsQuantityInSaleRequest: saleRequestModel.Products?.length ?? 0,
       );
 
       await sut.saveProducts(
@@ -1741,20 +1740,6 @@ void main() {
       verify(() => homePresenter
           .updateCommandNumber(newCommandNumber.padLeft(3, "0"))).called(1);
     });
-    test("Should call load sale request", () async {
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock!,
-      );
-
-      verify(() => loadSaleRequest.load(
-          commandNumber: homePresenter.commandNumberMock!.toInt())).called(1);
-    });
   });
 
   group("Confirmed combox products", () {
@@ -1789,7 +1774,6 @@ void main() {
       final entity = sut.getProductsEntitys(
         saleRequestTempId: fakeSaleRequestTempId,
         insertProductPresenter: insertProductPresenter,
-        productsQuantityInSaleRequest: 0,
       ); //converto o combo pra uma lista de produtos da forma que usa pra adicionar na comanda
 
       expect(entity, [

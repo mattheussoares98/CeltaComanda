@@ -48,7 +48,6 @@ abstract class CartPresenter implements ChangeNotifier {
   List<UpdateSaleRequestTempProductEntity> getProductsEntitys({
     required int saleRequestTempId,
     required InsertProductPresenter insertProductPresenter,
-    required int productsQuantityInSaleRequest,
   });
 
   CartProductEntity productWithSelectedsComments({

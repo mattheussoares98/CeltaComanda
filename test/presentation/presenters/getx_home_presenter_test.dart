@@ -711,8 +711,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-        updateConcentratorEnterpriseData:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
@@ -751,8 +751,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-        updateConcentratorEnterpriseData:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
@@ -788,8 +788,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-        updateConcentratorEnterpriseData:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
@@ -1451,25 +1451,6 @@ void main() {
 
       verify(() => enterprisePresenter
           .getFirebaseAndConcentradorEnterpriseParameters()).called(1);
-    });
-
-    test("Should update sut.updateDevicesInformations", () async {
-      expect(sut.updateDevicesInformations, null);
-
-      await sut.doOnRemoteEnterpriseChanges(
-        data: enterpriseJson,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        enterprisePresenter: enterprisePresenter,
-      );
-
-      expect(
-          sut.updateDevicesInformations,
-          EnterpriseValidationModel.fromJson(enterpriseJson)
-              .updateDevicesInformations);
     });
 
     test("Should call add device info", () async {

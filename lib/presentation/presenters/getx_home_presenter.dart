@@ -487,14 +487,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=
-          EnterpriseDataBuilder.enterpriseDataEntity?.updateConcentratorEnterpriseData) {
-        _updateConcentratorEnterpriseData = enterprise.updateConcentratorEnterpriseData;
+          EnterpriseDataBuilder
+              .enterpriseDataEntity?.updateConcentratorEnterpriseData) {
         await enterprisePresenter
             .getFirebaseAndConcentradorEnterpriseParameters();
       }
 
-      if (enterprise.updateDevicesInformations != _updateDevicesInformations) {
-        _updateDevicesInformations = enterprise.updateDevicesInformations;
+      if (enterprise.updateDevicesInformations !=
+          EnterpriseDataBuilder
+              .enterpriseDataEntity?.updateDevicesInformations) {
         await addDeviceInfo.add(commandNumber?.toInt());
       }
     } catch (e) {
@@ -507,15 +508,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     await navigateTo.navigate(pageRoute: PageRoutes.configurations);
   }
 
-  int? _updateDevicesInformations;
-  @override
-  int? get updateDevicesInformations => _updateDevicesInformations;
-
   int? _updateMenuCount = -1;
   @override
   int? get updateMenuCount => _updateMenuCount;
-
-  int? _updateConcentratorEnterpriseData = -1;
-  @override
-  int? get updateConcentratorEnterpriseData => _updateConcentratorEnterpriseData;
 }

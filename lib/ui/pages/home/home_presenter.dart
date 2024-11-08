@@ -30,7 +30,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required String? sellerCode,
   });
 
-  Future<void> clearData();
+  void clear();
 
   Future<void> doLogout({
     required PrintedProductsPresenter printedProductsPresenter,

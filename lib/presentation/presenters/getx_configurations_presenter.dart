@@ -35,7 +35,20 @@ class GetxConfigurationsPresenter extends GetxController
   });
 
   @override
-  Future<void> goToSplashPage() async {}
+  Future<void> doLogout({
+    required MenuPresenter menuPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
+  }) async {
+    menuPresenter.clear();
+    printedProductsPresenter.clear();
+    cartPresenter.clear();
+    homePresenter.clear();
+    await persistent.makeNotPersistent();
+
+    await navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
+  }
 
   @override
   Future<bool> openOrBlockadeCommand({

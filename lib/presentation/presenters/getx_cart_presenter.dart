@@ -547,7 +547,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       );
 
       productsEntitys.add(productEntity);
-      indexOfProductEntity += productsEntitys.indexOf(productEntity);
+      indexOfProductEntity += productsEntitys.lastIndexOf(productEntity);
 
       if (product.Product.childsComposition == null ||
           product.Product.childsComposition!.isEmpty) {

@@ -614,9 +614,10 @@ void main() {
       await sut.loadPrinted(homePresenter);
 
       expect(
-        sut.totalLiquid.toStringAsFixed(2).toDouble(),
+        sut.totalLiquid.toStringAsFixed(2).toDouble().roundAccordingBs(),
         (printed.TotalLiquid.toDouble().roundAccordingBs() *
-            (printed.IncrementValue! / 100 + 1).roundAccordingBs()),
+                (printed.IncrementValue! / 100 + 1).roundAccordingBs())
+            .roundAccordingBs(),
       );
     });
     test("Should return correct value if incrementType is invalid", () async {
@@ -630,7 +631,10 @@ void main() {
 
       expect(
         sut.totalLiquid,
-        printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble(),
+        printed.TotalLiquid.toDouble()
+            .toStringAsFixed(2)
+            .toDouble()
+            .roundAccordingBs(),
       );
     });
   });

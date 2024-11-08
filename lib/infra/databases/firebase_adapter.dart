@@ -1,9 +1,8 @@
-import 'package:clean_celta_mobile/domain/entities/device_info_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/database/database.dart';
 import '../../data/models/models.dart';
-import '../../domain/entities/print_request_entity.dart';
+import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 
@@ -49,7 +48,7 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> addDeviceInfo(DeviceInfoEntity entity) async {
+  Future<void> addDeviceInfo(DeviceInfoEntity entity, String imei) async {
     try {
       var docRef = firestore
           .collection('clients')
@@ -58,8 +57,7 @@ class FirebaseAdapter implements FirebaseStorage {
           .doc("loadedDevices");
 
       await docRef.set({
-        entity.imei ?? "unrecognizedImei":
-            DeviceInfoModel.fromEntity(entity).toJson(),
+        imei: DeviceInfoModel.fromEntity(entity).toJson(),
       }, SetOptions(merge: true));
     } catch (e) {
       throw DomainError.unexpected;

@@ -4,13 +4,11 @@ class DeviceInfoEntity extends Equatable {
   final int? commandNumber;
   final DateTime? lastUpdatedDate;
   final String? applicationVersion;
-  final String? imei;
 
   const DeviceInfoEntity({
     required this.commandNumber,
     required this.lastUpdatedDate,
     required this.applicationVersion,
-    required this.imei,
   });
 
   @override
@@ -18,6 +16,5 @@ class DeviceInfoEntity extends Equatable {
         commandNumber,
         lastUpdatedDate,
         applicationVersion,
-        imei,
       ];
 }

@@ -26,6 +26,8 @@ void main() {
   late CheckPasswordByCustomerCodeSpy checkPasswordByCustomerCode;
   late UserValidationsSpy userValidations;
   late CommandInformationsSpy commandInformations;
+  late NavigateToSpy navigateTo;
+  late PersistentSpy persistent;
 
   late String password;
   late int userCode;
@@ -44,6 +46,8 @@ void main() {
       checkPasswordByCustomerCode: checkPasswordByCustomerCode,
       userValidations: userValidations,
       commandInformations: commandInformations,
+      navigateTo: navigateTo,
+      persistent: persistent,
     );
   }
 
@@ -55,6 +59,8 @@ void main() {
     checkPasswordByCustomerCode = CheckPasswordByCustomerCodeSpy();
     userValidations = UserValidationsSpy();
     commandInformations = CommandInformationsSpy();
+    navigateTo = NavigateToSpy();
+    persistent = PersistentSpy();
   }
 
   void initMocks() {}

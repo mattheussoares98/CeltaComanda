@@ -19,6 +19,8 @@ class GetxConfigurationsPresenter extends GetxController
   final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
   final UserValidations userValidations;
   final CommandInformations commandInformations;
+  final NavigateTo navigateTo;
+  final Persistent persistent;
 
   GetxConfigurationsPresenter({
     required this.loadCustomer,
@@ -28,6 +30,8 @@ class GetxConfigurationsPresenter extends GetxController
     required this.checkPasswordByCustomerCode,
     required this.userValidations,
     required this.commandInformations,
+    required this.navigateTo,
+    required this.persistent,
   });
 
   @override

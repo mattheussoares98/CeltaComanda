@@ -94,6 +94,7 @@ void main() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     loadSellers.mockLoadSellers(sellerEntitys);
+    addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
   }
 
   void initEntitys() {
@@ -1481,6 +1482,23 @@ void main() {
       );
 
       verify(() => addDeviceInfo.add(sut.commandNumber?.toInt())).called(1);
+    });
+
+    test("Should update enterprise data with received json", () async {
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      expect(
+        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
+      );
     });
   });
 

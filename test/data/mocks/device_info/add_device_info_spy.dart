@@ -1,18 +1,17 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class AddDeviceInfoSpy extends Mock implements AddDeviceInfo {
-  When mockDeviceInfoCall() => when(() => this.add(any()));
+  When _mockDeviceInfoCall() => when(() => this.add(any()));
 
-  void mockDeviceInfo(DeviceInfoEntity entity) {
-    this.mockDeviceInfoCall().thenAnswer((_) async => entity);
+  void mockDeviceInfo(int? commandNumber) {
+    this._mockDeviceInfoCall().thenAnswer((any) async => any);
   }
 
   void mockError() {
-    this.mockDeviceInfoCall().thenThrow(DomainError.unexpected);
+    this._mockDeviceInfoCall().thenThrow(DomainError.unexpected);
   }
 }

@@ -10,7 +10,7 @@ class CacheFactory {
         'persistApp': faker.randomGenerator.boolean(),
         'useCovenant': faker.randomGenerator.boolean(),
         'updateMenuCount': faker.randomGenerator.integer(100),
-        'updateEnterpriseCount': faker.randomGenerator.integer(100),
+        'updateConcentratorEnterpriseData': faker.randomGenerator.integer(100),
         'serviceChargePercentageOrValue': faker.randomGenerator.decimal(),
       };
 

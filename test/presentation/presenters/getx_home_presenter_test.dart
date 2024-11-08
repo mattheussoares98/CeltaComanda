@@ -240,7 +240,7 @@ void main() {
               useCovenant: null,
               enterpriseConcentradorParametersEntity: null,
               updateMenuCount: null,
-              updateEnterpriseCount: null,
+              updateConcentratorEnterpriseData: null,
               serviceChargePercentageOrValue: null,
               serviceChargeType: null,
               updateDevicesInformations: null,
@@ -711,8 +711,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-        updateEnterpriseCount:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+        updateConcentratorEnterpriseData:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
@@ -751,8 +751,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-        updateEnterpriseCount:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+        updateConcentratorEnterpriseData:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
@@ -788,8 +788,8 @@ void main() {
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
         updateMenuCount:
             EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-        updateEnterpriseCount:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+        updateConcentratorEnterpriseData:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
@@ -1390,7 +1390,7 @@ void main() {
         enterpriseConcentradorParametersEntity: null,
         updateMenuCount: faker.randomGenerator.integer(100),
         updateDevicesInformations: faker.randomGenerator.integer(100),
-        updateEnterpriseCount: faker.randomGenerator.integer(100),
+        updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
       );
@@ -1420,7 +1420,7 @@ void main() {
         enterpriseConcentradorParametersEntity: null,
         updateMenuCount: faker.randomGenerator.integer(100),
         updateDevicesInformations: faker.randomGenerator.integer(100),
-        updateEnterpriseCount: faker.randomGenerator.integer(100),
+        updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
       );
@@ -1483,7 +1483,7 @@ void main() {
         useCovenant: faker.randomGenerator.boolean(),
         enterpriseConcentradorParametersEntity: null,
         updateMenuCount: faker.randomGenerator.integer(100),
-        updateEnterpriseCount: faker.randomGenerator.integer(100),
+        updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
         updateDevicesInformations: faker.randomGenerator.integer(100),

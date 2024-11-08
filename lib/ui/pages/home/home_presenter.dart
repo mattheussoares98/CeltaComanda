@@ -18,7 +18,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
   int? get updateMenuCount;
-  int? get updateEnterpriseCount;
+  int? get updateConcentratorEnterpriseData;
   int? get updateDevicesInformations;
 
   void updateCommandNumber(String? value);

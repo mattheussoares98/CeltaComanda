@@ -259,8 +259,8 @@ void main() {
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       updateMenuCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-      updateEnterpriseCount:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+      updateConcentratorEnterpriseData:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
@@ -289,8 +289,8 @@ void main() {
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       updateMenuCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-      updateEnterpriseCount:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+      updateConcentratorEnterpriseData:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
@@ -320,8 +320,8 @@ void main() {
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       updateMenuCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-      updateEnterpriseCount:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterpriseCount,
+      updateConcentratorEnterpriseData:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
@@ -467,7 +467,7 @@ void main() {
           useCovenant: null,
           enterpriseConcentradorParametersEntity: null,
           updateMenuCount: null,
-          updateEnterpriseCount: null,
+          updateConcentratorEnterpriseData: null,
           serviceChargePercentageOrValue: null,
           serviceChargeType: null,
           updateDevicesInformations: null,

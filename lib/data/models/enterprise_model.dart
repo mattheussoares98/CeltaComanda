@@ -11,7 +11,7 @@ class EnterpriseValidationModel {
   final String? urlCCS;
   final bool? useCovenant;
   final int? updateMenuCount;
-  final int? updateEnterpriseCount;
+  final int? updateConcentratorEnterpriseData;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
@@ -28,7 +28,7 @@ class EnterpriseValidationModel {
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenuCount,
-    required this.updateEnterpriseCount,
+    required this.updateConcentratorEnterpriseData,
     required this.serviceChargePercentageOrValue,
     required this.serviceChargeType,
     required this.updateDevicesInformations,
@@ -52,7 +52,7 @@ class EnterpriseValidationModel {
       urlCCS: json["urlCCS"],
       useCovenant: json["useCovenant"],
       updateMenuCount: json["updateMenuCount"],
-      updateEnterpriseCount: json["updateEnterpriseCount"],
+      updateConcentratorEnterpriseData: json["updateConcentratorEnterpriseData"],
       serviceChargePercentageOrValue:
           json["serviceChargePercentageOrValue"]?.toDouble(),
       serviceChargeType: json["serviceChargeType"],
@@ -76,7 +76,7 @@ class EnterpriseValidationModel {
         urlCCS: entity.urlCCS,
         useCovenant: entity.useCovenant,
         updateMenuCount: entity.updateMenuCount,
-        updateEnterpriseCount: entity.updateEnterpriseCount,
+        updateConcentratorEnterpriseData: entity.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
         serviceChargeType: entity.serviceChargeType,
         updateDevicesInformations: entity.updateDevicesInformations,
@@ -93,7 +93,7 @@ class EnterpriseValidationModel {
         persistApp: persistApp,
         useCovenant: useCovenant,
         updateMenuCount: updateMenuCount,
-        updateEnterpriseCount: updateEnterpriseCount,
+        updateConcentratorEnterpriseData: updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: serviceChargePercentageOrValue,
         serviceChargeType: serviceChargeType,
         updateDevicesInformations: updateDevicesInformations,
@@ -110,7 +110,7 @@ class EnterpriseValidationModel {
         'urlCCS': urlCCS,
         'useCovenant': useCovenant,
         'updateMenuCount': updateMenuCount,
-        'updateEnterpriseCount': updateEnterpriseCount,
+        'updateConcentratorEnterpriseData': updateConcentratorEnterpriseData,
         'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
         'updateDevicesInformations': updateDevicesInformations,
         'serviceChargeType': serviceChargeType,

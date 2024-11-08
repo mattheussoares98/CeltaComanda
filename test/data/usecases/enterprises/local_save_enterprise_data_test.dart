@@ -30,7 +30,7 @@ void main() {
           EntityFactory.makeEnterpriseConcentradorParametersEntity(),
       updateMenuCount: faker.randomGenerator.integer(100),
       updateDevicesInformations: faker.randomGenerator.integer(100),
-      updateEnterpriseCount: faker.randomGenerator.integer(100),
+      updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
       serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
       serviceChargeType: faker.randomGenerator.integer(2, min: 1),
     );

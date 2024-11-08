@@ -70,7 +70,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
       updateMenuCount: null,
-      updateEnterpriseCount: null,
+      updateConcentratorEnterpriseData: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
       updateDevicesInformations: null,
@@ -486,9 +486,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
       }
 
-      if (enterprise.updateEnterpriseCount !=
-          EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterpriseCount) {
-        _updateEnterpriseCount = enterprise.updateEnterpriseCount;
+      if (enterprise.updateConcentratorEnterpriseData !=
+          EnterpriseDataBuilder.enterpriseDataEntity?.updateConcentratorEnterpriseData) {
+        _updateConcentratorEnterpriseData = enterprise.updateConcentratorEnterpriseData;
         await enterprisePresenter
             .getFirebaseAndConcentradorEnterpriseParameters();
       }
@@ -515,7 +515,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   int? get updateMenuCount => _updateMenuCount;
 
-  int? _updateEnterpriseCount = -1;
+  int? _updateConcentratorEnterpriseData = -1;
   @override
-  int? get updateEnterpriseCount => _updateEnterpriseCount;
+  int? get updateConcentratorEnterpriseData => _updateConcentratorEnterpriseData;
 }

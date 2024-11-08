@@ -711,8 +711,7 @@ void main() {
         persistApp: true,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
         updateConcentratorEnterpriseData: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
@@ -753,8 +752,7 @@ void main() {
         persistApp: true,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
         updateConcentratorEnterpriseData: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
@@ -792,8 +790,7 @@ void main() {
         persistApp: false,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
         updateConcentratorEnterpriseData: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
@@ -1495,7 +1492,8 @@ void main() {
       verify(() => addDeviceInfo.add(sut.commandNumber?.toInt())).called(1);
     });
 
-    test("Should update enterprise data with received json", () async {
+    test("Should update enterprise data when updateEnterprise is different",
+        () async {
       await sut.doOnRemoteEnterpriseChanges(
         data: enterpriseJson,
         menuPresenter: menuPresenter,
@@ -1510,6 +1508,24 @@ void main() {
         EnterpriseDataBuilder.enterpriseDataEntity,
         EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
       );
+    });
+    test(
+        "Should update locally enterprise data when updateEnterprise is different",
+        () async {
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      final newEnterprise =
+          EnterpriseValidationModel.fromJson(enterpriseJson).toEntity();
+
+      verify(() => localEnterpriseData.add(newEnterprise)).called(1);
     });
   });
 

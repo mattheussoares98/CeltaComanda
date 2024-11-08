@@ -1339,37 +1339,7 @@ void main() {
     final enterpriseJson =
         EnterpriseValidationModel.fromEntity(EntityFactory.makeEnterpriseData())
             .toJson();
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.doOnRemoteEnterpriseChanges(
-        data: enterpriseJson,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        enterprisePresenter: enterprisePresenter,
-      );
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      localCommandData.mockLoadError();
-
-      await sut.doOnRemoteEnterpriseChanges(
-        data: enterpriseJson,
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        enterprisePresenter: enterprisePresenter,
-      );
-    });
     test("Should call loadCommandData if enterprise.menucount is different",
         () async {
       await sut.doOnRemoteEnterpriseChanges(

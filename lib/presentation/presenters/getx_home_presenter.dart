@@ -471,8 +471,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         EnterpriseDataBuilder.enterpriseDataEntity?.url == null) {
       return;
     }
-    isLoading = true;
-    mainError = null;
 
     try {
       final enterprise = EnterpriseValidationModel.fromJson(data).toEntity();
@@ -500,9 +498,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await addDeviceInfo.add(commandNumber?.toInt());
       }
     } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
+      e;
     }
   }
 

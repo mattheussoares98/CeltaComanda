@@ -230,41 +230,27 @@ void main() {
     });
   });
 
-  group("ClearEnterpriseData", () {
-    test("Should call localEnterpriseData cleaning data", () async {
-      await sut.clearEnterpriseData();
+  group("Clear data", () {
+    test('Should clear command number', () async {
+      sut.updateCommandNumber("001");
 
-      verify(() => localEnterpriseData.add(
-            EnterpriseEntity(
-              enterpriseName:
-                  EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-              enterpriseId: null,
-              url: null,
-              concentradorUrl: null,
-              persistApp: null,
-              urlCCS: null,
-              useCovenant: null,
-              enterpriseConcentradorParametersEntity: null,
-              updateMenu: null,
-              updateConcentratorEnterpriseData: null,
-              serviceChargePercentageOrValue: null,
-              serviceChargeType: null,
-              updateDevicesInformations: null,
-              updateEnterprise: null,
-            ),
-          )).called(1);
+      await sut.clearData();
+
+      expect(sut.commandNumber, isNull);
     });
-    test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
-      await sut.doLogout(
+    test('Should clear updateMenu count', () async {
+      await sut.loadCommandData(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        updateMenu: faker.randomGenerator.integer(100),
       );
 
-      expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName,
-          isNotEmpty);
-      expect(EnterpriseDataBuilder.enterpriseDataEntity?.url, null);
-      expect(EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId, null);
+      await sut.clearData();
+
+      expect(sut.updateMenu, -1);
     });
   });
 

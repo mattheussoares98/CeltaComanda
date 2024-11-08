@@ -41,13 +41,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
   }) async {
-    _updateMenu = -1;
-    _commandNumber = null;
     menuPresenter.clear();
     printedProductsPresenter.clear();
     cartPresenter.clear();
     await persistent.makeNotPersistent();
-    await clearEnterpriseData();
+    await clearData();
 
     await navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }
@@ -58,27 +56,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> clearEnterpriseData() async {
-    final emptyEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName ?? "",
-      enterpriseId: null,
-      url: null,
-      concentradorUrl: null,
-      persistApp: null,
-      urlCCS: null,
-      useCovenant: null,
-      enterpriseConcentradorParametersEntity: null,
-      updateMenu: null,
-      updateConcentratorEnterpriseData: null,
-      serviceChargePercentageOrValue: null,
-      serviceChargeType: null,
-      updateDevicesInformations: null,
-      updateEnterprise: null,
-    );
-    EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
-
-    await localEnterpriseData.add(emptyEntity);
+  Future<void> clearData() async {
+    _commandNumber = null;
+    _updateMenu = -1;
   }
 
   @override

@@ -36,7 +36,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   });
 
   @override
-  Future<void> goToSplashPage({
+  Future<void> doLogout({
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,

@@ -50,7 +50,7 @@ class LogoutButton extends StatelessWidget {
                   content: Text(R.string.msgClearCartOnLogout),
                   onPress: () async {
                     cartPresenter.clearCart();
-                    await homePresenter.goToSplashPage(
+                    await homePresenter.doLogout(
                       printedProductsPresenter: printedProductsPresenter,
                       cartPresenter: cartPresenter,
                       menuPresenter: menuPresenter,
@@ -58,7 +58,7 @@ class LogoutButton extends StatelessWidget {
                   });
             });
           } else {
-            await homePresenter.goToSplashPage(
+            await homePresenter.doLogout(
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
               menuPresenter: menuPresenter,

@@ -181,7 +181,7 @@ void main() {
           )).called(1);
     });
     test('Should go to SplashPage', () async {
-      await sut.goToSplashPage(
+      await sut.doLogout(
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -194,7 +194,7 @@ void main() {
     });
 
     test('Should make not persist app when go to splash page', () async {
-      await sut.goToSplashPage(
+      await sut.doLogout(
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -220,7 +220,7 @@ void main() {
     });
 
     test('Should update updateMenu', () async {
-      await sut.goToSplashPage(
+      await sut.doLogout(
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
@@ -255,7 +255,7 @@ void main() {
           )).called(1);
     });
     test('Should clear EnterpriseDataBuilder when go to SplashPage', () async {
-      await sut.goToSplashPage(
+      await sut.doLogout(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,

@@ -32,7 +32,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
 
   Future<void> clearEnterpriseData();
 
-  Future<void> goToSplashPage({
+  Future<void> doLogout({
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,

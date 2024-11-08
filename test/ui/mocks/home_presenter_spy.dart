@@ -30,7 +30,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   }
 
   void mockGoToSplashPage() {
-    when(() => this.goToSplashPage(
+    when(() => this.doLogout(
           cartPresenter: any(named: "cartPresenter"),
           menuPresenter: any(named: "menuPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),

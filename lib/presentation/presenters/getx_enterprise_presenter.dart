@@ -103,7 +103,8 @@ class GetxEnterprisePresenter extends GetxController
           useCovenant: firebaseData.useCovenant,
           enterpriseConcentradorParametersEntity: concentradorData,
           updateMenuCount: firebaseData.updateMenuCount,
-          updateConcentratorEnterpriseData: firebaseData.updateConcentratorEnterpriseData,
+          updateConcentratorEnterpriseData:
+              firebaseData.updateConcentratorEnterpriseData,
           updateDevicesInformations: firebaseData.updateDevicesInformations,
           serviceChargePercentageOrValue:
               firebaseData.serviceChargePercentageOrValue,
@@ -278,5 +279,38 @@ class GetxEnterprisePresenter extends GetxController
     EnterpriseEntity newEnterprise,
   ) async {
     EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;
+  }
+
+  @override
+  Future<void> updateConcentratorEnterpriseParameters() async {
+    try {
+      final enterprise = EnterpriseDataBuilder.enterpriseDataEntity!;
+      final concentradorData = await loadEnterpriseConcentradorParameters.load(
+        concentradorUrl: enterprise.concentradorUrl!,
+        enterpriseId: enterprise.enterpriseId!,
+      );
+
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName: enterprise.enterpriseName,
+        url: enterprise.url,
+        enterpriseId: enterprise.enterpriseId,
+        concentradorUrl: enterprise.concentradorUrl,
+        persistApp: enterprise.persistApp,
+        urlCCS: enterprise.urlCCS,
+        useCovenant: enterprise.useCovenant,
+        enterpriseConcentradorParametersEntity: concentradorData,
+        updateMenuCount: enterprise.updateMenuCount,
+        updateConcentratorEnterpriseData:
+            enterprise.updateConcentratorEnterpriseData,
+        updateDevicesInformations: enterprise.updateDevicesInformations,
+        serviceChargePercentageOrValue:
+            enterprise.serviceChargePercentageOrValue,
+        serviceChargeType: enterprise.serviceChargeType,
+      );
+
+      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
+    } catch (e) {
+      e;
+    }
   }
 }

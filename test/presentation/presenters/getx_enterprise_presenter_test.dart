@@ -259,8 +259,8 @@ void main() {
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       updateMenuCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-      updateConcentratorEnterpriseData:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
+      updateConcentratorEnterpriseData: EnterpriseDataBuilder
+          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
@@ -289,8 +289,8 @@ void main() {
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       updateMenuCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-      updateConcentratorEnterpriseData:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
+      updateConcentratorEnterpriseData: EnterpriseDataBuilder
+          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
@@ -320,8 +320,8 @@ void main() {
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
       updateMenuCount:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
-      updateConcentratorEnterpriseData:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateConcentratorEnterpriseData,
+      updateConcentratorEnterpriseData: EnterpriseDataBuilder
+          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
@@ -563,6 +563,39 @@ void main() {
       sut.updateEnterpriseEntity(newEnterprise);
 
       expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
+    });
+  });
+
+  group("Update concentrator enterprise parameters", () {
+    test("Should call load concentrator data", () async {
+      await sut.updateConcentratorEnterpriseParameters();
+
+      verify(() => loadEnterpriseConcentradorParameters.load(
+            enterpriseId:
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+            concentradorUrl:
+                EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!,
+          )).called(1);
+    });
+    test("Should update concentrador parameters data", () async {
+      final concentratorEntity =
+          EntityFactory.makeEnterpriseConcentradorParametersEntity();
+      loadEnterpriseConcentradorParameters
+          .mockLoadEnterprise(concentratorEntity);
+
+      await sut.updateConcentratorEnterpriseParameters();
+
+      expect(
+        EnterpriseDataBuilder
+            .enterpriseDataEntity?.enterpriseConcentradorParametersEntity,
+        concentratorEntity,
+      );
+    });
+    test("Should update local enterprise data", () async {
+      await sut.updateConcentratorEnterpriseParameters();
+
+      verify(() => localEnterpriseData
+          .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
     });
   });
 }

@@ -30,6 +30,7 @@ class EnterprisePresenterSpy extends Mock
 
     when(() => this.getLocalData(any())).thenAnswer((any) async => any);
     when(() => this.getFirebaseAndConcentradorEnterpriseParameters()).thenAnswer((any) async => any);
+    when(() => this.updateConcentratorEnterpriseParameters()).thenAnswer((any) async => any);
     when(() => this.validateApiAndGoToHomePage(
           commandEntity: any(named: "commandEntity"),
           homePresenter: any(named: "homePresenter"),

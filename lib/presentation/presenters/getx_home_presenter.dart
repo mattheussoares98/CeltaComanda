@@ -41,7 +41,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required MenuPresenter menuPresenter,
   }) async {
-    _updateMenuCount = -1;
+    _updateMenu = -1;
     _commandNumber = null;
     menuPresenter.clear();
     printedProductsPresenter.clear();
@@ -69,11 +69,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       urlCCS: null,
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
-      updateMenuCount: null,
+      updateMenu: null,
       updateConcentratorEnterpriseData: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
       updateDevicesInformations: null,
+      updateEnterprise: null,
     );
     EnterpriseDataBuilder.enterpriseDataEntity = emptyEntity;
 
@@ -118,13 +119,13 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    int? updateMenuCount,
+    int? updateMenu,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      _updateMenuCount = updateMenuCount;
+      _updateMenu = updateMenu;
 
       if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
           !_isGeneratingVersionToTablet) {
@@ -475,22 +476,21 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     try {
       final enterprise = EnterpriseValidationModel.fromJson(data).toEntity();
 
-      if (_updateMenuCount != enterprise.updateMenuCount) {
+      if (_updateMenu != enterprise.updateMenu) {
         await loadCommandData(
           menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
           cartPresenter: cartPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
-          updateMenuCount: enterprise.updateMenuCount,
+          updateMenu: enterprise.updateMenu,
         );
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=
           EnterpriseDataBuilder
               .enterpriseDataEntity?.updateConcentratorEnterpriseData) {
-        await enterprisePresenter
-            .getFirebaseAndConcentradorEnterpriseParameters();
+        await enterprisePresenter.updateConcentratorEnterpriseParameters();
       }
 
       if (enterprise.updateDevicesInformations !=
@@ -510,7 +510,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     await navigateTo.navigate(pageRoute: PageRoutes.configurations);
   }
 
-  int? _updateMenuCount = -1;
+  int? _updateMenu = -1;
   @override
-  int? get updateMenuCount => _updateMenuCount;
+  int? get updateMenu => _updateMenu;
 }

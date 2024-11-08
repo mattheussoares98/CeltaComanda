@@ -10,13 +10,14 @@ class EnterpriseValidationModel {
   final bool? persistApp;
   final String? urlCCS;
   final bool? useCovenant;
-  final int? updateMenuCount;
+  final int? updateMenu;
   final int? updateConcentratorEnterpriseData;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
   final int? serviceChargeType;
   final int? updateDevicesInformations;
+  final int? updateEnterprise;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -27,11 +28,12 @@ class EnterpriseValidationModel {
     required this.urlCCS,
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
-    required this.updateMenuCount,
+    required this.updateMenu,
     required this.updateConcentratorEnterpriseData,
     required this.serviceChargePercentageOrValue,
     required this.serviceChargeType,
     required this.updateDevicesInformations,
+    required this.updateEnterprise,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -50,9 +52,11 @@ class EnterpriseValidationModel {
       concentradorUrl: json["concentradorUrl"],
       persistApp: json["persistApp"],
       urlCCS: json["urlCCS"],
+      updateEnterprise: json["updateEnterprise"],
       useCovenant: json["useCovenant"],
-      updateMenuCount: json["updateMenuCount"],
-      updateConcentratorEnterpriseData: json["updateConcentratorEnterpriseData"],
+      updateMenu: json["updateMenu"],
+      updateConcentratorEnterpriseData:
+          json["updateConcentratorEnterpriseData"],
       serviceChargePercentageOrValue:
           json["serviceChargePercentageOrValue"]?.toDouble(),
       serviceChargeType: json["serviceChargeType"],
@@ -69,14 +73,16 @@ class EnterpriseValidationModel {
   factory EnterpriseValidationModel.fromEntity(EnterpriseEntity entity) =>
       EnterpriseValidationModel(
         url: entity.url,
+        updateEnterprise: entity.updateEnterprise,
         enterpriseName: entity.enterpriseName,
         enterpriseId: entity.enterpriseId,
         concentradorUrl: entity.concentradorUrl,
         persistApp: entity.persistApp,
         urlCCS: entity.urlCCS,
         useCovenant: entity.useCovenant,
-        updateMenuCount: entity.updateMenuCount,
-        updateConcentratorEnterpriseData: entity.updateConcentratorEnterpriseData,
+        updateMenu: entity.updateMenu,
+        updateConcentratorEnterpriseData:
+            entity.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
         serviceChargeType: entity.serviceChargeType,
         updateDevicesInformations: entity.updateDevicesInformations,
@@ -92,11 +98,12 @@ class EnterpriseValidationModel {
         concentradorUrl: concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         persistApp: persistApp,
         useCovenant: useCovenant,
-        updateMenuCount: updateMenuCount,
+        updateMenu: updateMenu,
         updateConcentratorEnterpriseData: updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: serviceChargePercentageOrValue,
         serviceChargeType: serviceChargeType,
         updateDevicesInformations: updateDevicesInformations,
+        updateEnterprise: updateEnterprise,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
       );
@@ -109,7 +116,8 @@ class EnterpriseValidationModel {
         'persistApp': persistApp,
         'urlCCS': urlCCS,
         'useCovenant': useCovenant,
-        'updateMenuCount': updateMenuCount,
+        'updateMenu': updateMenu,
+        'updateEnterprise': updateEnterprise,
         'updateConcentratorEnterpriseData': updateConcentratorEnterpriseData,
         'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
         'updateDevicesInformations': updateDevicesInformations,

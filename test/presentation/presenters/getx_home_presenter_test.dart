@@ -214,14 +214,14 @@ void main() {
           )).called(1);
     });
 
-    test('Should update updateMenuCount', () async {
+    test('Should update updateMenu', () async {
       await sut.goToSplashPage(
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         menuPresenter: menuPresenter,
       );
 
-      expect(sut.updateMenuCount, -1);
+      expect(sut.updateMenu, -1);
     });
   });
 
@@ -240,11 +240,12 @@ void main() {
               urlCCS: null,
               useCovenant: null,
               enterpriseConcentradorParametersEntity: null,
-              updateMenuCount: null,
+              updateMenu: null,
               updateConcentratorEnterpriseData: null,
               serviceChargePercentageOrValue: null,
               serviceChargeType: null,
               updateDevicesInformations: null,
+              updateEnterprise: null,
             ),
           )).called(1);
     });
@@ -710,14 +711,16 @@ void main() {
         persistApp: true,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenuCount:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+        updateMenu:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
         updateConcentratorEnterpriseData: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
             EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
         updateDevicesInformations: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateDevicesInformations,
       );
@@ -750,14 +753,16 @@ void main() {
         persistApp: true,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenuCount:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+        updateMenu:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
         updateConcentratorEnterpriseData: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
             EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
         updateDevicesInformations: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateDevicesInformations,
       );
@@ -787,14 +792,16 @@ void main() {
         persistApp: false,
         enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
             .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenuCount:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+        updateMenu:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
         updateConcentratorEnterpriseData: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: EnterpriseDataBuilder
             .enterpriseDataEntity!.serviceChargePercentageOrValue,
         serviceChargeType:
             EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
         updateDevicesInformations: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateDevicesInformations,
       );
@@ -809,7 +816,7 @@ void main() {
 
       verify(() => persistent.makeNotPersistent()).called(1);
     });
-    test("Should update updateMenuCount when pass a value", () async {
+    test("Should update updateMenu when pass a value", () async {
       final value = faker.randomGenerator.integer(100);
 
       await sut.loadCommandData(
@@ -818,22 +825,22 @@ void main() {
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        updateMenuCount: value,
+        updateMenu: value,
       );
 
-      expect(sut.updateMenuCount, value);
+      expect(sut.updateMenu, value);
     });
-    test("Should not update updateMenuCount when dont pass a value", () async {
+    test("Should not update updateMenu when dont pass a value", () async {
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        updateMenuCount: null,
+        updateMenu: null,
       );
 
-      expect(sut.updateMenuCount, null);
+      expect(sut.updateMenu, null);
     });
   });
 
@@ -1389,8 +1396,9 @@ void main() {
         urlCCS: faker.randomGenerator.string(10),
         useCovenant: faker.randomGenerator.boolean(),
         enterpriseConcentradorParametersEntity: null,
-        updateMenuCount: faker.randomGenerator.integer(100),
+        updateMenu: faker.randomGenerator.integer(100),
         updateDevicesInformations: faker.randomGenerator.integer(100),
+        updateEnterprise: faker.randomGenerator.integer(100),
         updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
@@ -1419,8 +1427,9 @@ void main() {
         urlCCS: faker.randomGenerator.string(10),
         useCovenant: faker.randomGenerator.boolean(),
         enterpriseConcentradorParametersEntity: null,
-        updateMenuCount: faker.randomGenerator.integer(100),
+        updateMenu: faker.randomGenerator.integer(100),
         updateDevicesInformations: faker.randomGenerator.integer(100),
+        updateEnterprise: faker.randomGenerator.integer(100),
         updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
@@ -1450,8 +1459,8 @@ void main() {
         enterprisePresenter: enterprisePresenter,
       );
 
-      verify(() => enterprisePresenter
-          .getFirebaseAndConcentradorEnterpriseParameters()).called(1);
+      verify(() => enterprisePresenter.updateConcentratorEnterpriseParameters())
+          .called(1);
     });
 
     test("Should call add device info", () async {
@@ -1464,11 +1473,13 @@ void main() {
         urlCCS: faker.internet.httpUrl(),
         useCovenant: faker.randomGenerator.boolean(),
         enterpriseConcentradorParametersEntity: null,
-        updateMenuCount: faker.randomGenerator.integer(100),
+        updateMenu: faker.randomGenerator.integer(100),
+        updateEnterprise: faker.randomGenerator.integer(100),
         updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
         serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
         serviceChargeType: faker.randomGenerator.integer(2),
-        updateDevicesInformations: faker.randomGenerator.integer(100),
+        updateDevicesInformations:
+            faker.randomGenerator.integer(1000, min: 500),
       );
 
       await sut.doOnRemoteEnterpriseChanges(

@@ -257,14 +257,16 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenuCount:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+      updateMenu:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
       updateConcentratorEnterpriseData: EnterpriseDataBuilder
           .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
           EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateEnterprise:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
     );
@@ -287,14 +289,16 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenuCount:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+      updateMenu:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
       updateConcentratorEnterpriseData: EnterpriseDataBuilder
           .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
           EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateEnterprise:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
     );
@@ -318,14 +322,16 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenuCount:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenuCount,
+      updateMenu:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
       updateConcentratorEnterpriseData: EnterpriseDataBuilder
           .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
           .enterpriseDataEntity!.serviceChargePercentageOrValue,
       serviceChargeType:
           EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateEnterprise:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
     );
@@ -466,11 +472,12 @@ void main() {
           urlCCS: null,
           useCovenant: null,
           enterpriseConcentradorParametersEntity: null,
-          updateMenuCount: null,
+          updateMenu: null,
           updateConcentratorEnterpriseData: null,
           serviceChargePercentageOrValue: null,
           serviceChargeType: null,
           updateDevicesInformations: null,
+          updateEnterprise: null,
         ),
       );
     });

@@ -57,13 +57,14 @@ void main() {
           useCovenant: enterpriseJsonData["useCovenant"],
           enterpriseConcentradorParametersEntity:
               enterpriseJsonData["enterpriseConcentradorParametersEntity"],
-          updateMenuCount: enterpriseJsonData["updateMenuCount"],
+          updateMenu: enterpriseJsonData["updateMenu"],
           updateConcentratorEnterpriseData: enterpriseJsonData["updateConcentratorEnterpriseData"],
           serviceChargePercentageOrValue:
               enterpriseJsonData["serviceChargePercentageOrValue"],
           updateDevicesInformations:
               enterpriseJsonData["updateDevicesInformations"],
           serviceChargeType: enterpriseJsonData["serviceChargeType"],
+          updateEnterprise: enterpriseJsonData["updateEnterprise"],
         ),
       );
     });

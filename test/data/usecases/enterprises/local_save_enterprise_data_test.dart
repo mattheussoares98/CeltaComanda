@@ -28,8 +28,9 @@ void main() {
       useCovenant: faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:
           EntityFactory.makeEnterpriseConcentradorParametersEntity(),
-      updateMenuCount: faker.randomGenerator.integer(100),
+      updateMenu: faker.randomGenerator.integer(100),
       updateDevicesInformations: faker.randomGenerator.integer(100),
+      updateEnterprise: faker.randomGenerator.integer(100),
       updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
       serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
       serviceChargeType: faker.randomGenerator.integer(2, min: 1),

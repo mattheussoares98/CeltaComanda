@@ -102,13 +102,14 @@ class GetxEnterprisePresenter extends GetxController
           urlCCS: firebaseData.urlCCS,
           useCovenant: firebaseData.useCovenant,
           enterpriseConcentradorParametersEntity: concentradorData,
-          updateMenuCount: firebaseData.updateMenuCount,
+          updateMenu: firebaseData.updateMenu,
           updateConcentratorEnterpriseData:
               firebaseData.updateConcentratorEnterpriseData,
           updateDevicesInformations: firebaseData.updateDevicesInformations,
           serviceChargePercentageOrValue:
               firebaseData.serviceChargePercentageOrValue,
           serviceChargeType: firebaseData.serviceChargeType,
+          updateEnterprise: firebaseData.updateEnterprise,
         );
       } else {
         throw DomainError.enterpriseOrUrlNotFound;
@@ -192,11 +193,12 @@ class GetxEnterprisePresenter extends GetxController
       urlCCS: null,
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
-      updateMenuCount: null,
+      updateMenu: null,
       updateConcentratorEnterpriseData: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
       updateDevicesInformations: null,
+      updateEnterprise: null,
     );
 
     _enterpriseError.value = _validateField('enterpriseName');
@@ -299,13 +301,14 @@ class GetxEnterprisePresenter extends GetxController
         urlCCS: enterprise.urlCCS,
         useCovenant: enterprise.useCovenant,
         enterpriseConcentradorParametersEntity: concentradorData,
-        updateMenuCount: enterprise.updateMenuCount,
+        updateMenu: enterprise.updateMenu,
         updateConcentratorEnterpriseData:
             enterprise.updateConcentratorEnterpriseData,
         updateDevicesInformations: enterprise.updateDevicesInformations,
         serviceChargePercentageOrValue:
             enterprise.serviceChargePercentageOrValue,
         serviceChargeType: enterprise.serviceChargeType,
+        updateEnterprise: enterprise.updateEnterprise,
       );
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);

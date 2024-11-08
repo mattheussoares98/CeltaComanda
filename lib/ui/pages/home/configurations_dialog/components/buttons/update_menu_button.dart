@@ -44,7 +44,7 @@ class UpdateMenuButton extends StatelessWidget {
             cartPresenter: cartPresenter,
             expansibleGroupFromProductPresenter:
                 expansibleGroupFromProductPresenter,
-            updateMenuCount: null,
+            updateMenu: null,
           );
         },
       ),

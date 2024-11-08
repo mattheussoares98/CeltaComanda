@@ -58,7 +58,7 @@ class FirebaseAdapter implements FirebaseStorage {
           .doc("loadedDevices");
 
       await docRef.set({
-        "${entity.id} ${entity.device}":
+        entity.imei ?? "unrecognizedImei":
             DeviceInfoModel.fromEntity(entity).toJson(),
       }, SetOptions(merge: true));
     } catch (e) {

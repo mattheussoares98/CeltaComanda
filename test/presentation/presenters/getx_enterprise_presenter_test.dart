@@ -555,4 +555,14 @@ void main() {
       );
     });
   });
+
+  group("Update enterprise entity", () {
+    test("Should update enterpriseDatabuilder.entity", () {
+      final newEnterprise = EntityFactory.makeEnterpriseData();
+
+      sut.updateEnterpriseEntity(newEnterprise);
+
+      expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
+    });
+  });
 }

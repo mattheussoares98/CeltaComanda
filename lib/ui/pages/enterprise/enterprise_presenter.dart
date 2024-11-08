@@ -33,5 +33,5 @@ abstract class EnterprisePresenter implements Listenable {
     required String? newCommandValue,
     required HomePresenter homePresenter,
   });
-  // Future<void> updateEnterpriseEntity(Map<String, dynamic> enterpriseData);
+  void updateEnterpriseEntity(EnterpriseEntity newEnterprise);
 }

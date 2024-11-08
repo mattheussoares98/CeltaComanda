@@ -272,4 +272,11 @@ class GetxEnterprisePresenter extends GetxController
       isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
     );
   }
+
+  @override
+  void updateEnterpriseEntity(
+    EnterpriseEntity newEnterprise,
+  ) async {
+    EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;
+  }
 }

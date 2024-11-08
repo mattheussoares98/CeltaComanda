@@ -14,10 +14,15 @@ import 'package:get/get.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../ui/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
   late GetxConfigurationsPresenter sut;
+  late MenuPresenterSpy menuPresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
+  late CartPresenterSpy cartPresenter;
+  late HomePresenterSpy homePresenter;
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
@@ -38,6 +43,10 @@ void main() {
   Get.testMode = true;
 
   void initPresenters() {
+    menuPresenter = MenuPresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
+    cartPresenter = CartPresenterSpy();
+    homePresenter = HomePresenterSpy();
     sut = GetxConfigurationsPresenter(
       loadCustomer: loadCustomer,
       validation: validation,
@@ -80,7 +89,6 @@ void main() {
     initEntitys();
     initMocks();
   });
-
   setUpAll(() {
     registerFallbackValue(
       EntityFactory.makeSaleRequestModel(
@@ -88,6 +96,11 @@ void main() {
         customerCode: 0,
       ),
     );
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
   });
 
   group("Open or blockade command number", () {
@@ -245,6 +258,72 @@ void main() {
       sut.updateSelectedSeller(selectedSeller);
 
       expect(sut.selectedSeller, selectedSeller);
+    });
+  });
+
+  group("Do logout", () {
+    test("Should call menuPresenter.clear", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => menuPresenter.clear()).called(1);
+    });
+    test("Should call printedProductsPresenter.clear", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => printedProductsPresenter.clear()).called(1);
+    });
+    test("Should call cartPresenter.clear", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => cartPresenter.clear()).called(1);
+    });
+    test("Should call homePresenter.clear", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => homePresenter.clear()).called(1);
+    });
+    test("Should make not persistent", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
+    test("Should call navigate to splash page correctly", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(
+            pageRoute: PageRoutes.splash,
+            clear: true,
+          )).called(1);
     });
   });
 }

@@ -234,7 +234,7 @@ void main() {
     test('Should clear command number', () async {
       sut.updateCommandNumber("001");
 
-      await sut.clear();
+      sut.clear();
 
       expect(sut.commandNumber, isNull);
     });
@@ -248,7 +248,7 @@ void main() {
         updateMenu: faker.randomGenerator.integer(100),
       );
 
-      await sut.clear();
+      sut.clear();
 
       expect(sut.updateMenu, -1);
     });

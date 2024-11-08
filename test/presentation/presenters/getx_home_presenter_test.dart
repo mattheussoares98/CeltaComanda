@@ -49,6 +49,7 @@ void main() {
   late SellersViewModel selectedSeller;
   late int userCode;
   late String password;
+  late Map<String, dynamic> enterpriseJson;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -147,6 +148,10 @@ void main() {
     selectedSeller = EntityFactory.makeSellersViewModel();
 
     userCode = faker.randomGenerator.integer(100);
+
+    enterpriseJson = EnterpriseValidationModel.fromEntity(
+            EnterpriseDataBuilder.enterpriseDataEntity!)
+        .toJson();
   }
 
   setUp(() {
@@ -1341,10 +1346,6 @@ void main() {
   });
 
   group("Do on remote enterprise changes", () {
-    final enterpriseJson =
-        EnterpriseValidationModel.fromEntity(EntityFactory.makeEnterpriseData())
-            .toJson();
-
     test("Should call loadCommandData if enterprise.menucount is different",
         () async {
       await sut.doOnRemoteEnterpriseChanges(
@@ -1445,7 +1446,12 @@ void main() {
       verifyNever(() => localCommandData
           .load()); //first abstract called function when dont return because id or url is null
     });
-    test("Should call enterprisePresenter.", () async {
+    test(
+        "Should call updateConcentratorEnterpriseParameters when value is different",
+        () async {
+      enterpriseJson["updateConcentratorEnterpriseData"] =
+          faker.randomGenerator.integer(1000, min: 500);
+
       await sut.doOnRemoteEnterpriseChanges(
         data: enterpriseJson,
         menuPresenter: menuPresenter,
@@ -1460,24 +1466,10 @@ void main() {
           .called(1);
     });
 
-    test("Should call add device info", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-        enterpriseName: faker.randomGenerator.string(10),
-        url: faker.internet.httpUrl(),
-        enterpriseId: faker.randomGenerator.integer(100),
-        concentradorUrl: faker.internet.httpUrl(),
-        persistApp: faker.randomGenerator.boolean(),
-        urlCCS: faker.internet.httpUrl(),
-        useCovenant: faker.randomGenerator.boolean(),
-        enterpriseConcentradorParametersEntity: null,
-        updateMenu: faker.randomGenerator.integer(100),
-        updateEnterprise: faker.randomGenerator.integer(100),
-        updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
-        serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-        serviceChargeType: faker.randomGenerator.integer(2),
-        updateDevicesInformations:
-            faker.randomGenerator.integer(1000, min: 500),
-      );
+    test("Should call add device info on updateDevicesInformations changes",
+        () async {
+      enterpriseJson["updateDevicesInformations"] =
+          faker.randomGenerator.integer(1000, min: 500);
 
       await sut.doOnRemoteEnterpriseChanges(
         data: enterpriseJson,
@@ -1490,6 +1482,45 @@ void main() {
       );
 
       verify(() => addDeviceInfo.add(sut.commandNumber?.toInt())).called(1);
+    });
+    test("Should update enterprise on updateDeviceInformations changes",
+        () async {
+      enterpriseJson["updateDevicesInformations"] =
+          faker.randomGenerator.integer(1000, min: 500);
+
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      expect(
+        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
+      );
+    });
+    test("Should update locally when updateDeviceInformations changes",
+        () async {
+      enterpriseJson["updateDevicesInformations"] =
+          faker.randomGenerator.integer(1000, min: 500);
+
+      await sut.doOnRemoteEnterpriseChanges(
+        data: enterpriseJson,
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        enterprisePresenter: enterprisePresenter,
+      );
+
+      verify(() => localEnterpriseData.add(
+              EnterpriseValidationModel.fromJson(enterpriseJson).toEntity()))
+          .called(1);
     });
 
     test("Should update enterprise data when updateEnterprise is different",
@@ -1512,6 +1543,9 @@ void main() {
     test(
         "Should update locally enterprise data when updateEnterprise is different",
         () async {
+      enterpriseJson["updateEnterprise"] =
+          faker.randomGenerator.integer(1000, min: 500);
+
       await sut.doOnRemoteEnterpriseChanges(
         data: enterpriseJson,
         menuPresenter: menuPresenter,

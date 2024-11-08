@@ -497,6 +497,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           EnterpriseDataBuilder
               .enterpriseDataEntity?.updateDevicesInformations) {
         await addDeviceInfo.add(commandNumber?.toInt());
+        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+        await localEnterpriseData.add(enterprise);
       }
 
       if (enterprise.updateEnterprise !=
@@ -505,6 +507,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await localEnterpriseData.add(enterprise);
       }
     } catch (e) {
+      debugPrint(e.toString());
       e;
     }
   }

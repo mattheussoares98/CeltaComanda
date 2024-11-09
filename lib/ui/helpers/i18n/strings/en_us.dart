@@ -129,6 +129,7 @@ class EnUs implements Translation {
   String get eanOrPlu => 'EAN or PLU';
   String get email => 'Email';
   String get emptyCart => 'The cart is empty';
+  String get emptyTable => 'The table is empty';
   String get enterprise => 'Enterprise';
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';

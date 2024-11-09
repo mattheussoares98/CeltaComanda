@@ -131,6 +131,7 @@ class PtBr implements Translation {
   String get eanOrPlu => "EAN ou PLU";
   String get email => "E-mail";
   String get emptyCart => 'O carrinho está vazio';
+  String get emptyTable => 'A mesa está vazia';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get environment => 'Ambiente';

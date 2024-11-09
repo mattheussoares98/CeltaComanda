@@ -107,6 +107,7 @@ abstract class Translation {
   String get eanOrPlu;
   String get email;
   String get emptyCart;
+  String get emptyTable;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
   String get environment;

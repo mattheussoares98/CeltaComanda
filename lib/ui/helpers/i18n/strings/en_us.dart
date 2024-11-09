@@ -160,6 +160,7 @@ class EnUs implements Translation {
   String get per => 'Per';
   String get personalizedCode => 'Personalized code';
   String get price => 'Price';
+  String get products => 'Products';
   String get productsAndComments => 'Products and comments';
   String get promotionWithoutPoints => 'Promotion without points';
   String get quantity => 'Quantity';

@@ -140,6 +140,7 @@ abstract class Translation {
   String get personalizedCode;
   String get price;
   String get productsAndComments;
+  String get products;
   String get promotionWithoutPoints;
   String get quantity;
   String get quantityAbbreviated;

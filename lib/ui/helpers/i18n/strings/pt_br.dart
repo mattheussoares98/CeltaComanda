@@ -163,6 +163,7 @@ class PtBr implements Translation {
   String get per => 'Por';
   String get personalizedCode => 'Código personalizado';
   String get price => 'Preço';
+  String get products => 'Produtos';
   String get productsAndComments => 'Produtos e comentários';
   String get promotionWithoutPoints => 'Promocao';
   String get quantity => 'Quantidade';

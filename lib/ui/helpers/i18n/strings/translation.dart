@@ -75,6 +75,7 @@ abstract class Translation {
   String get blockCommand;
   String get call;
   String get cancel;
+  String get cancelProducts;
   String get cart;
   String get cashCredit;
   String get cellPhone;
@@ -82,7 +83,6 @@ abstract class Translation {
   String get close;
   String get closeApplication;
   String get code;
-  String get internalcodeNameOrCpf;
   String get combox;
   String get commandNotAvailable;
   String get command;
@@ -114,6 +114,7 @@ abstract class Translation {
   String get getCustomer;
   String get insertInCart;
   String get insert;
+  String get internalcodeNameOrCpf;
   String get ifWantSelectComments;
   String get ifWantSelectProducts;
   String get jump;

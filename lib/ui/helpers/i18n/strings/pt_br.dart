@@ -100,13 +100,13 @@ class PtBr implements Translation {
   String get cart => "Carrinho";
   String get call => "Ligar";
   String get cancel => "Cancelar";
+  String get cancelProducts => "Cancelar produtos";
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
   String get clearCart => "Limpar carrinho";
   String get closeApplication => "Fechar APP";
   String get close => "Fechar";
   String get code => "Código";
-  String get internalcodeNameOrCpf => "Código interno, nome ou CPF";
   String get combox => "Combo";
   String get command => "Comanda";
   String get commandNumber => "Número da comanda";
@@ -138,6 +138,7 @@ class PtBr implements Translation {
   String get getCustomer => 'Pesquisar cliente';
   String get insertInCart => 'Inserir no carrinho';
   String get insert => 'Inserir';
+  String get internalcodeNameOrCpf => "Código interno, nome ou CPF";
   String get ifWantSelectComments => 'Se desejar, selecione comentários';
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';

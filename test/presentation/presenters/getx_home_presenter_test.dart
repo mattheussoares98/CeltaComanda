@@ -1571,6 +1571,67 @@ void main() {
   });
 
   group("Navigate to configurations page", () {
+    test("Should emit correct values", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.goToConfigurationsPage(
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test("Should emit correct values on validate password throws", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+
+      userValidations.mockIsValidPasswordError(
+        DomainError.invalidCredentialsOrAccessDenied,
+      );
+
+      await sut.goToConfigurationsPage(
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+    test("Should emit correct values on password is invalid", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+
+      userValidations.mockIsValidPassword(false);
+
+      await sut.goToConfigurationsPage(
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+
+    test("Should call user validations with correct values", () async {
+      await sut.goToConfigurationsPage(
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      verify(() => userValidations.isValidPassword(
+            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            personalizedCode: userPersonalizedCode,
+            password: password,
+          ));
+    });
+    test("Should emit correct error if cant cancel", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.accessDenied]));
+
+      userValidations.mockCanCancel(false);
+
+      await sut.goToConfigurationsPage(
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
+    });
+
     test("Should call navigateTo with correct values", () async {
       await sut.goToConfigurationsPage(
         userPersonalizedCode: userPersonalizedCode,

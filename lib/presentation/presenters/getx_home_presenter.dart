@@ -501,11 +501,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      await userValidations.isValidPassword(
+      bool isValidPassword = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         personalizedCode: userPersonalizedCode,
         password: password,
       );
+
+      if (!isValidPassword) {
+        throw DomainError.invalidCredentials;
+      }
 
       final canCancel = await userValidations.canCancel(
         personalizedCode: userPersonalizedCode,
@@ -513,12 +517,17 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (!canCancel) {
-        throw DomainError.invalidCredentialsOrAccessDenied;
+        throw DomainError.accessDenied;
       }
+
+      await navigateTo.navigate(pageRoute: PageRoutes.configurations);
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
+        case DomainError.accessDenied:
+          mainError = UIError.accessDenied;
+          break;
+        case DomainError.invalidCredentials:
+          mainError = UIError.invalidCredentials;
           break;
         default:
           mainError = UIError.unexpected;
@@ -527,7 +536,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     } finally {
       isLoading = false;
     }
-    await navigateTo.navigate(pageRoute: PageRoutes.configurations);
   }
 
   int? _updateMenu = -1;

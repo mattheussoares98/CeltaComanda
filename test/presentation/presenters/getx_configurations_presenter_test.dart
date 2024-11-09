@@ -15,7 +15,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../ui/mocks/mocks.dart';
-import '../mocks/mocks.dart';
 
 void main() {
   late GetxConfigurationsPresenter sut;
@@ -24,11 +23,6 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late HomePresenterSpy homePresenter;
 
-  late LoadCustomerSpy loadCustomer;
-  late ValidationSpy validation;
-  late CovenantLimitSpy covenantLimit;
-  late UpdateSaleRequestSpy updateSaleRequest;
-  late CheckPasswordByCustomerCodeSpy checkPasswordByCustomerCode;
   late UserValidationsSpy userValidations;
   late CommandInformationsSpy commandInformations;
   late NavigateToSpy navigateTo;
@@ -48,11 +42,6 @@ void main() {
     cartPresenter = CartPresenterSpy();
     homePresenter = HomePresenterSpy();
     sut = GetxConfigurationsPresenter(
-      loadCustomer: loadCustomer,
-      validation: validation,
-      covenantLimit: covenantLimit,
-      updateSaleRequest: updateSaleRequest,
-      checkPasswordByCustomerCode: checkPasswordByCustomerCode,
       userValidations: userValidations,
       commandInformations: commandInformations,
       navigateTo: navigateTo,
@@ -61,11 +50,6 @@ void main() {
   }
 
   void initUsecases() {
-    loadCustomer = LoadCustomerSpy();
-    validation = ValidationSpy();
-    covenantLimit = CovenantLimitSpy();
-    updateSaleRequest = UpdateSaleRequestSpy();
-    checkPasswordByCustomerCode = CheckPasswordByCustomerCodeSpy();
     userValidations = UserValidationsSpy();
     commandInformations = CommandInformationsSpy();
     navigateTo = NavigateToSpy();

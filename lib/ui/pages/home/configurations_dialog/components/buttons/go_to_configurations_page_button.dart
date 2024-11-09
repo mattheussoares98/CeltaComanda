@@ -5,7 +5,14 @@ import '../../../../../helpers/helpers.dart';
 import '../../../../pages.dart';
 
 class GoToConfigurationsPageButton extends StatelessWidget {
-  const GoToConfigurationsPageButton({super.key});
+  final TextEditingController userCodeController;
+  final TextEditingController passwordController;
+
+  const GoToConfigurationsPageButton({
+    required this.userCodeController,
+    required this.passwordController,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,10 @@ class GoToConfigurationsPageButton extends StatelessWidget {
 
     return ElevatedButton(
       onPressed: () async {
-        await homePresenter.goToConfigurationsPage();
+        await homePresenter.goToConfigurationsPage(
+          userPersonalizedCode: userCodeController.text.toInt(),
+          password: passwordController.text,
+        );
       },
       child: Text(R.string.configurations),
     );

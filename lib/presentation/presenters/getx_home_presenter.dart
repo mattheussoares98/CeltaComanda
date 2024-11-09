@@ -493,7 +493,40 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> goToConfigurationsPage() async {
+  Future<void> goToConfigurationsPage({
+    required int userPersonalizedCode,
+    required String password,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await userValidations.isValidPassword(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        personalizedCode: userPersonalizedCode,
+        password: password,
+      );
+
+      final canCancel = await userValidations.canCancel(
+        personalizedCode: userPersonalizedCode,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+      );
+
+      if (!canCancel) {
+        throw DomainError.invalidCredentialsOrAccessDenied;
+      }
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+          break;
+        default:
+          mainError = UIError.unexpected;
+          break;
+      }
+    } finally {
+      isLoading = false;
+    }
     await navigateTo.navigate(pageRoute: PageRoutes.configurations);
   }
 

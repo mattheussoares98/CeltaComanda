@@ -1572,7 +1572,10 @@ void main() {
 
   group("Navigate to configurations page", () {
     test("Should call navigateTo with correct values", () async {
-      await sut.goToConfigurationsPage();
+      await sut.goToConfigurationsPage(
+        userPersonalizedCode: userPersonalizedCode,
+        password: password,
+      );
 
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations));
     });

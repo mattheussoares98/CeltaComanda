@@ -7,27 +7,15 @@ import '../mixins/mixins.dart';
 
 import 'package:get/get.dart';
 
-import '../protocols/protocols.dart';
-
 class GetxConfigurationsPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements ConfigurationsPresenter {
-  final Validation validation;
-  final LoadCustomer loadCustomer;
-  final CovenantLimit covenantLimit;
-  final UpdateSaleRequest updateSaleRequest;
-  final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
   final UserValidations userValidations;
   final CommandInformations commandInformations;
   final NavigateTo navigateTo;
   final Persistent persistent;
 
   GetxConfigurationsPresenter({
-    required this.loadCustomer,
-    required this.validation,
-    required this.covenantLimit,
-    required this.updateSaleRequest,
-    required this.checkPasswordByCustomerCode,
     required this.userValidations,
     required this.commandInformations,
     required this.navigateTo,

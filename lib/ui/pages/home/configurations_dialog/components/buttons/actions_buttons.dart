@@ -87,6 +87,10 @@ class ActionsButtons extends StatelessWidget {
         },
         resetDropdownsErrors: keyDropdowns.currentState?.reset,
       ),
+      GoToConfigurationsPageButton(
+        userCodeController: userCodeController,
+        passwordController: passwordController,
+      ),
     ];
 
     return GridView.builder(

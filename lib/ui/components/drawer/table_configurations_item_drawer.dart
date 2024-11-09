@@ -14,7 +14,7 @@ class TableConfigurationsItemDrawer extends StatelessWidget {
         Navigator.of(context).pop();
         PersonalizedDialogPage.open(
           context: context,
-          page: const TableConfigurationsPage(),
+          page: const ConfigurationsDialogPage(),
         );
       },
       name: R.string.configurations,

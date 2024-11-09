@@ -7,10 +7,12 @@ import '../../../../pages.dart';
 class GoToConfigurationsPageButton extends StatelessWidget {
   final TextEditingController userCodeController;
   final TextEditingController passwordController;
+  final GlobalKey<FormState> keyUserAndPassword;
 
   const GoToConfigurationsPageButton({
     required this.userCodeController,
     required this.passwordController,
+    required this.keyUserAndPassword,
     super.key,
   });
 
@@ -20,10 +22,19 @@ class GoToConfigurationsPageButton extends StatelessWidget {
 
     return ElevatedButton(
       onPressed: () async {
-        await homePresenter.goToConfigurationsPage(
-          userPersonalizedCode: userCodeController.text.toInt(),
-          password: passwordController.text,
-        );
+        bool? isValid = keyUserAndPassword.currentState?.validate();
+
+        if (isValid == true) {
+          FocusScope.of(context).unfocus();
+
+          await homePresenter.goToConfigurationsPage(
+            userPersonalizedCode: userCodeController.text.toInt(),
+            password: passwordController.text,
+          );
+
+          userCodeController.clear();
+          passwordController.clear();
+        }
       },
       child: Text(R.string.configurations),
     );

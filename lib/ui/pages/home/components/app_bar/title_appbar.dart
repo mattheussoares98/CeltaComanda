@@ -13,7 +13,7 @@ class TitleAppbar extends StatelessWidget {
   void doOnPress(BuildContext context) {
     PersonalizedDialogPage.open(
       context: context,
-      page: const TableConfigurationsPage(),
+      page: const ConfigurationsDialogPage(),
     );
   }
 

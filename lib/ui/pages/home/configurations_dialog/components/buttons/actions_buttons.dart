@@ -90,6 +90,7 @@ class ActionsButtons extends StatelessWidget {
       GoToConfigurationsPageButton(
         userCodeController: userCodeController,
         passwordController: passwordController,
+        keyUserAndPassword: keyUserAndPassword,
       ),
     ];
 

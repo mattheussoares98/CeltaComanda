@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 import '../../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
-class TableConfigurationsPage extends StatefulWidget {
-  const TableConfigurationsPage({super.key});
+class ConfigurationsDialogPage extends StatefulWidget {
+  const ConfigurationsDialogPage({super.key});
 
   @override
-  State<TableConfigurationsPage> createState() =>
-      _TableConfigurationsPageState();
+  State<ConfigurationsDialogPage> createState() =>
+      _ConfigurationsDialogPageState();
 }
 
-class _TableConfigurationsPageState extends State<TableConfigurationsPage> {
+class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   final _userCodeController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordFocusNode = FocusNode();

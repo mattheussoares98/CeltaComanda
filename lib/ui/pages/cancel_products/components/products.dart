@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class Products extends StatelessWidget {
@@ -8,10 +9,13 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(
-      context,
-      listen: false,
-    );
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+
+    if (printedProductsPresenter.printedProducts == null) {
+      return Center(
+        child: Text(R.string.emptyTable),
+      );
+    }
 
     return ListView.builder(
       shrinkWrap: true,

@@ -47,7 +47,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SelectCommandDropDown(),
-          if (printedProductsPresenter.printedProducts != null) Products(),
+          Products(),
         ],
       ),
     );

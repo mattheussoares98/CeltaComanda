@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class SelectCommandDropDown extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SelectCommandDropDownState extends State<SelectCommandDropDown> {
     return DropdownButton(
       isExpanded: true,
       alignment: Alignment.center,
-      hint: Text(homePresenter.commandNumber.toString()),
+      hint: Text("${R.string.table} ${homePresenter.commandNumber}"),
       items: List<int>.generate(
         100,
         (int index) => index++,
@@ -39,9 +40,10 @@ class _SelectCommandDropDownState extends State<SelectCommandDropDown> {
           )
           .toList(),
       onChanged: (value) async {
-        homePresenter.updateCommandNumber(value!.toString());
+        setState(() {
+          homePresenter.updateCommandNumber(value!.toString());
+        });
         await printedProductsPresenter.loadPrinted(homePresenter);
-        setState(() {});
       },
     );
   }

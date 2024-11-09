@@ -24,6 +24,7 @@ class PasswordInput extends StatelessWidget {
       focusNode: passwordFocusNode,
       controller: passwordController,
       obscureText: true,
+      autofocus: false,
       validator: (value) {
         if (value?.isEmpty == true) {
           return R.string.msgWritePassword;

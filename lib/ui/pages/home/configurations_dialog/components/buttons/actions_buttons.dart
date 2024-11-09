@@ -8,10 +8,14 @@ import '../../../../pages.dart';
 class ActionsButtons extends StatelessWidget {
   final TextEditingController passwordController;
   final TextEditingController userCodeController;
+  final FocusNode userCodeFocusNode;
+  final FocusNode passwordFocusNode;
   final GlobalKey<FormState> keyUserAndPassword;
   final GlobalKey<FormState> keyDropdowns;
 
   const ActionsButtons({
+    required this.userCodeFocusNode,
+    required this.passwordFocusNode,
     required this.passwordController,
     required this.userCodeController,
     required this.keyUserAndPassword,
@@ -91,6 +95,8 @@ class ActionsButtons extends StatelessWidget {
         userCodeController: userCodeController,
         passwordController: passwordController,
         keyUserAndPassword: keyUserAndPassword,
+        userCodeFocusNode: userCodeFocusNode,
+        passwordFocusNode: passwordFocusNode,
       ),
     ];
 

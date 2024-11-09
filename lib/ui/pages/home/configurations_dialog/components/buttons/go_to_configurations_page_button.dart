@@ -8,11 +8,15 @@ class GoToConfigurationsPageButton extends StatelessWidget {
   final TextEditingController userCodeController;
   final TextEditingController passwordController;
   final GlobalKey<FormState> keyUserAndPassword;
+  final FocusNode userCodeFocusNode;
+  final FocusNode passwordFocusNode;
 
   const GoToConfigurationsPageButton({
     required this.userCodeController,
     required this.passwordController,
     required this.keyUserAndPassword,
+    required this.userCodeFocusNode,
+    required this.passwordFocusNode,
     super.key,
   });
 
@@ -25,7 +29,8 @@ class GoToConfigurationsPageButton extends StatelessWidget {
         bool? isValid = keyUserAndPassword.currentState?.validate();
 
         if (isValid == true) {
-          FocusScope.of(context).unfocus();
+          userCodeFocusNode.unfocus();
+          passwordFocusNode.unfocus();
 
           await homePresenter.goToConfigurationsPage(
             userPersonalizedCode: userCodeController.text.toInt(),

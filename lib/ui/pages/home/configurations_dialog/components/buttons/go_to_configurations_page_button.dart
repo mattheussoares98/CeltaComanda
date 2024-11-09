@@ -38,9 +38,6 @@ class GoToConfigurationsPageButton extends StatelessWidget {
             userPersonalizedCode: userCodeController.text.toInt(),
             password: passwordController.text,
           );
-
-          userCodeController.clear();
-          passwordController.clear();
         }
       },
       child: Text(R.string.configurations),

@@ -146,7 +146,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
 
         await cartPresenter.getSaleRequestTemp(commandNumber!);
-        await printedProductsPresenter.loadPrinted(this);
+        await printedProductsPresenter.loadPrinted(_commandNumber!);
 
         final isValid = await commandInformations.isValidDatetime(
             commandNumber: commandNumber!);
@@ -263,7 +263,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       _peoples = peoples;
-      await printedProductsPresenter.loadPrinted(this);
+      await printedProductsPresenter.loadPrinted(_commandNumber!);
       notifyListeners();
       return true;
     } on DomainError catch (e) {

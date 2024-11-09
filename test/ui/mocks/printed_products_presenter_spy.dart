@@ -48,7 +48,7 @@ class PrintedProductsPresenterSpy extends Mock
           expansibleGroupFromProductPresenter:
               any(named: "expansibleGroupFromProductPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
-          homePresenter: any(named: "homePresenter"),
+          commandNumber: any(named: "commandNumber"),
         )).thenAnswer((any) async => any);
   }
 

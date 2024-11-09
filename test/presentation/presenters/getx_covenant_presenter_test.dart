@@ -458,7 +458,7 @@ void main() {
       );
 
       verify(
-        () => printedProductsPresenter.loadPrinted(homePresenter),
+        () => printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!),
       ).called(1);
     });
     test("Should call authorize covenant limit use by code", () async {

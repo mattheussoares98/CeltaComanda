@@ -443,7 +443,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
+      verify(() => printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
           .called(1);
     });
     test(

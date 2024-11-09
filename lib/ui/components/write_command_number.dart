@@ -164,6 +164,6 @@ Future<void> _onPress({
     );
   } else {
     homePresenter.updateCommandNumber(commandNumber);
-    await printedProductsPresenter.loadPrinted(homePresenter);
+    await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
   }
 }

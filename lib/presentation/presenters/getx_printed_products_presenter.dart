@@ -29,7 +29,7 @@ class GetxPrintedProductsPresenter
     required String saleRequestProductId,
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
+    required String commandNumber,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
@@ -43,9 +43,9 @@ class GetxPrintedProductsPresenter
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
       );
 
-      await loadPrinted(homePresenter);
+      await loadPrinted(commandNumber);
     } on DomainError catch (error) {
-      await loadPrinted(homePresenter);
+      await loadPrinted(commandNumber);
       switch (error) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
@@ -58,7 +58,7 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> loadPrinted(HomePresenter homePresenter) async {
+  Future<void> loadPrinted(String commandNumber) async {
     isLoading = true;
     mainError = null;
 
@@ -66,7 +66,7 @@ class GetxPrintedProductsPresenter
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!.toInt(),
+        commandNumber: commandNumber.toInt(),
       );
 
       _printedProducts = null;
@@ -222,7 +222,7 @@ class GetxPrintedProductsPresenter
   Future<void> removeServiceCharge({
     required int personalizedCode,
     required String password,
-    required HomePresenter homePresenter,
+    required String commandNumber,
   }) async {
     isLoading = true;
     mainError = null;
@@ -248,12 +248,11 @@ class GetxPrintedProductsPresenter
 
       await updateSaleRequest.update(
         model: model,
-        commandNumberWithThreeNumbers:
-            homePresenter.commandNumber!.padLeft(3, "0"),
+        commandNumberWithThreeNumbers: commandNumber.padLeft(3, "0"),
         saleRequestId: _printedProducts!.SaleRequestId.toInt(),
       );
 
-      await loadPrinted(homePresenter);
+      await loadPrinted(commandNumber);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.invalidCredentialsOrAccessDenied:

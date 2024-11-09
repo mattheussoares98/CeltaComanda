@@ -194,7 +194,7 @@ class GetxCovenantPresenter extends GetxController
 
         _authorizationPendingModel = null;
 
-        await printedProductsPresenter.loadPrinted(homePresenter);
+        await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
 
         closePagesUntilHomePage();
       }

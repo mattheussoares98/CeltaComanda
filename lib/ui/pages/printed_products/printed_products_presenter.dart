@@ -15,7 +15,7 @@ abstract class PrintedProductsPresenter
   double get serviceChargeValue;
 
   void updateCanCancelProducts(bool value);
-  Future<void> loadPrinted(HomePresenter homePresenter);
+  Future<void> loadPrinted(String commandNumber);
   void clear();
   void doOnClosePage();
   PrintedViewModel? get printedProducts;
@@ -24,7 +24,7 @@ abstract class PrintedProductsPresenter
     required String saleRequestProductId,
     required MenuPresenter menuPresenter,
     required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
+    required String commandNumber,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
@@ -47,6 +47,6 @@ abstract class PrintedProductsPresenter
   Future<void> removeServiceCharge({
     required int personalizedCode,
     required String password,
-    required HomePresenter homePresenter,
+    required String commandNumber,
   });
 }

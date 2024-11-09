@@ -4,24 +4,26 @@ import 'package:provider/provider.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class SelectCommandDropDown extends StatefulWidget {
-  const SelectCommandDropDown({super.key});
+class SelectCommandDropDown extends StatelessWidget {
+  final int? selectedCommandInDropDown;
+  final void Function(int? value) updateSelectedCommandInDropDown;
+  const SelectCommandDropDown({
+    required this.selectedCommandInDropDown,
+    required this.updateSelectedCommandInDropDown,
+    super.key,
+  });
 
-  @override
-  State<SelectCommandDropDown> createState() => _SelectCommandDropDownState();
-}
-
-class _SelectCommandDropDownState extends State<SelectCommandDropDown> {
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
     return DropdownButton(
       isExpanded: true,
       alignment: Alignment.center,
-      hint: Text("${R.string.table} ${homePresenter.commandNumber}"),
+      hint: Text(selectedCommandInDropDown == null
+          ? R.string.msgSelectCommand
+          : "${R.string.table} $selectedCommandInDropDown"),
       items: List<int>.generate(
         100,
         (int index) => index++,
@@ -40,10 +42,8 @@ class _SelectCommandDropDownState extends State<SelectCommandDropDown> {
           )
           .toList(),
       onChanged: (value) async {
-        setState(() {
-          homePresenter.updateCommandNumber(value!.toString());
-        });
-        await printedProductsPresenter.loadPrinted(homePresenter);
+        updateSelectedCommandInDropDown(value);
+        await printedProductsPresenter.loadPrinted(value.toString());
       },
     );
   }

@@ -68,7 +68,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter.loadPrinted(homePresenter);
+                await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
               },
               icon: Row(
                 children: [

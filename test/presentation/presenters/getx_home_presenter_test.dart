@@ -443,7 +443,8 @@ void main() {
       verify(() => cartPresenter.getSaleRequestTemp(
             fixedCommandEntity.commandNumber.toString(),
           )).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(sut)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!))
+          .called(1);
     });
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
@@ -843,7 +844,8 @@ void main() {
         password: password,
       );
 
-      verify(() => printedProductsPresenter.loadPrinted(sut)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!))
+          .called(1);
     });
     test("Should emit correct values when update command number", () async {
       expectLater(sut.mainErrorStream, emits(null));
@@ -1583,10 +1585,10 @@ void main() {
     test("Should emit correct values on validate password throws", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+          emitsInOrder([null, UIError.invalidCredentials]));
 
       userValidations.mockIsValidPasswordError(
-        DomainError.invalidCredentialsOrAccessDenied,
+        DomainError.invalidCredentials,
       );
 
       await sut.goToConfigurationsPage(

@@ -478,7 +478,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await confirmedCartProducts.updateValue(false);
       await cartInformations.clearCartProducts();
-      await printedProductsPresenter.loadPrinted(homePresenter);
+      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
 
       _cartProducts.clear();
 

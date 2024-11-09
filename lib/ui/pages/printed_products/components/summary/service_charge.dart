@@ -39,7 +39,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
       await printedProductsPresenter.removeServiceCharge(
         personalizedCode: userController.text.toInt(),
         password: passwordController.text,
-        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandNumber!,
       );
     }
   }

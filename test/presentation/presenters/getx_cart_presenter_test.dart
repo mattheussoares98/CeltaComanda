@@ -1124,7 +1124,7 @@ void main() {
       verify(() => finishSaleRequestTempById.finish(
             saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter))
+      verify(() => printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
           .called(1);
     });
     test(

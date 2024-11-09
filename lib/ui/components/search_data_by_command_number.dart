@@ -33,7 +33,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
           child: TextButton.icon(
             onPressed: () async {
               if (homePresenter.isFixedCommandNumber) {
-                await printedProductsPresenter.loadPrinted(homePresenter);
+                await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
               } else {
                 writeCommandNumber(
                   context: context,

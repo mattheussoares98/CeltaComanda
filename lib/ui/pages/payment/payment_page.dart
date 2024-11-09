@@ -134,7 +134,7 @@ class _PaymentPageState extends State<PaymentPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter.loadPrinted(homePresenter);
+                await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
               },
               icon: Row(
                 children: [

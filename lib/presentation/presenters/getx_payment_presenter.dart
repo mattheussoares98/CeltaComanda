@@ -117,7 +117,7 @@ class GetxPaymentPresenter extends GetxController
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
       _lastRequestedPaymentFinalization = null;
-      await printedProductsPresenter.loadPrinted(homePresenter);
+      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -427,7 +427,7 @@ class GetxPaymentPresenter extends GetxController
         _successfulPayments.clear();
         showSuccessAndCloseUntilHomePage();
 
-        await printedProductsPresenter.loadPrinted(homePresenter);
+        await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
       }
     } catch (e) {
       mainError = UIError.unexpected;

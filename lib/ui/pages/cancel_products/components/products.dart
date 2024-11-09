@@ -5,13 +5,18 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class Products extends StatelessWidget {
-  const Products({super.key});
+  final int? selectedCommandInDropDown;
+  const Products({
+    required this.selectedCommandInDropDown,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
 
-    if (printedProductsPresenter.printedProducts == null) {
+    if (printedProductsPresenter.printedProducts == null ||
+        selectedCommandInDropDown == null) {
       return Center(
         child: Text(R.string.emptyTable),
       );

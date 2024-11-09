@@ -18,6 +18,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  int? selectedCommandInDropDown;
 
   @override
   dispose() {
@@ -46,8 +47,17 @@ class _CancelProductsPageState extends State<CancelProductsPage>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SelectCommandDropDown(),
-          Products(),
+          SelectCommandDropDown(
+            selectedCommandInDropDown: selectedCommandInDropDown,
+            updateSelectedCommandInDropDown: (value) {
+              setState(() {
+                selectedCommandInDropDown = value;
+              });
+            },
+          ),
+          Products(
+            selectedCommandInDropDown: selectedCommandInDropDown,
+          ),
         ],
       ),
     );

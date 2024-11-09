@@ -108,4 +108,9 @@ class GetxConfigurationsPresenter extends GetxController
   int? _peoples;
   @override
   int? get selectedPeoples => _peoples;
+
+  @override
+  Future<void> goToCancelProductsPage() async {
+    await navigateTo.navigate(pageRoute: PageRoutes.cancelProducts);
+  }
 }

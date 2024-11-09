@@ -310,4 +310,13 @@ void main() {
           )).called(1);
     });
   });
+
+  group("Go to configurations page", () {
+    test("Should call navigateTo with correct values", () async {
+      await sut.goToCancelProductsPage();
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.cancelProducts))
+          .called(1);
+    });
+  });
 }

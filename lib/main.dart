@@ -100,6 +100,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
           initialRoute: PageRoutes.splash,
           getPages: [
             GetPage(
+              name: PageRoutes.cancelProducts,
+              page: makeCancelProductsPage,
+              transition: Transition.fadeIn,
+            ),
+            GetPage(
               name: PageRoutes.covenant,
               page: makeCovenantPage,
               transition: Transition.fadeIn,

@@ -29,15 +29,11 @@ class _CancelProductsPageState extends State<CancelProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(
-      context,
-      listen: false,
-    );
-    HomePresenter homePresenter = Provider.of(
-      context,
-      listen: false,
-    );
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
     loadingSubscription =
         handleLoading(context, printedProductsPresenter.isLoadingStream);
     mainErrorSubscription =
@@ -48,30 +44,9 @@ class _CancelProductsPageState extends State<CancelProductsPage>
         title: Text(R.string.cancel),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          DropdownButton(
-            value: homePresenter.commandNumber?.toInt(),
-            items: List<int>.generate(
-              100,
-              (int index) => index++,
-              growable: true,
-            )
-                .map(
-                  (e) => DropdownMenuItem(
-                    value: e + 1,
-                    onTap: () async {
-                      await printedProductsPresenter.loadPrinted(homePresenter);
-                    },
-                    child: Text(
-                      (e + 1).toString(),
-                    ),
-                  ),
-                )
-                .toList(),
-            onChanged: (value) async {
-              await printedProductsPresenter.loadPrinted(homePresenter);
-            },
-          ),
+          SelectCommandDropDown(),
           if (printedProductsPresenter.printedProducts != null) Products(),
         ],
       ),

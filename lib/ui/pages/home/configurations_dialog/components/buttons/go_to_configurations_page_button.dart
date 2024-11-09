@@ -32,6 +32,8 @@ class GoToConfigurationsPageButton extends StatelessWidget {
           userCodeFocusNode.unfocus();
           passwordFocusNode.unfocus();
 
+          Navigator.of(context).pop();
+
           await homePresenter.goToConfigurationsPage(
             userPersonalizedCode: userCodeController.text.toInt(),
             password: passwordController.text,

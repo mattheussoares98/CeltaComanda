@@ -18,33 +18,56 @@ class SelectCommandDropDown extends StatelessWidget {
     CancelProductsPresenter cancelProductsPresenter =
         Provider.of(context, listen: false);
 
-    return DropdownButton(
-      isExpanded: true,
-      alignment: Alignment.center,
-      hint: Text(selectedCommandInDropDown == null
-          ? R.string.msgSelectCommand
-          : "${R.string.table} $selectedCommandInDropDown"),
-      items: List<int>.generate(
-        100,
-        (int index) => index++,
-        growable: true,
-      )
-          .map(
-            (e) => DropdownMenuItem(
-              value: e + 1,
-              onTap: () async {},
-              child: Center(
-                child: Text(
-                  (e + 1).toString(),
-                ),
-              ),
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: DropdownButton(
+              isExpanded: true,
+              alignment: Alignment.center,
+              hint: Text(selectedCommandInDropDown == null
+                  ? R.string.msgSelectCommand
+                  : "${R.string.table} $selectedCommandInDropDown"),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: getStringSize(context),
+                  color: Colors.black),
+              items: List<int>.generate(
+                100,
+                (int index) => index++,
+                growable: true,
+              )
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e + 1,
+                      onTap: () async {},
+                      child: Center(
+                        child: Text(
+                          (e + 1).toString(),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (value) async {
+                updateSelectedCommandInDropDown(value);
+                await cancelProductsPresenter.loadProducts(value!);
+              },
             ),
-          )
-          .toList(),
-      onChanged: (value) async {
-        updateSelectedCommandInDropDown(value);
-        await cancelProductsPresenter.loadProducts(value!);
-      },
+          ),
+        ),
+        IconButton(
+          onPressed: selectedCommandInDropDown == null
+              ? null
+              : () async {
+                  updateSelectedCommandInDropDown(selectedCommandInDropDown);
+                  await cancelProductsPresenter
+                      .loadProducts(selectedCommandInDropDown!);
+                },
+          icon: const Icon(Icons.refresh),
+        ),
+      ],
     );
   }
 }

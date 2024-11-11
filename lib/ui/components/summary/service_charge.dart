@@ -9,9 +9,11 @@ import '../../pages/pages.dart';
 class ServiceCharge extends StatefulWidget {
   final int saleRequestId;
   final double serviceChargeValue;
+  final Future<void> Function() loadPrintedAgain;
   const ServiceCharge({
     required this.saleRequestId,
     required this.serviceChargeValue,
+    required this.loadPrintedAgain,
     super.key,
   });
 
@@ -48,6 +50,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
         commandNumber: homePresenter.commandNumber!,
         saleRequestId: widget.saleRequestId,
       );
+      await widget.loadPrintedAgain();
     }
   }
 

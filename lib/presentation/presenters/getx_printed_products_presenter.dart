@@ -182,14 +182,14 @@ class GetxPrintedProductsPresenter
 
   @override
   double getTotalLiquid(PrintedViewModel? printed) {
-    if (_printed == null) {
+    if (printed == null) {
       return 0;
     }
 
-    final serviceChargeValue = getServiceChargeValue(_printed);
+    final serviceChargeValue = getServiceChargeValue(printed);
 
     double value =
-        (_printed!.TotalLiquid.toDouble() + serviceChargeValue.toDouble());
+        (printed.TotalLiquid.toDouble() + serviceChargeValue.toDouble());
 
     return value.roundAccordingBs().toStringAsFixed(2).toDouble();
   }

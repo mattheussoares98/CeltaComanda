@@ -75,12 +75,15 @@ class _CancelProductsPageState extends State<CancelProductsPage>
                         printed: snapshot.data!,
                       ),
                       RequestSummary(
-                        serviceChargeValue: printedProductsPresenter
-                            .getServiceChargeValue(snapshot.data!),
-                        totalLiquid: printedProductsPresenter
-                            .getTotalLiquid(snapshot.data!),
-                        saleRequestId: snapshot.data!.SaleRequestId.toInt(),
-                      ),
+                          serviceChargeValue: printedProductsPresenter
+                              .getServiceChargeValue(snapshot.data!),
+                          totalLiquid: printedProductsPresenter
+                              .getTotalLiquid(snapshot.data!),
+                          saleRequestId: snapshot.data!.SaleRequestId.toInt(),
+                          loadPrintedAgain: () async {
+                            await cancelProductsPresenter
+                                .loadProducts(selectedCommandInDropDown!);
+                          }),
                     ],
                   ),
                 );

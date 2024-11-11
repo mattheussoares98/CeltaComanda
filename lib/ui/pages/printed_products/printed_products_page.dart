@@ -109,6 +109,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                       .getTotalLiquid(printedProductsPresenter.printed),
                   saleRequestId:
                       printedProductsPresenter.printed!.SaleRequestId.toInt(),
+                  loadPrintedAgain: () async {
+                    await printedProductsPresenter
+                        .loadPrinted(homePresenter.commandNumber!);
+                  },
                 ),
             ],
           ),

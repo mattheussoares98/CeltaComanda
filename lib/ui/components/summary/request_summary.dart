@@ -8,10 +8,12 @@ class RequestSummary extends StatelessWidget {
   final double serviceChargeValue;
   final double totalLiquid;
   final int saleRequestId;
+  final Future<void> Function() loadPrintedAgain;
   const RequestSummary({
     required this.serviceChargeValue,
     required this.totalLiquid,
     required this.saleRequestId,
+    required this.loadPrintedAgain,
     super.key,
   });
 
@@ -44,11 +46,12 @@ class RequestSummary extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Subtotal(totalLiquid: totalLiquid),
+                        Subtotal(totalLiquid: totalLiquid - serviceChargeValue),
                         const SizedBox(height: 10),
                         ServiceCharge(
                           saleRequestId: saleRequestId,
                           serviceChargeValue: serviceChargeValue,
+                          loadPrintedAgain: loadPrintedAgain,
                         ),
                       ],
                     ),

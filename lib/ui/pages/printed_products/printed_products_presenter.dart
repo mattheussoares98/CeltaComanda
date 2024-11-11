@@ -11,8 +11,8 @@ abstract class PrintedProductsPresenter
   Stream<bool> get isLoadingStream;
   Stream<String?> get alertMessageStream;
   bool get canCancelProducts;
-  double get totalLiquid;
-  double get serviceChargeValue;
+  double getTotalLiquid(PrintedViewModel? printed);
+  double getServiceChargeValue(PrintedViewModel? printed);
 
   void updateCanCancelProducts(bool value);
   Future<void> loadPrinted(String commandNumber);

@@ -589,7 +589,7 @@ void main() {
       loadPrintedProducts.mockLoadPrintedProducts(null);
       await sut.loadPrinted(homePresenter.commandNumber!);
 
-      expect(sut.totalLiquid, 0);
+      expect(sut.getTotalLiquid(sut.printed), 0);
     });
 
     test("Should return correct value if incrementType is 1", () async {
@@ -604,7 +604,7 @@ void main() {
           .toStringAsFixed(2)
           .toDouble();
 
-      expect(sut.totalLiquid, value);
+      expect(sut.getTotalLiquid(sut.printed), value);
     });
     test("Should return correct value if incrementType is 2", () async {
       final printed = EntityFactory.makePrintedProductsEntity(incrementType: 2);
@@ -614,7 +614,7 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       expect(
-        sut.totalLiquid.toStringAsFixed(2).toDouble().roundAccordingBs(),
+        sut.getTotalLiquid(sut.printed).toStringAsFixed(2).toDouble().roundAccordingBs(),
         (printed.TotalLiquid.toDouble().roundAccordingBs() *
                 (printed.IncrementValue! / 100 + 1).roundAccordingBs())
             .roundAccordingBs(),
@@ -630,7 +630,7 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       expect(
-        sut.totalLiquid,
+        sut.getTotalLiquid(sut.printed),
         printed.TotalLiquid.toDouble()
             .toStringAsFixed(2)
             .toDouble()

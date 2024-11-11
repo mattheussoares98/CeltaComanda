@@ -30,7 +30,9 @@ class _TotalByPersonState extends State<TotalByPerson> {
 
   void _updateTotalPerPerson(
       PrintedProductsPresenter printedProductsPresenter) {
-    totalPerPerson = printedProductsPresenter.totalLiquid / selectedPeoples;
+    totalPerPerson = printedProductsPresenter
+            .getTotalLiquid(printedProductsPresenter.printed) /
+        selectedPeoples;
   }
 
   @override
@@ -71,7 +73,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
             ),
             const SizedBox(height: 10),
             Text(
-              "${R.string.totalByPerson}: ${(printedProductsPresenter.totalLiquid / selectedPeoples).toString().toBrazilianNumber().addBrazilianCoin()}",
+              "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / selectedPeoples).toString().toBrazilianNumber().addBrazilianCoin()}",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: getStringSize(context)),
             ),

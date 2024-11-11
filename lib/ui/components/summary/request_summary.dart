@@ -46,7 +46,10 @@ class RequestSummary extends StatelessWidget {
                       children: [
                         Subtotal(totalLiquid: totalLiquid),
                         const SizedBox(height: 10),
-                        ServiceCharge(saleRequestId: saleRequestId),
+                        ServiceCharge(
+                          saleRequestId: saleRequestId,
+                          serviceChargeValue: serviceChargeValue,
+                        ),
                       ],
                     ),
             ),

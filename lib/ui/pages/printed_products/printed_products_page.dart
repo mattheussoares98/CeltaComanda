@@ -103,9 +103,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               ),
               if (printedProductsPresenter.printed != null)
                 RequestSummary(
-                  serviceChargeValue:
-                      printedProductsPresenter.serviceChargeValue,
-                  totalLiquid: printedProductsPresenter.totalLiquid,
+                  serviceChargeValue: printedProductsPresenter
+                      .getServiceChargeValue(printedProductsPresenter.printed),
+                  totalLiquid: printedProductsPresenter
+                      .getTotalLiquid(printedProductsPresenter.printed),
                   saleRequestId:
                       printedProductsPresenter.printed!.SaleRequestId.toInt(),
                 ),

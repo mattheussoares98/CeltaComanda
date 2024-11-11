@@ -101,7 +101,9 @@ class GetxPaymentPresenter extends GetxController
     }
     updateScreen = false;
 
-    if (totalPaidValue < printedProductsPresenter.totalLiquid) {
+    if (totalPaidValue <
+        printedProductsPresenter
+            .getTotalLiquid(printedProductsPresenter.printed)) {
       return;
     }
 
@@ -251,7 +253,8 @@ class GetxPaymentPresenter extends GetxController
   double getTotalPendingValue(
     PrintedProductsPresenter printedProductsPresenter,
   ) {
-    double totalLiquid = printedProductsPresenter.totalLiquid
+    double totalLiquid = printedProductsPresenter
+        .getTotalLiquid(printedProductsPresenter.printed)
         .roundAccordingBs()
         .toStringAsFixed(2)
         .toDouble();
@@ -427,7 +430,8 @@ class GetxPaymentPresenter extends GetxController
         _successfulPayments.clear();
         showSuccessAndCloseUntilHomePage();
 
-        await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+        await printedProductsPresenter
+            .loadPrinted(homePresenter.commandNumber!);
       }
     } catch (e) {
       mainError = UIError.unexpected;

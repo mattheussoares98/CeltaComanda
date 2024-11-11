@@ -30,8 +30,10 @@ PreferredSize homeAppBar({
                 icon: Icons.monetization_on,
                 isPrice: true,
                 buttonName: R.string.pay,
-                quantityString:
-                    printedProductsPresenter.totalLiquid.toDouble().toString(),
+                quantityString: printedProductsPresenter
+                    .getTotalLiquid(printedProductsPresenter.printed)
+                    .toDouble()
+                    .toString(),
               ),
             ),
           ),

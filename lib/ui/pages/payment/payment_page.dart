@@ -77,6 +77,8 @@ class _PaymentPageState extends State<PaymentPage>
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+    final totalLiquid = printedProductsPresenter
+        .getTotalLiquid(printedProductsPresenter.printed);
 
     printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
@@ -134,7 +136,8 @@ class _PaymentPageState extends State<PaymentPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+                await printedProductsPresenter
+                    .loadPrinted(homePresenter.commandNumber!);
               },
               icon: Row(
                 children: [
@@ -186,9 +189,8 @@ class _PaymentPageState extends State<PaymentPage>
                       ),
                     ],
                   ),
-                if (paymentPresenter.totalPaidValue ==
-                        printedProductsPresenter.totalLiquid &&
-                    printedProductsPresenter.totalLiquid > 0)
+                if (paymentPresenter.totalPaidValue == totalLiquid &&
+                    totalLiquid > 0)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: LiquidateCommand(

@@ -17,9 +17,13 @@ class PrintedProductsPresenterSpy extends Mock
   PrintedViewModel printedProductsMock = EntityFactory.makePrintedViewModel();
   bool canCancelProductsController = false;
   double totalLiquidController = 0;
+  double serviceChargeController = 0;
 
   PrintedProductsPresenterSpy() {
-    when(() => this.totalLiquid).thenAnswer((_) => totalLiquidController);
+    when(() => this.getTotalLiquid(any()))
+        .thenAnswer((_) => totalLiquidController);
+    when(() => this.getServiceChargeValue(any()))
+        .thenAnswer((_) => serviceChargeController);
     when(() => this.printed).thenAnswer((_) => printedProductsMock);
     when(() => this.canCancelProducts)
         .thenAnswer((_) => canCancelProductsController);
@@ -56,5 +60,9 @@ class PrintedProductsPresenterSpy extends Mock
 
   void mockLoadPrintedError(DomainError error) {
     mockLoadPrintedCall().thenThrow(error);
+  }
+
+  void mockGetTotalLiquid(double value) {
+    when(() => this.getTotalLiquid(any())).thenAnswer((_) => value);
   }
 }

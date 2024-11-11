@@ -181,10 +181,12 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  double get totalLiquid {
+  double getTotalLiquid(PrintedViewModel? printed) {
     if (_printed == null) {
       return 0;
     }
+
+    final serviceChargeValue = getServiceChargeValue(_printed);
 
     double value =
         (_printed!.TotalLiquid.toDouble() + serviceChargeValue.toDouble());
@@ -193,20 +195,20 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  double get serviceChargeValue {
-    if (_printed == null) {
+  double getServiceChargeValue(PrintedViewModel? printed) {
+    if (printed == null) {
       return 0;
     }
 
     double value;
 
-    if (_printed!.IncrementType.toInt() == 1) {
+    if (printed.IncrementType.toInt() == 1) {
       //value
-      value = _printed!.IncrementValue.toDouble();
-    } else if (_printed!.IncrementType.toInt() == 2) {
+      value = printed.IncrementValue.toDouble();
+    } else if (printed.IncrementType.toInt() == 2) {
       //percentage
-      value = _printed!.TotalLiquid.toDouble() *
-          (_printed!.IncrementValue.toDouble() / 100);
+      value = printed.TotalLiquid.toDouble() *
+          (printed.IncrementValue.toDouble() / 100);
     } else {
       return 0;
     }

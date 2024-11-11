@@ -48,6 +48,7 @@ void main() {
   late PrintedEntity printedEntity;
   late String commandNumber;
   late SoapResponse soapResponse;
+  late double totalLiquidMocked;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -99,6 +100,7 @@ void main() {
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
     );
+    totalLiquidMocked = faker.randomGenerator.decimal().roundAccordingBs();
   }
 
   mockSuccess() {
@@ -117,6 +119,7 @@ void main() {
     covenantLimit
         .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(soapResponse);
     checkPasswordByCustomerCode.mockCheck(soapResponse);
+    printedProductsPresenter.mockGetTotalLiquid(totalLiquidMocked);
   }
 
   setUp(() {
@@ -403,6 +406,15 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.updateScreenStream, emitsInOrder([true, false]));
 
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked.roundAccordingBs(),
+          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
       await sut.liquidateCommand(
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -415,6 +427,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       finishSaleRequestConcentrador.mockError();
+      printedProductsPresenter.mockGetTotalLiquid(0);
+
       await sut.liquidateCommand(
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -423,6 +437,15 @@ void main() {
     });
     test("Should call finishSaleRequestConcentrador with correct values",
         () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked.roundAccordingBs(),
+          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
       await sut.liquidateCommand(
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -437,14 +460,23 @@ void main() {
     });
 
     test("Should load printed products in success", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
       await sut.liquidateCommand(
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => printedProductsPresenter
+          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
     });
     test(
         "Should not call finish in concentrador when paid is less than total liquid ",
@@ -798,12 +830,11 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      double pendingValue = sut.getTotalPendingValue(printedProductsPresenter);
       expect(sut.successfulPayments, [
         ConcentratorFinalizationModel(
           FinalizationId: FinalizationIdentification.covenant.finalizationId,
-          Value: pendingValue,
-          ValueLiquid: pendingValue,
+          Value: totalLiquidMocked.roundAccordingBs(),
+          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
           PortionQuantity: 1,
           AuthorizationCode: soapResponse.response,
           AuthorizationType: 2,
@@ -829,7 +860,7 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value: sut.getTotalPendingValue(printedProductsPresenter),
+          value: totalLiquidMocked.toDouble().roundAccordingBs(),
         ),
       ).called(1);
     });

@@ -8,8 +8,10 @@ import '../../pages/pages.dart';
 
 class ServiceCharge extends StatefulWidget {
   final int saleRequestId;
+  final double serviceChargeValue;
   const ServiceCharge({
     required this.saleRequestId,
+    required this.serviceChargeValue,
     super.key,
   });
 
@@ -161,7 +163,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
               child: Column(
                 children: [
                   Text(
-                    printedProductsPresenter.serviceChargeValue
+                    widget.serviceChargeValue
                         .toDouble()
                         .toString()
                         .toBrazilianNumber()

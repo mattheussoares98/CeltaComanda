@@ -35,4 +35,5 @@ abstract class EnterprisePresenter implements Listenable {
     required HomePresenter homePresenter,
   });
   void updateEnterpriseEntity(EnterpriseEntity newEnterprise);
+  Future<void> clearEnterpriseData();
 }

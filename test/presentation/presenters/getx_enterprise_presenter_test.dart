@@ -35,6 +35,7 @@ void main() {
   late EnterpriseEntity enterpriseEntity;
   late EnterpriseConcentradorParametersEntity
       enterpriseConcentradorParametersEntity;
+  late EnterpriseEntity clearedEnterprise;
 
   setUp(() {
     validation = ValidationSpy();
@@ -65,6 +66,23 @@ void main() {
         .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
 
     homePresenter = HomePresenterSpy();
+    clearedEnterprise = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName ?? "",
+      url: null,
+      enterpriseId: null,
+      concentradorUrl: null,
+      persistApp: null,
+      urlCCS: null,
+      useCovenant: null,
+      enterpriseConcentradorParametersEntity: null,
+      updateMenu: null,
+      updateConcentratorEnterpriseData: null,
+      serviceChargePercentageOrValue: null,
+      serviceChargeType: null,
+      updateDevicesInformations: null,
+      updateEnterprise: null,
+    );
     sut = GetxEnterprisePresenter(
       validation: validation,
       localEntepriseData: localEnterpriseData,
@@ -257,8 +275,7 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
       updateConcentratorEnterpriseData: EnterpriseDataBuilder
           .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
@@ -289,8 +306,7 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
       updateConcentratorEnterpriseData: EnterpriseDataBuilder
           .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
@@ -322,8 +338,7 @@ void main() {
       useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
       enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
           .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
       updateConcentratorEnterpriseData: EnterpriseDataBuilder
           .enterpriseDataEntity!.updateConcentratorEnterpriseData,
       serviceChargePercentageOrValue: EnterpriseDataBuilder
@@ -603,6 +618,23 @@ void main() {
 
       verify(() => localEnterpriseData
           .add(EnterpriseDataBuilder.enterpriseDataEntity!)).called(1);
+    });
+  });
+
+  group("Clear enterprise data", () {
+    test("Should clear enterprise data correctly", () async {
+      expect(EnterpriseDataBuilder.enterpriseDataEntity, isNotNull);
+
+      await sut.clearEnterpriseData();
+
+      expect(EnterpriseDataBuilder.enterpriseDataEntity, clearedEnterprise);
+    });
+    test("Should update enterprise locally", () async {
+      expect(EnterpriseDataBuilder.enterpriseDataEntity, isNotNull);
+
+      await sut.clearEnterpriseData();
+
+      verify(() => localEnterpriseData.add(clearedEnterprise)).called(1);
     });
   });
 }

@@ -316,4 +316,35 @@ class GetxEnterprisePresenter extends GetxController
       e;
     }
   }
+
+  @override
+  Future<void> clearEnterpriseData() async {
+    try {
+      final oldEnterpriseName =
+          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName;
+
+      final newEnterprise = EnterpriseEntity(
+        enterpriseName: oldEnterpriseName ?? "",
+        url: null,
+        enterpriseId: null,
+        concentradorUrl: null,
+        persistApp: null,
+        urlCCS: null,
+        useCovenant: null,
+        enterpriseConcentradorParametersEntity: null,
+        updateMenu: null,
+        updateConcentratorEnterpriseData: null,
+        serviceChargePercentageOrValue: null,
+        serviceChargeType: null,
+        updateDevicesInformations: null,
+        updateEnterprise: null,
+      );
+
+      EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;
+
+      await localEntepriseData.add(newEnterprise);
+    } catch (e) {
+      e;
+    }
+  }
 }

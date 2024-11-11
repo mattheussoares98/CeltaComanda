@@ -63,6 +63,16 @@ class _CancelProductsPageState extends State<CancelProductsPage>
           StreamBuilder<PrintedViewModel?>(
               stream: cancelProductsPresenter.printedProducts,
               builder: (context, snapshot) {
+                if (selectedCommandInDropDown != null &&
+                    snapshot.data == null) {
+                  return Text(
+                    R.string.emptyTable,
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }
                 if (snapshot.data == null) {
                   return SizedBox();
                 }

@@ -10,11 +10,13 @@ class LogoutItemDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomePresenter homePresenter = Provider.of(context, listen: false);
-    final PrintedProductsPresenter printedProductsPresenter =
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    final CartPresenter cartPresenter = Provider.of(context, listen: false);
-    final MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    EnterprisePresenter enterprisePresenter =
+        Provider.of(context, listen: false);
 
     return DrawerItem(
       onTap: () async {
@@ -29,6 +31,7 @@ class LogoutItemDrawer extends StatelessWidget {
                   printedProductsPresenter: printedProductsPresenter,
                   cartPresenter: cartPresenter,
                   menuPresenter: menuPresenter,
+                  enterprisePresenter: enterprisePresenter,
                 );
               });
         } else {
@@ -42,6 +45,7 @@ class LogoutItemDrawer extends StatelessWidget {
                   printedProductsPresenter: printedProductsPresenter,
                   cartPresenter: cartPresenter,
                   menuPresenter: menuPresenter,
+                  enterprisePresenter: enterprisePresenter,
                 );
               });
         }
@@ -60,11 +64,13 @@ Future<void> _logout({
   required PrintedProductsPresenter printedProductsPresenter,
   required CartPresenter cartPresenter,
   required MenuPresenter menuPresenter,
+  required EnterprisePresenter enterprisePresenter,
 }) async {
   await cartPresenter.clearCart();
   await homePresenter.doLogout(
     printedProductsPresenter: printedProductsPresenter,
     cartPresenter: cartPresenter,
     menuPresenter: menuPresenter,
+    enterprisePresenter: enterprisePresenter,
   );
 }

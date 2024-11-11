@@ -12,8 +12,7 @@ import 'package:mocktail/mocktail.dart';
 
 class EnterpriseDataEntitySpy extends Mock implements EnterpriseEntity {}
 
-class EnterprisePresenterSpy extends Mock
-    implements EnterprisePresenter {
+class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
   final mainErrorController = StreamController<UIError?>();
   final enterpriseErrorController = StreamController<UIError?>();
   final isFormValidController = StreamController<bool>();
@@ -29,8 +28,11 @@ class EnterprisePresenterSpy extends Mock
         .thenReturn(enterpriseNameTextEditingController);
 
     when(() => this.getLocalData(any())).thenAnswer((any) async => any);
-    when(() => this.getFirebaseAndConcentradorEnterpriseParameters()).thenAnswer((any) async => any);
-    when(() => this.updateConcentratorEnterpriseParameters()).thenAnswer((any) async => any);
+    when(() => this.clearEnterpriseData()).thenAnswer((any) async => any);
+    when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
+        .thenAnswer((any) async => any);
+    when(() => this.updateConcentratorEnterpriseParameters())
+        .thenAnswer((any) async => any);
     when(() => this.validateApiAndGoToHomePage(
           commandEntity: any(named: "commandEntity"),
           homePresenter: any(named: "homePresenter"),

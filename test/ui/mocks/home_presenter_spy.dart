@@ -35,6 +35,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
           cartPresenter: any(named: "cartPresenter"),
           menuPresenter: any(named: "menuPresenter"),
           printedProductsPresenter: any(named: "printedProductsPresenter"),
+          enterprisePresenter: any(named: "enterprisePresenter"),
         )).thenAnswer((_) async => Get.offAllNamed(
           PageRoutes.splash,
         ));

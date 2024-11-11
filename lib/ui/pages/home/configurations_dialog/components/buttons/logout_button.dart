@@ -21,6 +21,8 @@ class LogoutButton extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    EnterprisePresenter enterprisePresenter =
+        Provider.of(context, listen: false);
 
     return ElevatedButton(
       child: Padding(
@@ -54,6 +56,7 @@ class LogoutButton extends StatelessWidget {
                       printedProductsPresenter: printedProductsPresenter,
                       cartPresenter: cartPresenter,
                       menuPresenter: menuPresenter,
+                      enterprisePresenter: enterprisePresenter,
                     );
                   });
             });
@@ -62,6 +65,7 @@ class LogoutButton extends StatelessWidget {
               printedProductsPresenter: printedProductsPresenter,
               cartPresenter: cartPresenter,
               menuPresenter: menuPresenter,
+              enterprisePresenter: enterprisePresenter,
             );
           }
         }

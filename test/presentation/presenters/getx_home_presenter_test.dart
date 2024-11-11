@@ -173,6 +173,53 @@ void main() {
   });
 
   group("Navigation", () {
+    group("Do logout", () {
+      test('Should go to SplashPage', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => navigateTo.navigate(
+              pageRoute: PageRoutes.splash,
+              clear: true,
+            )).called(1);
+      });
+
+      test('Should make not persist app when go to splash page', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => persistent.makeNotPersistent()).called(1);
+      });
+
+      test('Should update updateMenu', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        expect(sut.updateMenu, -1);
+      });
+      test('Should call enterprisePresenter.clearEnterpriseData', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => enterprisePresenter.clearEnterpriseData()).called(1);
+      });
+    });
     test('Should go to PrintedProductsPage', () async {
       sut.goToPrintedProductsPage();
 
@@ -180,28 +227,7 @@ void main() {
             pageRoute: PageRoutes.printedProducts,
           )).called(1);
     });
-    test('Should go to SplashPage', () async {
-      await sut.doLogout(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-      );
 
-      verify(() => navigateTo.navigate(
-            pageRoute: PageRoutes.splash,
-            clear: true,
-          )).called(1);
-    });
-
-    test('Should make not persist app when go to splash page', () async {
-      await sut.doLogout(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
     test('Should go to CartPage', () async {
       sut.goToCartPage();
 
@@ -217,16 +243,6 @@ void main() {
       verify(() => navigateTo.navigate(
             pageRoute: PageRoutes.payment,
           )).called(1);
-    });
-
-    test('Should update updateMenu', () async {
-      await sut.doLogout(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        menuPresenter: menuPresenter,
-      );
-
-      expect(sut.updateMenu, -1);
     });
   });
 

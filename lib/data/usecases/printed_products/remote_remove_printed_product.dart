@@ -1,5 +1,6 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
 class RemoteRemovePrintedProduct implements RemovePrintedProduct {
@@ -10,14 +11,11 @@ class RemoteRemovePrintedProduct implements RemovePrintedProduct {
   });
 
   @override
-  Future<void> remove({
-    required String productId,
-    required String url,
-  }) async {
+  Future<void> remove(String productId) async {
     try {
       await httpAdapter.request(
         url:
-            "$url/api/APISaleRequestProduct/DeleteSaleRequestProduct?id=$productId",
+            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APISaleRequestProduct/DeleteSaleRequestProduct?id=$productId",
         method: "get",
       );
     } catch (error) {

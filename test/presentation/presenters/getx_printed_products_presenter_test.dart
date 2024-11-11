@@ -455,10 +455,7 @@ void main() {
         commandNumber: homePresenter.commandNumber!,
       );
 
-      verify(() => removePrintedProduct.remove(
-            productId: saleRequestProductId,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-          )).called(1);
+      verify(() => removePrintedProduct.remove(saleRequestProductId)).called(1);
     });
 
     test("Should emit correct values on removeProduct success", () async {
@@ -477,7 +474,7 @@ void main() {
     });
 
     test("Should emit correct values on removeProduct throws", () async {
-      removePrintedProduct.mockError(DomainError.unexpected);
+      removePrintedProduct.mockError();
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -495,7 +492,7 @@ void main() {
 
     test("Should load printed products again when removeProduct throws",
         () async {
-      removePrintedProduct.mockError(DomainError.unexpected);
+      removePrintedProduct.mockError();
 
       await sut.removeProduct(
         printedProductsPresenter: printedProductsPresenter,
@@ -515,7 +512,7 @@ void main() {
     });
 
     test("Should emit correct values on removeProduct throws", () async {
-      removePrintedProduct.mockError(DomainError.unexpected);
+      removePrintedProduct.mockError();
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -532,7 +529,7 @@ void main() {
     });
 
     test("Should emit correct values on ticket is not permitted", () async {
-      removePrintedProduct.mockError(DomainError.unexpected);
+      removePrintedProduct.mockError();
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

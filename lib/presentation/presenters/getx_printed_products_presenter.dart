@@ -38,10 +38,7 @@ class GetxPrintedProductsPresenter
     mainError = null;
 
     try {
-      await removePrintedProduct.remove(
-        productId: saleRequestProductId,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-      );
+      await removePrintedProduct.remove(saleRequestProductId);
 
       await loadPrinted(commandNumber);
     } on DomainError catch (error) {

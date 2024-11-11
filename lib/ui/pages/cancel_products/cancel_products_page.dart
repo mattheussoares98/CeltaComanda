@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -57,9 +58,29 @@ class _CancelProductsPageState extends State<CancelProductsPage>
               });
             },
           ),
-          CancelProductsItems(
-            selectedCommandInDropDown: selectedCommandInDropDown,
-          ),
+          StreamBuilder<PrintedViewModel?>(
+              stream: cancelProductsPresenter.printedProducts,
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return SizedBox();
+                }
+
+                return Expanded(
+                  child: Column(
+                    children: [
+                      CancelProductsItems(
+                        selectedCommandInDropDown: selectedCommandInDropDown,
+                        printed: snapshot.data!,
+                      ),
+                      RequestSummary(
+                        serviceChargeValue:
+                            snapshot.data!.IncrementValue.toDouble(),
+                        totalLiquid: snapshot.data!.TotalLiquid.toDouble(),
+                      ),
+                    ],
+                  ),
+                );
+              }),
         ],
       ),
     );

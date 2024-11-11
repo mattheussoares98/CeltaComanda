@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../helpers/helpers.dart';
-import '../../../pages.dart';
+import '../../helpers/helpers.dart';
 
 class Subtotal extends StatelessWidget {
-  const Subtotal({super.key});
+  final double totalLiquid;
+  const Subtotal({
+    required this.totalLiquid,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-
     return Row(
       children: [
         Expanded(
@@ -23,7 +22,7 @@ class Subtotal extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            printedProductsPresenter.printed!.TotalLiquid
+            totalLiquid
                 .toDouble()
                 .toString()
                 .toBrazilianNumber()

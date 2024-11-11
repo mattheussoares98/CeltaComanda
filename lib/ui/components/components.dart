@@ -1,4 +1,5 @@
 export './drawer/drawer.dart';
+export './summary/summary.dart';
 export "./app_theme.dart";
 export './comment.dart';
 export 'drawer/drawer_items.dart';

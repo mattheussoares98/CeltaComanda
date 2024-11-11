@@ -68,7 +68,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             IconButton(
               onPressed: () async {
-                  await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+                await printedProductsPresenter
+                    .loadPrinted(homePresenter.commandNumber!);
               },
               icon: Row(
                 children: [
@@ -101,7 +102,11 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     : const SearchDataByCommandNumber(),
               ),
               if (printedProductsPresenter.printed != null)
-                const RequestSummary(),
+                RequestSummary(
+                  serviceChargeValue:
+                      printedProductsPresenter.serviceChargeValue,
+                  totalLiquid: printedProductsPresenter.totalLiquid,
+                ),
             ],
           ),
         ),

@@ -1,17 +1,20 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 
-import '../../../../../../ui/pages/pages.dart';
+import 'service_charge.dart';
+import 'subtotal.dart';
+import 'total.dart';
 
 class RequestSummary extends StatelessWidget {
-  const RequestSummary({super.key});
+  final double serviceChargeValue;
+  final double totalLiquid;
+  const RequestSummary({
+    required this.serviceChargeValue,
+    required this.totalLiquid,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: true);
-
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(2),
@@ -33,25 +36,25 @@ class RequestSummary extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: printedProductsPresenter.serviceChargeValue <= 0
+              child: serviceChargeValue <= 0
                   ? SizedBox()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Subtotal(),
+                        Subtotal(totalLiquid: totalLiquid),
                         const SizedBox(height: 10),
-                        ServiceCharge(),
+                        const ServiceCharge(),
                       ],
                     ),
             ),
-            if (printedProductsPresenter.serviceChargeValue > 0)
+            if (serviceChargeValue > 0)
               VerticalDivider(
                 color: Theme.of(context).primaryColorLight,
                 thickness: 1,
               ),
             Expanded(
-              child: Total(),
+              child: Total(totalLiquid: totalLiquid),
             ),
           ],
         ),

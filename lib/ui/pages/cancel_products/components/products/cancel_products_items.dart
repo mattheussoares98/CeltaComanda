@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class CancelProductsItems extends StatelessWidget {
   final int? selectedCommandInDropDown;
+  final PrintedViewModel printed;
   const CancelProductsItems({
     required this.selectedCommandInDropDown,
+    required this.printed,
     super.key,
   });
 
@@ -18,54 +18,41 @@ class CancelProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CancelProductsPresenter cancelProductsPresenter =
-        Provider.of(context, listen: false);
+    return Expanded(
+      child: Column(
+        children: [
+          ProductsHeader(
+            productFlex: productFlex,
+            quantityFlex: quantityFlex,
+            totalFlex: totalFlex,
+            deleteButtonSize: deleteButtonSize,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: ListView.builder(
+                itemCount: printed.Products.length,
+                itemBuilder: (context, index) {
+                  printed.Products.sort(
+                      (a, b) => a.Product.Name.compareTo(b.Product.Name));
 
-    return StreamBuilder<PrintedViewModel?>(
-        stream: cancelProductsPresenter.printedProducts,
-        builder: (context, snapshot) {
-          if (snapshot.data == null || selectedCommandInDropDown == null) {
-            return Center(
-              child: Text(R.string.emptyTable),
-            );
-          }
+                  final product = printed.Products[index];
 
-          return Expanded(
-            child: Column(
-              children: [
-                ProductsHeader(
-                  productFlex: productFlex,
-                  quantityFlex: quantityFlex,
-                  totalFlex: totalFlex,
-                  deleteButtonSize: deleteButtonSize,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ListView.builder(
-                      itemCount: snapshot.data!.Products.length,
-                      itemBuilder: (context, index) {
-                        snapshot.data!.Products.sort(
-                            (a, b) => a.Product.Name.compareTo(b.Product.Name));
-                    
-                        final product = snapshot.data!.Products[index];
-                    
-                        return ProductItem(
-                          product: product,
-                          index: index,
-                          productFlex: productFlex,
-                          totalFlex: totalFlex,
-                          quantityFlex: quantityFlex,
-                          deleteButtonSize: deleteButtonSize,
-                          commandNumber: selectedCommandInDropDown,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
+                  return ProductItem(
+                    product: product,
+                    index: index,
+                    productFlex: productFlex,
+                    totalFlex: totalFlex,
+                    quantityFlex: quantityFlex,
+                    deleteButtonSize: deleteButtonSize,
+                    commandNumber: selectedCommandInDropDown,
+                  );
+                },
+              ),
             ),
-          );
-        });
+          ),
+        ],
+      ),
+    );
   }
 }

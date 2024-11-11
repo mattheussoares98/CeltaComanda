@@ -2,7 +2,6 @@ export 'cancel_products_password_input.dart';
 export './name_and_comment.dart';
 export 'printed_item.dart';
 export './product_details.dart';
-export 'summary/summary.dart';
 export './requested_at.dart';
 export './search_data_of_other_command_number.dart';
 export 'total_by_person.dart';

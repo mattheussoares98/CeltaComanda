@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../helpers/helpers.dart';
-import '../../../pages.dart';
+import '../../helpers/helpers.dart';
 
 class Total extends StatelessWidget {
-  const Total({super.key});
+  final double totalLiquid;
+  const Total({
+    required this.totalLiquid,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -20,7 +19,7 @@ class Total extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         Text(
-          printedProductsPresenter.totalLiquid
+          totalLiquid
               .toDouble()
               .toString()
               .toBrazilianNumber()

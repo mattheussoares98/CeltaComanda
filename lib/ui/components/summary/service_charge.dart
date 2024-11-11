@@ -2,12 +2,14 @@ import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../components/components.dart';
-import '../../../../helpers/helpers.dart';
-import '../../../pages.dart';
+import '../components.dart';
+import '../../helpers/helpers.dart';
+import '../../pages/pages.dart';
 
 class ServiceCharge extends StatefulWidget {
-  const ServiceCharge({super.key});
+  const ServiceCharge({
+    super.key,
+  });
 
   @override
   State<ServiceCharge> createState() => _ServiceChargeState();

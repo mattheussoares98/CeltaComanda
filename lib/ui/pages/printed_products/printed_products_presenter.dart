@@ -45,8 +45,9 @@ abstract class PrintedProductsPresenter
   });
 
   Future<void> removeServiceCharge({
-    required int personalizedCode,
+    required int userPersonalizedCode,
     required String password,
     required String commandNumber,
+    required int saleRequestId,
   });
 }

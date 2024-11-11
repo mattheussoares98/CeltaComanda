@@ -7,7 +7,9 @@ import '../../helpers/helpers.dart';
 import '../../pages/pages.dart';
 
 class ServiceCharge extends StatefulWidget {
+  final int saleRequestId;
   const ServiceCharge({
+    required this.saleRequestId,
     super.key,
   });
 
@@ -39,9 +41,10 @@ class _ServiceChargeState extends State<ServiceCharge> {
     if (isValid == true) {
       Navigator.of(context).pop();
       await printedProductsPresenter.removeServiceCharge(
-        personalizedCode: userController.text.toInt(),
+        userPersonalizedCode: userController.text.toInt(),
         password: passwordController.text,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: widget.saleRequestId,
       );
     }
   }

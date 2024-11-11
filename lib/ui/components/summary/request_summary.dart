@@ -7,9 +7,11 @@ import 'total.dart';
 class RequestSummary extends StatelessWidget {
   final double serviceChargeValue;
   final double totalLiquid;
+  final int saleRequestId;
   const RequestSummary({
     required this.serviceChargeValue,
     required this.totalLiquid,
+    required this.saleRequestId,
     super.key,
   });
 
@@ -44,7 +46,7 @@ class RequestSummary extends StatelessWidget {
                       children: [
                         Subtotal(totalLiquid: totalLiquid),
                         const SizedBox(height: 10),
-                        const ServiceCharge(),
+                        ServiceCharge(saleRequestId: saleRequestId),
                       ],
                     ),
             ),

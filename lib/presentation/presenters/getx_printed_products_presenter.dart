@@ -216,16 +216,17 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> removeServiceCharge({
-    required int personalizedCode,
+    required int userPersonalizedCode,
     required String password,
     required String commandNumber,
+    required int saleRequestId,
   }) async {
     isLoading = true;
     mainError = null;
     try {
       bool isValid = await userValidations.isValidPassword(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        personalizedCode: personalizedCode,
+        personalizedCode: userPersonalizedCode,
         password: password,
       );
 
@@ -245,7 +246,7 @@ class GetxPrintedProductsPresenter
       await updateSaleRequest.update(
         model: model,
         commandNumberWithThreeNumbers: commandNumber.padLeft(3, "0"),
-        saleRequestId: _printed!.SaleRequestId.toInt(),
+        saleRequestId: saleRequestId,
       );
 
       await loadPrinted(commandNumber);

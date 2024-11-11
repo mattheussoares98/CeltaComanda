@@ -106,6 +106,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   serviceChargeValue:
                       printedProductsPresenter.serviceChargeValue,
                   totalLiquid: printedProductsPresenter.totalLiquid,
+                  saleRequestId:
+                      printedProductsPresenter.printed!.SaleRequestId.toInt(),
                 ),
             ],
           ),

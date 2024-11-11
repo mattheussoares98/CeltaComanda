@@ -36,6 +36,7 @@ void main() {
   late int personalizedCode;
   late String password;
   late String saleRequestProductId;
+  late int saleRequestId;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -77,6 +78,7 @@ void main() {
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
+    saleRequestId = faker.randomGenerator.integer(100);
   }
 
   void mockSuccess() {
@@ -597,11 +599,10 @@ void main() {
 
       await sut.loadPrinted(homePresenter.commandNumber!);
 
-      double value =
-          (sut.printed!.TotalLiquid.toDouble().roundAccordingBs() +
-                  printed.IncrementValue!.toDouble().roundAccordingBs())
-              .toStringAsFixed(2)
-              .toDouble();
+      double value = (sut.printed!.TotalLiquid.toDouble().roundAccordingBs() +
+              printed.IncrementValue!.toDouble().roundAccordingBs())
+          .toStringAsFixed(2)
+          .toDouble();
 
       expect(sut.totalLiquid, value);
     });
@@ -645,9 +646,10 @@ void main() {
       // expectLater(sut.mainErrorStream, emits(null)); //dont works because in the loadPrinted already put null value in mainStream
 
       await sut.removeServiceCharge(
-        personalizedCode: personalizedCode,
+        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: saleRequestId,
       );
     });
     test("Should emit correct values if throws", () async {
@@ -658,9 +660,10 @@ void main() {
       userValidations.mockIsValidPasswordError(DomainError.unexpected);
 
       await sut.removeServiceCharge(
-        personalizedCode: personalizedCode,
+        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: saleRequestId,
       );
     });
     test("Should emit correct values if password is invalid", () async {
@@ -671,17 +674,19 @@ void main() {
       userValidations.mockIsValidPassword(false);
 
       await sut.removeServiceCharge(
-        personalizedCode: personalizedCode,
+        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: saleRequestId,
       );
     });
     test("Should call validate user password with correct values", () async {
       await sut.loadPrinted(homePresenter.commandNumber!);
       await sut.removeServiceCharge(
-        personalizedCode: personalizedCode,
+        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: saleRequestId,
       );
 
       verify(
@@ -695,9 +700,10 @@ void main() {
     test("Should call update sale request with correct values", () async {
       await sut.loadPrinted(homePresenter.commandNumber!);
       await sut.removeServiceCharge(
-        personalizedCode: personalizedCode,
+        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: sut.printed!.SaleRequestId.toInt(),
       );
 
       verify(
@@ -720,9 +726,10 @@ void main() {
     test("Should call loadPrinted", () async {
       await sut.loadPrinted(homePresenter.commandNumber!);
       await sut.removeServiceCharge(
-        personalizedCode: personalizedCode,
+        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
+        saleRequestId: saleRequestId,
       );
 
       verify(

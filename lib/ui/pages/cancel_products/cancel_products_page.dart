@@ -76,6 +76,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
                         serviceChargeValue:
                             snapshot.data!.IncrementValue.toDouble(),
                         totalLiquid: snapshot.data!.TotalLiquid.toDouble(),
+                        saleRequestId: snapshot.data!.SaleRequestId.toInt(),
                       ),
                     ],
                   ),

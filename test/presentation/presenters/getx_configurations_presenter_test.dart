@@ -93,8 +93,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: true,
       );
@@ -109,8 +107,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: true,
       );
@@ -119,8 +115,6 @@ void main() {
       bool isOpen = faker.randomGenerator.boolean();
 
       await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
       );
@@ -134,8 +128,6 @@ void main() {
       bool isOpen = faker.randomGenerator.boolean();
 
       final value = await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
       );
@@ -147,8 +139,6 @@ void main() {
       bool isOpen = faker.randomGenerator.boolean();
 
       final value = await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
       );
@@ -157,8 +147,6 @@ void main() {
     });
     test("Should call userValidations", () async {
       await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: false,
       );
@@ -180,8 +168,6 @@ void main() {
       );
 
       final value = await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: false,
       );
@@ -199,8 +185,6 @@ void main() {
       );
 
       final value = await sut.openOrBlockadeCommand(
-        password: password,
-        userCode: userCode,
         commandNumber: newFixedCommandNumber,
         isOpen: false,
       );

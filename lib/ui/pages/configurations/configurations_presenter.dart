@@ -20,8 +20,6 @@ abstract class ConfigurationsPresenter implements Listenable {
   Future<bool> openOrBlockadeCommand({
     required int commandNumber,
     required bool isOpen,
-    required int userCode,
-    required String password,
   });
   void updateSelectedPeoples(int? value);
   void updateSelectedCommand(int value);

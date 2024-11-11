@@ -43,32 +43,6 @@ class ActionsButtons extends StatelessWidget {
           );
         },
       ),
-      ElevatedButton(
-        onPressed: () async {
-          await _openOrBlock(
-            homePresenter: homePresenter,
-            liberate: true,
-            context: context,
-            keyUserAndPassword: keyUserAndPassword,
-            passwordController: passwordController,
-            userCodeController: userCodeController,
-          );
-        },
-        child: FittedBox(child: Text(R.string.liberateCommand)),
-      ),
-      ElevatedButton(
-        onPressed: () async {
-          await _openOrBlock(
-            homePresenter: homePresenter,
-            liberate: false,
-            context: context,
-            keyUserAndPassword: keyUserAndPassword,
-            passwordController: passwordController,
-            userCodeController: userCodeController,
-          );
-        },
-        child: FittedBox(child: Text(R.string.blockCommand)),
-      ),
       CloseApplicationButton(validateUserCredentials: () async {
         return _validateUserCredentials(
           homePresenter: homePresenter,
@@ -156,37 +130,6 @@ Future<void> _updateCommand({
       snackBarMessage(
         context,
         R.string.msgUpdatedTableConfigurationsSuccess,
-      );
-    });
-  }
-}
-
-Future<void> _openOrBlock({
-  required HomePresenter homePresenter,
-  required bool liberate,
-  required BuildContext context,
-  required GlobalKey<FormState> keyUserAndPassword,
-  required TextEditingController passwordController,
-  required TextEditingController userCodeController,
-}) async {
-  if (keyUserAndPassword.currentState?.validate() != true) {
-    return;
-  }
-
-  final updated = await homePresenter.openOrBlockadeCommand(
-    commandNumber: homePresenter.selectedCommand!.toInt(),
-    isOpen: liberate,
-    password: passwordController.text,
-    userCode: userCodeController.text.toInt(),
-  );
-
-  if (updated) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      FocusScope.of(context).unfocus();
-      snackBarMessage(
-        context,
-        liberate ? R.string.msgReleasesCommand : R.string.msgBlockedCommand,
-        backgroundColor: Theme.of(context).secondaryHeaderColor,
       );
     });
   }

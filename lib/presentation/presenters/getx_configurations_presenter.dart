@@ -1,6 +1,5 @@
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -42,22 +41,10 @@ class GetxConfigurationsPresenter extends GetxController
   Future<bool> openOrBlockadeCommand({
     required int commandNumber,
     required bool isOpen,
-    required int userCode,
-    required String password,
   }) async {
     mainError = null;
     isLoading = true;
     try {
-      bool isValidPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        personalizedCode: userCode.toInt(),
-        password: password,
-      );
-
-      if (isValidPassword != true) {
-        throw DomainError.invalidCredentialsOrAccessDenied;
-      }
-
       await commandInformations.openOrBlockade(
         commandNumber: commandNumber.toString().padLeft(3, "0"),
         isOpen: isOpen,

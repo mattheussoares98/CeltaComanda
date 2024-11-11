@@ -55,6 +55,7 @@ class CancelProductsItems extends StatelessWidget {
                         totalFlex: totalFlex,
                         quantityFlex: quantityFlex,
                         deleteButtonSize: deleteButtonSize,
+                        commandNumber: selectedCommandInDropDown,
                       );
                     },
                   ),

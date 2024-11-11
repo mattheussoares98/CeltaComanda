@@ -20,12 +20,18 @@ class GetxCancelProductsPresenter extends GetxController
   });
 
   @override
-  Future<void> cancelProduct(String productId) async {
+  Future<void> cancelProduct({
+    required String productId,
+    required int commandNumber,
+    required void Function() showSuccessMessage,
+  }) async {
     isLoading = true;
     mainError = null;
 
     try {
       await removePrintedProduct.remove(productId);
+      await loadProducts(commandNumber);
+      showSuccessMessage();
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

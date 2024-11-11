@@ -11,6 +11,7 @@ class ProductItem extends StatelessWidget {
   final int productFlex;
   final int totalFlex;
   final int quantityFlex;
+  final int? commandNumber;
   final double deleteButtonSize;
   const ProductItem({
     required this.product,
@@ -18,6 +19,7 @@ class ProductItem extends StatelessWidget {
     required this.productFlex,
     required this.totalFlex,
     required this.quantityFlex,
+    required this.commandNumber,
     required this.deleteButtonSize,
     super.key,
   });
@@ -65,11 +67,43 @@ class ProductItem extends StatelessWidget {
               onPressed: () async {
                 notificationDialog(
                   context: context,
-                  titleMessage: "${R.string.cancelProducts}?",
-                  content: Text(""),
+                  titleMessage: "${R.string.cancelProduct}?",
+                  content: SizedBox(
+                    height: MediaQuery.of(context).size.height / 3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          product.Products.Name,
+                          style: TextStyle(
+                            fontSize: getStringSize(context),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          product.TotalLiquid.toDouble()
+                              .toString()
+                              .toBrazilianNumber()
+                              .addBrazilianCoin(),
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: getStringSize(context),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   onPress: () async {
-                    await cancelProductsPresenter
-                        .cancelProduct(product.SaleRequestProductId);
+                    await cancelProductsPresenter.cancelProduct(
+                        productId: product.SaleRequestProductId,
+                        commandNumber: commandNumber!,
+                        showSuccessMessage: () {
+                          snackBarMessage(
+                            context,
+                            R.string.msgSuccessToCancelProducts,
+                          );
+                        });
                   },
                 );
               },

@@ -86,7 +86,11 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.cancelProduct(faker.randomGenerator.string(10));
+      await sut.cancelProduct(
+        productId: faker.randomGenerator.string(10),
+        commandNumber: commandNumber,
+        showSuccessMessage: () {},
+      );
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -95,12 +99,20 @@ void main() {
 
       removePrintedProduct.mockError();
 
-      await sut.cancelProduct(faker.randomGenerator.string(10));
+      await sut.cancelProduct(
+        productId: faker.randomGenerator.string(10),
+        commandNumber: commandNumber,
+        showSuccessMessage: () {},
+      );
     });
     test("Should call removePrintedProduct with correct value", () async {
       final id = faker.randomGenerator.string(10);
 
-      await sut.cancelProduct(id);
+      await sut.cancelProduct(
+        productId: faker.randomGenerator.string(10),
+        commandNumber: commandNumber,
+        showSuccessMessage: () {},
+      );
 
       verify(() => removePrintedProduct.remove(id)).called(1);
     });

@@ -40,24 +40,27 @@ class CancelProductsItems extends StatelessWidget {
                   deleteButtonSize: deleteButtonSize,
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.Products.length,
-                    itemBuilder: (context, index) {
-                      snapshot.data!.Products.sort(
-                          (a, b) => a.Product.Name.compareTo(b.Product.Name));
-
-                      final product = snapshot.data!.Products[index];
-
-                      return ProductItem(
-                        product: product,
-                        index: index,
-                        productFlex: productFlex,
-                        totalFlex: totalFlex,
-                        quantityFlex: quantityFlex,
-                        deleteButtonSize: deleteButtonSize,
-                        commandNumber: selectedCommandInDropDown,
-                      );
-                    },
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.Products.length,
+                      itemBuilder: (context, index) {
+                        snapshot.data!.Products.sort(
+                            (a, b) => a.Product.Name.compareTo(b.Product.Name));
+                    
+                        final product = snapshot.data!.Products[index];
+                    
+                        return ProductItem(
+                          product: product,
+                          index: index,
+                          productFlex: productFlex,
+                          totalFlex: totalFlex,
+                          quantityFlex: quantityFlex,
+                          deleteButtonSize: deleteButtonSize,
+                          commandNumber: selectedCommandInDropDown,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

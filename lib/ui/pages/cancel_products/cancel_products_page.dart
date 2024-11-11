@@ -55,7 +55,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
               });
             },
           ),
-          Products(
+          CancelProductsItems(
             selectedCommandInDropDown: selectedCommandInDropDown,
           ),
         ],

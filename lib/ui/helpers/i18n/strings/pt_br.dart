@@ -101,6 +101,7 @@ class PtBr implements Translation {
   String get call => "Ligar";
   String get cancel => "Cancelar";
   String get cancelProducts => "Cancelar produtos";
+  String get cancelProduct => "Cancelar produto";
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
   String get clearCart => "Limpar carrinho";

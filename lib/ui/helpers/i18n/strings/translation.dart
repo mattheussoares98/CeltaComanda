@@ -76,6 +76,7 @@ abstract class Translation {
   String get call;
   String get cancel;
   String get cancelProducts;
+  String get cancelProduct;
   String get cart;
   String get cashCredit;
   String get cellPhone;

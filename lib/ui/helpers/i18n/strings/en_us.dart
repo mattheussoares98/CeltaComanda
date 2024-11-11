@@ -16,7 +16,8 @@ class EnUs implements Translation {
   String get msgCommandDontHaveOpenValues => 'This command has no open values';
   String get msgCommandDontHaveProducts =>
       "This command has no products inserted";
-  String get msgConfirmClearTotalPaid => "If you exit the page, the paid value will be cleared";
+  String get msgConfirmClearTotalPaid =>
+      "If you exit the page, the paid value will be cleared";
   String get msgConsultCommandToViewProducts =>
       "Search command to view products";
   String get msgEvaluateFood => 'Rate the food';
@@ -98,6 +99,7 @@ class EnUs implements Translation {
   String get call => 'Call';
   String get cancel => 'Cancel';
   String get cancelProducts => 'Cancel products';
+  String get cancelProduct => 'Cancel product';
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
   String get clearCart => 'Clear cart';

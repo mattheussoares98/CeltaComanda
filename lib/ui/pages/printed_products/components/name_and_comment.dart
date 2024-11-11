@@ -18,7 +18,7 @@ class NameAndComment extends StatelessWidget {
     return Column(
       children: [
         Text(
-          product.Products.Name,
+          product.Product.Name,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,

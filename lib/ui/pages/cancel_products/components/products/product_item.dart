@@ -38,14 +38,14 @@ class ProductItem extends StatelessWidget {
           Expanded(
             flex: productFlex,
             child: Text(
-              product.Products.Name,
+              product.Product.Name,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: quantityFlex,
             child: Text(
-              product.Products.productQuantity.toString().toBrazilianNumber(0),
+              product.Product.productQuantity.toString().toBrazilianNumber(0),
               textAlign: TextAlign.center,
             ),
           ),
@@ -74,7 +74,7 @@ class ProductItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          product.Products.Name,
+                          product.Product.Name,
                           style: TextStyle(
                             fontSize: getStringSize(context),
                             fontWeight: FontWeight.bold,

@@ -498,7 +498,7 @@ class EntityFactory {
   static List<PrintedProductsViewModel> makePrintedProductsViewModel() {
     return [
       PrintedProductsViewModel(
-        Products: makeProductsViewModel(),
+        Product: makeProductsViewModel(),
         SaleRequestProductId: faker.randomGenerator.string(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
         Value: faker.randomGenerator.string(10),
@@ -516,7 +516,7 @@ class EntityFactory {
         ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
       ),
       PrintedProductsViewModel(
-        Products: makeProductsViewModel(),
+        Product: makeProductsViewModel(),
         SaleRequestProductId: faker.randomGenerator.string(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
         Value: faker.randomGenerator.string(10),

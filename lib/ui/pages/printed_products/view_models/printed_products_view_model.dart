@@ -7,7 +7,7 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/pages/pages.dart';
 
 class PrintedProductsViewModel extends Equatable {
-  final ProductsViewModel Products;
+  final ProductsViewModel Product;
   final String SaleRequestProductId;
   final String ProductPriceLookUpCode;
   final String Value;
@@ -29,7 +29,7 @@ class PrintedProductsViewModel extends Equatable {
   List get props => [];
 
   const PrintedProductsViewModel({
-    required this.Products,
+    required this.Product,
     required this.SaleRequestProductId,
     required this.ProductPriceLookUpCode,
     required this.Value,
@@ -50,7 +50,7 @@ class PrintedProductsViewModel extends Equatable {
 
   factory PrintedProductsViewModel.fromEntity(PrintedProductsEntity entity) =>
       PrintedProductsViewModel(
-        Products: ProductsViewModel.fromEntity(entity.Product),
+        Product: ProductsViewModel.fromEntity(entity.Product),
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
         QuantityString: entity.QuantityString,
         Comments: entity.Comments,

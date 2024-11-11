@@ -44,7 +44,7 @@ class CancelProductsItems extends StatelessWidget {
                     itemCount: snapshot.data!.Products.length,
                     itemBuilder: (context, index) {
                       snapshot.data!.Products.sort(
-                          (a, b) => a.Products.Name.compareTo(b.Products.Name));
+                          (a, b) => a.Product.Name.compareTo(b.Product.Name));
 
                       final product = snapshot.data!.Products[index];
 

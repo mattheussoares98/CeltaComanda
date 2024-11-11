@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
+import 'components/components.dart';
 
 class ConfigurationsPage extends StatelessWidget {
   final ConfigurationsPresenter configurationsPresenter;

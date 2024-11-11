@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../main/builders/builders.dart';
-import '../../../../../helpers/helpers.dart';
-import '../../../../pages.dart';
+import '../../../../main/builders/builders.dart';
+import '../../../helpers/helpers.dart';
+import '../../pages.dart';
 
 class ReserveTableButton extends StatelessWidget {
   const ReserveTableButton({super.key});

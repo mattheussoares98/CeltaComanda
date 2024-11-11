@@ -15,7 +15,7 @@ class SelectCommandDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
+    CancelProductsPresenter cancelProductsPresenter =
         Provider.of(context, listen: false);
 
     return DropdownButton(
@@ -43,7 +43,7 @@ class SelectCommandDropDown extends StatelessWidget {
           .toList(),
       onChanged: (value) async {
         updateSelectedCommandInDropDown(value);
-        await printedProductsPresenter.loadPrinted(value.toString());
+        await cancelProductsPresenter.loadProducts(value!);
       },
     );
   }

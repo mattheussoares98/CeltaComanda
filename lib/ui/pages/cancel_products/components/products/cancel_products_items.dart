@@ -18,53 +18,50 @@ class CancelProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
+    CancelProductsPresenter cancelProductsPresenter =
+        Provider.of(context, listen: false);
 
-    if (printedProductsPresenter.printedProducts == null ||
-        selectedCommandInDropDown == null) {
-      return Center(
-        child: Text(R.string.emptyTable),
-      );
-    }
+    return StreamBuilder<PrintedViewModel?>(
+        stream: cancelProductsPresenter.printedProducts,
+        builder: (context, snapshot) {
+          if (snapshot.data == null || selectedCommandInDropDown == null) {
+            return Center(
+              child: Text(R.string.emptyTable),
+            );
+          }
 
-    return Expanded(
-      child: Column(
-        children: [
-          if (printedProductsPresenter.printedProducts != null)
-            ProductsHeader(
-              productFlex: productFlex,
-              quantityFlex: quantityFlex,
-              totalFlex: totalFlex,
-              deleteButtonSize: deleteButtonSize,
-            ),
-          Expanded(
-            child: ListView.builder(
-              itemCount:
-                  printedProductsPresenter.printedProducts!.Products.length,
-              itemBuilder: (context, index) {
-                printedProductsPresenter.printedProducts!.Products
-                    .sort((a, b) => a.Products.Name.compareTo(b.Products.Name));
-
-                if (printedProductsPresenter.printedProducts == null) {
-                  return SizedBox();
-                }
-
-                final product =
-                    printedProductsPresenter.printedProducts!.Products[index];
-
-                return ProductItem(
-                  product: product,
-                  index: index,
+          return Expanded(
+            child: Column(
+              children: [
+                ProductsHeader(
                   productFlex: productFlex,
-                  totalFlex: totalFlex,
                   quantityFlex: quantityFlex,
+                  totalFlex: totalFlex,
                   deleteButtonSize: deleteButtonSize,
-                );
-              },
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.Products.length,
+                    itemBuilder: (context, index) {
+                      snapshot.data!.Products.sort(
+                          (a, b) => a.Products.Name.compareTo(b.Products.Name));
+
+                      final product = snapshot.data!.Products[index];
+
+                      return ProductItem(
+                        product: product,
+                        index: index,
+                        productFlex: productFlex,
+                        totalFlex: totalFlex,
+                        quantityFlex: quantityFlex,
+                        deleteButtonSize: deleteButtonSize,
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

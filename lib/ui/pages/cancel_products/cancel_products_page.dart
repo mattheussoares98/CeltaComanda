@@ -32,15 +32,15 @@ class _CancelProductsPageState extends State<CancelProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
+    CancelProductsPresenter cancelProductsPresenter =
         Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     loadingSubscription =
-        handleLoading(context, printedProductsPresenter.isLoadingStream);
+        handleLoading(context, cancelProductsPresenter.isLoadingStream);
     mainErrorSubscription =
-        handleMainError(context, printedProductsPresenter.mainErrorStream);
+        handleMainError(context, cancelProductsPresenter.mainErrorStream);
 
     return Scaffold(
       appBar: AppBar(

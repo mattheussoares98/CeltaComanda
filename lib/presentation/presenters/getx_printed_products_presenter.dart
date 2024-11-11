@@ -66,12 +66,11 @@ class GetxPrintedProductsPresenter
         commandNumber: commandNumber.toInt(),
       );
 
-      _printedProducts = null;
+      _printed = null;
       if (printedProducts?.Products.isEmpty == false) {
-        _printedProducts = PrintedViewModel.fromEntity(printedProducts!);
-        _printedProducts!.Products.sort((a, b) =>
-            DateTime.parse(a.DateHourOfCreation)
-                .compareTo(DateTime.parse(b.DateHourOfCreation)));
+        _printed = PrintedViewModel.fromEntity(printedProducts!);
+        _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation)
+            .compareTo(DateTime.parse(b.DateHourOfCreation)));
       }
     } catch (error) {
       switch (error) {
@@ -90,7 +89,7 @@ class GetxPrintedProductsPresenter
 
   @override
   void clear() {
-    _printedProducts = null;
+    _printed = null;
   }
 
   @override
@@ -147,9 +146,9 @@ class GetxPrintedProductsPresenter
     }
   }
 
-  PrintedViewModel? _printedProducts;
+  PrintedViewModel? _printed;
   @override
-  PrintedViewModel? get printedProducts => _printedProducts;
+  PrintedViewModel? get printed => _printed;
 
   final _isLoading = false.obs;
   @override
@@ -183,31 +182,31 @@ class GetxPrintedProductsPresenter
 
   @override
   double get totalLiquid {
-    if (_printedProducts == null) {
+    if (_printed == null) {
       return 0;
     }
 
-    double value = (_printedProducts!.TotalLiquid.toDouble() +
-        serviceChargeValue.toDouble());
+    double value =
+        (_printed!.TotalLiquid.toDouble() + serviceChargeValue.toDouble());
 
     return value.roundAccordingBs().toStringAsFixed(2).toDouble();
   }
 
   @override
   double get serviceChargeValue {
-    if (_printedProducts == null) {
+    if (_printed == null) {
       return 0;
     }
 
     double value;
 
-    if (_printedProducts!.IncrementType.toInt() == 1) {
+    if (_printed!.IncrementType.toInt() == 1) {
       //value
-      value = _printedProducts!.IncrementValue.toDouble();
-    } else if (_printedProducts!.IncrementType.toInt() == 2) {
+      value = _printed!.IncrementValue.toDouble();
+    } else if (_printed!.IncrementType.toInt() == 2) {
       //percentage
-      value = _printedProducts!.TotalLiquid.toDouble() *
-          (_printedProducts!.IncrementValue.toDouble() / 100);
+      value = _printed!.TotalLiquid.toDouble() *
+          (_printed!.IncrementValue.toDouble() / 100);
     } else {
       return 0;
     }
@@ -239,14 +238,14 @@ class GetxPrintedProductsPresenter
         CustomerCode: null,
         IncrementType: 0,
         IncrementValue: 0,
-        TotalLiquid: _printedProducts!.TotalLiquid.toDouble(),
+        TotalLiquid: _printed!.TotalLiquid.toDouble(),
         EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
       );
 
       await updateSaleRequest.update(
         model: model,
         commandNumberWithThreeNumbers: commandNumber.padLeft(3, "0"),
-        saleRequestId: _printedProducts!.SaleRequestId.toInt(),
+        saleRequestId: _printed!.SaleRequestId.toInt(),
       );
 
       await loadPrinted(commandNumber);

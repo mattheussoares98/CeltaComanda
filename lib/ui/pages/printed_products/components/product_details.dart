@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../pages.dart';
+import '../../../../ui/helpers/helpers.dart';
 
 class ProductDetails extends StatelessWidget {
   final PrintedProductsViewModel product;
@@ -32,19 +32,69 @@ class ProductDetails extends StatelessWidget {
       );
     }
 
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: RequestedAt(printedProduct: product),
+        Row(
+          children: [
+            Expanded(
+              child: RequestedAt(printedProduct: product),
+            ),
+            const SizedBox(width: 2),
+            Expanded(
+              flex: 3,
+              child: NameAndComment(product: product, comments: comments),
+            ),
+            if (hasMinWidth(context)) rowValue(value),
+            rowValue(quantity),
+            rowValue(totalLiquid),
+          ],
         ),
-        const SizedBox(width: 2),
-        Expanded(
-          flex: 3,
-          child: NameAndComment(product: product, comments: comments),
-        ),
-        if (hasMinWidth(context)) rowValue(value),
-        rowValue(quantity),
-        rowValue(totalLiquid),
+        if (product.childs.isNotEmpty)
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: product.childs.length,
+            itemBuilder: (context, index) {
+              final child = product.childs[index];
+
+              return Row(
+                children: [
+                  Expanded(child: SizedBox()),
+                  Expanded(
+                    flex: hasMinWidth(context) ? 7 : 6,
+                    child: Wrap(
+                      children: [
+                        const SizedBox(width: 2),
+                        RichText(
+                          text: TextSpan(
+                            text: child.Product.Name,
+                            style: TextStyle(
+                              fontSize: getStringSize(context) * 0.9,
+                              color: Colors.black,
+                              fontStyle: FontStyle.italic,
+                            ),
+                            children: child.Comments == null
+                                ? []
+                                : <TextSpan>[
+                                    TextSpan(
+                                      text: "   (${child.Comments})",
+                                      style: TextStyle(
+                                        color:
+                                            Theme.of(context).primaryColorLight,
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: getStringSize(context) * 0.9,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          )
       ],
     );
   }

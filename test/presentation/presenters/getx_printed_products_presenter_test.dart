@@ -345,18 +345,18 @@ void main() {
         () async {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
-      expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
+      expect(sut.printed, PrintedViewModel.fromEntity(printedEntity));
     });
 
     test(
         'Should clear printed products if the second search dont return anything',
         () async {
       await sut.loadPrinted(homePresenter.commandNumber!);
-      expect(sut.printedProducts, PrintedViewModel.fromEntity(printedEntity));
+      expect(sut.printed, PrintedViewModel.fromEntity(printedEntity));
 
       loadPrintedProducts.mockLoadPrintedProducts(null);
       await sut.loadPrinted(homePresenter.commandNumber!);
-      expect(sut.printedProducts, null);
+      expect(sut.printed, null);
     });
 
     test("Should call loadPrintedProducts with correct values", () async {
@@ -416,7 +416,7 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
       sut.clear();
 
-      expect(sut.printedProducts, null);
+      expect(sut.printed, null);
     });
 
     test(
@@ -568,7 +568,7 @@ void main() {
 
       await sut.loadPrinted(homePresenter.commandNumber!);
 
-      expect(sut.printedProducts, null);
+      expect(sut.printed, null);
     });
   });
 
@@ -598,7 +598,7 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       double value =
-          (sut.printedProducts!.TotalLiquid.toDouble().roundAccordingBs() +
+          (sut.printed!.TotalLiquid.toDouble().roundAccordingBs() +
                   printed.IncrementValue!.toDouble().roundAccordingBs())
               .toStringAsFixed(2)
               .toDouble();
@@ -707,13 +707,13 @@ void main() {
             CustomerCode: null,
             IncrementType: 0,
             IncrementValue: 0,
-            TotalLiquid: sut.printedProducts!.TotalLiquid.toDouble(),
+            TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
             EnterpriseId:
                 EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
           ),
           commandNumberWithThreeNumbers:
               homePresenter.commandNumberMock!.padLeft(3, "0"),
-          saleRequestId: sut.printedProducts!.SaleRequestId.toInt(),
+          saleRequestId: sut.printed!.SaleRequestId.toInt(),
         ),
       ).called(1);
     });

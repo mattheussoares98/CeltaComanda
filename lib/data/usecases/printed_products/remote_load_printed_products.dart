@@ -1,6 +1,5 @@
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/entities/printed_entity.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
@@ -26,9 +25,44 @@ class RemoteLoadPrintedProducts implements LoadPrintedProducts {
       );
       if (printedProducts == null) return null;
 
-      return PrintedProductsModel.fromJson(printedProducts).toEntity();
+      final printedEntity =
+          PrintedProductsModel.fromJson(printedProducts).toEntity();
+      final allProducts = _insertChildsInFathers(printedEntity);
+      printedEntity.Products.removeRange(0, printedEntity.Products.length);
+      printedEntity.Products.addAll(allProducts);
+
+      return printedEntity;
     } catch (error) {
       throw DomainError.unexpected;
     }
+  }
+
+  List<PrintedProductsEntity> _insertChildsInFathers(PrintedEntity printed) {
+    final fathers =
+        printed.Products.where((e) => e.ProductIsFatherComposition == true)
+            .toList();
+
+    final childs = printed.Products.where(
+      (e) => e.SaleRequestProductIdOfFather != null,
+    ).toList();
+
+    for (var father in fathers) {
+      final childsOfFather = childs.where(
+          (e) => e.SaleRequestProductIdOfFather == father.SaleRequestProductId);
+      father.childs.addAll(childsOfFather);
+    }
+
+    final notComposition =
+        printed.Products.where((e) => e.ProductIsFatherComposition == false)
+            .toList()
+            .where(
+              (x) => x.SaleRequestProductIdOfFather == null,
+            )
+            .toList();
+
+    return [
+      ...fathers,
+      ...notComposition,
+    ];
   }
 }

@@ -405,7 +405,7 @@ class GetxPaymentPresenter extends GetxController
           commandNumberWithThreeNumbers:
               homePresenter.commandNumber!.toString().padLeft(3, "0"),
           saleRequestId:
-              printedProductsPresenter.printedProducts!.SaleRequestId.toInt(),
+              printedProductsPresenter.printed!.SaleRequestId.toInt(),
         );
 
         _successfulPayments.add(ConcentratorFinalizationModel(

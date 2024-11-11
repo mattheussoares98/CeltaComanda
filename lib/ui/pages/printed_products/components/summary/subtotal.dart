@@ -23,7 +23,7 @@ class Subtotal extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            printedProductsPresenter.printedProducts!.TotalLiquid
+            printedProductsPresenter.printed!.TotalLiquid
                 .toDouble()
                 .toString()
                 .toBrazilianNumber()

@@ -19,7 +19,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (printedProductsPresenter.printedProducts == null)
+        if (printedProductsPresenter.printed == null)
           Text(
             R.string.msgCommandDontHaveOpenValues,
             textAlign: TextAlign.center,

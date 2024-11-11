@@ -72,6 +72,8 @@ class PrintedProductsModel {
                 ProductInternalCodeOnErp: e["ProductInternalCodeOnErp"],
                 SaleRequestId: e["SaleRequestId"],
                 ProductIsFatherComposition: e["ProductIsFatherComposition"],
+                childs: e["childs"] ?? [],
+                SaleRequestProductIdOfFather: e["SaleRequestProductIdOfFather"],
               ))
           .toList(),
       PersonalizedCode: json["PersonalizedCode"],

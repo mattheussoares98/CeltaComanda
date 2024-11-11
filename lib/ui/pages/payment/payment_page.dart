@@ -164,7 +164,7 @@ class _PaymentPageState extends State<PaymentPage>
                     pendingValue: paymentPresenter
                         .getTotalPendingValue(printedProductsPresenter),
                   ),
-                if (printedProductsPresenter.printedProducts != null &&
+                if (printedProductsPresenter.printed != null &&
                     paymentPresenter
                             .getTotalPendingValue(printedProductsPresenter) >
                         0)
@@ -197,7 +197,7 @@ class _PaymentPageState extends State<PaymentPage>
                       },
                     ),
                   ),
-                if (printedProductsPresenter.printedProducts == null ||
+                if (printedProductsPresenter.printed == null ||
                     !homePresenter.isFixedCommandNumber)
                   const SearchDataByCommandNumber(),
               ],

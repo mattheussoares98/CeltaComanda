@@ -109,7 +109,7 @@ void main() {
       final id = faker.randomGenerator.string(10);
 
       await sut.cancelProduct(
-        productId: faker.randomGenerator.string(10),
+        productId: id,
         commandNumber: commandNumber,
         showSuccessMessage: () {},
       );

@@ -24,9 +24,29 @@ class PrintedProductsViewModel extends Equatable {
   final String ProductInternalCodeOnErp;
   final String SaleRequestId;
   final String ProductIsFatherComposition;
+  final List<PrintedProductsViewModel> childs;
 
   @override
-  List get props => [];
+  List get props => [
+        Product,
+        SaleRequestProductId,
+        ProductPriceLookUpCode,
+        Value,
+        Quantity,
+        QuantityString,
+        UserId,
+        DateHourOfCreation,
+        IsCancelled,
+        IsDelivered,
+        IsPrinted,
+        ProductionStatus,
+        TotalLiquid,
+        ProductInternalCodeOnErp,
+        SaleRequestId,
+        ProductIsFatherComposition,
+        childs,
+        Comments,
+      ];
 
   const PrintedProductsViewModel({
     required this.Product,
@@ -45,6 +65,7 @@ class PrintedProductsViewModel extends Equatable {
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
     required this.ProductIsFatherComposition,
+    required this.childs,
     this.Comments,
   });
 
@@ -66,6 +87,10 @@ class PrintedProductsViewModel extends Equatable {
         ProductionStatus: entity.ProductionStatus.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
         SaleRequestId: entity.SaleRequestId.toString(),
-        ProductIsFatherComposition: entity.ProductIsFatherComposition.toString(),
+        ProductIsFatherComposition:
+            entity.ProductIsFatherComposition.toString(),
+        childs: entity.childs
+            .map((e) => PrintedProductsViewModel.fromEntity(e))
+            .toList(),
       );
 }

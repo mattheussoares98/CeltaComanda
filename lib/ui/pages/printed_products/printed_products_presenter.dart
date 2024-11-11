@@ -18,7 +18,7 @@ abstract class PrintedProductsPresenter
   Future<void> loadPrinted(String commandNumber);
   void clear();
   void doOnClosePage();
-  PrintedViewModel? get printedProducts;
+  PrintedViewModel? get printed;
 
   Future<void> removeProduct({
     required String saleRequestProductId,

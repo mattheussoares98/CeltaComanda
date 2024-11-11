@@ -12,7 +12,6 @@ class PrintedViewModel extends Equatable {
   final String TotalLiquid;
   final String DeliveryControl;
   final String? Comments;
-
   final String DateOfCreation;
   final String DateHourOfCreation;
   final String FlagStatus;
@@ -33,6 +32,18 @@ class PrintedViewModel extends Equatable {
         TotalLiquid,
         DeliveryControl,
         Comments,
+        DateOfCreation,
+        DateHourOfCreation,
+        FlagStatus,
+        EnterpriseId,
+        RequestType,
+        IsCancelled,
+        IsUsing,
+        Peoples,
+        SaleRequestId,
+        FlagOrigin,
+        IncrementType,
+        IncrementValue,
       ];
 
   const PrintedViewModel({

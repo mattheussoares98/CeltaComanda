@@ -20,6 +20,8 @@ class PrintedProductsEntity {
   final int ProductInternalCodeOnErp;
   final int SaleRequestId;
   final bool ProductIsFatherComposition;
+  final int? SaleRequestProductIdOfFather;
+  final List<PrintedProductsEntity> childs;
 
   PrintedProductsEntity({
     required this.Product,
@@ -39,5 +41,7 @@ class PrintedProductsEntity {
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
     required this.ProductIsFatherComposition,
+    required this.childs,
+    required this.SaleRequestProductIdOfFather,
   });
 }

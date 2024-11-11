@@ -20,7 +20,7 @@ class PrintedProductsPresenterSpy extends Mock
 
   PrintedProductsPresenterSpy() {
     when(() => this.totalLiquid).thenAnswer((_) => totalLiquidController);
-    when(() => this.printedProducts).thenAnswer((_) => printedProductsMock);
+    when(() => this.printed).thenAnswer((_) => printedProductsMock);
     when(() => this.canCancelProducts)
         .thenAnswer((_) => canCancelProductsController);
     when(() => this.updateCanCancelProducts(any())).thenAnswer((any) => any);

@@ -68,7 +68,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+                  await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
               },
               icon: Row(
                 children: [
@@ -91,16 +91,16 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           child: Column(
             children: [
               Expanded(
-                child: printedProductsPresenter.printedProducts != null
+                child: printedProductsPresenter.printed != null
                     ? PrintedItem(
-                        printed: printedProductsPresenter.printedProducts!,
+                        printed: printedProductsPresenter.printed!,
                         formKey: formKey,
                         passwordController: passwordController,
                         personalizedCodeController: personalizedCodeController,
                       )
                     : const SearchDataByCommandNumber(),
               ),
-              if (printedProductsPresenter.printedProducts != null)
+              if (printedProductsPresenter.printed != null)
                 const RequestSummary(),
             ],
           ),

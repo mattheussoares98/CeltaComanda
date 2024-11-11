@@ -303,4 +303,14 @@ void main() {
           .called(1);
     });
   });
+
+  group("Go to block or liberate command page", () {
+    test("Should call navigate to with correct values", () {
+      sut.goToBlockOrLiberateCommandPage();
+
+      verify(() =>
+              navigateTo.navigate(pageRoute: PageRoutes.blockOrLiberateCommand))
+          .called(1);
+    });
+  });
 }

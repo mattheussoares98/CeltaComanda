@@ -100,4 +100,9 @@ class GetxConfigurationsPresenter extends GetxController
   Future<void> goToCancelProductsPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.cancelProducts);
   }
+
+  @override
+  void goToBlockOrLiberateCommandPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.blockOrLiberateCommand);
+  }
 }

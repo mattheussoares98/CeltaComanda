@@ -1,4 +1,5 @@
 class PageRoutes {
+  static const String blockOrLiberateCommand = "/block_or_liberate_command";
   static const String cart = "/cart";
   static const String cancelProducts = "/cancel_products";
   static const String configurations = "/configurations";

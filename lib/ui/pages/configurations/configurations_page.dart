@@ -19,6 +19,7 @@ class ConfigurationsPage extends StatelessWidget {
 
     final buttons = [
       GoToCancelProductsPageButton(),
+      LogoutButton(),
     ];
 
     return PopScope(

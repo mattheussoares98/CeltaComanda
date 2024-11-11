@@ -6,11 +6,7 @@ import '../../../../../helpers/helpers.dart';
 import '../../../../pages.dart';
 
 class LogoutButton extends StatelessWidget {
-  final void Function()? resetDropdownsErrors;
-  final Future<bool> Function() validateUserCredentials;
   const LogoutButton({
-    required this.resetDropdownsErrors,
-    required this.validateUserCredentials,
     super.key,
   });
 
@@ -37,38 +33,27 @@ class LogoutButton extends StatelessWidget {
         ),
       ),
       onPressed: () async {
-        if (resetDropdownsErrors != null) {
-          resetDropdownsErrors!();
-        }
-
-        bool isValidCredentials = await validateUserCredentials();
-
-        if (isValidCredentials) {
-          if (cartPresenter.cartProducts.isNotEmpty) {
-            WidgetsBinding.instance.addPostFrameCallback((_) async {
-              notificationDialog(
-                  context: context,
-                  titleMessage: R.string.clearCart,
-                  content: Text(R.string.msgClearCartOnLogout),
-                  onPress: () async {
-                    cartPresenter.clearCart();
-                    await homePresenter.doLogout(
-                      printedProductsPresenter: printedProductsPresenter,
-                      cartPresenter: cartPresenter,
-                      menuPresenter: menuPresenter,
-                      enterprisePresenter: enterprisePresenter,
-                    );
-                  });
-            });
-          } else {
-            await homePresenter.doLogout(
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              menuPresenter: menuPresenter,
-              enterprisePresenter: enterprisePresenter,
-            );
-          }
-        }
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          notificationDialog(
+              context: context,
+              titleMessage: cartPresenter.cartProducts.isNotEmpty
+                  ? R.string.clearCart
+                  : R.string.doLogout,
+              content: Text(
+                cartPresenter.cartProducts.isNotEmpty
+                    ? R.string.msgClearCartOnLogout
+                    : R.string.msgWantDoLogout,
+              ),
+              onPress: () async {
+                cartPresenter.clearCart();
+                await homePresenter.doLogout(
+                  printedProductsPresenter: printedProductsPresenter,
+                  cartPresenter: cartPresenter,
+                  menuPresenter: menuPresenter,
+                  enterprisePresenter: enterprisePresenter,
+                );
+              });
+        });
       },
     );
   }

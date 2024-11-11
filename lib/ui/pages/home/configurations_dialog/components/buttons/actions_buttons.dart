@@ -79,18 +79,6 @@ class ActionsButtons extends StatelessWidget {
           context: context,
         );
       }),
-      LogoutButton(
-        validateUserCredentials: () async {
-          return _validateUserCredentials(
-            homePresenter: homePresenter,
-            keyUserAndPassword: keyUserAndPassword,
-            passwordController: passwordController,
-            userCodeController: userCodeController,
-            context: context,
-          );
-        },
-        resetDropdownsErrors: keyDropdowns.currentState?.reset,
-      ),
       GoToConfigurationsPageButton(
         userCodeController: userCodeController,
         passwordController: passwordController,

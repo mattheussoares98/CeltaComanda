@@ -97,15 +97,19 @@ class _HomePageState extends State<HomePage>
       collection: "clients",
       doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
       function: (data) async {
-        await homePresenter.doOnRemoteEnterpriseChanges(
-          data: data,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          if (mounted) {
+            await homePresenter.doOnRemoteEnterpriseChanges(
+              data: data,
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
+              enterprisePresenter: enterprisePresenter,
+            );
+          }
+        });
       },
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -118,6 +122,8 @@ class _HomePageState extends State<HomePage>
         child: PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, _) {
+            loadingSubscription?.cancel();
+            mainErrorSubscription?.cancel();
             if (!homePresenter.isGeneratingVersionToTablet) {
               notificationDialog(
                 context: context,

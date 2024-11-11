@@ -5,4 +5,5 @@ import '../../../../ui/pages/pages.dart';
 CancelProductsPresenter makeGetxCancelProductsPresenter() =>
     GetxCancelProductsPresenter(
       removePrintedProduct: makeRemoteRemovePrintedProduct(),
+      loadPrintedProducts: makeRemoteLoadPrintedProducts(),
     );

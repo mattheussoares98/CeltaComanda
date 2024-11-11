@@ -1,4 +1,7 @@
+import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -9,9 +12,11 @@ class GetxCancelProductsPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements CancelProductsPresenter {
   final RemovePrintedProduct removePrintedProduct;
+  final LoadPrintedProducts loadPrintedProducts;
 
   GetxCancelProductsPresenter({
     required this.removePrintedProduct,
+    required this.loadPrintedProducts,
   });
 
   @override
@@ -27,4 +32,42 @@ class GetxCancelProductsPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> loadProducts(int commandNumber) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      PrintedEntity? printedProducts = await loadPrintedProducts.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber.toInt(),
+      );
+
+      products = null;
+      if (printedProducts?.Products.isEmpty == false) {
+        final printedViewModel = PrintedViewModel.fromEntity(printedProducts!);
+        printedViewModel.Products.sort((a, b) =>
+            DateTime.parse(a.DateHourOfCreation)
+                .compareTo(DateTime.parse(b.DateHourOfCreation)));
+
+        products = printedViewModel;
+      }
+    } catch (error) {
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  final _products = Rx<PrintedViewModel?>(null);
+  @override
+  Stream<PrintedViewModel?> get printedProducts => _products.stream;
+  set products(PrintedViewModel? value) => _products.value = value;
 }

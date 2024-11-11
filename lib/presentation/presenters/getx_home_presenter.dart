@@ -376,7 +376,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
   set isLoading(bool value) {
-    _isLoading.value = value;
+    _isLoading.subject.add(value);
   }
 
   final _mainError = Rx<UIError?>(null);

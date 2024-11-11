@@ -20,6 +20,9 @@ class ConfigurationsPage extends StatelessWidget {
     final buttons = [
       GoToCancelProductsPageButton(),
       LogoutButton(),
+      if (!homePresenter.isGeneratingVersionToRede &&
+          !homePresenter.isGeneratingVersionToGetNet)
+        const ReserveTableButton(),
     ];
 
     return PopScope(

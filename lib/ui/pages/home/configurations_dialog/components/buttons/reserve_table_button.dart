@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../main/builders/builders.dart';
 import '../../../../../helpers/helpers.dart';
 import '../../../../pages.dart';
 
@@ -9,9 +10,15 @@ class ReserveTableButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pop();
+      onPressed: () async {
+        Navigator.of(NavigatorKey.navigatorKey.currentState!.context).popUntil(
+          (route) => route.isFirst,
+        );
+
+        await Future.delayed(Duration.zero, () {});
+
         showDialog(
+            // ignore: use_build_context_synchronously
             context: context,
             builder: (context) {
               return const ReserveTable();

@@ -43,7 +43,6 @@ class ActionsButtons extends StatelessWidget {
           );
         },
       ),
-      if (!homePresenter.isGeneratingVersionToRede) const ReserveTableButton(),
       ElevatedButton(
         onPressed: () async {
           await _openOrBlock(

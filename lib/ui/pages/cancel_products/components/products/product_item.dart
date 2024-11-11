@@ -1,7 +1,9 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../pages.dart';
+import '../../../../../ui/helpers/helpers.dart';
 
 class ProductItem extends StatelessWidget {
   final PrintedProductsViewModel product;
@@ -22,6 +24,9 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CancelProductsPresenter cancelProductsPresenter =
+        Provider.of(context, listen: false);
+
     return Container(
       color: index % 2 == 1
           ? Theme.of(context).primaryColorLight.withAlpha(30)
@@ -57,7 +62,17 @@ class ProductItem extends StatelessWidget {
             width: deleteButtonSize,
             height: deleteButtonSize,
             child: IconButton(
-              onPressed: () async {},
+              onPressed: () async {
+                notificationDialog(
+                  context: context,
+                  titleMessage: "${R.string.cancelProducts}?",
+                  content: Text(""),
+                  onPress: () async {
+                    await cancelProductsPresenter
+                        .cancelProduct(product.SaleRequestProductId);
+                  },
+                );
+              },
               icon: Icon(
                 Icons.delete,
                 color: Colors.red,

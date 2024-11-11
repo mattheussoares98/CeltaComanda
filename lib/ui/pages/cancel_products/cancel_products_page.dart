@@ -8,7 +8,9 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class CancelProductsPage extends StatefulWidget {
-  const CancelProductsPage({super.key});
+  const CancelProductsPage({
+    super.key,
+  });
 
   @override
   State<CancelProductsPage> createState() => _CancelProductsPageState();

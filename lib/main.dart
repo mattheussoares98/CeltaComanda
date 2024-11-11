@@ -68,19 +68,22 @@ class App extends StatelessWidget with HideNavigationBarManager {
           create: (_) => makeGetxPrintedProductsPresenter(),
         ),
         ListenableProvider(
-          create: (_) => makeGetxMenuPresenter(),
+          create: (_) => makeGetxCancelProductsPresenter(),
         ),
         ListenableProvider(
           create: (_) => makeGetxEnterprisePresenter(),
         ),
         ListenableProvider(
+          create: (_) => makeGetxExpansibleGroupFromProductPresenter(),
+        ),
+        ListenableProvider(
           create: (_) => makeGetxInsertProductsPresenter(),
         ),
         ListenableProvider(
-          create: (_) => makeGetxPaymentPresenter(),
+          create: (_) => makeGetxMenuPresenter(),
         ),
         ListenableProvider(
-          create: (_) => makeGetxExpansibleGroupFromProductPresenter(),
+          create: (_) => makeGetxPaymentPresenter(),
         ),
       ],
       child: GestureDetector(

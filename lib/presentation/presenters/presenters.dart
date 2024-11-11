@@ -1,3 +1,4 @@
+export './getx_cancel_products_presenter.dart';
 export './getx_cart_presenter.dart';
 export './getx_configurations_presenter.dart';
 export './getx_covenant_presenter.dart';

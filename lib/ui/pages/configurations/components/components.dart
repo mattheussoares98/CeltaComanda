@@ -3,5 +3,6 @@ export './command_configuratios/command_configurations.dart';
 export 'open_block_or_liberate_command_page_button.dart';
 export './go_to_cancel_products_page_button.dart';
 export './open_command_configurations_page_button.dart';
+export './open_schedules_page_button.dart';
 export './reserve_table_button.dart';
 export './update_menu_button.dart';

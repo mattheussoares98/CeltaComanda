@@ -62,7 +62,8 @@ class EnUs implements Translation {
   String get msgSelectSeller => 'Select the seller';
   String get msgSelectTable => 'Select the tabls';
   String get msgSuccessToCancelProducts => 'Product cancelled';
-  String get msgSuccessUpdateMenuInAllDevices => 'The menu will be updated in all devices';
+  String get msgSuccessUpdateMenuInAllDevices =>
+      'The menu will be updated in all devices';
   String get msgTableNumber => 'Table number';
   String get msgUpdatedTableConfigurationsSuccess =>
       'Configurations updated successfully';
@@ -104,7 +105,8 @@ class EnUs implements Translation {
   String get cart => 'Cart';
   String get call => 'Call';
   String get cancel => 'Cancel';
-  String get cancelProductsOrRemoveServiceCharge => 'Cancel products or remove service charge';
+  String get cancelProductsOrRemoveServiceCharge =>
+      'Cancel products or remove service charge';
   String get cancelProduct => 'Cancel product';
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
@@ -170,8 +172,9 @@ class EnUs implements Translation {
   String get per => 'Per';
   String get personalizedCode => 'Personalized code';
   String get price => 'Price';
-  String get products => 'Products';
   String get productsAndComments => 'Products and comments';
+  String get productsSchedules => 'Products schedules';
+  String get products => 'Products';
   String get promotionWithoutPoints => 'Promotion without points';
   String get quantity => 'Quantity';
   String get quantityAbbreviated => 'Qty';

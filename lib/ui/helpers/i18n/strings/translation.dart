@@ -73,6 +73,7 @@ abstract class Translation {
   String get addMoreItens;
   String get avaliate;
   String get blockCommand;
+  String get blockTable;
   String get call;
   String get cancel;
   String get cancelProducts;
@@ -122,6 +123,8 @@ abstract class Translation {
   String get jump;
   String get liberateCancelProducts;
   String get liberateCommand;
+  String get liberateOrBlockTable;
+  String get liberateTable;
   String get liquidateCommand;
   String get liquidateCommandSucceeds;
   String get loadMenu;

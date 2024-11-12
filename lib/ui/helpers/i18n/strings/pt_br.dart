@@ -97,6 +97,7 @@ class PtBr implements Translation {
   String get alwaysUseSameTable => "Usar sempre a mesma mesa";
   String get avaliate => 'Avaliar';
   String get blockCommand => 'Bloquear comanda';
+  String get blockTable => 'Bloquear mesa';
   String get cart => "Carrinho";
   String get call => "Ligar";
   String get cancel => "Cancelar";
@@ -146,6 +147,8 @@ class PtBr implements Translation {
   String get jump => 'Pular';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
   String get liberateCommand => 'Liberar comanda';
+  String get liberateOrBlockTable => "Liberar ou bloquear mesa";
+  String get liberateTable => "Liberar mesa";
   String get liquidateCommand => 'Liquidar comanda';
   String get liquidateCommandSucceeds => "Comanda liquidada com sucesso";
   String get loadMenu => 'Carregar menu';

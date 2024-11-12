@@ -95,6 +95,7 @@ class EnUs implements Translation {
   String get alwaysUseSameTable => 'Always use the same table';
   String get avaliate => 'Evaluate';
   String get blockCommand => 'Block command';
+  String get blockTable => 'Block table';
   String get cart => 'Cart';
   String get call => 'Call';
   String get cancel => 'Cancel';
@@ -144,6 +145,8 @@ class EnUs implements Translation {
   String get jump => 'Skip';
   String get liberateCancelProducts => 'Allow item cancellation';
   String get liberateCommand => 'Liberate command';
+  String get liberateOrBlockTable => "Liberate or block table";
+  String get liberateTable => "Liberate table";
   String get liquidateCommand => 'Liquidate command';
   String get liquidateCommandSucceeds => 'Command successfully liquidated';
   String get loadMenu => 'Load menu';

@@ -18,7 +18,7 @@ class GoToBlockOrLiberateCommandPageButton extends StatelessWidget {
       },
       child: FittedBox(
         child: Text(
-          R.string.liberateCommand + " " + R.string.blockCommand,
+          R.string.liberateOrBlockTable,
         ),
       ),
     );

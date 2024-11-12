@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -20,9 +18,6 @@ class _BlockOrLiberateCommandPageState
 
   @override
   Widget build(BuildContext context) {
-    ConfigurationsPresenter configurationsPresenter =
-        Provider.of(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -78,36 +73,18 @@ class _BlockOrLiberateCommandPageState
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await _openOrBlock(
-                        formKey: formKey,
-                        configurationsPresenter: configurationsPresenter,
-                        liberate: false,
-                        context: context,
-                        commandNumber: selectedCommandInDropDown,
-                      );
-                    },
-                    child: Text(
-                      R.string.blockCommand,
-                    ),
+                  child: BlockOrLiberateButton(
+                    commandNumber: selectedCommandInDropDown,
+                    formKey: formKey,
+                    isLiberating: false,
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await _openOrBlock(
-                        formKey: formKey,
-                        configurationsPresenter: configurationsPresenter,
-                        liberate: true,
-                        context: context,
-                        commandNumber: selectedCommandInDropDown,
-                      );
-                    },
-                    child: Text(
-                      R.string.liberateCommand,
-                    ),
+                  child: BlockOrLiberateButton(
+                    commandNumber: selectedCommandInDropDown,
+                    formKey: formKey,
+                    isLiberating: true,
                   ),
                 ),
               ],
@@ -116,35 +93,5 @@ class _BlockOrLiberateCommandPageState
         ),
       ),
     );
-  }
-}
-
-Future<void> _openOrBlock({
-  required ConfigurationsPresenter configurationsPresenter,
-  required bool liberate,
-  required BuildContext context,
-  required int? commandNumber,
-  required GlobalKey<FormState> formKey,
-}) async {
-  bool? isValid = formKey.currentState?.validate();
-
-  if (isValid != true) {
-    return;
-  }
-
-  final updated = await configurationsPresenter.openOrBlockadeCommand(
-    commandNumber: commandNumber!,
-    isOpen: liberate,
-  );
-
-  if (updated) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      FocusScope.of(context).unfocus();
-      snackBarMessage(
-        context,
-        liberate ? R.string.msgReleasesCommand : R.string.msgBlockedCommand,
-        backgroundColor: Theme.of(context).secondaryHeaderColor,
-      );
-    });
   }
 }

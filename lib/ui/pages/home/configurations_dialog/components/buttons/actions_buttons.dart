@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../../components/components.dart';
 import '../../../../../helpers/helpers.dart';
 import '../../../../pages.dart';
 
@@ -25,24 +23,7 @@ class ActionsButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-
     final List<Widget> buttons = [
-      UpdateConfigurationsButton(
-        updateCommand: () async {
-          await _updateCommand(
-            homePresenter: homePresenter,
-            printedProductsPresenter: printedProductsPresenter,
-            context: context,
-            keyUserAndPassword: keyUserAndPassword,
-            keyDropdowns: keyDropdowns,
-            passwordController: passwordController,
-            userCodeController: userCodeController,
-          );
-        },
-      ),
       GoToConfigurationsPageButton(
         userCodeController: userCodeController,
         passwordController: passwordController,
@@ -66,41 +47,5 @@ class ActionsButtons extends StatelessWidget {
         return buttons[index];
       },
     );
-  }
-}
-
-Future<void> _updateCommand({
-  required HomePresenter homePresenter,
-  required PrintedProductsPresenter printedProductsPresenter,
-  required BuildContext context,
-  required GlobalKey<FormState> keyDropdowns,
-  required GlobalKey<FormState> keyUserAndPassword,
-  required TextEditingController passwordController,
-  required TextEditingController userCodeController,
-}) async {
-  FocusScope.of(context).unfocus();
-
-  if (keyDropdowns.currentState?.validate() != true ||
-      keyUserAndPassword.currentState?.validate() != true) {
-    return;
-  }
-
-  final updated = await homePresenter.updateCommandData(
-    newFixedCommandNumber: homePresenter.selectedCommand!,
-    userPersonalizedCode: userCodeController.text.toInt(),
-    password: passwordController.text,
-    printedProductsPresenter: printedProductsPresenter,
-    peoples: homePresenter.selectedPeoples,
-    sellerCode: homePresenter.selectedSeller?.PersonalizedCode,
-  );
-
-  if (updated) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      FocusScope.of(context).unfocus();
-      snackBarMessage(
-        context,
-        R.string.msgUpdatedTableConfigurationsSuccess,
-      );
-    });
   }
 }

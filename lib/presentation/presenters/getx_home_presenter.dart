@@ -185,107 +185,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<bool> updateCommandData({
-    required int newFixedCommandNumber,
-    required int userPersonalizedCode,
-    required String password,
-    required String? sellerCode,
-    required int? peoples,
-    required PrintedProductsPresenter printedProductsPresenter,
-  }) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
-
-      bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: commandNumber,
-      );
-
-      if (!isValid) {
-        throw DomainError.blockedCommand;
-      }
-
-      bool isValidPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        personalizedCode: userPersonalizedCode,
-        password: password,
-      );
-
-      if (isValidPassword != true) {
-        throw DomainError.invalidCredentialsOrAccessDenied;
-      }
-
-      updateCommandNumber(commandNumber);
-      await localCommandData.update(
-        CommandEntity(
-          commandNumber: commandNumber,
-          isFixedCommandNumber: true,
-        ),
-      );
-
-      final saleRequestTempEntity = await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-        commandNumber: commandNumber,
-      );
-
-      await updateSaleRequestTemp.update(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        entity: UpdateSaleRequestTempEntity(
-          Peoples: peoples,
-          SellerCode: sellerCode,
-          Comments: saleRequestTempEntity.Comments,
-          DeliveryControl: saleRequestTempEntity.DeliveryControl,
-          EnterpriseId: saleRequestTempEntity.EnterpriseId,
-          PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
-          SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
-          TotalLiquid: saleRequestTempEntity.TotalLiquid,
-          CustomerCode: saleRequestTempEntity.CustomerCode,
-          CovenantCode: saleRequestTempEntity.CovenantCode,
-          IncrementValue: EnterpriseDataBuilder
-              .enterpriseDataEntity?.serviceChargePercentageOrValue,
-          IncrementType:
-              EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
-          Products: saleRequestTempEntity.Products.map(
-            (e) => UpdateSaleRequestTempProductEntity(
-              ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
-              ProductPriceLookUpCode: e.ProductPriceLookUpCode,
-              Quantity: e.Quantity,
-              SaleRequestTempId: e.SaleRequestTempId,
-              TotalLiquid: e.TotalLiquid,
-              Value: e.Value,
-              Comments: e.Comments,
-              SaleRequestProductIdOfFather: e.SaleRequestProductIdOfFather,
-              ProductIsFatherComposition: e.ProductIsFatherComposition,
-            ),
-          ).toList(),
-        ),
-      );
-
-      _peoples = peoples;
-      await printedProductsPresenter.loadPrinted(_commandNumber!);
-      notifyListeners();
-      return true;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.blockedCommand:
-          mainError = UIError.blockedCommand;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-        default:
-          mainError = UIError.unexpected;
-      }
-      return false;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
   Future<bool> isValidUserAndPassword({
     required int personalizedCode,
     required String password,
@@ -366,6 +265,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     } else {
       _commandNumber = value.padLeft(3, "0");
     }
+    notifyListeners();
   }
 
   String? _commandNumber;

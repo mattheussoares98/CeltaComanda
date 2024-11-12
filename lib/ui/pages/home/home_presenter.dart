@@ -21,14 +21,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
 
   void updateCommandNumber(String? value);
   Future<void> updateIsFixedCommandNumber();
-  Future<bool> updateCommandData({
-    required int newFixedCommandNumber,
-    required int userPersonalizedCode,
-    required String password,
-    required int? peoples,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required String? sellerCode,
-  });
 
   void clear();
 

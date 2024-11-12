@@ -27,8 +27,9 @@ class ConfigurationsPage extends StatelessWidget {
     ];
 
     return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      onPopInvokedWithResult: (didPop, result) async {
+        await printedProductsPresenter
+            .loadPrinted(homePresenter.commandNumber!);
       },
       child: Scaffold(
         appBar: AppBar(

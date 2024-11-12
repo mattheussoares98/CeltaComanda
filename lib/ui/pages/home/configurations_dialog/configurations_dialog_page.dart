@@ -53,20 +53,6 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
             child: Column(
               children: [
                 Form(
-                  key: _keyDropdowns,
-                  child: const Column(
-                    children: [
-                      SizedBox(height: 10),
-                      UpdateCommandNumberDropdown(),
-                      SizedBox(height: 10),
-                      UpdatePeopleNumbersDropdown(),
-                      SizedBox(height: 10),
-                      UpdateSellerDropdown(),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Form(
                   key: _keyUserAndPassword,
                   child: Column(
                     children: [

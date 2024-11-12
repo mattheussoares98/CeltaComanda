@@ -10,6 +10,8 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
 
     return DropdownButtonFormField<int>(
       isExpanded: true,
@@ -34,7 +36,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
             (e) => DropdownMenuItem(
               value: e + 1,
               onTap: () {
-                homePresenter.updateSelectedCommand(e + 1);
+                configurationsPresenter.updateSelectedCommand(e + 1);
               },
               child: Text(
                 (e + 1).toString(),
@@ -43,7 +45,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
           )
           .toList(),
       onChanged: (value) {
-        homePresenter.updateSelectedCommand(value ?? 0 + 1);
+        configurationsPresenter.updateSelectedCommand(value ?? 0 + 1);
       },
     );
   }

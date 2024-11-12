@@ -13,7 +13,7 @@ class CommandConfigurationsPage extends StatelessWidget {
       children: [
         Form(
           key: formKey,
-          child: const Column(
+          child: Column(
             children: [
               SizedBox(height: 10),
               UpdateCommandNumberDropdown(),
@@ -21,6 +21,9 @@ class CommandConfigurationsPage extends StatelessWidget {
               UpdatePeopleNumbersDropdown(),
               SizedBox(height: 10),
               UpdateSellerDropdown(),
+              ConfirmUpdateCommandDataButton(
+                formKey: formKey,
+              ),
             ],
           ),
         ),

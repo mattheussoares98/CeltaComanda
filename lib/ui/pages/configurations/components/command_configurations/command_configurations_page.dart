@@ -9,25 +9,27 @@ class CommandConfigurationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Form(
-          key: formKey,
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              UpdateCommandNumberDropdown(),
-              SizedBox(height: 10),
-              UpdatePeopleNumbersDropdown(),
-              SizedBox(height: 10),
-              UpdateSellerDropdown(),
-              ConfirmUpdateCommandDataButton(
-                formKey: formKey,
-              ),
-            ],
+    return Scaffold(
+      body: Column(
+        children: [
+          Form(
+            key: formKey,
+            child: Column(
+              children: [
+                SizedBox(height: 10),
+                UpdateCommandNumberDropdown(),
+                SizedBox(height: 10),
+                UpdatePeopleNumbersDropdown(),
+                SizedBox(height: 10),
+                UpdateSellerDropdown(),
+                ConfirmUpdateCommandDataButton(
+                  formKey: formKey,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -62,9 +62,11 @@ class EnUs implements Translation {
   String get msgSelectSeller => 'Select the seller';
   String get msgSelectTable => 'Select the tabls';
   String get msgSuccessToCancelProducts => 'Product cancelled';
+  String get msgSuccessUpdateMenuInAllDevices => 'The menu will be updated in all devices';
   String get msgTableNumber => 'Table number';
   String get msgUpdatedTableConfigurationsSuccess =>
       'Configurations updated successfully';
+
   String get msgUpdatedTableSuccess => "Table number updated successfully";
   String get msgUnexpectedError =>
       'Something went wrong. Please try again later.';
@@ -74,6 +76,8 @@ class EnUs implements Translation {
   String get msgWantCloseApplication =>
       'Do you really want to close the application?';
   String get msgWantDoLogout => 'Do you really want to log out?';
+  String get msgWantUpdateMenuInAllDevices =>
+      "Do you want update the menu in all devices?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'By confirming, the products will be requested and will be served shortly';
   String get msgWriteCommandNumber => 'Enter the command number';

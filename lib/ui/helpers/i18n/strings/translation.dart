@@ -46,6 +46,7 @@ abstract class Translation {
   String get msgSelectSeller;
   String get msgSelectTable;
   String get msgSuccessToCancelProducts;
+  String get msgSuccessUpdateMenuInAllDevices;
   String get msgTableNumber;
   String get msgUpdatedTableConfigurationsSuccess;
   String get msgUnexpectedError;
@@ -53,6 +54,7 @@ abstract class Translation {
   String get msgVeryShortField;
   String get msgWantCloseApplication;
   String get msgWantDoLogout;
+  String get msgWantUpdateMenuInAllDevices;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
   String get msgWriteEanOrPlu;

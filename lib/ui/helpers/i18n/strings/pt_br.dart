@@ -66,6 +66,7 @@ class PtBr implements Translation {
   String get msgSelectSeller => 'Selecione o vendedor';
   String get msgSelectTable => 'Selecione a mesa';
   String get msgSuccessToCancelProducts => 'Produto cancelado com sucesso';
+  String get msgSuccessUpdateMenuInAllDevices => 'O menu vai ser atualizado em todos dispositivos';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableConfigurationsSuccess =>
       "Configurações alteradas com sucesso";
@@ -76,6 +77,8 @@ class PtBr implements Translation {
   String get msgVeryShortField => 'Campo muito curto';
   String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
+  String get msgWantUpdateMenuInAllDevices =>
+      "Deseja realmente atualizar o menu em todos dispositivos?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteCommandNumber => "Digite o número da comanda";

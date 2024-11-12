@@ -23,6 +23,7 @@ class ConfigurationsPage extends StatelessWidget {
           !homePresenter.isGeneratingVersionToGetNet)
         const ReserveTableButton(),
       OpenBlockOrLiberateCommandPageButton(),
+      UpdateMenuButton(),
     ];
 
     return PopScope(

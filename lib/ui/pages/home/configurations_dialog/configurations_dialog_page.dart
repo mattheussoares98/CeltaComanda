@@ -94,7 +94,6 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                     keyDropdowns: _keyDropdowns,
                   ),
                 ),
-                const UpdateMenuButton(),
               ],
             ),
           ),

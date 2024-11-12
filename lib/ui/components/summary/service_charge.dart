@@ -7,13 +7,15 @@ import '../../helpers/helpers.dart';
 import '../../pages/pages.dart';
 
 class ServiceCharge extends StatefulWidget {
-  final int saleRequestId;
-  final double serviceChargeValue;
+  final PrintedViewModel printed;
   final Future<void> Function() loadPrintedAgain;
+  final bool validateUserAndPassword;
+  final int commandNumber;
   const ServiceCharge({
-    required this.saleRequestId,
-    required this.serviceChargeValue,
+    required this.printed,
     required this.loadPrintedAgain,
+    required this.validateUserAndPassword,
+    required this.commandNumber,
     super.key,
   });
 
@@ -38,26 +40,51 @@ class _ServiceChargeState extends State<ServiceCharge> {
 
   Future<void> removeCharge(
     PrintedProductsPresenter printedProductsPresenter,
-    HomePresenter homePresenter,
+    CancelProductsPresenter cancelProductsPresenter,
   ) async {
-    bool? isValid = formKey.currentState?.validate();
+    bool? isValid;
+
+    if (widget.validateUserAndPassword) {
+      isValid = formKey.currentState?.validate();
+    } else {
+      isValid = true;
+    }
 
     if (isValid == true) {
-      Navigator.of(context).pop();
+      if (widget.validateUserAndPassword) {
+        Navigator.of(context).pop();
+      }
       await printedProductsPresenter.removeServiceCharge(
+        validateUserAndPassword: widget.validateUserAndPassword,
         userPersonalizedCode: userController.text.toInt(),
         password: passwordController.text,
-        commandNumber: homePresenter.commandNumber!,
-        saleRequestId: widget.saleRequestId,
+        commandNumber: widget.commandNumber.toString(),
+        printed: widget.printed,
       );
-      await widget.loadPrintedAgain();
+      if (widget.validateUserAndPassword) {
+        await cancelProductsPresenter.loadProducts(widget.commandNumber);
+      } else {
+        await widget.loadPrintedAgain();
+      }
     }
   }
 
   void openRemoveServiceChargeDialog(
     PrintedProductsPresenter printedProductsPresenter,
-    HomePresenter homePresenter,
+    CancelProductsPresenter cancelProductsPresenter,
   ) {
+    if (widget.validateUserAndPassword == false) {
+      notificationDialog(
+          context: context,
+          titleMessage: R.string.removeServiceCharge,
+          content: null,
+          showCancelAndConfirmMessage: true,
+          onPress: () async {
+            await removeCharge(
+                printedProductsPresenter, cancelProductsPresenter);
+          });
+      return;
+    }
     userController.clear();
     passwordController.clear();
     notificationDialog(
@@ -106,7 +133,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                     focusNode: passwordFocusNode,
                     onFieldSubmitted: (value) async {
                       await removeCharge(
-                          printedProductsPresenter, homePresenter);
+                          printedProductsPresenter, cancelProductsPresenter);
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -125,7 +152,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                   ElevatedButton(
                     onPressed: () async {
                       await removeCharge(
-                          printedProductsPresenter, homePresenter);
+                          printedProductsPresenter, cancelProductsPresenter);
                     },
                     child: Text(
                       R.string.confirm,
@@ -146,10 +173,13 @@ class _ServiceChargeState extends State<ServiceCharge> {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    CancelProductsPresenter cancelProductsPresenter =
+        Provider.of(context, listen: false);
 
     return GestureDetector(
-      onLongPress: () {
-        openRemoveServiceChargeDialog(printedProductsPresenter, homePresenter);
+      onLongPress: () async {
+        openRemoveServiceChargeDialog(
+            printedProductsPresenter, cancelProductsPresenter);
       },
       child: Container(
         color: Colors.transparent,
@@ -166,8 +196,8 @@ class _ServiceChargeState extends State<ServiceCharge> {
               child: Column(
                 children: [
                   Text(
-                    widget.serviceChargeValue
-                        .toDouble()
+                    printedProductsPresenter
+                        .getServiceChargeValue(widget.printed)
                         .toString()
                         .toBrazilianNumber()
                         .addBrazilianCoin(),
@@ -181,9 +211,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                     InkWell(
                       onTap: () {
                         openRemoveServiceChargeDialog(
-                          printedProductsPresenter,
-                          homePresenter,
-                        );
+                            printedProductsPresenter, cancelProductsPresenter);
                       },
                       child: FittedBox(
                         child: Row(

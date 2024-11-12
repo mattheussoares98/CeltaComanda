@@ -103,12 +103,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               ),
               if (printedProductsPresenter.printed != null)
                 RequestSummary(
-                  serviceChargeValue: printedProductsPresenter
-                      .getServiceChargeValue(printedProductsPresenter.printed),
-                  totalLiquid: printedProductsPresenter
-                      .getTotalLiquid(printedProductsPresenter.printed),
-                  saleRequestId:
-                      printedProductsPresenter.printed!.SaleRequestId.toInt(),
+                  requestUserAndPassword: true,
+                  printed: printedProductsPresenter.printed!,
+                  commandNumber: homePresenter.commandNumber!.toInt(),
                   loadPrintedAgain: () async {
                     await printedProductsPresenter
                         .loadPrinted(homePresenter.commandNumber!);

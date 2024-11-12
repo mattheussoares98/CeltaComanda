@@ -36,7 +36,6 @@ void main() {
   late int personalizedCode;
   late String password;
   late String saleRequestProductId;
-  late int saleRequestId;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -78,7 +77,6 @@ void main() {
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
-    saleRequestId = faker.randomGenerator.integer(100);
   }
 
   void mockSuccess() {
@@ -614,7 +612,11 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       expect(
-        sut.getTotalLiquid(sut.printed).toStringAsFixed(2).toDouble().roundAccordingBs(),
+        sut
+            .getTotalLiquid(sut.printed)
+            .toStringAsFixed(2)
+            .toDouble()
+            .roundAccordingBs(),
         (printed.TotalLiquid.toDouble().roundAccordingBs() *
                 (printed.IncrementValue! / 100 + 1).roundAccordingBs())
             .roundAccordingBs(),
@@ -649,7 +651,8 @@ void main() {
         userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
-        saleRequestId: saleRequestId,
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: true,
       );
     });
     test("Should emit correct values if throws", () async {
@@ -663,7 +666,8 @@ void main() {
         userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
-        saleRequestId: saleRequestId,
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: true,
       );
     });
     test("Should emit correct values if password is invalid", () async {
@@ -677,7 +681,8 @@ void main() {
         userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
-        saleRequestId: saleRequestId,
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: true,
       );
     });
     test("Should call validate user password with correct values", () async {
@@ -686,7 +691,8 @@ void main() {
         userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
-        saleRequestId: saleRequestId,
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: true,
       );
 
       verify(
@@ -703,7 +709,8 @@ void main() {
         userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
-        saleRequestId: sut.printed!.SaleRequestId.toInt(),
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: true,
       );
 
       verify(
@@ -729,7 +736,8 @@ void main() {
         userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandNumber!,
-        saleRequestId: saleRequestId,
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: true,
       );
 
       verify(
@@ -740,6 +748,27 @@ void main() {
           commandNumber: homePresenter.commandNumberMock!.toInt(),
         ),
       ).called(2);
+    });
+
+    test(
+        "Should not validate user credentials when validateUserAndPassword is false",
+        () async {
+      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.removeServiceCharge(
+        userPersonalizedCode: personalizedCode,
+        password: password,
+        commandNumber: homePresenter.commandNumber!,
+        printed: PrintedViewModel.fromEntity(printedEntity),
+        validateUserAndPassword: false,
+      );
+
+      verifyNever(
+        () => userValidations.isValidPassword(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          personalizedCode: personalizedCode,
+          password: password,
+        ),
+      );
     });
   });
 }

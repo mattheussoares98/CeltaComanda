@@ -35,8 +35,6 @@ class _CancelProductsPageState extends State<CancelProductsPage>
   Widget build(BuildContext context) {
     CancelProductsPresenter cancelProductsPresenter =
         Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -85,11 +83,9 @@ class _CancelProductsPageState extends State<CancelProductsPage>
                         printed: snapshot.data!,
                       ),
                       RequestSummary(
-                          serviceChargeValue: printedProductsPresenter
-                              .getServiceChargeValue(snapshot.data!),
-                          totalLiquid: printedProductsPresenter
-                              .getTotalLiquid(snapshot.data!),
-                          saleRequestId: snapshot.data!.SaleRequestId.toInt(),
+                          requestUserAndPassword: false,
+                          printed: snapshot.data!,
+                          commandNumber: selectedCommandInDropDown!,
                           loadPrintedAgain: () async {
                             await cancelProductsPresenter
                                 .loadProducts(selectedCommandInDropDown!);

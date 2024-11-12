@@ -221,19 +221,22 @@ class GetxPrintedProductsPresenter
     required int userPersonalizedCode,
     required String password,
     required String commandNumber,
-    required int saleRequestId,
+    required PrintedViewModel printed,
+    required bool validateUserAndPassword,
   }) async {
     isLoading = true;
     mainError = null;
     try {
-      bool isValid = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        personalizedCode: userPersonalizedCode,
-        password: password,
-      );
+      if (validateUserAndPassword) {
+        bool isValid = await userValidations.isValidPassword(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          personalizedCode: userPersonalizedCode,
+          password: password,
+        );
 
-      if (!isValid) {
-        throw DomainError.invalidCredentialsOrAccessDenied;
+        if (!isValid) {
+          throw DomainError.invalidCredentialsOrAccessDenied;
+        }
       }
 
       final model = SaleRequestModel(
@@ -241,14 +244,14 @@ class GetxPrintedProductsPresenter
         CustomerCode: null,
         IncrementType: 0,
         IncrementValue: 0,
-        TotalLiquid: _printed!.TotalLiquid.toDouble(),
+        TotalLiquid: printed.TotalLiquid.toDouble(),
         EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
       );
 
       await updateSaleRequest.update(
         model: model,
         commandNumberWithThreeNumbers: commandNumber.padLeft(3, "0"),
-        saleRequestId: saleRequestId,
+        saleRequestId: printed.SaleRequestId.toInt(),
       );
 
       await loadPrinted(commandNumber);

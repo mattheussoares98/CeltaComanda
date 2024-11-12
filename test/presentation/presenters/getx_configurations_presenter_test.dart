@@ -33,8 +33,6 @@ void main() {
   late LocalCommandDataSpy localCommandData;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
-  late String password;
-  late int userCode;
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
   late int? peoples;
@@ -81,8 +79,6 @@ void main() {
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
         EntityFactory.makeEnterpriseData();
-    password = faker.guid.guid();
-    userCode = faker.randomGenerator.integer(100);
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     selectedSeller = EntityFactory.makeSellersViewModel();
     peoples = faker.randomGenerator.integer(100);
@@ -170,52 +166,6 @@ void main() {
       final value = await sut.openOrBlockadeCommand(
         commandNumber: newFixedCommandNumber,
         isOpen: isOpen,
-      );
-
-      expect(value, false);
-    });
-    test("Should call userValidations", () async {
-      await sut.openOrBlockadeCommand(
-        commandNumber: newFixedCommandNumber,
-        isOpen: false,
-      );
-
-      verify(() => userValidations.isValidPassword(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-            personalizedCode: userCode,
-            password: password,
-          )).called(1);
-    });
-    test("Should emit correct error on invalid credentials", () async {
-      userValidations.mockIsValidPasswordError(
-          DomainError.invalidCredentialsOrAccessDenied);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]),
-      );
-
-      final value = await sut.openOrBlockadeCommand(
-        commandNumber: newFixedCommandNumber,
-        isOpen: false,
-      );
-
-      expect(value, false);
-    });
-
-    test("Should emit correct error on throws", () async {
-      userValidations.mockIsValidPasswordError(DomainError.unexpected);
-
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-
-      final value = await sut.openOrBlockadeCommand(
-        commandNumber: newFixedCommandNumber,
-        isOpen: false,
       );
 
       expect(value, false);

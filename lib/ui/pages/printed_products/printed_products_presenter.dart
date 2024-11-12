@@ -48,6 +48,7 @@ abstract class PrintedProductsPresenter
     required int userPersonalizedCode,
     required String password,
     required String commandNumber,
-    required int saleRequestId,
+    required PrintedViewModel printed,
+    required bool validateUserAndPassword,
   });
 }

@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../pages/pages.dart';
 import 'service_charge.dart';
 import 'subtotal.dart';
 import 'total.dart';
 
 class RequestSummary extends StatelessWidget {
-  final double serviceChargeValue;
-  final double totalLiquid;
-  final int saleRequestId;
+  final PrintedViewModel printed;
   final Future<void> Function() loadPrintedAgain;
+  final bool requestUserAndPassword;
+  final int commandNumber;
   const RequestSummary({
-    required this.serviceChargeValue,
-    required this.totalLiquid,
-    required this.saleRequestId,
+    required this.printed,
     required this.loadPrintedAgain,
+    required this.requestUserAndPassword,
+    required this.commandNumber,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+
+    double serviceChargeValue =
+        printedProductsPresenter.getServiceChargeValue(printed);
+    double totalLiquid = printedProductsPresenter.getTotalLiquid(printed);
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(2),
@@ -49,9 +58,10 @@ class RequestSummary extends StatelessWidget {
                         Subtotal(totalLiquid: totalLiquid - serviceChargeValue),
                         const SizedBox(height: 10),
                         ServiceCharge(
-                          saleRequestId: saleRequestId,
-                          serviceChargeValue: serviceChargeValue,
+                          printed: printed,
                           loadPrintedAgain: loadPrintedAgain,
+                          validateUserAndPassword: requestUserAndPassword,
+                          commandNumber: commandNumber,
                         ),
                       ],
                     ),

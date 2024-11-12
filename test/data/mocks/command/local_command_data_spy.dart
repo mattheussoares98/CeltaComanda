@@ -7,12 +7,17 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LocalCommandDataSpy extends Mock implements LocalCommandData {
-  When mockUpdateAll() => when(() => this.update(any()));
-  void mockUpdate() => this.mockUpdateAll().thenAnswer((any) async => any);
+  LocalCommandDataSpy() {
+    this.mockUpdate();
+  }
+
+  When _mockUpdateCall() => when(() => this.update(any()));
+  void mockUpdate() => this._mockUpdateCall().thenAnswer((any) async => any);
   void mockUpdateError() =>
-      this.mockUpdateAll().thenThrow(DomainError.unexpected);
+      this._mockUpdateCall().thenThrow(DomainError.unexpected);
 
   When mockLoadCall() => when(() => this.load());
-  void mockLoad(CommandEntity? entity) => this.mockLoadCall().thenAnswer((_) async => entity);
+  void mockLoad(CommandEntity? entity) =>
+      this.mockLoadCall().thenAnswer((_) async => entity);
   void mockLoadError() => this.mockLoadCall().thenThrow(Exception());
 }

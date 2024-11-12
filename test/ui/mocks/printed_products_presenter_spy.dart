@@ -35,7 +35,7 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.alertMessageStream)
         .thenAnswer((_) => alertMessageController.stream);
 
-    mockLoadPrintedCall().thenAnswer((any) async => any);
+    _mockLoadPrintedCall().thenAnswer((any) async => any);
     when(() => this.clear()).thenAnswer((any) => any);
     when(() => this.doOnClosePage()).thenAnswer((any) => any);
     when(() => this.validateUserAndPermissionToCancelProducts(
@@ -56,10 +56,10 @@ class PrintedProductsPresenterSpy extends Mock
         )).thenAnswer((any) async => any);
   }
 
-  When mockLoadPrintedCall() => when(() => this.loadPrinted(any()));
+  When _mockLoadPrintedCall() => when(() => this.loadPrinted(any()));
 
   void mockLoadPrintedError(DomainError error) {
-    mockLoadPrintedCall().thenThrow(error);
+    _mockLoadPrintedCall().thenThrow(error);
   }
 
   void mockGetTotalLiquid(double value) {

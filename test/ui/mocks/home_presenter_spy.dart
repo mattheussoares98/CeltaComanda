@@ -24,7 +24,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         .thenAnswer((_) => isGeneratingVersionToRedeMock);
     when(() => this.isGeneratingVersionToTablet)
         .thenAnswer((_) => isGeneratingVersionToTabletMock);
-    when(() => this.updateCommandNumber(any())).thenAnswer((any) async => any);
+    when(() => this.updateCommandNumber(any())).thenAnswer((any) => any);
     when(() => this.updateIsFixedCommandNumber())
         .thenAnswer((any) async => any);
     when(() => this.clear()).thenAnswer((any) => any);

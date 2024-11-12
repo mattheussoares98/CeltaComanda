@@ -9,4 +9,7 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       navigateTo: makeNavigateTo(),
       persistent: makeAndroidPersistent(),
       updateMenu: makeRemoteUpdateMenu(),
+      loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
+      localCommandData: makeLocalUseFixedCommandNumber(),
+      updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
     );

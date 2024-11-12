@@ -1,5 +1,7 @@
+import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -14,6 +16,9 @@ class GetxConfigurationsPresenter extends GetxController
   final NavigateTo navigateTo;
   final Persistent persistent;
   final UpdateMenu updateMenu;
+  final LocalCommandData localCommandData;
+  final LoadSaleRequestTemp loadSaleRequestTemp;
+  final UpdateSaleRequestTemp updateSaleRequestTemp;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -21,6 +26,9 @@ class GetxConfigurationsPresenter extends GetxController
     required this.navigateTo,
     required this.persistent,
     required this.updateMenu,
+    required this.localCommandData,
+    required this.loadSaleRequestTemp,
+    required this.updateSaleRequestTemp,
   });
 
   @override
@@ -113,6 +121,82 @@ class GetxConfigurationsPresenter extends GetxController
       return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<bool> updateCommandData({
+    required int newFixedCommandNumber,
+    required int? peoples,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required String? sellerCode,
+    required HomePresenter homePresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      final commandNumber = newFixedCommandNumber.toString().padLeft(3, '0');
+
+      bool isValid = await commandInformations.isValidDatetime(
+        commandNumber: commandNumber,
+      );
+
+      if (!isValid) {
+        throw DomainError.blockedCommand;
+      }
+
+      homePresenter.updateCommandNumber(commandNumber);
+      await localCommandData.update(
+        CommandEntity(
+          commandNumber: commandNumber,
+          isFixedCommandNumber: true,
+        ),
+      );
+
+      final saleRequestTempEntity = await loadSaleRequestTemp.load(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        commandNumber: commandNumber,
+      );
+
+      await updateSaleRequestTemp.update(
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        entity: UpdateSaleRequestTempEntity(
+          Comments: null,
+          Peoples: null,
+          DeliveryControl: null,
+          EnterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
+          SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
+          TotalLiquid: saleRequestTempEntity.TotalLiquid,
+          Products: [],
+          SellerCode: sellerCode,
+          CustomerCode: null,
+          CovenantCode: null,
+          IncrementValue: null,
+          IncrementType: null,
+        ),
+      );
+
+      _peoples = peoples;
+      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      return true;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.blockedCommand:
+          mainError = UIError.blockedCommand;
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+        case DomainError.invalidCredentialsOrAccessDenied:
+          mainError = UIError.invalidCredentialsOrAccessDenied;
+        default:
+          mainError = UIError.unexpected;
+      }
       return false;
     } finally {
       isLoading = false;

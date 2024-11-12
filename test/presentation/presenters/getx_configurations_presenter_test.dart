@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
@@ -28,11 +29,18 @@ void main() {
   late NavigateToSpy navigateTo;
   late PersistentSpy persistent;
   late UpdateMenuSpy updateMenu;
+  late LoadSaleRequestTempSpy loadSaleRequestTemp;
+  late LocalCommandDataSpy localCommandData;
+  late UpdateSaleRequestTempSpy updateSaleRequestTemp;
 
   late String password;
   late int userCode;
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
+  late int? peoples;
+  late String? sellerCode;
+  late CommandEntity fixedCommandEntity;
+  late SaleRequestTempEntity saleRequestTempEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -48,6 +56,9 @@ void main() {
       navigateTo: navigateTo,
       persistent: persistent,
       updateMenu: updateMenu,
+      loadSaleRequestTemp: loadSaleRequestTemp,
+      localCommandData: localCommandData,
+      updateSaleRequestTemp: updateSaleRequestTemp,
     );
   }
 
@@ -57,9 +68,15 @@ void main() {
     navigateTo = NavigateToSpy();
     persistent = PersistentSpy();
     updateMenu = UpdateMenuSpy();
+    loadSaleRequestTemp = LoadSaleRequestTempSpy();
+    localCommandData = LocalCommandDataSpy();
+    updateSaleRequestTemp = UpdateSaleRequestTempSpy();
   }
 
-  void initMocks() {}
+  void initMocks() {
+    localCommandData.mockLoad(fixedCommandEntity);
+    loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+  }
 
   void initEntitys() {
     EnterpriseDataBuilder.enterpriseDataEntity =
@@ -68,6 +85,13 @@ void main() {
     userCode = faker.randomGenerator.integer(100);
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     selectedSeller = EntityFactory.makeSellersViewModel();
+    peoples = faker.randomGenerator.integer(100);
+    sellerCode = faker.randomGenerator.integer(100).toString();
+    fixedCommandEntity = EntityFactory.makeCommandEntity(true);
+    saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(
+      newFixedCommandNumber,
+    );
+    homePresenter.commandNumberMock = newFixedCommandNumber.toString();
   }
 
   setUp(() {
@@ -88,6 +112,8 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
+    registerFallbackValue(EntityFactory.makeCommandEntity());
   });
 
   group("Open or blockade command number", () {
@@ -339,6 +365,170 @@ void main() {
       final value = await sut.loadMenuAgain();
 
       expect(value, false);
+    });
+  });
+
+  group("Update command data", () {
+    test("Should call printedProductsPresenter.load", () async {
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => printedProductsPresenter
+          .loadPrinted(homePresenter.commandNumber!)).called(1);
+    });
+    test("Should emit correct values when update command number", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should call is valid datetime with correct values", () async {
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => commandInformations.isValidDatetime(
+          commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
+        ),
+      ).called(1);
+    });
+
+    test("Should update local command data", () async {
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => localCommandData.update(
+          CommandEntity(
+            commandNumber: newFixedCommandNumber.toString().padLeft(3, '0'),
+            isFixedCommandNumber: true,
+          ),
+        ),
+      ).called(1);
+    });
+    test("Should emit correct values on validate time throws", () async {
+      commandInformations.mockErrorIsValidDateTime();
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.blockedCommand]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+    });
+
+    test("Should update command number", () async {
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => homePresenter.updateCommandNumber(
+            newFixedCommandNumber.toString().padLeft(3, '0')),
+      ).called(1);
+    });
+    test("Should return false if update fixed command number throws", () async {
+      commandInformations.mockErrorIsValidDateTime();
+
+      final value = await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      expect(value, false);
+    });
+    test("Should return true if update fixed command number success", () async {
+      final value = await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      expect(value, true);
+    });
+    test("Should call loadSaleRequestTemp", () async {
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => loadSaleRequestTemp.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: newFixedCommandNumber.toString(),
+        ),
+      ).called(1);
+    });
+    // test("Should call updateSaleRequestTemp", () async {
+    //   await sut.updateCommandData(
+    //     sellerCode: sellerCode,
+    //     peoples: peoples,
+    //     printedProductsPresenter: printedProductsPresenter,
+    //     newFixedCommandNumber: newFixedCommandNumber,
+    //     homePresenter: homePresenter,
+    //   );
+
+    //   verify(
+    //     () => updateSaleRequestTemp.update(
+    //       url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+    //       entity: updateSaleRequestTempEntity,
+    //     ),
+    //   ).called(1);
+    // });
+    test("Should update peoples number", () async {
+      expect(sut.selectedPeoples, null);
+
+      await sut.updateCommandData(
+        sellerCode: sellerCode,
+        peoples: peoples,
+        printedProductsPresenter: printedProductsPresenter,
+        newFixedCommandNumber: newFixedCommandNumber,
+        homePresenter: homePresenter,
+      );
+
+      expect(sut.selectedPeoples, peoples);
     });
   });
 }

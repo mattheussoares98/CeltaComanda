@@ -28,4 +28,12 @@ abstract class ConfigurationsPresenter implements Listenable {
   Future<void> goToCancelProductsPage();
 
   Future<bool> loadMenuAgain();
+
+  Future<bool> updateCommandData({
+    required int newFixedCommandNumber,
+    required int? peoples,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required String? sellerCode,
+    required HomePresenter homePresenter,
+  });
 }

@@ -28,6 +28,8 @@ class HttpAdapter implements HttpClient {
             headers: defaultHeaders, body: jsonBody);
       } else if (method == 'get') {
         futureResponse = client.get(Uri.parse(url), headers: defaultHeaders);
+      } else if (method == 'delete') {
+        futureResponse = client.delete(Uri.parse(url), headers: defaultHeaders);
       } else if (method == 'put') {
         futureResponse =
             client.put(Uri.parse(url), headers: defaultHeaders, body: jsonBody);

@@ -2,8 +2,7 @@ import '../../usecases/usecases.dart';
 import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 
-MenuPresenter makeGetxMenuPresenter() =>
-    GetxMenuPresenter(
+MenuPresenter makeGetxMenuPresenter() => GetxMenuPresenter(
       loadExpansibleGroups: makeRemoteLoadExpansibleGroups(),
       navigateTo: makeNavigateTo(),
       commandInformations: makeRemoteCommandInformations(),
@@ -12,4 +11,5 @@ MenuPresenter makeGetxMenuPresenter() =>
       loadProducts: makeRemoteLoadProducts(),
       getProductComposition: makeRemoteGetProductComposition(),
       loadSuggestionSale: makeRemoteLoadSuggestionSale(),
+      manageProductSchedule: makeRemoteManageProductSchedule(),
     );

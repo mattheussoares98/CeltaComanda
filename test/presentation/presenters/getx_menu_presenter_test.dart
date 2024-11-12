@@ -29,6 +29,8 @@ void main() {
       menuListWithoutPromoCombox;
   late List<SuggestionSaleEntity> suggestions;
   late List<ProductsViewModel> suggestionsProductsViewModel;
+  late int internalCodeOnErp;
+  late ProductScheduleEntity productSchedule;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -39,6 +41,7 @@ void main() {
   late LoadProductsSpy loadProducts;
   late GetProductCompositionSpy getProductComposition;
   late LoadSuggestionSaleSpy loadSuggestionSale;
+  late ManageProductScheduleSpy manageProductSchedule;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -60,6 +63,7 @@ void main() {
     loadProducts = LoadProductsSpy();
     getProductComposition = GetProductCompositionSpy();
     loadSuggestionSale = LoadSuggestionSaleSpy();
+    manageProductSchedule = ManageProductScheduleSpy();
   }
 
   void initPresenters() {
@@ -77,6 +81,7 @@ void main() {
       loadProducts: loadProducts,
       getProductComposition: getProductComposition,
       loadSuggestionSale: loadSuggestionSale,
+      manageProductSchedule: manageProductSchedule,
     );
   }
 
@@ -132,6 +137,8 @@ void main() {
     suggestionsProductsViewModel = [
       ...products.map((e) => ProductsViewModel.fromEntity(e)),
     ];
+    internalCodeOnErp = faker.randomGenerator.integer(100);
+    productSchedule = EntityFactory.makeProductScheduleEntity();
   }
 
   void mockSuccess() {
@@ -990,6 +997,18 @@ void main() {
       );
 
       expect(sut.getSubgroup(entity), null);
+    });
+  });
+
+  group("Insert update product schedule", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.insertUpdateProductSchedule(
+        internalCodeOnErp,
+        productSchedule,
+      );
     });
   });
 }

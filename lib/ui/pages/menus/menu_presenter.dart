@@ -39,4 +39,8 @@ abstract class MenuPresenter implements Listenable {
   String getExpansibleGroupNameWithoutPipes(String expansibleGroupName);
   bool getAlreadyContainsExpansibleGroupName(String expansibleGroupName);
   String? getSubgroup(ExpansibleGroupEntity expansibleGroupEntity);
+  Future<void> insertUpdateProductSchedule(
+    int internalCodeOnErp,
+    ProductScheduleEntity productSchedule,
+  );
 }

@@ -23,6 +23,7 @@ class GetxMenuPresenter extends GetxController
   final LoadProducts loadProducts;
   final GetProductComposition getProductComposition;
   final LoadSuggestionSale loadSuggestionSale;
+  final ManageProductSchedule manageProductSchedule;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -33,6 +34,7 @@ class GetxMenuPresenter extends GetxController
     required this.loadProducts,
     required this.getProductComposition,
     required this.loadSuggestionSale,
+    required this.manageProductSchedule,
   });
 
   @override
@@ -452,4 +454,18 @@ class GetxMenuPresenter extends GetxController
       _atualSuggestionProduct.stream;
   set atualSuggestionProduct(ProductsViewModel? product) =>
       _atualSuggestionProduct.subject.add(product);
+
+  @override
+  Future<void> insertUpdateProductSchedule(
+    int internalCodeOnErp,
+    ProductScheduleEntity productScheduleEntity,
+  ) async {
+    isLoading = true;
+    mainError = null;
+    try {} catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

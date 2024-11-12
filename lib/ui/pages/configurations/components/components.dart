@@ -1,5 +1,5 @@
 export './block_or_liberate_command/block_or_liberate_command.dart';
-export './command_configuratios/command_configurations.dart';
+export 'command_configurations/command_configurations.dart';
 export 'open_block_or_liberate_command_page_button.dart';
 export './go_to_cancel_products_page_button.dart';
 export './open_command_configurations_page_button.dart';

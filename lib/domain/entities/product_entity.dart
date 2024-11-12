@@ -75,6 +75,7 @@ class ProductEntity extends Equatable {
   final String? ProductComplement;
   final String PackingAbbreviation;
   final List<ProductCompositionEntity>? childsComposition;
+  final ProductScheduleEntity? Schedule;
 
   const ProductEntity({
     required this.PackingAbbreviation,
@@ -144,6 +145,7 @@ class ProductEntity extends Equatable {
     required this.SaleRetailPraticedString,
     required this.childsComposition,
     required this.MaximumQuantityForSale,
+    required this.Schedule,
   });
 
   @override
@@ -215,5 +217,6 @@ class ProductEntity extends Equatable {
         ProductComplement,
         childsComposition,
         MaximumQuantityForSale,
+        Schedule,
       ];
 }

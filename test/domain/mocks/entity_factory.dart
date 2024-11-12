@@ -32,6 +32,7 @@ class EntityFactory {
       {bool? isPromoCombox, bool? generateChilds}) {
     return [
       ProductEntity(
+        Schedule: makeProductScheduleEntity(),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(100),
         IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
@@ -103,6 +104,7 @@ class EntityFactory {
             : null,
       ),
       ProductEntity(
+        Schedule: makeProductScheduleEntity(),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(100),
         IsPromoCombox: isPromoCombox ?? faker.randomGenerator.boolean(),
@@ -239,6 +241,7 @@ class EntityFactory {
     bool? insertOfferPrice = true,
   }) {
     return ProductsViewModel(
+      Schedule: makeProductScheduleEntity(),
       subgroupName: subgroupName,
       suggestions: null,
       MaximumQuantityForSale: maximumProductQuantity != null
@@ -334,6 +337,7 @@ class EntityFactory {
   static List<ProductModel> makeProductModel() {
     return [
       ProductModel(
+        Schedule: makeProductScheduleEntity(),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
@@ -403,6 +407,7 @@ class EntityFactory {
         childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
       ProductModel(
+        Schedule: makeProductScheduleEntity(),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
@@ -1167,5 +1172,17 @@ class EntityFactory {
         PortionQuantity: faker.randomGenerator.integer(100),
         Value: faker.randomGenerator.decimal(),
         ValueLiquid: faker.randomGenerator.decimal(),
+      );
+
+  static makeProductScheduleEntity() => ProductScheduleEntity(
+        InternalCodeOnERP: faker.randomGenerator.integer(100),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        AllowMonday: faker.randomGenerator.integer(1, min: 0),
+        AlloTuesday: faker.randomGenerator.integer(1, min: 0),
+        AllowWednesday: faker.randomGenerator.integer(1, min: 0),
+        AllowThursday: faker.randomGenerator.integer(1, min: 0),
+        AllowFriday: faker.randomGenerator.integer(1, min: 0),
+        AllowSaturday: faker.randomGenerator.integer(1, min: 0),
+        AllowSunday: faker.randomGenerator.integer(1, min: 0),
       );
 }

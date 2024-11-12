@@ -73,6 +73,7 @@ class ProductsViewModel extends Equatable {
   final String PackingAbbreviation;
   final String IsPromoCombox;
   final String? MaximumQuantityForSale;
+  final ProductScheduleEntity? Schedule;
   List<ProductCompositionViewModel>? childsComposition;
   List<SuggestionSaleEntity>? suggestions;
   double productQuantity;
@@ -146,6 +147,7 @@ class ProductsViewModel extends Equatable {
     required this.EanCode,
     required this.NameComplete,
     required this.NameReduced,
+    required this.Schedule,
     this.productQuantity = 1,
     required this.childsComposition,
     required this.suggestions,
@@ -219,6 +221,7 @@ class ProductsViewModel extends Equatable {
         productQuantity,
         childsComposition,
         MaximumQuantityForSale,
+        Schedule,
       ];
 
   factory ProductsViewModel.fromEntity(
@@ -312,6 +315,7 @@ class ProductsViewModel extends Equatable {
         PercImpNBPTNational: entity.PercImpNBPTNational.toString(),
         CofinsPercentage: entity.CofinsPercentage.toString(),
         PisPercentage: entity.PisPercentage.toString(),
+        Schedule: entity.Schedule,
         childsComposition: entity.childsComposition
             ?.map((e) => ProductCompositionViewModel.fromEntity(e))
             .toList(),
@@ -319,6 +323,7 @@ class ProductsViewModel extends Equatable {
 
   ProductEntity toEntity() => ProductEntity(
         ProductComplement: ProductComplement,
+        Schedule: Schedule,
         MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
         IsPromoCombox: bool.parse(IsPromoCombox),
         Name: Name,
@@ -392,6 +397,7 @@ class ProductsViewModel extends Equatable {
 
   ProductEntity toEntityWithSelectedChilds(int productQuantity) =>
       ProductEntity(
+        Schedule: Schedule,
         ProductComplement: ProductComplement,
         MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
         IsPromoCombox: bool.parse(IsPromoCombox),
@@ -471,6 +477,7 @@ class ProductsViewModel extends Equatable {
 
   Map<String, dynamic> toJson() => {
         "suggestions": suggestions,
+        "Schedule": Schedule,
         "ProductsId": ProductsId,
         "InternalCodeOnERP": InternalCodeOnERP,
         "InternalCodeOfProductOnERP": InternalCodeOfProductOnERP,
@@ -544,6 +551,7 @@ class ProductsViewModel extends Equatable {
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
         subgroupName: null,
         suggestions: json["suggestions"],
+        Schedule: json["Schedule"],
         ProductsId: json["ProductsId"],
         InternalCodeOnERP: json["InternalCodeOnERP"],
         InternalCodeOfProductOnERP: json["InternalCodeOfProductOnERP"],

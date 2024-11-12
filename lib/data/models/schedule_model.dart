@@ -35,17 +35,18 @@ class ProductScheduleModel {
     return ProductScheduleModel(
       InternalCodeOnERP: json["InternalCodeOnERP"],
       EnterpriseId: json["EnterpriseId"],
-      AllowMonday: json["AllowMonday"],
-      AlloTuesday: json["AlloTuesday"],
-      AllowWednesday: json["AllowWednesday"],
-      AllowThursday: json["AllowThursday"],
-      AllowFriday: json["AllowFriday"],
-      AllowSaturday: json["AllowSaturday"],
-      AllowSunday: json["AllowSunday"],
+      AllowMonday: json["AllowMonday"] == 1,
+      AlloTuesday: json["AlloTuesday"] == 1,
+      AllowWednesday: json["AllowWednesday"] == 1,
+      AllowThursday: json["AllowThursday"] == 1,
+      AllowFriday: json["AllowFriday"] == 1,
+      AllowSaturday: json["AllowSaturday"] == 1,
+      AllowSunday: json["AllowSunday"] == 1,
     );
   }
 
-  factory ProductScheduleModel.fromEntity(ProductScheduleEntity entity) => ProductScheduleModel(
+  factory ProductScheduleModel.fromEntity(ProductScheduleEntity entity) =>
+      ProductScheduleModel(
         InternalCodeOnERP: entity.InternalCodeOnERP,
         EnterpriseId: entity.EnterpriseId,
         AllowMonday: entity.AllowMonday == 1,

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import '../../domain/entities/entities.dart';
+import 'models.dart';
 
 class ProductModel {
   final int ProductsId;
@@ -70,6 +71,7 @@ class ProductModel {
   final bool? GoesForFastTable;
   final bool? IsAlcoholicProduct;
   final List<ProductCompositionEntity>? childsComposition;
+  final ProductScheduleEntity? Schedule;
 
   ProductModel({
     required this.ProductsId,
@@ -139,6 +141,7 @@ class ProductModel {
     required this.GoesForFastTable,
     required this.IsAlcoholicProduct,
     required this.childsComposition,
+    required this.Schedule,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -221,6 +224,9 @@ class ProductModel {
       NameComplete: json["NameComplete"],
       NameReduced: json["NameReduced"],
       ProductComplement: json["ProductComplement"],
+      Schedule: json["Schedule"] == null
+          ? null
+          : ProductScheduleModel.fromJson(json["Schedule"]).toEntity(),
       childsComposition: json["childsComposition"],
     );
   }
@@ -293,6 +299,7 @@ class ProductModel {
       NameComplete: entity.NameComplete,
       NameReduced: entity.NameReduced,
       ProductComplement: entity.ProductComplement,
+      Schedule: entity.Schedule,
       childsComposition: entity.childsComposition,
     );
   }
@@ -364,6 +371,7 @@ class ProductModel {
     data['SaleRetailPraticed'] = SaleRetailPraticed;
     data['SaleRetailPraticedString'] = SaleRetailPraticedString;
     data['ProductComplement'] = ProductComplement;
+    data['Schedule'] = Schedule;
     return data;
   }
 
@@ -434,6 +442,7 @@ class ProductModel {
         SaleRetailPraticed: SaleRetailPraticed,
         SaleRetailPraticedString: SaleRetailPraticedString,
         ProductComplement: ProductComplement,
+        Schedule: Schedule,
         childsComposition: childsComposition,
       );
 }

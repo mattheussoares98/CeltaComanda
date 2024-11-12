@@ -11,9 +11,12 @@ class TitleAppbar extends StatelessWidget {
   });
 
   void doOnPress(BuildContext context) {
-    PersonalizedDialogPage.open(
+    notificationDialog(
       context: context,
-      page: const ConfigurationsDialogPage(),
+      titleMessage: R.string.accessConfigurations,
+      content: ConfigurationsDialogPage(),
+      showCancelAndConfirmMessage: false,
+      onPress: () async {},
     );
   }
 

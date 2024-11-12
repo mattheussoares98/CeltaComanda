@@ -91,6 +91,7 @@ class EnUs implements Translation {
   String get msgWriteThreeNumbers => 'Enter 3 numbers';
   String get msgWriteUserCode => 'Enter the user code';
 
+  String get accessConfigurations => 'Access configurations';
   String get accessDenied => 'User does not have permission';
   String get advance => 'Advance';
   String get addAccount => 'Create account';

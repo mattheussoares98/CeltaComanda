@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../helpers/helpers.dart';
-import '../../../../pages.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../pages.dart';
 
 class GoToConfigurationsPageButton extends StatelessWidget {
   final TextEditingController userCodeController;
@@ -40,7 +40,7 @@ class GoToConfigurationsPageButton extends StatelessWidget {
           );
         }
       },
-      child: Text(R.string.configurations),
+      child: Text(R.string.confirm),
     );
   }
 }

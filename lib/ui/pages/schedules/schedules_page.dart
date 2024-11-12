@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -65,18 +66,68 @@ class _SchedulesPageState extends State<SchedulesPage>
                 .toList()[groupIndex];
             final productsOfGroup =
                 menuPresenter.loadedMenu[groupIndex].values.first;
-            return Column(
-              children: [
-                Text(group.Name),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: productsOfGroup.length,
-                  itemBuilder: (context, productIndex) {
-                    final product = productsOfGroup[productIndex];
-                    return Text(product.Name);
-                  },
-                ),
-              ],
+            return Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      group.Name,
+                      style: TextStyle(
+                        fontSize: getStringSize(context),
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: productsOfGroup.length,
+                    itemBuilder: (context, productIndex) {
+                      final product = productsOfGroup[productIndex];
+                      return InkWell(
+                        onTap: () {
+                          notificationDialog(
+                            context: context,
+                            titleMessage: R.string.productsSchedules,
+                            cancelMessage: R.string.cancel,
+                            confirmMessage: R.string.confirm,
+                            content: Column(
+                              children: [
+                                Text(product.Name),
+                              ],
+                            ),
+                            onPress: () async {},
+                          );
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                          color: productIndex % 2 == 0
+                              ? Theme.of(context)
+                                  .primaryColorLight
+                                  .withAlpha(50)
+                              : Colors.white,
+                          child: GestureDetector(
+                            child: Row(
+                              children: [
+                                Expanded(child: Text(product.Name)),
+                                Icon(
+                                  Icons.edit,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             );
           },
         ),

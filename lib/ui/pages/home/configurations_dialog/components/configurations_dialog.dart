@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../ui/helpers/helpers.dart';
-import '../../pages.dart';
+import '../../../../../../ui/helpers/helpers.dart';
+import '../../../pages.dart';
 
 class ConfigurationsDialogPage extends StatefulWidget {
   const ConfigurationsDialogPage({super.key});
@@ -18,7 +18,6 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   final _userCodeFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
   final _keyUserAndPassword = GlobalKey<FormState>();
-  final _keyDropdowns = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -71,13 +70,12 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
-                  child: ActionsButtons(
+                  child: GoToConfigurationsPageButton(
                     passwordController: _passwordController,
                     userCodeController: _userCodeController,
                     keyUserAndPassword: _keyUserAndPassword,
                     userCodeFocusNode: _userCodeFocusNode,
                     passwordFocusNode: _passwordFocusNode,
-                    keyDropdowns: _keyDropdowns,
                   ),
                 ),
               ],

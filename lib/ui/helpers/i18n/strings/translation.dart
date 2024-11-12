@@ -66,6 +66,7 @@ abstract class Translation {
   String get msgWriteThreeNumbers;
   String get msgWriteUserCode;
 
+  String get accessConfigurations;
   String get accessDenied;
   String get advance;
   String get alwaysUseSameTable;

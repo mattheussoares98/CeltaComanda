@@ -92,6 +92,7 @@ class PtBr implements Translation {
   String get msgWriteThreeNumbers => "Digite 3 números";
   String get msgWriteUserCode => "Digite o código do usuário";
 
+  String get accessConfigurations => 'Acessar configurações';
   String get accessDenied => 'O usuário não possui permissão';
   String get advance => 'Avançar';
   String get addAccount => 'Criar conta';

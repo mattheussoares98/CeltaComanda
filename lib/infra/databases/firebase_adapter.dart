@@ -63,4 +63,18 @@ class FirebaseAdapter implements FirebaseStorage {
       throw DomainError.unexpected;
     }
   }
+
+  @override
+  Future<void> updateMenu() async {
+    var docRef = firestore
+        .collection('clients')
+        .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+
+    await docRef.set(
+      {
+        "updateMenu": FieldValue.increment(1),
+      },
+      SetOptions(merge: true),
+    );
+  }
 }

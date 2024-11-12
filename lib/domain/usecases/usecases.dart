@@ -7,6 +7,7 @@ export './device_info/device_info.dart';
 export './enterprise_concentrador/enterprise_concentrador.dart';
 export './expansible_groups/expansible_groups.dart';
 export './enterprise_data/enterprise_data.dart';
+export './menu/menu.dart';
 export './navigation/navigation.dart';
 export './payment/payment.dart';
 export './print_request/print_request.dart';

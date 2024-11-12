@@ -64,6 +64,7 @@ class PtBr implements Translation {
   String get msgSelectCommand => 'Selecione a comanda';
   String get msgSelectPeopleNumbers => 'Selecione a quantidade de pessoas';
   String get msgSelectSeller => 'Selecione o vendedor';
+  String get msgSelectTable => 'Selecione a mesa';
   String get msgSuccessToCancelProducts => 'Produto cancelado com sucesso';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableConfigurationsSuccess =>

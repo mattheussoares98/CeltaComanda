@@ -16,8 +16,8 @@ class OpenBlockOrLiberateCommandPageButton extends StatelessWidget {
             titleMessage: R.string.liberateOrBlockTable,
             showCancelAndConfirmMessage: false,
             showCloseAction: true,
+            showLargeDialog: true,
             content: SizedBox(
-              height: MediaQuery.of(context).size.height / 3,
               child: BlockOrLiberateCommandPage(),
             ),
             onPress: () async {});

@@ -1,3 +1,4 @@
+export './block_or_liberate_command/block_or_liberate_command.dart';
 export 'open_block_or_liberate_command_page_button.dart';
 export './go_to_cancel_products_page_button.dart';
 export './reserve_table_button.dart';

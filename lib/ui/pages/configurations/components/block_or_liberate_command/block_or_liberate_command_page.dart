@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pages.dart';
+import '../../../pages.dart';
 
 class BlockOrLiberateCommandPage extends StatefulWidget {
   const BlockOrLiberateCommandPage({super.key});

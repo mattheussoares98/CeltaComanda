@@ -8,4 +8,5 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       commandInformations: makeRemoteCommandInformations(),
       navigateTo: makeNavigateTo(),
       persistent: makeAndroidPersistent(),
+      updateMenu: makeRemoteUpdateMenu(),
     );

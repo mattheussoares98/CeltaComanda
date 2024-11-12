@@ -13,12 +13,14 @@ class GetxConfigurationsPresenter extends GetxController
   final CommandInformations commandInformations;
   final NavigateTo navigateTo;
   final Persistent persistent;
+  final UpdateMenu updateMenu;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
     required this.commandInformations,
     required this.navigateTo,
     required this.persistent,
+    required this.updateMenu,
   });
 
   @override

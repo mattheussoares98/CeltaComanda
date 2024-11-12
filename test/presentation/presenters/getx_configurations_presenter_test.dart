@@ -27,6 +27,7 @@ void main() {
   late CommandInformationsSpy commandInformations;
   late NavigateToSpy navigateTo;
   late PersistentSpy persistent;
+  late UpdateMenuSpy updateMenu;
 
   late String password;
   late int userCode;
@@ -46,6 +47,7 @@ void main() {
       commandInformations: commandInformations,
       navigateTo: navigateTo,
       persistent: persistent,
+      updateMenu: updateMenu,
     );
   }
 
@@ -54,6 +56,7 @@ void main() {
     commandInformations = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
     persistent = PersistentSpy();
+    updateMenu = UpdateMenuSpy();
   }
 
   void initMocks() {}

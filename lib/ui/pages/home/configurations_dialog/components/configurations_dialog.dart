@@ -39,8 +39,26 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
     _userCodeFocusNode.dispose();
   }
 
+  Future<void> goToConfigurationsPage(HomePresenter homePresenter) async {
+    bool? isValid = _keyUserAndPassword.currentState?.validate();
+
+    if (isValid == true) {
+      _userCodeFocusNode.unfocus();
+      _passwordFocusNode.unfocus();
+
+      Navigator.of(context).pop();
+
+      await homePresenter.goToConfigurationsPage(
+        userPersonalizedCode: _userCodeController.text.toInt(),
+        password: _passwordController.text,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -62,20 +80,20 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                       ),
                       const SizedBox(height: 10),
                       PasswordInput(
-                        passwordFocusNode: _passwordFocusNode,
-                        passwordController: _passwordController,
-                      ),
+                          passwordFocusNode: _passwordFocusNode,
+                          passwordController: _passwordController,
+                          goToConfigurationsPage: () async {
+                            await goToConfigurationsPage(homePresenter);
+                          }),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: GoToConfigurationsPageButton(
-                    passwordController: _passwordController,
-                    userCodeController: _userCodeController,
-                    keyUserAndPassword: _keyUserAndPassword,
-                    userCodeFocusNode: _userCodeFocusNode,
-                    passwordFocusNode: _passwordFocusNode,
+                    goToConfigurationsPage: () async {
+                      await goToConfigurationsPage(homePresenter);
+                    },
                   ),
                 ),
               ],

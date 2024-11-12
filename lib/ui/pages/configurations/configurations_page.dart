@@ -1,29 +1,59 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
+import '../../mixins/mixins.dart';
 import '../pages.dart';
 
-class ConfigurationsPage extends StatelessWidget {
+class ConfigurationsPage extends StatefulWidget {
   const ConfigurationsPage({
     super.key,
   });
+
+  @override
+  State<ConfigurationsPage> createState() => _ConfigurationsPageState();
+}
+
+class _ConfigurationsPageState extends State<ConfigurationsPage>
+    with LoadingManager, UIErrorManager {
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+
+  @override
+  dispose() {
+    super.dispose();
+
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
+
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+    loadingSubscription =
+        handleLoading(context, configurationsPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, configurationsPresenter.mainErrorStream);
 
     final buttons = [
+      UpdateMenuButton(),
+      OpenSchedulesPageButton(),
       GoToCancelProductsPageButton(),
+      OpenCommandConfigurationsPageButton(),
       LogoutButton(),
+      OpenBlockOrLiberateCommandPageButton(),
       if (!homePresenter.isGeneratingVersionToRede &&
           !homePresenter.isGeneratingVersionToGetNet)
         const ReserveTableButton(),
-      OpenBlockOrLiberateCommandPageButton(),
-      UpdateMenuButton(),
-      OpenCommandConfigurationsPageButton(),
     ];
 
     return PopScope(

@@ -241,7 +241,7 @@ class EntityFactory {
     bool? insertOfferPrice = true,
   }) {
     return ProductsViewModel(
-      Schedule: makeProductScheduleEntity(),
+      Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
       subgroupName: subgroupName,
       suggestions: null,
       MaximumQuantityForSale: maximumProductQuantity != null
@@ -1174,7 +1174,8 @@ class EntityFactory {
         ValueLiquid: faker.randomGenerator.decimal(),
       );
 
-  static makeProductScheduleEntity() => ProductScheduleEntity(
+  static ProductScheduleEntity makeProductScheduleEntity() =>
+      ProductScheduleEntity(
         InternalCodeOnERP: faker.randomGenerator.integer(100),
         EnterpriseId: faker.randomGenerator.integer(100),
         AllowMonday: faker.randomGenerator.integer(1, min: 0),

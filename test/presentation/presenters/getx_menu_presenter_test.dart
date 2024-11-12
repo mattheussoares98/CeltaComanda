@@ -166,6 +166,7 @@ void main() {
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeEnterpriseData());
+    registerFallbackValue(EntityFactory.makeProductScheduleEntity());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
@@ -1009,6 +1010,28 @@ void main() {
         internalCodeOnErp,
         productSchedule,
       );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      manageProductSchedule.mockInsertError();
+
+      await sut.insertUpdateProductSchedule(
+        internalCodeOnErp,
+        productSchedule,
+      );
+    });
+    test("Should call manageProductSchedule.insertUpdate with correct values",
+        () async {
+      await sut.insertUpdateProductSchedule(
+        internalCodeOnErp,
+        productSchedule,
+      );
+
+      verify(() => manageProductSchedule.insertUpdate(productSchedule))
+          .called(1);
     });
   });
 }

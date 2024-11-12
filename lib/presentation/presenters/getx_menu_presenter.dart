@@ -462,7 +462,9 @@ class GetxMenuPresenter extends GetxController
   ) async {
     isLoading = true;
     mainError = null;
-    try {} catch (e) {
+    try {
+      await manageProductSchedule.insertUpdate(productScheduleEntity);
+    } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;

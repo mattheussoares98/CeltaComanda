@@ -10,4 +10,5 @@ export './home/home.dart';
 export './payment/payment.dart';
 export './printed_products/printed_products.dart';
 export 'insert_products/insert_products.dart';
+export './schedules/schedules.dart';
 export './splash/splash.dart';

@@ -202,4 +202,9 @@ class GetxConfigurationsPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> goToSchedulesPage() async {
+    await navigateTo.navigate(pageRoute: PageRoutes.schedules);
+  }
 }

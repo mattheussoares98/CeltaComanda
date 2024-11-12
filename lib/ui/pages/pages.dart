@@ -12,6 +12,6 @@ export './payment/payment.dart';
 export './pre_load_images/pre_load_images.dart';
 export './printed_products/printed_products.dart';
 export './products/products.dart';
-export './products_schedules/products_schedules.dart';
+export 'schedules/schedules.dart';
 export './splash/splash.dart';
 export './support/support.dart';

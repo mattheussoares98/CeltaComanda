@@ -481,4 +481,13 @@ void main() {
       expect(sut.selectedPeoples, peoples);
     });
   });
+
+  group("Go to products schedules page", () {
+    test("Should call navigateTo with correct values", () async {
+      await sut.goToSchedulesPage();
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.schedules))
+          .called(1);
+    });
+  });
 }

@@ -43,15 +43,6 @@ class ActionsButtons extends StatelessWidget {
           );
         },
       ),
-      CloseApplicationButton(validateUserCredentials: () async {
-        return _validateUserCredentials(
-          homePresenter: homePresenter,
-          keyUserAndPassword: keyUserAndPassword,
-          passwordController: passwordController,
-          userCodeController: userCodeController,
-          context: context,
-        );
-      }),
       GoToConfigurationsPageButton(
         userCodeController: userCodeController,
         passwordController: passwordController,
@@ -76,27 +67,6 @@ class ActionsButtons extends StatelessWidget {
       },
     );
   }
-}
-
-Future<bool> _validateUserCredentials({
-  required HomePresenter homePresenter,
-  required GlobalKey<FormState> keyUserAndPassword,
-  required TextEditingController passwordController,
-  required TextEditingController userCodeController,
-  required BuildContext context,
-}) async {
-  FocusScope.of(context).unfocus();
-
-  if (keyUserAndPassword.currentState?.validate() != true) {
-    return false;
-  }
-
-  bool isValidUserAndPassword = await homePresenter.isValidUserAndPassword(
-    personalizedCode: userCodeController.text.toInt(),
-    password: passwordController.text,
-  );
-
-  return isValidUserAndPassword;
 }
 
 Future<void> _updateCommand({

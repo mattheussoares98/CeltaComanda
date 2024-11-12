@@ -66,7 +66,8 @@ class PtBr implements Translation {
   String get msgSelectSeller => 'Selecione o vendedor';
   String get msgSelectTable => 'Selecione a mesa';
   String get msgSuccessToCancelProducts => 'Produto cancelado com sucesso';
-  String get msgSuccessUpdateMenuInAllDevices => 'O menu vai ser atualizado em todos dispositivos';
+  String get msgSuccessUpdateMenuInAllDevices =>
+      'O menu vai ser atualizado em todos dispositivos';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableConfigurationsSuccess =>
       "Configurações alteradas com sucesso";
@@ -105,7 +106,8 @@ class PtBr implements Translation {
   String get cart => "Carrinho";
   String get call => "Ligar";
   String get cancel => "Cancelar";
-  String get cancelProducts => "Cancelar produtos";
+  String get cancelProductsOrRemoveServiceCharge =>
+      "Cancelar produtos ou remover taxa de serviço";
   String get cancelProduct => "Cancelar produto";
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";

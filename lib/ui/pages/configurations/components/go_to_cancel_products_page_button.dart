@@ -16,7 +16,7 @@ class GoToCancelProductsPageButton extends StatelessWidget {
       onPressed: () async {
         await configurationsPresenter.goToCancelProductsPage();
       },
-      child: Text(R.string.cancelProducts),
+      child: Text(R.string.cancelProductsOrRemoveServiceCharge),
     );
   }
 }

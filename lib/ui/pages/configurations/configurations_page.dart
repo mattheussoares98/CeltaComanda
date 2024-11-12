@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
 import '../pages.dart';
-import 'components/components.dart';
 
 class ConfigurationsPage extends StatelessWidget {
   const ConfigurationsPage({
@@ -24,6 +23,7 @@ class ConfigurationsPage extends StatelessWidget {
         const ReserveTableButton(),
       OpenBlockOrLiberateCommandPageButton(),
       UpdateMenuButton(),
+      OpenCommandConfigurationsPageButton(),
     ];
 
     return PopScope(

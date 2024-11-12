@@ -208,6 +208,7 @@ class EnUs implements Translation {
   String get surveys => 'Surveys';
   String get surveyResult => 'Survey result';
   String get table => 'Table';
+  String get tableConfigurations => 'Table configurations';
   String get time => 'Time';
   String get total => 'Total';
   String get totalPaid => 'Total paid';

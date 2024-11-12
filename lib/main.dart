@@ -71,6 +71,9 @@ class App extends StatelessWidget with HideNavigationBarManager {
           create: (_) => makeGetxCancelProductsPresenter(),
         ),
         ListenableProvider(
+          create: (_) => makeGetxConfigurationsPresenter(),
+        ),
+        ListenableProvider(
           create: (_) => makeGetxEnterprisePresenter(),
         ),
         ListenableProvider(
@@ -102,6 +105,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
           navigatorObservers: [routeObserver],
           initialRoute: PageRoutes.splash,
           getPages: [
+            GetPage(
+              name: PageRoutes.blockOrLiberateCommand,
+              page: makeBlockOrLiberateCommandPage,
+              transition: Transition.fadeIn,
+            ),
             GetPage(
               name: PageRoutes.cancelProducts,
               page: makeCancelProductsPage,

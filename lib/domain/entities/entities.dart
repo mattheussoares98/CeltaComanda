@@ -16,6 +16,7 @@ export './sale_request_entity.dart';
 export './sale_request_product_entity.dart';
 export './sale_request_temp_entity.dart';
 export './sale_request_temp_product_entity.dart';
+export './schedule_entity.dart';
 export './seller_entity.dart';
 export './suggestion_sale_entity.dart';
 export './ticket_is_permitted_entity.dart';

@@ -102,4 +102,20 @@ class GetxConfigurationsPresenter extends GetxController
   Future<void> goToCancelProductsPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.cancelProducts);
   }
+
+  @override
+  Future<bool> loadMenuAgain() async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await updateMenu.update();
+      return true;
+    } catch (e) {
+      mainError = UIError.unexpected;
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

@@ -26,4 +26,6 @@ abstract class ConfigurationsPresenter implements Listenable {
   void updateSelectedSeller(SellersViewModel? seller);
 
   Future<void> goToCancelProductsPage();
+
+  Future<bool> loadMenuAgain();
 }

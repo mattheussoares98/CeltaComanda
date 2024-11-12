@@ -306,4 +306,39 @@ void main() {
           .called(1);
     });
   });
+
+  group("Load menu again", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.loadMenuAgain();
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      updateMenu.mockUpdateError();
+
+      await sut.loadMenuAgain();
+    });
+    test("Should call updateMenu.update", () async {
+      await sut.loadMenuAgain();
+
+      verify(() => updateMenu.update()).called(1);
+    });
+    test("Should return true on success", () async {
+      final value = await sut.loadMenuAgain();
+
+      expect(value, true);
+    });
+    test("Should return false on error", () async {
+      updateMenu.mockUpdateError();
+
+      final value = await sut.loadMenuAgain();
+
+      expect(value, false);
+    });
+  });
 }

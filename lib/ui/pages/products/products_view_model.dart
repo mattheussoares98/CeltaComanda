@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../ui/helpers/helpers.dart';
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../pages.dart';
 
@@ -73,7 +74,7 @@ class ProductsViewModel extends Equatable {
   final String PackingAbbreviation;
   final String IsPromoCombox;
   final String? MaximumQuantityForSale;
-  final ProductScheduleEntity? Schedule;
+  final ProductScheduleModel? Schedule;
   List<ProductCompositionViewModel>? childsComposition;
   List<SuggestionSaleEntity>? suggestions;
   double productQuantity;
@@ -315,7 +316,9 @@ class ProductsViewModel extends Equatable {
         PercImpNBPTNational: entity.PercImpNBPTNational.toString(),
         CofinsPercentage: entity.CofinsPercentage.toString(),
         PisPercentage: entity.PisPercentage.toString(),
-        Schedule: entity.Schedule,
+        Schedule: entity.Schedule != null
+            ? ProductScheduleModel.fromEntity(entity.Schedule!)
+            : null,
         childsComposition: entity.childsComposition
             ?.map((e) => ProductCompositionViewModel.fromEntity(e))
             .toList(),
@@ -323,7 +326,7 @@ class ProductsViewModel extends Equatable {
 
   ProductEntity toEntity() => ProductEntity(
         ProductComplement: ProductComplement,
-        Schedule: Schedule,
+        Schedule: Schedule?.toEntity(),
         MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
         IsPromoCombox: bool.parse(IsPromoCombox),
         Name: Name,
@@ -397,7 +400,7 @@ class ProductsViewModel extends Equatable {
 
   ProductEntity toEntityWithSelectedChilds(int productQuantity) =>
       ProductEntity(
-        Schedule: Schedule,
+        Schedule: Schedule?.toEntity(),
         ProductComplement: ProductComplement,
         MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
         IsPromoCombox: bool.parse(IsPromoCombox),

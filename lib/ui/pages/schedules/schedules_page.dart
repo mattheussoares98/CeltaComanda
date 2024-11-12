@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -83,49 +82,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                       textAlign: TextAlign.start,
                     ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: productsOfGroup.length,
-                    itemBuilder: (context, productIndex) {
-                      final product = productsOfGroup[productIndex];
-                      return InkWell(
-                        onTap: () {
-                          notificationDialog(
-                            context: context,
-                            titleMessage: R.string.productsSchedules,
-                            cancelMessage: R.string.cancel,
-                            confirmMessage: R.string.confirm,
-                            content: Column(
-                              children: [
-                                Text(product.Name),
-                              ],
-                            ),
-                            onPress: () async {},
-                          );
-                        },
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                          color: productIndex % 2 == 0
-                              ? Theme.of(context)
-                                  .primaryColorLight
-                                  .withAlpha(50)
-                              : Colors.white,
-                          child: GestureDetector(
-                            child: Row(
-                              children: [
-                                Expanded(child: Text(product.Name)),
-                                Icon(
-                                  Icons.edit,
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  ProductsSchedulesItems(products: productsOfGroup),
                 ],
               ),
             );

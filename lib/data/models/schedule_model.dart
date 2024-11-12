@@ -2,7 +2,7 @@
 
 import '../../domain/entities/entities.dart';
 
-class ScheduleModel {
+class ProductScheduleModel {
   final int? InternalCodeOnERP;
   final int? EnterpriseId;
   final bool? AllowMonday;
@@ -13,7 +13,7 @@ class ScheduleModel {
   final bool? AllowSaturday;
   final bool? AllowSunday;
 
-  ScheduleModel({
+  ProductScheduleModel({
     required this.InternalCodeOnERP,
     required this.EnterpriseId,
     required this.AllowMonday,
@@ -25,14 +25,14 @@ class ScheduleModel {
     required this.AllowSunday,
   });
 
-  factory ScheduleModel.fromJson(Map json) {
+  factory ProductScheduleModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       'InternalCodeOnERP',
       'EnterpriseId',
     ])) {
       throw Exception();
     }
-    return ScheduleModel(
+    return ProductScheduleModel(
       InternalCodeOnERP: json["InternalCodeOnERP"],
       EnterpriseId: json["EnterpriseId"],
       AllowMonday: json["AllowMonday"],
@@ -45,7 +45,7 @@ class ScheduleModel {
     );
   }
 
-  factory ScheduleModel.fromEntity(ScheduleEntity entity) => ScheduleModel(
+  factory ProductScheduleModel.fromEntity(ProductScheduleEntity entity) => ProductScheduleModel(
         InternalCodeOnERP: entity.InternalCodeOnERP,
         EnterpriseId: entity.EnterpriseId,
         AllowMonday: entity.AllowMonday == 1,
@@ -57,7 +57,7 @@ class ScheduleModel {
         AllowSunday: entity.AllowSunday == 1,
       );
 
-  ScheduleEntity toEntity() => ScheduleEntity(
+  ProductScheduleEntity toEntity() => ProductScheduleEntity(
         InternalCodeOnERP: InternalCodeOnERP,
         EnterpriseId: EnterpriseId,
         AllowMonday: AllowMonday == true ? 1 : 0,

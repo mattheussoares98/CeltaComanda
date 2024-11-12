@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-class ScheduleEntity {
+class ProductScheduleEntity {
   final int? InternalCodeOnERP;
   final int? EnterpriseId;
   final int? AllowMonday;
@@ -11,7 +11,7 @@ class ScheduleEntity {
   final int? AllowSaturday;
   final int? AllowSunday;
 
-  const ScheduleEntity({
+  const ProductScheduleEntity({
     required this.InternalCodeOnERP,
     required this.EnterpriseId,
     required this.AllowMonday,

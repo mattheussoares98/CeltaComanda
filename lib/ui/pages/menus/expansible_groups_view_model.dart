@@ -19,6 +19,7 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupType,
         OrderClassification,
         subgroups,
+        Schedule,
       ];
 
   const ExpansibleGroupsViewModel({

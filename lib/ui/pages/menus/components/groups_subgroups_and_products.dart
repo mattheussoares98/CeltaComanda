@@ -91,9 +91,8 @@ class _GroupsSubgroupsAndProductsState
           Expanded(
             flex: getGroupItemFlex(),
             child: GroupItems(
-              expansibleGroupsViewModel: menuPresenter.loadedMenu
-                  .map((element) => element.keys.first)
-                  .toList(),
+              expansibleGroupsViewModel:
+                  menuPresenter.treatSchedules<ExpansibleGroupsViewModel>(),
               selectedIndex: widget.selectedIndex ?? 0,
               scrollUpItemsList: () {
                 _scrollUp(

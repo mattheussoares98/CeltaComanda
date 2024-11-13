@@ -33,7 +33,7 @@ class DetachItems extends StatelessWidget {
         autoPlayCurve: Curves.fastOutSlowIn,
         scrollDirection: hasMinWidth(context) ? Axis.horizontal : Axis.vertical,
       ),
-      items: menuPresenter.loadedMenu[0].entries.first.value.map((product) {
+      items: menuPresenter.treatSchedules().map((product) {
         return InkWell(
           onTap: () {
             if (popOnImageClick == true) {

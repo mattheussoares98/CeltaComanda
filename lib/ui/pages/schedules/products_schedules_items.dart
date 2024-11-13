@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
+import '../../helpers/helpers.dart';
 import '../pages.dart';
 
 class ProductsSchedulesItems extends StatefulWidget {
@@ -20,6 +21,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: widget.products.length,
       itemBuilder: (context, productIndex) {
@@ -37,14 +39,21 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
             );
           },
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             color: productIndex % 2 == 0
                 ? Theme.of(context).primaryColorLight.withAlpha(50)
                 : Colors.white,
             child: GestureDetector(
               child: Row(
                 children: [
-                  Expanded(child: Text(product.Name)),
+                  Expanded(
+                      child: Text(
+                    product.Name,
+                    style: TextStyle(
+                      fontSize: getStringSize(context),
+                    ),
+                  )),
+                  const SizedBox(width: 5),
                   ScheduleEnabledDays(
                     allowMonday: product.Schedule?.AllowMonday != false,
                     allowTuesday: product.Schedule?.AllowTuesday != false,

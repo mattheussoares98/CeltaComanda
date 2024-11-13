@@ -144,159 +144,165 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                     ? productSchedule?.AllowSunday != false
                     : groupSchedule?.AllowSunday != false;
 
-                return Column(
-                  children: [
-                    FittedBox(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.isUpdatingProduct
-                                ? widget.product?.Name ?? ""
-                                : widget.expansibleGroup?.Name ?? "",
-                            style: TextStyle(
-                              fontSize: getStringSize(context) * 1.5,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            widget.isUpdatingProduct
-                                ? "(${R.string.product})"
-                                : "(${R.string.expansibleGroup})",
-                            style: TextStyle(
-                              fontSize: getStringSize(context),
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowMonday,
-                      dayName: R.string.monday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          monday: value,
-                        );
-                      },
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowTuesday,
-                      dayName: R.string.tuesday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          tuesday: value,
-                        );
-                      },
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowWednesday,
-                      dayName: R.string.wednesday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          wednesday: value,
-                        );
-                      },
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowThursday,
-                      dayName: R.string.thursday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          thursday: value,
-                        );
-                      },
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowFriday,
-                      dayName: R.string.friday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          friday: value,
-                        );
-                      },
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowSaturday,
-                      dayName: R.string.saturday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          saturday: value,
-                        );
-                      },
-                    ),
-                    personalizedCheckBox(
-                      dayEnabled: allowSunday,
-                      dayName: R.string.sunday,
-                      onChanged: (value) {
-                        updateSchedule(
-                          menuPresenter: menuPresenter,
-                          groupSchedule: groupSchedule,
-                          productSchedule: productSchedule,
-                          sunday: value,
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: FittedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.isUpdatingProduct
+                                    ? widget.product?.Name ?? ""
+                                    : widget.expansibleGroup?.Name ?? "",
+                                style: TextStyle(
+                                  fontSize: getStringSize(context) * 1.5,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(R.string.cancel),
-                            ),
+                              const SizedBox(width: 20),
+                              Text(
+                                widget.isUpdatingProduct
+                                    ? "(${R.string.product})"
+                                    : "(${R.string.expansibleGroup})",
+                                style: TextStyle(
+                                  fontSize: getStringSize(context),
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: (widget.isUpdatingProduct &&
-                                          productSchedule == null) ||
-                                      (groupSchedule == null &&
-                                          !widget.isUpdatingProduct)
-                                  ? null
-                                  : () async {
-                                      await onPressed(
-                                        menuPresenter: menuPresenter,
-                                        expansibleGroupFromProductPresenter:
-                                            expansibleGroupFromProductPresenter,
-                                        homePresenter: homePresenter,
-                                        configurationsPresenter:
-                                            configurationsPresenter,
-                                        callSetState: widget.callSetState,
-                                      );
-                                    },
-                              child: Text(R.string.confirm),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
+                      personalizedCheckBox(
+                        dayEnabled: allowMonday,
+                        dayName: R.string.monday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            monday: value,
+                          );
+                        },
+                      ),
+                      personalizedCheckBox(
+                        dayEnabled: allowTuesday,
+                        dayName: R.string.tuesday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            tuesday: value,
+                          );
+                        },
+                      ),
+                      personalizedCheckBox(
+                        dayEnabled: allowWednesday,
+                        dayName: R.string.wednesday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            wednesday: value,
+                          );
+                        },
+                      ),
+                      personalizedCheckBox(
+                        dayEnabled: allowThursday,
+                        dayName: R.string.thursday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            thursday: value,
+                          );
+                        },
+                      ),
+                      personalizedCheckBox(
+                        dayEnabled: allowFriday,
+                        dayName: R.string.friday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            friday: value,
+                          );
+                        },
+                      ),
+                      personalizedCheckBox(
+                        dayEnabled: allowSaturday,
+                        dayName: R.string.saturday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            saturday: value,
+                          );
+                        },
+                      ),
+                      personalizedCheckBox(
+                        dayEnabled: allowSunday,
+                        dayName: R.string.sunday,
+                        onChanged: (value) {
+                          updateSchedule(
+                            menuPresenter: menuPresenter,
+                            groupSchedule: groupSchedule,
+                            productSchedule: productSchedule,
+                            sunday: value,
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(R.string.cancel),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: (widget.isUpdatingProduct &&
+                                            productSchedule == null) ||
+                                        (groupSchedule == null &&
+                                            !widget.isUpdatingProduct)
+                                    ? null
+                                    : () async {
+                                        await onPressed(
+                                          menuPresenter: menuPresenter,
+                                          expansibleGroupFromProductPresenter:
+                                              expansibleGroupFromProductPresenter,
+                                          homePresenter: homePresenter,
+                                          configurationsPresenter:
+                                              configurationsPresenter,
+                                          callSetState: widget.callSetState,
+                                        );
+                                      },
+                                child: Text(R.string.confirm),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               });
         });
@@ -340,8 +346,10 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
           notificationDialog(
               context: context,
               titleMessage: R.string.msgSuccessToUpdateSchedule,
-              content:
-                  Center(child: Text(R.string.msgWantUpdateMenuInAllDevices)),
+              content: Text(
+                R.string.msgWantUpdateMenuInAllDevices,
+                textAlign: TextAlign.center,
+              ),
               onPress: () async {
                 await configurationsPresenter.loadMenuAgain();
               });
@@ -357,7 +365,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
     required void Function(bool?)? onChanged,
   }) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+      padding: const EdgeInsets.only(bottom: 4),
       child: CheckboxListTile(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

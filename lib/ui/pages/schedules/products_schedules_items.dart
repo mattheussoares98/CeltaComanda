@@ -47,11 +47,6 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                     allowSaturday: product.Schedule?.AllowSaturday != false,
                     allowSunday: product.Schedule?.AllowSunday != false,
                   ),
-                  const SizedBox(width: 5),
-                  Icon(
-                    Icons.edit,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
                 ],
               ),
             ),

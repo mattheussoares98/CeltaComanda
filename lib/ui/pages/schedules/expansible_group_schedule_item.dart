@@ -13,7 +13,7 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
       child: Row(
         children: [
           Expanded(
@@ -27,7 +27,15 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
           ),
-          
+          ScheduleEnabledDays(
+            allowMonday: expansibleGroup.Schedule?.AllowMonday != false,
+            alloTuesday: expansibleGroup.Schedule?.AlloTuesday != false,
+            allowWednesday: expansibleGroup.Schedule?.AllowWednesday != false,
+            allowThursday: expansibleGroup.Schedule?.AllowThursday != false,
+            allowFriday: expansibleGroup.Schedule?.AllowFriday != false,
+            allowSaturday: expansibleGroup.Schedule?.AllowSaturday != false,
+            allowSunday: expansibleGroup.Schedule?.AllowSunday != false,
+          )
         ],
       ),
     );

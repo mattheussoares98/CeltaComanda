@@ -78,6 +78,11 @@ class ScheduleEnabledDays extends StatelessWidget {
           firstLetterOfDay: "D",
           context: context,
         ),
+        const SizedBox(width: 5),
+        Icon(
+          Icons.edit,
+          color: Theme.of(context).primaryColorLight,
+        ),
       ],
     );
   }

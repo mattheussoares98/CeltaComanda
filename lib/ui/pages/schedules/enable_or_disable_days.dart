@@ -136,13 +136,30 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
 
                 return Column(
                   children: [
-                    Text(
-                      widget.isUpdatingProduct
-                          ? widget.product?.Name ?? ""
-                          : widget.expansibleGroup?.Name ?? "",
-                      style: TextStyle(
-                        fontSize: getStringSize(context) * 1.5,
-                        fontWeight: FontWeight.bold,
+                    FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.isUpdatingProduct
+                                ? widget.product?.Name ?? ""
+                                : widget.expansibleGroup?.Name ?? "",
+                            style: TextStyle(
+                              fontSize: getStringSize(context) * 1.5,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Text(
+                            widget.isUpdatingProduct
+                                ? "(${R.string.product})"
+                                : "(${R.string.expansibleGroup})",
+                            style: TextStyle(
+                              fontSize: getStringSize(context),
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     personalizedCheckBox(
@@ -299,9 +316,8 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         value: dayEnabled == true,
         fillColor:
             dayEnabled == true ? WidgetStatePropertyAll(Colors.green) : null,
-        tileColor: dayEnabled == true
-            ? Colors.green.withAlpha(120)
-            : Colors.red[100],
+        tileColor:
+            dayEnabled == true ? Colors.green.withAlpha(120) : Colors.red[100],
         onChanged: onChanged,
       ),
     );

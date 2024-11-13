@@ -40,7 +40,12 @@ class PersonalizedDialogPage {
               ),
               Expanded(
                 flex: hasMinWidth(context) ? 9 : 11,
-                child: AnimatedDialog(page: page, actions: actions),
+                child: AnimatedDialog(
+                    page: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: SingleChildScrollView(child: page),
+                    ),
+                    actions: actions),
               ),
             ],
           ),

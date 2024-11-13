@@ -273,30 +273,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                           !widget.isUpdatingProduct)
                                   ? null
                                   : () async {
-                                      Navigator.of(context).pop();
-
-                                      if (widget.isUpdatingProduct &&
-                                          widget.product != null) {
-                                        final updated = await menuPresenter
-                                            .insertUpdateProductSchedule(
-                                          widget.product!.InternalCodeOnERP!
-                                              .toInt(),
-                                        );
-                                        if(updated) {
-                                          snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
-                                        } 
-                                      } else if (!widget.isUpdatingProduct &&
-                                          widget.expansibleGroup != null) {
-                                        final updated = await menuPresenter
-                                            .insertUpdateExpansibleGroupSchedule(
-                                          widget.expansibleGroup!
-                                              .ExpansibleGroupId
-                                              .toInt(),
-                                        );
-                                        if(updated) {
-                                          snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
-                                        } 
-                                      }
+                                      await onPressed(menuPresenter);
                                     },
                               child: Text(R.string.confirm),
                             ),
@@ -308,6 +285,26 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                 );
               });
         });
+  }
+
+  Future<void> onPressed(MenuPresenter menuPresenter) async {
+    if (widget.isUpdatingProduct && widget.product != null) {
+      final updated = await menuPresenter.insertUpdateProductSchedule(
+        widget.product!.InternalCodeOnERP!.toInt(),
+      );
+      if (updated) {
+        Navigator.of(context).pop();
+        snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
+      }
+    } else if (!widget.isUpdatingProduct && widget.expansibleGroup != null) {
+      final updated = await menuPresenter.insertUpdateExpansibleGroupSchedule(
+        widget.expansibleGroup!.ExpansibleGroupId.toInt(),
+      );
+      if (updated) {
+        Navigator.of(context).pop();
+        snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
+      }
+    }
   }
 
   Widget personalizedCheckBox({

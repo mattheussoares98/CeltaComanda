@@ -56,5 +56,5 @@ abstract class MenuPresenter implements Listenable {
     bool? sunday,
   });
 
-  List<ProductsViewModel> treatSchedules();
+  List<T> treatSchedules<T>();
 }

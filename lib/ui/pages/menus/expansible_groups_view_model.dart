@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:equatable/equatable.dart';
 
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 
 class ExpansibleGroupsViewModel extends Equatable {
@@ -9,6 +10,7 @@ class ExpansibleGroupsViewModel extends Equatable {
   final String ExpansibleGroupType;
   final String OrderClassification;
   final List<String?> subgroups;
+  final ExpansibleGroupScheduleModel? Schedule;
 
   @override
   List get props => [
@@ -25,6 +27,7 @@ class ExpansibleGroupsViewModel extends Equatable {
     required this.ExpansibleGroupType,
     required this.OrderClassification,
     required this.subgroups,
+    required this.Schedule,
   });
 
   factory ExpansibleGroupsViewModel.fromEntity({
@@ -38,6 +41,9 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupType: entity.ExpansibleGroupType.toString(),
         OrderClassification: entity.OrderClassification.toString(),
         subgroups: subgroupName == null ? [] : [subgroupName],
+        Schedule: entity.Schedule == null
+            ? null
+            : ExpansibleGroupScheduleModel.fromEntity(entity.Schedule!),
       );
 
   ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(
@@ -45,5 +51,6 @@ class ExpansibleGroupsViewModel extends Equatable {
         ExpansibleGroupId: int.tryParse(ExpansibleGroupId) ?? 0,
         ExpansibleGroupType: int.tryParse(ExpansibleGroupType) ?? 0,
         OrderClassification: int.tryParse(OrderClassification) ?? 0,
+        Schedule: Schedule?.toEntity(),
       );
 }

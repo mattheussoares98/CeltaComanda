@@ -7,12 +7,14 @@ class ExpansibleGroupsModel {
   final int ExpansibleGroupId;
   final int ExpansibleGroupType;
   final int OrderClassification;
+  final ExpansibleGroupScheduleEntity? Schedule;
 
   ExpansibleGroupsModel({
     required this.Name,
     required this.ExpansibleGroupId,
     required this.ExpansibleGroupType,
     required this.OrderClassification,
+    required this.Schedule,
   });
 
   factory ExpansibleGroupsModel.fromJson(Map json) {
@@ -32,6 +34,7 @@ class ExpansibleGroupsModel {
       ExpansibleGroupId: json["ExpansibleGroupId"],
       ExpansibleGroupType: json["ExpansibleGroupType"],
       OrderClassification: json["OrderClassification"],
+      Schedule: json["Schedule"],
     );
   }
 
@@ -41,6 +44,7 @@ class ExpansibleGroupsModel {
         ExpansibleGroupType: entity.ExpansibleGroupType,
         Name: entity.Name,
         OrderClassification: entity.OrderClassification,
+        Schedule: entity.Schedule,
       );
 
   ExpansibleGroupEntity toEntity() => ExpansibleGroupEntity(
@@ -48,6 +52,7 @@ class ExpansibleGroupsModel {
         ExpansibleGroupId: ExpansibleGroupId,
         ExpansibleGroupType: ExpansibleGroupType,
         OrderClassification: OrderClassification,
+        Schedule: Schedule,
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,5 +60,6 @@ class ExpansibleGroupsModel {
         "ExpansibleGroupId": ExpansibleGroupId,
         "ExpansibleGroupType": ExpansibleGroupType,
         "OrderClassification": OrderClassification,
+        "Schedule": Schedule,
       };
 }

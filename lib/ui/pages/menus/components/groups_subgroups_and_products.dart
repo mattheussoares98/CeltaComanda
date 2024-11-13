@@ -136,7 +136,8 @@ class _GroupsSubgroupsAndProductsState
                         Expanded(
                           flex: 4,
                           child: ProductsItems(
-                            products: menuPresenter.treatSchedules(),
+                            products: menuPresenter
+                                .treatSchedules<ProductsViewModel>(),
                             productsScrollController: productsScrollController,
                             itemExtent: getProductItemExtent(context),
                           ),

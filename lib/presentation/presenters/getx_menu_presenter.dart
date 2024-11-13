@@ -519,7 +519,7 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  List<ProductsViewModel> treatSchedules() {
+  List<T> treatSchedules<T>() {
     Map<int, String> daysOfWeek = {
       1: 'Monday',
       2: 'Tuesday',
@@ -532,27 +532,53 @@ class GetxMenuPresenter extends GetxController
     DateTime now = DateTime.now();
     String dayOfWeek = daysOfWeek[now.weekday]!;
 
-    return loadedMenu[_inexOfSelectedGroup.value].values.first.where((e) {
-      if (e.Schedule == null) {
-        return true;
-      } else if (dayOfWeek == daysOfWeek[1]) {
-        return e.Schedule!.AllowMonday == true;
-      } else if (dayOfWeek == daysOfWeek[2]) {
-        return e.Schedule!.AlloTuesday == true;
-      } else if (dayOfWeek == daysOfWeek[3]) {
-        return e.Schedule!.AllowThursday == true;
-      } else if (dayOfWeek == daysOfWeek[4]) {
-        return e.Schedule!.AllowWednesday == true;
-      } else if (dayOfWeek == daysOfWeek[5]) {
-        return e.Schedule!.AllowFriday == true;
-      } else if (dayOfWeek == daysOfWeek[6]) {
-        return e.Schedule!.AllowSaturday == true;
-      } else if (dayOfWeek == daysOfWeek[7]) {
-        return e.Schedule!.AllowSunday == true;
-      } else {
-        return true;
-      }
-    }).toList();
+    if (T == ProductsViewModel) {
+      return loadedMenu[_inexOfSelectedGroup.value].values.first.where((e) {
+        if (e.Schedule == null) {
+          return true;
+        } else if (dayOfWeek == daysOfWeek[1]) {
+          return e.Schedule!.AllowMonday == true;
+        } else if (dayOfWeek == daysOfWeek[2]) {
+          return e.Schedule!.AlloTuesday == true;
+        } else if (dayOfWeek == daysOfWeek[3]) {
+          return e.Schedule!.AllowWednesday == true;
+        } else if (dayOfWeek == daysOfWeek[4]) {
+          return e.Schedule!.AllowThursday == true;
+        } else if (dayOfWeek == daysOfWeek[5]) {
+          return e.Schedule!.AllowFriday == true;
+        } else if (dayOfWeek == daysOfWeek[6]) {
+          return e.Schedule!.AllowSaturday == true;
+        } else if (dayOfWeek == daysOfWeek[7]) {
+          return e.Schedule!.AllowSunday == true;
+        } else {
+          return true;
+        }
+      }).toList() as List<T>;
+    } else if (T == ExpansibleGroupsViewModel) {
+      return loadedMenu.expand((map) => map.keys).toList().where((e) {
+        if (e.Schedule == null) {
+          return true;
+        } else if (dayOfWeek == daysOfWeek[1]) {
+          return e.Schedule!.AllowMonday == true;
+        } else if (dayOfWeek == daysOfWeek[2]) {
+          return e.Schedule!.AlloTuesday == true;
+        } else if (dayOfWeek == daysOfWeek[3]) {
+          return e.Schedule!.AllowWednesday == true;
+        } else if (dayOfWeek == daysOfWeek[4]) {
+          return e.Schedule!.AllowThursday == true;
+        } else if (dayOfWeek == daysOfWeek[5]) {
+          return e.Schedule!.AllowFriday == true;
+        } else if (dayOfWeek == daysOfWeek[6]) {
+          return e.Schedule!.AllowSaturday == true;
+        } else if (dayOfWeek == daysOfWeek[7]) {
+          return e.Schedule!.AllowSunday == true;
+        } else {
+          return true;
+        }
+      }).toList() as List<T>;
+    }
+
+    return [];
   }
 
   final _expansibleGroupSchedule = Rx<ExpansibleGroupScheduleViewModel?>(null);

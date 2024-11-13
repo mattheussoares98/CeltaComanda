@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -100,6 +101,9 @@ void main() {
               ExpansibleGroupId: e.ExpansibleGroupId.toString(),
               ExpansibleGroupType: e.ExpansibleGroupType.toString(),
               OrderClassification: e.OrderClassification.toString(),
+              Schedule: ExpansibleGroupScheduleModel.fromEntity(
+                  EntityFactory.makeExpansibleGroupScheduleEntity(
+                      e.ExpansibleGroupId)),
               subgroups: const [],
             ))
         .toList();
@@ -128,6 +132,8 @@ void main() {
           ExpansibleGroupId: "0",
           ExpansibleGroupType: "0",
           OrderClassification: "0",
+          Schedule: ExpansibleGroupScheduleModel.fromEntity(
+              EntityFactory.makeExpansibleGroupScheduleEntity(0)),
           subgroups: const [],
         ): []
       });
@@ -171,6 +177,7 @@ void main() {
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductScheduleEntity());
+    registerFallbackValue(EntityFactory.makeExpansibleGroupScheduleEntity(0));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
@@ -283,13 +290,19 @@ void main() {
         ExpansibleGroupId: "0",
         ExpansibleGroupType: "0",
         OrderClassification: "0",
+        Schedule: ExpansibleGroupScheduleModel.fromEntity(
+            EntityFactory.makeExpansibleGroupScheduleEntity(0)),
         subgroups: const [],
       );
+
+      final id = faker.randomGenerator.integer(10);
       final detachGroup = ExpansibleGroupsViewModel(
         Name: R.string.detach.toLowerCase(),
-        ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+        ExpansibleGroupId: id.toString(),
         ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
         OrderClassification: faker.randomGenerator.integer(10).toString(),
+        Schedule: ExpansibleGroupScheduleModel.fromEntity(
+            EntityFactory.makeExpansibleGroupScheduleEntity(id)),
         subgroups: const [],
       );
       final groups = [
@@ -324,6 +337,8 @@ void main() {
         ExpansibleGroupId: "0",
         ExpansibleGroupType: "0",
         OrderClassification: "0",
+        Schedule: ExpansibleGroupScheduleModel.fromEntity(
+            EntityFactory.makeExpansibleGroupScheduleEntity(0)),
         subgroups: const [],
       );
       final promotionGroup = ExpansibleGroupsViewModel(
@@ -331,13 +346,19 @@ void main() {
         ExpansibleGroupId: "0",
         ExpansibleGroupType: "0",
         OrderClassification: "0",
+        Schedule: ExpansibleGroupScheduleModel.fromEntity(
+            EntityFactory.makeExpansibleGroupScheduleEntity(0)),
         subgroups: const [],
       );
+
+      final id = faker.randomGenerator.integer(10);
       final detachGroup = ExpansibleGroupsViewModel(
         Name: R.string.detach.toLowerCase(),
-        ExpansibleGroupId: faker.randomGenerator.integer(10).toString(),
+        ExpansibleGroupId: id.toString(),
         ExpansibleGroupType: faker.randomGenerator.integer(10).toString(),
         OrderClassification: faker.randomGenerator.integer(10).toString(),
+        Schedule: ExpansibleGroupScheduleModel.fromEntity(
+            EntityFactory.makeExpansibleGroupScheduleEntity(id)),
         subgroups: const [],
       );
       final groups = [
@@ -417,19 +438,23 @@ void main() {
 
     test("Should update ExpansibleGroup correctly when has | separator",
         () async {
+      final firstId = faker.randomGenerator.integer(100);
+      final secondId = faker.randomGenerator.integer(100);
       loadExpansibleGroups.mockLoadExpansibleGroups(
         [
           ExpansibleGroupEntity(
             Name: "teste|primeiro",
-            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupId: firstId,
             ExpansibleGroupType: faker.randomGenerator.integer(100),
             OrderClassification: faker.randomGenerator.integer(100),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(firstId),
           ),
           ExpansibleGroupEntity(
             Name: "teste|segundo",
-            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupId: secondId,
             ExpansibleGroupType: faker.randomGenerator.integer(100),
             OrderClassification: faker.randomGenerator.integer(100),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(secondId),
           ),
         ],
       );
@@ -445,19 +470,24 @@ void main() {
 
     test("Should return correct _loadedMenu.length when groups has subgroups",
         () async {
+      final firstId = faker.randomGenerator.integer(100);
+      final secondId = faker.randomGenerator.integer(100);
+
       loadExpansibleGroups.mockLoadExpansibleGroups(
         [
           ExpansibleGroupEntity(
             Name: "teste|primeiro",
-            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupId: firstId,
             ExpansibleGroupType: faker.randomGenerator.integer(100),
             OrderClassification: faker.randomGenerator.integer(100),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(firstId),
           ),
           ExpansibleGroupEntity(
             Name: "teste|segundo",
-            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupId: secondId,
             ExpansibleGroupType: faker.randomGenerator.integer(100),
             OrderClassification: faker.randomGenerator.integer(100),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(secondId),
           ),
         ],
       );
@@ -472,13 +502,15 @@ void main() {
     });
 
     test("Should update product.subgroupName correctly", () async {
+      final id = faker.randomGenerator.integer(100);
       loadExpansibleGroups.mockLoadExpansibleGroups(
         [
           ExpansibleGroupEntity(
             Name: "teste|primeiro",
-            ExpansibleGroupId: faker.randomGenerator.integer(100),
+            ExpansibleGroupId: id,
             ExpansibleGroupType: faker.randomGenerator.integer(100),
             OrderClassification: faker.randomGenerator.integer(100),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(id),
           ),
         ],
       );
@@ -915,13 +947,15 @@ void main() {
 
   group("Already contains expansible group in menu", () {
     test("Should return true if already contains", () async {
+      final id = faker.randomGenerator.integer(999);
       loadExpansibleGroups.mockLoadExpansibleGroups(
         [
           ExpansibleGroupEntity(
             Name: "Name",
-            ExpansibleGroupId: faker.randomGenerator.integer(999),
+            ExpansibleGroupId: id,
             ExpansibleGroupType: faker.randomGenerator.integer(999),
             OrderClassification: faker.randomGenerator.integer(999),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(id),
           ),
         ],
       );
@@ -937,6 +971,7 @@ void main() {
     });
     test("Should return true if already contains separating by pipes",
         () async {
+      final id = faker.randomGenerator.integer(999);
       loadExpansibleGroups.mockLoadExpansibleGroups(
         [
           ExpansibleGroupEntity(
@@ -944,6 +979,7 @@ void main() {
             ExpansibleGroupId: faker.randomGenerator.integer(999),
             ExpansibleGroupType: faker.randomGenerator.integer(999),
             OrderClassification: faker.randomGenerator.integer(999),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(id),
           ),
         ],
       );
@@ -958,6 +994,7 @@ void main() {
       expect(value, true);
     });
     test("Should return false if dont have", () async {
+      final id = faker.randomGenerator.integer(999);
       loadExpansibleGroups.mockLoadExpansibleGroups(
         [
           ExpansibleGroupEntity(
@@ -965,6 +1002,7 @@ void main() {
             ExpansibleGroupId: faker.randomGenerator.integer(999),
             ExpansibleGroupType: faker.randomGenerator.integer(999),
             OrderClassification: faker.randomGenerator.integer(999),
+            Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(id),
           ),
         ],
       );
@@ -983,22 +1021,26 @@ void main() {
   group("Get subgroup", () {
     test("Should return subgroup if expansible group entity has a pipe",
         () async {
+      final id = faker.randomGenerator.integer(999);
       final entity = ExpansibleGroupEntity(
         Name: "Name|subgroup",
         ExpansibleGroupId: faker.randomGenerator.integer(100),
         ExpansibleGroupType: faker.randomGenerator.integer(100),
         OrderClassification: faker.randomGenerator.integer(100),
+        Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(id),
       );
 
       expect(sut.getSubgroup(entity), "subgroup");
     });
     test("Should return null if expansible group name dont have pipe",
         () async {
+      final id = faker.randomGenerator.integer(999);
       final entity = ExpansibleGroupEntity(
         Name: "Name subgroup",
         ExpansibleGroupId: faker.randomGenerator.integer(100),
         ExpansibleGroupType: faker.randomGenerator.integer(100),
         OrderClassification: faker.randomGenerator.integer(100),
+        Schedule: EntityFactory.makeExpansibleGroupScheduleEntity(id),
       );
 
       expect(sut.getSubgroup(entity), null);

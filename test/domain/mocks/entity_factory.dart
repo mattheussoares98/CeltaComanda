@@ -179,18 +179,22 @@ class EntityFactory {
   }
 
   static List<ExpansibleGroupEntity> makeExpansibleGroupsEntity() {
+    final firstId = faker.randomGenerator.integer(999);
+    final secondId = faker.randomGenerator.integer(999);
     return [
       ExpansibleGroupEntity(
         Name: faker.randomGenerator.string(30),
-        ExpansibleGroupId: faker.randomGenerator.integer(999),
+        ExpansibleGroupId: firstId,
         ExpansibleGroupType: faker.randomGenerator.integer(999),
         OrderClassification: faker.randomGenerator.integer(999),
+        Schedule: makeExpansibleGroupScheduleEntity(firstId),
       ),
       ExpansibleGroupEntity(
         Name: faker.randomGenerator.string(30),
-        ExpansibleGroupId: faker.randomGenerator.integer(999),
+        ExpansibleGroupId: secondId,
         ExpansibleGroupType: faker.randomGenerator.integer(999),
         OrderClassification: faker.randomGenerator.integer(999),
+        Schedule: makeExpansibleGroupScheduleEntity(secondId),
       ),
     ];
   }
@@ -1199,5 +1203,18 @@ class EntityFactory {
         AllowFriday: faker.randomGenerator.boolean(),
         AllowSaturday: faker.randomGenerator.boolean(),
         AllowSunday: faker.randomGenerator.boolean(),
+      );
+
+  static ExpansibleGroupScheduleEntity makeExpansibleGroupScheduleEntity(
+          int expansibleGroupId) =>
+      ExpansibleGroupScheduleEntity(
+        ExpansibleGroupId: expansibleGroupId,
+        AllowMonday: faker.randomGenerator.integer(1, min: 0),
+        AlloTuesday: faker.randomGenerator.integer(1, min: 0),
+        AllowWednesday: faker.randomGenerator.integer(1, min: 0),
+        AllowThursday: faker.randomGenerator.integer(1, min: 0),
+        AllowFriday: faker.randomGenerator.integer(1, min: 0),
+        AllowSaturday: faker.randomGenerator.integer(1, min: 0),
+        AllowSunday: faker.randomGenerator.integer(1, min: 0),
       );
 }

@@ -62,6 +62,8 @@ class EnUs implements Translation {
   String get msgSelectSeller => 'Select the seller';
   String get msgSelectTable => 'Select the tabls';
   String get msgSuccessToCancelProducts => 'Product cancelled';
+  String get msgSuccessToUpdateSchedule =>
+      'The schedule has been configured successfully';
   String get msgSuccessUpdateMenuInAllDevices =>
       'The menu will be updated in all devices';
   String get msgTableNumber => 'Table number';

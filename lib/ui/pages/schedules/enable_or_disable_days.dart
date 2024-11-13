@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -274,18 +277,25 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
 
                                       if (widget.isUpdatingProduct &&
                                           widget.product != null) {
-                                        await menuPresenter
+                                        final updated = await menuPresenter
                                             .insertUpdateProductSchedule(
                                           widget.product!.InternalCodeOnERP!
                                               .toInt(),
                                         );
+                                        if(updated) {
+                                          snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
+                                        } 
                                       } else if (!widget.isUpdatingProduct &&
                                           widget.expansibleGroup != null) {
-                                        await menuPresenter
+                                        final updated = await menuPresenter
                                             .insertUpdateExpansibleGroupSchedule(
-                                                widget.expansibleGroup!
-                                                    .ExpansibleGroupId
-                                                    .toInt());
+                                          widget.expansibleGroup!
+                                              .ExpansibleGroupId
+                                              .toInt(),
+                                        );
+                                        if(updated) {
+                                          snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
+                                        } 
                                       }
                                     },
                               child: Text(R.string.confirm),

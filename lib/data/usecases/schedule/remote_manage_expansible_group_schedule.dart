@@ -19,7 +19,7 @@ class RemoteManageExpansibleGroupSchedule
           EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
       await httpAdapter.request(
         url:
-            "$url/api/APIProduct/DeleteExpansibleGroupSchedule?enterpriseId=$enterpriseId&expansibleGroupId=$expansibleGroupId",
+            "$url/api/APIGroups/DeleteExpansibleGroupSchedule?enterpriseId=$enterpriseId&expansibleGroupId=$expansibleGroupId",
         method: "delete",
       );
     } catch (error) {
@@ -34,7 +34,7 @@ class RemoteManageExpansibleGroupSchedule
 
       final result = await httpAdapter.request(
         url:
-            "$url/api/APIProduct/GetExpansibleGroupSchedules?expansibleGroupId=$expansibleGroupId",
+            "$url/api/APIGroups/GetExpansibleGroupSchedules?expansibleGroupId=$expansibleGroupId",
         method: "get",
       );
 
@@ -55,7 +55,7 @@ class RemoteManageExpansibleGroupSchedule
       final body = ExpansibleGroupScheduleModel.fromEntity(entity).toJson();
 
       await httpAdapter.request(
-        url: "$url/api/APIProduct/InsertUpdateExpansibleGroupSchedule",
+        url: "$url/api/APIGroups/InsertUpdateExpansibleGroupSchedule",
         method: "post",
         body: body,
       );

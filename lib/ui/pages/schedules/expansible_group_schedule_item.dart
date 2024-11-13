@@ -6,8 +6,10 @@ import '../pages.dart';
 
 class ExpansibleGroupScheduleItem extends StatelessWidget {
   final ExpansibleGroupsViewModel expansibleGroup;
+  final void Function() callSetSate;
   const ExpansibleGroupScheduleItem({
     required this.expansibleGroup,
+    required this.callSetSate,
     super.key,
   });
 
@@ -21,6 +23,7 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
             product: null,
             expansibleGroup: expansibleGroup,
             isUpdatingProduct: false,
+            callSetState: callSetSate,
           ),
         );
       },

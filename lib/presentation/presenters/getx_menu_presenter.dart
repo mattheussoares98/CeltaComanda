@@ -458,9 +458,12 @@ class GetxMenuPresenter extends GetxController
       _atualSuggestionProduct.subject.add(product);
 
   @override
-  Future<bool> insertUpdateProductSchedule(
-    int internalCodeOnErp,
-  ) async {
+  Future<bool> insertUpdateProductSchedule({
+    required int internalCodeOnErp,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
+  }) async {
     isLoading = true;
     mainError = null;
     try {
@@ -476,6 +479,12 @@ class GetxMenuPresenter extends GetxController
         await manageProductSchedule
             .insertUpdate(_productSchedule.value!.toEntity());
       }
+
+      await getGroupsAndProducts(
+        commandNumber: homePresenter.commandNumber?.toInt().toString() ?? "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
 
       return true;
     } catch (e) {
@@ -592,9 +601,12 @@ class GetxMenuPresenter extends GetxController
       _expansibleGroupSchedule.value = value;
 
   @override
-  Future<bool> insertUpdateExpansibleGroupSchedule(
-    int expansibleGroupId,
-  ) async {
+  Future<bool> insertUpdateExpansibleGroupSchedule({
+    required int expansibleGroupId,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
+  }) async {
     isLoading = true;
     mainError = null;
     try {
@@ -610,6 +622,12 @@ class GetxMenuPresenter extends GetxController
         await manageExpansibleGroupSchedule
             .insertUpdate(_expansibleGroupSchedule.value!.toEntity());
       }
+
+      await getGroupsAndProducts(
+        commandNumber: homePresenter.commandNumber?.toInt().toString() ?? "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       return true;
     } catch (e) {
       mainError = UIError.unexpected;

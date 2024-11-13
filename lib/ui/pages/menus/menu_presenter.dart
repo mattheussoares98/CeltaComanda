@@ -42,9 +42,12 @@ abstract class MenuPresenter implements Listenable {
   String getExpansibleGroupNameWithoutPipes(String expansibleGroupName);
   bool getAlreadyContainsExpansibleGroupName(String expansibleGroupName);
   String? getSubgroup(ExpansibleGroupEntity expansibleGroupEntity);
-  Future<bool> insertUpdateProductSchedule(
-    int internalCodeOnErp,
-  );
+  Future<bool> insertUpdateProductSchedule({
+    required int internalCodeOnErp,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
+  });
   void updateProductSchedule({
     required int internalCodeOnErp,
     bool? monday,
@@ -56,7 +59,12 @@ abstract class MenuPresenter implements Listenable {
     bool? sunday,
   });
 
-  Future<bool> insertUpdateExpansibleGroupSchedule(int expansibleGroupId);
+  Future<bool> insertUpdateExpansibleGroupSchedule({
+    required int expansibleGroupId,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
+  });
   void updateExpansibleGroupSchedule({
     required int expansibleGroupId,
     bool? monday,

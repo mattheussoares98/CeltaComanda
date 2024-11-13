@@ -32,6 +32,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                 product: product,
                 expansibleGroup: widget.expansibleGroup,
                 isUpdatingProduct: true,
+                callSetState: () => setState(() {}),
               ),
             );
           },

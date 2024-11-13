@@ -71,7 +71,10 @@ class _SchedulesPageState extends State<SchedulesPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ExpansibleGroupScheduleItem(expansibleGroup: group),
+                  ExpansibleGroupScheduleItem(
+                    expansibleGroup: group,
+                    callSetSate: () => setState(() {}),
+                  ),
                   ProductsSchedulesItems(
                     products: productsOfGroup,
                     expansibleGroup: null,

@@ -11,10 +11,12 @@ class EnableOrDisableDays extends StatefulWidget {
   final ProductsViewModel? product;
   final ExpansibleGroupsViewModel? expansibleGroup;
   final bool isUpdatingProduct;
+  final void Function() callSetState;
   const EnableOrDisableDays({
     required this.product,
     required this.expansibleGroup,
     required this.isUpdatingProduct,
+    required this.callSetState,
     super.key,
   });
 
@@ -103,6 +105,11 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
 
     return StreamBuilder<ExpansibleGroupScheduleViewModel?>(
         stream: menuPresenter.expansibleGroupScheduleStream,
@@ -273,7 +280,15 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                           !widget.isUpdatingProduct)
                                   ? null
                                   : () async {
-                                      await onPressed(menuPresenter);
+                                      await onPressed(
+                                        menuPresenter: menuPresenter,
+                                        expansibleGroupFromProductPresenter:
+                                            expansibleGroupFromProductPresenter,
+                                        homePresenter: homePresenter,
+                                        configurationsPresenter:
+                                            configurationsPresenter,
+                                      );
+                                      widget.callSetState();
                                     },
                               child: Text(R.string.confirm),
                             ),
@@ -287,24 +302,50 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         });
   }
 
-  Future<void> onPressed(MenuPresenter menuPresenter) async {
-    if (widget.isUpdatingProduct && widget.product != null) {
-      final updated = await menuPresenter.insertUpdateProductSchedule(
-        widget.product!.InternalCodeOnERP!.toInt(),
-      );
-      if (updated) {
-        Navigator.of(context).pop();
-        snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
-      }
-    } else if (!widget.isUpdatingProduct && widget.expansibleGroup != null) {
-      final updated = await menuPresenter.insertUpdateExpansibleGroupSchedule(
-        widget.expansibleGroup!.ExpansibleGroupId.toInt(),
-      );
-      if (updated) {
-        Navigator.of(context).pop();
-        snackBarMessage(context, R.string.msgSuccessToUpdateSchedule);
-      }
-    }
+  Future<void> onPressed({
+    required MenuPresenter menuPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
+    required ConfigurationsPresenter configurationsPresenter,
+  }) async {
+    bool updated = false;
+    notificationDialog(
+      context: context,
+      titleMessage: R.string.confirmSchedule,
+      content: null,
+      onPress: () async {
+        if (widget.isUpdatingProduct && widget.product != null) {
+          updated = await menuPresenter.insertUpdateProductSchedule(
+            internalCodeOnErp: widget.product!.InternalCodeOnERP!.toInt(),
+            homePresenter: homePresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+          );
+        } else if (!widget.isUpdatingProduct &&
+            widget.expansibleGroup != null) {
+          updated = await menuPresenter.insertUpdateExpansibleGroupSchedule(
+            expansibleGroupId:
+                widget.expansibleGroup!.ExpansibleGroupId.toInt(),
+            homePresenter: homePresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+          );
+        }
+
+        if (updated) {
+          Navigator.of(context).pop();
+          notificationDialog(
+              context: context,
+              titleMessage: R.string.msgSuccessToUpdateSchedule,
+              content:
+                  Center(child: Text(R.string.msgWantUpdateMenuInAllDevices)),
+              onPress: () async {
+                await configurationsPresenter.loadMenuAgain();
+              });
+        }
+      },
+    );
   }
 
   Widget personalizedCheckBox({

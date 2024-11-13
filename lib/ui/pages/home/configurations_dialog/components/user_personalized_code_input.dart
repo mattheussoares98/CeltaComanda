@@ -17,7 +17,7 @@ class UserPersonalizedCodeInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: userCodeFocusNode,
-      autofocus: false,
+      autofocus: true,
       onFieldSubmitted: (_) {
         passwordFocusNode.requestFocus();
       },

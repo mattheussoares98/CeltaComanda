@@ -270,6 +270,8 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                           !widget.isUpdatingProduct)
                                   ? null
                                   : () async {
+                                      Navigator.of(context).pop();
+
                                       if (widget.isUpdatingProduct &&
                                           widget.product != null) {
                                         await menuPresenter

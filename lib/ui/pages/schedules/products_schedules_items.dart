@@ -41,7 +41,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             color: productIndex % 2 == 0
-                ? Theme.of(context).primaryColorLight.withAlpha(50)
+                ? Theme.of(context).primaryColorLight.withAlpha(30)
                 : Colors.white,
             child: GestureDetector(
               child: Row(

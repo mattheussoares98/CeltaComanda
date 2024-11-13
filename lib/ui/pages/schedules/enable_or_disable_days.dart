@@ -373,7 +373,12 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
             color: Theme.of(context).primaryColorLight,
           ),
         ),
-        title: Text(dayName),
+        title: Text(
+          dayName,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         value: dayEnabled == true,
         fillColor:
             dayEnabled == true ? WidgetStatePropertyAll(Colors.green) : null,

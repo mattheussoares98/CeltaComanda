@@ -30,6 +30,7 @@ class _SchedulesPageState extends State<SchedulesPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: true);
+    HomePresenter homePresenter = Provider.of(context, listen: true);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
@@ -41,12 +42,12 @@ class _SchedulesPageState extends State<SchedulesPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(R.string.productsSchedules),
+        title: FittedBox(child: Text(R.string.productsSchedules)),
         actions: [
           IconButton(
             onPressed: () async {
               await menuPresenter.getGroupsAndProducts(
-                commandNumber: "001",
+                commandNumber: homePresenter.commandNumber ?? "001",
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
               );
@@ -57,32 +58,56 @@ class _SchedulesPageState extends State<SchedulesPage>
         ],
       ),
       body: Center(
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: menuPresenter.loadedMenu.length,
-          itemBuilder: (context, groupIndex) {
-            final group = menuPresenter.loadedMenu
-                .map((element) => element.keys.first)
-                .toList()[groupIndex];
-            final productsOfGroup =
-                menuPresenter.loadedMenu[groupIndex].values.first;
-            return Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ExpansibleGroupScheduleItem(
-                    expansibleGroup: group,
-                    callSetSate: () => setState(() {}),
-                  ),
-                  ProductsSchedulesItems(
-                    products: productsOfGroup,
-                    expansibleGroup: null,
-                  ),
-                ],
-              ),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await menuPresenter.getGroupsAndProducts(
+              commandNumber: homePresenter.commandNumber ?? "001",
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
             );
+            setState(() {});
           },
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: menuPresenter.loadedMenu.length,
+            itemBuilder: (context, groupIndex) {
+              final group = menuPresenter.loadedMenu
+                  .map((element) => element.keys.first)
+                  .toList()[groupIndex];
+              final productsOfGroup =
+                  menuPresenter.loadedMenu[groupIndex].values.first;
+              return Container(
+                margin: EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Theme.of(context).primaryColorLight,
+                    )),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ExpansibleGroupScheduleItem(
+                        expansibleGroup: group,
+                        callSetSate: () => setState(() {}),
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                        child: ProductsSchedulesItems(
+                          products: productsOfGroup,
+                          expansibleGroup: null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

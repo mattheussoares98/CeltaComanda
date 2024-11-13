@@ -145,6 +145,7 @@ class PtBr implements Translation {
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get environment => 'Ambiente';
   String get exit => 'Sair';
+  String get expansibleGroup => 'Grupo expansível';
   String get friday => 'Sexta';
   String get getCustomer => 'Pesquisar cliente';
   String get insertInCart => 'Inserir no carrinho';
@@ -179,6 +180,7 @@ class PtBr implements Translation {
   String get productsAndComments => 'Produtos e comentários';
   String get productsSchedules => 'Agendamento de produtos';
   String get products => 'Produtos';
+  String get product => 'Produto';
   String get promotionWithoutPoints => 'Promocao';
   String get quantity => 'Quantidade';
   String get quantityAbbreviated => 'Qtd';

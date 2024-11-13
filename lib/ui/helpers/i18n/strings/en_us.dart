@@ -145,6 +145,7 @@ class EnUs implements Translation {
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';
   String get exit => 'Exit';
+  String get expansibleGroup => 'Expansible group';
   String get friday => 'Friday';
   String get getCustomer => 'Get customer';
   String get insertInCart => 'Add to cart';
@@ -178,6 +179,7 @@ class EnUs implements Translation {
   String get productsAndComments => 'Products and comments';
   String get productsSchedules => 'Products schedules';
   String get products => 'Products';
+  String get product => 'Product';
   String get promotionWithoutPoints => 'Promotion without points';
   String get quantity => 'Quantity';
   String get quantityAbbreviated => 'Qty';

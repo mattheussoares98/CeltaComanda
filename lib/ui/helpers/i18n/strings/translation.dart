@@ -118,6 +118,7 @@ abstract class Translation {
   String get enterprise;
   String get environment;
   String get exit;
+  String get expansibleGroup;
   String get friday;
   String get getCustomer;
   String get insertInCart;
@@ -152,6 +153,7 @@ abstract class Translation {
   String get productsAndComments;
   String get productsSchedules;
   String get products;
+  String get product;
   String get promotionWithoutPoints;
   String get quantity;
   String get quantityAbbreviated;

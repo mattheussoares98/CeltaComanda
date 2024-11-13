@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
-import '../../helpers/helpers.dart';
 import '../pages.dart';
 
 class ProductsSchedulesItems extends StatefulWidget {
@@ -33,39 +32,9 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
         final product = widget.products[productIndex];
         return InkWell(
           onTap: () {
-            setState(() {
-              allowMonday = product.Schedule?.AllowMonday != false;
-              allowTuesday = product.Schedule?.AlloTuesday != false;
-              allowWednesday = product.Schedule?.AllowWednesday != false;
-              allowThursday = product.Schedule?.AllowThursday != false;
-              allowFriday = product.Schedule?.AllowFriday != false;
-              allowSunday = product.Schedule?.AllowSunday != false;
-              allowSaturday = product.Schedule?.AllowSaturday != false;
-            });
-
-            notificationDialog(
+            PersonalizedDialogPage.open(
               context: context,
-              titleMessage: R.string.productsSchedules,
-              cancelMessage: R.string.cancel,
-              confirmMessage: R.string.confirm,
-              content: Scaffold(
-                body: Column(
-                  children: [
-                    Text(product.Name),
-                    CheckboxListTile(
-                      dense: true,
-                      title: Text("Mon" + "day"),
-                      value: allowMonday,
-                      onChanged: (value) {
-                        setState(() {
-                          allowMonday = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              onPress: () async {},
+              page: EnableOrDisableDays(product: product),
             );
           },
           child: Container(

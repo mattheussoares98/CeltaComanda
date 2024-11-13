@@ -145,6 +145,7 @@ class EnUs implements Translation {
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';
   String get exit => 'Exit';
+  String get friday => 'Friday';
   String get getCustomer => 'Get customer';
   String get insertInCart => 'Add to cart';
   String get insert => 'Insert';
@@ -160,6 +161,7 @@ class EnUs implements Translation {
   String get loadMenu => 'Load menu';
   String get login => 'Login';
   String get missing => 'Missing';
+  String get monday => 'Monday';
   String get name => 'Name';
   String get neww => 'New';
   String get no => 'No';
@@ -187,6 +189,7 @@ class EnUs implements Translation {
   String get requestSentSuccessfully => 'The request was sent successfully';
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';
+  String get saturday => "Saturday";
   String get searchByPersonalizedCode => "Search by personalized code";
   String get searchDataOfOtherCommandNumber =>
       'Search data of other command number';
@@ -207,16 +210,19 @@ class EnUs implements Translation {
   String get serviceCharge => 'Service charge';
   String get subtotal => 'Subtotal';
   String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
+  String get sunday => 'Sunday';
   String get support => 'Support';
   String get supportContact => 'Support contact';
   String get surveys => 'Surveys';
   String get surveyResult => 'Survey result';
   String get table => 'Table';
   String get tableConfigurations => 'Table configurations';
+  String get thursday => 'Thursday';
   String get time => 'Time';
   String get total => 'Total';
   String get totalPaid => 'Total paid';
   String get totalByPerson => 'Total by person';
+  String get tuesday => 'Tuesday';
   String get turnBack => 'Go back';
   String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';
@@ -231,6 +237,7 @@ class EnUs implements Translation {
   String get wait => 'Please wait...';
   String get wantRemoveRequestedProduct =>
       'Do you really want to remove the product from the requested products?';
+  String get wednesday => "Wednesday";
   String get yes => "yes";
   String get withoutCovenant => "Without covenant";
 }

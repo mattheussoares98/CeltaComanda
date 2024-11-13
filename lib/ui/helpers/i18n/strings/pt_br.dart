@@ -145,6 +145,7 @@ class PtBr implements Translation {
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get environment => 'Ambiente';
   String get exit => 'Sair';
+  String get friday => 'Sexta';
   String get getCustomer => 'Pesquisar cliente';
   String get insertInCart => 'Inserir no carrinho';
   String get insert => 'Inserir';
@@ -161,6 +162,7 @@ class PtBr implements Translation {
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
   String get missing => 'Faltando';
+  String get monday => 'Segunda';
   String get name => 'Nome';
   String get neww => 'Novo';
   String get no => 'Não';
@@ -188,6 +190,7 @@ class PtBr implements Translation {
   String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
+  String get saturday => "Sábado";
   String get searchByPersonalizedCode => "Pesquisar pelo código personalizado";
   String get searchDataOfOtherCommandNumber =>
       "Consultar dados de outra comanda";
@@ -209,16 +212,19 @@ class PtBr implements Translation {
   String get serviceCharge => 'Taxa de serviço';
   String get subtotal => "Subtotal";
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
+  String get sunday => "Domingo";
   String get support => 'Suporte';
   String get supportContact => 'Contato do suporte';
   String get surveys => 'Enquetes';
   String get surveyResult => 'Resultado da enquete';
   String get table => 'Mesa';
   String get tableConfigurations => 'Configurações da mesa';
+  String get thursday => 'Quinta';
   String get time => 'Horário';
   String get total => 'Total';
   String get totalPaid => 'Total pago';
   String get totalByPerson => 'Total por pessoa';
+  String get tuesday => 'Terça';
   String get turnBack => 'Voltar';
   String get updateConfigurations => "Alterar configurações";
   String get updateMenu => "Atualizar menu";
@@ -233,6 +239,7 @@ class PtBr implements Translation {
   String get wait => 'Aguarde...';
   String get wantRemoveRequestedProduct =>
       'Deseja realmente remover o produto dos produtos solicitados?';
+  String get wednesday => "Quarta";
   String get withoutCovenant => "Sem convênio";
   String get yes => "Sim";
 }

@@ -118,6 +118,7 @@ abstract class Translation {
   String get enterprise;
   String get environment;
   String get exit;
+  String get friday;
   String get getCustomer;
   String get insertInCart;
   String get insert;
@@ -134,6 +135,7 @@ abstract class Translation {
   String get loadMenu;
   String get login;
   String get missing;
+  String get monday;
   String get name;
   String get neww;
   String get no;
@@ -160,6 +162,7 @@ abstract class Translation {
   String get requestedAt;
   String get reserved;
   String get reserveTable;
+  String get saturday;
   String get searchByPersonalizedCode;
   String get searchCommandData;
   String get searchDataOfOtherCommandNumber;
@@ -179,16 +182,19 @@ abstract class Translation {
   String get serviceCharge;
   String get subtotal;
   String get suggestionCriticalOrPraise;
+  String get sunday;
   String get support;
   String get supportContact;
   String get surveys;
   String get surveyResult;
   String get table;
   String get tableConfigurations;
+  String get thursday;
   String get time;
   String get total;
   String get totalByPerson;
   String get totalPaid;
+  String get tuesday;
   String get turnBack;
   String get updateConfigurations;
   String get updateMenu;
@@ -201,6 +207,7 @@ abstract class Translation {
   String get voucher;
   String get wait;
   String get wantRemoveRequestedProduct;
+  String get wednesday;
   String get withoutCovenant;
   String get yes;
 }

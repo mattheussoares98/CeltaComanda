@@ -24,6 +24,7 @@ class GetxMenuPresenter extends GetxController
   final GetProductComposition getProductComposition;
   final LoadSuggestionSale loadSuggestionSale;
   final ManageProductSchedule manageProductSchedule;
+  final ManageExpansibleGroupSchedule manageExpansibleGroupSchedule;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -35,6 +36,7 @@ class GetxMenuPresenter extends GetxController
     required this.getProductComposition,
     required this.loadSuggestionSale,
     required this.manageProductSchedule,
+    required this.manageExpansibleGroupSchedule,
   });
 
   @override

@@ -42,6 +42,7 @@ void main() {
   late GetProductCompositionSpy getProductComposition;
   late LoadSuggestionSaleSpy loadSuggestionSale;
   late ManageProductScheduleSpy manageProductSchedule;
+  late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
 
   late String productEan;
   late ProductEntity productEntity;
@@ -64,6 +65,7 @@ void main() {
     getProductComposition = GetProductCompositionSpy();
     loadSuggestionSale = LoadSuggestionSaleSpy();
     manageProductSchedule = ManageProductScheduleSpy();
+    manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
   }
 
   void initPresenters() {
@@ -82,6 +84,7 @@ void main() {
       getProductComposition: getProductComposition,
       loadSuggestionSale: loadSuggestionSale,
       manageProductSchedule: manageProductSchedule,
+      manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
     );
   }
 

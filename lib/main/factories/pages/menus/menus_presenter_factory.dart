@@ -12,4 +12,5 @@ MenuPresenter makeGetxMenuPresenter() => GetxMenuPresenter(
       getProductComposition: makeRemoteGetProductComposition(),
       loadSuggestionSale: makeRemoteLoadSuggestionSale(),
       manageProductSchedule: makeRemoteManageProductSchedule(),
+      manageExpansibleGroupSchedule: makeRemoteManageExpansibleGroupSchedule(),
     );

@@ -77,8 +77,14 @@ class Subgroups extends StatelessWidget {
     }
 
     return Builder(builder: (context) {
-      final subgroups =
-          menuPresenter.loadedMenu[selectedIndex ?? 0].keys.first.subgroups;
+      final subgroups = menuPresenter
+          .loadedMenu[selectedIndex ?? 0].keys.first.subgroups
+          .where((e) => menuPresenter
+              .treatSchedules()
+              .where((t) => t.subgroupName == e)
+              .toList()
+              .isNotEmpty)
+          .toList();
 
       if (subgroups.isEmpty) {
         return const SizedBox();

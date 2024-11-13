@@ -66,7 +66,8 @@ class PtBr implements Translation {
   String get msgSelectSeller => 'Selecione o vendedor';
   String get msgSelectTable => 'Selecione a mesa';
   String get msgSuccessToCancelProducts => 'Produto cancelado com sucesso';
-  String get msgSuccessToUpdateSchedule => "Agendamento configurado com sucesso";
+  String get msgSuccessToUpdateSchedule =>
+      "Agendamento configurado com sucesso";
   String get msgSuccessUpdateMenuInAllDevices =>
       'O menu vai ser atualizado em todos dispositivos';
   String get msgTableNumber => 'Número da mesa';
@@ -80,7 +81,7 @@ class PtBr implements Translation {
   String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
   String get msgWantUpdateMenuInAllDevices =>
-      "Deseja realmente atualizar o menu em todos dispositivos?";
+      "Deseja atualizar o menu em todos dispositivos?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
       'Ao confirmar, os produtos serão solicitados e em breve serão servidos';
   String get msgWriteCommandNumber => "Digite o número da comanda";
@@ -127,8 +128,9 @@ class PtBr implements Translation {
   String get configurations => "Configurações";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
-  String get contactUs => 'Fale conosco';
+  String get confirmSchedule => 'Confirmar agendamento';
   String get confirm => 'Confirmar';
+  String get contactUs => 'Fale conosco';
   String get costBenefit => 'Custo benefício';
   String get covenant => "Convênio";
   String get covenants => "Convênios";

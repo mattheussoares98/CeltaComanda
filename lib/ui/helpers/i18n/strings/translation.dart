@@ -101,6 +101,7 @@ abstract class Translation {
   String get confirmFlag;
   String get confirm;
   String get confirmPassword;
+  String get confirmSchedule;
   String get contactUs;
   String get costBenefit;
   String get covenant;

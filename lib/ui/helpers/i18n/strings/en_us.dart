@@ -128,6 +128,7 @@ class EnUs implements Translation {
   String get configurations => 'Configurations';
   String get confirmFlag => 'Confirm flag';
   String get confirmPassword => 'Confirm password';
+  String get confirmSchedule => 'Confirm schedule';
   String get confirm => 'Confirm';
   String get contactUs => 'Contact us';
   String get costBenefit => 'Cost-benefit';

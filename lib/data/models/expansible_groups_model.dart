@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import '../../domain/entities/entities.dart';
+import 'models.dart';
 
 class ExpansibleGroupsModel {
   final String Name;
@@ -34,7 +35,9 @@ class ExpansibleGroupsModel {
       ExpansibleGroupId: json["ExpansibleGroupId"],
       ExpansibleGroupType: json["ExpansibleGroupType"],
       OrderClassification: json["OrderClassification"],
-      Schedule: json["Schedule"],
+      Schedule: json["Schedule"] == null
+          ? null
+          : ExpansibleGroupScheduleModel.fromJson(json["Schedule"]).toEntity(),
     );
   }
 

@@ -34,7 +34,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
             internalCodeOnErp:
                 widget.product!.InternalCodeOfProductOnERP!.toInt(),
             monday: widget.product!.Schedule?.AllowMonday != false,
-            tuesday: widget.product!.Schedule?.AlloTuesday != false,
+            tuesday: widget.product!.Schedule?.AllowTuesday != false,
             wednesday: widget.product!.Schedule?.AllowWednesday != false,
             thursday: widget.product!.Schedule?.AllowThursday != false,
             friday: widget.product!.Schedule?.AllowFriday != false,
@@ -47,7 +47,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
               expansibleGroupId:
                   widget.expansibleGroup!.ExpansibleGroupId.toInt(),
               monday: widget.expansibleGroup!.Schedule?.AllowMonday != false,
-              tuesday: widget.expansibleGroup!.Schedule?.AlloTuesday != false,
+              tuesday: widget.expansibleGroup!.Schedule?.AllowTuesday != false,
               wednesday:
                   widget.expansibleGroup!.Schedule?.AllowWednesday != false,
               thursday:
@@ -79,7 +79,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
       menuPresenter.updateProductSchedule(
         internalCodeOnErp: widget.product!.InternalCodeOnERP!.toInt(),
         monday: monday ?? productSchedule?.AllowMonday,
-        tuesday: tuesday ?? productSchedule?.AlloTuesday,
+        tuesday: tuesday ?? productSchedule?.AllowTuesday,
         wednesday: wednesday ?? productSchedule?.AllowWednesday,
         thursday: thursday ?? productSchedule?.AllowThursday,
         friday: friday ?? productSchedule?.AllowFriday,
@@ -90,7 +90,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
       menuPresenter.updateExpansibleGroupSchedule(
         expansibleGroupId: widget.expansibleGroup!.ExpansibleGroupId.toInt(),
         monday: monday ?? groupSchedule?.AllowMonday,
-        tuesday: tuesday ?? groupSchedule?.AlloTuesday,
+        tuesday: tuesday ?? groupSchedule?.AllowTuesday,
         wednesday: wednesday ?? groupSchedule?.AllowWednesday,
         thursday: thursday ?? groupSchedule?.AllowThursday,
         friday: friday ?? groupSchedule?.AllowFriday,
@@ -118,9 +118,9 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                 bool allowMonday = widget.isUpdatingProduct
                     ? productSchedule?.AllowMonday != false
                     : groupSchedule?.AllowMonday != false;
-                bool alloTuesday = widget.isUpdatingProduct
-                    ? productSchedule?.AlloTuesday != false
-                    : groupSchedule?.AlloTuesday != false;
+                bool allowTuesday = widget.isUpdatingProduct
+                    ? productSchedule?.AllowTuesday != false
+                    : groupSchedule?.AllowTuesday != false;
                 bool allowWednesday = widget.isUpdatingProduct
                     ? productSchedule?.AllowWednesday != false
                     : groupSchedule?.AllowWednesday != false;
@@ -178,7 +178,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                       },
                     ),
                     personalizedCheckBox(
-                      dayEnabled: alloTuesday,
+                      dayEnabled: allowTuesday,
                       dayName: R.string.tuesday,
                       onChanged: (value) {
                         updateSchedule(

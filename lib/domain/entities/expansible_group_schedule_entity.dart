@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 class ExpansibleGroupScheduleEntity extends Equatable {
   final int? ExpansibleGroupId;
   final int? AllowMonday;
-  final int? AlloTuesday;
+  final int? AllowTuesday;
   final int? AllowWednesday;
   final int? AllowThursday;
   final int? AllowFriday;
@@ -15,7 +15,7 @@ class ExpansibleGroupScheduleEntity extends Equatable {
   const ExpansibleGroupScheduleEntity({
     required this.ExpansibleGroupId,
     required this.AllowMonday,
-    required this.AlloTuesday,
+    required this.AllowTuesday,
     required this.AllowWednesday,
     required this.AllowThursday,
     required this.AllowFriday,
@@ -27,7 +27,7 @@ class ExpansibleGroupScheduleEntity extends Equatable {
   List<Object?> get props => [
         ExpansibleGroupId,
         AllowMonday,
-        AlloTuesday,
+        AllowTuesday,
         AllowWednesday,
         AllowThursday,
         AllowFriday,

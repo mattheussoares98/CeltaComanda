@@ -41,7 +41,7 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
             ),
             ScheduleEnabledDays(
               allowMonday: expansibleGroup.Schedule?.AllowMonday != false,
-              alloTuesday: expansibleGroup.Schedule?.AlloTuesday != false,
+              allowTuesday: expansibleGroup.Schedule?.AllowTuesday != false,
               allowWednesday: expansibleGroup.Schedule?.AllowWednesday != false,
               allowThursday: expansibleGroup.Schedule?.AllowThursday != false,
               allowFriday: expansibleGroup.Schedule?.AllowFriday != false,

@@ -6,7 +6,7 @@ class ProductScheduleEntity extends Equatable {
   final int? InternalCodeOnERP;
   final int? EnterpriseId;
   final int? AllowMonday;
-  final int? AlloTuesday;
+  final int? AllowTuesday;
   final int? AllowWednesday;
   final int? AllowThursday;
   final int? AllowFriday;
@@ -17,7 +17,7 @@ class ProductScheduleEntity extends Equatable {
     required this.InternalCodeOnERP,
     required this.EnterpriseId,
     required this.AllowMonday,
-    required this.AlloTuesday,
+    required this.AllowTuesday,
     required this.AllowWednesday,
     required this.AllowThursday,
     required this.AllowFriday,
@@ -30,7 +30,7 @@ class ProductScheduleEntity extends Equatable {
         InternalCodeOnERP,
         EnterpriseId,
         AllowMonday,
-        AlloTuesday,
+        AllowTuesday,
         AllowWednesday,
         AllowThursday,
         AllowFriday,

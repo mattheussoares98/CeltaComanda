@@ -8,7 +8,7 @@ class ProductScheduleViewModel extends Equatable {
   final int InternalCodeOnERP;
   final int EnterpriseId;
   final bool AllowMonday;
-  final bool AlloTuesday;
+  final bool AllowTuesday;
   final bool AllowWednesday;
   final bool AllowThursday;
   final bool AllowFriday;
@@ -19,7 +19,7 @@ class ProductScheduleViewModel extends Equatable {
     required this.InternalCodeOnERP,
     required this.EnterpriseId,
     required this.AllowMonday,
-    required this.AlloTuesday,
+    required this.AllowTuesday,
     required this.AllowWednesday,
     required this.AllowThursday,
     required this.AllowFriday,
@@ -32,7 +32,7 @@ class ProductScheduleViewModel extends Equatable {
         InternalCodeOnERP,
         EnterpriseId,
         AllowMonday,
-        AlloTuesday,
+        AllowTuesday,
         AllowWednesday,
         AllowThursday,
         AllowFriday,
@@ -51,7 +51,7 @@ class ProductScheduleViewModel extends Equatable {
       InternalCodeOnERP: json["InternalCodeOnERP"],
       EnterpriseId: json["EnterpriseId"],
       AllowMonday: json["AllowMonday"] == 1,
-      AlloTuesday: json["AlloTuesday"] == 1,
+      AllowTuesday: json["AllowTuesday"] == 1,
       AllowWednesday: json["AllowWednesday"] == 1,
       AllowThursday: json["AllowThursday"] == 1,
       AllowFriday: json["AllowFriday"] == 1,
@@ -65,7 +65,7 @@ class ProductScheduleViewModel extends Equatable {
         InternalCodeOnERP: entity.InternalCodeOnERP!,
         EnterpriseId: entity.EnterpriseId!,
         AllowMonday: entity.AllowMonday == 1,
-        AlloTuesday: entity.AlloTuesday == 1,
+        AllowTuesday: entity.AllowTuesday == 1,
         AllowWednesday: entity.AllowWednesday == 1,
         AllowThursday: entity.AllowThursday == 1,
         AllowFriday: entity.AllowFriday == 1,
@@ -77,7 +77,7 @@ class ProductScheduleViewModel extends Equatable {
         InternalCodeOnERP: InternalCodeOnERP,
         EnterpriseId: EnterpriseId,
         AllowMonday: AllowMonday == true ? 1 : 0,
-        AlloTuesday: AlloTuesday == true ? 1 : 0,
+        AllowTuesday: AllowTuesday == true ? 1 : 0,
         AllowWednesday: AllowWednesday == true ? 1 : 0,
         AllowThursday: AllowThursday == true ? 1 : 0,
         AllowFriday: AllowFriday == true ? 1 : 0,
@@ -89,7 +89,7 @@ class ProductScheduleViewModel extends Equatable {
         "InternalCodeOnERP": InternalCodeOnERP,
         "EnterpriseId": EnterpriseId,
         "AllowMonday": AllowMonday == true ? 1 : 0,
-        "AlloTuesday": AlloTuesday == true ? 1 : 0,
+        "AllowTuesday": AllowTuesday == true ? 1 : 0,
         "AllowWednesday": AllowWednesday == true ? 1 : 0,
         "AllowThursday": AllowThursday == true ? 1 : 0,
         "AllowFriday": AllowFriday == true ? 1 : 0,

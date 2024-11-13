@@ -46,7 +46,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                   Expanded(child: Text(product.Name)),
                   ScheduleEnabledDays(
                     allowMonday: product.Schedule?.AllowMonday != false,
-                    alloTuesday: product.Schedule?.AlloTuesday != false,
+                    allowTuesday: product.Schedule?.AllowTuesday != false,
                     allowWednesday: product.Schedule?.AllowWednesday != false,
                     allowThursday: product.Schedule?.AllowThursday != false,
                     allowFriday: product.Schedule?.AllowFriday != false,

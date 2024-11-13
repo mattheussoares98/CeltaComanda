@@ -1077,7 +1077,7 @@ void main() {
         saturday: productScheduleViewModel.AllowSaturday,
         sunday: productScheduleViewModel.AllowSunday,
         thursday: productScheduleViewModel.AllowThursday,
-        tuesday: productScheduleViewModel.AlloTuesday,
+        tuesday: productScheduleViewModel.AllowTuesday,
         wednesday: productScheduleViewModel.AllowWednesday,
       );
 
@@ -1135,7 +1135,7 @@ void main() {
         saturday: productScheduleViewModel.AllowSaturday,
         sunday: productScheduleViewModel.AllowSunday,
         thursday: productScheduleViewModel.AllowThursday,
-        tuesday: productScheduleViewModel.AlloTuesday,
+        tuesday: productScheduleViewModel.AllowTuesday,
         wednesday: productScheduleViewModel.AllowWednesday,
       );
     });
@@ -1167,7 +1167,7 @@ void main() {
         saturday: expansibleGroupScheduleViewModel.AllowSaturday,
         sunday: expansibleGroupScheduleViewModel.AllowSunday,
         thursday: expansibleGroupScheduleViewModel.AllowThursday,
-        tuesday: expansibleGroupScheduleViewModel.AlloTuesday,
+        tuesday: expansibleGroupScheduleViewModel.AllowTuesday,
         wednesday: expansibleGroupScheduleViewModel.AllowWednesday,
       );
 
@@ -1229,7 +1229,7 @@ void main() {
         saturday: expansibleGroupScheduleViewModel.AllowSaturday,
         sunday: expansibleGroupScheduleViewModel.AllowSunday,
         thursday: expansibleGroupScheduleViewModel.AllowThursday,
-        tuesday: expansibleGroupScheduleViewModel.AlloTuesday,
+        tuesday: expansibleGroupScheduleViewModel.AllowTuesday,
         wednesday: expansibleGroupScheduleViewModel.AllowWednesday,
       );
     });

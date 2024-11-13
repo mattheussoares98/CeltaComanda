@@ -465,7 +465,7 @@ class GetxMenuPresenter extends GetxController
     mainError = null;
     try {
       if (_productSchedule.value?.AllowMonday == true &&
-          _productSchedule.value?.AlloTuesday == true &&
+          _productSchedule.value?.AllowTuesday == true &&
           _productSchedule.value?.AllowWednesday == true &&
           _productSchedule.value?.AllowThursday == true &&
           _productSchedule.value?.AllowFriday == true &&
@@ -508,7 +508,7 @@ class GetxMenuPresenter extends GetxController
       InternalCodeOnERP: internalCodeOnErp,
       EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
       AllowMonday: monday ?? _productSchedule.value?.AllowMonday == true,
-      AlloTuesday: tuesday ?? _productSchedule.value?.AlloTuesday == true,
+      AllowTuesday: tuesday ?? _productSchedule.value?.AllowTuesday == true,
       AllowWednesday:
           wednesday ?? _productSchedule.value?.AllowWednesday == true,
       AllowThursday: thursday ?? _productSchedule.value?.AllowThursday == true,
@@ -542,7 +542,7 @@ class GetxMenuPresenter extends GetxController
         } else if (dayOfWeek == daysOfWeek[1]) {
           return e.Schedule!.AllowMonday == true;
         } else if (dayOfWeek == daysOfWeek[2]) {
-          return e.Schedule!.AlloTuesday == true;
+          return e.Schedule!.AllowTuesday == true;
         } else if (dayOfWeek == daysOfWeek[3]) {
           return e.Schedule!.AllowWednesday == true;
         } else if (dayOfWeek == daysOfWeek[4]) {
@@ -564,7 +564,7 @@ class GetxMenuPresenter extends GetxController
         } else if (dayOfWeek == daysOfWeek[1]) {
           return e.Schedule!.AllowMonday == true;
         } else if (dayOfWeek == daysOfWeek[2]) {
-          return e.Schedule!.AlloTuesday == true;
+          return e.Schedule!.AllowTuesday == true;
         } else if (dayOfWeek == daysOfWeek[3]) {
           return e.Schedule!.AllowWednesday == true;
         } else if (dayOfWeek == daysOfWeek[4]) {
@@ -599,7 +599,7 @@ class GetxMenuPresenter extends GetxController
     mainError = null;
     try {
       if (_expansibleGroupSchedule.value?.AllowMonday == true &&
-          _expansibleGroupSchedule.value?.AlloTuesday == true &&
+          _expansibleGroupSchedule.value?.AllowTuesday == true &&
           _expansibleGroupSchedule.value?.AllowWednesday == true &&
           _expansibleGroupSchedule.value?.AllowThursday == true &&
           _expansibleGroupSchedule.value?.AllowFriday == true &&
@@ -634,8 +634,8 @@ class GetxMenuPresenter extends GetxController
       ExpansibleGroupId: expansibleGroupId,
       AllowMonday:
           monday ?? _expansibleGroupSchedule.value?.AllowMonday == true,
-      AlloTuesday:
-          tuesday ?? _expansibleGroupSchedule.value?.AlloTuesday == true,
+      AllowTuesday:
+          tuesday ?? _expansibleGroupSchedule.value?.AllowTuesday == true,
       AllowWednesday:
           wednesday ?? _expansibleGroupSchedule.value?.AllowWednesday == true,
       AllowThursday:

@@ -4,7 +4,7 @@ import '../../../ui/helpers/helpers.dart';
 
 class ScheduleEnabledDays extends StatelessWidget {
   final bool allowMonday;
-  final bool alloTuesday;
+  final bool allowTuesday;
   final bool allowWednesday;
   final bool allowThursday;
   final bool allowFriday;
@@ -12,7 +12,7 @@ class ScheduleEnabledDays extends StatelessWidget {
   final bool allowSunday;
   const ScheduleEnabledDays({
     required this.allowMonday,
-    required this.alloTuesday,
+    required this.allowTuesday,
     required this.allowWednesday,
     required this.allowThursday,
     required this.allowFriday,
@@ -49,7 +49,7 @@ class ScheduleEnabledDays extends StatelessWidget {
           context: context,
         ),
         getIcon(
-          enabled: alloTuesday,
+          enabled: allowTuesday,
           firstLetterOfDay: "T",
           context: context,
         ),

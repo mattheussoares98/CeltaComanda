@@ -7,7 +7,7 @@ import '../../domain/entities/entities.dart';
 class ExpansibleGroupScheduleModel extends Equatable {
   final int? ExpansibleGroupId;
   final bool? AllowMonday;
-  final bool? AlloTuesday;
+  final bool? AllowTuesday;
   final bool? AllowWednesday;
   final bool? AllowThursday;
   final bool? AllowFriday;
@@ -17,7 +17,7 @@ class ExpansibleGroupScheduleModel extends Equatable {
   const ExpansibleGroupScheduleModel({
     required this.ExpansibleGroupId,
     required this.AllowMonday,
-    required this.AlloTuesday,
+    required this.AllowTuesday,
     required this.AllowWednesday,
     required this.AllowThursday,
     required this.AllowFriday,
@@ -29,7 +29,7 @@ class ExpansibleGroupScheduleModel extends Equatable {
   List<Object?> get props => [
         ExpansibleGroupId,
         AllowMonday,
-        AlloTuesday,
+        AllowTuesday,
         AllowWednesday,
         AllowThursday,
         AllowFriday,
@@ -44,7 +44,7 @@ class ExpansibleGroupScheduleModel extends Equatable {
     return ExpansibleGroupScheduleModel(
       ExpansibleGroupId: json["ExpansibleGroupId"],
       AllowMonday: json["AllowMonday"] == 1,
-      AlloTuesday: json["AlloTuesday"] == 1,
+      AllowTuesday: json["AllowTuesday"] == 1,
       AllowWednesday: json["AllowWednesday"] == 1,
       AllowThursday: json["AllowThursday"] == 1,
       AllowFriday: json["AllowFriday"] == 1,
@@ -58,7 +58,7 @@ class ExpansibleGroupScheduleModel extends Equatable {
       ExpansibleGroupScheduleModel(
         ExpansibleGroupId: entity.ExpansibleGroupId,
         AllowMonday: entity.AllowMonday == 1,
-        AlloTuesday: entity.AlloTuesday == 1,
+        AllowTuesday: entity.AllowTuesday == 1,
         AllowWednesday: entity.AllowWednesday == 1,
         AllowThursday: entity.AllowThursday == 1,
         AllowFriday: entity.AllowFriday == 1,
@@ -69,7 +69,7 @@ class ExpansibleGroupScheduleModel extends Equatable {
   ExpansibleGroupScheduleEntity toEntity() => ExpansibleGroupScheduleEntity(
         ExpansibleGroupId: ExpansibleGroupId,
         AllowMonday: AllowMonday == true ? 1 : 0,
-        AlloTuesday: AlloTuesday == true ? 1 : 0,
+        AllowTuesday: AllowTuesday == true ? 1 : 0,
         AllowWednesday: AllowWednesday == true ? 1 : 0,
         AllowThursday: AllowThursday == true ? 1 : 0,
         AllowFriday: AllowFriday == true ? 1 : 0,
@@ -80,7 +80,7 @@ class ExpansibleGroupScheduleModel extends Equatable {
   Map<String, dynamic> toJson() => {
         "ExpansibleGroupId": ExpansibleGroupId,
         "AllowMonday": AllowMonday == true ? 1 : 0,
-        "AlloTuesday": AlloTuesday == true ? 1 : 0,
+        "AllowTuesday": AllowTuesday == true ? 1 : 0,
         "AllowWednesday": AllowWednesday == true ? 1 : 0,
         "AllowThursday": AllowThursday == true ? 1 : 0,
         "AllowFriday": AllowFriday == true ? 1 : 0,

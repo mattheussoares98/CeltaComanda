@@ -10,11 +10,13 @@ class ServiceCharge extends StatefulWidget {
   final PrintedViewModel printed;
   final Future<void> Function() loadPrintedAgain;
   final bool validateUserAndPassword;
+  final bool showRemoveServiceChargeButton;
   final int commandNumber;
   const ServiceCharge({
     required this.printed,
     required this.loadPrintedAgain,
     required this.validateUserAndPassword,
+    required this.showRemoveServiceChargeButton,
     required this.commandNumber,
     super.key,
   });
@@ -172,7 +174,6 @@ class _ServiceChargeState extends State<ServiceCharge> {
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
     CancelProductsPresenter cancelProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -207,7 +208,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                       fontSize: getStringSize(context),
                     ),
                   ),
-                  if (!homePresenter.isGeneratingVersionToTablet)
+                  if (widget.showRemoveServiceChargeButton)
                     InkWell(
                       onTap: () {
                         openRemoveServiceChargeDialog(

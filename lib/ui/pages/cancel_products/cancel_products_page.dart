@@ -83,6 +83,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
                         printed: snapshot.data!,
                       ),
                       RequestSummary(
+                          showRemoveServiceChargeButton: true,
                           requestUserAndPassword: false,
                           printed: snapshot.data!,
                           commandNumber: selectedCommandInDropDown!,

@@ -28,27 +28,24 @@ class CancelProductsItems extends StatelessWidget {
             deleteButtonSize: deleteButtonSize,
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: ListView.builder(
-                itemCount: printed.Products.length,
-                itemBuilder: (context, index) {
-                  printed.Products.sort(
-                      (a, b) => a.Product.Name.compareTo(b.Product.Name));
-
-                  final product = printed.Products[index];
-
-                  return ProductItem(
-                    product: product,
-                    index: index,
-                    productFlex: productFlex,
-                    totalFlex: totalFlex,
-                    quantityFlex: quantityFlex,
-                    deleteButtonSize: deleteButtonSize,
-                    commandNumber: selectedCommandInDropDown,
-                  );
-                },
-              ),
+            child: ListView.builder(
+              itemCount: printed.Products.length,
+              itemBuilder: (context, index) {
+                printed.Products.sort(
+                    (a, b) => a.Product.Name.compareTo(b.Product.Name));
+            
+                final product = printed.Products[index];
+            
+                return ProductItem(
+                  product: product,
+                  index: index,
+                  productFlex: productFlex,
+                  totalFlex: totalFlex,
+                  quantityFlex: quantityFlex,
+                  deleteButtonSize: deleteButtonSize,
+                  commandNumber: selectedCommandInDropDown,
+                );
+              },
             ),
           ),
         ],

@@ -10,11 +10,13 @@ class RequestSummary extends StatelessWidget {
   final PrintedViewModel printed;
   final Future<void> Function() loadPrintedAgain;
   final bool requestUserAndPassword;
+  final bool showRemoveServiceChargeButton;
   final int commandNumber;
   const RequestSummary({
     required this.printed,
     required this.loadPrintedAgain,
     required this.requestUserAndPassword,
+    required this.showRemoveServiceChargeButton,
     required this.commandNumber,
     super.key,
   });
@@ -48,7 +50,7 @@ class RequestSummary extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
-              flex: 2,
+              flex: 3,
               child: serviceChargeValue <= 0
                   ? SizedBox()
                   : Column(
@@ -62,6 +64,8 @@ class RequestSummary extends StatelessWidget {
                           loadPrintedAgain: loadPrintedAgain,
                           validateUserAndPassword: requestUserAndPassword,
                           commandNumber: commandNumber,
+                          showRemoveServiceChargeButton:
+                              showRemoveServiceChargeButton,
                         ),
                       ],
                     ),

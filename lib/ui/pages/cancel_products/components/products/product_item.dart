@@ -30,8 +30,9 @@ class ProductItem extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
       color: index % 2 == 1
-          ? Theme.of(context).primaryColorLight.withAlpha(30)
+          ? Theme.of(context).primaryColorLight.withAlpha(20)
           : Colors.white,
       child: Column(
         children: [
@@ -131,6 +132,7 @@ class ProductItem extends StatelessWidget {
           ),
           if (product.childs.isNotEmpty)
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: product.childs.length,
               itemBuilder: (context, index) {

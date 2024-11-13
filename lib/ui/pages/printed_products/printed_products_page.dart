@@ -103,6 +103,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
               ),
               if (printedProductsPresenter.printed != null)
                 RequestSummary(
+                  showRemoveServiceChargeButton: false,
                   requestUserAndPassword: true,
                   printed: printedProductsPresenter.printed!,
                   commandNumber: homePresenter.commandNumber!.toInt(),

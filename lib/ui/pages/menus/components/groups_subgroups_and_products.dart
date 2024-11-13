@@ -136,10 +136,12 @@ class _GroupsSubgroupsAndProductsState
                         Expanded(
                           flex: 4,
                           child: ProductsItems(
-                            products: menuPresenter
-                                .loadedMenu[widget.selectedIndex ?? 0]
-                                .values
-                                .first,
+                            products: treatSchedules(
+                              menuPresenter
+                                  .loadedMenu[widget.selectedIndex ?? 0]
+                                  .values
+                                  .first,
+                            ),
                             productsScrollController: productsScrollController,
                             itemExtent: getProductItemExtent(context),
                           ),
@@ -154,4 +156,40 @@ class _GroupsSubgroupsAndProductsState
       ),
     );
   }
+}
+
+List<ProductsViewModel> treatSchedules(List<ProductsViewModel> products) {
+  Map<int, String> daysOfWeek = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday',
+  };
+  DateTime now = DateTime.now();
+  String dayOfWeek = daysOfWeek[now.weekday]!;
+
+  return products.where((e) {
+    if (e.Schedule == null) {
+      return true;
+    } else if (dayOfWeek == daysOfWeek[1]) {
+      return e.Schedule!.AllowMonday == true;
+    } else if (dayOfWeek == daysOfWeek[2]) {
+      return e.Schedule!.AlloTuesday == true;
+    } else if (dayOfWeek == daysOfWeek[3]) {
+      return e.Schedule!.AllowThursday == true;
+    } else if (dayOfWeek == daysOfWeek[4]) {
+      return e.Schedule!.AllowWednesday == true;
+    } else if (dayOfWeek == daysOfWeek[5]) {
+      return e.Schedule!.AllowFriday == true;
+    } else if (dayOfWeek == daysOfWeek[6]) {
+      return e.Schedule!.AllowSaturday == true;
+    } else if (dayOfWeek == daysOfWeek[7]) {
+      return e.Schedule!.AllowSunday == true;
+    } else {
+      return true;
+    }
+  }).toList();
 }

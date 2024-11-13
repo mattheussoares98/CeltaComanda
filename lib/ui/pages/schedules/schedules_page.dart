@@ -71,18 +71,7 @@ class _SchedulesPageState extends State<SchedulesPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text(
-                      group.Name,
-                      style: TextStyle(
-                        fontSize: getStringSize(context),
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
+                  ExpansibleGroupScheduleItem(expansibleGroup: group),
                   ProductsSchedulesItems(products: productsOfGroup),
                 ],
               ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../../main/builders/builders.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -18,118 +16,166 @@ class EnableOrDisableDays extends StatefulWidget {
 }
 
 class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
-  bool? allowMonday;
-  bool? allowTuesday;
-  bool? allowWednesday;
-  bool? allowThursday;
-  bool? allowFriday;
-  bool? allowSunday;
-  bool? allowSaturday;
-  List<Map<String, bool?>> days = [];
-
   @override
   initState() {
     super.initState();
-    if (mounted) {
-      allowMonday = widget.product.Schedule?.AllowMonday != false;
-      allowTuesday = widget.product.Schedule?.AlloTuesday != false;
-      allowWednesday = widget.product.Schedule?.AllowWednesday != false;
-      allowThursday = widget.product.Schedule?.AllowThursday != false;
-      allowFriday = widget.product.Schedule?.AllowFriday != false;
-      allowSunday = widget.product.Schedule?.AllowSunday != false;
-      allowSaturday = widget.product.Schedule?.AllowSaturday != false;
-    }
-
-    days = [
-      {R.string.monday: allowMonday},
-      {R.string.tuesday: allowTuesday},
-      {R.string.wednesday: allowWednesday},
-      {R.string.thursday: allowThursday},
-      {R.string.friday: allowFriday},
-      {R.string.sunday: allowSunday},
-      {R.string.saturday: allowSaturday},
-    ];
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        MenuPresenter menuPresenter = Provider.of(context, listen: false);
+        menuPresenter.updateProductSchedule(
+          internalCodeOnErp: widget.product.InternalCodeOfProductOnERP!.toInt(),
+          monday: widget.product.Schedule?.AllowMonday != false,
+          tuesday: widget.product.Schedule?.AlloTuesday != false,
+          wednesday: widget.product.Schedule?.AllowWednesday != false,
+          thursday: widget.product.Schedule?.AllowThursday != false,
+          friday: widget.product.Schedule?.AllowFriday != false,
+          saturday: widget.product.Schedule?.AllowSaturday != false,
+          sunday: widget.product.Schedule?.AllowSunday != false,
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Column(
-      children: [
-        Text(
-          widget.product.Name,
-          style: TextStyle(
-            fontSize: getStringSize(context) * 1.5,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        for (var x = 0; x < days.length; x++)
-          CheckboxListTile(
-              tileColor: x % 2 == 0
-                  ? Theme.of(context).primaryColor.withAlpha(50)
-                  : null,
-              fillColor: WidgetStatePropertyAll(
-                  days[x].values.first == true ? Colors.green : null),
-              title: Text(days[x].keys.first),
-              value: days[x].values.first,
-              onChanged: (value) {
-                final newValue = value;
-                setState(() {
-                  days[x] = {days[x].keys.first: newValue};
-                });
-              }),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
+    return StreamBuilder<ProductScheduleViewModel?>(
+        stream: menuPresenter.productScheduleStream,
+        builder: (context, snapshot) {
+          return Column(
             children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(R.string.cancel),
+              Text(
+                widget.product.Name,
+                style: TextStyle(
+                  fontSize: getStringSize(context) * 1.5,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    final schedule = ProductScheduleEntity(
-                      InternalCodeOnERP:
+              CheckboxListTile(
+                  title: Text(R.string.monday),
+                  value: snapshot.data?.AllowMonday == true,
+                  fillColor: snapshot.data?.AllowMonday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
                           widget.product.InternalCodeOnERP!.toInt(),
-                      EnterpriseId: EnterpriseDataBuilder
-                          .enterpriseDataEntity!.enterpriseId,
-                      AllowMonday: getIsEnabled(days, R.string.monday),
-                      AlloTuesday: getIsEnabled(days, R.string.tuesday),
-                      AllowWednesday: getIsEnabled(days, R.string.wednesday),
-                      AllowThursday: getIsEnabled(days, R.string.thursday),
-                      AllowFriday: getIsEnabled(days, R.string.friday),
-                      AllowSaturday: getIsEnabled(days, R.string.sunday),
-                      AllowSunday: getIsEnabled(days, R.string.saturday),
+                      monday: value,
                     );
-
-                    await menuPresenter.insertUpdateProductSchedule(
-                      widget.product.InternalCodeOnERP!.toInt(),
-                      schedule,
+                  }),
+              CheckboxListTile(
+                  title: Text(R.string.tuesday),
+                  value: snapshot.data?.AlloTuesday == true,
+                  fillColor: snapshot.data?.AlloTuesday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
+                          widget.product.InternalCodeOnERP!.toInt(),
+                      tuesday: value,
                     );
-                  },
-                  child: Text(R.string.confirm),
+                  }),
+              CheckboxListTile(
+                  title: Text(R.string.wednesday),
+                  value: snapshot.data?.AllowWednesday == true,
+                  fillColor: snapshot.data?.AllowWednesday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
+                          widget.product.InternalCodeOnERP!.toInt(),
+                      wednesday: value,
+                    );
+                  }),
+              CheckboxListTile(
+                  title: Text(R.string.thursday),
+                  value: snapshot.data?.AllowThursday == true,
+                  fillColor: snapshot.data?.AllowThursday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
+                          widget.product.InternalCodeOnERP!.toInt(),
+                      thursday: value,
+                    );
+                  }),
+              CheckboxListTile(
+                  title: Text(R.string.friday),
+                  value: snapshot.data?.AllowFriday == true,
+                  fillColor: snapshot.data?.AllowFriday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
+                          widget.product.InternalCodeOnERP!.toInt(),
+                      friday: value,
+                    );
+                  }),
+              CheckboxListTile(
+                  title: Text(R.string.saturday),
+                  value: snapshot.data?.AllowSaturday == true,
+                  fillColor: snapshot.data?.AllowSaturday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
+                          widget.product.InternalCodeOnERP!.toInt(),
+                      saturday: value,
+                    );
+                  }),
+              CheckboxListTile(
+                  title: Text(R.string.sunday),
+                  value: snapshot.data?.AllowSunday == true,
+                  fillColor: snapshot.data?.AllowSunday == true
+                      ? WidgetStatePropertyAll(Colors.green)
+                      : null,
+                  onChanged: (value) {
+                    menuPresenter.updateProductSchedule(
+                      internalCodeOnErp:
+                          widget.product.InternalCodeOnERP!.toInt(),
+                      sunday: value,
+                    );
+                  }),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(R.string.cancel),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: snapshot.data == null
+                            ? null
+                            : () async {
+                                await menuPresenter.insertUpdateProductSchedule(
+                                  widget.product.InternalCodeOnERP!.toInt(),
+                                );
+                              },
+                        child: Text(R.string.confirm),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              )
             ],
-          ),
-        )
-      ],
-    );
+          );
+        });
   }
-}
-
-int getIsEnabled(List<Map<String, bool?>> days, String day) {
-  return days.where((e) => e.keys.first == day).first.values.first == true
-      ? 1
-      : 0;
 }

@@ -29,7 +29,7 @@ class _SchedulesPageState extends State<SchedulesPage>
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: true);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
@@ -50,6 +50,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
               );
+              setState(() {});
             },
             icon: Icon(Icons.refresh),
           ),

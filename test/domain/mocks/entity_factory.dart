@@ -1186,4 +1186,18 @@ class EntityFactory {
         AllowSaturday: faker.randomGenerator.integer(1, min: 0),
         AllowSunday: faker.randomGenerator.integer(1, min: 0),
       );
+
+  static ProductScheduleViewModel makeProductScheduleViewModel(
+          int internalCodeOnErp) =>
+      ProductScheduleViewModel(
+        InternalCodeOnERP: internalCodeOnErp,
+        EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        AllowMonday: faker.randomGenerator.boolean(),
+        AlloTuesday: faker.randomGenerator.boolean(),
+        AllowWednesday: faker.randomGenerator.boolean(),
+        AllowThursday: faker.randomGenerator.boolean(),
+        AllowFriday: faker.randomGenerator.boolean(),
+        AllowSaturday: faker.randomGenerator.boolean(),
+        AllowSunday: faker.randomGenerator.boolean(),
+      );
 }

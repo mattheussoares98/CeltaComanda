@@ -18,6 +18,8 @@ abstract class MenuPresenter implements Listenable {
 
   TextEditingController get searchProductController;
 
+  Stream<ProductScheduleViewModel?> get productScheduleStream;
+
   Future<void> getGroupsAndProducts({
     required String commandNumber,
     required ExpansibleGroupFromProductPresenter
@@ -41,6 +43,15 @@ abstract class MenuPresenter implements Listenable {
   String? getSubgroup(ExpansibleGroupEntity expansibleGroupEntity);
   Future<void> insertUpdateProductSchedule(
     int internalCodeOnErp,
-    ProductScheduleEntity productSchedule,
   );
+  void updateProductSchedule({
+    required int internalCodeOnErp,
+    bool? monday,
+    bool? tuesday,
+    bool? wednesday,
+    bool? thursday,
+    bool? friday,
+    bool? saturday,
+    bool? sunday,
+  });
 }

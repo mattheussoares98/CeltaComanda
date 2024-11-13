@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-class ProductScheduleEntity {
+import 'package:equatable/equatable.dart';
+
+class ProductScheduleEntity extends Equatable {
   final int? InternalCodeOnERP;
   final int? EnterpriseId;
   final int? AllowMonday;
@@ -22,4 +24,17 @@ class ProductScheduleEntity {
     required this.AllowSaturday,
     required this.AllowSunday,
   });
+
+  @override
+  List<Object?> get props => [
+        InternalCodeOnERP,
+        EnterpriseId,
+        AllowMonday,
+        AlloTuesday,
+        AllowWednesday,
+        AllowThursday,
+        AllowFriday,
+        AllowSaturday,
+        AllowSunday,
+      ];
 }

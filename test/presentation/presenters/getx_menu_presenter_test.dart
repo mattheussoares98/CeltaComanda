@@ -30,7 +30,7 @@ void main() {
   late List<SuggestionSaleEntity> suggestions;
   late List<ProductsViewModel> suggestionsProductsViewModel;
   late int internalCodeOnErp;
-  late ProductScheduleEntity productSchedule;
+  late ProductScheduleViewModel productScheduleViewModel;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -138,7 +138,8 @@ void main() {
       ...products.map((e) => ProductsViewModel.fromEntity(e)),
     ];
     internalCodeOnErp = faker.randomGenerator.integer(100);
-    productSchedule = EntityFactory.makeProductScheduleEntity();
+    productScheduleViewModel =
+        EntityFactory.makeProductScheduleViewModel(internalCodeOnErp);
   }
 
   void mockSuccess() {
@@ -1006,10 +1007,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.insertUpdateProductSchedule(
-        internalCodeOnErp,
-        productSchedule,
-      );
+      await sut.insertUpdateProductSchedule(internalCodeOnErp);
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -1018,20 +1016,67 @@ void main() {
 
       manageProductSchedule.mockInsertError();
 
-      await sut.insertUpdateProductSchedule(
-        internalCodeOnErp,
-        productSchedule,
-      );
+      await sut.insertUpdateProductSchedule(internalCodeOnErp);
     });
     test("Should call manageProductSchedule.insertUpdate with correct values",
         () async {
-      await sut.insertUpdateProductSchedule(
-        internalCodeOnErp,
-        productSchedule,
+      sut.updateProductSchedule(
+        internalCodeOnErp: internalCodeOnErp,
+        friday: productScheduleViewModel.AllowFriday,
+        monday: productScheduleViewModel.AllowMonday,
+        saturday: productScheduleViewModel.AllowSaturday,
+        sunday: productScheduleViewModel.AllowSunday,
+        thursday: productScheduleViewModel.AllowThursday,
+        tuesday: productScheduleViewModel.AlloTuesday,
+        wednesday: productScheduleViewModel.AllowWednesday,
       );
 
-      verify(() => manageProductSchedule.insertUpdate(productSchedule))
-          .called(1);
+      await sut.insertUpdateProductSchedule(internalCodeOnErp);
+
+      verify(() => manageProductSchedule
+          .insertUpdate(productScheduleViewModel.toEntity())).called(1);
+    });
+  });
+
+  group("Update selected product schedule", () {
+    test("Should emit correct values", () {
+      expectLater(sut.productScheduleStream, emits(productScheduleViewModel));
+
+      sut.updateProductSchedule(
+        internalCodeOnErp: internalCodeOnErp,
+        friday: productScheduleViewModel.AllowFriday,
+        monday: productScheduleViewModel.AllowMonday,
+        saturday: productScheduleViewModel.AllowSaturday,
+        sunday: productScheduleViewModel.AllowSunday,
+        thursday: productScheduleViewModel.AllowThursday,
+        tuesday: productScheduleViewModel.AlloTuesday,
+        wednesday: productScheduleViewModel.AllowWednesday,
+      );
+    });
+    test("Should emit the same value more than one time", () {
+      expectLater(sut.productScheduleStream,
+          emitsInOrder([productScheduleViewModel, productScheduleViewModel]));
+
+      sut.updateProductSchedule(
+        internalCodeOnErp: internalCodeOnErp,
+        friday: productScheduleViewModel.AllowFriday,
+        monday: productScheduleViewModel.AllowMonday,
+        saturday: productScheduleViewModel.AllowSaturday,
+        sunday: productScheduleViewModel.AllowSunday,
+        thursday: productScheduleViewModel.AllowThursday,
+        tuesday: productScheduleViewModel.AlloTuesday,
+        wednesday: productScheduleViewModel.AllowWednesday,
+      );
+      sut.updateProductSchedule(
+        internalCodeOnErp: internalCodeOnErp,
+        friday: productScheduleViewModel.AllowFriday,
+        monday: productScheduleViewModel.AllowMonday,
+        saturday: productScheduleViewModel.AllowSaturday,
+        sunday: productScheduleViewModel.AllowSunday,
+        thursday: productScheduleViewModel.AllowThursday,
+        tuesday: productScheduleViewModel.AlloTuesday,
+        wednesday: productScheduleViewModel.AllowWednesday,
+      );
     });
   });
 }

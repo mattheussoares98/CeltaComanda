@@ -458,16 +458,50 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<void> insertUpdateProductSchedule(
     int internalCodeOnErp,
-    ProductScheduleEntity productScheduleEntity,
   ) async {
     isLoading = true;
     mainError = null;
     try {
-      await manageProductSchedule.insertUpdate(productScheduleEntity);
+      await manageProductSchedule
+          .insertUpdate(_productSchedule.value!.toEntity());
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }
+  }
+
+  final _productSchedule = Rx<ProductScheduleViewModel?>(null);
+  @override
+  Stream<ProductScheduleViewModel?> get productScheduleStream =>
+      _productSchedule.stream;
+  set atualProductSchedule(ProductScheduleViewModel? schedule) =>
+      _productSchedule.subject.add(schedule);
+
+  @override
+  void updateProductSchedule({
+    required int internalCodeOnErp,
+    bool? monday,
+    bool? tuesday,
+    bool? wednesday,
+    bool? thursday,
+    bool? friday,
+    bool? saturday,
+    bool? sunday,
+  }) {
+    final schedule = ProductScheduleViewModel(
+      InternalCodeOnERP: internalCodeOnErp,
+      EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+      AllowMonday: monday ?? _productSchedule.value?.AllowMonday == true,
+      AlloTuesday: tuesday ?? _productSchedule.value?.AlloTuesday == true,
+      AllowWednesday:
+          wednesday ?? _productSchedule.value?.AllowWednesday == true,
+      AllowThursday: thursday ?? _productSchedule.value?.AllowThursday == true,
+      AllowFriday: friday ?? _productSchedule.value?.AllowFriday == true,
+      AllowSaturday: saturday ?? _productSchedule.value?.AllowSaturday == true,
+      AllowSunday: sunday ?? _productSchedule.value?.AllowSunday == true,
+    );
+
+    atualProductSchedule = schedule;
   }
 }

@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/entities.dart';
 
-class ProductScheduleModel {
+class ProductScheduleModel extends Equatable {
   final int? InternalCodeOnERP;
   final int? EnterpriseId;
   final bool? AllowMonday;
@@ -13,7 +15,7 @@ class ProductScheduleModel {
   final bool? AllowSaturday;
   final bool? AllowSunday;
 
-  ProductScheduleModel({
+  const ProductScheduleModel({
     required this.InternalCodeOnERP,
     required this.EnterpriseId,
     required this.AllowMonday,
@@ -24,6 +26,19 @@ class ProductScheduleModel {
     required this.AllowSaturday,
     required this.AllowSunday,
   });
+
+  @override
+  List<Object?> get props => [
+        InternalCodeOnERP,
+        EnterpriseId,
+        AllowMonday,
+        AlloTuesday,
+        AllowWednesday,
+        AllowThursday,
+        AllowFriday,
+        AllowSaturday,
+        AllowSunday,
+      ];
 
   factory ProductScheduleModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([

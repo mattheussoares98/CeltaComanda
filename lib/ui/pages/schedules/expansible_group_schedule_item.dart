@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -12,31 +13,43 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              expansibleGroup.Name,
-              style: TextStyle(
-                fontSize: getStringSize(context),
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),
-              textAlign: TextAlign.start,
-            ),
+    return InkWell(
+      onTap: () {
+        PersonalizedDialogPage.open(
+          context: context,
+          page: EnableOrDisableDays(
+            product: null,
+            expansibleGroup: expansibleGroup,
+            isUpdatingProduct: false,
           ),
-          ScheduleEnabledDays(
-            allowMonday: expansibleGroup.Schedule?.AllowMonday != false,
-            alloTuesday: expansibleGroup.Schedule?.AlloTuesday != false,
-            allowWednesday: expansibleGroup.Schedule?.AllowWednesday != false,
-            allowThursday: expansibleGroup.Schedule?.AllowThursday != false,
-            allowFriday: expansibleGroup.Schedule?.AllowFriday != false,
-            allowSaturday: expansibleGroup.Schedule?.AllowSaturday != false,
-            allowSunday: expansibleGroup.Schedule?.AllowSunday != false,
-          )
-        ],
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                expansibleGroup.Name,
+                style: TextStyle(
+                  fontSize: getStringSize(context),
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            ScheduleEnabledDays(
+              allowMonday: expansibleGroup.Schedule?.AllowMonday != false,
+              alloTuesday: expansibleGroup.Schedule?.AlloTuesday != false,
+              allowWednesday: expansibleGroup.Schedule?.AllowWednesday != false,
+              allowThursday: expansibleGroup.Schedule?.AllowThursday != false,
+              allowFriday: expansibleGroup.Schedule?.AllowFriday != false,
+              allowSaturday: expansibleGroup.Schedule?.AllowSaturday != false,
+              allowSunday: expansibleGroup.Schedule?.AllowSunday != false,
+            )
+          ],
+        ),
       ),
     );
   }

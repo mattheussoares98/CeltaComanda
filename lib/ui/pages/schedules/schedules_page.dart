@@ -72,7 +72,10 @@ class _SchedulesPageState extends State<SchedulesPage>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ExpansibleGroupScheduleItem(expansibleGroup: group),
-                  ProductsSchedulesItems(products: productsOfGroup),
+                  ProductsSchedulesItems(
+                    products: productsOfGroup,
+                    expansibleGroup: null,
+                  ),
                 ],
               ),
             );

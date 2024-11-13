@@ -5,8 +5,10 @@ import '../pages.dart';
 
 class ProductsSchedulesItems extends StatefulWidget {
   final List<ProductsViewModel> products;
+  final ExpansibleGroupsViewModel? expansibleGroup;
   const ProductsSchedulesItems({
     required this.products,
+    required this.expansibleGroup,
     super.key,
   });
 
@@ -26,7 +28,11 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
           onTap: () {
             PersonalizedDialogPage.open(
               context: context,
-              page: EnableOrDisableDays(product: product),
+              page: EnableOrDisableDays(
+                product: product,
+                expansibleGroup: widget.expansibleGroup,
+                isUpdatingProduct: true,
+              ),
             );
           },
           child: Container(

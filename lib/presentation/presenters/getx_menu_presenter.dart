@@ -458,7 +458,7 @@ class GetxMenuPresenter extends GetxController
       _atualSuggestionProduct.subject.add(product);
 
   @override
-  Future<void> insertUpdateProductSchedule(
+  Future<bool> insertUpdateProductSchedule(
     int internalCodeOnErp,
   ) async {
     isLoading = true;
@@ -476,8 +476,11 @@ class GetxMenuPresenter extends GetxController
         await manageProductSchedule
             .insertUpdate(_productSchedule.value!.toEntity());
       }
+
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
     } finally {
       isLoading = false;
     }
@@ -589,7 +592,7 @@ class GetxMenuPresenter extends GetxController
       _expansibleGroupSchedule.value = value;
 
   @override
-  Future<void> insertUpdateExpansibleGroupSchedule(
+  Future<bool> insertUpdateExpansibleGroupSchedule(
     int expansibleGroupId,
   ) async {
     isLoading = true;
@@ -607,8 +610,10 @@ class GetxMenuPresenter extends GetxController
         await manageExpansibleGroupSchedule
             .insertUpdate(_expansibleGroupSchedule.value!.toEntity());
       }
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
     } finally {
       isLoading = false;
     }

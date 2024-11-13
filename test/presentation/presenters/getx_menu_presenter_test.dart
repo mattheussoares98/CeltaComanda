@@ -1106,6 +1106,21 @@ void main() {
 
       verify(() => manageProductSchedule.delete(internalCodeOnErp)).called(1);
     });
+
+    test("Should return true on success", () async {
+      sut.updateProductSchedule(internalCodeOnErp: internalCodeOnErp);
+
+      final updated = await sut.insertUpdateProductSchedule(internalCodeOnErp);
+
+      expect(updated, true);
+    });
+    test("Should return false on error", () async {
+      manageProductSchedule.mockInsertError();
+
+      final updated = await sut.insertUpdateProductSchedule(internalCodeOnErp);
+
+      expect(updated, false);
+    });
   });
 
   group("Update selected product schedule", () {
@@ -1182,6 +1197,23 @@ void main() {
 
       verify(() => manageExpansibleGroupSchedule.delete(expansibleGroupId))
           .called(1);
+    });
+
+    test("Should return true on success", () async {
+      sut.updateExpansibleGroupSchedule(expansibleGroupId: expansibleGroupId);
+
+      final updated =
+          await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+
+      expect(updated, true);
+    });
+    test("Should return false on error", () async {
+      manageExpansibleGroupSchedule.mockInsertError();
+
+      final updated =
+          await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+
+      expect(updated, false);
     });
   });
 

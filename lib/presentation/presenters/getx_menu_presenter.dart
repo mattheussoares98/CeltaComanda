@@ -554,4 +554,11 @@ class GetxMenuPresenter extends GetxController
       }
     }).toList();
   }
+
+  final _expansibleGroupSchedule = Rx<ExpansibleGroupScheduleViewModel?>(null);
+  @override
+  Stream<ExpansibleGroupScheduleViewModel?> get expansibleGroupScheduleStream =>
+      _expansibleGroupSchedule.stream;
+  set expansibleGroupSchedule(ExpansibleGroupScheduleViewModel? value) =>
+      _expansibleGroupSchedule.subject.add(value);
 }

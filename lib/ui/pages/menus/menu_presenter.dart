@@ -19,6 +19,7 @@ abstract class MenuPresenter implements Listenable {
   TextEditingController get searchProductController;
 
   Stream<ProductScheduleViewModel?> get productScheduleStream;
+  Stream<ExpansibleGroupScheduleViewModel?> get expansibleGroupScheduleStream;
 
   Future<void> getGroupsAndProducts({
     required String commandNumber,

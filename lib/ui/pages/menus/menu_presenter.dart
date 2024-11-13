@@ -56,5 +56,17 @@ abstract class MenuPresenter implements Listenable {
     bool? sunday,
   });
 
+  Future<void> insertUpdateExpansibleGroupSchedule(int expansibleGroupId);
+  void updateExpansibleGroupSchedule({
+    required int expansibleGroupId,
+    bool? monday,
+    bool? tuesday,
+    bool? wednesday,
+    bool? thursday,
+    bool? friday,
+    bool? saturday,
+    bool? sunday,
+  });
+
   List<T> treatSchedules<T>();
 }

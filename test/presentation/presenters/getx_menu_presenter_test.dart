@@ -31,7 +31,15 @@ void main() {
   late List<SuggestionSaleEntity> suggestions;
   late List<ProductsViewModel> suggestionsProductsViewModel;
   late int internalCodeOnErp;
+  late int expansibleGroupId;
   late ProductScheduleViewModel productScheduleViewModel;
+  late ExpansibleGroupScheduleViewModel expansibleGroupScheduleViewModel;
+  late String productEan;
+  late ProductEntity productEntity;
+  late ProductsViewModel productsViewModel;
+  late List<ProductEntity> products;
+  late List<ProductEntity> productsEntityThatIsPromoCombox;
+  late List<ProductCompositionEntity> productsCompositionsEntitys;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -44,13 +52,6 @@ void main() {
   late LoadSuggestionSaleSpy loadSuggestionSale;
   late ManageProductScheduleSpy manageProductSchedule;
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
-
-  late String productEan;
-  late ProductEntity productEntity;
-  late ProductsViewModel productsViewModel;
-  late List<ProductEntity> products;
-  late List<ProductEntity> productsEntityThatIsPromoCombox;
-  late List<ProductCompositionEntity> productsCompositionsEntitys;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -149,6 +150,10 @@ void main() {
     internalCodeOnErp = faker.randomGenerator.integer(100);
     productScheduleViewModel =
         EntityFactory.makeProductScheduleViewModel(internalCodeOnErp);
+    expansibleGroupId = faker.randomGenerator.integer(100);
+    expansibleGroupScheduleViewModel =
+        ExpansibleGroupScheduleViewModel.fromEntity(
+            EntityFactory.makeExpansibleGroupScheduleEntity(expansibleGroupId));
   }
 
   void mockSuccess() {
@@ -1117,6 +1122,83 @@ void main() {
         thursday: productScheduleViewModel.AllowThursday,
         tuesday: productScheduleViewModel.AlloTuesday,
         wednesday: productScheduleViewModel.AllowWednesday,
+      );
+    });
+  });
+
+  group("Insert update expandible group schedule", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      manageExpansibleGroupSchedule.mockInsertError();
+
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+    });
+    test(
+        "Should call manageExpansibleGroupSchedule.insertUpdate with correct values",
+        () async {
+      sut.updateExpansibleGroupSchedule(
+        expansibleGroupId: expansibleGroupId,
+        friday: expansibleGroupScheduleViewModel.AllowFriday,
+        monday: expansibleGroupScheduleViewModel.AllowMonday,
+        saturday: expansibleGroupScheduleViewModel.AllowSaturday,
+        sunday: expansibleGroupScheduleViewModel.AllowSunday,
+        thursday: expansibleGroupScheduleViewModel.AllowThursday,
+        tuesday: expansibleGroupScheduleViewModel.AlloTuesday,
+        wednesday: expansibleGroupScheduleViewModel.AllowWednesday,
+      );
+
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+
+      verify(() => manageExpansibleGroupSchedule
+          .insertUpdate(expansibleGroupScheduleViewModel.toEntity())).called(1);
+    });
+    test(
+        "Should call manageExpansibleGroupSchedule.delete if all days are true",
+        () async {
+      sut.updateExpansibleGroupSchedule(
+        expansibleGroupId: expansibleGroupId,
+        friday: true,
+        monday: true,
+        saturday: true,
+        sunday: true,
+        thursday: true,
+        tuesday: true,
+        wednesday: true,
+      );
+
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+
+      verifyNever(() => manageExpansibleGroupSchedule
+          .insertUpdate(expansibleGroupScheduleViewModel.toEntity()));
+
+      verify(() => manageExpansibleGroupSchedule.delete(expansibleGroupId))
+          .called(1);
+    });
+  });
+
+  group("Update selected expansible group schedule", () {
+    test("Should emit correct values", () {
+      expectLater(sut.expansibleGroupScheduleStream,
+          emitsInOrder([null, expansibleGroupScheduleViewModel]));
+
+      sut.updateExpansibleGroupSchedule(
+        expansibleGroupId: expansibleGroupId,
+        friday: expansibleGroupScheduleViewModel.AllowFriday,
+        monday: expansibleGroupScheduleViewModel.AllowMonday,
+        saturday: expansibleGroupScheduleViewModel.AllowSaturday,
+        sunday: expansibleGroupScheduleViewModel.AllowSunday,
+        thursday: expansibleGroupScheduleViewModel.AllowThursday,
+        tuesday: expansibleGroupScheduleViewModel.AlloTuesday,
+        wednesday: expansibleGroupScheduleViewModel.AllowWednesday,
       );
     });
   });

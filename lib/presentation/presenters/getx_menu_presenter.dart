@@ -586,5 +586,64 @@ class GetxMenuPresenter extends GetxController
   Stream<ExpansibleGroupScheduleViewModel?> get expansibleGroupScheduleStream =>
       _expansibleGroupSchedule.stream;
   set expansibleGroupSchedule(ExpansibleGroupScheduleViewModel? value) =>
-      _expansibleGroupSchedule.subject.add(value);
+      _expansibleGroupSchedule.value = value;
+
+  @override
+  Future<void> insertUpdateExpansibleGroupSchedule(
+    int expansibleGroupId,
+  ) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      if (_expansibleGroupSchedule.value?.AllowMonday == true &&
+          _expansibleGroupSchedule.value?.AlloTuesday == true &&
+          _expansibleGroupSchedule.value?.AllowWednesday == true &&
+          _expansibleGroupSchedule.value?.AllowThursday == true &&
+          _expansibleGroupSchedule.value?.AllowFriday == true &&
+          _expansibleGroupSchedule.value?.AllowSaturday == true &&
+          _expansibleGroupSchedule.value?.AllowSunday == true) {
+        await manageExpansibleGroupSchedule.delete(expansibleGroupId);
+      } else {
+        await manageExpansibleGroupSchedule
+            .insertUpdate(_expansibleGroupSchedule.value!.toEntity());
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  void updateExpansibleGroupSchedule({
+    required int expansibleGroupId,
+    bool? monday,
+    bool? tuesday,
+    bool? wednesday,
+    bool? thursday,
+    bool? friday,
+    bool? saturday,
+    bool? sunday,
+  }) {
+    final schedule = ExpansibleGroupScheduleViewModel(
+      ExpansibleGroupId: expansibleGroupId,
+      AllowMonday:
+          monday ?? _expansibleGroupSchedule.value?.AllowMonday == true,
+      AlloTuesday:
+          tuesday ?? _expansibleGroupSchedule.value?.AlloTuesday == true,
+      AllowWednesday:
+          wednesday ?? _expansibleGroupSchedule.value?.AllowWednesday == true,
+      AllowThursday:
+          thursday ?? _expansibleGroupSchedule.value?.AllowThursday == true,
+      AllowFriday:
+          friday ?? _expansibleGroupSchedule.value?.AllowFriday == true,
+      AllowSaturday:
+          saturday ?? _expansibleGroupSchedule.value?.AllowSaturday == true,
+      AllowSunday:
+          sunday ?? _expansibleGroupSchedule.value?.AllowSunday == true,
+    );
+
+    expansibleGroupSchedule = null;
+    expansibleGroupSchedule = schedule;
+  }
 }

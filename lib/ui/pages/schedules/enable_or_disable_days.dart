@@ -103,13 +103,13 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                           widget.product.InternalCodeOnERP!.toInt(),
                       EnterpriseId: EnterpriseDataBuilder
                           .enterpriseDataEntity!.enterpriseId,
-                      AllowMonday: allowMonday == true ? 1 : 0,
-                      AlloTuesday: allowTuesday == true ? 1 : 0,
-                      AllowWednesday: allowWednesday == true ? 1 : 0,
-                      AllowThursday: allowThursday == true ? 1 : 0,
-                      AllowFriday: allowFriday == true ? 1 : 0,
-                      AllowSaturday: allowSaturday == true ? 1 : 0,
-                      AllowSunday: allowSunday == true ? 1 : 0,
+                      AllowMonday: getIsEnabled(days, R.string.monday),
+                      AlloTuesday: getIsEnabled(days, R.string.tuesday),
+                      AllowWednesday: getIsEnabled(days, R.string.wednesday),
+                      AllowThursday: getIsEnabled(days, R.string.thursday),
+                      AllowFriday: getIsEnabled(days, R.string.friday),
+                      AllowSaturday: getIsEnabled(days, R.string.sunday),
+                      AllowSunday: getIsEnabled(days, R.string.saturday),
                     );
 
                     await menuPresenter.insertUpdateProductSchedule(
@@ -126,4 +126,10 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
       ],
     );
   }
+}
+
+int getIsEnabled(List<Map<String, bool?>> days, String day) {
+  return days.where((e) => e.keys.first == day).first.values.first == true
+      ? 1
+      : 0;
 }

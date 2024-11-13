@@ -25,15 +25,14 @@ class Subgroups extends StatelessWidget {
     ScrollController subgroupScrollController = ScrollController();
 
     bool firstIndexIsGreaterThanAtualProductsLength() =>
-        firstVisibleProductIndex >=
-        menuPresenter.loadedMenu[selectedIndex ?? 0].values.first.length;
+        firstVisibleProductIndex >= menuPresenter.treatSchedules().length;
 
     Color getSubgroupColor(String subgroupName) {
       if (firstIndexIsGreaterThanAtualProductsLength()) {
         return Theme.of(context).primaryColorLight;
       }
-      final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
-          .elementAt(firstVisibleProductIndex);
+      final element =
+          menuPresenter.treatSchedules().elementAt(firstVisibleProductIndex);
 
       if (subgroupName == element.subgroupName) {
         return Theme.of(context).primaryColorDark;
@@ -49,11 +48,9 @@ class Subgroups extends StatelessWidget {
       if (!productsScrollController.hasClients ||
           firstIndexIsGreaterThanAtualProductsLength()) return;
 
-      Map<ExpansibleGroupsViewModel, List<ProductsViewModel>> selectedItem =
-          menuPresenter.loadedMenu[selectedIndex ?? 0];
+      List<ProductsViewModel> products = menuPresenter.treatSchedules();
 
-      int index = selectedItem.values.first
-          .indexWhere((e) => e.subgroupName == subgroupName);
+      int index = products.indexWhere((e) => e.subgroupName == subgroupName);
 
       productsScrollController.animateTo(
         productItemExtent * index,

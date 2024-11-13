@@ -63,8 +63,8 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        body: SingleChildScrollView(
+      child: SizedBox(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

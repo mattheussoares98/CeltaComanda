@@ -1,12 +1,23 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/models/models.dart';
+import '../../../ui/helpers/helpers.dart';
 
-class ProductScheduleEnabledDays extends StatelessWidget {
-  final ProductScheduleModel? productSchedule;
-  const ProductScheduleEnabledDays({
-    required this.productSchedule,
+class ScheduleEnabledDays extends StatelessWidget {
+  final bool allowMonday;
+  final bool alloTuesday;
+  final bool allowWednesday;
+  final bool allowThursday;
+  final bool allowFriday;
+  final bool allowSaturday;
+  final bool allowSunday;
+  const ScheduleEnabledDays({
+    required this.allowMonday,
+    required this.alloTuesday,
+    required this.allowWednesday,
+    required this.allowThursday,
+    required this.allowFriday,
+    required this.allowSaturday,
+    required this.allowSunday,
     super.key,
   });
 
@@ -33,37 +44,37 @@ class ProductScheduleEnabledDays extends StatelessWidget {
     return Row(
       children: [
         getIcon(
-          enabled: productSchedule?.AllowMonday,
+          enabled: allowMonday,
           firstLetterOfDay: "S",
           context: context,
         ),
         getIcon(
-          enabled: productSchedule?.AlloTuesday,
+          enabled: alloTuesday,
           firstLetterOfDay: "T",
           context: context,
         ),
         getIcon(
-          enabled: productSchedule?.AllowWednesday,
+          enabled: allowWednesday,
           firstLetterOfDay: "Q",
           context: context,
         ),
         getIcon(
-          enabled: productSchedule?.AllowThursday,
+          enabled: allowThursday,
           firstLetterOfDay: "Q",
           context: context,
         ),
         getIcon(
-          enabled: productSchedule?.AllowFriday,
+          enabled: allowFriday,
           firstLetterOfDay: "S",
           context: context,
         ),
         getIcon(
-          enabled: productSchedule?.AllowSaturday,
+          enabled: allowSaturday,
           firstLetterOfDay: "S",
           context: context,
         ),
         getIcon(
-          enabled: productSchedule?.AllowSunday,
+          enabled: allowSunday,
           firstLetterOfDay: "D",
           context: context,
         ),

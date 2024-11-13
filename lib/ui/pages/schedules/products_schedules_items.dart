@@ -15,14 +15,6 @@ class ProductsSchedulesItems extends StatefulWidget {
 }
 
 class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
-  bool? allowMonday = true;
-  bool? allowTuesday = true;
-  bool? allowWednesday = true;
-  bool? allowThursday = true;
-  bool? allowFriday = true;
-  bool? allowSunday = true;
-  bool? allowSaturday = true;
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -46,7 +38,15 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
               child: Row(
                 children: [
                   Expanded(child: Text(product.Name)),
-                  ProductScheduleEnabledDays(productSchedule: product.Schedule),
+                  ScheduleEnabledDays(
+                    allowMonday: product.Schedule?.AllowMonday != false,
+                    alloTuesday: product.Schedule?.AlloTuesday != false,
+                    allowWednesday: product.Schedule?.AllowWednesday != false,
+                    allowThursday: product.Schedule?.AllowThursday != false,
+                    allowFriday: product.Schedule?.AllowFriday != false,
+                    allowSaturday: product.Schedule?.AllowSaturday != false,
+                    allowSunday: product.Schedule?.AllowSunday != false,
+                  ),
                   const SizedBox(width: 5),
                   Icon(
                     Icons.edit,

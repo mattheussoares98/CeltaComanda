@@ -499,8 +499,6 @@ class GetxMenuPresenter extends GetxController
     bool? saturday,
     bool? sunday,
   }) {
-    atualProductSchedule = null;
-
     final schedule = ProductScheduleViewModel(
       InternalCodeOnERP: internalCodeOnErp,
       EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
@@ -514,6 +512,7 @@ class GetxMenuPresenter extends GetxController
       AllowSunday: sunday ?? _productSchedule.value?.AllowSunday == true,
     );
 
+    atualProductSchedule = null;
     atualProductSchedule = schedule;
   }
 }

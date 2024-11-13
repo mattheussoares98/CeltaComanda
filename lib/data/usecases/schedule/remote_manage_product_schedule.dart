@@ -1,5 +1,4 @@
-import 'package:clean_celta_mobile/domain/entities/schedule_entity.dart';
-
+import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';

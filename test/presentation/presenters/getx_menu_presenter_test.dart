@@ -1036,37 +1036,33 @@ void main() {
       verify(() => manageProductSchedule
           .insertUpdate(productScheduleViewModel.toEntity())).called(1);
     });
+    test("Should call manageProductSchedule.delete if all days are true",
+        () async {
+      sut.updateProductSchedule(
+        internalCodeOnErp: internalCodeOnErp,
+        friday: true,
+        monday: true,
+        saturday: true,
+        sunday: true,
+        thursday: true,
+        tuesday: true,
+        wednesday: true,
+      );
+
+      await sut.insertUpdateProductSchedule(internalCodeOnErp);
+
+      verifyNever(() => manageProductSchedule
+          .insertUpdate(productScheduleViewModel.toEntity()));
+
+      verify(() => manageProductSchedule.delete(internalCodeOnErp)).called(1);
+    });
   });
 
   group("Update selected product schedule", () {
     test("Should emit correct values", () {
-      expectLater(sut.productScheduleStream, emits(productScheduleViewModel));
-
-      sut.updateProductSchedule(
-        internalCodeOnErp: internalCodeOnErp,
-        friday: productScheduleViewModel.AllowFriday,
-        monday: productScheduleViewModel.AllowMonday,
-        saturday: productScheduleViewModel.AllowSaturday,
-        sunday: productScheduleViewModel.AllowSunday,
-        thursday: productScheduleViewModel.AllowThursday,
-        tuesday: productScheduleViewModel.AlloTuesday,
-        wednesday: productScheduleViewModel.AllowWednesday,
-      );
-    });
-    test("Should emit the same value more than one time", () {
       expectLater(sut.productScheduleStream,
-          emitsInOrder([productScheduleViewModel, productScheduleViewModel]));
+          emitsInOrder([null, productScheduleViewModel]));
 
-      sut.updateProductSchedule(
-        internalCodeOnErp: internalCodeOnErp,
-        friday: productScheduleViewModel.AllowFriday,
-        monday: productScheduleViewModel.AllowMonday,
-        saturday: productScheduleViewModel.AllowSaturday,
-        sunday: productScheduleViewModel.AllowSunday,
-        thursday: productScheduleViewModel.AllowThursday,
-        tuesday: productScheduleViewModel.AlloTuesday,
-        wednesday: productScheduleViewModel.AllowWednesday,
-      );
       sut.updateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
         friday: productScheduleViewModel.AllowFriday,

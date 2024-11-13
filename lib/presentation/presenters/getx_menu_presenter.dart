@@ -462,8 +462,18 @@ class GetxMenuPresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      await manageProductSchedule
-          .insertUpdate(_productSchedule.value!.toEntity());
+      if (_productSchedule.value?.AllowMonday == true &&
+          _productSchedule.value?.AlloTuesday == true &&
+          _productSchedule.value?.AllowWednesday == true &&
+          _productSchedule.value?.AllowThursday == true &&
+          _productSchedule.value?.AllowFriday == true &&
+          _productSchedule.value?.AllowSaturday == true &&
+          _productSchedule.value?.AllowSunday == true) {
+        await manageProductSchedule.delete(internalCodeOnErp);
+      } else {
+        await manageProductSchedule
+            .insertUpdate(_productSchedule.value!.toEntity());
+      }
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -475,8 +485,8 @@ class GetxMenuPresenter extends GetxController
   @override
   Stream<ProductScheduleViewModel?> get productScheduleStream =>
       _productSchedule.stream;
-  set atualProductSchedule(ProductScheduleViewModel? schedule) =>
-      _productSchedule.subject.add(schedule);
+  set atualProductSchedule(ProductScheduleViewModel? value) =>
+      _productSchedule.value = value;
 
   @override
   void updateProductSchedule({
@@ -489,6 +499,8 @@ class GetxMenuPresenter extends GetxController
     bool? saturday,
     bool? sunday,
   }) {
+    atualProductSchedule = null;
+
     final schedule = ProductScheduleViewModel(
       InternalCodeOnERP: internalCodeOnErp,
       EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,

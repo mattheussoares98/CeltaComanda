@@ -461,9 +461,7 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<bool> insertUpdateProductSchedule({
     required int internalCodeOnErp,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required HomePresenter homePresenter,
+    required int expansibleGroupId,
   }) async {
     isLoading = true;
     mainError = null;
@@ -480,12 +478,6 @@ class GetxMenuPresenter extends GetxController
         await manageProductSchedule
             .insertUpdate(_productSchedule.value!.toEntity());
       }
-
-      await getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumber?.toInt().toString() ?? "001",
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
 
       return true;
     } catch (e) {
@@ -618,12 +610,9 @@ class GetxMenuPresenter extends GetxController
       _expansibleGroupSchedule.value = value;
 
   @override
-  Future<bool> insertUpdateExpansibleGroupSchedule({
-    required int expansibleGroupId,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required HomePresenter homePresenter,
-  }) async {
+  Future<bool> insertUpdateExpansibleGroupSchedule(
+    int expansibleGroupId,
+  ) async {
     isLoading = true;
     mainError = null;
     try {

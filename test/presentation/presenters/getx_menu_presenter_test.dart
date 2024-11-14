@@ -1059,9 +1059,7 @@ void main() {
 
       await sut.insertUpdateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
+        expansibleGroupId: expansibleGroupId,
       );
     });
     test("Should emit correct values on error", () async {
@@ -1073,9 +1071,7 @@ void main() {
 
       await sut.insertUpdateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
+        expansibleGroupId: expansibleGroupId,
       );
     });
     test("Should call manageProductSchedule.insertUpdate with correct values",
@@ -1093,9 +1089,7 @@ void main() {
 
       await sut.insertUpdateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
+        expansibleGroupId: expansibleGroupId,
       );
 
       verify(() => manageProductSchedule
@@ -1116,9 +1110,7 @@ void main() {
 
       await sut.insertUpdateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
+        expansibleGroupId: expansibleGroupId,
       );
 
       verifyNever(() => manageProductSchedule
@@ -1132,9 +1124,7 @@ void main() {
 
       final updated = await sut.insertUpdateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
+        expansibleGroupId: expansibleGroupId,
       );
 
       expect(updated, true);
@@ -1144,9 +1134,7 @@ void main() {
 
       final updated = await sut.insertUpdateProductSchedule(
         internalCodeOnErp: internalCodeOnErp,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
+        expansibleGroupId: expansibleGroupId,
       );
 
       expect(updated, false);
@@ -1176,12 +1164,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.insertUpdateExpansibleGroupSchedule(
-        expansibleGroupId: expansibleGroupId,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-      );
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -1190,12 +1173,7 @@ void main() {
 
       manageExpansibleGroupSchedule.mockInsertError();
 
-      await sut.insertUpdateExpansibleGroupSchedule(
-        expansibleGroupId: expansibleGroupId,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-      );
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
     });
     test(
         "Should call manageExpansibleGroupSchedule.insertUpdate with correct values",
@@ -1211,12 +1189,7 @@ void main() {
         wednesday: expansibleGroupScheduleViewModel.AllowWednesday,
       );
 
-      await sut.insertUpdateExpansibleGroupSchedule(
-        expansibleGroupId: expansibleGroupId,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-      );
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
 
       verify(() => manageExpansibleGroupSchedule
           .insertUpdate(expansibleGroupScheduleViewModel.toEntity())).called(1);
@@ -1235,12 +1208,7 @@ void main() {
         wednesday: true,
       );
 
-      await sut.insertUpdateExpansibleGroupSchedule(
-        expansibleGroupId: expansibleGroupId,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-      );
+      await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
 
       verifyNever(() => manageExpansibleGroupSchedule
           .insertUpdate(expansibleGroupScheduleViewModel.toEntity()));
@@ -1268,24 +1236,16 @@ void main() {
       );
       sut.updateExpansibleGroupSchedule(expansibleGroupId: expansibleGroupId);
 
-      final updated = await sut.insertUpdateExpansibleGroupSchedule(
-        expansibleGroupId: expansibleGroupId,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-      );
+      final updated =
+          await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
 
       expect(updated, true);
     });
     test("Should return false on error", () async {
       manageExpansibleGroupSchedule.mockInsertError();
 
-      final updated = await sut.insertUpdateExpansibleGroupSchedule(
-        expansibleGroupId: expansibleGroupId,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-      );
+      final updated =
+          await sut.insertUpdateExpansibleGroupSchedule(expansibleGroupId);
 
       expect(updated, false);
     });

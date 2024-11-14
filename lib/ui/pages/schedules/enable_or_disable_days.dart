@@ -9,7 +9,7 @@ import '../pages.dart';
 
 class EnableOrDisableDays extends StatefulWidget {
   final ProductsViewModel? product;
-  final ExpansibleGroupsViewModel? expansibleGroup;
+  final ExpansibleGroupsViewModel expansibleGroup;
   final bool isUpdatingProduct;
   final void Function() callSetState;
   const EnableOrDisableDays({
@@ -44,22 +44,16 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
             sunday: widget.product!.Schedule?.AllowSunday != false,
           );
         } else {
-          if (widget.expansibleGroup != null) {
-            menuPresenter.updateExpansibleGroupSchedule(
-              expansibleGroupId:
-                  widget.expansibleGroup!.ExpansibleGroupId.toInt(),
-              monday: widget.expansibleGroup!.Schedule?.AllowMonday != false,
-              tuesday: widget.expansibleGroup!.Schedule?.AllowTuesday != false,
-              wednesday:
-                  widget.expansibleGroup!.Schedule?.AllowWednesday != false,
-              thursday:
-                  widget.expansibleGroup!.Schedule?.AllowThursday != false,
-              friday: widget.expansibleGroup!.Schedule?.AllowFriday != false,
-              saturday:
-                  widget.expansibleGroup!.Schedule?.AllowSaturday != false,
-              sunday: widget.expansibleGroup!.Schedule?.AllowSunday != false,
-            );
-          }
+          menuPresenter.updateExpansibleGroupSchedule(
+            expansibleGroupId: widget.expansibleGroup.ExpansibleGroupId.toInt(),
+            monday: widget.expansibleGroup.Schedule?.AllowMonday != false,
+            tuesday: widget.expansibleGroup.Schedule?.AllowTuesday != false,
+            wednesday: widget.expansibleGroup.Schedule?.AllowWednesday != false,
+            thursday: widget.expansibleGroup.Schedule?.AllowThursday != false,
+            friday: widget.expansibleGroup.Schedule?.AllowFriday != false,
+            saturday: widget.expansibleGroup.Schedule?.AllowSaturday != false,
+            sunday: widget.expansibleGroup.Schedule?.AllowSunday != false,
+          );
         }
       }
     });
@@ -88,9 +82,9 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         saturday: saturday ?? productSchedule?.AllowSaturday,
         sunday: sunday ?? productSchedule?.AllowSunday,
       );
-    } else if (widget.expansibleGroup != null) {
+    } else {
       menuPresenter.updateExpansibleGroupSchedule(
-        expansibleGroupId: widget.expansibleGroup!.ExpansibleGroupId.toInt(),
+        expansibleGroupId: widget.expansibleGroup.ExpansibleGroupId.toInt(),
         monday: monday ?? groupSchedule?.AllowMonday,
         tuesday: tuesday ?? groupSchedule?.AllowTuesday,
         wednesday: wednesday ?? groupSchedule?.AllowWednesday,
@@ -105,9 +99,6 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
@@ -157,7 +148,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                               Text(
                                 widget.isUpdatingProduct
                                     ? widget.product?.Name ?? ""
-                                    : widget.expansibleGroup?.Name ?? "",
+                                    : widget.expansibleGroup.Name,
                                 style: TextStyle(
                                   fontSize: getStringSize(context) * 1.5,
                                   fontWeight: FontWeight.bold,
@@ -286,10 +277,10 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                     ? null
                                     : () async {
                                         await onPressed(
+                                          expansibleGroupId: widget
+                                              .expansibleGroup.ExpansibleGroupId
+                                              .toInt(),
                                           menuPresenter: menuPresenter,
-                                          expansibleGroupFromProductPresenter:
-                                              expansibleGroupFromProductPresenter,
-                                          homePresenter: homePresenter,
                                           configurationsPresenter:
                                               configurationsPresenter,
                                           callSetState: () {
@@ -312,11 +303,9 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
 
   Future<void> onPressed({
     required MenuPresenter menuPresenter,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required HomePresenter homePresenter,
     required ConfigurationsPresenter configurationsPresenter,
     required void Function() callSetState,
+    required int expansibleGroupId,
   }) async {
     bool updated = false;
     notificationDialog(
@@ -327,19 +316,11 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         if (widget.isUpdatingProduct && widget.product != null) {
           updated = await menuPresenter.insertUpdateProductSchedule(
             internalCodeOnErp: widget.product!.InternalCodeOnERP!.toInt(),
-            homePresenter: homePresenter,
-            expansibleGroupFromProductPresenter:
-                expansibleGroupFromProductPresenter,
+            expansibleGroupId: expansibleGroupId,
           );
-        } else if (!widget.isUpdatingProduct &&
-            widget.expansibleGroup != null) {
-          updated = await menuPresenter.insertUpdateExpansibleGroupSchedule(
-            expansibleGroupId:
-                widget.expansibleGroup!.ExpansibleGroupId.toInt(),
-            homePresenter: homePresenter,
-            expansibleGroupFromProductPresenter:
-                expansibleGroupFromProductPresenter,
-          );
+        } else if (!widget.isUpdatingProduct) {
+          updated = await menuPresenter
+              .insertUpdateExpansibleGroupSchedule(expansibleGroupId);
         }
 
         if (updated) {

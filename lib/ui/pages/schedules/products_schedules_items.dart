@@ -6,7 +6,7 @@ import '../pages.dart';
 
 class ProductsSchedulesItems extends StatefulWidget {
   final List<ProductsViewModel> products;
-  final ExpansibleGroupsViewModel? expansibleGroup;
+  final ExpansibleGroupsViewModel expansibleGroup;
   final void Function() callSetState;
   const ProductsSchedulesItems({
     required this.products,

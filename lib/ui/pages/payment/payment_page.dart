@@ -163,10 +163,7 @@ class _PaymentPageState extends State<PaymentPage>
                 if (paymentPresenter
                         .getTotalPendingValue(printedProductsPresenter) >
                     0)
-                  PaymentDetails(
-                    pendingValue: paymentPresenter
-                        .getTotalPendingValue(printedProductsPresenter),
-                  ),
+                  PaymentDetails(),
                 if (printedProductsPresenter.printed != null &&
                     paymentPresenter
                             .getTotalPendingValue(printedProductsPresenter) >

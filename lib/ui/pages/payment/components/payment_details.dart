@@ -5,9 +5,7 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class PaymentDetails extends StatelessWidget {
-  final double pendingValue;
   const PaymentDetails({
-    required this.pendingValue,
     super.key,
   });
 
@@ -39,7 +37,7 @@ class PaymentDetails extends StatelessWidget {
                 ),
               ),
               Text(
-                "${R.string.missing} ${pendingValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                "${R.string.missing} ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
                 style: TextStyle(
                   fontSize: getStringSize(context) * 2,
                   fontWeight: FontWeight.bold,

@@ -43,6 +43,7 @@ class LogoutButton extends StatelessWidget {
                 cartPresenter.cartProducts.isNotEmpty
                     ? R.string.msgClearCartOnLogout
                     : R.string.msgWantDoLogout,
+                textAlign: TextAlign.center,
               ),
               onPress: () async {
                 cartPresenter.clearCart();

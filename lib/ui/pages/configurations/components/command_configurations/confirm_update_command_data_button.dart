@@ -20,34 +20,37 @@ class ConfirmUpdateCommandDataButton extends StatelessWidget {
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
-    return ElevatedButton(
-      onPressed: () async {
-        FocusScope.of(context).unfocus();
-
-        if (formKey.currentState?.validate() != true) {
-          return;
-        }
-
-        final updated = await configurationsPresenter.updateCommandData(
-          newFixedCommandNumber: configurationsPresenter.selectedCommand!,
-          printedProductsPresenter: printedProductsPresenter,
-          peoples: configurationsPresenter.selectedPeoples,
-          sellerCode: configurationsPresenter.selectedSeller?.PersonalizedCode,
-          homePresenter: homePresenter,
-        );
-
-        if (updated) {
-          WidgetsBinding.instance.addPostFrameCallback((_) async {
-            FocusScope.of(context).unfocus();
-            snackBarMessage(
-              context,
-              R.string.msgUpdatedTableConfigurationsSuccess,
-            );
-          });
-        }
-      },
-      child: Text(
-        R.string.confirm,
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: ElevatedButton(
+        onPressed: () async {
+          FocusScope.of(context).unfocus();
+      
+          if (formKey.currentState?.validate() != true) {
+            return;
+          }
+      
+          final updated = await configurationsPresenter.updateCommandData(
+            newFixedCommandNumber: configurationsPresenter.selectedCommand!,
+            printedProductsPresenter: printedProductsPresenter,
+            peoples: configurationsPresenter.selectedPeoples,
+            sellerCode: configurationsPresenter.selectedSeller?.PersonalizedCode,
+            homePresenter: homePresenter,
+          );
+      
+          if (updated) {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              FocusScope.of(context).unfocus();
+              snackBarMessage(
+                context,
+                R.string.msgUpdatedTableConfigurationsSuccess,
+              );
+            });
+          }
+        },
+        child: Text(
+          R.string.confirm,
+        ),
       ),
     );
   }

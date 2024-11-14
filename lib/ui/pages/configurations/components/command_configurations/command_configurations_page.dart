@@ -22,9 +22,7 @@ class CommandConfigurationsPage extends StatelessWidget {
                 UpdatePeopleNumbersDropdown(),
                 SizedBox(height: 10),
                 UpdateSellerDropdown(),
-                ConfirmUpdateCommandDataButton(
-                  formKey: formKey,
-                ),
+                ConfirmUpdateCommandDataButton(formKey: formKey),
               ],
             ),
           ),

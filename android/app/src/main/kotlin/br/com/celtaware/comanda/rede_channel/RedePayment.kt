@@ -50,6 +50,10 @@ class RedePayment(
                         collectPayment(result, FlexTipoPagamento.DEBITO, longAmountValue)
                     }
 
+                    "voucher" -> {
+                        collectPayment(result, FlexTipoPagamento.VOUCHER, longAmountValue)
+                    }
+
                     "pix" -> {
                         collectPayment(result, FlexTipoPagamento.PIX, longAmountValue)
                     }

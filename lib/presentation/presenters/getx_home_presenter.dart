@@ -422,6 +422,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         throw DomainError.accessDenied;
       }
 
+      isLoading = false;
       await navigateTo.navigate(pageRoute: PageRoutes.configurations);
     } on DomainError catch (e) {
       switch (e) {

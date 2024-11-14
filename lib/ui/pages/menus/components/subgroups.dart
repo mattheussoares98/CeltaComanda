@@ -83,7 +83,7 @@ class Subgroups extends StatelessWidget {
       final subgroups = menuPresenter
           .loadedMenu[selectedIndex ?? 0].keys.first.subgroups
           .where((e) => menuPresenter
-              .treatSchedules()
+              .treatSchedules<ProductsViewModel>()
               .where((t) => t.subgroupName == e)
               .toList()
               .isNotEmpty)

@@ -80,12 +80,8 @@ class Subgroups extends StatelessWidget {
     }
 
     return Builder(builder: (context) {
-      menuPresenter
-          .treatSchedules<ExpansibleGroupsViewModel>()[selectedIndex ?? 0]
-          .subgroups;
       final subgroups = menuPresenter
-          .treatSchedules<ExpansibleGroupsViewModel>()[selectedIndex ?? 0]
-          .subgroups
+          .loadedMenu[selectedIndex ?? 0].keys.first.subgroups
           .where((e) => menuPresenter
               .treatSchedules<ProductsViewModel>()
               .where((t) => t.subgroupName == e)

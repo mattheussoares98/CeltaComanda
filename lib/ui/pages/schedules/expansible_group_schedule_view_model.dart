@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 
 class ExpansibleGroupScheduleViewModel extends Equatable {
@@ -77,6 +78,17 @@ class ExpansibleGroupScheduleViewModel extends Equatable {
         AllowFriday: AllowFriday == true ? 1 : 0,
         AllowSaturday: AllowSaturday == true ? 1 : 0,
         AllowSunday: AllowSunday == true ? 1 : 0,
+      );
+
+  ExpansibleGroupScheduleModel toModel() => ExpansibleGroupScheduleModel(
+        ExpansibleGroupId: ExpansibleGroupId,
+        AllowMonday: AllowMonday,
+        AllowTuesday: AllowTuesday,
+        AllowWednesday: AllowWednesday,
+        AllowThursday: AllowThursday,
+        AllowFriday: AllowFriday,
+        AllowSaturday: AllowSaturday,
+        AllowSunday: AllowSunday,
       );
 
   Map<String, dynamic> toJson() => {

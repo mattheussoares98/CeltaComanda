@@ -1250,6 +1250,22 @@ void main() {
     });
 
     test("Should return true on success", () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups([
+        ...expansibleGroups,
+        ExpansibleGroupEntity(
+          Name: faker.randomGenerator.string(10),
+          ExpansibleGroupId:
+              expansibleGroupId, //mocking a expansible group with the same expansibleGroupId that will be updated
+          ExpansibleGroupType: faker.randomGenerator.integer(10),
+          OrderClassification: faker.randomGenerator.integer(10),
+          Schedule: null,
+        ),
+      ]);
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandNumberMock!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
       sut.updateExpansibleGroupSchedule(expansibleGroupId: expansibleGroupId);
 
       final updated = await sut.insertUpdateExpansibleGroupSchedule(

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -639,11 +640,20 @@ class GetxMenuPresenter extends GetxController
             .insertUpdate(_expansibleGroupSchedule.value!.toEntity());
       }
 
-      await getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumber?.toInt().toString() ?? "001",
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
+      final index = _loadedMenu.indexWhere(
+          (e) => e.keys.first.ExpansibleGroupId.toInt() == expansibleGroupId);
+      final oldGroup = _loadedMenu[index].keys.first;
+      final groupUpdated = ExpansibleGroupsViewModel(
+        Name: oldGroup.Name,
+        ExpansibleGroupId: oldGroup.ExpansibleGroupId,
+        ExpansibleGroupType: oldGroup.ExpansibleGroupType,
+        OrderClassification: oldGroup.OrderClassification,
+        subgroups: oldGroup.subgroups,
+        Schedule: ExpansibleGroupScheduleModel.fromEntity(
+            _expansibleGroupSchedule.value!.toEntity()),
       );
+      final oldProducts = _loadedMenu[index].values.first;
+      _loadedMenu[index] = {groupUpdated: oldProducts};
       return true;
     } catch (e) {
       mainError = UIError.unexpected;

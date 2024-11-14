@@ -97,19 +97,15 @@ class _HomePageState extends State<HomePage>
       collection: "clients",
       doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
       function: (data) async {
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          if (mounted) {
-            await homePresenter.doOnRemoteEnterpriseChanges(
-              data: data,
-              menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-              enterprisePresenter: enterprisePresenter,
-            );
-          }
-        });
+        await homePresenter.doOnRemoteEnterpriseChanges(
+          data: data,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
       },
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,

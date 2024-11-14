@@ -20,6 +20,7 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? homeLoadingSubscription;
 
   @override
   dispose() {
@@ -27,6 +28,7 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    homeLoadingSubscription?.cancel();
   }
 
   @override
@@ -39,10 +41,14 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    homeLoadingSubscription?.cancel();
+
     loadingSubscription =
         handleLoading(context, configurationsPresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, configurationsPresenter.mainErrorStream);
+    homeLoadingSubscription =
+        handleLoading(context, homePresenter.isLoadingStream);
 
     final buttons = [
       UpdateMenuButton(),

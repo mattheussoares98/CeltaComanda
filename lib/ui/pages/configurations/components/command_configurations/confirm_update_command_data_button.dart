@@ -25,21 +25,24 @@ class ConfirmUpdateCommandDataButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           FocusScope.of(context).unfocus();
-      
+
           if (formKey.currentState?.validate() != true) {
             return;
           }
-      
+
           final updated = await configurationsPresenter.updateCommandData(
-            newFixedCommandNumber: configurationsPresenter.selectedCommand!,
+            newFixedCommandNumber: configurationsPresenter.selectedCommand ??
+                homePresenter.commandNumber!.toInt(),
             printedProductsPresenter: printedProductsPresenter,
             peoples: configurationsPresenter.selectedPeoples,
-            sellerCode: configurationsPresenter.selectedSeller?.PersonalizedCode,
+            sellerCode:
+                configurationsPresenter.selectedSeller?.PersonalizedCode,
             homePresenter: homePresenter,
           );
-      
+
           if (updated) {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
+              Navigator.of(context).pop();
               FocusScope.of(context).unfocus();
               snackBarMessage(
                 context,

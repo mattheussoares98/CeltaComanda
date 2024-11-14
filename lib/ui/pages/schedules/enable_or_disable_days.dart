@@ -326,6 +326,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         if (updated) {
           Navigator.of(context).pop();
 
+          callSetState();
           await notificationDialog(
               context: context,
               titleMessage: R.string.msgSuccessToUpdateSchedule,
@@ -336,9 +337,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
               onPress: () async {
                 await configurationsPresenter.loadMenuAgain();
               });
-          callSetState();
         }
-        callSetState();
       },
     );
   }

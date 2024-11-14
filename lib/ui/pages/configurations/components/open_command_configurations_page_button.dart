@@ -17,9 +17,7 @@ class OpenCommandConfigurationsPageButton extends StatelessWidget {
             showCancelAndConfirmMessage: false,
             showCloseAction: true,
             showLargeDialog: true,
-            content: SizedBox(
-              child: CommandConfigurationsPage(),
-            ),
+            content: CommandConfigurationsPage(),
             onPress: () async {});
       },
       child: FittedBox(

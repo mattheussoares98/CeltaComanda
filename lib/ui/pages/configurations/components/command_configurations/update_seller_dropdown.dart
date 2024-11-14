@@ -14,13 +14,6 @@ class UpdateSellerDropdown extends StatelessWidget {
     return DropdownButtonFormField<SellersViewModel>(
       isExpanded: true,
       value: homePresenter.selectedSeller,
-      validator: (value) {
-        if (value == null) {
-          return R.string.msgSelectSeller;
-        }
-
-        return null;
-      },
       decoration: InputDecoration(
         hintText: R.string.seller,
         labelText: R.string.seller,

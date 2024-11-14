@@ -14,13 +14,6 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
     return DropdownButtonFormField<int>(
       isExpanded: true,
       value: homePresenter.selectedPeoples,
-      validator: (value) {
-        if (value == null) {
-          return R.string.msgSelectPeopleNumbers;
-        }
-
-        return null;
-      },
       decoration: InputDecoration(
         hintText: R.string.peopleQuantity,
         labelText: R.string.peopleQuantity,

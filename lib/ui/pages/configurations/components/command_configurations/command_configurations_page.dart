@@ -9,11 +9,12 @@ class CommandConfigurationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Form(
-            key: formKey,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 3,
+      child: Scaffold(
+        body: Form(
+          key: formKey,
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(height: 10),
@@ -26,7 +27,7 @@ class CommandConfigurationsPage extends StatelessWidget {
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

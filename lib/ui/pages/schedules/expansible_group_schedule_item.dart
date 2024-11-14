@@ -23,7 +23,9 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
             product: null,
             expansibleGroup: expansibleGroup,
             isUpdatingProduct: false,
-            callSetState: callSetSate,
+            callSetState: () {
+              callSetSate();
+            },
           ),
         );
       },

@@ -29,8 +29,8 @@ class _SchedulesPageState extends State<SchedulesPage>
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: true);
-    HomePresenter homePresenter = Provider.of(context, listen: true);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
@@ -100,6 +100,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                         child: ProductsSchedulesItems(
                           products: productsOfGroup,
                           expansibleGroup: null,
+                          callSetState: () => setState(() {}),
                         ),
                       ),
                     ],

@@ -287,8 +287,8 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                         homePresenter: homePresenter,
                                         configurationsPresenter:
                                             configurationsPresenter,
+                                        callSetState: widget.callSetState,
                                       );
-                                      widget.callSetState();
                                     },
                               child: Text(R.string.confirm),
                             ),
@@ -308,6 +308,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         expansibleGroupFromProductPresenter,
     required HomePresenter homePresenter,
     required ConfigurationsPresenter configurationsPresenter,
+    required void Function() callSetState,
   }) async {
     bool updated = false;
     notificationDialog(
@@ -335,6 +336,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
 
         if (updated) {
           Navigator.of(context).pop();
+
           notificationDialog(
               context: context,
               titleMessage: R.string.msgSuccessToUpdateSchedule,
@@ -343,6 +345,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
               onPress: () async {
                 await configurationsPresenter.loadMenuAgain();
               });
+          callSetState();
         }
       },
     );

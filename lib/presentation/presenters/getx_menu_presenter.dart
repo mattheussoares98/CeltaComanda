@@ -545,7 +545,23 @@ class GetxMenuPresenter extends GetxController
     String dayOfWeek = daysOfWeek[now.weekday]!;
 
     if (T == ProductsViewModel) {
-      return loadedMenu[_inexOfSelectedGroup.value].values.first.where((e) {
+      List<ExpansibleGroupsViewModel> treatedGroups =
+          treatSchedules<ExpansibleGroupsViewModel>();
+      List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
+          filteredMenu = [];
+      // Percorre a lista loadedMenu
+      for (var menuItem in loadedMenu) {
+        // Para cada mapa em loadedMenu, verifica se a chave está em 'groups'
+        for (var key in menuItem.keys) {
+          if (treatedGroups.contains(key)) {
+            // Se encontrar correspondência, adiciona o item na nova lista
+            filteredMenu.add(menuItem);
+            break; // Não precisa continuar verificando outras chaves no mesmo mapa
+          }
+        }
+      }
+
+      return filteredMenu[_inexOfSelectedGroup.value].values.first.where((e) {
         if (e.Schedule == null) {
           return true;
         } else if (dayOfWeek == daysOfWeek[1]) {

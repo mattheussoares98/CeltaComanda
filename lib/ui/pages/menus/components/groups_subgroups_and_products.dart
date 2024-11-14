@@ -23,6 +23,13 @@ class _GroupsSubgroupsAndProductsState
   int firstVisibleProductIndex = 0;
 
   bool isDetachSelected(MenuPresenter menuPresenter) {
+    if (menuPresenter
+        .treatSchedules<ExpansibleGroupsViewModel>()
+        .where((e) => e.Name.toLowerCase() == R.string.detach.toLowerCase())
+        .toList()
+        .isEmpty) {
+      return false;
+    }
     for (var menu in menuPresenter.loadedMenu) {
       for (var group in menu.keys) {
         if (group.Name.toLowerCase() == R.string.detach.toLowerCase() &&

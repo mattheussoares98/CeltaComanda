@@ -12,9 +12,12 @@ class TableConfigurationsItemDrawer extends StatelessWidget {
     return DrawerItem(
       onTap: () async {
         Navigator.of(context).pop();
-        PersonalizedDialogPage.open(
+        notificationDialog(
           context: context,
-          page: const ConfigurationsDialogPage(),
+          titleMessage: R.string.accessConfigurations,
+          content: ConfigurationsDialogPage(),
+          showCancelAndConfirmMessage: false,
+          onPress: () async {},
         );
       },
       name: R.string.configurations,

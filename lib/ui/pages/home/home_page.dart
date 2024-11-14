@@ -97,16 +97,19 @@ class _HomePageState extends State<HomePage>
       collection: "clients",
       doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
       function: (data) async {
-        await Future.delayed(const Duration(seconds: 1));
-        await homePresenter.doOnRemoteEnterpriseChanges(
-          data: data,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          if (mounted) {
+            await homePresenter.doOnRemoteEnterpriseChanges(
+              data: data,
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
+              enterprisePresenter: enterprisePresenter,
+            );
+          }
+        });
       },
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,

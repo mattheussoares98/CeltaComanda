@@ -48,7 +48,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required int? updateMenu,
   });
   Future<bool> isValidUserAndPassword({
     required int personalizedCode,

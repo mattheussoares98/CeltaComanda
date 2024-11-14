@@ -101,14 +101,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    int? updateMenu,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      _updateMenu = updateMenu;
-
       if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
           !_isGeneratingVersionToTablet) {
         await persistent.makePersistent();
@@ -359,13 +356,13 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       final enterprise = EnterpriseValidationModel.fromJson(data).toEntity();
 
       if (_updateMenu != enterprise.updateMenu) {
+        _updateMenu = enterprise.updateMenu;
         await loadCommandData(
           menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
           cartPresenter: cartPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
-          updateMenu: enterprise.updateMenu,
         );
       }
 

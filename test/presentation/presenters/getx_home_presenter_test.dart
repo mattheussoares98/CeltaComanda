@@ -227,7 +227,6 @@ void main() {
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        updateMenu: faker.randomGenerator.integer(100),
       );
 
       sut.clear();
@@ -787,32 +786,6 @@ void main() {
 
       verify(() => persistent.makeNotPersistent()).called(1);
     });
-    test("Should update updateMenu when pass a value", () async {
-      final value = faker.randomGenerator.integer(100);
-
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        updateMenu: value,
-      );
-
-      expect(sut.updateMenu, value);
-    });
-    test("Should not update updateMenu when dont pass a value", () async {
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        updateMenu: null,
-      );
-
-      expect(sut.updateMenu, null);
-    });
   });
 
   group("Is valid user and password", () {
@@ -1092,6 +1065,23 @@ void main() {
         );
 
         verify(() => localCommandData.load()).called(1);
+      });
+
+      test("Should update updateMenu with remote data", () async {
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        expect(
+          sut.updateMenu,
+          EnterpriseValidationModel.fromJson(enterpriseJson).updateMenu,
+        );
       });
     });
 

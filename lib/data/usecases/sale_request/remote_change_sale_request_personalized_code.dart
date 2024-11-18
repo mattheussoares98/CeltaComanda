@@ -18,10 +18,12 @@ class RemoteChangeSaleRequestPersonalizedCode
       final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
       final enterpriseId =
           EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
+      final oldCode = oldPersonalizedCode.padLeft(3, "0");
+      final newCode = newPersonalizedCode.padLeft(3, "0");
 
       await httpAdapter.request(
         url:
-            "$url/api/apiSaleRequest/ChangeSaleRequestPersonalizedCode?enterpriseId=$enterpriseId&oldPersonalizedCode=$oldPersonalizedCode&newPersonalizedCode=$newPersonalizedCode",
+            "$url/api/apiSaleRequest/ChangeSaleRequestPersonalizedCode?enterpriseId=$enterpriseId&oldPersonalizedCode=$oldCode&newPersonalizedCode=$newCode",
         method: "post",
       );
     } catch (error) {

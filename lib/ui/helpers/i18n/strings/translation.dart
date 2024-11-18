@@ -27,9 +27,11 @@ abstract class Translation {
   String get msgLiquidadeCommandError;
   String get msgLowBatteryChargeDevice;
   String get msgMaximumQuantityAchieved;
+  String get msgNewTable;
   String get msgNotFound;
   String get msgNumberCopiedSuccessfully;
   String get msgObligatoryFixedCommandNumber;
+  String get msgOldTable;
   String get msgPaymentCanceled;
   String get msgPaymentDeclined;
   String get msgPaymentPendant;
@@ -180,6 +182,7 @@ abstract class Translation {
   String get seller;
   String get sendEvaluation;
   String get sendMessage;
+  String get sendProductsToAnotherTable;
   String get sendRequest;
   String get send;
   String get service;

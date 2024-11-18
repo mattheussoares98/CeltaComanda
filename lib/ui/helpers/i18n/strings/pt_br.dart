@@ -42,10 +42,12 @@ class PtBr implements Translation {
   String get msgLowBatteryChargeDevice =>
       "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
+  String get msgNewTable => "Mesa nova";
   String get msgNotFound => "Valor não encontrado";
   String get msgNumberCopiedSuccessfully => "Número copiado com sucesso";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
+  String get msgOldTable => "Mesa antiga";
   String get msgPaymentCanceled => "Pagamento cancelado";
   String get msgPaymentDeclined => "Pagamento recusado";
   String get msgPaymentPendant => "Transação pendente";
@@ -211,6 +213,7 @@ class PtBr implements Translation {
   String get seller => "Vendedor";
   String get sendEvaluation => 'Enviar avaliação';
   String get sendMessage => 'Enviar mensagem';
+  String get sendProductsToAnotherTable => 'Enviar produtos para outra mesa';
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';
   String get service => 'Atendimento';

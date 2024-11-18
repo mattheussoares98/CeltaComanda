@@ -39,10 +39,12 @@ class EnUs implements Translation {
   String get msgLowBatteryChargeDevice =>
       'Charge the device. It is running low on battery';
   String get msgMaximumQuantityAchieved => "Maximum quantity achivied";
+  String get msgNewTable => "New table";
   String get msgNotFound => "Value not found";
   String get msgNumberCopiedSuccessfully => "Number copied successfully";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
+  String get msgOldTable => "Old table";
   String get msgPaymentCanceled => 'Payment canceled';
   String get msgPaymentDeclined => 'Payment declined';
   String get msgPaymentPendant => "Payment pendant";
@@ -209,6 +211,7 @@ class EnUs implements Translation {
   String get seller => 'Seller';
   String get sendEvaluation => 'Send evaluation';
   String get sendMessage => 'Send message';
+  String get sendProductsToAnotherTable => 'Send products to another table';
   String get sendRequest => 'Send request';
   String get send => 'Send';
   String get service => 'Service';

@@ -186,7 +186,7 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return (printed.TotalLiquid.toDouble().roundAccordingBs() +
+    return (printed.TotalLiquid.toDouble() +
         getServiceChargeValue(printed));
   }
 

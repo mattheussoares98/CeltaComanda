@@ -1124,8 +1124,8 @@ void main() {
       verify(() => finishSaleRequestTempById.finish(
             saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => printedProductsPresenter
+          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
     });
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
@@ -1828,6 +1828,46 @@ void main() {
           ProductIsFatherComposition: false,
         ),
       ]);
+    });
+  });
+
+  group("Calculate service charge value", () {
+    test("Should return correct value", () {
+      final totalLiquid = faker.randomGenerator.decimal();
+
+      final value = sut.calculateServiceChargeValue(totalLiquid);
+
+      expect(
+          value,
+          totalLiquid *
+              (EnterpriseDataBuilder
+                      .enterpriseDataEntity!.serviceChargePercentageOrValue! /
+                  100));
+    });
+    test("Should return correct value", () {
+      final oldEnterprise = EnterpriseDataBuilder.enterpriseDataEntity;
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName: oldEnterprise!.enterpriseName,
+        url: oldEnterprise.url,
+        enterpriseId: oldEnterprise.enterpriseId,
+        concentradorUrl: oldEnterprise.concentradorUrl,
+        persistApp: oldEnterprise.persistApp,
+        urlCCS: oldEnterprise.urlCCS,
+        useCovenant: oldEnterprise.useCovenant,
+        enterpriseConcentradorParametersEntity:
+            oldEnterprise.enterpriseConcentradorParametersEntity,
+        updateMenu: oldEnterprise.updateMenu,
+        updateConcentratorEnterpriseData:
+            oldEnterprise.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: null,
+        serviceChargeType: null,
+        updateDevicesInformations: oldEnterprise.updateDevicesInformations,
+        updateEnterprise: oldEnterprise.updateEnterprise,
+      );
+      final totalLiquid = faker.randomGenerator.decimal();
+      final value = sut.calculateServiceChargeValue(totalLiquid);
+
+      expect(value, 0);
     });
   });
 }

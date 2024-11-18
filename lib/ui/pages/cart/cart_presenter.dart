@@ -55,4 +55,5 @@ abstract class CartPresenter implements ChangeNotifier {
         expansibleGroupFromProductPresenter,
     required CartProductEntity product,
   });
+  double calculateServiceChargeValue(double totalLiquidSaleRequest);
 }

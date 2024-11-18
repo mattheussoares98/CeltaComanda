@@ -235,17 +235,9 @@ class GetxPaymentPresenter extends GetxController
     if (_successfulPayments.isEmpty) {
       return 0;
     } else {
-      return _successfulPayments.fold(0.0, (previousValue, element) {
-        double previous =
-            previousValue.roundAccordingBs().toStringAsFixed(2).toDouble();
-        double newElement =
-            element.Value.roundAccordingBs().toStringAsFixed(2).toDouble();
-        double result = (previous += newElement)
-            .roundAccordingBs()
-            .toStringAsFixed(2)
-            .toDouble();
-        return result;
-      });
+      return _successfulPayments
+          .fold(0.0, (previousValue, element) => previousValue + element.Value)
+          .roundAccordingBs();
     }
   }
 
@@ -256,11 +248,7 @@ class GetxPaymentPresenter extends GetxController
     double totalLiquid = printedProductsPresenter
         .getTotalLiquid(printedProductsPresenter.printed);
 
-    double paid =
-        totalPaidValue.roundAccordingBs().toStringAsFixed(2).toDouble();
-    double result = totalLiquid - paid;
-
-    return result;
+    return (totalLiquid - totalPaidValue).roundAccordingBs();
   }
 
   @override

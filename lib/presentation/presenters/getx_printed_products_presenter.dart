@@ -186,12 +186,8 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    final serviceChargeValue = getServiceChargeValue(printed);
-
-    double value =
-        (printed.TotalLiquid.toDouble() + serviceChargeValue.toDouble());
-
-    return value.roundAccordingBs().toStringAsFixed(2).toDouble();
+    return (printed.TotalLiquid.toDouble().roundAccordingBs() +
+        getServiceChargeValue(printed));
   }
 
   @override
@@ -213,7 +209,7 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return value.roundAccordingBs().toStringAsFixed(2).toDouble();
+    return value.roundAccordingBs();
   }
 
   @override

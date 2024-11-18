@@ -186,7 +186,8 @@ class _PaymentPageState extends State<PaymentPage>
                       ),
                     ],
                   ),
-                if (paymentPresenter.totalPaidValue == totalLiquid &&
+                if (paymentPresenter.totalPaidValue.toStringAsFixed(2) ==
+                        totalLiquid.toStringAsFixed(2) &&
                     totalLiquid > 0)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),

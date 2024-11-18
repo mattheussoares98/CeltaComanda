@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
@@ -25,10 +28,20 @@ class ConfirmUpdateButton extends StatelessWidget {
         bool? isValid = formKey.currentState?.validate();
 
         if (isValid == true) {
-          await configurationsPresenter.updateSaleRequestPersonalizedCode(
+          final updated =
+              await configurationsPresenter.updateSaleRequestPersonalizedCode(
             oldPersonalizedCode: oldPersonalizedCode!,
             newPersonalizedCode: newPersonalizedCode!,
           );
+
+          if (updated) {
+            Navigator.of(context).pop();
+            snackBarMessage(
+              context,
+              R.string.msgSuccessToUpdateCommandNumberProducts,
+              backgroundColor: Theme.of(context).secondaryHeaderColor,
+            );
+          }
         }
       },
       child: Text(R.string.confirm),

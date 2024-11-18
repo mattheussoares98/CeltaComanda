@@ -558,5 +558,23 @@ void main() {
             newPersonalizedCode: newPersonalizedCode.toString(),
           )).called(1);
     });
+    test("Should return true on success", () async {
+      final updated = await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+
+      expect(updated, true);
+    });
+    test("Should return false on error", () async {
+      changeSaleRequestPersonalizedCode.mockError(DomainError.unexpected);
+
+      final updated = await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+
+      expect(updated, false);
+    });
   });
 }

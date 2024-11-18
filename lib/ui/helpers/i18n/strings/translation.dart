@@ -50,6 +50,7 @@ abstract class Translation {
   String get msgSelectSeller;
   String get msgSelectTable;
   String get msgSuccessToCancelProducts;
+  String get msgSuccessToUpdateCommandNumberProducts;
   String get msgSuccessToUpdateSchedule;
   String get msgSuccessUpdateMenuInAllDevices;
   String get msgTableNumber;

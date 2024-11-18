@@ -211,7 +211,7 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<void> updateSaleRequestPersonalizedCode({
+  Future<bool> updateSaleRequestPersonalizedCode({
     required int oldPersonalizedCode,
     required int newPersonalizedCode,
   }) async {
@@ -223,6 +223,7 @@ class GetxConfigurationsPresenter extends GetxController
         oldPersonalizedCode: oldPersonalizedCode.toString(),
         newPersonalizedCode: newPersonalizedCode.toString(),
       );
+      return true;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.newCommandMustBeEmpty:
@@ -234,6 +235,7 @@ class GetxConfigurationsPresenter extends GetxController
         default:
           mainError = UIError.unexpected;
       }
+      return false;
     } finally {
       isLoading = false;
     }

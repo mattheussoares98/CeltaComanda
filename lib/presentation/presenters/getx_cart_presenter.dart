@@ -405,7 +405,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     isLoading = true;
     mainError = null;
     clear();
-    await addNewPrintRequestInFirebase();
+    addNewPrintRequestInFirebase();
 
     try {
       if (!homePresenter.isFixedCommandNumber && commandNumber == null) {

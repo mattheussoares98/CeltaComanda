@@ -42,11 +42,13 @@ class PtBr implements Translation {
   String get msgLowBatteryChargeDevice =>
       "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
+  String get msgNewCommandMustBeEmpty => "A mesa nova precisa estar vazia";
   String get msgNewTable => "Mesa nova";
   String get msgNotFound => "Valor não encontrado";
   String get msgNumberCopiedSuccessfully => "Número copiado com sucesso";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
+  String get msgOldCommandIsEmpty => "A mesa antiga está vazia";
   String get msgOldTable => "Mesa antiga";
   String get msgPaymentCanceled => "Pagamento cancelado";
   String get msgPaymentDeclined => "Pagamento recusado";

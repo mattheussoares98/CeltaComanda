@@ -506,12 +506,40 @@ void main() {
         newPersonalizedCode: newPersonalizedCode,
       );
     });
-    test("Should emit correct values on error", () async {
+    test("Should emit correct values on DomainError.unexpected", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      changeSaleRequestPersonalizedCode.mockError();
+      changeSaleRequestPersonalizedCode.mockError(DomainError.unexpected);
+
+      await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+    });
+    test("Should emit correct values on DomainError.newCommandIsNotEmpty",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.newCommandMustBeEmpty]));
+
+      changeSaleRequestPersonalizedCode
+          .mockError(DomainError.newCommandMustBeEmpty);
+
+      await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+    });
+    test("Should emit correct values on DomainError.oldCommandIsEmpty",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.oldCommandIsEmpty]));
+
+      changeSaleRequestPersonalizedCode
+          .mockError(DomainError.oldCommandIsEmpty);
 
       await sut.updateSaleRequestPersonalizedCode(
         oldPersonalizedCode: oldPersonalizedCode,

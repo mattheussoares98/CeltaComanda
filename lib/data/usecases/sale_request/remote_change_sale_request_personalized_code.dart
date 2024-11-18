@@ -27,7 +27,14 @@ class RemoteChangeSaleRequestPersonalizedCode
         method: "post",
       );
     } catch (error) {
-      throw DomainError.unexpected;
+      switch (error) {
+        case HttpError.badRequest:
+          throw DomainError.newCommandMustBeEmpty;
+        case HttpError.notFound:
+          throw DomainError.oldCommandIsEmpty;
+        default:
+          throw DomainError.unexpected;
+      }
     }
   }
 }

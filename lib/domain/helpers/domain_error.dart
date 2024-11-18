@@ -11,8 +11,10 @@ enum DomainError {
   invalidCredentials,
   invalidCredentialsOrAccessDenied,
   maximumQuantityAchieved,
+  newCommandMustBeEmpty,
   notFound,
   obligatoryFixedCommandNumber,
+  oldCommandIsEmpty,
   productNotFound,
   unexpected,
 }

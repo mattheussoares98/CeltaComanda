@@ -27,10 +27,12 @@ abstract class Translation {
   String get msgLiquidadeCommandError;
   String get msgLowBatteryChargeDevice;
   String get msgMaximumQuantityAchieved;
+  String get msgNewCommandMustBeEmpty;
   String get msgNewTable;
   String get msgNotFound;
   String get msgNumberCopiedSuccessfully;
   String get msgObligatoryFixedCommandNumber;
+  String get msgOldCommandIsEmpty;
   String get msgOldTable;
   String get msgPaymentCanceled;
   String get msgPaymentDeclined;

@@ -223,8 +223,17 @@ class GetxConfigurationsPresenter extends GetxController
         oldPersonalizedCode: oldPersonalizedCode.toString(),
         newPersonalizedCode: newPersonalizedCode.toString(),
       );
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.newCommandMustBeEmpty:
+          mainError = UIError.newCommandMustBeEmpty;
+          break;
+        case DomainError.oldCommandIsEmpty:
+          mainError = UIError.oldCommandIsEmpty;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

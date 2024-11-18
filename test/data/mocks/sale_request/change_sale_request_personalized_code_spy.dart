@@ -16,10 +16,10 @@ class ChangeSaleRequestPersonalizedCodeSpy extends Mock
       ));
 
   void mockChange() {
-    this._mockChangeCall().thenAnswer((any) => any);
+    this._mockChangeCall().thenAnswer((any) async => any);
   }
 
-  void mockError() {
-    this._mockChangeCall().thenThrow(DomainError.unexpected);
+  void mockError(DomainError error) {
+    this._mockChangeCall().thenThrow(error);
   }
 }

@@ -16,8 +16,10 @@ enum UIError {
   invalidField,
   liquidadeCommandError,
   maximumQuantityAchieved,
+  newCommandMustBeEmpty,
   notFound,
   obligatoryFixedCommandNumber,
+  oldCommandIsEmpty,
   paymentCanceled,
   paymentDeclined,
   paymentPendant,
@@ -60,10 +62,14 @@ extension UIErrorExtension on UIError {
         return R.string.msgLiquidadeCommandError;
       case UIError.maximumQuantityAchieved:
         return R.string.msgMaximumQuantityAchieved;
+      case UIError.newCommandMustBeEmpty:
+        return R.string.msgNewCommandMustBeEmpty;
       case UIError.notFound:
         return R.string.msgNotFound;
       case UIError.obligatoryFixedCommandNumber:
         return R.string.msgObligatoryFixedCommandNumber;
+      case UIError.oldCommandIsEmpty:
+        return R.string.msgOldCommandIsEmpty;
       case UIError.paymentCanceled:
         return R.string.msgPaymentCanceled;
       case UIError.paymentDeclined:

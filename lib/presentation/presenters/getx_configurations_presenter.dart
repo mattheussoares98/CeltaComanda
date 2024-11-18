@@ -19,6 +19,7 @@ class GetxConfigurationsPresenter extends GetxController
   final LocalCommandData localCommandData;
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
+  final ChangeSaleRequestPersonalizedCode changeSaleRequestPersonalizedCode;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -29,6 +30,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.localCommandData,
     required this.loadSaleRequestTemp,
     required this.updateSaleRequestTemp,
+    required this.changeSaleRequestPersonalizedCode,
   });
 
   @override
@@ -206,5 +208,25 @@ class GetxConfigurationsPresenter extends GetxController
   @override
   Future<void> goToSchedulesPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.schedules);
+  }
+
+  @override
+  Future<void> updateSaleRequestPersonalizedCode({
+    required int oldPersonalizedCode,
+    required int newPersonalizedCode,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await changeSaleRequestPersonalizedCode.change(
+        oldPersonalizedCode: oldPersonalizedCode.toString(),
+        newPersonalizedCode: newPersonalizedCode.toString(),
+      );
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 }

@@ -32,6 +32,7 @@ void main() {
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late LocalCommandDataSpy localCommandData;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
+  late ChangeSaleRequestPersonalizedCodeSpy changeSaleRequestPersonalizedCode;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -57,6 +58,7 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       localCommandData: localCommandData,
       updateSaleRequestTemp: updateSaleRequestTemp,
+      changeSaleRequestPersonalizedCode: changeSaleRequestPersonalizedCode,
     );
   }
 
@@ -69,6 +71,7 @@ void main() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     localCommandData = LocalCommandDataSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
+    changeSaleRequestPersonalizedCode = ChangeSaleRequestPersonalizedCodeSpy();
   }
 
   void initMocks() {
@@ -488,6 +491,44 @@ void main() {
 
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.schedules))
           .called(1);
+    });
+  });
+
+  group("Update sale request personalized code", () {
+    final int oldPersonalizedCode = faker.randomGenerator.integer(100);
+    final int newPersonalizedCode = faker.randomGenerator.integer(100);
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      changeSaleRequestPersonalizedCode.mockError();
+
+      await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+    });
+    test("Should call changeSaleRequestPersonalizedCode with correct values",
+        () async {
+      await sut.updateSaleRequestPersonalizedCode(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+
+      verify(() => changeSaleRequestPersonalizedCode.change(
+            oldPersonalizedCode: oldPersonalizedCode.toString(),
+            newPersonalizedCode: newPersonalizedCode.toString(),
+          )).called(1);
     });
   });
 }

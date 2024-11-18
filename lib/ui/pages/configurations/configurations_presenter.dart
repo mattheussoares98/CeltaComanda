@@ -37,4 +37,8 @@ abstract class ConfigurationsPresenter implements Listenable {
     required String? sellerCode,
     required HomePresenter homePresenter,
   });
+  Future<void> updateSaleRequestPersonalizedCode({
+    required int oldPersonalizedCode,
+    required int newPersonalizedCode,
+  });
 }

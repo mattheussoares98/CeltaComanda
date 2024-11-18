@@ -12,4 +12,5 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       localCommandData: makeLocalUseFixedCommandNumber(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
+      changeSaleRequestPersonalizedCode: makeChangeSaleRequestPersonalizedCode(),
     );

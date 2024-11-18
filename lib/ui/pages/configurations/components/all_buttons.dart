@@ -123,6 +123,21 @@ List<Widget> allButtons(BuildContext context) {
                   return const ReserveTable();
                 });
           }),
+    _button(
+        context: context,
+        name: R.string.sendProductsToAnotherTable,
+        function: () {
+          notificationDialog(
+              context: context,
+              titleMessage: R.string.sendProductsToAnotherTable,
+              showCancelAndConfirmMessage: false,
+              showCloseAction: true,
+              showLargeDialog: true,
+              content: SizedBox(
+                child: ChangeSaleRequestPersonalizedCodePage(),
+              ),
+              onPress: () async {});
+        }),
   ];
 }
 

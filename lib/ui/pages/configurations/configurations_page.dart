@@ -50,17 +50,7 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
     homeLoadingSubscription =
         handleLoading(context, homePresenter.isLoadingStream);
 
-    final buttons = [
-      UpdateMenuButton(),
-      OpenSchedulesPageButton(),
-      GoToCancelProductsPageButton(),
-      OpenCommandConfigurationsPageButton(),
-      LogoutButton(),
-      OpenBlockOrLiberateCommandPageButton(),
-      if (!homePresenter.isGeneratingVersionToRede &&
-          !homePresenter.isGeneratingVersionToGetNet)
-        const ReserveTableButton(),
-    ];
+    final buttons = allButtons(context);
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {

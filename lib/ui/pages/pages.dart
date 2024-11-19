@@ -15,3 +15,4 @@ export './products/products.dart';
 export 'schedules/schedules.dart';
 export './splash/splash.dart';
 export './support/support.dart';
+export './web_login/web_login.dart';

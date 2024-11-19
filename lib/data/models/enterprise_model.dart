@@ -18,6 +18,7 @@ class EnterpriseValidationModel {
   final int? serviceChargeType;
   final int? updateDevicesInformations;
   final int? updateEnterprise;
+  final bool? zoomImage;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -34,6 +35,7 @@ class EnterpriseValidationModel {
     required this.serviceChargeType,
     required this.updateDevicesInformations,
     required this.updateEnterprise,
+    required this.zoomImage,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -61,6 +63,7 @@ class EnterpriseValidationModel {
           json["serviceChargePercentageOrValue"]?.toDouble(),
       serviceChargeType: json["serviceChargeType"],
       updateDevicesInformations: json["updateDevicesInformations"],
+      zoomImage: json["zoomImage"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null
@@ -88,6 +91,7 @@ class EnterpriseValidationModel {
         updateDevicesInformations: entity.updateDevicesInformations,
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
+        zoomImage: entity.zoomImage,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -106,6 +110,7 @@ class EnterpriseValidationModel {
         updateEnterprise: updateEnterprise,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
+        zoomImage: zoomImage,
       );
 
   Map<String, dynamic> toJson() => {
@@ -128,5 +133,6 @@ class EnterpriseValidationModel {
                         enterpriseConcentradorParametersEntity!)
                     .toJson()
                 : null,
+        'zoomImage': zoomImage,
       };
 }

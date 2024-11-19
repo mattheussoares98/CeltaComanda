@@ -695,6 +695,7 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
         updateDevicesInformations: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -736,6 +737,7 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
         updateDevicesInformations: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -774,6 +776,7 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
         updateDevicesInformations: EnterpriseDataBuilder
             .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
       );
 
       await sut.loadCommandData(
@@ -1102,6 +1105,7 @@ void main() {
           updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
           serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
           serviceChargeType: faker.randomGenerator.integer(2),
+          zoomImage: faker.randomGenerator.boolean(),
         );
 
         await sut.doOnRemoteEnterpriseChanges(
@@ -1133,6 +1137,7 @@ void main() {
           updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
           serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
           serviceChargeType: faker.randomGenerator.integer(2),
+          zoomImage: faker.randomGenerator.boolean(),
         );
 
         await sut.doOnRemoteEnterpriseChanges(

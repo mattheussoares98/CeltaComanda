@@ -82,6 +82,7 @@ void main() {
       serviceChargeType: null,
       updateDevicesInformations: null,
       updateEnterprise: null,
+      zoomImage: null,
     );
     sut = GetxEnterprisePresenter(
       validation: validation,
@@ -286,6 +287,7 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
+      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -317,6 +319,7 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
+      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
     await sut.goToHomePage(homePresenter);
@@ -349,6 +352,7 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
+      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
     await sut.goToHomePage(homePresenter);
 
@@ -493,6 +497,7 @@ void main() {
           serviceChargeType: null,
           updateDevicesInformations: null,
           updateEnterprise: null,
+          zoomImage: null,
         ),
       );
     });

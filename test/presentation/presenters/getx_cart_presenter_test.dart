@@ -1863,6 +1863,7 @@ void main() {
         serviceChargeType: null,
         updateDevicesInformations: oldEnterprise.updateDevicesInformations,
         updateEnterprise: oldEnterprise.updateEnterprise,
+        zoomImage: oldEnterprise.zoomImage,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

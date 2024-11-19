@@ -65,6 +65,7 @@ void main() {
               enterpriseJsonData["updateDevicesInformations"],
           serviceChargeType: enterpriseJsonData["serviceChargeType"],
           updateEnterprise: enterpriseJsonData["updateEnterprise"],
+          zoomImage: enterpriseJsonData["zoomImage"],
         ),
       );
     });

@@ -18,6 +18,7 @@ class EnterpriseEntity extends Equatable {
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
   final int? serviceChargeType;
+  final bool? zoomImage;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -34,6 +35,7 @@ class EnterpriseEntity extends Equatable {
     required this.serviceChargeType,
     required this.updateDevicesInformations,
     required this.updateEnterprise,
+    required this.zoomImage,
   });
 
   @override
@@ -52,5 +54,6 @@ class EnterpriseEntity extends Equatable {
         serviceChargeType,
         updateDevicesInformations,
         updateEnterprise,
+        zoomImage,
       ];
 }

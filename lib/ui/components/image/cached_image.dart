@@ -10,13 +10,13 @@ class CachedImage extends StatelessWidget {
   final String plu;
   final double height;
   final double width;
-  final bool isShowingLargeImage;
+  final bool zoomImage;
   const CachedImage({
     required this.ean,
     required this.plu,
     required this.height,
     required this.width,
-    this.isShowingLargeImage = false,
+    this.zoomImage = true,
     super.key,
   });
 
@@ -45,7 +45,7 @@ class CachedImage extends StatelessWidget {
 
     return CachedNetworkImage(
       fit: EnterpriseDataBuilder.enterpriseDataEntity?.zoomImage == true &&
-              isShowingLargeImage == false
+              zoomImage
           ? BoxFit.fitWidth
           : BoxFit.contain,
       memCacheHeight: 5 * 1024 * 1024,

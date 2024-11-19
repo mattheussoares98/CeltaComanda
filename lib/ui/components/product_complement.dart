@@ -2,6 +2,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ui/helpers/helpers.dart';
 import '../pages/pages.dart';
 
 class ProductComplement extends StatelessWidget {
@@ -15,22 +16,11 @@ class ProductComplement extends StatelessWidget {
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    if (productComplement == null || productComplement?.isEmpty == true) {
+    if (productComplement == null ||
+        productComplement?.isEmpty == true ||
+        productComplement!.removeComplementConfigurations().isEmpty) {
       return const SizedBox();
     }
-    RegExp optionalRegex = RegExp(r'\(op\|[^|]*\|op\)');
-    RegExp obligatoryRegex = RegExp(r'\(ob\|[^|]*\|ob\)');
-
-    String complement = productComplement
-        .toString()
-        .toLowerCase()
-        .replaceAll(optionalRegex, '')
-        .replaceAll(obligatoryRegex, '')
-        .replaceAll(RegExp(r'\(p\)'), '')
-        .replaceAll(RegExp(r'\(pp\)'), '')
-        .replaceAll(RegExp(r'\(ppp\)'), '')
-        .replaceAll(RegExp(r'\(kids\)'), '')
-        .replaceAll(RegExp(r'\(novo\)'), '');
 
     return SingleChildScrollView(
       child: Column(
@@ -40,8 +30,10 @@ class ProductComplement extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: homePresenter.isGeneratingVersionToGetNet
-                  ? Text(_parseHtmlString(complement))
-                  : HtmlWidget(complement),
+                  ? Text(_parseHtmlString(
+                      productComplement!.removeComplementConfigurations()))
+                  : HtmlWidget(
+                      productComplement!.removeComplementConfigurations()),
             ),
           ),
         ],

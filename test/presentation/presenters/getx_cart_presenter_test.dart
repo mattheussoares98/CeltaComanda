@@ -172,10 +172,10 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: EnterpriseDataBuilder
-          .enterpriseDataEntity?.serviceChargePercentageOrValue,
-      IncrementType:
-          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+      IncrementValue: sut.calculateServiceChargeValue(
+          cartSaleRequestTempProductsEntity.fold(0.0,
+              (previousValue, element) => element.TotalLiquid + previousValue)),
+      IncrementType: 1,
     );
 
     cartProductViewModelWithChilds =
@@ -1094,10 +1094,9 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue: EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue,
-        IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+        IncrementValue: sut.calculateServiceChargeValue(
+            cartProductViewModelWithChilds.TotalLiquid.toDouble()),
+        IncrementType: 1,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1151,6 +1150,10 @@ void main() {
         commandNumber: homePresenter.commandNumberMock,
       );
 
+      final totalLiquid = products
+          .where((e) => e.ProductIsFatherComposition == false)
+          .fold(0.0,
+              (previousValue, element) => element.TotalLiquid + previousValue);
       final entity = UpdateSaleRequestTempEntity(
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
@@ -1161,16 +1164,9 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue: EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue,
-        IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
-        TotalLiquid: products
-            .where((e) => e.ProductIsFatherComposition == false)
-            .fold(
-                0.0,
-                (previousValue, element) =>
-                    element.TotalLiquid + previousValue),
+        IncrementValue: sut.calculateServiceChargeValue(totalLiquid),
+        IncrementType: 1,
+        TotalLiquid: totalLiquid,
         Products: [...products],
       );
 

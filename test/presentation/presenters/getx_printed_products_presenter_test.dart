@@ -612,13 +612,9 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       expect(
-        sut
-            .getTotalLiquid(sut.printed)
-            .toStringAsFixed(2)
-            .toDouble()
-            .roundAccordingBs(),
-        (printed.TotalLiquid.toDouble().roundAccordingBs() *
-                (printed.IncrementValue! / 100 + 1).roundAccordingBs())
+        sut.getTotalLiquid(sut.printed).roundAccordingBs(),
+        (printed.TotalLiquid.roundAccordingBs() *
+                (printed.IncrementValue! / 100 + 1))
             .roundAccordingBs(),
       );
     });

@@ -19,6 +19,12 @@ List<Widget> allButtons(BuildContext context) {
   return [
     _button(
         context: context,
+        name: R.string.productsSchedules,
+        function: () async {
+          await configurationsPresenter.goToSchedulesPage();
+        }),
+    _button(
+        context: context,
         name: R.string.updateMenu,
         function: () {
           notificationDialog(
@@ -38,12 +44,6 @@ List<Widget> allButtons(BuildContext context) {
         }),
     _button(
         context: context,
-        name: R.string.productsSchedules,
-        function: () async {
-          await configurationsPresenter.goToSchedulesPage();
-        }),
-    _button(
-        context: context,
         name: R.string.cancelProductsOrRemoveServiceCharge,
         function: () async {
           await configurationsPresenter.goToCancelProductsPage();
@@ -59,6 +59,21 @@ List<Widget> allButtons(BuildContext context) {
               showCloseAction: true,
               showLargeDialog: true,
               content: CommandConfigurationsPage(),
+              onPress: () async {});
+        }),
+    _button(
+        context: context,
+        name: R.string.sendProductsToAnotherTable,
+        function: () {
+          notificationDialog(
+              context: context,
+              titleMessage: R.string.sendProductsToAnotherTable,
+              showCancelAndConfirmMessage: false,
+              showCloseAction: true,
+              showLargeDialog: true,
+              content: SizedBox(
+                child: ChangeSaleRequestPersonalizedCodePage(),
+              ),
               onPress: () async {});
         }),
     _button(
@@ -123,21 +138,6 @@ List<Widget> allButtons(BuildContext context) {
                   return const ReserveTable();
                 });
           }),
-    _button(
-        context: context,
-        name: R.string.sendProductsToAnotherTable,
-        function: () {
-          notificationDialog(
-              context: context,
-              titleMessage: R.string.sendProductsToAnotherTable,
-              showCancelAndConfirmMessage: false,
-              showCloseAction: true,
-              showLargeDialog: true,
-              content: SizedBox(
-                child: ChangeSaleRequestPersonalizedCodePage(),
-              ),
-              onPress: () async {});
-        }),
   ];
 }
 

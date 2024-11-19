@@ -76,6 +76,8 @@ class _SchedulesPageState extends State<SchedulesPage>
                   .toList()[groupIndex];
               final productsOfGroup =
                   menuPresenter.loadedMenu[groupIndex].values.first;
+              productsOfGroup.sort((a, b) => a.Name.compareTo(b.Name));
+
               return Container(
                 margin: EdgeInsets.all(3),
                 decoration: BoxDecoration(

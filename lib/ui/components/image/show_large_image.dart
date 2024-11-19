@@ -35,6 +35,7 @@ void showLargeImage({
               height: MediaQuery.of(context).size.height * 0.5,
               width: MediaQuery.of(context).size.width,
               selectedProduct: selectedProduct,
+              isShowingLargeImage: true,
             ),
             if (selectedProduct != null)
               _complementAndInsertProductButton(

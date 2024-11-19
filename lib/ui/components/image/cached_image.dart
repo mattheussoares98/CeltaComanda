@@ -4,18 +4,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../infra/helpers/helperts.dart';
 import '../../../main/builders/builders.dart';
-import '../../helpers/sizes/sizes.dart';
 
 class CachedImage extends StatelessWidget {
   final String? ean;
   final String plu;
   final double height;
   final double width;
+  final bool isShowingLargeImage;
   const CachedImage({
     required this.ean,
     required this.plu,
     required this.height,
     required this.width,
+    this.isShowingLargeImage = false,
     super.key,
   });
 
@@ -43,7 +44,10 @@ class CachedImage extends StatelessWidget {
     }
 
     return CachedNetworkImage(
-      fit: hasMinWidth(context) ? BoxFit.fitHeight : BoxFit.contain,
+      fit: EnterpriseDataBuilder.enterpriseDataEntity?.zoomImage == true &&
+              isShowingLargeImage == false
+          ? BoxFit.fitWidth
+          : BoxFit.contain,
       memCacheHeight: 5 * 1024 * 1024,
       memCacheWidth: 5 * 1024 * 1024,
       cacheManager: _customCacheManager,

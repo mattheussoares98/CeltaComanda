@@ -15,6 +15,7 @@ class ImageWidget extends StatefulWidget {
   final double width;
   final ProductsViewModel? selectedProduct;
   final AnimationOrientation orientation;
+  final bool? isShowingLargeImage;
 
   const ImageWidget({
     this.height = 65,
@@ -22,6 +23,7 @@ class ImageWidget extends StatefulWidget {
     required this.ean,
     required this.plu,
     required this.selectedProduct,
+    this.isShowingLargeImage,
     this.orientation = AnimationOrientation.horizontal,
     super.key,
   });
@@ -81,6 +83,7 @@ class _ImageWidgetState extends State<ImageWidget>
                         plu: widget.plu,
                         height: widget.height,
                         width: widget.width,
+                        isShowingLargeImage: widget.isShowingLargeImage == true,
                       ),
                     );
                   },

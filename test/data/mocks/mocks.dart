@@ -13,6 +13,7 @@ export './login/login.dart';
 export './menu/menu.dart';
 export './navigation/navigation.dart';
 export './payment/payment.dart';
+export './plataform/plataform.dart';
 export './print_request/print_request.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';

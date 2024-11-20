@@ -9,7 +9,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    presenter.checkApiSaleRequest();
+    presenter.checkPageToGo();
 
     return Scaffold(
       body: Center(

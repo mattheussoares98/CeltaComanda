@@ -8,20 +8,27 @@ import '../../ui/pages/pages.dart';
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
+  final GetPlataform getPlataform;
 
   GetxSplashPresenter({
     required this.navigateTo,
     required this.loadEnterpriseData,
+    required this.getPlataform,
   });
 
   @override
-  Future<void> checkApiSaleRequest({int durationInSeconds = 2}) async {
+  Future<void> checkPageToGo({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       EnterpriseDataBuilder.enterpriseDataEntity =
           await loadEnterpriseData.load();
+      bool isWeb = getPlataform.isWeb();
 
-      if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null) {
+      if (isWeb) {
+        navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);
+      } else if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId ==
+              null ||
+          EnterpriseDataBuilder.enterpriseDataEntity?.url == null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,

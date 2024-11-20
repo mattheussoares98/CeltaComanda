@@ -5,4 +5,5 @@ import '../../usecases/usecases.dart';
 SplashPresenter makeGetxSplashPresenter() => GetxSplashPresenter(
       navigateTo: makeNavigateTo(),
       loadEnterpriseData: makeLocalEnterpriseData(),
+      getPlataform: makeFlutterGetPlatform(),
     );

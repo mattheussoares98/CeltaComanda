@@ -13,7 +13,7 @@ class LocalEnterpriseDataSpy extends Mock implements LocalEnterpriseData {
   void mockAddError() => this.mockAddCall().thenThrow(DomainError.unexpected);
 
   When mockLoadCall() => when(() => this.load());
-  void mockLoad(EnterpriseEntity entity) =>
+  void mockLoad(EnterpriseEntity? entity) =>
       this.mockLoadCall().thenAnswer((_) async => entity);
   void mockLoadError() => this.mockLoadCall().thenThrow(Exception());
 }

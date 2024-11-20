@@ -44,7 +44,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(() => presenter.checkApiSaleRequest()).called(1);
+    verify(() => presenter.checkPageToGo()).called(1);
   });
 
   testWidgets('Should change to ExpansibleGroupsPage',

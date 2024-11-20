@@ -20,7 +20,7 @@ class FirebaseAuthLoginManagement implements LoginManagement {
   }
 
   @override
-  Future<void> signOut() async {
+  Future<void> logout() async {
     try {
       await firebaseAuthAdapter.logout();
     } catch (e) {

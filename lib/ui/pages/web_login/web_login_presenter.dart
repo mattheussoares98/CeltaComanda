@@ -10,4 +10,5 @@ abstract class WebLoginPresenter implements Listenable {
     required String email,
     required String password,
   });
+  Future<void> doLogout();
 }

@@ -3,5 +3,5 @@ abstract class LoginManagement {
     required String email,
     required String password,
   });
-  Future<void> signOut();
+  Future<void> logout();
 }

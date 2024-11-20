@@ -393,20 +393,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  double calculateServiceChargeValue(double totalLiquidSaleRequest) {
-    if (EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue ==
-        null) {
-      return 0;
-    } else {
-      return totalLiquidSaleRequest *
-          (EnterpriseDataBuilder
-                  .enterpriseDataEntity!.serviceChargePercentageOrValue! /
-              100);
-    }
-  }
-
-  @override
   Future<bool> saveProducts({
     required PrintedProductsPresenter printedProductsPresenter,
     required int? tableNumber,
@@ -451,25 +437,28 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         insertProductPresenter: insertProductPresenter,
       );
 
-      final totalLiquid = productsEntitys
-          .where((e) => e.ProductIsFatherComposition == false)
-          .fold(0.0,
-              (previousValue, element) => element.TotalLiquid + previousValue);
-
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: totalLiquid,
+        TotalLiquid: productsEntitys
+            .where((e) => e.ProductIsFatherComposition == false)
+            .fold(
+                0.0,
+                (previousValue, element) =>
+                    element.TotalLiquid + previousValue),
         Products: productsEntitys,
         Comments: _saleRequestTemp?.Comments,
         SellerCode: _saleRequestTemp?.SellerCode,
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue: calculateServiceChargeValue(totalLiquid),
-        IncrementType: 1,
+        IncrementValue: EnterpriseDataBuilder
+                .enterpriseDataEntity?.serviceChargePercentageOrValue ??
+            0,
+        IncrementType:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType ?? 0,
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -610,6 +599,20 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
+    }
+  }
+
+  @override
+  double calculateServiceChargeValue(double totalLiquidSaleRequest) {
+    if (EnterpriseDataBuilder
+            .enterpriseDataEntity?.serviceChargePercentageOrValue ==
+        null) {
+      return 0;
+    } else {
+      return totalLiquidSaleRequest *
+          (EnterpriseDataBuilder
+                  .enterpriseDataEntity!.serviceChargePercentageOrValue! /
+              100);
     }
   }
 }

@@ -1,0 +1,1 @@
+export './flutter_get_platform.dart';

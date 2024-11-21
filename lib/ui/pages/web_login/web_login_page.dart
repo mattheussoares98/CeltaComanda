@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
+import 'components/components.dart';
 
 class WebLoginPage extends StatefulWidget {
   const WebLoginPage({super.key});
@@ -21,6 +20,7 @@ class _WebLoginPageState extends State<WebLoginPage>
   StreamSubscription? mainErrorSubscription;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final passwordFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -36,6 +36,13 @@ class _WebLoginPageState extends State<WebLoginPage>
     });
   }
 
+  Future<void> makeLogin(WebLoginPresenter webLoginPresenter) async {
+    await webLoginPresenter.doLogin(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -43,6 +50,7 @@ class _WebLoginPageState extends State<WebLoginPage>
     mainErrorSubscription?.cancel();
     emailController.dispose();
     passwordController.dispose();
+    passwordFocusNode.dispose();
   }
 
   @override
@@ -63,37 +71,22 @@ class _WebLoginPageState extends State<WebLoginPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextFormField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: formFieldDecoration(
-                context: context,
-                hintText: R.string.email,
-                labelText: R.string.email,
-                errorText: null,
-              ),
+            EmailField(
+              emailController: emailController,
+              passwordFocusNode: passwordFocusNode,
             ),
             const SizedBox(height: 10),
-            TextFormField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: formFieldDecoration(
-                context: context,
-                hintText: R.string.password,
-                labelText: R.string.password,
-                errorText: null,
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () async {
-                await webLoginPresenter.doLogin(
-                  email: emailController.text,
-                  password: passwordController.text,
-                );
+            PasswordField(
+              makeLogin: () async {
+                await makeLogin(webLoginPresenter);
               },
-              child: Text(R.string.login),
+              passwordController: passwordController,
+              passwordFocusNode: passwordFocusNode,
             ),
+            const SizedBox(height: 10),
+            MakeLoginButton(makeLogin: () async {
+              await makeLogin(webLoginPresenter);
+            }),
           ],
         ),
       ),

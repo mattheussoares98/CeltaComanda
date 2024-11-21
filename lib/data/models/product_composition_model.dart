@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/entities.dart';
+import 'models.dart';
 
 class ProductCompositionModel extends Equatable {
   final int? ProductCompositionId;
@@ -19,6 +20,7 @@ class ProductCompositionModel extends Equatable {
   final dynamic ProductOptions;
   final String? comment;
   final int? indexOfSelectedChild;
+  final ProductScheduleEntity? Schedule;
 
   const ProductCompositionModel({
     required this.ProductCompositionId,
@@ -35,6 +37,7 @@ class ProductCompositionModel extends Equatable {
     required this.ProductOptions,
     required this.comment,
     required this.indexOfSelectedChild,
+    required this.Schedule,
   });
 
   factory ProductCompositionModel.fromJson(Map<String, dynamic> json) {
@@ -66,6 +69,9 @@ class ProductCompositionModel extends Equatable {
       ProductOptions: json["ProductOptions"],
       comment: json["comment"],
       indexOfSelectedChild: json["indexOfSelectedChild"],
+      Schedule: json["Schedule"] == null
+          ? null
+          : ProductScheduleModel.fromJson(json["Schedule"]).toEntity(),
     );
   }
 
@@ -85,6 +91,7 @@ class ProductCompositionModel extends Equatable {
       ProductOptions: entity.ProductOptions,
       comment: entity.comment,
       indexOfSelectedChild: entity.indexOfSelectedChild,
+      Schedule: entity.Schedule,
     );
   }
 
@@ -102,6 +109,7 @@ class ProductCompositionModel extends Equatable {
         "IsOptionalItem": IsOptionalItem,
         "ProductOptions": ProductOptions,
         "comment": comment,
+        "Schedule": Schedule,
       };
 
   ProductCompositionEntity toEntity() => ProductCompositionEntity(
@@ -119,6 +127,7 @@ class ProductCompositionModel extends Equatable {
         ProductOptions: ProductOptions,
         comment: comment,
         indexOfSelectedChild: indexOfSelectedChild,
+        Schedule: Schedule,
       );
 
   @override
@@ -135,5 +144,6 @@ class ProductCompositionModel extends Equatable {
         IncrementValue,
         IsOptionalItem,
         ProductOptions,
+        Schedule,
       ];
 }

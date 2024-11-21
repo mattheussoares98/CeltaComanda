@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 
+import 'entities.dart';
+
 // ignore: must_be_immutable
 class ProductCompositionEntity extends Equatable {
   final int? ProductCompositionId;
@@ -16,6 +18,7 @@ class ProductCompositionEntity extends Equatable {
   final double? IncrementValue;
   final bool? IsOptionalItem;
   final dynamic ProductOptions;
+  final ProductScheduleEntity? Schedule;
   String? comment;
   List<ProductCompositionEntity>? childsComposition;
   int? indexOfSelectedChild;
@@ -35,6 +38,7 @@ class ProductCompositionEntity extends Equatable {
     required this.ProductOptions,
     required this.comment,
     required this.indexOfSelectedChild,
+    required this.Schedule,
     this.childsComposition,
   });
 
@@ -54,6 +58,7 @@ class ProductCompositionEntity extends Equatable {
         ProductOptions,
         childsComposition,
         indexOfSelectedChild,
+        Schedule,
       ];
 
   @override
@@ -75,6 +80,7 @@ class ProductCompositionEntity extends Equatable {
         other.ProductOptions == ProductOptions &&
         other.comment == comment &&
         other.indexOfSelectedChild == indexOfSelectedChild &&
+        other.Schedule == Schedule &&
         listEquals(other.childsComposition, childsComposition);
   }
 
@@ -96,6 +102,7 @@ class ProductCompositionEntity extends Equatable {
       comment,
       indexOfSelectedChild,
       childsComposition,
+      Schedule,
     );
   }
 

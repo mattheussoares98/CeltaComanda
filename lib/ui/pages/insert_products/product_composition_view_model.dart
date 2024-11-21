@@ -19,6 +19,8 @@ class ProductCompositionViewModel extends Equatable {
   final String? IsOptionalItem;
   final String? ProductOptions;
   final List<ProductCompositionViewModel>? childs;
+  final ProductScheduleEntity? Schedule;
+
   int? indexOfSelectedChild;
   String? commentFather;
 
@@ -35,6 +37,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductOptions,
+    required this.Schedule,
     this.indexOfSelectedChild,
     this.childs,
     this.commentFather,
@@ -58,6 +61,7 @@ class ProductCompositionViewModel extends Equatable {
         indexOfSelectedChild,
         childs,
         commentFather,
+        Schedule,
       ];
 
   factory ProductCompositionViewModel.fromEntity(
@@ -79,6 +83,7 @@ class ProductCompositionViewModel extends Equatable {
         ProductOptions: entity.ProductOptions?.toString(),
         commentFather: entity.comment,
         indexOfSelectedChild: entity.indexOfSelectedChild,
+        Schedule: entity.Schedule,
         childs: entity.childsComposition
             ?.map((e) => ProductCompositionViewModel.fromEntity(e))
             .toList(),
@@ -104,6 +109,7 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
+        Schedule: entity.Schedule,
         childs: childs
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -130,6 +136,7 @@ class ProductCompositionViewModel extends Equatable {
             ? null
             : childs?.map((e) => e.toEntity()).toList(),
         indexOfSelectedChild: indexOfSelectedChild,
+        Schedule: Schedule,
       );
 
   Map toJson() => {
@@ -148,6 +155,7 @@ class ProductCompositionViewModel extends Equatable {
         "childs": childs,
         "indexOfSelectedChild": indexOfSelectedChild,
         "commentFather": commentFather,
+        "Schedule": Schedule,
       };
 
   factory ProductCompositionViewModel.fromJson(Map json) =>
@@ -170,5 +178,6 @@ class ProductCompositionViewModel extends Equatable {
                 (element) => ProductCompositionViewModel.fromJson(element))
             .toList(),
         commentFather: json["commentFather"],
+        Schedule: json["Schedule"],
       );
 }

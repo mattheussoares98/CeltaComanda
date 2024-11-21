@@ -283,6 +283,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
               childs: e.childs,
               commentFather: e.commentFather,
               indexOfSelectedChild: e.indexOfSelectedChild,
+              Schedule: e.Schedule,
             );
           }).toList();
         }
@@ -354,6 +355,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             childs: e.childs,
             commentFather: e.commentFather,
             indexOfSelectedChild: e.indexOfSelectedChild,
+            Schedule: e.Schedule,
           );
         }).toList();
       }

@@ -732,6 +732,7 @@ class EntityFactory {
           IsOptionalItem: isOptionalItem,
           comment: faker.randomGenerator.string(10),
           indexOfSelectedChild: null,
+          Schedule: makeProductScheduleEntity(),
         ),
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
@@ -748,6 +749,7 @@ class EntityFactory {
           IsOptionalItem: isOptionalItem,
           comment: faker.randomGenerator.string(10),
           indexOfSelectedChild: null,
+          Schedule: makeProductScheduleEntity(),
         ),
       ];
 
@@ -775,10 +777,12 @@ class EntityFactory {
         IsOptionalItem: isOptionalItem.toString(),
         ProductOptions: "",
         indexOfSelectedChild: indexOfSelectedChild,
+        Schedule: makeProductScheduleEntity(),
         childs: !insertChilds
             ? []
             : [
                 ProductCompositionViewModel(
+                  Schedule: makeProductScheduleEntity(),
                   ProductCompositionId: "1",
                   EnterpriseId: "1",
                   InternalCodeOnERPCodeFather: "1",

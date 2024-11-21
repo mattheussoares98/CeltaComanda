@@ -625,10 +625,8 @@ void main() {
 
       expect(
         sut.getTotalLiquid(sut.printed),
-        printed.TotalLiquid.toDouble()
-            .toStringAsFixed(2)
-            .toDouble()
-            .roundAccordingBs(),
+        printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble() +
+            sut.getServiceChargeValue(sut.printed),
       );
     });
   });

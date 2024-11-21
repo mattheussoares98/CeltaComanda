@@ -247,7 +247,7 @@ class GetxPaymentPresenter extends GetxController
     double totalLiquid = printedProductsPresenter
         .getTotalLiquid(printedProductsPresenter.printed);
 
-    return (totalLiquid - totalPaidValue).roundAccordingBs();
+    return (totalLiquid - totalPaidValue);
   }
 
   @override

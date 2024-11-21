@@ -27,7 +27,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
     when(() => this.updateCommandNumber(any())).thenAnswer((any) => any);
     when(() => this.updateIsFixedCommandNumber())
         .thenAnswer((any) async => any);
-    when(() => this.clear()).thenAnswer((any) => any);
+    when(() => this.clear()).thenAnswer((any) async => any);
   }
 
   void mockGoToSplashPage() {

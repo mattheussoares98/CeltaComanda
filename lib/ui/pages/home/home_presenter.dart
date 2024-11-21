@@ -22,7 +22,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   void updateCommandNumber(String? value);
   Future<void> updateIsFixedCommandNumber();
 
-  void clear();
+  Future<void> clear();
 
   Future<void> doLogout({
     required PrintedProductsPresenter printedProductsPresenter,

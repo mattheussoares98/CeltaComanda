@@ -45,9 +45,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     menuPresenter.clear();
     printedProductsPresenter.clear();
     cartPresenter.clear();
-    clear();
     await enterprisePresenter.clearEnterpriseData();
     await persistent.makeNotPersistent();
+    await clear();
 
     await navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }
@@ -58,9 +58,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     _commandNumber = null;
     _updateMenu = -1;
+    await localCommandData.update(
+      CommandEntity(
+        commandNumber: _commandNumber,
+        isFixedCommandNumber: false,
+      ),
+    );
   }
 
   @override
@@ -292,7 +298,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToMicrosoftStore => false;
 
-  bool _isGeneratingVersionToTablet = true;
+  bool _isGeneratingVersionToTablet = false;
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 

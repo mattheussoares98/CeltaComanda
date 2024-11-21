@@ -185,6 +185,19 @@ void main() {
 
         verify(() => enterprisePresenter.clearEnterpriseData()).called(1);
       });
+      test('Should call localCommandData.update correctly', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(
+          () => localCommandData.update(
+              CommandEntity(commandNumber: null, isFixedCommandNumber: false)),
+        ).called(1);
+      });
     });
     test('Should go to PrintedProductsPage', () async {
       sut.goToPrintedProductsPage();

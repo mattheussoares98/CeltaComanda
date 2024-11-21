@@ -597,10 +597,8 @@ void main() {
 
       await sut.loadPrinted(homePresenter.commandNumber!);
 
-      double value = (sut.printed!.TotalLiquid.toDouble().roundAccordingBs() +
-              printed.IncrementValue!.toDouble().roundAccordingBs())
-          .toStringAsFixed(2)
-          .toDouble();
+      double value =
+          sut.getSubtotal(sut.printed) + sut.getServiceChargeValue(sut.printed);
 
       expect(sut.getTotalLiquid(sut.printed), value);
     });
@@ -612,10 +610,8 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       expect(
-        sut.getTotalLiquid(sut.printed).roundAccordingBs(),
-        (printed.TotalLiquid.roundAccordingBs() *
-                (printed.IncrementValue! / 100 + 1))
-            .roundAccordingBs(),
+        sut.getTotalLiquid(sut.printed),
+        sut.getSubtotal(sut.printed) + sut.getServiceChargeValue(sut.printed),
       );
     });
     test("Should return correct value if incrementType is invalid", () async {
@@ -637,6 +633,22 @@ void main() {
     });
   });
 
+  group("Get sub total", () {
+    test("Should return 0 if printed products is null", () async {
+      loadPrintedProducts.mockLoadPrintedProducts(null);
+      await sut.loadPrinted(homePresenter.commandNumber!);
+
+      expect(sut.getSubtotal(sut.printed), 0);
+    });
+    test("Should return total liquid of printed products", () async {
+      await sut.loadPrinted(homePresenter.commandNumber!);
+
+      expect(
+        sut.getSubtotal(sut.printed),
+        printedEntity.TotalLiquid.toStringAsFixed(2).toDouble(),
+      );
+    });
+  });
   group("Remove service charge", () {
     test("Should emit correct values in success", () async {
       await sut.loadPrinted(homePresenter.commandNumber!);

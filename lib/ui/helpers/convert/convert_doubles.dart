@@ -2,7 +2,7 @@ import '../../../ui/helpers/helpers.dart';
 
 extension DoubleModifier on double {
   double roundAccordingBs() {
-    double diff = (this * 1000 % 10).toStringAsFixed(2).toDouble();
+    double diff = (this * 100 % 10).toStringAsFixed(2).toDouble();
 
     if (diff > 5) {
       return ((this * 100).ceil() / 100);

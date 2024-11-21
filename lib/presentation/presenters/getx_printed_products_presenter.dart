@@ -186,8 +186,16 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return (printed.TotalLiquid.toDouble() +
-        getServiceChargeValue(printed));
+    return printed.TotalLiquid.toDouble() + getServiceChargeValue(printed);
+  }
+
+  @override
+  double getSubtotal(PrintedViewModel? printed) {
+    if (printed == null) {
+      return 0;
+    }
+
+    return printed.TotalLiquid.toDouble();
   }
 
   @override

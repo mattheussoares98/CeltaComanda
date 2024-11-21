@@ -57,7 +57,7 @@ class RequestSummary extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Subtotal(totalLiquid: totalLiquid - serviceChargeValue),
+                        Subtotal(totalLiquid: printedProductsPresenter.getSubtotal(printed)),
                         const SizedBox(height: 10),
                         ServiceCharge(
                           printed: printed,

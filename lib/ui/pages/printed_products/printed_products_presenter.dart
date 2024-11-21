@@ -12,6 +12,7 @@ abstract class PrintedProductsPresenter
   Stream<String?> get alertMessageStream;
   bool get canCancelProducts;
   double getTotalLiquid(PrintedViewModel? printed);
+  double getSubtotal(PrintedViewModel? printed);
   double getServiceChargeValue(PrintedViewModel? printed);
 
   void updateCanCancelProducts(bool value);

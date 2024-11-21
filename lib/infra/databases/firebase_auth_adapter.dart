@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../data/database/database.dart';
@@ -34,5 +36,19 @@ class FirebaseAuthAdapter implements FirebaseAuthStorage {
     } catch (e) {
       throw DomainError.unexpected;
     }
+  }
+
+  @override
+  Future<bool> isLoggedIn() async {
+    bool logged = false;
+    final loginSubscription =
+        firebaseAuth.authStateChanges().listen((User? user) {
+      if (user != null) {
+        logged = true;
+      }
+    });
+    await Future.delayed(Duration(seconds: 3));
+    loginSubscription.cancel();
+    return logged;
   }
 }

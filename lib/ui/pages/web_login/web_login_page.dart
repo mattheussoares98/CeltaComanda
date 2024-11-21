@@ -23,6 +23,20 @@ class _WebLoginPageState extends State<WebLoginPage>
   final passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        WebLoginPresenter webLoginPresenter =
+            Provider.of(context, listen: false);
+
+        await webLoginPresenter
+            .navigateToWebConfigurationsPageIfAlreadyLoggedIn();
+      }
+    });
+  }
+
+  @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();

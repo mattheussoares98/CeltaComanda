@@ -27,4 +27,7 @@ class FirebaseAuthLoginManagement implements LoginManagement {
       throw DomainError.unexpected;
     }
   }
+
+  @override
+  Future<bool> isLoggedIn() async => await firebaseAuthAdapter.isLoggedIn();
 }

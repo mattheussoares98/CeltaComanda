@@ -11,4 +11,5 @@ abstract class WebLoginPresenter implements Listenable {
     required String password,
   });
   Future<void> doLogout();
+  Future<void> navigateToWebConfigurationsPageIfAlreadyLoggedIn();
 }

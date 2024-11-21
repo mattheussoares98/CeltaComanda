@@ -48,4 +48,15 @@ class GetxWebLoginPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> navigateToWebConfigurationsPageIfAlreadyLoggedIn() async {
+    isLoading = true;
+    bool isLogged = await loginManagement.isLoggedIn();
+    if (isLogged) {
+      navigateTo.navigate(
+          pageRoute: PageRoutes.webEnterprisesConfigurations, clear: true);
+    }
+    isLoading = false;
+  }
 }

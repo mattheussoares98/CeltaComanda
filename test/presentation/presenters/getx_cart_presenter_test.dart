@@ -172,10 +172,10 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: sut.calculateServiceChargeValue(
-          cartSaleRequestTempProductsEntity.fold(0.0,
-              (previousValue, element) => element.TotalLiquid + previousValue)),
-      IncrementType: 1,
+      IncrementValue: EnterpriseDataBuilder
+          .enterpriseDataEntity?.serviceChargePercentageOrValue,
+      IncrementType:
+          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
     );
 
     cartProductViewModelWithChilds =
@@ -1094,9 +1094,10 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue: sut.calculateServiceChargeValue(
-            cartProductViewModelWithChilds.TotalLiquid.toDouble()),
-        IncrementType: 1,
+        IncrementValue: EnterpriseDataBuilder
+            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementType:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1164,8 +1165,10 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue: sut.calculateServiceChargeValue(totalLiquid),
-        IncrementType: 1,
+        IncrementValue: EnterpriseDataBuilder
+            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementType:
+            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
         TotalLiquid: totalLiquid,
         Products: [...products],
       );

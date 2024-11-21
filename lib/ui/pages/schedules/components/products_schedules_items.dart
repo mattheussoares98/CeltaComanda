@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../components/components.dart';
-import '../../helpers/helpers.dart';
-import '../pages.dart';
+import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
+import '../../pages.dart';
+import 'components.dart';
 
 class ProductsSchedulesItems extends StatefulWidget {
   final List<ProductsViewModel> products;

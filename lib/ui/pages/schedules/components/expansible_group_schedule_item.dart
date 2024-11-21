@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../components/components.dart';
-import '../../helpers/helpers.dart';
-import '../pages.dart';
+import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
+import '../../pages.dart';
+import 'components.dart';
 
 class ExpansibleGroupScheduleItem extends StatelessWidget {
   final ExpansibleGroupsViewModel expansibleGroup;

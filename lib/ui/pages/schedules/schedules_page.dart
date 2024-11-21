@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
+import 'components/components.dart';
 
 class SchedulesPage extends StatefulWidget {
   const SchedulesPage({super.key});

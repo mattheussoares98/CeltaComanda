@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/helpers/helpers.dart';
+import '../../../helpers/helpers.dart';
 
 class ScheduleEnabledDays extends StatelessWidget {
   final bool allowMonday;

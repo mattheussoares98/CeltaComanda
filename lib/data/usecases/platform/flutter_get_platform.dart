@@ -1,16 +1,15 @@
-import 'dart:io';
+import 'package:get/get.dart';
 
+import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class FlutterGetPlatform implements GetPlataform {
   @override
   bool isWeb() {
     try {
-      //TODO 
-      //use a package to get if is web
-      return !Platform.isAndroid && !Platform.isIOS && !Platform.isWindows;
+      return GetPlatform.isWeb;
     } catch (e) {
-      return true;
+      throw DomainError.unexpected;
     }
   }
 }

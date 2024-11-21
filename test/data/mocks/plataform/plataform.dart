@@ -1,1 +1,1 @@
-export 'get_plataform_spy.dart';
+export 'obtain_plataform_spy.dart';

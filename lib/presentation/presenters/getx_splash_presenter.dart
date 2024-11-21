@@ -8,12 +8,12 @@ import '../../ui/pages/pages.dart';
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
-  final GetPlataform getPlataform;
+  final ObtainPlataform obtainPlatform;
 
   GetxSplashPresenter({
     required this.navigateTo,
     required this.loadEnterpriseData,
-    required this.getPlataform,
+    required this.obtainPlatform,
   });
 
   @override
@@ -22,7 +22,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
     try {
       EnterpriseDataBuilder.enterpriseDataEntity =
           await loadEnterpriseData.load();
-      bool isWeb = getPlataform.isWeb();
+      bool isWeb = obtainPlatform.isWeb();
 
       if (isWeb) {
         navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);

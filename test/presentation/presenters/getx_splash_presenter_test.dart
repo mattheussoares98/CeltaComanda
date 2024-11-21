@@ -17,7 +17,7 @@ void main() {
   late GetxSplashPresenter sut;
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy loadEnterpriseData;
-  late GetPlataformSpy getPlataform;
+  late ObtainPlataformSpy obtainPlatform;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -27,18 +27,18 @@ void main() {
         EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
     loadEnterpriseData = LocalEnterpriseDataSpy();
-    getPlataform = GetPlataformSpy();
+    obtainPlatform = ObtainPlataformSpy();
     loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadEnterpriseData: loadEnterpriseData,
-      getPlataform: getPlataform,
+      obtainPlatform: obtainPlatform,
     );
   });
 
   group("Go to home page", () {
     test('Should go to home page on success to load data of API', () async {
-      getPlataform.mockIsWeb(false);
+      obtainPlatform.mockIsWeb(false);
       await sut.checkPageToGo(durationInSeconds: 0);
 
       verify(
@@ -52,7 +52,7 @@ void main() {
 
   group("Go to enterprise validation page", () {
     test('Should go to enterprise validation enterprise is null', () async {
-      getPlataform.mockIsWeb(false);
+      obtainPlatform.mockIsWeb(false);
       loadEnterpriseData.mockLoad(null);
 
       await sut.checkPageToGo(durationInSeconds: 0);
@@ -66,7 +66,7 @@ void main() {
     });
     test('Should go to enterprise validation if EnterpriseId is null',
         () async {
-      getPlataform.mockIsWeb(false);
+      obtainPlatform.mockIsWeb(false);
       loadEnterpriseData.mockLoad(
         EnterpriseEntity(
           enterpriseName: "enterpriseName",
@@ -98,7 +98,7 @@ void main() {
       ).called(1);
     });
     test('Should go to enterprise validation if url is null', () async {
-      getPlataform.mockIsWeb(false);
+      obtainPlatform.mockIsWeb(false);
       loadEnterpriseData.mockLoad(
         EnterpriseEntity(
           enterpriseName: "enterpriseName",
@@ -145,7 +145,7 @@ void main() {
     test("Should call getPlataform.isWeb", () async {
       await sut.checkPageToGo();
 
-      verify(() => getPlataform.isWeb()).called(1);
+      verify(() => obtainPlatform.isWeb()).called(1);
     });
     test("Should go to webLoginPage if is web page", () async {
       await sut.checkPageToGo();

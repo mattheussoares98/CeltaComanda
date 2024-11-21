@@ -1,1 +1,1 @@
-export './get_plataform.dart';
+export 'obtain_plataform.dart';

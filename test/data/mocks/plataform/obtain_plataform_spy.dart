@@ -3,8 +3,8 @@
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class GetPlataformSpy extends Mock implements GetPlataform {
-  GetPlataformSpy() {
+class ObtainPlataformSpy extends Mock implements ObtainPlataform {
+  ObtainPlataformSpy() {
     mockIsWeb(true);
   }
   When _mockIsWebCall() => when(() => this.isWeb());

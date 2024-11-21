@@ -1,1 +1,1 @@
-export './flutter_get_platform.dart';
+export 'getx_obtain_platform.dart';

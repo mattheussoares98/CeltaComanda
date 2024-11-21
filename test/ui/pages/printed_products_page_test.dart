@@ -18,7 +18,8 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
@@ -31,7 +32,7 @@ void main() {
     await tester.pumpWidget(
         makePage(
           path: PageRoutes.printedProducts,
-          page: () => const PrintedProductsPage(null),
+          page: () => const PrintedProductsPage(),
         ),
         duration: const Duration(seconds: 1));
   }

@@ -142,11 +142,7 @@ class App extends StatelessWidget with HideNavigationBarManager {
             ),
             GetPage(
               name: PageRoutes.printedProducts,
-              page: () {
-                return makePrintedProductsPage(
-                  makeGetxHomePresenter().isFixedCommandNumber,
-                );
-              },
+              page: makePrintedProductsPage,
               transition: Transition.fadeIn,
             ),
             GetPage(

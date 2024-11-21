@@ -9,11 +9,7 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class PrintedProductsPage extends StatefulWidget {
-  final bool? isFixedCommandNumber;
-  const PrintedProductsPage(
-    this.isFixedCommandNumber, {
-    super.key,
-  });
+  const PrintedProductsPage({super.key});
 
   @override
   State<PrintedProductsPage> createState() => _PrintedProductsPageState();

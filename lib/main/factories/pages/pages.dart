@@ -12,3 +12,4 @@ export './printed_products/printed_products.dart';
 export 'insert_products/insert_products.dart';
 export './schedules/schedules.dart';
 export './splash/splash.dart';
+export './web_login/web_login.dart';

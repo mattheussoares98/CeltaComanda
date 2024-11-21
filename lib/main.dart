@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/main/factories/pages/web_login/web_login_presenter_factory.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -88,6 +89,9 @@ class App extends StatelessWidget with HideNavigationBarManager {
         ListenableProvider(
           create: (_) => makeGetxPaymentPresenter(),
         ),
+        ListenableProvider(
+          create: (_) => makeGetxWebLoginPresenter(),
+        ),
       ],
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -153,6 +157,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
             GetPage(
               name: PageRoutes.splash,
               page: makeSplashPage,
+              transition: Transition.fade,
+            ),
+            GetPage(
+              name: PageRoutes.webLogin,
+              page: makeWebLoginPage,
               transition: Transition.fade,
             ),
           ],

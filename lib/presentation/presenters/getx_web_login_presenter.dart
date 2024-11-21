@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../domain/usecases/usecases.dart';
-import '../../ui/helpers/errors/errors.dart';
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
@@ -25,6 +25,10 @@ class GetxWebLoginPresenter extends GetxController
     mainError = null;
     try {
       await loginManagement.login(email: email, password: password);
+      await navigateTo.navigate(
+        pageRoute: PageRoutes.webEnterprisesConfigurations,
+        clear: true,
+      );
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

@@ -76,6 +76,15 @@ void main() {
             password: password,
           )).called(1);
     });
+    test("Should call navigateTo WebEnterprisesConfigurations in success",
+        () async {
+      await sut.doLogin(email: email, password: password);
+
+      verify(
+        () => navigateTo.navigate(
+            pageRoute: PageRoutes.webEnterprisesConfigurations, clear: true),
+      ).called(1);
+    });
   });
 
   group("Logout", () {

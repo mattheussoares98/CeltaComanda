@@ -232,7 +232,7 @@ class GetxMenuPresenter extends GetxController
                 Quantity: "1",
                 SalePrice: product.SaleRetailPraticed,
                 OfferPrice: product.OfferRetailPrice,
-                Schedule: product.Schedule?.toEntity(),
+                Schedule: product.Schedule,
                 IncrementValue: childs[0].IncrementValue?.toString(),
                 IsOptionalItem: childs[0].IsOptionalItem?.toString(),
                 ProductOptions: "",

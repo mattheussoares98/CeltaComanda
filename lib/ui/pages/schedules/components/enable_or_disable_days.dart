@@ -157,7 +157,12 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                               const SizedBox(width: 20),
                               Text(
                                 widget.isUpdatingProduct
-                                    ? "(${R.string.product})"
+                                    ? widget.product?.childsComposition !=
+                                                null &&
+                                            widget.product!.childsComposition!
+                                                .isNotEmpty
+                                        ? " (${R.string.combox})"
+                                        : "(${R.string.product})"
                                     : "(${R.string.expansibleGroup})",
                                 style: TextStyle(
                                   fontSize: getStringSize(context),

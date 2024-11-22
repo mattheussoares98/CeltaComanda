@@ -3,6 +3,7 @@
 import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 
 class ProductCompositionViewModel extends Equatable {
@@ -19,7 +20,7 @@ class ProductCompositionViewModel extends Equatable {
   final String? IsOptionalItem;
   final String? ProductOptions;
   final List<ProductCompositionViewModel>? childs;
-  final ProductScheduleEntity? Schedule;
+  final ProductScheduleModel? Schedule;
 
   int? indexOfSelectedChild;
   String? commentFather;
@@ -83,7 +84,9 @@ class ProductCompositionViewModel extends Equatable {
         ProductOptions: entity.ProductOptions?.toString(),
         commentFather: entity.comment,
         indexOfSelectedChild: entity.indexOfSelectedChild,
-        Schedule: entity.Schedule,
+        Schedule: entity.Schedule != null
+            ? ProductScheduleModel.fromEntity(entity.Schedule!)
+            : null,
         childs: entity.childsComposition
             ?.map((e) => ProductCompositionViewModel.fromEntity(e))
             .toList(),
@@ -109,7 +112,7 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
-        Schedule: entity.Schedule,
+        Schedule: entity.Schedule != null ? ProductScheduleModel.fromEntity(entity.Schedule!) : null,
         childs: childs
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),
@@ -136,7 +139,7 @@ class ProductCompositionViewModel extends Equatable {
             ? null
             : childs?.map((e) => e.toEntity()).toList(),
         indexOfSelectedChild: indexOfSelectedChild,
-        Schedule: Schedule,
+        Schedule: Schedule?.toEntity(),
       );
 
   Map toJson() => {

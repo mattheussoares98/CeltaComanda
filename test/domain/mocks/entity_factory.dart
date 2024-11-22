@@ -777,12 +777,12 @@ class EntityFactory {
         IsOptionalItem: isOptionalItem.toString(),
         ProductOptions: "",
         indexOfSelectedChild: indexOfSelectedChild,
-        Schedule: makeProductScheduleEntity(),
+        Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
         childs: !insertChilds
             ? []
             : [
                 ProductCompositionViewModel(
-                  Schedule: makeProductScheduleEntity(),
+                  Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
                   ProductCompositionId: "1",
                   EnterpriseId: "1",
                   InternalCodeOnERPCodeFather: "1",

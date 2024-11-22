@@ -53,24 +53,23 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: Row(
-                      children: [
-                        Text(
-                          product.Name,
+                        child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: product.Name,
                           style: TextStyle(
-                            fontSize: getStringSize(context),
-                          ),
+                              color: Colors.black,
+                              fontSize: getStringSize(context)),
                         ),
                         if (product.childsComposition != null &&
                             product.childsComposition!.isNotEmpty)
-                          Text(
-                            "  (${R.string.combox})",
+                          TextSpan(
+                            text: " (${R.string.combox})",
                             style: TextStyle(
-                              fontSize: getStringSize(context),
-                              color: Theme.of(context).secondaryHeaderColor,
-                            ),
-                          ),
-                      ],
+                                color: Theme.of(context).secondaryHeaderColor,
+                                fontSize: getStringSize(context)),
+                          )
+                      ]),
                     )),
                     const SizedBox(width: 5),
                     ScheduleEnabledDays(
@@ -104,9 +103,52 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                             itemCount: father.childs!.length,
                             itemBuilder: (context, childIndex) {
                               final child = father.childs![childIndex];
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Text("- ${child.ChildName!}"),
+                              return InkWell(
+                                onTap: () {
+                                  PersonalizedDialogPage.open(
+                                    context: context,
+                                    page: EnableOrDisableDays(
+                                      product: product,
+                                      expansibleGroup: widget.expansibleGroup,
+                                      isUpdatingProduct: true,
+                                      callSetState: () {
+                                        widget.callSetState();
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text("- ${child.ChildName!}")),
+                                      ScheduleEnabledDays(
+                                        allowMonday:
+                                            child.Schedule?.AllowMonday !=
+                                                false,
+                                        allowTuesday:
+                                            child.Schedule?.AllowTuesday !=
+                                                false,
+                                        allowWednesday:
+                                            child.Schedule?.AllowWednesday !=
+                                                false,
+                                        allowThursday:
+                                            child.Schedule?.AllowThursday !=
+                                                false,
+                                        allowFriday:
+                                            child.Schedule?.AllowFriday !=
+                                                false,
+                                        allowSaturday:
+                                            child.Schedule?.AllowSaturday !=
+                                                false,
+                                        allowSunday:
+                                            child.Schedule?.AllowSunday !=
+                                                false,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                             },
                           ),

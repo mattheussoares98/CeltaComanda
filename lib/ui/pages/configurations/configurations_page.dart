@@ -54,8 +54,10 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
-        await printedProductsPresenter
-            .loadPrinted(homePresenter.commandNumber!); //TODO pode estar sem o número da comanda
+        if (homePresenter.commandNumber != null) {
+          await printedProductsPresenter
+              .loadPrinted(homePresenter.commandNumber!);
+        }
       },
       child: Scaffold(
         appBar: AppBar(

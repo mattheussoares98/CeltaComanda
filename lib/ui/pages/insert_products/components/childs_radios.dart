@@ -57,6 +57,14 @@ class ChildsRadios extends StatelessWidget {
           });
         }
 
+        double? incrementValue;
+
+        if (selectedFather.IncrementValue!.toDouble() > 0) {
+          incrementValue = selectedFather.IncrementValue!.toDouble();
+        } else if (child.IncrementValue!.toDouble() > 0) {
+          incrementValue = child.IncrementValue!.toDouble();
+        }
+
         return InkWell(
           onTap: () {
             _updateSelectedIndex(
@@ -102,11 +110,11 @@ class ChildsRadios extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (child.IncrementValue!.toDouble() > 0)
+              if (incrementValue != null)
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    "+ ${child.IncrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                    "+ ${incrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                     textAlign: TextAlign.end,
                     style: TextStyle(
                       fontSize: getStringSize(context),

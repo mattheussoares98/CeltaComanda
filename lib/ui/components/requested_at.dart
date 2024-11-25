@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../helpers/helpers.dart';
-import '../../pages.dart';
+import '../helpers/helpers.dart';
+import '../pages/pages.dart';
 
 class RequestedAt extends StatelessWidget {
   final PrintedProductsViewModel printedProduct;

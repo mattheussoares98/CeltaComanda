@@ -16,6 +16,7 @@ export './personalized_dialog_page.dart';
 export './price_and_update_product_quantity.dart';
 export './product_complement.dart';
 export './reload_screen.dart';
+export './requested_at.dart';
 export './search_command_icon.dart';
 export './search_data_by_command_number.dart';
 export 'snack_bar_message.dart';

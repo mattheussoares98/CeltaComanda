@@ -6,11 +6,13 @@ class ProductsHeader extends StatelessWidget {
   final int productFlex;
   final int quantityFlex;
   final int totalFlex;
+  final int timeFlex;
   final double deleteButtonSize;
   const ProductsHeader({
     required this.productFlex,
     required this.quantityFlex,
     required this.totalFlex,
+    required this.timeFlex,
     required this.deleteButtonSize,
     super.key,
   });
@@ -21,6 +23,17 @@ class ProductsHeader extends StatelessWidget {
       children: [
         Row(
           children: [
+            Expanded(
+              flex: timeFlex,
+              child: Text(
+                R.string.time,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: getStringSize(context),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             Expanded(
               flex: productFlex,
               child: Text(

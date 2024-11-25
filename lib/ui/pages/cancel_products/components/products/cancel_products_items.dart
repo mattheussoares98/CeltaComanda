@@ -15,6 +15,7 @@ class CancelProductsItems extends StatelessWidget {
   final int quantityFlex = 2;
   final int totalFlex = 3;
   final double deleteButtonSize = 43;
+  final int timeFlex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class CancelProductsItems extends StatelessWidget {
       child: Column(
         children: [
           ProductsHeader(
+            timeFlex: timeFlex,
             productFlex: productFlex,
             quantityFlex: quantityFlex,
             totalFlex: totalFlex,
@@ -32,11 +34,12 @@ class CancelProductsItems extends StatelessWidget {
               itemCount: printed.Products.length,
               itemBuilder: (context, index) {
                 printed.Products.sort(
-                    (a, b) => a.Product.Name.compareTo(b.Product.Name));
-            
+                    (a, b) => a.DateHourOfCreation.compareTo(b.DateHourOfCreation));
+
                 final product = printed.Products[index];
-            
+
                 return ProductItem(
+                  timeFlex: timeFlex,
                   product: product,
                   index: index,
                   productFlex: productFlex,

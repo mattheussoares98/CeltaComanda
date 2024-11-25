@@ -13,6 +13,7 @@ class ProductItem extends StatelessWidget {
   final int quantityFlex;
   final int? commandNumber;
   final double deleteButtonSize;
+  final int timeFlex;
   const ProductItem({
     required this.product,
     required this.index,
@@ -21,6 +22,7 @@ class ProductItem extends StatelessWidget {
     required this.quantityFlex,
     required this.commandNumber,
     required this.deleteButtonSize,
+    required this.timeFlex,
     super.key,
   });
 
@@ -38,6 +40,10 @@ class ProductItem extends StatelessWidget {
         children: [
           Row(
             children: [
+              Expanded(
+                flex: timeFlex,
+                child: RequestedAt(printedProduct: product),
+              ),
               Expanded(
                 flex: productFlex,
                 child: Text(
@@ -157,7 +163,8 @@ class ProductItem extends StatelessWidget {
                                   TextSpan(
                                     text: "   (${child.Comments})",
                                     style: TextStyle(
-                                      color: Theme.of(context).primaryColorLight,
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                       fontStyle: FontStyle.italic,
                                       fontSize: getStringSize(context) * 0.9,
                                       fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -271,5 +273,18 @@ class GetxPrintedProductsPresenter
     } finally {
       isLoading = false;
     }
+  }
+
+  @override
+  Future<void> printPrintedProducts(Uint8List bitmap) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await printBitmap.print(bitmap);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    }
+    isLoading = false;
   }
 }

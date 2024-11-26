@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
@@ -37,6 +39,7 @@ void main() {
   late int personalizedCode;
   late String password;
   late String saleRequestProductId;
+  late Uint8List bitmap;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -80,6 +83,7 @@ void main() {
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
+    bitmap = Uint8List(faker.randomGenerator.integer(100));
   }
 
   void mockSuccess() {
@@ -110,6 +114,7 @@ void main() {
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(
         EntityFactory.makeSaleRequestModel(covenantCode: 0, customerCode: 0));
+    registerFallbackValue(Uint8List(faker.randomGenerator.integer(100)));
   });
 
   group("Validate password", () {
@@ -778,6 +783,29 @@ void main() {
           password: password,
         ),
       );
+    });
+  });
+
+  group("Print printed products", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.printPrintedProducts(bitmap);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      printBitmap.mockPrintBitmapError();
+
+      await sut.printPrintedProducts(bitmap);
+    });
+    test("Should call printBitmap with correct values", () async {
+      await sut.printPrintedProducts(bitmap);
+
+      verify(() => printBitmap.print(bitmap)).called(1);
     });
   });
 }

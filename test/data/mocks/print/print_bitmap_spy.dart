@@ -14,7 +14,7 @@ class PrintBitmapSpy extends Mock implements PrintBitmap {
     this._mocPrintBitmapCall().thenAnswer((any) async => any);
   }
 
-  void mockPrintBitmapError(DomainError error) {
-    this._mocPrintBitmapCall().thenThrow(error);
+  void mockPrintBitmapError() {
+    this._mocPrintBitmapCall().thenThrow(DomainError.unexpected);
   }
 }

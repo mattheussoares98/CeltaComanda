@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import '../../helpers/helpers.dart';
 
 import 'package:flutter/material.dart';
@@ -52,4 +54,6 @@ abstract class PrintedProductsPresenter
     required PrintedViewModel printed,
     required bool validateUserAndPassword,
   });
+
+  Future<void> printPrintedProducts(Uint8List bitmap);
 }

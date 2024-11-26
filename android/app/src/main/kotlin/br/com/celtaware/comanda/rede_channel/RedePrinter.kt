@@ -13,13 +13,13 @@ class RedePrinter(
     private val flutterEngine: FlutterEngine,
     private val connectorPrinter: IConnectorPrinter,
 ) {
-    private val channel: String = "rede_printer"
+    private val channel: String = "redePrinter"
 
     fun setupMethodChannel() {
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger, channel
         ).setMethodCallHandler { call, _ ->
-            if (call.method == "sendBitmap") {
+            if (call.method == "printBitmap") {
                 val bitmapBytes = call.argument<ByteArray>("bitmap")
                 if (bitmapBytes != null) {
                     val bitmap = BitmapFactory.decodeByteArray(

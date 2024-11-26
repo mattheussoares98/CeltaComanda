@@ -1,0 +1,1 @@
+export './rede_print_bitmap.dart';

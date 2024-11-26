@@ -62,25 +62,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         appBar: AppBar(
           title: Text(R.string.requested),
           actions: [
-            IconButton(
-              onPressed: () async {
-                await printedProductsPresenter
-                    .loadPrinted(homePresenter.commandNumber!);
-              },
-              icon: Row(
-                children: [
-                  if (homePresenter.commandNumber != null)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Text(
-                        "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
-                        style: TextStyle(fontSize: getStringSize(context)),
-                      ),
-                    ),
-                  const Icon(Icons.refresh),
-                ],
-              ),
-            ),
+            LoadPrintedProductsAgainButton(),
           ],
         ),
         body: SizedBox(

@@ -32,6 +32,7 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
   late UpdateSaleRequestSpy updateSaleRequest;
   late PrintBitmapSpy printBitmap;
+  late NavigateToSpy navigateTo;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -55,6 +56,7 @@ void main() {
       removePrintedProduct: removePrintedProduct,
       updateSaleRequest: updateSaleRequest,
       printBitmap: printBitmap,
+      navigateTo: navigateTo,
     );
   }
 
@@ -66,6 +68,7 @@ void main() {
     barcodeScanner = BarcodeScannerSpy();
     updateSaleRequest = UpdateSaleRequestSpy();
     printBitmap = PrintBitmapSpy();
+    navigateTo = NavigateToSpy();
   }
 
   void initEntitys() {
@@ -806,6 +809,15 @@ void main() {
       await sut.printPrintedProducts(bitmap);
 
       verify(() => printBitmap.print(bitmap)).called(1);
+    });
+  });
+
+  group("Go to print products page", () {
+    test("Should call navigateTo with correct route", () async {
+      await sut.goToPrintProductsPage();
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.printProducts))
+          .called(1);
     });
   });
 }

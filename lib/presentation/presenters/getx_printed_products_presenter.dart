@@ -19,6 +19,7 @@ class GetxPrintedProductsPresenter
   final RemovePrintedProduct removePrintedProduct;
   final UpdateSaleRequest updateSaleRequest;
   final PrintBitmap printBitmap;
+  final NavigateTo navigateTo;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
@@ -26,6 +27,7 @@ class GetxPrintedProductsPresenter
     required this.removePrintedProduct,
     required this.updateSaleRequest,
     required this.printBitmap,
+    required this.navigateTo,
   });
 
   @override
@@ -286,5 +288,10 @@ class GetxPrintedProductsPresenter
       mainError = UIError.unexpected;
     }
     isLoading = false;
+  }
+
+  @override
+  Future<void> goToPrintProductsPage() async {
+    await navigateTo.navigate(pageRoute: PageRoutes.printProducts);
   }
 }

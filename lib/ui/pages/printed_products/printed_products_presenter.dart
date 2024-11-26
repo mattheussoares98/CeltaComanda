@@ -33,15 +33,6 @@ abstract class PrintedProductsPresenter
     required PrintedProductsPresenter printedProductsPresenter,
   });
 
-  // Future<void> loadCommandData({
-  //   required CartPresenter cartPresenter,
-  //   required MenuPresenter menuPresenter,
-  //   required HomePresenter homePresenter,
-  //   required CommentsPresenter expansibleGroupFromProductPresenter,
-  //   required bool clearPermissionToCancelProducts,
-  //   required bool isRemovingProduct,
-  // });
-
   Future<void> validateUserAndPermissionToCancelProducts({
     required int personalizedCode,
     required String password,
@@ -56,4 +47,6 @@ abstract class PrintedProductsPresenter
   });
 
   Future<void> printPrintedProducts(Uint8List bitmap);
+
+  void goToPrintProductsPage();
 }

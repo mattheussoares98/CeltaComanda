@@ -8,6 +8,7 @@ export 'enterprise/enterprise.dart';
 export './menus/menus.dart';
 export './home/home.dart';
 export './payment/payment.dart';
+export './print_products/print_products.dart';
 export './printed_products/printed_products.dart';
 export 'insert_products/insert_products.dart';
 export './schedules/schedules.dart';

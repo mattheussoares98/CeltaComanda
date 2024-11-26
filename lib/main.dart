@@ -150,6 +150,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
               transition: Transition.fadeIn,
             ),
             GetPage(
+              name: PageRoutes.printProducts,
+              page: makePrintProductsPage,
+              transition: Transition.fadeIn,
+            ),
+            GetPage(
               name: PageRoutes.schedules,
               page: makeSchedulesPage,
               transition: Transition.fade,

@@ -60,8 +60,9 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(R.string.requested),
+          title: FittedBox(child: Text(R.string.requested)),
           actions: [
+            PrintPrintedProductsButton(),
             LoadPrintedProductsAgainButton(),
           ],
         ),

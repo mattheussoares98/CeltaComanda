@@ -10,6 +10,7 @@ export 'insert_products/insert_products.dart';
 export 'menus/menus.dart';
 export './payment/payment.dart';
 export './pre_load_images/pre_load_images.dart';
+export './print_products/print_products.dart';
 export './printed_products/printed_products.dart';
 export './products/products.dart';
 export 'schedules/schedules.dart';

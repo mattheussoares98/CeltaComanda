@@ -14,10 +14,12 @@ class LoadPrintedProductsAgainButton extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return IconButton(
-      onPressed: () async {
-        await printedProductsPresenter
-            .loadPrinted(homePresenter.commandNumber!);
-      },
+      onPressed: homePresenter.commandNumber == null
+          ? null
+          : () async {
+              await printedProductsPresenter
+                  .loadPrinted(homePresenter.commandNumber!);
+            },
       icon: Row(
         children: [
           if (homePresenter.commandNumber != null)

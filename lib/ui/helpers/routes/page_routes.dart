@@ -10,6 +10,7 @@ class PageRoutes {
   static const String menus = "/menus";
   static const String payment = "/payment";
   static const String printedProducts = "/printed_products";
+  static const String printProducts = "/print_products";
   static const String schedules = "/products_schedules";
   static const String splash = "/splash";
   static const String webEnterprisesConfigurations = "/web_enterprises_configurations";

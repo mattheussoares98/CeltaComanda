@@ -222,6 +222,7 @@ class PtBr implements Translation {
   String get send => 'Enviar';
   String get service => 'Atendimento';
   String get serviceCharge => 'Taxa de serviço';
+  String get serviceChargeAbbreviated => 'Serviço';
   String get subtotal => "Subtotal";
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
   String get sunday => "Domingo";

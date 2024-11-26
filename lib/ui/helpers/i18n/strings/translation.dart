@@ -190,6 +190,7 @@ abstract class Translation {
   String get send;
   String get service;
   String get serviceCharge;
+  String get serviceChargeAbbreviated;
   String get subtotal;
   String get suggestionCriticalOrPraise;
   String get sunday;

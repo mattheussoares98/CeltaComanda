@@ -219,6 +219,7 @@ class EnUs implements Translation {
   String get send => 'Send';
   String get service => 'Service';
   String get serviceCharge => 'Service charge';
+  String get serviceChargeAbbreviated => 'Service';
   String get subtotal => 'Subtotal';
   String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
   String get sunday => 'Sunday';

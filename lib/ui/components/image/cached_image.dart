@@ -72,7 +72,7 @@ class CachedImageState extends State<CachedImage> {
           if (totalBytes > maxSizeInBytes) {
             _largeImages.add(url);
             subscription?.cancel();
-            completer.completeError('Tamanho máximo excedido');
+            completer.completeError('Tamanho máximo da imagem excedido $url');
           }
         },
         onDone: () {

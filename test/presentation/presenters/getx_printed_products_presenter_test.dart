@@ -29,6 +29,7 @@ void main() {
   late FinishSaleRequestTempSpy finishSaleRequestTemp;
   late BarcodeScannerSpy barcodeScanner;
   late UpdateSaleRequestSpy updateSaleRequest;
+  late PrintBitmapSpy printBitmap;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -50,6 +51,7 @@ void main() {
       loadPrintedProducts: loadPrintedProducts,
       removePrintedProduct: removePrintedProduct,
       updateSaleRequest: updateSaleRequest,
+      printBitmap: printBitmap,
     );
   }
 
@@ -60,6 +62,7 @@ void main() {
     finishSaleRequestTemp = FinishSaleRequestTempSpy();
     barcodeScanner = BarcodeScannerSpy();
     updateSaleRequest = UpdateSaleRequestSpy();
+    printBitmap = PrintBitmapSpy();
   }
 
   void initEntitys() {

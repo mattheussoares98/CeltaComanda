@@ -11,6 +11,7 @@ export './menu/menu.dart';
 export './navigation/navigation.dart';
 export './payment/payment.dart';
 export './platform/platform.dart';
+export './print/print.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';
 export './products/products.dart';

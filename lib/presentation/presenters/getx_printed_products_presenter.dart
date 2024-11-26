@@ -16,12 +16,14 @@ class GetxPrintedProductsPresenter
   final LoadPrintedProducts loadPrintedProducts;
   final RemovePrintedProduct removePrintedProduct;
   final UpdateSaleRequest updateSaleRequest;
+  final PrintBitmap printBitmap;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
     required this.loadPrintedProducts,
     required this.removePrintedProduct,
     required this.updateSaleRequest,
+    required this.printBitmap,
   });
 
   @override

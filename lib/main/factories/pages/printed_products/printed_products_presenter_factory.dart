@@ -8,4 +8,5 @@ PrintedProductsPresenter makeGetxPrintedProductsPresenter() =>
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
       removePrintedProduct: makeRemoteRemovePrintedProduct(),
       updateSaleRequest: makeRemoteUpdateSaleRequest(),
+      printBitmap: makeRedePrintBitMap(),
     );

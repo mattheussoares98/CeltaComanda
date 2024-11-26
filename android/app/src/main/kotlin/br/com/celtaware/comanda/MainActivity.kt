@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import br.com.celtaware.comanda.getnet_channel.GetNetPayment
 import br.com.celtaware.comanda.rede_channel.RedePayment
+import br.com.celtaware.comanda.rede_channel.RedePrinter
 import br.com.celtaware.comanda.utils.AppUtils
 import br.com.celtaware.comanda.utils.OrientationUtils
 import br.com.celtaware.comanda.utils.PersistentChannelManager
@@ -15,6 +16,7 @@ import rede.smartrede.sdk.RedePayments
 
 class MainActivity : FlutterActivity() {
     private val redePayments: RedePayments by inject()
+    private val redePrinter: RedePrinter by inject()
     private lateinit var persistentChannelManager: PersistentChannelManager
     private lateinit var redePaymentHandler: RedePayment
     private lateinit var getnetPayment: GetNetPayment
@@ -27,6 +29,8 @@ class MainActivity : FlutterActivity() {
 
         redePaymentHandler = RedePayment(this, redePayments, flutterEngine)
         redePaymentHandler.setupMethodChannel()
+
+        redePrinter.setupMethodChannel()
 
         getnetPayment = GetNetPayment(this, flutterEngine)
         getnetPayment.setupMethodChannel()

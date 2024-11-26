@@ -21,36 +21,39 @@ class PreLoadImagesPage extends StatefulWidget {
 
 class _PreLoadImagesPageState extends State<PreLoadImagesPage>
     with UIErrorManager, LoadingManager {
-  List<String> getAllPlus(MenuPresenter menuPresenter) {
-    List<String> urls = [];
+  List<String> allPlus = [];
+  List<String> allEans = [];
 
+  void addPlusInAllPlusList(MenuPresenter menuPresenter) {
     final allProducts = menuPresenter.loadedMenu
         .expand((map) => map.values)
         .expand((lista) => lista)
         .toList();
 
+    void addPlu(String? plu) {
+      if (!allPlus.contains(plu) && plu != null) {
+        allPlus.add(plu);
+      }
+    }
+
     for (var product in allProducts) {
-      urls.add(product.EanCode ?? product.PriceLookupCode);
+      addPlu(product.EanCode ?? product.PriceLookupCode);
 
       if (product.childsComposition != null) {
         for (var combox in product.childsComposition!) {
-          urls.add(combox.PluChild!);
+          addPlu(combox.PluChild);
 
           if (combox.childs?.isNotEmpty == true) {
             for (var child in combox.childs!) {
-              urls.add(child.PluChild!);
+              addPlu(child.PluChild);
             }
           }
         }
       }
     }
-
-    return urls;
   }
 
-  List<String> getAllEans(MenuPresenter menuPresenter) {
-    List<String> urls = [];
-
+  void addEansInAllEansList(MenuPresenter menuPresenter) {
     final allProducts = menuPresenter.loadedMenu
         .expand((map) => map.values)
         .expand((lista) => lista)
@@ -58,16 +61,16 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
 
     for (var product in allProducts) {
       if (product.EanCode != null) {
-        urls.add(product.EanCode!);
+        allEans.add(product.EanCode!);
       }
     }
-
-    return urls;
   }
 
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    addPlusInAllPlusList(menuPresenter);
+    addEansInAllEansList(menuPresenter);
 
     return Stack(
       children: [
@@ -80,9 +83,9 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
                 crossAxisSpacing: 1,
                 mainAxisSpacing: 1,
               ),
-              itemCount: getAllPlus(menuPresenter).length,
+              itemCount: allPlus.length,
               itemBuilder: (context, index) {
-                final plu = getAllPlus(menuPresenter)[index];
+                final plu = allPlus[index];
 
                 return ImageWidget(
                   ean: null,
@@ -102,9 +105,9 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
                 crossAxisSpacing: 1,
                 mainAxisSpacing: 1,
               ),
-              itemCount: getAllEans(menuPresenter).length,
+              itemCount: allEans.length,
               itemBuilder: (context, index) {
-                final ean = getAllEans(menuPresenter)[index];
+                final ean = allEans[index];
 
                 return ImageWidget(
                   ean: ean,

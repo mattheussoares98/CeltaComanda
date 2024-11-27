@@ -21,11 +21,14 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
   final repaintBoundaryKey = GlobalKey();
 
   @override
-  initState(){
+  initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_)async {
-      
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        await Future.delayed(Duration.zero);
+        await print();
+      }
     });
   }
 
@@ -34,7 +37,6 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
       SchedulerBinding.instance.addPostFrameCallback((_) async {
         PrintedProductsPresenter printedProductsPresenter =
             Provider.of(context, listen: false);
-
         RenderRepaintBoundary boundary = repaintBoundaryKey.currentContext!
             .findRenderObject() as RenderRepaintBoundary;
         ui.Image image = await boundary.toImage();
@@ -43,12 +45,12 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
         final bitmap = byteData!.buffer.asUint8List();
 
         await printedProductsPresenter.printPrintedProducts(bitmap);
-
         // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
       });
     } catch (e) {
       debugPrint(e.toString());
+      Navigator.of(context).pop();
     }
   }
 
@@ -59,16 +61,37 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
     return RepaintBoundary(
       key: repaintBoundaryKey,
       child: Scaffold(
+        // appBar: AppBar(),
         body: Column(
           children: [
+            Text(
+                "" +
+                    "CONFERÊNCIA DA MESA " +
+                    "${homePresenter.commandNumber!.toInt()}",
+                style: textStyle()),
+            Divider(thickness: 0.2),
             PrintProductsItems(),
             Divider(thickness: 0.2),
-            Text(
-              "${R.string.table} ${homePresenter.commandNumber!.toInt()}",
-              style: textStyle(),
-            ),
             SizedBox(height: 5),
             TotalSummary(),
+            SizedBox(height: 10),
+            Stack(
+              children: [
+                Divider(thickness: 0.2),
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    color: Colors.white,
+                    child: Text(
+                      "" + "Desenvolvido por Celtaware",
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

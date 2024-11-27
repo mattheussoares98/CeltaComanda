@@ -62,6 +62,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         appBar: AppBar(
           title: FittedBox(child: Text(R.string.requested)),
           actions: [
+            if(homePresenter.isGeneratingVersionToRede)
             PrintPrintedProductsButton(),
             LoadPrintedProductsAgainButton(),
           ],

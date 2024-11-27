@@ -170,6 +170,11 @@ class GetxPrintedProductsPresenter
   @override
   bool get canCancelProducts => _canCancelProducts;
 
+  int _peopleQuantity = 1;
+  @override
+  int get peopleQuantity => _peopleQuantity;
+  set peopleQuantity(int value) => _peopleQuantity = value;
+
   @override
   void updateCanCancelProducts(bool value) {
     _canCancelProducts = value;

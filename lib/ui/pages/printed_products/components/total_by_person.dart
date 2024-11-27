@@ -20,11 +20,9 @@ class _TotalByPersonState extends State<TotalByPerson> {
   void initState() {
     super.initState();
 
-    HomePresenter homePresenter = Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
-    selectedPeoples = homePresenter.selectedPeoples ?? 1;
     _updateTotalPerPerson(printedProductsPresenter);
   }
 

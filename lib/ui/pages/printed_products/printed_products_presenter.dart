@@ -12,6 +12,7 @@ abstract class PrintedProductsPresenter
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<String?> get alertMessageStream;
+  int get peopleQuantity;
   bool get canCancelProducts;
   double getTotalLiquid(PrintedViewModel? printed);
   double getSubtotal(PrintedViewModel? printed);

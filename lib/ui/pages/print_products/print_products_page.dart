@@ -61,7 +61,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
     return RepaintBoundary(
       key: repaintBoundaryKey,
       child: Scaffold(
-        // appBar: AppBar(),
+        appBar: AppBar(),
         body: Column(
           children: [
             Text(

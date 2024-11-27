@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -44,41 +46,41 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
             await image.toByteData(format: ui.ImageByteFormat.png);
         final bitmap = byteData!.buffer.asUint8List();
 
-        // await printedProductsPresenter.printPrintedProducts(bitmap);
-        // ignore: use_build_context_synchronously
-        // Navigator.of(context).pop();
+        await printedProductsPresenter.printPrintedProducts(bitmap);
+
+        Navigator.of(context).pop();
       });
     } catch (e) {
       debugPrint(e.toString());
-      // Navigator.of(context).pop();
+      Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
 
     return RepaintBoundary(
       key: repaintBoundaryKey,
       child: Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [
-            Text(
-                "" +
-                    "CONFERÊNCIA DA MESA " +
-                    "${homePresenter.commandNumber!.toInt()}",
-                style: textStyle()),
-            Divider(thickness: 0.2),
-            PrintProductsItems(),
-            Divider(thickness: 0.2),
-            SizedBox(height: 5),
-            TotalSummary(),
-            SizedBox(height: 10),
-            DevelopedByCeltaware(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                  "" +
+                      "CONFERÊNCIA DA MESA " +
+                      "${homePresenter.commandNumber!.toInt()}",
+                  style: textStyle()),
+              Divider(thickness: 0.2),
+              PrintProductsItems(),
+              Divider(thickness: 0.2),
+              SizedBox(height: 5),
+              TotalSummary(),
+              SizedBox(height: 10),
+              DevelopedByCeltaware(),
+            ],
+          ),
         ),
       ),
     );

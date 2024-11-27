@@ -299,4 +299,13 @@ class GetxPrintedProductsPresenter
   Future<void> goToPrintProductsPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.printProducts);
   }
+
+  @override
+  void updatePeopleQuantity({required bool isAdding}) {
+    if (isAdding) {
+      _peopleQuantity++;
+    } else if (_peopleQuantity > 1) {
+      _peopleQuantity--;
+    }
+  }
 }

@@ -820,4 +820,36 @@ void main() {
           .called(1);
     });
   });
+
+  group("Update people quantity", () {
+    test("Should not reduce quantity if atual quantity is 1", () {
+      expect(sut.peopleQuantity, 1);
+
+      sut.updatePeopleQuantity(isAdding: false);
+
+      expect(sut.peopleQuantity, 1);
+    });
+
+    test("Should add quantity if is adding", () {
+      sut.updatePeopleQuantity(isAdding: true);
+      expect(sut.peopleQuantity, 2);
+      
+      sut.updatePeopleQuantity(isAdding: true);
+      expect(sut.peopleQuantity, 3);
+    });
+    
+    test("Should update people quantity correctly", () {
+      sut.updatePeopleQuantity(isAdding: false);
+      expect(sut.peopleQuantity, 1);
+      
+      sut.updatePeopleQuantity(isAdding: true);
+      expect(sut.peopleQuantity, 2);
+      
+      sut.updatePeopleQuantity(isAdding: false);
+      expect(sut.peopleQuantity, 1);
+      
+      sut.updatePeopleQuantity(isAdding: false);
+      expect(sut.peopleQuantity, 1);
+    });
+  });
 }

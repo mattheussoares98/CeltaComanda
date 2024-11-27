@@ -50,4 +50,5 @@ abstract class PrintedProductsPresenter
   Future<void> printPrintedProducts(Uint8List bitmap);
 
   void goToPrintProductsPage();
+  void updatePeopleQuantity({required bool isAdding});
 }

@@ -13,7 +13,6 @@ class TotalByPerson extends StatefulWidget {
 }
 
 class _TotalByPersonState extends State<TotalByPerson> {
-  int selectedPeoples = 1;
   double totalPerPerson = 0;
 
   @override
@@ -30,7 +29,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
       PrintedProductsPresenter printedProductsPresenter) {
     totalPerPerson = printedProductsPresenter
             .getTotalLiquid(printedProductsPresenter.printed) /
-        selectedPeoples;
+        printedProductsPresenter.peopleQuantity;
   }
 
   @override
@@ -54,24 +53,26 @@ class _TotalByPersonState extends State<TotalByPerson> {
             const SizedBox(height: 10),
             FittedBox(
               child: UpdateQuantity(
-                quantity: selectedPeoples,
+                quantity: printedProductsPresenter.peopleQuantity,
                 reduceQuantity: () {
                   setState(() {
-                    selectedPeoples--;
-                    _updateTotalPerPerson(printedProductsPresenter);
+                    printedProductsPresenter.updatePeopleQuantity(
+                      isAdding: false,
+                    );
                   });
                 },
                 addQuantity: () {
                   setState(() {
-                    selectedPeoples++;
-                    _updateTotalPerPerson(printedProductsPresenter);
+                    printedProductsPresenter.updatePeopleQuantity(
+                      isAdding: true,
+                    );
                   });
                 },
               ),
             ),
             const SizedBox(height: 10),
             Text(
-              "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / selectedPeoples).toString().toBrazilianNumber().addBrazilianCoin()}",
+              "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity).toString().toBrazilianNumber().addBrazilianCoin()}",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: getStringSize(context)),
             ),

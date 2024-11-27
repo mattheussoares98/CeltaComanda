@@ -75,23 +75,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
             SizedBox(height: 5),
             TotalSummary(),
             SizedBox(height: 10),
-            Stack(
-              children: [
-                Divider(thickness: 0.2),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    color: Colors.white,
-                    child: Text(
-                      "" + "Desenvolvido por Celtaware",
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            DevelopedByCeltaware(),
           ],
         ),
       ),

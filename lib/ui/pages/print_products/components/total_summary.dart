@@ -12,68 +12,92 @@ class TotalSummary extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(R.string.subtotal),
+                  FittedBox(
+                    child: Text(
+                      printedProductsPresenter
+                          .getSubtotal(printedProductsPresenter.printed)
+                          .toDouble()
+                          .toString()
+                          .toBrazilianNumber()
+                          .addBrazilianCoin(),
+                      style: textStyle(),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(R.string.serviceChargeAbbreviated),
+                  FittedBox(
+                    child: Text(
+                      printedProductsPresenter
+                          .getServiceChargeValue(
+                              printedProductsPresenter.printed)
+                          .toDouble()
+                          .toString()
+                          .toBrazilianNumber()
+                          .addBrazilianCoin(),
+                      style: textStyle(),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(R.string.total),
+                  FittedBox(
+                    child: Text(
+                      printedProductsPresenter
+                          .getTotalLiquid(printedProductsPresenter.printed)
+                          .toDouble()
+                          .toString()
+                          .toBrazilianNumber()
+                          .addBrazilianCoin(),
+                      style: textStyle(),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        if (printedProductsPresenter.peopleQuantity > 1)
+          Row(
             children: [
-              Text(R.string.subtotal),
-              FittedBox(
+              Expanded(
                 child: Text(
-                  printedProductsPresenter
-                      .getSubtotal(printedProductsPresenter.printed)
-                      .toDouble()
-                      .toString()
-                      .toBrazilianNumber()
-                      .addBrazilianCoin(),
+                  "${R.string.totalByPerson} (${printedProductsPresenter.peopleQuantity})",
                   style: textStyle(),
-                  textAlign: TextAlign.end,
                 ),
+              ),
+              Text(
+                "${printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity}"
+                    .toDouble()
+                    .toString()
+                    .toBrazilianNumber()
+                    .addBrazilianCoin(),
+                style: textStyle(),
               ),
             ],
           ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(R.string.serviceChargeAbbreviated),
-              FittedBox(
-                child: Text(
-                  printedProductsPresenter
-                      .getServiceChargeValue(printedProductsPresenter.printed)
-                      .toDouble()
-                      .toString()
-                      .toBrazilianNumber()
-                      .addBrazilianCoin(),
-                  style: textStyle(),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(R.string.total),
-              FittedBox(
-                child: Text(
-                  printedProductsPresenter
-                      .getTotalLiquid(printedProductsPresenter.printed)
-                      .toDouble()
-                      .toString()
-                      .toBrazilianNumber()
-                      .addBrazilianCoin(),
-                  style: textStyle(),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }

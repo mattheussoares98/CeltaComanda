@@ -44,19 +44,21 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
             await image.toByteData(format: ui.ImageByteFormat.png);
         final bitmap = byteData!.buffer.asUint8List();
 
-        await printedProductsPresenter.printPrintedProducts(bitmap);
+        // await printedProductsPresenter.printPrintedProducts(bitmap);
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
       });
     } catch (e) {
       debugPrint(e.toString());
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
 
     return RepaintBoundary(
       key: repaintBoundaryKey,

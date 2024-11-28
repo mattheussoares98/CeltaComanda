@@ -47,4 +47,6 @@ abstract class ConfigurationsPresenter implements Listenable {
     required int newPersonalizedCode,
     required List<int> saleRequestProductsIds,
   });
+
+  void goToSendProductsToAnotherTablePage();
 }

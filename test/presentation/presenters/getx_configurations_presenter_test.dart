@@ -635,4 +635,13 @@ void main() {
       ).called(1);
     });
   });
+
+  group("Go to send products to another table page", () {
+    test("Should call navigateTo with correct values", () {
+      sut.goToSendProductsToAnotherTablePage();
+
+      verify(() => navigateTo.navigate(
+          pageRoute: PageRoutes.sendProductsToAnotherTable)).called(1);
+    });
+  });
 }

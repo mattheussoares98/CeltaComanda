@@ -11,6 +11,7 @@ class PageRoutes {
   static const String payment = "/payment";
   static const String printedProducts = "/printed_products";
   static const String printProducts = "/print_products";
+  static const String sendProductsToAnotherTable = "/send_products_to_another_table";
   static const String schedules = "/products_schedules";
   static const String splash = "/splash";
   static const String webEnterprisesConfigurations = "/web_enterprises_configurations";

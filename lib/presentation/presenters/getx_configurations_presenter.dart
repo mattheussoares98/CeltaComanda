@@ -265,4 +265,9 @@ class GetxConfigurationsPresenter extends GetxController
       isLoading = false;
     }
   }
+  
+  @override
+  void goToSendProductsToAnotherTablePage() {
+    navigateTo.navigate(pageRoute: PageRoutes.sendProductsToAnotherTable);
+  }
 }

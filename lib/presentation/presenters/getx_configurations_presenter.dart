@@ -20,7 +20,8 @@ class GetxConfigurationsPresenter extends GetxController
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final ChangeSaleRequestPersonalizedCode changeSaleRequestPersonalizedCode;
-  final ChangeSaleRequestPersonalizedCodeProducts changeSaleRequestPersonalizedCodeProducts;
+  final ChangeSaleRequestPersonalizedCodeProducts
+      changeSaleRequestPersonalizedCodeProducts;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -238,6 +239,28 @@ class GetxConfigurationsPresenter extends GetxController
           mainError = UIError.unexpected;
       }
       return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<void> sendProductsToAnotherTable({
+    required int oldPersonalizedCode,
+    required int newPersonalizedCode,
+    required List<int> saleRequestProductsIds,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await changeSaleRequestPersonalizedCodeProducts.change(
+        oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
+        newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
+        saleRequestProductsIds: saleRequestProductsIds,
+      );
+    } catch (e) {
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }

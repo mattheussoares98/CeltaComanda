@@ -41,4 +41,10 @@ abstract class ConfigurationsPresenter implements Listenable {
     required int oldPersonalizedCode,
     required int newPersonalizedCode,
   });
+
+  Future<void> sendProductsToAnotherTable({
+    required int oldPersonalizedCode,
+    required int newPersonalizedCode,
+    required List<int> saleRequestProductsIds,
+  });
 }

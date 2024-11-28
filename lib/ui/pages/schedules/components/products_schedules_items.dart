@@ -84,78 +84,78 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                   ],
                 ),
               ),
-              if (product.childsComposition != null &&
-                  product.childsComposition!.isNotEmpty)
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: product.childsComposition!.length,
-                  itemBuilder: (context, fatherIndex) {
-                    final father = product.childsComposition![fatherIndex];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${father.ChildName!} (${R.string.father})"),
-                        if (father.childs != null && father.childs!.isNotEmpty)
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: father.childs!.length,
-                            itemBuilder: (context, childIndex) {
-                              final child = father.childs![childIndex];
-                              return InkWell(
-                                onTap: () {
-                                  PersonalizedDialogPage.open(
-                                    context: context,
-                                    page: EnableOrDisableDays(
-                                      product: product,
-                                      expansibleGroup: widget.expansibleGroup,
-                                      isUpdatingProduct: true,
-                                      callSetState: () {
-                                        widget.callSetState();
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: Text("- ${child.ChildName!}")),
-                                      ScheduleEnabledDays(
-                                        allowMonday:
-                                            child.Schedule?.AllowMonday !=
-                                                false,
-                                        allowTuesday:
-                                            child.Schedule?.AllowTuesday !=
-                                                false,
-                                        allowWednesday:
-                                            child.Schedule?.AllowWednesday !=
-                                                false,
-                                        allowThursday:
-                                            child.Schedule?.AllowThursday !=
-                                                false,
-                                        allowFriday:
-                                            child.Schedule?.AllowFriday !=
-                                                false,
-                                        allowSaturday:
-                                            child.Schedule?.AllowSaturday !=
-                                                false,
-                                        allowSunday:
-                                            child.Schedule?.AllowSunday !=
-                                                false,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                      ],
-                    );
-                  },
-                ),
+              // if (product.childsComposition != null &&
+              //     product.childsComposition!.isNotEmpty)
+              //   ListView.builder(
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     itemCount: product.childsComposition!.length,
+              //     itemBuilder: (context, fatherIndex) {
+              //       final father = product.childsComposition![fatherIndex];
+              //       return Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text("${father.ChildName!} (${R.string.father})"),
+              //           if (father.childs != null && father.childs!.isNotEmpty)
+              //             ListView.builder(
+              //               shrinkWrap: true,
+              //               physics: const NeverScrollableScrollPhysics(),
+              //               itemCount: father.childs!.length,
+              //               itemBuilder: (context, childIndex) {
+              //                 final child = father.childs![childIndex];
+              //                 return InkWell(
+              //                   onTap: () {
+              //                     PersonalizedDialogPage.open(
+              //                       context: context,
+              //                       page: EnableOrDisableDays(
+              //                         product: product,
+              //                         expansibleGroup: widget.expansibleGroup,
+              //                         isUpdatingProduct: true,
+              //                         callSetState: () {
+              //                           widget.callSetState();
+              //                         },
+              //                       ),
+              //                     );
+              //                   },
+              //                   child: Padding(
+              //                     padding: const EdgeInsets.only(left: 8),
+              //                     child: Row(
+              //                       children: [
+              //                         Expanded(
+              //                             child: Text("- ${child.ChildName!}")),
+              //                         ScheduleEnabledDays(
+              //                           allowMonday:
+              //                               child.Schedule?.AllowMonday !=
+              //                                   false,
+              //                           allowTuesday:
+              //                               child.Schedule?.AllowTuesday !=
+              //                                   false,
+              //                           allowWednesday:
+              //                               child.Schedule?.AllowWednesday !=
+              //                                   false,
+              //                           allowThursday:
+              //                               child.Schedule?.AllowThursday !=
+              //                                   false,
+              //                           allowFriday:
+              //                               child.Schedule?.AllowFriday !=
+              //                                   false,
+              //                           allowSaturday:
+              //                               child.Schedule?.AllowSaturday !=
+              //                                   false,
+              //                           allowSunday:
+              //                               child.Schedule?.AllowSunday !=
+              //                                   false,
+              //                         ),
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 );
+              //               },
+              //             ),
+              //         ],
+              //       );
+              //     },
+              //   ),
             ],
           ),
         );

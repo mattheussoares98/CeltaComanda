@@ -131,6 +131,7 @@ class PtBr implements Translation {
   String get commentsOfProduct => "Comentários do produto";
   String get comments => "Comentários";
   String get comment => "Comentário";
+  String get conferenceOfTable => "Conferência da mesa";
   String get configurations => "Configurações";
   String get confirmFlag => "Confirmar bandeira";
   String get confirmPassword => 'Confirmar senha';
@@ -143,6 +144,7 @@ class PtBr implements Translation {
   String get customer => "Cliente";
   String get debit => "Débito";
   String get detach => "Destaques";
+  String get developedByCeltaware => "Desenvolvido por Celtaware";
   String get doLogout => "Fazer logout";
   String get doYouWantToAdd => "Deseja adicionar?";
   String get drink => "Bebida";
@@ -155,6 +157,7 @@ class PtBr implements Translation {
   String get environment => 'Ambiente';
   String get exit => 'Sair';
   String get expansibleGroup => 'Grupo expansível';
+  String get father => 'Pai';
   String get friday => 'Sexta';
   String get getCustomer => 'Pesquisar cliente';
   String get insertInCart => 'Inserir no carrinho';

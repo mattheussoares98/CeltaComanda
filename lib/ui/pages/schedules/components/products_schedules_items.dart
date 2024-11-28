@@ -95,7 +95,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(father.ChildName! + " (FATHER)"),
+                        Text("${father.ChildName!} (${R.string.father})"),
                         if (father.childs != null && father.childs!.isNotEmpty)
                           ListView.builder(
                             shrinkWrap: true,

@@ -130,6 +130,7 @@ class EnUs implements Translation {
   String get commentsOfProduct => 'Product comments';
   String get comments => 'Comments';
   String get comment => 'Comment';
+  String get conferenceOfTable => 'Conference of table';
   String get configurations => 'Configurations';
   String get confirmFlag => 'Confirm flag';
   String get confirmPassword => 'Confirm password';
@@ -142,6 +143,7 @@ class EnUs implements Translation {
   String get customer => 'Customer';
   String get debit => 'Debit';
   String get detach => 'Highlights';
+  String get developedByCeltaware => 'Developed by Celtaware';
   String get doLogout => 'Log out';
   String get doYouWantToAdd => 'Do you want add?';
   String get drink => 'Drink';
@@ -154,6 +156,7 @@ class EnUs implements Translation {
   String get environment => 'Environment';
   String get exit => 'Exit';
   String get expansibleGroup => 'Expansible group';
+  String get father => 'Father';
   String get friday => 'Friday';
   String get getCustomer => 'Get customer';
   String get insertInCart => 'Add to cart';

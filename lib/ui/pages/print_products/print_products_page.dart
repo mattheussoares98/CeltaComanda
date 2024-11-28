@@ -68,9 +68,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
           child: Column(
             children: [
               Text(
-                  "" +
-                      "CONFERÊNCIA DA MESA " +
-                      "${homePresenter.commandNumber!.toInt()}",
+                  "${R.string.conferenceOfTable} ${homePresenter.commandNumber!.toInt()}",
                   style: textStyle()),
               Divider(thickness: 0.2),
               PrintProductsItems(),

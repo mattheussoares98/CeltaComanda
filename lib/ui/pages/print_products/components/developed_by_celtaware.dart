@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/helpers.dart';
+
 class DevelopedByCeltaware extends StatelessWidget {
   const DevelopedByCeltaware({super.key});
 
@@ -13,7 +15,7 @@ class DevelopedByCeltaware extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 5),
             color: Colors.white,
             child: Text(
-              "" + "Desenvolvido por Celtaware",
+              R.string.developedByCeltaware,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
               ),

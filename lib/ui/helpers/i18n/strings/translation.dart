@@ -102,6 +102,7 @@ abstract class Translation {
   String get commentsOfProduct;
   String get comments;
   String get comment;
+  String get conferenceOfTable;
   String get configurations;
   String get confirmFlag;
   String get confirm;
@@ -114,6 +115,7 @@ abstract class Translation {
   String get customer;
   String get debit;
   String get detach;
+  String get developedByCeltaware;
   String get doLogout;
   String get doYouWantToAdd;
   String get drink;
@@ -126,6 +128,7 @@ abstract class Translation {
   String get environment;
   String get exit;
   String get expansibleGroup;
+  String get father;
   String get friday;
   String get getCustomer;
   String get insertInCart;

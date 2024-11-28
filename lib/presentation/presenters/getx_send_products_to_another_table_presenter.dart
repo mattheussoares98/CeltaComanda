@@ -75,8 +75,27 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     }
   }
 
+  @override
+  void updateProductIsSelected(int saleRequestProductId) {
+    if (_selectedSaleRequestProductsIds.contains(saleRequestProductId)) {
+      _selectedSaleRequestProductsIds.remove(saleRequestProductId);
+    } else {
+      _selectedSaleRequestProductsIds.add(saleRequestProductId);
+    }
+  }
+
+  @override
+  void clearAllSelectedsSaleRequestProductsIds() {
+    _selectedSaleRequestProductsIds.clear();
+  }
+
   final _products = Rx<PrintedViewModel?>(null);
   @override
   Stream<PrintedViewModel?> get printedProducts => _products.stream;
   set products(PrintedViewModel? value) => _products.value = value;
+
+  final _selectedSaleRequestProductsIds = <int>[];
+  @override
+  List<int> get selectedsSaleRequestProductsIds =>
+      [..._selectedSaleRequestProductsIds];
 }

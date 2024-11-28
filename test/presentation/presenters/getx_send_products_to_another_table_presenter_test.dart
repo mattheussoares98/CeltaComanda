@@ -136,4 +136,27 @@ void main() {
       ).called(1);
     });
   });
+
+  group("Update product is selected", () {
+    test("Should update product is selected correctly", () {
+      sut.updateProductIsSelected(0);
+      sut.updateProductIsSelected(1);
+      sut.updateProductIsSelected(2);
+      expect(sut.selectedsSaleRequestProductsIds, [0, 1, 2]);
+
+      sut.updateProductIsSelected(2);
+      expect(sut.selectedsSaleRequestProductsIds, [0, 1]);
+    });
+  });
+
+  group("Clear all selecteds sale request products ids", () {
+    test("Should clear selectedsSaleRequestProductsIds", () {
+      sut.updateProductIsSelected(0);
+      sut.updateProductIsSelected(1);
+      expect(sut.selectedsSaleRequestProductsIds, [0, 1]);
+
+      sut.clearAllSelectedsSaleRequestProductsIds();
+      expect(sut.selectedsSaleRequestProductsIds, []);
+    });
+  });
 }

@@ -8,6 +8,8 @@ abstract class SendProductsToAnotherTablePresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<PrintedViewModel?> get printedProducts;
 
+  List<int> get selectedsSaleRequestProductsIds;
+
   Future<void> loadProducts(int commandNumber);
 
   Future<void> sendProductsToAnotherTable({
@@ -15,4 +17,8 @@ abstract class SendProductsToAnotherTablePresenter implements Listenable {
     required int newPersonalizedCode,
     required List<int> saleRequestProductsIds,
   });
+
+  void updateProductIsSelected(int saleRequestProductId);
+
+  void clearAllSelectedsSaleRequestProductsIds();
 }

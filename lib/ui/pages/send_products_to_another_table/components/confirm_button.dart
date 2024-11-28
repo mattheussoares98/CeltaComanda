@@ -14,7 +14,9 @@ class ConfirmButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          bool? isValid = formKey.currentState?.validate();
+        },
         child: Text(
           R.string.confirm,
         ),

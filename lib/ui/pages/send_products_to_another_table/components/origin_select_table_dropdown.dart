@@ -19,6 +19,9 @@ class OriginSelectTableDropdown extends StatelessWidget {
         Text("" + "origin"),
         SelectTableDropDown(
           validator: (value) {
+            if (value == null || selectedOriginCommand == null) {
+              return R.string.msgSelectCommand;
+            }
             return null;
           },
           hintText: R.string.msgSelectCommand,

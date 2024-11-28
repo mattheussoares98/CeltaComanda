@@ -19,6 +19,9 @@ class DestinySelectTableDropdown extends StatelessWidget {
         Text("" + "destiny"),
         SelectTableDropDown(
           validator: (value) {
+            if (value == null || selectedDestinyCommand == null) {
+              return R.string.msgSelectCommand;
+            }
             return null;
           },
           hintText: R.string.msgSelectCommand,

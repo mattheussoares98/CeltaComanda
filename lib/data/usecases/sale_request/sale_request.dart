@@ -1,3 +1,4 @@
+export './remote_change_sale_request_personalized_code_products.dart';
 export './remote_change_sale_request_personalized_code.dart';
 export './remote_finish_sale_request_temp_by_id.dart';
 export 'remote_finish_sale_request_temp.dart';

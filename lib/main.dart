@@ -160,6 +160,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
               transition: Transition.fade,
             ),
             GetPage(
+              name: PageRoutes.sendProductsToAnotherTable,
+              page: makeSendProductsToAnotherPageFactory,
+              transition: Transition.fade,
+            ),
+            GetPage(
               name: PageRoutes.splash,
               page: makeSplashPage,
               transition: Transition.fade,

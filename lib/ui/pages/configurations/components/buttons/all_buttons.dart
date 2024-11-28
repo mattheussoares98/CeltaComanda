@@ -11,6 +11,7 @@ List<Widget> allButtons(BuildContext context) {
     UpdateMenuButton(),
     CancelProductsOrRemoveServiceChargeButton(),
     TableConfigurationsButton(),
+    SendOneOrMoreProductsToAnotherTableButton(),
     SendAllProductsToAnotherTableButton(),
     DoLogoutButton(),
     LiberateOrBlockTableButton(),

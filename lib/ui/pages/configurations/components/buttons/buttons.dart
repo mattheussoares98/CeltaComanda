@@ -6,5 +6,6 @@ export './liberate_or_block_table_button.dart';
 export 'products_schedules_button.dart';
 export './reserve_table_button.dart';
 export './send_all_products_to_another_table_button.dart';
+export './send_one_or_more_products_to_another_table_button.dart';
 export './table_configurations_button.dart';
 export './update_menu_button.dart';

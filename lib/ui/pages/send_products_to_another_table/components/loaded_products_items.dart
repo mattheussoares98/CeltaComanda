@@ -4,8 +4,25 @@ import 'package:provider/provider.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class LoadedProductsItems extends StatelessWidget {
+class LoadedProductsItems extends StatefulWidget {
   const LoadedProductsItems({super.key});
+
+  @override
+  State<LoadedProductsItems> createState() => _LoadedProductsItemsState();
+}
+
+class _LoadedProductsItemsState extends State<LoadedProductsItems> {
+  void updateProductIsSelected({
+    required SendProductsToAnotherTablePresenter
+        sendProductsToAnotherTablePresenter,
+    required PrintedProductsViewModel product,
+  }) {
+    setState(() {
+      sendProductsToAnotherTablePresenter.updateProductIsSelected(
+        product.SaleRequestProductId.toInt(),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +69,13 @@ class LoadedProductsItems extends StatelessWidget {
                     "${data.hour.toString().padLeft(2, '0')}:${data.minute.toString().padLeft(2, '0')}";
 
                 return InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    updateProductIsSelected(
+                      sendProductsToAnotherTablePresenter:
+                          sendProductsToAnotherTablePresenter,
+                      product: product,
+                    );
+                  },
                   child: Container(
                     color: Theme.of(context).primaryColorLight.withAlpha(30),
                     child: Row(
@@ -64,8 +87,18 @@ class LoadedProductsItems extends StatelessWidget {
                         ),
                         Text(product.Product.Name),
                         Checkbox(
-                          value: false,
-                          onChanged: (value) {},
+                          value: sendProductsToAnotherTablePresenter
+                              .selectedsSaleRequestProductsIds
+                              .contains(
+                            product.SaleRequestProductId.toInt(),
+                          ),
+                          onChanged: (value) {
+                            updateProductIsSelected(
+                              sendProductsToAnotherTablePresenter:
+                                  sendProductsToAnotherTablePresenter,
+                              product: product,
+                            );
+                          },
                         ),
                       ],
                     ),

@@ -591,6 +591,12 @@ void main() {
       sut.doOnClosePage();
       expect(sut.canCancelProducts, false);
     });
+    test("Should update people quantity to zero", () {
+      sut.updatePeopleQuantity(isAdding: true);
+
+      sut.doOnClosePage();
+      expect(sut.peopleQuantity, 1);
+    });
   });
 
   group("Get total liquid", () {
@@ -833,21 +839,21 @@ void main() {
     test("Should add quantity if is adding", () {
       sut.updatePeopleQuantity(isAdding: true);
       expect(sut.peopleQuantity, 2);
-      
+
       sut.updatePeopleQuantity(isAdding: true);
       expect(sut.peopleQuantity, 3);
     });
-    
+
     test("Should update people quantity correctly", () {
       sut.updatePeopleQuantity(isAdding: false);
       expect(sut.peopleQuantity, 1);
-      
+
       sut.updatePeopleQuantity(isAdding: true);
       expect(sut.peopleQuantity, 2);
-      
+
       sut.updatePeopleQuantity(isAdding: false);
       expect(sut.peopleQuantity, 1);
-      
+
       sut.updatePeopleQuantity(isAdding: false);
       expect(sut.peopleQuantity, 1);
     });

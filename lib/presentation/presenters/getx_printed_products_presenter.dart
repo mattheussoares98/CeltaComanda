@@ -189,6 +189,7 @@ class GetxPrintedProductsPresenter
   @override
   void doOnClosePage() {
     _canCancelProducts = false;
+    _peopleQuantity = 1;
   }
 
   @override

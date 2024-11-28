@@ -187,6 +187,7 @@ abstract class Translation {
   String get selectQuantity;
   String get seller;
   String get sendAllProductsToAnotherTable;
+  String get sendOneOrMoreProductsToAnotherTable;
   String get sendEvaluation;
   String get sendMessage;
   String get sendProductsToAnotherTable;

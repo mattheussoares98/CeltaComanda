@@ -72,7 +72,7 @@ dev_dependencies:
   faker: ^2.1.0
   network_image_mock: ^2.1.1
   flutter_lints: ^5.0.0
-  msix: ^3.16.8
+  msix: ^3.16.8 #dart run msix:create
 
 msix_config:
   display_name: Celta Comanda

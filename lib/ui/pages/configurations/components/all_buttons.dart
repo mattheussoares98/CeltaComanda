@@ -63,11 +63,11 @@ List<Widget> allButtons(BuildContext context) {
         }),
     _button(
         context: context,
-        name: R.string.sendProductsToAnotherTable,
+        name: R.string.sendAllProductsToAnotherTable,
         function: () {
           notificationDialog(
               context: context,
-              titleMessage: R.string.sendProductsToAnotherTable,
+              titleMessage: R.string.sendAllProductsToAnotherTable,
               showCancelAndConfirmMessage: false,
               showCloseAction: true,
               showLargeDialog: true,

@@ -245,28 +245,6 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<void> sendProductsToAnotherTable({
-    required int oldPersonalizedCode,
-    required int newPersonalizedCode,
-    required List<int> saleRequestProductsIds,
-  }) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      await changeSaleRequestPersonalizedCodeProducts.change(
-        oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
-        newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-        saleRequestProductsIds: saleRequestProductsIds,
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-  
-  @override
   void goToSendProductsToAnotherTablePage() {
     navigateTo.navigate(pageRoute: PageRoutes.sendProductsToAnotherTable);
   }

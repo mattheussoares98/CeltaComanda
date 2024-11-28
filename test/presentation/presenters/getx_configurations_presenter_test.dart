@@ -584,58 +584,6 @@ void main() {
     });
   });
 
-  group("Update sale request personalized code products", () {
-    final int oldPersonalizedCode = faker.randomGenerator.integer(100);
-    final int newPersonalizedCode = faker.randomGenerator.integer(100);
-    final List<int> saleRequestProductsIds = [
-      faker.randomGenerator.integer(100),
-      faker.randomGenerator.integer(100),
-      faker.randomGenerator.integer(100),
-    ];
-
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        saleRequestProductsIds: saleRequestProductsIds,
-      );
-    });
-
-    test("Should emit correct values on error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      changeSaleRequestPersonalizedCodeProducts
-          .mockError(DomainError.unexpected);
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        saleRequestProductsIds: saleRequestProductsIds,
-      );
-    });
-    test(
-        "Should call changeSaleRequestPersonalizedCodeProducts with correct values",
-        () async {
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        saleRequestProductsIds: saleRequestProductsIds,
-      );
-
-      verify(
-        () => changeSaleRequestPersonalizedCodeProducts.change(
-            oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
-            newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-            saleRequestProductsIds: saleRequestProductsIds),
-      ).called(1);
-    });
-  });
-
   group("Go to send products to another table page", () {
     test("Should call navigateTo with correct values", () {
       sut.goToSendProductsToAnotherTablePage();

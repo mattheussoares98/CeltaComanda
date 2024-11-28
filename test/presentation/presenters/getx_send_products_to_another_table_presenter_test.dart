@@ -83,6 +83,13 @@ void main() {
 
       await sut.loadProducts(commandNumber);
     });
+    test("Should clear all selecteds products sale request ids", () async {
+      sut.updateProductIsSelected(0);
+      expect(sut.selectedsSaleRequestProductsIds, [0]);
+
+      await sut.loadProducts(commandNumber);
+      expect(sut.selectedsSaleRequestProductsIds, []);
+    });
   });
 
   group("Update sale request personalized code products", () {

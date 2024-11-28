@@ -26,6 +26,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     mainError = null;
 
     try {
+      clearAllSelectedsSaleRequestProductsIds();
+
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,

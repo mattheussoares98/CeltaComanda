@@ -14,6 +14,7 @@ export './print_products/print_products.dart';
 export './printed_products/printed_products.dart';
 export './products/products.dart';
 export 'schedules/schedules.dart';
+export './send_products_to_another_table/send_products_to_another_table.dart';
 export './splash/splash.dart';
 export './support/support.dart';
 export './web_enterprises_configurations/web_enterprises_configurations.dart';

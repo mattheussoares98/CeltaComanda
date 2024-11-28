@@ -33,6 +33,8 @@ void main() {
   late LocalCommandDataSpy localCommandData;
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late ChangeSaleRequestPersonalizedCodeSpy changeSaleRequestPersonalizedCode;
+  late ChangeSaleRequestPersonalizedCodeProductsSpy
+      changeSaleRequestPersonalizedCodeProducts;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -59,6 +61,8 @@ void main() {
       localCommandData: localCommandData,
       updateSaleRequestTemp: updateSaleRequestTemp,
       changeSaleRequestPersonalizedCode: changeSaleRequestPersonalizedCode,
+      changeSaleRequestPersonalizedCodeProducts:
+          changeSaleRequestPersonalizedCodeProducts,
     );
   }
 
@@ -72,6 +76,8 @@ void main() {
     localCommandData = LocalCommandDataSpy();
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     changeSaleRequestPersonalizedCode = ChangeSaleRequestPersonalizedCodeSpy();
+    changeSaleRequestPersonalizedCodeProducts =
+        ChangeSaleRequestPersonalizedCodeProductsSpy();
   }
 
   void initMocks() {

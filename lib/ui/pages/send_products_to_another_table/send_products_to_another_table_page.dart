@@ -91,7 +91,11 @@ class _SendProductsToAnotherTablePageState
             Expanded(
               child: LoadedProductsItems(),
             ),
-            ConfirmButton(formKey: formKey),
+            ConfirmButton(
+              formKey: formKey,
+              oldPersonalizedCode: selectedOriginCommand,
+              newPersonalizedCode: selectedDestinyCommand,
+            ),
           ],
         ),
       ),

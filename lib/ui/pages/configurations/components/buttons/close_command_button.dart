@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +25,9 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
 
     return defaultButton(
       context: context,
-      name: R.string.close,
+      name: R.string.close + "command",
       function: () async {
-        notificationDialog(
+        await notificationDialog(
             context: context,
             titleMessage: "R.string.confirmClose" + "",
             closeDialogOnConfirmPress: false,
@@ -51,10 +53,17 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
               bool? isValid = formKey.currentState?.validate();
 
               if (isValid == true) {
-                await configurationsPresenter
+                bool confirmed = await configurationsPresenter
                     .closeCommand(selectedCommandInDropDown!);
+
+                Navigator.of(context).pop();
+
+                if (confirmed) {
+                  snackBarMessage(context, "" + "Closed with success");
+                }
               }
             });
+        selectedCommandInDropDown = null;
       },
     );
   }

@@ -57,47 +57,51 @@ class _SendProductsToAnotherTablePageState
       ),
       body: Form(
         key: formKey,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                ReloadProductsIconButton(
-                  selectedOriginCommand: selectedOriginCommand,
-                ),
-                Expanded(
-                  child: OriginSelectTableDropdown(
-                    selectedOriginCommand: selectedOriginCommand,
-                    updateSelectedCommandInDropDown: (value) async {
-                      setState(() {
-                        selectedOriginCommand = value;
-                      });
-                      await sendProductsToAnotherTablePresenter
-                          .loadProducts(value!);
-                    },
+        child: StreamBuilder<PrintedViewModel?>(
+            stream: sendProductsToAnotherTablePresenter.printedProducts,
+            builder: (context, snapshot) {
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      ReloadProductsIconButton(
+                        selectedOriginCommand: selectedOriginCommand,
+                      ),
+                      Expanded(
+                        child: OriginSelectTableDropdown(
+                          selectedOriginCommand: selectedOriginCommand,
+                          updateSelectedCommandInDropDown: (value) async {
+                            setState(() {
+                              selectedOriginCommand = value;
+                            });
+                            await sendProductsToAnotherTablePresenter
+                                .loadProducts(value!);
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: DestinySelectTableDropdown(
+                          selectedDestinyCommand: selectedDestinyCommand,
+                          updateSelectedCommandInDropDown: (value) {
+                            setState(() {
+                              selectedDestinyCommand = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Expanded(
-                  child: DestinySelectTableDropdown(
-                    selectedDestinyCommand: selectedDestinyCommand,
-                    updateSelectedCommandInDropDown: (value) {
-                      setState(() {
-                        selectedDestinyCommand = value;
-                      });
-                    },
+                  Expanded(
+                    child: LoadedProductsItems(printedViewModel: snapshot.data),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: LoadedProductsItems(),
-            ),
-            ConfirmButton(
-              formKey: formKey,
-              oldPersonalizedCode: selectedOriginCommand,
-              newPersonalizedCode: selectedDestinyCommand,
-            ),
-          ],
-        ),
+                  ConfirmButton(
+                    formKey: formKey,
+                    oldPersonalizedCode: selectedOriginCommand,
+                    newPersonalizedCode: selectedDestinyCommand,
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }

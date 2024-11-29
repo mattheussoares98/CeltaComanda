@@ -9,16 +9,15 @@ abstract class EnterprisePresenter implements Listenable {
   Stream<UIError?> get enterpriseErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<bool> get isFormValidStream;
-  Stream<CommandViewModel?> get commandDataStream;
 
   bool isUpdatedEnterpriseName = false;
 
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false});
-  void updateEnterpriseController(String value);
 
   Future<void> validateApiAndGoToHomePage({
-    required CommandEntity commandEntity,
+    required bool isFixedCommandNumber,
+    required String? commandNumber,
     required HomePresenter homePresenter,
   });
   Future<void> getFirebaseAndConcentradorEnterpriseParameters();
@@ -27,11 +26,6 @@ abstract class EnterprisePresenter implements Listenable {
 
   Future<void> goToHomePage(HomePresenter homePresenter);
 
-  Future<void> updateUseFixedCommandNumber(HomePresenter homePresenter);
-  void updateCommandNumber({
-    required String? newCommandValue,
-    required HomePresenter homePresenter,
-  });
   void updateEnterpriseEntity(EnterpriseEntity newEnterprise);
   Future<void> clearEnterpriseData();
 }

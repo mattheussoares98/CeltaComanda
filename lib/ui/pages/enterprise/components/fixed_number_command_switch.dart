@@ -1,31 +1,27 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 
-import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class FixedNumberCommandSwitch extends StatelessWidget {
-  final CommandViewModel commandViewModel;
+  final bool isFixedCommandNumber;
+  final void Function() updateIsFixedCommandNumber;
   const FixedNumberCommandSwitch({
-    required this.commandViewModel,
+    required this.isFixedCommandNumber,
+    required this.updateIsFixedCommandNumber,
     super.key,
   });
 
+  static final GlobalKey tooltipKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey tooltipKey = GlobalKey();
-    EnterprisePresenter enterprisePresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Switch(
-          value: commandViewModel.isFixedCommandNumber == "true",
+          value: isFixedCommandNumber,
           onChanged: (_) {
-            enterprisePresenter.updateUseFixedCommandNumber(homePresenter);
+            updateIsFixedCommandNumber();
           },
         ),
         const SizedBox(width: 10),

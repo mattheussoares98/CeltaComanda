@@ -11,7 +11,7 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxEnterprisePresenter extends GetxController
-    with TextControllerManager, LoadingManager, FormManager, UIErrorManager
+    with LoadingManager, FormManager, UIErrorManager
     implements EnterprisePresenter {
   final Validation validation;
   final LocalEnterpriseData localEntepriseData;
@@ -41,20 +41,10 @@ class GetxEnterprisePresenter extends GetxController
   @override
   Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
 
-  final _commandData = Rx<CommandViewModel?>(null);
-  @override
-  Stream<CommandViewModel?> get commandDataStream => _commandData.stream;
-
   @override
   Future<void> getLocalData(HomePresenter homePresenter) async {
     EnterpriseDataBuilder.enterpriseDataEntity =
         await localEntepriseData.load();
-
-    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName.isNotEmpty ==
-        true) {
-      updateEnterpriseController(
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
-    }
 
     isLoading = true;
     mainError = null;
@@ -65,17 +55,12 @@ class GetxEnterprisePresenter extends GetxController
         throw Exception();
       }
 
-      _commandData.subject.add(CommandViewModel.fromEntity(commandEntity));
-
       if (commandEntity.isFixedCommandNumber !=
           homePresenter.isFixedCommandNumber) {
         await homePresenter.updateIsFixedCommandNumber();
       }
     } catch (e) {
-      _commandData.value = const CommandViewModel(
-        commandNumber: null,
-        isFixedCommandNumber: null,
-      );
+      e;
     } finally {
       isLoading = false;
     }
@@ -119,8 +104,6 @@ class GetxEnterprisePresenter extends GetxController
       if (EnterpriseDataBuilder
               .enterpriseDataEntity?.enterpriseName.isNotEmpty ==
           true) {
-        enterpriseNameController.text =
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
         await localEntepriseData
             .add(EnterpriseDataBuilder.enterpriseDataEntity!);
       }
@@ -137,7 +120,8 @@ class GetxEnterprisePresenter extends GetxController
 
   @override
   Future<void> validateApiAndGoToHomePage({
-    required CommandEntity commandEntity,
+    required bool isFixedCommandNumber,
+    required String? commandNumber,
     required HomePresenter homePresenter,
   }) async {
     try {
@@ -153,13 +137,17 @@ class GetxEnterprisePresenter extends GetxController
 
       await commandInformations.ticketIsPermitted(
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        commandNumber: commandEntity.commandNumber == null ||
-                commandEntity.commandNumber?.isEmpty == true
+        commandNumber: commandNumber == null || commandNumber.isEmpty == true
             ? "001"
-            : commandEntity.commandNumber!,
+            : commandNumber,
       );
 
-      await localCommandData.update(commandEntity);
+      await localCommandData.update(
+        CommandEntity(
+          commandNumber: commandNumber,
+          isFixedCommandNumber: isFixedCommandNumber,
+        ),
+      );
 
       isLoading = false;
       await goToHomePage(homePresenter);
@@ -183,10 +171,12 @@ class GetxEnterprisePresenter extends GetxController
   }
 
   @override
-  void validateEnterpriseInput(String value,
-      {bool? updateEnterpriseNameController = false}) {
+  void validateEnterpriseInput(
+    String enterpriseName, {
+    bool? updateEnterpriseNameController = false,
+  }) {
     EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName: value,
+      enterpriseName: enterpriseName,
       url: null,
       enterpriseId: null,
       concentradorUrl: null,
@@ -203,16 +193,20 @@ class GetxEnterprisePresenter extends GetxController
       zoomImage: null,
     );
 
-    _enterpriseError.value = _validateField('enterpriseName');
-    _validateForm();
+    _enterpriseError.value =
+        _validateField(field: "enterpriseName", enterpriseName: enterpriseName);
+    _validateForm(enterpriseName);
     if (updateEnterpriseNameController == true) {
       isUpdatedEnterpriseName = true;
     }
   }
 
-  UIError? _validateField(String field) {
+  UIError? _validateField({
+    required String field,
+    required String enterpriseName,
+  }) {
     final formData = {
-      'enterpriseName': enterpriseNameController.text,
+      'enterpriseName': enterpriseName,
     };
     final error = validation.validate(field: field, input: formData);
     switch (error) {
@@ -225,9 +219,9 @@ class GetxEnterprisePresenter extends GetxController
     }
   }
 
-  void _validateForm() {
-    isFormValid = _enterpriseError.value == null &&
-        enterpriseNameController.text.isNotEmpty == true;
+  void _validateForm(String enterpriseName) {
+    isFormValid =
+        _enterpriseError.value == null && enterpriseName.isNotEmpty == true;
   }
 
   @override
@@ -239,43 +233,6 @@ class GetxEnterprisePresenter extends GetxController
     } else {
       await persistent.makeNotPersistent();
     }
-  }
-
-  @override
-  Future<void> updateUseFixedCommandNumber(HomePresenter homePresenter) async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      final commandViewModel = CommandViewModel(
-        commandNumber: homePresenter.commandNumber,
-        isFixedCommandNumber: (!homePresenter.isFixedCommandNumber).toString(),
-      );
-
-      await localCommandData.update(commandViewModel.toEntity());
-
-      _commandData.value = commandViewModel;
-      await homePresenter.updateIsFixedCommandNumber();
-    } catch (e) {
-      UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
-  void updateCommandNumber({
-    required String? newCommandValue,
-    required HomePresenter homePresenter,
-  }) {
-    final commandWithPadLeft = newCommandValue?.padLeft(3, "0");
-
-    homePresenter.updateCommandNumber(commandWithPadLeft);
-
-    _commandData.value = CommandViewModel(
-      commandNumber: commandWithPadLeft,
-      isFixedCommandNumber: _commandData.value?.isFixedCommandNumber ?? "false",
-    );
   }
 
   @override

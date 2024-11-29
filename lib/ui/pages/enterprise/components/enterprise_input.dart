@@ -6,11 +6,13 @@ import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class EnterpriseInput extends StatelessWidget {
-  final CommandViewModel commandVideModel;
   final TextEditingController enterpriseController;
+  final TextEditingController commandNumberController;
+  final bool isFixedCommandNumber;
   const EnterpriseInput({
-    required this.commandVideModel,
     required this.enterpriseController,
+    required this.commandNumberController,
+    required this.isFixedCommandNumber,
     super.key,
   });
 
@@ -33,7 +35,8 @@ class EnterpriseInput extends StatelessWidget {
             onFieldSubmitted: (_) async {
               if (enterpriseController.text.isNotEmpty) {
                 await presenter.validateApiAndGoToHomePage(
-                  commandEntity: commandVideModel.toEntity(),
+                  commandNumber: commandNumberController.text,
+                  isFixedCommandNumber: isFixedCommandNumber,
                   homePresenter: homePresenter,
                 );
               }

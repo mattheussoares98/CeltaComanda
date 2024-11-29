@@ -17,7 +17,6 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
   final enterpriseErrorController = StreamController<UIError?>();
   final isFormValidController = StreamController<bool>();
   final isLoadingController = StreamController<bool>();
-  final useFixedCommandNumberController = StreamController<CommandViewModel>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
 
@@ -32,14 +31,13 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
     when(() => this.updateConcentratorEnterpriseParameters())
         .thenAnswer((any) async => any);
     when(() => this.validateApiAndGoToHomePage(
-          commandEntity: any(named: "commandEntity"),
+          isFixedCommandNumber: any(named: "isFixedCommandNumber"),
+          commandNumber: any(named: "commandNumber"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((any) async => any);
     when(() => this.goToHomePage(any())).thenAnswer((_) async => Get.offNamed(
           PageRoutes.menus,
         ));
-    when(() => this.updateEnterpriseController(any()))
-        .thenAnswer((any) async => any);
     when(() => this.validateEnterpriseInput(any(),
             updateEnterpriseNameController:
                 any(named: "updateEnterpriseNameController")))
@@ -54,8 +52,6 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
         .thenAnswer((_) => isFormValidController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.commandDataStream)
-        .thenAnswer((_) => useFixedCommandNumberController.stream);
   }
 
   void emitFormError() => isFormValidController.add(false);

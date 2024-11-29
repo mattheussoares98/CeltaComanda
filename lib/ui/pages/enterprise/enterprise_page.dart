@@ -21,6 +21,11 @@ class EnterpriseValidationPage extends StatefulWidget {
 class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   final enterpriseController = TextEditingController();
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final commandNumberController = TextEditingController();
+  bool isFixedCommandNumber = false;
 
   @override
   void initState() {
@@ -42,39 +47,27 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     });
   }
 
-  Future<void> _validateEnterprise({
-    required CommandViewModel commandViewModel,
-    required EnterprisePresenter enterprisePresenter,
-    required HomePresenter homePresenter,
-  }) async {
-    if (commandViewModel.isFixedCommandNumber == "true") {
-      if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
-        return;
-      }
-
-      await enterprisePresenter.validateApiAndGoToHomePage(
-        commandEntity: commandViewModel.toEntity(),
-        homePresenter: homePresenter,
-      );
-    } else {
-      await enterprisePresenter.validateApiAndGoToHomePage(
-        commandEntity: commandViewModel.toEntity(),
-        homePresenter: homePresenter,
-      );
-    }
-  }
-
-  StreamSubscription? loadingSubscription;
-  StreamSubscription? mainErrorSubscription;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final commandNumberController = TextEditingController();
-
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     commandNumberController.dispose();
+  }
+
+  Future<void> _validateEnterprise({
+    required EnterprisePresenter enterprisePresenter,
+    required HomePresenter homePresenter,
+  }) async {
+    if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
+      return;
+    }
+
+    await enterprisePresenter.validateApiAndGoToHomePage(
+      commandNumber: commandNumberController.text,
+      isFixedCommandNumber: isFixedCommandNumber,
+      homePresenter: homePresenter,
+    );
   }
 
   @override
@@ -102,57 +95,48 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
               Headline1(text: R.string.validateEnterprise),
               Padding(
                 padding: const EdgeInsets.all(25),
-                child: StreamBuilder<CommandViewModel?>(
-                    stream: enterprisePresenter.commandDataStream,
-                    builder: (context, snapshotCommandData) {
-                      if (snapshotCommandData.data == null) {
-                        return const SizedBox();
-                      }
-                      return Column(
+                child: Column(
+                  children: [
+                    EnterpriseInput(
+                      enterpriseController: enterpriseController,
+                      commandNumberController: commandNumberController,
+                      isFixedCommandNumber: isFixedCommandNumber,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Column(
                         children: [
-                          EnterpriseInput(
-                            commandVideModel: snapshotCommandData.data!,
-                            enterpriseController: enterpriseController,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Column(
-                              children: [
-                                FixedNumberCommandSwitch(
-                                  commandViewModel: snapshotCommandData.data!,
-                                ),
-                                if (snapshotCommandData
-                                        .data?.isFixedCommandNumber ==
-                                    "true")
-                                  FixedCommandNumberInput(
-                                    formKey: _formKey,
-                                    commandViewModel: snapshotCommandData.data!,
-                                    validateEnterprise: () async {
-                                      await _validateEnterprise(
-                                        homePresenter: homePresenter,
-                                        commandViewModel:
-                                            snapshotCommandData.data!,
-                                        enterprisePresenter:
-                                            enterprisePresenter,
-                                      );
-                                    },
-                                  ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          EnterpriseValidateButton(
-                            validateEnterprise: () async {
-                              await _validateEnterprise(
-                                homePresenter: homePresenter,
-                                commandViewModel: snapshotCommandData.data!,
-                                enterprisePresenter: enterprisePresenter,
-                              );
+                          FixedNumberCommandSwitch(
+                            isFixedCommandNumber: isFixedCommandNumber,
+                            updateIsFixedCommandNumber: () {
+                              isFixedCommandNumber = !isFixedCommandNumber;
                             },
                           ),
+                          if (isFixedCommandNumber)
+                            FixedCommandNumberInput(
+                              commandNumberController: commandNumberController,
+                              formKey: _formKey,
+                              validateEnterprise: () async {
+                                await _validateEnterprise(
+                                  homePresenter: homePresenter,
+                                  enterprisePresenter: enterprisePresenter,
+                                );
+                              },
+                            ),
                         ],
-                      );
-                    }),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    EnterpriseValidateButton(
+                      validateEnterprise: () async {
+                        await _validateEnterprise(
+                          homePresenter: homePresenter,
+                          enterprisePresenter: enterprisePresenter,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               )
             ],
           ),

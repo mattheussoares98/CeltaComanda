@@ -1,27 +1,20 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 
-import '../../pages.dart';
 import '../../../helpers/helpers.dart';
 
 class FixedCommandNumberInput extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final CommandViewModel commandViewModel;
   final void Function() validateEnterprise;
+  final TextEditingController commandNumberController;
   const FixedCommandNumberInput({
     required this.formKey,
-    required this.commandViewModel,
     required this.validateEnterprise,
+    required this.commandNumberController,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    EnterprisePresenter enterprisePresenter =
-        Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Form(
@@ -33,12 +26,9 @@ class FixedCommandNumberInput extends StatelessWidget {
           maxLength: 3,
           onFieldSubmitted: (_) async {
             validateEnterprise();
-          }, //implementar
-          onChanged: (String? newValue) {
-            enterprisePresenter.updateCommandNumber(
-              newCommandValue: newValue?.isEmpty == true ? null : newValue,
-              homePresenter: homePresenter,
-            );
+          },
+          onChanged: (String newValue) {
+            commandNumberController.text = newValue;
           },
           validator: (value) {
             if (value == null) {

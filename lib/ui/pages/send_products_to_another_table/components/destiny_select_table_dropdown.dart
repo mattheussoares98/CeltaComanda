@@ -18,7 +18,13 @@ class DestinySelectTableDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(R.string.destinyTable),
+        Text(
+          R.string.destinyTable,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: getStringSize(context),
+          ),
+        ),
         SelectTableDropDown(
           validator: (value) {
             if (value == null || selectedDestinyCommand == null) {

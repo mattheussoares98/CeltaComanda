@@ -16,7 +16,13 @@ class OriginSelectTableDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(R.string.originTable),
+        Text(
+          R.string.originTable,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: getStringSize(context),
+          ),
+        ),
         SelectTableDropDown(
           validator: (value) {
             if (value == null || selectedOriginCommand == null) {

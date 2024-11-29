@@ -25,11 +25,11 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
 
     return defaultButton(
       context: context,
-      name: R.string.close + "command",
+      name: R.string.closeTable,
       function: () async {
         await notificationDialog(
             context: context,
-            titleMessage: "R.string.confirmClose" + "",
+            titleMessage: R.string.msgWantCloseTable,
             closeDialogOnConfirmPress: false,
             content: Form(
               key: formKey,
@@ -59,7 +59,7 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
                 Navigator.of(context).pop();
 
                 if (confirmed) {
-                  snackBarMessage(context, "" + "Closed with success");
+                  snackBarMessage(context, R.string.msgTableClosedSuccessfully);
                 }
               }
             });

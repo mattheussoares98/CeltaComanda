@@ -56,12 +56,14 @@ abstract class Translation {
   String get msgSuccessToUpdateCommandNumberProducts;
   String get msgSuccessToUpdateSchedule;
   String get msgSuccessUpdateMenuInAllDevices;
+  String get msgTableClosedSuccessfully;
   String get msgTableNumber;
   String get msgUpdatedTableConfigurationsSuccess;
   String get msgUnexpectedError;
   String get msgUseOnlyWhenIsFixedTableNumber;
   String get msgVeryShortField;
   String get msgWantCloseApplication;
+  String get msgWantCloseTable;
   String get msgWantDoLogout;
   String get msgWantUpdateMenuInAllDevices;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
@@ -97,6 +99,7 @@ abstract class Translation {
   String get clearCart;
   String get close;
   String get closeApplication;
+  String get closeTable;
   String get code;
   String get combox;
   String get commandNotAvailable;

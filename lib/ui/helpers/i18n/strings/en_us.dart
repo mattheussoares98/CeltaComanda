@@ -75,6 +75,7 @@ class EnUs implements Translation {
       'The schedule has been configured successfully';
   String get msgSuccessUpdateMenuInAllDevices =>
       'The menu will be updated in all devices';
+  String get msgTableClosedSuccessfully => 'Table closed successfully';
   String get msgTableNumber => 'Table number';
   String get msgUpdatedTableConfigurationsSuccess =>
       'Configurations updated successfully';
@@ -87,6 +88,7 @@ class EnUs implements Translation {
   String get msgVeryShortField => 'Field too short';
   String get msgWantCloseApplication =>
       'Do you really want to close the application?';
+  String get msgWantCloseTable => "Do you really want close the table?";
   String get msgWantDoLogout => 'Do you really want to log out?';
   String get msgWantUpdateMenuInAllDevices =>
       "Do you want update the menu in all devices?";
@@ -124,6 +126,7 @@ class EnUs implements Translation {
   String get cellPhone => 'Cell phone';
   String get clearCart => 'Clear cart';
   String get closeApplication => 'Close APP';
+  String get closeTable => 'Close table';
   String get close => 'Close';
   String get code => 'Code';
   String get internalcodeNameOrCpf => 'Internal code, name or CPF';

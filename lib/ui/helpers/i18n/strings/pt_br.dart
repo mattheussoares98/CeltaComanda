@@ -79,6 +79,7 @@ class PtBr implements Translation {
       "Agendamento configurado com sucesso";
   String get msgSuccessUpdateMenuInAllDevices =>
       'O menu vai ser atualizado em todos dispositivos';
+  String get msgTableClosedSuccessfully => 'Mesa fechada com sucesso';
   String get msgTableNumber => 'Número da mesa';
   String get msgUpdatedTableConfigurationsSuccess =>
       "Configurações alteradas com sucesso";
@@ -88,6 +89,7 @@ class PtBr implements Translation {
       'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa';
   String get msgVeryShortField => 'Campo muito curto';
   String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
+  String get msgWantCloseTable => "Deseja realmente fechar a mesa?";
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
   String get msgWantUpdateMenuInAllDevices =>
       "Deseja atualizar o menu em todos dispositivos?";
@@ -124,8 +126,9 @@ class PtBr implements Translation {
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
   String get clearCart => "Limpar carrinho";
-  String get closeApplication => "Fechar APP";
   String get close => "Fechar";
+  String get closeApplication => "Fechar APP";
+  String get closeTable => "Fechar mesa";
   String get code => "Código";
   String get combox => "Combo";
   String get command => "Comanda";

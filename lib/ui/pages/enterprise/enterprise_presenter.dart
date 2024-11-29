@@ -22,7 +22,7 @@ abstract class EnterprisePresenter implements Listenable {
   });
   Future<void> getFirebaseAndConcentradorEnterpriseParameters();
   Future<void> updateConcentratorEnterpriseParameters();
-  Future<void> getLocalData(HomePresenter homePresenter);
+  Future<void> getLocalData();
 
   Future<void> goToHomePage(HomePresenter homePresenter);
 

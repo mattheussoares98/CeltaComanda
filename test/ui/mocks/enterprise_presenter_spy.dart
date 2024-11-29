@@ -24,7 +24,7 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
     when(() => this.isUpdatedEnterpriseName)
         .thenReturn(isUpdatedEnterpriseNameController);
 
-    when(() => this.getLocalData(any())).thenAnswer((any) async => any);
+    when(() => this.getLocalData()).thenAnswer((any) async => any);
     when(() => this.clearEnterpriseData()).thenAnswer((any) async => any);
     when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
         .thenAnswer((any) async => any);

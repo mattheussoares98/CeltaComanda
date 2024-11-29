@@ -33,10 +33,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         Future.delayed(Duration.zero, () async {
-          HomePresenter homePresenter = Provider.of(context, listen: false);
           EnterprisePresenter enterprisePresenter =
               Provider.of(context, listen: false);
-          await enterprisePresenter.getLocalData(homePresenter);
+          await enterprisePresenter.getLocalData();
 
           if (enterpriseController.text.isNotEmpty) {
             enterprisePresenter

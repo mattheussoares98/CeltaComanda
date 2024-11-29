@@ -42,7 +42,7 @@ class GetxEnterprisePresenter extends GetxController
   Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
 
   @override
-  Future<void> getLocalData(HomePresenter homePresenter) async {
+  Future<void> getLocalData() async {
     EnterpriseDataBuilder.enterpriseDataEntity =
         await localEntepriseData.load();
 

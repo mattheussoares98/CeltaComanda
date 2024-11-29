@@ -217,7 +217,7 @@ void main() {
   });
 
   test("Should call loadCommandData on loadLocalData", () async {
-    await sut.getLocalData(homePresenter);
+    await sut.getLocalData();
 
     verify(() => loadCommandData.load()).called(1);
   });

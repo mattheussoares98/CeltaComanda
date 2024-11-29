@@ -101,13 +101,24 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     _selectedSaleRequestProductsIds.clear();
   }
 
-  final _products = Rx<PrintedViewModel?>(null);
+  final _printedProducts = Rx<PrintedViewModel?>(null);
   @override
-  Stream<PrintedViewModel?> get printedProducts => _products.stream;
-  set products(PrintedViewModel? value) => _products.value = value;
+  Stream<PrintedViewModel?> get printedProducts => _printedProducts.stream;
+  set products(PrintedViewModel? value) => _printedProducts.value = value;
 
   final _selectedSaleRequestProductsIds = <int>[];
   @override
   List<int> get selectedsSaleRequestProductsIds =>
       [..._selectedSaleRequestProductsIds];
+
+  @override
+  void selectAllProducts() {
+    if (_printedProducts.value == null) {
+      return;
+    }
+    _selectedSaleRequestProductsIds.clear();
+    _selectedSaleRequestProductsIds.addAll(_printedProducts.value!.Products
+        .map((e) => e.SaleRequestProductId.toInt())
+        .toList());
+  }
 }

@@ -20,4 +20,5 @@ abstract class SendProductsToAnotherTablePresenter implements Listenable {
   void updateProductIsSelected(int saleRequestProductId);
 
   void clearAllSelectedsSaleRequestProductsIds();
+  void selectAllProducts();
 }

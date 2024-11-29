@@ -197,4 +197,17 @@ void main() {
       expect(sut.selectedsSaleRequestProductsIds, []);
     });
   });
+
+  group("Select all products", () {
+    test("Should select all products correctly", () async {
+      await sut.loadProducts(commandNumber);
+      expect(sut.selectedsSaleRequestProductsIds, isEmpty);
+
+      sut.selectAllProducts();
+      expect(
+          sut.selectedsSaleRequestProductsIds,
+          printedViewModel.Products.map((e) => e.SaleRequestProductId.toInt())
+              .toList());
+    });
+  });
 }

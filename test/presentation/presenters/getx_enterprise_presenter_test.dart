@@ -1,7 +1,6 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
@@ -108,16 +107,6 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
   });
 
-  test("Should go to HomePage cleaning atual route", () async {
-    await sut.goToHomePage(homePresenter);
-
-    verify(
-      () => navigateTo.navigate(
-        pageRoute: PageRoutes.home,
-        clear: true,
-      ),
-    ).called(1);
-  });
   test(
       "Should make persist app when go to home page and enterprise.persist app is true",
       () async {
@@ -146,7 +135,6 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
-    await sut.goToHomePage(homePresenter);
 
     verify(() => persistent.makePersistent()).called(1);
   });
@@ -179,7 +167,6 @@ void main() {
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
-    await sut.goToHomePage(homePresenter);
 
     verify(() => persistent.makeNotPersistent()).called(1);
   });
@@ -211,7 +198,6 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
-    await sut.goToHomePage(homePresenter);
 
     verify(() => persistent.makeNotPersistent()).called(1);
   });

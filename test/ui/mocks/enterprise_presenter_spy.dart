@@ -5,7 +5,6 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'dart:async';
 import 'package:mocktail/mocktail.dart';
@@ -35,9 +34,6 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
           commandNumber: any(named: "commandNumber"),
           homePresenter: any(named: "homePresenter"),
         )).thenAnswer((any) async => any);
-    when(() => this.goToHomePage(any())).thenAnswer((_) async => Get.offNamed(
-          PageRoutes.menus,
-        ));
     when(() => this.validateEnterpriseInput(any(),
             updateEnterpriseNameController:
                 any(named: "updateEnterpriseNameController")))

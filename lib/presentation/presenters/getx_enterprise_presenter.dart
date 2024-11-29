@@ -145,7 +145,6 @@ class GetxEnterprisePresenter extends GetxController
       );
 
       isLoading = false;
-      await goToHomePage(homePresenter);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -217,24 +216,6 @@ class GetxEnterprisePresenter extends GetxController
   void _validateForm(String enterpriseName) {
     isFormValid =
         _enterpriseError.value == null && enterpriseName.isNotEmpty == true;
-  }
-
-  @override
-  Future<void> goToHomePage(HomePresenter homePresenter) async {
-    navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
-    if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
-        !homePresenter.isGeneratingVersionToRede) {
-      await persistent.makePersistent();
-    } else {
-      await persistent.makeNotPersistent();
-    }
-  }
-
-  @override
-  void updateEnterpriseEntity(
-    EnterpriseEntity newEnterprise,
-  ) async {
-    EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;
   }
 
   @override

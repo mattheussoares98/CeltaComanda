@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -24,8 +23,5 @@ abstract class EnterprisePresenter implements Listenable {
   Future<void> updateConcentratorEnterpriseParameters();
   Future<void> getLocalData();
 
-  Future<void> goToHomePage(HomePresenter homePresenter);
-
-  void updateEnterpriseEntity(EnterpriseEntity newEnterprise);
   Future<void> clearEnterpriseData();
 }

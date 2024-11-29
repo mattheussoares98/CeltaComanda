@@ -1,5 +1,6 @@
 export './all_buttons.dart';
 export './cancel_products_or_remove_service_charge_button.dart';
+export './close_command_button.dart';
 export 'default_button.dart';
 export './do_logout_button.dart';
 export './liberate_or_block_table_button.dart';

@@ -11,8 +11,8 @@ List<Widget> allButtons(BuildContext context) {
     UpdateMenuButton(),
     CancelProductsOrRemoveServiceChargeButton(),
     TableConfigurationsButton(),
-    SendOneOrMoreProductsToAnotherTableButton(),
     SendAllProductsToAnotherTableButton(),
+    SendOneOrMoreProductsToAnotherTableButton(),
     DoLogoutButton(),
     LiberateOrBlockTableButton(),
     if (!homePresenter.isGeneratingVersionToRede &&

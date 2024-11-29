@@ -19,7 +19,7 @@ abstract class PrintedProductsPresenter
   double getServiceChargeValue(PrintedViewModel? printed);
 
   void updateCanCancelProducts(bool value);
-  Future<void> loadPrinted(String commandNumber);
+  Future<void> loadPrinted(String commandNumber, {bool showIsLoading = true});
   void clear();
   void doOnClosePage();
   PrintedViewModel? get printed;

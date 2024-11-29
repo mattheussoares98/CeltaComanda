@@ -345,7 +345,7 @@ void main() {
     });
   });
 
-  group("Manipulate data", () {
+  group("Load printed products", () {
     test('Should emit correct values on success to loadPrintes', () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -580,6 +580,13 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       expect(sut.printed, null);
+    });
+
+    test('Should not emit isLoading', () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emits(false));
+
+      await sut.loadPrinted(homePresenter.commandNumber!, showIsLoading: false);
     });
   });
 

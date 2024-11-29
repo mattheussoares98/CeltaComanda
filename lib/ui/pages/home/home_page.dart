@@ -45,8 +45,10 @@ class _HomePageState extends State<HomePage>
     HomePresenter homePresenter = Provider.of(context, listen: false);
     timer = Timer.periodic(Duration(minutes: 1), (_) async {
       if (homePresenter.commandNumber != null) {
-        await printedProductsPresenter
-            .loadPrinted(homePresenter.commandNumber!);
+        await printedProductsPresenter.loadPrinted(
+          homePresenter.commandNumber!,
+          showIsLoading: false,
+        );
       }
     });
   }

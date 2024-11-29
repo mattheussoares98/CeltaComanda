@@ -61,8 +61,11 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> loadPrinted(String commandNumber) async {
-    isLoading = true;
+  Future<void> loadPrinted(String commandNumber,
+      {bool showIsLoading = true}) async {
+    if (showIsLoading) {
+      isLoading = true;
+    }
     mainError = null;
 
     try {

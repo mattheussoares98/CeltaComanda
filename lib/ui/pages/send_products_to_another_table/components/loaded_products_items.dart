@@ -5,28 +5,24 @@ import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class LoadedProductsItems extends StatefulWidget {
+class LoadedProductsItems extends StatelessWidget {
   final PrintedViewModel? printedViewModel;
+  final void Function() callSetState;
   const LoadedProductsItems({
     required this.printedViewModel,
+    required this.callSetState,
     super.key,
   });
 
-  @override
-  State<LoadedProductsItems> createState() => _LoadedProductsItemsState();
-}
-
-class _LoadedProductsItemsState extends State<LoadedProductsItems> {
   void updateProductIsSelected({
     required SendProductsToAnotherTablePresenter
         sendProductsToAnotherTablePresenter,
     required PrintedProductsViewModel product,
   }) {
-    setState(() {
-      sendProductsToAnotherTablePresenter.updateProductIsSelected(
-        product.SaleRequestProductId.toInt(),
-      );
-    });
+    sendProductsToAnotherTablePresenter.updateProductIsSelected(
+      product.SaleRequestProductId.toInt(),
+    );
+    callSetState();
   }
 
   @override
@@ -35,7 +31,7 @@ class _LoadedProductsItemsState extends State<LoadedProductsItems> {
         Provider.of(context, listen: false);
 
     return Builder(builder: (context) {
-      if (widget.printedViewModel == null) {
+      if (printedViewModel == null) {
         return Center(
           child: Text(
             "origin table is empty" + "",
@@ -47,7 +43,7 @@ class _LoadedProductsItemsState extends State<LoadedProductsItems> {
           ),
         );
       }
-      if (widget.printedViewModel == null) {
+      if (printedViewModel == null) {
         return SizedBox();
       }
       return Padding(
@@ -60,12 +56,12 @@ class _LoadedProductsItemsState extends State<LoadedProductsItems> {
             mainAxisSpacing: 5,
             crossAxisSpacing: 5,
           ),
-          itemCount: widget.printedViewModel!.Products.length,
+          itemCount: printedViewModel!.Products.length,
           itemBuilder: (context, index) {
-            widget.printedViewModel!.Products.sort(
+            printedViewModel!.Products.sort(
                 (a, b) => a.DateHourOfCreation.compareTo(b.DateHourOfCreation));
 
-            final product = widget.printedViewModel!.Products[index];
+            final product = printedViewModel!.Products[index];
 
             DateTime data = DateTime.parse(product.DateHourOfCreation);
             String horasEMinutos =

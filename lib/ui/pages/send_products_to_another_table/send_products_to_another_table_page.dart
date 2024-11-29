@@ -92,12 +92,44 @@ class _SendProductsToAnotherTablePageState
                     ],
                   ),
                   Expanded(
-                    child: LoadedProductsItems(printedViewModel: snapshot.data),
+                    child: LoadedProductsItems(
+                      printedViewModel: snapshot.data,
+                      callSetState: () {
+                        setState(() {});
+                      },
+                    ),
                   ),
-                  ConfirmButton(
-                    formKey: formKey,
-                    oldPersonalizedCode: selectedOriginCommand,
-                    newPersonalizedCode: selectedDestinyCommand,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          if (snapshot.data?.Products.length ==
+                              sendProductsToAnotherTablePresenter
+                                  .selectedsSaleRequestProductsIds.length) {
+                            setState(() {
+                              sendProductsToAnotherTablePresenter
+                                  .clearAllSelectedsSaleRequestProductsIds();
+                            });
+                          } else {
+                            setState(() {
+                              sendProductsToAnotherTablePresenter
+                                  .selectAllProducts();
+                            });
+                          }
+                        },
+                        child: Text(snapshot.data?.Products.length ==
+                                sendProductsToAnotherTablePresenter
+                                    .selectedsSaleRequestProductsIds.length
+                            ? "Unselect all products"
+                            : "Select all products" + ""),
+                      ),
+                      ConfirmButton(
+                        formKey: formKey,
+                        oldPersonalizedCode: selectedOriginCommand,
+                        newPersonalizedCode: selectedDestinyCommand,
+                      ),
+                    ],
                   ),
                 ],
               );

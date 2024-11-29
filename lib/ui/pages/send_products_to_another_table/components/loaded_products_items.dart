@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -85,7 +86,38 @@ class _LoadedProductsItemsState extends State<LoadedProductsItems> {
                           padding: const EdgeInsets.only(left: 8),
                           child: Text(horasEMinutos),
                         ),
-                        Text(product.Product.Name),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    product.Product.Name,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: getStringSize(context),
+                                    ),
+                                  ),
+                                ),
+                                if (product.Comments != null)
+                                  FittedBox(
+                                    child: Comment(comment: product.Comments!),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Text(
+                            product.TotalLiquid.toDouble()
+                                .toString()
+                                .toBrazilianNumber()
+                                .addBrazilianCoin(),
+                          ),
+                        ),
                         Checkbox(
                           value: sendProductsToAnotherTablePresenter
                               .selectedsSaleRequestProductsIds

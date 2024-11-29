@@ -14,9 +14,8 @@ class RemoteCloseSaleRequest implements CloseSaleRequest {
       final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
 
       await httpAdapter.request(
-        url: "$url/api/apiSaleRequest/CloseSaleRequestF",
+        url: "$url/api/apiSaleRequest/CloseSaleRequest?_personalizedCode=$personalizedCode",
         method: "post",
-        body: personalizedCode,
       );
     } catch (error) {
       throw DomainError.unexpected;

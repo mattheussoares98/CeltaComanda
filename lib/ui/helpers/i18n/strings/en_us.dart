@@ -18,6 +18,7 @@ class EnUs implements Translation {
       "This command has no products inserted";
   String get msgConfirmClearTotalPaid =>
       "If you exit the page, the paid value will be cleared";
+  String get msgConfirmSendProducts => "Do you want confirm send products?";
   String get msgConsultCommandToViewProducts =>
       "Search command to view products";
   String get msgEvaluateFood => 'Rate the food';
@@ -62,12 +63,14 @@ class EnUs implements Translation {
   String get msgReleasesCommand => "Command released";
   String get msgSearchCommandToPay => 'Look up a command to make the payment';
   String get msgSelectCommand => 'Select the command';
+  String get msgSelectDifferentTables => 'Select different tables';
   String get msgSelectPeopleNumbers => 'Select the number of people';
   String get msgSelectProducts => 'Select products';
   String get msgSelectSeller => 'Select the seller';
   String get msgSelectTable => 'Select the tabls';
   String get msgSuccessToCancelProducts => 'Product cancelled';
-  String get msgSuccessToUpdateCommandNumberProducts => "The products were sent to the new command";
+  String get msgSuccessToUpdateCommandNumberProducts =>
+      "The products were sent to the new command";
   String get msgSuccessToUpdateSchedule =>
       'The schedule has been configured successfully';
   String get msgSuccessUpdateMenuInAllDevices =>
@@ -143,6 +146,7 @@ class EnUs implements Translation {
   String get covenants => 'Covenants';
   String get customer => 'Customer';
   String get debit => 'Debit';
+  String get destinyTable => 'Destiny table';
   String get detach => 'Highlights';
   String get developedByCeltaware => 'Developed by Celtaware';
   String get doLogout => 'Log out';
@@ -181,6 +185,8 @@ class EnUs implements Translation {
   String get obligatory => 'Mandatory';
   String get obligatoryComments => 'Mandatory comments';
   String get optional => 'Optional';
+  String get originTableIsEmpty => 'Oritin table is empty';
+  String get originTable => 'Oritin table';
   String get password => 'Password';
   String get pay => 'Pay';
   String get paymentValue => 'Payment value';
@@ -210,14 +216,17 @@ class EnUs implements Translation {
   String get searchCommandData => 'Search command data';
   String get searchProduct => 'Search product';
   String get searchType => 'Search type';
+  String get selectAllProducts => "Select all products";
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';
   String get selectPaymentOption => 'Select a payment option';
   String get selectProduct => 'Select a product!';
   String get selectQuantity => 'Enter the quantity';
   String get seller => 'Seller';
-  String get sendAllProductsToAnotherTable => 'Send ALL products to another table';
-  String get sendOneOrMoreProductsToAnotherTable => 'Send ONE OR MORE products to another table';
+  String get sendAllProductsToAnotherTable =>
+      'Send ALL products to another table';
+  String get sendOneOrMoreProductsToAnotherTable =>
+      'Send ONE OR MORE products to another table';
   String get sendEvaluation => 'Send evaluation';
   String get sendMessage => 'Send message';
   String get sendProductsToAnotherTable => 'Send products to another table';
@@ -242,6 +251,7 @@ class EnUs implements Translation {
   String get totalByPerson => 'Total by person';
   String get tuesday => 'Tuesday';
   String get turnBack => 'Go back';
+  String get unselectAllProducts => 'Unselect all products';
   String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>

@@ -18,13 +18,13 @@ class DestinySelectTableDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("" + "destiny"),
+        Text(R.string.destinyTable),
         SelectTableDropDown(
           validator: (value) {
             if (value == null || selectedDestinyCommand == null) {
               return R.string.msgSelectCommand;
-            } else if(selectedOriginCommand == selectedDestinyCommand) {
-              return "cant select the same command number" + "";
+            } else if (selectedOriginCommand == selectedDestinyCommand) {
+              return R.string.msgSelectDifferentTables;
             }
             return null;
           },

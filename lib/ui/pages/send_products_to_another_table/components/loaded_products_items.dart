@@ -34,7 +34,7 @@ class LoadedProductsItems extends StatelessWidget {
       if (printedViewModel == null) {
         return Center(
           child: Text(
-            "origin table is empty" + "",
+            R.string.originTableIsEmpty,
             style: TextStyle(
               fontSize: getStringSize(context),
               fontWeight: FontWeight.bold,

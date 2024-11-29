@@ -30,7 +30,7 @@ class ConfirmButton extends StatelessWidget {
           if (isValid == true) {
             notificationDialog(
                 context: context,
-                titleMessage: "Confirm send itens to another table?" + "",
+                titleMessage: R.string.msgConfirmSendProducts,
                 content: null,
                 onPress: () async {
                   await sendProductsToAnotherTablePresenter

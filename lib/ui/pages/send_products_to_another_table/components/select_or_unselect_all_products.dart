@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class SelectOrUnselectAllProducts extends StatelessWidget {
@@ -31,11 +32,13 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
           callSetState();
         }
       },
-      child: Text(printedViewModel?.Products.length ==
-              sendProductsToAnotherTablePresenter
-                  .selectedsSaleRequestProductsIds.length
-          ? "Unselect all products"
-          : "Select all products" + ""),
+      child: Text(
+        printedViewModel?.Products.length ==
+                sendProductsToAnotherTablePresenter
+                    .selectedsSaleRequestProductsIds.length
+            ? R.string.unselectAllProducts
+            : R.string.selectAllProducts,
+      ),
     );
   }
 }

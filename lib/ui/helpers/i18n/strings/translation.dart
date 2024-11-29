@@ -11,6 +11,7 @@ abstract class Translation {
   String get msgCommandDontHaveOpenValues;
   String get msgCommandDontHaveProducts;
   String get msgConfirmClearTotalPaid;
+  String get msgConfirmSendProducts;
   String get msgConsultCommandToViewProducts;
   String get msgEvaluateFood;
   String get msgEvaluateDrink;
@@ -46,6 +47,7 @@ abstract class Translation {
   String get msgRequiredField;
   String get msgSearchCommandToPay;
   String get msgSelectCommand;
+  String get msgSelectDifferentTables;
   String get msgSelectPeopleNumbers;
   String get msgSelectProducts;
   String get msgSelectSeller;
@@ -115,6 +117,7 @@ abstract class Translation {
   String get covenants;
   String get customer;
   String get debit;
+  String get destinyTable;
   String get detach;
   String get developedByCeltaware;
   String get doLogout;
@@ -154,6 +157,8 @@ abstract class Translation {
   String get obligatory;
   String get obligatoryComments;
   String get optional;
+  String get originTableIsEmpty;
+  String get originTable;
   String get password;
   String get pay;
   String get paymentValue;
@@ -181,6 +186,7 @@ abstract class Translation {
   String get searchDataOfOtherCommandNumber;
   String get searchProduct;
   String get searchType;
+  String get selectAllProducts;
   String get selectOneComment;
   String get selectedProductsAndComments;
   String get selectPaymentOption;
@@ -213,6 +219,7 @@ abstract class Translation {
   String get totalPaid;
   String get tuesday;
   String get turnBack;
+  String get unselectAllProducts;
   String get updateConfigurations;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;

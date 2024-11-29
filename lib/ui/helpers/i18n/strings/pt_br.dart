@@ -20,6 +20,7 @@ class PtBr implements Translation {
       "Não há produtos solicitados nessa mesa";
   String get msgConfirmClearTotalPaid =>
       "Ao sair da tela, o total pago será limpo";
+  String get msgConfirmSendProducts => "Deseja realmente enviar os produtos?";
   String get msgConsultCommandToViewProducts =>
       "Consulte alguma comanda para visualizar os produtos solicitados";
   String get msgEvaluateFood => "Avalie a comida";
@@ -66,6 +67,7 @@ class PtBr implements Translation {
   String get msgSearchCommandToPay =>
       'Consulte alguma comanda para efetuar o pagamento dela';
   String get msgSelectCommand => 'Selecione a comanda';
+  String get msgSelectDifferentTables => 'Selecione mesas diferentes';
   String get msgSelectPeopleNumbers => 'Selecione a quantidade de pessoas';
   String get msgSelectProducts => 'Selecione produtos';
   String get msgSelectSeller => 'Selecione o vendedor';
@@ -144,6 +146,7 @@ class PtBr implements Translation {
   String get covenants => "Convênios";
   String get customer => "Cliente";
   String get debit => "Débito";
+  String get destinyTable => "Mesa de destino";
   String get detach => "Destaques";
   String get developedByCeltaware => "Desenvolvido por Celtaware";
   String get doLogout => "Fazer logout";
@@ -183,6 +186,8 @@ class PtBr implements Translation {
   String get obligatory => 'Obrigatório';
   String get obligatoryComments => 'Comentários obrigatórios';
   String get optional => 'Opcional';
+  String get originTableIsEmpty => 'A mesa de origem está vazia';
+  String get originTable => 'Mesa de origem';
   String get password => 'Senha';
   String get pay => 'Pagar';
   String get paymentValue => 'Valor do pagamento';
@@ -212,6 +217,7 @@ class PtBr implements Translation {
   String get searchCommandData => "Consultar dados da comanda";
   String get searchProduct => "Consultar produto";
   String get searchType => "Tipo de pesquisa";
+  String get selectAllProducts => "Selecionar todos produtos";
   String get selectOneComment => "Selecione um comentário";
   String get selectedProductsAndComments =>
       'Produtos selecionados e comentários';
@@ -219,8 +225,10 @@ class PtBr implements Translation {
   String get selectProduct => "Selecione um produto!";
   String get selectQuantity => "Informe a quantidade";
   String get seller => "Vendedor";
-  String get sendAllProductsToAnotherTable => 'Enviar TODOS produtos para outra mesa';
-  String get sendOneOrMoreProductsToAnotherTable => 'Enviar UM OU MAIS produtos para outra mesa';
+  String get sendAllProductsToAnotherTable =>
+      'Enviar TODOS produtos para outra mesa';
+  String get sendOneOrMoreProductsToAnotherTable =>
+      'Enviar UM OU MAIS produtos para outra mesa';
   String get sendEvaluation => 'Enviar avaliação';
   String get sendMessage => 'Enviar mensagem';
   String get sendProductsToAnotherTable => 'Enviar produtos para outra mesa';
@@ -245,6 +253,7 @@ class PtBr implements Translation {
   String get totalByPerson => 'Total por pessoa';
   String get tuesday => 'Terça';
   String get turnBack => 'Voltar';
+  String get unselectAllProducts => "Desselecionar todos produtos";
   String get updateConfigurations => "Alterar configurações";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>

@@ -92,7 +92,7 @@ void main() {
     });
   });
 
-  group("Update sale request personalized code products", () {
+  group("Send products to another table", () {
     final int oldPersonalizedCode = faker.randomGenerator.integer(100);
     final int newPersonalizedCode = faker.randomGenerator.integer(100);
 
@@ -151,6 +151,25 @@ void main() {
           oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
           newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
           saleRequestProductsIds: [firstSelected, secondSelected],
+        ),
+      ).called(1);
+    });
+    test("Should reload products after send products to another table",
+        () async {
+      int firstSelected = faker.randomGenerator.integer(100);
+      sut.updateProductIsSelected(firstSelected);
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+
+      verify(
+        () => loadPrintedProducts.load(
+          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          enterpriseId:
+              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+          commandNumber: oldPersonalizedCode,
         ),
       ).called(1);
     });

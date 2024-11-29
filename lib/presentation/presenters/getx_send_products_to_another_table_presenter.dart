@@ -72,6 +72,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
         saleRequestProductsIds: _selectedSaleRequestProductsIds,
       );
+
+      await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.selectProducts:

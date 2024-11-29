@@ -21,29 +21,26 @@ class ConfirmButton extends StatelessWidget {
     SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter =
         Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: ElevatedButton(
-        onPressed: () async {
-          bool? isValid = formKey.currentState?.validate();
-
-          if (isValid == true) {
-            notificationDialog(
-                context: context,
-                titleMessage: R.string.msgConfirmSendProducts,
-                content: null,
-                onPress: () async {
-                  await sendProductsToAnotherTablePresenter
-                      .sendProductsToAnotherTable(
-                    oldPersonalizedCode: oldPersonalizedCode!,
-                    newPersonalizedCode: newPersonalizedCode!,
-                  );
-                });
-          }
-        },
-        child: Text(
-          R.string.confirm,
-        ),
+    return ElevatedButton(
+      onPressed: () async {
+        bool? isValid = formKey.currentState?.validate();
+    
+        if (isValid == true) {
+          notificationDialog(
+              context: context,
+              titleMessage: R.string.msgConfirmSendProducts,
+              content: null,
+              onPress: () async {
+                await sendProductsToAnotherTablePresenter
+                    .sendProductsToAnotherTable(
+                  oldPersonalizedCode: oldPersonalizedCode!,
+                  newPersonalizedCode: newPersonalizedCode!,
+                );
+              });
+        }
+      },
+      child: Text(
+        R.string.confirm,
       ),
     );
   }

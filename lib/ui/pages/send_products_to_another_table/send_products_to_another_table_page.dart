@@ -100,21 +100,24 @@ class _SendProductsToAnotherTablePageState
                       },
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SelectOrUnselectAllProducts(
-                        printedViewModel: snapshot.data,
-                        callSetState: () {
-                          setState(() {});
-                        },
-                      ),
-                      ConfirmButton(
-                        formKey: formKey,
-                        oldPersonalizedCode: selectedOriginCommand,
-                        newPersonalizedCode: selectedDestinyCommand,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SelectOrUnselectAllProducts(
+                          printedViewModel: snapshot.data,
+                          callSetState: () {
+                            setState(() {});
+                          },
+                        ),
+                        ConfirmButton(
+                          formKey: formKey,
+                          oldPersonalizedCode: selectedOriginCommand,
+                          newPersonalizedCode: selectedDestinyCommand,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               );

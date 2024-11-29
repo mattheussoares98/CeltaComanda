@@ -23,56 +23,33 @@ class _HomePageState extends State<HomePage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   ProductsViewModel? _lastShowedSuggestionProduct;
+  Timer? timer;
+
+  @override
+  initState() {
+    super.initState();
+    startTimer();
+  }
 
   @override
   void dispose() {
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    // if (_batteryStateSubscription != null) {
-    //   _batteryStateSubscription!.cancel();
-    // }
+    timer?.cancel();
   }
 
-  // final Battery _battery = Battery();
-
-  // BatteryState? _batteryState;
-  // StreamSubscription<BatteryState>? _batteryStateSubscription;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _battery.batteryState.then(_updateBatteryState);
-  //   _batteryStateSubscription =
-  //       _battery.onBatteryStateChanged.listen(_updateBatteryState);
-  // }
-
-  // int _lastUpdatedBatteryLevel = 0;
-
-  // void _updateBatteryState(BatteryState state) async {
-  //   final int atualBatteryLevel = await _battery.batteryLevel;
-
-  //   final differenceBetweenLastUpdatedAndAtualBattery =
-  //       (_lastUpdatedBatteryLevel - atualBatteryLevel).abs();
-
-  //   if (atualBatteryLevel > 20 ||
-  //       _batteryState == BatteryState.charging ||
-  //       differenceBetweenLastUpdatedAndAtualBattery < 5) {
-  //     return;
-  //   }
-
-  //   _lastUpdatedBatteryLevel = atualBatteryLevel;
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     snackBarMessage(
-  //       context,
-  //       "$atualBatteryLevel%. ${R.string.msgLowBatteryChargeDevice}",
-  //       backgroundColor: Colors.red,
-  //     );
-  //   });
-
-  //   if (_batteryState == state) return;
-  //   _batteryState = state;
-  // }
+  void startTimer() {
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    timer = Timer.periodic(Duration(minutes: 1), (_) async {
+      if (homePresenter.commandNumber != null) {
+        await printedProductsPresenter
+            .loadPrinted(homePresenter.commandNumber!);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

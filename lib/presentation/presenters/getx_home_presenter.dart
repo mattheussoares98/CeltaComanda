@@ -80,27 +80,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> updateIsFixedCommandNumber() async {
-    isLoading = true;
-    mainError = null;
-
-    try {
-      _isFixedCommandNumber = !_isFixedCommandNumber;
-
-      await localCommandData.update(
-        CommandEntity(
-          commandNumber: _commandNumber,
-          isFixedCommandNumber: _isFixedCommandNumber,
-        ),
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
   Future<void> loadCommandData({
     required MenuPresenter menuPresenter,
     required PrintedProductsPresenter printedProductsPresenter,

@@ -54,11 +54,6 @@ class GetxEnterprisePresenter extends GetxController
       if (commandEntity == null) {
         throw Exception();
       }
-
-      if (commandEntity.isFixedCommandNumber !=
-          homePresenter.isFixedCommandNumber) {
-        await homePresenter.updateIsFixedCommandNumber();
-      }
     } catch (e) {
       e;
     } finally {

@@ -20,7 +20,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   int? get updateMenu;
 
   void updateCommandNumber(String? value);
-  Future<void> updateIsFixedCommandNumber();
 
   Future<void> clear();
 

@@ -250,21 +250,4 @@ void main() {
       ),
     );
   });
-
-  test(
-      "Should update homePresenter.isFixedCommandNumber when load command data",
-      () async {
-    await sut.getLocalData(homePresenter);
-    expect(homePresenter.isFixedCommandNumber, false);
-
-    loadCommandData.mockLoad(
-      CommandEntity(
-        commandNumber: faker.randomGenerator.integer(100).toString(),
-        isFixedCommandNumber: true,
-      ),
-    );
-
-    await sut.getLocalData(homePresenter);
-    verify(() => homePresenter.updateIsFixedCommandNumber()).called(1);
-  });
 }

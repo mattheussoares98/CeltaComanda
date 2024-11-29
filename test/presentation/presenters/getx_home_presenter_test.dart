@@ -263,36 +263,6 @@ void main() {
     });
   });
 
-  group("updateIsFixedCommandNumber", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateIsFixedCommandNumber();
-    });
-    test("Should emit correct values on error", () async {
-      localCommandData.mockUpdateError();
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateIsFixedCommandNumber();
-    });
-    test("Should call localCommandData.udpate", () async {
-      final commandNumber =
-          faker.randomGenerator.integer(100).toString().padLeft(3, "0");
-      sut.updateCommandNumber(commandNumber);
-
-      await sut.updateIsFixedCommandNumber();
-
-      verify(() => localCommandData.update(CommandEntity(
-            commandNumber: commandNumber,
-            isFixedCommandNumber: sut.isFixedCommandNumber,
-          ))).called(1);
-    });
-  });
-
   group("load command data", () {
     test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
         () async {
@@ -424,8 +394,6 @@ void main() {
     test(
         "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
         () async {
-      await sut.updateIsFixedCommandNumber();
-
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -443,7 +411,6 @@ void main() {
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
         () async {
-      await sut.updateIsFixedCommandNumber();
       cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
       expectLater(sut.mainErrorStream, emits(UIError.unexpected));
@@ -460,7 +427,6 @@ void main() {
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.commandNotAvailable",
         () async {
-      await sut.updateIsFixedCommandNumber();
       cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
@@ -478,7 +444,6 @@ void main() {
     test(
         "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.unexpected",
         () async {
-      await sut.updateIsFixedCommandNumber();
       printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
 
       expectLater(sut.mainErrorStream, emits(UIError.unexpected));
@@ -495,7 +460,6 @@ void main() {
     test(
         "Should emit correct values on printedProductsPresenter.loadPrinted throw DomainError.commandNotAvailable",
         () async {
-      await sut.updateIsFixedCommandNumber();
       printedProductsPresenter
           .mockLoadPrintedError(DomainError.commandNotAvailable);
 
@@ -546,8 +510,6 @@ void main() {
       );
     });
     test("Should call loadSaleRequestTemp", () async {
-      await sut.updateIsFixedCommandNumber();
-
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -566,7 +528,6 @@ void main() {
       ).called(1);
     });
     test("Should update peoples number", () async {
-      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
@@ -581,7 +542,6 @@ void main() {
     });
 
     test("Should call loadSellers", () async {
-      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
@@ -597,7 +557,6 @@ void main() {
 
     test("Should update sellers correctly", () async {
       expect(sut.isFixedCommandNumber, false);
-      await sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -611,7 +570,6 @@ void main() {
           sellerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
     });
     test("Should update selected seller correctly", () async {
-      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
@@ -635,7 +593,6 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.updateIsFixedCommandNumber();
       sut.updateCommandNumber(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
@@ -647,8 +604,6 @@ void main() {
       );
     });
     test("Should call isValidDateTime when is fixed command number", () async {
-      await sut.updateIsFixedCommandNumber();
-
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -671,7 +626,6 @@ void main() {
 
       commandInformations.mockIsValidDateTime(false);
       sut.updateCommandNumber(newFixedCommandNumber.toString());
-      sut.updateIsFixedCommandNumber();
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,

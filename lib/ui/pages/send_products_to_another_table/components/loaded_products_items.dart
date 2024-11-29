@@ -58,9 +58,6 @@ class LoadedProductsItems extends StatelessWidget {
           ),
           itemCount: printedViewModel!.Products.length,
           itemBuilder: (context, index) {
-            printedViewModel!.Products.sort(
-                (a, b) => a.DateHourOfCreation.compareTo(b.DateHourOfCreation));
-
             final product = printedViewModel!.Products[index];
 
             DateTime data = DateTime.parse(product.DateHourOfCreation);
